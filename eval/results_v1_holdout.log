@@ -1,0 +1,12 @@
+  10/62  lenient match 0/10  (45s)
+  20/62  lenient match 4/20  (100s)
+  30/62  lenient match 4/30  (141s)
+  40/62  lenient match 4/40  (195s)
+  50/62  lenient match 4/50  (255s)
+  60/62  lenient match 4/60  (309s)
+  62/62  lenient match 4/62  (320s)
+
+sql2pyspark:latest on holdout.jsonl (n=62)
+  strict : syntax 79.0%  runs 0.0%  match 0.0%
+  lenient: syntax 79.0%  runs 14.5%  match 6.5%
+  results -> eval/results/v1__holdout.json

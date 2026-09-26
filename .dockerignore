@@ -1,0 +1,5 @@
+# Allowlist: images only need these files. Everything else (models, archive, venvs, llama.cpp,
+# generated data - ~17 GB) stays out of the build context; the tools container mounts the project instead.
+*
+!app.py
+!docker/

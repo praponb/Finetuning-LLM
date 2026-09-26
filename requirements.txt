@@ -1,0 +1,23 @@
+# Single environment for the whole pipeline (tested with Python 3.14 on Apple Silicon).
+# Java 17 is also required for PySpark (e.g. `brew install openjdk@17`).
+
+# training / fusing (Apple MLX)
+mlx==0.32.2
+mlx-lm==0.31.3
+transformers==5.17.0
+safetensors==0.8.0
+sentencepiece==0.2.2
+huggingface_hub==1.33.0
+
+# GGUF export via llama.cpp/convert_hf_to_gguf.py
+torch==2.14.0
+gguf==0.19.0
+numpy==2.5.3
+
+# dataset execution checks + evaluation
+pyspark==4.2.0
+PyYAML==6.0.3
+requests==2.34.2
+
+# UI
+streamlit==1.64.0

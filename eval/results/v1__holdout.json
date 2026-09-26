@@ -1,0 +1,1348 @@
+{
+  "model": "sql2pyspark:v1",
+  "set": "eval/holdout.jsonl",
+  "n": 62,
+  "summary": {
+    "ALL": {
+      "n": 62,
+      "strict_syntax": 0.7903,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 0.7903,
+      "lenient_runs": 0.1613,
+      "lenient_match": 0.0645
+    },
+    "complex": {
+      "n": 25,
+      "strict_syntax": 0.72,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 0.72,
+      "lenient_runs": 0.0,
+      "lenient_match": 0.0
+    },
+    "medium": {
+      "n": 22,
+      "strict_syntax": 0.8182,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 0.8182,
+      "lenient_runs": 0.2273,
+      "lenient_match": 0.1364
+    },
+    "simple": {
+      "n": 15,
+      "strict_syntax": 0.8667,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 0.8667,
+      "lenient_runs": 0.3333,
+      "lenient_match": 0.0667
+    }
+  },
+  "avg_seconds": 4.25,
+  "cases": [
+    {
+      "id": "holdout001",
+      "level": "simple",
+      "sql": "SELECT id, full_name, city FROM patients WHERE insurance_type = 'PRIVATE';",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .filter(f.col(\"insurance_type\") == \"PRIVATE\")\n)\n```",
+      "seconds": 6.77,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['id', 'full_name', 'city'] py=['id', 'full_name', 'gender', 'birth_date', 'city', 'insurance_type', 'is_smoker']"
+      }
+    },
+    {
+      "id": "holdout002",
+      "level": "simple",
+      "sql": "SELECT * FROM doctors WHERE years_experience >= 10 ORDER BY years_experience DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .filter(f.col(\"years_experience\") >= 10)\n    .orderBy(desc(\"years_experience\"))\n)\n```",
+      "seconds": 2.41,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'desc' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'desc' is not defined"
+      }
+    },
+    {
+      "id": "holdout003",
+      "level": "simple",
+      "sql": "SELECT DISTINCT specialty FROM doctors;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .distinct()\n    .select(\"specialty\")\n)\n```",
+      "seconds": 1.88,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=5 rows, py=40 rows; first diff: sql-only=[] py-only=[\"('Cardiology',)\"]"
+      }
+    },
+    {
+      "id": "holdout004",
+      "level": "simple",
+      "sql": "SELECT id, airline, origin, destination FROM flights WHERE distance_km BETWEEN 1000 AND 5000;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .filter(f.col(\"distance_km\") >= 1000)\n    .filter(f.col(\"distance_km\") <= 5000)\n)\n```",
+      "seconds": 3.23,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['id', 'airline', 'origin', 'destination'] py=['id', 'airline', 'origin', 'destination', 'departure_time', 'distance_km', 'base_fare']"
+      }
+    },
+    {
+      "id": "holdout005",
+      "level": "simple",
+      "sql": "SELECT id, passenger_name, price FROM bookings WHERE is_cancelled = FALSE AND seat_class IN ('BUSINESS', 'FIRST');",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .filter(f.col(\"is_cancelled\") == False)\n    .filter(f.col(\"seat_class\").isin([\"BUSINESS\", \"FIRST\"])\n)\n```",
+      "seconds": 3.2,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout006",
+      "level": "simple",
+      "sql": "SELECT COUNT(*) AS total_appointments FROM appointments WHERE status = 'NO_SHOW';",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .filter(f.col(\"status\") == \"NO_SHOW\")\n    .agg({\"status\": \"count\"}, alias=\"total_appointments\")\n)\n```",
+      "seconds": 3.44,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: DataFrame.agg() got an unexpected keyword argument 'alias'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: DataFrame.agg() got an unexpected keyword argument 'alias'"
+      }
+    },
+    {
+      "id": "holdout007",
+      "level": "simple",
+      "sql": "SELECT id, UPPER(TRIM(full_name)) AS patient_name, YEAR(birth_date) AS birth_year FROM patients;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .groupBy(\"id\", \"full_name\")\n    .agg(\n        f.col(\"full_name\").substr(1, -1).toUpperCase().alias(\"patient_name\"),\n        f.year(\"birth_date\").alias(\"birth_year\")\n    )\n)\n```",
+      "seconds": 4.1,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      }
+    },
+    {
+      "id": "holdout008",
+      "level": "simple",
+      "sql": "SELECT id, fee, ROUND(fee * 1.07, 2) AS fee_with_vat FROM appointments;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"id\", \"fee\")\n    .agg(round(f.col(\"fee\") * 1.07, 2).alias(\"fee_with_vat\"))\n)\n```",
+      "seconds": 3.98,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: type Column doesn't define __round__ method"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: type Column doesn't define __round__ method"
+      }
+    },
+    {
+      "id": "holdout009",
+      "level": "simple",
+      "sql": "SELECT id, departure_time, TO_DATE(departure_time) AS departure_day, HOUR(departure_time) AS departure_hour FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .groupBy(\"id\", \"departure_time\", \"departure_day\", \"departure_hour\")\n)",
+      "seconds": 3.18,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout010",
+      "level": "simple",
+      "sql": "SELECT * FROM bookings WHERE loyalty_tier IS NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .filter(col(\"loyalty_tier\").is_null())\n)\n```",
+      "seconds": 2.59,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'col' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'col' is not defined"
+      }
+    },
+    {
+      "id": "holdout011",
+      "level": "simple",
+      "sql": "SELECT id, passenger_name FROM bookings WHERE passenger_name LIKE '%a%' ORDER BY id LIMIT 5;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .filter(f.col(\"passenger_name\").like(\"%a%\"))\n    .limit(5)\n)\n```",
+      "seconds": 2.99,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['id', 'passenger_name'] py=['id', 'flight_id', 'passenger_name', 'seat_class', 'price', 'booked_at', 'is_cancelled', 'loyalty_tier']"
+      }
+    },
+    {
+      "id": "holdout012",
+      "level": "simple",
+      "sql": "SELECT id, doctor_name, COALESCE(hospital, 'Unassigned') AS hospital FROM doctors;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .groupBy(\"id\", \"doctor_name\")\n    .agg(COALESCE(\"hospital\", \"Unassigned\").alias(\"hospital\"))\n)\n```",
+      "seconds": 3.36,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'COALESCE' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'COALESCE' is not defined"
+      }
+    },
+    {
+      "id": "holdout013",
+      "level": "simple",
+      "sql": "SELECT id,\n       CASE WHEN wait_minutes > 60 THEN 'long'\n            WHEN wait_minutes > 15 THEN 'normal'\n            ELSE 'short' END AS wait_band\nFROM appointments;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"id\")\n    .agg(\n        f.when(f.col(\"wait_minutes\") > 60, \"long\")\n        .when(f.col(\"wait_minutes\") > 15, \"normal\")\n        .otherwise(\"short\")\n    )\n    .alias(\"df_result\")\n)\n```",
+      "seconds": 5.88,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [MISSING_AGGREGATION] The non-aggregating expression \"wait_minutes\" is based on columns which are not participating in the GROUP BY clause."
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [MISSING_AGGREGATION] The non-aggregating expression \"wait_minutes\" is based on columns which are not participating in the GROUP BY clause."
+      }
+    },
+    {
+      "id": "holdout014",
+      "level": "simple",
+      "sql": "SELECT MAX(base_fare) AS max_fare, MIN(base_fare) AS min_fare, ROUND(AVG(base_fare), 2) AS avg_fare FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .agg(\n        f.max(\"base_fare\") .alias(\"max_fare\"),\n        f.min(\"base_fare\") .alias(\"min_fare\"),\n        f.round(f.avg(\"base_fare\"), 2) .alias(\"avg_fare\")\n    )\n)\n```",
+      "seconds": 5.24,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout015",
+      "level": "simple",
+      "sql": "SELECT id, DATEDIFF(CURRENT_DATE(), birth_date) / 365 AS approx_age FROM patients;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .groupBy(\"id\")\n    .agg(f.expr(\"DATEDIFF(CURRENT_DATE(), birth_date) / 365 AS approx_age\")\n)\n```",
+      "seconds": 3.36,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout016",
+      "level": "medium",
+      "sql": "SELECT specialty, COUNT(*) AS doctor_count, AVG(years_experience) AS avg_experience\nFROM doctors\nGROUP BY specialty\nORDER BY doctor_count DESC, specialty;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .groupBy(\"specialty\")\n    .agg(\n        f.count(\"*\").alias(\"doctor_count\"),\n        f.avg(\"years_experience\").alias(\"avg_experience\")\n    )\n    .orderBy(\"doctor_count desc\", \"specialty\")\n)\n```",
+      "seconds": 4.64,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `doctor_count desc` cannot be resolved. Did you mean one of the following? [`doctor_count`, `avg_experience`, `specialty`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `doctor_count desc` cannot be resolved. Did you mean one of the following? [`doctor_count`, `avg_experience`, `specialty`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "holdout017",
+      "level": "medium",
+      "sql": "SELECT status, COUNT(*) AS n, SUM(fee) AS total_fee\nFROM appointments\nWHERE appt_date >= '2024-01-01'\nGROUP BY status\nHAVING COUNT(*) >= 2;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .filter(f.col(\"appt_date\") >= \"2024-01-01\")\n    .groupBy(\"status\")\n    .agg(\n        f.count(\"*\").alias(\"n\"),\n        f.sum(\"fee\").alias(\"total_fee\")\n    )\n    .filter(f.col(\"n\") >= 2)\n)\n```",
+      "seconds": 6.17,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout018",
+      "level": "medium",
+      "sql": "SELECT airline, origin, COUNT(*) AS flights, ROUND(AVG(distance_km), 0) AS avg_distance FROM flights GROUP BY airline, origin;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .groupBy(\"airline\", \"origin\")\n    .agg(\n        f.count(\"*\").alias(\"flights\"),\n        f.round(f.avg(\"distance_km\"), 0).alias(\"avg_distance\")\n    )\n)\n```",
+      "seconds": 4.28,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout019",
+      "level": "medium",
+      "sql": "SELECT seat_class, SUM(CASE WHEN is_cancelled THEN 1 ELSE 0 END) AS cancelled, COUNT(*) AS total FROM bookings GROUP BY seat_class;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .groupBy(\"seat_class\")\n    .agg(\n        f.sum(f.when(f.col(\"is_cancelled\"), 1).otherwise(0)).alias(\"cancelled\"),\n        f.count(\"*\").alias(\"total\")\n    )\n)\n```",
+      "seconds": 4.48,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout020",
+      "level": "medium",
+      "sql": "SELECT a.id, p.full_name, a.appt_date, a.fee FROM appointments a JOIN patients p ON a.patient_id = p.id WHERE a.status = 'DONE';",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .filter(f.col(\"status\") == \"DONE\")\n    .select(\"a.id\", \"p.full_name\", \"a.appt_date\", \"a.fee\")\n)\n```",
+      "seconds": 3.68,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `a`.`id` cannot be resolved. Did you mean one of the following? [`id`, `fee`, `status`, `appt_date`, `doctor_id`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `a`.`id` cannot be resolved. Did you mean one of the following? [`id`, `fee`, `status`, `appt_date`, `doctor_id`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "holdout021",
+      "level": "medium",
+      "sql": "SELECT d.doctor_name, d.specialty, a.appt_date FROM doctors d LEFT JOIN appointments a ON d.id = a.doctor_id WHERE d.specialty = 'Cardiology';",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .filter(f.col(\"specialty\") == \"Cardiology\")\n)",
+      "seconds": 2.34,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['doctor_name', 'specialty', 'appt_date'] py=['id', 'doctor_name', 'specialty', 'hospital', 'years_experience']"
+      }
+    },
+    {
+      "id": "holdout022",
+      "level": "medium",
+      "sql": "SELECT b.id, b.passenger_name, f.airline, f.origin, f.destination\nFROM bookings b\nINNER JOIN flights f ON b.flight_id = f.id\nWHERE f.origin = 'BKK'\nORDER BY b.id;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .join(\n        df_flights,\n        on=\"flight_id\"\n    )\n    .filter(\n        df_flights.origin == \"BKK\"\n    )\n)\n```",
+      "seconds": 3.89,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_USING_COLUMN_FOR_JOIN] USING column `flight_id` cannot be resolved on the right side of the join. The right-side columns: [`airline`, `base_fare`, `departure_time`, `destination`, `distance_km`, `id`, `origin`]. SQLSTATE: 42703"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_USING_COLUMN_FOR_JOIN] USING column `flight_id` cannot be resolved on the right side of the join. The right-side columns: [`airline`, `base_fare`, `departure_time`, `destination`, `distance_km`, `id`, `origin`]. SQLSTATE: 42703"
+      }
+    },
+    {
+      "id": "holdout023",
+      "level": "medium",
+      "sql": "SELECT DATE_FORMAT(appt_date, 'yyyy-MM') AS month, COUNT(*) AS appointments\nFROM appointments\nGROUP BY DATE_FORMAT(appt_date, 'yyyy-MM')\nORDER BY month;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"appt_date\")\n    .agg(count(\"*\").alias(\"appointments\")\n    .groupBy(\"month\")\n)\n```",
+      "seconds": 3.05,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout024",
+      "level": "medium",
+      "sql": "SELECT id, full_name FROM patients WHERE id IN (SELECT patient_id FROM appointments WHERE appt_type = 'emergency');",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .filter(f.col(\"id\").isin(df_appointments[df_appointments[\"appt_type\"] == \"emergency\"].select(\"patient_id\")).distinct())\n)\n```",
+      "seconds": 3.5,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      }
+    },
+    {
+      "id": "holdout025",
+      "level": "medium",
+      "sql": "SELECT * FROM doctors d WHERE NOT EXISTS (SELECT 1 FROM appointments a WHERE a.doctor_id = d.id AND a.status = 'DONE');",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .filter(f.col(\"id_not_in_appointments_done\") == True)\n)\n```",
+      "seconds": 2.63,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `id_not_in_appointments_done` cannot be resolved. Did you mean one of the following? [`doctor_name`, `years_experience`, `hospital`, `specialty`, `id`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `id_not_in_appointments_done` cannot be resolved. Did you mean one of the following? [`doctor_name`, `years_experience`, `hospital`, `specialty`, `id`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "holdout026",
+      "level": "medium",
+      "sql": "SELECT id, flight_id, price, RANK() OVER (PARTITION BY flight_id ORDER BY price DESC) AS price_rank FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .groupBy(\"flight_id\", \"price\")\n    .withColumn(\"price_rank\", f.row_number().over(window_spec_flight_id_price_desc))\n    .select(\"id\", \"flight_id\", \"price\", \"price_rank\")\n)\n```",
+      "seconds": 4.62,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: 'GroupedData' object has no attribute 'withColumn'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: 'GroupedData' object has no attribute 'withColumn'"
+      }
+    },
+    {
+      "id": "holdout027",
+      "level": "medium",
+      "sql": "SELECT id, patient_id, appt_date, LAG(appt_date) OVER (PARTITION BY patient_id ORDER BY appt_date, id) AS previous_visit FROM appointments;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"id\", \"patient_id\", \"appt_date\")\n    .withColumn(\"previous_visit\", f.lag(\"appt_date\").over(window_spec_partition_by_patient_id_order_by_appt_date_id))\n)\n```",
+      "seconds": 4.77,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: 'GroupedData' object has no attribute 'withColumn'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: 'GroupedData' object has no attribute 'withColumn'"
+      }
+    },
+    {
+      "id": "holdout028",
+      "level": "medium",
+      "sql": "SELECT insurance_type, gender, COUNT(*) AS patients FROM patients GROUP BY insurance_type, gender ORDER BY insurance_type, gender;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .groupBy(\"insurance_type\", \"gender\")\n    .count(asName=\"patients\")\n)\n```",
+      "seconds": 2.54,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: dfapi.<locals>._api() got an unexpected keyword argument 'asName'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: dfapi.<locals>._api() got an unexpected keyword argument 'asName'"
+      }
+    },
+    {
+      "id": "holdout029",
+      "level": "medium",
+      "sql": "SELECT id, airline, base_fare FROM flights WHERE base_fare > (SELECT AVG(base_fare) FROM flights);",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .filter(f.col(\"base_fare\") > f.col(\"base_fare\").mean())\n)\n```",
+      "seconds": 2.9,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      }
+    },
+    {
+      "id": "holdout030",
+      "level": "medium",
+      "sql": "SELECT loyalty_tier, ROUND(AVG(price), 2) AS avg_price FROM bookings WHERE NOT is_cancelled GROUP BY loyalty_tier;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .groupBy(\"loyalty_tier\")\n    .agg(f.avg(\"price\").alias(\"avg_price\"))\n)\n```",
+      "seconds": 3.07,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=4 rows, py=5 rows; first diff: sql-only=[\"('SILVER', 2499.8)\"] py-only=[\"('GOLD', 4199.1938)\"]"
+      }
+    },
+    {
+      "id": "holdout031",
+      "level": "medium",
+      "sql": "SELECT city FROM patients WHERE city IS NOT NULL UNION SELECT hospital FROM doctors WHERE hospital IS NOT NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .filter(df_patients.city.isNotNull())\n    .unionAll(\n        df_doctors\n        .filter(df_doctors.hospital.isNotNull())\n        \n```",
+      "seconds": 3.33,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout032",
+      "level": "medium",
+      "sql": "SELECT id, passenger_name, CONCAT(seat_class, '-', COALESCE(loyalty_tier, 'NONE')) AS fare_code FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .groupBy(\"id\", \"passenger_name\")\n    .agg(\n        f.concat(\"seat_class\", \"-\", f.coalesce(\"loyalty_tier\", \"NONE\")).alias(\"fare_code\")\n    )\n)\n```",
+      "seconds": 4.64,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `-` cannot be resolved. Did you mean one of the following? [`id`, `price`, `booked_at`, `flight_id`, `seat_class`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `-` cannot be resolved. Did you mean one of the following? [`id`, `price`, `booked_at`, `flight_id`, `seat_class`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "holdout033",
+      "level": "medium",
+      "sql": "SELECT doctor_id, COUNT(DISTINCT patient_id) AS unique_patients\nFROM appointments\nGROUP BY doctor_id\nHAVING COUNT(DISTINCT patient_id) > 1\nORDER BY unique_patients DESC, doctor_id;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"doctor_id\")\n    .agg(countDistinct(\"patient_id\").alias(\"unique_patients\")\n    .filter(countDistinct(\"patient_id\") > 1)\n    .orderBy(\"unique_patients\", \"doctor_id\")\n)\n```",
+      "seconds": 4.42,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout034",
+      "level": "medium",
+      "sql": "SELECT id, departure_time, DATE_TRUNC('month', departure_time) AS dep_month FROM flights WHERE airline <> 'Delta';",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .filter(f.airline != \"Delta\")\n    .withColumn(\"dep_month\", f.date_trunc(\"month\", f.departure_time))\n    .select(\"id\", \"departure_time\", \"dep_month\")\n)\n```",
+      "seconds": 4.84,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: module 'pyspark.sql.functions' has no attribute 'airline'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: module 'pyspark.sql.functions' has no attribute 'airline'"
+      }
+    },
+    {
+      "id": "holdout035",
+      "level": "medium",
+      "sql": "SELECT origin, destination, COUNT(*) AS n\nFROM flights\nWHERE destination IS NOT NULL\nGROUP BY origin, destination\nHAVING COUNT(*) > 1;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .filter(f.col(\"destination\").isNotNull())\n    .groupBy(\"origin\", \"destination\")\n    .agg(count(\"*\").alias(\"n\")\n```",
+      "seconds": 3.44,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout036",
+      "level": "medium",
+      "sql": "SELECT appt_type,\n       COUNT(CASE WHEN status = 'DONE' THEN 1 END) AS done,\n       COUNT(CASE WHEN status = 'NO_SHOW' THEN 1 END) AS no_show\nFROM appointments\nGROUP BY appt_type;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"appt_type\")\n    .agg(\n        f.count.when(f.col(\"status\") == \"DONE\", 1).alias(\"done\"),\n        f.count.when(f.col(\"status\") == \"NO_SHOW\", 1).alias(\"no_show\")\n    )\n)\n```",
+      "seconds": 5.49,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: 'function' object has no attribute 'when'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: 'function' object has no attribute 'when'"
+      }
+    },
+    {
+      "id": "holdout037",
+      "level": "medium",
+      "sql": "SELECT * FROM bookings WHERE booked_at = (SELECT MAX(booked_at) FROM bookings);",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .orderBy(df_bookings_booked_at.desc())\n    .limit(1)\n)\n```",
+      "seconds": 2.6,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_bookings_booked_at' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_bookings_booked_at' is not defined"
+      }
+    },
+    {
+      "id": "holdout038",
+      "level": "complex",
+      "sql": "WITH doctor_revenue AS (\n    SELECT doctor_id, SUM(fee) AS revenue, COUNT(*) AS visits\n    FROM appointments\n    WHERE status = 'DONE'\n    GROUP BY doctor_id\n)\nSELECT d.id, d.doctor_name, d.specialty, r.revenue, r.visits\nFROM doctors d\nJOIN doctor_revenue r ON d.id = r.doctor_id\nORDER BY r.revenue DESC, d.id;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"doctor_id\")\n    .agg(\n        f.sum(\"fee\").alias(\"revenue\"),\n        f.count(\"*\").alias(\"visits\")\n    )\n    .orderBy(desc(\"revenue\"), df_result.id)\n)\n```",
+      "seconds": 4.85,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'desc' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'desc' is not defined"
+      }
+    },
+    {
+      "id": "holdout039",
+      "level": "complex",
+      "sql": "WITH ranked AS (\n    SELECT b.*, ROW_NUMBER() OVER (PARTITION BY flight_id ORDER BY price DESC, id) AS rn\n    FROM bookings b\n)\nSELECT id, flight_id, passenger_name, price FROM ranked WHERE rn <= 2;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .groupBy(\"flight_id\", \"id\", \"passenger_name\", \"price\")\n    .withColumn(\"rn\", f.row_number().over(window_spec_partition_by_flight_id_order_by_price_desc_id))\n    .filter(f.col(\"rn\") <= 2)\n)\n```",
+      "seconds": 5.02,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: 'GroupedData' object has no attribute 'withColumn'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: 'GroupedData' object has no attribute 'withColumn'"
+      }
+    },
+    {
+      "id": "holdout040",
+      "level": "complex",
+      "sql": "SELECT month, revenue, SUM(revenue) OVER (ORDER BY month) AS cumulative_revenue\nFROM (\n    SELECT DATE_FORMAT(appt_date, 'yyyy-MM') AS month, SUM(fee) AS revenue\n    FROM appointments\n    GROUP BY DATE_FORMAT(appt_date, 'yyyy-MM')\n) t\nORDER BY month;",
+      "reply": "```python\nfrom pyspark.sql.window import Window\n\nwindow_spec = Window.order_by(\"month\")\n\ndf_result = (\n    df_appointments\n    .groupBy(\"month\")\n    .agg(sum(df_appointments.fee).alias(\"revenue\")\n    .withColumn(\"cumulative_revenue\", F.sum(df_appointments.revenue).over(window_spec))\n    .orderBy(\"month\")\n)\n```",
+      "seconds": 5.39,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout041",
+      "level": "complex",
+      "sql": "SELECT d.specialty,\n       SUM(a.fee) AS total_fee,\n       ROUND(100.0 * SUM(a.fee) / SUM(SUM(a.fee)) OVER (), 2) AS pct_of_total\nFROM appointments a\nJOIN doctors d ON a.doctor_id = d.id\nGROUP BY d.specialty;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"d.specialty\")\n    .agg(\n        f.sum(\"a.fee\").alias(\"total_fee\"),\n        f.round(100.0 * f.sum(\"a.fee\") / f.sum(f.sum(\"a.fee\")).over(), 2).alias(\"pct_of_total\")\n    )\n)\n```",
+      "seconds": 6.16,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: Column.over() missing 1 required positional argument: 'window'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: Column.over() missing 1 required positional argument: 'window'"
+      }
+    },
+    {
+      "id": "holdout042",
+      "level": "complex",
+      "sql": "SELECT p.full_name, d.doctor_name, a.appt_date, a.fee\nFROM appointments a\nJOIN patients p ON a.patient_id = p.id\nJOIN doctors d ON a.doctor_id = d.id\nWHERE a.appt_type IN ('surgery', 'emergency') AND d.years_experience > 5;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .join(\n        df_patients,\n        on=\"patient_id\"\n    )\n    .join(\n        df_doctors,\n        on=\"doctor_id\"\n    )\n    .filter(\n        f.col(\"appt_type\") in (\"surgery\", \"emergency\") & f.col(\"years_experience\") > 5\n    )\n)\n```",
+      "seconds": 6.32,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_USING_COLUMN_FOR_JOIN] USING column `patient_id` cannot be resolved on the right side of the join. The right-side columns: [`birth_date`, `city`, `full_name`, `gender`, `id`, `insurance_type`, `is_smoker`]. SQLSTATE: 42703"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_USING_COLUMN_FOR_JOIN] USING column `patient_id` cannot be resolved on the right side of the join. The right-side columns: [`birth_date`, `city`, `full_name`, `gender`, `id`, `insurance_type`, `is_smoker`]. SQLSTATE: 42703"
+      }
+    },
+    {
+      "id": "holdout043",
+      "level": "complex",
+      "sql": "SELECT p.id, p.full_name FROM patients p LEFT JOIN appointments a ON p.id = a.patient_id WHERE a.id IS NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .leftJoin(df_appointments, df_patients.id == df_appointments.patient_id)\n    .filter(df_appointments.id.is_null())\n)\n```",
+      "seconds": 3.43,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `leftJoin` is not supported."
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `leftJoin` is not supported."
+      }
+    },
+    {
+      "id": "holdout044",
+      "level": "complex",
+      "sql": "SELECT b.id, b.flight_id, b.price\nFROM bookings b\nWHERE b.price > (SELECT AVG(b2.price) FROM bookings b2 WHERE b2.flight_id = b.flight_id);",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .filter(f.col(\"price\") > f.avg(\"price\").over(window_partition_by=\"flight_id\")\n)\n```",
+      "seconds": 3.08,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout045",
+      "level": "complex",
+      "sql": "SELECT f.airline,\n       COUNT(*) AS bookings,\n       ROUND(100.0 * SUM(CASE WHEN b.is_cancelled THEN 1 ELSE 0 END) / COUNT(*), 1) AS cancel_rate\nFROM bookings b\nJOIN flights f ON b.flight_id = f.id\nGROUP BY f.airline\nORDER BY cancel_rate DESC, f.airline;",
+      "reply": "```python\nfrom pyspark.sql import functions as fn\n\ndf_result = (\n    df_bookings\n    .groupBy(\"f_airline\")\n    .agg(\n        fn.count(\"*\").alias(\"bookings\"),\n        fn.round(100.0 * fn.sum(fn.when(fn.col(\"b_is_cancelled\") == True, 1).otherwise(0)) / fn.count(\"*\"), 1).alias(\"cancel_rate\")\n)\n```",
+      "seconds": 6.32,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout046",
+      "level": "complex",
+      "sql": "SELECT * FROM (\n    SELECT specialty, hospital, years_experience FROM doctors\n) PIVOT (\n    MAX(years_experience) FOR hospital IN ('City Hospital', 'Bumrungrad', 'General Clinic')\n);",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .groupBy(\"specialty\", \"hospital\")\n    .agg(max(\"years_experience\").alias(\"years_experience\")\n)\n```",
+      "seconds": 2.84,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout047",
+      "level": "complex",
+      "sql": "SELECT id, patient_id, appt_date,\n       DATEDIFF(appt_date, LAG(appt_date) OVER (PARTITION BY patient_id ORDER BY appt_date, id)) AS days_since_last\nFROM appointments\nWHERE patient_id IS NOT NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .filter(df_appointments.patient_id.isNotNull())\n    .withColumn(\"days_since_last\", f.datediff(\"appt_date\", f.lag(\"appt_date\").over(window_partition_by_patient))\n\n)\n```",
+      "seconds": 4.72,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout048",
+      "level": "complex",
+      "sql": "WITH daily AS (\n    SELECT doctor_id, appt_date, COUNT(*) AS n\n    FROM appointments\n    GROUP BY doctor_id, appt_date\n),\nranked AS (\n    SELECT *, RANK() OVER (PARTITION BY doctor_id ORDER BY n DESC) AS r\n    FROM daily\n)\nSELECT doctor_id, appt_date, n FROM ranked WHERE r = 1;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"doctor_id\", \"appt_date\")\n    .agg(count(\"*\").alias(\"n\"))\n    .orderBy(\"doctor_id\", desc(\"n\"))\n    .filter(f.col(\"r\") == 1)\n)\n```",
+      "seconds": 4.56,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'count' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'count' is not defined"
+      }
+    },
+    {
+      "id": "holdout049",
+      "level": "complex",
+      "sql": "SELECT origin, destination, COUNT(*) AS flights, MAX(base_fare) AS max_fare\nFROM flights\nWHERE destination IS NOT NULL AND origin <> destination\nGROUP BY origin, destination\nORDER BY flights DESC, origin, destination\nLIMIT 5;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .filter(f.col(\"destination\").isNotNull() & (f.col(\"origin\") != f.col(\"destination\"))\n    .groupBy(\"origin\", \"destination\")\n    .agg(count(\"*\").alias(\"flights\"), max(\"base_fare\").alias(\"max_fare\"))\n    .orderBy(\"flights desc\", \"origin\", \"destination\")\n    .limit(5)\n)\n```",
+      "seconds": 7.07,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout050",
+      "level": "complex",
+      "sql": "SELECT f.id, f.airline\nFROM flights f\nWHERE EXISTS (\n    SELECT 1 FROM bookings b\n    WHERE b.flight_id = f.id AND b.seat_class = 'FIRST' AND NOT b.is_cancelled\n);",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .filter(\n        f.col(\"bookings\").exists(lambda x: \n            f.and_(\n                f.col(\"bookings.flight_id\") == f.col(\"flights.id\"),\n                f.col(\"bookings.seat_class\") == \"FIRST\",\n                ~f.col(\"bookings.is_cancelled\")\n            )\n        )\n    )\n)\n```",
+      "seconds": 6.58,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      }
+    },
+    {
+      "id": "holdout051",
+      "level": "complex",
+      "sql": "SELECT CASE WHEN YEAR(birth_date) < 2024 THEN 'early'\n            WHEN YEAR(birth_date) = 2024 THEN 'mid'\n            ELSE 'late' END AS cohort,\n       COUNT(*) AS patients\nFROM patients\nGROUP BY 1\nORDER BY cohort;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .groupBy(\"cohort\")\n    .agg(func_count(\"*\").alias(\"patients\"))\n)\n```",
+      "seconds": 2.81,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'func_count' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'func_count' is not defined"
+      }
+    },
+    {
+      "id": "holdout052",
+      "level": "complex",
+      "sql": "SELECT id, doctor_name FROM doctors WHERE id NOT IN (SELECT doctor_id FROM appointments WHERE status = 'CANCELLED');",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .filter(f.col(\"id\") not in df_appointments\n            .filter(f.col(\"status\") == \"CANCELLED\")\n            .select(\"doctor_id\"))\n)\n```",
+      "seconds": 3.89,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkValueError: [CANNOT_CONVERT_COLUMN_INTO_BOOL] Cannot convert column into bool: please use '&' for 'and', '|' for 'or', '~' for 'not' when building DataFrame boolean expressions."
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkValueError: [CANNOT_CONVERT_COLUMN_INTO_BOOL] Cannot convert column into bool: please use '&' for 'and', '|' for 'or', '~' for 'not' when building DataFrame boolean expressions."
+      }
+    },
+    {
+      "id": "holdout053",
+      "level": "complex",
+      "sql": "SELECT 'patient' AS kind, full_name AS name FROM patients\nUNION ALL\nSELECT 'passenger' AS kind, passenger_name AS name FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    .df_patients\n    .groupBy(\"kind\", \"full_name\").alias(\"df_result\")\n    .unionAll(\n        .df_bookings\n        .groupBy(\"kind\", \"passenger_name\").alias(\"df_result\")\n    )\n)\n```",
+      "seconds": 4.99,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout054",
+      "level": "complex",
+      "sql": "SELECT id, departure_time, base_fare,\n       ROUND(AVG(base_fare) OVER (PARTITION BY airline ORDER BY departure_time, id\n                                  ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS fare_ma3\nFROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .groupBy(\"id\", \"departure_time\", \"base_fare\")\n    .agg(\n        f.round(f.avg(\"base_fare\").over(window_spec_flights_window_periods_3_months_window_type_lag_months_2_months_window_start_offset_current_row_month_window_end_offset_current_row_month),\n                2) == \"fare_ma3\"\n    )\n)\n```",
+      "seconds": 6.65,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'window_spec_flights_window_periods_3_months_window_type_lag_months_2_months_window_start_offset_current_row_month_window_end_offset_current_row_month' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'window_spec_flights_window_periods_3_months_window_type_lag_months_2_months_window_start_offset_current_row_month_window_end_offset_current_row_month' is not defined"
+      }
+    },
+    {
+      "id": "holdout055",
+      "level": "complex",
+      "sql": "SELECT full_name FROM patients INTERSECT SELECT passenger_name FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_patients\n    .intersect(\n        df_bookings\n        .select(\"passenger_name\")\n    )\n)\n```",
+      "seconds": 2.53,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [NUM_COLUMNS_MISMATCH] INTERSECT can only be performed on inputs with the same number of columns, but the first input has 7 columns and the second input has 1 columns. SQLSTATE: 42826;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [NUM_COLUMNS_MISMATCH] INTERSECT can only be performed on inputs with the same number of columns, but the first input has 7 columns and the second input has 1 columns. SQLSTATE: 42826;"
+      }
+    },
+    {
+      "id": "holdout056",
+      "level": "complex",
+      "sql": "SELECT id FROM flights EXCEPT SELECT flight_id FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_flights\n    .exceptAll(\n        df_bookings\n        .select(\"flight_id\")\n    )\n)\n```",
+      "seconds": 2.82,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [NUM_COLUMNS_MISMATCH] EXCEPT ALL can only be performed on inputs with the same number of columns, but the first input has 7 columns and the second input has 1 columns. SQLSTATE: 42826;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [NUM_COLUMNS_MISMATCH] EXCEPT ALL can only be performed on inputs with the same number of columns, but the first input has 7 columns and the second input has 1 columns. SQLSTATE: 42826;"
+      }
+    },
+    {
+      "id": "holdout057",
+      "level": "complex",
+      "sql": "SELECT *\nFROM (\n    SELECT patient_id, COUNT(*) AS visits, SUM(fee) AS spend\n    FROM appointments\n    WHERE patient_id IS NOT NULL\n    GROUP BY patient_id\n) t\nWHERE visits >= 2\nORDER BY spend DESC, patient_id;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_appointments\n    .groupBy(\"patient_id\")\n    .agg(\n        f.count(\"*\").alias(\"visits\"),\n        f.sum(\"fee\").alias(\"spend\")\n    )\n    .filter(f.col(\"visits\") >= 2)\n    .orderBy(desc(\"spend\"), \"patient_id\")\n)\n```",
+      "seconds": 5.83,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'desc' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'desc' is not defined"
+      }
+    },
+    {
+      "id": "holdout058",
+      "level": "complex",
+      "sql": "SELECT s.specialty, t.appt_type\nFROM (SELECT DISTINCT specialty FROM doctors) s\nCROSS JOIN (SELECT DISTINCT appt_type FROM appointments WHERE appt_type IS NOT NULL) t\nORDER BY s.specialty, t.appt_type;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_doctors\n    .distinct(\"specialty\")\n    .crossJoin(\n        df_appointments\n        .filter(df_appointments.appt_type.isNotNull())\n    )\n    .orderBy(\"specialty\", \"appt_type\")\n)\n```",
+      "seconds": 4.41,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: DataFrame.distinct() takes 1 positional argument but 2 were given"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: DataFrame.distinct() takes 1 positional argument but 2 were given"
+      }
+    },
+    {
+      "id": "holdout059",
+      "level": "complex",
+      "sql": "WITH active AS (\n    SELECT * FROM bookings WHERE is_cancelled = FALSE\n),\nby_flight AS (\n    SELECT flight_id, COUNT(*) AS seats_sold, SUM(price) AS revenue\n    FROM active\n    GROUP BY flight_id\n)\nSELECT f.id, f.airline, f.origin,\n       COALESCE(b.seats_sold, 0) AS seats_sold,\n       COALESCE(b.revenue, 0) AS revenue\nFROM flights f\nLEFT JOIN by_flight b ON f.id = b.flight_id\nORDER BY revenue DESC, f.id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\ndf_result = (\n    df_bookings\n    .filter(df_bookings.is_cancelled == False)\n    .groupBy(\"flight_id\")\n    .agg(\n        F.count(\"*\").alias(\"seats_sold\"),\n        F.sum(\"price\").alias(\"revenue\")\n    )\n    .join(\n        df_flights,\n        \"flight_id\",\n        \"left\"\n    )\n    .orderBy(df_result.revenue.desc(), df_result.id)\n)\n```",
+      "seconds": 7.47,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_USING_COLUMN_FOR_JOIN] USING column `flight_id` cannot be resolved on the right side of the join. The right-side columns: [`airline`, `base_fare`, `departure_time`, `destination`, `distance_km`, `id`, `origin`]. SQLSTATE: 42703"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_USING_COLUMN_FOR_JOIN] USING column `flight_id` cannot be resolved on the right side of the join. The right-side columns: [`airline`, `base_fare`, `departure_time`, `destination`, `distance_km`, `id`, `origin`]. SQLSTATE: 42703"
+      }
+    },
+    {
+      "id": "holdout060",
+      "level": "complex",
+      "sql": "SELECT id, doctor_name, years_experience, PERCENT_RANK() OVER (ORDER BY years_experience) AS pct FROM doctors;",
+      "reply": "```python\nfrom pyspark.sql.window import Window\n\nwindow_spec = Window.order_by(years_experience)\n\ndf_result = (\n    df_doctors\n    .groupBy(\"id\", \"doctor_name\", \"years_experience\")\n    .withColumn(\"pct\", F.percent_rank().over(window_spec))\n    .select(\"id\", \"doctor_name\", \"years_experience\", \"pct\")\n)\n```",
+      "seconds": 5.54,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: type object 'Window' has no attribute 'order_by'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: type object 'Window' has no attribute 'order_by'"
+      }
+    },
+    {
+      "id": "holdout061",
+      "level": "complex",
+      "sql": "SELECT id,\n       INITCAP(SUBSTRING_INDEX(TRIM(passenger_name), ' ', 1)) AS first_name,\n       LENGTH(TRIM(passenger_name)) AS name_length\nFROM bookings\nWHERE passenger_name IS NOT NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .filter(df_bookings.passenger_name.isNotNull())\n    .withColumn(\"first_name\", f.initcap(f.col(\"passenger_name\").split(\" \", 1)[0]))\n    .withColumn(\"name_length\", f.length(f.col(\"passenger_name\")).alias(\"name_length\"))\n)\n```",
+      "seconds": 6.03,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 'Column' object is not callable"
+      }
+    },
+    {
+      "id": "holdout062",
+      "level": "complex",
+      "sql": "SELECT f.airline, b.seat_class, SUM(b.price) AS revenue\nFROM bookings b\nJOIN flights f ON b.flight_id = f.id\nGROUP BY ROLLUP(f.airline, b.seat_class);",
+      "reply": "```python\nfrom pyspark.sql import functions as f\n\ndf_result = (\n    df_bookings\n    .groupBy(\"airline\", \"seat_class\")\n    .agg(sum(\"price\").alias(\"revenue\"))\n)\n```",
+      "seconds": 2.99,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+      }
+    }
+  ]
+}

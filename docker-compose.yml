@@ -1,0 +1,68 @@
+# SQL -> PySpark converter in Docker.
+#
+#   docker compose up -d --build                 # Streamlit UI on http://localhost:8501, using Ollama on the host
+#   docker compose run --rm tools make data PY=python    # dataset pipeline in a Spark container
+#   docker compose run --rm tools make eval PY=python    # execution-based evaluation against Ollama
+#
+# On a Mac, containers cannot use the Apple GPU, so the model is served best by the *native* Ollama app
+# (the default below). The optional `ollama` profile runs Ollama in a container instead - CPU-only on a
+# Mac, but the right choice on a Linux server (add a GPU reservation there):
+#
+#   OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up -d --build
+
+x-ollama-url: &ollama-url
+  OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    image: sql2pyspark-app:latest
+    ports:
+      - "8501:8501"
+    environment:
+      <<: *ollama-url
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # makes the host reachable on Linux too
+    depends_on:
+      ollama:
+        condition: service_healthy
+        required: false                        # only when the `ollama` profile is enabled
+    restart: unless-stopped
+
+  tools:
+    profiles: ["tools"]
+    build:
+      context: .
+      dockerfile: docker/tools.Dockerfile
+    image: sql2pyspark-tools:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      <<: *ollama-url
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  ollama:
+    profiles: ["ollama"]
+    image: ollama/ollama:0.34.4
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    ports:
+      - "11435:11434"   # 11434 is left free for a native Ollama on the host
+    volumes:
+      - ollama-models:/root/.ollama
+      - ./docker/ollama-entrypoint.sh:/entrypoint.sh:ro
+      - ./Modelfile:/models/Modelfile:ro
+      - ./sql2pyspark.gguf:/models/sql2pyspark.gguf:ro
+    healthcheck:
+      test: ["CMD", "ollama", "show", "sql2pyspark"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  ollama-models:

@@ -1,0 +1,4 @@
+# Dataset generation, Spark execution checks and evaluation (CPU only; no MLX/torch)
+pyspark==4.2.0
+PyYAML==6.0.3
+requests==2.34.2

@@ -1,0 +1,125 @@
+ Container finetuning-llm-tools-run-3b2e83e22b83 Creating 
+ Container finetuning-llm-tools-run-3b2e83e22b83 Created 
+cd sql2pyspark-mlx && rm -rf raw_pairs && python generate_dataset.py --n 15000 --out raw_pairs \
+	&& python handwritten_pairs.py --out raw_pairs
+wrote 15000 pairs to raw_pairs/ ; by family: {'agg': 2244, 'cte_agg_join': 1047, 'cte_chain': 733, 'derived': 546, 'join': 1839, 'join_agg': 1121, 'select': 2149, 'setop': 1044, 'special': 795, 'subquery': 1366, 'topn': 953, 'window': 1163}
+wrote 105 hand-written pairs to raw_pairs/
+cd sql2pyspark-mlx && python verify_pairs.py --src raw_pairs --workers 4
+checking 15105 pairs with 4 workers ...
+WARNING: Using incubator modules: jdk.incubator.vector
+WARNING: Using incubator modules: jdk.incubator.vector
+WARNING: Using incubator modules: jdk.incubator.vector
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/26 08:56:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/26 08:56:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/26 08:56:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/26 08:56:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+  500/15105  ok=500  (53s)
+  1000/15105  ok=1000  (74s)
+  1500/15105  ok=1500  (93s)
+  2000/15105  ok=2000  (110s)
+  2500/15105  ok=2500  (128s)
+  3000/15105  ok=3000  (145s)
+  3500/15105  ok=3500  (162s)
+  4000/15105  ok=4000  (181s)
+  4500/15105  ok=4500  (201s)
+  5000/15105  ok=5000  (218s)
+  5500/15105  ok=5500  (237s)
+  6000/15105  ok=6000  (254s)
+  6500/15105  ok=6500  (271s)
+  7000/15105  ok=7000  (287s)
+  7500/15105  ok=7500  (304s)
+  8000/15105  ok=8000  (321s)
+  8500/15105  ok=8500  (338s)
+  9000/15105  ok=9000  (354s)
+  9500/15105  ok=9500  (371s)
+  10000/15105  ok=10000  (388s)
+  10500/15105  ok=10500  (405s)
+  11000/15105  ok=11000  (421s)
+  11500/15105  ok=11500  (438s)
+  12000/15105  ok=12000  (454s)
+  12500/15105  ok=12500  (472s)
+  13000/15105  ok=13000  (489s)
+  13500/15105  ok=13500  (506s)
+  14000/15105  ok=14000  (523s)
+  14500/15105  ok=14500  (540s)
+  15000/15105  ok=15000  (558s)
+{
+  "total": 15105,
+  "ok": 15105,
+  "pass_rate": 1.0,
+  "ok_but_empty_result": 1717,
+  "by_status": {
+    "ok": 15105
+  },
+  "by_family": {
+    "agg": {
+      "ok": 2244
+    },
+    "cte_agg_join": {
+      "ok": 1047
+    },
+    "cte_chain": {
+      "ok": 733
+    },
+    "derived": {
+      "ok": 546
+    },
+    "handwritten": {
+      "ok": 105
+    },
+    "join": {
+      "ok": 1839
+    },
+    "join_agg": {
+      "ok": 1121
+    },
+    "select": {
+      "ok": 2149
+    },
+    "setop": {
+      "ok": 1044
+    },
+    "special": {
+      "ok": 795
+    },
+    "subquery": {
+      "ok": 1366
+    },
+    "topn": {
+      "ok": 953
+    },
+    "window": {
+      "ok": 1163
+    }
+  },
+  "seconds": 561.6
+}
+cd sql2pyspark-mlx && python convert_sql_pyspark.py --src raw_pairs --out-dir data
+{
+  "pairs": 15105,
+  "train": 12743,
+  "valid": 1575,
+  "test": 787,
+  "signatures": {
+    "train": 3555,
+    "valid": 359,
+    "test": 168
+  },
+  "signature_overlap_train_valid": 0,
+  "signature_overlap_train_test": 0,
+  "features_missing_from_train": []
+}
+exit=0

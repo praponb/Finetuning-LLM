@@ -1,0 +1,13 @@
+# Type-checker (Pyrefly) settings: use the project venv, not the system Python.
+python-interpreter-path = "sql2pyspark-mlx/.venv/bin/python"
+
+# eval/*.py and app tooling import modules that live in sql2pyspark-mlx/ (schemas, verify_pairs, ...)
+search-path = [".", "sql2pyspark-mlx"]
+
+project-excludes = [
+    "llama.cpp/**",
+    "archive/**",
+    "mlx-env/**",
+    "sql2pyspark-mlx/.venv/**",
+    "sql2pyspark-mlx/raw_pairs/**",
+]
