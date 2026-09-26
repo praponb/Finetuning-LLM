@@ -58,7 +58,7 @@ save_every: 300
 ```
 
 ### Key Hyperparameter Decisions:
-1. **8 adapted layers, 1,200 steps**: the original plan was 16 layers and ~3,000 steps, but on a base M2 that ran at 0.138 it/s (~6.5 h). With 8 layers it runs at ~0.19 it/s, and the data is learned quickly (train loss 0.053 after 50 steps), so 1,200 steps (~1 h 50 min) was chosen.
+1. **8 adapted layers, 1,200 steps**: the original plan was 16 layers and ~3,000 steps, but on a base M2 that ran at 0.138 it/s (~6.5 h). With 8 layers it runs at ~0.19 it/s, and the data is learned quickly (train loss 0.053 after 50 steps), so 1,200 steps (~1 h 50 min – 2 h) was chosen. v2 and v3 use the same configuration.
 2. **No gradient checkpointing**: tried it to save memory; it cut peak memory a lot but made each step ~40% slower. Memory was not the bottleneck, compute was.
 3. **Masked prompt (`mask_prompt: true`)**: the system message and SQL prompt are excluded from the loss, so updates focus on generating the PySpark answer.
 4. **Cosine decay with warmup**: 100 warmup steps from $10^{-6}$ to $10^{-4}$, then decaying to $10^{-5}$ over 1,100 steps.
@@ -67,26 +67,28 @@ save_every: 300
 
 ## 📊 Training Dynamics (`train.log`)
 
-Measured on a base Apple M2 (16 GB):
+`sql2pyspark-mlx/train.log` is the **v3** run (same config, v3 dataset). The v2 log is kept in `sql2pyspark-mlx/runs/v2/train.log`. Measured on a base Apple M2 (16 GB):
 
 ```
-Step    Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
+v3      Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ─────────────────────────────────────────────────────────────────────────────────────────────
-1       0.605       —             —                —               —                 —
-25      —           0.197         2.476e-5         0.189           11,015            7.05 GB
-50      —           0.053         4.951e-5         0.190           21,978            8.77 GB
-100     —           0.054         9.901e-5         0.189           44,306            9.22 GB
-300     0.011       0.014         9.299e-5         0.196           130,933           9.68 GB
-600     0.007       0.008         6.166e-5         0.187           261,780           9.68 GB
-900     0.006       0.005         2.573e-5         0.197           391,073           9.68 GB
-1200    0.004       0.005         1.000e-5         0.183           522,702           9.68 GB
+1       0.547       —             —                —               —                 —
+25      —           0.185         2.476e-5         0.132           11,133            7.50 GB
+50      —           0.068         4.951e-5         0.146           22,349            8.41 GB
+100     —           0.045         9.901e-5         0.168           43,681            8.41 GB
+300     0.013       0.017         9.299e-5         0.187           132,635           8.77 GB
+600     0.008       0.014         6.166e-5         0.171           266,921           9.70 GB
+900     0.005       0.004         2.573e-5         0.162           400,675           9.70 GB
+1200    0.005       0.007         1.000e-5         0.172           533,099           9.70 GB
 ```
+
+For comparison, the v2 run went from val loss 0.605 to 0.011 / 0.007 / 0.006 / **0.004** at steps 300 / 600 / 900 / 1200 (peak 9.68 GB). The validation sets differ between versions (the split is recomputed for each dataset), so the small difference in final val loss is not a like-for-like comparison.
 
 ### Observations:
-- **Fast convergence**: training loss fell below 0.06 within 50 steps; the generated data is very regular.
-- **Held-out signatures**: validation loss (on feature combinations never seen in training) fell steadily to **0.004**, and stayed close to training loss, so there is no sign of overfitting. The hand-written hold-out set (90% correct) is the stronger generalisation test; see [Evaluation](04-evaluation-and-benchmarking.md).
-- **Memory**: peak 9.68 GB. That fits a 16 GB Mac, but running Ollama inference at the same time caused a Metal out-of-memory crash, so evaluations were run after training.
-- **Duration**: ~1 h 50 min for 1,200 steps (plus the first attempts, which were stopped and restarted).
+- **Fast convergence**: training loss fell below 0.07 within 50 steps; the generated data is very regular.
+- **Held-out signatures**: validation loss (on feature combinations never seen in training) fell steadily to **0.005** and stayed close to training loss, so there is no sign of overfitting. The hand-written hold-out set (v3: 95% correct) is the stronger generalisation test; see [Evaluation](04-evaluation-and-benchmarking.md).
+- **Memory**: peak 9.70 GB. That fits a 16 GB Mac, but running Ollama inference at the same time caused a Metal out-of-memory crash, so evaluations are run after training. Docker Desktop's VM also takes memory, so stop Docker before training.
+- **Duration**: about 2 h for 1,200 steps including the five validation passes (v3: 16:10 → 18:12).
 
 Checkpoints are saved every 300 steps in `sql2pyspark-mlx/adapters/`:
 - `0000300_adapters.safetensors`
@@ -140,7 +142,7 @@ It takes about 80 seconds.
 
 ### Why Q8_0?
 - **Accuracy**: 8-bit quantization is generally close to 16-bit quality, which matters for code, where one wrong token breaks execution. (Q8_0 vs. BF16 wasn't measured separately here; the evaluation scores are for the Q8_0 model.)
-- **Size**: `sql2pyspark.gguf` is 3.29 GB, the same size as v1, and runs at about 4–5 s per query in Ollama on the M2.
+- **Size**: `sql2pyspark.gguf` is 3.29 GB, the same size as v1, and runs at about 3–6 s per query in Ollama on the M2 (v3: 3.3 s on the hold-out set, 5.3 s on the test sample).
 
 ---
 
@@ -169,10 +171,21 @@ The system prompt matches the one used in the training data.
 
 ### Registration Commands:
 ```bash
-make ollama TAG=v2     # ollama create sql2pyspark:v2 -f Modelfile
-make promote TAG=v2    # keeps the old latest as :v1, then ollama cp sql2pyspark:v2 sql2pyspark:latest
+make export TAG=v3             # fuse + gguf + ollama create sql2pyspark:v3 -f Modelfile
+make promote TAG=v3 PREV=v2    # keeps the old latest as :v2 (if that tag is missing), then ollama cp sql2pyspark:v3 sql2pyspark:latest
 ```
 
-Current tags: `sql2pyspark:latest` = `sql2pyspark:v2` (ID `fb27933c2519`), and `sql2pyspark:v1` (`3dd2beaef9ff`).
+Pass `TAG`/`PREV` explicitly: the Makefile defaults are still `TAG=v2 PREV=v1`.
+
+Current tags:
+
+| Tag | Image ID | Notes |
+|---|---|---|
+| `sql2pyspark:latest` | `aa95ad200568` | = v3, promoted 2026-09-26 |
+| `sql2pyspark:v3` | `aa95ad200568` | current model |
+| `sql2pyspark:v2` | `fb27933c2519` | previous model; rollback: `ollama cp sql2pyspark:v2 sql2pyspark:latest` |
+| `sql2pyspark:v1` | `3dd2beaef9ff` | template-based v1 |
+
+`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the v3 weights. The v2 adapters, dataset and logs are backed up in `sql2pyspark-mlx/runs/v2/`; the v2 GGUF lives only inside Ollama (`sql2pyspark:v2`).
 
 The model is served at `POST http://localhost:11434/api/chat`.

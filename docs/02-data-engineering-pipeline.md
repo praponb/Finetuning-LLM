@@ -118,7 +118,7 @@ To make the model robust to different SQL writing styles, `Style` randomizes non
 | Family | SQL Pattern | PySpark Implementation |
 | :--- | :--- | :--- |
 | `fam_select` | `SELECT cols, exprs FROM t WHERE cond ORDER BY ... LIMIT n`, `SELECT *`, `DISTINCT` | `.filter(...).select(...).orderBy(...).limit(n)` / `.withColumn(...)` |
-| `fam_agg` | `SELECT g, AGG(x) FROM t WHERE cond GROUP BY g HAVING cond`, `ROLLUP`/`CUBE` | `.filter(...).groupBy(...).agg(...).filter(...)` |
+| `fam_agg` | `SELECT g, AGG(x) FROM t WHERE cond GROUP BY g HAVING cond` (keys referenced by expression, alias or ordinal such as `GROUP BY 1` on a `CASE`), `ROLLUP`/`CUBE` | `.filter(...).groupBy(...).agg(...).filter(...)` |
 | `fam_join` | `FROM a [INNER\|LEFT\|RIGHT\|FULL] JOIN b ON ...`, chains, self-joins, composite keys | `df_a.alias("a").join(df_b.alias("b"), cond, "left").select(...)` |
 | `fam_join_agg` | Joins followed by `GROUP BY` and aggregates | join chain → `.groupBy(...).agg(...)` |
 | `fam_window` | `ROW_NUMBER`/`RANK`/`NTILE`/`LAG`/`LEAD`/running & moving aggregates `OVER (...)` | `w = Window...`, `F.row_number().over(w)` |
@@ -126,11 +126,17 @@ To make the model robust to different SQL writing styles, `Style` randomizes non
 | `fam_cte_agg_join` | `WITH totals AS (SELECT ... GROUP BY fk) SELECT ... FROM parent JOIN totals` | named intermediate DataFrame (e.g. `customer_totals = ...`) joined into the main chain |
 | `fam_cte_chain` | `WITH t1 AS (...), t2 AS (... FROM t1) SELECT ... FROM t2` | sequential named DataFrames |
 | `fam_derived` | `SELECT ... FROM (SELECT ... GROUP BY ...) sub WHERE ...` | one chain: inner steps followed by the outer filter |
-| `fam_subquery` | `IN`, `EXISTS`, `NOT EXISTS`, `NOT IN`, scalar and correlated subqueries | `left_semi` / `left_anti` joins, a value computed with `.first()[0]`, or a window aggregate for correlated subqueries |
-| `fam_setop` | `UNION ALL`, `UNION`, `INTERSECT`, `EXCEPT` | `.unionByName()`, `.distinct()`, `.intersect()`, `.subtract()` |
+| `fam_subquery` | `IN`, `EXISTS`, `NOT EXISTS`, `NOT IN`, scalar and correlated subqueries | `left_semi` / `left_anti` joins (plus a NULL guard for `NOT IN`), a value computed with `.first()[0]`, or a window aggregate for correlated subqueries |
+| `fam_setop` | `UNION ALL`, `UNION`, `INTERSECT`, `EXCEPT` over one table, two tables with shared column names, or two tables with *differently named* columns | `.unionByName()` / `.union()`, `.distinct()`, `.intersect()`, `.subtract()` |
 | `fam_special` | `PIVOT`, `EXPLODE` / `LATERAL VIEW`, `CROSS JOIN`, window over an aggregate | `.groupBy().pivot().agg()`, `F.explode()`, `.crossJoin()`, `.withColumn(... .over(w))` after `.agg()` |
 
 Each sample is tagged with feature tags, for example `where_cmp`, `where_like`, `where_null`, `where_or`, `case`, `fn_date`, `fn_str`, `agg_case`, `having`, `order`, `limit`, `join_left`, `window_rank`, `window_frame`, `cte`, `set_union_all`. The tags drive the split in step 6.
+
+### v3 generator changes
+v3 targets the v2 hold-out failures (see [04 - Evaluation](04-evaluation-and-benchmarking.md)):
+- **Set operations over differently named columns**: 35% of set operations now pair columns with different names (`city` / `location`). The SQL is written positionally, with an alias on the right side, or with a common alias on both sides. The PySpark uses `.union()` when the names differ and `.unionByName()` when they line up, because SQL matches set-operation columns by position. Feature tags: `set_positional`, `set_alias_right`, `set_alias_both`.
+- **`GROUP BY` references**: grouping keys are referenced by expression, by alias or by ordinal (`GROUP BY 1`). Ordinals are used more often when a key is a `CASE` expression (35%), so the model learns to keep the `CASE` as the grouping key.
+- **Exact `NOT IN` semantics**: `x NOT IN (subquery)` drops rows where `x` is NULL, unless the subquery returns no rows. The PySpark now computes the excluded values first and adds `.filter(F.col(x).isNotNull() | F.lit(excluded.isEmpty()))` after the anti join, so the pair that failed verification in v2 is now correct.
 
 ---
 
@@ -191,14 +197,14 @@ All 105 are execution-verified and always go to the training split.
 ```json
 {
   "total": 15105,
-  "ok": 15104,
-  "pass_rate": 0.9999,
-  "ok_but_empty_result": 1683,
-  "by_status": { "ok": 15104, "rows": 1 },
-  "seconds": 865.7
+  "ok": 15105,
+  "pass_rate": 1.0,
+  "ok_but_empty_result": 1717,
+  "by_status": { "ok": 15105 },
+  "seconds": 561.6
 }
 ```
-The one failure was a `NOT IN` subquery: when the subquery returns no rows, SQL keeps rows whose key is NULL, but the generated PySpark removes them first. The pair was dropped; the same pattern may still appear in pairs whose data didn't trigger the edge case. 1,683 passing pairs return an empty result, which makes their check weaker.
+All v3 pairs pass (the v2 build had 15,104 of 15,105 and took 865.7 s). The v2 failure was a `NOT IN` subquery: when the subquery returns no rows, SQL keeps rows whose key is NULL, but the generated PySpark removed them. v3 renders the exact semantics (see the v3 generator changes above). 1,717 passing pairs return an empty result, which makes their check weaker.
 
 ---
 
@@ -216,12 +222,14 @@ $$\text{Signature} = \text{family} \;\|\; \text{sorted}(\text{features})$$
 4. All 105 hand-written pairs always go to `train`.
 
 ### Final Split Statistics (`data/split_stats.json`):
-- **Verified pairs**: 15,104
-- **Training set (`train.jsonl`)**: 12,743 pairs (3,299 signatures)
-- **Validation set (`valid.jsonl`)**: 1,574 pairs (386 signatures)
-- **Test set (`test.jsonl`)**: 787 pairs (216 signatures)
+- **Verified pairs**: 15,105
+- **Training set (`train.jsonl`)**: 12,743 pairs (3,555 signatures)
+- **Validation set (`valid.jsonl`)**: 1,575 pairs (359 signatures)
+- **Test set (`test.jsonl`)**: 787 pairs (168 signatures)
 - **Signatures shared between train and valid/test**: **0**
 - **Features missing from train**: **0**
+
+Because the split is recomputed for every dataset version, the v2 and v3 test splits contain different queries; compare two models on the same split (see [04 - Evaluation](04-evaluation-and-benchmarking.md)).
 
 `valid_meta.jsonl` / `test_meta.jsonl` keep the SQL, reference code and ORDER BY columns for execution-based evaluation.
 
