@@ -29,7 +29,7 @@ sequenceDiagram
 
 ## 🦙 Ollama Serving Engine
 
-The GGUF model (`sql2pyspark.gguf`) is registered in the local Ollama daemon as `sql2pyspark:v2`, and `sql2pyspark:latest` points to it; the previous model stays available as `sql2pyspark:v1`.
+The GGUF model (`sql2pyspark.gguf`) is registered in the local Ollama daemon as `sql2pyspark:v3`, and `sql2pyspark:latest` points to it; the previous models stay available as `sql2pyspark:v2` and `sql2pyspark:v1`.
 
 ### Server Address
 - Default: `http://localhost:11434`
@@ -97,16 +97,17 @@ def extract_code(text: str) -> str:
 
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
-- `sql2pyspark:latest` (default, currently v2)
-- `sql2pyspark:v2`
-- `sql2pyspark:v1` (previous model, for comparison)
+- `sql2pyspark:latest` (default, currently v3)
+- `sql2pyspark:v3`
+- `sql2pyspark:v2` (previous model, for comparison)
+- `sql2pyspark:v1` (template-based first model)
 
 ### 4. Error Handling
 - **Ollama unreachable**: shows `Cannot connect to Ollama at <OLLAMA_URL>. Make sure the Ollama service is running (open -a Ollama).`
 - **Blank input**: shows a warning.
 - **Timeout**: 120 seconds per request.
 
-The app was checked headlessly (`streamlit.testing.v1.AppTest`) on the default query and three hold-out queries (a CTE with a join, a PIVOT, and a GROUP BY/ORDER BY). All three hold-out conversions were execution-verified as correct.
+The app was checked headlessly with the v2 model (`streamlit.testing.v1.AppTest`) on the default query and three hold-out queries (a CTE with a join, a PIVOT, and a GROUP BY/ORDER BY). All three hold-out conversions were execution-verified as correct.
 
 ---
 
@@ -118,4 +119,11 @@ make app
 streamlit run app.py
 ```
 
-The UI runs at **`http://localhost:8501`**. Serving it from Docker is in progress; see the [Operations Runbook](07-operations-runbook.md#-docker-work-in-progress).
+The UI runs at **`http://localhost:8501`**.
+
+### From Docker
+```bash
+docker compose up -d --build     # app container on http://localhost:8501, model served by the host's Ollama
+docker compose down
+```
+The `app` container reaches the native Ollama on the host through `OLLAMA_URL=http://host.docker.internal:11434` (the default in `docker-compose.yml`) and reports healthy once Streamlit is up. Keep Ollama native on a Mac: containers can't use the Apple GPU. See the [Operations Runbook](07-operations-runbook.md#-docker) for the other profiles.

@@ -8,7 +8,8 @@ A practical guide for setting up, running, changing, and troubleshooting the SQL
 
 ### System Requirements:
 - **Hardware**: Apple Silicon Mac. Developed and measured on a base **M2 with 16 GB** unified memory; more memory gives more headroom.
-- **Disk space**: the project currently uses ~28 GB (of which `archive/` is ~14 GB and can be deleted). Budget ~15 GB for a fresh run: data, adapters, fused models, BF16 export and GGUF.
+- **Disk space**: the project currently uses ~28 GB. About 20 GB of that can be freed: `archive/` (~14 GB), `sql2pyspark-hf/` (~5.8 GB, recreated by `make fuse`) and `mlx-env/` (~0.4 GB, unused). Budget ~15 GB for a fresh run: data, adapters, fused models, BF16 export and GGUF.
+- **Docker Desktop** (optional): for the containerised app, data pipeline and evaluation; see [Docker](#-docker).
 
 ### Software Dependencies:
 1. **Java 17** (required by PySpark for the execution checks and evaluation):
@@ -43,7 +44,7 @@ All workflows are in the [Makefile](../Makefile):
 
 ### Phase 1: Synthesize & Verify Dataset
 ```bash
-# Generate 15,000 pairs + 105 hand-written pairs, verify in Spark, and split (~15 min)
+# Generate 15,000 pairs + 105 hand-written pairs, verify in Spark, and split (~10–15 min)
 make data
 
 # Or step by step:
@@ -59,7 +60,8 @@ make data N=20000 WORKERS=6
 
 ### Phase 2: LoRA Fine-Tuning
 ```bash
-# MLX LoRA fine-tuning (~1 h 50 min on a base M2)
+# MLX LoRA fine-tuning (~1 h 50 min – 2 h on a base M2). Stop Docker and Ollama models first.
+# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v3/): adapters/, data/, raw_pairs/, train.log
 make train
 ```
 
@@ -72,18 +74,18 @@ tail -f sql2pyspark-mlx/train.log
 ### Phase 3: Export, Fuse & Quantize
 ```bash
 # Fuse adapters, dequantize to BF16, convert to Q8_0 GGUF, register in Ollama
-make export TAG=v2
+make export TAG=v4
 
 # Or step by step:
 make fuse           # 4-bit MLX model + dequantized BF16 copy in sql2pyspark-hf/
 make gguf           # llama.cpp convert_hf_to_gguf.py -> sql2pyspark.gguf
-make ollama TAG=v2  # registers the GGUF as sql2pyspark:v2
+make ollama TAG=v4  # registers the GGUF as sql2pyspark:v4
 ```
 
 ### Phase 4: Benchmark & Evaluate
 ```bash
 # Compare the new model with the previous one (hold-out set + 300 test queries each; ~1 h in total)
-make eval TAG=v2 PREV=v1
+make eval TAG=v4 PREV=v3
 ```
 
 *Update the README results table:*
@@ -93,10 +95,12 @@ python eval/report.py --readme README.md
 
 ### Phase 5: Promote to Production
 ```bash
-# Point sql2pyspark:latest at v2 (keeps the old latest as :v1 if that tag doesn't exist yet)
-make promote TAG=v2
+# Point sql2pyspark:latest at v4 (keeps the old latest as :v3 if that tag doesn't exist yet)
+make promote TAG=v4 PREV=v3
 ```
-Promote only if the new model beats the previous one on the hold-out set.
+Promote only if the new model beats the previous one on the hold-out set and doesn't regress on the same test sample. Roll back with `ollama cp sql2pyspark:<previous> sql2pyspark:latest`.
+
+The examples use the next version (v4). Always pass `TAG` and `PREV`: the Makefile defaults are still `TAG=v2 PREV=v1`. The v2 → v3 cycle ran as `make export TAG=v3`, `make eval TAG=v3 PREV=v2` and `make promote TAG=v3 PREV=v2`.
 
 ### Phase 6: Launch Web Interface
 ```bash
@@ -111,12 +115,14 @@ make app
 ### Don't run Ollama while training
 Training peaks at ~9.7 GB. On a 16 GB Mac, running an Ollama evaluation at the same time crashed training with a Metal out-of-memory error. Run evaluations, the app, and Ollama chats only after training finishes.
 
+Docker Desktop's VM (8 GB) competes for the same memory, so stop it before training: `docker compose down`, then quit Docker Desktop.
+
 ### Training Speed vs. Memory (`sql2pyspark-mlx/lora_config.yaml`)
 Measured on a base M2:
 
 | Setting | Speed | Peak memory |
 | :--- | :--- | :--- |
-| 8 layers, no gradient checkpointing (**current**) | ~0.19 it/s | ~9.7 GB |
+| 8 layers, no gradient checkpointing (**current**) | ~0.17–0.19 it/s | ~9.7 GB |
 | 16 layers, no gradient checkpointing | ~0.14 it/s | ~13 GB |
 | 16 layers, `grad_checkpoint: true` | ~0.08 it/s | ~4.5 GB |
 
@@ -132,25 +138,38 @@ Each `verify_pairs.py` worker is a separate process with its own local `SparkSes
 
 ---
 
-## 🐳 Docker (work in progress)
+## 🐳 Docker
 
-The Docker setup has been written but **not yet finished or tested**:
+Everything except training and fusing runs in Docker (tested with Docker Desktop 29.8.0 on macOS):
 
-- **Files**: `docker-compose.yml`, `docker/app.Dockerfile`, `docker/tools.Dockerfile`, `docker/requirements-*.txt`, `docker/ollama-entrypoint.sh`, `.dockerignore` (allowlist, so the ~28 GB of models and data stay out of builds).
+- **Files**: `docker-compose.yml`, `docker/app.Dockerfile`, `docker/tools.Dockerfile` (both on `python:3.12-slim-bookworm`, which still ships `openjdk-17`), `docker/requirements-*.txt`, `docker/ollama-entrypoint.sh`, `.dockerignore` (allowlist, so the ~28 GB of models and data stay out of builds).
 - **Services**:
   - `app`: Streamlit UI on port 8501. It uses Ollama on the host through `OLLAMA_URL=http://host.docker.internal:11434`.
-  - `tools` profile: Java + PySpark for `make data PY=python` and `make eval PY=python`, with the project mounted at `/workspace`.
+  - `tools` profile: Java 17 + PySpark for the data pipeline and evaluation, with the project mounted at `/workspace` (outputs land in the normal place on the host).
   - `ollama` profile: Ollama in a container on port 11435, registering the model from the mounted GGUF.
-- **Known issue**: the `tools` image fails to build because `python:3.12-slim` is now Debian 13, which has no `openjdk-17` package. The planned fix is to base both images on `python:3.12-slim-bookworm`.
 - **Limits on a Mac**: containers can't use the Apple GPU. MLX training (`make train`, `make fuse`) must run natively, and Ollama in a container is CPU-only (much slower), so native Ollama is the recommended way to serve the model on macOS. The `ollama` profile is meant for Linux servers.
 
-Intended usage, once finished:
 ```bash
-docker compose up -d --build                         # UI on http://localhost:8501, model from the host's Ollama
-docker compose run --rm tools make data PY=python    # dataset pipeline in a Spark container
-docker compose run --rm tools make eval PY=python    # evaluation against Ollama
-OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up -d --build   # Ollama in a container
+docker compose up -d --build                                          # UI on http://localhost:8501, model from the host's Ollama
+docker compose --profile tools run --rm tools make data PY=python     # dataset pipeline in a Spark container
+docker compose --profile tools run --rm tools make eval PY=python TAG=v4 PREV=v3   # evaluation against the host's Ollama
+docker compose --profile tools run --rm tools python eval/evaluate.py --model sql2pyspark:v3 --set eval/holdout.jsonl
+OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up -d --build      # Ollama in a container
+docker compose down
 ```
+
+What has been verified:
+
+| Path | Result |
+| :--- | :--- |
+| `app` container | Builds, reports healthy, converts queries through the host's Ollama |
+| `tools`: `make data` | Built the v3 dataset: 15,105/15,105 pairs verified in 561.6 s (`sql2pyspark-mlx/data_v3_docker.log`) |
+| `tools`: evaluation | v3 on the hold-out set: 59/62 (95.2%), identical replies and scores to the native run (`eval/results/v3__holdout.json`), 3.3 s/query, 3 min 47 s in total |
+| `ollama` profile | Not benchmarked (CPU-only on a Mac) |
+
+**Before training**, stop Docker (`docker compose down`, then quit Docker Desktop): its VM takes ~8 GB, which a 16 GB Mac needs for MLX.
+
+**After starting Docker Desktop**, wait until `docker info` succeeds before running compose commands. Docker Desktop can update itself on restart (29.6.2 → 29.8.0 here) and return 500/EOF errors for several minutes meanwhile; the evaluation can always run natively instead (`make eval`).
 
 ---
 
@@ -181,7 +200,11 @@ OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up -d --build   #
 - **Cause**: another GPU user (usually Ollama) was running at the same time.
 - **Fix**: stop Ollama models (`ollama stop <model>`), close other heavy apps, and restart `make train`.
 
-### 6. Re-running training from scratch
+### 6. Docker commands fail with `500 Internal Server Error` or `EOF`
+- **Cause**: Docker Desktop is still starting (or updating itself).
+- **Fix**: wait until `docker info` succeeds, e.g. `until docker info >/dev/null 2>&1; do sleep 5; done`, or run the step natively.
+
+### 7. Re-running training from scratch
 - Remove the old adapters first (this deletes the current LoRA weights):
   ```bash
   rm -rf sql2pyspark-mlx/adapters

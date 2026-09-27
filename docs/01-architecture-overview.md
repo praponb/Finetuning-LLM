@@ -23,7 +23,7 @@ flowchart TD
         G --> Raw
         H --> Raw
         Raw --> Verify
-        Verify -->|15,104 of 15,105 pass| Split
+        Verify -->|15,105 of 15,105 pass| Split
         Split --> Data
     end
 
@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & UI Interface"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(sql2pyspark:latest = v2)"]
+        Ollama["Ollama Engine<br/>(sql2pyspark:latest = v3)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
 
         GGUF --> Modelfile
@@ -89,7 +89,7 @@ Both results are compared on:
 - Multiset row equivalence (row order ignored, floats rounded to 4 decimals)
 - Sequence of the `ORDER BY` columns, when the query has one
 
-Only matching pairs go into `verified.jsonl`: 15,104 of 15,105 generated pairs passed. The one failure exposed a real edge case (`NOT IN` against an empty subquery) and was dropped.
+Only matching pairs go into `verified.jsonl`. In the v3 dataset all 15,105 pairs pass. The v2 build had one failure, a real edge case (`NOT IN` against an empty subquery keeps NULL keys in SQL), which exposed a generator bug; v3 renders the exact semantics instead of dropping the pair.
 
 ### 3. Feature-Signature Splitting (`convert_sql_pyspark.py`)
 Random row-level splitting leaks: near-identical query structures with different constants land in both train and test. Instead:
@@ -101,7 +101,7 @@ Random row-level splitting leaks: near-identical query structures with different
 - Base model: `Qwen2.5-Coder-3B-Instruct-4bit`
 - LoRA fine-tuning in unified memory with `mlx-lm`.
 - Peak memory during training: **~9.7 GB**. That fits a 16 GB Mac, but not alongside Ollama: running an evaluation during training caused a Metal out-of-memory crash.
-- Speed: ~0.19 it/s on a base M2, ~1 h 50 min for 1,200 iterations.
+- Speed: ~0.17–0.19 it/s on a base M2, ~1 h 50 min for 1,200 iterations.
 
 ---
 
@@ -133,8 +133,8 @@ result = (
 4. **Column references**: `F.col("name")` in expressions; plain strings for simple `.select("a", "b")` / `.groupBy("a")`; joins use `df_x.alias("a")` with `F.col("a.col")`.
 5. **No bare counts**: aggregations use `.agg(F.count("*").alias("cnt"))` rather than `.count()`, so the column name matches the SQL alias.
 6. **Set operations**:
-   - `UNION ALL` → `.unionByName(other)`
-   - `UNION` → `.unionByName(other).distinct()`
+   - `UNION ALL` → `.unionByName(other)` when both sides have the same column names, otherwise `.union(other)` (SQL matches columns by position)
+   - `UNION` → the same call followed by `.distinct()`
    - `EXCEPT` → `.subtract(other)`
    - `INTERSECT` → `.intersect(other)`
 7. **CTEs**: become named intermediate DataFrames instead of one nested expression; scalar subqueries become a value computed up front (`avg_x = df.agg(...).first()[0]`).

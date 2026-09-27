@@ -7,8 +7,9 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [docs/INDEX.md](docs/INDEX.md) indexes the detailed guides (architecture, data, training, evaluation, serving,
 > file catalog, runbook).
 
-**Current model:** `sql2pyspark:latest` = **v2** — 90% correct results on 62 hand-written queries over tables it
-never saw in training (v1: 6%), 98% on 300 held-out generated queries (v1: 8%). v1 is kept as `sql2pyspark:v1`.
+**Current model:** `sql2pyspark:latest` = **v3** (since 2026-09-26): 95% correct results on 62 hand-written queries
+over tables it never saw in training (v2: 90%, v1: 6%), and 95% on 300 held-out generated queries (tied with v2).
+v2 and v1 are kept as `sql2pyspark:v2` / `sql2pyspark:v1`.
 
 ```
 schemas.py ─┐
@@ -41,15 +42,16 @@ Editor type-checking (Pyrefly) is configured in [`pyrefly.toml`](pyrefly.toml) t
 |---|---|---|
 | Data | `make data` | Generate ~15k pairs + 105 hand-written pairs, execute both sides of every pair in local Spark, keep only pairs whose results match, split by feature signature. |
 | Train | `make train` | `mlx_lm.lora -c sql2pyspark-mlx/lora_config.yaml` (LoRA rank 16 on the last 8 blocks, 1,200 steps × batch 4, cosine LR; ~1 h 50 min on a base M2). |
-| Export | `make export TAG=v2` | Fuse adapters, dequantize, convert to Q8_0 GGUF, `ollama create sql2pyspark:v2`. |
-| Evaluate | `make eval TAG=v2 PREV=v1` | Score both models on the hand-written hold-out set and a sample of the test split. |
-| Promote | `make promote TAG=v2` | Point `sql2pyspark:latest` (what `app.py` uses by default) at the new model; keeps the old one as `:v1`. |
+| Export | `make export TAG=v3` | Fuse adapters, dequantize, convert to Q8_0 GGUF, `ollama create sql2pyspark:v3`. |
+| Evaluate | `make eval TAG=v3 PREV=v2` | Score both models on the hand-written hold-out set and the same sample of the test split. |
+| Promote | `make promote TAG=v3 PREV=v2` | Point `sql2pyspark:latest` (what `app.py` uses by default) at the new model; keeps the old one as `:$(PREV)`. |
 | UI | `make app` | Streamlit converter on http://localhost:8501; the sidebar field picks any Ollama tag. |
 
-`make help` lists every target. On a 16 GB Mac, don't run Ollama (evaluations, the app) while training — the two
-together ran out of GPU memory once.
+`make help` lists every target. Always pass `TAG`/`PREV` (the Makefile defaults are still `v2`/`v1`). On a 16 GB Mac,
+don't run Ollama (evaluations, the app) or Docker while training: Ollama plus training ran out of GPU memory once, and
+Docker Desktop's VM takes another 8 GB.
 
-## Dataset (v2)
+## Dataset (v3)
 
 * **`sql2pyspark-mlx/schemas.py`**: catalog of 17 training tables and 5 *hold-out* tables (typed columns,
   foreign keys, realistic value pools) plus seeded sample data for execution checks.
@@ -60,9 +62,13 @@ together ran out of GPU memory once.
   COALESCE, conditional aggregates, frames, HAVING, ORDER BY/LIMIT, … SQL surface style varies (case, layout,
   aliases). SQL and PySpark are rendered from the same objects, so they agree by construction.
 * **`sql2pyspark-mlx/verify_pairs.py`**: runs `spark.sql(sql)` and the PySpark code on the sample tables and
-  compares column names, rows and ORDER BY sequence. Only passing pairs are used (15,104 of 15,105).
+  compares column names, rows and ORDER BY sequence. Only passing pairs are used (v3: all 15,105 pass).
 * **`sql2pyspark-mlx/convert_sql_pyspark.py`**: chat-format JSONL. Whole feature signatures are held out for
   valid/test, so validation loss measures generalisation to unseen feature combinations.
+
+v3 changes to the generator, aimed at the v2 hold-out failures: set operations over differently named columns
+(`union()` / aliases), `GROUP BY` ordinals on `CASE` keys, and exact `NOT IN` semantics
+(`isNotNull() | F.lit(excluded.isEmpty())`). The v2 dataset, adapters and logs are backed up in `sql2pyspark-mlx/runs/v2/`.
 
 ### Output conventions (what the model learns to write)
 
@@ -82,7 +88,8 @@ result = (
 * the final column list, order and aliases match the SQL select list;
 * joins use `df_x.alias("a")` + `F.col("a.col")`, mirroring SQL aliases;
 * aggregates always use `.agg(F.count("*").alias(...))`, never a bare `.count()`;
-* `UNION ALL` → `unionByName`, `UNION` → `unionByName(...).distinct()`, `EXCEPT` → `subtract`;
+* `UNION ALL` → `unionByName` (or `union` when the two sides' column names differ, since SQL matches by position),
+  `UNION` → the same plus `.distinct()`, `EXCEPT` → `subtract`;
 * CTEs become named intermediate DataFrames; scalar subqueries become a value computed up front.
 
 ## Evaluation
@@ -91,10 +98,11 @@ result = (
 hold-out tables, each with a verified reference answer. `eval/evaluate.py` sends each query to an Ollama model with
 the same prompt as `app.py`, executes the returned code and compares it with the SQL result.
 
-* **strict**: code must run as-is and assign `result` (the v2 convention).
+* **strict**: code must run as-is and assign `result` (the convention since v2).
 * **lenient**: imports added, bare `df` bound to the main table, last expression taken as the result (fair to v1).
 
-The table below is generated by `python eval/report.py --readme README.md`.
+The table below is generated by `python eval/report.py --readme README.md`. Both `test_meta` rows use the same 300-query
+sample of the v3 test split; older results on the v2 split (v1 8%, v2 98%) are in `eval/results/v2-split/`.
 
 <!-- RESULTS:START -->
 | Model | Eval set | n | Syntax OK | Runs (strict) | Correct (strict) | Runs (lenient) | Correct (lenient) | s / query |
@@ -114,37 +122,45 @@ Hold-out, correct results (lenient) by difficulty:
 | `sql2pyspark:v3` | 100% | 95% | 92% |
 <!-- RESULTS:END -->
 
-**Known gaps (v2 hold-out failures)**, useful targets for the next dataset iteration:
+**v3 vs. v2:** v3 fixes 3 of v2's 6 hold-out failures (`GROUP BY 1` on a `CASE`, two unbalanced-parenthesis slips)
+with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300).
 
-* `UNION` between columns with *different names* (`city` ∪ `hospital`): the model uses `unionByName`, which fails,
-  because the generator only produces set operations over identically named columns. Fix: add pairs that alias or use `union()`.
-* `GROUP BY 1` where column 1 is a `CASE` expression: the CASE was dropped (grouped by `YEAR(...)` instead).
-* Occasional unbalanced parentheses in long single-line expressions (`SUM(SUM(x)) OVER ()`, `/ 365` after a function).
-* One hallucinated join type (`"left_seats"`) on an `EXISTS` with three conditions.
+**Known gaps (v3)**, targets for a v4 dataset:
 
-## Docker (work in progress)
+* `UNION` between columns with *different names* (`city` ∪ `hospital`) still uses `unionByName`, which fails.
+* `UNION ALL` with literal columns and aliases: garbled alias syntax (`"full_name.alias("name")`).
+* A misplaced parenthesis in an `EXISTS` → `left_semi` join with three conditions.
+* All 9 set-operation queries in the test sample share one held-out signature (`UNION` + literal `source` column +
+  `ORDER BY`): both models drop `.distinct()` after `unionByName` (v2 3/9, v3 1/9 correct).
 
-Docker files exist but the setup is **not finished or tested yet**:
+## Docker
 
-* `docker-compose.yml` defines an `app` service (Streamlit, talks to the host's Ollama via `OLLAMA_URL`), a `tools`
-  profile (Java + PySpark for `make data` / `make eval`), and an optional `ollama` profile (Ollama in a container).
-* The `tools` image build currently fails: `python:3.12-slim` is now Debian 13, which has no `openjdk-17` package.
-  Pending fix: base both images on `python:3.12-slim-bookworm`.
-* Training cannot run in Docker on a Mac (MLX needs Metal, which containers can't use), and Ollama in a container is
-  CPU-only there, so native Ollama stays the recommended way to serve the model on macOS.
+Everything except training runs in Docker (tested with Docker Desktop 29.8.0; both images use `python:3.12-slim-bookworm`):
+
+```bash
+docker compose up -d --build                                          # Streamlit UI on :8501, model from the host's Ollama
+docker compose --profile tools run --rm tools make data PY=python     # dataset pipeline (Java 17 + PySpark)
+docker compose --profile tools run --rm tools make eval PY=python TAG=v4 PREV=v3   # evaluation against the host's Ollama
+OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up -d --build      # Ollama in a container (Linux servers)
+```
+
+Verified: the app container, the v3 dataset build in `tools` (15,105/15,105 pairs), and the v3 hold-out evaluation in
+`tools` (59/62, identical replies and scores to the native run). Training cannot run in Docker on a Mac (MLX needs
+Metal, which containers can't use), and Ollama in a container is CPU-only there, so native Ollama stays the recommended
+way to serve the model on macOS. Stop Docker before `make train`.
 
 ## Layout
 
 ```
-app.py, Modelfile, Makefile, requirements.txt, pyrefly.toml
+app.py, Modelfile, Makefile, requirements.txt, pyrefly.toml, .gitignore
 README.md, PROJECT_DOCUMENTATION.md, docs/          documentation
 sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, handwritten_pairs.py, verify_pairs.py,
-                   convert_sql_pyspark.py, lora_config.yaml, train.log, raw_pairs/, data/, adapters/,
-                   sql2pyspark-model/ (fused 4-bit MLX model)
+                   convert_sql_pyspark.py, lora_config.yaml, train.log (v3), raw_pairs/, data/, adapters/,
+                   sql2pyspark-model/ (fused 4-bit MLX model), runs/v2/ (v2 backup)
 sql2pyspark-hf/    dequantized BF16 fused model (input for GGUF conversion)
-sql2pyspark.gguf   Q8_0 model served by Ollama
-eval/              build_holdout.py, holdout.jsonl, evaluate.py, report.py, results/, *.log
-docker/, docker-compose.yml, .dockerignore          Docker setup (work in progress)
+sql2pyspark.gguf   Q8_0 model served by Ollama (v3)
+eval/              build_holdout.py, holdout.jsonl, evaluate.py, report.py, results/ (+ results/v2-split/), *.log
+docker/, docker-compose.yml, .dockerignore          Docker setup
 llama.cpp/         upstream checkout, used only for convert_hf_to_gguf.py
 archive/           previous experiments and the v1 model/data (~14 GB, safe to delete)
 mlx-env/           legacy venv from the first experiment (unused)
@@ -152,3 +168,7 @@ mlx-env/           legacy venv from the first experiment (unused)
 
 `archive/` holds `my-finetuned-model/` (first experiment on non-Coder Qwen2.5-3B), `trial-3-examples/` (3-example
 trial run) and `v1/` (the template-based 10k dataset, its adapters, fused model, HF export and GGUF).
+`archive/`, `mlx-env/` and `sql2pyspark-hf/` (recreated by `make fuse`) can be deleted to free ~20 GB.
+
+The code is in the private GitHub repo `praponb/Finetuning-LLM`; `.gitignore` keeps weights, generated data, venvs,
+`llama.cpp/`, `archive/` and `sql2pyspark-mlx/runs/` out of git.
