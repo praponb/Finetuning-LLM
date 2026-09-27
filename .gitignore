@@ -1,6 +1,8 @@
 # environments
 .venv/
 mlx-env/
+# API keys (template: .env.example)
+.env
 __pycache__/
 
 # model weights and build artifacts (regenerate with `make data train export`)

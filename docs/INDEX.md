@@ -90,6 +90,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── real_queries.jsonl        # Real-world query benchmark (real001–real004)
 │   ├── real_tables.py            # Sample tables for real-world queries
 │   ├── evaluate.py               # Execution-based model evaluation (--tables, --num-predict)
+│   ├── agent_repair.py           # Kimi K3 repair loop for failed answers (key in .env)
 │   ├── report.py                 # Markdown results-table generator
 │   └── results/                  # <tag>__<set>.json results (+ v2-split/, v3-split/, v4-split/)
 └── llama.cpp/                    # Upstream checkout (GGUF converter)

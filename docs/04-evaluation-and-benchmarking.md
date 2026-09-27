@@ -299,6 +299,26 @@ Stronger penalties make the model misspell identifiers it has already written (`
 
 ---
 
+## 🤖 Agent repair loop with Kimi K3 (2026-09-28)
+
+Can a large model fix v5's wrong answers if it may run them? `eval/agent_repair.py` gives **Kimi K3** (Moonshot AI, `kimi-k3` via the OpenAI-compatible API at `api.moonshot.ai`, `reasoning_effort=high`) each real query's SQL, the schemas of the tables it reads and v5's answer, plus one tool, `run_pyspark`, which runs a snippet on the same sample tables as the evaluation and returns the error or the first 20 rows of `result`. The agent never sees the expected output, code calling `.sql(...)` is refused (so it cannot run the original query), and it gets at most 5 runs per query. Its final code is scored like `evaluate.py` (results in `eval/results/v5-repair/`, outside the report's glob; log `eval/agent_repair_v5.log`).
+
+| Query | v5 alone | After repair | Runs | Time | Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `real001` | `NameError` (`w93`, repetition loop) | ✅ correct | 2 | 308 s | $0.26 |
+| `real002` | syntax error (unclosed `(`) | ✅ correct | 4 | 310 s | $0.27 |
+| `real003` | unresolved column `temperature` | ❌ runs, 6 rows instead of 4 | 2 | 162 s | $0.13 |
+| `real004` | syntax error (unterminated string) | ✅ correct | 3 | 319 s | $0.24 |
+| **Total** | **0/4** | **3/4** (4/4 run) | 11 | 18.4 min | **$0.90** |
+
+Tokens: 148k input (93k served from Kimi's prompt cache) and 47k output, priced at $3 / $0.30 (cached) / $15 per million.
+
+`real003` misses one semantic detail: Spark SQL's `UNPIVOT` drops rows whose value is NULL by default (`EXCLUDE NULLS`), while `DataFrame.unpivot()` keeps them, so the forward-filled NULL readings add two groups. Adding `.filter(F.col("metric_value").isNotNull())` after the `unpivot` makes Kimi's code match exactly. The agent could not notice, because nothing in the sample output looks wrong without the expected rows.
+
+Takeaways: an execution-feedback loop turns v5's long-query failures (loops, syntax errors, wrong names) into correct code at about $0.20-0.30 and 5 minutes per query, so a "v5 first, agent repair on failure" setup is practical for long SQL. It does not replace a stronger local model. The `UNPIVOT` NULL rule is already in v5's training data (the generator's `stg_unpivot` adds the same `isNotNull()` filter unless the SQL says `INCLUDE NULLS`); v5 itself fails `real003` earlier, on a column name.
+
+---
+
 ## 🏃 Running Evaluations
 
 Use `make eval TAG=v4 PREV=v3` (compares `TAG` with `PREV`; the Makefile defaults are `TAG=v4 PREV=v3`), or the CLI directly:
@@ -321,6 +341,9 @@ python eval/evaluate.py --model sql2pyspark:v4 --set eval/holdout_v4.jsonl
 
 # Extra Ollama options (e.g. the repetition-penalty experiment)
 python eval/evaluate.py --model sql2pyspark:v5 --set eval/real_queries.jsonl --tables eval/real_tables.py --option repeat_last_n=2048 --out /tmp/rp.json
+
+# Agent repair of v5's answers with Kimi K3 (key in .env, see .env.example; --dry-run needs no key)
+python eval/agent_repair.py --results eval/results/v5__real_queries.json
 
 # Rebuild the results table in README.md
 python eval/report.py --readme README.md

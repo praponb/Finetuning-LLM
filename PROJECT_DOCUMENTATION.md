@@ -104,6 +104,7 @@ Finetuning-LLM/
 │   ├── real_queries.jsonl        # Real-world query benchmark (real001–real004)
 │   ├── real_tables.py            # Sample tables for real-world queries
 │   ├── evaluate.py               # Strict/lenient execution evaluator (--tables, --num-predict)
+│   ├── agent_repair.py           # Kimi K3 repair loop for failed answers (key in .env)
 │   ├── report.py                 # Markdown results-table generator
 │   ├── post_training_v4.sh       # v4 export + evaluation chain
 │   └── results/                  # <tag>__<set>.json results (+ v2-split/, v3-split/)

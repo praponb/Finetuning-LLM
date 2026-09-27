@@ -230,6 +230,12 @@ window-definition loop. `repeat_last_n=2048` stops it at the cost of one hold-ou
 values make the model misspell repeated column names (hold-out 49 and 41). No setting makes a real query correct.
 `app.py` therefore uses `repeat_last_n=2048` only for SQL longer than 2,000 characters (details in docs/04).
 
+**Agent repair with Kimi K3 (2026-09-28)**: `eval/agent_repair.py` gives Kimi K3 (Moonshot AI) each real query, v5's
+answer and one tool that runs PySpark on the sample tables (no expected output, no `.sql(...)`, at most 5 runs). It fixes
+3 of the 4 real queries (0/4 before; all 4 run) for $0.90 in total, about 5 minutes per query. `real003` still keeps
+NULL rows that Spark SQL's `UNPIVOT` drops by default. Needs `KIMI_API_KEY` in `.env` (template `.env.example`; details in
+docs/04).
+
 **Known gaps (after v5)**: `real001`'s repetition loop, the long-standing `UNION` alias gaps (`holdout031`,
 `holdout053`), `holdout050`, `holdout058`, pipelines in the v4 hold-out set (0/2) and on the fixed test set (8/22), and
 two v5 slips on simple expressions (`holdout015`, `holdout041`). The v4 list below is kept for reference.
