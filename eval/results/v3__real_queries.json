@@ -1,0 +1,49 @@
+{
+  "model": "sql2pyspark:v3",
+  "set": "eval/real_queries.jsonl",
+  "n": 1,
+  "summary": {
+    "ALL": {
+      "n": 1,
+      "strict_syntax": 0.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 0.0,
+      "lenient_runs": 0.0,
+      "lenient_match": 0.0
+    },
+    "real": {
+      "n": 1,
+      "strict_syntax": 0.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 0.0,
+      "lenient_runs": 0.0,
+      "lenient_match": 0.0
+    }
+  },
+  "avg_seconds": 48.82,
+  "cases": [
+    {
+      "id": "real001",
+      "level": "real",
+      "sql": "WITH customer_clean AS (\n    -- Deduplication & time-gap calculation using window functions\n    SELECT \n        user_id,\n        session_id,\n        event_time,\n        event_type,\n        amount,\n        COALESCE(channel, 'DIRECT') AS acquisition_channel,\n        LAG(event_time, 1) OVER (\n            PARTITION BY user_id \n            ORDER BY event_time ASC\n        ) AS prev_event_time,\n        LEAD(event_type, 1) OVER (\n            PARTITION BY user_id, session_id \n            ORDER BY event_time ASC\n        ) AS next_event_type,\n        ROW_NUMBER() OVER (\n            PARTITION BY user_id, session_id, event_time, event_type \n            ORDER BY amount DESC NULLS LAST\n        ) AS dedup_rank\n    FROM raw_events\n    WHERE event_time >= TIMESTAMP '2025-01-01 00:00:00'\n      AND user_id IS NOT NULL\n),\nsession_attribution AS (\n    -- Session boundary identification and non-equi interval joins\n    SELECT \n        cc.user_id,\n        cc.session_id,\n        cc.event_time,\n        cc.event_type,\n        cc.amount,\n        cc.acquisition_channel,\n        camp.campaign_id,\n        camp.campaign_type,\n        CASE \n            WHEN cc.prev_event_time IS NULL \n                 OR cc.event_time > cc.prev_event_time + INTERVAL '30' MINUTE \n            THEN 1 \n            ELSE 0 \n        END AS is_new_session_flag\n    FROM customer_clean cc\n    LEFT JOIN marketing_campaigns camp\n        ON cc.acquisition_channel = camp.channel_code\n       AND cc.event_time >= camp.start_time\n       AND cc.event_time < camp.end_time + INTERVAL '7' DAY\n    WHERE cc.dedup_rank = 1\n),\nrunning_metrics AS (\n    -- Multi-frame cumulative aggregates and moving averages\n    SELECT \n        user_id,\n        session_id,\n        event_time,\n        event_type,\n        amount,\n        campaign_id,\n        SUM(is_new_session_flag) OVER (\n            PARTITION BY user_id \n            ORDER BY event_time ASC \n            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n        ) AS calculated_session_id,\n        SUM(amount) OVER (\n            PARTITION BY user_id \n            ORDER BY event_time ASC \n            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n        ) AS lifetime_spend,\n        AVG(amount) OVER (\n            PARTITION BY user_id \n            ORDER BY event_time ASC \n            ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING\n        ) AS moving_avg_3_prior_tx,\n        DENSE_RANK() OVER (\n            PARTITION BY user_id \n            ORDER BY amount DESC NULLS LAST\n        ) AS spend_rank\n    FROM session_attribution\n),\nuser_cohorts AS (\n    -- Pivot-style conditional aggregation with mathematical transforms\n    SELECT \n        user_id,\n        COUNT(DISTINCT calculated_session_id) AS total_sessions,\n        COUNT(CASE WHEN event_type = 'PURCHASE' THEN 1 END) AS total_purchases,\n        SUM(CASE WHEN event_type = 'PURCHASE' THEN amount ELSE 0 END) AS total_revenue,\n        MAX(event_time) AS last_active_time,\n        ROUND(\n            SUM(CASE WHEN event_type = 'PURCHASE' THEN amount ELSE 0 END) / \n            NULLIF(COUNT(CASE WHEN event_type = 'PURCHASE' THEN 1 END), 0), \n            2\n        ) AS avg_order_value,\n        COLLECT_LIST(DISTINCT campaign_id) AS touched_campaigns\n    FROM running_metrics\n    GROUP BY user_id\n    HAVING COUNT(DISTINCT calculated_session_id) >= 2\n)\n-- Final aggregation using subquery anti-join, grouping sets, and ranking\nSELECT \n    COALESCE(rm.campaign_id, 'ORGANIC') AS resolved_campaign_id,\n    DATE_TRUNC('month', rm.event_time) AS activity_month,\n    rm.event_type,\n    COUNT(DISTINCT rm.user_id) AS unique_active_users,\n    SUM(rm.amount) AS total_gross_amount,\n    PERCENT_RANK() OVER (\n        PARTITION BY DATE_TRUNC('month', rm.event_time) \n        ORDER BY SUM(rm.amount) DESC\n    ) AS monthly_revenue_percentile\nFROM running_metrics rm\nINNER JOIN user_cohorts uc \n    ON rm.user_id = uc.user_id\nWHERE rm.spend_rank <= 10\n  AND NOT EXISTS (\n      -- Anti-join test via correlated subquery\n      SELECT 1 \n      FROM fraud_blacklist fb \n      WHERE fb.user_id = rm.user_id \n        AND fb.flagged_date <= rm.event_time\n  )\nGROUP BY GROUPING SETS (\n    (DATE_TRUNC('month', rm.event_time), COALESCE(rm.campaign_id, 'ORGANIC'), rm.event_type),\n    (DATE_TRUNC('month', rm.event_time), COALESCE(rm.campaign_id, 'ORGANIC')),\n    (DATE_TRUNC('month', rm.event_time))\n)\nORDER BY activity_month DESC, total_gross_amount DESC NULLS LAST;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nw = Window.partitionBy(\"user_id\").orderBy(\"event_time\")\nw2 = Window.partitionBy(\"user_id\").orderBy(\"amount DESC NULLS LAST\")\nw3 = Window.partitionBy(\"user_id\").rowsBetween(Window.unboundedPreceding, Window.currentRow)\nw4 = Window.partitionBy(\"user_id\").rowsBetween(3, 1)\nw5 = Window.partitionBy(\"user_id\").orderBy(\"amount DESC NULLS LAST\")\nw6 = Window.partitionBy(DATE_TRUNC(\"month\", \"event_time\")).orderBy(F.col(\"total_gross_amount\").desc())\nw7 = Window.partitionBy(DATE_TRUNC(\"month\", \"event_time\")).orderBy(\"total_gross_amount\")\n\nresult = (\n    df_raw_events\n    .filter((F.col(\"event_time\") >= \"2025-01-01 00:00:00\") & F.col(\"user_id\").isNotNull())\n    .select(\n        \"user_id\",\n        \"session_id\",\n        \"event_time\",\n        \"event_type\",\n        \"amount\",\n        F.coalesce(\"channel\", F.lit(\"DIRECT\")).alias(\"acquisition_channel\"),\n        F.lag(\"event_time\", 1).over(w).alias(\"prev_event_time\"),\n        F.lead(\"event_type\", 1).over(w.partitionBy(\"user_id\", \"session_id\")).alias(\"next_event_type\"),\n        F.row_number().over(w2).alias(\"dedup_rank\"),\n    )\n    .join(df_marketing_campaigns.alias(\"camp\"), (F.col(\"acquisition_channel\") == F.col(\"camp.channel_code\")) & (F.col(\"event_time\") >= F.col(\"camp.start_time\")) & (F.col(\"event_time\") < (F.col(\"camp.end_time\") + F.interval(\"7\", \"day\")), \"left\")\n    .filter(F.col(\"dedup_rank\") == 1)\n    .select(\n        \"user_id\",\n        \"session_id\",\n        \"event_time\",\n        \"event_type\",\n        \"amount\",\n        \"acquisition_channel\",\n        F.col(\"camp.campaign_id\").alias(\"campaign_id\"),\n        F.col(\"camp.campaign_type\").alias(\"campaign_type\"),\n        F.when(F.col(\"prev_event_time\").isNull() | (F.col(\"event_time\") > (F.col(\"prev_event_time\") + F.interval(\"30\", \"minute\"))), 1).otherwise(0).alias(\"is_new_session_flag\"),\n    )\n    .withColumn(\"calculated_session_id\", F.sum(\"is_new_session_flag\").over(w3))\n    .withColumn(\"lifetime_spend\", F.sum(\"amount\").over(w3))\n    .withColumn(\"moving_avg_3_prior_tx\", F.avg(\"amount\").over(w4))\n    .withColumn(\"spend_rank\", F.dense_rank().over(w5))\n    .groupBy(\"user_id\")\n    .agg(\n        F.countDistinct(\"calculated_session_id\").alias(\"total_sessions\"),\n        F.count(F.when(F.col(\"event_type\") == \"PURCHASE\", 1)).alias(\"total_purchases\"),\n        F.sum(F.when(F.col(\"event_type\") == \"PURCHASE\", F.col(\"amount\")).otherwise(0)).alias(\"total_revenue\"),\n        F.max(\"event_time\").alias(\"last_active_time\"),\n        F.round((F.col(\"total_revenue\") / NULLIF(F.count(F.when(F.col(\"event_type\") == \"PURCHASE\", 1)), 0)), 2).alias(\"avg_order_value\"),\n        F.collect_list(F.col(\"campaign_id\")).alias(\"touched_campaigns\"),\n    )\n    .filter(F.col(\"total_sessions\") >= 2)\n    .withColumn(\"resolved_campaign_id\", F.coalesce(\"campaign_id\", F.lit(\"ORGANIC\")))\n    .withColumn(\"activity_month\", F.date_trunc(\"month\", \"event_time\"))\n    .withColumn(\"event_type\", \"event_type\")\n    .withColumn(\"unique_active_users\", F.countDistinct(\"user_id\"))\n    .withColumn(\"total_gross_amount\", F.sum(\"amount\"))\n    .withColumn(\"monthly_revenue_percentile\", F.percent_rank().over(w6))\n    .join(df_fraud_blacklist.alias(\"fb\"), (F.col(\"user_id\") == F.col(\"fb.user_id\")) & (F.col(\"fb.flagged_date\") <= F.col(\"event_time\")), \"left\")\n    .filter(~F.col(\"fb.user_id\").isNotNull() | F.lit(exists = False))\n    .groupBy(F.groupingSets(\n        (F.date_trunc(\"month\", \"event_time\"), F.col(\"resolved_campaign_id\"), F.col(\"event_type\")),\n        (F.date_trunc(\"month\", \"event_time\"), F.col(\"resolved_campaign_id\")),\n        (F.date_trunc(\"month\", \"event_time\")),\n    ))\n    .agg(\n        F.countDistinct(\"user_id\").alias(\"unique_active_users\"),\n        F.sum(\"total_gross_amount\").alias(\"total_gross_amount\"),\n    )\n    .orderBy(F.col(\"activity_month\").desc(), F.col(\"total_gross_amount\").descNullsLast())\n)\n```",
+      "seconds": 48.82,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    }
+  ]
+}

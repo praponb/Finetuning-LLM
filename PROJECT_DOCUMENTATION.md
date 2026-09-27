@@ -264,6 +264,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 ### Benchmark Sets:
 1. **Hold-out set (`eval/holdout.jsonl`)**: 62 hand-written queries (15 simple, 22 medium, 25 complex) on unseen tables (`patients`, `doctors`, `appointments`, `flights`, `bookings`).
 2. **Test split (`sql2pyspark-mlx/data/test_meta.jsonl`)**: a random sample of 300 generated queries whose feature signatures never occur in training. The split is recomputed for each dataset, so models are compared on the same sample of the current (v3) split.
+3. **Real-world queries (`eval/real_queries.jsonl`)**: SQL supplied by users, on hand-made sample tables in `eval/real_tables.py` (`--tables eval/real_tables.py`). Currently 1 query: a 4-CTE marketing-attribution report.
 
 **Strict** scoring runs the code as returned (it must assign `result`); **lenient** scoring adds imports, binds a bare `df`, and takes the last expression as the result, to be fair to v1.
 
@@ -275,6 +276,8 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v2` | test_meta (v3 split) | 300 | 99% | 99% | **95%** | 99% | **95%** | 6.0 |
 | `sql2pyspark:v3` | holdout | 62 | 97% | 95% | **95%** | 95% | **95%** | 3.3 |
 | `sql2pyspark:v3` | test_meta (v3 split) | 300 | 100% | 98% | **95%** | 98% | **95%** | 5.3 |
+| `sql2pyspark:v2` | real_queries | 1 | 0% | 0% | **0%** | 0% | **0%** | 44.0 |
+| `sql2pyspark:v3` | real_queries | 1 | 0% | 0% | **0%** | 0% | **0%** | 48.8 |
 
 Hold-out by difficulty (correct, lenient): v3 **100% / 95% / 92%** (simple / medium / complex); v2 93% / 95% / 84%; v1 7% / 14% / 0%.
 
@@ -283,6 +286,8 @@ On the same 300 test queries v2 and v3 are tied (286 vs. 284 correct). Earlier r
 **Promotion**: v3 beat v2 on the hold-out set (fixing 3 of v2's 6 failures with no regressions) and tied on the test sample, so it was promoted to `sql2pyspark:latest` on 2026-09-26.
 
 **Remaining v3 failures on the hold-out set (3)**: `UNION` of differently named columns still uses `unionByName` (1), a misplaced parenthesis in an `EXISTS` → `left_semi` join (1), garbled alias syntax in a `UNION ALL` with literal columns (1).
+
+**Real-world query (v4 target)**: both v2 and v3 fail the user's marketing-attribution query; neither reply parses. It is 2,371 tokens as a training sample (training: max 603) and uses `GROUPING SETS` and `INTERVAL` (0 training samples), `NULLS LAST` (1), `NULLIF` (5) and 4 CTEs (training: at most 2).
 
 **Shared gap (v4 target)**: all 9 set-operation queries in the test sample share one held-out signature (`UNION` + literal `source` column + `ORDER BY`); both models drop `.distinct()` after `unionByName` (v2 3/9, v3 1/9 correct).
 

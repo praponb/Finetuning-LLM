@@ -2,7 +2,7 @@
 
 Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder-3B-Instruct** for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
-**Status (2026-09-26):** the v3 model is live as `sql2pyspark:latest`: 95% correct on the unseen-schema hold-out set (v2: 90%, v1: 6%) and 95% on a 300-query sample of the held-out test split (tied with v2). v2 and v1 remain available as `sql2pyspark:v2` / `:v1`. The Docker setup works (app, Spark data pipeline, evaluation). The code is in the private GitHub repo `praponb/Finetuning-LLM`.
+**Status (2026-09-26):** the v3 model is live as `sql2pyspark:latest`: 95% correct on the unseen-schema hold-out set (v2: 90%, v1: 6%) and 95% on a 300-query sample of the held-out test split (tied with v2). v2 and v1 remain available as `sql2pyspark:v2` / `:v1`. Both models fail the first real-world query (a 4-CTE production report far longer than the training data), which is the main target for v4. The Docker setup works (app, Spark data pipeline, evaluation). The code is in the private GitHub repo `praponb/Finetuning-LLM`.
 
 ---
 
@@ -13,7 +13,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 | [Architecture Overview](01-architecture-overview.md) | High-Level System Architecture | All Developers | End-to-end pipeline diagram, design principles, output conventions (`df_<table>`, `result = ...`) |
 | [Data Engineering Pipeline](02-data-engineering-pipeline.md) | Dataset Synthesis & Verification | Data Engineers, ML Engineers | Table catalog (17 train / 5 hold-out), dual-rendering expression engine (`sqlspec.py`), 12 query families, v3 generator changes, Spark dual-execution check, leakage-free split |
 | [Model Training & Export](03-model-training-and-export.md) | MLX LoRA & GGUF Quantization | ML Engineers, MLOps | LoRA hyperparameters, training curve, adapter fusion, BF16 dequantization, llama.cpp Q8_0 export, Ollama packaging |
-| [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, strict vs. lenient scoring, v1/v2/v3 results, promotion rule, failure analysis and v4 targets |
+| [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, real-world queries on their own tables, strict vs. lenient scoring, v1/v2/v3 results, promotion rule, failure analysis and v4 targets |
 | [Serving & Streamlit UI](05-serving-and-streamlit-ui.md) | Local Inference & Frontend | Frontend Developers, Users | Ollama `/api/chat` integration, `OLLAMA_URL`, Streamlit UI (`app.py`), code-block extraction, model tag field, app in Docker |
 | [File Catalog & Reference](06-file-catalog-and-reference.md) | Repository Index | All Contributors | Reference of the scripts, datasets, configs and artifacts in the repository |
 | [Operations Runbook](07-operations-runbook.md) | Practical How-To & Makefile Guide | Developers, DevOps | Environment setup, Make targets, memory limits, Docker, troubleshooting |

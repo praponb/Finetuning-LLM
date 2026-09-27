@@ -18,11 +18,13 @@ Two scoring modes are reported:
 Usage:
   python eval/evaluate.py --model sql2pyspark:v2 --set eval/holdout.jsonl
   python eval/evaluate.py --model sql2pyspark:v2 --set sql2pyspark-mlx/data/test_meta.jsonl --sample 300
+  python eval/evaluate.py --model sql2pyspark:v3 --set eval/real_queries.jsonl --tables eval/real_tables.py
 """
 from __future__ import annotations
 
 import argparse
 import ast
+import importlib.util
 import json
 import os
 import random
@@ -44,13 +46,13 @@ OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/") 
 IMPORTS = "from pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n"
 
 
-def ask(model: str, sql: str, timeout: int) -> tuple[str, float]:
+def ask(model: str, sql: str, timeout: int, num_predict: int) -> tuple[str, float]:
     t0 = time.time()
     r = requests.post(OLLAMA_URL, json={
         "model": model,
         "messages": [{"role": "user", "content": f"Convert SQL to PySpark:\n```sql\n{sql}\n```"}],
         "stream": False,
-        "options": {"temperature": 0, "seed": 0, "num_predict": 1024},
+        "options": {"temperature": 0, "seed": 0, "num_predict": num_predict},
     }, timeout=timeout)
     r.raise_for_status()
     return r.json().get("message", {}).get("content", ""), time.time() - t0
@@ -102,6 +104,15 @@ def score(checker: Checker, s_cols, s_rows, code: str, order_cols) -> dict:
             "match": res.ok, "status": res.status, "detail": res.detail[:300]}
 
 
+def load_tables(path: str, spark) -> dict:
+    """Extra sample tables from a .py file that defines make_dataframes(spark) -> {"df_<table>": DataFrame}."""
+    spec = importlib.util.spec_from_file_location(Path(path).stem, path)
+    assert spec and spec.loader, path
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.make_dataframes(spark)
+
+
 def load_cases(path: Path, sample: int, seed: int):
     cases = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
     if sample and sample < len(cases):
@@ -129,6 +140,10 @@ def main():
     ap.add_argument("--sample", type=int, default=0, help="random subset size (0 = all)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--timeout", type=int, default=180)
+    ap.add_argument("--num-predict", type=int, default=2048,
+                    help="max tokens per reply (was 1024 before 2026-09-27; only long real-world queries need more)")
+    ap.add_argument("--tables", default=None,
+                    help="extra sample tables: a .py file with make_dataframes(spark), e.g. eval/real_tables.py")
     ap.add_argument("--out", default=None, help="results JSON (default eval/results/<model>__<set>.json)")
     ap.add_argument("--reuse-replies", action="store_true",
                     help="re-score the replies already stored in --out instead of querying the model")
@@ -142,6 +157,8 @@ def main():
     if args.reuse_replies and out.exists():
         cached = {c["id"]: (c["reply"], c["seconds"]) for c in json.loads(out.read_text())["cases"]}
     checker = Checker()
+    if args.tables:
+        checker.frames.update(load_tables(args.tables, checker.spark))
     rows: list[dict[str, Any]] = []
     t0 = time.time()
     for i, c in enumerate(cases, 1):
@@ -150,7 +167,7 @@ def main():
             reply, secs = cached[c["id"]]
         else:
             try:
-                reply, secs = ask(args.model, c["sql"], args.timeout)
+                reply, secs = ask(args.model, c["sql"], args.timeout, args.num_predict)
             except Exception as e:  # noqa: BLE001
                 reply, secs = f"<request failed: {_short(e)}>", 0.0
         code = extract_code(reply)

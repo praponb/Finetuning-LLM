@@ -65,10 +65,13 @@ A reference for the directories, scripts, configuration files, datasets and arti
 | File | Purpose | Key Symbols / Details | Role in Pipeline |
 | :--- | :--- | :--- | :--- |
 | [build_holdout.py](../eval/build_holdout.py) | Builds the hold-out benchmark | Helper `H(level, sql, body, order)`, list `CASES` (62 cases) | Writes `eval/holdout.jsonl` |
+| [build_real_queries.py](../eval/build_real_queries.py) | Builds the real-world query set | Helper `R(name, sql, body, order)`, list `CASES`; checks each reference against its SQL in Spark | Writes `eval/real_queries.jsonl` |
+| `real_queries.jsonl` | Real-world query set | 1 user-supplied query (`real001`, marketing attribution) | Read by `evaluate.py` with `--tables eval/real_tables.py` |
+| [real_tables.py](../eval/real_tables.py) | Sample tables for the real-world queries | `raw_events`, `marketing_campaigns`, `fraud_blacklist`; `make_dataframes(spark)` | Loaded by `evaluate.py --tables` and `build_real_queries.py` |
 | `holdout.jsonl` | Hold-out benchmark | 62 entries (15 simple, 22 medium, 25 complex) on unseen tables | Read by `evaluate.py` |
-| [evaluate.py](../eval/evaluate.py) | Execution-based evaluator | `ask()`, `extract_code()`, `lenient()`, `score()`, `main_table()`; `--sample`, `--reuse-replies`, `OLLAMA_URL` | Queries Ollama, runs code in Spark, scores results |
+| [evaluate.py](../eval/evaluate.py) | Execution-based evaluator | `ask()`, `extract_code()`, `lenient()`, `score()`, `main_table()`, `load_tables()`; `--sample`, `--reuse-replies`, `--tables`, `--num-predict`, `OLLAMA_URL` | Queries Ollama, runs code in Spark, scores results |
 | [report.py](../eval/report.py) | Results-table generator | `load()`, `table()`; `--readme` replaces the block between `RESULTS` markers | Markdown tables from `eval/results/*.json` |
-| `results/` | Evaluation results | `v1__holdout.json`, `v2__holdout.json`, `v3__holdout.json`, `v2__test.json`, `v3__test.json` (every reply + score; both test files use the same 300-query sample of the v3 split) | Source for `report.py` |
+| `results/` | Evaluation results | `v1__holdout.json`, `v2__holdout.json`, `v3__holdout.json`, `v2__test.json`, `v3__test.json` (every reply + score; both test files use the same 300-query sample of the v3 split), `v2__real_queries.json`, `v3__real_queries.json` | Source for `report.py` |
 | `results/v2-split/` | Earlier test results | `v1__test.json`, `v2__test.json` on the v2 split | Kept for reference; not read by `report.py` |
 | `results_v1_holdout.log`, `results_v1_test.log` | v1 evaluation console logs | Progress and summary lines | Reference |
 | `post_training.log` | Post-training run log (v2) | Output of `make fuse`, `make gguf`, `make ollama`, and the v1/v2 evaluations | Record of the v2 export |
