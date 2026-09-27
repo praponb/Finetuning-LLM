@@ -2,7 +2,7 @@
 
 Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder-3B-Instruct** for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
-**Status (2026-09-26):** the v3 model is live as `sql2pyspark:latest`: 95% correct on the unseen-schema hold-out set (v2: 90%, v1: 6%) and 95% on a 300-query sample of the held-out test split (tied with v2). v2 and v1 remain available as `sql2pyspark:v2` / `:v1`. The Docker setup works (app, Spark data pipeline, evaluation). The code is in the private GitHub repo `praponb/Finetuning-LLM`.
+**Status (2026-09-27):** `sql2pyspark:latest` is still **v3** (95% on the 62-query unseen-schema hold-out; v2 90%, v1 6%). **v4** was trained on a much broader dataset (stage-based pipelines, advanced Spark SQL and nested data from `advanced.py`, 20,068 verified pairs) and is available as `sql2pyspark:v4`: it triples v3 on the 25-query v4 hold-out (36% vs. 12%) but scores 58/62 on the original hold-out and 0/4 on the real-world queries, so it was not promoted. On a 150-query test sample v4 leads 110 vs. 105 overall but loses 12 classic queries that v3 gets right (84/97 vs. 96/97). The Docker setup works (app, Spark data pipeline, evaluation). The code is in the private GitHub repo `praponb/Finetuning-LLM`.
 
 ---
 
@@ -11,9 +11,9 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 | Document | Topic | Target Audience | Key Contents |
 | :--- | :--- | :--- | :--- |
 | [Architecture Overview](01-architecture-overview.md) | High-Level System Architecture | All Developers | End-to-end pipeline diagram, design principles, output conventions (`df_<table>`, `result = ...`) |
-| [Data Engineering Pipeline](02-data-engineering-pipeline.md) | Dataset Synthesis & Verification | Data Engineers, ML Engineers | Table catalog (17 train / 5 hold-out), dual-rendering expression engine (`sqlspec.py`), 12 query families, v3 generator changes, Spark dual-execution check, leakage-free split |
-| [Model Training & Export](03-model-training-and-export.md) | MLX LoRA & GGUF Quantization | ML Engineers, MLOps | LoRA hyperparameters, training curve, adapter fusion, BF16 dequantization, llama.cpp Q8_0 export, Ollama packaging |
-| [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, strict vs. lenient scoring, v1/v2/v3 results, promotion rule, failure analysis and v4 targets |
+| [Data Engineering Pipeline](02-data-engineering-pipeline.md) | Dataset Synthesis & Verification | Data Engineers, ML Engineers | Table catalog (17 base + 5 extra train / 5 base + 1 extra hold-out), dual-rendering expression engine (`sqlspec.py`), 12 query families + the v4 stage-based families (`advanced.py`), v3 generator changes, Spark dual-execution check, leakage-free split |
+| [Model Training & Export](03-model-training-and-export.md) | MLX LoRA & GGUF Quantization | ML Engineers, MLOps | LoRA hyperparameters (v4: batch 2 × 2, checkpointing, 3,200 tokens), crash-proof `train_resumable.py`, training curve, adapter fusion, BF16 dequantization, llama.cpp Q8_0 export, Ollama packaging |
+| [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, 25 v4-feature hold-out queries, 4 real-world queries on their own tables, strict vs. lenient scoring, v1–v4 results, promotion rule and the v4 decision, failure analysis and v4 targets |
 | [Serving & Streamlit UI](05-serving-and-streamlit-ui.md) | Local Inference & Frontend | Frontend Developers, Users | Ollama `/api/chat` integration, `OLLAMA_URL`, Streamlit UI (`app.py`), code-block extraction, model tag field, app in Docker |
 | [File Catalog & Reference](06-file-catalog-and-reference.md) | Repository Index | All Contributors | Reference of the scripts, datasets, configs and artifacts in the repository |
 | [Operations Runbook](07-operations-runbook.md) | Practical How-To & Makefile Guide | Developers, DevOps | Environment setup, Make targets, memory limits, Docker, troubleshooting |
@@ -51,7 +51,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 ├── app.py                        # Streamlit web converter UI
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, ...)
 ├── pyrefly.toml                  # Editor type-checker config (uses the project venv)
-├── sql2pyspark.gguf              # Q8_0 v3 model served by Ollama (3.3 GB)
+├── sql2pyspark.gguf              # Q8_0 GGUF of the last export (v4, 3.3 GB); Ollama keeps its own copies
 ├── docker-compose.yml            # Docker: app, tools (Spark data/eval) and ollama services
 ├── docker/                       # Dockerfiles, container requirements, Ollama entrypoint
 ├── docs/                         # Detailed modular documentation
@@ -64,26 +64,32 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── 06-file-catalog-and-reference.md
 │   └── 07-operations-runbook.md
 ├── sql2pyspark-mlx/              # Data synthesis, verification & MLX training
-│   ├── schemas.py                # Table catalog (17 train / 5 hold-out tables)
+│   ├── schemas.py                # Table catalog (17 base + 5 extra train, 5 base + 1 extra hold-out)
 │   ├── sqlspec.py                # Dual-rendering expression/query objects
-│   ├── generate_dataset.py       # Compositional query generator (12 families)
+│   ├── generate_dataset.py       # Compositional query generator (12 families + v4 families)
+│   ├── advanced.py               # v4 stage-based families: pipelines, advanced SQL, nested data
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # PySpark dual-execution verifier
 │   ├── convert_sql_pyspark.py    # Leakage-free splitter & chat formatter
 │   ├── lora_config.yaml          # MLX LoRA training hyperparameters
-│   ├── train.log                 # Training log of the v3 run
-│   ├── data/                     # train.jsonl (12.7k), valid.jsonl, test.jsonl (+ *_meta.jsonl)
+│   ├── train_resumable.py        # Crash-proof training wrapper used by `make train`
+│   ├── train.log                 # Training log of the v4 run
+│   ├── data/                     # train.jsonl (16.9k), valid.jsonl, test.jsonl (+ *_meta.jsonl)
 │   ├── raw_pairs/                # 15.1k pair files, verified.jsonl & reports
-│   ├── adapters/                 # Fine-tuned LoRA weights + checkpoints (v3)
-│   ├── runs/v2/                  # v2 backup: adapters, data, raw pairs, logs
+│   ├── adapters/                 # Fine-tuned LoRA weights + checkpoints (v4)
+│   ├── runs/v2/, runs/v3/        # v2 and v3 backups: adapters, data, raw pairs, logs
 │   └── sql2pyspark-model/        # Fused 4-bit MLX model
 ├── sql2pyspark-hf/               # Dequantized BF16 fused model (input for GGUF)
 ├── eval/                         # Execution-based evaluation
 │   ├── build_holdout.py          # 62 hand-written queries on unseen schemas
+│   ├── build_holdout_v4.py       # 25 hand-written queries for the v4 features
+│   ├── holdout_v4.jsonl          # v4 feature benchmark
 │   ├── holdout.jsonl             # Benchmark query set
-│   ├── evaluate.py               # Execution-based model evaluation
+│   ├── build_real_queries.py     # 4 real-world production queries checked in Spark
+│   ├── real_queries.jsonl        # Real-world query benchmark (real001–real004)
+│   ├── real_tables.py            # Sample tables for real-world queries
+│   ├── evaluate.py               # Execution-based model evaluation (--tables, --num-predict)
 │   ├── report.py                 # Markdown results-table generator
-│   └── results/                  # v1/v2/v3 × holdout/test results (+ v2-split/ for the older test split)
-├── llama.cpp/                    # Upstream checkout (GGUF converter)
-└── archive/                      # Earlier iterations (v1, non-coder trials; ~14 GB)
+│   └── results/                  # <tag>__<set>.json results (+ v2-split/, v3-split/)
+└── llama.cpp/                    # Upstream checkout (GGUF converter)
 ```

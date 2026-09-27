@@ -12,7 +12,7 @@ This document covers fine-tuning, weight fusion, dequantization, GGUF conversion
 - **Precision**: 4-bit quantized MLX base weights
 
 ### Why Qwen2.5-Coder-3B?
-The very first experiment (`archive/my-finetuned-model/`) fine-tuned the general `Qwen2.5-3B-Instruct`. It was never evaluated. From v1 onward the project used the code-specialized `Qwen2.5-Coder-3B-Instruct`: it is the same size, fits the 16 GB training budget, and is pretrained on code. The two base models were not compared head to head.
+The very first experiment (formerly `archive/my-finetuned-model/`, deleted 2026-09-27) fine-tuned the general `Qwen2.5-3B-Instruct`. It was never evaluated. From v1 onward the project used the code-specialized `Qwen2.5-Coder-3B-Instruct`: it is the same size, fits the 16 GB training budget, and is pretrained on code. The two base models were not compared head to head.
 
 ---
 
@@ -20,7 +20,7 @@ The very first experiment (`archive/my-finetuned-model/`) fine-tuned the general
 
 LoRA (Low-Rank Adaptation) freezes the pretrained weights and trains small low-rank matrices added to the attention and MLP projections of the adapted layers.
 
-Training is configured in [lora_config.yaml](../sql2pyspark-mlx/lora_config.yaml) and run with `make train`:
+Training is configured in [lora_config.yaml](../sql2pyspark-mlx/lora_config.yaml) and run with `make train`, which calls [train_resumable.py](../sql2pyspark-mlx/train_resumable.py) (see [Crash-proof training](#crash-proof-training-train_resumablepy)). The v4 configuration:
 
 ```yaml
 model: mlx-community/Qwen2.5-Coder-3B-Instruct-4bit
@@ -30,12 +30,12 @@ data: ./data
 adapter_path: ./adapters
 seed: 0
 
-iters: 1200                  # ~0.4 epoch over ~12.7k training pairs at batch 4
-batch_size: 4
-grad_accumulation_steps: 1
-max_seq_length: 1024
+iters: 2400                  # micro-batches: 1,200 optimizer updates x 4 samples, as batch 2 x 2 accumulation
+batch_size: 2
+grad_accumulation_steps: 2
+max_seq_length: 3200         # longest v4 training sample: 3,119 tokens (v3 data: max 603)
 mask_prompt: true            # loss only on the assistant (PySpark) tokens
-grad_checkpoint: false       # true cut peak memory 13 GB -> 4.5 GB (16-layer run) but was ~40% slower
+grad_checkpoint: true        # needed for v4's long samples (~40% slower); v2/v3 ran without it
 
 num_layers: 8                # adapt the last 8 of 36 transformer blocks (16 was ~1.4x slower per step)
 lora_parameters:
@@ -49,52 +49,53 @@ lr_schedule:
   name: cosine_decay
   warmup: 100
   warmup_init: 1.0e-6
-  arguments: [1.0e-4, 1100, 1.0e-5]   # [init, decay_steps, end]
+  arguments: [1.0e-4, 1100, 1.0e-5]   # [init, decay_steps, end]  (counted in optimizer updates)
 
-steps_per_report: 25
-steps_per_eval: 300
-val_batches: 25              # 100 held-out-signature samples per eval
-save_every: 300
+steps_per_report: 50
+steps_per_eval: 600
+val_batches: 50              # 100 held-out-signature samples per eval
+save_every: 100              # frequent checkpoints so train_resumable.py loses little after a crash
 ```
 
+v2 and v3 used `iters: 1200`, `batch_size: 4`, no accumulation, `max_seq_length: 1024`, no gradient checkpointing, and evaluated/saved every 300 steps; the backups in `sql2pyspark-mlx/runs/v2/` and `runs/v3/` contain their configs.
+
 ### Key Hyperparameter Decisions:
-1. **8 adapted layers, 1,200 steps**: the original plan was 16 layers and ~3,000 steps, but on a base M2 that ran at 0.138 it/s (~6.5 h). With 8 layers it runs at ~0.19 it/s, and the data is learned quickly (train loss 0.053 after 50 steps), so 1,200 steps (~1 h 50 min – 2 h) was chosen. v2 and v3 use the same configuration.
-2. **No gradient checkpointing**: tried it to save memory; it cut peak memory a lot but made each step ~40% slower. Memory was not the bottleneck, compute was.
+1. **8 adapted layers, 1,200 optimizer updates of 4 samples**: the original plan was 16 layers and ~3,000 steps, but on a base M2 that ran at 0.138 it/s (~6.5 h). With 8 layers and the short v2/v3 samples it ran at ~0.19 it/s, and the data is learned quickly, so 1,200 updates (~1 h 50 min – 2 h) was chosen. v4 keeps the same number of updates and samples (~0.28 epoch of 16.9k pairs).
+2. **Batch 2 × 2 accumulation + gradient checkpointing (v4 only)**: v4's pipelines reach 3.1k tokens. A dry run on the 64 longest training samples ran out of GPU memory with batch 4 (with or without checkpointing) and with batch 2 without checkpointing; batch 2 with checkpointing peaked at 9.8 GB. A 16 GB Mac lets Metal use ~10.7–12.7 GB, so this is the largest setting that fits. Note that `iters` counts micro-batches, while the learning-rate schedule counts optimizer updates.
 3. **Masked prompt (`mask_prompt: true`)**: the system message and SQL prompt are excluded from the loss, so updates focus on generating the PySpark answer.
-4. **Cosine decay with warmup**: 100 warmup steps from $10^{-6}$ to $10^{-4}$, then decaying to $10^{-5}$ over 1,100 steps.
+4. **Cosine decay with warmup**: 100 warmup updates from $10^{-6}$ to $10^{-4}$, then decaying to $10^{-5}$ over 1,100 updates.
+
+### Crash-proof training (`train_resumable.py`)
+The first v4 run crashed after ~250 iterations with `[METAL] Command buffer execution failed: Impacting Interactivity`: macOS aborts a GPU command buffer that runs too long, and mlx_lm cannot recover. `train_resumable.py`:
+- runs `mlx_lm.lora` with smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`; ~9% slower), which avoided the error for the whole second run;
+- if the run still dies, restarts from the newest checkpoint (saved every 100 iterations) for the remaining iterations, continuing the cosine learning-rate schedule from where it stopped (AdamW moments restart), up to 6 times.
 
 ---
 
 ## 📊 Training Dynamics (`train.log`)
 
-`sql2pyspark-mlx/train.log` is the **v3** run (same config, v3 dataset). The v2 log is kept in `sql2pyspark-mlx/runs/v2/train.log`. Measured on a base Apple M2 (16 GB):
+`sql2pyspark-mlx/train.log` is the **v4** run (restarted with `train_resumable.py` at 09:47 after the Metal crash; finished at 15:04 without another crash). Iterations are micro-batches of 2 samples; the v2 and v3 logs are kept in `sql2pyspark-mlx/runs/v2/` and `runs/v3/`. Measured on a base Apple M2 (16 GB):
 
 ```
-v3      Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
-─────────────────────────────────────────────────────────────────────────────────────────────
-1       0.547       —             —                —               —                 —
-25      —           0.185         2.476e-5         0.132           11,133            7.50 GB
-50      —           0.068         4.951e-5         0.146           22,349            8.41 GB
-100     —           0.045         9.901e-5         0.168           43,681            8.41 GB
-300     0.013       0.017         9.299e-5         0.187           132,635           8.77 GB
-600     0.008       0.014         6.166e-5         0.171           266,921           9.70 GB
-900     0.005       0.004         2.573e-5         0.162           400,675           9.70 GB
-1200    0.005       0.007         1.000e-5         0.172           533,099           9.70 GB
+v4 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
+───────────────────────────────────────────────────────────────────────────────────────────────
+1        0.389       —             —                —               —                 —
+50       —           0.192         2.476e-5         0.104           19,303            7.13 GB
+100      —           0.070         4.951e-5         0.086           41,904            7.67 GB
+600      0.050       0.029         9.299e-5         0.119           243,556           8.77 GB
+1200     0.025       0.020         6.166e-5         0.137           498,531           9.29 GB
+1800     0.024       0.011         2.573e-5         0.180           756,069           9.74 GB
+2400     0.018       0.012         1.000e-5         0.179           1,003,159         9.74 GB
 ```
 
-For comparison, the v2 run went from val loss 0.605 to 0.011 / 0.007 / 0.006 / **0.004** at steps 300 / 600 / 900 / 1200 (peak 9.68 GB). The validation sets differ between versions (the split is recomputed for each dataset), so the small difference in final val loss is not a like-for-like comparison.
+For comparison, v3 went from val loss 0.547 to 0.013 / 0.008 / 0.005 / **0.005** at steps 300 / 600 / 900 / 1200 (batch 4, peak 9.70 GB), and v2 to **0.004**. Each version has its own validation set (the split is recomputed per dataset), and v4's contains long pipelines and nested data, so the higher v4 loss is not a regression.
 
 ### Observations:
-- **Fast convergence**: training loss fell below 0.07 within 50 steps; the generated data is very regular.
-- **Held-out signatures**: validation loss (on feature combinations never seen in training) fell steadily to **0.005** and stayed close to training loss, so there is no sign of overfitting. The hand-written hold-out set (v3: 95% correct) is the stronger generalisation test; see [Evaluation](04-evaluation-and-benchmarking.md).
-- **Memory**: peak 9.70 GB. That fits a 16 GB Mac, but running Ollama inference at the same time caused a Metal out-of-memory crash, so evaluations are run after training. Docker Desktop's VM also takes memory, so stop Docker before training.
-- **Duration**: about 2 h for 1,200 steps including the five validation passes (v3: 16:10 → 18:12).
+- **Convergence**: training loss fell below 0.07 within 100 micro-batches and to ~0.012 at the end; validation loss flattened around 0.024 between iterations 1,200 and 1,800 and ended at 0.018.
+- **Memory**: peak 9.74 GB with gradient checkpointing. Running Ollama inference or Docker Desktop at the same time is not possible on a 16 GB Mac.
+- **Duration**: 5 h 16 min for 2,400 micro-batches (≈ 4,800 samples, ~1.0 M trained tokens) including five ~3–5 min validation passes; ~2.5× the v3 run because the average v4 sample is 1.8× longer and checkpointing costs ~40%.
 
-Checkpoints are saved every 300 steps in `sql2pyspark-mlx/adapters/`:
-- `0000300_adapters.safetensors`
-- `0000600_adapters.safetensors`
-- `0000900_adapters.safetensors`
-- `0001200_adapters.safetensors` (same as the final `adapters.safetensors`)
+Checkpoints are saved every 100 iterations in `sql2pyspark-mlx/adapters/` (`0000100_adapters.safetensors` … `0002400_adapters.safetensors`; the last equals `adapters.safetensors`).
 
 ---
 
@@ -171,21 +172,22 @@ The system prompt matches the one used in the training data.
 
 ### Registration Commands:
 ```bash
-make export TAG=v3             # fuse + gguf + ollama create sql2pyspark:v3 -f Modelfile
-make promote TAG=v3 PREV=v2    # keeps the old latest as :v2 (if that tag is missing), then ollama cp sql2pyspark:v3 sql2pyspark:latest
+make export TAG=v4             # fuse + gguf + ollama create sql2pyspark:v4 -f Modelfile
+make promote TAG=v4 PREV=v3    # keeps the old latest as :v3 (if that tag is missing), then ollama cp sql2pyspark:v4 sql2pyspark:latest
 ```
 
-Pass `TAG`/`PREV` explicitly: the Makefile defaults are still `TAG=v2 PREV=v1`.
+The Makefile defaults are `TAG=v4 PREV=v3`.
 
 Current tags:
 
 | Tag | Image ID | Notes |
 |---|---|---|
 | `sql2pyspark:latest` | `aa95ad200568` | = v3, promoted 2026-09-26 |
+| `sql2pyspark:v4` | `23108327a0d7` | exported 2026-09-27; not promoted (see [Evaluation](04-evaluation-and-benchmarking.md)) |
 | `sql2pyspark:v3` | `aa95ad200568` | current model |
 | `sql2pyspark:v2` | `fb27933c2519` | previous model; rollback: `ollama cp sql2pyspark:v2 sql2pyspark:latest` |
 | `sql2pyspark:v1` | `3dd2beaef9ff` | template-based v1 |
 
-`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the v3 weights. The v2 adapters, dataset and logs are backed up in `sql2pyspark-mlx/runs/v2/`; the v2 GGUF lives only inside Ollama (`sql2pyspark:v2`).
+`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v4** weights (last export); Ollama keeps its own copy of every tag, so `latest` still serves v3. The v2 and v3 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` and `runs/v3/`; their GGUFs live only inside Ollama.
 
 The model is served at `POST http://localhost:11434/api/chat`.

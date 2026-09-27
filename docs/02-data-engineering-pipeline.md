@@ -15,27 +15,33 @@ The pipeline runs in three phases (`make data` runs all three):
 
 ## 1. Table Catalog & Schema Definitions (`schemas.py`)
 
-[schemas.py](../sql2pyspark-mlx/schemas.py) defines the relational domain model for the whole dataset. It separates tables into two groups:
+[schemas.py](../sql2pyspark-mlx/schemas.py) defines the relational domain model for the dataset. It provides base tables and extra complex nested tables:
 
-### A. 17 Training Tables
-Used by `generate_dataset.py` and `handwritten_pairs.py`:
-- **E-commerce & retail**: `customers`, `orders`, `order_items`, `products`, `suppliers`, `payments`, `shipments`, `stores`, `inventory`, `store_sales`, `subscriptions`
-- **HR**: `employees`, `departments`
-- **Banking**: `accounts`, `transactions`
-- **Web analytics**: `sessions`, `web_events`
+### A. Training Tables (22 total)
+- **17 Base Tables** (used by `generate_dataset.py` and `handwritten_pairs.py`):
+  - **E-commerce & retail**: `customers`, `orders`, `order_items`, `products`, `suppliers`, `payments`, `shipments`, `stores`, `inventory`, `store_sales`, `subscriptions`
+  - **HR**: `employees`, `departments`
+  - **Banking**: `accounts`, `transactions`
+  - **Web analytics**: `sessions`, `web_events`
+- **5 Extra Complex Tables** (`EXTRA_TABLES`, introducing nested types and custom generators):
+  - `carts`: arrays of structs (`items`), coupon arrays (`coupon_codes`), address structs (`ship_to`), string-to-string maps (`attributes`)
+  - `app_logs`: service/host categoricals, timestamps, latency, HTTP status codes, raw JSON payload strings (`payload_json`), metadata maps (`context`)
+  - `price_tiers`: pricing plans, integer limit arrays (`tier_limits`), double arrays (`tier_prices`, `discounts`), currency
+  - `device_readings`: device codes, IoT timestamps, environmental telemetry (temp, humidity, pressure), status bitmasks, firmware strings
+  - `promotions`: channel, promotion codes, active date ranges, discount percentages
 
-### B. 5 Hold-Out Tables (`holdout=True`)
-Never used by the generator or the hand-written training pairs; only the evaluation set (`eval/holdout.jsonl`) uses them:
-- `patients`, `doctors`, `appointments` (healthcare)
-- `flights`, `bookings` (aviation)
+### B. Hold-Out Tables (6 total, `holdout=True`)
+Never used by the generator or the hand-written training pairs; only evaluation sets use them:
+- **5 Base Hold-Out Tables**: `patients`, `doctors`, `appointments` (healthcare); `flights`, `bookings` (aviation)
+- **1 Extra Nested Hold-Out Table**: `vehicle_trips` (driver IDs, trip timestamps, `ARRAY<STRUCT>` stops with wait times and fares, route struct, telemetry JSON strings, extras map, and fare component arrays)
 
-### C. Column Types & Synthetic Data
-Every table is defined with typed `Column` descriptors:
+### C. Column Types, Nested Schemas & Synthetic Data
+Every table is defined with typed `Column` descriptors supporting primitive and nested data types:
 ```python
 @dataclass(frozen=True)
 class Column:
     name: str
-    kind: str              # id, fk, int, double, cat, str, date, ts, bool, array
+    kind: str              # id, fk, int, double, cat, str, date, ts, bool, array, struct, map, json
     pool: tuple = ()       # allowed values for categorical/string/array columns
     lo: float = 0          # numeric range minimum
     hi: float = 100        # numeric range maximum
@@ -43,7 +49,7 @@ class Column:
     nullable: bool = True
 ```
 
-`make_dataframes(spark, seed=7)` builds a deterministic 40-row sample for each table (about 8% NULLs in nullable columns, a few dangling foreign keys so anti-joins and outer joins have something to find), registers each as a temp view (`createOrReplaceTempView(table.name)`), and returns them as `df_<table_name>`.
+`make_dataframes(spark, seed=7)` builds deterministic DataFrames for all 28 tables (`TABLES + EXTRA_TABLES`), registers each as a temp view (`createOrReplaceTempView(table.name)`), and returns them as `df_<table_name>`. Tables can provide custom row generation closures (`table.rows(seed)`) for complex nested distributions.
 
 ---
 
@@ -138,6 +144,32 @@ v3 targets the v2 hold-out failures (see [04 - Evaluation](04-evaluation-and-ben
 - **`GROUP BY` references**: grouping keys are referenced by expression, by alias or by ordinal (`GROUP BY 1`). Ordinals are used more often when a key is a `CASE` expression (35%), so the model learns to keep the `CASE` as the grouping key.
 - **Exact `NOT IN` semantics**: `x NOT IN (subquery)` drops rows where `x` is NULL, unless the subquery returns no rows. The PySpark now computes the excluded values first and adds `.filter(F.col(x).isNotNull() | F.lit(excluded.isEmpty()))` after the anti join, so the pair that failed verification in v2 is now correct.
 
+### v4: stage-based families (`advanced.py`)
+v4 adds [advanced.py](../sql2pyspark-mlx/advanced.py), bound into `generate_dataset.FAMILIES`, for the SQL that real production queries use and v1–v3 never generated. A query is a chain of **stages**; each stage turns one relation into the next and renders both a SELECT (a CTE body, or the main query for the last stage) and the matching PySpark chain:
+
+| Stage | SQL | PySpark |
+| :--- | :--- | :--- |
+| `stg_clean` | `WHERE ts >= TIMESTAMP '...'`, `IS NOT NULL`, derived and `COALESCE`d columns | `.filter(...)`, `F.lit(...).cast("timestamp")`, `.withColumn` / `.select("*", ...)` |
+| `stg_dedup` | `ROW_NUMBER()` / `RANK() ... = 1` via `QUALIFY` or a subquery, `NULLS FIRST/LAST` | `.withColumn("rn", F.row_number().over(w)).filter(F.col("rn") == 1)` |
+| `stg_windows` | 2–5 windows with different specs: `LAG/LEAD` (with default), running `ROWS UNBOUNDED`, `ROWS n PRECEDING AND m PRECEDING`, `RANGE` over `CAST(ts AS BIGINT)`, `DENSE_RANK/RANK/PERCENT_RANK/CUME_DIST`, `NTILE`, `FIRST/LAST_VALUE ... IGNORE NULLS`, partition `STDDEV_SAMP/CORR`, shares; optional named `WINDOW` clause | `Window...rowsBetween/rangeBetween`, `.desc_nulls_last()`, `F.last(..., ignorenulls=True)` |
+| `stg_session` | gaps-and-islands: `CASE WHEN LAG(ts) ... IS NULL OR ts > LAG(ts) ... + INTERVAL '30' MINUTE` (or `ts - LAG(ts) > INTERVAL ...`), then `SUM(flag) OVER (... ROWS UNBOUNDED ...)` | `F.expr("INTERVAL 30 MINUTES")`, running `F.sum(...).over(w)` |
+| `stg_join` | foreign-key joins; validity-window joins (`d >= p.starts_on AND d < p.ends_on + INTERVAL 7 DAYS`, `BETWEEN`, `DATE_ADD`), `<=>` and `COALESCE` keys | compound join conditions, `.eqNullSafe(...)` |
+| `stg_lateral` | `[LEFT] JOIN LATERAL (... ORDER BY ... LIMIT 1) x ON TRUE` | join + `row_number()` per source row, keep `rn == 1` |
+| `stg_anti` | `[NOT] EXISTS (SELECT 1 ... WHERE c.fk = s.id AND c.d <= s.d)` | `left_anti` / `left_semi` with a compound condition |
+| `stg_setop` | `EXCEPT [ALL\|DISTINCT]`, `INTERSECT [ALL]` on key columns, joined back | `.subtract` / `.exceptAll` / `.intersect` / `.intersectAll` |
+| `stg_agg` | `GROUP BY` (expression / alias / ordinal), `ROLLUP`, `CUBE`, `GROUPING SETS`, `GROUPING_ID()` / `GROUPING()`, `AGG(x) FILTER (WHERE ...)`, `COUNT_IF`, `SUM(CASE ...)`, `ROUND(... / NULLIF(...), 2)`, `PERCENTILE_APPROX` (scalar or `ARRAY`), `CORR`, `STDDEV_SAMP`, `BIT_OR/BIT_AND`, `SORT_ARRAY(COLLECT_SET(...))`, `HAVING`, rank over the aggregate | `.groupBy / .rollup / .cube / .groupingSets([[...]], ...)`, `F.when` inside aggregates, `F.nullif`, `F.grouping_id()` |
+| `stg_pivot` | `PIVOT (SUM(x) [AS a], COUNT(1) AS n FOR c IN ('V' [AS v], ...))` | `.groupBy(...).pivot(c, [...]).agg(...)` + renames to the SQL column names |
+| `stg_unpivot` | `UNPIVOT [INCLUDE NULLS] (val FOR name IN (a AS A, b, ...))` | `.unpivot(ids, values, name, val)` (+ `.filter(val.isNotNull())`) |
+| `stg_final` | final projection, `CASE WHEN c RLIKE '^(A\|B)$'`, correlated scalar subquery in SELECT, `ORDER BY ... NULLS LAST`, `LIMIT` | lookup DataFrame + left join, `.rlike(...)`, `.desc_nulls_last()` |
+| `stg_explode` | `LATERAL VIEW [OUTER] EXPLODE/POSEXPLODE`, `INLINE`, `EXPLODE(map) AS k, v` | `F.explode_outer`, `F.posexplode(...).alias("pos", "item")`, `F.inline` |
+| `stg_nested_select` | struct fields, `m['key']`, `TRY_CAST(m['k'] AS DOUBLE)`, `MAP_KEYS`, `GET_JSON_OBJECT`, `FROM_JSON(...).field`, `TRANSFORM`, `FILTER`, `EXISTS`, `FORALL`, `AGGREGATE`, `ZIP_WITH`, `ELEMENT_AT`, `SLICE`, `(x & 4) != 0`, `SHIFTRIGHT` | `F.col("s.f")`, `F.col("m")["k"]`, `.try_cast(...)`, `F.transform(col, lambda x: ...)`, `F.aggregate(...)`, `.bitwiseAND(...)` |
+
+Families: `fam_adv_window`, `fam_adv_dedup`, `fam_adv_agg`, `fam_adv_join`, `fam_adv_reshape`, `fam_adv_setop`, `fam_adv_session` and `fam_adv_nested` are 1–2-stage queries focused on one feature group; `fam_pipeline` chains 4–8 stages (falling back to another stage when one does not apply) into production-style queries with SQL comments, up to ~3.1k tokens as training samples.
+
+Row-order-dependent windows (`ROW_NUMBER`, `LAG`, `NTILE`, `ROWS` frames, `FIRST/LAST_VALUE`) always order by the relation's unique key as a tie-breaker, and are skipped once a relation has no unique key (after an explode or a multiplying join), so SQL and PySpark produce the same rows. CTE names never shadow a table name. In a sample of 540 pairs, 99.6% passed the Spark check; the rest were `CORR` dividing by zero on constant groups (Spark 4 runs in ANSI mode).
+
+Known weaknesses (left for v5, because the v4 data was already built): some `HAVING agg < 0` filters and an inherited `NOT IN` over every value of a column return empty results, which makes their Spark check weak (the pairs are still correct).
+
 ---
 
 ## 4. Curated Pairs (`handwritten_pairs.py`)
@@ -193,18 +225,18 @@ All 105 are execution-verified and always go to the training split.
 2. **Multiset equivalence**: rows are normalized (numbers rounded to 4 decimals, dates ISO-formatted, NaN standardized) and compared with `Counter(map(repr, rows))`, so row order doesn't matter.
 3. **Ordering**: if the query has `ORDER BY`, the sequence of the ORDER BY columns must match (rows that tie may come out in either order).
 
-### Verification Run Results (`raw_pairs/verify_report.json`):
+### Verification Run Results (`raw_pairs/verify_report.json`, v4):
 ```json
 {
-  "total": 15105,
-  "ok": 15105,
-  "pass_rate": 1.0,
-  "ok_but_empty_result": 1717,
-  "by_status": { "ok": 15105 },
-  "seconds": 561.6
+  "total": 20105,
+  "ok": 20068,
+  "pass_rate": 0.9982,
+  "ok_but_empty_result": 2254,
+  "by_status": { "ok": 20068, "sql_error": 36, "rows": 1 },
+  "seconds": 1185.7
 }
 ```
-All v3 pairs pass (the v2 build had 15,104 of 15,105 and took 865.7 s). The v2 failure was a `NOT IN` subquery: when the subquery returns no rows, SQL keeps rows whose key is NULL, but the generated PySpark removed them. v3 renders the exact semantics (see the v3 generator changes above). 1,717 passing pairs return an empty result, which makes their check weaker.
+Built natively with `make data N=20000 WORKERS=4` (~20 min; log in `sql2pyspark-mlx/data_v4.log`). The 36 SQL errors are mostly `CORR` / division by zero under ANSI mode; the pairs that fail are dropped. v3 had all 15,105 pairs passing (561.6 s); the v2 build had 15,104 of 15,105. The v2 failure was a `NOT IN` subquery: when the subquery returns no rows, SQL keeps rows whose key is NULL, but the generated PySpark removed them. v3 renders the exact semantics (see the v3 generator changes above). In v4, 2,254 passing pairs (11%) return an empty result, which makes their check weaker.
 
 ---
 
@@ -221,15 +253,15 @@ $$\text{Signature} = \text{family} \;\|\; \text{sorted}(\text{features})$$
 3. A signature is only held out if it holds at most 2% of the pairs and every one of its features keeps at least `min_train_per_feature=30` training examples.
 4. All 105 hand-written pairs always go to `train`.
 
-### Final Split Statistics (`data/split_stats.json`):
-- **Verified pairs**: 15,105
-- **Training set (`train.jsonl`)**: 12,743 pairs (3,555 signatures)
-- **Validation set (`valid.jsonl`)**: 1,575 pairs (359 signatures)
-- **Test set (`test.jsonl`)**: 787 pairs (168 signatures)
+### Final Split Statistics (`data/split_stats.json`, v4):
+- **Verified pairs**: 20,068
+- **Training set (`train.jsonl`)**: 16,924 pairs (8,693 signatures; 7,145 from the v4 families, 2,662 of them pipelines)
+- **Validation set (`valid.jsonl`)**: 2,096 pairs (1,037 signatures)
+- **Test set (`test.jsonl`)**: 1,048 pairs (513 signatures; 399 from the v4 families)
 - **Signatures shared between train and valid/test**: **0**
 - **Features missing from train**: **0**
 
-Because the split is recomputed for every dataset version, the v2 and v3 test splits contain different queries; compare two models on the same split (see [04 - Evaluation](04-evaluation-and-benchmarking.md)).
+Pipelines have nearly unique signatures, so they make up a larger share of valid/test than of train. Because the split is recomputed for every dataset version, the v2, v3 and v4 test splits contain different queries; compare two models on the same split (see [04 - Evaluation](04-evaluation-and-benchmarking.md)).
 
 `valid_meta.jsonl` / `test_meta.jsonl` keep the SQL, reference code and ORDER BY columns for execution-based evaluation.
 
@@ -253,4 +285,4 @@ Each record uses the MLX chat format and the same prompt the Ollama runtime and 
   ]
 }
 ```
-Training samples are 210 tokens long at the median (557 max), well under `max_seq_length: 1024`.
+v4 training samples are 411 tokens long on average (v3: ~230) and at most 3,119 tokens, under `max_seq_length: 3200`; the answer (the part that is trained) averages 211 tokens.

@@ -8,7 +8,7 @@ A practical guide for setting up, running, changing, and troubleshooting the SQL
 
 ### System Requirements:
 - **Hardware**: Apple Silicon Mac. Developed and measured on a base **M2 with 16 GB** unified memory; more memory gives more headroom.
-- **Disk space**: the project currently uses ~28 GB. About 20 GB of that can be freed: `archive/` (~14 GB), `sql2pyspark-hf/` (~5.8 GB, recreated by `make fuse`) and `mlx-env/` (~0.4 GB, unused). Budget ~15 GB for a fresh run: data, adapters, fused models, BF16 export and GGUF.
+- **Disk space**: the project uses ~14 GB (after `archive/` and `mlx-env/` were deleted on 2026-09-27), of which `sql2pyspark-hf/` (~5.8 GB) can be deleted and is recreated by `make fuse`. Budget ~15 GB for a fresh run: data, adapters, fused models, BF16 export and GGUF; each `runs/vN/` backup adds ~0.3 GB.
 - **Docker Desktop** (optional): for the containerised app, data pipeline and evaluation; see [Docker](#-docker).
 
 ### Software Dependencies:
@@ -44,8 +44,9 @@ All workflows are in the [Makefile](../Makefile):
 
 ### Phase 1: Synthesize & Verify Dataset
 ```bash
-# Generate 15,000 pairs + 105 hand-written pairs, verify in Spark, and split (~10–15 min)
-make data
+# Generate 20,000 pairs (v1-v3 families + the v4 families in advanced.py) + 105 hand-written pairs,
+# verify in Spark, and split (~20 min natively with 4 workers)
+make data N=20000 WORKERS=4
 
 # Or step by step:
 make generate   # writes raw SQL/PySpark pairs to sql2pyspark-mlx/raw_pairs/
@@ -60,8 +61,9 @@ make data N=20000 WORKERS=6
 
 ### Phase 2: LoRA Fine-Tuning
 ```bash
-# MLX LoRA fine-tuning (~1 h 50 min – 2 h on a base M2). Stop Docker and Ollama models first.
-# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v3/): adapters/, data/, raw_pairs/, train.log
+# MLX LoRA fine-tuning via train_resumable.py (v4 config: ~5 h 15 min on a base M2).
+# Stop Docker (docker compose down, quit Docker Desktop) and unload Ollama models (ollama stop <model>) first.
+# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v4/): adapters/, data/, raw_pairs/, train.log
 make train
 ```
 
@@ -69,7 +71,7 @@ make train
 ```bash
 tail -f sql2pyspark-mlx/train.log
 ```
-`make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`.
+`make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
 
 ### Phase 3: Export, Fuse & Quantize
 ```bash
@@ -84,7 +86,8 @@ make ollama TAG=v4  # registers the GGUF as sql2pyspark:v4
 
 ### Phase 4: Benchmark & Evaluate
 ```bash
-# Compare the new model with the previous one (hold-out set + 300 test queries each; ~1 h in total)
+# Compare the new model with the previous one on the hold-out set, the v4 hold-out set, the real-world queries
+# and 300 test queries (~2 h in total; the test sample dominates)
 make eval TAG=v4 PREV=v3
 ```
 
@@ -98,9 +101,9 @@ python eval/report.py --readme README.md
 # Point sql2pyspark:latest at v4 (keeps the old latest as :v3 if that tag doesn't exist yet)
 make promote TAG=v4 PREV=v3
 ```
-Promote only if the new model beats the previous one on the hold-out set and doesn't regress on the same test sample. Roll back with `ollama cp sql2pyspark:<previous> sql2pyspark:latest`.
+Promote only if the new model scores at least the previous one on the hold-out set, beats it on the v4 hold-out set and the real-world queries, and doesn't regress on the same test sample. v4 did not meet this rule (see [Evaluation](04-evaluation-and-benchmarking.md)), so `latest` is still v3. Roll back with `ollama cp sql2pyspark:<previous> sql2pyspark:latest`.
 
-The examples use the next version (v4). Always pass `TAG` and `PREV`: the Makefile defaults are still `TAG=v2 PREV=v1`. The v2 → v3 cycle ran as `make export TAG=v3`, `make eval TAG=v3 PREV=v2` and `make promote TAG=v3 PREV=v2`.
+The Makefile defaults are `TAG=v4 PREV=v3`; pass `TAG=v5 PREV=v3` (or similar) for the next version. The v2 → v3 cycle ran as `make export TAG=v3`, `make eval TAG=v3 PREV=v2` and `make promote TAG=v3 PREV=v2`.
 
 ### Phase 6: Launch Web Interface
 ```bash
@@ -122,11 +125,12 @@ Measured on a base M2:
 
 | Setting | Speed | Peak memory |
 | :--- | :--- | :--- |
-| 8 layers, no gradient checkpointing (**current**) | ~0.17–0.19 it/s | ~9.7 GB |
-| 16 layers, no gradient checkpointing | ~0.14 it/s | ~13 GB |
-| 16 layers, `grad_checkpoint: true` | ~0.08 it/s | ~4.5 GB |
+| 8 layers, batch 4, no gradient checkpointing (v2/v3, samples ≤ 603 tokens) | ~0.17–0.19 it/s | ~9.7 GB |
+| 16 layers, batch 4, no gradient checkpointing | ~0.14 it/s | ~13 GB |
+| 16 layers, batch 4, `grad_checkpoint: true` | ~0.08 it/s | ~4.5 GB |
+| 8 layers, batch 2 × 2 accumulation, `grad_checkpoint: true` (**v4**, samples up to 3.1k tokens) | ~0.09–0.18 it/s (micro-batches) | ~9.7 GB |
 
-Turn on `grad_checkpoint: true` only if you run out of memory; it makes each step ~40% slower.
+With v4's long samples, batch 4 ran out of GPU memory even with gradient checkpointing, and batch 2 without it did too (dry run on the 64 longest samples). Metal can use ~10.7–12.7 GB of a 16 GB Mac. To test a new setting, run a few iterations on the longest samples before a full run.
 
 ### Spark Worker Tuning
 Each `verify_pairs.py` worker is a separate process with its own local `SparkSession` (~1 GB).
@@ -200,11 +204,15 @@ What has been verified:
 - **Cause**: another GPU user (usually Ollama) was running at the same time.
 - **Fix**: stop Ollama models (`ollama stop <model>`), close other heavy apps, and restart `make train`.
 
-### 6. Docker commands fail with `500 Internal Server Error` or `EOF`
+### 6. Training crashed with `[METAL] ... Impacting Interactivity`
+- **Cause**: macOS aborts a GPU command buffer that runs too long (happened after ~250 iterations of the first v4 run).
+- **Fix**: `make train` already uses `train_resumable.py`, which runs with `MLX_MAX_OPS_PER_BUFFER=2` / `MLX_MAX_MB_PER_BUFFER=40` (smaller buffers, ~9% slower) and resumes from the newest checkpoint if the error still happens.
+
+### 7. Docker commands fail with `500 Internal Server Error` or `EOF`
 - **Cause**: Docker Desktop is still starting (or updating itself).
 - **Fix**: wait until `docker info` succeeds, e.g. `until docker info >/dev/null 2>&1; do sleep 5; done`, or run the step natively.
 
-### 7. Re-running training from scratch
+### 8. Re-running training from scratch
 - Remove the old adapters first (this deletes the current LoRA weights):
   ```bash
   rm -rf sql2pyspark-mlx/adapters

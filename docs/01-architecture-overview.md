@@ -11,25 +11,25 @@ The whole lifecycle—from synthetic query generation to inference in a web UI�
 ```mermaid
 flowchart TD
     subgraph DataEngineering["1. Data Engineering & Verification"]
-        S["schemas.py<br/>(17 Train + 5 Hold-out Tables)"]
-        G["generate_dataset.py<br/>+ sqlspec.py (dual renderer)"]
+        S["schemas.py<br/>(22 Train + 6 Hold-out Tables)"]
+        G["generate_dataset.py + advanced.py<br/>+ sqlspec.py (dual renderer)"]
         H["handwritten_pairs.py<br/>(105 Curated Pairs)"]
-        Raw["raw_pairs/<br/>(~15.1k SQL + PySpark pairs)"]
+        Raw["raw_pairs/<br/>(~20.1k SQL + PySpark pairs)"]
         Verify["verify_pairs.py<br/>(Local PySpark Dual Execution)"]
         Split["convert_sql_pyspark.py<br/>(Feature-Signature Split)"]
-        Data["data/<br/>train.jsonl (12.7k)<br/>valid.jsonl (1.6k)<br/>test.jsonl (0.8k)"]
+        Data["data/<br/>train.jsonl (16.9k)<br/>valid.jsonl (2.1k)<br/>test.jsonl (1.0k)"]
 
         S --> G
         G --> Raw
         H --> Raw
         Raw --> Verify
-        Verify -->|15,105 of 15,105 pass| Split
+        Verify -->|20,068 of 20,105 pass| Split
         Split --> Data
     end
 
     subgraph Training["2. Local LoRA Fine-Tuning (Apple MLX)"]
         BaseModel["mlx-community/<br/>Qwen2.5-Coder-3B-Instruct-4bit"]
-        Config["lora_config.yaml<br/>(Rank 16, 8 Layers, 1200 iters)"]
+        Config["lora_config.yaml<br/>(Rank 16, 8 Layers, 1200 updates x 4)"]
         MLX["mlx_lm.lora"]
         Adapters["adapters/<br/>(adapters.safetensors)"]
 
@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & UI Interface"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(sql2pyspark:latest = v3)"]
+        Ollama["Ollama Engine<br/>(latest = v3, v4 available)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
 
         GGUF --> Modelfile
@@ -64,7 +64,7 @@ flowchart TD
     end
 
     subgraph Evaluation["5. Execution-Based Evaluation"]
-        Holdout["eval/holdout.jsonl<br/>(62 Unseen-Schema Queries)"]
+        Holdout["eval/holdout.jsonl (62 Unseen-Schema Queries)<br/>+ eval/real_queries.jsonl (4 Real Queries)"]
         EvalRunner["eval/evaluate.py<br/>(Strict & Lenient Execution)"]
         Report["eval/report.py<br/>(Markdown Comparison Tables)"]
 
@@ -89,7 +89,7 @@ Both results are compared on:
 - Multiset row equivalence (row order ignored, floats rounded to 4 decimals)
 - Sequence of the `ORDER BY` columns, when the query has one
 
-Only matching pairs go into `verified.jsonl`. In the v3 dataset all 15,105 pairs pass. The v2 build had one failure, a real edge case (`NOT IN` against an empty subquery keeps NULL keys in SQL), which exposed a generator bug; v3 renders the exact semantics instead of dropping the pair.
+Only matching pairs go into `verified.jsonl`. In the v4 dataset 20,068 of 20,105 pairs pass (the failures are mostly `CORR` dividing by zero under ANSI mode); in v3 all 15,105 passed. The v2 build had one failure, a real edge case (`NOT IN` against an empty subquery keeps NULL keys in SQL), which exposed a generator bug; v3 renders the exact semantics instead of dropping the pair.
 
 ### 3. Feature-Signature Splitting (`convert_sql_pyspark.py`)
 Random row-level splitting leaks: near-identical query structures with different constants land in both train and test. Instead:
@@ -101,7 +101,7 @@ Random row-level splitting leaks: near-identical query structures with different
 - Base model: `Qwen2.5-Coder-3B-Instruct-4bit`
 - LoRA fine-tuning in unified memory with `mlx-lm`.
 - Peak memory during training: **~9.7 GB**. That fits a 16 GB Mac, but not alongside Ollama: running an evaluation during training caused a Metal out-of-memory crash.
-- Speed: ~0.17–0.19 it/s on a base M2, ~1 h 50 min for 1,200 iterations.
+- v2/v3: ~1 h 50 min for 1,200 iterations of 4 short samples. v4 (samples up to 3.1k tokens): batch 2 × 2 accumulation with gradient checkpointing, ~5 h 15 min, run through `train_resumable.py` so a Metal abort ("Impacting Interactivity") resumes from the last checkpoint.
 
 ---
 
