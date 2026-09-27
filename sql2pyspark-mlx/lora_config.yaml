@@ -1,17 +1,19 @@
-# LoRA fine-tune of Qwen2.5-Coder-3B-Instruct (4-bit MLX) on the SQL -> PySpark dataset (v4: + long pipelines,
-# advanced Spark SQL and nested data; v2/v3 used the same settings with max_seq_length 1024).
+# LoRA fine-tune of Qwen2.5-Coder-3B-Instruct (4-bit MLX) on the SQL -> PySpark dataset.
+# v5: CONTINUES from the v4 adapters (resume_adapter_file) on a replay-heavy mix (55% classic families, 25% short v4
+# features, 20% pipelines) with half the peak learning rate. v4 trained from scratch with peak 1e-4; v2/v3 used
+# batch 4, max_seq_length 1024 and no gradient checkpointing (configs in runs/v2..v4/).
 # Run from sql2pyspark-mlx/:   mlx_lm.lora -c lora_config.yaml
 model: mlx-community/Qwen2.5-Coder-3B-Instruct-4bit
 train: true
 fine_tune_type: lora
 data: ./data                 # train.jsonl / valid.jsonl / test.jsonl from convert_sql_pyspark.py
 adapter_path: ./adapters
+resume_adapter_file: ./runs/v4/adapters/adapters.safetensors   # v5: start from v4
 seed: 0
 
-# v4: 1,200 optimizer updates of 4 samples (like v2/v3), done as 2,400 micro-batches of 2 with gradient
-# accumulation: 4 x ~2.7k-token samples do not fit in the ~10.7 GB of GPU memory a 16 GB Mac allows, even
-# with gradient checkpointing (dry run on the 64 longest samples: batch 4 -> Metal OOM, batch 2 + checkpointing
-# -> 9.8 GB peak). ~0.28 epoch over 16.9k pairs; ~5 h on a base M2.
+# 1,200 optimizer updates of 4 samples, done as 2,400 micro-batches of 2 with gradient accumulation: 4 x ~2.7k-token
+# samples do not fit in the ~10.7 GB of GPU memory a 16 GB Mac allows, even with gradient checkpointing (v4 dry run
+# on the 64 longest samples: batch 4 -> Metal OOM, batch 2 + checkpointing -> 9.8 GB peak). ~6 h on a base M2.
 iters: 2400
 batch_size: 2
 grad_accumulation_steps: 2
@@ -26,12 +28,12 @@ lora_parameters:
   scale: 20.0
 
 optimizer: adamw
-learning_rate: 1.0e-4
+learning_rate: 5.0e-5          # v5: half of v4's peak, since it continues from v4
 lr_schedule:
   name: cosine_decay
-  warmup: 100
+  warmup: 50
   warmup_init: 1.0e-6
-  arguments: [1.0e-4, 1100, 1.0e-5]   # [init, decay_steps, end]
+  arguments: [5.0e-5, 1150, 5.0e-6]   # [init, decay_steps, end]  (optimizer updates)
 
 steps_per_report: 50
 steps_per_eval: 600

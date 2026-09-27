@@ -323,6 +323,7 @@ class Gen:
     ctx: Ctx
     feats: set
     names: set = field(default_factory=set)     # CTE names in use
+    filters: int = 0                            # optional in-stage filters used so far (v5: at most 1 per query)
 
 
 def fresh(name, taken):
@@ -423,7 +424,7 @@ def threshold(table, col, date_only=False):
     if info is None:
         skip()
     lo, hi, _ = info
-    t = lo + (hi - lo) * rng.uniform(0.05, 0.45)
+    t = lo + (hi - lo) * rng.uniform(0.03, 0.25)      # v5: earlier thresholds (fewer empty results)
     t = t.replace(minute=0, second=0, microsecond=0)
     if date_only or chance(0.5):
         return t.strftime("%Y-%m-%d"), True
@@ -514,10 +515,22 @@ def stg_clean(g: Gen, cur: R, last: bool) -> Out:
     if nullable_keys and chance(0.5):
         conds.append(IsNull(C(choice(nullable_keys).name, "int"), neg=True))
         g.feats.add("not_null_filter")
+    dcats = [c for c in cur.of("cat", pooled=True) if c.nullable]
+    if dcats and chance(0.2):
+        # v5: null-safe comparison with a literal
+        c = choice(dcats)
+        v = G.pool_val(c)
+        neg = chance(0.7)
+        conds.append(T(lambda st_, c=c, v=v, neg=neg: f"{c.name} {st_.k('IS DISTINCT FROM' if neg else 'IS NOT DISTINCT FROM')} '{v}'",
+                       lambda ctx_, c=c, v=v, neg=neg: f"{'~' if neg else ''}F.col({pyq(c.name)}).eqNullSafe(F.lit({pyq(v)}))",
+                       kind="bool", wrap=True))
+        g.feats.add("is_distinct_from")
     if not conds or chance(0.35):
         p, f = G.atom(rel)
         conds.append(p)
         g.feats.add(f"where_{f}")
+    if len(conds) > 2:
+        conds = rng.sample(conds, 2)        # v5: at most two conditions (stacked filters emptied many pipelines)
     derived = []
     taken = set(cur.names())
     for _ in range(rng.choice([1, 1, 2])):
@@ -583,10 +596,27 @@ def stg_dedup(g: Gen, cur: R, last: bool) -> Out:
     if form.startswith("qualify"):
         g.feats.add("qualify")
     k = st.k
+    # v5: explicit output columns (no rn) instead of SELECT *
+    explicit = form != "qualify_col" and chance(0.7 if last else 0.4)
+    keep = subset_cols(cur) if explicit else None
+    if explicit:
+        g.feats.add("explicit_projection")
     if form == "qualify_expr":
-        sql = sql_select(g, ["*"], cur.name, qualify=f"{wf.sql(st)} = 1")
-        steps = [f".withColumn({pyq(rn)}, {wf.py(ctx)})", f".filter(F.col({pyq(rn)}) == 1)", f".drop({pyq(rn)})"]
-        cols = list(cur.cols)
+        sql = sql_select(g, [c.name for c in keep] if explicit else ["*"], cur.name, qualify=f"{wf.sql(st)} = 1")
+        steps = [f".withColumn({pyq(rn)}, {wf.py(ctx)})", f".filter(F.col({pyq(rn)}) == 1)"]
+        steps.append(call("select", [pyq(c.name) for c in keep]) if explicit else f".drop({pyq(rn)})")
+        cols = keep if explicit else list(cur.cols)
+    elif explicit:
+        inner = sql_select(g, ["*", f"{wf.sql(st)} {k('AS')} {rn}"], cur.name)
+        if st.multiline:
+            inner = "\n".join("    " + line for line in inner.split("\n"))
+            frm = f"(\n{inner}\n) {choice(['ranked', 't', 'x'])}"
+        else:
+            frm = f"({inner}) {choice(['ranked', 't', 'x'])}"
+        sql = sql_select(g, [c.name for c in keep], frm, where=[f"{rn} = 1"])
+        steps = [f".withColumn({pyq(rn)}, {wf.py(ctx)})", f".filter(F.col({pyq(rn)}) == 1)",
+                 call("select", [pyq(c.name) for c in keep])]
+        cols = keep
     else:
         if form == "qualify_col":
             sql = sql_select(g, ["*", f"{wf.sql(st)} {k('AS')} {rn}"], cur.name, qualify=f"{rn} = 1")
@@ -715,10 +745,67 @@ def win_col(n, e, cur: R) -> Column:
     return Column(n, kind, lo=lo, hi=hi)
 
 
+def subset_cols(cur: R, must=(), p=0.55, lo=2):
+    """Keys + `must` + a random subset of the other plain columns, in their original order (v5: exact projections)."""
+    keep = set(cur.keys or []) | set(must)
+    plain = [c for c in cur.cols if c.kind in PLAIN_KINDS]
+    picked = [c for c in plain if c.name in keep or chance(p)]
+    if len(picked) < lo:
+        picked = plain[:max(lo, len(picked))]
+    return picked
+
+
+def shared_spec_items(g: Gen, cur: R, taken: set):
+    """3-4 window functions over ONE spec, so the PySpark reuses a single Window variable (v5)."""
+    parts = part_candidates(cur)
+    orders = order_candidates(cur)
+    nums = num_cols(cur)
+    if not orders or not nums or not cur.keys:
+        skip()
+    part = [C(c.name, c.kind) for c in rng.sample(parts, min(len(parts), rng.choice([1, 1, 2])))] if parts else []
+    oc = choice(orders)
+    order = [(C(oc.name, oc.kind), False, None)] + tiebreak(cur)
+    items = []
+    if chance(0.6):
+        frame = ("ROWS", "UP", "CR") if chance(0.6) else ("ROWS", -rng.choice([2, 3, 6]), "CR")
+        spec = WSpec(part, order, frame)
+        fns = rng.sample([("SUM", "sum"), ("AVG", "avg"), ("MAX", "max"), ("MIN", "min"), ("COUNT", "count")], rng.choice([3, 3, 4]))
+        v = choice(nums)
+        label = "running" if frame[1] == "UP" else f"last{-frame[1] + 1}"
+        for f in fns:
+            n = fresh(f"{label}_{f[1]}_{v.name}", taken)
+            taken.add(n)
+            items.append((WFn(f[0], f[1], [C(v.name, v.kind)], spec, kind="int" if f[0] == "COUNT" else "double"), n))
+        g.feats.add("window_shared_frame")
+    else:
+        spec = WSpec(part, order)
+        vs = rng.sample(nums, min(len(nums), 2))
+        for v in vs:
+            for f in rng.sample([("LAG", "lag"), ("LEAD", "lead")], rng.choice([1, 2])):
+                n = fresh(f"{'prev' if f[0] == 'LAG' else 'next'}_{v.name}", taken)
+                taken.add(n)
+                items.append((WFn(f[0], f[1], [C(v.name, v.kind)], spec, kind=v.kind), n))
+        n = fresh(choice(["row_seq", "event_seq", "seq_no"]), taken)
+        taken.add(n)
+        items.append((WFn("ROW_NUMBER", "row_number", [], spec), n))
+        g.feats.add("window_shared_order")
+    g.feats.add("window_reuse")
+    return items
+
+
 def stg_windows(g: Gen, cur: R, last: bool) -> Out:
     st, ctx = g.st, g.ctx
     taken = set(cur.names())
-    items = [make_window_item(g, cur, taken) for _ in range(rng.choice([2, 2, 3, 3, 4, 5]))]
+    if chance(0.35):
+        try:
+            items = shared_spec_items(g, cur, taken)
+        except G.Skip:
+            items = []
+        items += [make_window_item(g, cur, taken) for _ in range(rng.choice([0, 1]))]
+    else:
+        items = [make_window_item(g, cur, taken) for _ in range(rng.choice([2, 2, 3, 3, 4, 5]))]
+    if not items:
+        skip()
     # named WINDOW clause when two items share a spec
     wins = [e for e, _ in items if isinstance(e, WFn)]
     window_clause = []
@@ -734,14 +821,29 @@ def stg_windows(g: Gen, cur: R, last: bool) -> Out:
                     w.named = nm
                 window_clause.append(f"{nm} {st.k('AS')} ({sq})")
                 g.feats.add("named_window")
-    explicit = chance(0.35)
-    items_sql = ([c.name for c in cur.cols] if explicit else ["*"]) + [sel_sql(e, n, st) for e, n in items]
-    sql = sql_select(g, items_sql, cur.name, window=window_clause or None)
-    if chance(0.5):
-        steps = [f".withColumn({pyq(n)}, {e.py(ctx)})" for e, n in items]
+    # v5: optional filter in the same SELECT (applied before the windows)
+    conds = []
+    rel = cur.plain_rel()
+    if rel.cols and g.filters < 1 and chance(0.35):
+        p, f = G.atom(rel)
+        conds.append(p)
+        g.filters += 1
+        g.feats.add("window_with_where")
+    # v5: explicit projections (a subset of the columns) instead of SELECT *
+    explicit = chance(0.8 if last else 0.5)
+    keep = subset_cols(cur) if explicit else list(cur.cols)
+    items_sql = ([c.name for c in keep] if explicit else ["*"]) + [sel_sql(e, n, st) for e, n in items]
+    where_sql = [(f"({p.sql(st)})" if isinstance(p, Or) else p.sql(st)) for p in conds]
+    sql = sql_select(g, items_sql, cur.name, where=where_sql, window=window_clause or None)
+    steps = [f".filter({conds[0].py(ctx)})"] if conds else []
+    if explicit:
+        steps.append(call("select", [pyq(c.name) for c in keep] + [sel_py(e, n, ctx) for e, n in items]))
+        g.feats.add("explicit_projection")
+    elif chance(0.5):
+        steps += [f".withColumn({pyq(n)}, {e.py(ctx)})" for e, n in items]
     else:
-        steps = [call("select", ['"*"'] + [sel_py(e, n, ctx) for e, n in items])]
-    cols = list(cur.cols) + [win_col(n, e, cur) for e, n in items]
+        steps.append(call("select", ['"*"'] + [sel_py(e, n, ctx) for e, n in items]))
+    cols = keep + [win_col(n, e, cur) for e, n in items]
     g.feats.add("stage_windows")
     return Out(sql, cur.var, steps, cols, cur.keys, hint=choice(["enriched", "with_windows", "metrics", "scored"]),
                comment=choice(["Window metrics over several different partitions", "Running and moving aggregates",
@@ -808,9 +910,17 @@ def stg_session(g: Gen, cur: R, last: bool) -> Out:
         flag_py = chain(cur.var, [f".withColumn({pyq(flag)}, {case_py})"])
         extra = [(fname, fname, flag_sql, flag_py, "Flag rows that start a new session (gap > interval)")]
         base_cols = list(cur.cols) + [Column(flag, "int", lo=0, hi=1)]
-    sql = sql_select(g, ["*", f"{run.sql(st)} {k('AS')} {sess}"], fname)
-    steps = [f".withColumn({pyq(sess)}, {run.py(ctx)})"]
-    cols = base_cols + [Column(sess, "int", lo=0, hi=10, nullable=False)]
+    if chance(0.75 if last else 0.4):
+        # v5: explicit projection that drops the helper columns (flag / previous timestamp)
+        keep = subset_cols(cur, must=[t.name] + [p_.name for p_ in part])
+        sql = sql_select(g, [c.name for c in keep] + [f"{run.sql(st)} {k('AS')} {sess}"], fname)
+        steps = [call("select", [pyq(c.name) for c in keep] + [f"{run.py(ctx)}.alias({pyq(sess)})"])]
+        cols = keep + [Column(sess, "int", lo=0, hi=10, nullable=False)]
+        g.feats.add("explicit_projection")
+    else:
+        sql = sql_select(g, ["*", f"{run.sql(st)} {k('AS')} {sess}"], fname)
+        steps = [f".withColumn({pyq(sess)}, {run.py(ctx)})"]
+        cols = base_cols + [Column(sess, "int", lo=0, hi=10, nullable=False)]
     return Out(sql, fname, steps, cols, cur.keys, hint=choice(["sessionized", "sessions", "islands"]),
                comment="Running sum of the flag = session number", extra=extra)
 
@@ -849,8 +959,14 @@ def stg_join(g: Gen, cur: R, last: bool) -> Out:
             skip()
         chosen = rng.sample(pcols, min(len(pcols), rng.randint(1, 3)))
         how = choice(["left", "inner", "left"])
-        cond_sql = f"{sa}.{fkc.name} = {pa}.id"
-        cond_py = f"F.col({pyq(sa + '.' + fkc.name)}) == F.col({pyq(pa + '.id')})"
+        if fkc.nullable and chance(0.25):
+            # v5: null-safe key comparison
+            cond_sql = f"{sa}.{fkc.name} <=> {pa}.id"
+            cond_py = f"F.col({pyq(sa + '.' + fkc.name)}).eqNullSafe(F.col({pyq(pa + '.id')}))"
+            g.feats.add("null_safe_join")
+        else:
+            cond_sql = f"{sa}.{fkc.name} = {pa}.id"
+            cond_py = f"F.col({pyq(sa + '.' + fkc.name)}) == F.col({pyq(pa + '.id')})"
         outs = []
         for c in chosen:
             n = c.name if c.name not in taken else fresh(f"{G.singular(parent.name)}_{c.name}", taken)
@@ -858,13 +974,31 @@ def stg_join(g: Gen, cur: R, last: bool) -> Out:
             outs.append((c, n))
         join_sql = f"{k('LEFT JOIN') if how == 'left' else k(st.inner_kw)} {parent.name} {pa}\n    {k('ON')} {cond_sql}" \
             if st.multiline else f"{k('LEFT JOIN') if how == 'left' else k(st.inner_kw)} {parent.name} {pa} {k('ON')} {cond_sql}"
-        items_sql = [f"{sa}.*"] + [f"{pa}.{c.name}" + ("" if n == c.name else f" {k('AS')} {n}") for c, n in outs]
-        sql = sql_select(g, items_sql, f"{cur.name} {sa}", joins=[join_sql])
+        # v5: explicit source columns instead of s.* (keys + a subset), and an optional filter on the parent
+        explicit = chance(0.75 if last else 0.5)
+        keep = subset_cols(cur, must=[fkc.name]) if explicit else list(cur.cols)
+        src_sql = [f"{sa}.{c.name}" for c in keep] if explicit else [f"{sa}.*"]
+        src_py = [pyq(f"{sa}.{c.name}") for c in keep] if explicit else [pyq(sa + ".*")]
+        where_sql, where_py = [], []
+        from sqlspec import Rel
+        prel = Rel(parent.name, f"df_{parent.name}", [c for c in parent.columns if c.kind in PLAIN_KINDS and c.name != "id"
+                                                         and (c.kind not in ("cat", "str") or c.pool)], table=parent)
+        if prel.cols and g.filters < 1 and chance(0.35):
+            g.filters += 1
+            p_, f_ = G.atom(prel)
+            where_sql.append(_qualify_sql(p_, pa, st))
+            where_py.append(f".filter({_qualify_py(p_, pa, ctx)})")
+            g.feats.add("join_with_where")
+        items_sql = src_sql + [f"{pa}.{c.name}" + ("" if n == c.name else f" {k('AS')} {n}") for c, n in outs]
+        sql = sql_select(g, items_sql, f"{cur.name} {sa}", joins=[join_sql], where=where_sql)
         steps = [f".alias({pyq(sa)})",
-                 f".join(df_{parent.name}.alias({pyq(pa)}), {cond_py}, {pyq(how)})",
-                 call("select", [pyq(sa + ".*")] + [f"F.col({pyq(pa + '.' + c.name)})" + (f".alias({pyq(n)})" if n != c.name else "")
-                                                   for c, n in outs])]
-        cols = list(cur.cols) + [Column(n, c.kind, pool=c.pool, lo=c.lo, hi=c.hi, nullable=True) for c, n in outs]
+                 f".join(df_{parent.name}.alias({pyq(pa)}), {cond_py}, {pyq(how)})"] + where_py + [
+                 call("select", src_py + [f"F.col({pyq(pa + '.' + c.name)})" + (f".alias({pyq(n)})" if n != c.name else "")
+                                          for c, n in outs])]
+        cols = keep + [Column(n, c.kind, pool=c.pool, lo=c.lo, hi=c.hi, nullable=True) for c, n in outs]
+        if explicit:
+            g.feats.add("explicit_projection")
+        keys = cur.keys if cur.keys and all(x in [c.name for c in keep] for x in cur.keys) else None
         g.feats |= {"stage_join", "join_fk", f"join_{how}"}
         hint, comment = choice(["joined", "with_dims", "enriched"]), f"Attach {parent.name} attributes"
     else:
@@ -1204,8 +1338,9 @@ def stg_agg(g: Gen, cur: R, last: bool) -> Out:
     num_aggs = [(e, n) for e, n in aggs if e.kind in ("int", "double")]
     if num_aggs and chance(0.3):
         e, n = choice(num_aggs)
-        op = choice([">", ">=", "<"])
-        val = 1 if e.kind == "int" else 0
+        op = choice([">", ">=", ">", "<"])
+        # v5: "< 0" / "> 1" thresholds often emptied the result; keep the check meaningful
+        val = (1 if e.kind == "int" else 0) if op != "<" else (1000000 if e.kind == "double" else 1000)
         if chance(0.5):
             having = f"{n} {op} {val}"
         else:
@@ -1273,6 +1408,96 @@ def stg_agg(g: Gen, cur: R, last: bool) -> Out:
     return Out(sql, cur.var, steps, cols, out_keys, hint=choice(["summary", "totals", "grouped", "daily", "stats"]),
                comment=choice(["Aggregate with conditional metrics", "Grouped metrics",
                                "Multi-level aggregation"]), order=[o[0] for o in order])
+
+
+def stg_join_agg(g: Gen, cur: R, last: bool) -> Out:
+    """v5: join a parent table and aggregate in ONE SELECT, often with GROUPING SETS / ROLLUP / CUBE + GROUPING_ID."""
+    st, ctx = g.st, g.ctx
+    k = st.k
+    parents = [(c, t) for c, t in fk_parents(cur) if any(x.kind == "cat" and x.pool for x in t.columns)]
+    if not parents:
+        skip()
+    fkc, parent = choice(parents)
+    sa = choice(["s", "a", "src", "e"])
+    pa = choice(["p", "d", "dim", parent.name[0]])
+    if pa == sa:
+        pa = "p"
+    pcats = [c for c in parent.columns if c.kind == "cat" and c.pool]
+    scats = [c for c in cur.of("cat", pooled=True) if c.name != fkc.name]
+    keys = [(pa, c) for c in rng.sample(pcats, min(len(pcats), rng.choice([1, 1, 2])))]
+    if scats and (len(keys) < 2 or chance(0.5)):
+        keys.append((sa, choice(scats)))
+    names = []
+    both = set(cur.names()) & {c.name for c in parent.columns}
+    for a, c in keys:
+        owner = parent.name if a == pa else (cur.base.name if cur.base else "src")
+        # a name present in both tables would make the grouping-set reference ambiguous
+        n = f"{G.singular(owner)}_{c.name}" if (c.name in both or c.name in names) else c.name
+        names.append(n)
+    nums = [c for c in num_cols(cur) if c.name != fkc.name]
+    if not nums:
+        skip()
+    taken = set(names)
+    aggs = [(f"{k('COUNT')}(*)", 'F.count("*")', fresh(choice(["cnt", "rows_total", "num_rows"]), taken), "int")]
+    taken.add(aggs[-1][2])
+    for v in rng.sample(nums, min(len(nums), rng.choice([1, 2]))):
+        fn = choice(["SUM", "AVG", "MAX", "MIN"])
+        n = fresh(f"{AGG_NAMES[fn.lower()]}_{v.name}", taken)
+        taken.add(n)
+        if fn in ("SUM", "AVG") and chance(0.5):
+            aggs.append((f"{k('ROUND')}({k(fn)}({sa}.{v.name}), 2)", f"F.round(F.{fn.lower()}(F.col({pyq(sa + '.' + v.name)})), 2)", n, "double"))
+        else:
+            aggs.append((f"{k(fn)}({sa}.{v.name})", f"F.{fn.lower()}(F.col({pyq(sa + '.' + v.name)}))", n, "double"))
+    mode = wchoice([("grouping_sets", 0.4), ("rollup", 0.2), ("cube", 0.15), ("plain", 0.25)] if len(keys) >= 2
+                   else [("rollup", 0.4), ("cube", 0.2), ("plain", 0.4)])
+    gid = mode != "plain" and chance(0.6)
+    how = choice(["inner", "inner", "left"])
+    cond_sql = f"{sa}.{fkc.name} = {pa}.id"
+    cond_py = f"F.col({pyq(sa + '.' + fkc.name)}) == F.col({pyq(pa + '.id')})"
+    key_sql = [f"{a}.{c.name}" for a, c in keys]
+    items_sql = [ks + ("" if n == c.name else f" {k('AS')} {n}") for ks, (a, c), n in zip(key_sql, keys, names)]
+    items_sql += [f"{e} {k('AS')} {n}" for e, _, n, _ in aggs]
+    gid_name = None
+    if gid:
+        gid_name = fresh(choice(["grouping_level", "gid", "level_id"]), taken)
+        items_sql.append(f"{k('GROUPING_ID')}() {k('AS')} {gid_name}")
+    if mode == "plain":
+        group = ", ".join(key_sql)
+    elif mode in ("rollup", "cube"):
+        group = f"{k(mode.upper())} (" + ", ".join(key_sql) + ")"
+    else:
+        sets = [list(range(len(keys))), [0]] + ([[]] if chance(0.6) else [])
+        if len(keys) == 3 and chance(0.5):
+            sets.insert(1, [0, 1])
+        group = f"{k('GROUPING SETS')} (" + ", ".join("(" + ", ".join(key_sql[i_] for i_ in s_) + ")" for s_ in sets) + ")"
+    join_sql = f"{k('LEFT JOIN') if how == 'left' else k(st.inner_kw)} {parent.name} {pa} {k('ON')} {cond_sql}"
+    order = []
+    if last and chance(0.5):
+        o = choice(names + [n for _, _, n, t in aggs])
+        order = [(o, chance(0.5), rng.choice([None, "last", "first"]))]
+    sql = sql_select(g, items_sql, f"{cur.name} {sa}", joins=[join_sql], group=group,
+                     order=order_sql(g, order) if order else None)
+    key_py = [f"F.col({pyq(a + '.' + c.name)}).alias({pyq(n)})" for (a, c), n in zip(keys, names)]
+    if mode == "plain":
+        grp = call("groupBy", key_py)
+    elif mode in ("rollup", "cube"):
+        grp = call(mode, key_py)
+    else:
+        sets_py = "[" + ", ".join("[" + ", ".join(pyq(names[i_]) for i_ in s_) + "]" for s_ in sets) + "]"
+        grp = call("groupingSets", [sets_py] + key_py)
+    agg_py = [f"{py}.alias({pyq(n)})" for _, py, n, _ in aggs] + ([f"F.grouping_id().alias({pyq(gid_name)})"] if gid else [])
+    steps = [f".alias({pyq(sa)})", f".join(df_{parent.name}.alias({pyq(pa)}), {cond_py}, {pyq(how)})", grp,
+             call("agg", agg_py, width=60)]
+    if order:
+        steps.append(call("orderBy", order_py_names(order)))
+    cols = [Column(n, "cat", pool=c.pool) for (a, c), n in zip(keys, names)] + [Column(n, t, lo=0, hi=100) for _, _, n, t in aggs]
+    if gid:
+        cols.append(Column(gid_name, "int", lo=0, hi=7))
+        g.feats.add("grouping_id")
+    g.feats |= {"stage_join_agg", f"group_{mode}", "join_then_group"}
+    return Out(sql, cur.var, steps, cols, names if mode == "plain" else None,
+               hint=choice(["by_dimension", "dim_totals", "rollup_totals"]), comment="Join a dimension and aggregate",
+               order=[o[0] for o in order])
 
 
 def stg_setop(g: Gen, cur: R, last: bool) -> Out:
@@ -1405,17 +1630,21 @@ def stg_unpivot(g: Gen, cur: R, last: bool) -> Out:
     inner = sql_select(g, ids + [c.name for c in vs], cur.name)
     in_items = ", ".join(c.name + (f" {k('AS')} {a}" if u else "") for c, a, u in zip(vs, al, use_alias))
     un = k("UNPIVOT") + (" " + k("INCLUDE NULLS") if include_nulls else "")
+    ualias = f" {choice(['u', 'unp', 'long_rows'])}" if chance(0.3) else ""
     if st.multiline:
         inner = "\n".join("    " + line for line in inner.split("\n"))
-        frm = f"(\n{inner}\n) src\n{un} (\n    {vname} {k('FOR')} {mname} {k('IN')} ({in_items})\n)"
+        frm = f"(\n{inner}\n) src\n{un} (\n    {vname} {k('FOR')} {mname} {k('IN')} ({in_items})\n){ualias}"
     else:
-        frm = f"({inner}) src {un} ({vname} {k('FOR')} {mname} {k('IN')} ({in_items}))"
-    sql = sql_select(g, ["*"], frm)
+        frm = f"({inner}) src {un} ({vname} {k('FOR')} {mname} {k('IN')} ({in_items})){ualias}"
+    # v5: SELECT * or the explicit output list (ids, name column, value column)
+    out_items = ["*"] if chance(0.5) else ids + [mname, vname]
+    sql = sql_select(g, out_items, frm)
+    g.feats.add("unpivot_explicit_select" if out_items != ["*"] else "unpivot_star")
     sel = [pyq(i) for i in ids] + [(f"F.col({pyq(c.name)}).alias({pyq(lb)})" if lb != c.name else pyq(c.name))
                                     for c, lb in zip(vs, labels)]
     steps = [call("select", sel),
-             call("unpivot", [f"[{', '.join(pyq(i) for i in ids)}]", f"[{', '.join(pyq(lb) for lb in labels)}]",
-                              pyq(mname), pyq(vname)])]
+             call("unpivot", [f"ids=[{', '.join(pyq(i) for i in ids)}]", f"values=[{', '.join(pyq(lb) for lb in labels)}]",
+                              f"variableColumnName={pyq(mname)}", f"valueColumnName={pyq(vname)}"])]
     if not include_nulls:
         steps.append(f".filter(F.col({pyq(vname)}).isNotNull())")
     cols = [cur.col(i) for i in ids] + [Column(mname, "cat", pool=tuple(labels), nullable=False), Column(vname, "double")]
@@ -1465,7 +1694,12 @@ def stg_lateral(g: Gen, cur: R, last: bool) -> Out:
         join_sql = f"{k('LEFT JOIN LATERAL') if left else k('JOIN LATERAL')} (\n        {sub}\n    ) {la} {k('ON')} {k('TRUE')}"
     else:
         join_sql = f"{k('LEFT JOIN LATERAL') if left else k('JOIN LATERAL')} ({sub}) {la} {k('ON')} {k('TRUE')}"
-    items_sql = [f"{sa}.*"] + [f"{la}.{n}" for _, n in names]
+    # v5: explicit source columns instead of s.*
+    explicit = chance(0.75 if last else 0.5)
+    keep = subset_cols(cur) if explicit else list(cur.cols)
+    if explicit:
+        g.feats.add("explicit_projection")
+    items_sql = ([f"{sa}.{c.name}" for c in keep] if explicit else [f"{sa}.*"]) + [f"{la}.{n}" for _, n in names]
     sql = sql_select(g, items_sql, f"{cur.name} {sa}", joins=[join_sql])
     wspec = (f"Window.partitionBy({', '.join('F.col(' + pyq(sa + '.' + kk) + ')' for kk in cur.keys)})"
              f".orderBy(F.col({pyq(ca + '.' + oc.name)}).desc(), F.col({pyq(ca + '.id')}).desc())")
@@ -1475,9 +1709,9 @@ def stg_lateral(g: Gen, cur: R, last: bool) -> Out:
              f".join(df_{child.name}.alias({pyq(ca)}), {' & '.join(conds_py)}, {pyq('left' if left else 'inner')})",
              f".withColumn({pyq(rn)}, F.row_number().over({wv}))",
              f".filter(F.col({pyq(rn)}) == 1)",
-             call("select", [pyq(sa + ".*")] + [f"F.col({pyq(ca + '.' + x.name)})" + (f".alias({pyq(n)})" if n != x.name else "")
-                                               for x, n in names])]
-    cols = list(cur.cols) + [Column(n, x.kind, pool=x.pool, lo=x.lo, hi=x.hi) for x, n in names]
+             call("select", ([pyq(f"{sa}.{c.name}") for c in keep] if explicit else [pyq(sa + ".*")]) +
+                  [f"F.col({pyq(ca + '.' + x.name)})" + (f".alias({pyq(n)})" if n != x.name else "") for x, n in names])]
+    cols = keep + [Column(n, x.kind, pool=x.pool, lo=x.lo, hi=x.hi) for x, n in names]
     g.feats |= {"stage_lateral", "lateral_join", "lateral_left" if left else "lateral_inner", "window_row_number"}
     return Out(sql, cur.var, steps, cols, cur.keys, hint=choice(["with_latest", "latest_match", "with_last"]),
                comment=f"Latest matching {G.singular(child.name)} per row (LATERAL ... LIMIT 1)")
@@ -1529,7 +1763,7 @@ def stg_final(g: Gen, cur: R, last: bool) -> Out:
             g.feats.add("rlike")
     # correlated scalar subquery
     fks_ = [c for c in keep if c.kind == "fk" and scalar_sources(c.name)]
-    if fks_ and chance(0.45):
+    if fks_ and chance(0.6):
         c = choice(fks_)
         t, nums = choice(scalar_sources(c.name))
         v = choice(nums)
@@ -1649,18 +1883,37 @@ def stg_explode(g: Gen, cur: R, last: bool) -> Out:
         else:
             pos = form == "posexplode"
             fn = ("POSEXPLODE" if pos else "EXPLODE")
-            lv = f"{k('LATERAL VIEW')} {k('OUTER') + ' ' if outer else ''}{k(fn)}({a.name}) {ta} {k('AS')} " + (f"pos, {item}" if pos else item)
-            items_sql = [c.name for c in keep] + (["pos"] if pos else []) + [f"{item}.{f_}" + ("" if n == f_ else f" {k('AS')} {n}") for f_, n, _ in outs]
-            sql = sql_select(g, items_sql, cur.name, joins=[lv])
+            # v5: table alias with qualified columns, item aliases unlike the field names, pos + 1 numbering
+            tq = choice(["t", "c", "src", "base"]) if chance(0.5) else None
+            if tq == ta:
+                tq = "t0"
+            item = choice([item, "line", "entry", "elem", "rec"]) if chance(0.5) else item
+            if item in [c.name for c in cur.cols]:
+                item = "item_" + item
+            pos_name = "pos"
+            pos_out = None
+            if pos and chance(0.5):
+                pos_out = fresh(choice(["line_no", "position", "item_no"]), taken)
+                taken.add(pos_out)
+                g.feats.add("posexplode_plus_one")
+            arr_ref = f"{tq}.{a.name}" if tq else a.name
+            lv = f"{k('LATERAL VIEW')} {k('OUTER') + ' ' if outer else ''}{k(fn)}({arr_ref}) {ta} {k('AS')} " + (f"{pos_name}, {item}" if pos else item)
+            pos_sql = ([f"{pos_name} + 1 {k('AS')} {pos_out}"] if pos_out else [pos_name]) if pos else []
+            items_sql = [f"{tq}.{c.name}" if tq else c.name for c in keep] + pos_sql + \
+                        [f"{item}.{f_}" + ("" if n == f_ else f" {k('AS')} {n}") for f_, n, _ in outs]
+            sql = sql_select(g, items_sql, f"{cur.name} {tq}" if tq else cur.name, joins=[lv])
+            if tq:
+                g.feats.add("lateral_view_aliased")
             if pos:
                 pf = "posexplode_outer" if outer else "posexplode"
-                steps = [call("select", ['"*"', f"F.{pf}({pyq(a.name)}).alias(\"pos\", {pyq(item)})"])]
+                steps = [call("select", ['"*"', f"F.{pf}({pyq(a.name)}).alias({pyq(pos_name)}, {pyq(item)})"])]
             else:
                 steps = [f".withColumn({pyq(item)}, F.{'explode_outer' if outer else 'explode'}({pyq(a.name)}))"]
-            steps.append(call("select", [pyq(c.name) for c in keep] + (['"pos"'] if pos else []) +
+            pos_py = ([f"(F.col({pyq(pos_name)}) + 1).alias({pyq(pos_out)})"] if pos_out else [pyq(pos_name)]) if pos else []
+            steps.append(call("select", [pyq(c.name) for c in keep] + pos_py +
                               [f"F.col({pyq(item + '.' + f_)})" + (f".alias({pyq(n)})" if n != f_ else "") for f_, n, _ in outs]))
-            cols = keep + ([Column("pos", "int", lo=0, hi=4)] if pos else []) + [c for _, _, c in outs]
-            keys = (cur.keys + ["pos"]) if pos and cur.keys and all(x in [c.name for c in keep] for x in cur.keys) and not outer else None
+            cols = keep + ([Column(pos_out or "pos", "int", lo=0, hi=4)] if pos else []) + [c for _, _, c in outs]
+            keys = (cur.keys + [pos_out or "pos"]) if pos and cur.keys and all(x in [c.name for c in keep] for x in cur.keys) and not outer else None
             g.feats |= {"lateral_view", "posexplode" if pos else "explode"}
     elif a.kind == "map":
         kn, vn = fresh(choice(["attr_key", "key", "k"]), taken), None
@@ -1909,11 +2162,12 @@ def try_stages(g: Gen, cur: R, last: bool, options: list) -> Out:
     rest = list(options[1:])
     rng.shuffle(rest)
     for stage in [options[0]] + rest:          # the preferred stage first, then the fallbacks
-        snap = (list(g.ctx.pre), dict(g.ctx.windows), g.ctx.uses_window, set(g.feats), set(g.names))
+        snap = (list(g.ctx.pre), dict(g.ctx.windows), g.ctx.uses_window, set(g.feats), set(g.names), g.filters)
         try:
             return stage(g, cur, last)
         except G.Skip:
             g.ctx.pre[:], g.ctx.windows, g.ctx.uses_window = snap[0], snap[1], snap[2]
+            g.filters = snap[5]
             g.feats.clear()
             g.feats |= snap[3]
             g.names.clear()
@@ -1943,13 +2197,14 @@ def fam_adv_dedup(st, ctx):
 
 def fam_adv_agg(st, ctx):
     t = choice(plain_tables())
-    stages = choice([[stg_agg], [stg_agg], [stg_clean, stg_agg], [stg_windows, stg_agg]])
+    stages = choice([[stg_agg], [stg_agg], [stg_clean, stg_agg], [stg_windows, stg_agg], [stg_join_agg],
+                     [stg_join_agg], [stg_clean, stg_join_agg], [stg_join_agg, stg_final]])
     return run_pipeline(st, ctx, t, stages)
 
 
 def fam_adv_join(st, ctx):
     t = choice(plain_tables())
-    kind = choice(["join", "lateral", "anti"])
+    kind = choice(["join", "lateral", "anti", "lateral", "anti"])
     first = {"join": stg_join, "lateral": stg_lateral, "anti": stg_anti}[kind]
     stages = choice([[first], [first, stg_final], [stg_clean, first], [first, stg_agg]])
     return run_pipeline(st, ctx, t, stages)
@@ -1980,9 +2235,10 @@ def fam_adv_nested(st, ctx):
     return run_pipeline(st, ctx, t, stages)
 
 
-RELATIONAL_MIDDLE = [(stg_windows, 0.25), (stg_dedup, 0.12), (stg_session, 0.12), (stg_join, 0.16), (stg_lateral, 0.08),
-                     (stg_anti, 0.1), (stg_setop, 0.07), (stg_clean, 0.1)]
-ENDINGS = [(stg_agg, 0.45), (stg_final, 0.3), (stg_pivot, 0.1), (stg_unpivot, 0.07), (stg_windows, 0.08)]
+RELATIONAL_MIDDLE = [(stg_windows, 0.24), (stg_dedup, 0.11), (stg_session, 0.11), (stg_join, 0.15), (stg_lateral, 0.12),
+                     (stg_anti, 0.13), (stg_setop, 0.06), (stg_clean, 0.08)]
+ENDINGS = [(stg_agg, 0.35), (stg_join_agg, 0.15), (stg_final, 0.3), (stg_pivot, 0.08), (stg_unpivot, 0.06),
+           (stg_windows, 0.06)]
 
 
 def fam_pipeline(st, ctx):
@@ -1990,7 +2246,7 @@ def fam_pipeline(st, ctx):
     st.multiline = chance(0.92)
     nested = chance(0.3)
     t = choice(nested_tables() if nested else plain_tables())
-    n = rng.choice([4, 4, 5, 5, 6, 7, 8])
+    n = rng.choice([5, 5, 6, 6, 7, 8])      # v5: longer (v4: 4-8)
     stages: list = []
     if nested:
         stages.append([stg_explode, stg_nested_select])
@@ -2004,10 +2260,12 @@ def fam_pipeline(st, ctx):
         stages.append([first] + [s for s in middle if s is not first and s is not stg_setop])
     end = wchoice(ENDINGS)
     stages.append([end] if end in (stg_agg, stg_final) else [end, stg_agg, stg_final])
+    if end is stg_join_agg:
+        stages[-1] = [stg_join_agg, stg_agg]
     if end in (stg_agg, stg_pivot) and chance(0.35):
         stages.append([stg_final])
     return run_pipeline(st, ctx, t, stages)
 
 
 FAMILIES = [(fam_adv_window, 8), (fam_adv_dedup, 5), (fam_adv_agg, 8), (fam_adv_join, 8), (fam_adv_reshape, 6),
-            (fam_adv_setop, 4), (fam_adv_session, 5), (fam_adv_nested, 12), (fam_pipeline, 30)]
+            (fam_adv_setop, 4), (fam_adv_session, 5), (fam_adv_nested, 12), (fam_pipeline, 42)]

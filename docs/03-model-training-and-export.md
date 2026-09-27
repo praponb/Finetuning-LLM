@@ -74,7 +74,25 @@ The first v4 run crashed after ~250 iterations with `[METAL] Command buffer exec
 
 ## 📊 Training Dynamics (`train.log`)
 
-`sql2pyspark-mlx/train.log` is the **v4** run (restarted with `train_resumable.py` at 09:47 after the Metal crash; finished at 15:04 without another crash). Iterations are micro-batches of 2 samples; the v2 and v3 logs are kept in `sql2pyspark-mlx/runs/v2/` and `runs/v3/`. Measured on a base Apple M2 (16 GB):
+### v5 (continued from v4)
+`sql2pyspark-mlx/train.log` is now the **v5** run: `resume_adapter_file: ./runs/v4/adapters/adapters.safetensors`, peak learning rate 5e-5 (50 warmup updates, cosine to 5e-6), 1,200 updates of 4 samples on the v5 mix (55% classic, 25% short v4 features, 20% pipelines). 17:17 → 22:56 (5 h 39 min) without a crash; peak memory 10.31 GB.
+
+```
+v5 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
+───────────────────────────────────────────────────────────────────────────────────────────────
+1        0.030       —             —                —               —                 —
+50       —           0.017         2.452e-5         0.138           23,532            8.69 GB
+600      0.020       0.018         4.503e-5         0.116           304,350           10.31 GB
+1200     0.017       0.014         2.916e-5         0.120           607,853           10.31 GB
+1800     0.014       0.012         1.223e-5         0.105           913,624           10.31 GB
+2400     0.012       0.008         5.000e-6         0.139           1,211,697         10.31 GB
+```
+
+The v4 run below trained from scratch; its log is in `sql2pyspark-mlx/runs/v4/train.log`.
+
+### v4 (from scratch)
+
+The **v4** run (restarted with `train_resumable.py` at 09:47 after the Metal crash; finished at 15:04 without another crash). Iterations are micro-batches of 2 samples; the v2 and v3 logs are kept in `sql2pyspark-mlx/runs/v2/` and `runs/v3/`. Measured on a base Apple M2 (16 GB):
 
 ```
 v4 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
@@ -183,11 +201,12 @@ Current tags:
 | Tag | Image ID | Notes |
 |---|---|---|
 | `sql2pyspark:latest` | `aa95ad200568` | = v3, promoted 2026-09-26 |
-| `sql2pyspark:v4` | `23108327a0d7` | exported 2026-09-27; not promoted (see [Evaluation](04-evaluation-and-benchmarking.md)) |
+| `sql2pyspark:v5` | `b6a1ace642a4` | exported 2026-09-27 (continued from v4); not promoted (see [Evaluation](04-evaluation-and-benchmarking.md)) |
+| `sql2pyspark:v4` | `23108327a0d7` | exported 2026-09-27; not promoted |
 | `sql2pyspark:v3` | `aa95ad200568` | current model |
 | `sql2pyspark:v2` | `fb27933c2519` | previous model; rollback: `ollama cp sql2pyspark:v2 sql2pyspark:latest` |
 | `sql2pyspark:v1` | `3dd2beaef9ff` | template-based v1 |
 
-`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v4** weights (last export); Ollama keeps its own copy of every tag, so `latest` still serves v3. The v2 and v3 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` and `runs/v3/`; their GGUFs live only inside Ollama.
+`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v5** weights (last export); Ollama keeps its own copy of every tag, so `latest` still serves v3. The v2, v3 and v4 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/`, `runs/v3/` and `runs/v4/`; their GGUFs live only inside Ollama.
 
 The model is served at `POST http://localhost:11434/api/chat`.

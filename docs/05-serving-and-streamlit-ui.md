@@ -29,7 +29,7 @@ sequenceDiagram
 
 ## 🦙 Ollama Serving Engine
 
-Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v3**; `sql2pyspark:v4` (exported 2026-09-27, not promoted), `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag, so `sql2pyspark.gguf` on disk now holds v4 while `latest` still serves v3.
+Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v3**; `sql2pyspark:v5` and `sql2pyspark:v4` (exported 2026-09-27, not promoted), `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag, so `sql2pyspark.gguf` on disk now holds v5 while `latest` still serves v3.
 
 ### Server Address
 - Default: `http://localhost:11434`
@@ -98,6 +98,7 @@ def extract_code(text: str) -> str:
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
 - `sql2pyspark:latest` (default, currently v3)
+- `sql2pyspark:v5` (best on the fixed test set and the v4 features; see [Evaluation](04-evaluation-and-benchmarking.md))
 - `sql2pyspark:v4` (better at the v4 features: GROUPING SETS, PIVOT/UNPIVOT, nested data, ...; see [Evaluation](04-evaluation-and-benchmarking.md))
 - `sql2pyspark:v3`
 - `sql2pyspark:v2` (previous model, for comparison)

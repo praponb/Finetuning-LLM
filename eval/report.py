@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 START, END = "<!-- RESULTS:START -->", "<!-- RESULTS:END -->"
 
 
-SET_ORDER = ["holdout", "holdout_v4", "real_queries", "test_meta"]
+SET_ORDER = ["holdout", "holdout_v4", "real_queries", "test_fixed", "test_meta"]
 
 
 def load():

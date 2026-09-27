@@ -168,7 +168,21 @@ Families: `fam_adv_window`, `fam_adv_dedup`, `fam_adv_agg`, `fam_adv_join`, `fam
 
 Row-order-dependent windows (`ROW_NUMBER`, `LAG`, `NTILE`, `ROWS` frames, `FIRST/LAST_VALUE`) always order by the relation's unique key as a tie-breaker, and are skipped once a relation has no unique key (after an explode or a multiplying join), so SQL and PySpark produce the same rows. CTE names never shadow a table name. In a sample of 540 pairs, 99.6% passed the Spark check; the rest were `CORR` dividing by zero on constant groups (Spark 4 runs in ANSI mode).
 
-Known weaknesses (left for v5, because the v4 data was already built): some `HAVING agg < 0` filters and an inherited `NOT IN` over every value of a column return empty results, which makes their Spark check weak (the pairs are still correct).
+Known weaknesses of the v4 data: some `HAVING agg < 0` filters and an inherited `NOT IN` over every value of a column returned empty results, which made their Spark check weak (the pairs were still correct). Both are fixed in v5.
+
+### v5 generator changes
+v5 targets what v4 got wrong on the v4 hold-out set (6 of its 16 misses were wrong column lists) and its regression on classic queries:
+1. **Exact projections**: windows, session, dedup, foreign-key-join and LATERAL stages usually end with an explicit column list (`subset_cols()`: the keys plus a random subset) instead of `SELECT *` / `s.*`, and drop helper columns (session flags, previous timestamps, `rn`). Feature tag `explicit_projection`.
+2. **Null-safe comparisons**: `<=>` keys in foreign-key joins (`.eqNullSafe(...)`) and `IS [NOT] DISTINCT FROM` filters (`~F.col(c).eqNullSafe(F.lit(v))`).
+3. **`stg_join_agg`** (new): join a dimension table and aggregate in one SELECT with `GROUPING SETS` / `ROLLUP` / `CUBE` / plain `GROUP BY` and `GROUPING_ID()` (only with the first three); grouping keys that exist in both tables get distinct aliases.
+4. **`UNPIVOT`**: `unpivot(ids=..., values=..., variableColumnName=..., valueColumnName=...)` keyword arguments, an explicit output list or `SELECT *`, optional alias after `UNPIVOT (...)`.
+5. **Explode**: aliased tables with qualified `LATERAL VIEW` arguments (`FROM carts t LATERAL VIEW OUTER EXPLODE(t.items) li AS line`), item aliases unlike the field names, `pos + 1 AS line_no`.
+6. **More `LATERAL`, `[NOT] EXISTS` and correlated scalar subqueries** (higher stage and family weights).
+7. **Denser, longer pipelines**: 5–8 stages (v4: 4–8); windows and joins can carry a `WHERE` in the same SELECT (at most one such optional filter per query, so results don't become empty); 35% of window stages compute 3–4 functions over one shared spec (`shared_spec_items()`), so the PySpark reuses one `Window` variable instead of defining many.
+8. **Set operations**: 50% of `fam_setop` queries pair differently named columns (v4: 35%), 55% of those are positional; the literal column (`source`, `kind`, `record_type` or `origin`) goes first or last; `SELECT DISTINCT` cross joins are twice as common.
+9. **Weak checks**: `HAVING agg < x` now uses a large threshold, and `NOT IN` never lists every value of a column.
+
+v5 data is generated with `--seed 5` (v4: 0) and 20% pipelines (`fam_pipeline` weight 42); the split drops every pair whose SQL appears in the fixed test set (`convert_sql_pyspark.py --exclude ../eval/test_fixed.jsonl`, 2 pairs). About 36% of pipelines still return an empty result on the 40-row sample tables (stacked dedup / anti-join / set-operation stages); their stages pass the check on thousands of non-empty cases.
 
 ---
 
@@ -225,18 +239,18 @@ All 105 are execution-verified and always go to the training split.
 2. **Multiset equivalence**: rows are normalized (numbers rounded to 4 decimals, dates ISO-formatted, NaN standardized) and compared with `Counter(map(repr, rows))`, so row order doesn't matter.
 3. **Ordering**: if the query has `ORDER BY`, the sequence of the ORDER BY columns must match (rows that tie may come out in either order).
 
-### Verification Run Results (`raw_pairs/verify_report.json`, v4):
+### Verification Run Results (`raw_pairs/verify_report.json`, v5):
 ```json
 {
   "total": 20105,
-  "ok": 20068,
-  "pass_rate": 0.9982,
-  "ok_but_empty_result": 2254,
-  "by_status": { "ok": 20068, "sql_error": 36, "rows": 1 },
-  "seconds": 1185.7
+  "ok": 20073,
+  "pass_rate": 0.9984,
+  "ok_but_empty_result": 2761,
+  "by_status": { "ok": 20073, "sql_error": 25, "rows": 7 },
+  "seconds": 1253.8
 }
 ```
-Built natively with `make data N=20000 WORKERS=4` (~20 min; log in `sql2pyspark-mlx/data_v4.log`). The 36 SQL errors are mostly `CORR` / division by zero under ANSI mode; the pairs that fail are dropped. v3 had all 15,105 pairs passing (561.6 s); the v2 build had 15,104 of 15,105. The v2 failure was a `NOT IN` subquery: when the subquery returns no rows, SQL keeps rows whose key is NULL, but the generated PySpark removed them. v3 renders the exact semantics (see the v3 generator changes above). In v4, 2,254 passing pairs (11%) return an empty result, which makes their check weaker.
+Built natively with `make data N=20000 SEED=5 WORKERS=4` (~21 min; log in `sql2pyspark-mlx/data_v5.log`). v4: 20,068 of 20,105 (`data_v4.log`, now in `runs/v4/`). The 36 SQL errors are mostly `CORR` / division by zero under ANSI mode; the pairs that fail are dropped. v3 had all 15,105 pairs passing (561.6 s); the v2 build had 15,104 of 15,105. The v2 failure was a `NOT IN` subquery: when the subquery returns no rows, SQL keeps rows whose key is NULL, but the generated PySpark removed them. v3 renders the exact semantics (see the v3 generator changes above). In v5, 2,761 passing pairs (14%; v4: 11%) return an empty result, which makes their check weaker; most are long pipelines.
 
 ---
 
@@ -253,11 +267,12 @@ $$\text{Signature} = \text{family} \;\|\; \text{sorted}(\text{features})$$
 3. A signature is only held out if it holds at most 2% of the pairs and every one of its features keeps at least `min_train_per_feature=30` training examples.
 4. All 105 hand-written pairs always go to `train`.
 
-### Final Split Statistics (`data/split_stats.json`, v4):
-- **Verified pairs**: 20,068
-- **Training set (`train.jsonl`)**: 16,924 pairs (8,693 signatures; 7,145 from the v4 families, 2,662 of them pipelines)
-- **Validation set (`valid.jsonl`)**: 2,096 pairs (1,037 signatures)
-- **Test set (`test.jsonl`)**: 1,048 pairs (513 signatures; 399 from the v4 families)
+### Final Split Statistics (`data/split_stats.json`, v5):
+- **Verified pairs**: 20,071 (20,073 minus 2 that match the fixed test set)
+- **Training set (`train.jsonl`)**: 16,927 pairs; mix 55.1% classic families, 24.5% short v4 families, 20.4% pipelines (v4: 58% / 26% / 16%)
+- **Validation set (`valid.jsonl`)**: 2,096 pairs
+- **Test set (`test.jsonl`)**: 1,048 pairs
+- v4: train 16,924 / valid 2,096 / test 1,048 (backup in `runs/v4/data/`)
 - **Signatures shared between train and valid/test**: **0**
 - **Features missing from train**: **0**
 
