@@ -6,6 +6,17 @@ import streamlit as st
 
 # Ollama server; in Docker this points at the host (see docker-compose.yml)
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/")
+LONG_SQL_CHARS = 2000
+
+
+def generation_options(sql: str) -> dict:
+    """Ollama options for one request. On long multi-CTE SQL the model can repeat window definitions until it runs
+    out of tokens; a repetition window of 2,048 tokens (Ollama's default is 64) stops that. It is applied to long
+    inputs only, because on short queries it cost one hold-out query (docs/04, repetition-penalty experiment)."""
+    options = {"temperature": 0.2}
+    if len(sql) > LONG_SQL_CHARS:
+        options["repeat_last_n"] = 2048
+    return options
 
 
 def extract_code(text: str) -> str:
@@ -79,11 +90,9 @@ with col2:
                                 }
                             ],
                             "stream": False,
-                            "options": {
-                                "temperature": 0.2
-                            }
+                            "options": generation_options(sql_input),
                         },
-                        timeout=120
+                        timeout=300 if len(sql_input) > LONG_SQL_CHARS else 120
                     )
 
                     if response.status_code == 200:

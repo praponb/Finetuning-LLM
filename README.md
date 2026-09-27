@@ -7,14 +7,13 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [docs/INDEX.md](docs/INDEX.md) indexes the detailed guides (architecture, data, training, evaluation, serving,
 > file catalog, runbook).
 
-**Current model:** `sql2pyspark:latest` = **v3** (since 2026-09-26): 95% correct results on 62 hand-written queries
-over tables it never saw in training (v2: 90%, v1: 6%). v2 and v1 are kept as `sql2pyspark:v2` / `sql2pyspark:v1`.
-
-**v5 (2026-09-27, available as `sql2pyspark:v5`, not promoted):** continued from v4 on a replay-heavy dataset with
-generator fixes. It is the strongest model overall: 128/150 on a fixed test set (v3 105, v4 110) with v3's accuracy on
-classic queries (95/97 vs. 96/97), and 14/25 on the v4-feature hold-out set (v4 9, v3 3). But it scores 56/62 on the
-original hold-out (v3 59) and still 0/4 on the real-world queries, so by the promotion rule `latest` stays on v3.
-See [v5 results](#v5-results-2026-09-28). **v4** (`sql2pyspark:v4`) is kept for comparison.
+**Current model:** `sql2pyspark:latest` = **v5** (since 2026-09-28). v5 continued from v4 on a replay-heavy dataset with
+generator fixes and is the strongest model overall: 128/150 on a fixed test set (v3 105, v4 110) with v3's accuracy on
+classic queries (95/97 vs. 96/97), and 14/25 on the v4-feature hold-out set (v4 9, v3 3). It scores 56/62 on the
+original hold-out (v3 59) and 0/4 on the real-world queries (like every model), so it misses two conditions of the
+promotion rule; it was promoted anyway by the owner's decision. See [v5 results](#v5-results-2026-09-28).
+**v3** (the previous `latest`, 95% on the hold-out) is kept as `sql2pyspark:v3`: roll back with
+`ollama cp sql2pyspark:v3 sql2pyspark:latest`. v4, v2 and v1 are kept as `sql2pyspark:v4` / `:v2` / `:v1`.
 
 ```
 schemas.py ─┐
@@ -199,7 +198,8 @@ v5 continued from v4 for 1,200 more updates (peak LR 5e-5) on a 55% classic / 25
 with the v5 generator fixes (exact projections, `<=>`, `GROUPING SETS` over joins, `UNPIVOT` keyword arguments, aliased
 explodes, window reuse, denser pipelines). It recovered v3's classic accuracy and solves 5/5 window queries of the v4
 hold-out set (incl. `RANGE` frames, named `WINDOW`, sessionization), `GROUPING SETS` over a join, `LATERAL ... LIMIT 1`,
-the `<=>` join and `LATERAL VIEW OUTER EXPLODE`. It misses the promotion rule on two points, so `latest` stays on v3:
+the `<=>` join and `LATERAL VIEW OUTER EXPLODE`. It misses the promotion rule on two points (below); on 2026-09-28 it was
+promoted to `latest` anyway by the owner's decision, with v3 kept as `sql2pyspark:v3` for rollback:
 
 * **Hold-out 56/62**: besides v3's three failures and v4's `holdout058` (`.distinct()` dropped in a CROSS JOIN), it
   fails `holdout015` (`DATEDIFF(...) / 365` rendered as `... / 365.alias(...)`) and `holdout041` (no `result`).
@@ -218,12 +218,23 @@ the `<=>` join and `LATERAL VIEW OUTER EXPLODE`. It misses the promotion rule on
 
 **Promotion rule** (promote only if the new model scores at least the old one's hold-out result, beats it on the v4
 hold-out and the real queries, and doesn't regress on the test sample): v4 misses the first and third condition, so
-`sql2pyspark:latest` stays on v3. v4 stays available as `sql2pyspark:v4` for the queries it handles better.
+`sql2pyspark:latest` stayed on v3 at the time (v5 later replaced it). v4 stays available as `sql2pyspark:v4`.
 
 **Why the real queries still fail:** `real001` sends v4 into a repetition loop (it defines the same window `w1`...`w93`
 until the 2,048-token limit), `real002` turns the null-safe `<=>` into `=`, `real004` leaves a parenthesis unclosed, and
 `real003` parses and runs but mixes up a column qualifier. These queries are 1,200-2,400 tokens long and combine ~15
 features each; the v4 pipelines teach the individual features but rarely at that length and density.
+
+**Repetition penalty (2026-09-28)**: Ollama's default repetition window (64 tokens) is too short to stop `real001`'s
+window-definition loop. `repeat_last_n=2048` stops it at the cost of one hold-out query, and stronger `repeat_penalty`
+values make the model misspell repeated column names (hold-out 49 and 41). No setting makes a real query correct.
+`app.py` therefore uses `repeat_last_n=2048` only for SQL longer than 2,000 characters (details in docs/04).
+
+**Agent repair with Kimi K3 (2026-09-28)**: `eval/agent_repair.py` gives Kimi K3 (Moonshot AI) each real query, v5's
+answer and one tool that runs PySpark on the sample tables (no expected output, no `.sql(...)`, at most 5 runs). It fixes
+3 of the 4 real queries (0/4 before; all 4 run) for $0.90 in total, about 5 minutes per query. `real003` still keeps
+NULL rows that Spark SQL's `UNPIVOT` drops by default. Needs `KIMI_API_KEY` in `.env` (template `.env.example`; details in
+docs/04).
 
 **Known gaps (after v5)**: `real001`'s repetition loop, the long-standing `UNION` alias gaps (`holdout031`,
 `holdout053`), `holdout050`, `holdout058`, pipelines in the v4 hold-out set (0/2) and on the fixed test set (8/22), and

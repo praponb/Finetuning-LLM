@@ -2,7 +2,7 @@
 
 Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder-3B-Instruct** for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
-**Status (2026-09-28):** `sql2pyspark:latest` is still **v3** (95% on the 62-query unseen-schema hold-out). **v5** (continued from v4 on a replay-heavy dataset with generator fixes) is the strongest model overall, 128/150 on the fixed test set (v3 105, v4 110), 95/97 on its classic queries, and 14/25 on the v4-feature hold-out (v4 9, v3 3), but it scores 56/62 on the original hold-out and 0/4 on the real-world queries, so it was not promoted; `sql2pyspark:v5` and `sql2pyspark:v4` are available. The Docker setup works (app, Spark data pipeline, evaluation). The code is in the private GitHub repo `praponb/Finetuning-LLM`.
+**Status (2026-09-28):** `sql2pyspark:latest` is **v5** (continued from v4 on a replay-heavy dataset with generator fixes): 128/150 on the fixed test set (v3 105, v4 110), 95/97 on its classic queries, and 14/25 on the v4-feature hold-out (v4 9, v3 3), but 56/62 on the original hold-out (v3 59) and 0/4 on the real-world queries. It missed two promotion-rule conditions and was promoted by the owner's decision; v3 is kept as `sql2pyspark:v3` for rollback. The Docker setup works (app, Spark data pipeline, evaluation). The code is in the private GitHub repo `praponb/Finetuning-LLM`.
 
 ---
 
@@ -90,6 +90,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── real_queries.jsonl        # Real-world query benchmark (real001–real004)
 │   ├── real_tables.py            # Sample tables for real-world queries
 │   ├── evaluate.py               # Execution-based model evaluation (--tables, --num-predict)
+│   ├── agent_repair.py           # Kimi K3 repair loop for failed answers (key in .env)
 │   ├── report.py                 # Markdown results-table generator
 │   └── results/                  # <tag>__<set>.json results (+ v2-split/, v3-split/, v4-split/)
 └── llama.cpp/                    # Upstream checkout (GGUF converter)
