@@ -15,12 +15,16 @@ ROOT = Path(__file__).resolve().parent.parent
 START, END = "<!-- RESULTS:START -->", "<!-- RESULTS:END -->"
 
 
+SET_ORDER = ["holdout", "holdout_v4", "real_queries", "test_meta"]
+
+
 def load():
     runs = []
     for f in sorted((ROOT / "eval" / "results").glob("*.json")):
         d = json.loads(f.read_text())
         runs.append((d["model"], Path(d["set"]).stem, d))
-    return runs
+    # group rows by eval set, then by model
+    return sorted(runs, key=lambda r: (SET_ORDER.index(r[1]) if r[1] in SET_ORDER else len(SET_ORDER), r[1], r[0]))
 
 
 def table(runs) -> str:
@@ -39,6 +43,15 @@ def table(runs) -> str:
                   "|---|" + "---|" * len(levels)]
         for m, d in hold:
             lines.append(f"| `{m}` | " + " | ".join(f"{d['summary'][lv]['lenient_match']:.0%}" for lv in levels) + " |")
+    v4 = [(m, d) for m, s, d in runs if s == "holdout_v4"]
+    if v4:
+        groups = [k for k in ("aggregation", "window", "join", "setop", "reshape", "nested", "pipeline")
+                  if k in v4[0][1]["summary"]]
+        lines += ["", "v4 hold-out, correct results (lenient) by feature group:", "",
+                  "| Model | " + " | ".join(f"{g} (n={v4[0][1]['summary'][g]['n']})" for g in groups) + " |",
+                  "|---|" + "---|" * len(groups)]
+        for m, d in v4:
+            lines.append(f"| `{m}` | " + " | ".join(f"{d['summary'][g]['lenient_match']:.0%}" for g in groups) + " |")
     return "\n".join(lines)
 
 

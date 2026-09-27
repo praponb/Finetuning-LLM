@@ -8,8 +8,12 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > file catalog, runbook).
 
 **Current model:** `sql2pyspark:latest` = **v3** (since 2026-09-26): 95% correct results on 62 hand-written queries
-over tables it never saw in training (v2: 90%, v1: 6%), and 95% on 300 held-out generated queries (tied with v2).
-v2 and v1 are kept as `sql2pyspark:v2` / `sql2pyspark:v1`.
+over tables it never saw in training (v2: 90%, v1: 6%). v2 and v1 are kept as `sql2pyspark:v2` / `sql2pyspark:v1`.
+
+**v4 (2026-09-27, available as `sql2pyspark:v4`, not promoted):** trained on a much broader dataset (long multi-CTE
+pipelines, advanced Spark SQL, nested data). It triples v3's score on 25 hand-written queries that use those features
+(36% vs. 12%), but scores 58/62 on the original hold-out (v3: 59/62) and still 0/4 on the real-world queries, so by the
+promotion rule `latest` stays on v3. See [v4 results](#v4-results-2026-09-27).
 
 ```
 schemas.py ─┐
@@ -40,35 +44,52 @@ Editor type-checking (Pyrefly) is configured in [`pyrefly.toml`](pyrefly.toml) t
 
 | Step | Command | What it does |
 |---|---|---|
-| Data | `make data` | Generate ~15k pairs + 105 hand-written pairs, execute both sides of every pair in local Spark, keep only pairs whose results match, split by feature signature. |
-| Train | `make train` | `mlx_lm.lora -c sql2pyspark-mlx/lora_config.yaml` (LoRA rank 16 on the last 8 blocks, 1,200 steps × batch 4, cosine LR; ~1 h 50 min on a base M2). |
-| Export | `make export TAG=v3` | Fuse adapters, dequantize, convert to Q8_0 GGUF, `ollama create sql2pyspark:v3`. |
-| Evaluate | `make eval TAG=v3 PREV=v2` | Score both models on the hand-written hold-out set and the same sample of the test split. |
-| Promote | `make promote TAG=v3 PREV=v2` | Point `sql2pyspark:latest` (what `app.py` uses by default) at the new model; keeps the old one as `:$(PREV)`. |
+| Data | `make data N=20000` | Generate 20k pairs + 105 hand-written pairs, execute both sides of every pair in local Spark, keep only pairs whose results match, split by feature signature (~20 min). |
+| Train | `make train` | `train_resumable.py` runs `mlx_lm.lora -c sql2pyspark-mlx/lora_config.yaml` and resumes from the last checkpoint if Metal aborts a step (v4: LoRA rank 16 on the last 8 blocks, 1,200 updates × 4 samples as batch 2 × 2 accumulation, gradient checkpointing, max 3,200 tokens; ~5 h 15 min on a base M2). |
+| Export | `make export TAG=v4` | Fuse adapters, dequantize, convert to Q8_0 GGUF, `ollama create sql2pyspark:v4`. |
+| Evaluate | `make eval TAG=v4 PREV=v3` | Score both models on the hold-out set, the v4 hold-out set, the real-world queries and the same sample of the test split. |
+| Promote | `make promote TAG=v4 PREV=v3` | Point `sql2pyspark:latest` (what `app.py` uses by default) at the new model; keeps the old one as `:$(PREV)`. |
 | UI | `make app` | Streamlit converter on http://localhost:8501; the sidebar field picks any Ollama tag. |
 
-`make help` lists every target. Always pass `TAG`/`PREV` (the Makefile defaults are still `v2`/`v1`). On a 16 GB Mac,
+`make help` lists every target. The Makefile defaults are `TAG=v4` and `PREV=v3`. On a 16 GB Mac,
 don't run Ollama (evaluations, the app) or Docker while training: Ollama plus training ran out of GPU memory once, and
 Docker Desktop's VM takes another 8 GB.
 
-## Dataset (v3)
+## Dataset (v4)
 
-* **`sql2pyspark-mlx/schemas.py`**: catalog of 17 training tables and 5 *hold-out* tables (typed columns,
-  foreign keys, realistic value pools) plus seeded sample data for execution checks.
+* **`sql2pyspark-mlx/schemas.py`**: catalog of 17 base training tables (+ 5 extra tables for v4: `carts`, `app_logs`,
+  `price_tiers` with nested data, `device_readings` and `promotions` with dense time series / validity windows) and 5
+  base hold-out tables (+ the nested hold-out table `vehicle_trips`), with typed columns, foreign keys, realistic value
+  pools, nested types (structs, arrays of structs, maps, JSON strings) and seeded sample data for execution checks.
 * **`sql2pyspark-mlx/generate_dataset.py`** + **`sqlspec.py`**: compositional generator. Each sample picks a family
   (select, aggregation, joins, join+aggregation, windows, top-N per group, CTE + join, CTE chains, derived tables,
   IN/EXISTS/NOT EXISTS/scalar/correlated subqueries, set operations, pivot/explode/cross join, window-over-aggregate)
   and fills it with random building blocks: boolean filter trees, string/date/numeric functions, CASE, CAST,
   COALESCE, conditional aggregates, frames, HAVING, ORDER BY/LIMIT, … SQL surface style varies (case, layout,
   aliases). SQL and PySpark are rendered from the same objects, so they agree by construction.
-* **`sql2pyspark-mlx/verify_pairs.py`**: runs `spark.sql(sql)` and the PySpark code on the sample tables and
-  compares column names, rows and ORDER BY sequence. Only passing pairs are used (v3: all 15,105 pass).
+* **`sql2pyspark-mlx/advanced.py`** (v4): stage-based families. A query is a chain of stages, each one a CTE: cleaning
+  with timestamp literals, ROW_NUMBER/RANK dedup (QUALIFY or subquery), 2-5 different windows (LAG/LEAD, running and
+  `ROWS n PRECEDING` frames, epoch `RANGE` frames, `NULLS FIRST/LAST`, CUME_DIST, NTILE, `LAST_VALUE ... IGNORE NULLS`,
+  named `WINDOW` clauses), gaps-and-islands sessions with `INTERVAL`, joins (foreign key, `INTERVAL` / `BETWEEN` validity
+  windows, `<=>`, `COALESCE` keys), `LATERAL ... LIMIT 1`, `[NOT] EXISTS` with extra correlated conditions,
+  `EXCEPT/INTERSECT [ALL|DISTINCT]`, aggregation (`GROUPING SETS`, `ROLLUP`, `CUBE`, `GROUPING_ID`, `FILTER (WHERE ...)`,
+  `COUNT_IF`, `NULLIF` ratios, `PERCENTILE_APPROX`, `CORR`, `BIT_OR`, sorted `COLLECT_SET`), multi-aggregate `PIVOT`,
+  `UNPIVOT`, final reports (correlated scalar subqueries in SELECT, `RLIKE`), and nested data (`LATERAL VIEW [OUTER]
+  EXPLODE/POSEXPLODE`, `INLINE`, struct fields, map lookups, `TRY_CAST`, `FROM_JSON`, `GET_JSON_OBJECT`, `TRANSFORM`,
+  `FILTER`, `EXISTS`, `FORALL`, `AGGREGATE`, `ZIP_WITH`, bit masks). One-stage chains are short feature queries;
+  `fam_pipeline` chains 4-8 stages into production-style queries of up to ~2.7k tokens.: runs `spark.sql(sql)` and the PySpark code on the sample tables and
+  compares column names, rows and ORDER BY sequence. Only passing pairs are used (v4: 20,068 of 20,105; v3: all 15,105).
 * **`sql2pyspark-mlx/convert_sql_pyspark.py`**: chat-format JSONL. Whole feature signatures are held out for
   valid/test, so validation loss measures generalisation to unseen feature combinations.
 
+v4 dataset: 20,068 verified pairs (train 16,924 / valid 2,096 / test 1,048); 42% come from the v4 families and 16%
+are long pipelines (median ~1,100 tokens, max 3,119; the v3 data maxed at 603). `UNION` (with `.distinct()`) is now
+drawn more often than `UNION ALL`.
+
 v3 changes to the generator, aimed at the v2 hold-out failures: set operations over differently named columns
 (`union()` / aliases), `GROUP BY` ordinals on `CASE` keys, and exact `NOT IN` semantics
-(`isNotNull() | F.lit(excluded.isEmpty())`). The v2 dataset, adapters and logs are backed up in `sql2pyspark-mlx/runs/v2/`.
+(`isNotNull() | F.lit(excluded.isEmpty())`). The v2 and v3 datasets, adapters and logs are backed up in
+`sql2pyspark-mlx/runs/v2/` and `runs/v3/`.
 
 ### Output conventions (what the model learns to write)
 
@@ -98,15 +119,25 @@ result = (
 hold-out tables, each with a verified reference answer. `eval/evaluate.py` sends each query to an Ollama model with
 the same prompt as `app.py`, executes the returned code and compares it with the SQL result.
 
-`eval/build_real_queries.py` → `eval/real_queries.jsonl`: real-world queries supplied by users, run against the
-hand-made tables in `eval/real_tables.py` (scored with `--tables eval/real_tables.py`). It currently holds one query:
-a 4-CTE marketing-attribution report (~120 lines of SQL).
+`eval/build_holdout_v4.py` → `eval/holdout_v4.jsonl`: 25 hand-written queries for the v4 features (aggregation,
+window, join, set operation, reshape, nested and pipeline groups) on the hold-out tables, including the nested
+`vehicle_trips`.
+
+`eval/build_real_queries.py` → `eval/real_queries.jsonl`: 4 real-world queries supplied by users, run against the
+hand-made tables in `eval/real_tables.py` (scored with `--tables eval/real_tables.py`):
+1. `real001` (`marketing_attribution`): 4-CTE report with sessionization, interval joins, dedup windowing, grouping sets.
+2. `real002` (`order_fulfillment`): higher-order array lambdas, lateral view explode, RANGE windows, QUALIFY, PIVOT, correlated SLA subquery.
+3. `real003` (`iot_telemetry`): complex JSON parsing, bitwise masks, native UNPIVOT, correlated LATERAL join, stateful imputation with `LAST_VALUE IGNORE NULLS`, CUME_DIST, MAP_FROM_ARRAYS, aggregate FILTER.
+4. `real004` (`trade_analytics`): regex tokens, `TRY_CAST`, higher-order `ZIP_WITH` and `AGGREGATE` (fold/reduce), sessionization gaps-and-islands, named windows, CUBE with `GROUPING_ID`, `APPROX_PERCENTILE`.
 
 * **strict**: code must run as-is and assign `result` (the convention since v2).
 * **lenient**: imports added, bare `df` bound to the main table, last expression taken as the result (fair to v1).
 
-The table below is generated by `python eval/report.py --readme README.md`. Both `test_meta` rows use the same 300-query
-sample of the v3 test split; older results on the v2 split (v1 8%, v2 98%) are in `eval/results/v2-split/`.
+The table below is generated by `python eval/report.py --readme README.md`. The `test_meta` rows use the same 300-query
+sample of the v4 test split; results on older splits are in `eval/results/v3-split/` (v2 95%, v3 95%) and
+`eval/results/v2-split/` (v1 8%, v2 98%). `real003` and `real004` carry a `ref_sql`: Spark rejects string-literal
+`UNPIVOT` aliases and a repeated `GROUPING_ID(... CASE ...)` in `HAVING`, so the expected result comes from a rewrite
+with the same meaning while the model gets the original SQL.
 Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, which only ever cut off the real query).
 
 <!-- RESULTS:START -->
@@ -114,11 +145,16 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 |---|---|---|---|---|---|---|---|---|
 | `sql2pyspark:v1` | holdout | 62 | 79% | 0% | **0%** | 16% | **6%** | 4.2 |
 | `sql2pyspark:v2` | holdout | 62 | 98% | 92% | **90%** | 92% | **90%** | 4.1 |
-| `sql2pyspark:v2` | real_queries | 1 | 0% | 0% | **0%** | 0% | **0%** | 44.0 |
-| `sql2pyspark:v2` | test_meta | 300 | 99% | 99% | **95%** | 99% | **95%** | 6.0 |
 | `sql2pyspark:v3` | holdout | 62 | 97% | 95% | **95%** | 95% | **95%** | 3.3 |
-| `sql2pyspark:v3` | real_queries | 1 | 0% | 0% | **0%** | 0% | **0%** | 48.8 |
-| `sql2pyspark:v3` | test_meta | 300 | 100% | 98% | **95%** | 98% | **95%** | 5.3 |
+| `sql2pyspark:v4` | holdout | 62 | 100% | 95% | **94%** | 95% | **94%** | 4.0 |
+| `sql2pyspark:v2` | holdout_v4 | 25 | 92% | 32% | **20%** | 32% | **20%** | 6.5 |
+| `sql2pyspark:v3` | holdout_v4 | 25 | 88% | 32% | **12%** | 32% | **12%** | 7.1 |
+| `sql2pyspark:v4` | holdout_v4 | 25 | 96% | 60% | **36%** | 60% | **36%** | 7.0 |
+| `sql2pyspark:v2` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 55.3 |
+| `sql2pyspark:v3` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 78.9 |
+| `sql2pyspark:v4` | real_queries | 4 | 25% | 0% | **0%** | 0% | **0%** | 92.8 |
+| `sql2pyspark:v3` | test_meta | 150 | 92% | 73% | **69%** | 73% | **70%** | 8.0 |
+| `sql2pyspark:v4` | test_meta | 150 | 90% | 80% | **73%** | 80% | **73%** | 11.6 |
 
 Hold-out, correct results (lenient) by difficulty:
 
@@ -127,26 +163,52 @@ Hold-out, correct results (lenient) by difficulty:
 | `sql2pyspark:v1` | 7% | 14% | 0% |
 | `sql2pyspark:v2` | 93% | 95% | 84% |
 | `sql2pyspark:v3` | 100% | 95% | 92% |
+| `sql2pyspark:v4` | 100% | 95% | 88% |
+
+v4 hold-out, correct results (lenient) by feature group:
+
+| Model | aggregation (n=4) | window (n=5) | join (n=5) | setop (n=3) | reshape (n=2) | nested (n=4) | pipeline (n=2) |
+|---|---|---|---|---|---|---|---|
+| `sql2pyspark:v2` | 0% | 40% | 20% | 67% | 0% | 0% | 0% |
+| `sql2pyspark:v3` | 0% | 40% | 0% | 33% | 0% | 0% | 0% |
+| `sql2pyspark:v4` | 25% | 40% | 20% | 67% | 50% | 50% | 0% |
 <!-- RESULTS:END -->
 
 **v3 vs. v2:** v3 fixes 3 of v2's 6 hold-out failures (`GROUP BY 1` on a `CASE`, two unbalanced-parenthesis slips)
 with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300).
 
-**Real-world query (2026-09-27): both v2 and v3 fail it**; neither reply even parses. The query is far outside the
-training data: it is 2,371 tokens as a training sample (training samples: median 210, max 603) and uses
-`GROUP BY GROUPING SETS` and `INTERVAL` arithmetic (0 training examples), `NULLS LAST` (1), `NULLIF` (5) and 4 CTEs
-(training: at most 2). v3 also flattens the CTE chain into a single chain; v2 keeps named DataFrames but reuses one
-window for every window function and makes up functions (`F.interval`, `F.nullIf`).
+### v4 results (2026-09-27)
 
-**Known gaps (v3)**, targets for a v4 dataset:
+| Eval set | v3 | v4 | Change |
+|---|---|---|---|
+| Hold-out (62, unseen tables) | 59/62 (95.2%) | 58/62 (93.5%) | -1: `holdout058` (dropped `.distinct()` on one side of a CROSS JOIN) |
+| v4 hold-out (25, new features) | 3/25 (12%) | 9/25 (36%) | ×3: `FILTER`/`COUNT_IF`, `NULLS LAST` + `IGNORE NULLS`, `INTERVAL` join, `INTERSECT ALL`, multi-agg `PIVOT`, lambdas, struct/map/JSON |
+| Real-world queries (4) | 0/4 | 0/4 | 1 reply now parses and runs up to an alias error (`real003`) |
+| Test sample (300, v4 split) | 105/150 (70.0%) | 110/150 (73.3%) | On the 150-query test sample v4 is 5 queries ahead overall, but only because it gains 17 on the v4 families (26/53 vs. 9/53; long pipelines 5/22 vs. 0/22) while losing 12 on the classic v1–v3 families (84/97 vs. 96/97: 5 syntax errors, 3 runtime errors, 2 wrong column lists, 2 wrong row sets), so v4 is not a safe drop-in replacement either. |
 
-* `UNION` between columns with *different names* (`city` ∪ `hospital`) still uses `unionByName`, which fails.
-* `UNION ALL` with literal columns and aliases: garbled alias syntax (`"full_name.alias("name")`).
-* A misplaced parenthesis in an `EXISTS` → `left_semi` join with three conditions.
-* All 9 set-operation queries in the test sample share one held-out signature (`UNION` + literal `source` column +
-  `ORDER BY`): both models drop `.distinct()` after `unionByName` (v2 3/9, v3 1/9 correct).
-* Long, multi-step production SQL (see the real-world query above): long CTE chains, several different windows,
-  `GROUPING SETS`, `INTERVAL`, `NULLS LAST`, non-equi joins and correlated anti-joins with extra conditions.
+**Promotion rule** (promote only if the new model scores at least the old one's hold-out result, beats it on the v4
+hold-out and the real queries, and doesn't regress on the test sample): v4 misses the first and third condition, so
+`sql2pyspark:latest` stays on v3. v4 stays available as `sql2pyspark:v4` for the queries it handles better.
+
+**Why the real queries still fail:** `real001` sends v4 into a repetition loop (it defines the same window `w1`...`w93`
+until the 2,048-token limit), `real002` turns the null-safe `<=>` into `=`, `real004` leaves a parenthesis unclosed, and
+`real003` parses and runs but mixes up a column qualifier. These queries are 1,200-2,400 tokens long and combine ~15
+features each; the v4 pipelines teach the individual features but rarely at that length and density.
+
+**Known gaps (v4)**, targets for a v5 dataset:
+
+* **Classic-query regression**: on the test sample v4 loses 12 of the v1–v3 family queries that v3 gets right
+  (84/97 vs. 96/97). The v4 run saw the same ~4,800 samples as v3, but only ~58% of them were classic families; v5 should
+  train longer (or continue from v3's adapters) so the new families don't crowd out the old ones.
+* Very long inputs: repetition loops on the longest query; long pipelines are v4's weakest test family (5/22). More
+  training samples near 2-3k tokens (and more steps).
+* `<=>` translated as `=`; parenthesis balance in long join conditions.
+* `UNION` of differently named columns (`holdout031`) and garbled aliases in `UNION ALL` with literals (`holdout053`),
+  still failing since v3.
+* `holdout058`: `.distinct()` dropped on one side of a CROSS JOIN of two `SELECT DISTINCT` subqueries.
+* Generator: some `HAVING agg < 0` filters and an inherited `NOT IN` over every value of a column produce empty results,
+  which makes their Spark check weak (the pairs are still correct).
+* Pipelines in the v4 hold-out (0/2) and windows (40%, unchanged) are the weakest groups.
 
 ## Docker
 
@@ -169,22 +231,23 @@ way to serve the model on macOS. Stop Docker before `make train`.
 ```
 app.py, Modelfile, Makefile, requirements.txt, pyrefly.toml, .gitignore
 README.md, PROJECT_DOCUMENTATION.md, docs/          documentation
-sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, handwritten_pairs.py, verify_pairs.py,
-                   convert_sql_pyspark.py, lora_config.yaml, train.log (v3), raw_pairs/, data/, adapters/,
-                   sql2pyspark-model/ (fused 4-bit MLX model), runs/v2/ (v2 backup)
-sql2pyspark-hf/    dequantized BF16 fused model (input for GGUF conversion)
-sql2pyspark.gguf   Q8_0 model served by Ollama (v3)
-eval/              build_holdout.py, holdout.jsonl, build_real_queries.py, real_queries.jsonl, real_tables.py,
-                   evaluate.py, report.py, results/ (+ results/v2-split/), *.log
+sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4 families), handwritten_pairs.py,
+                   verify_pairs.py, convert_sql_pyspark.py, lora_config.yaml, train_resumable.py, train.log (v4),
+                   data_v4.log, raw_pairs/, data/, adapters/, sql2pyspark-model/ (fused 4-bit MLX model),
+                   runs/v2/, runs/v3/ (backups)
+sql2pyspark-hf/    dequantized BF16 fused model (input for GGUF conversion; now v4)
+sql2pyspark.gguf   Q8_0 GGUF of the last export (v4); Ollama keeps its own copy of every tag
+eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
+                   real_queries.jsonl, real_tables.py, evaluate.py, report.py, post_training_v4.sh,
+                   results/ (+ v2-split/, v3-split/), *.log
 docker/, docker-compose.yml, .dockerignore          Docker setup
 llama.cpp/         upstream checkout, used only for convert_hf_to_gguf.py
-archive/           previous experiments and the v1 model/data (~14 GB, safe to delete)
-mlx-env/           legacy venv from the first experiment (unused)
 ```
 
-`archive/` holds `my-finetuned-model/` (first experiment on non-Coder Qwen2.5-3B), `trial-3-examples/` (3-example
-trial run) and `v1/` (the template-based 10k dataset, its adapters, fused model, HF export and GGUF).
-`archive/`, `mlx-env/` and `sql2pyspark-hf/` (recreated by `make fuse`) can be deleted to free ~20 GB.
+The Docker `ollama` profile registers the model from the mounted `sql2pyspark.gguf`, i.e. the last export (v4).
+
+`archive/` (earlier experiments and the v1 model/data) and the legacy `mlx-env/` venv were deleted on 2026-09-27;
+`sql2pyspark-hf/` can be deleted too (recreated by `make fuse`).
 
 The code is in the private GitHub repo `praponb/Finetuning-LLM`; `.gitignore` keeps weights, generated data, venvs,
 `llama.cpp/`, `archive/` and `sql2pyspark-mlx/runs/` out of git.

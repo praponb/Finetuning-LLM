@@ -18,7 +18,10 @@ from typing import Any, cast
 from schemas import Column, Table
 
 KIND = {"id": "int", "fk": "int", "int": "int", "double": "double", "cat": "str", "str": "str",
-        "date": "date", "ts": "ts", "bool": "bool", "array": "array"}
+        "date": "date", "ts": "ts", "bool": "bool", "array": "array",
+        # v4 nested / semi-structured kinds (advanced.py)
+        "struct": "struct", "array_struct": "array", "map": "map", "json": "str", "array_int": "array",
+        "array_double": "array"}
 
 
 def pyq(v) -> str:

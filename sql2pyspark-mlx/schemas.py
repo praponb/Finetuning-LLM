@@ -6,12 +6,18 @@ seeded DataFrames and execute both sides) and eval/evaluate.py.
 Tables flagged ``holdout=True`` are never used by the generator; they only
 appear in the hand-written evaluation set so we can measure generalisation to
 unseen table/column names.
+
+EXTRA_TABLES (v4) hold nested data (structs, arrays of structs, maps, JSON strings)
+and dense time series. Only the v4 families in advanced.py use them, so the v1-v3
+families (and their outputs for a given seed) are unchanged.
 """
 from __future__ import annotations
 
 import random
+import json
 from dataclasses import dataclass, field, replace
 from datetime import date, datetime, timedelta
+from typing import Any
 
 # kind -> Spark SQL type
 SPARK_TYPES = {
@@ -40,6 +46,7 @@ class Column:
     hi: float = 100
     ref: str | None = None    # referenced table for fk columns
     nullable: bool = True
+    dtype: str | None = None  # explicit Spark type for nested kinds (struct / array_struct / map / ...)
 
     @property
     def is_numeric(self) -> bool:
@@ -55,13 +62,14 @@ class Table:
     name: str
     columns: tuple
     holdout: bool = False
+    rows: Any = None          # optional callable(seed) -> list[tuple] for hand-shaped sample data
 
     def col(self, name: str) -> Column:
         return next(c for c in self.columns if c.name == name)
 
     @property
     def ddl(self) -> str:
-        return ", ".join(f"{c.name} {SPARK_TYPES[c.kind]}" for c in self.columns)
+        return ", ".join(f"{c.name} {c.dtype or SPARK_TYPES[c.kind]}" for c in self.columns)
 
 
 def _id() -> Column:
@@ -238,7 +246,180 @@ TABLES: tuple[Table, ...] = (
     ), holdout=True),
 )
 
-TABLE_BY_NAME = {t.name: t for t in TABLES}
+
+# ---------------------------------------------------------------------------
+# v4: nested data and dense time series (used only by advanced.py)
+# ---------------------------------------------------------------------------
+def _nested(name: str, kind: str, dtype: str, nullable: bool = True) -> Column:
+    return Column(name, kind, dtype=dtype, nullable=nullable)
+
+
+def _dense_ts(rng: random.Random, start: datetime, n: int, max_gap_min: int) -> list[datetime]:
+    """Increasing timestamps with gaps of 1..max_gap_min minutes (so session / interval logic has something
+    to find), returned in shuffled order."""
+    t, out = start, []
+    for _ in range(n):
+        t += timedelta(minutes=rng.choice([rng.randint(1, 20), rng.randint(1, max_gap_min)]))
+        out.append(t)
+    rng.shuffle(out)
+    return out
+
+
+CART_ITEM = "STRUCT<product_id: INT, qty: INT, price: DOUBLE, promo: STRING>"
+PROMO_CODES = ("SPRING10", "VIP", "BUNDLE", "WELCOME5")
+
+
+def _cart_rows(seed: int) -> list[tuple]:
+    rng = random.Random(f"{seed}-carts")
+    times = _dense_ts(rng, datetime(2025, 3, 1, 8, 0), 40, 600)
+    rows = []
+    for i in range(1, 41):
+        items = [(rng.randint(1, 12), rng.randint(1, 6), round(rng.uniform(5, 300), 2),
+                  rng.choice([None, None, *PROMO_CODES])) for _ in range(rng.choice([0, 1, 2, 2, 3, 4]))]
+        ship = None if rng.random() < 0.06 else (rng.choice(CITIES), f"{rng.randint(10000, 99999)}",
+                                                  rng.choice([*COUNTRIES, None]))
+        attrs = {}
+        for k, pool in (("device", ("ios", "android", "web")), ("utm_source", ("google", "email", "tiktok")),
+                        ("gift", ("true", "false")), ("weight_kg", ("0.5", "1.25", "3", "n/a"))):
+            if rng.random() < 0.7:
+                attrs[k] = rng.choice(pool)
+        rows.append((i, rng.randint(1, 45) if rng.random() > 0.05 else None, times[i - 1], items,
+                     rng.sample(PROMO_CODES, rng.randint(0, 2)), ship, attrs))
+    return rows
+
+
+def _app_log_rows(seed: int) -> list[tuple]:
+    rng = random.Random(f"{seed}-app_logs")
+    times = _dense_ts(rng, datetime(2025, 6, 1, 0, 0), 40, 240)
+    rows = []
+    for i in range(1, 41):
+        r = rng.random()
+        if r < 0.05:
+            payload = None
+        elif r < 0.1:
+            payload = "n/a"
+        else:
+            p: dict = {"user": {"id": rng.randint(1, 30), "tier": rng.choice(["free", "gold", "pro"])}}
+            if rng.random() < 0.85:
+                p["duration"] = round(rng.uniform(0.05, 4.0), 2)
+            if rng.random() < 0.7:
+                p["retries"] = rng.randint(0, 3)
+            p["tags"] = rng.sample(["mobile", "beta", "eu", "cache_hit", "slow"], rng.randint(0, 3))
+            payload = json.dumps(p)
+        ctx = {k: rng.choice(pool) for k, pool in (("region", ("ap-southeast", "us-east", "eu-west")),
+                                                   ("version", ("1.4.0", "1.5.2", "2.0.0")),
+                                                   ("trace", ("on", "off"))) if rng.random() < 0.75}
+        rows.append((i, rng.choice(["auth", "billing", "search", "checkout"]), rng.choice(["h1", "h2", "h3", "h4"]),
+                     times[i - 1], rng.choice(["INFO", "INFO", "WARN", "ERROR", "DEBUG"]),
+                     rng.randint(1, 3000) if rng.random() > 0.08 else None,
+                     rng.choice([200, 200, 201, 400, 404, 500, 503]), payload, ctx))
+    return rows
+
+
+def _price_tier_rows(seed: int) -> list[tuple]:
+    rng = random.Random(f"{seed}-price_tiers")
+    rows = []
+    for i in range(1, 41):
+        n = rng.randint(2, 4)
+        limits = sorted(rng.sample([50, 100, 500, 1000, 5000, 10000], n))
+        prices = sorted((round(rng.uniform(0.5, 40), 2) for _ in range(n)), reverse=True)
+        discounts = [round(rng.choice([0.0, 0.05, 0.1, 0.15, 0.25]), 2) for _ in range(n)]
+        rows.append((i, rng.choice(["starter", "basic", "pro", "enterprise"]), limits, prices, discounts,
+                     date(2024, 1, 1) + timedelta(days=rng.randint(0, 700)), rng.choice(["USD", "EUR", "THB"])))
+    return rows
+
+
+def _device_rows(seed: int) -> list[tuple]:
+    rng = random.Random(f"{seed}-device_readings")
+    times = _dense_ts(rng, datetime(2025, 9, 1, 0, 0), 40, 180)
+    rows = []
+    for i in range(1, 41):
+        def val(lo, hi):
+            return None if rng.random() < 0.1 else round(rng.uniform(lo, hi), 2)
+        rows.append((i, rng.choice(["DV-01", "DV-02", "DV-03", "DV-04"]), times[i - 1], val(15, 45), val(20, 90),
+                     val(980, 1040), rng.randint(0, 15), rng.choice(["1.0.3", "1.1.0", "2.0.1"])))
+    return rows
+
+
+def _promotion_rows(seed: int) -> list[tuple]:
+    rng = random.Random(f"{seed}-promotions")
+    rows = []
+    for i in range(1, 13):
+        start = date(2023, 1, 1) + timedelta(days=rng.randint(0, 3 * 365 - 90))
+        rows.append((i, rng.choice(["web", "mobile", "store", "partner", None]), rng.choice(PROMO_CODES),
+                     start, start + timedelta(days=rng.randint(7, 90)), round(rng.uniform(0.05, 0.4), 2)))
+    return rows
+
+
+TRIP_STOP = "STRUCT<stop_name: STRING, wait_min: INT, fare: DOUBLE>"
+
+
+def _trip_rows(seed: int) -> list[tuple]:
+    rng = random.Random(f"{seed}-vehicle_trips")
+    times = _dense_ts(rng, datetime(2025, 11, 3, 6, 0), 40, 300)
+    rows = []
+    for i in range(1, 41):
+        stops = [(rng.choice(["Central", "Airport", "Old Town", "Harbor", "Uni", "Mall"]), rng.randint(0, 25),
+                  round(rng.uniform(2, 60), 2)) for _ in range(rng.choice([0, 1, 2, 3]))]
+        tele = None if rng.random() < 0.07 else json.dumps(
+            {"speed": {"avg": round(rng.uniform(15, 70), 1), "max": round(rng.uniform(70, 130), 1)},
+             "battery": rng.randint(5, 100)})
+        n = rng.randint(1, 3)
+        rows.append((i, rng.randint(1, 10), times[i - 1], stops,
+                     (rng.choice(["BKK", "DMK", "CNX"]), rng.choice(["BKK", "DMK", "CNX", "HKT", None])), tele,
+                     {k: rng.choice(v) for k, v in (("vehicle_type", ("sedan", "van", "ev")),
+                                                    ("rating", ("4.5", "5", "3.8", "none"))) if rng.random() < 0.8},
+                     [round(rng.uniform(1, 30), 2) for _ in range(n)], [rng.choice([1.0, 1.1, 1.25]) for _ in range(n)]))
+    return rows
+
+
+EXTRA_TABLES: tuple[Table, ...] = (
+    Table("carts", (
+        _id(), _fk("customer_id", "customers"), Column("created_at", "ts", nullable=False),
+        _nested("items", "array_struct", f"ARRAY<{CART_ITEM}>", nullable=False),
+        Column("coupon_codes", "array", pool=PROMO_CODES, nullable=False),
+        _nested("ship_to", "struct", "STRUCT<city: STRING, zip: STRING, country: STRING>"),
+        _nested("attributes", "map", "MAP<STRING, STRING>", nullable=False),
+    ), rows=_cart_rows),
+    Table("app_logs", (
+        _id(), _cat("service", "auth", "billing", "search", "checkout", nullable=False),
+        _cat("host", "h1", "h2", "h3", "h4", nullable=False), Column("log_ts", "ts", nullable=False),
+        _cat("level", "INFO", "WARN", "ERROR", "DEBUG", nullable=False), _num("latency_ms", 1, 3000, "int"),
+        Column("status_code", "int", lo=200, hi=503, nullable=False),
+        _nested("payload_json", "json", "STRING"),
+        _nested("context", "map", "MAP<STRING, STRING>", nullable=False),
+    ), rows=_app_log_rows),
+    Table("price_tiers", (
+        _id(), _cat("plan", "starter", "basic", "pro", "enterprise", nullable=False),
+        _nested("tier_limits", "array_int", "ARRAY<INT>", nullable=False),
+        _nested("tier_prices", "array_double", "ARRAY<DOUBLE>", nullable=False),
+        _nested("discounts", "array_double", "ARRAY<DOUBLE>", nullable=False),
+        _date("effective_from", nullable=False), _cat("currency", "USD", "EUR", "THB", nullable=False),
+    ), rows=_price_tier_rows),
+    Table("device_readings", (
+        _id(), _cat("device_code", "DV-01", "DV-02", "DV-03", "DV-04", nullable=False),
+        Column("reading_ts", "ts", nullable=False), _num("temp_c", 15, 45), _num("humidity", 20, 90),
+        _num("pressure", 980, 1040), Column("status_bits", "int", lo=0, hi=15, nullable=False),
+        _cat("firmware", "1.0.3", "1.1.0", "2.0.1", nullable=False),
+    ), rows=_device_rows),
+    Table("promotions", (
+        Column("id", "id", lo=1, hi=12, nullable=False), _cat("channel", "web", "mobile", "store", "partner"),
+        _cat("promo_code", *PROMO_CODES, nullable=False), _date("starts_on", nullable=False),
+        _date("ends_on", nullable=False), _num("discount_pct", 0.05, 0.4, nullable=False),
+    ), rows=_promotion_rows),
+    # ---- hold-out: nested data, never used by the generator ----
+    Table("vehicle_trips", (
+        _id(), _num("driver_id", 1, 10, "int", nullable=False), Column("trip_start", "ts", nullable=False),
+        _nested("stops", "array_struct", f"ARRAY<{TRIP_STOP}>", nullable=False),
+        _nested("route", "struct", "STRUCT<origin: STRING, destination: STRING>", nullable=False),
+        _nested("telemetry_json", "json", "STRING"),
+        _nested("extras", "map", "MAP<STRING, STRING>", nullable=False),
+        _nested("fare_components", "array_double", "ARRAY<DOUBLE>", nullable=False),
+        _nested("surcharge_rates", "array_double", "ARRAY<DOUBLE>", nullable=False),
+    ), holdout=True, rows=_trip_rows),
+)
+
+TABLE_BY_NAME = {t.name: t for t in TABLES + EXTRA_TABLES}
 
 
 def train_tables() -> list[Table]:
@@ -246,7 +427,11 @@ def train_tables() -> list[Table]:
 
 
 def holdout_tables() -> list[Table]:
-    return [t for t in TABLES if t.holdout]
+    return [t for t in TABLES + EXTRA_TABLES if t.holdout]
+
+
+def extra_train_tables() -> list[Table]:
+    return [t for t in EXTRA_TABLES if not t.holdout]
 
 
 # --------------------------------------------------------------------------
@@ -284,6 +469,8 @@ def _value(col: Column, rng: random.Random, row_id: int):
 
 
 def make_rows(table: Table, seed: int = 7) -> list[tuple]:
+    if table.rows is not None:
+        return table.rows(seed)
     rng = random.Random(f"{seed}-{table.name}")
     return [tuple(_value(c, rng, i) for c in table.columns) for i in range(1, N_ROWS + 1)]
 
@@ -291,7 +478,7 @@ def make_rows(table: Table, seed: int = 7) -> list[tuple]:
 def make_dataframes(spark, seed: int = 7) -> dict:
     """Return {"df_<table>": DataFrame} and register each table as a temp view."""
     frames = {}
-    for t in TABLES:
+    for t in TABLES + EXTRA_TABLES:
         df = spark.createDataFrame(make_rows(t, seed), t.ddl)
         df.createOrReplaceTempView(t.name)
         frames[f"df_{t.name}"] = df

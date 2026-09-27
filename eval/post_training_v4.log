@@ -1,0 +1,71 @@
+[15:04:09] export v4
+success 
+[15:05:10] move v3-split test results
+[15:05:10] v4 holdout
+  10/62  lenient match 10/10  (23s)
+  20/62  lenient match 20/20  (53s)
+  30/62  lenient match 30/30  (87s)
+  40/62  lenient match 39/40  (135s)
+  50/62  lenient match 48/50  (198s)
+  60/62  lenient match 56/60  (248s)
+  62/62  lenient match 58/62  (257s)
+sql2pyspark:v4 on holdout.jsonl (n=62)
+  strict : syntax 100.0%  runs 95.2%  match 93.5%
+  lenient: syntax 100.0%  runs 95.2%  match 93.5%
+  results -> eval/results/v4__holdout.json
+[15:09:35] v4 holdout_v4
+  10/25  lenient match 4/10  (75s)
+  20/25  lenient match 7/20  (128s)
+  25/25  lenient match 9/25  (182s)
+sql2pyspark:v4 on holdout_v4.jsonl (n=25)
+  strict : syntax 96.0%  runs 60.0%  match 36.0%
+  lenient: syntax 96.0%  runs 60.0%  match 36.0%
+  results -> eval/results/v4__holdout_v4.json
+[15:12:45] v4 real_queries
+  4/4  lenient match 0/4  (376s)
+sql2pyspark:v4 on real_queries.jsonl (n=4)
+  strict : syntax 25.0%  runs 0.0%  match 0.0%
+  lenient: syntax 25.0%  runs 0.0%  match 0.0%
+  results -> eval/results/v4__real_queries.json
+[15:19:12] v4 test (v4 split)
+  10/300  lenient match 7/10  (232s)
+  20/300  lenient match 14/20  (317s)
+[15:25:47] v4 test (v4 split, 150)
+  10/150  lenient match 7/10  (169s)
+  20/150  lenient match 14/20  (237s)
+  30/150  lenient match 20/30  (423s)
+  40/150  lenient match 28/40  (492s)
+  50/150  lenient match 34/50  (557s)
+  60/150  lenient match 40/60  (761s)
+  70/150  lenient match 50/70  (821s)
+  80/150  lenient match 60/80  (868s)
+  90/150  lenient match 66/90  (1020s)
+  100/150  lenient match 72/100  (1100s)
+  110/150  lenient match 80/110  (1167s)
+  120/150  lenient match 86/120  (1323s)
+  130/150  lenient match 92/130  (1410s)
+  140/150  lenient match 102/140  (1506s)
+  150/150  lenient match 110/150  (1762s)
+  strict : syntax 90.0%  runs 80.0%  match 73.3%
+  lenient: syntax 90.0%  runs 80.0%  match 73.3%
+  results -> eval/results/v4__test_meta.json
+[15:55:18] v3 test (v4 split, 150)
+  10/150  lenient match 6/10  (82s)
+  20/150  lenient match 15/20  (150s)
+  30/150  lenient match 21/30  (245s)
+  40/150  lenient match 29/40  (306s)
+  50/150  lenient match 36/50  (374s)
+  60/150  lenient match 44/60  (513s)
+  70/150  lenient match 50/70  (571s)
+  80/150  lenient match 59/80  (619s)
+  90/150  lenient match 66/90  (695s)
+  100/150  lenient match 72/100  (771s)
+  110/150  lenient match 80/110  (828s)
+  120/150  lenient match 86/120  (924s)
+  130/150  lenient match 93/130  (1003s)
+  140/150  lenient match 99/140  (1100s)
+  150/150  lenient match 105/150  (1218s)
+  strict : syntax 92.0%  runs 72.7%  match 69.3%
+  lenient: syntax 92.0%  runs 73.3%  match 70.0%
+  results -> eval/results/v3__test_meta.json
+[16:15:44] ALL DONE

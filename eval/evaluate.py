@@ -151,7 +151,8 @@ def main():
 
     set_path = Path(args.set)
     cases = load_cases(set_path, args.sample, args.seed)
-    out = Path(args.out) if args.out else ROOT / "eval" / "results" / f"{args.model.replace(':', '_')}__{set_path.stem}.json"
+    tag = args.model.split(":", 1)[1] if args.model.startswith("sql2pyspark:") else args.model.replace(":", "_")
+    out = Path(args.out) if args.out else ROOT / "eval" / "results" / f"{tag}__{set_path.stem}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     cached = {}
     if args.reuse_replies and out.exists():
@@ -162,7 +163,8 @@ def main():
     rows: list[dict[str, Any]] = []
     t0 = time.time()
     for i, c in enumerate(cases, 1):
-        s_cols, s_rows = checker.run_sql(c["sql"])
+        # ref_sql: optional Spark-compatible rewrite of `sql` (same meaning); the model always gets `sql`
+        s_cols, s_rows = checker.run_sql(c.get("ref_sql") or c["sql"])
         if c["id"] in cached:
             reply, secs = cached[c["id"]]
         else:

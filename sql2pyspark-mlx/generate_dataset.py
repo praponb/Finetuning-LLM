@@ -18,10 +18,12 @@ import argparse
 import json
 import random
 import re
+import sys
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Callable, Iterable, TypeVar
 
+import advanced
 from schemas import TABLE_BY_NAME, Column, Table, train_tables
 from sqlspec import (Agg, And, Between, BinOp, BoolTest, Case, Cast, Cmp, Col, Ctx, E, Fn, FnPred, InList, IsNull,
                      Join, Like, Lit, NoArgFn, Not, Or, PyVar, Raw, Rel, Sel, Semi, Style, WinFn, WinSpec, call,
@@ -1198,7 +1200,7 @@ def renamed_col_pairs() -> list[tuple[Table, Column, Table, Column]]:
 
 
 def fam_setop(st, ctx):
-    op = wchoice([("UNION ALL", .4), ("UNION", .3), ("INTERSECT", .15), ("EXCEPT", .15)])
+    op = wchoice([("UNION ALL", .3), ("UNION", .4), ("INTERSECT", .15), ("EXCEPT", .15)])   # v4: more UNION (+ .distinct())
     feats = {"setop", "set_" + op.split()[0].lower() + ("_all" if "ALL" in op else "")}
     branch = wchoice([("same_table", .4), ("shared_names", .25), ("renamed", .35)])
     if branch == "renamed":
@@ -1399,6 +1401,10 @@ def fam_special(st, ctx):
 FAMILIES = [(fam_select, 15), (fam_agg, 15), (fam_join, 12), (fam_join_agg, 8), (fam_window, 9), (fam_topn, 6),
             (fam_cte_agg_join, 7), (fam_cte_chain, 5), (fam_derived, 4), (fam_subquery, 9), (fam_setop, 7),
             (fam_special, 6)]
+
+# v4: long multi-CTE pipelines, advanced Spark SQL and nested data (advanced.py)
+advanced.bind(sys.modules[__name__])
+FAMILIES += advanced.FAMILIES
 
 
 def generate_one():
