@@ -44,9 +44,10 @@ All workflows are in the [Makefile](../Makefile):
 
 ### Phase 1: Synthesize & Verify Dataset
 ```bash
-# Generate 20,000 pairs (v1-v3 families + the v4 families in advanced.py) + 105 hand-written pairs,
-# verify in Spark, and split (~20 min natively with 4 workers)
-make data N=20000 WORKERS=4
+# Generate 20,000 pairs (v1-v3 families + the v4/v5 families in advanced.py) + 105 hand-written pairs,
+# verify in Spark, and split (~20 min natively with 4 workers). SEED picks the generator seed (v5: 5);
+# EXCLUDE (default ../eval/test_fixed.jsonl) keeps the fixed test set out of every split.
+make data N=20000 SEED=5 WORKERS=4
 
 # Or step by step:
 make generate   # writes raw SQL/PySpark pairs to sql2pyspark-mlx/raw_pairs/
@@ -71,6 +72,8 @@ make train
 ```bash
 tail -f sql2pyspark-mlx/train.log
 ```
+To continue from an earlier model instead of starting from scratch (v5 continued from v4), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` (e.g. `./runs/v4/adapters/adapters.safetensors`) and use a lower peak learning rate; the adapter shape (rank, layers) must match.
+
 `make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
 
 ### Phase 3: Export, Fuse & Quantize

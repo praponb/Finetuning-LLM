@@ -12,7 +12,9 @@ PY       := $(CURDIR)/$(VENV)/python
 BASE     := mlx-community/Qwen2.5-Coder-3B-Instruct-4bit
 TAG      ?= v4
 PREV     ?= v3
-N        ?= 15000
+N        ?= 20000
+SEED     ?= 0
+EXCLUDE  ?= ../eval/test_fixed.jsonl
 WORKERS  ?= 5
 SAMPLE   ?= 300
 
@@ -28,14 +30,14 @@ setup: ## create the venv and install requirements (needs Python 3.12+ and Java 
 data: generate verify split ## full dataset build
 
 generate: ## write generated + hand-written pairs to sql2pyspark-mlx/raw_pairs/
-	cd $(MLX) && rm -rf raw_pairs && $(PY) generate_dataset.py --n $(N) --out raw_pairs \
+	cd $(MLX) && rm -rf raw_pairs && $(PY) generate_dataset.py --n $(N) --seed $(SEED) --out raw_pairs \
 		&& $(PY) handwritten_pairs.py --out raw_pairs
 
 verify: ## run both sides of every pair in local Spark, keep matching pairs
 	cd $(MLX) && $(PY) verify_pairs.py --src raw_pairs --workers $(WORKERS)
 
 split: ## leakage-free train/valid/test split in mlx chat format
-	cd $(MLX) && $(PY) convert_sql_pyspark.py --src raw_pairs --out-dir data
+	cd $(MLX) && $(PY) convert_sql_pyspark.py --src raw_pairs --out-dir data --exclude $(EXCLUDE)
 
 train: ## LoRA fine-tune (writes sql2pyspark-mlx/adapters/); resumes by itself if Metal aborts a step
 	cd $(MLX) && $(PY) train_resumable.py --config lora_config.yaml

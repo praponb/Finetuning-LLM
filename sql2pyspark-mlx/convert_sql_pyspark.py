@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -43,6 +44,10 @@ def write_jsonl(file_path: Path, data: list):
     with open(file_path, "w", encoding="utf-8") as f:
         for item in data:
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
+
+
+def norm_sql(sql: str) -> str:
+    return re.sub(r"\s+", " ", sql.lower()).strip().rstrip(";")
 
 
 def signature(rec) -> str:
@@ -85,12 +90,20 @@ def main():
     ap.add_argument("--min-train-per-feature", type=int, default=30)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--system-prompt", default=DEFAULT_SYSTEM_PROMPT)
+    ap.add_argument("--exclude", nargs="*", default=[],
+                    help="JSONL files whose `sql` must never appear in any split (e.g. eval/test_fixed.jsonl)")
     args = ap.parse_args()
 
     src = Path(args.src) / "verified.jsonl"
     if not src.exists():
         raise SystemExit(f"{src} not found - run verify_pairs.py first")
     recs = [json.loads(line) for line in src.read_text(encoding="utf-8").splitlines() if line.strip()]
+    excluded = {norm_sql(json.loads(line)["sql"]) for f in args.exclude
+                for line in Path(f).read_text(encoding="utf-8").splitlines() if line.strip()}
+    before = len(recs)
+    recs = [r for r in recs if norm_sql(r["sql"]) not in excluded]
+    if args.exclude:
+        print(f"excluded {before - len(recs)} pairs that match {len(excluded)} queries in {args.exclude}")
     train, valid, test = split(recs, args.valid_frac, args.test_frac, args.min_train_per_feature, args.seed)
     random.Random(args.seed).shuffle(train)
 

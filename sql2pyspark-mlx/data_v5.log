@@ -1,0 +1,184 @@
+cd sql2pyspark-mlx && rm -rf raw_pairs && /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/bin/python generate_dataset.py --n 20000 --seed 5 --out raw_pairs \
+		&& /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/bin/python handwritten_pairs.py --out raw_pairs
+wrote 20000 pairs to raw_pairs/ ; by family: {'adv_agg': 717, 'adv_dedup': 557, 'adv_join': 432, 'adv_nested': 1177, 'adv_reshape': 278, 'adv_session': 516, 'adv_setop': 420, 'adv_window': 873, 'agg': 1595, 'cte_agg_join': 736, 'cte_chain': 530, 'derived': 388, 'join': 1294, 'join_agg': 817, 'pipeline': 4137, 'select': 1634, 'setop': 783, 'special': 584, 'subquery': 969, 'topn': 653, 'window': 910}
+wrote 105 hand-written pairs to raw_pairs/
+cd sql2pyspark-mlx && /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/bin/python verify_pairs.py --src raw_pairs --workers 4
+checking 20105 pairs with 4 workers ...
+WARNING: Using incubator modules: jdk.incubator.vector
+WARNING: Using incubator modules: jdk.incubator.vector
+WARNING: Using incubator modules: jdk.incubator.vector
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/09/27 16:55:52 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.34 instead (on interface en0)
+26/09/27 16:55:52 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/09/27 16:55:52 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.34 instead (on interface en0)
+26/09/27 16:55:52 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/09/27 16:55:52 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.34 instead (on interface en0)
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/09/27 16:55:52 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/09/27 16:55:52 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.34 instead (on interface en0)
+26/09/27 16:55:52 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/27 16:55:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/27 16:55:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/27 16:55:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/27 16:55:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+  500/20105  ok=499  (78s)
+  1000/20105  ok=997  (116s)
+  1500/20105  ok=1497  (153s)
+  2000/20105  ok=1996  (186s)
+  2500/20105  ok=2494  (218s)
+  3000/20105  ok=2994  (248s)
+  3500/20105  ok=3494  (281s)
+  4000/20105  ok=3993  (311s)
+  4500/20105  ok=4493  (343s)
+  5000/20105  ok=4991  (372s)
+  5500/20105  ok=5491  (403s)
+  6000/20105  ok=5991  (435s)
+  6500/20105  ok=6489  (467s)
+  7000/20105  ok=6988  (500s)
+  7500/20105  ok=7488  (533s)
+  8000/20105  ok=7985  (563s)
+  8500/20105  ok=8485  (593s)
+  9000/20105  ok=8984  (624s)
+  9500/20105  ok=9483  (654s)
+  10000/20105  ok=9983  (682s)
+  10500/20105  ok=10483  (708s)
+  11000/20105  ok=10982  (737s)
+  11500/20105  ok=11482  (765s)
+  12000/20105  ok=11982  (792s)
+  12500/20105  ok=12482  (818s)
+  13000/20105  ok=12982  (848s)
+  13500/20105  ok=13480  (874s)
+  14000/20105  ok=13978  (901s)
+  14500/20105  ok=14476  (930s)
+  15000/20105  ok=14974  (959s)
+  15500/20105  ok=15474  (988s)
+  16000/20105  ok=15974  (1015s)
+  16500/20105  ok=16473  (1045s)
+  17000/20105  ok=16971  (1077s)
+  17500/20105  ok=17471  (1108s)
+  18000/20105  ok=17970  (1137s)
+  18500/20105  ok=18470  (1168s)
+  19000/20105  ok=18970  (1199s)
+  19500/20105  ok=19468  (1226s)
+  20000/20105  ok=19968  (1252s)
+{
+  "total": 20105,
+  "ok": 20073,
+  "pass_rate": 0.9984,
+  "ok_but_empty_result": 2761,
+  "by_status": {
+    "ok": 20073,
+    "sql_error": 25,
+    "rows": 7
+  },
+  "by_family": {
+    "adv_agg": {
+      "ok": 710,
+      "sql_error": 6,
+      "rows": 1
+    },
+    "adv_dedup": {
+      "ok": 554,
+      "sql_error": 3
+    },
+    "adv_join": {
+      "ok": 431,
+      "sql_error": 1
+    },
+    "adv_nested": {
+      "ok": 1174,
+      "sql_error": 3
+    },
+    "adv_reshape": {
+      "ok": 278
+    },
+    "adv_session": {
+      "ok": 516
+    },
+    "adv_setop": {
+      "ok": 420
+    },
+    "adv_window": {
+      "ok": 869,
+      "sql_error": 4
+    },
+    "agg": {
+      "ok": 1595
+    },
+    "cte_agg_join": {
+      "ok": 736
+    },
+    "cte_chain": {
+      "ok": 530
+    },
+    "derived": {
+      "ok": 388
+    },
+    "handwritten": {
+      "ok": 105
+    },
+    "join": {
+      "ok": 1294
+    },
+    "join_agg": {
+      "ok": 817
+    },
+    "pipeline": {
+      "ok": 4123,
+      "sql_error": 8,
+      "rows": 6
+    },
+    "select": {
+      "ok": 1634
+    },
+    "setop": {
+      "ok": 783
+    },
+    "special": {
+      "ok": 584
+    },
+    "subquery": {
+      "ok": 969
+    },
+    "topn": {
+      "ok": 653
+    },
+    "window": {
+      "ok": 910
+    }
+  },
+  "seconds": 1253.8
+}
+cd sql2pyspark-mlx && /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/bin/python convert_sql_pyspark.py --src raw_pairs --out-dir data --exclude ../eval/test_fixed.jsonl
+excluded 2 pairs that match 150 queries in ['../eval/test_fixed.jsonl']
+{
+  "pairs": 20071,
+  "train": 16927,
+  "valid": 2096,
+  "test": 1048,
+  "signatures": {
+    "train": 9071,
+    "valid": 1207,
+    "test": 555
+  },
+  "signature_overlap_train_valid": 0,
+  "signature_overlap_train_test": 0,
+  "features_missing_from_train": []
+}
+make data N=20000 SEED=5 WORKERS=4  280.32s user 144.81s system 33% cpu 21:06.63 total
+exit=0

@@ -1,0 +1,51 @@
+[22:55:59] export v5
+INFO:hf-to-gguf:Model successfully exported to sql2pyspark.gguf
+success 
+[22:56:54] v5 holdout
+  10/62  lenient match 10/10  (22s)
+  20/62  lenient match 19/20  (53s)
+  30/62  lenient match 29/30  (97s)
+  40/62  lenient match 38/40  (149s)
+  50/62  lenient match 46/50  (216s)
+  60/62  lenient match 54/60  (269s)
+  62/62  lenient match 56/62  (280s)
+sql2pyspark:v5 on holdout.jsonl (n=62)
+  strict : syntax 96.8%  runs 91.9%  match 90.3%
+  lenient: syntax 96.8%  runs 91.9%  match 90.3%
+  results -> eval/results/v5__holdout.json
+[23:01:42] v5 holdout_v4
+  10/25  lenient match 7/10  (83s)
+  20/25  lenient match 13/20  (148s)
+  25/25  lenient match 14/25  (208s)
+sql2pyspark:v5 on holdout_v4.jsonl (n=25)
+  strict : syntax 88.0%  runs 68.0%  match 56.0%
+  lenient: syntax 88.0%  runs 68.0%  match 56.0%
+  results -> eval/results/v5__holdout_v4.json
+[23:05:18] v5 real_queries
+  4/4  lenient match 0/4  (307s)
+sql2pyspark:v5 on real_queries.jsonl (n=4)
+  strict : syntax 50.0%  runs 0.0%  match 0.0%
+  lenient: syntax 50.0%  runs 0.0%  match 0.0%
+  results -> eval/results/v5__real_queries.json
+[23:10:33] v5 test_fixed
+  10/150  lenient match 8/10  (119s)
+  20/150  lenient match 16/20  (211s)
+  30/150  lenient match 23/30  (361s)
+  40/150  lenient match 32/40  (454s)
+  50/150  lenient match 41/50  (548s)
+  60/150  lenient match 50/60  (679s)
+  70/150  lenient match 60/70  (765s)
+  80/150  lenient match 70/80  (825s)
+  90/150  lenient match 78/90  (937s)
+  100/150  lenient match 87/100  (1047s)
+  110/150  lenient match 96/110  (1131s)
+  120/150  lenient match 103/120  (1278s)
+  130/150  lenient match 110/130  (1407s)
+  140/150  lenient match 120/140  (1538s)
+  150/150  lenient match 128/150  (1717s)
+sql2pyspark:v5 on test_fixed.jsonl (n=150)
+  strict : syntax 97.3%  runs 88.0%  match 85.3%
+  lenient: syntax 97.3%  runs 88.7%  match 85.3%
+  results -> eval/results/v5__test_fixed.json
+[23:39:20] ALL DONE
+exit=0

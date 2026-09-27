@@ -185,8 +185,13 @@ def atom(rel, col=None):
             return IsNull(x, neg=chance(0.6)), "null"
         if r < 0.55:
             return Cmp(x, choice(["=", "=", "=", "<>"]), Lit(pool_val(col))), "cmp"
-        vals = rng.sample([v for v in col.pool if "'" not in v], min(len(col.pool), rng.randint(2, 3)))
-        return InList(x, vals, neg=chance(0.25)), "in"
+        neg = chance(0.25)
+        pool = [v for v in col.pool if "'" not in v]
+        # v5: a NOT IN over every value of the column always returned nothing
+        vals = rng.sample(pool, min(len(pool) - (1 if neg else 0), rng.randint(2, 3)))
+        if not vals:
+            raise Skip
+        return InList(x, vals, neg=neg), "in"
     if k == "str":
         v = pool_val(col).strip()
         if r < 0.45:
@@ -1202,11 +1207,11 @@ def renamed_col_pairs() -> list[tuple[Table, Column, Table, Column]]:
 def fam_setop(st, ctx):
     op = wchoice([("UNION ALL", .3), ("UNION", .4), ("INTERSECT", .15), ("EXCEPT", .15)])   # v4: more UNION (+ .distinct())
     feats = {"setop", "set_" + op.split()[0].lower() + ("_all" if "ALL" in op else "")}
-    branch = wchoice([("same_table", .4), ("shared_names", .25), ("renamed", .35)])
+    branch = wchoice([("same_table", .3), ("shared_names", .2), ("renamed", .5)])   # v5: more renamed columns
     if branch == "renamed":
         t1, c1, t2, c2 = choice(renamed_col_pairs())
         r1, r2 = base_rel(t1), base_rel(t2)
-        mode = wchoice([("positional", .5), ("alias_right", .3), ("alias_both", .2)])
+        mode = wchoice([("positional", .55), ("alias_right", .2), ("alias_both", .25)])
         if mode == "positional":        # SELECT city ... UNION SELECT location ...  -> .union() (by position)
             names = (c1.name, c2.name)
         elif mode == "alias_right":     # SELECT city ... UNION SELECT location AS city ...
@@ -1217,10 +1222,15 @@ def fam_setop(st, ctx):
         feats.add("set_" + mode)
         li2: list[tuple[E, str]] = [(Col(c1), names[0])]
         ri2: list[tuple[E, str]] = [(Col(c2), names[1])]
-        if op.startswith("UNION") and chance(.4):
-            li2.append((Lit(singular(t1.name)), "source"))
-            ri2.append((Lit(singular(t2.name)), "source"))
+        if op.startswith("UNION") and chance(.5):
+            lname = choice(["source", "kind", "record_type", "origin"])
+            # v5: the literal column goes first or last
+            at = 0 if chance(.5) else len(li2)
+            li2.insert(at, (Lit(singular(t1.name)), lname))
+            ri2.insert(at, (Lit(singular(t2.name)), lname))
             feats.add("literal_col")
+            if at == 0:
+                feats.add("literal_first")
         left, right = Sel(r1, items=li2), Sel(r2, items=ri2)
         if chance(.4):
             left.where = atom(r1)[0]
@@ -1240,9 +1250,13 @@ def fam_setop(st, ctx):
         li: list[tuple[E, str]] = [(Col(t1.col(n)), n) for n in names]
         ri: list[tuple[E, str]] = [(Col(t2.col(n)), n) for n in names]
         if op.startswith("UNION") and chance(.5):
-            li.append((Lit(singular(t1.name)), "source"))
-            ri.append((Lit(singular(t2.name)), "source"))
+            lname = choice(["source", "kind", "record_type", "origin"])
+            at = 0 if chance(.5) else len(li)
+            li.insert(at, (Lit(singular(t1.name)), lname))
+            ri.insert(at, (Lit(singular(t2.name)), lname))
             feats.add("literal_col")
+            if at == 0:
+                feats.add("literal_first")
         left, right = Sel(r1, items=li), Sel(r2, items=ri)
         if chance(.4):
             left.where = atom(r1)[0]
@@ -1274,7 +1288,7 @@ def fam_setop(st, ctx):
 
 
 def fam_special(st, ctx):
-    kind = wchoice([("pivot", .3), ("explode", .25), ("cross", .1), ("window_over_agg", .35)])
+    kind = wchoice([("pivot", .28), ("explode", .22), ("cross", .2), ("window_over_agg", .3)])   # v5: more DISTINCT cross joins
     feats = {kind}
     k = st.k
     nl = "\n" if st.multiline else " "
