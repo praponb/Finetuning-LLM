@@ -182,7 +182,7 @@ Earlier samples are kept outside the report's glob: `eval/results/v4-split/` (th
 - **v2** beat v1 on hold-out correctness (90% vs. 6%) and was promoted to `sql2pyspark:latest`.
 - **v3** beat v2 on the hold-out set (95.2% vs. 90.3%: it fixes 3 of v2's 6 failures with no regressions) and tied it on the same test sample, so it was promoted on 2026-09-26 (`make promote TAG=v3 PREV=v2`). v2 stays available as `sql2pyspark:v2`.
 - **v4** (2026-09-27) was **not promoted**; see [v4 results](#-v4-results-2026-09-27). It stays available as `sql2pyspark:v4`.
-- **v5** (2026-09-28) was **not promoted** either; see [v5 results](#-v5-results-2026-09-28). It stays available as `sql2pyspark:v5`.
+- **v5** (2026-09-28) missed the rule on two conditions (see [v5 results](#-v5-results-2026-09-28)) but was **promoted to `latest` by the owner's decision** (`make promote TAG=v5 PREV=v3`); v3 is kept as `sql2pyspark:v3` for rollback.
 
 The rule (since v5): promote a new model only if it scores at least the current one on the hold-out set (≥ 59/62), keeps its accuracy on the classic-family queries of the fixed test set (≥ v3 − 2, i.e. ≥ 94/97), beats it on the v4 hold-out set, gets at least 1 of the 4 real-world queries right, and doesn't regress on the fixed test set overall. (v4 used the same rule without the classic-family condition and with "better on the real queries".)
 
@@ -249,7 +249,7 @@ v5 continued training from v4's adapters (1,200 updates, peak LR 5e-5) on a 55% 
 | v4 hold-out (25) | 3 | 9 | **14** | ✅ > 3 |
 | Real-world queries (4) | 0 | 0 | 0 | ❌ ≥ 1 |
 
-**Decision**: v5 misses two conditions, so `sql2pyspark:latest` stays on v3. v5 is nevertheless the best model on the fixed test set and the v4 features, with v3-level accuracy on classic queries.
+**Decision**: by the rule v5 misses two conditions (hold-out, real queries). It is nevertheless the best model on the fixed test set and the v4 features, with v3-level accuracy on classic queries, so the owner **promoted it to `latest` on 2026-09-28** as an explicit override; roll back with `ollama cp sql2pyspark:v3 sql2pyspark:latest`.
 
 **v4 hold-out by feature group** (v5 / v4 / v3): aggregation 50% / 25% / 0%, window **100%** / 40% / 40%, join 40% / 20% / 0%, setop 67% / 67% / 33%, reshape 50% / 50% / 0%, nested 50% / 50% / 0%, pipeline 0% / 0% / 0%. New in v5: `GROUPING SETS` over a join (`001`), the epoch `RANGE` frame (`006`), the named `WINDOW` (`007`), the 6-hour sessionization (`009`), `LATERAL ... LIMIT 1` (`011`), the `<=>` join (`013`) and `LATERAL VIEW OUTER EXPLODE` (`020`). Lost versus v4: the `INTERVAL` range join (`010`, now a syntax error) and the struct / map / JSON query (`023`). Still failing: `ROLLUP` + `GROUPING_ID` (`002`, wrong column order), percentiles / `COLLECT_SET` (`004`), correlated `NOT EXISTS` (`012`), the scalar subquery (`014`), the renamed-column `UNION` (`015`), `UNPIVOT` (`019`, wrong rows), `POSEXPLODE` (`021`) and both pipelines (`024` rank without `ORDER BY`, `025` struct-field confusion).
 
@@ -268,7 +268,7 @@ v5 continued training from v4's adapters (1,200 updates, peak LR 5e-5) on a 55% 
 | Real-world queries (4) | 0/4 | 0/4 | ❌ no gain |
 | Test sample (150, v4 split) | 105/150 (70.0%) | 110/150 (73.3%) | ⚠️ +5 overall, −12 on classic queries |
 
-**Decision**: v4 misses the promotion rule, so `sql2pyspark:latest` stays on v3. On the 150-query test sample v4 is 5 queries ahead overall, but only because it gains 17 on the v4 families (26/53 vs. 9/53; long pipelines 5/22 vs. 0/22) while losing 12 on the classic v1–v3 families (84/97 vs. 96/97: 5 syntax errors, 3 runtime errors, 2 wrong column lists, 2 wrong row sets), so v4 is not a safe drop-in replacement either.
+**Decision**: v4 misses the promotion rule, so `sql2pyspark:latest` stayed on v3. On the 150-query test sample v4 is 5 queries ahead overall, but only because it gains 17 on the v4 families (26/53 vs. 9/53; long pipelines 5/22 vs. 0/22) while losing 12 on the classic v1–v3 families (84/97 vs. 96/97: 5 syntax errors, 3 runtime errors, 2 wrong column lists, 2 wrong row sets), so v4 is not a safe drop-in replacement either.
 
 **v4 hold-out by feature group** (correct, lenient): aggregation 25% (v3 0%), window 40% (40%), join 20% (0%), setop 67% (33%), reshape 50% (0%), nested 50% (0%), pipeline 0% (0%). v4 newly solves `FILTER (WHERE ...)` / `COUNT_IF` / `NULLIF` (`003`), `DENSE_RANK ... NULLS LAST` + `LAST_VALUE ... IGNORE NULLS` (`005`), the `INTERVAL` range join (`010`), `INTERSECT ALL` (`017`), multi-aggregate `PIVOT` (`018`), the lambda query (`AGGREGATE` / `TRANSFORM` / `FILTER` / `EXISTS` / `ZIP_WITH`, `022`) and the struct / map / `TRY_CAST` / JSON query (`023`), and keeps `QUALIFY` (`008`) and `EXCEPT ALL` (`016`). It loses the named-`WINDOW` query that v3 solved (`007`) and still fails `GROUPING SETS` over a join, `ROLLUP` + `GROUPING_ID`, percentiles / `COLLECT_SET`, the epoch `RANGE` frame, the 6-hour sessionization, `LATERAL ... LIMIT 1`, correlated `NOT EXISTS`, the `<=>` join, the scalar subquery, the renamed-column `UNION`, `UNPIVOT`, both explode queries and both pipelines.
 
@@ -281,6 +281,21 @@ v5 continued training from v4's adapters (1,200 updates, peak LR 5e-5) on a 55% 
 - `real004`: a parenthesis is left open in the final chain.
 
 The real queries are 1,200–2,400 tokens and combine ~15 features each; the v4 pipelines teach the individual features, but rarely at that length and density (median ~1,100 tokens). Targets for v5: keep v3's accuracy on the classic families (more training steps, or continue from v3's adapters, since the v4 run saw the same ~4,800 samples as v3 but only ~58% classic ones), more and longer pipeline samples, `<=>`, `QUALIFY`, `UNPIVOT`, `LATERAL`, lambda-heavy nested queries, and the long-standing `UNION` alias gaps.
+
+## 🔁 Repetition-penalty experiment (2026-09-28)
+
+`real001` makes v5 (and v4) repeat window definitions (`w1` … `w93`) until the 2,048-token limit. Ollama already applies `repeat_penalty` 1.1 over the last 64 tokens (`repeat_last_n`), which is shorter than the repeated lines. v5 was re-scored with stronger settings via `evaluate.py --option KEY=VALUE` (results in `eval/results/v5-repeat-penalty/`, outside the report's glob):
+
+| Setting | Hold-out (62) | Real queries (4) | `real001` |
+| :--- | :--- | :--- | :--- |
+| Default (1.1 over 64 tokens) | **56** | 0 correct, 2 parse | loops: 92 window definitions, cut off |
+| `repeat_last_n=2048` (1.1 over 2,048) | 55 | 0 correct, 1 parses | loop gone: 3 windows, complete reply, one syntax error |
+| `repeat_penalty=1.2`, `repeat_last_n=256` | 49 | 0 correct, 1 parses | loop gone, parses, fails on a column carried through wrongly |
+| `repeat_penalty=1.3`, `repeat_last_n=256` | 41 | 0 correct, 0 parse | — |
+
+(`repeat_last_n=-1`, "whole context", is rejected by Ollama 0.34.4 with HTTP 400.)
+
+Stronger penalties make the model misspell identifiers it has already written (`docotr_id`, `avg_base_fair`): all 7 hold-out queries lost with `repeat_penalty=1.2` are such misspellings. No setting makes a real query correct, so correctness is a model limit, not a decoding one. Adopted: **`repeat_last_n=2048` for SQL longer than 2,000 characters only**, in `app.py` (`generation_options()`); every hold-out query is under 410 characters and the real queries are 4,200+, so short queries behave exactly as before while long ones no longer loop. The `Modelfile` and the evaluation defaults are unchanged.
 
 ---
 
@@ -303,6 +318,9 @@ python eval/evaluate.py --model sql2pyspark:v4 --set eval/real_queries.jsonl --t
 
 # v4 feature hold-out set
 python eval/evaluate.py --model sql2pyspark:v4 --set eval/holdout_v4.jsonl
+
+# Extra Ollama options (e.g. the repetition-penalty experiment)
+python eval/evaluate.py --model sql2pyspark:v5 --set eval/real_queries.jsonl --tables eval/real_tables.py --option repeat_last_n=2048 --out /tmp/rp.json
 
 # Rebuild the results table in README.md
 python eval/report.py --readme README.md

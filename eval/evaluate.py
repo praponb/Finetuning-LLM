@@ -46,13 +46,13 @@ OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/") 
 IMPORTS = "from pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n"
 
 
-def ask(model: str, sql: str, timeout: int, num_predict: int) -> tuple[str, float]:
+def ask(model: str, sql: str, timeout: int, num_predict: int, extra: dict | None = None) -> tuple[str, float]:
     t0 = time.time()
     r = requests.post(OLLAMA_URL, json={
         "model": model,
         "messages": [{"role": "user", "content": f"Convert SQL to PySpark:\n```sql\n{sql}\n```"}],
         "stream": False,
-        "options": {"temperature": 0, "seed": 0, "num_predict": num_predict},
+        "options": {"temperature": 0, "seed": 0, "num_predict": num_predict, **(extra or {})},
     }, timeout=timeout)
     r.raise_for_status()
     return r.json().get("message", {}).get("content", ""), time.time() - t0
@@ -142,6 +142,8 @@ def main():
     ap.add_argument("--timeout", type=int, default=180)
     ap.add_argument("--num-predict", type=int, default=2048,
                     help="max tokens per reply (was 1024 before 2026-09-27; only long real-world queries need more)")
+    ap.add_argument("--option", action="append", default=[], metavar="KEY=VALUE",
+                    help="extra Ollama option, repeatable (e.g. --option repeat_penalty=1.2 --option repeat_last_n=256)")
     ap.add_argument("--tables", default=None,
                     help="extra sample tables: a .py file with make_dataframes(spark), e.g. eval/real_tables.py")
     ap.add_argument("--out", default=None, help="results JSON (default eval/results/<model>__<set>.json)")
@@ -157,6 +159,10 @@ def main():
     cached = {}
     if args.reuse_replies and out.exists():
         cached = {c["id"]: (c["reply"], c["seconds"]) for c in json.loads(out.read_text())["cases"]}
+    extra = {}
+    for kv in args.option:
+        k, v = kv.split("=", 1)
+        extra[k] = int(v) if v.lstrip("-").isdigit() else float(v)
     checker = Checker()
     if args.tables:
         checker.frames.update(load_tables(args.tables, checker.spark))
@@ -169,7 +175,7 @@ def main():
             reply, secs = cached[c["id"]]
         else:
             try:
-                reply, secs = ask(args.model, c["sql"], args.timeout, args.num_predict)
+                reply, secs = ask(args.model, c["sql"], args.timeout, args.num_predict, extra)
             except Exception as e:  # noqa: BLE001
                 reply, secs = f"<request failed: {_short(e)}>", 0.0
         code = extract_code(reply)

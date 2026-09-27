@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & UI Interface"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(latest = v3, v4 available)"]
+        Ollama["Ollama Engine<br/>(latest = v5; v3, v4 kept)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
 
         GGUF --> Modelfile

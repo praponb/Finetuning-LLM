@@ -200,13 +200,13 @@ Current tags:
 
 | Tag | Image ID | Notes |
 |---|---|---|
-| `sql2pyspark:latest` | `aa95ad200568` | = v3, promoted 2026-09-26 |
-| `sql2pyspark:v5` | `b6a1ace642a4` | exported 2026-09-27 (continued from v4); not promoted (see [Evaluation](04-evaluation-and-benchmarking.md)) |
+| `sql2pyspark:latest` | `b6a1ace642a4` | = v5, promoted 2026-09-28 (owner's decision; see [Evaluation](04-evaluation-and-benchmarking.md)) |
+| `sql2pyspark:v5` | `b6a1ace642a4` | exported 2026-09-27 (continued from v4); current model |
 | `sql2pyspark:v4` | `23108327a0d7` | exported 2026-09-27; not promoted |
-| `sql2pyspark:v3` | `aa95ad200568` | current model |
+| `sql2pyspark:v3` | `aa95ad200568` | previous `latest` (2026-09-26 → 09-28); rollback: `ollama cp sql2pyspark:v3 sql2pyspark:latest` |
 | `sql2pyspark:v2` | `fb27933c2519` | previous model; rollback: `ollama cp sql2pyspark:v2 sql2pyspark:latest` |
 | `sql2pyspark:v1` | `3dd2beaef9ff` | template-based v1 |
 
-`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v5** weights (last export); Ollama keeps its own copy of every tag, so `latest` still serves v3. The v2, v3 and v4 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/`, `runs/v3/` and `runs/v4/`; their GGUFs live only inside Ollama.
+`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v5** weights (last export); Ollama keeps its own copy of every tag. The v2, v3 and v4 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/`, `runs/v3/` and `runs/v4/`; their GGUFs live only inside Ollama.
 
 The model is served at `POST http://localhost:11434/api/chat`.

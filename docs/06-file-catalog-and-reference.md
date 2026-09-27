@@ -12,7 +12,7 @@ A reference for the directories, scripts, configuration files, datasets and arti
 | [Modelfile](../Modelfile) | Ollama model definition | Chat template, stop token, temperature 0.2, top_p 0.9, system prompt | `sql2pyspark.gguf` | Ollama model `sql2pyspark:<tag>` |
 | [README.md](../README.md) | Project summary | Pipeline, setup, conventions, results table, known gaps, layout | — | Landing page |
 | [PROJECT_DOCUMENTATION.md](../PROJECT_DOCUMENTATION.md) | Single-file documentation | Condensed version of the `docs/` guides | — | — |
-| [app.py](../app.py) | Streamlit web application | `extract_code(text)`, `OLLAMA_URL` | `streamlit`, `requests`, Ollama API | Web UI on `:8501` |
+| [app.py](../app.py) | Streamlit web application | `extract_code(text)`, `generation_options(sql)` (long-SQL repetition window), `OLLAMA_URL` | `streamlit`, `requests`, Ollama API | Web UI on `:8501` |
 | [requirements.txt](../requirements.txt) | Pinned dependencies | MLX, mlx-lm, transformers, torch, gguf, PySpark, Streamlit, ... | Python 3.14 on macOS arm64 (tested) | Contents of the project venv |
 | [pyrefly.toml](../pyrefly.toml) | Editor type-checker config | Points Pyrefly at `sql2pyspark-mlx/.venv/bin/python`; adds `sql2pyspark-mlx/` to the search path; excludes vendored/generated folders | Pyrefly extension | No red "Cannot find module" errors |
 | `sql2pyspark.gguf` | Quantized model of the last export (v4) | 3.29 GB, Q8_0 | Output of `make gguf` | Registered in Ollama by `make ollama`; Ollama keeps its own copy of every tag (`latest` = v3) |
@@ -78,10 +78,11 @@ A reference for the directories, scripts, configuration files, datasets and arti
 | `holdout.jsonl` | Hold-out benchmark | 62 entries (15 simple, 22 medium, 25 complex) on unseen tables | Read by `evaluate.py` |
 | `test_fixed.jsonl` | Fixed test set (since v5) | The 150-query sample of the v4 test split (id, family, SQL, reference, ORDER BY columns); excluded from later training data | Read by `evaluate.py`; `convert_sql_pyspark.py --exclude` |
 | `holdout_v4.jsonl` | v4 hold-out benchmark | 25 entries on unseen tables incl. the nested `vehicle_trips`; `level` = feature group | Read by `evaluate.py` |
-| [evaluate.py](../eval/evaluate.py) | Execution-based evaluator | `ask()`, `extract_code()`, `lenient()`, `score()`, `main_table()`, `load_tables()`; `--sample`, `--reuse-replies`, `--tables`, `--num-predict`, `OLLAMA_URL` | Queries Ollama, runs code in Spark, scores results |
+| [evaluate.py](../eval/evaluate.py) | Execution-based evaluator | `ask()`, `extract_code()`, `lenient()`, `score()`, `main_table()`, `load_tables()`; `--sample`, `--reuse-replies`, `--tables`, `--num-predict`, `--option KEY=VALUE`, `OLLAMA_URL` | Queries Ollama, runs code in Spark, scores results |
 | [report.py](../eval/report.py) | Results-table generator | `load()`, `table()`; `--readme` replaces the block between `RESULTS` markers | Markdown tables from `eval/results/*.json` |
 | `results/` | Evaluation results | `<tag>__<set>.json` for `holdout`, `holdout_v4`, `real_queries` and `test` (every reply + score); `v3__test.json` and `v4__test.json` use the same 300-query sample of the v4 split | Source for `report.py` |
 | `results/v2-split/` | Earlier test results | `v1__test.json`, `v2__test.json` on the v2 split | Kept for reference; not read by `report.py` |
+| `results/v5-repeat-penalty/` | v5 with stronger repetition settings | `A2_rp1.1_2048__*.json`, `B_rp1.2_256__*.json`, `C_rp1.3_256__*.json` (real queries + hold-out) | Evidence for the long-SQL setting in `app.py` |
 | `results/v4-split/` | v3/v4 results on the v4-split sample (identical to their `__test_fixed.json`) | `v3__test.json`, `v4__test.json` | Kept for reference; not read by `report.py` |
 | `results/v3-split/` | Test results on the v3 split | `v2__test.json`, `v3__test.json` | Kept for reference; not read by `report.py` |
 | `results_v1_holdout.log`, `results_v1_test.log` | v1 evaluation console logs | Progress and summary lines | Reference |

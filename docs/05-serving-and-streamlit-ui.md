@@ -29,7 +29,7 @@ sequenceDiagram
 
 ## 🦙 Ollama Serving Engine
 
-Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v3**; `sql2pyspark:v5` and `sql2pyspark:v4` (exported 2026-09-27, not promoted), `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag, so `sql2pyspark.gguf` on disk now holds v5 while `latest` still serves v3.
+Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v5** (since 2026-09-28); `sql2pyspark:v3` (the previous `latest`), `sql2pyspark:v4`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the last export (v5).
 
 ### Server Address
 - Default: `http://localhost:11434`
@@ -97,17 +97,20 @@ def extract_code(text: str) -> str:
 
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
-- `sql2pyspark:latest` (default, currently v3)
-- `sql2pyspark:v5` (best on the fixed test set and the v4 features; see [Evaluation](04-evaluation-and-benchmarking.md))
+- `sql2pyspark:latest` (default, currently v5)
+- `sql2pyspark:v5` (= `latest`; best on the fixed test set and the v4 features; see [Evaluation](04-evaluation-and-benchmarking.md))
 - `sql2pyspark:v4` (better at the v4 features: GROUPING SETS, PIVOT/UNPIVOT, nested data, ...; see [Evaluation](04-evaluation-and-benchmarking.md))
 - `sql2pyspark:v3`
 - `sql2pyspark:v2` (previous model, for comparison)
 - `sql2pyspark:v1` (template-based first model)
 
+### Generation settings
+`app.py` sends `temperature` 0.2. For SQL longer than 2,000 characters, `generation_options()` also sets `repeat_last_n` to 2,048 (Ollama's default: 64) and the request timeout rises from 120 s to 300 s: on long multi-CTE queries the model otherwise repeats window definitions until the token limit. Short queries are unaffected (see the repetition-penalty experiment in [Evaluation](04-evaluation-and-benchmarking.md)).
+
 ### 4. Error Handling
 - **Ollama unreachable**: shows `Cannot connect to Ollama at <OLLAMA_URL>. Make sure the Ollama service is running (open -a Ollama).`
 - **Blank input**: shows a warning.
-- **Timeout**: 120 seconds per request.
+- **Timeout**: 120 seconds per request (300 seconds for SQL longer than 2,000 characters).
 
 The app was checked headlessly with the v2 model (`streamlit.testing.v1.AppTest`) on the default query and three hold-out queries (a CTE with a join, a PIVOT, and a GROUP BY/ORDER BY). All three hold-out conversions were execution-verified as correct.
 

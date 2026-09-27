@@ -29,7 +29,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 3. **Splits by feature signature** (`convert_sql_pyspark.py`), so validation and test contain feature combinations that never occur in training.
 4. **Fine-tunes Qwen2.5-Coder-3B-Instruct (4-bit MLX)** with LoRA on a base M2 (v4 from scratch: validation loss 0.389 → 0.018, ~5 h 15 min; v5 continued from v4: 0.030 → **0.012**, ~5 h 40 min).
 5. **Exports a Q8_0 GGUF** served by Ollama behind a Streamlit UI.
-6. **Scores models by executing their answers** on 62 hand-written queries over unseen tables (v3 95%, v4 94%, v5 90%, v2 90%, v1 6%), 25 hand-written v4-feature queries (v5 56%, v4 36%, v3 12%), 4 real-world production queries (all models 0/4) and a fixed 150-query test set (v5 128, v4 110, v3 105). `sql2pyspark:latest` = **v3** since 2026-09-26; v4 and v5 are available as `sql2pyspark:v4` / `:v5` but were not promoted.
+6. **Scores models by executing their answers** on 62 hand-written queries over unseen tables (v3 95%, v4 94%, v5 90%, v2 90%, v1 6%), 25 hand-written v4-feature queries (v5 56%, v4 36%, v3 12%), 4 real-world production queries (all models 0/4) and a fixed 150-query test set (v5 128, v4 110, v3 105). `sql2pyspark:latest` = **v5** since 2026-09-28 (promoted to `latest` on 2026-09-28 by the owner's decision, although it misses two promotion-rule conditions); v3 is kept as `sql2pyspark:v3` for rollback.
 
 ### Architecture Diagram:
 ```mermaid
@@ -252,7 +252,7 @@ To package the fine-tuned model for Ollama (`make export TAG=v4`):
    `python llama.cpp/convert_hf_to_gguf.py sql2pyspark-hf --outtype q8_0 --outfile sql2pyspark.gguf`
    (**3.29 GB**, ~80 s).
 4. **Ollama registration and promotion**:
-   `ollama create sql2pyspark:v4 -f Modelfile` (ID `23108327a0d7`, 2026-09-27). v3 was promoted with `make promote TAG=v3 PREV=v2` (`sql2pyspark:latest` → v3, ID `aa95ad200568`); v4 was **not** promoted (see section 9). Roll back with `ollama cp sql2pyspark:v2 sql2pyspark:latest`. `sql2pyspark.gguf` on disk is always the last export (now v4); Ollama keeps its own copy of every tag.
+   `ollama create sql2pyspark:v4 -f Modelfile` (ID `23108327a0d7`, 2026-09-27). v3 was promoted with `make promote TAG=v3 PREV=v2` (ID `aa95ad200568`); v4 was not promoted; v5 (ID `b6a1ace642a4`) became `latest` on 2026-09-28 (`make promote TAG=v5 PREV=v3`, see section 9). Roll back with `ollama cp sql2pyspark:v2 sql2pyspark:latest`. `sql2pyspark.gguf` on disk is always the last export (now v4); Ollama keeps its own copy of every tag.
 
 ---
 
@@ -264,9 +264,10 @@ To package the fine-tuned model for Ollama (`make export TAG=v4`):
 
 ### Streamlit Web Application (`app.py`):
 - **Two columns**: SQL input on the left, generated PySpark on the right (with a copy button).
-- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v3), `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2`, `sql2pyspark:v1`.
+- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v5), `sql2pyspark:v5`, `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2`, `sql2pyspark:v1`.
 - **Robust code extraction**: `extract_code()` also handles replies that stop before the closing code fence.
-- **Error handling**: clear messages when Ollama is unreachable or the input is blank; 120 s timeout.
+- **Error handling**: clear messages when Ollama is unreachable or the input is blank; 120 s timeout (300 s for long SQL).
+- **Long SQL** (> 2,000 characters): `repeat_last_n=2048` stops the window-definition loops seen on long real queries; short queries are unaffected (docs/04, repetition-penalty experiment).
 - **Run**: `make app` → `http://localhost:8501`, or `docker compose up -d --build` for the same UI in a container (it uses the host's Ollama).
 
 Details: [docs/05-serving-and-streamlit-ui.md](docs/05-serving-and-streamlit-ui.md).
@@ -337,7 +338,9 @@ v4 hold-out, correct results (lenient) by feature group:
 | v4 hold-out (25) | 3 | 9 | **14** | ✅ > 3 |
 | Real-world queries (4) | 0 | 0 | 0 | ❌ ≥ 1 |
 
-v5 is the strongest model overall (it recovered v3's classic accuracy and solves all 5 window queries of the v4 hold-out set, `GROUPING SETS` over a join, `LATERAL`, `<=>` and `LATERAL VIEW OUTER EXPLODE`), but it misses the hold-out and real-query conditions: it adds two slips on simple expressions (`holdout015`, `holdout041`), and `real001` still loops on window definitions. `latest` stays on v3; v5 is available as `sql2pyspark:v5`.
+v5 is the strongest model overall (it recovered v3's classic accuracy and solves all 5 window queries of the v4 hold-out set, `GROUPING SETS` over a join, `LATERAL`, `<=>` and `LATERAL VIEW OUTER EXPLODE`), but it misses the hold-out and real-query conditions: it adds two slips on simple expressions (`holdout015`, `holdout041`), and `real001` still loops on window definitions. by the rule `latest` would have stayed on v3 (see the override below).
+
+**Override (2026-09-28)**: the owner promoted v5 to `latest` anyway (`make promote TAG=v5 PREV=v3`), since it beats v3 everywhere except the 62-query hold-out and all models score 0/4 on the real queries. v3 is kept as `sql2pyspark:v3`; roll back with `ollama cp sql2pyspark:v3 sql2pyspark:latest`.
 
 ### v4 decision (2026-09-27)
 | Eval set | v3 | v4 |
@@ -347,7 +350,7 @@ v5 is the strongest model overall (it recovered v3's classic accuracy and solves
 | Real-world queries (4) | 0/4 | 0/4 |
 | Test sample (150, v4 split) | 105/150 (70.0%) | 110/150 (73.3%) |
 
-v4 misses the promotion rule (hold-out 58 < 59, no gain on the real queries), so `sql2pyspark:latest` stays on **v3** and v4 is available as `sql2pyspark:v4`. On the 150-query test sample v4 is 5 queries ahead overall, but only because it gains 17 on the v4 families (26/53 vs. 9/53; long pipelines 5/22 vs. 0/22) while losing 12 on the classic v1–v3 families (84/97 vs. 96/97: 5 syntax errors, 3 runtime errors, 2 wrong column lists, 2 wrong row sets), so v4 is not a safe drop-in replacement either.
+v4 misses the promotion rule (hold-out 58 < 59, no gain on the real queries), so `sql2pyspark:latest` stayed on **v3** and v4 is available as `sql2pyspark:v4`. On the 150-query test sample v4 is 5 queries ahead overall, but only because it gains 17 on the v4 families (26/53 vs. 9/53; long pipelines 5/22 vs. 0/22) while losing 12 on the classic v1–v3 families (84/97 vs. 96/97: 5 syntax errors, 3 runtime errors, 2 wrong column lists, 2 wrong row sets), so v4 is not a safe drop-in replacement either.
 
 - **v4 gains** (v4 hold-out): `FILTER (WHERE ...)` / `COUNT_IF` / `NULLIF`, `NULLS LAST` + `LAST_VALUE ... IGNORE NULLS`, `INTERVAL` range joins, `INTERSECT ALL`, multi-aggregate `PIVOT`, higher-order lambdas and struct / map / JSON access on the unseen `vehicle_trips`; every original hold-out reply now parses (100% syntax vs. 97%). Still failing: `GROUPING SETS`, `ROLLUP` + `GROUPING_ID`, `RANGE` frames, sessionization, `LATERAL`, `<=>`, `UNPIVOT`, explode queries and both pipelines; the named-`WINDOW` query that v3 solved regressed.
 - **v4 regression**: `holdout058` drops `.distinct()` on one side of a CROSS JOIN of two `SELECT DISTINCT` subqueries (180 rows instead of 20).
