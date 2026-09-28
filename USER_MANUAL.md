@@ -106,7 +106,7 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
   - `sql2pyspark:v6`: Previous production model (7B).
   - `sql2pyspark:v5`: Previous production model (3B, about twice as fast, slightly less accurate).
   - `sql2pyspark:v4` / `:v3`: Earlier 3B models, kept for comparison.
-- **Kimi K3 Repair**: *When a check fails* (default), *Always* or *Off* (requires `KIMI_API_KEY` in `.env`; without it the section explains how to enable it).
+- **Kimi K3 Repair**: *When a check fails or the SQL is long* (default; long = over 2,000 characters), *When a check fails*, *Always* or *Off* (requires `KIMI_API_KEY` in `.env`; without it the section explains how to enable it).
 
 ---
 
@@ -300,13 +300,14 @@ Every conversion runs through Python's `ast` parser instantly:
 - Detects unclosed parentheses, missing commas, and syntax slips.
 - Detects undefined variable references (such as hallucinated window identifiers like `w93`).
 - Confirms that the target variable `result` is assigned.
+- Flags `.unionByName()` when the SQL's `UNION` branches name their columns differently (SQL matches set-operation columns by position, so the code needs `.union()`).
 
 ### 2. Kimi K3 Repair with Sandboxed Schema Execution
-When a check fails or when requested:
+When a check fails, when the SQL is long (over 2,000 characters), or when requested:
 1. **What leaves your machine**: the SQL query and the generated PySpark code are sent to Moonshot AI's Kimi API; no table data is (the app has none). Kimi declares the table schemas it infers from the SQL, and [kimi_repair.py](kimi_repair.py) creates empty DataFrames with those schemas (`EmptyTableRunner`). Don't enable the repair for SQL you may not share with a third-party API.
 2. **Local Spark execution**: each candidate code version runs in a local PySpark session on those empty tables, which catches wrong column names, type errors and column-order mismatches (not mistakes that only show in the data).
 3. **Column Parity Check**: The tool verifies that the DataFrame's output columns match the expected projection of the SQL query.
-4. **Result**: Shows the repaired code, token metrics, execution time, and repair cost (typically $0.13–$0.27 per query; 3 of the 4 real-world test queries fixed).
+4. **Result**: Shows the repaired code, token metrics, execution time, and repair cost (typically $0.07–$0.27 per query; 3 to 4 of the 4 real-world test queries fixed, achieving 100% 4/4 match under explicit UNPIVOT NULL filtering and positional set-operation matching rules).
 
 ### Activating Kimi K3
 Add your API key to [.env](.env):
@@ -332,8 +333,8 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
 - **Cause**: The model tag has not been registered in Ollama.
 - **Solution**:
   - Run `ollama list` to verify registered tags.
-  - If you have exported weights, run `make export TAG=v6` or `ollama cp sql2pyspark:v6 sql2pyspark:latest`.
-  - Alternatively, type an existing tag (e.g., `sql2pyspark:v5`) in the sidebar text box.
+  - If you have exported weights, run `make export TAG=v7` or `ollama cp sql2pyspark:v7 sql2pyspark:latest`.
+  - Alternatively, type an existing tag (e.g., `sql2pyspark:v6` or `sql2pyspark:v5`) in the sidebar text box.
 
 ### Q3: Why does long SQL produce repeating window definitions?
 - **Cause**: Very long queries (>2,000 characters) can enter repetition loops on smaller models if the repetition penalty window is too small.

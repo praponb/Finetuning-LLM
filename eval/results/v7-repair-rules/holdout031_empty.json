@@ -1,0 +1,69 @@
+{
+  "model": "kimi-k3",
+  "effort": "high",
+  "mode": "empty",
+  "max_runs": 5,
+  "source": "eval/results/v7__holdout.json",
+  "set": "eval/holdout.jsonl",
+  "summary": {
+    "n": 1,
+    "match_before": 0,
+    "match_after": 1,
+    "runs_after": 1,
+    "tool_runs": 2,
+    "usage": {
+      "input": 3140,
+      "output": 539,
+      "cache_read": 2304
+    },
+    "cost_usd": 0.0113,
+    "seconds": 26.0
+  },
+  "cases": [
+    {
+      "id": "holdout031",
+      "before": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN_AMONG_FIELD_NAMES] Cannot resolve column name \"city\" among (hospital). SQLSTATE: 42703"
+      },
+      "after": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "after_strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "n_runs": 2,
+      "final_reply": "The fix works. The problem was that `unionByName` matches columns by name, but SQL `UNION` matches by position — so `hospital` values should flow into the `city` column. Using positional `union` plus `distinct` (since SQL `UNION` deduplicates) preserves the exact semantics.\n\n```python\nresult = (\n    df_patients\n    .filter(F.col(\"city\").isNotNull())\n    .select(\"city\")\n    .union(df_doctors.filter(F.col(\"hospital\").isNotNull()).select(\"hospital\"))\n    .distinct()\n)\n```",
+      "code": "result = (\n    df_patients\n    .filter(F.col(\"city\").isNotNull())\n    .select(\"city\")\n    .union(df_doctors.filter(F.col(\"hospital\").isNotNull()).select(\"hospital\"))\n    .distinct()\n)",
+      "runs": [
+        {
+          "code": "result = (\n    df_patients\n    .filter(F.col(\"city\").isNotNull())\n    .select(\"city\")\n    .unionByName(df_doctors.filter(F.col(\"hospital\").isNotNull()).select(\"hospital\"))\n    .distinct()\n)",
+          "output": "Error: AnalysisException: [UNRESOLVED_COLUMN_AMONG_FIELD_NAMES] Cannot resolve column name \"city\" among (hospital). SQLSTATE: 42703\nSQL output columns: ['city']"
+        },
+        {
+          "code": "result = (\n    df_patients\n    .filter(F.col(\"city\").isNotNull())\n    .select(\"city\")\n    .union(df_doctors.filter(F.col(\"hospital\").isNotNull()).select(\"hospital\"))\n    .distinct()\n)",
+          "output": "OK (empty tables). result columns: ['city']\nSQL output columns: ['city']\ncolumns match the SQL"
+        }
+      ],
+      "stop_reason": "stop",
+      "usage": {
+        "input": 3140,
+        "output": 539,
+        "cache_read": 2304
+      },
+      "cost_usd": 0.0113,
+      "seconds": 25.6
+    }
+  ]
+}
