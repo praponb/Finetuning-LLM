@@ -367,6 +367,10 @@ def derive(rel, feats, col=None):
                      f"{n}_period", "fn_date"),
             lambda: (Fn("DATEDIFF", "datediff", [NoArgFn("CURRENT_DATE", "current_date"), x], kind="int"),
                      f"days_since_{n}", "fn_date"),
+            # v7: arithmetic on a date function (DATEDIFF(...) / 365 AS approx_years, ... / 7 AS weeks)
+            lambda: (lambda dv: (BinOp(Fn("DATEDIFF", "datediff", [NoArgFn("CURRENT_DATE", "current_date"), x],
+                                          kind="int"), "/", Lit(dv[0])), f"{dv[1]}_since_{n}", "fn_date_arith"))(
+                rng.choice([(365, "years"), (365.25, "years"), (7, "weeks"), (30, "months")])),
         ]
         if k == "date":
             d = rng.randint(1, 90)
@@ -383,6 +387,12 @@ def derive(rel, feats, col=None):
                 y = rel.ref(choice(others))
                 opts.append(lambda: (Fn("DATEDIFF", "datediff", [y, x], kind="int"), f"days_{n}_to_{y.name}",
                                      "fn_date"))
+                # v7: DATEDIFF(a, b) / 7 and ROUND(DATEDIFF(a, b) / 30.0, 1)
+                opts.append(lambda: (BinOp(Fn("DATEDIFF", "datediff", [y, x], kind="int"), "/", Lit(7)),
+                                     f"weeks_{n}_to_{y.name}", "fn_date_arith"))
+                opts.append(lambda: (Fn("ROUND", "round", [BinOp(Fn("DATEDIFF", "datediff", [y, x], kind="int"), "/",
+                                                                 Lit(30.0)), Raw(1)]),
+                                     f"months_{n}_to_{y.name}", "fn_date_arith"))
         else:
             opts += [
                 lambda: (Fn("HOUR", "hour", [x], kind="int"), f"{n}_hour", "fn_date"),
@@ -845,6 +855,29 @@ def fam_join_agg(st, ctx):
     return q.sql(st), [], q.py_chain(ctx), feats, [o[0] for o in q.order]
 
 
+def date_part_expr(c: Column) -> E:
+    """v7: a date expression to partition a window by (DATE_TRUNC('month', ts), YEAR(d), TO_DATE(ts) ...)."""
+    x = Col(c)
+    opts = [Fn("DATE_TRUNC", "date_trunc", [Raw(rng.choice(["MONTH", "month", "YEAR", "WEEK", "week"])), x], kind="ts"),
+            Fn("YEAR", "year", [x], kind="int"), Fn("MONTH", "month", [x], kind="int")]
+    if c.kind == "ts":
+        opts.append(Fn("TO_DATE", "to_date", [x], kind="date"))
+    return choice(opts)
+
+
+def part_name(e: E) -> str:
+    """Name fragment for a partition expression (a column, or e.g. order_date_year for YEAR(order_date))."""
+    if isinstance(e, Col):
+        return e.name
+    col = next(a for a in e.args if isinstance(a, Col))
+    return f"{col.name}_{e.py_name.replace('date_trunc', 'period')}"
+
+
+def part_cols(e: E) -> list[str]:
+    """Source columns of a partition expression."""
+    return [e.name] if isinstance(e, Col) else [a.name for a in e.args if isinstance(a, Col)]
+
+
 def make_window(rel, feats):
     parts_pool = [c for c in rel.cols if c.kind in ("cat", "fk")]
     order_pool = [c for c in rel.cols if c.kind in ("int", "double", "date", "ts")]
@@ -854,6 +887,10 @@ def make_window(rel, feats):
     idc = Col(rel.table.col("id")) if rel.table else None
     npart = rng.choices([0, 1, 2], [.15, .75, .1])[0]
     part = [Col(c) for c in rng.sample(parts_pool, min(npart, len(parts_pool)))]
+    dts = [c for c in rel.cols if c.kind in ("date", "ts")]
+    if dts and chance(.12):          # v7: PARTITION BY DATE_TRUNC('month', ts) / YEAR(d) ...
+        part = [date_part_expr(choice(dts))] + part[:1]
+        feats.add("window_expr_partition")
     oc = choice(order_pool)
     desc = chance(.6 if oc.kind in ("int", "double") else .3)
     tiebreak = [(idc, False)] if idc is not None else []
@@ -891,8 +928,8 @@ def make_window(rel, feats):
                     f"{val.name}_share")
         fn = choice([("SUM", "sum"), ("AVG", "avg"), ("MAX", "max"), ("MIN", "min"), ("COUNT", "count")])
         if fn[0] == "COUNT":
-            return WinFn(fn[0], fn[1], [Star()], WinSpec(part)), f"{part[0].name}_count"
-        return WinFn(fn[0], fn[1], [Col(val)], WinSpec(part)), f"{part[0].name}_{fn[1]}_{val.name}"
+            return WinFn(fn[0], fn[1], [Star()], WinSpec(part)), f"{part_name(part[0])}_count"
+        return WinFn(fn[0], fn[1], [Col(val)], WinSpec(part)), f"{part_name(part[0])}_{fn[1]}_{val.name}"
     if kind == "running":
         if not num_pool:
             raise Skip
@@ -910,7 +947,7 @@ def make_window(rel, feats):
             feats.add("window_frame")
         return WinFn("SUM", "sum", [Col(val)], WinSpec(part, spec_order, frame), kind="double"), f"running_{val.name}"
     # first_last
-    used = {p.name for p in part} | {oc.name}
+    used = {n for p in part for n in part_cols(p)} | {oc.name}
     val = choice(c for c in rel.cols if c.kind not in ("array", "id", "bool") and c.name not in used)
     order = [(Col(oc), desc)] + tiebreak
     if chance(.5):
@@ -925,7 +962,7 @@ def window_items(rel, wins):
     names = ["id"]
     for e, _ in wins:
         for w in find(e, WinFn):
-            names += [p.name for p in w.spec.part] + [o.name for o, _ in w.spec.order]
+            names += [n for p in w.spec.part for n in part_cols(p)] + [o.name for o, _ in w.spec.order]
             names += [a.name for a in w.args if isinstance(a, Col)]
     return [(Col(rel.table.col(n)), n) for n in dict.fromkeys(names)]
 
@@ -1204,14 +1241,32 @@ def renamed_col_pairs() -> list[tuple[Table, Column, Table, Column]]:
     return out
 
 
+def unrelated_col_pairs() -> list[tuple[Table, Column, Table, Column]]:
+    """v7: string columns of two different tables with different names and unrelated values (city vs. hospital).
+    SQL set operations still combine them by position, so the PySpark side must use .union(), not .unionByName()."""
+    out = []
+    for t1 in TABLES:
+        for t2 in TABLES:
+            if t1.name == t2.name:
+                continue
+            for c1 in t1.columns:
+                for c2 in t2.columns:
+                    if c1.name != c2.name and c1.kind in ("cat", "str") and c2.kind in ("cat", "str"):
+                        out.append((t1, c1, t2, c2))
+    return out
+
+
 def fam_setop(st, ctx):
     op = wchoice([("UNION ALL", .3), ("UNION", .4), ("INTERSECT", .15), ("EXCEPT", .15)])   # v4: more UNION (+ .distinct())
     feats = {"setop", "set_" + op.split()[0].lower() + ("_all" if "ALL" in op else "")}
     branch = wchoice([("same_table", .3), ("shared_names", .2), ("renamed", .5)])   # v5: more renamed columns
     if branch == "renamed":
-        t1, c1, t2, c2 = choice(renamed_col_pairs())
+        unrelated = chance(.35)      # v7: also unrelated string columns (holdout-style city vs. hospital)
+        t1, c1, t2, c2 = choice(unrelated_col_pairs() if unrelated else renamed_col_pairs())
         r1, r2 = base_rel(t1), base_rel(t2)
         mode = wchoice([("positional", .55), ("alias_right", .2), ("alias_both", .25)])
+        if unrelated:
+            feats.add("set_unrelated")
         if mode == "positional":        # SELECT city ... UNION SELECT location ...  -> .union() (by position)
             names = (c1.name, c2.name)
         elif mode == "alias_right":     # SELECT city ... UNION SELECT location AS city ...
@@ -1232,10 +1287,14 @@ def fam_setop(st, ctx):
             if at == 0:
                 feats.add("literal_first")
         left, right = Sel(r1, items=li2), Sel(r2, items=ri2)
-        if chance(.4):
-            left.where = atom(r1)[0]
-        if chance(.4):
-            right.where = atom(r2)[0]
+        if chance(.3):               # v7: WHERE <selected column> IS NOT NULL on both branches
+            left.where, right.where = IsNull(Col(c1), neg=True), IsNull(Col(c2), neg=True)
+            feats.add("set_not_null_filter")
+        else:
+            if chance(.4):
+                left.where = atom(r1)[0]
+            if chance(.4):
+                right.where = atom(r2)[0]
     elif branch == "same_table":
         t = choice(TABLES)
         r = base_rel(t)

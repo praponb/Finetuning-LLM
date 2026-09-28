@@ -71,9 +71,10 @@ test_batches: 200
 2. **v4 (3B)**: `iters: 2400`, `batch_size: 2`, `grad_accumulation_steps: 2`, `max_seq_length: 3200`, gradient checkpointing enabled, peak 9.74 GB, ~5 h 16 min.
 3. **v5 (3B)**: continued from v4 (`resume_adapter_file: ./runs/v4/adapters/adapters.safetensors`), half learning rate (5.0e-5), peak 10.31 GB, ~5 h 39 min.
 4. **v6 (7B)**: `iters: 4800`, `batch_size: 1`, `grad_accumulation_steps: 4`, 8 of 28 layers adapted, gradient checkpointing. Dry run on the 64 longest samples showed `batch_size: 2` caused Metal OOM; `batch_size: 1` with accumulation 4 peaked at **9.0 GB** in the dry run and **10.1 GB** in the full run, within the ~12.7 GB Metal working set of a 16 GB Mac, at ~37–50 trained tokens/s (**8 h 19 min** in total, no crash).
-2. **Batch 2 × 2 accumulation + gradient checkpointing (v4 only)**: v4's pipelines reach 3.1k tokens. A dry run on the 64 longest training samples ran out of GPU memory with batch 4 (with or without checkpointing) and with batch 2 without checkpointing; batch 2 with checkpointing peaked at 9.8 GB. A 16 GB Mac lets Metal use ~10.7–12.7 GB, so this is the largest setting that fits. Note that `iters` counts micro-batches, while the learning-rate schedule counts optimizer updates.
+5. **v7 (7B, continued from v6)**: `resume_adapter_file: ./runs/v6/adapters/adapters.safetensors`, `iters: 2400` (600 updates of 4 samples), `batch_size: 1`, `grad_accumulation_steps: 4`, peak LR 5.0e-5 (half of v6), warmup 50, cosine decay to 5.0e-6 over 550 updates. 4 h 58 min on a base M2, peak 9.9 GB, validation loss 0.011 → 0.021 (step 800) → 0.010 → **0.009**.
+2. **Batch 1 × 4 accumulation + gradient checkpointing (7B since v6)**: on a 16 GB Mac, batch 2 runs out of Metal memory. Batch 1 with gradient accumulation 4 keeps peak memory at 9.0–10.1 GB.
 3. **Masked prompt (`mask_prompt: true`)**: the system message and SQL prompt are excluded from the loss, so updates focus on generating the PySpark answer.
-4. **Cosine decay with warmup**: 100 warmup updates from $10^{-6}$ to $10^{-4}$, then decaying to $10^{-5}$ over 1,100 updates.
+4. **Cosine decay with warmup**: v6 used 100 warmup updates to $10^{-4}$ decaying to $10^{-5}$ over 1,100 updates; v7 uses 50 warmup updates to $5 \times 10^{-5}$ decaying to $5 \times 10^{-6}$ over 550 updates.
 
 ### Crash-proof training (`train_resumable.py`)
 The first v4 run crashed after ~250 iterations with `[METAL] Command buffer execution failed: Impacting Interactivity`: macOS aborts a GPU command buffer that runs too long, and mlx_lm cannot recover. `train_resumable.py`:
@@ -84,8 +85,23 @@ The first v4 run crashed after ~250 iterations with `[METAL] Command buffer exec
 
 ## 📊 Training Dynamics (`train.log`)
 
+### v7 (7B, continued from v6)
+`sql2pyspark-mlx/train.log` is now the **v7** run (the v6 log is in `sql2pyspark-mlx/runs/v6/train.log`): `resume_adapter_file: ./runs/v6/adapters/adapters.safetensors`, peak learning rate 5e-5 (50 warmup updates, cosine to 5e-6), 600 updates of 4 samples on the v7 dataset as 2,400 micro-batches of 1. 18:13 → 23:11 (4 h 58 min) without a crash; peak memory 9.93 GB.
+
+```
+v7 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
+───────────────────────────────────────────────────────────────────────────────────────────────
+1        0.011       —             —                —               —                 —
+50       —           0.010         1.178e-5         0.165           13,584            7.51 GB
+800      0.021       0.015         4.243e-5         0.118           203,460           8.59 GB
+1600     0.010       0.011         1.839e-5         0.118           404,257           9.93 GB
+2400     0.009       0.008         5.001e-6         0.126           597,072           9.93 GB
+```
+
+The validation set is v7's (it contains the new patterns), so its values are not comparable with v6's table. Validation loss rose while the learning rate was near its peak (continued training restarts the optimizer state) and fell below the starting value as the rate decayed. Evaluation results: [v7 results](04-evaluation-and-benchmarking.md#-v7-results-2026-09-29).
+
 ### v6 (7B, fresh adapters)
-`sql2pyspark-mlx/train.log` is now the **v6** run (the v5 log is in `sql2pyspark-mlx/runs/v5/train.log`): `Qwen2.5-Coder-7B-Instruct-4bit`, fresh adapters, peak learning rate 1e-4 (100 warmup updates, cosine to 1e-5), 1,200 updates of 4 samples on the v5 dataset as 4,800 micro-batches of 1. 07:09 → 15:28 (8 h 19 min) without a crash, including five 4.5–7 min validation passes over 100 samples; peak memory 10.11 GB.
+The **v6** run (log in `sql2pyspark-mlx/runs/v6/train.log`; the v5 log is in `sql2pyspark-mlx/runs/v5/train.log`): `Qwen2.5-Coder-7B-Instruct-4bit`, fresh adapters, peak learning rate 1e-4 (100 warmup updates, cosine to 1e-5), 1,200 updates of 4 samples on the v5 dataset as 4,800 micro-batches of 1. 07:09 → 15:28 (8 h 19 min) without a crash, including five 4.5–7 min validation passes over 100 samples; peak memory 10.11 GB.
 
 ```
 v6 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
@@ -225,6 +241,7 @@ Current tags:
 | Tag | Image ID | Notes |
 |---|---|---|
 | `sql2pyspark:latest` | `192e20ddb887` | = v6 (7B), promoted 2026-09-28 (see [Evaluation](04-evaluation-and-benchmarking.md#-v6-results-2026-09-28)) |
+| `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); recommended for promotion, not yet `latest` (`make promote TAG=v7 PREV=v6`) |
 | `sql2pyspark:v6` | `192e20ddb887` | exported 2026-09-28 (7B, 8.1 GB); current production model |
 | `sql2pyspark:v5` | `b6a1ace642a4` | exported 2026-09-27 (3B, continued from v4); previous `latest` (09-28); rollback: `ollama cp sql2pyspark:v5 sql2pyspark:latest` |
 | `sql2pyspark:v4` | `23108327a0d7` | exported 2026-09-27; not promoted |
@@ -232,8 +249,10 @@ Current tags:
 | `sql2pyspark:v2` | `fb27933c2519` | previous model; rollback: `ollama cp sql2pyspark:v2 sql2pyspark:latest` |
 | `sql2pyspark:v1` | `3dd2beaef9ff` | template-based v1 |
 
-`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v6** weights (last completed export); Ollama keeps its own copy of every tag. The v2–v5 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` … `runs/v5/` (v6's adapters are in `sql2pyspark-mlx/adapters/`); their GGUFs live inside Ollama.
+`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v7** weights (last completed export); Ollama keeps its own copy of every tag. The v2–v6 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` … `runs/v6/` (v7's adapters are in `sql2pyspark-mlx/adapters/`; v6 was trained on the v5 data); their GGUFs live inside Ollama.
 
 The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v6`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
+
+For v7, [eval/start_training_v7.sh](../eval/start_training_v7.sh) and [eval/post_training_v7.sh](../eval/post_training_v7.sh) provide unattended orchestration: waits for the v7 dataset build and v6 Kimi repair, terminates background Docker and Ollama models to free GPU memory, starts `make train` (2,400 steps, ~4.2 h), runs `make export TAG=v7`, benchmarks across all 4 evaluation sets with `--timeout 600`, reloads Docker, and executes the Kimi K3 repair loop on v7's real-query replies.
 
 The model is served at `POST http://localhost:11434/api/chat`.

@@ -102,7 +102,8 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
 ### Sidebar Options
 
 - **Model Tag**: Change the text field in the sidebar to switch between model versions:
-  - `sql2pyspark` or `sql2pyspark:latest`: Current production model (**v6**, 7B; best on every evaluation set).
+  - `sql2pyspark` or `sql2pyspark:latest`: Current production model (**v6**, 7B).
+  - `sql2pyspark:v7`: Newest model (7B, continued from v6), better on every evaluation set; recommended to become `latest`.
   - `sql2pyspark:v5`: Previous production model (3B, about twice as fast, slightly less accurate).
   - `sql2pyspark:v4` / `:v3`: Earlier 3B models, kept for comparison.
 - **Kimi K3 Repair**: *When a check fails* (default), *Always* or *Off* (requires `KIMI_API_KEY` in `.env`; without it the section explains how to enable it).
