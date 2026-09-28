@@ -463,7 +463,7 @@ python eval/evaluate.py --model sql2pyspark:v6 --set eval/holdout.jsonl --timeou
 # Extra Ollama options (e.g. the repetition-penalty experiment)
 python eval/evaluate.py --model sql2pyspark:v5 --set eval/real_queries.jsonl --tables eval/real_tables.py --option repeat_last_n=2048 --out /tmp/rp.json
 
-# Agent repair of v5's answers with Kimi K3 (key in .env, see .env.example; --dry-run needs no key)
+# Agent repair of v5's answers with Kimi K3 (KIMI_API_KEY in .env; --dry-run needs no key)
 python eval/agent_repair.py --results eval/results/v5__real_queries.json               # sample tables
 python eval/agent_repair.py --results eval/results/v5__real_queries.json --mode empty  # like the app
 

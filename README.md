@@ -308,8 +308,8 @@ values make the model misspell repeated column names (hold-out 49 and 41). No se
 **Agent repair with Kimi K3 (2026-09-28)**: `eval/agent_repair.py` gives Kimi K3 (Moonshot AI) each real query, the
 model's answer and one tool that runs PySpark on the sample tables (no expected output, no `.sql(...)`, at most 5 runs).
 On **v6** it fixes 3 of the 4 real queries in only **4 tool runs** (1 per query) for **$0.59** (on v5: 11 runs, $0.90).
-`real003` still keeps NULL rows that Spark SQL's `UNPIVOT` drops by default. Needs `KIMI_API_KEY` in `.env` (template
-`.env.example`; details in docs/04).
+`real003` still keeps NULL rows that Spark SQL's `UNPIVOT` drops by default. Needs `KIMI_API_KEY` in a `.env` file in
+the repo root (gitignored; see [USER_MANUAL.md](USER_MANUAL.md#activating-kimi-k3); details in docs/04).
 
 **Kimi K3 repair in the app**: with a key, the app statically flags syntax errors, undefined names, a missing `result`,
 and positional set-operation mismatches (`setop_check()`), letting Kimi K3 repair the code. The sidebar repair mode

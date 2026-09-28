@@ -87,7 +87,7 @@ with st.sidebar:
         )
     else:
         repair_mode = "Off"
-        st.caption("Off: put `KIMI_API_KEY` in `.env` (see `.env.example`) and restart the app to enable it.")
+        st.caption("Off: put `KIMI_API_KEY=...` in a `.env` file in the repo root and restart the app to enable it.")
 
 # Layout: 2 side-by-side columns
 col1, col2 = st.columns(2)

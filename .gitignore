@@ -1,7 +1,7 @@
 # environments
 .venv/
 mlx-env/
-# API keys (template: .env.example)
+# API keys: .env holds KIMI_API_KEY (and optionally KIMI_BASE_URL, KIMI_MODEL) for the Kimi K3 repair
 .env
 __pycache__/
 
