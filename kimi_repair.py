@@ -8,7 +8,7 @@ is supplied by the caller:
     (EmptyTableRunner). That catches syntax, name, column and type errors and compares the output columns with
     the SQL's, but not mistakes that only show in the data.
 
-The key is KIMI_API_KEY (environment or the repo's .env, gitignored; template .env.example).
+The key is KIMI_API_KEY (environment or the repo's .env, gitignored; format in USER_MANUAL.md).
 """
 from __future__ import annotations
 

@@ -307,15 +307,17 @@ When a check fails, when the SQL is long (over 2,000 characters), or when reques
 1. **What leaves your machine**: the SQL query and the generated PySpark code are sent to Moonshot AI's Kimi API; no table data is (the app has none). Kimi declares the table schemas it infers from the SQL, and [kimi_repair.py](kimi_repair.py) creates empty DataFrames with those schemas (`EmptyTableRunner`). Don't enable the repair for SQL you may not share with a third-party API.
 2. **Local Spark execution**: each candidate code version runs in a local PySpark session on those empty tables, which catches wrong column names, type errors and column-order mismatches (not mistakes that only show in the data).
 3. **Column Parity Check**: The tool verifies that the DataFrame's output columns match the expected projection of the SQL query.
-4. **Result**: Shows the repaired code, token metrics, execution time, and repair cost (typically $0.07–$0.27 per query; 3 to 4 of the 4 real-world test queries fixed, achieving 100% 4/4 match under explicit UNPIVOT NULL filtering and positional set-operation matching rules).
+4. **Result**: Shows the repaired code, token metrics, execution time, and repair cost (typically $0.07–$0.27 per query; with the Spark-default rules, v7's answers to the 4 real-world test queries were repaired 12/12 times on empty tables and 11/12 on sample tables over 3 runs).
 
 ### Activating Kimi K3
-Add your API key to [.env](.env):
+Create a file named `.env` in the repository root (it is gitignored, so the key never gets committed) with:
 ```bash
-cp .env.example .env
-# Edit .env and set:
-# KIMI_API_KEY=your_moonshot_api_key
+KIMI_API_KEY=your_moonshot_api_key
+# optional (these are the defaults):
+KIMI_BASE_URL=https://api.moonshot.ai/v1
+KIMI_MODEL=kimi-k3
 ```
+Get a key at platform.moonshot.ai (console → API keys). Keep the file private (`chmod 600 .env`).
 Restart the app (`make app` or `docker compose restart app`). The repair options in the sidebar will activate automatically.
 
 ---

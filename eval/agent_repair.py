@@ -12,7 +12,7 @@ it gives a final answer, which is scored like evaluate.py against the SQL's resu
     tool runs the code on empty tables and compares its columns with the SQL's (errors only, no rows).
 
 Kimi K3 (Moonshot AI) is called through its OpenAI-compatible API. The key is read from KIMI_API_KEY in the
-environment or in the repo's .env (gitignored; template .env.example). --dry-run needs no key: it only runs the
+environment or in the repo's .env (gitignored; format in USER_MANUAL.md). --dry-run needs no key: it only runs the
 fine-tuned model's answers through the sample-table tool and shows what the agent would see first.
 
 Usage (from the repo root, with sql2pyspark-mlx/.venv):
@@ -79,7 +79,7 @@ def main():
     kr.load_env(ROOT / ".env")
     args.model = args.model or os.environ.get("KIMI_MODEL") or "kimi-k3"
     if not args.dry_run and not os.environ.get("KIMI_API_KEY"):
-        raise SystemExit("KIMI_API_KEY is empty: put your key in .env (see .env.example)")
+        raise SystemExit("KIMI_API_KEY is empty: put KIMI_API_KEY=... in .env in the repo root (see USER_MANUAL.md)")
 
     prior = {c["id"]: c for c in json.loads(Path(args.results).read_text())["cases"]}
     cases = [c for c in load_cases(Path(args.set), 0, 0) if c["id"] in prior]

@@ -23,7 +23,7 @@ services:
       - "8501:8501"
     environment:
       <<: *ollama-url
-    env_file:                                  # KIMI_API_KEY for the optional Kimi K3 repair (template .env.example)
+    env_file:                                  # KIMI_API_KEY for the optional Kimi K3 repair (see USER_MANUAL.md)
       - path: .env
         required: false
     extra_hosts:
