@@ -277,16 +277,16 @@ To package the fine-tuned model for Ollama (`make export TAG=v8`):
 
 ### Streamlit Web Application (`app.py`):
 - **Two columns**: SQL input on the left, generated PySpark on the right (with a copy button).
-- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v6), `sql2pyspark:v6`, `sql2pyspark:v5`, `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2`, `sql2pyspark:v1`.
+- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v7), `sql2pyspark:v6`, `sql2pyspark:v5`, `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2`, `sql2pyspark:v1`.
 - **Robust code extraction**: `extract_code()` also handles replies that stop before the closing code fence.
 - **Error handling**: clear messages when Ollama is unreachable or the input is blank; 180 s timeout (600 s for SQL longer than 2,000 characters; 120/300 s before the 7B model).
 - **Long SQL** (> 2,000 characters): `repeat_last_n=2048` stops the window-definition loops seen on long real queries; short queries are unaffected (docs/04, repetition-penalty experiment).
 
 ### Kimi K3 Verification & Repair Loop (`kimi_repair.py`):
 With `KIMI_API_KEY` set (in `.env` or passed into Docker), `app.py` provides automated post-processing:
-1. **Static AST check** (`static_check()`): instant check for syntax errors, undefined names (such as `w93` from repetition loops), or a missing `result` variable.
+1. **Static AST & set-operation check** (`static_check(code, sql)`): instant check for syntax errors, undefined names (such as `w93` from repetition loops), a missing `result` variable, and `.unionByName()` used for positional `UNION`/`INTERSECT`/`EXCEPT` with differently named columns (`setop_check()`).
 2. **Empty table execution** (`EmptyTableRunner`): Kimi K3 (Moonshot AI, `reasoning_effort=high`) infers table schemas from the SQL, runs the code on empty PySpark tables in a local `SparkSession`, and verifies that output columns match the SQL's columns.
-3. **Sidebar controls**: options to repair *When a check fails* (default), *Always*, or *Off*, plus a manual *Check and repair with Kimi K3* button.
+3. **Sidebar controls**: options to repair *When a check fails or the SQL is long* (default; long = over 2,000 characters), *When a check fails*, *Always*, or *Off*, plus a manual *Check and repair with Kimi K3* button. Long SQL queries are repaired by default because model mistakes on long multi-stage queries often only manifest when the code runs.
 4. **Container readiness**: `docker/app.Dockerfile` includes Java 17 and PySpark (2.1 GB image), running the local Spark checks seamlessly inside the container.
 - **Run**: `make app` → `http://localhost:8501`, or `docker compose up -d --build` for the containerized UI.
 
@@ -460,7 +460,13 @@ Using Moonshot AI's Kimi K3 (`api.moonshot.ai`, `reasoning_effort=high`) with Py
 | `real004` | ✅ correct | 1 | 388 s | $0.27 |
 | **Total** | **3/4** | 5 | 16.2 min | **$0.79** |
 
-Syntactic and structural correctness can be verified and repaired without real data by instantiating empty DataFrames with declared schemas.
+**Explicit Rules Mode (2026-09-29, `eval/results/v7-repair-rules/`)**:
+With explicit prompt rules for `UNPIVOT` null exclusion and positional `UNION` resolution (plus `setop_check` in `static_check`), 3 runs per mode on v7's answers:
+- **Sample tables (`run{1,2,3}_sample.json`)**: **11/12** (4/4, 3/4, 4/4; the miss is a `real002` row difference in run 2), $1.87 in total.
+- **Empty tables (`run{1,2,3}_empty.json`, the app's setting)**: **12/12** (4/4 each), $2.36 in total.
+- `real003` (the `UNPIVOT` NULL rows) is fixed in 6 of 6 runs, up from 2 of 6 before the rules.
+
+Syntactic, structural, and subtle semantic correctness can be verified and repaired without real data by instantiating empty DataFrames with declared schemas.
 
 Details: [docs/04-evaluation-and-benchmarking.md](docs/04-evaluation-and-benchmarking.md).
 

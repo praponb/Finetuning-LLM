@@ -34,7 +34,10 @@ RULES = """Rules for the final code:
 - Each input table is bound to a variable named df_<table>; `spark`, `F` (pyspark.sql.functions) and `Window`
   are also defined.
 - Assign the final DataFrame to a variable named `result`, with the same columns (names and order) as the
-  query's SELECT list. Keep the query's semantics exactly; do not add or drop rows or columns."""
+  query's SELECT list. Keep the query's semantics exactly; do not add or drop rows or columns.
+- Spark SQL defaults that the DataFrame API does not share must be written out explicitly. In particular, SQL
+  UNPIVOT drops rows whose value is NULL unless it says INCLUDE NULLS, while DataFrame.unpivot() keeps them; and SQL
+  set operations (UNION, INTERSECT, EXCEPT) match columns by position, while unionByName() matches them by name."""
 
 SYSTEM_SAMPLE = f"""You fix PySpark code that was meant to be an exact translation of a Spark SQL query.
 
@@ -100,8 +103,95 @@ def short_error(e: BaseException) -> str:
     return f"{type(e).__name__}: {msg}"[:400]
 
 
-def static_check(code: str) -> str | None:
-    """Problems visible without Spark: a syntax error, names used but never defined, or no `result`.
+SETOP_KW = re.compile(r"\b(UNION(?:\s+ALL)?|INTERSECT|EXCEPT|MINUS)\b", re.I)
+
+
+def _mask_literals(sql: str) -> str:
+    """SQL without comments, and with string literals blanked (so their contents can't look like keywords)."""
+    sql = re.sub(r"--[^\n]*", " ", sql)
+    sql = re.sub(r"/\*.*?\*/", " ", sql, flags=re.S)
+    return re.sub(r"'(?:[^']|'')*'", "''", sql)
+
+
+def _split_top(text: str, pattern: re.Pattern) -> list[str]:
+    """Split `text` at matches of `pattern` that are outside parentheses."""
+    parts, depth, start, i = [], 0, 0, 0
+    while i < len(text):
+        c = text[i]
+        if c == "(":
+            depth += 1
+        elif c == ")":
+            depth -= 1
+        elif depth == 0:
+            m = pattern.match(text, i)
+            if m and (i == 0 or not (text[i - 1].isalnum() or text[i - 1] == "_")):
+                parts.append(text[start:i])
+                start = i = m.end()
+                continue
+        i += 1
+    parts.append(text[start:])
+    return parts
+
+
+def _paren_groups(text: str) -> list[str]:
+    """The contents of every parenthesised group (CTE bodies, subqueries ...)."""
+    out, stack = [], []
+    for i, c in enumerate(text):
+        if c == "(":
+            stack.append(i)
+        elif c == ")" and stack:
+            out.append(text[stack.pop() + 1:i])
+    return out
+
+
+def _select_names(branch: str) -> list[str] | None:
+    """Output column names of a simple `SELECT ... FROM` branch, or None when they can't be read reliably."""
+    m = re.search(r"\bSELECT\s+(?:DISTINCT\s+)?", branch, re.I)
+    if not m:
+        return None
+    rest = branch[m.end():]
+    items_text = _split_top(rest, re.compile(r"FROM\b", re.I))[0]
+    names = []
+    for item in _split_top(items_text, re.compile(r",")):
+        item = item.strip()
+        a = re.search(r"\bAS\s+([A-Za-z_]\w*)$", item, re.I)
+        b = re.fullmatch(r"(?:[A-Za-z_]\w*\.)?([A-Za-z_]\w*)", item)
+        c = re.search(r"[\w)'\]]\s+([A-Za-z_]\w*)$", item)
+        if a:
+            names.append(a.group(1).lower())
+        elif b:
+            names.append(b.group(1).lower())
+        elif c and c.group(1).upper() not in ("END", "DESC", "ASC"):
+            names.append(c.group(1).lower())
+        else:
+            return None
+    return names or None
+
+
+def setop_check(sql: str, code: str) -> str | None:
+    """SQL set operations match columns by position. Flag .unionByName() when a UNION's branches name their columns
+    differently (e.g. SELECT city ... UNION SELECT hospital ...): there it fails or pairs the wrong columns."""
+    if ".unionByName(" not in code:
+        return None
+    text = _mask_literals(sql)
+    for seg in [text] + _paren_groups(text):
+        branches = _split_top(seg, SETOP_KW)
+        if len(branches) < 2:
+            continue
+        names = [_select_names(b) for b in branches]
+        if any(n is None for n in names):
+            continue
+        for n in names[1:]:
+            if len(n) == len(names[0]) and n != names[0]:
+                diff = next((x, y) for x, y in zip(names[0], n) if x != y)
+                return (f"SQL set operations match columns by position, but the branches name them differently "
+                        f"({diff[0]} vs {diff[1]}); the code uses .unionByName(), which matches by name: use .union()")
+    return None
+
+
+def static_check(code: str, sql: str | None = None) -> str | None:
+    """Problems visible without Spark: a syntax error, names used but never defined, no `result`, or (with the SQL)
+    .unionByName() for a positional UNION of differently named columns.
     Returns None when nothing is found (the code may still be wrong)."""
     try:
         tree = ast.parse(code)
@@ -128,7 +218,7 @@ def static_check(code: str) -> str | None:
         return "Undefined names: " + ", ".join(undefined[:10])
     if "result" not in defined:
         return "The code never assigns `result`"
-    return None
+    return setop_check(sql, code) if sql else None
 
 
 def exec_code(code: str, namespace: dict):

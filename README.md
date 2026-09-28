@@ -206,7 +206,8 @@ with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300
 | Fixed test set: all (150) | 128 | 132 | **137** | ✅ needs ≥ 132 |
 | v4 hold-out (25, new features) | 14 | 16 | 16 | ❌ needs > 16 (tie) |
 | Real-world queries (4) | 0 | 0 | 0 | ❌ needs ≥ 1 |
-| Real-world queries + Kimi K3 repair (sample / empty tables) | 3 / 3 | 3 / **4** | **4** / 3 | — |
+| Real-world queries + Kimi K3 repair (sample / empty tables), 1 run | 3 / 3 | 3 / **4** | **4** / 3 | — |
+| … with the Spark-default rules, 3 runs (of 12) | — | — | 11 / **12** | — |
 | Seconds per hold-out query | 4.3 | 9.9 | 9.1 | — |
 
 v7 continues from v6's adapters for 600 updates (2,400 micro-batches of 1, peak LR 5e-5; 4 h 58 min, validation loss
@@ -221,8 +222,9 @@ of unrelated columns with `IS NOT NULL` filters (144 + 133 pairs) and windows pa
   query) and 2 wrong that v6 gets right; all 97 classic queries correct.
 * **v4 hold-out 16/25**: gains 2 (`holdout_v4_019`, `holdout_v4_023`) and loses 2 (`holdout_v4_002`, `holdout_v4_017`).
 * **Real-world queries 0/4**: `real001` still loops (88 window definitions) despite the expression-partition data; only
-  2 of 4 replies parse (v6: 3). With the Kimi K3 repair v7 reaches 4/4 on sample tables and 3/4 on empty tables; v6
-  reached 3/4 and 4/4. `real003` (the `UNPIVOT` NULL rows) flips between runs, so the repair is at 3-4 of 4.
+  2 of 4 replies parse (v6: 3). With the Kimi K3 repair and the added rules for `UNPIVOT` NULL exclusion and positional `UNION`
+  handling, v7's answers were repaired 11/12 times on sample tables and 12/12 on empty tables over 3 runs per mode
+  (`eval/results/v7-repair-rules/`; before the rules one run per mode gave 4/4 and 3/4).
 
 **Decision**: v7 beats or ties v6 on every set and misses two rule conditions: the v4 hold-out is a tie and no model
 has solved a real-world query yet (v6 was promoted with the latter). The owner promoted it on 2026-09-29
@@ -309,10 +311,12 @@ On **v6** it fixes 3 of the 4 real queries in only **4 tool runs** (1 per query)
 `real003` still keeps NULL rows that Spark SQL's `UNPIVOT` drops by default. Needs `KIMI_API_KEY` in `.env` (template
 `.env.example`; details in docs/04).
 
-**Kimi K3 repair in the app**: with a key, the app flags syntax errors, undefined names and a missing `result` in the
-model's code and lets Kimi K3 repair it (automatically when a check fails, or on demand). With no data available, Kimi
-checks its code on empty tables with the schemas the SQL implies, comparing the output columns with the SQL's
-(`kimi_repair.py`). In that setting it also fixes 3 of the 4 real queries ($0.79 in total; docs/05).
+**Kimi K3 repair in the app**: with a key, the app statically flags syntax errors, undefined names, a missing `result`,
+and positional set-operation mismatches (`setop_check()`), letting Kimi K3 repair the code. The sidebar repair mode
+defaults to *When a check fails or the SQL is long* (> 2,000 characters). With no data available, Kimi checks its code
+on empty tables with schemas inferred from the SQL, comparing output columns with the SQL's projection (`kimi_repair.py`).
+With explicit rules for `UNPIVOT` NULL exclusion and positional `UNION` matching it repaired v7's real-query answers
+11/12 times on sample tables and **12/12** on empty tables over 3 runs per mode (~$0.18 per query; docs/04, docs/05).
 
 **Known gaps (after v5)**: `real001`'s repetition loop, the long-standing `UNION` alias gaps (`holdout031`,
 `holdout053`), `holdout050`, `holdout058`, pipelines in the v4 hold-out set (0/2) and on the fixed test set (8/22), and
@@ -354,21 +358,21 @@ way to serve the model on macOS. Stop Docker before `make train`.
 ```
 app.py, kimi_repair.py, Modelfile, Makefile, requirements.txt, pyrefly.toml, .gitignore
 README.md, USER_MANUAL.md, PROJECT_DOCUMENTATION.md, docs/          documentation
-sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4/v5 families), handwritten_pairs.py,
+sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4–v7 families), handwritten_pairs.py,
                    verify_pairs.py, convert_sql_pyspark.py, lora_config.yaml, train_resumable.py, train.log,
-                   data_v5.log, raw_pairs/, data/, adapters/, sql2pyspark-model/ (fused 4-bit MLX model),
-                   runs/v2/, runs/v3/, runs/v4/ (backups)
-sql2pyspark-hf/    dequantized BF16 fused model (input for GGUF conversion; now v5)
-sql2pyspark.gguf   Q8_0 GGUF of the last export (v5); Ollama keeps its own copy of every tag
+                   data_v7.log, raw_pairs/, data/, adapters/, sql2pyspark-model/ (fused 4-bit MLX model),
+                   runs/v2/ … runs/v6/ (backups)
+sql2pyspark-hf/    dequantized BF16 fused model (input for GGUF conversion; now v7)
+sql2pyspark.gguf   Q8_0 GGUF of the last export (v7, 8.1 GB); Ollama keeps its own copy of every tag
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,
-                   post_training_v4.sh, post_training_v5.sh, post_training_v6.sh,
-                   results/ (+ v2-split/, v3-split/, v4-split/, v5-repair/, v5-repeat-penalty/), *.log
+                   post_training_v4.sh, post_training_v5.sh, post_training_v6.sh, start_training_v7.sh, post_training_v7.sh,
+                   results/ (+ v2-split/ … v7-repair/, v7-repair-rules/), logs-repair-rules/, *.log
 docker/, docker-compose.yml, .dockerignore          Docker setup
 llama.cpp/         upstream checkout, used only for convert_hf_to_gguf.py
 ```
 
-The Docker `ollama` profile registers the model from the mounted `sql2pyspark.gguf`, i.e. the last export (v5).
+The Docker `ollama` profile registers the model from the mounted `sql2pyspark.gguf`, i.e. the last export (v7).
 
 `archive/` (earlier experiments and the v1 model/data) and the legacy `mlx-env/` venv were deleted on 2026-09-27;
 `sql2pyspark-hf/` can be deleted too (recreated by `make fuse`).

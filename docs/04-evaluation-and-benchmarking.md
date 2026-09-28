@@ -414,7 +414,26 @@ Same score without any data: the failures were syntax, names and columns, which 
 
 (`eval/results/v{5,6,7}-repair/`, logs `eval/agent_repair_v{5,6,7}*.log`.) `real001`, `real002` and `real004` were fixed in every run; `real003` (the `UNPIVOT` NULL rows) was fixed in 2 of 6 runs, with no pattern by model or mode, so the repair reliably gets 3 of the 4 real queries and sometimes the fourth. The 7B answers needed fewer tool runs than v5's (4-5 vs. 5-11), consistent with fewer structural errors to fix, but with one run per setting that difference is indicative only.
 
-Takeaways: an execution-feedback loop turns long-query failures (loops, syntax errors, wrong names) into correct code at about $0.13–$0.27 and a few minutes per query.
+### Repair with explicit rules (2026-09-29, 3 runs per mode)
+
+To handle the `real003` UNPIVOT discrepancy and positional set operations, two general Spark-SQL rules were added to `RULES` in `kimi_repair.py`:
+1. **UNPIVOT nulls**: Spark SQL `UNPIVOT` drops rows whose value is NULL unless it says `INCLUDE NULLS`, whereas `DataFrame.unpivot()` keeps them, so the code must filter them out (`.filter(F.col("val").isNotNull())`).
+2. **Positional set operations**: SQL set operations (`UNION`, `INTERSECT`, `EXCEPT`) match columns by position, whereas `unionByName()` matches by name; when the branches name columns differently the code must use `.union()`. `static_check()` also flags this in the app via `setop_check()`.
+
+These are general Spark semantics, not query-specific hints, but the `UNPIVOT` rule was written after seeing `real003` fail, so its effect is measured on the same query. v7's real-query answers, 3 runs per mode (`eval/results/v7-repair-rules/run{1,2,3}_{sample,empty}.json`, logs `eval/logs-repair-rules/`):
+
+| Run | Sample tables | Empty tables (the app) |
+| :--- | :--- | :--- |
+| 1 | 4/4, 4 tool runs, $0.51, 11 min | 4/4, 6 runs, $0.94, 20 min |
+| 2 | 3/4 (`real002`: a row difference), 8 runs, $0.73, 14 min | 4/4, 5 runs, $0.76, 16 min |
+| 3 | 4/4, 6 runs, $0.63, 14 min | 4/4, 5 runs, $0.66, 15 min |
+| **Total** | **11/12** | **12/12** |
+
+`real003` is now fixed in 6 of 6 runs (2 of 6 before the rules); `real002` failed once, the first time in any run. Total cost $4.23 for 24 repairs (~$0.18 each).
+
+**`holdout031` in the app flow**: the static check flags v7's `.unionByName()` for the `city`/`hospital` `UNION`, and the repair (empty tables) turns it into `.union()` in 2 tool runs, 26 s and $0.01; the result matches the SQL (`eval/results/v7-repair-rules/holdout031_empty.json`).
+
+Takeaways: an execution-feedback loop turns long-query failures (loops, syntax errors, wrong names) into correct code at about $0.07–$0.27 and a few minutes per query; with the Spark-default rules it got 23 of 24 repairs of v7's real-query answers right.
 
 ---
 

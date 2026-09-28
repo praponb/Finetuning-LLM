@@ -103,9 +103,9 @@ def extract_code(text: str) -> str:
 
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
-- `sql2pyspark:latest` (default, currently v7)
-- `sql2pyspark:v6` (= `latest`; 7B, best on every evaluation set; see [Evaluation](04-evaluation-and-benchmarking.md))
-- `sql2pyspark:v5` (previous `latest`; 3B, about twice as fast)
+- `sql2pyspark:latest` (default, currently **v7**; 7B, best on every evaluation set; see [Evaluation](04-evaluation-and-benchmarking.md))
+- `sql2pyspark:v6` (previous production model, 7B)
+- `sql2pyspark:v5` (previous stable 3B model, about twice as fast)
 - `sql2pyspark:v4` (better at the v4 features: GROUPING SETS, PIVOT/UNPIVOT, nested data, ...; see [Evaluation](04-evaluation-and-benchmarking.md))
 - `sql2pyspark:v3` (previous stable production model)
 - `sql2pyspark:v2` (previous model, for comparison)
@@ -117,9 +117,9 @@ A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama
 ### Kimi K3 repair (optional)
 With `KIMI_API_KEY` set (in `.env`; Docker passes it in), the app checks and repairs the model's answer with Kimi K3 (Moonshot AI). The shared logic is in `kimi_repair.py`:
 
-1. **Static check** (free, instant, `static_check()`): syntax, names that are used but never defined (e.g. `w93` from a repetition loop) and a missing `result`. It flags 3 of v5's 4 failures on the real-world queries.
+1. **Static check** (free, instant, `static_check()`): syntax, names that are used but never defined (e.g. `w93` from a repetition loop) and a missing `result`. It flags 3 of v5's 4 failures on the real-world queries. Since 2026-09-29 it also gets the SQL and flags `.unionByName()` when a `UNION`/`INTERSECT`/`EXCEPT` has branches with differently named columns (`setop_check()`): SQL matches them by position, so `.union()` is needed. This is the `holdout031` failure of every model from v3 to v7; the rule flags it for all five and none of 383 correct `unionByName` pairs in the dataset or any correct stored answer.
 2. **Repair** (`repair()`): Kimi K3 gets the SQL and the model's code, plus one tool, `run_pyspark`. There is no data, so the tool (`EmptyTableRunner`) runs the code on **empty tables whose schemas Kimi declares from the SQL**. It reports syntax, name, column and type errors, analyzes the SQL itself on the same tables and compares its output columns with `result`'s. Mistakes that only show in the data are not caught, and `.sql(...)` is refused. At most 5 runs per repair.
-3. **UI**: the sidebar's *Kimi K3 repair* switch runs the repair *When a check fails* (default), *Always* or *Off*, and a *Check and repair with Kimi K3* button runs it on demand. The repaired code is shown below the model's, marked as verified when Kimi's last check ran exactly that code with matching columns, with the checks, tokens and cost. Without a key the section is off.
+3. **UI**: the sidebar's *Kimi K3 repair* switch runs the repair *When a check fails or the SQL is long* (default since 2026-09-29; long = over 2,000 characters), *When a check fails*, *Always* or *Off*. Long SQL is repaired even when the static check passes because the model's errors there often only show when the code runs (v7's `real002` and `real004`: an invalid method and a missing column). A *Check and repair with Kimi K3* button runs it on demand. The repaired code is shown below the model's, marked as verified when Kimi's last check ran exactly that code with matching columns, with the checks, tokens and cost. Without a key the section is off.
 
 On the 4 real-world queries this mode fixes 3 (0/4 before; $0.79 in total, 1.5-6.5 minutes per query); see [Evaluation](04-evaluation-and-benchmarking.md#-agent-repair-loop-with-kimi-k3-2026-09-28). Spark starts once per app process (`get_spark()`, `local[1]`, 1 GB).
 

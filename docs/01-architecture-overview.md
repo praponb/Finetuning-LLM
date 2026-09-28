@@ -115,8 +115,8 @@ Random row-level splitting leaks: near-identical query structures with different
 ### 5. Hybrid Inference & Empty-Table Verification Loop (`kimi_repair.py`)
 To handle complex multi-CTE queries where small models can fail on identifier names, missing closing parentheses, or repetition loops:
 - The local fine-tuned model converts the query first (fast, free, private).
-- An AST static checker immediately detects syntax errors, undefined variables, and missing `result`.
-- When an error is detected (or on demand), **Kimi K3** (Moonshot AI) checks the code using an empty-table Spark runner (`EmptyTableRunner`). Schemas are inferred from the SQL without needing real user data. This loop fixes 3 of 4 production-grade queries for ~$0.20 per query.
+- An AST static checker immediately detects syntax errors, undefined variables, missing `result`, and `.unionByName()` used for positional `UNION`/`INTERSECT`/`EXCEPT` where branches have different column names (`setop_check()`).
+- When an error is detected, when the SQL is long (> 2,000 characters), or on demand, **Kimi K3** (Moonshot AI) checks and repairs the code using an empty-table Spark runner (`EmptyTableRunner`). Schemas are inferred from the SQL without needing real user data. With updated prompt rules (explicit `UNPIVOT` NULL exclusion and positional set-operation matching), this loop repaired v7's answers to the 4 production-grade queries 23 times out of 24 (3 runs per mode; 12/12 on empty tables) for ~$0.07–$0.27 per query.
 
 ---
 

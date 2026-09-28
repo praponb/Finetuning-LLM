@@ -1,0 +1,15 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/09/29 06:26:07 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.45 instead (on interface en0)
+26/09/29 06:26:07 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/29 06:26:07 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+holdout031: repairing (before: py_error) ...
+  after: ok  runs 2  $0.01  26s  
+
+repair with kimi-k3 (empty tables, effort high, <= 5 runs per query)
+  match: 0/1 before -> 1/1 after  (runs without error after: 1/1)
+  tool runs 2  tokens in 3140 (2304 cached) / out 539  cost $0.01
+  results -> eval/results/v7-repair-rules/holdout031_empty.json

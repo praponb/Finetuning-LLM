@@ -2,9 +2,9 @@
 
 Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder** (v1–v5: 3B; v6: 7B) for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
-**Status (2026-09-28):**
+**Status (2026-09-29):**
 - **Production model:** `sql2pyspark:latest` is **v7** (since 2026-09-29): Qwen2.5-Coder-7B continued from v6's adapters (2,400 steps, peak LR 5e-5, 4 h 58 min) on the v7 dataset (DATEDIFF arithmetic, unrelated-column UNIONs, windows partitioned by date expressions): 61/62 hold-out, 137/150 fixed test set (97/97 classic), 16/25 v4 hold-out, 0/4 real queries (3/4 or 4/4 with the Kimi K3 repair). v6 (the first 7B model, 60/62 and 132/150) is kept as `sql2pyspark:v6` for rollback, v5 (3B) as `sql2pyspark:v5`. About 2x slower than the 3B, ~8 GB in Ollama.
-- **Agent repair loop:** Kimi K3 (Moonshot AI) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code and repair it on empty tables with declared schemas (fixing 3/4 real queries; on v6, 3/4 in only 4 tool runs for $0.59).
+- **Agent repair loop:** Kimi K3 (Moonshot AI) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code (syntax, undefined names, `result`, and positional `UNION` column ordering) and repair it on empty tables with declared schemas (v7's real queries with the Spark-default rules: 11/12 repairs on sample tables and 12/12 on empty tables over 3 runs per mode). Default UI mode runs when a check fails or the SQL is long (> 2,000 characters).
 - **Environment:** Native Apple Silicon training with MLX; Docker setup for Streamlit UI, Spark data pipeline, and evaluation. The codebase is in the private GitHub repo `praponb/Finetuning-LLM`.
 
 ---
@@ -58,7 +58,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 ├── kimi_repair.py                # Kimi K3 check + repair loop (app and eval)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (uses the project venv)
-├── sql2pyspark.gguf              # Q8_0 GGUF of the last export (v6, 8.1 GB); Ollama keeps its own copies
+├── sql2pyspark.gguf              # Q8_0 GGUF of the last export (v7, 8.1 GB); Ollama keeps its own copies
 ├── docker-compose.yml            # Docker: app, tools (Spark data/eval) and ollama services
 ├── docker/                       # Dockerfiles, container requirements, Ollama entrypoint
 ├── docs/                         # Detailed modular documentation

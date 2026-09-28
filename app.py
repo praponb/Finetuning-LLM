@@ -12,7 +12,7 @@ LONG_SQL_CHARS = 2000
 # Kimi K3 repair (optional): KIMI_API_KEY from the environment or .env (Docker passes .env in)
 kr.load_env(Path(__file__).resolve().parent / ".env")
 KIMI_READY = bool(os.environ.get("KIMI_API_KEY"))
-REPAIR_MODES = ["When a check fails", "Always", "Off"]
+REPAIR_MODES = ["When a check fails or the SQL is long", "When a check fails", "Always", "Off"]
 
 
 def generation_options(sql: str) -> dict:
@@ -81,7 +81,9 @@ with st.sidebar:
         repair_mode = st.radio(
             "Run the repair", REPAIR_MODES, index=0,
             help="Kimi K3 (Moonshot AI) checks the code on empty tables with the schemas the SQL implies and fixes "
-                 "syntax, name, column and type errors. About $0.10-0.30 and 1-5 minutes per repair.",
+                 "syntax, name, column and type errors. About $0.10-0.30 and 1-5 minutes per repair. Long SQL "
+                 f"(> {LONG_SQL_CHARS:,} characters) is repaired by default: the model's errors there often only show "
+                 "when the code runs.",
         )
     else:
         repair_mode = "Off"
@@ -153,12 +155,16 @@ with col2:
     converted = st.session_state.get("converted")
     if converted:
         result_container.code(converted["code"], language="python")
-        problem = kr.static_check(converted["code"])
+        problem = kr.static_check(converted["code"], converted["sql"])
         if problem:
             st.warning(f"The model's code has a problem: {problem}")
         else:
-            st.caption("✅ Basic checks passed (syntax, defined names, `result`); run it on your data to be sure.")
-        wanted = repair_mode == "Always" or (repair_mode == "When a check fails" and problem)
+            st.caption("✅ Basic checks passed (syntax, defined names, `result`, UNION column order); "
+                       "run it on your data to be sure.")
+        long_sql = len(converted["sql"]) > LONG_SQL_CHARS
+        wanted = (repair_mode == "Always"
+                  or (repair_mode.startswith("When a check fails") and problem)
+                  or (repair_mode == "When a check fails or the SQL is long" and long_sql))
         if st.session_state.pop("auto_repair", False) and wanted:
             run_repair(converted["sql"], converted["code"])
         elif KIMI_READY and "repair" not in st.session_state and \

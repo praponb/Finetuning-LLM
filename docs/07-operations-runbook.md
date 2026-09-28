@@ -45,9 +45,9 @@ All workflows are in the [Makefile](../Makefile):
 ### Phase 1: Synthesize & Verify Dataset
 ```bash
 # Generate 20,000 pairs (v1-v3 families + the v4/v5 families in advanced.py) + 105 hand-written pairs,
-# verify in Spark, and split (~20 min natively with 4 workers). SEED picks the generator seed (v5: 5);
+# verify in Spark, and split (~20 min natively with 4 workers). SEED picks the generator seed (v7: 7; v5: 5);
 # EXCLUDE (default ../eval/test_fixed.jsonl) keeps the fixed test set out of every split.
-make data N=20000 SEED=5 WORKERS=4
+make data N=20000 SEED=7 WORKERS=4
 
 # Or step by step:
 make generate   # writes raw SQL/PySpark pairs to sql2pyspark-mlx/raw_pairs/
@@ -65,7 +65,7 @@ make data N=20000 WORKERS=6
 # MLX LoRA fine-tuning via train_resumable.py
 # (v7: 7B model continued from v6, 2,400 steps, 4 h 58 min; v6: 7B model fresh adapters, 4,800 steps, 8 h 19 min; v5: continued from v4's 3B adapters with peak LR 5e-5, ~5 h 40 min).
 # Stop Docker (docker compose down, quit Docker Desktop) and unload Ollama models (ollama stop <model>) first.
-# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v6/): adapters/, data/, raw_pairs/, train.log
+# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v7/): adapters/, data/, raw_pairs/, train.log
 make train
 ```
 
