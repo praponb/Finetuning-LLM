@@ -3,8 +3,7 @@
 Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder** (v1–v5: 3B; v6: 7B) for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
 **Status (2026-09-28):**
-- **Production model:** `sql2pyspark:latest` is **v6**, the first model on **Qwen2.5-Coder-7B-Instruct-4bit** (fresh adapters on the v5 dataset, 8 h 19 min on a base M2): 60/62 on the hold-out (v5 56, v3 59), 132/150 on the fixed test set (v5 128) with 96/97 classic queries, 16/25 on the v4-feature hold-out (v5 14) and 0/4 on the real-world queries (like every model). Promoted on 2026-09-28; v5 (3B) is kept as `sql2pyspark:v5` for rollback. About 2x slower than the 3B, ~8 GB in Ollama.
-- **Newest model (v7, 2026-09-29, recommended for promotion):** Qwen2.5-Coder-7B continued from v6's adapters (2,400 steps, peak LR 5e-5, 4 h 58 min) on the v7 dataset (DATEDIFF arithmetic, unrelated-column UNIONs, windows partitioned by date expressions): 61/62 hold-out, 137/150 fixed test set (97/97 classic), 16/25 v4 hold-out, 0/4 real queries (4/4 or 3/4 with the Kimi K3 repair). `latest` stays v6 until the owner runs `make promote TAG=v7 PREV=v6`.
+- **Production model:** `sql2pyspark:latest` is **v7** (since 2026-09-29): Qwen2.5-Coder-7B continued from v6's adapters (2,400 steps, peak LR 5e-5, 4 h 58 min) on the v7 dataset (DATEDIFF arithmetic, unrelated-column UNIONs, windows partitioned by date expressions): 61/62 hold-out, 137/150 fixed test set (97/97 classic), 16/25 v4 hold-out, 0/4 real queries (3/4 or 4/4 with the Kimi K3 repair). v6 (the first 7B model, 60/62 and 132/150) is kept as `sql2pyspark:v6` for rollback, v5 (3B) as `sql2pyspark:v5`. About 2x slower than the 3B, ~8 GB in Ollama.
 - **Agent repair loop:** Kimi K3 (Moonshot AI) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code and repair it on empty tables with declared schemas (fixing 3/4 real queries; on v6, 3/4 in only 4 tool runs for $0.59).
 - **Environment:** Native Apple Silicon training with MLX; Docker setup for Streamlit UI, Spark data pipeline, and evaluation. The codebase is in the private GitHub repo `praponb/Finetuning-LLM`.
 
@@ -20,7 +19,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 | [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, 25 v4-feature hold-out queries, 4 real-world queries on their own tables, strict vs. lenient scoring, v1–v5 benchmark results, fixed test set, repetition penalty experiment, Kimi K3 agent repair benchmark |
 | [Serving & Streamlit UI](05-serving-and-streamlit-ui.md) | Local Inference & Frontend | Frontend Developers, Users | Ollama `/api/chat` integration, `OLLAMA_URL`, Streamlit UI (`app.py`), code-block extraction, long-SQL repetition window, Kimi K3 static check & empty-table repair, containerized app with Java 17 + PySpark |
 | [File Catalog & Reference](06-file-catalog-and-reference.md) | Repository Index | All Contributors | Comprehensive reference of all scripts, datasets, configs, logs, and artifacts in the repository |
-| [Operations Runbook](07-operations-runbook.md) | Practical How-To & Makefile Guide | Developers, DevOps | Environment setup, Make targets (`TAG=v6 PREV=v5`), memory limits, Docker profiles, troubleshooting & FAQs |
+| [Operations Runbook](07-operations-runbook.md) | Practical How-To & Makefile Guide | Developers, DevOps | Environment setup, Make targets (`TAG=v8 PREV=v7`), memory limits, Docker profiles, troubleshooting & FAQs |
 | [User Manual](../USER_MANUAL.md) | End-User Guide & API Reference | End Users, Developers | Web UI walkthrough, Ollama CLI usage, REST API curl/Python examples, SQL feature support, Kimi K3 repair, troubleshooting |
 | [Master Project Documentation](../PROJECT_DOCUMENTATION.md) | All-in-One Guide | All Readers | Single-file consolidated summary of the entire documentation suite |
 
@@ -50,7 +49,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 
 ```
 .
-├── Makefile                      # Pipeline runner (`make help` lists targets, default TAG=v6 PREV=v5)
+├── Makefile                      # Pipeline runner (`make help` lists targets, default TAG=v8 PREV=v7)
 ├── Modelfile                     # Ollama model definition & system prompt
 ├── README.md                     # Project summary and results table
 ├── USER_MANUAL.md                # End-user manual (Web UI, CLI, API, SQL guide)

@@ -8,7 +8,7 @@ A reference for the directories, scripts, configuration files, datasets and arti
 
 | File | Purpose | Primary Functions / Contents | Inputs / Dependencies | Output / Artifacts |
 | :--- | :--- | :--- | :--- | :--- |
-| [Makefile](../Makefile) | Pipeline orchestration | Targets: `help`, `setup`, `data` (`generate`, `verify`, `split`), `train` (via `train_resumable.py`), `fuse`, `gguf`, `ollama`, `export`, `eval`, `promote`, `app` (`TAG ?= v6`, `PREV ?= v5`, `BASE ?= 7B`) | venv in `sql2pyspark-mlx/.venv`, Ollama | Runs the full lifecycle |
+| [Makefile](../Makefile) | Pipeline orchestration | Targets: `help`, `setup`, `data` (`generate`, `verify`, `split`), `train` (via `train_resumable.py`), `fuse`, `gguf`, `ollama`, `export`, `eval`, `promote`, `app` (`TAG ?= v8`, `PREV ?= v7`, `BASE ?= 7B`) | venv in `sql2pyspark-mlx/.venv`, Ollama | Runs the full lifecycle |
 | [Modelfile](../Modelfile) | Ollama model definition | Chat template, stop token, temperature 0.2, top_p 0.9, system prompt | `sql2pyspark.gguf` | Ollama model `sql2pyspark:<tag>` |
 | [USER_MANUAL.md](../USER_MANUAL.md) | End-user manual & guide | Streamlit UI walkthrough, CLI usage, REST API (`curl`/Python), SQL feature matrix, AST validation, Kimi K3 repair, FAQ | — | End-user manual |
 | [README.md](../README.md) | Project summary | Pipeline, setup, conventions, results table, known gaps, layout | — | Landing page |

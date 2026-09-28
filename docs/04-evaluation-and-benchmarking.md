@@ -195,8 +195,8 @@ Earlier samples are kept outside the report's glob: `eval/results/v4-split/` (th
 - **v3** beat v2 on the hold-out set (95.2% vs. 90.3%: it fixes 3 of v2's 6 failures with no regressions) and tied it on the same test sample, so it was promoted on 2026-09-26 (`make promote TAG=v3 PREV=v2`). v2 stays available as `sql2pyspark:v2`.
 - **v4** (2026-09-27) was **not promoted**; see [v4 results](#-v4-results-2026-09-27). It stays available as `sql2pyspark:v4`.
 - **v5** (2026-09-28) missed the rule on two conditions (see [v5 results](#-v5-results-2026-09-28)) but was **promoted to `latest` by the owner's decision** (`make promote TAG=v5 PREV=v3`); v3 is kept as `sql2pyspark:v3` for rollback.
-- **v7** (2026-09-29, 7B continued from v6) beats or ties v6 on every set but ties it on the v4 hold-out (16) and, like every model, solves no real-world query; promotion is **recommended and left to the owner** (`make promote TAG=v7 PREV=v6`). See [v7 results](#-v7-results-2026-09-29).
-- **v6** (2026-09-28, the 7B model) beats or ties v5 on every set and meets every condition except the real-world query one, which no model has met; it was **promoted** (`make promote TAG=v6 PREV=v5`), with v5 kept as `sql2pyspark:v5` for rollback. See [v6 results](#-v6-results-2026-09-28).
+- **v7** (2026-09-29, 7B continued from v6) beats or ties v6 on every set but ties it on the v4 hold-out (16) and, like every model, solves no real-world query; the owner **promoted** it on 2026-09-29 (`make promote TAG=v7 PREV=v6`); v6 is kept as `sql2pyspark:v6`. See [v7 results](#-v7-results-2026-09-29).
+- **v6** (2026-09-28, the 7B model) beats or ties v5 on every set and meets every condition except the real-world query one, which no model has met; it was **promoted** (`make promote TAG=v8 PREV=v7`), with v5 kept as `sql2pyspark:v5` for rollback. See [v6 results](#-v6-results-2026-09-28).
 
 The rule (since v5): promote a new model only if it scores at least the current one on the hold-out set (≥ 59/62), keeps its accuracy on the classic-family queries of the fixed test set (≥ v3 − 2, i.e. ≥ 94/97), beats it on the v4 hold-out set, gets at least 1 of the 4 real-world queries right, and doesn't regress on the fixed test set overall. (v4 used the same rule without the classic-family condition and with "better on the real queries".)
 
@@ -268,7 +268,7 @@ v7 continues from v6's adapters (600 updates of 4 samples as 2,400 micro-batches
 - **v4 hold-out**: aggregation 2/4, windows 4/5, joins 3/5, set operations 1/3, reshape 2/2, nested 3/4, pipelines 1/2; it gains `holdout_v4_019` and `holdout_v4_023` and loses `holdout_v4_002` and `holdout_v4_017`.
 - **Real-world queries**: `real001` still loops (88 window definitions), so the expression-partitioned windows did not remove the loop; only 2 of 4 replies parse (v6: 3), e.g. `real002` calls `asc_nulls_last` on a `WindowSpec`. With the Kimi K3 repair: 4/4 (sample tables) and 3/4 (empty tables).
 
-**Decision**: v7 beats or ties v6 everywhere; it misses the v4-hold-out condition by a tie and the real-world condition that no model has met (v6 was promoted with the latter). Promotion is recommended. The unattended overnight session was not allowed to change `latest`, so it stays on v6 until the owner runs `make promote TAG=v7 PREV=v6` (rollback: `ollama cp sql2pyspark:v6 sql2pyspark:latest`).
+**Decision**: v7 beats or ties v6 everywhere; it misses the v4-hold-out condition by a tie and the real-world condition that no model has met (v6 was promoted with the latter). The owner promoted it on 2026-09-29 (`make promote TAG=v7 PREV=v6`; the unattended session that produced it was not allowed to change `latest`). Roll back with `ollama cp sql2pyspark:v6 sql2pyspark:latest`.
 
 ## 🆕 v6 results (2026-09-28)
 
@@ -289,7 +289,7 @@ v6 is the first model on **Qwen2.5-Coder-7B-Instruct-4bit** (fresh LoRA adapters
 - **Fixed test set**: v6 gets 7 queries right that v5 misses (3 pipelines, a CTE chain, a join aggregation, an advanced join and an advanced window) and misses 3 that v5 gets right (an aggregation, an advanced aggregation, a pipeline).
 - **Real-world queries**: `real001` still loops (`w1` … `w92` window definitions until the 2,048-token limit, cut off mid-string); `real002`, `real003` and `real004` now parse (v5: 2 of 4) but fail on a column qualifier (`po.rolling_avg_cost_7d`, `ct.device_id`) or a `grouping_id` column that is never created.
 
-**Decision**: v6 meets every condition except the real-world one (0/4, like every model; v5 was promoted by override while missing it and the hold-out condition). Since it beats or ties v5 everywhere, it was promoted on 2026-09-28 (`make promote TAG=v6 PREV=v5`); roll back with `ollama cp sql2pyspark:v5 sql2pyspark:latest`. Trade-off: about 2x slower answers and ~8 GB in Ollama (v5: ~3.5 GB).
+**Decision**: v6 meets every condition except the real-world one (0/4, like every model; v5 was promoted by override while missing it and the hold-out condition). Since it beats or ties v5 everywhere, it was promoted on 2026-09-28 (`make promote TAG=v8 PREV=v7`); roll back with `ollama cp sql2pyspark:v5 sql2pyspark:latest`. Trade-off: about 2x slower answers and ~8 GB in Ollama (v5: ~3.5 GB).
 
 ## 🆕 v5 results (2026-09-28)
 
@@ -420,7 +420,7 @@ Takeaways: an execution-feedback loop turns long-query failures (loops, syntax e
 
 ## 🏃 Running Evaluations
 
-Use `make eval TAG=v6 PREV=v5` (compares `TAG` with `PREV`; the Makefile defaults are `TAG=v6 PREV=v5`), or the CLI directly:
+Use `make eval TAG=v8 PREV=v7` (compares `TAG` with `PREV`; the Makefile defaults are `TAG=v8 PREV=v7`), or the CLI directly:
 
 ```bash
 # Hold-out benchmark for one model tag (results -> eval/results/v5__holdout.json)

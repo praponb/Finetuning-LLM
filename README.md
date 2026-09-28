@@ -7,18 +7,13 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) is the single-file technical guide;
 > [docs/INDEX.md](docs/INDEX.md) indexes the modular guides (architecture, data, training, evaluation, serving, file catalog, runbook).
 
-**Current model:** `sql2pyspark:latest` = **v6** (since 2026-09-28), the first model on the **7B** base (fresh LoRA
-adapters on the v5 dataset). It is the best model on every evaluation set: 60/62 on the hold-out (v5 56, v3 59), 132/150
-on the fixed test set (v5 128) with 96/97 on classic queries, and 16/25 on the v4-feature hold-out (v5 14). Like every
-model it gets 0 of the 4 real-world queries right, the one promotion condition no model has met; the app's
-[Kimi K3 repair](#evaluation) fixes 3 of them. It answers about 2x slower than the 3B (~10 s per hold-out query) and
-needs ~8 GB in Ollama. See [v6 results](#v6-results-2026-09-28). **v5** (3B, the previous `latest`) is kept as
-`sql2pyspark:v5`: roll back with `ollama cp sql2pyspark:v5 sql2pyspark:latest`. v4, v3, v2 and v1 stay available too.
-
-**Newest model: v7** (2026-09-29, 7B, continued from v6 on data that targets v6's gaps) is the best model so far:
-61/62 on the hold-out, 137/150 on the fixed test set with **97/97** classic queries, 16/25 on the v4 hold-out (tie with
-v6), 0/4 on the real queries. It is **recommended for promotion but not yet `latest`**: promoting is an owner step
-(`make promote TAG=v7 PREV=v6`). See [v7 results](#v7-results-2026-09-29).
+**Current model:** `sql2pyspark:latest` = **v7** (since 2026-09-29), 7B, continued from v6 on data that targets v6's
+gaps. It is the best model on every evaluation set: 61/62 on the hold-out (v6 60), 137/150 on the fixed test set (v6
+132) with **97/97** classic queries, and 16/25 on the v4-feature hold-out (tie with v6). Like every model it gets 0 of
+the 4 real-world queries right; the app's [Kimi K3 repair](#evaluation) fixes 3 or 4 of them. It answers in ~9 s per
+hold-out query (the 3B v5: ~4 s) and needs ~8 GB in Ollama. See [v7 results](#v7-results-2026-09-29). **v6** (the
+previous `latest`) is kept as `sql2pyspark:v6`: roll back with `ollama cp sql2pyspark:v6 sql2pyspark:latest`. v5 (3B),
+v4, v3, v2 and v1 stay available too.
 
 ```
 schemas.py ─┐
@@ -51,12 +46,12 @@ Editor type-checking (Pyrefly) is configured in [`pyrefly.toml`](pyrefly.toml) t
 |---|---|---|
 | Data | `make data N=20000 SEED=5` | Generate 20k pairs + 105 hand-written pairs, execute both sides of every pair in local Spark, keep only pairs whose results match, split by feature signature (~20 min). |
 | Train | `make train` | `train_resumable.py` runs `mlx_lm.lora -c sql2pyspark-mlx/lora_config.yaml` and resumes from the last checkpoint if Metal aborts a step (v6: Qwen2.5-Coder-7B-Instruct-4bit, batch 1 × 4 accumulation, ~8.5 h; v5: continued from v4's 3B adapters with peak LR 5e-5; ~5 h 40 min on a base M2). |
-| Export | `make export TAG=v6` | Fuse adapters, dequantize, convert to Q8_0 GGUF, `ollama create sql2pyspark:v6`. |
-| Evaluate | `make eval TAG=v6 PREV=v5` | Score both models on the hold-out set, the v4 hold-out set, the real-world queries and the same sample of the test split. |
-| Promote | `make promote TAG=v6 PREV=v5` | Point `sql2pyspark:latest` (what `app.py` uses by default) at the new model; keeps the old one as `:$(PREV)`. |
+| Export | `make export TAG=v8` | Fuse adapters, dequantize, convert to Q8_0 GGUF, `ollama create sql2pyspark:v8`. |
+| Evaluate | `make eval TAG=v8 PREV=v7` | Score both models on the hold-out set, the v4 hold-out set, the real-world queries and the same sample of the test split. |
+| Promote | `make promote TAG=v8 PREV=v7` | Point `sql2pyspark:latest` (what `app.py` uses by default) at the new model; keeps the old one as `:$(PREV)`. |
 | UI | `make app` | Streamlit converter on http://localhost:8501; the sidebar field picks any Ollama tag. |
 
-`make help` lists every target. The Makefile defaults are `TAG=v6` and `PREV=v5` (`BASE` is `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` since v6; v1–v5 used 3B). On a 16 GB Mac,
+`make help` lists every target. The Makefile defaults are `TAG=v8` and `PREV=v7` (`BASE` is `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` since v6; v1–v5 used 3B). On a 16 GB Mac,
 don't run Ollama (evaluations, the app) or Docker while training: Ollama plus training ran out of GPU memory once, and
 Docker Desktop's VM takes another 8 GB.
 
@@ -230,9 +225,8 @@ of unrelated columns with `IS NOT NULL` filters (144 + 133 pairs) and windows pa
   reached 3/4 and 4/4. `real003` (the `UNPIVOT` NULL rows) flips between runs, so the repair is at 3-4 of 4.
 
 **Decision**: v7 beats or ties v6 on every set and misses two rule conditions: the v4 hold-out is a tie and no model
-has solved a real-world query yet (v6 was promoted with the latter). Promotion is recommended; it was left to the owner
-because the unattended session could not change `latest` (`make promote TAG=v7 PREV=v6`, rollback
-`ollama cp sql2pyspark:v6 sql2pyspark:latest`).
+has solved a real-world query yet (v6 was promoted with the latter). The owner promoted it on 2026-09-29
+(`make promote TAG=v7 PREV=v6`); roll back with `ollama cp sql2pyspark:v6 sql2pyspark:latest`.
 
 ### v6 results (2026-09-28)
 

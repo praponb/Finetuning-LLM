@@ -83,19 +83,19 @@ You can orchestrate unattended execution via `zsh eval/start_training_v7.sh`: it
 ### Phase 3: Export, Fuse & Quantize
 ```bash
 # Fuse adapters, dequantize to BF16, convert to Q8_0 GGUF, register in Ollama
-make export TAG=v6
+make export TAG=v8
 
 # Or step by step:
 make fuse           # 4-bit MLX model + dequantized BF16 copy in sql2pyspark-hf/
 make gguf           # llama.cpp convert_hf_to_gguf.py -> sql2pyspark.gguf
-make ollama TAG=v6  # registers the GGUF as sql2pyspark:v6
+make ollama TAG=v8  # registers the GGUF as sql2pyspark:v8
 ```
 
 ### Phase 4: Benchmark & Evaluate
 ```bash
 # Compare the new model with the previous one on the hold-out set, the v4 hold-out set, the real-world queries
 # and 150 test queries (~2 h in total; on 7B, use --timeout 600)
-make eval TAG=v6 PREV=v5
+make eval TAG=v8 PREV=v7
 ```
 
 *Update the README results table:*
@@ -105,12 +105,13 @@ python eval/report.py --readme README.md
 
 ### Phase 5: Promote to Production
 ```bash
-# Point sql2pyspark:latest at v6 (keeps the old latest as :v5 if that tag doesn't exist yet)
-make promote TAG=v6 PREV=v5
+# Point sql2pyspark:latest at the next model (keeps the old latest as :v7 if that tag doesn't exist yet).
+# Always pass TAG and PREV: with the defaults alone it re-promotes the Makefile's TAG.
+make promote TAG=v8 PREV=v7
 ```
-Promote only if the new model scores at least the previous one on the hold-out set, keeps the classic-family accuracy, beats it on the v4 hold-out set, gets a real-world query right, and doesn't regress on the fixed test set (details in [Evaluation](04-evaluation-and-benchmarking.md#promotions)). v5 was promoted by the owner's decision; v6 (7B) was promoted on 2026-09-28, meeting every condition except the real-world one that no model has met. Roll back anytime with `ollama cp sql2pyspark:v5 sql2pyspark:latest` (or any other tag).
+Promote only if the new model scores at least the previous one on the hold-out set, keeps the classic-family accuracy, beats it on the v4 hold-out set, gets a real-world query right, and doesn't regress on the fixed test set (details in [Evaluation](04-evaluation-and-benchmarking.md#promotions)). v5 was promoted by the owner's decision; v6 (7B) was promoted on 2026-09-28 and v7 on 2026-09-29, each meeting every condition except the real-world one that no model has met (v7 also only ties v6 on the v4 hold-out). Roll back anytime with `ollama cp sql2pyspark:v6 sql2pyspark:latest` (or any other tag).
 
-The Makefile defaults are `TAG=v6 PREV=v5` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`). Earlier runs used `TAG=v5 PREV=v3` or `TAG=v4 PREV=v3`.
+The Makefile defaults are `TAG=v8 PREV=v7` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`), i.e. the next model; until `sql2pyspark:v8` exists a bare `make promote` fails instead of re-promoting an old tag. Earlier runs used `TAG=v7 PREV=v6`, `TAG=v6 PREV=v5`, `TAG=v5 PREV=v3` and `TAG=v4 PREV=v3`.
 
 ### Phase 6: Launch Web Interface
 ```bash
