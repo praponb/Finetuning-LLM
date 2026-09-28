@@ -23,12 +23,12 @@ flowchart TD
         G --> Raw
         H --> Raw
         Raw --> Verify
-        Verify -->|20,071 of 20,105 pass (v5)| Split
+        Verify -->|20,066 of 20,105 pass (v7)| Split
         Split --> Data
     end
 
     subgraph Training["2. Local LoRA Fine-Tuning (Apple MLX)"]
-        BaseModel["Qwen2.5-Coder Base<br/>v1–v5: 3B-Instruct-4bit<br/>v6: 7B-Instruct-4bit"]
+        BaseModel["Qwen2.5-Coder Base<br/>v1–v5: 3B-Instruct-4bit<br/>v6–v7: 7B-Instruct-4bit"]
         Config["lora_config.yaml<br/>(Rank 16, 8 Layers, 1200 updates x 4)"]
         MLX["mlx_lm.lora<br/>train_resumable.py"]
         Adapters["adapters/<br/>(adapters.safetensors)"]
@@ -93,7 +93,7 @@ Both results are compared on:
 - Multiset row equivalence (row order ignored, floats rounded to 4 decimals)
 - Sequence of the `ORDER BY` columns, when the query has one
 
-Only matching pairs go into `verified.jsonl`. In the v5 dataset 20,071 of 20,105 pairs pass (after excluding test_fixed duplicates; 2,761 return empty results, mostly long pipelines); in v4 20,068 passed; in v3 all 15,105 passed.
+Only matching pairs go into `verified.jsonl`. In the v7 dataset 20,066 of 20,105 pairs pass (20,065 after removing 1 duplicate of the fixed test set); in v5 20,071 passed; in v4 20,068 passed; in v3 all 15,105 passed.
 
 ### 3. Feature-Signature Splitting (`convert_sql_pyspark.py`)
 Random row-level splitting leaks: near-identical query structures with different constants land in both train and test. Instead:
@@ -104,11 +104,12 @@ Random row-level splitting leaks: near-identical query structures with different
 ### 4. Apple Silicon Training (Apple MLX)
 - **Base model**:
   - `v1–v5`: `mlx-community/Qwen2.5-Coder-3B-Instruct-4bit` (36 transformer blocks, 3.09 B parameters)
-  - `v6`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 transformer blocks, 7.61 B parameters)
+  - `v6–v7`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 transformer blocks, 7.61 B parameters)
 - **Unified memory budget**: fine-tuning runs natively in Apple Silicon unified memory using `mlx-lm`.
   - v2/v3 (3B, short samples): batch 4, no gradient checkpointing, peak ~9.7 GB, ~1 h 50 min.
   - v4/v5 (3B, samples up to 3.1k tokens): batch 2 × 2 gradient accumulation, gradient checkpointing, peak ~9.8–10.3 GB, ~5 h 15 min – 5 h 40 min.
   - v6 (7B, 3.2k tokens): batch 1 × 4 gradient accumulation, gradient checkpointing (batch 2 runs out of GPU memory), peak 10.1 GB, 8 h 19 min on a base M2, ~40–48 trained tokens/s.
+  - v7 (7B, continued from v6): batch 1 × 4 gradient accumulation, 2,400 micro-batches (4 h 58 min, peak 9.9 GB), continuing from v6 adapters with halved learning rate.
 - **Resilience**: `train_resumable.py` sets smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) and resumes from the latest checkpoint if macOS aborts a long GPU buffer.
 
 ### 5. Hybrid Inference & Empty-Table Verification Loop (`kimi_repair.py`)

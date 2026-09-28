@@ -4,7 +4,8 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 
 **Status (2026-09-28):**
 - **Production model:** `sql2pyspark:latest` is **v6**, the first model on **Qwen2.5-Coder-7B-Instruct-4bit** (fresh adapters on the v5 dataset, 8 h 19 min on a base M2): 60/62 on the hold-out (v5 56, v3 59), 132/150 on the fixed test set (v5 128) with 96/97 classic queries, 16/25 on the v4-feature hold-out (v5 14) and 0/4 on the real-world queries (like every model). Promoted on 2026-09-28; v5 (3B) is kept as `sql2pyspark:v5` for rollback. About 2x slower than the 3B, ~8 GB in Ollama.
-- **Agent repair loop:** Kimi K3 (Moonshot AI) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code and repair it on empty tables with declared schemas (fixing 3/4 real queries).
+- **Newest model (v7, 2026-09-29, recommended for promotion):** Qwen2.5-Coder-7B continued from v6's adapters (2,400 steps, peak LR 5e-5, 4 h 58 min) on the v7 dataset (DATEDIFF arithmetic, unrelated-column UNIONs, windows partitioned by date expressions): 61/62 hold-out, 137/150 fixed test set (97/97 classic), 16/25 v4 hold-out, 0/4 real queries (4/4 or 3/4 with the Kimi K3 repair). `latest` stays v6 until the owner runs `make promote TAG=v7 PREV=v6`.
+- **Agent repair loop:** Kimi K3 (Moonshot AI) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code and repair it on empty tables with declared schemas (fixing 3/4 real queries; on v6, 3/4 in only 4 tool runs for $0.59).
 - **Environment:** Native Apple Silicon training with MLX; Docker setup for Streamlit UI, Spark data pipeline, and evaluation. The codebase is in the private GitHub repo `praponb/Finetuning-LLM`.
 
 ---
@@ -80,10 +81,10 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── convert_sql_pyspark.py    # Leakage-free splitter & chat formatter
 │   ├── lora_config.yaml          # MLX LoRA training hyperparameters (v6: 7B model)
 │   ├── train_resumable.py        # Crash-proof training wrapper used by `make train`
-│   ├── train.log                 # Training log (v6 in-progress; v5 in runs/v5/)
+│   ├── train.log                 # Training log (v7; v6 and v5 in runs/v6/, runs/v5/)
 │   ├── data/                     # train.jsonl (16.9k), valid.jsonl, test.jsonl (+ *_meta.jsonl)
 │   ├── raw_pairs/                # 20.1k pair files, verified.jsonl & reports
-│   ├── adapters/                 # Fine-tuned LoRA weights + checkpoints (v6 in-progress)
+│   ├── adapters/                 # Fine-tuned LoRA weights + checkpoints (v7; v6 in runs/v6/)
 │   ├── runs/v2/ … runs/v5/       # Backups: adapters, data, raw pairs, configs, logs
 │   └── sql2pyspark-model/        # Fused 4-bit MLX model
 ├── sql2pyspark-hf/               # Dequantized BF16 fused model (input for GGUF; v5)
@@ -102,6 +103,8 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── post_training_v4.sh       # v4 post-training script
 │   ├── post_training_v5.sh       # v5 post-training script
 │   ├── post_training_v6.sh       # v6 post-training script (timeout 600s for 7B)
-│   └── results/                  # <tag>__<set>.json (+ v2/v3/v4-split, v5-repair, v5-repeat-penalty)
+│   ├── start_training_v7.sh      # v7 unattended training launcher
+│   ├── post_training_v7.sh       # v7 post-training export + eval chain
+│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5/v6-repair, v5/v6-repeat-penalty)
 └── llama.cpp/                    # Upstream checkout (GGUF converter)
 ```

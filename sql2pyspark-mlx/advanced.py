@@ -644,6 +644,10 @@ def make_window_item(g: Gen, cur: R, taken: set):
     if not orders:
         skip()
     part = [C(c.name, c.kind) for c in rng.sample(parts, min(len(parts), rng.choice([0, 1, 1, 1, 2])))] if parts else []
+    dts = cur.of("ts", "date")
+    if dts and chance(0.2):          # v7: PARTITION BY DATE_TRUNC('month', ts) / YEAR(d) ... (real001-style)
+        part = [G.date_part_expr(choice(dts))] + part[:1]
+        g.feats.add("window_expr_partition")
     has_keys = bool(cur.keys)
     opts = []
     oc = choice(orders)
@@ -691,7 +695,7 @@ def make_window_item(g: Gen, cur: R, taken: set):
             agg = choice([("AVG", "avg"), ("MAX", "max"), ("MIN", "min"), ("SUM", "sum"), ("STDDEV_SAMP", "stddev_samp"),
                           ("COUNT", "count")])
             opts.append((WFn(agg[0], agg[1], [C(v.name, v.kind)], WSpec(part)),
-                                 f"{part[0].name}_{agg[1]}_{v.name}", "window_partition_agg"))
+                                 f"{G.part_name(part[0])}_{agg[1]}_{v.name}", "window_partition_agg"))
             if v.lo > 0:
                 opts.append((Fn("ROUND", "round", [BinOp(C(v.name, v.kind), "/",
                                                                 WFn("SUM", "sum", [C(v.name, v.kind)], WSpec(part))),

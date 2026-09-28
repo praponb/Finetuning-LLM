@@ -15,6 +15,11 @@ model it gets 0 of the 4 real-world queries right, the one promotion condition n
 needs ~8 GB in Ollama. See [v6 results](#v6-results-2026-09-28). **v5** (3B, the previous `latest`) is kept as
 `sql2pyspark:v5`: roll back with `ollama cp sql2pyspark:v5 sql2pyspark:latest`. v4, v3, v2 and v1 stay available too.
 
+**Newest model: v7** (2026-09-29, 7B, continued from v6 on data that targets v6's gaps) is the best model so far:
+61/62 on the hold-out, 137/150 on the fixed test set with **97/97** classic queries, 16/25 on the v4 hold-out (tie with
+v6), 0/4 on the real queries. It is **recommended for promotion but not yet `latest`**: promoting is an owner step
+(`make promote TAG=v7 PREV=v6`). See [v7 results](#v7-results-2026-09-29).
+
 ```
 schemas.py ─┐
             ├─ generate_dataset.py ─┐                         ┌─ data/train.jsonl ─ mlx_lm.lora ─ adapters/
@@ -150,20 +155,24 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 | `sql2pyspark:v4` | holdout | 62 | 100% | 95% | **94%** | 95% | **94%** | 4.0 |
 | `sql2pyspark:v5` | holdout | 62 | 97% | 92% | **90%** | 92% | **90%** | 4.3 |
 | `sql2pyspark:v6` | holdout | 62 | 100% | 97% | **97%** | 97% | **97%** | 9.9 |
+| `sql2pyspark:v7` | holdout | 62 | 100% | 98% | **98%** | 98% | **98%** | 9.1 |
 | `sql2pyspark:v2` | holdout_v4 | 25 | 92% | 32% | **20%** | 32% | **20%** | 6.5 |
 | `sql2pyspark:v3` | holdout_v4 | 25 | 88% | 32% | **12%** | 32% | **12%** | 7.1 |
 | `sql2pyspark:v4` | holdout_v4 | 25 | 96% | 60% | **36%** | 60% | **36%** | 7.0 |
 | `sql2pyspark:v5` | holdout_v4 | 25 | 88% | 68% | **56%** | 68% | **56%** | 8.1 |
 | `sql2pyspark:v6` | holdout_v4 | 25 | 100% | 80% | **64%** | 80% | **64%** | 18.4 |
+| `sql2pyspark:v7` | holdout_v4 | 25 | 100% | 80% | **64%** | 80% | **64%** | 16.4 |
 | `sql2pyspark:v2` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 55.3 |
 | `sql2pyspark:v3` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 78.9 |
 | `sql2pyspark:v4` | real_queries | 4 | 25% | 0% | **0%** | 0% | **0%** | 92.8 |
 | `sql2pyspark:v5` | real_queries | 4 | 50% | 0% | **0%** | 0% | **0%** | 75.6 |
 | `sql2pyspark:v6` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 189.4 |
+| `sql2pyspark:v7` | real_queries | 4 | 50% | 0% | **0%** | 0% | **0%** | 163.6 |
 | `sql2pyspark:v3` | test_fixed | 150 | 92% | 73% | **69%** | 73% | **70%** | 8.0 |
 | `sql2pyspark:v4` | test_fixed | 150 | 90% | 80% | **73%** | 80% | **73%** | 11.6 |
 | `sql2pyspark:v5` | test_fixed | 150 | 97% | 88% | **85%** | 89% | **85%** | 11.2 |
 | `sql2pyspark:v6` | test_fixed | 150 | 99% | 91% | **88%** | 91% | **88%** | 22.5 |
+| `sql2pyspark:v7` | test_fixed | 150 | 100% | 93% | **91%** | 93% | **91%** | 25.8 |
 
 Hold-out, correct results (lenient) by difficulty:
 
@@ -175,6 +184,7 @@ Hold-out, correct results (lenient) by difficulty:
 | `sql2pyspark:v4` | 100% | 95% | 88% |
 | `sql2pyspark:v5` | 93% | 95% | 84% |
 | `sql2pyspark:v6` | 93% | 95% | 100% |
+| `sql2pyspark:v7` | 100% | 95% | 100% |
 
 v4 hold-out, correct results (lenient) by feature group:
 
@@ -185,10 +195,44 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v4` | 25% | 40% | 20% | 67% | 50% | 50% | 0% |
 | `sql2pyspark:v5` | 50% | 100% | 40% | 67% | 50% | 50% | 0% |
 | `sql2pyspark:v6` | 75% | 80% | 60% | 67% | 50% | 50% | 50% |
+| `sql2pyspark:v7` | 50% | 80% | 60% | 33% | 100% | 75% | 50% |
 <!-- RESULTS:END -->
 
 **v3 vs. v2:** v3 fixes 3 of v2's 6 hold-out failures (`GROUP BY 1` on a `CASE`, two unbalanced-parenthesis slips)
 with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300).
+
+### v7 results (2026-09-29)
+
+| Eval set | v5 | v6 | **v7** | Rule for v7 (vs. v6) |
+|---|---|---|---|---|
+| Hold-out (62, unseen tables) | 56 | 60 | **61** | ✅ needs ≥ 60 |
+| Fixed test set: classic families (97) | 95 | 96 | **97** | ✅ needs ≥ 94 |
+| Fixed test set: v4 families (53, incl. 22 pipelines) | 33 (8) | 36 (10) | **40 (12)** | — |
+| Fixed test set: all (150) | 128 | 132 | **137** | ✅ needs ≥ 132 |
+| v4 hold-out (25, new features) | 14 | 16 | 16 | ❌ needs > 16 (tie) |
+| Real-world queries (4) | 0 | 0 | 0 | ❌ needs ≥ 1 |
+| Real-world queries + Kimi K3 repair (sample / empty tables) | 3 / 3 | 3 / **4** | **4** / 3 | — |
+| Seconds per hold-out query | 4.3 | 9.9 | 9.1 | — |
+
+v7 continues from v6's adapters for 600 updates (2,400 micro-batches of 1, peak LR 5e-5; 4 h 58 min, validation loss
+0.011 → 0.021 at step 800 → 0.010 → **0.009**) on a new dataset (`SEED=7`, 20,066 of 20,105 pairs verified) whose
+generator adds three patterns aimed at v6's failures: `DATEDIFF(...)` arithmetic (`/ 365`, `/ 7`; 321 pairs), `UNION`
+of unrelated columns with `IS NOT NULL` filters (144 + 133 pairs) and windows partitioned by a date expression
+(`PARTITION BY DATE_TRUNC('month', ts)`, `YEAR(d)`; 1,578 pairs; none existed before).
+
+* **Hold-out 61/62**: `holdout015` (`DATEDIFF(...) / 365`) is fixed; since the new data targeted it, count this gain
+  as optimistic. `holdout031` still uses `.unionByName()` for a positional `UNION` of `city` and `hospital`.
+* **Fixed test set 137/150** (not targeted): 7 queries right that v6 misses (3 pipelines, 3 aggregations, a nested
+  query) and 2 wrong that v6 gets right; all 97 classic queries correct.
+* **v4 hold-out 16/25**: gains 2 (`holdout_v4_019`, `holdout_v4_023`) and loses 2 (`holdout_v4_002`, `holdout_v4_017`).
+* **Real-world queries 0/4**: `real001` still loops (88 window definitions) despite the expression-partition data; only
+  2 of 4 replies parse (v6: 3). With the Kimi K3 repair v7 reaches 4/4 on sample tables and 3/4 on empty tables; v6
+  reached 3/4 and 4/4. `real003` (the `UNPIVOT` NULL rows) flips between runs, so the repair is at 3-4 of 4.
+
+**Decision**: v7 beats or ties v6 on every set and misses two rule conditions: the v4 hold-out is a tie and no model
+has solved a real-world query yet (v6 was promoted with the latter). Promotion is recommended; it was left to the owner
+because the unattended session could not change `latest` (`make promote TAG=v7 PREV=v6`, rollback
+`ollama cp sql2pyspark:v6 sql2pyspark:latest`).
 
 ### v6 results (2026-09-28)
 
@@ -265,11 +309,11 @@ window-definition loop. `repeat_last_n=2048` stops it at the cost of one hold-ou
 values make the model misspell repeated column names (hold-out 49 and 41). No setting makes a real query correct.
 `app.py` therefore uses `repeat_last_n=2048` only for SQL longer than 2,000 characters (details in docs/04).
 
-**Agent repair with Kimi K3 (2026-09-28)**: `eval/agent_repair.py` gives Kimi K3 (Moonshot AI) each real query, v5's
-answer and one tool that runs PySpark on the sample tables (no expected output, no `.sql(...)`, at most 5 runs). It fixes
-3 of the 4 real queries (0/4 before; all 4 run) for $0.90 in total, about 5 minutes per query. `real003` still keeps
-NULL rows that Spark SQL's `UNPIVOT` drops by default. Needs `KIMI_API_KEY` in `.env` (template `.env.example`; details in
-docs/04).
+**Agent repair with Kimi K3 (2026-09-28)**: `eval/agent_repair.py` gives Kimi K3 (Moonshot AI) each real query, the
+model's answer and one tool that runs PySpark on the sample tables (no expected output, no `.sql(...)`, at most 5 runs).
+On **v6** it fixes 3 of the 4 real queries in only **4 tool runs** (1 per query) for **$0.59** (on v5: 11 runs, $0.90).
+`real003` still keeps NULL rows that Spark SQL's `UNPIVOT` drops by default. Needs `KIMI_API_KEY` in `.env` (template
+`.env.example`; details in docs/04).
 
 **Kimi K3 repair in the app**: with a key, the app flags syntax errors, undefined names and a missing `result` in the
 model's code and lets Kimi K3 repair it (automatically when a check fails, or on demand). With no data available, Kimi

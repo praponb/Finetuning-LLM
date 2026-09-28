@@ -63,9 +63,9 @@ make data N=20000 WORKERS=6
 ### Phase 2: LoRA Fine-Tuning
 ```bash
 # MLX LoRA fine-tuning via train_resumable.py
-# (v6: 7B model, batch 1 × 4 accumulation, 8 h 19 min; v5: continued from v4's 3B adapters with peak LR 5e-5, ~5 h 40 min).
+# (v7: 7B model continued from v6, 2,400 steps, 4 h 58 min; v6: 7B model fresh adapters, 4,800 steps, 8 h 19 min; v5: continued from v4's 3B adapters with peak LR 5e-5, ~5 h 40 min).
 # Stop Docker (docker compose down, quit Docker Desktop) and unload Ollama models (ollama stop <model>) first.
-# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v5/): adapters/, data/, raw_pairs/, train.log
+# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v6/): adapters/, data/, raw_pairs/, train.log
 make train
 ```
 
@@ -73,7 +73,10 @@ make train
 ```bash
 tail -f sql2pyspark-mlx/train.log
 ```
-To continue from an earlier model instead of starting from scratch (v5 continued from v4), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` (e.g. `./runs/v4/adapters/adapters.safetensors`) and use a lower peak learning rate; the adapter shape (rank, layers) must match. v6 trains fresh adapters on the 7B model.
+To continue from an earlier model instead of starting from scratch (v5 continued from v4; v7 continues from v6), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` (e.g. `./runs/v6/adapters/adapters.safetensors`) and use a lower peak learning rate (e.g. 5e-5); the adapter shape (rank, layers) must match.
+
+*Automated unattended pipeline:*
+You can orchestrate unattended execution via `zsh eval/start_training_v7.sh`: it waits for dataset verification and Kimi repair, terminates Docker and Ollama models to free GPU RAM, starts `make train`, and calls `eval/post_training_v7.sh` upon completion.
 
 `make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 or 200 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
 

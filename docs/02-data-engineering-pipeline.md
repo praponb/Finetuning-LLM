@@ -184,6 +184,14 @@ v5 targets what v4 got wrong on the v4 hold-out set (6 of its 16 misses were wro
 
 v5 data is generated with `--seed 5` (v4: 0) and 20% pipelines (`fam_pipeline` weight 42); the split drops every pair whose SQL appears in the fixed test set (`convert_sql_pyspark.py --exclude ../eval/test_fixed.jsonl`, 2 pairs). About 36% of pipelines still return an empty result on the 40-row sample tables (stacked dedup / anti-join / set-operation stages); their stages pass the check on thousands of non-empty cases.
 
+### v7 generator changes
+v7 targets the remaining persistent gaps from v5 and v6 evaluations (`holdout015` date division slips, `holdout031` unrelated column set operations, and window partition expressions):
+1. **DATEDIFF arithmetic**: `derive()` in `generate_dataset.py` adds arithmetic on date differences (`DATEDIFF(CURRENT_DATE(), birth_date) / 365 AS approx_years`, `... / 7 AS weeks`, `ROUND(DATEDIFF(...) / 30.0, 1)`), explicitly teaching PySpark `(F.datediff(...) / 365)` and preventing the model from confusing string literals or calling `.alias(...)` on a Python float. Tag `fn_date_arith`.
+2. **Window partitioned by date expression**: `date_part_expr()` generates `PARTITION BY DATE_TRUNC('month', ts)`, `YEAR(d)`, `TO_DATE(ts)` within both `generate_dataset.py` (`make_window()`) and `advanced.py` (`make_window_item()`), teaching window specs that partition on derived expressions. Tag `window_expr_partition`.
+3. **Unrelated column set operations**: `unrelated_col_pairs()` in `fam_setop` pairs string columns of different tables with different names and completely unrelated values (e.g. `city` vs. `hospital`, as in `holdout031`). SQL set operations combine them by position, requiring PySpark `.union()` instead of `.unionByName()`. Also adds `WHERE <col> IS NOT NULL` filters on both branches (30% chance). Tags `set_unrelated`, `set_not_null_filter`.
+
+v7 data is generated with `--seed 7` (`make data N=20000 SEED=7 WORKERS=4`).
+
 ---
 
 ## 4. Curated Pairs (`handwritten_pairs.py`)
@@ -239,18 +247,13 @@ All 105 are execution-verified and always go to the training split.
 2. **Multiset equivalence**: rows are normalized (numbers rounded to 4 decimals, dates ISO-formatted, NaN standardized) and compared with `Counter(map(repr, rows))`, so row order doesn't matter.
 3. **Ordering**: if the query has `ORDER BY`, the sequence of the ORDER BY columns must match (rows that tie may come out in either order).
 
-### Verification Run Results (`raw_pairs/verify_report.json`, v5):
-```json
-{
-  "total": 20105,
-  "ok": 20073,
-  "pass_rate": 0.9984,
-  "ok_but_empty_result": 2761,
-  "by_status": { "ok": 20073, "sql_error": 25, "rows": 7 },
-  "seconds": 1253.8
-}
-```
-Built natively with `make data N=20000 SEED=5 WORKERS=4` (~21 min; log in `sql2pyspark-mlx/data_v5.log`). v4: 20,068 of 20,105 (`data_v4.log`, now in `runs/v4/`). The 36 SQL errors are mostly `CORR` / division by zero under ANSI mode; the pairs that fail are dropped. v3 had all 15,105 pairs passing (561.6 s); the v2 build had 15,104 of 15,105. The v2 failure was a `NOT IN` subquery: when the subquery returns no rows, SQL keeps rows whose key is NULL, but the generated PySpark removed them. v3 renders the exact semantics (see the v3 generator changes above). In v5, 2,761 passing pairs (14%; v4: 11%) return an empty result, which makes their check weaker; most are long pipelines.
+### Verification Run Results (`raw_pairs/verify_report.json`):
+- **v7**: 20,066 of 20,105 ok, 20,065 after removing 1 fixed-test duplicate (`sql2pyspark-mlx/data_v7.log`, ~28 min; 2,800 return an empty result)
+- **v5**: 20,073 of 20,105 ok (`sql2pyspark-mlx/data_v5.log`, ~21 min, 99.84% pass rate)
+- **v4**: 20,068 of 20,105 ok (`data_v4.log`, in `runs/v4/`)
+- **v3**: 15,105 of 15,105 ok (561 s)
+
+The failing pairs are dropped. In v5, 2,761 passing pairs (14%; v4: 11%) return an empty result, which makes their check weaker; most are long pipelines.
 
 ---
 
@@ -267,14 +270,16 @@ $$\text{Signature} = \text{family} \;\|\; \text{sorted}(\text{features})$$
 3. A signature is only held out if it holds at most 2% of the pairs and every one of its features keeps at least `min_train_per_feature=30` training examples.
 4. All 105 hand-written pairs always go to `train`.
 
-### Final Split Statistics (`data/split_stats.json`, v5):
-- **Verified pairs**: 20,071 (20,073 minus 2 that match the fixed test set)
-- **Training set (`train.jsonl`)**: 16,927 pairs; mix 55.1% classic families, 24.5% short v4 families, 20.4% pipelines (v4: 58% / 26% / 16%)
-- **Validation set (`valid.jsonl`)**: 2,096 pairs
-- **Test set (`test.jsonl`)**: 1,048 pairs
-- v4: train 16,924 / valid 2,096 / test 1,048 (backup in `runs/v4/data/`)
-- **Signatures shared between train and valid/test**: **0**
-- **Features missing from train**: **0**
+### Final Split Statistics:
+- **v7 (`data/split_stats.json`)**:
+  - **Verified pairs**: 20,065 (minus 1 excluded matching fixed test set)
+  - **Training set (`train.jsonl`)**: 16,923 pairs (9,215 signatures)
+  - **Validation set (`valid.jsonl`)**: 2,095 pairs (1,198 signatures)
+  - **Test set (`test.jsonl`)**: 1,047 pairs (590 signatures)
+  - **Signatures shared between train and valid/test**: **0**
+  - **Features missing from train**: **0**
+- **v5**: verified 20,071; train 16,927 (55.1% classic, 24.5% short v4, 20.4% pipelines) / valid 2,096 / test 1,048
+- **v4**: train 16,924 / valid 2,096 / test 1,048 (backup in `runs/v4/data/`)
 
 Pipelines have nearly unique signatures, so they make up a larger share of valid/test than of train. Because the split is recomputed for every dataset version, the v2, v3 and v4 test splits contain different queries; compare two models on the same split (see [04 - Evaluation](04-evaluation-and-benchmarking.md)).
 
