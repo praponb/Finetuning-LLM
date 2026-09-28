@@ -62,9 +62,10 @@ make data N=20000 WORKERS=6
 
 ### Phase 2: LoRA Fine-Tuning
 ```bash
-# MLX LoRA fine-tuning via train_resumable.py (v4 config: ~5 h 15 min on a base M2).
+# MLX LoRA fine-tuning via train_resumable.py
+# (v6: 7B model, batch 1 × 4 accumulation, 8 h 19 min; v5: continued from v4's 3B adapters with peak LR 5e-5, ~5 h 40 min).
 # Stop Docker (docker compose down, quit Docker Desktop) and unload Ollama models (ollama stop <model>) first.
-# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v4/): adapters/, data/, raw_pairs/, train.log
+# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v5/): adapters/, data/, raw_pairs/, train.log
 make train
 ```
 
@@ -72,26 +73,26 @@ make train
 ```bash
 tail -f sql2pyspark-mlx/train.log
 ```
-To continue from an earlier model instead of starting from scratch (v5 continued from v4), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` (e.g. `./runs/v4/adapters/adapters.safetensors`) and use a lower peak learning rate; the adapter shape (rank, layers) must match.
+To continue from an earlier model instead of starting from scratch (v5 continued from v4), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` (e.g. `./runs/v4/adapters/adapters.safetensors`) and use a lower peak learning rate; the adapter shape (rank, layers) must match. v6 trains fresh adapters on the 7B model.
 
-`make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
+`make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 or 200 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
 
 ### Phase 3: Export, Fuse & Quantize
 ```bash
 # Fuse adapters, dequantize to BF16, convert to Q8_0 GGUF, register in Ollama
-make export TAG=v4
+make export TAG=v6
 
 # Or step by step:
 make fuse           # 4-bit MLX model + dequantized BF16 copy in sql2pyspark-hf/
 make gguf           # llama.cpp convert_hf_to_gguf.py -> sql2pyspark.gguf
-make ollama TAG=v4  # registers the GGUF as sql2pyspark:v4
+make ollama TAG=v6  # registers the GGUF as sql2pyspark:v6
 ```
 
 ### Phase 4: Benchmark & Evaluate
 ```bash
 # Compare the new model with the previous one on the hold-out set, the v4 hold-out set, the real-world queries
-# and 300 test queries (~2 h in total; the test sample dominates)
-make eval TAG=v4 PREV=v3
+# and 150 test queries (~2 h in total; on 7B, use --timeout 600)
+make eval TAG=v6 PREV=v5
 ```
 
 *Update the README results table:*
@@ -101,12 +102,12 @@ python eval/report.py --readme README.md
 
 ### Phase 5: Promote to Production
 ```bash
-# Point sql2pyspark:latest at v4 (keeps the old latest as :v3 if that tag doesn't exist yet)
-make promote TAG=v4 PREV=v3
+# Point sql2pyspark:latest at v6 (keeps the old latest as :v5 if that tag doesn't exist yet)
+make promote TAG=v6 PREV=v5
 ```
-Promote only if the new model scores at least the previous one on the hold-out set, beats it on the v4 hold-out set and the real-world queries, and doesn't regress on the same test sample. v4 did not meet this rule (see [Evaluation](04-evaluation-and-benchmarking.md)), so `latest` is still v3. Roll back with `ollama cp sql2pyspark:<previous> sql2pyspark:latest`.
+Promote only if the new model scores at least the previous one on the hold-out set, keeps the classic-family accuracy, beats it on the v4 hold-out set, gets a real-world query right, and doesn't regress on the fixed test set (details in [Evaluation](04-evaluation-and-benchmarking.md#promotions)). v5 was promoted by the owner's decision; v6 (7B) was promoted on 2026-09-28, meeting every condition except the real-world one that no model has met. Roll back anytime with `ollama cp sql2pyspark:v5 sql2pyspark:latest` (or any other tag).
 
-The Makefile defaults are `TAG=v4 PREV=v3`; pass `TAG=v5 PREV=v3` (or similar) for the next version. The v2 → v3 cycle ran as `make export TAG=v3`, `make eval TAG=v3 PREV=v2` and `make promote TAG=v3 PREV=v2`.
+The Makefile defaults are `TAG=v6 PREV=v5` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`). Earlier runs used `TAG=v5 PREV=v3` or `TAG=v4 PREV=v3`.
 
 ### Phase 6: Launch Web Interface
 ```bash
@@ -119,7 +120,7 @@ make app
 ## ⚡ Memory & Performance Tips
 
 ### Don't run Ollama while training
-Training peaks at ~9.7 GB. On a 16 GB Mac, running an Ollama evaluation at the same time crashed training with a Metal out-of-memory error. Run evaluations, the app, and Ollama chats only after training finishes.
+Training peaks at ~9.7–10.3 GB (v6 7B: 10.1 GB). On a 16 GB Mac, running an Ollama evaluation at the same time crashed training with a Metal out-of-memory error. Run evaluations, the app, and Ollama chats only after training finishes.
 
 Docker Desktop's VM (8 GB) competes for the same memory, so stop it before training: `docker compose down`, then quit Docker Desktop.
 
@@ -128,12 +129,14 @@ Measured on a base M2:
 
 | Setting | Speed | Peak memory |
 | :--- | :--- | :--- |
-| 8 layers, batch 4, no gradient checkpointing (v2/v3, samples ≤ 603 tokens) | ~0.17–0.19 it/s | ~9.7 GB |
-| 16 layers, batch 4, no gradient checkpointing | ~0.14 it/s | ~13 GB |
-| 16 layers, batch 4, `grad_checkpoint: true` | ~0.08 it/s | ~4.5 GB |
-| 8 layers, batch 2 × 2 accumulation, `grad_checkpoint: true` (**v4**, samples up to 3.1k tokens) | ~0.09–0.18 it/s (micro-batches) | ~9.7 GB |
+| 8 layers of 36, batch 4, no gradient checkpointing (v2/v3, samples ≤ 603 tokens) | ~0.17–0.19 it/s | ~9.7 GB |
+| 16 layers of 36, batch 4, no gradient checkpointing | ~0.14 it/s | ~13 GB |
+| 16 layers of 36, batch 4, `grad_checkpoint: true` | ~0.08 it/s | ~4.5 GB |
+| 8 layers of 36, batch 2 × 2 accumulation, `grad_checkpoint: true` (**v4/v5**, samples up to 3.1k tokens) | ~0.09–0.18 it/s (micro-batches) | ~9.8–10.3 GB |
+| 8 layers of 28, batch 1 × 4 accumulation, `grad_checkpoint: true` (**v6**, 7B base model, 3.2k tokens) | ~0.14–0.25 it/s (micro-batches of 1; ~37–50 tok/s) | 10.1 GB |
+| 8 layers of 28, batch 2 × 2 accumulation, `grad_checkpoint: true` (7B dry run, 64 longest samples) | — | Metal out-of-memory |
 
-With v4's long samples, batch 4 ran out of GPU memory even with gradient checkpointing, and batch 2 without it did too (dry run on the 64 longest samples). Metal can use ~10.7–12.7 GB of a 16 GB Mac. To test a new setting, run a few iterations on the longest samples before a full run.
+With v4/v5's long samples on 3B, batch 4 ran out of GPU memory even with gradient checkpointing, and batch 2 without it did too. On the 7B model (v6), batch 2 with checkpointing caused Metal OOM during dry runs, whereas batch 1 with 4 accumulation steps peaked at ~9.2 GB, safely inside the ~10.7–12.7 GB Metal limit on a 16 GB Mac. To test a new setting, run a few iterations on the longest samples before a full run.
 
 ### Spark Worker Tuning
 Each `verify_pairs.py` worker is a separate process with its own local `SparkSession` (~1 GB).

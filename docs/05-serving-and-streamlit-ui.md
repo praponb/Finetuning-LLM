@@ -13,6 +13,7 @@ sequenceDiagram
     participant Browser as Streamlit Web App (app.py)
     participant Ollama as Ollama Server (OLLAMA_URL, default :11434)
     participant Model as sql2pyspark (Q8_0 GGUF)
+    participant Kimi as Kimi K3 & Spark (kimi_repair.py)
 
     User->>Browser: Enters SQL query in the left text area
     User->>Browser: Clicks "Convert to PySpark"
@@ -22,14 +23,19 @@ sequenceDiagram
     Model-->>Ollama: Markdown reply with a ```python block
     Ollama-->>Browser: JSON response {message: {content: ...}}
     Browser->>Browser: extract_code() pulls out the code block
-    Browser-->>User: Renders highlighted PySpark code
+    Browser->>Browser: static_check(code) AST analysis (syntax, undefined names, result)
+    alt Check fails or repair requested
+        Browser->>Kimi: EmptyTableRunner (declares schemas from SQL, runs code in Spark)
+        Kimi-->>Browser: Repaired & verified code with token usage, cost and logs
+    end
+    Browser-->>User: Renders highlighted PySpark code (+ repair card if triggered)
 ```
 
 ---
 
 ## 🦙 Ollama Serving Engine
 
-Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v5** (since 2026-09-28); `sql2pyspark:v3` (the previous `latest`), `sql2pyspark:v4`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the last export (v5).
+Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v6** (the 7B model, since 2026-09-28; 7.9 GB loaded, ~10 s per hold-out query vs. ~4 s for the 3B); `sql2pyspark:v5` (the previous `latest`, 3B), `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the last export (v6, 8.1 GB).
 
 ### Server Address
 - Default: `http://localhost:11434`
@@ -75,7 +81,7 @@ The system prompt and `top_p 0.9` come from the Modelfile, so the app doesn't se
 
 ## 🖥️ Streamlit Frontend Application (`app.py`)
 
-[app.py](../app.py) is a small (~100 lines) Streamlit frontend with two dependencies (`streamlit`, `requests`).
+[app.py](../app.py) is a streamlined (~180 lines) Streamlit frontend with support for local Ollama inference and automated Kimi K3 empty-table verification and repair.
 
 ### 1. Robust Code Extraction (`extract_code`)
 Models sometimes stop before closing a code fence. `extract_code()` handles both cases:
@@ -89,23 +95,24 @@ def extract_code(text: str) -> str:
     text = re.sub(r"^\s*```(?:python|pyspark|py)?\s*\n", "", text)
     return text.replace("```", "").strip()
 ```
-`eval/evaluate.py` uses an identical copy of this function, so the UI shows the same code the evaluation scored.
+`eval/evaluate.py` and `kimi_repair.py` use an identical implementation, so the UI, evaluation, and repair agent process identical code blocks.
 
 ### 2. Two-Column Layout
 - **Left column**: text area preloaded with an example query (`COUNT(*)`, `AVG()`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`).
-- **Right column**: generated code with syntax highlighting and Streamlit's copy button.
+- **Right column**: generated code with syntax highlighting, AST check status, and Streamlit's copy button.
 
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
-- `sql2pyspark:latest` (default, currently v5)
-- `sql2pyspark:v5` (= `latest`; best on the fixed test set and the v4 features; see [Evaluation](04-evaluation-and-benchmarking.md))
+- `sql2pyspark:latest` (default, currently v6)
+- `sql2pyspark:v6` (= `latest`; 7B, best on every evaluation set; see [Evaluation](04-evaluation-and-benchmarking.md))
+- `sql2pyspark:v5` (previous `latest`; 3B, about twice as fast)
 - `sql2pyspark:v4` (better at the v4 features: GROUPING SETS, PIVOT/UNPIVOT, nested data, ...; see [Evaluation](04-evaluation-and-benchmarking.md))
-- `sql2pyspark:v3`
+- `sql2pyspark:v3` (previous stable production model)
 - `sql2pyspark:v2` (previous model, for comparison)
 - `sql2pyspark:v1` (template-based first model)
 
 ### Generation settings
-`app.py` sends `temperature` 0.2. For SQL longer than 2,000 characters, `generation_options()` also sets `repeat_last_n` to 2,048 (Ollama's default: 64) and the request timeout rises from 120 s to 300 s: on long multi-CTE queries the model otherwise repeats window definitions until the token limit. Short queries are unaffected (see the repetition-penalty experiment in [Evaluation](04-evaluation-and-benchmarking.md)).
+`app.py` sends `temperature` 0.2. For SQL longer than 2,000 characters, `generation_options()` also sets `repeat_last_n` to 2,048 (Ollama's default: 64) and the request timeout rises from 120 s to 300 s: on long multi-CTE queries the model otherwise repeats window definitions until the token limit. Short queries are unaffected (see the repetition-penalty experiment in [Evaluation](04-evaluation-and-benchmarking.md)). With v6 (7B) this setting no longer stops the `real001` loop (identical 92-window reply); the static check flags the resulting syntax error, and the Kimi K3 repair fixed the same kind of looping answer from v5 in both repair tests.
 
 ### Kimi K3 repair (optional)
 With `KIMI_API_KEY` set (in `.env`; Docker passes it in), the app checks and repairs the model's answer with Kimi K3 (Moonshot AI). The shared logic is in `kimi_repair.py`:
@@ -119,7 +126,7 @@ On the 4 real-world queries this mode fixes 3 (0/4 before; $0.79 in total, 1.5-6
 ### 4. Error Handling
 - **Ollama unreachable**: shows `Cannot connect to Ollama at <OLLAMA_URL>. Make sure the Ollama service is running (open -a Ollama).`
 - **Blank input**: shows a warning.
-- **Timeout**: 120 seconds per request (300 seconds for SQL longer than 2,000 characters).
+- **Timeout**: 180 seconds per request (600 seconds for SQL longer than 2,000 characters; raised from 120/300 s for the slower 7B model, which needed up to ~270 s on the real-world queries).
 
 The app was checked headlessly with the v2 model (`streamlit.testing.v1.AppTest`) on the default query and three hold-out queries (a CTE with a join, a PIVOT, and a GROUP BY/ORDER BY). All three hold-out conversions were execution-verified as correct.
 

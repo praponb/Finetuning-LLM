@@ -133,7 +133,7 @@ with col2:
                             "stream": False,
                             "options": generation_options(sql_input),
                         },
-                        timeout=300 if len(sql_input) > LONG_SQL_CHARS else 120
+                        timeout=600 if len(sql_input) > LONG_SQL_CHARS else 180
                     )
 
                     if response.status_code == 200:
