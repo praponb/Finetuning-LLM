@@ -49,6 +49,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 ├── README.md                     # Project summary and results table
 ├── PROJECT_DOCUMENTATION.md      # Consolidated single-file documentation
 ├── app.py                        # Streamlit web converter UI
+├── kimi_repair.py                # Kimi K3 check + repair (app and eval)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, ...)
 ├── pyrefly.toml                  # Editor type-checker config (uses the project venv)
 ├── sql2pyspark.gguf              # Q8_0 GGUF of the last export (v5, 3.3 GB); Ollama keeps its own copies

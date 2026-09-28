@@ -315,6 +315,18 @@ Tokens: 148k input (93k served from Kimi's prompt cache) and 47k output, priced 
 
 `real003` misses one semantic detail: Spark SQL's `UNPIVOT` drops rows whose value is NULL by default (`EXCLUDE NULLS`), while `DataFrame.unpivot()` keeps them, so the forward-filled NULL readings add two groups. Adding `.filter(F.col("metric_value").isNotNull())` after the `unpivot` makes Kimi's code match exactly. The agent could not notice, because nothing in the sample output looks wrong without the expected rows.
 
+**The app's setting: no data (`--mode empty`).** In the app there are no sample tables, so the tool runs the code on empty tables whose schemas Kimi declares from the SQL and compares its columns with the SQL's (`kimi_repair.EmptyTableRunner`). Scored on the sample tables as above (`eval/results/v5-repair/real_queries_empty.json`, log `eval/agent_repair_v5_empty.log`):
+
+| Query | After repair (empty tables) | Runs | Time | Cost |
+| :--- | :--- | :--- | :--- | :--- |
+| `real001` | ✅ correct | 2 | 189 s | $0.15 |
+| `real002` | ✅ correct | 1 | 302 s | $0.24 |
+| `real003` | ❌ same 6 rows instead of 4 (`UNPIVOT` NULLs) | 1 | 82 s | $0.13 |
+| `real004` | ✅ correct | 1 | 388 s | $0.27 |
+| **Total** | **3/4** | 5 | 16.2 min | **$0.79** |
+
+Same score without any data: the failures were syntax, names and columns, which empty tables expose, and Kimi reasoned more before its first run (fewer runs, 44k output tokens).
+
 Takeaways: an execution-feedback loop turns v5's long-query failures (loops, syntax errors, wrong names) into correct code at about $0.20-0.30 and 5 minutes per query, so a "v5 first, agent repair on failure" setup is practical for long SQL. It does not replace a stronger local model. The `UNPIVOT` NULL rule is already in v5's training data (the generator's `stg_unpivot` adds the same `isNotNull()` filter unless the SQL says `INCLUDE NULLS`); v5 itself fails `real003` earlier, on a column name.
 
 ---
@@ -343,7 +355,8 @@ python eval/evaluate.py --model sql2pyspark:v4 --set eval/holdout_v4.jsonl
 python eval/evaluate.py --model sql2pyspark:v5 --set eval/real_queries.jsonl --tables eval/real_tables.py --option repeat_last_n=2048 --out /tmp/rp.json
 
 # Agent repair of v5's answers with Kimi K3 (key in .env, see .env.example; --dry-run needs no key)
-python eval/agent_repair.py --results eval/results/v5__real_queries.json
+python eval/agent_repair.py --results eval/results/v5__real_queries.json               # sample tables
+python eval/agent_repair.py --results eval/results/v5__real_queries.json --mode empty  # like the app
 
 # Rebuild the results table in README.md
 python eval/report.py --readme README.md

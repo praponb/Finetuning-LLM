@@ -19,5 +19,6 @@ pyspark==4.2.0
 PyYAML==6.0.3
 requests==2.34.2
 
-# UI
+# UI + Kimi K3 repair (app.py, kimi_repair.py, eval/agent_repair.py)
 streamlit==1.64.0
+openai==3.19.2

@@ -236,6 +236,11 @@ answer and one tool that runs PySpark on the sample tables (no expected output, 
 NULL rows that Spark SQL's `UNPIVOT` drops by default. Needs `KIMI_API_KEY` in `.env` (template `.env.example`; details in
 docs/04).
 
+**Kimi K3 repair in the app**: with a key, the app flags syntax errors, undefined names and a missing `result` in the
+model's code and lets Kimi K3 repair it (automatically when a check fails, or on demand). With no data available, Kimi
+checks its code on empty tables with the schemas the SQL implies, comparing the output columns with the SQL's
+(`kimi_repair.py`). In that setting it also fixes 3 of the 4 real queries ($0.79 in total; docs/05).
+
 **Known gaps (after v5)**: `real001`'s repetition loop, the long-standing `UNION` alias gaps (`holdout031`,
 `holdout053`), `holdout050`, `holdout058`, pipelines in the v4 hold-out set (0/2) and on the fixed test set (8/22), and
 two v5 slips on simple expressions (`holdout015`, `holdout041`). The v4 list below is kept for reference.

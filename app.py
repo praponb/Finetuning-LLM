@@ -1,12 +1,18 @@
 import os
-import re
+from pathlib import Path
 
 import requests
 import streamlit as st
 
+import kimi_repair as kr
+
 # Ollama server; in Docker this points at the host (see docker-compose.yml)
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/")
 LONG_SQL_CHARS = 2000
+# Kimi K3 repair (optional): KIMI_API_KEY from the environment or .env (Docker passes .env in)
+kr.load_env(Path(__file__).resolve().parent / ".env")
+KIMI_READY = bool(os.environ.get("KIMI_API_KEY"))
+REPAIR_MODES = ["When a check fails", "Always", "Off"]
 
 
 def generation_options(sql: str) -> dict:
@@ -19,14 +25,39 @@ def generation_options(sql: str) -> dict:
     return options
 
 
-def extract_code(text: str) -> str:
-    """Return the longest fenced code block in the reply (or the whole reply if there is none)."""
-    blocks: list[str] = re.findall(r"```(?:python|pyspark|py)?\s*\n(.*?)```", text, flags=re.S)
-    if blocks:
-        return max(blocks, key=len).strip()
-    # unterminated fence (generation stopped before the closing ```)
-    text = re.sub(r"^\s*```(?:python|pyspark|py)?\s*\n", "", text)
-    return text.replace("```", "").strip()
+extract_code = kr.extract_code
+
+
+@st.cache_resource(show_spinner="Starting Spark for the code checks...")
+def get_spark():
+    """Local Spark session for Kimi's tool (empty tables only, so one core and little memory are enough)."""
+    from pyspark.sql import SparkSession
+    spark = (SparkSession.builder.master("local[1]").appName("sql2pyspark-app")
+             .config("spark.ui.enabled", "false").config("spark.ui.showConsoleProgress", "false")
+             .config("spark.sql.shuffle.partitions", "1")
+             .config("spark.driver.memory", "1g").getOrCreate())
+    spark.sparkContext.setLogLevel("ERROR")
+    return spark
+
+
+def run_repair(sql: str, code: str) -> None:
+    """Kimi K3 fixes `code`, checking its versions on empty tables; the result goes to session state."""
+    model = os.environ.get("KIMI_MODEL") or kr.DEFAULT_MODEL
+    with st.status("Kimi K3 is checking and repairing the code...", expanded=True) as status:
+        try:
+            runner = kr.EmptyTableRunner(get_spark(), sql)
+            r = kr.repair(kr.make_client(), model, "high", sql, code, runner, max_runs=5,
+                          on_event=lambda line: st.write(line))
+        except Exception as e:  # noqa: BLE001
+            status.update(label="Kimi K3 repair failed", state="error")
+            st.error(f"Kimi K3 repair failed: {kr.short_error(e)}")
+            return
+        last = r["runs"][-1]["output"] if r["runs"] else ""
+        verified = bool(r["runs"]) and r["runs"][-1]["code"].strip() == r["code"].strip() \
+            and last.startswith("OK") and "MISMATCH" not in last
+        status.update(label=f"Kimi K3 finished: {len(r['runs'])} checks, {r['seconds']:.0f} s, ${r['cost_usd']:.2f}",
+                      state="complete", expanded=False)
+    st.session_state["repair"] = {**r, "verified": verified}
 
 
 # Page setup
@@ -45,6 +76,16 @@ with st.sidebar:
         value="sql2pyspark",
         help="Any tag from `ollama list`, e.g. sql2pyspark:v1 to compare with the previous model.",
     )
+    st.subheader("Kimi K3 repair")
+    if KIMI_READY:
+        repair_mode = st.radio(
+            "Run the repair", REPAIR_MODES, index=0,
+            help="Kimi K3 (Moonshot AI) checks the code on empty tables with the schemas the SQL implies and fixes "
+                 "syntax, name, column and type errors. About $0.10-0.30 and 1-5 minutes per repair.",
+        )
+    else:
+        repair_mode = "Off"
+        st.caption("Off: put `KIMI_API_KEY` in `.env` (see `.env.example`) and restart the app to enable it.")
 
 # Layout: 2 side-by-side columns
 col1, col2 = st.columns(2)
@@ -98,8 +139,9 @@ with col2:
                     if response.status_code == 200:
                         payload = response.json()
                         pyspark_output = payload.get("message", {}).get("content", "")
-                        
-                        result_container.code(extract_code(pyspark_output), language="python")
+                        st.session_state["converted"] = {"sql": sql_input, "code": extract_code(pyspark_output)}
+                        st.session_state.pop("repair", None)
+                        st.session_state["auto_repair"] = True
                     else:
                         st.error(f"Ollama returned error code {response.status_code}: {response.text}")
 
@@ -107,5 +149,34 @@ with col2:
                     st.error(f"Cannot connect to Ollama at {OLLAMA_URL}. Make sure the Ollama service is running (`open -a Ollama`).")
                 except Exception as e:
                     st.error(f"An unexpected error occurred: {str(e)}")
+
+    converted = st.session_state.get("converted")
+    if converted:
+        result_container.code(converted["code"], language="python")
+        problem = kr.static_check(converted["code"])
+        if problem:
+            st.warning(f"The model's code has a problem: {problem}")
+        else:
+            st.caption("✅ Basic checks passed (syntax, defined names, `result`); run it on your data to be sure.")
+        wanted = repair_mode == "Always" or (repair_mode == "When a check fails" and problem)
+        if st.session_state.pop("auto_repair", False) and wanted:
+            run_repair(converted["sql"], converted["code"])
+        elif KIMI_READY and "repair" not in st.session_state and \
+                st.button("🛠 Check and repair with Kimi K3", width="stretch"):
+            run_repair(converted["sql"], converted["code"])
+        rep = st.session_state.get("repair")
+        if rep:
+            st.subheader("Repaired by Kimi K3")
+            st.code(rep["code"], language="python")
+            if rep["verified"]:
+                st.success("This version ran on empty tables with the SQL's schemas and returns the SQL's columns.")
+            else:
+                st.info("Kimi's last check did not cover this exact version; review it before use.")
+            u = rep["usage"]
+            st.caption(f"{len(rep['runs'])} checks · {rep['seconds']:.0f} s · {u['input']:,} input tokens "
+                       f"({u['cache_read']:,} cached) · {u['output']:,} output tokens · ${rep['cost_usd']:.2f}")
+            with st.expander("Kimi's checks"):
+                for i, run in enumerate(rep["runs"], 1):
+                    st.text(f"Run {i}: {run['output']}")
     else:
         result_container.info("Click **Convert to PySpark** to generate code.")

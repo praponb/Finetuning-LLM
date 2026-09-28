@@ -151,7 +151,7 @@ Everything except training and fusing runs in Docker (tested with Docker Desktop
 
 - **Files**: `docker-compose.yml`, `docker/app.Dockerfile`, `docker/tools.Dockerfile` (both on `python:3.12-slim-bookworm`, which still ships `openjdk-17`), `docker/requirements-*.txt`, `docker/ollama-entrypoint.sh`, `.dockerignore` (allowlist, so the ~28 GB of models and data stay out of builds).
 - **Services**:
-  - `app`: Streamlit UI on port 8501. It uses Ollama on the host through `OLLAMA_URL=http://host.docker.internal:11434`.
+  - `app`: Streamlit UI on port 8501. It uses Ollama on the host through `OLLAMA_URL=http://host.docker.internal:11434`. Java 17 + PySpark (for the optional Kimi K3 repair) make the image 2.1 GB; `KIMI_API_KEY` comes from `.env` through `env_file` (optional), never from the image.
   - `tools` profile: Java 17 + PySpark for the data pipeline and evaluation, with the project mounted at `/workspace` (outputs land in the normal place on the host).
   - `ollama` profile: Ollama in a container on port 11435, registering the model from the mounted GGUF.
 - **Limits on a Mac**: containers can't use the Apple GPU. MLX training (`make train`, `make fuse`) must run natively, and Ollama in a container is CPU-only (much slower), so native Ollama is the recommended way to serve the model on macOS. The `ollama` profile is meant for Linux servers.
@@ -169,7 +169,7 @@ What has been verified:
 
 | Path | Result |
 | :--- | :--- |
-| `app` container | Builds, reports healthy, converts queries through the host's Ollama |
+| `app` container | Builds, reports healthy, converts queries through the host's Ollama; with the Kimi K3 repair (2026-09-28): key passed in from `.env`, empty-table check runs in the container's Spark |
 | `tools`: `make data` | Built the v3 dataset: 15,105/15,105 pairs verified in 561.6 s (`sql2pyspark-mlx/data_v3_docker.log`) |
 | `tools`: evaluation | v3 on the hold-out set: 59/62 (95.2%), identical replies and scores to the native run (`eval/results/v3__holdout.json`), 3.3 s/query, 3 min 47 s in total |
 | `ollama` profile | Not benchmarked (CPU-only on a Mac) |

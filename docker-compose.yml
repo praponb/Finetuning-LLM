@@ -23,6 +23,9 @@ services:
       - "8501:8501"
     environment:
       <<: *ollama-url
+    env_file:                                  # KIMI_API_KEY for the optional Kimi K3 repair (template .env.example)
+      - path: .env
+        required: false
     extra_hosts:
       - "host.docker.internal:host-gateway"   # makes the host reachable on Linux too
     depends_on:
