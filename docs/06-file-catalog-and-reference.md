@@ -8,18 +8,19 @@ A reference for the directories, scripts, configuration files, datasets and arti
 
 | File | Purpose | Primary Functions / Contents | Inputs / Dependencies | Output / Artifacts |
 | :--- | :--- | :--- | :--- | :--- |
-| [Makefile](../Makefile) | Pipeline orchestration | Targets: `help`, `setup`, `data` (`generate`, `verify`, `split`), `train` (via `train_resumable.py`), `fuse`, `gguf`, `ollama`, `export`, `eval`, `promote`, `app` (`TAG ?= v4`, `PREV ?= v3`) | venv in `sql2pyspark-mlx/.venv`, Ollama | Runs the full lifecycle |
+| [Makefile](../Makefile) | Pipeline orchestration | Targets: `help`, `setup`, `data` (`generate`, `verify`, `split`), `train` (via `train_resumable.py`), `fuse`, `gguf`, `ollama`, `export`, `eval`, `promote`, `app` (`TAG ?= v6`, `PREV ?= v5`, `BASE ?= 7B`) | venv in `sql2pyspark-mlx/.venv`, Ollama | Runs the full lifecycle |
 | [Modelfile](../Modelfile) | Ollama model definition | Chat template, stop token, temperature 0.2, top_p 0.9, system prompt | `sql2pyspark.gguf` | Ollama model `sql2pyspark:<tag>` |
+| [USER_MANUAL.md](../USER_MANUAL.md) | End-user manual & guide | Streamlit UI walkthrough, CLI usage, REST API (`curl`/Python), SQL feature matrix, AST validation, Kimi K3 repair, FAQ | — | End-user manual |
 | [README.md](../README.md) | Project summary | Pipeline, setup, conventions, results table, known gaps, layout | — | Landing page |
 | [PROJECT_DOCUMENTATION.md](../PROJECT_DOCUMENTATION.md) | Single-file documentation | Condensed version of the `docs/` guides | — | — |
-| [app.py](../app.py) | Streamlit web application | `extract_code(text)`, `generation_options(sql)` (long-SQL repetition window), `OLLAMA_URL` | `streamlit`, `requests`, Ollama API | Web UI on `:8501` |
-| [kimi_repair.py](../kimi_repair.py) | Kimi K3 repair loop (shared) | `static_check()`, `repair()`, `EmptyTableRunner` (empty tables with Kimi-declared schemas), `load_env()`, `make_client()`, prices | Used by `app.py` and `eval/agent_repair.py` |
-| [requirements.txt](../requirements.txt) | Pinned dependencies | MLX, mlx-lm, transformers, torch, gguf, PySpark, Streamlit, ... | Python 3.14 on macOS arm64 (tested) | Contents of the project venv |
+| [app.py](../app.py) | Streamlit web application | `extract_code(text)`, `generation_options(sql)` (long-SQL repetition window), `OLLAMA_URL`, Kimi K3 empty-table check & repair | `streamlit`, `requests`, `pyspark`, Ollama API | Web UI on `:8501` |
+| [kimi_repair.py](../kimi_repair.py) | Kimi K3 repair loop (shared) | `static_check()`, `repair()`, `EmptyTableRunner` (empty tables with Kimi-declared schemas), `load_env()`, `make_client()`, token pricing | Used by `app.py` and `eval/agent_repair.py` | AST checks, Spark empty table runner, Moonshot API client |
+| [requirements.txt](../requirements.txt) | Pinned dependencies | MLX, mlx-lm, transformers, torch, gguf, PySpark, Streamlit, openai, ... | Python 3.14 on macOS arm64 (tested) | Contents of the project venv |
 | [pyrefly.toml](../pyrefly.toml) | Editor type-checker config | Points Pyrefly at `sql2pyspark-mlx/.venv/bin/python`; adds `sql2pyspark-mlx/` to the search path; excludes vendored/generated folders | Pyrefly extension | No red "Cannot find module" errors |
-| `sql2pyspark.gguf` | Quantized model of the last export (v4) | 3.29 GB, Q8_0 | Output of `make gguf` | Registered in Ollama by `make ollama`; Ollama keeps its own copy of every tag (`latest` = v3) |
-| `.env.example` | API-key template | `KIMI_API_KEY`, `KIMI_BASE_URL`, `KIMI_MODEL`; copy to `.env` (gitignored) | Read by `eval/agent_repair.py` |
+| `sql2pyspark.gguf` | Quantized model of the last completed export (v6, 7B) | 8.10 GB, Q8_0 (3B: 3.29 GB) | Output of `make gguf` | Registered in Ollama by `make ollama`; Ollama keeps its own copy of every tag (`latest` = v5) |
+| `.env.example` | API-key template | `KIMI_API_KEY`, `KIMI_BASE_URL`, `KIMI_MODEL`; copy to `.env` (gitignored) | Read by `app.py` and `eval/agent_repair.py` | API credentials for Kimi K3 repair |
 | [.gitignore](../.gitignore) | Git exclusions | `.env`, venvs, caches, weights (`*.gguf`, `*.safetensors`, adapters, fused models, `sql2pyspark-hf/`), `archive/`, generated data (`raw_pairs/`, `data/`), `llama.cpp/`, `sql2pyspark-mlx/runs/`, `.agents/`, `.claude/` | Git; private GitHub repo `praponb/Finetuning-LLM` | Keeps the repo to source, configs, docs, eval results and logs |
-| [docker-compose.yml](../docker-compose.yml) | Docker services | `app` (Streamlit), `tools` profile (Spark data/eval), `ollama` profile | Docker Desktop | See the [runbook](07-operations-runbook.md#-docker) |
+| [docker-compose.yml](../docker-compose.yml) | Docker services | `app` (Streamlit + Java 17 + PySpark), `tools` profile (Spark data/eval), `ollama` profile | Docker Desktop | See the [runbook](07-operations-runbook.md#-docker) |
 | [.dockerignore](../.dockerignore) | Docker build-context allowlist | Only `app.py` and `docker/` are sent to the builder | Docker | Keeps ~28 GB of models/data out of builds |
 | `docker/` | Docker files (both images on `python:3.12-slim-bookworm`) | `app.Dockerfile`, `tools.Dockerfile`, `requirements-app.txt`, `requirements-tools.txt`, `ollama-entrypoint.sh` | Docker | Container images |
 
@@ -36,19 +37,17 @@ A reference for the directories, scripts, configuration files, datasets and arti
 | [handwritten_pairs.py](../sql2pyspark-mlx/handwritten_pairs.py) | Curated pairs | Helper `P(sql, body, order)`, list `PAIRS` (105 pairs) | `raw_pairs/hwNNN.sql` + `.py`, `meta_handwritten.jsonl` |
 | [verify_pairs.py](../sql2pyspark-mlx/verify_pairs.py) | Spark dual-execution check | `Checker`, `Result`, `compare()`, `norm()`, `rows_of()`, multiprocess CLI | `verified.jsonl`, `verify_report.json`, `verify_failures.jsonl` |
 | [convert_sql_pyspark.py](../sql2pyspark-mlx/convert_sql_pyspark.py) | Signature-based splitter | `signature(rec)`, `split()`, `format_sample()`, `write_jsonl()` | `data/train.jsonl`, `valid.jsonl`, `test.jsonl`, `*_meta.jsonl`, `split_stats.json` |
-| [lora_config.yaml](../sql2pyspark-mlx/lora_config.yaml) | MLX fine-tuning parameters (v4) | Rank 16, 8 layers, 2,400 micro-batches of 2 × 2 accumulation, max 3,200 tokens, gradient checkpointing, AdamW, cosine schedule, checkpoints every 100 | Read by `mlx_lm.lora` |
-| [train_resumable.py](../sql2pyspark-mlx/train_resumable.py) | Crash-proof training wrapper (`make train`) | Smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER`, `MLX_MAX_MB_PER_BUFFER`); resumes from the newest checkpoint with the cosine schedule continued; `lr_at()` | Adapters in `adapters/` |
-| `train.log` | Training log (v4 run) | Loss, learning rate, speed, tokens, peak memory per report | Training history |
+| [lora_config.yaml](../sql2pyspark-mlx/lora_config.yaml) | MLX fine-tuning parameters (v6) | 7B model, fresh adapters, 4,800 micro-batches (batch 1 × 4 accumulation), max 3,200 tokens, grad checkpointing, 8 of 28 layers, AdamW cosine schedule | Read by `mlx_lm.lora` |
+| [train_resumable.py](../sql2pyspark-mlx/train_resumable.py) | Crash-proof training wrapper (`make train`) | Smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER`, `MLX_MAX_MB_PER_BUFFER`); resumes from newest checkpoint with cosine schedule continued; `lr_at()` | Adapters in `adapters/` |
+| `train.log` | Training log (v6, 07:09 → 15:28, validation loss 0.010) | Loss, learning rate, speed, tokens, peak memory per report | Active training progress |
 | `data_v3_docker.log` | v3 dataset build log | `make data` run inside the `tools` container | Record of the v3 data build |
 | `data_v5.log` | v5 dataset build log | Native `make data N=20000 SEED=5 WORKERS=4` (generate, verify, split with `--exclude`) | Record of the v5 data build |
 | `data_v4.log` | v4 dataset build log | Native `make data N=20000 WORKERS=4` (generate, verify, split) | Record of the v4 data build |
-| `data/` | Split dataset (v4) | `train.jsonl` (16,924), `valid.jsonl` (2,096), `test.jsonl` (1,048), `valid_meta.jsonl`, `test_meta.jsonl`, `split_stats.json` | MLX training data + evaluation metadata |
-| `raw_pairs/` | Generated pairs (v4) | 20,105 `.sql`/`.py` pairs, `meta_*.jsonl`, `verified.jsonl` (20,068), `verify_report.json`, `verify_failures.jsonl`, `verify.log` | Input to `verify_pairs.py` and `convert_sql_pyspark.py` |
-| `adapters/` | LoRA weights (v3) | `adapters.safetensors`, checkpoints `0000300_` … `0001200_adapters.safetensors`, `adapter_config.json` | Produced by `mlx_lm.lora`; used by `mlx_lm.fuse` |
-| `sql2pyspark-model/` | Fused 4-bit MLX model (v3) | `model.safetensors` (1.74 GB), `config.json`, tokenizer files, model card `README.md` | Native MLX model |
-| `runs/v2/` | v2 backup (git-ignored, ~270 MB) | `adapters/`, `data/`, `raw_pairs/`, `lora_config.yaml`, `train.log`, `post_training.log` | Rollback / comparison with v2 |
-| `runs/v4/` | v4 backup (git-ignored, ~860 MB) | `adapters/` (all 24 checkpoints), `data/`, `raw_pairs/`, `lora_config.yaml`, `train.log`, `data_v4.log`, `post_training_v4.log`, `train_resumable.py` | Starting point of the v5 run (`resume_adapter_file`) and rollback |
-| `runs/v3/` | v3 backup (git-ignored, ~270 MB) | `adapters/`, `data/`, `raw_pairs/`, `lora_config.yaml`, `train.log`, `data_v3_docker.log`, `post_training_v3.log` | Rollback / comparison with v3 |
+| `data/` | Split dataset (v5) | `train.jsonl` (16,927), `valid.jsonl` (2,096), `test.jsonl` (1,048), `valid_meta.jsonl`, `test_meta.jsonl`, `split_stats.json` | MLX training data + evaluation metadata |
+| `raw_pairs/` | Generated pairs (v5) | 20,105 `.sql`/`.py` pairs, `meta_*.jsonl`, `verified.jsonl` (20,073), `verify_report.json`, `verify_failures.jsonl`, `verify.log` | Input to `verify_pairs.py` and `convert_sql_pyspark.py` |
+| `adapters/` | LoRA weights (v6) | `adapters.safetensors`, checkpoints `0000200_` … `adapters.safetensors`, `adapter_config.json` | Produced by `mlx_lm.lora`; used by `mlx_lm.fuse` |
+| `sql2pyspark-model/` | Fused 4-bit MLX model (v6) | `model.safetensors` (4.28 GB; 3B: 1.74 GB), `config.json`, tokenizer files, model card `README.md` | Native MLX model |
+| `runs/v2/` … `runs/v5/` | Version backups (git-ignored) | `adapters/`, `data/`, `raw_pairs/`, `lora_config.yaml`, `train.log`, post-training logs | Rollback / comparison across versions |
 | `.venv/` | Project Python environment | Python 3.14 + `requirements.txt` | Used by the Makefile and Pyrefly |
 
 ---
@@ -86,6 +85,7 @@ A reference for the directories, scripts, configuration files, datasets and arti
 | `results/v2-split/` | Earlier test results | `v1__test.json`, `v2__test.json` on the v2 split | Kept for reference; not read by `report.py` |
 | [agent_repair.py](../eval/agent_repair.py) | Agent repair evaluation (Kimi K3) | `preview()` (sample-table tool), `table_schemas()`; `--mode sample\|empty`, `--results`, `--max-runs`, `--effort`, `--only`, `--dry-run` | Reads a results JSON, runs `kimi_repair.repair()`, scores the repaired code |
 | `results/v5-repair/` | Kimi K3 repair of v5's real-query answers | `real_queries.json` (sample tables), `real_queries_empty.json` (empty tables, like the app); per query: before/after score, tool runs, tokens, cost | See docs/04; logs `eval/agent_repair_v5*.log` |
+| `results/v6-repeat-penalty/` | v6 with the app's long-SQL setting | `A2_rp1.1_2048__real_queries.json` (`repeat_last_n=2048`) | Shows the setting doesn't stop v6's `real001` loop |
 | `results/v5-repeat-penalty/` | v5 with stronger repetition settings | `A2_rp1.1_2048__*.json`, `B_rp1.2_256__*.json`, `C_rp1.3_256__*.json` (real queries + hold-out) | Evidence for the long-SQL setting in `app.py` |
 | `results/v4-split/` | v3/v4 results on the v4-split sample (identical to their `__test_fixed.json`) | `v3__test.json`, `v4__test.json` | Kept for reference; not read by `report.py` |
 | `results/v3-split/` | Test results on the v3 split | `v2__test.json`, `v3__test.json` | Kept for reference; not read by `report.py` |
@@ -94,6 +94,7 @@ A reference for the directories, scripts, configuration files, datasets and arti
 | `post_training_v3.log` | Post-training run log (v3) | v3 export, then the v3 hold-out/test and v2 test evaluations | Record of the v3 export |
 | `post_training_v5.sh`, `post_training_v5.log` | v5 post-training chain and its log | Waits for training, exports v5, evaluates it on the hold-out, v4 hold-out, real queries and fixed test set | Record of the v5 export and evaluation |
 | `post_training_v4.sh`, `post_training_v4.log` | v4 post-training chain and its log | Waits for training, exports v4, evaluates v4 on all sets and v3 on the new test sample | Record of the v4 export and evaluation |
+| `post_training_v6.sh`, `post_training_v6.log` | v6 post-training chain and its log | Waits for training, exports v6, evaluates v6 across 4 benchmarks (--timeout 600), restarts Docker app | Automated v6 pipeline execution |
 
 ---
 

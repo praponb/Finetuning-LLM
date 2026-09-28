@@ -23,14 +23,14 @@ flowchart TD
         G --> Raw
         H --> Raw
         Raw --> Verify
-        Verify -->|20,068 of 20,105 pass| Split
+        Verify -->|20,071 of 20,105 pass (v5)| Split
         Split --> Data
     end
 
     subgraph Training["2. Local LoRA Fine-Tuning (Apple MLX)"]
-        BaseModel["mlx-community/<br/>Qwen2.5-Coder-3B-Instruct-4bit"]
+        BaseModel["Qwen2.5-Coder Base<br/>v1–v5: 3B-Instruct-4bit<br/>v6: 7B-Instruct-4bit"]
         Config["lora_config.yaml<br/>(Rank 16, 8 Layers, 1200 updates x 4)"]
-        MLX["mlx_lm.lora"]
+        MLX["mlx_lm.lora<br/>train_resumable.py"]
         Adapters["adapters/<br/>(adapters.safetensors)"]
 
         Data --> MLX
@@ -53,24 +53,28 @@ flowchart TD
         GGUFConv --> GGUF
     end
 
-    subgraph ServingUI["4. Serving & UI Interface"]
+    subgraph ServingUI["4. Serving & Streamlit UI"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(latest = v5; v3, v4 kept)"]
+        Ollama["Ollama Engine<br/>(latest = v6 7B; v5, v4, v3 kept)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
+        KimiApp["kimi_repair.py<br/>(Static check + EmptyTableRunner)"]
 
         GGUF --> Modelfile
         Modelfile --> Ollama
         Ollama <-->|HTTP API /api/chat| Streamlit
+        Streamlit <-->|AST Check & Repair Loop| KimiApp
     end
 
     subgraph Evaluation["5. Execution-Based Evaluation"]
-        Holdout["eval/holdout.jsonl (62 Unseen-Schema Queries)<br/>+ eval/real_queries.jsonl (4 Real Queries)"]
-        EvalRunner["eval/evaluate.py<br/>(Strict & Lenient Execution)"]
+        Holdout["eval/holdout.jsonl (62 Queries)<br/>+ holdout_v4.jsonl (25 Queries)<br/>+ real_queries.jsonl (4 Queries)<br/>+ test_fixed.jsonl (150 Queries)"]
+        EvalRunner["eval/evaluate.py<br/>(Strict & Lenient Spark Scoring)"]
+        AgentRepair["eval/agent_repair.py<br/>(Kimi K3 Feedback Loop)"]
         Report["eval/report.py<br/>(Markdown Comparison Tables)"]
 
         Ollama --> EvalRunner
         Holdout --> EvalRunner
         EvalRunner --> Report
+        EvalRunner --> AgentRepair
     end
 ```
 
@@ -89,7 +93,7 @@ Both results are compared on:
 - Multiset row equivalence (row order ignored, floats rounded to 4 decimals)
 - Sequence of the `ORDER BY` columns, when the query has one
 
-Only matching pairs go into `verified.jsonl`. In the v4 dataset 20,068 of 20,105 pairs pass (the failures are mostly `CORR` dividing by zero under ANSI mode); in v3 all 15,105 passed. The v2 build had one failure, a real edge case (`NOT IN` against an empty subquery keeps NULL keys in SQL), which exposed a generator bug; v3 renders the exact semantics instead of dropping the pair.
+Only matching pairs go into `verified.jsonl`. In the v5 dataset 20,071 of 20,105 pairs pass (after excluding test_fixed duplicates; 2,761 return empty results, mostly long pipelines); in v4 20,068 passed; in v3 all 15,105 passed.
 
 ### 3. Feature-Signature Splitting (`convert_sql_pyspark.py`)
 Random row-level splitting leaks: near-identical query structures with different constants land in both train and test. Instead:
@@ -98,10 +102,20 @@ Random row-level splitting leaks: near-identical query structures with different
 - Validation loss therefore measures generalisation to unseen combinations of SQL features. (It still uses the generator's own style; the hand-written hold-out set in `eval/` is the stronger test.)
 
 ### 4. Apple Silicon Training (Apple MLX)
-- Base model: `Qwen2.5-Coder-3B-Instruct-4bit`
-- LoRA fine-tuning in unified memory with `mlx-lm`.
-- Peak memory during training: **~9.7 GB**. That fits a 16 GB Mac, but not alongside Ollama: running an evaluation during training caused a Metal out-of-memory crash.
-- v2/v3: ~1 h 50 min for 1,200 iterations of 4 short samples. v4 (samples up to 3.1k tokens): batch 2 × 2 accumulation with gradient checkpointing, ~5 h 15 min, run through `train_resumable.py` so a Metal abort ("Impacting Interactivity") resumes from the last checkpoint.
+- **Base model**:
+  - `v1–v5`: `mlx-community/Qwen2.5-Coder-3B-Instruct-4bit` (36 transformer blocks, 3.09 B parameters)
+  - `v6`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 transformer blocks, 7.61 B parameters)
+- **Unified memory budget**: fine-tuning runs natively in Apple Silicon unified memory using `mlx-lm`.
+  - v2/v3 (3B, short samples): batch 4, no gradient checkpointing, peak ~9.7 GB, ~1 h 50 min.
+  - v4/v5 (3B, samples up to 3.1k tokens): batch 2 × 2 gradient accumulation, gradient checkpointing, peak ~9.8–10.3 GB, ~5 h 15 min – 5 h 40 min.
+  - v6 (7B, 3.2k tokens): batch 1 × 4 gradient accumulation, gradient checkpointing (batch 2 runs out of GPU memory), peak 10.1 GB, 8 h 19 min on a base M2, ~40–48 trained tokens/s.
+- **Resilience**: `train_resumable.py` sets smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) and resumes from the latest checkpoint if macOS aborts a long GPU buffer.
+
+### 5. Hybrid Inference & Empty-Table Verification Loop (`kimi_repair.py`)
+To handle complex multi-CTE queries where small models can fail on identifier names, missing closing parentheses, or repetition loops:
+- The local fine-tuned model converts the query first (fast, free, private).
+- An AST static checker immediately detects syntax errors, undefined variables, and missing `result`.
+- When an error is detected (or on demand), **Kimi K3** (Moonshot AI) checks the code using an empty-table Spark runner (`EmptyTableRunner`). Schemas are inferred from the SQL without needing real user data. This loop fixes 3 of 4 production-grade queries for ~$0.20 per query.
 
 ---
 
