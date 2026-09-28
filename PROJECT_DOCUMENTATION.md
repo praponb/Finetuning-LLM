@@ -33,7 +33,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 5. **Exports a Q8_0 GGUF** served by Ollama behind a Streamlit UI (`app.py`).
 6. **Execution-based evaluation and repair**:
    - Scores models on 62 unseen hold-out queries (v7 98%, v6 97%, v3 95%, v4 94%, v5 90%), 25 v4-feature queries (v7 and v6 64%, v5 56%, v4 36%, v3 12%), 4 real-world production queries (0/4 without repair), and a fixed 150-query test set (v7 137, v6 132, v5 128, v4 110, v3 105).
-   - `sql2pyspark:latest` = **v6** (7B) since 2026-09-28; v5 (3B, the previous `latest`) is kept as `sql2pyspark:v5` for rollback. **v7** (7B, continued from v6; 61/62 hold-out, 137/150 fixed test, 97/97 classic) is recommended for promotion: `make promote TAG=v7 PREV=v6`.
+   - `sql2pyspark:latest` = **v7** (7B, continued from v6; 61/62 hold-out, 137/150 fixed test, 97/97 classic) since 2026-09-29; v6 (the previous `latest`) is kept as `sql2pyspark:v6` for rollback, and v5 (3B) as `sql2pyspark:v5`.
    - **Kimi K3 repair loop** (`kimi_repair.py`): checks and repairs failed answers on empty tables with declared schemas, fixing 3/4 real-world queries for ~$0.20 per query.
 
 ### Architecture Diagram:
@@ -60,7 +60,7 @@ flowchart TD
 
     subgraph ServeEval [Serving, Repair & Validation]
         GGUF --> Modelfile[Modelfile]
-        Modelfile --> Ollama[Ollama Server<br/>latest = v6]
+        Modelfile --> Ollama[Ollama Server<br/>latest = v7]
         Ollama <--> Streamlit[app.py<br/>Streamlit UI]
         Streamlit <--> Kimi[kimi_repair.py<br/>Kimi K3 Repair Loop]
         Ollama <--> Eval[eval/evaluate.py<br/>Spark Scoring]
@@ -76,7 +76,7 @@ Details: [docs/01-architecture-overview.md](docs/01-architecture-overview.md).
 
 ```
 Finetuning-LLM/
-├── Makefile                      # Pipeline orchestration (`make help`, default TAG=v6 PREV=v5)
+├── Makefile                      # Pipeline orchestration (`make help`, default TAG=v8 PREV=v7)
 ├── Modelfile                     # Ollama model definition & system prompt
 ├── README.md                     # Overview, results table, known gaps
 ├── PROJECT_DOCUMENTATION.md      # This file
@@ -254,7 +254,7 @@ Details: [docs/03-model-training-and-export.md](docs/03-model-training-and-expor
 
 ## 7. Fusion, Dequantization & GGUF Quantization
 
-To package the fine-tuned model for Ollama (`make export TAG=v6`):
+To package the fine-tuned model for Ollama (`make export TAG=v8`):
 
 1. **4-bit MLX fusion**:
    `mlx_lm.fuse --model ... --adapter-path adapters --save-path sql2pyspark-model`
@@ -265,7 +265,7 @@ To package the fine-tuned model for Ollama (`make export TAG=v6`):
    `python llama.cpp/convert_hf_to_gguf.py sql2pyspark-hf --outtype q8_0 --outfile sql2pyspark.gguf`
    (**8.10 GB** for 7B, 3.29 GB for 3B; the whole v6 export took 2.5 min).
 4. **Ollama registration and promotion**:
-   `ollama create sql2pyspark:v6 -f Modelfile`. `sql2pyspark:latest` currently points to **v6** (`make promote TAG=v6 PREV=v5`, ID `192e20ddb887`, promoted on 2026-09-28). Roll back with `ollama cp sql2pyspark:v5 sql2pyspark:latest`. `sql2pyspark.gguf` on disk is the last completed export (v6); Ollama keeps its own copy of every tag.
+   `ollama create sql2pyspark:v7 -f Modelfile`. `sql2pyspark:latest` currently points to **v7** (`make promote TAG=v7 PREV=v6`, ID `d6a6a0edb9da`, promoted on 2026-09-29). Roll back with `ollama cp sql2pyspark:v6 sql2pyspark:latest`. `sql2pyspark.gguf` on disk is the last completed export (v7); Ollama keeps its own copy of every tag.
 
 ---
 
@@ -370,7 +370,7 @@ v4 hold-out, correct results (lenient) by feature group:
 | v4 hold-out (25) | 14 | 16 | 16 | ❌ > 16 (tie) |
 | Real-world queries (4) | 0 | 0 | 0 | ❌ ≥ 1 |
 
-v7 continues from v6 (600 updates, peak LR 5e-5, 4 h 58 min) on data that adds `DATEDIFF` arithmetic, unrelated-column `UNION`s and windows partitioned by date expressions. It fixes `holdout015` (targeted, so optimistic), gets every classic test query right and 5 more fixed-test queries overall (not targeted); `holdout031` and the `real001` loop remain. It beats or ties v6 everywhere and misses two conditions (a tie on the v4 hold-out; no real-world query, like every model). **Recommended for promotion**, left to the owner because the unattended session could not change `latest`: `make promote TAG=v7 PREV=v6` (rollback `ollama cp sql2pyspark:v6 sql2pyspark:latest`).
+v7 continues from v6 (600 updates, peak LR 5e-5, 4 h 58 min) on data that adds `DATEDIFF` arithmetic, unrelated-column `UNION`s and windows partitioned by date expressions. It fixes `holdout015` (targeted, so optimistic), gets every classic test query right and 5 more fixed-test queries overall (not targeted); `holdout031` and the `real001` loop remain. It beats or ties v6 everywhere and misses two conditions (a tie on the v4 hold-out; no real-world query, like every model). **Promoted** by the owner on 2026-09-29 (`make promote TAG=v7 PREV=v6`; the unattended session could not change `latest`); rollback `ollama cp sql2pyspark:v6 sql2pyspark:latest`.
 
 ### v6 decision (2026-09-28)
 | Eval set | v3 | v5 | v6 (7B) | Rule |
@@ -381,7 +381,7 @@ v7 continues from v6 (600 updates, peak LR 5e-5, 4 h 58 min) on data that adds `
 | v4 hold-out (25) | 3 | 14 | **16** | ✅ > 14 |
 | Real-world queries (4) | 0 | 0 | 0 | ❌ ≥ 1 |
 
-v6, the first 7B model, beats or ties v5 on every set: it fixes 4 of v5's 6 hold-out failures (incl. `holdout053` and `holdout058`) with no new ones, gets all 25 complex hold-out queries right and solves a v4-hold-out pipeline for the first time. It misses only the real-world condition, which no model has met (`real001` still loops; the other three now parse but fail on column qualifiers). It was promoted (`make promote TAG=v6 PREV=v5`); v5 is kept as `sql2pyspark:v5`. Cost: ~2x slower answers (~10 s per hold-out query) and ~8 GB in Ollama.
+v6, the first 7B model, beats or ties v5 on every set: it fixes 4 of v5's 6 hold-out failures (incl. `holdout053` and `holdout058`) with no new ones, gets all 25 complex hold-out queries right and solves a v4-hold-out pipeline for the first time. It misses only the real-world condition, which no model has met (`real001` still loops; the other three now parse but fail on column qualifiers). It was promoted (`make promote TAG=v8 PREV=v7`); v5 is kept as `sql2pyspark:v5`. Cost: ~2x slower answers (~10 s per hold-out query) and ~8 GB in Ollama.
 
 ### v5 decision (2026-09-28)
 | Eval set | v3 | v4 | v5 | Rule |
@@ -474,17 +474,17 @@ Details: [docs/04-evaluation-and-benchmarking.md](docs/04-evaluation-and-benchma
 | `make setup` | `python3 -m venv sql2pyspark-mlx/.venv && pip install -r requirements.txt` | Creates the environment |
 | `make data N=20000 SEED=5 WORKERS=4` | `make generate verify split` | Generates ~20.1k pairs (incl. the v4/v5 families), verifies them in Spark, splits by signature without the fixed test set (~21 min) |
 | `make train` | `python train_resumable.py` (in `sql2pyspark-mlx/`) → `mlx_lm.lora -c lora_config.yaml` | Fine-tunes on Apple Silicon (v6 7B: batch 1 × 4 accumulation, ~8.5 h, 9.0–9.2 GB memory; v4/v5 3B: ~5 h 15 min); resumes from last checkpoint |
-| `make export TAG=v6` | `make fuse gguf ollama` | Fuses adapters, dequantizes, builds the Q8_0 GGUF, registers it in Ollama |
-| `make eval TAG=v6 PREV=v5` | `python eval/evaluate.py ...` (×8) | Evaluates both models on the hold-out set, the v4 hold-out set, the real-world queries (`--tables eval/real_tables.py`) and the fixed test set |
-| `make promote TAG=v6 PREV=v5` | `ollama cp sql2pyspark:$(TAG) sql2pyspark:latest` | Makes the model the default, keeping the previous one as `:$(PREV)` |
+| `make export TAG=v8` | `make fuse gguf ollama` | Fuses adapters, dequantizes, builds the Q8_0 GGUF, registers it in Ollama |
+| `make eval TAG=v8 PREV=v7` | `python eval/evaluate.py ...` (×8) | Evaluates both models on the hold-out set, the v4 hold-out set, the real-world queries (`--tables eval/real_tables.py`) and the fixed test set |
+| `make promote TAG=v8 PREV=v7` | `ollama cp sql2pyspark:$(TAG) sql2pyspark:latest` | Makes the model the default, keeping the previous one as `:$(PREV)` |
 | `make app` | `streamlit run app.py` | Starts the web UI at `http://localhost:8501` |
 
-The Makefile defaults are `BASE ?= mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`, `TAG ?= v6`, `PREV ?= v5`.
+The Makefile defaults are `BASE ?= mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`, `TAG ?= v8`, `PREV ?= v7`.
 
 **Promotion rule** (since v5): hold-out ≥ the current model's (59/62), classic-family queries of the fixed test set ≥ v3 − 2 (94/97), better than v3 on the v4 hold-out set, ≥ 1/4 real-world queries, and no regression on the fixed test set overall.
 
 **Automated Post-Training Chain**:
-`eval/post_training_v6.sh` coordinates end-to-end post-training automation: polls `sql2pyspark-mlx/train.log` until `mlx_lm.lora` exits cleanly, executes `make export TAG=v6`, runs all 4 evaluation benchmark sets with `--timeout 600`, and restarts the Dockerized Streamlit service.
+`eval/post_training_v6.sh` coordinates end-to-end post-training automation: polls `sql2pyspark-mlx/train.log` until `mlx_lm.lora` exits cleanly, executes `make export TAG=v8`, runs all 4 evaluation benchmark sets with `--timeout 600`, and restarts the Dockerized Streamlit service.
 
 **Docker** works for everything except training: `docker-compose.yml` defines an `app` service (Streamlit, using the host's Ollama), a `tools` profile (Java 17 + PySpark for the data pipeline and evaluation) and an optional `ollama` profile; both images use `python:3.12-slim-bookworm`. Verified: the app container, the v3 dataset build (`make data` in `tools`) and the v3 hold-out evaluation in `tools` (59/62, identical to the native run). MLX training can't run in Docker on a Mac, and Docker should be stopped during training (its VM takes ~8 GB).
 

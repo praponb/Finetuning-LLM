@@ -103,7 +103,7 @@ def extract_code(text: str) -> str:
 
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
-- `sql2pyspark:latest` (default, currently v6)
+- `sql2pyspark:latest` (default, currently v7)
 - `sql2pyspark:v6` (= `latest`; 7B, best on every evaluation set; see [Evaluation](04-evaluation-and-benchmarking.md))
 - `sql2pyspark:v5` (previous `latest`; 3B, about twice as fast)
 - `sql2pyspark:v4` (better at the v4 features: GROUPING SETS, PIVOT/UNPIVOT, nested data, ...; see [Evaluation](04-evaluation-and-benchmarking.md))

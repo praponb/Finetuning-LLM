@@ -230,19 +230,19 @@ The system prompt matches the one used in the training data.
 
 ### Registration Commands:
 ```bash
-make export TAG=v6             # fuse + gguf + ollama create sql2pyspark:v6 -f Modelfile
-make promote TAG=v6 PREV=v5    # keeps old latest as :v5, then ollama cp sql2pyspark:v6 sql2pyspark:latest
+make export TAG=v8             # fuse + gguf + ollama create sql2pyspark:v8 -f Modelfile
+make promote TAG=v8 PREV=v7    # keeps old latest as :v7, then ollama cp sql2pyspark:v8 sql2pyspark:latest
 ```
 
-The Makefile defaults are `TAG=v6 PREV=v5` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`).
+The Makefile defaults are `TAG=v8 PREV=v7` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`).
 
 Current tags:
 
 | Tag | Image ID | Notes |
 |---|---|---|
-| `sql2pyspark:latest` | `192e20ddb887` | = v6 (7B), promoted 2026-09-28 (see [Evaluation](04-evaluation-and-benchmarking.md#-v6-results-2026-09-28)) |
-| `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); recommended for promotion, not yet `latest` (`make promote TAG=v7 PREV=v6`) |
-| `sql2pyspark:v6` | `192e20ddb887` | exported 2026-09-28 (7B, 8.1 GB); current production model |
+| `sql2pyspark:latest` | `d6a6a0edb9da` | = v7 (7B), promoted 2026-09-29 (see [Evaluation](04-evaluation-and-benchmarking.md#-v7-results-2026-09-29)) |
+| `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); current production model |
+| `sql2pyspark:v6` | `192e20ddb887` | exported 2026-09-28 (7B, 8.1 GB); `latest` 09-28 → 09-29; rollback: `ollama cp sql2pyspark:v6 sql2pyspark:latest` |
 | `sql2pyspark:v5` | `b6a1ace642a4` | exported 2026-09-27 (3B, continued from v4); previous `latest` (09-28); rollback: `ollama cp sql2pyspark:v5 sql2pyspark:latest` |
 | `sql2pyspark:v4` | `23108327a0d7` | exported 2026-09-27; not promoted |
 | `sql2pyspark:v3` | `aa95ad200568` | `latest` 2026-09-26 → 09-28 |
@@ -251,7 +251,7 @@ Current tags:
 
 `sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v7** weights (last completed export); Ollama keeps its own copy of every tag. The v2–v6 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` … `runs/v6/` (v7's adapters are in `sql2pyspark-mlx/adapters/`; v6 was trained on the v5 data); their GGUFs live inside Ollama.
 
-The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v6`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
+The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v8`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
 
 For v7, [eval/start_training_v7.sh](../eval/start_training_v7.sh) and [eval/post_training_v7.sh](../eval/post_training_v7.sh) provide unattended orchestration: waits for the v7 dataset build and v6 Kimi repair, terminates background Docker and Ollama models to free GPU memory, starts `make train` (2,400 steps, ~4.2 h), runs `make export TAG=v7`, benchmarks across all 4 evaluation sets with `--timeout 600`, reloads Docker, and executes the Kimi K3 repair loop on v7's real-query replies.
 
