@@ -2,4 +2,5 @@
 # generated data - ~17 GB) stays out of the build context; the tools container mounts the project instead.
 *
 !app.py
+!kimi_repair.py
 !docker/

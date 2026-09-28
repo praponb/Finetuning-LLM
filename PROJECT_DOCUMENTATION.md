@@ -73,6 +73,7 @@ Finetuning-LLM/
 ├── README.md                     # Overview, results table, known gaps
 ├── PROJECT_DOCUMENTATION.md      # This file
 ├── app.py                        # Streamlit web converter UI
+├── kimi_repair.py                # Kimi K3 check + repair (app and eval)
 ├── requirements.txt              # Pinned dependencies
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
 ├── sql2pyspark.gguf              # 3.29 GB Q8_0 GGUF of the last export (v4); Ollama keeps its own copies
