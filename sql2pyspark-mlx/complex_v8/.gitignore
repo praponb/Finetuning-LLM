@@ -1,0 +1,6 @@
+# generated pairs, datasets and adapters (regenerate with the commands in README.md)
+raw_pairs/
+data/
+data_mix/
+adapters/
+__pycache__/
