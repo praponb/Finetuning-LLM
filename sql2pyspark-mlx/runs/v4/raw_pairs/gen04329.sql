@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 188 THEN 'high' WHEN quantity >= 97 THEN 'mid' ELSE 'low' END quantity_bucket, product_id, MIN(last_restock) min_last_restock, ROUND(STDDEV(quantity), 2) stddev_quantity FROM inventory WHERE quantity < 222 GROUP BY quantity_bucket, product_id HAVING ROUND(STDDEV(quantity), 2) < 57 ORDER BY min_last_restock

@@ -1,0 +1,1 @@
+select id, customer_id, created_at, coupon_codes, items, attributes['utm_source'] as utm_source, coalesce(attributes['utm_source'], 'unknown') as utm_source_or_default, transform(items, item -> item.product_id) as product_ids, ship_to.country as ship_country, ship_to.zip as ship_zip from carts;

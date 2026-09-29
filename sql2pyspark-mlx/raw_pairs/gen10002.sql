@@ -1,0 +1,1 @@
+SELECT i.store_id, i.last_restock, p.brand, p.cost, s.city, COALESCE(s.rating, 0) AS rating_filled FROM inventory i LEFT OUTER JOIN products p ON i.product_id = p.id JOIN suppliers s ON s.id = p.supplier_id WHERE s.country <> 'SG';

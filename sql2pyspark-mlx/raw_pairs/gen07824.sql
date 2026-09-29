@@ -1,0 +1,1 @@
+SELECT s.country, s.city, t.brand_values FROM suppliers s JOIN (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values FROM products WHERE brand IN ('Acme', 'Globex') GROUP BY supplier_id) t ON s.id = t.supplier_id;

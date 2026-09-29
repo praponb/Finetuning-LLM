@@ -1,0 +1,1 @@
+SELECT id, session_id, event_type, page, event_time, duration_sec, LAG(duration_sec) OVER w_grp AS prev_duration_sec, ROW_NUMBER() OVER w_grp AS row_seq FROM web_events WINDOW w_grp AS (PARTITION BY event_type ORDER BY event_time, id);

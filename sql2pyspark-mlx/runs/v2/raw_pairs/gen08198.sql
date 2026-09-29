@@ -1,0 +1,1 @@
+SELECT s.rating, t.first_launch_date, t.unique_suppliers FROM suppliers s JOIN (SELECT supplier_id, MIN(launch_date) AS first_launch_date, COUNT(DISTINCT stock_qty) AS unique_suppliers FROM products WHERE ARRAY_CONTAINS(tags, 'bestseller') GROUP BY supplier_id) t ON s.id = t.supplier_id;

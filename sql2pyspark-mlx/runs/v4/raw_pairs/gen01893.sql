@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT *, ROUND(amount / SUM(amount) OVER (PARTITION BY method), 4) AS amount_share, NTILE(4) OVER (PARTITION BY order_id ORDER BY amount ASC, id ASC) AS amount_bucket FROM payments) SELECT id, order_id, method, amount, status, amount_share, amount_bucket FROM enriched

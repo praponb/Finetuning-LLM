@@ -1,0 +1,1 @@
+SELECT id, product_id, LEAD(quantity) OVER w_recent AS next_quantity, LAG(quantity) OVER w_recent AS prev_quantity, ROW_NUMBER() OVER w_recent AS row_seq FROM inventory WINDOW w_recent AS (PARTITION BY store_id ORDER BY quantity, id);

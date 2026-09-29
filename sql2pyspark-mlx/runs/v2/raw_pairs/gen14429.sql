@@ -1,0 +1,1 @@
+WITH StoreSummary AS (SELECT store_id, ROUND(AVG(amount), 2) AS avg_amount, SUM(amount) AS total_amount FROM orders GROUP BY store_id) SELECT s.sqft, s.city, S.avg_amount, S.total_amount FROM stores s LEFT JOIN StoreSummary S ON s.id = S.store_id ORDER BY S.total_amount DESC;

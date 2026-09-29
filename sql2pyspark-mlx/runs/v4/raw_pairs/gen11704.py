@@ -1,0 +1,8 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_accounts
+    .filter(F.col("status").isin(["CLOSED", "FROZEN", "OPEN"]))
+    .select("status")
+    .subtract(df_payments.select("status"))
+)

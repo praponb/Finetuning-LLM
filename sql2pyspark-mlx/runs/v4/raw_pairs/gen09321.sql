@@ -1,0 +1,1 @@
+SELECT id, account_id, txn_type, amount, txn_time, merchant, is_flagged, SUM(amount) OVER (PARTITION BY account_id ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, SUM(amount) OVER (PARTITION BY txn_type, merchant ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_amount FROM transactions;

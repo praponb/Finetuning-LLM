@@ -1,0 +1,1 @@
+WITH RecentInventory AS (SELECT * FROM inventory WHERE product_id IN (3, 4, 9, 10)), agg AS (SELECT product_id, AVG(quantity) AS avg_quantity FROM RecentInventory GROUP BY product_id) SELECT product_id, avg_quantity FROM agg ORDER BY avg_quantity;

@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, t.level_list FROM departments d INNER JOIN (SELECT dept_id, SORT_ARRAY(COLLECT_SET(level)) level_list FROM employees GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY dept_name DESC, id DESC;

@@ -1,0 +1,1 @@
+select stores.id, stores.region, t.cnt, t.unique_products from stores left join (select store_id, count(*) as cnt, count(distinct units) as unique_products from store_sales group by store_id) t on stores.id = t.store_id where t.unique_products > 4 order by t.unique_products desc

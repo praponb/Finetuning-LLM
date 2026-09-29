@@ -1,0 +1,1 @@
+with valid as (select *, round(sqft, 2) as sqft_rounded, quarter(opened_date) as opened_date_quarter from stores where opened_date >= date '2024-04-16' and region is not null) select region, city from valid except select region, city from stores where store_name not like '%Old%';

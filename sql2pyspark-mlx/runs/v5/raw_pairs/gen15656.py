@@ -1,0 +1,3 @@
+from pyspark.sql import functions as F
+
+result = df_customers.select("id", "name", "segment", "signup_date")

@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, p.brand, p.product_name, s.country, s.city FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE s.city IS NOT NULL ORDER BY unit_price DESC;

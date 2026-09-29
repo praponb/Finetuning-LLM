@@ -1,0 +1,1 @@
+SELECT id, customer_id, account_type, balance, opened_date, status, ROW_NUMBER() OVER (PARTITION BY account_type, customer_id ORDER BY opened_date, id) seq_no, MIN(balance) OVER (PARTITION BY customer_id) customer_id_min_balance FROM accounts

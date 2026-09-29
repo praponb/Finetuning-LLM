@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 12750 THEN 'high' WHEN sqft >= 2586 THEN 'mid' ELSE 'low' END AS sqft_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values FROM stores WHERE sqft < 4615 GROUP BY CASE WHEN sqft >= 12750 THEN 'high' WHEN sqft >= 2586 THEN 'mid' ELSE 'low' END

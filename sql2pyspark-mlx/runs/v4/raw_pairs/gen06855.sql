@@ -1,0 +1,1 @@
+SELECT id, location, dept_name FROM departments WHERE budget BETWEEN 2701000 AND 3211000 UNION ALL SELECT id, location, dept_name FROM departments WHERE dept_name IN ('Marketing', 'Finance', 'Engineering')

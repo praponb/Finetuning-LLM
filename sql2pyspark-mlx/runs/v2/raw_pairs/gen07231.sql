@@ -1,0 +1,1 @@
+SELECT id, hire_date, manager_id, DENSE_RANK() OVER (ORDER BY hire_date) hire_date_dense_rank, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date, id) rn FROM employees WHERE is_remote ORDER BY rn DESC;

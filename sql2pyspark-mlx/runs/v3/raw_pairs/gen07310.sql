@@ -1,0 +1,1 @@
+SELECT brand, fashion_count FROM (SELECT brand, COUNT(CASE WHEN category = 'Fashion' THEN 1 END) AS fashion_count FROM products GROUP BY brand) AS t WHERE fashion_count >= 3 ORDER BY brand, fashion_count DESC

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, COUNT(*) AS transaction_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE amount > 1900 GROUP BY txn_month

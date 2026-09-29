@@ -1,0 +1,1 @@
+select s.order_id, s.cost, o.customer_id, o.channel, o.amount, coalesce(s.cost, 0) cost_filled from shipments s join orders o on s.order_id = o.id where s.cost between 44 and 63 or s.shipped_date between '2023-07-05' and '2024-07-12' order by amount desc, o.customer_id;

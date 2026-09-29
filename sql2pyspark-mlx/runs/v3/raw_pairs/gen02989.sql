@@ -1,0 +1,1 @@
+SELECT o.id, o.discount, o.amount, s.region, c.country FROM orders o INNER JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON o.customer_id = c.id WHERE o.discount >= 0.15 ORDER BY o.discount;

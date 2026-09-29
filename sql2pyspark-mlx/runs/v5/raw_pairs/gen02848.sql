@@ -1,0 +1,1 @@
+WITH OrderTotals AS (SELECT order_id, COUNT(CASE WHEN carrier = 'DHL' THEN 1 END) AS dhl_count FROM shipments WHERE carrier IN ('UPS', 'FedEx', 'Flash') GROUP BY order_id) SELECT o.discount, o.order_date, O.dhl_count FROM orders o INNER JOIN OrderTotals O ON o.id = O.order_id WHERE O.dhl_count >= 4

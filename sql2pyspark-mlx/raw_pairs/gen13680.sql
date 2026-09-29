@@ -1,0 +1,1 @@
+SELECT a.status, a.account_type, AVG(t.amount) AS avg_amount, ROUND((100 * SUM(CASE WHEN t.txn_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_credit FROM transactions t INNER JOIN accounts a ON a.id = t.account_id GROUP BY a.status, a.account_type ORDER BY a.status DESC, account_type LIMIT 50;

@@ -1,0 +1,1 @@
+with kept_keys as (select status, id from orders except select status, id from orders where discount < 0.38), verified as (select s.* from orders s inner join kept_keys k on s.status = k.status and s.id = k.id) select id, customer_id, status, shipping_fee from verified order by customer_id, status desc;

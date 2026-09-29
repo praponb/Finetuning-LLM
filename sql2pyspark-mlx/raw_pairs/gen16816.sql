@@ -1,0 +1,1 @@
+SELECT id, customer_id, device, started_at, country, ROW_NUMBER() OVER w_part AS seq_no, LAST_VALUE(browser, TRUE) OVER (PARTITION BY browser ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_browser FROM sessions WINDOW w_part AS (PARTITION BY TO_DATE(started_at) ORDER BY started_at DESC, id);

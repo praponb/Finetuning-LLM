@@ -1,0 +1,1 @@
+SELECT o.order_date, t.max_amount FROM orders o INNER JOIN (SELECT order_id, MAX(amount) AS max_amount FROM payments WHERE paid_at >= '2025-04-01' GROUP BY order_id) t ON o.id = t.order_id ORDER BY 1 ASC;

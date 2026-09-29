@@ -1,0 +1,1 @@
+with Numbered as (select id, store_id, last_restock, dense_rank() over (partition by store_id order by last_restock) as rnk from inventory where last_restock > '2024-12-01') select * from Numbered where rnk = 1;

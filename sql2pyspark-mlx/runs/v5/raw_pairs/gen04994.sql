@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, product_id, ROUND(AVG(revenue), 2) AS avg_revenue, SUM(units) AS total_units, MAX(sale_date) AS last_sale_date FROM store_sales WHERE revenue BETWEEN 1500 AND 3700 OR revenue < 2500 GROUP BY sale_month, product_id ORDER BY sale_month DESC;

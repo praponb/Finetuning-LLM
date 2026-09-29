@@ -1,0 +1,1 @@
+SELECT id, store_id, sale_date, product_id, units, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY sale_date DESC, id) AS row_num, LAG(units, 1, 0) OVER (PARTITION BY product_id, store_id ORDER BY sale_date, id) AS prev_units FROM store_sales WHERE revenue > 3000;

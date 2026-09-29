@@ -1,0 +1,1 @@
+WITH SupplierSummary AS (SELECT supplier_id, MIN(stock_qty) AS min_stock_qty FROM products GROUP BY supplier_id) SELECT s.id, s.rating, S.min_stock_qty FROM suppliers s JOIN SupplierSummary S ON s.id = S.supplier_id WHERE S.min_stock_qty > 310 ORDER BY s.rating DESC, id LIMIT 5;

@@ -1,0 +1,1 @@
+WITH OrderTotals AS (SELECT order_id, MIN(delivered_date) AS first_delivered_date, MAX(cost) AS max_cost FROM shipments GROUP BY order_id) SELECT o.customer_id, o.channel, O.first_delivered_date, O.max_cost FROM orders o LEFT OUTER JOIN OrderTotals O ON o.id = O.order_id WHERE O.max_cost > 61 ORDER BY o.channel;

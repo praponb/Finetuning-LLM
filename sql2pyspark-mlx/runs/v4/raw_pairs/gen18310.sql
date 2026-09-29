@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM payments WHERE status <> 'FAILED'), payments_stats AS (SELECT status, SORT_ARRAY(COLLECT_SET(method)) AS method_list FROM src GROUP BY status) SELECT * FROM payments_stats ORDER BY status

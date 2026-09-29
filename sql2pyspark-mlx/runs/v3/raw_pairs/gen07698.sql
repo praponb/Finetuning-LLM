@@ -1,0 +1,1 @@
+with product_summary as (select product_id, count(*) as total_count, count(*) as cnt from inventory where store_id in (1, 4, 5) group by product_id) select p.id, p.product_name, p.launch_date, ps.total_count, ps.cnt from products p inner join product_summary ps on p.id = ps.product_id order by cnt desc, p.id desc limit 10;

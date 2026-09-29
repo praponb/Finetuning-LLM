@@ -1,0 +1,1 @@
+select ss.units, s.sqft, s.city, p.stock_qty, p.product_name from store_sales ss join stores s on s.id = ss.store_id right join products p on p.id = ss.product_id where p.launch_date between '2023-03-01' and '2024-01-01' and ss.units <= 39;

@@ -1,0 +1,1 @@
+SELECT employees.id, employees.job_title, employees.is_remote, employees.email, departments.dept_name, departments.budget FROM employees JOIN departments ON departments.id = employees.dept_id WHERE departments.dept_name IS NULL ORDER BY 1;

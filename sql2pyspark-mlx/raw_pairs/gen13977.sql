@@ -1,0 +1,1 @@
+SELECT s.id, s.rating, t.initech_count FROM suppliers s LEFT JOIN (SELECT supplier_id, COUNT(CASE WHEN brand = 'Initech' THEN 1 END) AS initech_count FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.initech_count >= 5 ORDER BY rating DESC;

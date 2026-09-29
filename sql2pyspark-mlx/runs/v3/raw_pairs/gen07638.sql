@@ -1,0 +1,1 @@
+SELECT is_active, SUM(age) total_age, SUM(credit_limit) total_credit_limit FROM customers WHERE YEAR(signup_date) >= 2024 GROUP BY 1 HAVING SUM(CASE WHEN country = 'UK' THEN 1 ELSE 0 END) < 22 ORDER BY total_age, total_credit_limit DESC, is_active LIMIT 1

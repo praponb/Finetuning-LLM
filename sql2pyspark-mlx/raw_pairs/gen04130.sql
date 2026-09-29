@@ -1,0 +1,1 @@
+SELECT merchant, QUARTER(txn_time) AS txn_quarter, COUNT(*) AS row_count, SUM(CASE WHEN merchant = 'Amazon' THEN amount ELSE 0 END) AS amazon_amount, MIN(txn_time) AS first_txn_time FROM transactions WHERE txn_type != 'REFUND' GROUP BY CUBE(merchant, QUARTER(txn_time)) ORDER BY amazon_amount

@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, full_name, email, dept_id, salary, level, CAST(is_remote AS INT) AS is_remote_flag FROM employees WHERE level IS NOT NULL AND full_name IS NOT NULL) SELECT id, level FROM base INTERSECT ALL SELECT id, level FROM employees WHERE job_title NOT IN ('Director', 'Intern', 'Manager')

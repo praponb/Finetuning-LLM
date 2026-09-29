@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, starts_on, ends_on, UPPER(promo_code) AS promo_code_upper FROM promotions WHERE ends_on > '2023-03-15') SELECT *, ROW_NUMBER() OVER (ORDER BY starts_on DESC, id) AS event_seq, ROW_NUMBER() OVER (ORDER BY ends_on DESC, id) AS seq_no FROM valid

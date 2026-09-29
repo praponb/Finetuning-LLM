@@ -1,0 +1,1 @@
+SELECT country, segment, city, ROUND((100 * SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_tokyo FROM customers WHERE credit_limit BETWEEN 5300 AND 6400 GROUP BY country, segment, city

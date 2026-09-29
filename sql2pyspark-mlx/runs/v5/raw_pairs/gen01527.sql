@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, a.status, t.amount_range, t.min_amount FROM accounts a INNER JOIN (SELECT account_id, MAX(amount) - MIN(amount) AS amount_range, MIN(amount) AS min_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id

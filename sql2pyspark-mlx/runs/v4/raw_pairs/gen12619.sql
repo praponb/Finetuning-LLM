@@ -1,0 +1,1 @@
+SELECT CASE WHEN discount >= 0.34 THEN 'high' WHEN discount >= 0.06 THEN 'mid' ELSE 'low' END AS discount_bucket, COUNT(CASE WHEN status = 'SHIPPED' THEN 1 END) AS shipped_count FROM orders WHERE shipping_fee IS NOT NULL GROUP BY discount_bucket HAVING SUM(CASE WHEN channel = 'web' THEN 1 ELSE 0 END) > 52 ORDER BY shipped_count DESC, discount_bucket

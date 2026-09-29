@@ -1,0 +1,1 @@
+WITH SupplierSummary AS (SELECT supplier_id, MIN(launch_date) AS min_launch_date, MAX(launch_date) AS latest_launch_date FROM products GROUP BY supplier_id) SELECT s.rating, S.min_launch_date, S.latest_launch_date FROM suppliers s INNER JOIN SupplierSummary S ON s.id = S.supplier_id

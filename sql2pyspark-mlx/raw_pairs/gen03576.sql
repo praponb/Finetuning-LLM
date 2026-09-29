@@ -1,0 +1,1 @@
+SELECT id, txn_type, is_flagged, LAST_VALUE(amount) IGNORE NULLS OVER (ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_amount, DENSE_RANK() OVER (ORDER BY amount DESC NULLS LAST) AS amount_dense_rank FROM transactions;

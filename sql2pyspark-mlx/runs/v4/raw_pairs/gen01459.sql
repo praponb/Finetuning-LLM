@@ -1,0 +1,1 @@
+SELECT ss.sale_date, p.brand, p.product_name, s.supplier_name, s.country, COALESCE(p.product_name, 'Unknown') product_name_filled FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id RIGHT JOIN suppliers s ON p.supplier_id = s.id WHERE p.price > 920 AND p.cost BETWEEN 590 AND 690 ORDER BY brand

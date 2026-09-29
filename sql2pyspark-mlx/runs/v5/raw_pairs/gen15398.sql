@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(cost, 0) AS cost_rounded FROM shipments WHERE cost <= 27) SELECT * FROM (SELECT status, order_id, carrier, cost_rounded FROM cleaned) src PIVOT (SUM(cost_rounded) FOR carrier IN ('FedEx', 'Flash'));

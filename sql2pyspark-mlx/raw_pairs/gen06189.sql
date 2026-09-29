@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4401000 THEN 'high' WHEN budget >= 1051000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(DISTINCT budget) AS unique_dept_names, AVG(budget) AS avg_budget FROM departments GROUP BY budget_bucket;

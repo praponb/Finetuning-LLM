@@ -1,0 +1,1 @@
+select c.id, c.segment, c.name, t.desktop_count, t.latest_started_at from customers c inner join (select customer_id, sum(case when device = 'desktop' then 1 else 0 end) as desktop_count, max(started_at) as latest_started_at from sessions group by customer_id) t on c.id = t.customer_id order by name

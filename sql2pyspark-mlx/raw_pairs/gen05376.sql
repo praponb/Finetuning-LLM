@@ -1,0 +1,1 @@
+select *, sum(revenue) over (partition by date_trunc('WEEK', sale_date) order by sale_date, id rows between unbounded preceding and current row) as running_revenue, ntile(4) over (order by units desc, id) as units_bucket, ntile(3) over w_part as revenue_bucket from store_sales window w_part as (partition by date_trunc('month', sale_date), product_id order by revenue desc, id);

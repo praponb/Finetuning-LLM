@@ -1,0 +1,1 @@
+WITH top_customers AS (SELECT id, country, credit_limit, RANK() OVER (PARTITION BY country ORDER BY credit_limit) AS rn FROM customers) SELECT id, country, credit_limit FROM top_customers WHERE rn <= 5;

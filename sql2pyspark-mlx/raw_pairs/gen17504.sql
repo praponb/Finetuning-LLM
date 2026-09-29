@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CASE WHEN duration_sec >= 419 THEN 'High' WHEN duration_sec >= 99 THEN 'Medium' ELSE 'Low' END AS duration_sec_tier FROM web_events WHERE page IS NOT NULL AND page IS DISTINCT FROM '/cart') SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec DESC NULLS FIRST, id) AS rank_in_group FROM base QUALIFY rank_in_group = 1;

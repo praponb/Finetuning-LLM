@@ -1,0 +1,1 @@
+select account_id, txn_type, round((100 * sum(case when merchant = 'Grab' then 1 else 0 end)) / count(*), 1) as pct_grab, max(amount) - min(amount) as amount_range from transactions group by cube(account_id, txn_type)

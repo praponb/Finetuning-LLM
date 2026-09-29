@@ -1,0 +1,1 @@
+SELECT t.id, t.amount, t.account_id, a.account_type, a.balance, c.name, c.age FROM transactions t INNER JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE t.account_id IN (22, 36) ORDER BY c.name, id LIMIT 5

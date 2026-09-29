@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, log_ts, level, k, v FROM app_logs LATERAL VIEW EXPLODE(context) x AS k, v) SELECT k, MIN(log_ts) AS first_log_ts, COUNT_IF(k = 'region') AS region_events, GROUPING(k) AS gid FROM lines GROUP BY CUBE (k) ORDER BY region_events DESC NULLS FIRST

@@ -1,0 +1,1 @@
+SELECT id, status, amount, method, ROUND(amount, 1) AS amount_rounded FROM payments WHERE status IN ('FAILED', 'REFUNDED', 'SUCCESS') AND order_id IN (10, 29, 32) AND method IN ('promptpay', 'paypal') ORDER BY amount DESC;

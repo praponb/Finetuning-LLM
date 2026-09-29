@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, COUNT(quantity) AS quantity_count FROM order_items GROUP BY order_id) SELECT o.store_id, o.shipping_fee, ot.quantity_count FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.quantity_count > 10;

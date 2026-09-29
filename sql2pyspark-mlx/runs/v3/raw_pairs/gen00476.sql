@@ -1,0 +1,1 @@
+SELECT orders.id, orders.channel, orders.store_id, t.total_quantity FROM orders LEFT JOIN (SELECT order_id, SUM(quantity) AS total_quantity FROM order_items WHERE quantity BETWEEN 7 AND 8 GROUP BY order_id) t ON orders.id = t.order_id ORDER BY store_id DESC

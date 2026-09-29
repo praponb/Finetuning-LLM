@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, country, TRIM(city) AS clean_city, ROUND(age / credit_limit, 2) AS age_per_credit_limit FROM customers WHERE name LIKE '%Alice%' AND name IS NOT NULL AND credit_limit <= 11200 ORDER BY segment, country DESC

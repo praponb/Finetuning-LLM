@@ -1,0 +1,1 @@
+WITH valid_shipments AS (SELECT * FROM shipments WHERE order_id IS NOT NULL), shipments_stats AS (SELECT carrier, status, SUM(cost) AS total_cost FROM valid_shipments GROUP BY carrier, status) SELECT carrier, status, total_cost FROM shipments_stats ORDER BY status;

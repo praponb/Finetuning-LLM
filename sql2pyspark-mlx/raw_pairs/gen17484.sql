@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT dept_name, SUM(CASE WHEN location = 'Berlin' THEN 1 ELSE 0 END) AS berlin_count, COUNT(CASE WHEN dept_name = 'HR' THEN 1 END) AS hr_count FROM departments GROUP BY dept_name) AS agg WHERE hr_count > 9;

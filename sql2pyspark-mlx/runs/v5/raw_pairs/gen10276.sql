@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, SUM(sqft) AS total_sqft, MIN(opened_date) AS min_opened_date FROM stores WHERE MONTH(opened_date) IN (4, 7, 9) AND LOWER(TRIM(store_name)) = 'airport kiosk' AND opened_date <= '2024-12-16' GROUP BY DATE_TRUNC('MONTH', opened_date) ORDER BY total_sqft DESC, opened_month DESC LIMIT 1

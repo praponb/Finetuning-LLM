@@ -1,0 +1,1 @@
+SELECT e.salary employee_salary, m.job_title manager_job_title, m.hire_date manager_hire_date FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.hire_date BETWEEN '2023-09-11' AND '2023-12-01' OR m.is_remote ORDER BY m.job_title;

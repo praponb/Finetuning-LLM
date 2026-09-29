@@ -1,0 +1,1 @@
+SELECT region, SORT_ARRAY(COLLECT_SET(city)) AS city_list, COUNT(*) AS store_count FROM stores WHERE region IS NOT NULL AND city = 'Chiang Mai' GROUP BY region ORDER BY store_count DESC, region ASC LIMIT 5

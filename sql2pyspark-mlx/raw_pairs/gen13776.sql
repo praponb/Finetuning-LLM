@@ -1,0 +1,1 @@
+select year(event_time) as event_year, min(duration_sec) as min_duration_sec, sum(case when page = '/search' then 1 else 0 end) as search_count, max(event_time) as last_event_time from web_events group by event_year;

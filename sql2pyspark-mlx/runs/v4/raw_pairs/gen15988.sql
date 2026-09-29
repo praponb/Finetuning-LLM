@@ -1,0 +1,1 @@
+with latest as (select * from (select *, row_number() over (partition by store_id order by quantity nulls last, id) as row_num from inventory) x where row_num = 1) select id, store_id, row_num from latest order by id desc, row_num;

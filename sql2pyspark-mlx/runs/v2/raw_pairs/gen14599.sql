@@ -1,0 +1,1 @@
+SELECT id, customer_id, shipping_fee, store_id FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY shipping_fee DESC, id) AS row_num FROM orders WHERE discount BETWEEN 0.25 AND 0.28) AS t WHERE row_num <= 5;

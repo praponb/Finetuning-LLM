@@ -1,0 +1,1 @@
+with flattened as (select src.id, src.created_at, line.product_id, line.qty, line.promo from carts src lateral view explode(src.items) li as line) select id, created_at, product_id, qty, promo from flattened;

@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, MAX(hire_date) AS last_hire_date, COUNT(DISTINCT salary) AS unique_levels FROM employees WHERE dept_id IN (2, 10, 13, 16) GROUP BY dept_id) SELECT d.budget, dt.last_hire_date, dt.unique_levels FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.unique_levels > 4 ORDER BY dt.unique_levels

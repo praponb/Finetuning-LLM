@@ -1,0 +1,1 @@
+with filtered_store_sales as (select * from store_sales where store_id in (1, 2, 4, 5) or product_id in (1, 2, 4, 5)), Summary as (select date_trunc('MONTH', sale_date) sale_month, min(sale_date) min_sale_date from filtered_store_sales group by date_trunc('MONTH', sale_date)) select * from Summary

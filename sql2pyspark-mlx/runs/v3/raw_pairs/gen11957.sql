@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name AS employee_full_name, m.manager_id AS manager_manager_id, m.email AS manager_email, m.dept_id AS manager_dept_id, MONTH(m.hire_date) AS hire_date_month FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE e.level IN ('L3', 'L2', 'L4') ORDER BY id DESC

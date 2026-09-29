@@ -1,0 +1,1 @@
+SELECT inventory.last_restock, inventory.store_id, inventory.product_id, products.supplier_id, products.stock_qty FROM inventory INNER JOIN products ON inventory.product_id = products.id ORDER BY products.supplier_id;

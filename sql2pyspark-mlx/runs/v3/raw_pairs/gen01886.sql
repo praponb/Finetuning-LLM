@@ -1,0 +1,1 @@
+SELECT sessions.country, web_events.duration_sec, web_events.event_time, web_events.event_type FROM sessions LEFT JOIN web_events ON web_events.session_id = sessions.id WHERE sessions.customer_id IN (25, 31)

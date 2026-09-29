@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, duration_sec, page, SUM(duration_sec) OVER (PARTITION BY session_id ORDER BY event_time, id) AS running_duration_sec, AVG(duration_sec) OVER (PARTITION BY MONTH(event_time), page) AS event_time_month_avg_duration_sec FROM web_events;

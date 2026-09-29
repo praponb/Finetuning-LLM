@@ -1,0 +1,1 @@
+SELECT inventory.product_id, products.stock_qty, stores.region, stores.sqft, ADD_MONTHS(inventory.last_restock, 3) AS last_restock_plus_months FROM inventory RIGHT JOIN products ON products.id = inventory.product_id LEFT JOIN stores ON stores.id = inventory.store_id ORDER BY last_restock_plus_months;

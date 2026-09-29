@@ -1,0 +1,1 @@
+SELECT p.category, AVG(i.quantity) avg_quantity, MAX(i.quantity) - MIN(i.quantity) quantity_range FROM inventory i LEFT OUTER JOIN products p ON p.id = i.product_id WHERE i.last_restock > '2025-01-01' GROUP BY p.category ORDER BY avg_quantity DESC, quantity_range ASC

@@ -1,0 +1,1 @@
+SELECT id, started_at, device, browser, INITCAP(TRIM(browser)) AS browser_title, MONTH(started_at) AS started_at_month FROM sessions WHERE device = 'tablet' AND device IN ('desktop', 'mobile', 'tablet') AND country IN ('JP', 'SG')

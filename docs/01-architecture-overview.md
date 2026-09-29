@@ -42,9 +42,9 @@ flowchart TD
     subgraph ExportQuantization["3. Model Fusion & Quantization"]
         FuseMLX["mlx_lm.fuse<br/>(4-bit MLX Model)"]
         FuseHF["mlx_lm.fuse --dequantize<br/>(BF16 safetensors)"]
-        HFDir["sql2pyspark-hf/<br/>(~6.2 GB BF16)"]
+        HFDir["sql2pyspark-hf/<br/>(~15.2 GB BF16)"]
         GGUFConv["llama.cpp<br/>convert_hf_to_gguf.py"]
-        GGUF["sql2pyspark.gguf<br/>(3.3 GB Q8_0)"]
+        GGUF["sql2pyspark.gguf<br/>(8.1 GB Q8_0)"]
 
         Adapters --> FuseMLX
         Adapters --> FuseHF

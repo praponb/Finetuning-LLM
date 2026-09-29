@@ -1,0 +1,1 @@
+SELECT city, sqft, CASE WHEN sqft >= 15445 THEN 'High' WHEN sqft >= 7579 THEN 'Medium' ELSE 'Low' END sqft_band FROM stores WHERE city IN ('London', 'Tokyo', 'Singapore') AND (opened_date BETWEEN '2024-02-01' AND '2024-07-11' OR region = 'North')

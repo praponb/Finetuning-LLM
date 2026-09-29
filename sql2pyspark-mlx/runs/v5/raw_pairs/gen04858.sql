@@ -1,0 +1,1 @@
+SELECT status, CASE WHEN status IN ('SUCCESS', 'FAILED') THEN 'group_a' ELSE 'other' END AS status_group, COUNT(DISTINCT amount) AS unique_statuss, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values, AVG(amount) AS avg_amount FROM payments WHERE amount BETWEEN 570 AND 1150 GROUP BY status, CASE WHEN status IN ('SUCCESS', 'FAILED') THEN 'group_a' ELSE 'other' END

@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, a.opened_date, t.first_txn_time FROM accounts a LEFT JOIN (SELECT account_id, MIN(txn_time) AS first_txn_time FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY t.first_txn_time

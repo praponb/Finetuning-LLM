@@ -1,0 +1,1 @@
+SELECT product_id, MONTH(sale_date) AS sale_month, MIN(units) AS min_units, MAX(sale_date) AS last_sale_date, SUM(revenue) AS total_revenue FROM store_sales WHERE sale_date BETWEEN '2023-03-01' AND '2024-09-01' GROUP BY product_id, MONTH(sale_date)

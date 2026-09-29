@@ -1,0 +1,1 @@
+SELECT ss.id, ss.units, ss.sale_date, p.stock_qty, p.launch_date FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id WHERE ss.product_id IN (5, 7) OR ss.units > 32 ORDER BY units, id LIMIT 5;

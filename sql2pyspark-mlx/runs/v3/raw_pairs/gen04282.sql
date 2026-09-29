@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list FROM shipments WHERE cost < 32 GROUP BY order_id) SELECT o.channel, os.carrier_list FROM orders o INNER JOIN order_stats os ON o.id = os.order_id

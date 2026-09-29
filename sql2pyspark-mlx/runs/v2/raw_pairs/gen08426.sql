@@ -1,0 +1,1 @@
+WITH top_customers AS (SELECT id, segment, credit_limit, city, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY credit_limit, id) AS pos FROM customers) SELECT id, segment, credit_limit, city FROM top_customers WHERE pos = 1 ORDER BY credit_limit

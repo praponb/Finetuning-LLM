@@ -1,0 +1,1 @@
+select s.city, date_format(s.opened_date, 'yyyy-MM') as opened_month, max(o.shipping_fee) as max_shipping_fee, min(o.order_date) as first_order_date from orders o inner join stores s on o.store_id = s.id group by s.city, date_format(s.opened_date, 'yyyy-MM');

@@ -1,0 +1,1 @@
+SELECT MIN(sqft) AS min_sqft, ROUND((100 * SUM(CASE WHEN region = 'East' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_east, COUNT(*) AS store_count FROM stores WHERE store_name IS NOT NULL AND MONTH(opened_date) IN (4, 5, 7) AND sqft >= 12397;

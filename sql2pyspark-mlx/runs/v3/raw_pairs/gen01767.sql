@@ -1,0 +1,1 @@
+SELECT order_items.unit_price, orders.channel, orders.amount, stores.sqft, CAST(orders.amount AS INT) AS amount_int FROM order_items FULL OUTER JOIN orders ON order_items.order_id = orders.id JOIN stores ON orders.store_id = stores.id;

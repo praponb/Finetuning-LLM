@@ -1,0 +1,1 @@
+SELECT s.id, s.name, s.email, s.city, s.segment, latest.session_browser, latest.session_device FROM customers s LEFT JOIN LATERAL (SELECT c.browser AS session_browser, c.device AS session_device FROM sessions c WHERE c.customer_id = s.id ORDER BY c.started_at DESC, c.id DESC LIMIT 1) latest ON TRUE

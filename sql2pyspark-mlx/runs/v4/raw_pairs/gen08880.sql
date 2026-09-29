@@ -1,0 +1,1 @@
+select case when quantity >= 212 then 'LARGE' else 'SMALL' end as quantity_tier, bit_and(quantity) as quantity_bit_and, avg(quantity) as avg_quantity, bit_and(quantity) as quantity_bit_and_2, stddev_samp(quantity) as quantity_stddev from inventory group by case when quantity >= 212 then 'LARGE' else 'SMALL' end order by quantity_bit_and_2 desc nulls last;

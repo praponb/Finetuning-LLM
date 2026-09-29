@@ -1,0 +1,1 @@
+SELECT MONTH(txn_time) AS txn_month, merchant, MAX(txn_time) AS latest_txn_time FROM transactions WHERE TO_DATE(txn_time) < '2024-10-01' OR amount < 3700 GROUP BY 1, 2 ORDER BY txn_month DESC, merchant LIMIT 1;

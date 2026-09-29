@@ -1,0 +1,1 @@
+SELECT QUARTER(p.launch_date) AS launch_quarter, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity, COUNT(i.quantity) AS quantity_count FROM inventory i LEFT OUTER JOIN products p ON p.id = i.product_id INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY QUARTER(p.launch_date)

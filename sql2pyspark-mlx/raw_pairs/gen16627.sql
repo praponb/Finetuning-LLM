@@ -1,0 +1,1 @@
+select country, sort_array(collect_set(country)) as country_list, max(rating) - min(rating) as rating_range, count(case when city = 'Singapore' then 1 end) as singapore_count from suppliers group by country having count(distinct rating) > 5 order by rating_range desc;

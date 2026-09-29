@@ -1,0 +1,1 @@
+select dept_name, min(budget) as min_budget, concat_ws(', ', sort_array(collect_set(dept_name))) as dept_name_values, round(stddev(budget), 2) as stddev_budget from departments group by dept_name having min_budget >= 2170000 order by stddev_budget;

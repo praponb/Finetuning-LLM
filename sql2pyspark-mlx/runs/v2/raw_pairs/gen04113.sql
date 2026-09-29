@@ -1,0 +1,1 @@
+SELECT page, MAX(duration_sec) max_duration_sec, ROUND((100 * SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_page_view FROM web_events WHERE event_type = 'purchase' GROUP BY page HAVING AVG(duration_sec) < 130 ORDER BY pct_page_view DESC

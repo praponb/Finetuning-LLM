@@ -1,0 +1,1 @@
+select d.id, d.location, t.stddev_salary, t.intern_count from departments d join (select dept_id, round(stddev(salary), 2) as stddev_salary, sum(case when job_title = 'Intern' then 1 else 0 end) as intern_count from employees group by dept_id) t on d.id = t.dept_id where t.stddev_salary > 38;

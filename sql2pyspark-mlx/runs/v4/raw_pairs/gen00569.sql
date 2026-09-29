@@ -1,0 +1,1 @@
+select s.region, max(ss.sale_date) latest_sale_date from store_sales ss full outer join stores s on ss.store_id = s.id left outer join products p on p.id = ss.product_id where ss.store_id in (2, 3, 4) group by s.region order by latest_sale_date;

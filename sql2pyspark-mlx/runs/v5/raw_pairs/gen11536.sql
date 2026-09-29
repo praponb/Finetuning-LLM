@@ -1,0 +1,1 @@
+with src as (select * from order_items where product_id in (11, 24, 33)), agg as (select order_id, product_id, sum(unit_price) as total_unit_price from src group by order_id, product_id) select order_id, total_unit_price from agg where total_unit_price >= 2200 order by 1 desc

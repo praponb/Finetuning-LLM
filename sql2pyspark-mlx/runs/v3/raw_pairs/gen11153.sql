@@ -1,0 +1,1 @@
+select i.id, i.store_id, i.last_restock, i.product_id, ss.units, ss.sale_date, ss.revenue, round(i.quantity * 0.85, 2) adjusted_quantity from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.quantity < 178 order by last_restock, store_id desc

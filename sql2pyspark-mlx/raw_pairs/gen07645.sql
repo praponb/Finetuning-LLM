@@ -1,0 +1,1 @@
+SELECT method, status, CASE WHEN amount >= 1350 THEN 'high' WHEN amount >= 650 THEN 'mid' ELSE 'low' END amount_bucket, SUM(amount) total_amount FROM payments GROUP BY method, status, CASE WHEN amount >= 1350 THEN 'high' WHEN amount >= 650 THEN 'mid' ELSE 'low' END ORDER BY method

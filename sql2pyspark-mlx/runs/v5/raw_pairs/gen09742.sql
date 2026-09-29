@@ -1,0 +1,1 @@
+SELECT id, product_id, store_id, units, sale_date, SUM(units) OVER (PARTITION BY product_id, store_id) product_id_sum_units, RANK() OVER (PARTITION BY product_id ORDER BY sale_date) rnk FROM store_sales;

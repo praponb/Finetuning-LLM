@@ -1,0 +1,1 @@
+select we.id, we.event_type, we.page, s.customer_id, s.browser, s.country, lower(we.event_type) as event_type_lower from web_events we inner join sessions s on we.session_id = s.id where we.event_type in ('page_view', 'purchase', 'click') or we.page = '/search';

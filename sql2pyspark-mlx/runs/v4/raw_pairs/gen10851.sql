@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 6 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, SUM(unit_price * quantity) AS revenue FROM order_items GROUP BY CASE WHEN quantity >= 6 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END, product_id

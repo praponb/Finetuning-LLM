@@ -1,0 +1,1 @@
+SELECT txn_type, account_id, COUNT(DISTINCT amount) AS unique_txn_types, SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count, ROUND((100 * SUM(CASE WHEN merchant = 'Lazada' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_lazada FROM transactions GROUP BY CUBE(txn_type, account_id) ORDER BY txn_type;

@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, p.cost, p.category, s.city FROM store_sales ss RIGHT OUTER JOIN products p ON ss.product_id = p.id LEFT OUTER JOIN stores s ON s.id = ss.store_id ORDER BY ss.id DESC, s.city;

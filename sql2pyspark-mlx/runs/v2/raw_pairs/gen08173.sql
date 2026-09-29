@@ -1,0 +1,1 @@
+SELECT QUARTER(o.order_date) AS order_quarter, ROUND(AVG(p.amount), 2) AS avg_amount FROM payments p RIGHT JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE HOUR(p.paid_at) BETWEEN 12 AND 16 GROUP BY QUARTER(o.order_date) HAVING ROUND(AVG(p.amount), 2) >= 61

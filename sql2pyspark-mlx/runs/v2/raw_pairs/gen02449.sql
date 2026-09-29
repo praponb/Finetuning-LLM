@@ -1,0 +1,1 @@
+SELECT e.email employee_email, e.full_name employee_full_name, e.dept_id employee_dept_id, m.hire_date manager_hire_date FROM employees AS e LEFT JOIN employees AS m ON e.manager_id = m.id WHERE m.manager_id IS NOT NULL OR e.job_title NOT IN ('Manager', 'Director')

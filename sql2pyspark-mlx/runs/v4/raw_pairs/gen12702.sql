@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT device_code FROM device_readings EXCEPT SELECT device_code FROM device_readings WHERE TO_DATE(reading_ts) < '2024-10-01'), kept_rows AS (SELECT s.* FROM device_readings s INNER JOIN kept_keys k ON s.device_code = k.device_code) SELECT id, device_code, reading_ts, status_bits, firmware FROM kept_rows ORDER BY device_code DESC, reading_ts;

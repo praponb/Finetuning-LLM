@@ -1,0 +1,1 @@
+SELECT p.id, p.paid_at, o.customer_id, o.store_id, o.shipping_fee, CAST(p.paid_at AS DATE) AS paid_at_day FROM payments p LEFT JOIN orders o ON p.order_id = o.id WHERE p.status IN ('REFUNDED', 'FAILED') ORDER BY store_id DESC

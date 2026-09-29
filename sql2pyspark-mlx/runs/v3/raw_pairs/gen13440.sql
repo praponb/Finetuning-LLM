@@ -1,0 +1,1 @@
+select shipped_month, status, avg_cost from (select date_format(shipped_date, 'yyyy-MM') as shipped_month, status, avg(cost) as avg_cost from shipments group by date_format(shipped_date, 'yyyy-MM'), status) as agg where avg_cost < 65;

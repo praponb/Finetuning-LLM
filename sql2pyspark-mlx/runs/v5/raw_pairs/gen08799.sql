@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM transactions WHERE merchant = '7-Eleven'), transactions_stats AS (SELECT account_id, COUNT(*) row_count, MIN(amount) min_amount FROM src GROUP BY account_id) SELECT * FROM transactions_stats ORDER BY account_id DESC LIMIT 5

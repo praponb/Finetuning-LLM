@@ -1,0 +1,1 @@
+SELECT d.dept_name, d.budget, t.unique_managers FROM departments d JOIN (SELECT dept_id, COUNT(DISTINCT salary) AS unique_managers FROM employees WHERE hire_date > '2024-04-09' GROUP BY dept_id) t ON d.id = t.dept_id;

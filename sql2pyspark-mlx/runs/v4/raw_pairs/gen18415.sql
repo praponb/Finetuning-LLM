@@ -1,0 +1,1 @@
+SELECT a.status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(t.merchant))) AS merchant_values FROM transactions t INNER JOIN accounts a ON t.account_id = a.id GROUP BY a.status ORDER BY merchant_values, status LIMIT 5

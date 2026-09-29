@@ -1,0 +1,1 @@
+with account_totals as (select account_id, round(avg(amount), 2) as avg_amount from transactions where not is_flagged group by account_id) select a.id, a.account_type, at.avg_amount from accounts a left join account_totals at on a.id = at.account_id

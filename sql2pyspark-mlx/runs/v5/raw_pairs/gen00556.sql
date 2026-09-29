@@ -1,0 +1,1 @@
+SELECT supplier_name, city, COALESCE(city, 'unassigned') AS city_filled, CONCAT(city, '/', country) AS city_country FROM suppliers WHERE country NOT IN ('JP', 'UK', 'DE') AND city IN ('Berlin', 'New York', 'Tokyo') ORDER BY supplier_name ASC, city_filled DESC

@@ -1,0 +1,1 @@
+SELECT p.category, MIN(i.last_restock) min_last_restock FROM inventory i JOIN products p ON i.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE SIZE(p.tags) >= 2 GROUP BY p.category ORDER BY category, min_last_restock DESC;

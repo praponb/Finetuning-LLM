@@ -1,0 +1,1 @@
+WITH CustomerSummary AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders GROUP BY customer_id) SELECT c.id, c.credit_limit, C.channel_list FROM customers c INNER JOIN CustomerSummary C ON c.id = C.customer_id

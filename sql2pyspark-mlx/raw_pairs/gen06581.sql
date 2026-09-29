@@ -1,0 +1,1 @@
+SELECT d.dept_name, MAX(e.salary) - MIN(e.salary) AS salary_range, MIN(e.hire_date) AS first_hire_date FROM employees e RIGHT JOIN departments d ON d.id = e.dept_id GROUP BY d.dept_name ORDER BY 2, dept_name LIMIT 20;

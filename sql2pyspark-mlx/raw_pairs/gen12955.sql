@@ -1,0 +1,1 @@
+SELECT t.id, t.is_flagged, t.account_id, a.balance, a.opened_date, a.status FROM transactions t LEFT OUTER JOIN accounts a ON t.account_id = a.id WHERE t.amount <= 2700 OR a.account_type NOT IN ('SAVINGS', 'LOAN') ORDER BY account_id DESC, id LIMIT 50

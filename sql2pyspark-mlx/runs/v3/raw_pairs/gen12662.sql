@@ -1,0 +1,1 @@
+select p.supplier_id, round(avg(i.quantity), 2) as avg_quantity, sum(i.quantity) as total_quantity from inventory i inner join products p on i.product_id = p.id where i.quantity >= 212 group by p.supplier_id order by supplier_id, total_quantity desc;

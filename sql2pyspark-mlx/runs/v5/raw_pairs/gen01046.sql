@@ -1,0 +1,1 @@
+SELECT i.store_id, i.product_id, p.brand, s.rating FROM inventory i LEFT JOIN products p ON p.id = i.product_id JOIN suppliers s ON s.id = p.supplier_id WHERE i.store_id IN (1, 3, 4, 6) OR LOWER(s.supplier_name) LIKE '%uro%'

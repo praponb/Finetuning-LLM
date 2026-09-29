@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CASE WHEN rating >= 4.3 THEN 'High' WHEN rating >= 1.5 THEN 'Medium' ELSE 'Low' END rating_level, COALESCE(city, 'OTHER') city_filled FROM suppliers WHERE city IS NOT NULL AND country = 'US') SELECT s.* FROM filtered s WHERE EXISTS (SELECT 1 FROM products x WHERE x.supplier_id = s.id AND x.cost < 450);

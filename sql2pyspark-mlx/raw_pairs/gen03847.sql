@@ -1,0 +1,1 @@
+SELECT s.browser, COUNT(*) AS cnt, SORT_ARRAY(COLLECT_SET(we.page)) AS page_list FROM web_events we RIGHT OUTER JOIN sessions s ON we.session_id = s.id WHERE we.event_time < '2023-12-01' GROUP BY s.browser;

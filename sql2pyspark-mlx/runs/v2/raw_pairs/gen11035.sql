@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.quantity, orders.discount, products.stock_qty, ROUND(order_items.unit_price, 1) AS unit_price_rounded FROM order_items INNER JOIN orders ON order_items.order_id = orders.id RIGHT OUTER JOIN products ON order_items.product_id = products.id WHERE products.category = 'Grocery' ORDER BY orders.discount;

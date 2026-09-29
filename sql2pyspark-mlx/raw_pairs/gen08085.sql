@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, SUM(unit_price) AS total_unit_price, MIN(unit_price) AS min_unit_price FROM order_items WHERE quantity IS NOT NULL GROUP BY order_id) SELECT o.id, o.channel, o.amount, os.total_unit_price, os.min_unit_price FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.total_unit_price > 1800

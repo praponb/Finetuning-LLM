@@ -1,0 +1,1 @@
+SELECT p.category, s.supplier_name, UPPER(s.country) AS country_upper FROM products p LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE s.country IN ('TH', 'US', 'SG') AND p.cost <= 450 ORDER BY category DESC, supplier_name ASC

@@ -1,0 +1,1 @@
+select id, plan, end_date, status, lead(monthly_fee, 1) over (partition by year(end_date), customer_id order by monthly_fee, id) as next_monthly_fee, max(monthly_fee) over (partition by customer_id) as customer_id_max_monthly_fee from subscriptions

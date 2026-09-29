@@ -1,0 +1,1 @@
+SELECT status, COUNT(CASE WHEN carrier = 'UPS' THEN 1 END) AS ups_count, ROUND(AVG(cost), 2) AS avg_cost, ROUND(AVG(cost), 2) AS avg_cost_2, COUNT(DISTINCT carrier) AS distinct_carriers, COUNT_IF(status = 'DELIVERED') AS delivered_events FROM shipments GROUP BY status HAVING avg_cost_2 >= 0

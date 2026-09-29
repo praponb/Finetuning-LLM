@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(quantity) AS total_quantity FROM order_items GROUP BY quantity_bucket ORDER BY quantity_bucket;

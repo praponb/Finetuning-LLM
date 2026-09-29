@@ -1,0 +1,1 @@
+SELECT * FROM products WHERE supplier_id IS NULL AND cost BETWEEN 370 AND 460

@@ -1,0 +1,1 @@
+SELECT p.status, p.amount, p.paid_at, o.status AS order_status, o.store_id, o.amount AS order_amount, TO_DATE(p.paid_at) AS paid_at_date FROM payments p RIGHT OUTER JOIN orders o ON p.order_id = o.id ORDER BY store_id DESC

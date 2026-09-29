@@ -1,0 +1,1 @@
+WITH top_inventory AS (SELECT id, store_id, last_restock, product_id, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock DESC, id) row_num FROM inventory) SELECT * FROM top_inventory WHERE row_num = 1;

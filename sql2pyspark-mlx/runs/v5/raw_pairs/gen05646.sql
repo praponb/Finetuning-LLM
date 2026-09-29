@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, created_at, EXPLODE(coupon_codes) AS value FROM carts) SELECT s.customer_id, (SELECT MAX(x.balance) FROM accounts x WHERE x.customer_id = s.customer_id) AS max_account_balance FROM exploded s ORDER BY customer_id DESC

@@ -1,0 +1,1 @@
+select event_type, to_date(event_time) as event_day, count(*) as cnt, avg(duration_sec) as avg_duration_sec from web_events where session_id in (7, 19) and session_id in (1, 3, 22, 33) group by cube(event_type, to_date(event_time)) order by event_type, avg_duration_sec

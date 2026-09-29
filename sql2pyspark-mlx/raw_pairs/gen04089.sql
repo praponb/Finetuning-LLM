@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, COUNT(credit_limit) AS credit_limit_count, AVG(age) AS avg_age FROM customers WHERE signup_date BETWEEN '2023-05-01' AND '2024-10-01' AND (name LIKE 'bo%' OR name IS NULL) GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM') HAVING avg_age > 61;

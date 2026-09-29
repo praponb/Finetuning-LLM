@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, MAX(quantity) AS max_quantity FROM order_items GROUP BY product_id) SELECT p.id, p.stock_qty, p.price, ps.max_quantity FROM products p LEFT JOIN product_summary ps ON p.id = ps.product_id

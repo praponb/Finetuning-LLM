@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(opened_date) < 2024 THEN 'before_2024' WHEN YEAR(opened_date) = 2024 THEN '2024' ELSE 'after_2024' END AS opened_cohort, MAX(balance) AS max_balance, COUNT(*) AS row_count FROM accounts WHERE account_type != 'CREDIT' GROUP BY 1 HAVING COUNT(*) > 4;

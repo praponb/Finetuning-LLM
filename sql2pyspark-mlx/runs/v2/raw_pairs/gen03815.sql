@@ -1,0 +1,1 @@
+SELECT MONTH(opened_date) AS opened_month, ROUND(AVG(balance), 2) AS avg_balance, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) AS account_type_values FROM accounts WHERE status IN ('CLOSED', 'OPEN') AND account_type IN ('SAVINGS', 'CREDIT') GROUP BY opened_month ORDER BY avg_balance DESC

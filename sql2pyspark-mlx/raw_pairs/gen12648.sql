@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, created_at, coupon_codes, k, value FROM carts LATERAL VIEW OUTER EXPLODE(attributes) e AS k, value) SELECT k, CASE WHEN k RLIKE '^(device|utm_source)$' THEN 'PRIORITY' WHEN k RLIKE '^(gift|weight_kg)$' THEN 'EXTENDED' ELSE 'CORE' END AS k_zone FROM lines ORDER BY k_zone DESC NULLS LAST, k DESC

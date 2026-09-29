@@ -1,0 +1,1 @@
+with with_gaps as (select *, case when paid_at - lag(paid_at) over (partition by order_id order by paid_at, id) > interval 90 days then 1 else 0 end as is_new_session from payments) select id, order_id, amount, paid_at, status, sum(is_new_session) over (partition by order_id order by paid_at, id rows between unbounded preceding and current row) as burst_id from with_gaps

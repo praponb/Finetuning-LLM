@@ -1,0 +1,1 @@
+WITH department_stats AS (SELECT dept_id, COUNT(*) total_count, MIN(hire_date) min_hire_date FROM employees WHERE manager_id = 3 GROUP BY dept_id) SELECT d.id, d.location, d.dept_name, ds.total_count, ds.min_hire_date FROM departments d INNER JOIN department_stats ds ON d.id = ds.dept_id ORDER BY location, id LIMIT 5

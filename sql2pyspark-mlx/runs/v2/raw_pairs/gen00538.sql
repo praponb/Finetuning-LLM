@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END AS rating_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values FROM suppliers WHERE country != 'TH' GROUP BY CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END ORDER BY rating_bucket DESC, country_values

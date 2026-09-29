@@ -1,0 +1,1 @@
+SELECT s.customer_id, s.browser, s.device, we.duration_sec, we.session_id, UPPER(we.event_type) AS event_type_upper FROM sessions s LEFT OUTER JOIN web_events we ON s.id = we.session_id WHERE s.browser IN ('Edge', 'Chrome', 'Safari') ORDER BY session_id ASC

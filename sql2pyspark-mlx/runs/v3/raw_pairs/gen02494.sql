@@ -1,0 +1,1 @@
+SELECT channel, status, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range, ROUND(STDDEV(discount), 2) AS stddev_discount, MAX(discount) - MIN(discount) AS discount_range FROM orders GROUP BY 1, 2 HAVING MAX(discount) - MIN(discount) >= 32 ORDER BY channel DESC, stddev_discount

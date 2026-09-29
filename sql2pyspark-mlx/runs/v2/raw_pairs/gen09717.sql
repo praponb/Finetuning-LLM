@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM inventory WHERE quantity != 96), summary AS (SELECT store_id, COUNT(quantity) AS quantity_count FROM Base GROUP BY store_id) SELECT store_id, quantity_count FROM summary WHERE quantity_count >= 5 ORDER BY store_id DESC, quantity_count DESC;

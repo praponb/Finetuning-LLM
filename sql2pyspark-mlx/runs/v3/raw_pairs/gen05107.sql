@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM stores WHERE city = 'London' AND LOWER(store_name) LIKE '%ive%'), stores_stats AS (SELECT city, SUM(CASE WHEN city = 'Chiang Mai' THEN sqft ELSE 0 END) AS chiang_mai_sqft, COUNT(*) AS total_count FROM base GROUP BY city) SELECT * FROM stores_stats WHERE chiang_mai_sqft < 34 ORDER BY 2;

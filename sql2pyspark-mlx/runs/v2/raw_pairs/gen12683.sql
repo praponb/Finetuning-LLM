@@ -1,0 +1,1 @@
+WITH filtered_web_events AS (SELECT * FROM web_events WHERE event_time >= '2024-12-19' OR duration_sec < 130), session_id_summary AS (SELECT session_id, page, MIN(duration_sec) min_duration_sec FROM filtered_web_events GROUP BY session_id, page) SELECT session_id, page, min_duration_sec FROM session_id_summary ORDER BY min_duration_sec

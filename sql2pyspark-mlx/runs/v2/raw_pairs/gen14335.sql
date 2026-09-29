@@ -1,0 +1,1 @@
+SELECT s.customer_id, s.country, t.avg_duration_sec, t.event_type_values FROM sessions s LEFT OUTER JOIN (SELECT session_id, AVG(duration_sec) AS avg_duration_sec, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values FROM web_events GROUP BY session_id) t ON s.id = t.session_id;

@@ -1,0 +1,1 @@
+SELECT id, brand, cost, stock_qty, SUM(cost) OVER (PARTITION BY brand) AS brand_sum_cost, DENSE_RANK() OVER (PARTITION BY brand ORDER BY stock_qty) AS dense_rnk FROM products WHERE supplier_id IN (20, 23, 24)

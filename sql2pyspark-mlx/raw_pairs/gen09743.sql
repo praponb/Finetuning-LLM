@@ -1,0 +1,1 @@
+SELECT customer_id, DATE_TRUNC('YEAR', start_date) AS year_start, plan, COUNT(*) FILTER (WHERE plan = 'premium') AS premium_rows, SUM(monthly_fee) FILTER (WHERE status = 'PAUSED') AS paused_total_monthly_fee, AVG(monthly_fee) AS avg_monthly_fee, COUNT(DISTINCT id) AS distinct_ids FROM subscriptions GROUP BY CUBE (customer_id, DATE_TRUNC('YEAR', start_date), plan)

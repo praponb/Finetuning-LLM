@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, UPPER(level) level_upper FROM employees WHERE manager_id IN (21, 26, 29, 37) AND UPPER(full_name) LIKE '%MMA%'), agg AS (SELECT YEAR(hire_date) hire_year, COUNT(CASE WHEN job_title = 'Engineer' THEN 1 END) engineer_count FROM base GROUP BY YEAR(hire_date)) SELECT * FROM agg ORDER BY hire_year DESC

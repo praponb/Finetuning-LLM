@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, COUNT(CASE WHEN account_type = 'CHECKING' THEN 1 END) AS checking_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) AS account_type_values FROM accounts WHERE balance > 75000 GROUP BY QUARTER(opened_date) HAVING AVG(balance) >= 33000 ORDER BY opened_quarter DESC LIMIT 20

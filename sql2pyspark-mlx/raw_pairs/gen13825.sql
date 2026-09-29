@@ -1,0 +1,1 @@
+with recent_order_items as (select * from order_items where order_id in (6, 23, 34, 40)), agg as (select order_id, round(stddev(unit_price), 2) stddev_unit_price from recent_order_items group by order_id) select order_id, stddev_unit_price from agg order by order_id desc, stddev_unit_price desc limit 20;

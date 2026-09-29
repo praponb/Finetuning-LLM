@@ -1,0 +1,1 @@
+SELECT QUARTER(c.signup_date) AS signup_quarter, COUNT(*) AS session_count FROM sessions s INNER JOIN customers c ON c.id = s.customer_id WHERE c.age >= 35 GROUP BY QUARTER(c.signup_date) ORDER BY session_count DESC, signup_quarter DESC

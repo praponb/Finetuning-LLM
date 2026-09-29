@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.amount, accounts.opened_date, customers.email FROM transactions LEFT JOIN accounts ON transactions.account_id = accounts.id JOIN customers ON accounts.customer_id = customers.id WHERE accounts.opened_date <= '2024-03-01' ORDER BY accounts.opened_date;

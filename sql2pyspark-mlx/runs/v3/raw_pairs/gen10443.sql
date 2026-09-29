@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, COUNT(CASE WHEN level = 'L1' THEN 1 END) AS l1_count FROM employees GROUP BY dept_id) SELECT d.dept_name, dt.l1_count FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id ORDER BY d.dept_name, l1_count

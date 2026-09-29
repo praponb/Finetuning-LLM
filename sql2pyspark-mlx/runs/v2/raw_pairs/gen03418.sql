@@ -1,0 +1,1 @@
+select ss.id, ss.revenue, ss.product_id, p.supplier_id, p.price, s.region, s.city, upper(s.store_name) as store_name_upper from store_sales ss full outer join products p on p.id = ss.product_id full outer join stores s on ss.store_id = s.id order by ss.product_id desc;

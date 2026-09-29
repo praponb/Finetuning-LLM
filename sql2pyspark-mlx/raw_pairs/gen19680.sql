@@ -1,0 +1,1 @@
+WITH recent_order_items AS (SELECT * FROM order_items WHERE product_id IS NULL), Agg AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(DISTINCT quantity) AS unique_products FROM recent_order_items GROUP BY product_id) SELECT product_id, avg_quantity, unique_products FROM Agg ORDER BY avg_quantity, unique_products DESC

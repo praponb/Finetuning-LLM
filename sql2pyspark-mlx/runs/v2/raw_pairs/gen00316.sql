@@ -1,0 +1,1 @@
+WITH valid_shipments AS (SELECT * FROM shipments WHERE YEAR(shipped_date) = 2025 AND carrier IN ('Flash', 'FedEx')), carrier_summary AS (SELECT carrier, SUM(cost) AS total_cost FROM valid_shipments GROUP BY carrier) SELECT carrier, total_cost FROM carrier_summary

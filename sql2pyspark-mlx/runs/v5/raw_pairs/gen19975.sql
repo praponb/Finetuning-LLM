@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, host, log_ts, latency_ms, status_code, k, value FROM app_logs LATERAL VIEW EXPLODE(context) x AS k, value) SELECT id, latency_ms, k, LAG(status_code, 2) OVER (ORDER BY status_code, id, k) AS prev_status_code, AVG(latency_ms) OVER (ORDER BY latency_ms, id, k ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) AS latency_ms_avg_3 FROM exploded

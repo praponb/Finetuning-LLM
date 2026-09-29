@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT segment, country FROM customers INTERSECT ALL SELECT segment, country FROM customers WHERE country = 'DE'), kept_rows AS (SELECT s.* FROM customers s INNER JOIN kept_keys k ON s.segment = k.segment AND s.country = k.country) SELECT id, email, country, city, segment, signup_date, credit_limit, age FROM kept_rows ORDER BY city NULLS FIRST, signup_date

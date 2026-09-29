@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM sessions s WHERE NOT EXISTS (SELECT 1 FROM web_events x WHERE x.session_id = s.id AND x.session_id IN (15, 21))) SELECT id, customer_id, started_at, country, CASE WHEN country RLIKE '^(SG|JP)$' THEN 'CORE' WHEN country RLIKE '^(TH|US)$' THEN 'PRIORITY' ELSE 'GROUP_B' END AS country_zone FROM eligible ORDER BY country DESC, id

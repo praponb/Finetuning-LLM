@@ -1,0 +1,1 @@
+with product_summary as (select product_id, max(quantity) - min(quantity) as quantity_range, round(stddev(quantity), 2) as stddev_quantity from inventory where product_id = 4 group by product_id) select p.id, p.stock_qty, ps.quantity_range, ps.stddev_quantity from products p left join product_summary ps on p.id = ps.product_id order by stddev_quantity desc, ps.quantity_range desc

@@ -1,0 +1,1 @@
+SELECT c.is_active, COUNT(DISTINCT s.customer_id) AS unique_customers, COUNT(CASE WHEN s.browser = 'Firefox' THEN 1 END) AS firefox_count FROM sessions s JOIN customers c ON s.customer_id = c.id GROUP BY c.is_active;

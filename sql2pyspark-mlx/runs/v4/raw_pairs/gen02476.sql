@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, credit_limit * age credit_limit_times_age, COALESCE(city, 'UNKNOWN') resolved_city FROM customers WHERE email IS NOT NULL) SELECT *, RANK() OVER (PARTITION BY segment, city ORDER BY signup_date) AS rn FROM filtered QUALIFY rn = 1

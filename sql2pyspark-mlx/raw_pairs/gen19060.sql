@@ -1,0 +1,1 @@
+SELECT c.segment, MIN(s.started_at) AS first_started_at FROM sessions s FULL OUTER JOIN customers c ON s.customer_id = c.id WHERE TO_DATE(s.started_at) >= '2023-09-01' GROUP BY c.segment ORDER BY first_started_at DESC, segment;

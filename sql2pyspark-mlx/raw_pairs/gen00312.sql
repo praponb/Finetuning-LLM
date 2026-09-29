@@ -1,0 +1,1 @@
+with latest as (select *, row_number() over (partition by promo_code order by ends_on, id) as dedup_rank from promotions qualify dedup_rank = 1) select id, channel, ends_on, dedup_rank, case when channel rlike '^(mobile|partner)$' then 'CORE' else 'EXTENDED' end as channel_zone from latest;

@@ -1,0 +1,1 @@
+SELECT id, log_ts, level, context, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').duration AS duration_sec, COALESCE(context['trace'], 'none') AS trace_or_default FROM app_logs;

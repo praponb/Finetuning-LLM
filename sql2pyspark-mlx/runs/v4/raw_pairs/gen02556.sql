@@ -1,0 +1,1 @@
+SELECT page, first_event_time, page_view_count FROM (SELECT page, MIN(event_time) AS first_event_time, COUNT(CASE WHEN event_type = 'page_view' THEN 1 END) AS page_view_count FROM web_events WHERE session_id IN (11, 12, 31, 34) GROUP BY page) AS s WHERE page_view_count < 7 ORDER BY first_event_time DESC, page LIMIT 10

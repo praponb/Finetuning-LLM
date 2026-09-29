@@ -1,0 +1,1 @@
+SELECT page, event_type, MAX(event_time) AS last_event_time, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events WHERE duration_sec BETWEEN 216 AND 336 AND (event_time >= '2024-04-01' OR event_type IN ('purchase', 'add_to_cart')) GROUP BY page, event_type HAVING duration_sec_range < 21 ORDER BY page, event_type LIMIT 50;

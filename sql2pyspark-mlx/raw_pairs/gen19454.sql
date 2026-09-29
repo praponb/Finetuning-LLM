@@ -1,0 +1,1 @@
+SELECT id, country, rating, city, PERCENT_RANK() OVER (PARTITION BY country ORDER BY rating DESC) AS rating_pct_rank, LAST_VALUE(city) OVER (ORDER BY rating, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_city FROM suppliers

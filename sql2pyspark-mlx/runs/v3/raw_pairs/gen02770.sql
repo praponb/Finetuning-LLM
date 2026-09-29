@@ -1,0 +1,1 @@
+with department_summary as (select dept_id, sum(case when job_title = 'Analyst' then salary else 0 end) as analyst_salary, round(avg(salary), 2) as avg_salary from employees group by dept_id) select d.id, d.dept_name, ds.analyst_salary, ds.avg_salary from departments d left outer join department_summary ds on d.id = ds.dept_id order by analyst_salary desc

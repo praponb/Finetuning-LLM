@@ -1,0 +1,1 @@
+SELECT s.region, COUNT(*) AS inventory_count FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id GROUP BY s.region ORDER BY s.region DESC, inventory_count DESC;

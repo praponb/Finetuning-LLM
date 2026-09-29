@@ -1,0 +1,1 @@
+WITH order_items_by_order AS (SELECT order_id, COUNT(*) AS order_item_count FROM order_items GROUP BY order_id) SELECT orders.id, orders.store_id, orders.order_date, order_items_by_order.order_item_count FROM orders LEFT JOIN order_items_by_order ON orders.id = order_items_by_order.order_id WHERE order_items_by_order.order_item_count >= 10;

@@ -1,0 +1,1 @@
+SELECT id, status, opened_date, customer_id FROM (SELECT id, status, opened_date, customer_id, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date DESC, id) AS row_num FROM accounts WHERE customer_id IN (2, 13, 28)) AS ranked WHERE row_num <= 1;

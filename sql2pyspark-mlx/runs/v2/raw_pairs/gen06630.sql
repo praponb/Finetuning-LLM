@@ -1,0 +1,1 @@
+SELECT YEAR(paid_at) AS paid_year, status, ROUND(AVG(amount), 2) AS avg_amount, SUM(CASE WHEN method = 'paypal' THEN 1 ELSE 0 END) AS paypal_count FROM payments WHERE TO_DATE(paid_at) >= '2025-10-01' AND method IN ('bank_transfer', 'paypal', 'card') GROUP BY YEAR(paid_at), status;

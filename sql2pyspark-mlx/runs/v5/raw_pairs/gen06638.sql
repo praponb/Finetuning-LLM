@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, coupon_codes, k, attr_value FROM carts LATERAL VIEW EXPLODE(attributes) li AS k, attr_value) SELECT id, customer_id, k, CASE WHEN k RLIKE '^(gift|utm_source)$' THEN 'EXTENDED' ELSE 'PRIORITY' END AS k_zone FROM exploded ORDER BY id DESC;

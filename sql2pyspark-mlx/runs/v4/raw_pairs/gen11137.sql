@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, customer_id, account_type, balance, opened_date, status, LAST_DAY(opened_date) opened_date_month_end FROM accounts WHERE opened_date > DATE '2023-04-06' AND opened_date > '2023-04-01') SELECT e.*, b.segment, b.age FROM base e LEFT JOIN customers b ON e.customer_id = b.id;

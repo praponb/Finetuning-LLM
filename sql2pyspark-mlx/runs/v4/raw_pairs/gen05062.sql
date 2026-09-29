@@ -1,0 +1,1 @@
+SELECT plan, COUNT(CASE WHEN plan = 'premium' THEN 1 END) AS premium_count, COUNT(CASE WHEN plan = 'standard' THEN 1 END) AS standard_count, STDDEV_SAMP(monthly_fee) AS monthly_fee_stddev FROM subscriptions GROUP BY 1 ORDER BY plan DESC NULLS LAST;

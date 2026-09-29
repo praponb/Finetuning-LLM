@@ -1,0 +1,1 @@
+select transactions.id, transactions.merchant, transactions.amount, transactions.txn_time from transactions where transactions.account_id in (select id from accounts where status in ('CLOSED', 'FROZEN'));

@@ -1,0 +1,1 @@
+select *, avg(monthly_fee) over (order by monthly_fee, id rows between 6 preceding and current row) as monthly_fee_avg_6, avg(monthly_fee) over (order by end_date, id rows between 2 preceding and 1 preceding) as monthly_fee_avg_2_prior from subscriptions

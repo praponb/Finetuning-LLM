@@ -1,0 +1,1 @@
+select product_id, case when unit_price >= 430 then 'high' when unit_price >= 140 then 'mid' else 'low' end as unit_price_bucket, case when quantity >= 8 then 'high' when quantity >= 3 then 'mid' else 'low' end as quantity_bucket, max(unit_price) - min(unit_price) as unit_price_range from order_items group by 1, 2, 3 order by unit_price_bucket desc;

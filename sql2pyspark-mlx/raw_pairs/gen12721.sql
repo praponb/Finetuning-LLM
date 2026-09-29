@@ -1,0 +1,1 @@
+with cleaned as (select id, device_code, pressure, status_bits, firmware, temp_c + status_bits as temp_c_plus_status_bits from device_readings where temp_c > 30) select * from (select firmware, device_code, temp_c_plus_status_bits from cleaned) src pivot (max(temp_c_plus_status_bits) as total for device_code in ('DV-01' as dv_01, 'DV-03' as dv_03));

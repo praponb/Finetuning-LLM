@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, merchant, ROUND(STDDEV(amount), 2) AS stddev_amount, SUM(amount) AS total_amount FROM transactions GROUP BY DATE_FORMAT(txn_time, 'yyyy-MM'), merchant) AS t WHERE total_amount > 11000;

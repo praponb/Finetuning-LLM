@@ -1,0 +1,1 @@
+SELECT TO_DATE(s.started_at) AS started_day, COUNT(*) AS num_web_events FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE c.email LIKE '%@startup.io' GROUP BY TO_DATE(s.started_at);

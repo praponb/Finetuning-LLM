@@ -1,0 +1,1 @@
+SELECT id, category, launch_date, stock_qty, SUM(stock_qty) OVER (PARTITION BY category ORDER BY launch_date, id) AS running_stock_qty, SUM(stock_qty) OVER (ORDER BY launch_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_stock_qty_2 FROM products WHERE cost BETWEEN 260 AND 650

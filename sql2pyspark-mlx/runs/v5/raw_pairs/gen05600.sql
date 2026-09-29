@@ -1,0 +1,1 @@
+SELECT id, monthly_fee, start_date, end_date, CASE WHEN plan IN ('enterprise', 'basic') THEN 'Tier 1' ELSE 'Other' END AS plan_group FROM subscriptions WHERE monthly_fee <= 180 AND MONTH(start_date) IN (6, 8, 10) ORDER BY id DESC, monthly_fee DESC LIMIT 5

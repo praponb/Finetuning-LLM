@@ -1,0 +1,1 @@
+select merchant, amount, case when amount >= 4400 then 'High' when amount >= 700 then 'Medium' else 'Low' end as amount_band from transactions where amount >= 2900 and merchant in ('Amazon', '7-Eleven') order by amount_band;

@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT id FROM store_sales INTERSECT ALL SELECT id FROM store_sales WHERE product_id IN (2, 4, 5)), reconciled AS (SELECT s.* FROM store_sales s JOIN kept_keys k ON s.id = k.id) SELECT id, sale_date, units, revenue FROM reconciled

@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.last_restock, inventory.product_id, stores.opened_date, products.stock_qty, DATE_SUB(inventory.last_restock, 83) AS last_restock_minus_83d FROM inventory LEFT OUTER JOIN stores ON stores.id = inventory.store_id INNER JOIN products ON inventory.product_id = products.id WHERE inventory.quantity > 114 ORDER BY 6

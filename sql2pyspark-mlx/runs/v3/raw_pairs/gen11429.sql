@@ -1,0 +1,1 @@
+select id, account_id, txn_time, amount, sum(amount) over (partition by account_id order by txn_time, id rows between unbounded preceding and current row) as running_amount from transactions where txn_time < '2024-09-09'

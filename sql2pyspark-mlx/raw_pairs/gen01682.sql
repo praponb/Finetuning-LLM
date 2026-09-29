@@ -1,0 +1,1 @@
+SELECT id, location, budget, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS seq_no, ROW_NUMBER() OVER (PARTITION BY location, dept_name ORDER BY budget, id) AS event_seq FROM departments;

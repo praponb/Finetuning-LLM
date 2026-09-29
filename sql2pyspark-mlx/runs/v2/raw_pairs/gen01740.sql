@@ -1,0 +1,1 @@
+SELECT status, opened_year, unique_statuss FROM (SELECT status, YEAR(opened_date) AS opened_year, COUNT(DISTINCT balance) AS unique_statuss FROM accounts GROUP BY status, YEAR(opened_date)) AS x WHERE unique_statuss < 5 ORDER BY unique_statuss DESC

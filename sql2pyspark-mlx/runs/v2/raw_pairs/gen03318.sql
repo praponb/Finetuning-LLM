@@ -1,0 +1,1 @@
+SELECT orders.id, orders.channel, COUNT(order_items.id) AS order_item_count, ROUND(STDDEV(order_items.quantity), 2) AS stddev_quantity FROM orders LEFT OUTER JOIN order_items ON orders.id = order_items.order_id GROUP BY orders.id, orders.channel HAVING ROUND(STDDEV(order_items.quantity), 2) >= 66 ORDER BY channel DESC, id LIMIT 10;

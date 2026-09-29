@@ -1,0 +1,1 @@
+SELECT MONTH(hire_date) hire_month, ROUND(STDDEV(salary), 2) stddev_salary, MIN(salary) min_salary, MAX(salary) max_salary FROM employees GROUP BY hire_month HAVING min_salary < 110000 ORDER BY hire_month DESC, stddev_salary

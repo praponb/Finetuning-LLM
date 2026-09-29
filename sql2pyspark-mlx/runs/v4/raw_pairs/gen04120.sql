@@ -1,0 +1,1 @@
+SELECT id, level, dept_id, salary, CONCAT_WS(',', job_title, level) AS job_title_level_key FROM employees WHERE dept_id = 15 AND hire_date BETWEEN '2023-03-30' AND '2024-10-01' ORDER BY job_title_level_key

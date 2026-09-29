@@ -1,0 +1,1 @@
+SELECT id, shipping_fee, customer_id, discount, DATE_FORMAT(order_date, 'yyyy-MM') AS order_date_label, discount + shipping_fee AS discount_plus_shipping_fee FROM orders WHERE discount < 0.15 AND shipping_fee >= 35 AND status IN ('PENDING', 'COMPLETED', 'RETURNED') ORDER BY discount DESC

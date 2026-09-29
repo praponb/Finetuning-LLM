@@ -1,0 +1,1 @@
+select status, store_id, round(stddev(discount), 2) as stddev_discount, count(shipping_fee) as shipping_fee_count from orders where store_id is not null group by status, store_id order by 3 desc, status asc, store_id asc limit 10;

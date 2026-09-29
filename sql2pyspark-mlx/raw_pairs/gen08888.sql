@@ -1,0 +1,1 @@
+SELECT id, status, order_date, store_id, shipping_fee, ROW_NUMBER() OVER (PARTITION BY status ORDER BY order_date, id) AS row_num, LAG(shipping_fee, 1, 0) OVER (PARTITION BY store_id ORDER BY order_date, id) AS prev_shipping_fee FROM orders WHERE discount BETWEEN 0.28 AND 0.36;

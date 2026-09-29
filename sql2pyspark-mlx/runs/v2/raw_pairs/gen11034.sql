@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MIN(last_restock) AS first_last_restock, COUNT(*) AS num_inventory FROM inventory GROUP BY product_id) SELECT p.id, p.brand, p.price, pt.first_last_restock, pt.num_inventory FROM products p LEFT JOIN product_totals pt ON p.id = pt.product_id ORDER BY pt.num_inventory DESC

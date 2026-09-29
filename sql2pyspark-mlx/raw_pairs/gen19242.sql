@@ -1,0 +1,1 @@
+SELECT p.id, p.brand, COUNT(ss.id) AS store_sale_count, MIN(ss.units) AS min_units, COUNT(ss.revenue) AS revenue_count FROM products p INNER JOIN store_sales ss ON ss.product_id = p.id GROUP BY p.id, p.brand;

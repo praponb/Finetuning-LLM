@@ -1,0 +1,1 @@
+WITH ranked_accounts AS (SELECT *, RANK() OVER (PARTITION BY status ORDER BY opened_date DESC) AS pos FROM accounts WHERE customer_id IS NULL) SELECT id, status, opened_date, customer_id FROM ranked_accounts WHERE pos = 1 ORDER BY customer_id DESC;

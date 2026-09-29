@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, EXPLODE_OUTER(tier_prices) AS val FROM price_tiers) SELECT plan, PERCENTILE_APPROX(val, ARRAY(0.25, 0.5, 0.75)) AS val_quartiles, AVG(val) AS avg_val, MAX(val) FILTER (WHERE plan = 'enterprise') AS enterprise_max_val FROM flattened GROUP BY plan;

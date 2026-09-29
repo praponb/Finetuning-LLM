@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, DATE_TRUNC('MONTH', txn_time) AS txn_time_period, CONCAT(txn_type, ' - ', merchant) AS txn_type_merchant, COALESCE(merchant, 'DIRECT') AS resolved_merchant FROM transactions WHERE is_flagged) SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY txn_type, merchant ORDER BY txn_time DESC NULLS LAST) AS dedup_rank FROM valid) x WHERE dedup_rank = 1;

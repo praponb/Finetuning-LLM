@@ -1,0 +1,1 @@
+WITH filtered_shipments AS (SELECT *, UPPER(status) AS status_upper FROM shipments WHERE cost BETWEEN 54 AND 80), carrier_summary AS (SELECT carrier, MIN(shipped_date) AS min_shipped_date FROM filtered_shipments GROUP BY carrier) SELECT carrier, min_shipped_date FROM carrier_summary;

@@ -1,0 +1,1 @@
+select id, txn_type, merchant, amount, case when is_flagged then 'Yes' else 'No' end as is_flagged_label from transactions where amount <= 3100 and (account_id = 15 or amount between 2800 and 3300) order by is_flagged_label, id desc;

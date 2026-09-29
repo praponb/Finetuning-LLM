@@ -1,0 +1,1 @@
+with ranked as (select id, opened_date from (select *, row_number() over (partition by city order by sqft desc nulls last, id) as dedup_rank from stores) x where dedup_rank = 1) select id, opened_date from ranked

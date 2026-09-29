@@ -1,0 +1,1 @@
+select case when quantity >= 8 then 'high' when quantity >= 3 then 'mid' else 'low' end quantity_bucket, product_id, round(stddev(unit_price), 2) stddev_unit_price, count(distinct unit_price) unique_products from order_items where quantity > 4 group by 1, 2 order by unique_products, 2 desc, quantity_bucket limit 20

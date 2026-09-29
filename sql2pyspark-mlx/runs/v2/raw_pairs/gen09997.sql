@@ -1,0 +1,1 @@
+WITH payments_by_order AS (SELECT order_id, MIN(amount) AS min_amount FROM payments WHERE status IN ('FAILED', 'SUCCESS', 'REFUNDED') GROUP BY order_id) SELECT o.id, o.store_id, pbo.min_amount FROM orders o LEFT JOIN payments_by_order pbo ON o.id = pbo.order_id;

@@ -1,0 +1,1 @@
+SELECT store_id, DATE_TRUNC('MONTH', last_restock) AS last_restock_month, SUM(quantity) AS total_quantity FROM inventory WHERE product_id = 3 AND product_id IN (2, 4, 6, 7) AND quantity BETWEEN 66 AND 121 GROUP BY CUBE(store_id, DATE_TRUNC('MONTH', last_restock)) ORDER BY total_quantity DESC, last_restock_month;

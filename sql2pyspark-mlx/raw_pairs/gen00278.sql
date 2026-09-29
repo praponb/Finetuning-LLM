@@ -1,0 +1,1 @@
+SELECT id, city, sqft, opened_date, MAX(sqft) OVER (PARTITION BY city) AS city_max_sqft, DENSE_RANK() OVER (PARTITION BY city ORDER BY opened_date DESC) AS dense_rnk FROM stores WHERE sqft BETWEEN 5952 AND 8352;

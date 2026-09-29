@@ -1,0 +1,1 @@
+select city, month(opened_date) as opened_month, count(case when city = 'Berlin' then 1 end) as berlin_count from stores where sqft >= 15775 and opened_date > '2025-01-31' and opened_date <= '2024-01-25' group by city, month(opened_date) having berlin_count >= 3

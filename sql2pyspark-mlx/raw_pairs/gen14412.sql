@@ -1,0 +1,1 @@
+SELECT s.country, s.city, s.supplier_name, p.launch_date, p.price, p.stock_qty FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE p.product_name IS NULL AND s.rating < 3.8 ORDER BY p.launch_date;

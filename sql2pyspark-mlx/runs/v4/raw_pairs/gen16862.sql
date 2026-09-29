@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM departments s WHERE NOT EXISTS (SELECT 1 FROM employees x WHERE x.dept_id = s.id AND x.salary > 94000)) SELECT id, dept_name, location FROM eligible ORDER BY id DESC;

@@ -1,0 +1,1 @@
+WITH ValidOrders AS (SELECT * FROM orders WHERE amount >= 1570 AND channel = 'partner'), agg AS (SELECT status, MAX(amount) - MIN(amount) AS amount_range FROM ValidOrders GROUP BY status) SELECT * FROM agg ORDER BY status DESC, amount_range ASC

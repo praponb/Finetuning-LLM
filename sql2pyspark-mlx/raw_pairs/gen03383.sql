@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(a.opened_date, 'yyyy-MM') opened_month, MAX(t.amount) - MIN(t.amount) amount_range, ROUND(STDDEV(t.amount), 2) stddev_amount FROM transactions t RIGHT OUTER JOIN accounts a ON t.account_id = a.id GROUP BY DATE_FORMAT(a.opened_date, 'yyyy-MM') ORDER BY opened_month, amount_range DESC

@@ -1,0 +1,1 @@
+SELECT status, order_id, MIN(paid_at) AS first_paid_at, ROUND((100 * SUM(CASE WHEN status = 'REFUNDED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refunded FROM payments WHERE amount IS NULL GROUP BY status, order_id ORDER BY pct_refunded DESC

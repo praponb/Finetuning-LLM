@@ -1,0 +1,1 @@
+with lines as (select id, service, host, level, latency_ms, key, value from app_logs lateral view explode(context) e as key, value) select id, service, host, level, key, value, case when host rlike '^(h2|h4)$' then 'PRIORITY' when host rlike '^(h1|h3)$' then 'OTHER_ZONE' else 'CORE' end as host_zone from lines

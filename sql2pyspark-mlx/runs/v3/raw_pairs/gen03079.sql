@@ -1,0 +1,1 @@
+SELECT CASE WHEN page IN ('/checkout', '/cart') THEN 'group_a' ELSE 'other' END AS page_group, ROUND((100 * SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_click, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE event_type IN ('page_view', 'purchase') AND TO_DATE(event_time) >= '2023-09-22' GROUP BY 1 ORDER BY page_group DESC LIMIT 50;

@@ -1,0 +1,1 @@
+SELECT product_id, quantity_count FROM (SELECT product_id, COUNT(quantity) AS quantity_count FROM inventory WHERE last_restock BETWEEN '2024-05-18' AND '2024-10-16' GROUP BY product_id) AS x WHERE quantity_count >= 4 ORDER BY product_id DESC

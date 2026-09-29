@@ -1,0 +1,1 @@
+SELECT id, device, browser, started_at, country, FIRST_VALUE(browser) IGNORE NULLS OVER (PARTITION BY country, browser ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_browser, FIRST_VALUE(country, TRUE) OVER w_grp AS first_known_country FROM sessions WINDOW w_grp AS (ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)

@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY product_id) SELECT p.product_name, p.category, ps.last_last_restock FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id ORDER BY last_last_restock;

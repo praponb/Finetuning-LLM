@@ -1,0 +1,38 @@
+{
+  "total": 13000,
+  "ok": 12999,
+  "pass_rate": 0.9999,
+  "ok_but_empty_result": 1999,
+  "by_status": {
+    "ok": 12999,
+    "sql_error": 1
+  },
+  "by_family": {
+    "cx_full_outer": {
+      "ok": 591
+    },
+    "cx_grouping": {
+      "ok": 1273
+    },
+    "cx_interval": {
+      "ok": 925
+    },
+    "cx_pipeline": {
+      "ok": 4040,
+      "sql_error": 1
+    },
+    "cx_reshape": {
+      "ok": 1187
+    },
+    "cx_sessionize": {
+      "ok": 1059
+    },
+    "cx_setop": {
+      "ok": 1724
+    },
+    "cx_window_heavy": {
+      "ok": 2200
+    }
+  },
+  "seconds": 1965.0
+}

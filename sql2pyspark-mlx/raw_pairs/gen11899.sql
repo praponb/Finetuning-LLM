@@ -1,0 +1,1 @@
+select case when amount >= 1400 then 'high' when amount >= 710 then 'mid' else 'low' end as amount_bucket, sum(case when status = 'SUCCESS' then 1 else 0 end) as success_count from payments where amount between 620 and 700 group by 1 order by success_count

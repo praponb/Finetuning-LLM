@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.amount, transactions.account_id, transactions.merchant, accounts.account_type, accounts.customer_id FROM transactions FULL OUTER JOIN accounts ON transactions.account_id = accounts.id WHERE accounts.status = 'OPEN' AND transactions.txn_type IN ('CREDIT', 'DEBIT');

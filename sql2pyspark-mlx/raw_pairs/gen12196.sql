@@ -1,0 +1,1 @@
+SELECT d.channel, s.status AS shipment_status, COUNT(*) AS num_rows, ROUND(SUM(s.cost), 2) AS total_cost FROM shipments s INNER JOIN orders d ON s.order_id = d.id GROUP BY ROLLUP (d.channel, s.status)

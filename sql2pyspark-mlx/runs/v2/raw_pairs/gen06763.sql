@@ -1,0 +1,1 @@
+select date_format(s.opened_date, 'yyyy-MM') as opened_month, s.city, max(ss.revenue) as max_revenue, sum(ss.revenue) as total_revenue from store_sales ss inner join stores s on ss.store_id = s.id group by date_format(s.opened_date, 'yyyy-MM'), s.city having max(ss.revenue) >= 1000;

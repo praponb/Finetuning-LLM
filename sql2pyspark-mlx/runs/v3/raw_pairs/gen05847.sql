@@ -1,0 +1,1 @@
+SELECT id, carrier, delivered_date, shipped_date, SUBSTRING(status, 1, 2) status_prefix, LAST_DAY(delivered_date) delivered_date_month_end FROM shipments WHERE delivered_date > '2023-04-12' AND delivered_date >= '2025-01-17' AND YEAR(delivered_date) = 2024 ORDER BY id DESC, shipped_date

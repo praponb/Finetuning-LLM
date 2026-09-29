@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM suppliers QUALIFY RANK() OVER (PARTITION BY city ORDER BY rating DESC) = 1) SELECT id, supplier_name, country, CASE WHEN supplier_name RLIKE '^(Tokyo Traders|Global Supply)$' THEN 'PRIORITY' ELSE 'EXTENDED' END AS supplier_name_zone FROM latest ORDER BY supplier_name_zone DESC NULLS LAST

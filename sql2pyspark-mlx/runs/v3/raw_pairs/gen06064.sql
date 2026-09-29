@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, ss.product_id, ss.store_id, s.store_name, s.opened_date, FLOOR(ss.units) units_whole FROM store_sales ss RIGHT JOIN stores s ON s.id = ss.store_id WHERE s.sqft BETWEEN 12242 AND 15955 AND s.region IN ('East', 'West') ORDER BY units_whole DESC;

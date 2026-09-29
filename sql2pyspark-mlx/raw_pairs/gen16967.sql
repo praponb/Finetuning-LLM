@@ -1,0 +1,1 @@
+SELECT id, page, event_time FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time DESC, id) AS rnk FROM web_events WHERE duration_sec != 393) AS ranked WHERE rnk <= 3 ORDER BY event_time DESC;

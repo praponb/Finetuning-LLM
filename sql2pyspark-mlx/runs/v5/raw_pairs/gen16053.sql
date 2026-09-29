@@ -1,0 +1,1 @@
+WITH AccountStats AS (SELECT account_id, MIN(txn_time) first_txn_time, SUM(CASE WHEN txn_type = 'DEBIT' THEN amount ELSE 0 END) debit_amount FROM transactions WHERE TO_DATE(txn_time) >= '2025-06-23' GROUP BY account_id) SELECT a.balance, a.opened_date, A.first_txn_time, A.debit_amount FROM accounts a INNER JOIN AccountStats A ON a.id = A.account_id ORDER BY a.opened_date;

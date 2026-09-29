@@ -1,0 +1,1 @@
+SELECT MONTH(signup_date) AS signup_month, segment, country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(segment))) AS segment_values FROM customers WHERE city IN ('Tokyo', 'Chiang Mai') AND name LIKE 'Hen%' AND credit_limit > 12000 GROUP BY signup_month, segment, country;

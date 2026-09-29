@@ -1,0 +1,1 @@
+WITH ranked_order_items AS (SELECT id, product_id, unit_price, quantity, RANK() OVER (PARTITION BY product_id ORDER BY unit_price) AS rnk FROM order_items WHERE unit_price BETWEEN 180 AND 270) SELECT id, product_id, unit_price, quantity FROM ranked_order_items WHERE rnk = 1 ORDER BY unit_price ASC

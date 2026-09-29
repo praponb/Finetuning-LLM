@@ -1,0 +1,1 @@
+SELECT p.category, YEAR(p.launch_date) AS launch_year, COUNT(i.quantity) AS quantity_count, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i LEFT JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY p.category, YEAR(p.launch_date) ORDER BY p.category DESC, launch_year LIMIT 10;

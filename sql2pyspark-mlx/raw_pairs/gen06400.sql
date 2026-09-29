@@ -1,0 +1,1 @@
+WITH ranked_customers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date, id) pos FROM customers WHERE credit_limit < 10400) SELECT id, segment, signup_date FROM ranked_customers WHERE pos = 1 ORDER BY id DESC;

@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.product_id, orders.shipping_fee, orders.customer_id FROM order_items LEFT JOIN orders ON orders.id = order_items.order_id WHERE order_items.order_id IN (28, 33, 37) ORDER BY order_items.product_id ASC, id ASC LIMIT 20

@@ -1,0 +1,1 @@
+SELECT city, country, COUNT(CASE WHEN country = 'UK' THEN 1 END) AS uk_count, SUM(rating) AS total_rating FROM suppliers WHERE rating > 2.0 AND supplier_name NOT LIKE 'Sia%' AND LENGTH(supplier_name) >= 13 GROUP BY city, country HAVING SUM(rating) > 8 ORDER BY total_rating ASC, city ASC

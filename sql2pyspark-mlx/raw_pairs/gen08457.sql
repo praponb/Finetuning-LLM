@@ -1,0 +1,1 @@
+SELECT orders.channel, COUNT(shipments.id) AS shipment_count, MAX(shipments.shipped_date) AS last_shipped_date FROM orders LEFT OUTER JOIN shipments ON shipments.order_id = orders.id GROUP BY orders.channel HAVING COUNT(shipments.id) > 2;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1780 THEN 'high' WHEN amount >= 220 THEN 'mid' ELSE 'low' END AS amount_bucket, SUM(amount) AS total_amount, SUM(SUM(amount)) OVER (ORDER BY CASE WHEN amount >= 1780 THEN 'high' WHEN amount >= 220 THEN 'mid' ELSE 'low' END) AS cumulative_amount FROM payments GROUP BY CASE WHEN amount >= 1780 THEN 'high' WHEN amount >= 220 THEN 'mid' ELSE 'low' END;

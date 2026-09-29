@@ -1,0 +1,1 @@
+select status, date_trunc('MONTH', opened_date) as opened_month, year(opened_date) as opened_year, min(balance) as min_balance, count(*) as num_accounts from accounts where status = 'CLOSED' group by status, date_trunc('MONTH', opened_date), year(opened_date)

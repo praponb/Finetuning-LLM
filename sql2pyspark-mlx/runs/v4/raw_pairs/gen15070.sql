@@ -1,0 +1,1 @@
+SELECT products.cost, products.price, store_sales.sale_date, store_sales.revenue, store_sales.product_id FROM products LEFT JOIN store_sales ON store_sales.product_id = products.id ORDER BY products.price DESC;

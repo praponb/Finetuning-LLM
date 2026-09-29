@@ -1,0 +1,1 @@
+select a.id, a.status, a.opened_date, a.account_type from accounts a where a.opened_date between '2024-02-01' and '2024-05-01' and exists (select 1 from transactions t where t.account_id = a.id and t.account_id in (21, 23)) order by a.id desc;

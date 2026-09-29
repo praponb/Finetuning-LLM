@@ -1,0 +1,1 @@
+SELECT o.channel, ROUND(STDDEV(oi.quantity), 2) stddev_quantity, MIN(oi.unit_price) min_unit_price FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id LEFT JOIN products p ON oi.product_id = p.id GROUP BY o.channel;

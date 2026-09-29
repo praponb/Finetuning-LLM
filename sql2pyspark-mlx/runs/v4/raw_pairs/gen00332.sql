@@ -1,0 +1,1 @@
+select id, manager_id, salary, hire_date from (select id, manager_id, salary, hire_date, row_number() over (partition by manager_id order by salary, id) as pos from employees where month(hire_date) in (5, 8, 12)) as r where pos <= 3;

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(paid_at, 'yyyy-MM') AS paid_month, method, status, MAX(paid_at) AS latest_paid_at, COUNT(*) AS num_payments, SORT_ARRAY(COLLECT_SET(method)) AS method_list FROM payments GROUP BY paid_month, method, status;

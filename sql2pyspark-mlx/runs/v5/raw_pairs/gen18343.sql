@@ -1,0 +1,1 @@
+SELECT d.brand, COUNT(*) AS rows_total, MIN(src.unit_price) AS min_unit_price, ROUND(AVG(src.quantity), 2) AS avg_quantity, GROUPING_ID() AS grouping_level FROM order_items src LEFT JOIN products d ON src.product_id = d.id GROUP BY ROLLUP (d.brand) ORDER BY brand ASC NULLS FIRST;

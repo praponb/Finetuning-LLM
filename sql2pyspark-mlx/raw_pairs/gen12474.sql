@@ -1,0 +1,1 @@
+with valid as (select id, method, amount, paid_at, status, round(amount, 2) as amount_rounded from payments where paid_at > date '2023-04-23' and method is not null) select id, status from valid intersect all select id, status from payments where paid_at < '2023-08-01'

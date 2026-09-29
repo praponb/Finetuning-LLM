@@ -1,0 +1,1 @@
+SELECT id, name, email, country, signup_date, credit_limit, ROUND(credit_limit / SUM(credit_limit) OVER (PARTITION BY country), 4) AS credit_limit_share, ROUND(age / SUM(age) OVER (PARTITION BY city), 4) AS age_share, NTILE(5) OVER (PARTITION BY segment ORDER BY credit_limit DESC, id) AS credit_limit_bucket FROM customers

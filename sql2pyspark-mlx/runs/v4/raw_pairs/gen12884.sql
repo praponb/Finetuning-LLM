@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, items, ship_to, SIZE(items) AS num_items, ship_to.country AS ship_country, ARRAY_MAX(TRANSFORM(items, item -> item.price)) AS max_item_price, SIZE(FILTER(items, item -> item.qty >= 3)) AS bulk_lines FROM carts WHERE ARRAY_CONTAINS(coupon_codes, 'SPRING10')

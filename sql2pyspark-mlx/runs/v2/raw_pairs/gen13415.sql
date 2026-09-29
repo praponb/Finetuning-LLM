@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 2.0 THEN 'mid' ELSE 'low' END AS rating_bucket, city, COUNT(*) AS cnt FROM suppliers WHERE city NOT IN ('New York', 'Chiang Mai', 'London') GROUP BY CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 2.0 THEN 'mid' ELSE 'low' END, city ORDER BY rating_bucket, city LIMIT 3;

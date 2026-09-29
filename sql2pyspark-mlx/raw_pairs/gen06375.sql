@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY end_date DESC, id) AS row_num FROM subscriptions) SELECT id, customer_id, end_date FROM numbered WHERE row_num <= 5 ORDER BY id DESC;

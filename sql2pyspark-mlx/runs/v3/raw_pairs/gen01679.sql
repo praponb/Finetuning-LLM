@@ -1,0 +1,1 @@
+select location, round(stddev(budget), 2) as stddev_budget, max(budget) - min(budget) as budget_range, avg(budget) as avg_budget from departments where dept_name = 'Finance' and location is not null group by location having round(stddev(budget), 2) < 74;

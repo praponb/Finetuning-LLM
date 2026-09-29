@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, plan, start_date, monthly_fee, status, CAST(monthly_fee AS INT) AS monthly_fee_int, SUBSTRING(plan, 1, 2) AS plan_prefix FROM subscriptions WHERE end_date >= TO_DATE('2023-07-19')) SELECT * FROM (SELECT status, plan, monthly_fee_int FROM cleaned) src PIVOT (MAX(monthly_fee_int) AS amount FOR plan IN ('premium' AS premium, 'standard' AS standard))

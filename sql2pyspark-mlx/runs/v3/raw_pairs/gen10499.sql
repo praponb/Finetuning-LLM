@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, p.category, p.launch_date, o.customer_id, o.shipping_fee FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id ORDER BY customer_id DESC, launch_date ASC;

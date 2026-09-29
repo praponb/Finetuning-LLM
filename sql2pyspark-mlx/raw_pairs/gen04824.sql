@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, product_id, units, units - revenue AS revenue_per_unit, CAST(revenue AS INT) AS revenue_int FROM store_sales WHERE sale_date > DATE '2023-06-15') SELECT src.*, p.price FROM cleaned src LEFT JOIN products p ON src.product_id = p.id

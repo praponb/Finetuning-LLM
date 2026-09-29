@@ -1,0 +1,1 @@
+select id, product_id, last_restock, rank() over (order by quantity desc nulls last) as quantity_rank, percent_rank() over (partition by product_id order by quantity desc nulls last) as quantity_percent_rank from inventory;

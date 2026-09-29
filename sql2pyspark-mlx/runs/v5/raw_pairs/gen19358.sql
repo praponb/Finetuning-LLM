@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, p.price, CASE WHEN p.price >= 1050 THEN 'High' WHEN p.price >= 370 THEN 'Medium' ELSE 'Low' END AS price_level FROM order_items oi INNER JOIN products p ON p.id = oi.product_id ORDER BY price_level ASC;

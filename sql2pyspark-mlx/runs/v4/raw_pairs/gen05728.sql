@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT a.*, p.opened_date, p.city, p.sqft FROM inventory a LEFT JOIN stores p ON a.store_id = p.id) SELECT DATE_TRUNC('WEEK', opened_date) AS week_start, BIT_AND(quantity) AS quantity_bit_and, ROUND(AVG(sqft), 2) AS avg_sqft FROM enriched GROUP BY DATE_TRUNC('WEEK', opened_date) ORDER BY avg_sqft NULLS FIRST;

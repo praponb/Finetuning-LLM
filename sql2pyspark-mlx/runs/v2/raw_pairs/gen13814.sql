@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values FROM products WHERE cost BETWEEN 360 AND 640 GROUP BY supplier_id) SELECT s.rating, s.country, ss.category_values FROM suppliers s LEFT JOIN supplier_stats ss ON s.id = ss.supplier_id

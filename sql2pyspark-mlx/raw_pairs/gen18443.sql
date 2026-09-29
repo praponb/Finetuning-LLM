@@ -1,0 +1,1 @@
+SELECT id, delivered_date, status, cost, order_id, MIN(cost) OVER (PARTITION BY MONTH(delivered_date), status) AS delivered_date_month_min_cost, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY delivered_date, id) AS rn FROM shipments;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 85 THEN 'LARGE' ELSE 'SMALL' END AS cost_tier, COUNT(*) FILTER (WHERE status = 'RETURNED') AS returned_rows, SUM(CASE WHEN carrier = 'DHL' THEN cost ELSE 0 END) AS dhl_cost, COUNT(*) FILTER (WHERE status = 'IN_TRANSIT') AS in_transit_rows FROM shipments GROUP BY cost_tier;

@@ -1,0 +1,1 @@
+select order_items.id, order_items.order_id, products.brand, products.supplier_id, orders.store_id from order_items full outer join products on order_items.product_id = products.id full outer join orders on orders.id = order_items.order_id where order_items.unit_price between 200 and 290 and order_items.order_id in (14, 32, 34)

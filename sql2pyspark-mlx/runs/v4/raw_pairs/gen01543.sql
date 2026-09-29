@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, COUNT(quantity) AS quantity_count FROM order_items GROUP BY order_id) SELECT o.id, o.order_date, os.quantity_count FROM orders o LEFT OUTER JOIN order_summary os ON o.id = os.order_id

@@ -1,0 +1,1 @@
+SELECT o.id, o.order_date, o.amount, c.email, c.credit_limit, s.opened_date, s.city FROM orders o LEFT OUTER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id WHERE NOT (c.city NOT IN ('Chiang Mai', 'Berlin', 'London') AND c.credit_limit BETWEEN 9000 AND 12500) ORDER BY s.city;

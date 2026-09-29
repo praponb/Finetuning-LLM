@@ -1,0 +1,1 @@
+with recent_employees as (select *, initcap(trim(full_name)) as full_name_title from employees where is_remote = false), summary as (select date_format(hire_date, 'yyyy-MM') as hire_month, sum(case when level = 'L1' then 1 else 0 end) as l1_count, max(salary) - min(salary) as salary_range from recent_employees group by date_format(hire_date, 'yyyy-MM')) select * from summary;

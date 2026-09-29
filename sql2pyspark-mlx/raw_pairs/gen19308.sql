@@ -1,0 +1,1 @@
+SELECT s.id, s.cost, s.carrier, s.shipped_date, o.store_id, o.amount, o.discount, o.discount - o.shipping_fee AS discount_minus_shipping_fee FROM shipments s INNER JOIN orders o ON s.order_id = o.id WHERE o.shipping_fee <= 29 AND s.shipped_date < '2024-01-18'

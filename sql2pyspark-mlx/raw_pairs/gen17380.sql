@@ -1,0 +1,1 @@
+select id, account_id, is_flagged, case when txn_type in ('CREDIT', 'DEBIT') then 'Priority' else 'Other' end as txn_type_group, cast(amount as int) as amount_int from transactions where account_id = 9 order by id desc limit 50

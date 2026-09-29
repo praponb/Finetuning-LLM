@@ -1,0 +1,1 @@
+SELECT dept_name, CASE WHEN budget >= 3723000 THEN 'high' WHEN budget >= 1935000 THEN 'mid' ELSE 'low' END AS budget_bucket, MAX(budget) - MIN(budget) AS budget_range, COUNT(CASE WHEN dept_name = 'Finance' THEN 1 END) AS finance_count, ROUND(STDDEV(budget), 2) AS stddev_budget FROM departments GROUP BY dept_name, budget_bucket ORDER BY 5

@@ -1,0 +1,1 @@
+select *, lag(cost) over w_grp prev_cost, lead(cost) over w_grp next_cost, row_number() over w_grp row_seq from shipments where status in ('LOST', 'RETURNED') window w_grp as (partition by carrier, status order by delivered_date, id)

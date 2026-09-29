@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_merchants, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions WHERE NOT is_flagged GROUP BY account_id) SELECT a.id, a.account_type, as.unique_merchants, as.merchant_list FROM accounts a LEFT JOIN account_stats as ON a.id = as.account_id ORDER BY account_type, id DESC;

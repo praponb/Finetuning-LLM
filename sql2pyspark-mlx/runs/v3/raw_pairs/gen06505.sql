@@ -1,0 +1,1 @@
+select date_format(o.order_date, 'yyyy-MM') as order_month, min(p.paid_at) as min_paid_at from payments p left join orders o on p.order_id = o.id where month(o.order_date) in (2, 4, 8) group by date_format(o.order_date, 'yyyy-MM')

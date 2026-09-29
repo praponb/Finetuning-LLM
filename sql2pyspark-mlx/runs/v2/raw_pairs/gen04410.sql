@@ -1,0 +1,1 @@
+WITH web_events_by_session AS (SELECT session_id, SUM(duration_sec) AS total_duration_sec FROM web_events WHERE session_id IN (11, 17) GROUP BY session_id) SELECT sessions.customer_id, web_events_by_session.total_duration_sec FROM sessions JOIN web_events_by_session ON sessions.id = web_events_by_session.session_id WHERE web_events_by_session.total_duration_sec >= 2700;

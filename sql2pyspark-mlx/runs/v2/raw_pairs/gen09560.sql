@@ -1,0 +1,1 @@
+SELECT status, SUM(discount) AS total_discount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM orders WHERE discount > 0.26 AND customer_id IN (17, 21, 30) GROUP BY status HAVING total_discount >= 0.7;

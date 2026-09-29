@@ -1,0 +1,1 @@
+SELECT id, last_restock, CAST(quantity AS STRING) AS quantity_str, CEIL(quantity) AS quantity_whole FROM inventory WHERE NOT (store_id IN (1, 6) AND (product_id = 5 OR MONTH(last_restock) IN (6, 7, 10)));

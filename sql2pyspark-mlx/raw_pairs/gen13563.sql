@@ -1,0 +1,1 @@
+select case when year(sale_date) < 2024 then 'before_2024' when year(sale_date) = 2024 then '2024' else 'after_2024' end sale_cohort, round(stddev(units), 2) stddev_units, sum(revenue) total_revenue from store_sales group by sale_cohort

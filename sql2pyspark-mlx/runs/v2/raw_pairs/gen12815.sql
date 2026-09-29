@@ -1,0 +1,1 @@
+WITH ProductStats AS (SELECT product_id, ROUND(STDDEV(revenue), 2) AS stddev_revenue, MAX(units) - MIN(units) AS units_range FROM store_sales WHERE units >= 12 GROUP BY product_id) SELECT p.category, p.launch_date, P.stddev_revenue, P.units_range FROM products p JOIN ProductStats P ON p.id = P.product_id WHERE P.stddev_revenue >= 43;

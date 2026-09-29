@@ -1,0 +1,1 @@
+SELECT id, store_id, NTILE(3) OVER (PARTITION BY store_id ORDER BY quantity DESC, id ASC) AS quantity_bucket, SUM(quantity) OVER (PARTITION BY product_id ORDER BY quantity ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_quantity, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY quantity DESC, id ASC) AS seq_no FROM inventory;

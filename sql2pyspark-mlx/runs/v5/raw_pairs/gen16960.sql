@@ -1,0 +1,1 @@
+SELECT s.browser, COUNT(we.id) AS web_event_count, MIN(we.duration_sec) AS min_duration_sec, SORT_ARRAY(COLLECT_SET(we.event_type)) AS event_type_list FROM sessions s INNER JOIN web_events we ON we.session_id = s.id GROUP BY s.browser;

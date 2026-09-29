@@ -1,0 +1,1 @@
+select is_remote, unique_levels from (select is_remote, count(distinct salary) unique_levels from employees where email is null group by is_remote) s where unique_levels >= 5 order by unique_levels desc

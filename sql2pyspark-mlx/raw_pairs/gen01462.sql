@@ -1,0 +1,1 @@
+with not_flagged as (select s.* from departments s where not exists (select 1 from employees x where x.dept_id = s.id and x.manager_id is null)) select id, dept_name, location, case when dept_name rlike '^(Marketing|Finance)$' then 'PRIORITY' else 'EXTENDED' end as dept_name_zone from not_flagged order by dept_name;

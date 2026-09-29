@@ -1,0 +1,1 @@
+WITH ranked_products AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY stock_qty DESC, id) AS pos FROM products WHERE brand = 'Umbrella') SELECT id, supplier_id, stock_qty FROM ranked_products WHERE pos <= 5

@@ -1,0 +1,1 @@
+with orders_by_store as (select store_id, sort_array(collect_set(channel)) as channel_list from orders where store_id in (28, 38) group by store_id) select s.city, obs.channel_list from stores s join orders_by_store obs on s.id = obs.store_id order by city;

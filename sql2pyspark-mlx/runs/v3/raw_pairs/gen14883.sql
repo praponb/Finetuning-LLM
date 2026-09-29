@@ -1,0 +1,1 @@
+SELECT id, store_id, order_date, amount, SUM(amount) OVER (PARTITION BY store_id ORDER BY order_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount FROM orders WHERE customer_id = 11;

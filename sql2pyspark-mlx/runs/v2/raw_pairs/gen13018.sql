@@ -1,0 +1,1 @@
+SELECT QUARTER(order_date) AS order_quarter, COUNT(discount) AS discount_count, MAX(amount) - MIN(amount) AS amount_range, AVG(amount) AS avg_amount FROM orders WHERE channel = 'partner' OR YEAR(order_date) >= 2023 GROUP BY QUARTER(order_date) ORDER BY 1;

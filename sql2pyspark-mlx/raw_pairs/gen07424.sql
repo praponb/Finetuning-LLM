@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, order_id, carrier, delivered_date, cost, status, DATE_SUB(shipped_date, 67) AS shipped_date_minus_67d, COALESCE(carrier, 'UNKNOWN') AS carrier_filled FROM shipments WHERE shipped_date > '2024-01-01') SELECT *, ROW_NUMBER() OVER (PARTITION BY status, order_id ORDER BY cost NULLS LAST, id) AS rank_in_group FROM cleaned QUALIFY rank_in_group = 1;

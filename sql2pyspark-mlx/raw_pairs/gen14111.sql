@@ -1,0 +1,1 @@
+SELECT s.region, COUNT(o.id) AS order_count, MAX(o.amount) - MIN(o.amount) AS amount_range, SUM(CASE WHEN o.status = 'PENDING' THEN 1 ELSE 0 END) AS pending_count FROM stores s LEFT JOIN orders o ON o.store_id = s.id GROUP BY s.region;

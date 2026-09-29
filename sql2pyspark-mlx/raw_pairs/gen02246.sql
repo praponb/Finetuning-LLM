@@ -1,0 +1,1 @@
+SELECT e.id, e.email AS employee_email, e.manager_id AS employee_manager_id, m.level AS manager_level, m.hire_date AS manager_hire_date, m.dept_id AS manager_dept_id FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE e.level <> 'L4'

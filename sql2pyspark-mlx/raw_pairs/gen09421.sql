@@ -1,0 +1,1 @@
+WITH top_departments AS (SELECT id, location, budget, RANK() OVER (PARTITION BY location ORDER BY budget) AS pos FROM departments WHERE budget BETWEEN 1311000 AND 2233000) SELECT id, location, budget FROM top_departments WHERE pos <= 2 ORDER BY budget DESC;

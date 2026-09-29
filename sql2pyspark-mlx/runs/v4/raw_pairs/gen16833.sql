@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY brand ORDER BY cost) AS rank_in_group FROM products) t WHERE rank_in_group = 1) SELECT id, product_name, category, brand, price, CASE WHEN category RLIKE '^(Fashion|Home)$' THEN 'GROUP_B' ELSE 'CORE' END AS category_zone FROM ranked ORDER BY brand NULLS FIRST, category DESC

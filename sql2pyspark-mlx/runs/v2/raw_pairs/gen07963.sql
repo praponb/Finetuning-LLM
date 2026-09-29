@@ -1,0 +1,1 @@
+select o.id, o.order_date, o.status, s.region, s.store_name, c.is_active, c.signup_date, date_format(s.opened_date, 'yyyy-MM-dd') as opened_date_label from orders o left outer join stores s on s.id = o.store_id left outer join customers c on o.customer_id = c.id;

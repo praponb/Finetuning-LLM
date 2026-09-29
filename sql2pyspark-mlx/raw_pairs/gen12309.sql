@@ -1,0 +1,1 @@
+SELECT order_items.product_id, products.product_name, suppliers.country, INITCAP(TRIM(suppliers.supplier_name)) AS supplier_name_title FROM order_items LEFT OUTER JOIN products ON order_items.product_id = products.id JOIN suppliers ON products.supplier_id = suppliers.id ORDER BY product_name DESC;

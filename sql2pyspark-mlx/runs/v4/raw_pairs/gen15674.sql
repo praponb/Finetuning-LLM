@@ -1,0 +1,1 @@
+SELECT p.brand, SUM(ss.revenue) AS total_revenue FROM store_sales ss RIGHT JOIN products p ON ss.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.brand ORDER BY total_revenue;

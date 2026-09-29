@@ -1,0 +1,1 @@
+select s.country, max(we.duration_sec) - min(we.duration_sec) as duration_sec_range, sum(we.duration_sec) as total_duration_sec from web_events we inner join sessions s on we.session_id = s.id group by s.country

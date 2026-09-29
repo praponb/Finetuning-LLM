@@ -1,0 +1,1 @@
+select case when rating >= 4.5 then 'high' when rating >= 2.4 then 'mid' else 'low' end as rating_bucket, city, round(avg(rating), 2) as avg_rating from suppliers group by case when rating >= 4.5 then 'high' when rating >= 2.4 then 'mid' else 'low' end, city order by city

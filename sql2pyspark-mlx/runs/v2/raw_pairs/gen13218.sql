@@ -1,0 +1,1 @@
+SELECT o.channel, MAX(p.amount) AS max_amount, ROUND((100 * SUM(CASE WHEN p.status = 'REFUNDED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refunded FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id WHERE p.paid_at < '2023-11-01' GROUP BY o.channel ORDER BY 1;

@@ -1,0 +1,1 @@
+select p.category, count(distinct oi.unit_price) as unique_products from order_items oi inner join products p on oi.product_id = p.id left join orders o on oi.order_id = o.id group by p.category order by 2 asc, p.category asc limit 50;

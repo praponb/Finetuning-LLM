@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, customer_id, device, browser, started_at, HOUR(started_at) started_at_hour, COALESCE(country, 'OTHER') country_clean FROM sessions WHERE started_at >= TO_TIMESTAMP('2023-05-01 00:00:00') AND country IS DISTINCT FROM 'JP') SELECT * FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY customer_id, browser ORDER BY started_at, id) = 1;

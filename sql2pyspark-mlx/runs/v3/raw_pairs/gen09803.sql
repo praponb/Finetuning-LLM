@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY start_date, id) AS row_num FROM subscriptions) SELECT id, plan, start_date FROM Ranked WHERE row_num = 1 ORDER BY start_date DESC;

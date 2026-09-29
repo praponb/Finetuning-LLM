@@ -1,0 +1,1 @@
+SELECT id, status, ROUND(amount, 1) AS amount_rounded, ROUND(shipping_fee, 1) AS shipping_fee_rounded FROM orders WHERE shipping_fee <= 28 AND (discount < 0.16 OR discount BETWEEN 0.17 AND 0.37) ORDER BY amount_rounded DESC

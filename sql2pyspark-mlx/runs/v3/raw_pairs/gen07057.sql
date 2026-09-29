@@ -1,0 +1,1 @@
+SELECT CASE WHEN country IN ('SG', 'UK') THEN 'group_a' ELSE 'other' END AS country_group, ROUND(AVG(rating), 2) AS avg_rating, SUM(CASE WHEN country = 'TH' THEN 1 ELSE 0 END) AS th_count FROM suppliers GROUP BY country_group ORDER BY th_count

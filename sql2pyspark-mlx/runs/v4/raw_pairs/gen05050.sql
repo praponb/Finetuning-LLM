@@ -1,0 +1,1 @@
+SELECT YEAR(opened_date) AS opened_year, ROUND(STDDEV(balance), 2) AS stddev_balance, SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END) AS closed_count FROM accounts WHERE status = 'FROZEN' GROUP BY YEAR(opened_date) ORDER BY opened_year DESC

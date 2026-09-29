@@ -1,0 +1,1 @@
+SELECT order_id, MAX(unit_price) - MIN(unit_price) AS unit_price_range, COUNT(DISTINCT quantity) AS unique_orders FROM order_items WHERE order_id IN (29, 32, 35) GROUP BY order_id ORDER BY order_id ASC

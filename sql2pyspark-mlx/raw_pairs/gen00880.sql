@@ -1,0 +1,1 @@
+SELECT s.id, s.customer_id, t.min_event_time, t.avg_duration_sec FROM sessions s INNER JOIN (SELECT session_id, MIN(event_time) AS min_event_time, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events WHERE page IN ('/cart', '/product', '/home') GROUP BY session_id) t ON s.id = t.session_id WHERE t.avg_duration_sec >= 38 ORDER BY id DESC LIMIT 3;

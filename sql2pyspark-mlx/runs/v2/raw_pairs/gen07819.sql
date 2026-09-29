@@ -1,0 +1,1 @@
+SELECT brand, max_cost, unique_suppliers FROM (SELECT brand, MAX(cost) AS max_cost, COUNT(DISTINCT price) AS unique_suppliers FROM products WHERE category IN ('Fashion', 'Home', 'Books') GROUP BY brand) AS sub WHERE max_cost >= 440 ORDER BY unique_suppliers DESC;

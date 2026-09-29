@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(quantity) AS max_quantity, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items GROUP BY CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END HAVING avg_quantity < 67

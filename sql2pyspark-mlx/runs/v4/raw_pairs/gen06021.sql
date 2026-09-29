@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT id, store_id FROM store_sales EXCEPT SELECT id, store_id FROM store_sales WHERE product_id IN (8, 10)), verified AS (SELECT s.* FROM store_sales s INNER JOIN remaining_keys k ON s.id = k.id AND s.store_id = k.store_id) SELECT id, store_id, sale_date, revenue FROM verified;

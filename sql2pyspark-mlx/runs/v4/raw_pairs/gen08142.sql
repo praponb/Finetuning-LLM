@@ -1,0 +1,1 @@
+select we.id, we.event_time, s.country, s.browser, c.credit_limit, c.is_active from web_events we inner join sessions s on we.session_id = s.id right outer join customers c on s.customer_id = c.id where we.session_id in (4, 10, 20, 37) and we.session_id in (8, 35, 38) order by s.browser, country;

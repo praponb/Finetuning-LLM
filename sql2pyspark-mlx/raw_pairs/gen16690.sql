@@ -1,0 +1,1 @@
+select year(customers.signup_date) as signup_year, customers.country, round(stddev(subscriptions.monthly_fee), 2) as stddev_monthly_fee from subscriptions join customers on customers.id = subscriptions.customer_id where length(customers.name) > 8 group by year(customers.signup_date), customers.country order by stddev_monthly_fee, customers.country

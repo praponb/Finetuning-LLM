@@ -1,0 +1,1 @@
+SELECT id, customer_id, device, browser, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at DESC, id) AS row_seq, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) AS row_seq_2 FROM sessions

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, YEAR(s.opened_date) AS opened_year, MAX(o.order_date) AS latest_order_date, SUM(o.shipping_fee) AS total_shipping_fee FROM orders o LEFT JOIN stores s ON o.store_id = s.id WHERE s.city = 'New York' GROUP BY DATE_TRUNC('MONTH', s.opened_date), YEAR(s.opened_date) ORDER BY opened_month, latest_order_date

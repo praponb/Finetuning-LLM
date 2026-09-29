@@ -1,0 +1,1 @@
+select oi.id, oi.order_id, p.brand, p.launch_date, o.discount, o.store_id from order_items oi join products p on oi.product_id = p.id join orders o on oi.order_id = o.id where p.cost between 320 and 510 order by discount desc, id limit 3;

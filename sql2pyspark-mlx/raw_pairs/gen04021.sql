@@ -1,0 +1,1 @@
+SELECT CASE WHEN p.category IN ('Home', 'Grocery') THEN 'core' ELSE 'other' END AS category_group, COUNT(DISTINCT i.quantity) AS unique_stores FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE p.stock_qty = 132 GROUP BY CASE WHEN p.category IN ('Home', 'Grocery') THEN 'core' ELSE 'other' END ORDER BY unique_stores DESC;

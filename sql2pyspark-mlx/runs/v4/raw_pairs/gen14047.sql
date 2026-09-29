@@ -1,0 +1,1 @@
+select p.id, p.price, t.total_unit_price from products p left join (select product_id, sum(unit_price) as total_unit_price from order_items group by product_id) t on p.id = t.product_id where t.total_unit_price > 1800 order by price;

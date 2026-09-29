@@ -1,0 +1,1 @@
+SELECT sessions.country, COUNT(web_events.duration_sec) AS duration_sec_count FROM web_events LEFT JOIN sessions ON web_events.session_id = sessions.id WHERE web_events.duration_sec > 328 GROUP BY sessions.country

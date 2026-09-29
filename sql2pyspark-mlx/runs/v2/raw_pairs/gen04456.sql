@@ -1,0 +1,1 @@
+WITH recent_orders AS (SELECT * FROM orders WHERE discount < 0.29), agg AS (SELECT channel, ROUND(AVG(shipping_fee), 2) AS avg_shipping_fee, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM recent_orders GROUP BY channel) SELECT channel, avg_shipping_fee, status_list FROM agg ORDER BY 1 DESC, avg_shipping_fee DESC

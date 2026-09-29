@@ -1,0 +1,1 @@
+with account_stats as (select account_id, min(amount) as min_amount from transactions group by account_id) select a.status, a.account_type, as.min_amount from accounts a left join account_stats as on a.id = as.account_id order by a.status asc;

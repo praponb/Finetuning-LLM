@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, c.segment, SUM(CASE WHEN a.account_type = 'LOAN' THEN 1 ELSE 0 END) AS loan_count FROM accounts a INNER JOIN customers c ON a.customer_id = c.id WHERE a.status NOT IN ('CLOSED', 'FROZEN') GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM'), c.segment ORDER BY loan_count;

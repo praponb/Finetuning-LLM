@@ -1,0 +1,1 @@
+SELECT store_id, product_id, MAX(sale_date) last_sale_date, ROUND(STDDEV(revenue), 2) stddev_revenue FROM store_sales WHERE store_id IN (1, 2, 4, 5) GROUP BY store_id, product_id ORDER BY store_id ASC

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, supplier_name, city, rating, ROUND(rating, 1) AS rating_rounded, UPPER(supplier_name) AS supplier_name_upper, COALESCE(city, 'OTHER') AS city_clean FROM suppliers WHERE LOWER(TRIM(supplier_name)) = 'eurogoods gmbh') SELECT *, RANK() OVER (PARTITION BY city ORDER BY rating_rounded) AS latest_rank FROM filtered QUALIFY latest_rank = 1;

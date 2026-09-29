@@ -1,0 +1,1 @@
+SELECT p.cost, p.category, t.units_count, t.min_sale_date FROM products p INNER JOIN (SELECT product_id, COUNT(units) AS units_count, MIN(sale_date) AS min_sale_date FROM store_sales WHERE sale_date BETWEEN '2023-06-08' AND '2023-09-18' GROUP BY product_id) t ON p.id = t.product_id ORDER BY 3 DESC

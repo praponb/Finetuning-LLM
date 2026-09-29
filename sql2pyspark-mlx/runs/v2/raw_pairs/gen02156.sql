@@ -1,0 +1,1 @@
+select p.supplier_id, sum(oi.unit_price) as total_unit_price, round(stddev(oi.unit_price), 2) as stddev_unit_price from order_items oi inner join orders o on o.id = oi.order_id full outer join products p on oi.product_id = p.id group by p.supplier_id order by stddev_unit_price desc

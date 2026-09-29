@@ -1,0 +1,1 @@
+SELECT country, ROUND(AVG(rating), 2) AS avg_rating, SORT_ARRAY(COLLECT_SET(city)) AS city_list, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM suppliers WHERE city IS NOT NULL GROUP BY country HAVING ROUND(AVG(rating), 2) < 22

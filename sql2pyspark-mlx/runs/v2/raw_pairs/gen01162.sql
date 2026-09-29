@@ -1,0 +1,1 @@
+SELECT store_id, product_id, AVG(units) AS avg_units, COUNT(*) AS total_count FROM store_sales GROUP BY store_id, product_id HAVING AVG(units) > 37 ORDER BY product_id DESC, total_count, store_id LIMIT 5

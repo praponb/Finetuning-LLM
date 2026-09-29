@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, a.balance, a.status FROM accounts a WHERE MONTH(a.opened_date) IN (1, 2, 6) AND EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND t.is_flagged) ORDER BY balance

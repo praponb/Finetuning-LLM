@@ -1,0 +1,1 @@
+SELECT s.country, COUNT(p.id) product_count, MAX(p.launch_date) latest_launch_date, MAX(p.price) max_price FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE p.brand IS NULL GROUP BY s.country ORDER BY latest_launch_date;

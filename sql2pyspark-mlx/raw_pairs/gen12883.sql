@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.revenue, store_sales.store_id, stores.city, products.category, ROUND(store_sales.units / store_sales.revenue, 2) AS revenue_per_unit FROM store_sales INNER JOIN stores ON stores.id = store_sales.store_id INNER JOIN products ON store_sales.product_id = products.id WHERE products.product_name LIKE 'wi%' ORDER BY revenue_per_unit ASC;

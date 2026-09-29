@@ -1,0 +1,1 @@
+SELECT CASE WHEN monthly_fee >= 222 THEN 'high' WHEN monthly_fee >= 62 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, status, MIN(monthly_fee) AS min_monthly_fee, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count FROM subscriptions GROUP BY monthly_fee_bucket, status

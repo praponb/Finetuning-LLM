@@ -1,0 +1,1 @@
+with ranked as (select id, order_id, cost, row_number() over (partition by order_id order by cost desc, id) as rnk from shipments where delivered_date between '2024-07-28' and '2025-10-01') select * from ranked where rnk = 1 order by cost desc;

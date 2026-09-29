@@ -1,0 +1,1 @@
+WITH filtered_customers AS (SELECT * FROM customers WHERE segment IS NULL AND email LIKE '%@yahoo.com'), agg AS (SELECT segment, city, COUNT(CASE WHEN country = 'DE' THEN 1 END) AS de_count FROM filtered_customers GROUP BY segment, city) SELECT * FROM agg WHERE de_count < 8 ORDER BY segment, de_count DESC, city LIMIT 50

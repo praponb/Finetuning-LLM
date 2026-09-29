@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.product_id, o.amount, p.supplier_id, p.launch_date FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id JOIN products p ON p.id = oi.product_id WHERE p.cost <= 350;

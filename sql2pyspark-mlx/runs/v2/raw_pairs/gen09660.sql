@@ -1,0 +1,1 @@
+SELECT id, product_id, unit_price, order_id, quantity, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY unit_price DESC) AS dense_rnk, LEAD(unit_price, 2) OVER (PARTITION BY order_id ORDER BY quantity, id) AS next_unit_price FROM order_items WHERE order_id IN (21, 23, 39);

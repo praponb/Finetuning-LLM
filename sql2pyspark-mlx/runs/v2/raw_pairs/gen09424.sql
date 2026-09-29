@@ -1,0 +1,1 @@
+SELECT employees.id, employees.full_name, employees.level, employees.job_title FROM employees WHERE employees.manager_id IS NULL AND employees.dept_id IN (SELECT id FROM departments WHERE budget < 1622000)

@@ -1,0 +1,1 @@
+SELECT YEAR(last_restock) last_restock_year, COUNT(*) inventory_count, SUM(quantity) total_quantity, MAX(quantity) max_quantity FROM inventory WHERE product_id IN (1, 4, 5, 10) GROUP BY YEAR(last_restock) ORDER BY max_quantity DESC;

@@ -1,0 +1,1 @@
+SELECT cost, supplier_id, category, SIZE(tags) AS tags_count, COALESCE(cost, 0) AS cost_filled FROM products WHERE category IN ('Grocery', 'Fashion') AND LENGTH(product_name) < 9 ORDER BY tags_count DESC

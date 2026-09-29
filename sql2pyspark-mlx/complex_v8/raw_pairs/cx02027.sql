@@ -1,0 +1,6 @@
+SELECT id
+FROM courses
+INTERSECT
+SELECT id
+FROM students
+ORDER BY id DESC

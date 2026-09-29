@@ -1,0 +1,1 @@
+SELECT QUARTER(order_date) AS order_quarter, SUM(CASE WHEN status = 'RETURNED' THEN amount ELSE 0 END) AS returned_amount, MIN(order_date) AS first_order_date FROM orders WHERE channel = 'web' AND channel IN ('web', 'partner') AND status IN ('CANCELLED', 'RETURNED') GROUP BY 1 HAVING SUM(CASE WHEN status = 'RETURNED' THEN amount ELSE 0 END) < 60;

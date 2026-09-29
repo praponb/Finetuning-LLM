@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, event_type, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, COUNT(CASE WHEN event_type = 'search' THEN 1 END) AS search_count FROM web_events GROUP BY DATE_FORMAT(event_time, 'yyyy-MM'), event_type) AS sub WHERE duration_sec_range >= 29 ORDER BY event_month DESC

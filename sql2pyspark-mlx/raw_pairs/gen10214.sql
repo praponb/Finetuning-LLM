@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('WEEK', ends_on) AS week_start, COUNT(*) AS num_rows, MAX(discount_pct) AS max_discount_pct, MAX(discount_pct) AS max_discount_pct_2, PERCENTILE_APPROX(discount_pct, 0.95) AS discount_pct_p95, SUM(CASE WHEN promo_code = 'BUNDLE' THEN discount_pct ELSE 0 END) AS bundle_discount_pct FROM promotions GROUP BY DATE_TRUNC('WEEK', ends_on);

@@ -1,0 +1,1 @@
+SELECT customers.city, subscriptions.status, subscriptions.start_date, COALESCE(subscriptions.monthly_fee, 0) AS monthly_fee_filled FROM customers LEFT JOIN subscriptions ON subscriptions.customer_id = customers.id;

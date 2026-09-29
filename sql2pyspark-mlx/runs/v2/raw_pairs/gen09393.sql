@@ -1,0 +1,1 @@
+select month(p.launch_date) as launch_month, quarter(p.launch_date) as launch_quarter, count(oi.unit_price) as unit_price_count from order_items oi join products p on p.id = oi.product_id group by month(p.launch_date), quarter(p.launch_date) having count(oi.unit_price) >= 2 order by unit_price_count desc, launch_month, launch_quarter limit 3

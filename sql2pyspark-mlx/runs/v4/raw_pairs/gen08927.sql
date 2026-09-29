@@ -1,0 +1,1 @@
+SELECT account_id, IF(is_flagged, 'Yes', 'No') AS is_flagged_label, CASE WHEN amount >= 3900 THEN 'High' WHEN amount >= 1100 THEN 'Medium' ELSE 'Low' END AS amount_level FROM transactions ORDER BY account_id DESC, amount_level

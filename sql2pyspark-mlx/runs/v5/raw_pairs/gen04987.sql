@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, customer_id, order_date, channel, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS rnk FROM orders) SELECT id, customer_id, order_date, channel FROM ranked WHERE rnk <= 5 ORDER BY channel;

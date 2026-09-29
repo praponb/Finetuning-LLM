@@ -1,0 +1,1 @@
+SELECT id, location, dept_name, budget, TRIM(location) AS clean_location, CONCAT_WS('/', location, dept_name) AS location_dept_name_key FROM departments WHERE budget BETWEEN 2361000 AND 3492000 ORDER BY dept_name ASC, id ASC LIMIT 3;

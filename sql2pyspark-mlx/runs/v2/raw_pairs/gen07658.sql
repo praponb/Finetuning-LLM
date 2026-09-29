@@ -1,0 +1,1 @@
+WITH payments_by_order AS (SELECT order_id, COUNT(*) AS total_count, MIN(amount) AS min_amount FROM payments WHERE status IN ('REFUNDED', 'FAILED') GROUP BY order_id) SELECT o.shipping_fee, pbo.total_count, pbo.min_amount FROM orders o INNER JOIN payments_by_order pbo ON o.id = pbo.order_id;

@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.store_id, stores.region, products.product_name FROM inventory RIGHT JOIN stores ON inventory.store_id = stores.id RIGHT JOIN products ON products.id = inventory.product_id

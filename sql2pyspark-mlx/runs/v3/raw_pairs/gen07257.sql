@@ -1,0 +1,1 @@
+SELECT city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values, AVG(sqft) AS avg_sqft, COUNT(CASE WHEN city = 'New York' THEN 1 END) AS new_york_count FROM stores WHERE city = 'Singapore' AND city = 'Chiang Mai' GROUP BY city;

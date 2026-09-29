@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, product_id, revenue, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY revenue, id) AS rnk FROM store_sales WHERE store_id = 3) SELECT id, product_id, revenue FROM numbered WHERE rnk <= 3;

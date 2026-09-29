@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, ship_to, attributes, AGGREGATE(items, CAST(0 AS DOUBLE), (acc, item) -> acc + item.qty * item.price, acc -> ROUND(acc, 2)) AS items_total, attributes['utm_source'] AS utm_source FROM carts WHERE SIZE(coupon_codes) > 1;

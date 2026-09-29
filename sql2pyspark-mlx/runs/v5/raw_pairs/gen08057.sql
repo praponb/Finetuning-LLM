@@ -1,0 +1,1 @@
+select s.id, s.city, t.acme_price, t.total_cost from suppliers s left outer join (select supplier_id, sum(case when brand = 'Acme' then price else 0 end) as acme_price, sum(cost) as total_cost from products where price between 650 and 750 group by supplier_id) t on s.id = t.supplier_id;

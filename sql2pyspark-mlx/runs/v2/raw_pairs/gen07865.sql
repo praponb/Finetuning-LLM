@@ -1,0 +1,1 @@
+select s.id, s.supplier_name, count(p.id) as product_count, concat_ws(', ', sort_array(collect_set(p.category))) as category_values from suppliers s left join products p on p.supplier_id = s.id where s.country not in ('SG', 'JP') group by s.id, s.supplier_name order by category_values, id, supplier_name limit 5

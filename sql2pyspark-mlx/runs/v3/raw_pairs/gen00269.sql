@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, order_id, shipped_date, status, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY shipped_date DESC, id) pos FROM shipments) SELECT id, order_id, shipped_date, status FROM numbered WHERE pos = 1 ORDER BY shipped_date ASC;

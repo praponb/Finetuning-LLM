@@ -1,0 +1,1 @@
+SELECT city, CASE WHEN rating >= 4.6 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END rating_bucket, MAX(rating) max_rating FROM suppliers WHERE rating >= 3.2 GROUP BY CUBE(city, CASE WHEN rating >= 4.6 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END)

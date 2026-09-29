@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CONCAT(country, ', ', city) AS country_city FROM suppliers WHERE city IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY city, country ORDER BY rating, id) AS rank_in_group FROM base QUALIFY rank_in_group = 1;

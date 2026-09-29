@@ -1,0 +1,1 @@
+SELECT id, status, end_date, customer_id, monthly_fee, RANK() OVER (PARTITION BY status ORDER BY end_date) AS end_date_rank, RANK() OVER (PARTITION BY customer_id ORDER BY monthly_fee DESC) AS rnk FROM subscriptions;

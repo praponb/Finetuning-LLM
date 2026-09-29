@@ -1,0 +1,1 @@
+SELECT status, customer_id, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE status NOT IN ('PAUSED', 'CANCELLED') GROUP BY status, customer_id HAVING monthly_fee_range > 73 ORDER BY monthly_fee_range ASC, status ASC, customer_id ASC LIMIT 5

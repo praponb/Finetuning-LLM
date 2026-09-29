@@ -1,0 +1,1 @@
+SELECT id, last_restock, product_id, quantity, CAST(quantity AS DOUBLE) AS quantity_str, DATE_TRUNC('year', last_restock) AS last_restock_period FROM inventory WHERE store_id IN (2, 3, 5) OR quantity BETWEEN 182 AND 205 ORDER BY 4, id DESC

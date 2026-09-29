@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, DATEDIFF(CURRENT_DATE(), end_date) / 30 AS months_since_end_date FROM subscriptions WHERE plan IN ('enterprise', 'basic', 'premium') OR end_date BETWEEN '2024-02-01' AND '2025-06-01'), status_summary AS (SELECT status, MAX(end_date) AS latest_end_date FROM src GROUP BY status) SELECT status, latest_end_date FROM status_summary;

@@ -1,0 +1,1 @@
+SELECT country, MONTH(signup_date) signup_month, MAX(age) max_age, MAX(signup_date) last_signup_date FROM customers WHERE segment NOT IN ('Corporate', 'Consumer', 'SMB') GROUP BY country, MONTH(signup_date);

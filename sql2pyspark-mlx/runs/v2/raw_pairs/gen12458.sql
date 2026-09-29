@@ -1,0 +1,1 @@
+SELECT MAX(end_date) AS last_end_date, MAX(monthly_fee) AS max_monthly_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM subscriptions WHERE end_date BETWEEN '2023-04-16' AND '2023-06-18' ORDER BY status_values;

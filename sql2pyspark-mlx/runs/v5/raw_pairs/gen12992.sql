@@ -1,0 +1,1 @@
+select channel_group, shipped_discount, num_orders from (select case when channel in ('mobile', 'partner') then 'priority' else 'other' end channel_group, sum(case when status = 'SHIPPED' then discount else 0 end) shipped_discount, count(*) num_orders from orders group by case when channel in ('mobile', 'partner') then 'priority' else 'other' end) s where shipped_discount > 61;

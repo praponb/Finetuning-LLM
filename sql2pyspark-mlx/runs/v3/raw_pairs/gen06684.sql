@@ -1,0 +1,1 @@
+SELECT HOUR(txn_time) AS txn_hour, ROUND(AVG(amount), 2) AS avg_amount, SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END) AS amazon_count FROM transactions WHERE is_flagged AND merchant = 'Starbucks' AND HOUR(txn_time) BETWEEN 6 AND 12 GROUP BY txn_hour ORDER BY txn_hour DESC;

@@ -1,0 +1,1 @@
+SELECT s.region, YEAR(s.opened_date) AS opened_year, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i FULL OUTER JOIN stores s ON s.id = i.store_id INNER JOIN products p ON i.product_id = p.id WHERE s.sqft != 4755 GROUP BY s.region, YEAR(s.opened_date) ORDER BY opened_year, region LIMIT 50;

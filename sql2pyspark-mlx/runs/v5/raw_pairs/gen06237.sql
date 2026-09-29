@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, account_type, status, SUBSTRING(account_type, 1, 4) AS account_type_prefix FROM accounts WHERE opened_date > TO_DATE('2023-04-12') AND customer_id IS NOT NULL) SELECT account_type, id FROM base EXCEPT DISTINCT SELECT account_type, id FROM accounts WHERE customer_id = 8

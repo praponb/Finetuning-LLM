@@ -1,0 +1,1 @@
+WITH StoreStats AS (SELECT store_id, COUNT(units) AS units_count, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales WHERE store_id IN (1, 2, 4, 5) GROUP BY store_id) SELECT s.id, s.city, s.store_name, S.units_count, S.stddev_units FROM stores s JOIN StoreStats S ON s.id = S.store_id WHERE S.units_count >= 6 ORDER BY store_name ASC, stddev_units DESC

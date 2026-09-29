@@ -1,0 +1,1 @@
+with products_by_supplier as (select supplier_id, concat_ws(', ', sort_array(collect_set(category))) as category_values, sort_array(collect_set(brand)) as brand_list from products where price > 770 group by supplier_id) select s.city, s.rating, pbs.category_values, pbs.brand_list from suppliers s left join products_by_supplier pbs on s.id = pbs.supplier_id order by rating desc

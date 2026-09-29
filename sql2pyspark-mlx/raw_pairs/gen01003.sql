@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, MIN(sale_date) AS min_sale_date, COUNT(DISTINCT units) AS unique_stores FROM store_sales WHERE product_id IN (2, 5, 6, 10) GROUP BY store_id) SELECT s.opened_date, s.city, st.min_sale_date, st.unique_stores FROM stores s INNER JOIN store_totals st ON s.id = st.store_id ORDER BY city

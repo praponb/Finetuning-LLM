@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 186 THEN 'high' WHEN quantity >= 95 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, COUNT(*) AS row_count, MAX(quantity) AS max_quantity, MIN(last_restock) AS min_last_restock FROM inventory GROUP BY 1, 2 HAVING MAX(quantity) < 140;

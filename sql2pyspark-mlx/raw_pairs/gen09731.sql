@@ -1,0 +1,1 @@
+SELECT YEAR(orders.order_date) AS order_year, ROUND(AVG(order_items.unit_price), 2) AS avg_unit_price, COUNT(*) AS cnt FROM order_items JOIN products ON order_items.product_id = products.id JOIN orders ON order_items.order_id = orders.id GROUP BY YEAR(orders.order_date) ORDER BY avg_unit_price

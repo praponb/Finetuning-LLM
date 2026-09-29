@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, MAX(units) AS max_units FROM store_sales GROUP BY DATE_TRUNC('MONTH', sale_date) HAVING MIN(units) < 38 ORDER BY sale_month ASC, max_units ASC LIMIT 10;

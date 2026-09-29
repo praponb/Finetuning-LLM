@@ -1,0 +1,1 @@
+SELECT category, MIN(launch_date) min_launch_date, SUM(CASE WHEN category = 'Grocery' THEN cost ELSE 0 END) grocery_cost FROM products WHERE ARRAY_CONTAINS(tags, 'clearance') AND supplier_id = 31 AND SIZE(tags) > 2 GROUP BY category;

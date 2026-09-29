@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM stores WHERE region IN ('South', 'East') AND sqft = 15454), summary AS (SELECT city, region, MAX(sqft) - MIN(sqft) AS sqft_range FROM src GROUP BY city, region) SELECT city, region, sqft_range FROM summary ORDER BY 2;

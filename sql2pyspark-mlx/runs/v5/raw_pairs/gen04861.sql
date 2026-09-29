@@ -1,0 +1,1 @@
+SELECT method, COUNT(CASE WHEN method = 'bank_transfer' THEN 1 END) AS bank_transfer_count, COUNT(CASE WHEN status = 'REFUNDED' THEN 1 END) AS refunded_count FROM payments GROUP BY method ORDER BY method

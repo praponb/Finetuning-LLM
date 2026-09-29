@@ -1,0 +1,1 @@
+select * from (select case when quantity >= 260 then 'high' when quantity >= 31 then 'mid' else 'low' end as quantity_bucket, store_id, avg(quantity) as avg_quantity from inventory where quantity < 172 group by case when quantity >= 260 then 'high' when quantity >= 31 then 'mid' else 'low' end, store_id) as t where avg_quantity < 100 order by quantity_bucket asc, store_id desc

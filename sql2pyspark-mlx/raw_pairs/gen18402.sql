@@ -1,0 +1,1 @@
+SELECT id, location, budget, dept_name FROM (SELECT id, location, budget, dept_name, DENSE_RANK() OVER (PARTITION BY location ORDER BY budget DESC) AS rnk FROM departments) AS t WHERE rnk <= 5 ORDER BY 4 DESC, budget DESC;

@@ -1,0 +1,1 @@
+SELECT s.country, s.browser, MIN(we.event_time) AS min_event_time, MAX(we.event_time) AS latest_event_time FROM web_events we JOIN sessions s ON s.id = we.session_id WHERE s.device = 'desktop' GROUP BY s.country, s.browser ORDER BY country

@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 350 THEN 'PREMIUM' ELSE 'STANDARD' END AS unit_price_tier, product_id, PERCENTILE_APPROX(unit_price, ARRAY(0.25, 0.5, 0.75)) AS unit_price_quartiles, SUM(quantity) AS total_quantity, PERCENTILE_APPROX(unit_price, ARRAY(0.25, 0.5, 0.75)) AS unit_price_quartiles_2 FROM order_items GROUP BY 1, 2 HAVING SUM(quantity) > 0

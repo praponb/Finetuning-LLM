@@ -1,0 +1,1 @@
+SELECT e.id, e.is_remote AS employee_is_remote, m.manager_id AS manager_manager_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.manager_id IS NULL AND m.salary BETWEEN 86000 AND 141000

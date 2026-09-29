@@ -1,0 +1,1 @@
+with filtered_order_items as (select * from order_items where unit_price >= 170 and unit_price > 310), agg as (select product_id, count(*) as total_count, min(unit_price) as min_unit_price from filtered_order_items group by product_id) select * from agg;

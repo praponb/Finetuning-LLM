@@ -1,0 +1,1 @@
+with flattened as (select id, customer_id, explode_outer(coupon_codes) as element from carts) select customer_id, size(collect_set(element)) as num_elements, count_if(element = 'SPRING10') as spring10_events, count(distinct element) as distinct_elements, count(*) as num_rows, count(*) as cnt from flattened group by 1 order by cnt asc;

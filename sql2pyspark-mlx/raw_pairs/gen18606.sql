@@ -1,0 +1,1 @@
+SELECT city, CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END rating_bucket, SUM(CASE WHEN country = 'TH' THEN rating ELSE 0 END) th_rating, COUNT(*) row_count FROM suppliers GROUP BY city, rating_bucket HAVING th_rating < 23

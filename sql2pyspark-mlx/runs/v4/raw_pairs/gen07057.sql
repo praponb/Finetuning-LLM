@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, host, latency_ms, key, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) t AS key, value) SELECT *, CUME_DIST() OVER (ORDER BY latency_ms DESC) latency_ms_cume_dist, CUME_DIST() OVER (ORDER BY latency_ms DESC NULLS LAST) latency_ms_cume_dist_2 FROM lines;

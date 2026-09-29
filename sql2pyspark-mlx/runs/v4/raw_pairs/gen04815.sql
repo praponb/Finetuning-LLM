@@ -1,0 +1,1 @@
+with base as (select * from store_sales where product_id in (4, 6) or product_id in (1, 2, 6, 10)), agg as (select month(sale_date) as sale_month, count(distinct units) as unique_stores from base group by month(sale_date)) select sale_month, unique_stores from agg

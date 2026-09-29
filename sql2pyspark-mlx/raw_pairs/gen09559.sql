@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN sqft >= 14266 THEN 'high' WHEN sqft >= 5859 THEN 'mid' ELSE 'low' END AS sqft_bucket, AVG(sqft) AS avg_sqft, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM stores GROUP BY CASE WHEN sqft >= 14266 THEN 'high' WHEN sqft >= 5859 THEN 'mid' ELSE 'low' END) AS sub WHERE avg_sqft < 14500 ORDER BY avg_sqft DESC;

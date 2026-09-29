@@ -1,0 +1,1 @@
+WITH RankedOrders AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY shipping_fee, id) AS row_num FROM orders WHERE shipping_fee BETWEEN 24 AND 36) SELECT id, channel, shipping_fee FROM RankedOrders WHERE row_num = 1

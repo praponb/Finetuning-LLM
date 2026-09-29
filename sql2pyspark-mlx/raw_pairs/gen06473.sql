@@ -1,0 +1,1 @@
+with base as (select * from inventory where store_id in (3, 4, 6) and product_id in (3, 8)), summary as (select store_id, product_id, max(quantity) max_quantity, round(stddev(quantity), 2) stddev_quantity from base group by store_id, product_id) select * from summary where max_quantity < 60 order by store_id;

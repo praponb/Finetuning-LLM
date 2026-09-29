@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM shipments WHERE YEAR(delivered_date) = 2024), agg AS (SELECT carrier, ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_returned, MAX(cost) max_cost FROM src GROUP BY carrier) SELECT carrier, pct_returned, max_cost FROM agg WHERE pct_returned >= 78 ORDER BY pct_returned DESC;

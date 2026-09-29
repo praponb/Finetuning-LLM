@@ -1,0 +1,1 @@
+SELECT s.city, ROUND(AVG(ss.revenue), 2) avg_revenue, COUNT(ss.revenue) revenue_count FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.city

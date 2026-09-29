@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM orders GROUP BY store_id) SELECT s.store_name, s.opened_date, st.cancelled_count, st.status_values FROM stores s INNER JOIN store_totals st ON s.id = st.store_id WHERE st.cancelled_count > 23;

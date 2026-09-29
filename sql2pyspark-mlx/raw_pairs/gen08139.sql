@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, channel, promo_code, starts_on, DATE_ADD(ends_on, 87) AS ends_on_plus_87d, ROUND(discount_pct, 2) AS discount_pct_rounded FROM promotions WHERE starts_on >= TO_DATE('2023-10-12')) SELECT *, ROW_NUMBER() OVER (PARTITION BY promo_code, channel ORDER BY starts_on DESC, id) AS dedup_rank FROM filtered QUALIFY dedup_rank = 1

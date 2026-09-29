@@ -1,0 +1,1 @@
+SELECT id, service, log_ts, payload_json, context, CAST((status_code & 4) != 0 AS INT) AS has_fault, GET_JSON_OBJECT(payload_json, '$.user.tier') AS user_tier, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').retries AS retry_count FROM app_logs;

@@ -1,0 +1,1 @@
+select s.id, s.browser, s.device from sessions s where s.customer_id = 35 and s.id in (select session_id from web_events where to_date(event_time) < '2025-06-01') order by s.browser, device, id limit 5;

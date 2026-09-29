@@ -1,0 +1,1 @@
+select date_format(s.started_at, 'yyyy-MM') as started_month, s.browser, round(avg(we.duration_sec), 2) as avg_duration_sec from web_events we inner join sessions s on we.session_id = s.id inner join customers c on s.customer_id = c.id group by date_format(s.started_at, 'yyyy-MM'), s.browser order by avg_duration_sec desc;

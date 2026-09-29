@@ -1,0 +1,1 @@
+select id, monthly_fee, case when monthly_fee >= 270 then 'High' when monthly_fee >= 87 then 'Medium' else 'Low' end as monthly_fee_level, case when plan in ('enterprise', 'premium') then 'Priority' else 'Other' end as plan_group from subscriptions where end_date > '2025-05-01';

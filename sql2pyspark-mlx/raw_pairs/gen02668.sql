@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(DISTINCT oi.quantity) unique_orders, COUNT(*) row_count FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON o.id = oi.order_id WHERE oi.order_id = 23 GROUP BY o.channel ORDER BY 3 DESC, channel LIMIT 10;

@@ -1,0 +1,1 @@
+SELECT we.duration_sec, we.event_type, s.country, s.customer_id, s.device FROM web_events we JOIN sessions s ON s.id = we.session_id WHERE we.duration_sec BETWEEN 191 AND 308 AND s.country IN ('TH', 'SG', 'US');

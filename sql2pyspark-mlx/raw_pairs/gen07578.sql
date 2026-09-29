@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, ROUND(AVG(o.amount), 2) AS avg_amount FROM orders o LEFT JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id WHERE s.city = 'Berlin' GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM') ORDER BY opened_month DESC, avg_amount DESC LIMIT 20

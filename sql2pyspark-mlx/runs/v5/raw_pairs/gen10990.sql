@@ -1,0 +1,1 @@
+SELECT orders.channel, SUM(payments.amount) AS total_amount, COUNT(CASE WHEN payments.method = 'bank_transfer' THEN 1 END) AS bank_transfer_count FROM payments RIGHT JOIN orders ON payments.order_id = orders.id WHERE payments.status IN ('FAILED', 'SUCCESS') GROUP BY orders.channel ORDER BY channel;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM accounts WHERE YEAR(opened_date) >= 2024), summary AS (SELECT status, ROUND(STDDEV(balance), 2) AS stddev_balance FROM base GROUP BY status) SELECT * FROM summary WHERE stddev_balance < 66;

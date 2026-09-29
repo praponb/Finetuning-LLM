@@ -1,0 +1,1 @@
+with numbered as (select *, row_number() over (partition by order_id order by paid_at desc, id) as row_num from payments where paid_at >= '2024-10-26') select id, order_id, paid_at from numbered where row_num <= 2 order by id desc;

@@ -1,0 +1,1 @@
+with recent_customers as (select * from customers where segment <> 'Corporate' and segment = 'Corporate'), CountrySummary as (select country, max(credit_limit) - min(credit_limit) as credit_limit_range, min(signup_date) as first_signup_date from recent_customers group by country) select country, first_signup_date from CountrySummary

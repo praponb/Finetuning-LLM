@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY start_date, id) AS pos FROM subscriptions WHERE status IN ('EXPIRED', 'PAUSED')) SELECT id, plan, start_date FROM numbered WHERE pos <= 2;

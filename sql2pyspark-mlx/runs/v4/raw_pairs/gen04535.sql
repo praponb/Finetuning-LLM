@@ -1,0 +1,1 @@
+with top_web_events as (select *, row_number() over (partition by event_type order by event_time desc, id) as rn from web_events) select id, event_type, event_time, session_id from top_web_events where rn <= 2

@@ -1,0 +1,1 @@
+SELECT s.device, s.browser, s.country, we.page FROM sessions s INNER JOIN web_events we ON we.session_id = s.id WHERE s.country IN ('UK', 'SG', 'US') AND we.page IN ('/home', '/product', '/checkout');

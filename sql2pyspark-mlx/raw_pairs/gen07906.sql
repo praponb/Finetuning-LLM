@@ -1,0 +1,1 @@
+WITH ranked_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance, id) AS row_num FROM accounts) SELECT id, account_type, balance FROM ranked_accounts WHERE row_num <= 3;

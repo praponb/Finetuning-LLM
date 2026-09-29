@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(*) AS total_count, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY store_id) SELECT s.sqft, s.city, st.total_count, st.avg_quantity FROM stores s INNER JOIN store_totals st ON s.id = st.store_id WHERE st.avg_quantity > 54 ORDER BY sqft, st.total_count

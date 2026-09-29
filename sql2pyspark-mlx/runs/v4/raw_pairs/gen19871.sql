@@ -1,0 +1,1 @@
+SELECT id, method, amount, paid_at, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount DESC, id) AS amount_row, PERCENT_RANK() OVER (PARTITION BY method ORDER BY paid_at DESC) AS paid_at_pct_rank FROM payments

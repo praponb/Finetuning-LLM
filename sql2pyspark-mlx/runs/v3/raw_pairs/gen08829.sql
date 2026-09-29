@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, COUNT(*) AS row_count FROM inventory GROUP BY store_id) SELECT s.id, s.city, ss.row_count FROM stores s LEFT JOIN store_summary ss ON s.id = ss.store_id WHERE ss.row_count >= 7;

@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, created_at, tag FROM carts LATERAL VIEW OUTER EXPLODE(coupon_codes) e AS tag) SELECT s.id, s.customer_id, s.created_at, (SELECT MAX(t2.amount) FROM orders t2 WHERE t2.customer_id = s.customer_id) AS max_order_amount FROM exploded s ORDER BY customer_id DESC;

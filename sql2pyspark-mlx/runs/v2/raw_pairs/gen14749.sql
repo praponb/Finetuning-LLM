@@ -1,0 +1,1 @@
+SELECT s.country, SUM(CASE WHEN we.page = '/product' THEN we.duration_sec ELSE 0 END) AS product_duration_sec, MAX(we.duration_sec) AS max_duration_sec FROM web_events we JOIN sessions s ON we.session_id = s.id WHERE s.customer_id IN (7, 10, 36, 40) GROUP BY s.country ORDER BY product_duration_sec DESC, country LIMIT 1

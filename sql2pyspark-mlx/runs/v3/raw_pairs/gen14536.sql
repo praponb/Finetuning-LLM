@@ -1,0 +1,1 @@
+SELECT channel, total_shipping_fee FROM (SELECT channel, SUM(shipping_fee) AS total_shipping_fee FROM orders GROUP BY channel) AS t WHERE total_shipping_fee < 170 ORDER BY total_shipping_fee, channel DESC;

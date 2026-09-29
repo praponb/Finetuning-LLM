@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, EXPLODE(coupon_codes) AS code FROM carts) SELECT code, CASE WHEN code RLIKE '^(SPRING10|VIP)$' THEN 'OTHER_ZONE' WHEN code RLIKE '^(BUNDLE|WELCOME5)$' THEN 'PRIORITY' ELSE 'GROUP_B' END AS code_zone FROM lines ORDER BY code DESC NULLS FIRST, code_zone

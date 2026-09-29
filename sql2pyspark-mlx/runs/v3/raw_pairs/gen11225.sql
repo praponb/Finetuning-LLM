@@ -1,0 +1,1 @@
+SELECT carrier, status, CASE WHEN status IN ('DELIVERED', 'RETURNED') THEN 'priority' ELSE 'other' END status_group, ROUND(AVG(cost), 2) avg_cost FROM shipments WHERE order_id IN (14, 18, 31, 34) GROUP BY 1, 2, 3 ORDER BY status, carrier, status_group LIMIT 5;

@@ -1,0 +1,1 @@
+SELECT id, store_id, quantity, product_id, FIRST_VALUE(product_id) OVER (PARTITION BY store_id ORDER BY quantity DESC, id) AS first_product_id, MIN(quantity) OVER (PARTITION BY store_id) AS store_id_min_quantity FROM inventory WHERE store_id IN (1, 4, 6) ORDER BY store_id_min_quantity, first_product_id DESC;

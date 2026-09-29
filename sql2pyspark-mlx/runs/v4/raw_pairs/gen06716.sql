@@ -1,0 +1,1 @@
+SELECT *, ROUND(rating / SUM(rating) OVER (PARTITION BY city), 4) AS rating_share, NTILE(3) OVER w_ordered AS rating_bucket, SUM(rating) OVER (PARTITION BY city, country) AS city_sum_rating, ROW_NUMBER() OVER w_ordered AS row_seq, LAG(rating, 2) OVER (PARTITION BY country ORDER BY rating, id) AS prev_rating FROM suppliers WINDOW w_ordered AS (ORDER BY rating DESC, id)

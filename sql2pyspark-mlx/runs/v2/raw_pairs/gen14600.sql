@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(DISTINCT rating) AS unique_citys, SUM(CASE WHEN city = 'New York' THEN rating ELSE 0 END) AS new_york_rating FROM suppliers GROUP BY CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END;

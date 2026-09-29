@@ -1,0 +1,1 @@
+select oi.id, oi.order_id, oi.product_id, o.customer_id, o.channel, p.stock_qty, p.product_name from order_items oi left join orders o on oi.order_id = o.id inner join products p on oi.product_id = p.id order by channel asc;

@@ -1,0 +1,1 @@
+SELECT customers.id, customers.is_active, customers.credit_limit, customers.email FROM customers WHERE EXISTS (SELECT 1 FROM accounts WHERE accounts.customer_id = customers.id AND accounts.balance BETWEEN 26000 AND 53000) ORDER BY customers.credit_limit, id LIMIT 1

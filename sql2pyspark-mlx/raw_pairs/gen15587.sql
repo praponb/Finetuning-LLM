@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.monthly_fee, subscriptions.status, customers.country, customers.segment, customers.city FROM subscriptions INNER JOIN customers ON customers.id = subscriptions.customer_id ORDER BY monthly_fee DESC;

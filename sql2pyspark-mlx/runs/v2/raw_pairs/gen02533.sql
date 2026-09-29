@@ -1,0 +1,1 @@
+SELECT event_hour, page_list, search_count FROM (SELECT HOUR(event_time) AS event_hour, SORT_ARRAY(COLLECT_SET(page)) AS page_list, COUNT(CASE WHEN event_type = 'search' THEN 1 END) AS search_count FROM web_events GROUP BY HOUR(event_time)) AS x WHERE search_count >= 3;

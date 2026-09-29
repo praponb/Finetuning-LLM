@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.opened_date, accounts.balance, accounts.customer_id, customers.signup_date, customers.name FROM accounts JOIN customers ON accounts.customer_id = customers.id WHERE customers.name LIKE '%Emm%' AND customers.city = 'New York' ORDER BY accounts.id DESC

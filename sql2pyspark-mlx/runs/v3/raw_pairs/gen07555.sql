@@ -1,0 +1,1 @@
+SELECT o.id, o.customer_id, o.status, t.carrier_list, t.fedex_count FROM orders o INNER JOIN (SELECT order_id, SORT_ARRAY(COLLECT_SET(carrier)) carrier_list, COUNT(CASE WHEN carrier = 'FedEx' THEN 1 END) fedex_count FROM shipments WHERE carrier IN ('DHL', 'Kerry', 'UPS') GROUP BY order_id) t ON o.id = t.order_id ORDER BY o.status, id

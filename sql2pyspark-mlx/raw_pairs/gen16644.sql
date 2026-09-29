@@ -1,0 +1,1 @@
+SELECT account_type, customer_id, COUNT(balance) AS balance_count, SUM(balance) AS total_balance FROM accounts WHERE account_type <> 'SAVINGS' AND customer_id IN (8, 21, 29, 38) GROUP BY account_type, customer_id HAVING SUM(balance) > 267000 ORDER BY balance_count DESC, customer_id

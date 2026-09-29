@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, EXPLODE_OUTER(coupon_codes) AS code FROM carts) SELECT code, COUNT_IF(code = 'WELCOME5') AS welcome5_events, COUNT(*) AS row_count, COUNT(DISTINCT id) AS distinct_ids, SIZE(COLLECT_SET(code)) AS num_codes, COUNT(*) FILTER (WHERE code = 'SPRING10') AS spring10_rows FROM lines GROUP BY code HAVING COUNT(*) FILTER (WHERE code = 'SPRING10') >= 1

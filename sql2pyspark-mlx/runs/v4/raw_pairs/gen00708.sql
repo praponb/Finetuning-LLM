@@ -1,0 +1,1 @@
+SELECT sessions.country, t.duration_sec_count, t.duration_sec_range FROM sessions INNER JOIN (SELECT session_id, COUNT(duration_sec) duration_sec_count, MAX(duration_sec) - MIN(duration_sec) duration_sec_range FROM web_events GROUP BY session_id) t ON sessions.id = t.session_id

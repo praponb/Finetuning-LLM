@@ -1,0 +1,1 @@
+select * from (select date_trunc('MONTH', signup_date) as signup_month, country, credit_limit from customers where age = 33) pivot (count(credit_limit) for country in ('UK', 'TH')) order by signup_month

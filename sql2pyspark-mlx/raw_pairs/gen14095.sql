@@ -1,0 +1,1 @@
+select id, city, country, rating, round(rating / sum(rating) over (partition by city, country), 3) rating_share, round(rating / sum(rating) over (partition by country), 3) rating_share_2 from suppliers order by 6 asc

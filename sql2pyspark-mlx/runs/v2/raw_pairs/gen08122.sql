@@ -1,0 +1,1 @@
+SELECT id, customer_id, country, started_at, browser, FIRST_VALUE(browser) OVER (PARTITION BY customer_id, country ORDER BY started_at, id) first_browser FROM sessions WHERE country = 'TH' ORDER BY customer_id;

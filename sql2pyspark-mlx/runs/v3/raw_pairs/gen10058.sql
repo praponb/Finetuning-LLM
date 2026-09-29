@@ -1,0 +1,1 @@
+SELECT job_title, ROUND(AVG(salary), 2) AS avg_salary, SUM(CASE WHEN job_title = 'Manager' THEN salary ELSE 0 END) AS manager_salary FROM employees WHERE salary >= 117000 GROUP BY 1 HAVING manager_salary < 36

@@ -1,0 +1,1 @@
+SELECT p.brand, ROUND(STDDEV(ss.units), 2) AS stddev_units, COUNT(ss.units) AS units_count FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id WHERE s.region NOT IN ('East', 'North') GROUP BY p.brand;

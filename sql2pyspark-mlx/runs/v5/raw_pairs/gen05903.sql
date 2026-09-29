@@ -1,0 +1,1 @@
+SELECT id, opened_date, sqft, region, store_name, ROUND(AVG(sqft) OVER (ORDER BY opened_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS sqft_moving_avg_3, LAST_VALUE(store_name) OVER (PARTITION BY region ORDER BY sqft DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_store_name FROM stores WHERE opened_date BETWEEN '2023-09-15' AND '2024-10-29';

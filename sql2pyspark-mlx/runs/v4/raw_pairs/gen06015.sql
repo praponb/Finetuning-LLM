@@ -1,0 +1,1 @@
+select launch_year, cost_range, grocery_count from (select year(launch_date) as launch_year, max(cost) - min(cost) as cost_range, sum(case when category = 'Grocery' then 1 else 0 end) as grocery_count from products group by year(launch_date)) as agg where grocery_count < 51

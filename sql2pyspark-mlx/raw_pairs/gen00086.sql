@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, effective_from, element FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_limits) t AS element) SELECT id, effective_from, element FROM exploded ORDER BY id DESC NULLS FIRST;

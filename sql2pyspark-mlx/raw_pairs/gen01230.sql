@@ -1,0 +1,1 @@
+select i.id, i.product_id, i.last_restock, s.store_name, s.sqft, p.stock_qty, p.category from inventory i inner join stores s on i.store_id = s.id inner join products p on i.product_id = p.id where s.sqft between 14200 and 14608 order by store_name

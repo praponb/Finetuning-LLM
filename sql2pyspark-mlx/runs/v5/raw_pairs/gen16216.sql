@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, level, latency_ms, status_code, k, v FROM app_logs LATERAL VIEW EXPLODE(context) x AS k, v) SELECT id, service, level, latency_ms, status_code, k, v, CASE WHEN level RLIKE '^(ERROR|WARN)$' THEN 'EXTENDED' WHEN level RLIKE '^(INFO|DEBUG)$' THEN 'CORE' ELSE 'GROUP_B' END AS level_zone FROM exploded ORDER BY latency_ms DESC;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATEDIFF(CURRENT_DATE(), opened_date) days_since_opened_date FROM accounts WHERE opened_date > DATE '2023-04-22' AND customer_id IS NOT NULL) SELECT * FROM (SELECT customer_id, account_type, days_since_opened_date FROM filtered) src PIVOT (SUM(days_since_opened_date) AS amount, COUNT(1) AS cnt FOR account_type IN ('SAVINGS', 'CHECKING'))

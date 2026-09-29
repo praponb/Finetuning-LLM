@@ -1,0 +1,1 @@
+SELECT paid_month, avg_amount FROM (SELECT DATE_TRUNC('MONTH', paid_at) AS paid_month, AVG(amount) AS avg_amount FROM payments GROUP BY DATE_TRUNC('MONTH', paid_at)) AS t WHERE avg_amount < 670 ORDER BY avg_amount

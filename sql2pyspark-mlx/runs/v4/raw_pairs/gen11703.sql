@@ -1,0 +1,1 @@
+select case when location in ('Tokyo', 'London') then 'group_a' else 'other' end as location_group, count(*) as department_count, count(*) as cnt, round(stddev(budget), 2) as stddev_budget from departments where budget between 3092000 and 3287000 and budget < 1996000 group by 1 order by location_group desc limit 1;

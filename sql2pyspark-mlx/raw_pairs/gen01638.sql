@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM inventory WHERE product_id IN (5, 9) AND store_id IN (1, 2, 4)), agg AS (SELECT QUARTER(last_restock) AS last_restock_quarter, store_id, MAX(last_restock) AS last_last_restock FROM base GROUP BY QUARTER(last_restock), store_id) SELECT last_restock_quarter, store_id FROM agg

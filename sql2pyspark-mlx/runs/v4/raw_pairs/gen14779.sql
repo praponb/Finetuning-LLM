@@ -1,0 +1,1 @@
+with Base as (select * from departments where budget <= 3975000 and location <> 'London'), summary as (select dept_name, count(distinct budget) as unique_dept_names from Base group by dept_name) select dept_name, unique_dept_names from summary where unique_dept_names >= 3 order by unique_dept_names desc, dept_name asc limit 1

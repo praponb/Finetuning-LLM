@@ -1,0 +1,1 @@
+select * from (select account_type, customer_id, status, balance from accounts) src pivot (max(balance) as value_sum, count(1) as item_count for status in ('FROZEN' as frozen, 'OPEN' as open, 'CLOSED' as closed));

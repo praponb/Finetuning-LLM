@@ -1,0 +1,1 @@
+WITH CustomerTotals AS (SELECT customer_id, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions WHERE plan IN ('standard', 'basic', 'enterprise') GROUP BY customer_id) SELECT c.name, c.credit_limit, C.stddev_monthly_fee FROM customers c LEFT OUTER JOIN CustomerTotals C ON c.id = C.customer_id ORDER BY credit_limit

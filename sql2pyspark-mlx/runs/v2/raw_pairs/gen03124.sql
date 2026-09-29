@@ -1,0 +1,1 @@
+WITH ValidStores AS (SELECT * FROM stores WHERE MONTH(opened_date) IN (6, 10, 11) AND sqft > 13992 AND store_name LIKE 'Sia%'), agg AS (SELECT city, region, ROUND(AVG(sqft), 2) AS avg_sqft, MIN(opened_date) AS min_opened_date FROM ValidStores GROUP BY city, region) SELECT city, region, avg_sqft, min_opened_date FROM agg WHERE avg_sqft >= 51;

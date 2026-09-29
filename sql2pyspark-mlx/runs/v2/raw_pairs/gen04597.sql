@@ -1,0 +1,1 @@
+select t.id, t.is_flagged, t.txn_time, a.opened_date, a.balance, c.name, c.is_active, coalesce(c.segment, 'Unknown') as segment_filled from transactions t inner join accounts a on t.account_id = a.id inner join customers c on a.customer_id = c.id where a.customer_id is not null and t.merchant = 'Starbucks' order by a.balance, id limit 20;

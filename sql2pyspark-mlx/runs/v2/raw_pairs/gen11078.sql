@@ -1,0 +1,1 @@
+select date_format(txn_time, 'yyyy-MM') as txn_month, txn_type, max(txn_time) as latest_txn_time from transactions where is_flagged and amount between 2400 and 3100 group by date_format(txn_time, 'yyyy-MM'), txn_type;

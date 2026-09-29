@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, currency, EXPLODE(discounts) AS val FROM price_tiers) SELECT *, DENSE_RANK() OVER w_part AS val_dense_rank, MIN(val) OVER (PARTITION BY plan, currency) AS plan_min_val, COUNT(val) OVER (PARTITION BY currency, plan) AS currency_count_val FROM lines WINDOW w_part AS (PARTITION BY currency ORDER BY val DESC NULLS LAST)

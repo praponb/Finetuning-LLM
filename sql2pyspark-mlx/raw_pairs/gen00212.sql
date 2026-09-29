@@ -1,0 +1,1 @@
+select case when s.sqft >= 15239 then 'high' when s.sqft >= 5080 then 'mid' else 'low' end as sqft_bucket, max(ss.units) - min(ss.units) as units_range from store_sales ss right join stores s on ss.store_id = s.id group by case when s.sqft >= 15239 then 'high' when s.sqft >= 5080 then 'mid' else 'low' end having max(ss.units) - min(ss.units) >= 58 order by sqft_bucket limit 5

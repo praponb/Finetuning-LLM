@@ -1,0 +1,1 @@
+select a.id, a.customer_id, t.debit_count from accounts a left outer join (select account_id, sum(case when txn_type = 'DEBIT' then 1 else 0 end) as debit_count from transactions group by account_id) t on a.id = t.account_id order by a.id, t.debit_count desc

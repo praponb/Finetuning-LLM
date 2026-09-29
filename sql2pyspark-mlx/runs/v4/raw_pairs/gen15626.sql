@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.country, s.supplier_name FROM suppliers s WHERE s.supplier_name IS NULL AND NOT EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND p.supplier_id IS NULL) ORDER BY country ASC;

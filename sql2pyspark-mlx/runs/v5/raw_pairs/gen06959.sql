@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, order_date, status, channel, amount, discount, DATE_ADD(order_date, 67) AS order_date_plus_67d FROM orders WHERE order_date >= DATE '2023-03-31' AND channel IS NOT NULL) SELECT * FROM (SELECT channel, status, amount FROM cleaned) src PIVOT (AVG(amount) FOR status IN ('CANCELLED', 'SHIPPED'));

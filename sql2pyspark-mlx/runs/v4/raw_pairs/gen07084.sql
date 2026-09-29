@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY region ORDER BY opened_date ASC NULLS LAST, id ASC) AS dedup_rank FROM stores QUALIFY dedup_rank = 1) SELECT city, COUNT(DISTINCT city) AS distinct_cities, SUM(sqft) AS total_sqft, COUNT(*) AS event_count, PERCENTILE_APPROX(sqft, 0.9) AS sqft_p90 FROM deduped GROUP BY city ORDER BY distinct_cities ASC NULLS LAST

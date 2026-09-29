@@ -1,0 +1,1 @@
+SELECT d.location, src.level, COUNT(*) AS cnt, AVG(src.salary) AS avg_salary FROM employees src INNER JOIN departments d ON src.dept_id = d.id GROUP BY GROUPING SETS ((d.location, src.level), (d.location));

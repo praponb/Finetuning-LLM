@@ -1,0 +1,1 @@
+SELECT QUARTER(c.signup_date) AS signup_quarter, c.city, MIN(t.amount) AS min_amount, MIN(t.txn_time) AS min_txn_time FROM transactions t INNER JOIN accounts a ON t.account_id = a.id RIGHT JOIN customers c ON a.customer_id = c.id GROUP BY QUARTER(c.signup_date), c.city ORDER BY c.city DESC;

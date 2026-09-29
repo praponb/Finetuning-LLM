@@ -1,0 +1,1 @@
+select sessions.browser, sessions.customer_id, t.unique_pages from sessions join (select session_id, count(distinct duration_sec) as unique_pages from web_events where duration_sec < 155 group by session_id) t on sessions.id = t.session_id where t.unique_pages >= 6;

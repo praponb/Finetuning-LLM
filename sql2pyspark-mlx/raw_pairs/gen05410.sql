@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT product_id, CASE WHEN unit_price >= 360 THEN 'high' WHEN unit_price >= 110 THEN 'mid' ELSE 'low' END AS unit_price_bucket, SUM(quantity * unit_price) AS revenue FROM order_items GROUP BY product_id, CASE WHEN unit_price >= 360 THEN 'high' WHEN unit_price >= 110 THEN 'mid' ELSE 'low' END) AS x WHERE revenue > 36

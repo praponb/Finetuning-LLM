@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.rating >= 3.6 THEN 'high' WHEN s.rating >= 1.5 THEN 'mid' ELSE 'low' END AS rating_bucket, MAX(p.cost) AS max_cost FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id WHERE s.country = 'UK' GROUP BY CASE WHEN s.rating >= 3.6 THEN 'high' WHEN s.rating >= 1.5 THEN 'mid' ELSE 'low' END HAVING MAX(p.cost) >= 310 ORDER BY rating_bucket ASC

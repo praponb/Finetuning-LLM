@@ -1,0 +1,1 @@
+WITH orders_by_customer AS (SELECT customer_id, SUM(shipping_fee) total_shipping_fee FROM orders WHERE order_date >= '2025-06-01' GROUP BY customer_id) SELECT c.is_active, obc.total_shipping_fee FROM customers c INNER JOIN orders_by_customer obc ON c.id = obc.customer_id WHERE obc.total_shipping_fee >= 240 ORDER BY total_shipping_fee DESC;

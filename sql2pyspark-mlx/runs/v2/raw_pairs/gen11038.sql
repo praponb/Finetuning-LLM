@@ -1,0 +1,1 @@
+SELECT level, job_title, SUM(CASE WHEN job_title = 'Engineer' THEN 1 ELSE 0 END) AS engineer_count FROM employees WHERE salary < 111000 AND full_name LIKE '%Noa%' GROUP BY level, job_title ORDER BY job_title, level LIMIT 5;

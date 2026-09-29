@@ -1,0 +1,1 @@
+SELECT id, supplier_id, launch_date, cost, SUM(cost) OVER (PARTITION BY supplier_id ORDER BY launch_date, id) AS running_cost, ROUND(cost / SUM(cost) OVER (PARTITION BY supplier_id), 3) AS cost_share FROM products WHERE category = 'Home';

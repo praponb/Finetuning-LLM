@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT order_id, product_id, ROUND(AVG(unit_price), 2) avg_unit_price, COUNT(DISTINCT unit_price) unique_products FROM order_items WHERE quantity >= 8 GROUP BY order_id, product_id) agg WHERE avg_unit_price > 67 ORDER BY unique_products ASC, order_id ASC, product_id ASC LIMIT 10;

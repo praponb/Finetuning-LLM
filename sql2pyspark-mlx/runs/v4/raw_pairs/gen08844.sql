@@ -1,0 +1,1 @@
+SELECT QUARTER(txn_time) AS txn_quarter, MIN(txn_time) AS first_txn_time, MAX(amount) AS max_amount FROM transactions WHERE TO_DATE(txn_time) >= '2025-06-01' GROUP BY QUARTER(txn_time) HAVING max_amount >= 1600;

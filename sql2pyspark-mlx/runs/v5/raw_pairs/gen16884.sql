@@ -1,0 +1,1 @@
+SELECT * FROM web_events QUALIFY RANK() OVER (PARTITION BY page ORDER BY duration_sec NULLS LAST) = 1;

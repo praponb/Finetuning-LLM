@@ -1,0 +1,1 @@
+SELECT web_events.session_id, web_events.event_type, sessions.country, sessions.browser, sessions.customer_id FROM web_events INNER JOIN sessions ON sessions.id = web_events.session_id ORDER BY country

@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.product_id, p.product_name, o.shipping_fee, ROUND(p.cost * 1.1, 2) AS adjusted_cost FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id WHERE oi.order_id IN (11, 27, 36) OR oi.unit_price BETWEEN 220 AND 370 ORDER BY id DESC LIMIT 20

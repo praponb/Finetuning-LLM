@@ -1,0 +1,1 @@
+SELECT o.order_date, o.amount, s.store_name, s.opened_date, c.segment, c.age, CASE WHEN s.region IN ('Central', 'East') THEN 'Priority' ELSE 'Other' END AS region_group FROM orders o LEFT JOIN stores s ON o.store_id = s.id LEFT JOIN customers c ON c.id = o.customer_id;

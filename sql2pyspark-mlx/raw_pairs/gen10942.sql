@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 320 THEN 'high' WHEN unit_price >= 120 THEN 'mid' ELSE 'low' END AS unit_price_bucket, SUM(quantity) AS total_quantity, SUM(quantity * unit_price) AS revenue, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY unit_price_bucket ORDER BY revenue DESC;

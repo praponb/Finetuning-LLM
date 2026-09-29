@@ -1,0 +1,1 @@
+SELECT c.country, MONTH(c.signup_date) AS signup_month, ROUND(AVG(o.discount), 2) AS avg_discount FROM orders o INNER JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON o.customer_id = c.id WHERE c.segment NOT IN ('Consumer', 'SMB') GROUP BY c.country, MONTH(c.signup_date) HAVING ROUND(AVG(o.discount), 2) > 73

@@ -1,0 +1,1 @@
+WITH valid_shipments AS (SELECT * FROM shipments WHERE cost <= 89), summary AS (SELECT status, SUM(cost) AS total_cost FROM valid_shipments GROUP BY status) SELECT status, total_cost FROM summary ORDER BY status

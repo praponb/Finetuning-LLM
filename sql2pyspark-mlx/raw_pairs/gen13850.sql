@@ -1,0 +1,1 @@
+WITH SessionSummary AS (SELECT session_id, MIN(duration_sec) AS min_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, S.min_duration_sec FROM sessions s INNER JOIN SessionSummary S ON s.id = S.session_id WHERE S.min_duration_sec > 150 ORDER BY S.min_duration_sec DESC, id LIMIT 5

@@ -1,0 +1,1 @@
+with recent_customers as (select *, round(credit_limit / age, 2) as credit_limit_per_age from customers where is_active and is_active = false), agg as (select segment, sort_array(collect_set(country)) as country_list, sum(case when city = 'Tokyo' then credit_limit_per_age else 0 end) as tokyo_credit_limit_per_age from recent_customers group by segment) select * from agg;

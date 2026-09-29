@@ -1,0 +1,1 @@
+WITH recent_products AS (SELECT * FROM products WHERE stock_qty <= 241 OR stock_qty BETWEEN 114 AND 260), summary AS (SELECT category, SORT_ARRAY(COLLECT_SET(category)) AS category_list FROM recent_products GROUP BY category) SELECT category, category_list FROM summary ORDER BY category DESC

@@ -1,0 +1,1 @@
+SELECT s.region, s.store_name, i.quantity, i.last_restock, i.product_id FROM stores s LEFT OUTER JOIN inventory i ON i.store_id = s.id WHERE s.sqft >= 12754 AND s.city = 'New York' ORDER BY s.store_name;

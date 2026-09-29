@@ -1,0 +1,1 @@
+SELECT MONTH(customers.signup_date) AS signup_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(sessions.device))) AS device_values, COUNT(DISTINCT sessions.browser) AS unique_browsers FROM sessions LEFT JOIN customers ON sessions.customer_id = customers.id GROUP BY MONTH(customers.signup_date) ORDER BY unique_browsers DESC, signup_month LIMIT 20

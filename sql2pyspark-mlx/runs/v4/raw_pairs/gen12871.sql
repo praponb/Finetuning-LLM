@@ -1,0 +1,1 @@
+SELECT s.id, s.country, s.city, t.unique_categorys FROM suppliers s LEFT JOIN (SELECT supplier_id, COUNT(DISTINCT price) AS unique_categorys FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY id DESC;

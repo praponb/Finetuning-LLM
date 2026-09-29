@@ -1,0 +1,1 @@
+select inventory.id, inventory.last_restock, inventory.store_id, products.supplier_id, products.cost, stores.city, stores.store_name from inventory right join products on inventory.product_id = products.id left join stores on inventory.store_id = stores.id;

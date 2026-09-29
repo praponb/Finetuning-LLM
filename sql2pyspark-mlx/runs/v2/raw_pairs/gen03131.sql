@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, c.city, SUM(o.amount) AS total_amount FROM orders o JOIN stores s ON s.id = o.store_id LEFT JOIN customers c ON o.customer_id = c.id GROUP BY MONTH(c.signup_date), c.city ORDER BY city, signup_month LIMIT 3;

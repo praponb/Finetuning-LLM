@@ -1,0 +1,1 @@
+SELECT c.city, SUM(CASE WHEN s.carrier = 'UPS' THEN s.cost ELSE 0 END) AS ups_cost FROM shipments s LEFT JOIN orders o ON o.id = s.order_id LEFT JOIN customers c ON o.customer_id = c.id GROUP BY c.city;

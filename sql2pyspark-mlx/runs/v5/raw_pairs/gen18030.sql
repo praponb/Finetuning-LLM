@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory GROUP BY product_id) SELECT products.id, products.category, product_totals.quantity_range FROM products LEFT JOIN product_totals ON products.id = product_totals.product_id ORDER BY products.category DESC, id DESC;

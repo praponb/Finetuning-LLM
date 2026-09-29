@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, RANK() OVER (PARTITION BY country ORDER BY credit_limit) AS rn FROM customers QUALIFY rn = 1) SELECT id, name, email, city, segment, signup_date, is_active, credit_limit, age FROM deduped

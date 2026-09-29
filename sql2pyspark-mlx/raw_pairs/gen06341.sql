@@ -1,0 +1,1 @@
+SELECT id, dept_name, budget, LEAD(budget) OVER w_grp AS next_budget, LAG(budget) OVER w_grp AS prev_budget, ROW_NUMBER() OVER w_grp AS event_seq FROM departments WINDOW w_grp AS (PARTITION BY location ORDER BY budget, id)

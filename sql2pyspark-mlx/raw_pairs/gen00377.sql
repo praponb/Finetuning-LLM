@@ -1,0 +1,1 @@
+select segment, concat_ws(', ', sort_array(collect_set(country))) as country_values, min(age) as min_age from customers where email not like '%@startup.io' group by segment having min_age > 58 order by country_values, segment limit 5

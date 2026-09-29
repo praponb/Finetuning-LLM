@@ -1,0 +1,1 @@
+SELECT ss.id, ss.revenue, p.brand, p.product_name FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id WHERE ARRAY_CONTAINS(p.tags, 'bestseller') AND ss.store_id IN (1, 4) ORDER BY p.brand DESC;

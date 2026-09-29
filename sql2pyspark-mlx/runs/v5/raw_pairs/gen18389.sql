@@ -1,0 +1,1 @@
+select account_type, date_format(opened_date, 'yyyy-MM') as opened_month, concat_ws(', ', sort_array(collect_set(status))) as status_values, round(avg(balance), 2) as avg_balance, min(opened_date) as first_opened_date from accounts where customer_id = 11 group by 1, 2 order by first_opened_date

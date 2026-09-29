@@ -1,0 +1,1 @@
+select plan, quarter(end_date) as end_quarter, min(end_date) as first_end_date, min(monthly_fee) as min_monthly_fee from subscriptions where customer_id in (32, 37, 38) and monthly_fee < 80 group by plan, end_quarter having count(monthly_fee) < 2 order by first_end_date desc

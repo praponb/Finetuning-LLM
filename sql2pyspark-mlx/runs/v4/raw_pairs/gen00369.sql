@@ -1,0 +1,1 @@
+with filtered_order_items as (select * from order_items where quantity >= 7 and product_id is null), summary as (select product_id, sum(quantity * unit_price) as revenue from filtered_order_items group by product_id) select product_id, revenue from summary where revenue >= 77 order by 1 desc, revenue asc limit 1

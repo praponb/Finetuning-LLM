@@ -1,0 +1,1 @@
+select date_trunc('month', last_restock) as activity_month, round(avg(quantity), 2) as avg_quantity, count(distinct store_id) as distinct_store_ids from inventory group by date_trunc('month', last_restock);

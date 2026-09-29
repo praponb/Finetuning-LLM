@@ -1,0 +1,1 @@
+SELECT id, manager_id, salary, job_title, ROUND(salary / SUM(salary) OVER (PARTITION BY manager_id), 3) AS salary_share, NTILE(4) OVER (PARTITION BY job_title ORDER BY salary DESC, id) AS salary_ntile FROM employees

@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, RANK() OVER (PARTITION BY status, carrier ORDER BY shipped_date ASC NULLS FIRST) AS rn FROM shipments QUALIFY rn = 1) SELECT id, carrier, delivered_date, status FROM deduped ORDER BY delivered_date ASC;

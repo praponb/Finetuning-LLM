@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY amount, id) AS dedup_rank FROM transactions QUALIFY dedup_rank = 1) SELECT merchant, COUNT(CASE WHEN txn_type = 'DEBIT' THEN 1 END) AS debit_count, MIN(txn_time) AS first_seen, SUM(amount) FILTER (WHERE merchant = 'Shell') AS shell_total_amount FROM ranked GROUP BY 1

@@ -1,0 +1,1 @@
+SELECT a.account_type, MAX(t.txn_time) AS latest_txn_time, SUM(CASE WHEN t.merchant = 'Grab' THEN t.amount ELSE 0 END) AS grab_amount FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id GROUP BY a.account_type ORDER BY account_type

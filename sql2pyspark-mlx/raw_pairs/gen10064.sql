@@ -1,0 +1,1 @@
+SELECT customer_id, status, MIN(balance) min_balance, MIN(opened_date) first_opened_date, MAX(opened_date) last_opened_date FROM accounts GROUP BY 1, 2 HAVING COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) >= 4 ORDER BY last_opened_date DESC;

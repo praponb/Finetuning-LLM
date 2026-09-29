@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM suppliers s WHERE EXISTS (SELECT 1 FROM products x WHERE x.supplier_id = s.id AND MONTH(x.launch_date) IN (3, 10, 11))) SELECT id, country, city, rating, CASE WHEN city RLIKE '^(Singapore|New York)$' THEN 'EXTENDED' WHEN city RLIKE '^(Bangkok|Chiang Mai)$' THEN 'PRIORITY' ELSE 'GROUP_A' END AS city_zone FROM not_flagged ORDER BY country

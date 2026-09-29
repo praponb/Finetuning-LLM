@@ -1,0 +1,1 @@
+SELECT account_type, MIN(opened_date) AS first_opened_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) AS account_type_values FROM accounts WHERE opened_date <= '2025-01-01' GROUP BY account_type;

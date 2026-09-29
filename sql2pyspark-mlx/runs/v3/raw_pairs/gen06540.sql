@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.customer_id, sessions.device, sessions.country, customers.name FROM sessions JOIN customers ON sessions.customer_id = customers.id WHERE customers.country IN ('SG', 'US') ORDER BY sessions.device;

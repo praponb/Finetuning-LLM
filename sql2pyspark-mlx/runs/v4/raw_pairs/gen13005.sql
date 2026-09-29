@@ -1,0 +1,1 @@
+SELECT customer_id, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM accounts WHERE customer_id IN (5, 9, 30, 36) AND opened_date > '2023-04-16' GROUP BY customer_id ORDER BY 1 DESC

@@ -1,0 +1,1 @@
+SELECT HOUR(paid_at) AS paid_hour, method, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, SUM(amount) AS total_amount FROM payments WHERE paid_at >= '2025-05-01' GROUP BY HOUR(paid_at), method HAVING total_amount > 4100;

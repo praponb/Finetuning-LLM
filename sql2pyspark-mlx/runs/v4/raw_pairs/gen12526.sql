@@ -1,0 +1,1 @@
+SELECT txn_type, MAX(amount) AS max_amount, SIZE(COLLECT_SET(txn_type)) AS num_txn_types, COUNT(DISTINCT id) AS distinct_ids FROM transactions GROUP BY txn_type ORDER BY num_txn_types DESC NULLS FIRST

@@ -1,0 +1,1 @@
+SELECT s.region, DATE_FORMAT(s.opened_date, 'yyyy-MM') opened_month, ROUND(STDDEV(i.quantity), 2) stddev_quantity, MIN(i.last_restock) first_last_restock FROM inventory i LEFT JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id WHERE i.quantity >= 147 GROUP BY s.region, DATE_FORMAT(s.opened_date, 'yyyy-MM') ORDER BY first_last_restock DESC;

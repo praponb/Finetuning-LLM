@@ -1,0 +1,1 @@
+SELECT product_id, store_id, AVG(revenue) avg_revenue, SUM(revenue) total_revenue, MIN(sale_date) first_sale_date FROM store_sales WHERE revenue BETWEEN 1200 AND 2100 AND product_id IN (2, 6, 7, 8) AND store_id IN (1, 3, 4) GROUP BY product_id, store_id HAVING COUNT(DISTINCT units) >= 4 ORDER BY store_id DESC;

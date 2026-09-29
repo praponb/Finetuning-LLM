@@ -1,0 +1,9 @@
+from pyspark.sql import functions as F
+
+min_last_restock = df_inventory.filter(F.col("quantity").between(113, 134)).agg(F.min("last_restock")).first()[0]
+
+result = (
+    df_inventory
+    .filter(F.col("last_restock") == min_last_restock)
+    .select("id", "last_restock", "product_id")
+)

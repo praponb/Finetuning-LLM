@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY region, city ORDER BY opened_date DESC, id) AS rank_in_group FROM stores) x WHERE rank_in_group = 1) SELECT id, store_name, region, opened_date, sqft, rank_in_group FROM ranked ORDER BY opened_date NULLS LAST;

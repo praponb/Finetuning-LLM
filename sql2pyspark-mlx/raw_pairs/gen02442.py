@@ -1,0 +1,10 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.orderBy("sale_date")
+
+result = (
+    df_store_sales
+    .filter(F.year("sale_date") == 2024)
+    .select("id", "sale_date", F.rank().over(w).alias("sale_date_rank"))
+)

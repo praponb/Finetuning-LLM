@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', p.launch_date) AS launch_month, p.category, COUNT(*) AS num_order_items FROM order_items oi RIGHT JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE o.channel = 'web' GROUP BY DATE_TRUNC('MONTH', p.launch_date), p.category HAVING COUNT(*) >= 3;

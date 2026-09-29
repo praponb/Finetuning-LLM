@@ -1,0 +1,1 @@
+select plan, status, max(monthly_fee) as max_monthly_fee, sum(case when status = 'EXPIRED' then 1 else 0 end) as expired_count from subscriptions group by 1, 2 having max_monthly_fee > 140 order by expired_count, plan, status limit 5;

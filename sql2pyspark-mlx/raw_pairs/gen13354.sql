@@ -1,0 +1,1 @@
+WITH order_items_by_order AS (SELECT order_id, COUNT(DISTINCT unit_price) unique_orders, COUNT(quantity) quantity_count FROM order_items WHERE order_id = 34 GROUP BY order_id) SELECT o.shipping_fee, o.amount, oibo.unique_orders, oibo.quantity_count FROM orders o LEFT JOIN order_items_by_order oibo ON o.id = oibo.order_id WHERE oibo.unique_orders >= 9;

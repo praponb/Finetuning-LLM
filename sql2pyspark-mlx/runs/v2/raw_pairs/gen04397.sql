@@ -1,0 +1,1 @@
+SELECT session_id, SUM(duration_sec) AS total_duration_sec, COUNT(*) AS cnt, DENSE_RANK() OVER (ORDER BY SUM(duration_sec) DESC) AS duration_sec_rank FROM web_events WHERE duration_sec = 435 GROUP BY session_id ORDER BY 3

@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, ARRAY_MAX(TRANSFORM(items, li -> li.price)) AS max_item_price, TRANSFORM(FILTER(items, li -> li.promo IS NOT NULL), li -> STRUCT(li.product_id AS pid, ROUND(li.price * 0.9, 2) AS discounted_price)) AS promo_lines, TRY_CAST(attributes['weight_kg'] AS DOUBLE) AS weight_kg FROM carts;

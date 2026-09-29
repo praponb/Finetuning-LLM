@@ -1,0 +1,1 @@
+select s.id, s.country, count(we.id) web_event_count, sum(case when we.event_type = 'purchase' then 1 else 0 end) purchase_count from sessions s left join web_events we on s.id = we.session_id where s.customer_id in (4, 25, 37, 38) group by s.id, s.country;

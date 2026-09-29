@@ -1,0 +1,1 @@
+SELECT a.status, a.account_type, a.customer_id, t.txn_time, t.txn_type, t.amount, DATE_FORMAT(t.txn_time, 'yyyy-MM-dd') AS txn_time_label FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id WHERE a.balance >= 39000 OR t.txn_time < '2023-11-16' ORDER BY txn_time;

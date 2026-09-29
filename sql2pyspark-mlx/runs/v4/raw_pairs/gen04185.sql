@@ -1,0 +1,1 @@
+WITH filtered_orders AS (SELECT * FROM orders WHERE customer_id = 31), Agg AS (SELECT channel, ROUND(AVG(discount), 2) AS avg_discount, AVG(amount) AS avg_amount FROM filtered_orders GROUP BY channel) SELECT * FROM Agg ORDER BY channel DESC LIMIT 5;

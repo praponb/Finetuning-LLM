@@ -1,0 +1,1 @@
+SELECT id, quantity, product_id, unit_price, RANK() OVER (ORDER BY quantity) AS rnk, SUM(unit_price) OVER (PARTITION BY product_id ORDER BY unit_price, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_unit_price FROM order_items WHERE unit_price >= 230

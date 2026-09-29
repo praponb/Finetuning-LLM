@@ -1,0 +1,1 @@
+with base as (select id, full_name, dept_id, manager_id, hire_date, if(is_remote, 'Yes', 'No') as is_remote_label from employees where hire_date > date '2023-06-07' and salary >= 139000) select a.id, a.manager_id, a.is_remote_label, d.job_title, d.email, d.salary from base a left join employees d on a.manager_id = d.id;

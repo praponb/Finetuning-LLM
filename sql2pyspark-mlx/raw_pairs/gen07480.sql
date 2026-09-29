@@ -1,0 +1,1 @@
+SELECT c.city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.browser))) AS browser_values, SORT_ARRAY(COLLECT_SET(s.device)) AS device_list FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.started_at < '2024-12-01' GROUP BY c.city;

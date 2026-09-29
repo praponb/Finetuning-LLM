@@ -1,0 +1,1 @@
+SELECT p.brand, p.supplier_id, s.country, s.supplier_name, ARRAY_CONTAINS(p.tags, 'new') AS is_new FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.cost <= 220 OR p.price <= 590 ORDER BY s.supplier_name;

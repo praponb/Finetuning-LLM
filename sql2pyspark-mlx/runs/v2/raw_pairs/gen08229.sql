@@ -1,0 +1,1 @@
+WITH recent_products AS (SELECT * FROM products WHERE ARRAY_CONTAINS(tags, 'eco')), agg AS (SELECT category, MAX(cost) AS max_cost, COUNT(CASE WHEN brand = 'Umbrella' THEN 1 END) AS umbrella_count FROM recent_products GROUP BY category) SELECT * FROM agg WHERE umbrella_count > 3 ORDER BY max_cost DESC, category LIMIT 5

@@ -1,0 +1,16 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_inventory.alias("i")
+    .join(df_store_sales.alias("ss"), (F.col("i.store_id") == F.col("ss.store_id")) & (F.col("i.product_id") == F.col("ss.product_id")), "inner")
+    .groupBy(
+        F.when(F.year(F.col("ss.sale_date")) < 2024, "before_2024").when(F.year(F.col("ss.sale_date")) == 2024, "2024").otherwise("after_2024").alias("sale_cohort"),
+        F.quarter(F.col("ss.sale_date")).alias("sale_quarter"),
+    )
+    .agg(
+        F.countDistinct(F.col("i.quantity")).alias("unique_products"),
+        F.count("*").alias("cnt"),
+    )
+    .orderBy("unique_products", "cnt", "sale_cohort", "sale_quarter")
+    .limit(5)
+)

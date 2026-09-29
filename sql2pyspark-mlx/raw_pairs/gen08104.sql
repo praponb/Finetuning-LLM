@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, created_at, EXPLODE_OUTER(coupon_codes) AS tag FROM carts) SELECT s.id, s.customer_id, s.created_at, s.tag, CASE WHEN tag RLIKE '^(VIP|SPRING10)$' THEN 'CORE' ELSE 'PRIORITY' END AS tag_zone, (SELECT SUM(x.discount) FROM orders x WHERE x.customer_id = s.customer_id) AS sum_order_discount FROM exploded s ORDER BY tag_zone DESC NULLS LAST

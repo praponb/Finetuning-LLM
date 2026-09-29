@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, MAX(amount) - MIN(amount) AS amount_range FROM payments GROUP BY order_id) SELECT o.id, o.discount, o.shipping_fee, ot.amount_range FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.amount_range >= 54

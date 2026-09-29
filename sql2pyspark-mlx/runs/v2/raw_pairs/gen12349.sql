@@ -1,0 +1,1 @@
+SELECT o.store_id, SUM(CASE WHEN p.status = 'FAILED' THEN p.amount ELSE 0 END) AS failed_amount, COUNT(*) AS payment_count FROM payments p FULL OUTER JOIN orders o ON o.id = p.order_id GROUP BY o.store_id ORDER BY payment_count DESC

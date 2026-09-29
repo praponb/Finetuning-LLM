@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('QUARTER', event_time) AS quarter_start, event_type, BIT_OR(duration_sec) AS duration_sec_bit_or, PERCENTILE_APPROX(duration_sec, 0.95) AS duration_sec_p95 FROM web_events GROUP BY quarter_start, event_type ORDER BY duration_sec_p95 DESC;

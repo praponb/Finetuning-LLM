@@ -1,0 +1,1 @@
+select id, plan, discounts, transform(tier_prices, (p, i) -> round(p * tier_limits[i], 2)) as tier_revenue_caps, zip_with(tier_prices, discounts, (p, d) -> round(p * (1 - d), 2)) as net_prices from price_tiers where plan in ('basic', 'starter', 'pro');

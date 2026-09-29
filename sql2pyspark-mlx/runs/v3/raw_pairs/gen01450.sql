@@ -1,0 +1,1 @@
+SELECT order_id, status, COUNT(amount) AS amount_count FROM payments WHERE status = 'SUCCESS' AND (order_id = 15 OR amount >= 1390) GROUP BY order_id, status HAVING COUNT(amount) >= 3 ORDER BY order_id DESC, status ASC LIMIT 50;

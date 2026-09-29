@@ -1,0 +1,1 @@
+SELECT p.order_id, p.paid_at, o.shipping_fee, c.country, c.is_active, ROUND(c.age / c.credit_limit, 2) AS age_per_credit_limit FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE o.order_date > '2023-08-01' AND o.discount <= 0.25;

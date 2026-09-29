@@ -1,0 +1,3 @@
+SELECT *
+FROM orders
+QUALIFY ROW_NUMBER() OVER (PARTITION BY store_id, status ORDER BY amount ASC NULLS FIRST, id ASC) = 1;

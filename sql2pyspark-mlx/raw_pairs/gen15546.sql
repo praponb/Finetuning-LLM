@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('OPEN', 'CLOSED') THEN 'core' ELSE 'other' END status_group, SUM(CASE WHEN status = 'FROZEN' THEN balance ELSE 0 END) frozen_balance FROM accounts WHERE account_type = 'LOAN' GROUP BY status_group ORDER BY status_group LIMIT 1;

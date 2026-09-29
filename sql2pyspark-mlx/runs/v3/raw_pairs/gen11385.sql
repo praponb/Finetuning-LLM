@@ -1,0 +1,1 @@
+SELECT p.category, AVG(ss.units) AS avg_units, MAX(ss.revenue) AS max_revenue FROM store_sales ss LEFT JOIN products p ON p.id = ss.product_id WHERE ARRAY_CONTAINS(p.tags, 'premium') GROUP BY p.category ORDER BY category

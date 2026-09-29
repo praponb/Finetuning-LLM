@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, COUNT(quantity) AS quantity_count FROM order_items WHERE unit_price > 210 GROUP BY product_id) SELECT products.id, products.launch_date, products.stock_qty, product_summary.quantity_count FROM products JOIN product_summary ON products.id = product_summary.product_id;

@@ -1,0 +1,1 @@
+SELECT id, event_time, duration_sec, page, DATE_TRUNC('month', event_time) AS event_time_period, FLOOR(duration_sec) AS duration_sec_whole FROM web_events WHERE (duration_sec <> 422 AND event_type = 'page_view') OR session_id IN (10, 15, 34)

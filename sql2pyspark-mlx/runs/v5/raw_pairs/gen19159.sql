@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, RANK() OVER (PARTITION BY product_id ORDER BY last_restock DESC) AS rank_in_group FROM inventory QUALIFY rank_in_group = 1) SELECT id, last_restock, rank_in_group FROM ranked ORDER BY id DESC NULLS FIRST

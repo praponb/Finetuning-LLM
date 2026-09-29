@@ -1,0 +1,1 @@
+WITH recent_stores AS (SELECT * FROM stores WHERE NOT (sqft BETWEEN 6787 AND 11121 AND store_name IS NULL)), city_summary AS (SELECT city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) region_values, SUM(CASE WHEN city = 'Berlin' THEN sqft ELSE 0 END) berlin_sqft FROM recent_stores GROUP BY city) SELECT city, region_values FROM city_summary WHERE berlin_sqft >= 31;

@@ -1,0 +1,1 @@
+SELECT orders.id, orders.shipping_fee, orders.store_id, orders.channel FROM orders WHERE orders.channel NOT IN ('mobile', 'web') AND orders.id IN (SELECT order_id FROM order_items) ORDER BY 4, id LIMIT 50

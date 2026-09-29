@@ -1,0 +1,1 @@
+SELECT product_id, MONTH(last_restock) AS last_restock_month, QUARTER(last_restock) AS last_restock_quarter, MIN(last_restock) AS first_last_restock FROM inventory GROUP BY product_id, last_restock_month, last_restock_quarter;

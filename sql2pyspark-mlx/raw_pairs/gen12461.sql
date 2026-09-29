@@ -1,0 +1,1 @@
+with order_totals as (select order_id, count(amount) as amount_count, round(stddev(amount), 2) as stddev_amount from payments group by order_id) select o.id, o.amount, ot.amount_count, ot.stddev_amount from orders o left join order_totals ot on o.id = ot.order_id

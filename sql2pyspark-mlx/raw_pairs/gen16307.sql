@@ -1,0 +1,1 @@
+SELECT MONTH(signup_date) AS signup_month, ROUND(AVG(credit_limit), 2) AS avg_credit_limit, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM customers GROUP BY MONTH(signup_date) ORDER BY signup_month ASC, avg_credit_limit DESC;

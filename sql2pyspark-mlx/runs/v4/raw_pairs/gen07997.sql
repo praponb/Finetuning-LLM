@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, i.quantity, i.last_restock, ss.revenue, ss.sale_date, ss.store_id FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id ORDER BY i.product_id DESC;

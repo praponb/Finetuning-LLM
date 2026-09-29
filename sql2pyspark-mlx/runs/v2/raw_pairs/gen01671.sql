@@ -1,0 +1,1 @@
+SELECT page, DATE_TRUNC('MONTH', event_time) AS event_month, event_type, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY page, DATE_TRUNC('MONTH', event_time), event_type ORDER BY page DESC, event_month, event_type LIMIT 10

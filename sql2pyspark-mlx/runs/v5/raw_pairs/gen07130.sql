@@ -1,0 +1,1 @@
+SELECT id, channel, store_id, shipping_fee, order_date, MIN(shipping_fee) OVER (PARTITION BY channel, store_id) AS channel_min_shipping_fee, DENSE_RANK() OVER (PARTITION BY channel ORDER BY order_date DESC) AS dense_rnk FROM orders

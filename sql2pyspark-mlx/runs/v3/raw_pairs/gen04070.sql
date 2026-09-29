@@ -1,0 +1,1 @@
+SELECT a.account_type, SUM(t.amount) AS total_amount FROM transactions t JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE LENGTH(c.email) >= 8 GROUP BY a.account_type HAVING SUM(t.amount) >= 23000

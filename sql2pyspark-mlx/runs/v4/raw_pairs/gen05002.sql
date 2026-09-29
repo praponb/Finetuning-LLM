@@ -1,0 +1,1 @@
+with latest as (select *, row_number() over (partition by product_id order by quantity desc, id) as latest_rank from inventory qualify latest_rank = 1) select id, store_id, quantity from latest order by quantity nulls first, store_id

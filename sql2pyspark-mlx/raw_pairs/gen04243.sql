@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, store_id, product_id, quantity, last_restock, ROUND(quantity, 0) AS quantity_rounded FROM inventory WHERE product_id IN (1, 5, 6, 10)) SELECT p.category, COUNT(*) AS num_rows, AVG(s.quantity_rounded) AS avg_quantity_rounded, SUM(s.quantity) AS total_quantity FROM base s JOIN products p ON s.product_id = p.id GROUP BY p.category;

@@ -1,0 +1,4 @@
+SELECT DISTINCT method
+FROM payments
+WHERE status = 'SUCCESS'
+ORDER BY 1;

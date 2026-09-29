@@ -1,0 +1,1 @@
+SELECT category, fashion_count, max_price FROM (SELECT category, COUNT(CASE WHEN category = 'Fashion' THEN 1 END) AS fashion_count, MAX(price) AS max_price FROM products WHERE product_name IS NOT NULL GROUP BY category) AS t WHERE fashion_count < 9

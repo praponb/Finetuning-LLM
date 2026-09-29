@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM orders WHERE store_id = 26), orders_stats AS (SELECT QUARTER(order_date) AS order_quarter, store_id, MAX(order_date) AS last_order_date FROM base GROUP BY QUARTER(order_date), store_id) SELECT * FROM orders_stats ORDER BY store_id, order_quarter DESC;

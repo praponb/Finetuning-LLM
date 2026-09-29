@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.3 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN city = 'London' THEN rating ELSE 0 END) AS london_rating FROM suppliers WHERE city IS NOT NULL AND country = 'UK' AND rating BETWEEN 2.3 AND 2.8 GROUP BY rating_bucket ORDER BY london_rating DESC, rating_bucket LIMIT 5

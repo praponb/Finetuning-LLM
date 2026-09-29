@@ -1,0 +1,1 @@
+SELECT s.country, MAX(we.duration_sec) AS max_duration_sec FROM web_events we RIGHT JOIN sessions s ON s.id = we.session_id INNER JOIN customers c ON s.customer_id = c.id GROUP BY s.country ORDER BY country, max_duration_sec;

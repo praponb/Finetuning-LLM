@@ -1,0 +1,1 @@
+SELECT product_id, DATE_TRUNC('MONTH', last_restock) last_restock_month, store_id, ROUND(AVG(quantity), 2) avg_quantity FROM inventory WHERE last_restock > '2024-10-21' AND product_id IN (2, 3, 8, 10) GROUP BY 1, 2, 3

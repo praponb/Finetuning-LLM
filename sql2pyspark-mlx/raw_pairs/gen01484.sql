@@ -1,0 +1,1 @@
+with web_events_by_session as (select session_id, round(avg(duration_sec), 2) as avg_duration_sec from web_events group by session_id) select s.id, s.device, webs.avg_duration_sec from sessions s inner join web_events_by_session webs on s.id = webs.session_id where webs.avg_duration_sec >= 77 order by avg_duration_sec desc, id limit 3

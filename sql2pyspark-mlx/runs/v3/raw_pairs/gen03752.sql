@@ -1,0 +1,1 @@
+select id, store_id, quantity, product_id, min(quantity) over (partition by store_id) as store_id_min_quantity, rank() over (partition by product_id order by quantity desc) as rnk from inventory where store_id in (1, 5) order by product_id desc, store_id_min_quantity

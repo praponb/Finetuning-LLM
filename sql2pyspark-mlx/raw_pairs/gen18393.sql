@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CONCAT(plan, ' ', status) AS plan_status, CAST(monthly_fee AS INT) AS monthly_fee_int FROM subscriptions WHERE end_date >= DATE '2023-05-28' AND customer_id IS NOT NULL) SELECT plan FROM filtered INTERSECT SELECT plan FROM subscriptions WHERE start_date > '2025-03-01';

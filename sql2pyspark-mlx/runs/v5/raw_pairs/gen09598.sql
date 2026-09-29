@@ -1,0 +1,1 @@
+SELECT accounts.account_type, COUNT(transactions.id) AS transaction_count, SUM(CASE WHEN transactions.merchant = 'Grab' THEN 1 ELSE 0 END) AS grab_count FROM accounts LEFT JOIN transactions ON accounts.id = transactions.account_id GROUP BY accounts.account_type

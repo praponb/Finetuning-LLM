@@ -1,0 +1,1 @@
+SELECT id, order_id, cost, delivered_date, shipped_date, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY cost, id) AS rn, FIRST_VALUE(shipped_date) OVER (PARTITION BY order_id ORDER BY delivered_date, id) AS first_shipped_date FROM shipments WHERE YEAR(delivered_date) = 2025 ORDER BY order_id DESC;

@@ -1,0 +1,1 @@
+WITH ranked_orders AS (SELECT id, customer_id, shipping_fee, RANK() OVER (PARTITION BY customer_id ORDER BY shipping_fee DESC) pos FROM orders) SELECT * FROM ranked_orders WHERE pos <= 3 ORDER BY pos, id DESC;

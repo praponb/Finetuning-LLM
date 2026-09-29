@@ -1,0 +1,1 @@
+SELECT YEAR(start_date) AS start_year, MAX(monthly_fee) AS max_monthly_fee, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions GROUP BY YEAR(start_date) ORDER BY monthly_fee_count, start_year LIMIT 5;

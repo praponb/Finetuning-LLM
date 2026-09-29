@@ -1,0 +1,1 @@
+SELECT MONTH(launch_date) launch_month, MAX(stock_qty) max_stock_qty, COUNT(cost) cost_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values FROM products WHERE supplier_id IS NULL AND (brand = 'Acme' OR product_name NOT LIKE '%Mat%') GROUP BY MONTH(launch_date) HAVING MAX(stock_qty) >= 190

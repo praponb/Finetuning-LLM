@@ -1,0 +1,1 @@
+SELECT id, country, started_at, browser, LAST_VALUE(browser) OVER (PARTITION BY country ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_browser FROM sessions;

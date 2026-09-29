@@ -1,0 +1,1 @@
+select ss.store_id, max(i.quantity) as max_quantity from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.sale_date > '2024-07-01' group by ss.store_id order by max_quantity desc, ss.store_id desc;

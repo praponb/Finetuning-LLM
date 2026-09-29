@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, oi.quantity, p.stock_qty, p.launch_date, o.status FROM order_items oi FULL OUTER JOIN products p ON p.id = oi.product_id INNER JOIN orders o ON oi.order_id = o.id ORDER BY 4 DESC

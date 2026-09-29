@@ -1,0 +1,1 @@
+SELECT id, manager_id, hire_date, salary, job_title, ROUND(AVG(salary) OVER (PARTITION BY manager_id ORDER BY hire_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS salary_moving_avg_4, MAX(salary) OVER (PARTITION BY job_title) AS job_title_max_salary FROM employees WHERE UPPER(email) LIKE '%MMA%' ORDER BY id DESC

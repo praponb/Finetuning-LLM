@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, store_name, region, opened_date, sqft, CONCAT_WS('-', city, region) city_region_key, COALESCE(sqft, 0) sqft_filled, COALESCE(region, 'N/A') region_clean FROM stores WHERE opened_date >= TO_DATE('2023-07-19')) SELECT *, ROW_NUMBER() OVER (PARTITION BY region ORDER BY sqft DESC, id ASC) AS dedup_rank FROM cleaned QUALIFY dedup_rank = 1

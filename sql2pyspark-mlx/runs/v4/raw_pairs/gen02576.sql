@@ -1,0 +1,1 @@
+select s.city, round(avg(i.quantity), 2) as avg_quantity, max(i.quantity) - min(i.quantity) as quantity_range from inventory i inner join stores s on i.store_id = s.id right outer join products p on i.product_id = p.id where i.product_id in (2, 4, 7) group by s.city having round(avg(i.quantity), 2) > 71 order by quantity_range desc

@@ -1,0 +1,1 @@
+WITH filtered_web_events AS (SELECT * FROM web_events WHERE page IN ('/checkout', '/product') AND page = '/cart'), agg AS (SELECT event_type, MIN(duration_sec) AS min_duration_sec FROM filtered_web_events GROUP BY event_type) SELECT event_type, min_duration_sec FROM agg;

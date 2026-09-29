@@ -1,0 +1,1 @@
+select s.region, s.sqft, t.avg_revenue, t.total_units from stores s left join (select store_id, round(avg(revenue), 2) as avg_revenue, sum(units) as total_units from store_sales group by store_id) t on s.id = t.store_id order by sqft desc;

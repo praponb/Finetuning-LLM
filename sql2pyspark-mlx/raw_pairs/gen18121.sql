@@ -1,0 +1,1 @@
+SELECT channel, PERCENTILE_APPROX(discount_pct, ARRAY(0.25, 0.5, 0.75)) AS discount_pct_quartiles, AVG(discount_pct) AS avg_discount_pct, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM promotions GROUP BY 1 HAVING avg_discount_pct >= 0 ORDER BY avg_discount_pct NULLS LAST;

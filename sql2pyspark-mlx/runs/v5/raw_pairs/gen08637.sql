@@ -1,0 +1,1 @@
+SELECT s.supplier_name, t.price_count, t.home_count FROM suppliers s INNER JOIN (SELECT supplier_id, COUNT(price) price_count, COUNT(CASE WHEN category = 'Home' THEN 1 END) home_count FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.home_count > 6;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, customer_id, plan, monthly_fee, status, DATEDIFF(start_date, end_date) AS days_end_date_to_start_date, INITCAP(TRIM(status)) AS status_title FROM subscriptions WHERE plan = 'enterprise') SELECT status FROM base EXCEPT DISTINCT SELECT status FROM subscriptions WHERE MONTH(end_date) IN (2, 4, 5)

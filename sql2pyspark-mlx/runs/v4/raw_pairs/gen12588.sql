@@ -1,0 +1,1 @@
+WITH filtered_customers AS (SELECT * FROM customers WHERE credit_limit >= 10600 AND (country <> 'US' OR credit_limit <= 9400)), agg AS (SELECT is_active, SUM(CASE WHEN country = 'UK' THEN 1 ELSE 0 END) AS uk_count, MIN(signup_date) AS min_signup_date FROM filtered_customers GROUP BY is_active) SELECT * FROM agg ORDER BY min_signup_date, uk_count DESC, is_active LIMIT 10;

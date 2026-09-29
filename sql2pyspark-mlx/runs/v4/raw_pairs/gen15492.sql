@@ -1,0 +1,1 @@
+select s.region, t.store_sale_count, t.first_sale_date from stores s join (select store_id, count(*) as store_sale_count, min(sale_date) as first_sale_date from store_sales where store_id in (2, 4) group by store_id) t on s.id = t.store_id where t.store_sale_count >= 3;

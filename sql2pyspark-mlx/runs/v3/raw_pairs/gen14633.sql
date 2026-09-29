@@ -1,0 +1,1 @@
+SELECT d.dept_name, t.salary_range, t.avg_salary FROM departments d INNER JOIN (SELECT dept_id, MAX(salary) - MIN(salary) AS salary_range, ROUND(AVG(salary), 2) AS avg_salary FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.salary_range >= 79;

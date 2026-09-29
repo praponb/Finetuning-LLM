@@ -1,0 +1,1 @@
+SELECT QUARTER(s.opened_date) AS opened_quarter, COUNT(*) AS total_count, AVG(ss.units) AS avg_units FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON p.id = ss.product_id GROUP BY QUARTER(s.opened_date) ORDER BY avg_units DESC;

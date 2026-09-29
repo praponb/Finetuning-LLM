@@ -1,0 +1,1 @@
+SELECT id, status, start_date, customer_id, plan, DENSE_RANK() OVER (PARTITION BY status ORDER BY start_date) AS start_date_dense_rank, RANK() OVER (PARTITION BY customer_id, plan ORDER BY start_date) AS start_date_rank FROM subscriptions WHERE start_date BETWEEN '2023-08-08' AND '2025-08-01' ORDER BY plan

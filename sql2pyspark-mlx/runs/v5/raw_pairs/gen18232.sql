@@ -1,0 +1,1 @@
+WITH StoreStats AS (SELECT store_id, SUM(revenue) AS total_revenue FROM store_sales WHERE sale_date <= '2024-05-30' GROUP BY store_id) SELECT stores.opened_date, stores.store_name, StoreStats.total_revenue FROM stores INNER JOIN StoreStats ON stores.id = StoreStats.store_id WHERE StoreStats.total_revenue > 9000 ORDER BY opened_date ASC;

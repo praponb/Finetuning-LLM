@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, EXPLODE(coupon_codes) AS tag FROM carts) SELECT customer_id, tag, COUNT(DISTINCT id) AS distinct_ids, COUNT(CASE WHEN tag = 'BUNDLE' THEN 1 END) AS bundle_count, SIZE(COLLECT_SET(tag)) AS num_tags, COUNT(CASE WHEN tag = 'WELCOME5' THEN 1 END) AS welcome5_count FROM lines GROUP BY 1, 2

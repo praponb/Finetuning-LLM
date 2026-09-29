@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MAX(started_at) latest_started_at FROM sessions GROUP BY customer_id) SELECT c.id, c.signup_date, cs.latest_started_at FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY c.id

@@ -1,0 +1,1 @@
+with base as (select * from order_items where order_id in (10, 15, 26, 31) and quantity >= 7), Summary as (select product_id, count(*) as num_order_items, avg(quantity) as avg_quantity from base group by product_id) select * from Summary where avg_quantity >= 3.2 order by avg_quantity desc, product_id asc limit 5;

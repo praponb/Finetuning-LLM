@@ -1,0 +1,1 @@
+WITH top_products AS (SELECT id, supplier_id, launch_date, cost, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY launch_date DESC, id) AS rn FROM products WHERE launch_date BETWEEN '2023-05-13' AND '2024-03-01') SELECT * FROM top_products WHERE rn <= 2

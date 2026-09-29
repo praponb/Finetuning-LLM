@@ -1,0 +1,1 @@
+WITH ranked_order_items AS (SELECT id, order_id, unit_price, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY unit_price, id) AS pos FROM order_items WHERE order_id IN (2, 10, 20, 23)) SELECT id, order_id, unit_price FROM ranked_order_items WHERE pos <= 2;

@@ -1,0 +1,1 @@
+SELECT c.country, COUNT(o.discount) discount_count, AVG(o.shipping_fee) avg_shipping_fee FROM orders o LEFT OUTER JOIN customers c ON o.customer_id = c.id FULL OUTER JOIN stores s ON o.store_id = s.id WHERE o.channel = 'partner' GROUP BY c.country ORDER BY 3 DESC

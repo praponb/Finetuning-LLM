@@ -1,0 +1,1 @@
+select id, unit_price, case when quantity >= 8 then 'High' when quantity >= 3 then 'Medium' else 'Low' end as quantity_tier from order_items where quantity <> 5 and (product_id in (10, 14, 22) or unit_price < 140)

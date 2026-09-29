@@ -1,0 +1,1 @@
+SELECT id, city, age, country, credit_limit, MAX(age) OVER (PARTITION BY city) AS city_max_age, DENSE_RANK() OVER (PARTITION BY country ORDER BY credit_limit DESC) AS credit_limit_dense_rank FROM customers;

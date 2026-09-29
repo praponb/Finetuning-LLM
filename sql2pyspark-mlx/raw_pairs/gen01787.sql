@@ -1,0 +1,1 @@
+select p.job_title as employee_job_title, s.level as employee_level, count(*) as rows_total, round(sum(s.salary), 2) as total_salary from employees s inner join employees p on s.manager_id = p.id group by p.job_title, s.level

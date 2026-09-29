@@ -1,0 +1,1 @@
+SELECT a.customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(t.txn_type))) AS txn_type_values FROM transactions t JOIN accounts a ON t.account_id = a.id WHERE t.is_flagged = FALSE GROUP BY a.customer_id;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN cost >= 590 THEN 'high' WHEN cost >= 360 THEN 'mid' ELSE 'low' END AS cost_bucket, brand, cost FROM products) PIVOT (COUNT(cost) FOR brand IN ('Stark', 'Initech')) ORDER BY cost_bucket;

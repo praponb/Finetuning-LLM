@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, UPPER(TRIM(supplier_name)) AS supplier_name_normalized, CASE WHEN city IN ('Berlin', 'London') THEN 'Tier 1' ELSE 'Other' END AS city_group FROM suppliers WHERE country = 'DE') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC NULLS FIRST, id) AS latest_rank FROM filtered) ranked WHERE latest_rank = 1

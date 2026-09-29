@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, COUNT(*) AS cnt FROM employees GROUP BY dept_id) SELECT d.dept_name, d.budget, ebd.cnt FROM departments d LEFT JOIN employees_by_department ebd ON d.id = ebd.dept_id WHERE ebd.cnt > 4

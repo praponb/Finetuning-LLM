@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT account_type, ROUND(AVG(balance), 2) AS avg_balance, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM accounts WHERE account_type IN ('LOAN', 'CREDIT', 'CHECKING') GROUP BY account_type) AS t WHERE avg_balance >= 62 ORDER BY status_values ASC

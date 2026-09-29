@@ -1,0 +1,1 @@
+WITH Src AS (SELECT *, UPPER(region) AS region_upper FROM stores WHERE LENGTH(store_name) < 5 AND region IN ('West', 'North', 'Central')), city_summary AS (SELECT city, COUNT(sqft) AS sqft_count FROM Src GROUP BY city) SELECT city, sqft_count FROM city_summary WHERE sqft_count >= 9 ORDER BY sqft_count DESC, city DESC LIMIT 5

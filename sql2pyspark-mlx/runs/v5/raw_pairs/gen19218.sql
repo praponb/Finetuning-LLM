@@ -1,0 +1,1 @@
+with top_products as (select id, category, cost, row_number() over (partition by category order by cost, id) rnk from products where product_name like '%mou%') select id, category, cost from top_products where rnk <= 5

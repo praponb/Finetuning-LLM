@@ -1,0 +1,1 @@
+SELECT o.shipping_fee, o.amount, c.age, s.region, s.sqft FROM orders o LEFT JOIN customers c ON o.customer_id = c.id JOIN stores s ON o.store_id = s.id WHERE c.city IN ('Singapore', 'New York') AND YEAR(s.opened_date) >= 2025 ORDER BY sqft;

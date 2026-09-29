@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(balance, 0) AS balance_rounded FROM accounts WHERE opened_date >= DATE '2023-03-04' AND customer_id IS NOT NULL) SELECT p.country, s.status, COUNT(*) AS num_rows, ROUND(SUM(s.balance), 2) AS total_balance FROM cleaned s JOIN customers p ON s.customer_id = p.id GROUP BY p.country, s.status ORDER BY country;

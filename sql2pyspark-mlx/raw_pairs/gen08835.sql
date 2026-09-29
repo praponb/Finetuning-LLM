@@ -1,0 +1,1 @@
+SELECT id, order_id, shipped_date, delivered_date, cost, status, LAG(cost) OVER w_recent AS prev_cost, ROW_NUMBER() OVER w_recent AS seq_no, SUM(cost) OVER (PARTITION BY status ORDER BY delivered_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_cost FROM shipments WHERE cost BETWEEN 44 AND 77 WINDOW w_recent AS (PARTITION BY status ORDER BY cost, id)

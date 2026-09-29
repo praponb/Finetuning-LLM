@@ -1,0 +1,1 @@
+SELECT CASE WHEN discount >= 0.36 THEN 'LARGE' ELSE 'SMALL' END AS discount_tier, SIZE(COLLECT_SET(status)) AS num_status, ROUND(SUM(shipping_fee) / NULLIF(COUNT(CASE WHEN status = 'RETURNED' THEN 1 END), 0), 2) AS shipping_fee_per_returned, PERCENTILE_APPROX(discount, ARRAY(0.25, 0.5, 0.75)) AS discount_quartiles FROM orders GROUP BY discount_tier;

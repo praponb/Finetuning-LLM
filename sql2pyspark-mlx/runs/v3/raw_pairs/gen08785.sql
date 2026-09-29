@@ -1,0 +1,1 @@
+WITH valid_inventory AS (SELECT * FROM inventory WHERE last_restock <= '2023-03-08' AND (last_restock < '2025-04-01' OR store_id = 2)), agg AS (SELECT YEAR(last_restock) AS last_restock_year, AVG(quantity) AS avg_quantity FROM valid_inventory GROUP BY YEAR(last_restock)) SELECT last_restock_year, avg_quantity FROM agg ORDER BY last_restock_year DESC;

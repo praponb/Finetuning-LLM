@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.6 THEN 'high' WHEN rating >= 1.4 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_berlin FROM suppliers GROUP BY 1 HAVING ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 55 ORDER BY pct_berlin, rating_bucket LIMIT 10

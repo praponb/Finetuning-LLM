@@ -1,0 +1,1 @@
+with valid_departments as (select * from departments where dept_name in ('Engineering', 'Finance')), departments_stats as (select dept_name, concat_ws(', ', sort_array(collect_set(dept_name))) as dept_name_values, count(*) as cnt from valid_departments group by dept_name) select * from departments_stats where cnt < 6 order by dept_name_values;

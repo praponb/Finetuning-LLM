@@ -1,0 +1,1 @@
+with exploded as (select id, explode_outer(tier_prices) as tier_value from price_tiers) select id, tier_value, cume_dist() over (order by tier_value) tier_value_cume_dist, rank() over (order by tier_value desc nulls last) tier_value_rank, rank() over (order by tier_value desc) tier_value_rank_2 from exploded where tier_value > 23

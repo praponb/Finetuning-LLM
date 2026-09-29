@@ -1,0 +1,1 @@
+SELECT d.id, COUNT(e.id) AS employee_count, COUNT(CASE WHEN e.job_title = 'Manager' THEN 1 END) AS manager_count, MAX(e.hire_date) AS last_hire_date FROM departments d INNER JOIN employees e ON e.dept_id = d.id GROUP BY d.id ORDER BY 4 ASC, employee_count DESC;

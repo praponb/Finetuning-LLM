@@ -1,0 +1,1 @@
+SELECT id, account_id, amount, txn_type, ROUND(amount / SUM(amount) OVER (PARTITION BY account_id), 3) AS amount_share, MIN(amount) OVER (PARTITION BY txn_type) AS txn_type_min_amount FROM transactions;

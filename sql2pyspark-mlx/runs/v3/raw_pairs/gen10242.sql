@@ -1,0 +1,1 @@
+SELECT orders.id, orders.order_date, stores.region, stores.sqft, customers.email, customers.name FROM orders LEFT OUTER JOIN stores ON orders.store_id = stores.id INNER JOIN customers ON orders.customer_id = customers.id WHERE orders.shipping_fee BETWEEN 16 AND 25 AND orders.discount > 0.35 ORDER BY customers.name DESC

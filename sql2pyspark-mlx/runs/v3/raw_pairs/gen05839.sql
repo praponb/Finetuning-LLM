@@ -1,0 +1,1 @@
+SELECT delivered_date, shipped_date FROM shipments WHERE status NOT IN ('DELIVERED', 'RETURNED', 'LOST') UNION SELECT delivered_date, shipped_date FROM shipments WHERE cost > 91 ORDER BY shipped_date DESC

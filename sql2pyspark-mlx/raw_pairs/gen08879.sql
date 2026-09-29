@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, shipping_fee * amount AS amount_with_shipping, LOWER(channel) AS channel_lower FROM orders WHERE channel IS DISTINCT FROM 'web') SELECT id, store_id, status, amount FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id, channel ORDER BY amount_with_shipping DESC, id) AS latest_rank FROM base) x WHERE latest_rank = 1;

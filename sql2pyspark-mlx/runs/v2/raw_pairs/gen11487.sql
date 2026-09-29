@@ -1,0 +1,1 @@
+select id, txn_type, is_flagged, txn_time, dayofweek(txn_time) as txn_time_dayofweek, weekofyear(txn_time) as txn_time_weekofyear from transactions where amount <= 3300 and merchant in ('7-Eleven', 'Lazada');

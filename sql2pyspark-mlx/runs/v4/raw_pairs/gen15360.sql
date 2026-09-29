@@ -1,0 +1,1 @@
+SELECT status, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE customer_id IS NULL AND customer_id IN (23, 29, 39) AND start_date > '2024-07-01' GROUP BY status ORDER BY monthly_fee_range DESC, status

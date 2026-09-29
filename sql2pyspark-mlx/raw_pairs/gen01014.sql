@@ -1,0 +1,1 @@
+select is_flagged, merchant, round(avg(amount), 2) as avg_amount, max(amount) - min(amount) as amount_range, count(amount) as amount_count from transactions where amount between 3000 and 3300 and merchant = 'Grab' group by is_flagged, merchant having round(avg(amount), 2) < 42 order by 3 desc

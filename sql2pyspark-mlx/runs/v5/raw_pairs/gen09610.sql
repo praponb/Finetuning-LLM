@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, currency, EXPLODE(tier_limits) AS val FROM price_tiers) SELECT plan, currency, COUNT(val) OVER (PARTITION BY currency) AS currency_count_val, DENSE_RANK() OVER w_ordered AS val_dense_rank FROM flattened WHERE currency <> 'EUR' WINDOW w_ordered AS (ORDER BY val NULLS FIRST)

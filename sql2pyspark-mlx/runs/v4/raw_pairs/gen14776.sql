@@ -1,0 +1,1 @@
+SELECT *, AVG(status_bits) OVER (PARTITION BY device_code ORDER BY pressure, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) status_bits_avg_3, CORR(status_bits, pressure) OVER (PARTITION BY device_code) corr_status_bits_pressure, LAG(humidity, 2, 0) OVER (PARTITION BY device_code ORDER BY humidity, id) prev_humidity FROM device_readings;

@@ -1,0 +1,1 @@
+SELECT o.customer_id, COUNT(p.amount) AS amount_count, MAX(p.amount) - MIN(p.amount) AS amount_range FROM payments p JOIN orders o ON p.order_id = o.id JOIN stores s ON o.store_id = s.id WHERE o.status != 'PENDING' GROUP BY o.customer_id HAVING COUNT(p.amount) >= 4;

@@ -1,0 +1,1 @@
+with flattened as (select id, plan, effective_from, currency, val from price_tiers lateral view explode(tier_prices) x as val) select id, effective_from, currency, dense_rank() over (partition by plan order by val desc) as val_dense_rank, percent_rank() over (order by val nulls last) as val_percent_rank, dense_rank() over (order by val desc) as val_dense_rank_2 from flattened

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, AVG(sqft) AS avg_sqft, MAX(opened_date) AS last_opened_date, COUNT(sqft) AS sqft_count FROM stores WHERE region != 'South' GROUP BY opened_month HAVING COUNT(sqft) > 3

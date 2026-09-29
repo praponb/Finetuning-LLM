@@ -1,0 +1,1 @@
+SELECT device_code, MAX(humidity) AS max_humidity, APPROX_PERCENTILE(temp_c, 0.5) AS temp_c_p50, SUM(humidity) FILTER (WHERE device_code = 'DV-02') AS dv_02_total_humidity, APPROX_PERCENTILE(temp_c, ARRAY(0.25, 0.5, 0.75)) AS temp_c_quartiles, MAX(reading_ts) AS ended_at FROM device_readings GROUP BY device_code ORDER BY device_code ASC NULLS LAST

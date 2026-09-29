@@ -1,0 +1,1 @@
+SELECT event_day, unique_sessions, duration_sec_count FROM (SELECT TO_DATE(event_time) AS event_day, COUNT(DISTINCT duration_sec) AS unique_sessions, COUNT(duration_sec) AS duration_sec_count FROM web_events GROUP BY TO_DATE(event_time)) AS agg WHERE duration_sec_count >= 7

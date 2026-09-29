@@ -1,0 +1,1 @@
+select id, txn_type, amount, txn_time, max(amount) over (partition by txn_type) as txn_type_max_amount, lead(amount, 2) over (partition by txn_type order by txn_time, id) as next_amount from transactions order by txn_type desc

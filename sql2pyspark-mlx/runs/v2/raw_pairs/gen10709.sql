@@ -1,0 +1,1 @@
+SELECT c.is_active, MAX(o.discount) - MIN(o.discount) AS discount_range, MIN(o.amount) AS min_amount FROM orders o INNER JOIN stores s ON o.store_id = s.id RIGHT JOIN customers c ON o.customer_id = c.id GROUP BY c.is_active HAVING min_amount >= 1220 ORDER BY min_amount DESC;

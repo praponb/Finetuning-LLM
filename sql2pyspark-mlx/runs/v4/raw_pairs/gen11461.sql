@@ -1,0 +1,1 @@
+SELECT id, delivered_date, carrier FROM shipments WHERE delivered_date BETWEEN '2023-05-09' AND '2023-07-01' UNION ALL SELECT id, delivered_date, carrier FROM shipments WHERE delivered_date BETWEEN '2024-01-04' AND '2024-07-01';

@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, MIN(sale_date) AS min_sale_date, COUNT(*) AS total_count FROM store_sales WHERE sale_date < '2023-11-07' GROUP BY store_id) SELECT s.id, s.store_name, ss.min_sale_date, ss.total_count FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id

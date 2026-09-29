@@ -1,0 +1,1 @@
+SELECT unit_price, product_id, COALESCE(quantity, 0) AS quantity_filled, ROUND(unit_price / quantity, 2) AS line_total FROM order_items WHERE quantity != 4 AND (order_id = 26 OR unit_price <= 210) ORDER BY product_id

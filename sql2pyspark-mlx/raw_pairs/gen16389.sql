@@ -1,0 +1,1 @@
+SELECT country, MAX(rating) - MIN(rating) AS rating_range, SUM(rating) AS total_rating, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM suppliers WHERE supplier_name IS NOT NULL GROUP BY country

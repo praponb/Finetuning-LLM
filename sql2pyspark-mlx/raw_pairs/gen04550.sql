@@ -1,0 +1,1 @@
+SELECT country, APPROX_PERCENTILE(rating, 0.95) AS rating_p95, SIZE(COLLECT_SET(city)) AS num_cities, SUM(CASE WHEN city = 'New York' THEN rating ELSE 0 END) AS new_york_rating FROM suppliers GROUP BY country;

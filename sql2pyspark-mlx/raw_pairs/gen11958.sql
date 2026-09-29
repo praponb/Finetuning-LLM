@@ -1,0 +1,1 @@
+with ranked_accounts as (select id, status, opened_date, account_type, dense_rank() over (partition by status order by opened_date) as rnk from accounts) select id, status, opened_date, account_type from ranked_accounts where rnk <= 5;

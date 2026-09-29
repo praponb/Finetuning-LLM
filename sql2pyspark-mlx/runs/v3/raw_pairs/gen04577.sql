@@ -1,0 +1,1 @@
+SELECT ss.units, ss.product_id, p.stock_qty, s.opened_date FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE s.store_name LIKE 'Sia%' AND p.cost < 530 ORDER BY opened_date

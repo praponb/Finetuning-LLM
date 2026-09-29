@@ -1,0 +1,1 @@
+select e.full_name as employee_full_name, e.hire_date as employee_hire_date, e.email as employee_email, m.job_title as manager_job_title, m.dept_id as manager_dept_id from employees e left outer join employees m on e.manager_id = m.id;

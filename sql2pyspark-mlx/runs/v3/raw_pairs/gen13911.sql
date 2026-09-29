@@ -1,0 +1,1 @@
+with src as (select * from stores where region is null), agg as (select month(opened_date) opened_month, count(case when city = 'Berlin' then 1 end) berlin_count from src group by month(opened_date)) select opened_month, berlin_count from agg

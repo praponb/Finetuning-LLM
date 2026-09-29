@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, COUNT(*) AS cnt, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM orders GROUP BY store_id) SELECT s.id, s.store_name, ss.cnt, ss.status_list FROM stores s LEFT OUTER JOIN store_summary ss ON s.id = ss.store_id WHERE ss.cnt > 6 ORDER BY store_name

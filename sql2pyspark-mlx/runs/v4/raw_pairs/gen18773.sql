@@ -1,0 +1,1 @@
+SELECT *, AVG(quantity) OVER (PARTITION BY product_id, order_id ORDER BY unit_price, id ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) quantity_avg_3_prior, MIN(unit_price) OVER (PARTITION BY product_id, order_id) product_id_min_unit_price FROM order_items

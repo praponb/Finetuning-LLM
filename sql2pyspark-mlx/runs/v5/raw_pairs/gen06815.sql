@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(unit_price) AS max_unit_price, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items GROUP BY 1;

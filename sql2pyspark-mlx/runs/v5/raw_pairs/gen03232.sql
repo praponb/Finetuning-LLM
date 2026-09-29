@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.duration_sec, sessions.customer_id, sessions.browser, sessions.device, CASE WHEN web_events.event_type IN ('add_to_cart', 'click') THEN 'Core' ELSE 'Other' END AS event_type_group FROM web_events INNER JOIN sessions ON sessions.id = web_events.session_id WHERE web_events.duration_sec < 385 AND sessions.device = 'desktop';

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT QUARTER(sale_date) sale_quarter, YEAR(sale_date) sale_year, AVG(revenue) avg_revenue, SUM(units) total_units FROM store_sales GROUP BY QUARTER(sale_date), YEAR(sale_date)) x WHERE avg_revenue > 3300

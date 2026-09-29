@@ -1,0 +1,1 @@
+WITH filtered_departments AS (SELECT * FROM departments WHERE location NOT IN ('Bangkok', 'London', 'New York')), agg AS (SELECT dept_name, COUNT(budget) AS budget_count FROM filtered_departments GROUP BY dept_name) SELECT * FROM agg ORDER BY dept_name LIMIT 50

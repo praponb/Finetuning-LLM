@@ -1,0 +1,1 @@
+SELECT status, QUARTER(paid_at) AS paid_quarter, SUM(CASE WHEN method = 'bank_transfer' THEN amount ELSE 0 END) AS bank_transfer_amount, AVG(amount) AS avg_amount FROM payments WHERE method IN ('bank_transfer', 'paypal', 'card') AND paid_at >= '2025-03-13' GROUP BY 1, 2 HAVING SUM(CASE WHEN method = 'bank_transfer' THEN amount ELSE 0 END) < 33

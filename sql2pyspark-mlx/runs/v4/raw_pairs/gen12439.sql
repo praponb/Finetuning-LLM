@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CASE WHEN device = 'mobile' THEN 1 ELSE 0 END AS is_mobile FROM sessions WHERE browser IS NOT NULL AND browser IS NOT NULL) SELECT e.*, b.city, b.name FROM base e LEFT JOIN customers b ON e.customer_id = b.id;

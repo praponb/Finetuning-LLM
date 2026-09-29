@@ -1,0 +1,1 @@
+SELECT id, product_id, units, ROUND(revenue * 0.9, 2) AS revenue_adjusted, units + revenue AS revenue_per_unit FROM store_sales WHERE sale_date BETWEEN '2024-01-19' AND '2025-09-01' AND (sale_date BETWEEN '2024-10-01' AND '2025-01-26' OR product_id IN (9, 10));

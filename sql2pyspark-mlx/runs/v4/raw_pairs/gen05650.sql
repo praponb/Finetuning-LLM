@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget, id) AS pos FROM departments WHERE budget IS NOT NULL) SELECT id, location, budget, dept_name FROM numbered WHERE pos <= 3 ORDER BY dept_name

@@ -1,0 +1,18 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.orderBy(F.col("val").desc_nulls_first())
+w2 = Window.orderBy("val")
+w3 = Window.orderBy(F.col("val").asc_nulls_last())
+
+lines = df_price_tiers.select("id", F.explode_outer("discounts").alias("val"))
+
+result = (
+    lines
+    .select(
+        "*",
+        F.rank().over(w).alias("val_rank"),
+        F.percent_rank().over(w2).alias("val_percent_rank"),
+        F.rank().over(w3).alias("val_rank_2"),
+    )
+)

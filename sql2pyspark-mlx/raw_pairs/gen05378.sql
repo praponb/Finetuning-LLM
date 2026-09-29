@@ -1,0 +1,1 @@
+select oi.order_id, oi.product_id, p.category, s.country, s.supplier_name from order_items oi inner join products p on oi.product_id = p.id left join suppliers s on s.id = p.supplier_id where oi.order_id in (5, 19, 23)

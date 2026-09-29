@@ -1,0 +1,1 @@
+select *, lag(status_bits, 1) over (partition by device_code order by temp_c, id) prev_status_bits, dense_rank() over (order by temp_c desc) temp_c_dense_rank, min(humidity) over (partition by device_code) device_code_min_humidity from device_readings

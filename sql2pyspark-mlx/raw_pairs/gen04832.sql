@@ -1,0 +1,1 @@
+SELECT order_items.product_id, order_items.quantity, products.price FROM order_items INNER JOIN products ON order_items.product_id = products.id WHERE products.stock_qty = 245 AND order_items.unit_price BETWEEN 140 AND 210;

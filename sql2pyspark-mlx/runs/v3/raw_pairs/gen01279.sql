@@ -1,0 +1,1 @@
+SELECT p.supplier_id, t.unit_price_count FROM products p INNER JOIN (SELECT product_id, COUNT(unit_price) AS unit_price_count FROM order_items WHERE quantity > 6 GROUP BY product_id) t ON p.id = t.product_id WHERE t.unit_price_count >= 4 ORDER BY unit_price_count DESC

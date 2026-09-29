@@ -1,0 +1,1 @@
+SELECT * FROM departments QUALIFY ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC NULLS LAST, id) = 1

@@ -1,0 +1,1 @@
+SELECT id, revenue, units, LAST_VALUE(units) OVER (ORDER BY revenue DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_units, DENSE_RANK() OVER (ORDER BY units) AS units_dense_rank FROM store_sales ORDER BY units_dense_rank DESC, 3;

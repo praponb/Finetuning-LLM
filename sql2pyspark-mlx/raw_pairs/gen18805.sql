@@ -1,0 +1,1 @@
+SELECT id, paid_at, amount, order_id, UPPER(status) AS status_upper, CASE WHEN method IN ('paypal', 'cash') THEN 'Group A' ELSE 'Other' END AS method_group FROM payments WHERE method NOT IN ('bank_transfer', 'paypal');

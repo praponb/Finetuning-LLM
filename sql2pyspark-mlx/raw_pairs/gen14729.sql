@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CAST(balance AS INT) AS balance_int FROM accounts WHERE opened_date >= DATE '2023-09-17' AND YEAR(opened_date) = 2025) SELECT account_type, status FROM base INTERSECT SELECT account_type, status FROM accounts WHERE opened_date > '2025-08-18';

@@ -1,0 +1,1 @@
+select store_id, unique_products, revenue_count from (select store_id, count(distinct revenue) as unique_products, count(revenue) as revenue_count from store_sales where revenue >= 2800 group by store_id) as x where unique_products >= 4 order by unique_products desc;

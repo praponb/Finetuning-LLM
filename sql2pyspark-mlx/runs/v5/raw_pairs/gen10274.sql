@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 16253 THEN 'LARGE' ELSE 'SMALL' END AS sqft_tier, SUM(sqft) FILTER (WHERE city = 'Bangkok') AS bangkok_total_sqft, SUM(sqft) AS total_sqft, COUNT(DISTINCT id) AS distinct_ids FROM stores GROUP BY CASE WHEN sqft >= 16253 THEN 'LARGE' ELSE 'SMALL' END ORDER BY distinct_ids DESC NULLS LAST;

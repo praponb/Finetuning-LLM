@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.rating >= 4.5 THEN 'high' WHEN s.rating >= 1.4 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(*) AS num_products, COUNT(*) AS product_count FROM products p LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE p.supplier_id = 31 GROUP BY CASE WHEN s.rating >= 4.5 THEN 'high' WHEN s.rating >= 1.4 THEN 'mid' ELSE 'low' END ORDER BY num_products DESC;

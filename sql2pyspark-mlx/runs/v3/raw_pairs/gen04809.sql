@@ -1,0 +1,1 @@
+select session_id, min_duration_sec, event_type_values from (select session_id, min(duration_sec) min_duration_sec, concat_ws(', ', sort_array(collect_set(event_type))) event_type_values from web_events group by session_id) sub where min_duration_sec < 340 order by min_duration_sec desc;

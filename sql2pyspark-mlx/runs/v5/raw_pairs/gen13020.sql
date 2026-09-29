@@ -1,0 +1,1 @@
+SELECT city, min_rating, stddev_rating FROM (SELECT city, MIN(rating) AS min_rating, ROUND(STDDEV(rating), 2) AS stddev_rating FROM suppliers GROUP BY city) AS x WHERE min_rating >= 2.5 ORDER BY stddev_rating DESC

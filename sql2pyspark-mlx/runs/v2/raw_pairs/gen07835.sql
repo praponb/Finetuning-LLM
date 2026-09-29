@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM payments WHERE method = 'promptpay'), StatusSummary AS (SELECT status, SUM(amount) AS total_amount, MIN(paid_at) AS min_paid_at FROM src GROUP BY status) SELECT status, total_amount, min_paid_at FROM StatusSummary ORDER BY total_amount;

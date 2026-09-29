@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, store_id, last_restock, ROUND(quantity, 2) AS quantity_rounded FROM inventory WHERE product_id IN (4, 5, 6, 8)) SELECT store_id, id FROM filtered INTERSECT ALL SELECT store_id, id FROM inventory WHERE MONTH(last_restock) IN (3, 7, 8);

@@ -1,0 +1,1 @@
+SELECT id, region, opened_date, sqft, sqft - LAG(sqft, 2) OVER (PARTITION BY region ORDER BY opened_date, id) AS sqft_change, DENSE_RANK() OVER (PARTITION BY region ORDER BY sqft DESC) AS sqft_dense_rank FROM stores WHERE sqft != 6101;

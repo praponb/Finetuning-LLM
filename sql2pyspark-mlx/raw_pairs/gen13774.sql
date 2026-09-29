@@ -1,0 +1,1 @@
+SELECT customers.id, customers.country, customers.name, t.num_subscriptions, t.avg_monthly_fee FROM customers INNER JOIN (SELECT customer_id, COUNT(*) AS num_subscriptions, AVG(monthly_fee) AS avg_monthly_fee FROM subscriptions WHERE start_date > '2025-04-26' GROUP BY customer_id) t ON customers.id = t.customer_id WHERE t.num_subscriptions >= 7

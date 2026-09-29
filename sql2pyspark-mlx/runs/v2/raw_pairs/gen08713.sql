@@ -1,0 +1,1 @@
+select oi.quantity, oi.order_id, o.amount, s.store_name from order_items oi right join orders o on o.id = oi.order_id left join stores s on o.store_id = s.id where o.shipping_fee >= 31 and o.status != 'COMPLETED' order by oi.quantity desc, oi.order_id desc;

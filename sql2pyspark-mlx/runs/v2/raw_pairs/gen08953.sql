@@ -1,0 +1,1 @@
+WITH DepartmentSummary AS (SELECT dept_id, COUNT(DISTINCT salary) AS unique_depts FROM employees GROUP BY dept_id) SELECT d.id, d.location, D.unique_depts FROM departments d LEFT JOIN DepartmentSummary D ON d.id = D.dept_id WHERE D.unique_depts > 9;

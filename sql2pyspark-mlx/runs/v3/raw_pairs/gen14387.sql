@@ -1,0 +1,1 @@
+SELECT ss.store_id, COUNT(*) row_count FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.store_id = 3 GROUP BY ss.store_id ORDER BY 1 DESC LIMIT 10;

@@ -1,0 +1,1 @@
+select oi.order_id, oi.quantity, p.brand, p.launch_date, o.customer_id, o.shipping_fee from order_items oi inner join products p on oi.product_id = p.id inner join orders o on oi.order_id = o.id where year(p.launch_date) = 2024;

@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, customer_id FROM accounts QUALIFY RANK() OVER (PARTITION BY account_type ORDER BY balance DESC) = 1) SELECT customer_id, COUNT(*) AS event_count, COUNT(DISTINCT id) AS distinct_ids, COUNT(*) AS num_rows FROM ranked GROUP BY 1 HAVING COUNT(DISTINCT id) > 1

@@ -1,0 +1,1 @@
+select c.is_active, sum(case when s.plan = 'standard' then 1 else 0 end) as standard_count, concat_ws(', ', sort_array(collect_set(s.status))) as status_values from subscriptions s right join customers c on c.id = s.customer_id where c.city in ('Berlin', 'Bangkok', 'Tokyo') group by c.is_active;

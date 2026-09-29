@@ -1,0 +1,1 @@
+WITH with_gaps AS (SELECT *, CASE WHEN paid_at - LAG(paid_at) OVER (PARTITION BY order_id ORDER BY paid_at, id) > INTERVAL 30 DAYS THEN 1 ELSE 0 END AS session_start_flag FROM payments) SELECT id, order_id, method, paid_at, SUM(session_start_flag) OVER (PARTITION BY order_id ORDER BY paid_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS burst_id FROM with_gaps

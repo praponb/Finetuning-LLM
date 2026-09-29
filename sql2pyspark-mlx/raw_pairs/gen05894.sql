@@ -1,0 +1,1 @@
+SELECT s.cost, s.order_id, s.delivered_date, o.status, o.channel FROM shipments s LEFT OUTER JOIN orders o ON s.order_id = o.id WHERE NOT (s.delivered_date < '2024-05-01' AND o.order_date BETWEEN '2023-12-01' AND '2024-05-01');

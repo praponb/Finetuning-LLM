@@ -1,0 +1,1 @@
+select o.channel, avg(oi.quantity) as avg_quantity from order_items oi full outer join orders o on oi.order_id = o.id join products p on oi.product_id = p.id where array_contains(p.tags, 'clearance') group by o.channel order by o.channel desc limit 3

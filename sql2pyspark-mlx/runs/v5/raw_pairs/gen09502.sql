@@ -1,0 +1,1 @@
+SELECT id, location, CASE WHEN location = 'London' THEN 1 ELSE 0 END AS is_london, INITCAP(TRIM(dept_name)) AS dept_name_title FROM departments WHERE dept_name = 'Engineering' AND location NOT IN ('Tokyo', 'Bangkok') AND location <> 'London'

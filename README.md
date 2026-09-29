@@ -367,13 +367,13 @@ app.py, kimi_repair.py, Modelfile, Makefile, requirements.txt, pyrefly.toml, .gi
 README.md, USER_MANUAL.md, PROJECT_DOCUMENTATION.md, docs/          documentation
 sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4–v7 families), handwritten_pairs.py,
                    verify_pairs.py, convert_sql_pyspark.py, lora_config.yaml, train_resumable.py, train.log,
-                   data_v7.log, raw_pairs/, data/, adapters/, sql2pyspark-model/ (fused 4-bit MLX model),
-                   runs/v2/ … runs/v6/ (backups)
-sql2pyspark-hf/    dequantized BF16 fused model (input for GGUF conversion; now v7)
+                   data_v7.log, raw_pairs/, data/, adapters/, complex_v8/ (10k complex pairs & v8 LoRA config),
+                   sql2pyspark-model/ (fused 4-bit MLX model), runs/v2/ … runs/v7/ (backups)
+sql2pyspark-hf/    dequantized BF16 fused model (input for GGUF conversion; now v7, ~15.2 GB)
 sql2pyspark.gguf   Q8_0 GGUF of the last export (v7, 8.1 GB); Ollama keeps its own copy of every tag
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,
-                   post_training_v4.sh, post_training_v5.sh, post_training_v6.sh, start_training_v7.sh, post_training_v7.sh,
+                   post_training_v4.sh … post_training_v7.sh, start_training_v7.sh, start_training_v8.sh, post_training_v8.sh,
                    results/ (+ v2-split/ … v7-repair/, v7-repair-rules/), logs-repair-rules/, *.log
 docker/, docker-compose.yml, .dockerignore          Docker setup
 deploy/            sql2pyspark.service (systemd unit), setup_server.sh: Ubuntu server hosting (docs/08)
@@ -385,5 +385,4 @@ The Docker `ollama` profile registers the model from the mounted `sql2pyspark.gg
 `archive/` (earlier experiments and the v1 model/data) and the legacy `mlx-env/` venv were deleted on 2026-09-27;
 `sql2pyspark-hf/` can be deleted too (recreated by `make fuse`).
 
-The code is in the private GitHub repo `praponb/Finetuning-LLM`; `.gitignore` keeps weights, generated data, venvs,
-`llama.cpp/`, `archive/` and `sql2pyspark-mlx/runs/` out of git.
+The code is in the private GitHub repo `praponb/Finetuning-LLM`; `.gitignore` keeps large model binaries (`*.gguf`, `sql2pyspark-hf/`, `sql2pyspark-model/`), venvs, and `llama.cpp/` out of git, while data, raw pairs, run logs, configs, and adapters are tracked in plain git.

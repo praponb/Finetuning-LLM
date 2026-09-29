@@ -1,0 +1,1 @@
+select o.status, o.channel, sort_array(collect_set(s.status)) as status_list, concat_ws(', ', sort_array(collect_set(s.status))) as status_values from shipments s inner join orders o on s.order_id = o.id group by o.status, o.channel

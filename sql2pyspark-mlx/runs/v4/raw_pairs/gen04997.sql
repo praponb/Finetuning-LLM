@@ -1,0 +1,1 @@
+SELECT MONTH(hire_date) AS hire_month, CASE WHEN level IN ('L1', 'L4') THEN 'core' ELSE 'other' END AS level_group, YEAR(hire_date) AS hire_year, SUM(CASE WHEN level = 'L1' THEN 1 ELSE 0 END) AS l1_count FROM employees WHERE level IN ('L2', 'L3') AND (LENGTH(email) >= 14 OR salary > 134000) GROUP BY hire_month, level_group, hire_year;

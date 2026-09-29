@@ -1,0 +1,1 @@
+with order_summary as (select order_id, count(*) as row_count, max(unit_price) - min(unit_price) as unit_price_range from order_items where product_id is null group by order_id) select o.id, o.discount, o.amount, os.row_count, os.unit_price_range from orders o inner join order_summary os on o.id = os.order_id where os.unit_price_range > 27

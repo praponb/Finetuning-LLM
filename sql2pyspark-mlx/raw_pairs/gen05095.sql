@@ -1,0 +1,1 @@
+WITH with_dims AS (SELECT src.*, o.amount AS order_amount, o.order_date, o.channel FROM payments src LEFT JOIN orders o ON src.order_id = o.id WHERE o.discount <= 0.1) SELECT id, order_id, method, amount, status, order_amount, order_date, channel FROM with_dims ORDER BY status DESC

@@ -1,0 +1,1 @@
+SELECT city, SUM(CASE WHEN city = 'Bangkok' THEN sqft ELSE 0 END) bangkok_sqft, MIN(opened_date) min_opened_date FROM stores WHERE NOT (city != 'Chiang Mai' AND opened_date BETWEEN '2024-10-01' AND '2025-09-01') GROUP BY city

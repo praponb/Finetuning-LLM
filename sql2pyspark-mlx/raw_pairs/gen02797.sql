@@ -1,0 +1,1 @@
+WITH SessionTotals AS (SELECT session_id, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, SUM(CASE WHEN page = '/checkout' THEN 1 ELSE 0 END) AS checkout_count FROM web_events WHERE page = '/home' GROUP BY session_id) SELECT s.id, s.device, S.avg_duration_sec, S.checkout_count FROM sessions s JOIN SessionTotals S ON s.id = S.session_id;

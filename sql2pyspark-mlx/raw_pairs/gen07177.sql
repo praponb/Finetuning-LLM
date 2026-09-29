@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END AS rating_bucket, AVG(rating) AS avg_rating, MAX(rating) AS max_rating, MIN(rating) AS min_rating FROM suppliers GROUP BY 1 HAVING AVG(rating) >= 3.6 ORDER BY min_rating DESC;

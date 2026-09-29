@@ -1,0 +1,1 @@
+SELECT o.id, o.channel, COUNT(oi.id) AS order_item_count, MIN(oi.unit_price) AS min_unit_price FROM orders o LEFT OUTER JOIN order_items oi ON oi.order_id = o.id GROUP BY o.id, o.channel HAVING order_item_count >= 1

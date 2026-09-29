@@ -1,0 +1,1 @@
+SELECT o.id, o.store_id, o.status, t.delivered_count FROM orders o LEFT JOIN (SELECT order_id, SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered_count FROM shipments WHERE carrier = 'DHL' GROUP BY order_id) t ON o.id = t.order_id ORDER BY o.store_id DESC, o.id

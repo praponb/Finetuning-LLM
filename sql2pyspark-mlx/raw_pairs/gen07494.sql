@@ -1,0 +1,1 @@
+SELECT *, ROW_NUMBER() OVER (PARTITION BY browser ORDER BY started_at DESC, id) AS seq_no, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at, id) AS row_seq, ROW_NUMBER() OVER w_running AS seq_no_2 FROM sessions WHERE country NOT IN ('JP', 'SG') WINDOW w_running AS (PARTITION BY device ORDER BY started_at DESC, id);

@@ -1,0 +1,1 @@
+select case when sqft >= 15504 then 'high' when sqft >= 4378 then 'mid' else 'low' end as sqft_bucket, round(stddev(sqft), 2) as stddev_sqft from stores where region = 'West' and city = 'Bangkok' group by case when sqft >= 15504 then 'high' when sqft >= 4378 then 'mid' else 'low' end;

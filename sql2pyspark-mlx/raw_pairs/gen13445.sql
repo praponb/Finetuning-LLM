@@ -1,0 +1,3 @@
+SELECT *
+FROM subscriptions
+WHERE end_date BETWEEN '2024-01-01' AND '2025-04-13' AND status NOT IN ('ACTIVE', 'CANCELLED', 'EXPIRED')

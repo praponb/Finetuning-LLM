@@ -1,0 +1,1 @@
+SELECT s.id, s.order_id, s.delivered_date, s.cost FROM shipments s WHERE s.delivered_date < '2023-09-01' AND s.order_id NOT IN (SELECT id FROM orders WHERE order_date BETWEEN '2023-04-01' AND '2025-06-01')

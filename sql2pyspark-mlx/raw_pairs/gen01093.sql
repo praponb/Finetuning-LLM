@@ -1,0 +1,1 @@
+SELECT plan, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, COUNT(CASE WHEN status = 'EXPIRED' THEN 1 END) AS expired_count FROM subscriptions WHERE monthly_fee > 130 AND plan NOT IN ('premium', 'basic', 'standard') AND status IN ('CANCELLED', 'EXPIRED', 'PAUSED') GROUP BY 1 HAVING monthly_fee_range < 39 ORDER BY plan DESC LIMIT 5

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items WHERE product_id IS NULL GROUP BY order_id) SELECT o.id, o.channel, o.amount, os.avg_unit_price FROM orders o LEFT OUTER JOIN order_summary os ON o.id = os.order_id WHERE os.avg_unit_price > 44 ORDER BY channel DESC

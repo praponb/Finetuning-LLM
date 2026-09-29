@@ -1,0 +1,1 @@
+select case when salary >= 139000 then 'high' when salary >= 49000 then 'mid' else 'low' end as salary_bucket, max(hire_date) as latest_hire_date, max(hire_date) as last_hire_date, concat_ws(', ', sort_array(collect_set(job_title))) as job_title_values from employees group by 1 order by salary_bucket limit 5;

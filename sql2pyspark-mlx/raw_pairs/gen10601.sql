@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, category, cost, supplier_id, DENSE_RANK() OVER (PARTITION BY category ORDER BY cost) AS rn FROM products WHERE brand IN ('Initech', 'Acme')) SELECT id, category, cost, supplier_id FROM ranked WHERE rn = 1;

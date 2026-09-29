@@ -1,0 +1,1 @@
+with base as (select * from employees where level = 'L1' and manager_id is null), hire_month_summary as (select month(hire_date) as hire_month, sum(case when job_title = 'Manager' then salary else 0 end) as manager_salary, sum(salary) as total_salary from base group by month(hire_date)) select hire_month, manager_salary from hire_month_summary where total_salary >= 769000

@@ -1,0 +1,1 @@
+SELECT id, level, salary, manager_id, dept_id, hire_date, AVG(salary) OVER (PARTITION BY level) AS level_avg_salary, SUM(salary) OVER (PARTITION BY manager_id, dept_id ORDER BY hire_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_salary FROM employees;

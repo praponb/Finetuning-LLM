@@ -1,0 +1,1 @@
+select p.cost, t.stddev_quantity from products p join (select product_id, round(stddev(quantity), 2) as stddev_quantity from order_items where unit_price >= 210 group by product_id) t on p.id = t.product_id where t.stddev_quantity >= 48 order by cost desc

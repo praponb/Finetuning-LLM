@@ -1,0 +1,1 @@
+SELECT start_date, DATE_FORMAT(end_date, 'MMM yyyy') AS end_date_label, DATE_TRUNC('MONTH', end_date) AS end_date_period FROM subscriptions WHERE plan = 'premium' OR end_date BETWEEN '2024-07-07' AND '2025-05-01';

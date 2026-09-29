@@ -1,0 +1,1 @@
+WITH FilteredSubscriptions AS (SELECT * FROM subscriptions WHERE (YEAR(start_date) = 2025 AND monthly_fee > 130) OR status = 'ACTIVE'), summary AS (SELECT status, COUNT(CASE WHEN plan = 'enterprise' THEN 1 END) AS enterprise_count FROM FilteredSubscriptions GROUP BY status) SELECT status, enterprise_count FROM summary WHERE enterprise_count > 9

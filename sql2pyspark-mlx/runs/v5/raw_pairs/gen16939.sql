@@ -1,0 +1,1 @@
+WITH with_latest AS (SELECT s.*, top1.launch_date FROM suppliers s JOIN LATERAL (SELECT c.launch_date FROM products c WHERE c.supplier_id = s.id ORDER BY c.cost DESC, c.id DESC LIMIT 1) top1 ON TRUE) SELECT id, supplier_name, country, city, rating, launch_date FROM with_latest;

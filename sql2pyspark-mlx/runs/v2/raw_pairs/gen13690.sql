@@ -1,0 +1,1 @@
+WITH OrderStats AS (SELECT order_id, COUNT(*) AS total_count, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY order_id) SELECT o.id, o.shipping_fee, O.total_count, O.unit_price_range FROM orders o INNER JOIN OrderStats O ON o.id = O.order_id WHERE O.total_count >= 3 ORDER BY O.unit_price_range DESC, O.total_count DESC;

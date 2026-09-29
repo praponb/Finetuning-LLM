@@ -1,0 +1,1 @@
+SELECT id, account_id, amount, txn_time, merchant, is_flagged, NTILE(5) OVER (ORDER BY amount DESC, id) AS amount_bucket, LAG(amount, 2) OVER (ORDER BY txn_time, id) AS prev_amount, AVG(amount) OVER (PARTITION BY merchant ORDER BY txn_time, id ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS amount_avg_5 FROM transactions;

@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.product_id, orders.amount, orders.discount, orders.order_date FROM order_items RIGHT JOIN orders ON order_items.order_id = orders.id WHERE orders.customer_id IS NULL AND order_items.quantity > 7

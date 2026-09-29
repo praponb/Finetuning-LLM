@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, AVG(unit_price) AS avg_unit_price FROM order_items GROUP BY order_id) SELECT o.store_id, os.avg_unit_price FROM orders o LEFT JOIN order_summary os ON o.id = os.order_id ORDER BY o.store_id DESC;

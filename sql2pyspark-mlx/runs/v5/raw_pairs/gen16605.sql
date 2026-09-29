@@ -1,0 +1,1 @@
+WITH kept AS (SELECT s.* FROM suppliers s WHERE NOT EXISTS (SELECT 1 FROM products x WHERE x.supplier_id = s.id AND x.product_name IS NOT NULL)) SELECT id, supplier_name, country, city FROM kept ORDER BY country DESC NULLS LAST;

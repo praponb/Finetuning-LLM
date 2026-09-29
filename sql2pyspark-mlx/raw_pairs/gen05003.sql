@@ -1,0 +1,1 @@
+with filtered as (select *, floor(revenue) as revenue_whole from store_sales where revenue >= 1500) select date_trunc('quarter', sale_date) as quarter_start, count(*) as event_count, min(units) as min_units, count(*) as cnt from filtered group by quarter_start order by event_count desc;

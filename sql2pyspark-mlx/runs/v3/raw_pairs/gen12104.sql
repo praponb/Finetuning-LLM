@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM orders WHERE amount < 1200), agg AS (SELECT channel, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values, SUM(CASE WHEN channel = 'web' THEN amount ELSE 0 END) web_amount FROM base GROUP BY channel) SELECT * FROM agg WHERE web_amount < 44 ORDER BY web_amount DESC;

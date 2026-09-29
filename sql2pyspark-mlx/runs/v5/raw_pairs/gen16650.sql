@@ -1,0 +1,1 @@
+SELECT p.product_name, ss.product_id, SIZE(p.tags) AS tags_count FROM products p LEFT JOIN store_sales ss ON p.id = ss.product_id WHERE NOT (ss.product_id IN (2, 6, 7, 10) AND ss.store_id IN (1, 2, 3, 6)) ORDER BY tags_count DESC

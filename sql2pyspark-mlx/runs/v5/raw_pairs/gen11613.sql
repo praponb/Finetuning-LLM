@@ -1,0 +1,1 @@
+SELECT id, store_id, order_date, discount, status, amount, SUM(discount) OVER (PARTITION BY store_id ORDER BY order_date, id) AS running_discount, RANK() OVER (PARTITION BY status ORDER BY amount) AS amount_rank FROM orders;

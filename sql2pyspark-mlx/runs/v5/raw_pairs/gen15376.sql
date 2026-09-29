@@ -1,0 +1,1 @@
+with valid_shipments as (select * from shipments where status = 'LOST' and status = 'IN_TRANSIT' and status in ('IN_TRANSIT', 'LOST')), status_summary as (select status, sum(cost) as total_cost, count(cost) as cost_count from valid_shipments group by status) select * from status_summary where total_cost > 270 order by cost_count, status limit 1;

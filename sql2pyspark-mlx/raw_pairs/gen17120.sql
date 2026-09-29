@@ -1,0 +1,1 @@
+select i.id, i.store_id, p.stock_qty, p.product_name, p.cost, month(i.last_restock) as last_restock_month from inventory i left join products p on i.product_id = p.id order by p.stock_qty desc, p.product_name

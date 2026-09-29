@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC, id) AS rn FROM orders WHERE status NOT IN ('COMPLETED', 'PENDING', 'CANCELLED')) SELECT id, customer_id, order_date, status FROM ranked WHERE rn <= 2 ORDER BY order_date

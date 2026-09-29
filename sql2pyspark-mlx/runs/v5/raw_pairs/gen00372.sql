@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, ROUND(STDDEV(price), 2) AS stddev_price, MAX(launch_date) AS last_launch_date FROM products GROUP BY supplier_id) SELECT s.id, s.city, s.supplier_name, ss.stddev_price, ss.last_launch_date FROM suppliers s LEFT OUTER JOIN supplier_stats ss ON s.id = ss.supplier_id WHERE ss.stddev_price >= 27

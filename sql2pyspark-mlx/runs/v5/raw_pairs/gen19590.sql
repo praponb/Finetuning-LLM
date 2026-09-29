@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, TRIM(status) AS clean_status FROM accounts WHERE balance IS NOT NULL AND status IN ('OPEN', 'CLOSED')), summary AS (SELECT status, SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END) AS savings_count FROM base GROUP BY status) SELECT status, savings_count FROM summary WHERE savings_count > 69 ORDER BY status DESC

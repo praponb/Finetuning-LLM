@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.6 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END rating_bucket, city, MIN(rating) min_rating, COUNT(CASE WHEN country = 'TH' THEN 1 END) th_count FROM suppliers GROUP BY 1, 2 ORDER BY city;

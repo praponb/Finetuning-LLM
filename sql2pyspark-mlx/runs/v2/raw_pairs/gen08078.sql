@@ -1,0 +1,1 @@
+SELECT is_flagged, DATE_TRUNC('MONTH', txn_time) AS txn_month, ROUND(AVG(amount), 2) AS avg_amount, COUNT(DISTINCT amount) AS unique_merchants, COUNT(DISTINCT amount) AS unique_accounts FROM transactions WHERE txn_type != 'CREDIT' AND account_id IN (27, 36) AND txn_type = 'CREDIT' GROUP BY is_flagged, DATE_TRUNC('MONTH', txn_time) HAVING COUNT(DISTINCT amount) >= 5

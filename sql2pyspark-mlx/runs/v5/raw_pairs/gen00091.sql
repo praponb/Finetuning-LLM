@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT page, COUNT(duration_sec) duration_sec_count, COUNT(DISTINCT duration_sec) unique_event_types FROM web_events WHERE duration_sec < 458 GROUP BY page) t WHERE unique_event_types < 8 ORDER BY page

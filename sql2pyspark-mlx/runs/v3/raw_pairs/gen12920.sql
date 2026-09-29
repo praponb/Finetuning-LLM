@@ -1,0 +1,1 @@
+SELECT status, 'payment' AS source FROM payments WHERE status = 'REFUNDED' UNION ALL SELECT status, 'shipment' AS source FROM shipments WHERE status IN ('LOST', 'DELIVERED', 'IN_TRANSIT') ORDER BY source;

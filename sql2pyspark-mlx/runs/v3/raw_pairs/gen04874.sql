@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, a.status, t.txn_type_values FROM accounts a LEFT JOIN (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions WHERE amount BETWEEN 1900 AND 3500 GROUP BY account_id) t ON a.id = t.account_id;

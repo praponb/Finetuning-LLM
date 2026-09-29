@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, SUM(CASE WHEN brand = 'Acme' THEN cost ELSE 0 END) AS acme_cost, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list FROM products GROUP BY supplier_id) SELECT s.country, s.supplier_name, pbs.acme_cost, pbs.brand_list FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id WHERE pbs.acme_cost > 43

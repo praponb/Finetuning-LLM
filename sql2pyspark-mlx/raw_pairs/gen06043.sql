@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY humidity DESC NULLS LAST, id) AS row_num FROM device_readings) ranked WHERE row_num = 1) SELECT id, temp_c, humidity, pressure, status_bits, firmware, row_num FROM ranked ORDER BY id LIMIT 20

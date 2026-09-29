@@ -1,0 +1,1 @@
+select id, product_id, order_id, unit_price, quantity, first_value(quantity) over (partition by product_id, order_id order by unit_price desc, id) as first_quantity, last_value(order_id) over (partition by product_id order by unit_price, id rows between unbounded preceding and unbounded following) as last_order_id from order_items;

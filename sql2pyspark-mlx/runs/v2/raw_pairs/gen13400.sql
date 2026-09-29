@@ -1,0 +1,1 @@
+SELECT id, city, rating, LAG(rating, 1) OVER (PARTITION BY city ORDER BY rating, id) AS prev_rating FROM suppliers WHERE supplier_name LIKE 'Glo%';

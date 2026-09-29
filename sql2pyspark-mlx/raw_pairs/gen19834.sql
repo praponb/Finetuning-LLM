@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT device_code FROM device_readings EXCEPT SELECT device_code FROM device_readings WHERE reading_ts >= '2024-04-08'), verified AS (SELECT s.* FROM device_readings s INNER JOIN remaining_keys k ON s.device_code = k.device_code) SELECT id, device_code, reading_ts, humidity, pressure, status_bits, firmware FROM verified ORDER BY id;

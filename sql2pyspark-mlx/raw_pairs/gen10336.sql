@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.last_restock, inventory.store_id, inventory.product_id FROM inventory WHERE inventory.last_restock BETWEEN '2023-03-31' AND '2025-05-01' AND inventory.product_id NOT IN (SELECT id FROM products WHERE ARRAY_CONTAINS(tags, 'premium')) ORDER BY store_id;

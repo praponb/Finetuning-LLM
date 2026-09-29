@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, reading_ts, temp_c, humidity, pressure, status_bits, SUBSTRING(firmware, 1, 4) AS firmware_prefix FROM device_readings WHERE reading_ts > TO_TIMESTAMP('2025-09-01 09:00:00')) SELECT id FROM cleaned INTERSECT SELECT id FROM device_readings WHERE device_code <> 'DV-02'

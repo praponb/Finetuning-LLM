@@ -1,0 +1,1 @@
+SELECT o.id, o.shipping_fee, o.channel, c.city, s.store_name, s.opened_date FROM orders o INNER JOIN customers c ON o.customer_id = c.id RIGHT JOIN stores s ON o.store_id = s.id ORDER BY id ASC, c.city DESC;

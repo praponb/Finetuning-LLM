@@ -1,0 +1,1 @@
+SELECT MONTH(sale_date) AS sale_month, MIN(sale_date) AS first_sale_date, ROUND(STDDEV(revenue), 2) AS stddev_revenue, COUNT(revenue) AS revenue_count FROM store_sales WHERE units BETWEEN 30 AND 32 AND sale_date < '2024-09-23' GROUP BY MONTH(sale_date);

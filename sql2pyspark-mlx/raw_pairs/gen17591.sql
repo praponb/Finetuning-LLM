@@ -1,0 +1,1 @@
+select case when sqft >= 17329 then 'high' when sqft >= 2946 then 'mid' else 'low' end as sqft_bucket, max(opened_date) as last_opened_date, count(*) as total_count from stores group by case when sqft >= 17329 then 'high' when sqft >= 2946 then 'mid' else 'low' end

@@ -1,0 +1,1 @@
+select web_events.id, web_events.session_id, web_events.page, web_events.event_time from web_events where web_events.session_id not in (select id from sessions where device in ('mobile', 'desktop', 'tablet')) order by page, web_events.session_id desc

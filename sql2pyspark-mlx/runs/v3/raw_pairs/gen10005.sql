@@ -1,0 +1,1 @@
+select c.is_active, c.segment, sort_array(collect_set(s.browser)) as browser_list, count(distinct s.country) as unique_countrys from sessions s full outer join customers c on s.customer_id = c.id group by c.is_active, c.segment;

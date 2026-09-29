@@ -1,0 +1,1 @@
+WITH CustomerTotals AS (SELECT customer_id, COUNT(CASE WHEN account_type = 'CHECKING' THEN 1 END) AS checking_count, MAX(opened_date) AS latest_opened_date FROM accounts GROUP BY customer_id) SELECT c.signup_date, C.checking_count, C.latest_opened_date FROM customers c JOIN CustomerTotals C ON c.id = C.customer_id WHERE C.checking_count >= 8

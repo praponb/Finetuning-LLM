@@ -1,0 +1,1 @@
+SELECT store_id, last_restock_month, last_last_restock, avg_quantity FROM (SELECT store_id, DATE_TRUNC('MONTH', last_restock) AS last_restock_month, MAX(last_restock) AS last_last_restock, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY store_id, DATE_TRUNC('MONTH', last_restock)) AS t WHERE avg_quantity >= 66 ORDER BY last_restock_month ASC;

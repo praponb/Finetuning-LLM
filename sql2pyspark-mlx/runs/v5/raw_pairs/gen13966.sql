@@ -1,0 +1,1 @@
+SELECT id, service, level, payload_json, context, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').retries AS retry_count, GET_JSON_OBJECT(payload_json, '$.user.id') AS user_id, SHIFTRIGHT(status_code, 2) AS status_code_high, SIZE(context) AS num_context, context['version'] AS version FROM app_logs

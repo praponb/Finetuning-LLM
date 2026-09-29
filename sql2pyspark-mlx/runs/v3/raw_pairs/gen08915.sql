@@ -1,0 +1,1 @@
+SELECT t.id, t.is_flagged, a.customer_id, c.country, c.city FROM transactions t INNER JOIN accounts a ON a.id = t.account_id INNER JOIN customers c ON a.customer_id = c.id WHERE c.city IN ('London', 'Tokyo', 'Chiang Mai') ORDER BY c.country ASC

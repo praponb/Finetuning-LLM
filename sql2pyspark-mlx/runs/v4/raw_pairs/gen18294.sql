@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT * FROM transactions WHERE is_flagged = TRUE), MerchantSummary AS (SELECT merchant, AVG(amount) avg_amount, SUM(amount) total_amount FROM valid_transactions GROUP BY merchant) SELECT merchant, total_amount FROM MerchantSummary

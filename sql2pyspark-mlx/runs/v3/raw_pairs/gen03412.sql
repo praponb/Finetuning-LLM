@@ -1,0 +1,1 @@
+WITH recent_accounts AS (SELECT * FROM accounts WHERE balance IS NULL AND status NOT IN ('OPEN', 'FROZEN') AND balance > 79000), AccountTypeSummary AS (SELECT account_type, COUNT(DISTINCT balance) AS unique_statuss FROM recent_accounts GROUP BY account_type) SELECT * FROM AccountTypeSummary WHERE unique_statuss < 5 ORDER BY account_type LIMIT 20

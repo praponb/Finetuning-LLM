@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM suppliers WHERE city IN ('London', 'Tokyo')), suppliers_stats AS (SELECT city, COUNT(DISTINCT rating) AS unique_citys, MIN(rating) AS min_rating FROM base GROUP BY city) SELECT city, min_rating FROM suppliers_stats;

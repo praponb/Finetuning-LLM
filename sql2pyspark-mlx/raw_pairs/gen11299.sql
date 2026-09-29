@@ -1,0 +1,1 @@
+SELECT level, YEAR(hire_date) AS hire_year, SUM(CASE WHEN level = 'L1' THEN 1 ELSE 0 END) AS l1_count, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE manager_id = 21 OR hire_date >= '2025-01-01' GROUP BY level, hire_year

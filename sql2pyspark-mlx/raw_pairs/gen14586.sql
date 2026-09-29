@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM subscriptions WHERE status != 'CANCELLED' AND plan = 'premium'), EndMonthSummary AS (SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM src GROUP BY DATE_FORMAT(end_date, 'yyyy-MM')) SELECT end_month, stddev_monthly_fee FROM EndMonthSummary WHERE stddev_monthly_fee < 77 ORDER BY end_month

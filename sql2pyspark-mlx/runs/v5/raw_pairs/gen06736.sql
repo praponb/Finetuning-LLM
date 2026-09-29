@@ -1,0 +1,1 @@
+SELECT city, CASE WHEN city IN ('Chiang Mai', 'Singapore') THEN 'group_a' ELSE 'other' END AS city_group, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, AVG(rating) AS avg_rating, SUM(rating) AS total_rating FROM suppliers WHERE supplier_name IS NOT NULL AND city IN ('New York', 'London') GROUP BY 1, 2;

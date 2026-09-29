@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT dim.category, COUNT(*) AS cnt, SUM(e.quantity) AS total_quantity FROM inventory e INNER JOIN products dim ON e.product_id = dim.id GROUP BY dim.category) SELECT category, cnt, total_quantity FROM dim_totals;

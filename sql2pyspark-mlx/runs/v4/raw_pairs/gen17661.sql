@@ -1,0 +1,1 @@
+with product_stats as (select product_id, avg(quantity) as avg_quantity from order_items where order_id in (20, 25) group by product_id) select products.id, products.stock_qty, products.product_name, product_stats.avg_quantity from products join product_stats on products.id = product_stats.product_id where product_stats.avg_quantity > 6.8

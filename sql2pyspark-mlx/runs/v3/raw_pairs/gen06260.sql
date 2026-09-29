@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, COUNT(CASE WHEN brand = 'Globex' THEN 1 END) globex_count FROM products WHERE SIZE(tags) > 2 GROUP BY supplier_id) SELECT s.rating, s.supplier_name, pbs.globex_count FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY supplier_name DESC

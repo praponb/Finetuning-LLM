@@ -1,0 +1,1 @@
+SELECT id, city, CONCAT(city, '/', supplier_name) AS city_supplier_name, CASE WHEN country = 'SG' THEN 1 ELSE 0 END AS is_sg FROM suppliers WHERE country = 'DE' AND (supplier_name LIKE '%Sia%' OR supplier_name IS NOT NULL)

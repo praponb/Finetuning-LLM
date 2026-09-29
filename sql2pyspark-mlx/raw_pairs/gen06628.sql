@@ -1,0 +1,1 @@
+SELECT SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END) AS savings_count, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list, COUNT(DISTINCT balance) AS unique_statuss FROM accounts ORDER BY unique_statuss, savings_count;

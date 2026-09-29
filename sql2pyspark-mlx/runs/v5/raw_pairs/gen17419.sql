@@ -1,0 +1,1 @@
+select date_format(c.signup_date, 'yyyy-MM') as signup_month, min(s.monthly_fee) as min_monthly_fee, round((100 * sum(case when s.status = 'ACTIVE' then 1 else 0 end)) / count(*), 1) as pct_active from subscriptions s join customers c on s.customer_id = c.id where c.country != 'SG' group by date_format(c.signup_date, 'yyyy-MM')

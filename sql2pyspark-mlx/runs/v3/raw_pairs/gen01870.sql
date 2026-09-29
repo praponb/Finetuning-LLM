@@ -1,0 +1,1 @@
+select quarter(p.launch_date) launch_quarter, p.category, sum(i.quantity) total_quantity, min(i.last_restock) first_last_restock from inventory i inner join products p on p.id = i.product_id where i.quantity between 186 and 239 group by quarter(p.launch_date), p.category order by total_quantity desc, category desc, launch_quarter limit 50;

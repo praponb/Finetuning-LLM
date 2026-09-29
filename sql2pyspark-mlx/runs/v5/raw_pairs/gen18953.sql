@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time NULLS FIRST, id) AS row_num FROM web_events) x WHERE row_num = 1) SELECT id, event_type, event_time, duration_sec, row_num FROM deduped ORDER BY event_type DESC;

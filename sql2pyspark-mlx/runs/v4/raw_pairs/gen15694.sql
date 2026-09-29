@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.started_at, sessions.customer_id, sessions.browser, customers.signup_date, customers.segment FROM sessions INNER JOIN customers ON sessions.customer_id = customers.id WHERE sessions.country IN ('UK', 'US', 'SG') ORDER BY customer_id DESC;

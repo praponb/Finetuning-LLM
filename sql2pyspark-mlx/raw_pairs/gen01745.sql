@@ -1,0 +1,1 @@
+with lines as (select id, plan, element from price_tiers lateral view outer explode(discounts) t as element) select id, plan, element, case when plan rlike '^(starter|enterprise)$' then 'EXTENDED' else 'OTHER_ZONE' end as plan_zone from lines order by element desc;

@@ -1,0 +1,1 @@
+SELECT ROUND(STDDEV(revenue), 2) stddev_revenue, COUNT(units) units_count FROM store_sales WHERE (store_id IN (1, 3, 5, 6) AND revenue BETWEEN 2600 AND 3200) OR sale_date <= '2025-01-22' ORDER BY stddev_revenue DESC

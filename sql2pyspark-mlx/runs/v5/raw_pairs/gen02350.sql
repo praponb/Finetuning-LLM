@@ -1,0 +1,1 @@
+SELECT a.balance, t.avg_amount FROM accounts a INNER JOIN (SELECT account_id, ROUND(AVG(amount), 2) avg_amount FROM transactions WHERE amount >= 2700 GROUP BY account_id) t ON a.id = t.account_id ORDER BY a.balance DESC;

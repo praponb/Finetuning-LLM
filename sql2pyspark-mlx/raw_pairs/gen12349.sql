@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT event_type, page, duration_sec FROM web_events WHERE event_type = 'click') PIVOT (SUM(duration_sec) FOR page IN ('/checkout', '/product', '/search', '/cart')) ORDER BY event_type;

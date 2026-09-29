@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees WHERE manager_id IN (5, 21) GROUP BY DATE_FORMAT(hire_date, 'yyyy-MM');

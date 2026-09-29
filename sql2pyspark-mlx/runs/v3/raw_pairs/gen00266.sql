@@ -1,0 +1,1 @@
+SELECT ss.product_id, p.supplier_id, p.launch_date, s.country, s.rating FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE ss.revenue <= 2900 AND s.country <> 'JP';

@@ -1,0 +1,1 @@
+with with_dims as (select src.*, o.amount, o.channel, o.shipping_fee from shipments src left join orders o on src.order_id = o.id) select id, carrier, shipped_date, delivered_date, cost, status, channel, shipping_fee, case when carrier rlike '^(Kerry|UPS)$' then 'GROUP_A' else 'EXTENDED' end as carrier_zone from with_dims order by delivered_date desc

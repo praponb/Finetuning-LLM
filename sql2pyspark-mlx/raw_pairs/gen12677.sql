@@ -1,0 +1,1 @@
+SELECT page, event_type, ROUND((100 * SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_search, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events WHERE duration_sec <> 271 GROUP BY page, event_type ORDER BY 1, event_type LIMIT 50

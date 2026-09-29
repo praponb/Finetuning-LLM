@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, COUNT(DISTINCT unit_price) AS unique_products, COUNT(quantity) AS quantity_count FROM order_items GROUP BY product_id) SELECT p.id, p.launch_date, p.supplier_id, ps.unique_products, ps.quantity_count FROM products p LEFT JOIN product_stats ps ON p.id = ps.product_id;

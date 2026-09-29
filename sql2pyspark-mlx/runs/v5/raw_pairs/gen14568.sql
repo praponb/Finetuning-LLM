@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(CASE WHEN p.status = 'FAILED' THEN 1 END) AS failed_count, SUM(CASE WHEN p.method = 'promptpay' THEN p.amount ELSE 0 END) AS promptpay_amount FROM payments p LEFT JOIN orders o ON p.order_id = o.id GROUP BY o.channel ORDER BY promptpay_amount DESC

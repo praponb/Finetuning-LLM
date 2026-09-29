@@ -1,0 +1,1 @@
+SELECT status, account_type, SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END) AS savings_count, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM accounts WHERE customer_id IS NOT NULL AND customer_id IN (4, 21) GROUP BY status, account_type ORDER BY account_type;

@@ -1,0 +1,1 @@
+SELECT d.location, COUNT(e.id) AS employee_count, MAX(e.salary) AS max_salary, SUM(e.salary) AS total_salary FROM departments d LEFT OUTER JOIN employees e ON d.id = e.dept_id WHERE d.budget BETWEEN 1291000 AND 4000000 GROUP BY d.location ORDER BY max_salary DESC, d.location ASC LIMIT 20

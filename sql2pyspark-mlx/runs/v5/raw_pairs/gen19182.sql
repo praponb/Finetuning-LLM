@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.opened_date, t.revenue_range, t.total_revenue FROM stores s LEFT OUTER JOIN (SELECT store_id, MAX(revenue) - MIN(revenue) AS revenue_range, SUM(revenue) AS total_revenue FROM store_sales GROUP BY store_id) t ON s.id = t.store_id

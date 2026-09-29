@@ -1,0 +1,1 @@
+SELECT id, product_id, last_restock, quantity, store_id, SUM(quantity) OVER (PARTITION BY product_id ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_quantity, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY quantity) dense_rnk FROM inventory;

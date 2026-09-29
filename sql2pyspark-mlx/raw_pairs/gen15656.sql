@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, FLOOR(rating) AS rating_whole FROM suppliers WHERE city IS NULL), city_summary AS (SELECT city, country, SUM(CASE WHEN city = 'Tokyo' THEN rating_whole ELSE 0 END) AS tokyo_rating_whole FROM base GROUP BY city, country) SELECT * FROM city_summary WHERE tokyo_rating_whole >= 67

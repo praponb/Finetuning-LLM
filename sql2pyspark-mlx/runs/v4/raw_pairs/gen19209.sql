@@ -1,0 +1,1 @@
+SELECT *, SUM(balance) OVER (PARTITION BY status ORDER BY balance, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_balance, NTILE(5) OVER (PARTITION BY account_type ORDER BY balance, id) AS balance_bucket FROM accounts;

@@ -1,0 +1,1 @@
+WITH filtered_store_sales AS (SELECT * FROM store_sales WHERE sale_date <= '2023-08-01'), store_id_summary AS (SELECT store_id, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM filtered_store_sales GROUP BY store_id) SELECT * FROM store_id_summary WHERE stddev_revenue > 30 ORDER BY stddev_revenue, store_id DESC;

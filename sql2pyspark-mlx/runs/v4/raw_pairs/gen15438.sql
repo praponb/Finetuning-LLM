@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, ROUND((100 * SUM(CASE WHEN t.merchant = '7-Eleven' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_7_eleven, SUM(t.amount) AS total_amount FROM transactions t INNER JOIN accounts a ON a.id = t.account_id INNER JOIN customers c ON a.customer_id = c.id GROUP BY YEAR(c.signup_date) ORDER BY signup_year ASC, total_amount ASC

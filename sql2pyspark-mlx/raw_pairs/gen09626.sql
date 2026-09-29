@@ -1,0 +1,1 @@
+SELECT ss.product_id, MIN(i.quantity) AS min_quantity FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.store_id IN (1, 3, 4, 6) GROUP BY ss.product_id HAVING MIN(i.quantity) >= 220;

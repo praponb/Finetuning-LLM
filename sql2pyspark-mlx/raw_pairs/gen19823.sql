@@ -1,0 +1,1 @@
+WITH metrics AS (SELECT *, ROUND(rating / SUM(rating) OVER (PARTITION BY country, city), 4) rating_share, LEAD(rating, 1) OVER w_grp next_rating FROM suppliers WINDOW w_grp AS (ORDER BY rating ASC, id ASC)) SELECT id, supplier_name, country, city, rating, next_rating FROM metrics ORDER BY id ASC

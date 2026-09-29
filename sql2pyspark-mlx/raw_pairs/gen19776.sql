@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1240 THEN 'high' WHEN amount >= 470 THEN 'mid' ELSE 'low' END AS amount_bucket, status, SUM(amount) AS total_amount, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count FROM payments GROUP BY 1, 2 ORDER BY amount_bucket;

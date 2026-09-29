@@ -1,0 +1,1 @@
+SELECT order_id, AVG(unit_price) AS avg_unit_price, SUM(unit_price * quantity) AS revenue FROM order_items WHERE product_id = 33 AND order_id = 15 GROUP BY order_id HAVING SUM(unit_price * quantity) >= 51 ORDER BY revenue DESC

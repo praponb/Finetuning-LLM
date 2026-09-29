@@ -1,0 +1,1 @@
+select id, store_id, sale_date, units, count(*) over (partition by store_id) as store_id_count, first_value(units) over (partition by store_id order by sale_date, id) as first_units from store_sales where product_id in (1, 5, 6, 7) order by first_units desc;

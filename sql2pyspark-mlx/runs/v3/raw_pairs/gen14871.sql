@@ -1,0 +1,1 @@
+SELECT stores.id, stores.opened_date, t.stddev_units, t.unique_products FROM stores INNER JOIN (SELECT store_id, ROUND(STDDEV(units), 2) AS stddev_units, COUNT(DISTINCT revenue) AS unique_products FROM store_sales WHERE units IS NULL GROUP BY store_id) t ON stores.id = t.store_id WHERE t.stddev_units > 58 ORDER BY stores.id DESC LIMIT 5;

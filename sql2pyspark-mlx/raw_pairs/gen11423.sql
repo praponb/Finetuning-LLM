@@ -1,0 +1,1 @@
+SELECT stores.id, COUNT(orders.id) AS order_count, MAX(orders.order_date) AS latest_order_date FROM stores JOIN orders ON stores.id = orders.store_id WHERE orders.order_date BETWEEN '2024-06-01' AND '2025-01-06' GROUP BY stores.id ORDER BY id DESC

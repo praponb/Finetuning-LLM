@@ -1,0 +1,1 @@
+SELECT transactions.merchant, accounts.status, accounts.balance, customers.country FROM transactions RIGHT JOIN accounts ON transactions.account_id = accounts.id LEFT JOIN customers ON accounts.customer_id = customers.id ORDER BY status DESC;

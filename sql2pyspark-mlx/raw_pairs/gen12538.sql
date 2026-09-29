@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.last_restock, p.stock_qty, p.category, s.store_name, s.sqft, INITCAP(TRIM(p.brand)) AS brand_title FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON s.id = i.store_id WHERE i.quantity != 231;

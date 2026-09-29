@@ -1,0 +1,1 @@
+select id, account_type, balance, status, customer_id, opened_date, dense_rank() over (partition by account_type order by balance) as balance_dense_rank, lag(opened_date, 2) over (partition by status, customer_id order by opened_date, id) as prev_opened_date from accounts

@@ -1,0 +1,1 @@
+SELECT opened_date, balance, customer_id, CONCAT_WS('-', account_type, status) AS account_type_status_key, TRIM(status) AS clean_status FROM accounts WHERE account_type IN ('LOAN', 'CREDIT') ORDER BY customer_id DESC;

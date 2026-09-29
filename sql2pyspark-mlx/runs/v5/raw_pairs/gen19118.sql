@@ -1,0 +1,1 @@
+SELECT sale_month, stddev_units, avg_units FROM (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, ROUND(STDDEV(units), 2) AS stddev_units, ROUND(AVG(units), 2) AS avg_units FROM store_sales GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM')) AS x WHERE stddev_units >= 52;

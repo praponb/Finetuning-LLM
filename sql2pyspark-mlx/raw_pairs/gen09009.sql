@@ -1,0 +1,1 @@
+select * from (select case when budget >= 3611000 then 'high' when budget >= 600000 then 'mid' else 'low' end as budget_bucket, location, budget from departments) pivot (max(budget) for location in ('Singapore', 'London', 'New York'));

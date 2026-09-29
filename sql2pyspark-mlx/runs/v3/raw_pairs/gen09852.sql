@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', event_time) event_month, SUM(duration_sec) total_duration_sec, DENSE_RANK() OVER (ORDER BY SUM(duration_sec) DESC) AS rnk FROM web_events WHERE duration_sec BETWEEN 211 AND 408 GROUP BY DATE_TRUNC('MONTH', event_time) ORDER BY total_duration_sec DESC, event_month LIMIT 50

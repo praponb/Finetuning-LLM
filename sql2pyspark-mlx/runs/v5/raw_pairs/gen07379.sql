@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN amount >= 3000 THEN 'high' WHEN amount >= 1200 THEN 'mid' ELSE 'low' END AS amount_bucket, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY CASE WHEN amount >= 3000 THEN 'high' WHEN amount >= 1200 THEN 'mid' ELSE 'low' END) AS agg WHERE avg_amount > 77;

@@ -1,0 +1,1 @@
+SELECT brand, CASE WHEN stock_qty >= 424 THEN 'high' WHEN stock_qty >= 83 THEN 'mid' ELSE 'low' END AS stock_qty_bucket, SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END) AS umbrella_count FROM products GROUP BY ROLLUP(brand, CASE WHEN stock_qty >= 424 THEN 'high' WHEN stock_qty >= 83 THEN 'mid' ELSE 'low' END) ORDER BY brand DESC;

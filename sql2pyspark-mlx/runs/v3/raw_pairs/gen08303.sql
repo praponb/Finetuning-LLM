@@ -1,0 +1,1 @@
+SELECT id, status, CASE WHEN cost >= 92 THEN 'High' WHEN cost >= 23 THEN 'Medium' ELSE 'Low' END AS cost_level, CAST(cost AS INT) AS cost_int FROM shipments WHERE delivered_date BETWEEN '2024-10-20' AND '2025-05-01' ORDER BY cost_int DESC, cost_level DESC;

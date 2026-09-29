@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT TO_DATE(event_time) AS event_day, page, SUM(duration_sec) AS total_duration_sec, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events WHERE event_time >= '2023-10-01' GROUP BY TO_DATE(event_time), page) AS agg WHERE total_duration_sec >= 2400;

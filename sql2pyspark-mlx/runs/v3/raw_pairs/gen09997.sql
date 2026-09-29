@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, MAX(event_time) latest_event_time FROM web_events GROUP BY session_id) SELECT s.id, s.browser, s.country, ss.latest_event_time FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id ORDER BY latest_event_time DESC;

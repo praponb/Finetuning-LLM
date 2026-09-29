@@ -1,0 +1,1 @@
+select is_flagged, min(txn_time) min_txn_time, max(amount) max_amount, sort_array(collect_set(txn_type)) txn_type_list from transactions group by is_flagged having max_amount < 2700 order by max_amount desc;

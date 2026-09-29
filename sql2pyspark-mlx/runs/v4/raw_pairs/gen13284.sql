@@ -1,0 +1,1 @@
+select shipments.id, shipments.order_id, shipments.delivered_date from shipments where shipments.cost between 29 and 65 and shipments.order_id not in (select id from orders where customer_id in (5, 12));

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, AVG(quantity) AS avg_quantity, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items WHERE quantity < 6 GROUP BY order_id) SELECT o.id, o.discount, o.status, os.avg_quantity, os.avg_unit_price FROM orders o LEFT OUTER JOIN order_summary os ON o.id = os.order_id WHERE os.avg_unit_price >= 61 ORDER BY os.avg_unit_price DESC;

@@ -1,0 +1,1 @@
+select id, location, budget, lead(budget, 2) over (partition by location order by budget, id) as next_budget, row_number() over (order by budget, id) as rn from departments where location in ('Tokyo', 'Berlin', 'London');

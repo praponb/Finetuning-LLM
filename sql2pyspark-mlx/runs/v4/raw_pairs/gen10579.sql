@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT country FROM sessions EXCEPT ALL SELECT country FROM sessions WHERE started_at >= '2023-08-01'), kept_rows AS (SELECT s.* FROM sessions s INNER JOIN kept_keys k ON s.country = k.country) SELECT customer_id, started_at, country, CASE WHEN country RLIKE '^(US|DE)$' THEN 'OTHER_ZONE' ELSE 'GROUP_A' END AS country_zone FROM kept_rows ORDER BY started_at ASC;

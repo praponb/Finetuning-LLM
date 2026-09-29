@@ -1,0 +1,1 @@
+select id, full_name, email, dept_id, manager_id, job_title, salary, hire_date, is_remote, level, lag(salary, 1) over (partition by manager_id, dept_id order by hire_date, id) prev_salary, avg(salary) over (order by hire_date, id rows between 5 preceding and 1 preceding) salary_avg_5_prior from employees;

@@ -1,0 +1,1 @@
+SELECT store_sales.store_id, COUNT(DISTINCT inventory.quantity) unique_products, AVG(inventory.quantity) avg_quantity FROM inventory INNER JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE YEAR(store_sales.sale_date) = 2024 GROUP BY store_sales.store_id HAVING AVG(inventory.quantity) > 230;

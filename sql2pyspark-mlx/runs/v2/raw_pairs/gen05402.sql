@@ -1,0 +1,1 @@
+SELECT s.id, s.store_name, s.sqft, s.opened_date FROM stores s WHERE EXISTS (SELECT 1 FROM orders o WHERE o.store_id = s.id AND o.channel IN ('store', 'partner', 'mobile')) ORDER BY sqft DESC, s.id DESC LIMIT 3;

@@ -1,0 +1,1 @@
+select id, delivered_date, status, cost, length(carrier) as carrier_length, length(status) as status_length from shipments where order_id in (3, 24, 38) and order_id in (2, 22, 38) and month(delivered_date) in (5, 7, 9) order by cost desc, id limit 1;

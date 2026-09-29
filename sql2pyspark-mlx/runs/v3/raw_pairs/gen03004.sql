@@ -1,0 +1,1 @@
+WITH ValidInventory AS (SELECT * FROM inventory WHERE quantity BETWEEN 131 AND 141), product_id_summary AS (SELECT product_id, MIN(last_restock) AS min_last_restock, COUNT(quantity) AS quantity_count FROM ValidInventory GROUP BY product_id) SELECT product_id, min_last_restock, quantity_count FROM product_id_summary WHERE quantity_count >= 9;

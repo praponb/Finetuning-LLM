@@ -1,0 +1,4 @@
+SELECT id, age, is_active
+FROM customers
+WHERE age >= (SELECT MAX(age) FROM customers)
+ORDER BY age DESC

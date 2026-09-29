@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MIN(balance) AS min_balance FROM accounts WHERE balance < 72000 GROUP BY customer_id) SELECT c.country, cs.min_balance FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.min_balance > 75000

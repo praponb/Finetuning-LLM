@@ -1,0 +1,1 @@
+SELECT id, store_name, city, region, opened_date, sqft, ROUND(sqft / SUM(sqft) OVER (PARTITION BY region), 4) sqft_share, FIRST_VALUE(sqft) IGNORE NULLS OVER (ORDER BY sqft, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) first_known_sqft FROM stores

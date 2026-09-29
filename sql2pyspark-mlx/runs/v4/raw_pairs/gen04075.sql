@@ -1,0 +1,1 @@
+select p.brand, year(p.launch_date) as launch_year, round(avg(oi.unit_price), 2) as avg_unit_price from order_items oi full outer join orders o on o.id = oi.order_id inner join products p on oi.product_id = p.id group by p.brand, year(p.launch_date) order by launch_year;

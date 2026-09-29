@@ -1,0 +1,1 @@
+select stores.city, inventory.last_restock, substring(stores.region, 1, 3) as region_prefix from stores left outer join inventory on inventory.store_id = stores.id where stores.region in ('South', 'West', 'Central');

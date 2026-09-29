@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM transactions WHERE amount > 1700), IsFlaggedSummary AS (SELECT is_flagged, COUNT(DISTINCT amount) AS unique_merchants, MAX(amount) AS max_amount FROM Base GROUP BY is_flagged) SELECT * FROM IsFlaggedSummary WHERE unique_merchants >= 4 ORDER BY unique_merchants DESC, is_flagged LIMIT 3

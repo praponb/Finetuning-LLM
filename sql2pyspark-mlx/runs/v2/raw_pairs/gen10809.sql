@@ -1,0 +1,1 @@
+SELECT id, status, order_id, delivered_date, cost, RANK() OVER (PARTITION BY status, order_id ORDER BY delivered_date) AS delivered_date_rank, ROUND(cost / SUM(cost) OVER (PARTITION BY status), 3) AS cost_share FROM shipments WHERE order_id IS NOT NULL

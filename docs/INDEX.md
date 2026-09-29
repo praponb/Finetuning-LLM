@@ -78,18 +78,19 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── sqlspec.py                # Dual-rendering expression/query objects
 │   ├── generate_dataset.py       # Compositional query generator (12 families + v4/v5 families)
 │   ├── advanced.py               # v4/v5 stage-based families: pipelines, advanced SQL, nested data
+│   ├── complex_v8/               # 10k complex pairs dataset build (20 new tables, 8 families), LoRA config
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # PySpark dual-execution verifier
 │   ├── convert_sql_pyspark.py    # Leakage-free splitter & chat formatter
-│   ├── lora_config.yaml          # MLX LoRA training hyperparameters (v6: 7B model)
+│   ├── lora_config.yaml          # MLX LoRA training hyperparameters (v7: 7B model, continues from v6)
 │   ├── train_resumable.py        # Crash-proof training wrapper used by `make train`
 │   ├── train.log                 # Training log (v7; v6 and v5 in runs/v6/, runs/v5/)
 │   ├── data/                     # train.jsonl (16.9k), valid.jsonl, test.jsonl (+ *_meta.jsonl)
 │   ├── raw_pairs/                # 20.1k pair files, verified.jsonl & reports
 │   ├── adapters/                 # Fine-tuned LoRA weights + checkpoints (v7; v6 in runs/v6/)
-│   ├── runs/v2/ … runs/v5/       # Backups: adapters, data, raw pairs, configs, logs
+│   ├── runs/v2/ … runs/v6/       # Backups: adapters, data, raw pairs, configs, logs
 │   └── sql2pyspark-model/        # Fused 4-bit MLX model
-├── sql2pyspark-hf/               # Dequantized BF16 fused model (input for GGUF; v5)
+├── sql2pyspark-hf/               # Dequantized BF16 fused model (input for GGUF; v7, ~15.2 GB)
 ├── eval/                         # Execution-based evaluation
 │   ├── build_holdout.py          # 62 hand-written queries on unseen schemas
 │   ├── build_holdout_v4.py       # 25 hand-written queries for the v4 features
@@ -107,6 +108,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── post_training_v6.sh       # v6 post-training script (timeout 600s for 7B)
 │   ├── start_training_v7.sh      # v7 unattended training launcher
 │   ├── post_training_v7.sh       # v7 post-training export + eval chain
-│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5/v6-repair, v5/v6-repeat-penalty)
+│   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
+│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5..v7-repair, v7-repair-rules)
 └── llama.cpp/                    # Upstream checkout (GGUF converter)
 ```

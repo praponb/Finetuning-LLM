@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 107 THEN 'high' WHEN cost >= 49 THEN 'mid' ELSE 'low' END AS cost_bucket, AVG(cost) AS avg_cost, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list FROM shipments GROUP BY CASE WHEN cost >= 107 THEN 'high' WHEN cost >= 49 THEN 'mid' ELSE 'low' END ORDER BY cost_bucket;

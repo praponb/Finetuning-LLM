@@ -1,0 +1,1 @@
+SELECT store_id, DATE_TRUNC('MONTH', sale_date) AS sale_month, MAX(units) - MIN(units) AS units_range FROM store_sales WHERE sale_date <= '2025-07-22' GROUP BY store_id, sale_month ORDER BY sale_month

@@ -1,0 +1,1 @@
+select p.stock_qty, oi.product_id, oi.quantity, oi.order_id from products p left join order_items oi on oi.product_id = p.id where p.launch_date between '2023-06-22' and '2024-06-01' and p.cost between 390 and 470;

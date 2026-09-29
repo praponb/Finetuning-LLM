@@ -1,0 +1,1 @@
+select sessions.browser, sessions.customer_id, customers.credit_limit from sessions left join customers on sessions.customer_id = customers.id where sessions.device = 'mobile' and customers.credit_limit > 15800

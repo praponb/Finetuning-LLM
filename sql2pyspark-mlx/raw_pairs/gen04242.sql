@@ -1,0 +1,1 @@
+SELECT p.id, p.product_name, COUNT(ss.id) AS store_sale_count, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range FROM products p INNER JOIN store_sales ss ON p.id = ss.product_id GROUP BY p.id, p.product_name ORDER BY 2, revenue_range DESC;

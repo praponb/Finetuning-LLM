@@ -1,0 +1,1 @@
+select id, city, rating, supplier_name, lag(rating, 2) over (partition by city order by rating, id) as prev_rating, last_value(supplier_name) over (partition by city order by rating desc, id rows between unbounded preceding and unbounded following) as last_supplier_name from suppliers

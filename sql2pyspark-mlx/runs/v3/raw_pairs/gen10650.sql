@@ -1,0 +1,1 @@
+SELECT carrier, status, MIN(cost) min_cost, SUM(CASE WHEN status = 'RETURNED' THEN cost ELSE 0 END) returned_cost, MIN(shipped_date) min_shipped_date FROM shipments WHERE status = 'IN_TRANSIT' GROUP BY carrier, status ORDER BY status, carrier

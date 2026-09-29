@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(o.order_date, 'yyyy-MM') AS order_month, o.status, MIN(p.amount) AS min_amount, COUNT(*) AS row_count FROM payments p INNER JOIN orders o ON o.id = p.order_id GROUP BY DATE_FORMAT(o.order_date, 'yyyy-MM'), o.status ORDER BY min_amount DESC;

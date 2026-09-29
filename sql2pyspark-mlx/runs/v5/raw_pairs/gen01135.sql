@@ -1,0 +1,1 @@
+select c.country, c.signup_date, a.status, a.customer_id, a.opened_date, coalesce(c.credit_limit, 0) credit_limit_filled from customers c left join accounts a on a.customer_id = c.id order by opened_date;

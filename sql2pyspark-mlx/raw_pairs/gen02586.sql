@@ -1,0 +1,1 @@
+with session_totals as (select session_id, max(duration_sec) as max_duration_sec, max(duration_sec) - min(duration_sec) as duration_sec_range from web_events where session_id = 24 group by session_id) select s.id, s.started_at, st.max_duration_sec, st.duration_sec_range from sessions s inner join session_totals st on s.id = st.session_id;

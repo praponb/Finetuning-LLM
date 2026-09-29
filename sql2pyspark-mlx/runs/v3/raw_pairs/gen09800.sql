@@ -1,0 +1,1 @@
+SELECT region, CASE WHEN city IN ('New York', 'Bangkok') THEN 'core' ELSE 'other' END city_group, city, MAX(opened_date) latest_opened_date, MIN(opened_date) min_opened_date FROM stores GROUP BY region, city_group, city ORDER BY latest_opened_date, city_group;

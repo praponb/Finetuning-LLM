@@ -1,0 +1,1 @@
+SELECT product_id, avg_revenue, max_revenue FROM (SELECT product_id, ROUND(AVG(revenue), 2) AS avg_revenue, MAX(revenue) AS max_revenue FROM store_sales WHERE revenue > 3700 GROUP BY product_id) AS t WHERE avg_revenue < 43 ORDER BY product_id DESC

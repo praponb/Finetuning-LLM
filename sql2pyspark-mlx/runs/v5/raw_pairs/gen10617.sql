@@ -1,0 +1,1 @@
+SELECT products.id, products.category, products.launch_date, t.min_sale_date FROM products LEFT OUTER JOIN (SELECT product_id, MIN(sale_date) AS min_sale_date FROM store_sales GROUP BY product_id) t ON products.id = t.product_id ORDER BY launch_date;

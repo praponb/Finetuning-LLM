@@ -1,0 +1,1 @@
+select s.id, s.country, s.rating, top1.brand, top1.product_cost from suppliers s left join lateral (select c.brand, c.cost as product_cost from products c where c.supplier_id = s.id order by c.launch_date desc, c.id desc limit 1) top1 on true;

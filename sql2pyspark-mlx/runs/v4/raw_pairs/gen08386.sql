@@ -1,0 +1,1 @@
+select payments.id, payments.status, payments.amount, payments.order_id from payments where payments.status <> 'SUCCESS' and payments.order_id not in (select id from orders where status in ('CANCELLED', 'COMPLETED', 'SHIPPED')) order by id desc

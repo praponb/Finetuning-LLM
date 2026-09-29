@@ -1,0 +1,1 @@
+with ranked_subscriptions as (select id, plan, monthly_fee, customer_id, row_number() over (partition by plan order by monthly_fee desc, id) as rnk from subscriptions) select * from ranked_subscriptions where rnk <= 1;

@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END) umbrella_count FROM products GROUP BY supplier_id) SELECT s.id, s.city, st.umbrella_count FROM suppliers s LEFT OUTER JOIN supplier_totals st ON s.id = st.supplier_id WHERE st.umbrella_count >= 49 ORDER BY st.umbrella_count;

@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, MAX(revenue) AS max_revenue, COUNT(*) AS num_store_sales FROM store_sales GROUP BY store_id) SELECT s.city, st.max_revenue, st.num_store_sales FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id;

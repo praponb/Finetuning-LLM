@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, ship_to, COALESCE(attributes['utm_source'], 'direct') AS utm_source_or_default, SIZE(attributes) AS num_attributes, SIZE(FILTER(items, x -> x.qty >= 3)) AS bulk_lines FROM carts;

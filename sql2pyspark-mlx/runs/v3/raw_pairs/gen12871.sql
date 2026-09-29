@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, MAX(units) max_units, MAX(sale_date) last_sale_date FROM store_sales WHERE revenue < 1700 GROUP BY product_id) SELECT p.id, p.stock_qty, ps.max_units, ps.last_sale_date FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id;

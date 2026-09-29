@@ -1,0 +1,1 @@
+select product_id, total_quantity, stddev_quantity from (select product_id, sum(quantity) as total_quantity, round(stddev(quantity), 2) as stddev_quantity from inventory where last_restock <= '2023-07-15' group by product_id) as t where stddev_quantity >= 51 order by product_id;

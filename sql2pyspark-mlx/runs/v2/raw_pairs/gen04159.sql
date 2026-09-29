@@ -1,0 +1,1 @@
+SELECT s.id, s.country, t.min_launch_date, t.avg_cost FROM suppliers s INNER JOIN (SELECT supplier_id, MIN(launch_date) AS min_launch_date, AVG(cost) AS avg_cost FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.avg_cost > 280 ORDER BY min_launch_date ASC, id ASC LIMIT 20

@@ -1,0 +1,1 @@
+SELECT channel, CASE WHEN shipping_fee >= 30 THEN 'high' WHEN shipping_fee >= 9 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, store_id, SUM(shipping_fee) AS total_shipping_fee FROM orders WHERE customer_id IS NULL AND status = 'SHIPPED' GROUP BY channel, CASE WHEN shipping_fee >= 30 THEN 'high' WHEN shipping_fee >= 9 THEN 'mid' ELSE 'low' END, store_id;

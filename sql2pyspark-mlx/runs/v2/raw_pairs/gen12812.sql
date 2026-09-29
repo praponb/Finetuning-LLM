@@ -1,0 +1,1 @@
+select year(opened_date) as opened_year, sum(case when region = 'North' then 1 else 0 end) as north_count, max(sqft) - min(sqft) as sqft_range from stores group by opened_year having min(sqft) < 13100 order by north_count

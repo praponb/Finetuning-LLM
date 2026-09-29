@@ -1,0 +1,1 @@
+SELECT a.id, a.status, a.balance, t.fee_count FROM accounts a LEFT JOIN (SELECT account_id, COUNT(CASE WHEN txn_type = 'FEE' THEN 1 END) AS fee_count FROM transactions WHERE HOUR(txn_time) BETWEEN 8 AND 11 GROUP BY account_id) t ON a.id = t.account_id WHERE t.fee_count >= 6 ORDER BY balance DESC;

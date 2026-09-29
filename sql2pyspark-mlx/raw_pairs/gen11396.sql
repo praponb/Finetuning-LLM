@@ -1,0 +1,1 @@
+select s.customer_id, t.min_duration_sec from sessions s inner join (select session_id, min(duration_sec) as min_duration_sec from web_events where session_id = 4 group by session_id) t on s.id = t.session_id where t.min_duration_sec > 190 order by min_duration_sec desc;

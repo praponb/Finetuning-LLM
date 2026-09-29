@@ -1,0 +1,1 @@
+SELECT YEAR(sale_date) AS sale_year, product_id, AVG(units) AS avg_units, MAX(sale_date) AS latest_sale_date, ROUND(AVG(revenue), 2) AS avg_revenue FROM store_sales WHERE store_id IN (2, 5, 6) AND revenue < 1800 GROUP BY YEAR(sale_date), product_id ORDER BY avg_revenue DESC, sale_year, product_id LIMIT 5

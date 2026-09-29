@@ -1,0 +1,1 @@
+SELECT id, region, opened_date, city, CASE WHEN region = 'West' THEN 1 ELSE 0 END AS is_west FROM stores WHERE city IN ('Tokyo', 'Bangkok') AND opened_date <= '2024-01-01' AND opened_date >= '2024-09-01' ORDER BY region;

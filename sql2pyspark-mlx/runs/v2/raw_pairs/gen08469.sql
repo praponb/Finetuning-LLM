@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.monthly_fee, customers.segment, customers.credit_limit FROM subscriptions LEFT OUTER JOIN customers ON subscriptions.customer_id = customers.id WHERE customers.city = 'Singapore' ORDER BY customers.credit_limit DESC

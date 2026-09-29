@@ -1,0 +1,1 @@
+SELECT id, product_id, last_restock, store_id FROM (SELECT id, product_id, last_restock, store_id, RANK() OVER (PARTITION BY product_id ORDER BY last_restock DESC) AS rn FROM inventory) AS t WHERE rn <= 3 ORDER BY store_id DESC

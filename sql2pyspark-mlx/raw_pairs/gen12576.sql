@@ -1,0 +1,1 @@
+SELECT s.id, s.start_date, c.is_active, c.signup_date, c.age, CONCAT_WS('/', c.country, c.email) AS country_email_key FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE c.credit_limit < 11700 AND YEAR(c.signup_date) = 2023 ORDER BY start_date;

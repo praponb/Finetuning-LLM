@@ -1,0 +1,1 @@
+SELECT status, channel, COUNT(discount) AS discount_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, MAX(order_date) AS last_order_date FROM orders WHERE channel IN ('partner', 'store') AND discount < 0.24 AND order_date < '2025-05-20' GROUP BY status, channel HAVING COUNT(DISTINCT discount) < 2 ORDER BY status_values, status, channel LIMIT 1;

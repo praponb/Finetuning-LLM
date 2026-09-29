@@ -1,0 +1,1 @@
+select event_time, page, hour(event_time) as event_time_hour, round(duration_sec * 1.1, 2) as adjusted_duration_sec from web_events where to_date(event_time) >= '2023-03-16' and (duration_sec != 200 or to_date(event_time) < '2024-02-04');

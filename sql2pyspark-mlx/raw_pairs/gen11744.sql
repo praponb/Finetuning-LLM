@@ -1,0 +1,1 @@
+select id, created_at, attributes, size(items) as num_items, aggregate(items, cast(0 as double), (acc, x) -> acc + x.qty * x.price, acc -> round(acc, 2)) as items_total, forall(items, x -> x.qty <= 5) as all_small_qty, coalesce(attributes['device'], 'none') as device_or_default, attributes['utm_source'] as utm_source from carts;

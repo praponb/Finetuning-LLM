@@ -1,0 +1,1 @@
+select merchant, round((100 * sum(case when txn_type = 'REFUND' then 1 else 0 end)) / count(*), 1) as pct_refund, sum(case when txn_type = 'FEE' then 1 else 0 end) as fee_count, avg(amount) as avg_amount from transactions group by merchant order by fee_count asc

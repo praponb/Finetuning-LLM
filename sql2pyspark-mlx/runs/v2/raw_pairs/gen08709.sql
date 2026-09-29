@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, city, region, COUNT(sqft) AS sqft_count, MIN(opened_date) AS min_opened_date FROM stores WHERE city <> 'Tokyo' GROUP BY opened_month, city, region ORDER BY min_opened_date DESC, opened_month, city, region LIMIT 1;

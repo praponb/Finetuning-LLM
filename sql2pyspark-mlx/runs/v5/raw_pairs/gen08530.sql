@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CAST(balance AS INT) balance_int FROM accounts WHERE opened_date > DATE '2023-05-20' AND status IS DISTINCT FROM 'OPEN') SELECT c.city, c.segment, COUNT(*) AS cnt, MAX(e.balance) AS max_balance, ROUND(AVG(e.balance_int), 2) AS avg_balance_int FROM filtered e INNER JOIN customers c ON e.customer_id = c.id GROUP BY c.city, c.segment ORDER BY cnt DESC;

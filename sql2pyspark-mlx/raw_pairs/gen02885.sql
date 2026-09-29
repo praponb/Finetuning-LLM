@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CASE WHEN unit_price >= 400 THEN 'High' WHEN unit_price >= 130 THEN 'Medium' ELSE 'Low' END AS unit_price_level FROM order_items WHERE product_id IS NOT NULL AND unit_price > 110) SELECT p.brand, COUNT(*) AS cnt, MAX(e.unit_price) AS max_unit_price, GROUPING_ID() AS gid FROM filtered e JOIN products p ON e.product_id = p.id GROUP BY ROLLUP (p.brand);

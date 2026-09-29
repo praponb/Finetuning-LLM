@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, MAX(discount) - MIN(discount) AS discount_range, COUNT(*) AS num_orders FROM orders WHERE store_id IS NOT NULL GROUP BY store_id) SELECT stores.id, stores.opened_date, store_stats.discount_range, store_stats.num_orders FROM stores JOIN store_stats ON stores.id = store_stats.store_id

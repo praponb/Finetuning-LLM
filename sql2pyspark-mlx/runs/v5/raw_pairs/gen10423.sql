@@ -1,0 +1,1 @@
+select d.channel, e.status as payment_status, count(*) as num_rows, max(e.amount) as max_amount, grouping_id() as gid from payments e left join orders d on e.order_id = d.id group by cube (d.channel, e.status);

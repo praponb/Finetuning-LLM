@@ -1,0 +1,1 @@
+SELECT *, ROUND(salary / SUM(salary) OVER (PARTITION BY job_title), 4) salary_share, SUM(salary) OVER (PARTITION BY level ORDER BY hire_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) cumulative_salary FROM employees;

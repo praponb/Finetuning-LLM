@@ -1,0 +1,1 @@
+SELECT *, TRIM(email) AS clean_email, CONCAT(name, ' - ', city) AS name_city FROM customers WHERE age < 55 AND signup_date BETWEEN '2024-10-30' AND '2025-06-12' AND signup_date >= '2024-04-01' ORDER BY id ASC, country ASC LIMIT 20;

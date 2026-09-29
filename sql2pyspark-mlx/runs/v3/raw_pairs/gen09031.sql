@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.event_type, sessions.device, customers.segment, customers.credit_limit, COALESCE(web_events.duration_sec, 0) duration_sec_filled FROM web_events INNER JOIN sessions ON web_events.session_id = sessions.id LEFT OUTER JOIN customers ON sessions.customer_id = customers.id WHERE customers.city IN ('New York', 'Chiang Mai')

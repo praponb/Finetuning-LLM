@@ -1,0 +1,1 @@
+SELECT supplier_id, SUM(cost) AS total_cost, COUNT(*) AS cnt, RANK() OVER (ORDER BY SUM(cost) DESC) AS rnk FROM products WHERE product_name LIKE '%Cancel%' GROUP BY supplier_id ORDER BY supplier_id DESC LIMIT 1

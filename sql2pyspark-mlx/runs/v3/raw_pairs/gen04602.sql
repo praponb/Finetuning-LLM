@@ -1,0 +1,1 @@
+select id, customer_id, end_date, start_date, date_format(start_date, 'yyyy-MM') as start_date_label, month(end_date) as end_date_month from subscriptions where plan in ('standard', 'enterprise') order by start_date desc;

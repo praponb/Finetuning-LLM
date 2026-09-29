@@ -1,0 +1,1 @@
+SELECT c.id, c.city, c.is_active, t.max_balance, t.total_count FROM customers c INNER JOIN (SELECT customer_id, MAX(balance) max_balance, COUNT(*) total_count FROM accounts WHERE status = 'CLOSED' GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.max_balance > 22000;

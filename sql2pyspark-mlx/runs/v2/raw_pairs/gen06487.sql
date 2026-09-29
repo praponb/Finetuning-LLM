@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(end_date) AS end_month, plan, SUM(CASE WHEN plan = 'standard' THEN 1 ELSE 0 END) AS standard_count FROM subscriptions WHERE customer_id IS NOT NULL GROUP BY MONTH(end_date), plan) AS sub WHERE standard_count > 79 ORDER BY end_month DESC

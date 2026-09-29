@@ -1,0 +1,1 @@
+select products.id, products.brand from products where products.supplier_id = 39 and not exists (select 1 from order_items where order_items.product_id = products.id and order_items.product_id in (14, 21, 34, 38));

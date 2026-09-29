@@ -1,0 +1,1 @@
+SELECT we.id, we.event_type, we.page, s.started_at, s.browser, c.country FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE s.country IN ('SG', 'UK', 'JP') ORDER BY c.country DESC

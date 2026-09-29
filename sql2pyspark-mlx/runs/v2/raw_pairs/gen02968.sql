@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, SUM(CASE WHEN job_title = 'Designer' THEN salary ELSE 0 END) AS designer_salary FROM employees GROUP BY dept_id) SELECT d.dept_name, d.budget, ebd.designer_salary FROM departments d LEFT OUTER JOIN employees_by_department ebd ON d.id = ebd.dept_id WHERE ebd.designer_salary > 61

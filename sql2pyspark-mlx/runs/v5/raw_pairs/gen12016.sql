@@ -1,0 +1,1 @@
+SELECT id, status, UPPER(status) AS status_upper, CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END AS is_checking FROM accounts WHERE account_type NOT IN ('CREDIT', 'CHECKING') ORDER BY 2, status_upper;

@@ -1,0 +1,1 @@
+select * from (select to_date(txn_time) as txn_day, txn_type, sum(case when txn_type = 'DEBIT' then amount else 0 end) as debit_amount from transactions group by to_date(txn_time), txn_type) as t where debit_amount < 24

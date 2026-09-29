@@ -1,0 +1,1 @@
+SELECT a.opened_date, t.amount_range, t.last_txn_time FROM accounts a LEFT JOIN (SELECT account_id, MAX(amount) - MIN(amount) AS amount_range, MAX(txn_time) AS last_txn_time FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.amount_range > 57 ORDER BY last_txn_time DESC

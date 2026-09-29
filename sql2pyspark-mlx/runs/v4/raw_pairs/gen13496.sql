@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM order_items GROUP BY product_id) SELECT p.cost, ps.stddev_unit_price, ps.stddev_quantity FROM products p JOIN product_summary ps ON p.id = ps.product_id WHERE ps.stddev_unit_price >= 37;

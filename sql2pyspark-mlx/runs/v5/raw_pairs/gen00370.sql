@@ -1,0 +1,1 @@
+select id, launch_date, add_months(launch_date, 12) launch_date_plus_months, case when price >= 1230 then 'High' when price >= 570 then 'Medium' else 'Low' end price_band from products where launch_date < '2023-11-13' and product_name is not null and price < 710

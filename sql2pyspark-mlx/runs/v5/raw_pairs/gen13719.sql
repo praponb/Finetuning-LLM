@@ -1,0 +1,1 @@
+with order_items_by_product as (select product_id, max(unit_price) as max_unit_price, count(*) as num_order_items from order_items where order_id in (9, 20) group by product_id) select p.category, oibp.max_unit_price, oibp.num_order_items from products p left join order_items_by_product oibp on p.id = oibp.product_id order by max_unit_price desc, num_order_items desc

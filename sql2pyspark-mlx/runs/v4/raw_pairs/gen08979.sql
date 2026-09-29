@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, device_code, temp_c, humidity, pressure, status_bits, CASE WHEN status_bits >= 12 THEN 'High' WHEN status_bits >= 2 THEN 'Medium' ELSE 'Low' END AS status_bits_tier FROM device_readings WHERE reading_ts >= TO_TIMESTAMP('2025-09-01 14:00:00')) SELECT * FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY pressure DESC, id ASC) = 1

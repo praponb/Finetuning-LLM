@@ -1,0 +1,1 @@
+SELECT location, COUNT(budget) AS budget_count FROM departments WHERE location IN ('Singapore', 'New York', 'Bangkok') AND dept_name IN ('Finance', 'Engineering', 'Legal') GROUP BY location HAVING COUNT(budget) < 2 ORDER BY location LIMIT 1;

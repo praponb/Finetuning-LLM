@@ -1,0 +1,1 @@
+select transactions.account_id, transactions.amount, transactions.merchant, accounts.opened_date, accounts.customer_id from transactions full outer join accounts on transactions.account_id = accounts.id order by opened_date

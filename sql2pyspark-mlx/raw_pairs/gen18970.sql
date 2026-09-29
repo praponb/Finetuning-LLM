@@ -1,0 +1,1 @@
+SELECT id, signup_date, country, credit_limit, ROUND(AVG(credit_limit) OVER (PARTITION BY MONTH(signup_date), country ORDER BY signup_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS credit_limit_moving_avg_4 FROM customers;

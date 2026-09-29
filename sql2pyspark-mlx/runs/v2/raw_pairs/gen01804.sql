@@ -1,0 +1,1 @@
+with order_summary as (select order_id, avg(quantity) as avg_quantity, sum(unit_price) as total_unit_price from order_items group by order_id) select o.id, o.shipping_fee, o.customer_id, os.avg_quantity, os.total_unit_price from orders o left join order_summary os on o.id = os.order_id;

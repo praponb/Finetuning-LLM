@@ -1,0 +1,1 @@
+SELECT SORT_ARRAY(COLLECT_SET(dept_name)) AS dept_name_list, SUM(CASE WHEN dept_name = 'Engineering' THEN 1 ELSE 0 END) AS engineering_count, COUNT(DISTINCT budget) AS unique_dept_names FROM departments WHERE NOT (budget > 3479000 AND (location NOT IN ('Singapore', 'Chiang Mai', 'London') OR dept_name IN ('Sales', 'Legal', 'Marketing')))

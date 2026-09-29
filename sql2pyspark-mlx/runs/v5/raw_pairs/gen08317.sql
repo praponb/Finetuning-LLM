@@ -1,0 +1,1 @@
+SELECT id, session_id, event_type, page, duration_sec, LAST_VALUE(duration_sec) IGNORE NULLS OVER (PARTITION BY session_id ORDER BY event_time ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_duration_sec, DENSE_RANK() OVER (PARTITION BY page, session_id ORDER BY duration_sec DESC) AS duration_sec_dense_rank FROM web_events

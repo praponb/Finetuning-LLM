@@ -1,0 +1,1 @@
+SELECT CASE WHEN page IN ('/home', '/search') THEN 'tier_1' ELSE 'other' END AS page_group, page, COUNT(*) AS row_count FROM web_events WHERE page = '/product' GROUP BY page_group, page ORDER BY row_count;

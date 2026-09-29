@@ -1,0 +1,1 @@
+SELECT o.status, SUM(CASE WHEN p.method = 'promptpay' THEN 1 ELSE 0 END) AS promptpay_count FROM payments p LEFT JOIN orders o ON p.order_id = o.id WHERE o.shipping_fee >= 21 GROUP BY o.status ORDER BY promptpay_count DESC

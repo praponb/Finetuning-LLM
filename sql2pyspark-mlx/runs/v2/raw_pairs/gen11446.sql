@@ -1,0 +1,1 @@
+WITH CustomerSummary AS (SELECT customer_id, SUM(CASE WHEN device = 'desktop' THEN 1 ELSE 0 END) desktop_count FROM sessions GROUP BY customer_id) SELECT c.id, c.segment, C.desktop_count FROM customers c INNER JOIN CustomerSummary C ON c.id = C.customer_id;

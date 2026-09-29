@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY cost DESC, id) AS dedup_rank FROM products) x WHERE dedup_rank = 1) SELECT id, product_name, category, brand, price, stock_qty, launch_date, tags, supplier_id FROM deduped ORDER BY id DESC NULLS LAST, launch_date;

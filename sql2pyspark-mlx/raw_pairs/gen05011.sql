@@ -1,0 +1,1 @@
+SELECT id, amount, txn_type, txn_time, FIRST_VALUE(txn_type) OVER (ORDER BY amount DESC, id) AS first_txn_type, amount - LAG(amount, 1, 0) OVER (PARTITION BY txn_type ORDER BY txn_time, id) AS amount_change FROM transactions ORDER BY txn_type DESC;

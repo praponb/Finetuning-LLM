@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LENGTH(merchant) AS merchant_length, COALESCE(merchant, 'NONE') AS merchant_clean FROM transactions WHERE txn_time > TO_DATE('2023-05-25') AND merchant IS NOT NULL) SELECT id FROM base INTERSECT ALL SELECT id FROM transactions WHERE txn_time >= '2023-06-16';

@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, MAX(hire_date) AS latest_hire_date FROM employees WHERE email LIKE '%@outlook.com' GROUP BY dept_id) SELECT d.id, d.budget, ebd.latest_hire_date FROM departments d INNER JOIN employees_by_department ebd ON d.id = ebd.dept_id;

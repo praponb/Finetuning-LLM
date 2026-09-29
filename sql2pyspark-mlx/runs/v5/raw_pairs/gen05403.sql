@@ -1,0 +1,1 @@
+select id, browser, customer_id, to_date(started_at) as started_at_date, initcap(trim(country)) as country_title from sessions where to_date(started_at) < '2023-10-20' or browser in ('Firefox', 'Chrome');

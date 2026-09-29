@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.product_id, p.price, p.category, p.stock_qty FROM inventory i LEFT OUTER JOIN products p ON i.product_id = p.id WHERE ARRAY_CONTAINS(p.tags, 'sale') AND i.quantity BETWEEN 114 AND 202

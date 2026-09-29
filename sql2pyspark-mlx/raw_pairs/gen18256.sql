@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, COUNT(t.id) AS transaction_count, MAX(t.txn_time) AS last_txn_time, COUNT(DISTINCT t.amount) AS unique_txn_types FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id WHERE MONTH(a.opened_date) IN (5, 7, 9) GROUP BY a.id, a.account_type ORDER BY transaction_count DESC

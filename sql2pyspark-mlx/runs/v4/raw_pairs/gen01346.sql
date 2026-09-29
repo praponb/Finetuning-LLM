@@ -1,0 +1,1 @@
+SELECT products.brand, COUNT(order_items.quantity) AS quantity_count, COUNT(order_items.unit_price) AS unit_price_count FROM order_items INNER JOIN products ON products.id = order_items.product_id INNER JOIN orders ON orders.id = order_items.order_id GROUP BY products.brand;

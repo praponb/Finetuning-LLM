@@ -1,0 +1,1 @@
+SELECT id, plan, start_date, status, end_date, RANK() OVER (PARTITION BY plan ORDER BY start_date) rnk, DENSE_RANK() OVER (PARTITION BY status ORDER BY end_date) dense_rnk FROM subscriptions WHERE end_date < '2023-09-02' ORDER BY end_date;

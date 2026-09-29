@@ -1,0 +1,1 @@
+WITH top_payments AS (SELECT id, order_id, paid_at, status, RANK() OVER (PARTITION BY order_id ORDER BY paid_at DESC) AS rnk FROM payments) SELECT id, order_id, paid_at, status FROM top_payments WHERE rnk <= 3;

@@ -1,0 +1,1 @@
+WITH ranked_departments AS (SELECT id, dept_name, budget, DENSE_RANK() OVER (PARTITION BY dept_name ORDER BY budget DESC) rn FROM departments WHERE budget <= 3225000) SELECT id, dept_name, budget FROM ranked_departments WHERE rn <= 1;

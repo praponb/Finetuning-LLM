@@ -1,0 +1,1 @@
+SELECT s.city, s.region, COUNT(*) AS row_count FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON ss.product_id = p.id WHERE SIZE(p.tags) >= 1 GROUP BY s.city, s.region

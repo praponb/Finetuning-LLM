@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, session_id, duration_sec, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec, id) AS row_num FROM web_events WHERE event_type = 'page_view') SELECT * FROM numbered WHERE row_num = 1;

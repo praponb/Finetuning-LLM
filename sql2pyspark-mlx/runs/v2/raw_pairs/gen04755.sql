@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock, id) pos FROM inventory WHERE quantity BETWEEN 101 AND 219) SELECT id, store_id, last_restock, quantity FROM Numbered WHERE pos = 1 ORDER BY last_restock DESC;

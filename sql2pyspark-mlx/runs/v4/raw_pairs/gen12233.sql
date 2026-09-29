@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT device, customer_id FROM sessions EXCEPT ALL SELECT device, customer_id FROM sessions WHERE device <> 'desktop'), reconciled AS (SELECT s.* FROM sessions s INNER JOIN matched_keys k ON s.device = k.device AND s.customer_id = k.customer_id) SELECT id, customer_id FROM reconciled ORDER BY customer_id DESC NULLS LAST, id;

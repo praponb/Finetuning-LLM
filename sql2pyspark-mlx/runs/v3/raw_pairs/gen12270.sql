@@ -1,0 +1,1 @@
+SELECT customer_id, QUARTER(end_date) AS end_quarter, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM subscriptions WHERE plan = 'enterprise' AND start_date BETWEEN '2023-07-01' AND '2025-02-01' AND plan IN ('basic', 'standard', 'premium') GROUP BY customer_id, end_quarter;

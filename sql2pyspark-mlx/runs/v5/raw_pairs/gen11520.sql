@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, log_ts, level, key, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) li AS key, attr_value) SELECT id, log_ts, key, CASE WHEN key RLIKE '^(region|version)$' THEN 'GROUP_B' ELSE 'CORE' END AS key_zone FROM flattened;

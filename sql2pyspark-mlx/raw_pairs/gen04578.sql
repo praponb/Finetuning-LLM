@@ -1,0 +1,1 @@
+SELECT id, host, log_ts, level, status_code, payload_json, context, COALESCE(context['region'], 'direct') AS region_or_default, COALESCE(context['trace'], 'unknown') AS trace_or_default, context['region'] AS region, COALESCE(context['version'], 'unknown') AS version_or_default FROM app_logs

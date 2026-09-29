@@ -1,0 +1,1 @@
+SELECT started_at, customer_id, device, CASE WHEN device = 'desktop' THEN 1 ELSE 0 END AS is_desktop FROM sessions WHERE device = 'mobile' AND (customer_id IS NULL OR country = 'UK') ORDER BY started_at;

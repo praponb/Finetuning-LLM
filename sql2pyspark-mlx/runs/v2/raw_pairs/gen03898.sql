@@ -1,0 +1,1 @@
+SELECT level, COUNT(DISTINCT salary) AS unique_job_titles, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees GROUP BY 1

@@ -1,0 +1,1 @@
+SELECT id, device_code, reading_ts, temp_c, humidity, pressure, firmware FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY humidity NULLS FIRST, id) AS latest_rank FROM device_readings) t WHERE latest_rank = 1;

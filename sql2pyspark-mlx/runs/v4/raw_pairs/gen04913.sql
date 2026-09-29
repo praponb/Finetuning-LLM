@@ -1,0 +1,1 @@
+select d.id, d.dept_name, d.location, t.level_values, t.total_salary from departments d join (select dept_id, concat_ws(', ', sort_array(collect_set(level))) as level_values, sum(salary) as total_salary from employees where hire_date <= '2023-09-01' group by dept_id) t on d.id = t.dept_id where t.total_salary > 758000;

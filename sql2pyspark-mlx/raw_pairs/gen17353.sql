@@ -1,0 +1,1 @@
+SELECT DISTINCT city FROM suppliers ORDER BY city DESC

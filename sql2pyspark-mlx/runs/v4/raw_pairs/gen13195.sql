@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(ss.id) AS store_sale_count, COUNT(ss.units) AS units_count FROM products p LEFT JOIN store_sales ss ON ss.product_id = p.id WHERE p.category NOT IN ('Grocery', 'Fashion', 'Electronics') GROUP BY p.category ORDER BY store_sale_count DESC, units_count DESC, category LIMIT 1;

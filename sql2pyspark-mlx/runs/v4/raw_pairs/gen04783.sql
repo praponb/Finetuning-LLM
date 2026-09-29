@@ -1,0 +1,1 @@
+select manager_id, date_trunc('quarter', hire_date) as quarter_start, max(salary) filter (where job_title = 'Intern') as intern_max_salary, count(*) filter (where job_title = 'Engineer') as engineer_rows, round(avg(salary), 2) as avg_salary from employees group by grouping sets ((manager_id, date_trunc('quarter', hire_date)), (manager_id), ()) order by intern_max_salary desc;

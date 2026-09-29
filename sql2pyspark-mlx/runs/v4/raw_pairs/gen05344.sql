@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name AS employee_full_name, e.salary AS employee_salary, e.is_remote AS employee_is_remote, m.email AS manager_email, CAST(m.is_remote AS INT) AS is_remote_flag FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id;

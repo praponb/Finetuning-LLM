@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT id, status, order_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY order_date DESC, id) AS rn FROM orders WHERE channel = 'web') SELECT * FROM Numbered WHERE rn <= 5 ORDER BY id DESC

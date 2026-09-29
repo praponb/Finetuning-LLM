@@ -1,0 +1,1 @@
+WITH RecentCustomers AS (SELECT * FROM customers WHERE name LIKE 'Ivy%'), summary AS (SELECT MONTH(signup_date) AS signup_month, ROUND(AVG(credit_limit), 2) AS avg_credit_limit FROM RecentCustomers GROUP BY MONTH(signup_date)) SELECT * FROM summary;

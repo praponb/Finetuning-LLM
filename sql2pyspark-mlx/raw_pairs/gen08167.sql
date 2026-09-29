@@ -1,0 +1,1 @@
+SELECT event_type, SUM(duration_sec) AS total_duration_sec, MAX(duration_sec) AS max_duration_sec FROM web_events GROUP BY event_type HAVING MAX(duration_sec) >= 340 ORDER BY 3 DESC, event_type LIMIT 20;

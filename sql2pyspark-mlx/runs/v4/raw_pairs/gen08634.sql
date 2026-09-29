@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.product_id, s.region, s.store_name, s.city, DATE_FORMAT(s.opened_date, 'yyyy-MM-dd') AS opened_date_label FROM inventory i JOIN stores s ON i.store_id = s.id WHERE s.sqft >= 14595 ORDER BY id, i.product_id DESC LIMIT 10;

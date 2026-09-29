@@ -1,0 +1,1 @@
+SELECT page, SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) AS search_duration_sec, COUNT(*) AS web_event_count FROM web_events WHERE HOUR(event_time) BETWEEN 11 AND 15 AND page = '/checkout' GROUP BY page

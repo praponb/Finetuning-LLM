@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, COUNT(*) AS row_count FROM web_events WHERE session_id IN (8, 17, 23, 24) GROUP BY session_id) SELECT s.customer_id, ss.row_count FROM sessions s LEFT OUTER JOIN session_summary ss ON s.id = ss.session_id WHERE ss.row_count > 5 ORDER BY row_count

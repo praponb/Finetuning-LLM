@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MAX(balance) AS max_balance FROM accounts GROUP BY customer_id) SELECT c.id, c.age, cs.max_balance FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY age DESC

@@ -1,0 +1,1 @@
+with Base as (select *, length(product_name) product_name_length from products where lower(trim(product_name)) = 'usb-c hub'), agg as (select brand, sort_array(collect_set(category)) category_list, count(case when category = 'Home' then 1 end) home_count from Base group by brand) select brand, category_list, home_count from agg

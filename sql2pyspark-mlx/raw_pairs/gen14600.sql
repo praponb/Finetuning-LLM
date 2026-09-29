@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, COALESCE(cost, 0) AS cost_filled, COALESCE(carrier, 'NONE') AS carrier_filled FROM shipments WHERE carrier IS NOT NULL) SELECT id, order_id FROM valid INTERSECT SELECT id, order_id FROM shipments WHERE cost > 89;

@@ -1,0 +1,1 @@
+with not_flagged as (select s.* from products s where not exists (select 1 from store_sales ch where ch.product_id = s.id and ch.revenue < 3400)) select id, category, brand, price, cost, launch_date, tags from not_flagged order by category nulls last, id desc

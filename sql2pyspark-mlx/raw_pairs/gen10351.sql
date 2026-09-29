@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, UPPER(dept_name) AS dept_name_upper FROM departments WHERE location IS NOT NULL AND location IS DISTINCT FROM 'Bangkok') SELECT id, dept_name_upper FROM filtered QUALIFY ROW_NUMBER() OVER (PARTITION BY location, dept_name ORDER BY budget NULLS FIRST, id) = 1

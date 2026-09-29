@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, COUNT(DISTINCT unit_price) AS unique_orders FROM order_items WHERE quantity != 7 GROUP BY order_id) SELECT o.id, o.amount, o.status, os.unique_orders FROM orders o JOIN order_stats os ON o.id = os.order_id;

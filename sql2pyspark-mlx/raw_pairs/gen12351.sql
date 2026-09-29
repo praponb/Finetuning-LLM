@@ -1,0 +1,1 @@
+SELECT stores.region, stores.city, AVG(store_sales.revenue) AS avg_revenue FROM store_sales JOIN products ON products.id = store_sales.product_id FULL OUTER JOIN stores ON stores.id = store_sales.store_id GROUP BY stores.region, stores.city ORDER BY city, region LIMIT 50;

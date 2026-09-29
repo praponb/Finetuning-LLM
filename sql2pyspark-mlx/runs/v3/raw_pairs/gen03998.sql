@@ -1,0 +1,1 @@
+SELECT p.id, p.cost, p.category, p.launch_date, s.city, CASE WHEN s.rating >= 4.6 THEN 'High' WHEN s.rating >= 2.3 THEN 'Medium' ELSE 'Low' END AS rating_level FROM products p RIGHT JOIN suppliers s ON p.supplier_id = s.id WHERE s.country <> 'JP' ORDER BY cost DESC, id DESC;

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', shipped_date) AS shipped_month, status, carrier, MIN(shipped_date) AS min_shipped_date, MAX(delivered_date) AS latest_delivered_date FROM shipments WHERE order_id IN (22, 24) GROUP BY shipped_month, status, carrier;

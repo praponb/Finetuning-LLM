@@ -1,0 +1,1 @@
+SELECT we.event_time, s.customer_id, s.device, s.browser, CASE WHEN s.browser = 'Edge' THEN 1 ELSE 0 END AS is_edge FROM web_events we JOIN sessions s ON we.session_id = s.id WHERE s.device <> 'desktop' OR we.event_time < '2023-06-01'

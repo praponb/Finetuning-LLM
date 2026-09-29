@@ -1,0 +1,1 @@
+select dim.status, src.txn_type, count(*) as num_rows, min(src.amount) as min_amount, grouping_id() as level_id from transactions src join accounts dim on src.account_id = dim.id group by grouping sets ((dim.status, src.txn_type), (dim.status)) order by txn_type desc nulls first;

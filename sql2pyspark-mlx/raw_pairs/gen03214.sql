@@ -1,0 +1,1 @@
+with web_events_by_session as (select session_id, avg(duration_sec) as avg_duration_sec from web_events group by session_id) select sessions.id, sessions.browser, web_events_by_session.avg_duration_sec from sessions inner join web_events_by_session on sessions.id = web_events_by_session.session_id order by sessions.id desc

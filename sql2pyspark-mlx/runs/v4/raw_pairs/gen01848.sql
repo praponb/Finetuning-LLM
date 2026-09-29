@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, order_id, product_id, quantity, unit_price, GREATEST(quantity, unit_price) AS greatest_quantity_unit_price FROM order_items WHERE product_id IN (3, 12, 15, 23)) SELECT product_id, id FROM valid INTERSECT SELECT product_id, id FROM order_items WHERE product_id IN (7, 10, 26)

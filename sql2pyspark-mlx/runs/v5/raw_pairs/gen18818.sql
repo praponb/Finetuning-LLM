@@ -1,0 +1,1 @@
+SELECT *, LAST_VALUE(quantity) IGNORE NULLS OVER (PARTITION BY store_id ORDER BY last_restock ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) last_known_quantity, CUME_DIST() OVER (PARTITION BY product_id ORDER BY quantity DESC NULLS FIRST) quantity_cume_dist, CUME_DIST() OVER (ORDER BY quantity DESC) quantity_cume_dist_2 FROM inventory

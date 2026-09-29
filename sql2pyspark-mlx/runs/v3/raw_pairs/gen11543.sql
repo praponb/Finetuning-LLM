@@ -1,0 +1,1 @@
+select orders.id, orders.store_id, customers.signup_date, customers.segment, stores.city from orders join customers on orders.customer_id = customers.id join stores on orders.store_id = stores.id where orders.shipping_fee <= 24;

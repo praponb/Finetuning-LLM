@@ -1,0 +1,1 @@
+WITH session_totals AS (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, COUNT(duration_sec) AS duration_sec_count FROM web_events GROUP BY session_id) SELECT s.country, s.browser, st.event_type_values, st.duration_sec_count FROM sessions s JOIN session_totals st ON s.id = st.session_id ORDER BY st.event_type_values

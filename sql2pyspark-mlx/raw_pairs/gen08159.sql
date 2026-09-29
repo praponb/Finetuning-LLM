@@ -1,0 +1,1 @@
+select d.id, d.dept_name, count(e.id) as employee_count, concat_ws(', ', sort_array(collect_set(e.job_title))) as job_title_values from departments d join employees e on d.id = e.dept_id group by d.id, d.dept_name order by employee_count;

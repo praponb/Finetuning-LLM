@@ -1,0 +1,1 @@
+SELECT device_code, COUNT(*) AS cnt, SUM(pressure) AS total_pressure, ROUND(SUM(temp_c) / NULLIF(COUNT(CASE WHEN device_code = 'DV-04' THEN 1 END), 0), 2) AS temp_c_per_dv_04 FROM device_readings GROUP BY 1 HAVING total_pressure > 0;

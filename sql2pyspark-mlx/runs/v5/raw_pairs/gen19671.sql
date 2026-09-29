@@ -1,0 +1,1 @@
+SELECT id, plan, monthly_fee, start_date FROM (SELECT id, plan, monthly_fee, start_date, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY monthly_fee DESC, id) AS pos FROM subscriptions WHERE monthly_fee BETWEEN 120 AND 140) AS t WHERE pos <= 5 ORDER BY start_date;

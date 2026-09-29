@@ -1,0 +1,1 @@
+SELECT plan, cancelled_monthly_fee, plan_list FROM (SELECT plan, SUM(CASE WHEN status = 'CANCELLED' THEN monthly_fee ELSE 0 END) AS cancelled_monthly_fee, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list FROM subscriptions WHERE end_date < '2025-10-01' GROUP BY plan) AS t WHERE cancelled_monthly_fee > 55;

@@ -1,0 +1,1 @@
+select a.id, a.status, a.account_type, a.opened_date from accounts a where a.opened_date between '2025-02-17' and '2025-09-01' and a.id in (select account_id from transactions where merchant in ('Starbucks', 'Grab', '7-Eleven')) order by opened_date desc

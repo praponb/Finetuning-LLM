@@ -1,0 +1,1 @@
+select id, service, log_ts, level, context, size(context) as num_context, coalesce(context['version'], 'unknown') as version_or_default, coalesce(context['region'], 'none') as region_or_default, get_json_object(payload_json, '$.user.tier') as user_tier from app_logs;

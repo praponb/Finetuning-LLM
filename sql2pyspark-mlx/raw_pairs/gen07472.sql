@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(i.quantity) quantity_count, MAX(i.quantity) - MIN(i.quantity) quantity_range FROM inventory i LEFT OUTER JOIN products p ON p.id = i.product_id LEFT OUTER JOIN stores s ON i.store_id = s.id WHERE s.opened_date BETWEEN '2023-03-16' AND '2025-08-01' GROUP BY p.category ORDER BY quantity_range DESC

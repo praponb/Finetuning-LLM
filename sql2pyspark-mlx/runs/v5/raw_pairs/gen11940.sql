@@ -1,0 +1,1 @@
+SELECT product_id, AVG(quantity) AS avg_quantity, SUM(unit_price * quantity) AS revenue FROM order_items WHERE order_id IN (8, 28, 34) GROUP BY product_id HAVING COUNT(DISTINCT unit_price) > 3 ORDER BY avg_quantity;

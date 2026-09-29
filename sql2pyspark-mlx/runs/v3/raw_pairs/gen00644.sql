@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, MAX(i.quantity) - MIN(i.quantity) AS quantity_range, MIN(i.last_restock) AS first_last_restock FROM inventory i RIGHT JOIN stores s ON i.store_id = s.id GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM');

@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, age FROM (SELECT *, RANK() OVER (PARTITION BY segment ORDER BY signup_date) AS rn FROM customers WHERE age >= 55) AS r WHERE rn <= 1 ORDER BY age DESC, signup_date DESC

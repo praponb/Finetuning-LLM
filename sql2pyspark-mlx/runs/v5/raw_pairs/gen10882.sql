@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, session_id, page, event_time, ROUND(duration_sec, 0) AS duration_sec_rounded FROM web_events WHERE event_time >= DATE '2023-08-24' AND page = '/search') SELECT * FROM (SELECT session_id, page, duration_sec_rounded FROM valid) src PIVOT (SUM(duration_sec_rounded) AS total FOR page IN ('/search' AS search, '/home' AS home, '/checkout' AS checkout));

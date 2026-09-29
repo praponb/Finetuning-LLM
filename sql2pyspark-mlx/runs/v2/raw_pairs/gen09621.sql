@@ -1,0 +1,1 @@
+select s.customer_id, count(*) as total_count, min(we.event_time) as min_event_time from web_events we join sessions s on we.session_id = s.id where s.country in ('DE', 'SG', 'UK') group by s.customer_id order by total_count desc

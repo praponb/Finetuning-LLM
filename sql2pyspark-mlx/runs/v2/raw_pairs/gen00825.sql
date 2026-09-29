@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, COUNT(DISTINCT revenue) AS unique_products FROM store_sales WHERE sale_date <= '2023-10-20' GROUP BY store_id) SELECT s.id, s.opened_date, ss.unique_products FROM stores s JOIN store_summary ss ON s.id = ss.store_id WHERE ss.unique_products >= 9;

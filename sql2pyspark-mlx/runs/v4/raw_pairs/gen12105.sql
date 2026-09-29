@@ -1,0 +1,1 @@
+SELECT brand, SUM(stock_qty) AS total_stock_qty, COUNT(*) AS cnt, DENSE_RANK() OVER (ORDER BY SUM(stock_qty) DESC) AS rnk FROM products GROUP BY brand ORDER BY total_stock_qty DESC, rnk DESC, brand LIMIT 50;

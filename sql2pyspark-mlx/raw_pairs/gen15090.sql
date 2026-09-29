@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, SUBSTRING(channel, 1, 4) AS channel_prefix, LENGTH(promo_code) AS promo_code_length FROM promotions WHERE ends_on > TO_DATE('2023-11-02')) SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY promo_code_length DESC, id) AS rn FROM valid QUALIFY rn = 1

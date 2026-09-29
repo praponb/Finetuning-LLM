@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN amount >= 1530 THEN 'high' WHEN amount >= 710 THEN 'mid' ELSE 'low' END AS amount_bucket, AVG(amount) AS avg_amount FROM payments GROUP BY CASE WHEN amount >= 1530 THEN 'high' WHEN amount >= 710 THEN 'mid' ELSE 'low' END) AS sub WHERE avg_amount < 440 ORDER BY avg_amount DESC, amount_bucket ASC LIMIT 5;

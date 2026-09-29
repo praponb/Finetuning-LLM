@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CONCAT_WS('/', city, segment) AS city_segment_key FROM customers WHERE signup_date > DATE '2023-07-03') SELECT s.* FROM filtered s WHERE NOT EXISTS (SELECT 1 FROM subscriptions c WHERE c.customer_id = s.id AND c.end_date < s.signup_date);

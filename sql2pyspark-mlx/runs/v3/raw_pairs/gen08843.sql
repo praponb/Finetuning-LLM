@@ -1,0 +1,1 @@
+select d.id, d.budget, d.location, t.latest_hire_date from departments d left join (select dept_id, max(hire_date) latest_hire_date from employees where is_remote group by dept_id) t on d.id = t.dept_id;

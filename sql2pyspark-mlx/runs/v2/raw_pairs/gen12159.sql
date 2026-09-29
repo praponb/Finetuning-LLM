@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.browser, sessions.customer_id, sessions.device FROM sessions WHERE sessions.device = 'desktop' AND NOT EXISTS (SELECT 1 FROM web_events WHERE web_events.session_id = sessions.id) ORDER BY 4, customer_id DESC

@@ -1,0 +1,1 @@
+SELECT status, COUNT(*) FILTER (WHERE channel = 'web') AS web_rows, SUM(discount) AS total_discount, ROUND(AVG(discount), 2) AS avg_discount, SUM(CASE WHEN channel = 'partner' THEN discount ELSE 0 END) AS partner_discount FROM orders GROUP BY 1 ORDER BY web_rows DESC;

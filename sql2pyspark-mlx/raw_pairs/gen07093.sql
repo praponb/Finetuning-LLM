@@ -1,0 +1,1 @@
+select s.city, count(i.id) as inventory_count, round(stddev(i.quantity), 2) as stddev_quantity from stores s left join inventory i on s.id = i.store_id where i.product_id in (1, 5, 6, 9) group by s.city having round(stddev(i.quantity), 2) >= 33 order by inventory_count desc

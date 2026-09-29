@@ -1,0 +1,1 @@
+SELECT product_id, MIN(sale_date) AS first_sale_date, AVG(units) AS avg_units FROM store_sales WHERE product_id IN (1, 4, 6) OR revenue > 3300 GROUP BY product_id HAVING AVG(units) >= 26 ORDER BY avg_units

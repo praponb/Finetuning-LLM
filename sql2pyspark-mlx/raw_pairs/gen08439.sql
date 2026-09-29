@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, a.customer_id FROM accounts a WHERE a.customer_id IS NULL AND EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND t.txn_type IN ('CREDIT', 'DEBIT', 'REFUND')) ORDER BY a.id DESC;

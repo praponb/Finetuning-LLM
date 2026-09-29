@@ -1,0 +1,1 @@
+with exploded as (select id, created_at, key, attr_value from carts lateral view explode(attributes) e as key, attr_value) select key, date_trunc('day', created_at) as activity_day, count(distinct id) as distinct_ids, sort_array(collect_set(key)) as key_list, min(created_at) as first_seen from exploded group by key, date_trunc('day', created_at) order by key nulls first

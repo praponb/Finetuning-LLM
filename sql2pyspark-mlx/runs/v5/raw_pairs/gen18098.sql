@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, ROUND((100 * SUM(CASE WHEN job_title = 'Director' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_director, MIN(hire_date) first_hire_date FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.budget, dt.pct_director, dt.first_hire_date FROM departments d LEFT JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.pct_director >= 60;

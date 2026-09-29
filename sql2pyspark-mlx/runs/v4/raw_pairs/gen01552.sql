@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, created_at, key, attr_value FROM carts LATERAL VIEW OUTER EXPLODE(attributes) x AS key, attr_value) SELECT created_at, key, attr_value FROM exploded ORDER BY created_at DESC, key DESC

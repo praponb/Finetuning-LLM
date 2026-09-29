@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, txn_type, amount, merchant, is_flagged, FLOOR(amount) AS amount_whole FROM transactions WHERE TO_DATE(txn_time) < '2024-11-01') SELECT txn_type, id FROM base INTERSECT SELECT txn_type, id FROM transactions WHERE merchant = 'Amazon'

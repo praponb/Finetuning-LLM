@@ -1,0 +1,1 @@
+SELECT c.segment, COUNT(CASE WHEN s.browser = 'Chrome' THEN 1 END) chrome_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.device))) device_values FROM sessions s LEFT JOIN customers c ON s.customer_id = c.id WHERE c.name LIKE '%Gar%' GROUP BY c.segment ORDER BY device_values DESC;

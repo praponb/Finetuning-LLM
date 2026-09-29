@@ -1,0 +1,1 @@
+SELECT job_title, YEAR(hire_date) AS hire_year, MIN(salary) AS min_salary, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees GROUP BY job_title, YEAR(hire_date) ORDER BY 3 DESC, job_title_values;

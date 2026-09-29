@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.store_id, p.launch_date, s.region, s.store_name, CONCAT_WS('-', p.brand, p.category) AS brand_category_key FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id LEFT JOIN stores s ON ss.store_id = s.id

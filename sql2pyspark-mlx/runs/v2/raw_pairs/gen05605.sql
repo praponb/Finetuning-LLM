@@ -1,0 +1,1 @@
+SELECT account_id, pct_fee, txn_type_values FROM (SELECT account_id, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions WHERE txn_type = 'CREDIT' GROUP BY account_id) AS agg WHERE pct_fee >= 46

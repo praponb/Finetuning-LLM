@@ -1,0 +1,1 @@
+SELECT CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(dept_name))) AS dept_name_values, ROUND(AVG(budget), 2) AS avg_budget FROM departments WHERE location NOT IN ('Chiang Mai', 'London') AND budget >= 3408000 ORDER BY dept_name_values DESC;

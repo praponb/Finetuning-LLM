@@ -1,0 +1,1 @@
+WITH with_latest AS (SELECT s.*, latest.delivered_date, latest.shipment_cost FROM orders s LEFT JOIN LATERAL (SELECT c.delivered_date, c.cost AS shipment_cost FROM shipments c WHERE c.order_id = s.id ORDER BY c.cost DESC, c.id DESC LIMIT 1) latest ON TRUE) SELECT id, order_date, status, channel, amount, discount, shipping_fee, delivered_date, shipment_cost FROM with_latest

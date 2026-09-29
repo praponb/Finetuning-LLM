@@ -1,0 +1,4 @@
+SELECT DISTINCT status
+FROM accounts
+ORDER BY status DESC
+LIMIT 10;

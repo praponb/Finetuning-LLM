@@ -1,0 +1,1 @@
+SELECT SUM(CASE WHEN plan = 'basic' THEN 1 ELSE 0 END) AS basic_count, SUM(CASE WHEN status = 'PAUSED' THEN 1 ELSE 0 END) AS paused_count FROM subscriptions WHERE plan = 'standard' ORDER BY basic_count, paused_count

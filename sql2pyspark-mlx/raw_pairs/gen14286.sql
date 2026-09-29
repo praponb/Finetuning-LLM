@@ -1,0 +1,1 @@
+SELECT o.id, COUNT(s.id) AS shipment_count, COUNT(s.cost) AS cost_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.carrier))) AS carrier_values FROM orders o LEFT JOIN shipments s ON s.order_id = o.id GROUP BY o.id ORDER BY shipment_count DESC, o.id DESC;

@@ -1,0 +1,1 @@
+SELECT s.region, COUNT(CASE WHEN p.method = 'paypal' THEN 1 END) AS paypal_count FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id GROUP BY s.region HAVING COUNT(CASE WHEN p.method = 'paypal' THEN 1 END) >= 3 ORDER BY s.region

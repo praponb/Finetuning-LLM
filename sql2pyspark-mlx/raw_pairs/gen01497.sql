@@ -1,0 +1,1 @@
+SELECT transactions.account_id, transactions.merchant, transactions.is_flagged, accounts.status, accounts.opened_date, accounts.account_type FROM transactions LEFT OUTER JOIN accounts ON accounts.id = transactions.account_id;

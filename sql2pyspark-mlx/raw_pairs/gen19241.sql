@@ -1,0 +1,1 @@
+SELECT manager_id, email, DATEDIFF(CURRENT_DATE(), hire_date) AS days_since_hire_date, LAST_DAY(hire_date) AS hire_date_month_end FROM employees WHERE level IN ('L1', 'L3', 'L2') AND full_name LIKE 'Pi%'

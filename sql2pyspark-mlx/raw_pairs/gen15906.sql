@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, EXPLODE_OUTER(tier_limits) AS val FROM price_tiers) SELECT plan, COUNT(*) FILTER (WHERE plan = 'enterprise') AS enterprise_rows, ROUND(SUM(val) / NULLIF(COUNT(CASE WHEN plan = 'starter' THEN 1 END), 0), 2) AS val_per_starter, SUM(val) AS total_val FROM lines GROUP BY plan

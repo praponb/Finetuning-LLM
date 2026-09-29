@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY cost, id) AS latest_rank FROM products) x WHERE latest_rank = 1) SELECT id, product_name, category, price, cost, stock_qty, tags, supplier_id, latest_rank FROM deduped ORDER BY id NULLS LAST;

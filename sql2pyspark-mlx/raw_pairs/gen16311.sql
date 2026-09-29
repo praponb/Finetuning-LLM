@@ -1,0 +1,1 @@
+WITH session_totals AS (SELECT session_id, SUM(CASE WHEN event_type = 'search' THEN duration_sec ELSE 0 END) AS search_duration_sec, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.browser, st.search_duration_sec, st.avg_duration_sec FROM sessions s JOIN session_totals st ON s.id = st.session_id ORDER BY browser;

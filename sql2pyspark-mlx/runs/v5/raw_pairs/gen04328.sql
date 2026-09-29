@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, ROUND((100 * SUM(CASE WHEN country = 'UK' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_uk FROM customers WHERE is_active GROUP BY DATE_TRUNC('MONTH', signup_date)) AS agg WHERE pct_uk < 28;

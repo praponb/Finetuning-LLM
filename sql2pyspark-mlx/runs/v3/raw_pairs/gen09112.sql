@@ -1,0 +1,1 @@
+select case when revenue >= 3500 then 'high' when revenue >= 700 then 'mid' else 'low' end as revenue_bucket, max(units) as max_units from store_sales where product_id in (1, 5, 6, 10) and (units is not null or revenue between 1600 and 3800) group by case when revenue >= 3500 then 'high' when revenue >= 700 then 'mid' else 'low' end

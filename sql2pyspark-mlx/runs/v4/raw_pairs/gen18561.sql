@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, c.is_active, SORT_ARRAY(COLLECT_SET(s.country)) AS country_list FROM sessions s LEFT JOIN customers c ON s.customer_id = c.id WHERE s.customer_id IN (35, 38) GROUP BY MONTH(c.signup_date), c.is_active ORDER BY signup_month DESC

@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, MIN(duration_sec) AS min_duration_sec, MIN(event_time) AS first_event_time FROM web_events GROUP BY session_id) SELECT s.device, ss.min_duration_sec, ss.first_event_time FROM sessions s LEFT JOIN session_stats ss ON s.id = ss.session_id WHERE ss.min_duration_sec > 240 ORDER BY first_event_time

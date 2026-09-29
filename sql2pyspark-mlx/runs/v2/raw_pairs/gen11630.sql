@@ -1,0 +1,1 @@
+SELECT i.store_id, p.category, p.launch_date, s.country, s.city FROM inventory i LEFT OUTER JOIN products p ON i.product_id = p.id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.country = 'UK' ORDER BY country DESC;

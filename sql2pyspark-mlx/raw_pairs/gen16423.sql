@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, element FROM price_tiers LATERAL VIEW EXPLODE(tier_prices) li AS element) SELECT id, plan, element, AVG(element) OVER (PARTITION BY plan) AS plan_avg_element FROM lines;

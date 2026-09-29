@@ -1,0 +1,1 @@
+SELECT order_id, unique_orders FROM (SELECT order_id, COUNT(DISTINCT quantity) AS unique_orders FROM order_items WHERE product_id IN (34, 38) GROUP BY order_id) AS sub WHERE unique_orders >= 8 ORDER BY unique_orders DESC

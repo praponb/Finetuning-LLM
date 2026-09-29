@@ -1,0 +1,1 @@
+SELECT location, MAX(budget) AS max_budget, MAX(budget) - MIN(budget) AS budget_range FROM departments WHERE dept_name = 'Finance' AND budget >= 1218000 AND budget >= 1932000 GROUP BY location HAVING MAX(budget) >= 2182000 ORDER BY location DESC;

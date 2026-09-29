@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(DISTINCT rating) AS unique_citys FROM suppliers WHERE rating <= 3.6 GROUP BY CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END) AS t WHERE unique_citys < 8 ORDER BY unique_citys DESC, rating_bucket LIMIT 10;

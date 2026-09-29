@@ -1,0 +1,1 @@
+select date_trunc('quarter', txn_time) as quarter_start, max(txn_time) as last_seen, min(txn_time) as started_at, avg(amount) filter (where merchant = 'Shell') as shell_avg_amount, grouping_id() as gid from transactions group by rollup (date_trunc('quarter', txn_time));

@@ -1,0 +1,1 @@
+SELECT id, device_code, temp_c, humidity, pressure, status_bits, firmware FROM (SELECT *, RANK() OVER (PARTITION BY device_code ORDER BY status_bits DESC) AS rank_in_group FROM device_readings) t WHERE rank_in_group = 1;

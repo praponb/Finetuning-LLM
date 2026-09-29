@@ -1,0 +1,1 @@
+SELECT suppliers.supplier_name, t.min_launch_date, t.category_values FROM suppliers LEFT OUTER JOIN (SELECT supplier_id, MIN(launch_date) AS min_launch_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values FROM products WHERE brand IN ('Globex', 'Stark') GROUP BY supplier_id) t ON suppliers.id = t.supplier_id;

@@ -1,0 +1,1 @@
+SELECT p.supplier_id, ROUND(AVG(oi.quantity), 2) AS avg_quantity, COUNT(DISTINCT oi.quantity) AS unique_orders FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id RIGHT JOIN products p ON oi.product_id = p.id WHERE o.shipping_fee <= 24 GROUP BY p.supplier_id;

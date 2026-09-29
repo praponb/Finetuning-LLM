@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CASE WHEN city IN ('London', 'Tokyo') THEN 'Tier 1' ELSE 'Other' END AS city_group FROM suppliers WHERE city IN ('Bangkok', 'New York') AND rating >= 1.9 AND rating <= 3.3), CitySummary AS (SELECT city, COUNT(*) AS cnt FROM base GROUP BY city) SELECT * FROM CitySummary WHERE cnt > 8 ORDER BY cnt DESC, city LIMIT 5

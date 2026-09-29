@@ -1,0 +1,1 @@
+SELECT shipments.delivered_date, shipments.shipped_date, orders.discount, customers.email FROM shipments INNER JOIN orders ON shipments.order_id = orders.id LEFT JOIN customers ON orders.customer_id = customers.id WHERE customers.name LIKE 'D%' OR orders.order_date BETWEEN '2024-01-02' AND '2025-05-01' ORDER BY discount

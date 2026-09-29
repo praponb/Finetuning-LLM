@@ -1,0 +1,1 @@
+SELECT id, log_ts, level, payload_json, ARRAY_CONTAINS(MAP_KEYS(context), 'region') AS has_region, COALESCE(context['region'], 'direct') AS region_or_default, COALESCE(context['version'], 'unknown') AS version_or_default, context['version'] AS version, context['region'] AS region FROM app_logs

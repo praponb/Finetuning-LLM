@@ -1,0 +1,1 @@
+select id, account_type, opened_date, status, sum(balance) over w_hist as running_sum_balance, avg(balance) over w_hist as running_avg_balance, min(balance) over w_hist as running_min_balance from accounts where status is not null window w_hist as (partition by status, customer_id order by opened_date, id rows between unbounded preceding and current row)

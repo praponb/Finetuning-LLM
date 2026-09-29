@@ -1,0 +1,1 @@
+select i.id, i.store_id, i.last_restock, p.price, s.country, s.city from inventory i join products p on i.product_id = p.id join suppliers s on s.id = p.supplier_id where p.category = 'Grocery' or year(i.last_restock) >= 2025 order by p.price desc, id limit 1

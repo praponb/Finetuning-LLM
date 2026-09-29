@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1560 THEN 'high' WHEN amount >= 240 THEN 'mid' ELSE 'low' END AS amount_bucket, MIN(paid_at) AS first_paid_at FROM payments WHERE amount > 990 GROUP BY 1 ORDER BY first_paid_at;

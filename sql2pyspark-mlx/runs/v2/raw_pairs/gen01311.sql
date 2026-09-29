@@ -1,0 +1,1 @@
+SELECT s.browser, t.latest_event_time FROM sessions s INNER JOIN (SELECT session_id, MAX(event_time) latest_event_time FROM web_events WHERE HOUR(event_time) BETWEEN 11 AND 18 GROUP BY session_id) t ON s.id = t.session_id

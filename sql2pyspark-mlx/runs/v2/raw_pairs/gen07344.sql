@@ -1,0 +1,1 @@
+select s.customer_id, c.age, c.credit_limit from sessions s inner join customers c on c.id = s.customer_id where s.device = 'tablet' and c.segment not in ('Consumer', 'Corporate', 'SMB') order by c.age desc;

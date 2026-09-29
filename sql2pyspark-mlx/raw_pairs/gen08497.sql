@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LENGTH(browser) AS browser_length FROM sessions WHERE started_at >= TIMESTAMP '2023-04-27 17:00:00') SELECT browser, customer_id FROM base EXCEPT DISTINCT SELECT browser, customer_id FROM sessions WHERE browser IN ('Firefox', 'Edge', 'Safari');

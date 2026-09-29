@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 730 THEN 'PREMIUM' ELSE 'STANDARD' END AS cost_tier, category, PERCENTILE_APPROX(stock_qty, ARRAY(0.25, 0.5, 0.75)) AS stock_qty_quartiles, SUM(CASE WHEN category = 'Electronics' THEN price ELSE 0 END) AS electronics_price, SIZE(COLLECT_SET(category)) AS num_categories FROM products GROUP BY 1, 2 ORDER BY electronics_price DESC NULLS FIRST;

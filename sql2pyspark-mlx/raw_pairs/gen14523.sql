@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(ss.units) AS units_count, AVG(ss.units) AS avg_units FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id GROUP BY p.category;

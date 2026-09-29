@@ -1,0 +1,1 @@
+SELECT a.*, pr.id AS promo_id, pr.promo_code AS promotion_promo_code, pr.discount_pct AS promotion_discount_pct FROM promotions a JOIN promotions pr ON COALESCE(a.channel, 'store') = pr.channel AND a.starts_on >= pr.starts_on AND a.starts_on < pr.ends_on + INTERVAL 30 DAYS

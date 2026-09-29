@@ -1,0 +1,1 @@
+SELECT emp.id, emp.hire_date AS employee_hire_date, emp.full_name AS employee_full_name, mgr.is_remote AS manager_is_remote FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.dept_id = 24 AND LOWER(emp.full_name) LIKE '%lic%' ORDER BY employee_full_name DESC;

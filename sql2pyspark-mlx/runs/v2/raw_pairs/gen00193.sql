@@ -1,0 +1,1 @@
+SELECT CASE WHEN d.budget >= 3444000 THEN 'high' WHEN d.budget >= 1809000 THEN 'mid' ELSE 'low' END AS budget_bucket, d.location, COUNT(*) AS row_count FROM employees e RIGHT OUTER JOIN departments d ON e.dept_id = d.id GROUP BY CASE WHEN d.budget >= 3444000 THEN 'high' WHEN d.budget >= 1809000 THEN 'mid' ELSE 'low' END, d.location ORDER BY row_count DESC

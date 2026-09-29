@@ -1,0 +1,1 @@
+SELECT inventory.product_id, inventory.last_restock, inventory.quantity, stores.region, stores.store_name FROM inventory JOIN stores ON inventory.store_id = stores.id WHERE stores.city = 'Tokyo' ORDER BY product_id DESC

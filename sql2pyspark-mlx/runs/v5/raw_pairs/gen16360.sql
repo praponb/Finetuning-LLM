@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, region, COUNT(sqft) AS sqft_count, MAX(sqft) - MIN(sqft) AS sqft_range FROM stores GROUP BY DATE_TRUNC('MONTH', opened_date), region HAVING COUNT(sqft) < 3

@@ -1,0 +1,1 @@
+SELECT id, category, launch_date, DENSE_RANK() OVER (PARTITION BY category ORDER BY launch_date) AS launch_date_dense_rank FROM products WHERE stock_qty IS NULL ORDER BY category, launch_date_dense_rank;

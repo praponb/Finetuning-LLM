@@ -1,0 +1,1 @@
+select id, full_name, manager_id, salary, hire_date, sum(salary) over (partition by job_title, level order by salary, id rows between unbounded preceding and current row) as running_salary, row_number() over (partition by level order by salary, id) as row_seq from employees;

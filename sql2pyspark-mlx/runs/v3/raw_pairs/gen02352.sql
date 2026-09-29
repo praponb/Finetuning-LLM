@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM products WHERE cost BETWEEN 380 AND 390), supplier_id_summary AS (SELECT supplier_id, AVG(stock_qty) AS avg_stock_qty, MIN(stock_qty) AS min_stock_qty FROM src GROUP BY supplier_id) SELECT supplier_id, avg_stock_qty, min_stock_qty FROM supplier_id_summary WHERE avg_stock_qty > 170;

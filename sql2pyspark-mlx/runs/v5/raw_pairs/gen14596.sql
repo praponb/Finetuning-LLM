@@ -1,0 +1,1 @@
+select id, status, sum(balance) over w_part as last7_sum_balance, min(balance) over w_part as last7_min_balance, avg(balance) over w_part as last7_avg_balance, count(balance) over w_part as last7_count_balance from accounts window w_part as (partition by account_type, customer_id order by opened_date, id rows between 6 preceding and current row)

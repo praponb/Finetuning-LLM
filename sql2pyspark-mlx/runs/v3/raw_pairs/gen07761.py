@@ -1,0 +1,16 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_order_items.alias("oi")
+    .join(df_orders.alias("o"), F.col("oi.order_id") == F.col("o.id"), "inner")
+    .join(df_stores.alias("s"), F.col("o.store_id") == F.col("s.id"), "right")
+    .filter(F.col("s.region") != "North")
+    .select(
+        F.col("oi.id"),
+        F.col("oi.unit_price"),
+        F.col("o.store_id"),
+        F.col("s.city"),
+        F.col("s.store_name"),
+    )
+    .orderBy(F.col("id").desc(), "city")
+)

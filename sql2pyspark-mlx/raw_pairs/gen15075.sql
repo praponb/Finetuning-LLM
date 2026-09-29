@@ -1,0 +1,1 @@
+SELECT id, shipped_date, order_id, status, carrier, COUNT(*) OVER (PARTITION BY DATE_TRUNC('YEAR', shipped_date), order_id) AS shipped_date_period_count, ROW_NUMBER() OVER (PARTITION BY status, carrier ORDER BY shipped_date DESC, id) AS row_num FROM shipments;

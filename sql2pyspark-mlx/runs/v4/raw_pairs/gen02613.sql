@@ -1,0 +1,1 @@
+select date_trunc('MONTH', products.launch_date) launch_month, count(distinct inventory.quantity) unique_stores from inventory left join products on inventory.product_id = products.id left join stores on stores.id = inventory.store_id where products.stock_qty >= 136 group by date_trunc('MONTH', products.launch_date) order by launch_month desc

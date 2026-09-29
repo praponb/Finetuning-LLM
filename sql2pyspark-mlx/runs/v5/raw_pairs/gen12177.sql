@@ -1,0 +1,1 @@
+SELECT id, customer_id, coupon_codes, items, ship_to, SIZE(FILTER(items, i -> i.qty >= 3)) AS bulk_lines, attributes['gift'] AS gift, COALESCE(attributes['device'], 'unknown') AS device_or_default FROM carts WHERE customer_id IS NULL;

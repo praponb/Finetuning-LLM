@@ -1,0 +1,1 @@
+SELECT id, session_id, page, event_time, duration_sec, NTILE(4) OVER w_ordered AS duration_sec_bucket, AVG(duration_sec) OVER w_hist AS duration_sec_avg_6_prior FROM web_events WINDOW w_ordered AS (ORDER BY duration_sec ASC, id ASC), w_hist AS (PARTITION BY page, session_id ORDER BY event_time ASC, id ASC ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING);

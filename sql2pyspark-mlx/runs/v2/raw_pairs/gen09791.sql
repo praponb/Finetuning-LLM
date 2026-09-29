@@ -1,0 +1,1 @@
+SELECT c.id, c.city, COUNT(s.id) subscription_count, MIN(s.monthly_fee) min_monthly_fee, SUM(s.monthly_fee) total_monthly_fee FROM customers c JOIN subscriptions s ON c.id = s.customer_id GROUP BY c.id, c.city HAVING COUNT(s.id) > 4 ORDER BY total_monthly_fee DESC

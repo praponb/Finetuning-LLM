@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', o.order_date) AS order_month, AVG(oi.quantity) AS avg_quantity, COUNT(*) AS cnt FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id WHERE oi.order_id IN (14, 15, 17, 39) GROUP BY DATE_TRUNC('MONTH', o.order_date) ORDER BY order_month ASC;

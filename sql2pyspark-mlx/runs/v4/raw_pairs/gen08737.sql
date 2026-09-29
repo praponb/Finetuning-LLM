@@ -1,0 +1,1 @@
+SELECT s.region, t.latest_order_date, t.stddev_discount FROM stores s INNER JOIN (SELECT store_id, MAX(order_date) AS latest_order_date, ROUND(STDDEV(discount), 2) AS stddev_discount FROM orders GROUP BY store_id) t ON s.id = t.store_id WHERE t.stddev_discount >= 39;

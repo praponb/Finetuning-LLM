@@ -1,0 +1,1 @@
+SELECT s.country, t.brand_list, t.last_launch_date FROM suppliers s INNER JOIN (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list, MAX(launch_date) AS last_launch_date FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id;

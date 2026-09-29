@@ -1,0 +1,1 @@
+SELECT status, MONTH(opened_date) opened_month, SORT_ARRAY(COLLECT_SET(account_type)) account_type_list FROM accounts WHERE (customer_id = 19 AND account_type IN ('CHECKING', 'SAVINGS', 'CREDIT')) OR status IN ('OPEN', 'FROZEN', 'CLOSED') GROUP BY status, MONTH(opened_date)

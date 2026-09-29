@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, AVG(o.shipping_fee) AS avg_shipping_fee, ROUND(STDDEV(o.amount), 2) AS stddev_amount FROM orders o FULL OUTER JOIN stores s ON o.store_id = s.id LEFT OUTER JOIN customers c ON o.customer_id = c.id WHERE o.customer_id IS NOT NULL GROUP BY MONTH(c.signup_date) HAVING AVG(o.shipping_fee) > 35 ORDER BY signup_month DESC LIMIT 10

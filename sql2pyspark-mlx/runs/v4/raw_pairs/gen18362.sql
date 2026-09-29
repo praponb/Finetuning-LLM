@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, SUM(CASE WHEN status = 'ACTIVE' THEN 1 ELSE 0 END) AS active_count, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions WHERE NOT (plan NOT IN ('enterprise', 'basic', 'premium') AND monthly_fee < 80) GROUP BY DATE_FORMAT(end_date, 'yyyy-MM');

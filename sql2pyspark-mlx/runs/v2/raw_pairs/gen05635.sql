@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, customer_id, MAX(balance) - MIN(balance) AS balance_range FROM accounts WHERE status IN ('CLOSED', 'OPEN', 'FROZEN') AND YEAR(opened_date) >= 2025 AND customer_id IN (5, 20, 22, 35) GROUP BY opened_quarter, customer_id HAVING MAX(balance) - MIN(balance) >= 75;

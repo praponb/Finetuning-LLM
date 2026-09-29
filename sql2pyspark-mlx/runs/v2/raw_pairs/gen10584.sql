@@ -1,0 +1,1 @@
+with valid_subscriptions as (select * from subscriptions where status <> 'CANCELLED'), summary as (select plan, quarter(start_date) as start_quarter, count(distinct monthly_fee) as unique_statuss from valid_subscriptions group by plan, quarter(start_date)) select plan, start_quarter from summary order by plan desc, start_quarter limit 1

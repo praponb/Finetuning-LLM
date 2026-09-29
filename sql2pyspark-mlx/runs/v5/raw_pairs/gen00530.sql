@@ -1,0 +1,1 @@
+SELECT o.status, COUNT(s.id) shipment_count, MIN(s.cost) min_cost, AVG(s.cost) avg_cost FROM orders o LEFT JOIN shipments s ON s.order_id = o.id WHERE o.customer_id IN (17, 21, 28, 38) GROUP BY o.status HAVING avg_cost >= 48 ORDER BY min_cost ASC

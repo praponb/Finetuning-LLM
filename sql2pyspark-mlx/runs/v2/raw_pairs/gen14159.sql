@@ -1,0 +1,1 @@
+select sale_month, total_units from (select date_trunc('MONTH', sale_date) sale_month, sum(units) total_units from store_sales where product_id in (7, 9) group by date_trunc('MONTH', sale_date)) agg where total_units >= 140 order by sale_month limit 1

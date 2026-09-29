@@ -1,0 +1,1 @@
+SELECT region, CASE WHEN sqft >= 15057 THEN 'HIGH' ELSE 'LOW' END AS sqft_tier, PERCENTILE_APPROX(sqft, 0.9) AS sqft_p90, STDDEV_SAMP(sqft) AS sqft_stddev, GROUPING(region) AS gid FROM stores GROUP BY ROLLUP (region, CASE WHEN sqft >= 15057 THEN 'HIGH' ELSE 'LOW' END) ORDER BY sqft_stddev NULLS LAST

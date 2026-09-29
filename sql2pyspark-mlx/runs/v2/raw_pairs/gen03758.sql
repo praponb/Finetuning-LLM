@@ -1,0 +1,1 @@
+SELECT CASE WHEN a.balance >= 85000 THEN 'high' WHEN a.balance >= 17000 THEN 'mid' ELSE 'low' END balance_bucket, MAX(t.amount) max_amount FROM transactions t JOIN accounts a ON t.account_id = a.id WHERE t.is_flagged = TRUE GROUP BY CASE WHEN a.balance >= 85000 THEN 'high' WHEN a.balance >= 17000 THEN 'mid' ELSE 'low' END ORDER BY max_amount DESC

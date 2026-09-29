@@ -1,0 +1,1 @@
+SELECT id, account_id, amount, txn_time FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount, id) pos FROM transactions WHERE txn_type = 'FEE') r WHERE pos <= 2 ORDER BY account_id DESC

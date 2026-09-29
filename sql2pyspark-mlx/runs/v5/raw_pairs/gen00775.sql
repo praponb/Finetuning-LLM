@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.page, web_events.session_id, web_events.duration_sec, sessions.started_at, CASE WHEN web_events.event_type IN ('search', 'page_view') THEN 'Tier 1' ELSE 'Other' END AS event_type_group FROM web_events INNER JOIN sessions ON web_events.session_id = sessions.id;

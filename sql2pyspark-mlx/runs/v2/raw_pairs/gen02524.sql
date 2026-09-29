@@ -1,0 +1,1 @@
+with orders_by_store as (select store_id, avg(amount) as avg_amount from orders group by store_id) select s.opened_date, s.region, obs.avg_amount from stores s left join orders_by_store obs on s.id = obs.store_id where obs.avg_amount >= 1430

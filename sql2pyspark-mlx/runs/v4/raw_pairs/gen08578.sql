@@ -1,0 +1,1 @@
+with base as (select *, pressure * status_bits as pressure_times_status_bits from device_readings where status_bits <= 9) select *, min(pressure) over (partition by device_code) as device_code_min_pressure, row_number() over (order by status_bits desc, id) as event_seq from base;

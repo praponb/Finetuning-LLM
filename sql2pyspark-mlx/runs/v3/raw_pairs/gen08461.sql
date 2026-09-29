@@ -1,0 +1,1 @@
+with customer_stats as (select customer_id, count(distinct monthly_fee) as unique_customers from subscriptions group by customer_id) select customers.id, customers.is_active, customer_stats.unique_customers from customers left join customer_stats on customers.id = customer_stats.customer_id;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(signup_date) AS signup_month, is_active, MAX(signup_date) AS last_signup_date, SUM(CASE WHEN segment = 'Consumer' THEN credit_limit ELSE 0 END) AS consumer_credit_limit FROM customers GROUP BY MONTH(signup_date), is_active) AS agg WHERE consumer_credit_limit < 36;

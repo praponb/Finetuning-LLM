@@ -1,0 +1,1 @@
+SELECT c.id, c.is_active, c.country, t.active_count, t.status_list FROM customers c JOIN (SELECT customer_id, COUNT(CASE WHEN status = 'ACTIVE' THEN 1 END) AS active_count, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM subscriptions GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY c.country DESC

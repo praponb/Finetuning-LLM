@@ -1,0 +1,1 @@
+select s.id, count(p.id) as product_count, avg(p.price) as avg_price, concat_ws(', ', sort_array(collect_set(p.category))) as category_values from suppliers s inner join products p on s.id = p.supplier_id where s.supplier_name like '%Pac%' group by s.id having count(p.id) > 2;

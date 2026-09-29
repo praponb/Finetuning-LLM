@@ -1,0 +1,1 @@
+select payments.id, payments.order_id, payments.status, payments.amount from payments where payments.order_id not in (select id from orders where status not in ('PENDING', 'SHIPPED', 'CANCELLED')) order by status;

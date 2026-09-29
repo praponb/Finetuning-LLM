@@ -1,0 +1,6 @@
+SELECT id AS qty
+FROM tickets
+INTERSECT
+SELECT id
+FROM tickets
+ORDER BY qty DESC

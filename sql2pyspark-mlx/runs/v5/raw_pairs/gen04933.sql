@@ -1,0 +1,1 @@
+with latest as (select * from (select *, rank() over (partition by dept_name order by budget) as row_num from departments) t where row_num = 1) select id, dept_name, budget, row_num from latest order by row_num desc;

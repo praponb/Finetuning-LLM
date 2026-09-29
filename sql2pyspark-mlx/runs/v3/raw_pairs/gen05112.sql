@@ -1,0 +1,1 @@
+SELECT channel, CASE WHEN status IN ('PENDING', 'RETURNED') THEN 'core' ELSE 'other' END AS status_group, COUNT(discount) AS discount_count, MAX(discount) AS max_discount, COUNT(*) AS cnt FROM orders WHERE customer_id IN (18, 21) OR order_date <= '2024-11-01' GROUP BY channel, status_group ORDER BY cnt DESC;

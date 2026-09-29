@@ -1,0 +1,1 @@
+SELECT merchant, SUM(CASE WHEN merchant = 'Starbucks' THEN amount ELSE 0 END) AS starbucks_amount FROM transactions WHERE is_flagged = FALSE GROUP BY merchant ORDER BY starbucks_amount DESC, merchant DESC LIMIT 3;

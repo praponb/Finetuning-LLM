@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CASE WHEN rating >= 4.2 THEN 'High' WHEN rating >= 1.9 THEN 'Medium' ELSE 'Low' END AS rating_band FROM suppliers WHERE city IN ('New York', 'Tokyo', 'Chiang Mai')) SELECT * FROM (SELECT country, city, rating FROM cleaned) src PIVOT (AVG(rating) FOR city IN ('New York' AS new_york, 'Berlin' AS berlin));

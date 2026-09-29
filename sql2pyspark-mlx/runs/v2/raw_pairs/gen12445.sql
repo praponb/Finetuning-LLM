@@ -1,0 +1,1 @@
+SELECT id, status, opened_date, CEIL(balance) balance_whole, CONCAT_WS(',', account_type, status) account_type_status_key FROM accounts WHERE customer_id = 30 AND balance < 42000 AND balance >= 26000;

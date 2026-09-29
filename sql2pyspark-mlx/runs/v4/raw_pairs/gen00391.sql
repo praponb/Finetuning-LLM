@@ -1,0 +1,1 @@
+with filtered as (select id, channel, starts_on, ends_on, discount_pct, date_format(starts_on, 'yyyy-MM') as starts_on_label from promotions where starts_on < '2023-09-01') select e.*, pr.id as promo_id, pr.promo_code, pr.discount_pct as promotion_discount_pct from filtered e left join promotions pr on e.channel = pr.channel and e.ends_on between pr.starts_on and pr.ends_on

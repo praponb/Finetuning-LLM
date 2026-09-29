@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, host, log_ts, k, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) li AS k, attr_value) SELECT id, host, log_ts, k, FIRST_VALUE(k) IGNORE NULLS OVER (PARTITION BY host, service ORDER BY log_ts, id, k ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_k FROM exploded WHERE service IN ('checkout', 'search', 'billing')

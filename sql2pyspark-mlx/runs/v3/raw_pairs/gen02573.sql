@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MAX(sale_date) latest_sale_date FROM store_sales GROUP BY product_id) SELECT p.id, p.brand, p.category, pt.latest_sale_date FROM products p LEFT JOIN product_totals pt ON p.id = pt.product_id

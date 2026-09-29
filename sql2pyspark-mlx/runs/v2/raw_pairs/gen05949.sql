@@ -1,0 +1,1 @@
+select * from (select case when sqft >= 17063 then 'high' when sqft >= 5933 then 'mid' else 'low' end as sqft_bucket, round(avg(sqft), 2) as avg_sqft, count(distinct sqft) as unique_citys from stores group by case when sqft >= 17063 then 'high' when sqft >= 5933 then 'mid' else 'low' end) as x where unique_citys >= 9 order by 2 desc;

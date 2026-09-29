@@ -1,0 +1,1 @@
+SELECT id, customer_id, started_at, country FROM (SELECT id, customer_id, started_at, country, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) rnk FROM sessions WHERE device IN ('tablet', 'desktop')) t WHERE rnk <= 3

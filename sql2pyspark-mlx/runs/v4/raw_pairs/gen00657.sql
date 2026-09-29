@@ -1,0 +1,1 @@
+with src as (select * from shipments where carrier != 'FedEx' and order_id is not null), shipments_stats as (select status, concat_ws(', ', sort_array(collect_set(carrier))) as carrier_values, count(cost) as cost_count from src group by status) select status, cost_count from shipments_stats;

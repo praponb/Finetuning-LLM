@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, DENSE_RANK() OVER (PARTITION BY account_type ORDER BY opened_date DESC) AS pos FROM accounts WHERE account_type IN ('CREDIT', 'SAVINGS', 'LOAN')) SELECT id, account_type, opened_date, customer_id FROM numbered WHERE pos <= 3 ORDER BY opened_date, id

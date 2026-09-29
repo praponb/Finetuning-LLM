@@ -1,0 +1,1 @@
+WITH StoreSummary AS (SELECT store_id, AVG(revenue) AS avg_revenue, MIN(revenue) AS min_revenue FROM store_sales WHERE store_id IN (1, 2) GROUP BY store_id) SELECT s.city, s.sqft, S.avg_revenue, S.min_revenue FROM stores s INNER JOIN StoreSummary S ON s.id = S.store_id WHERE S.min_revenue > 2300

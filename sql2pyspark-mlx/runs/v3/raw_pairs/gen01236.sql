@@ -1,0 +1,1 @@
+SELECT is_active, CASE WHEN age >= 70 THEN 'high' WHEN age >= 38 THEN 'mid' ELSE 'low' END AS age_bucket, SUM(credit_limit) AS total_credit_limit FROM customers GROUP BY is_active, CASE WHEN age >= 70 THEN 'high' WHEN age >= 38 THEN 'mid' ELSE 'low' END HAVING SUM(CASE WHEN country = 'JP' THEN 1 ELSE 0 END) > 20

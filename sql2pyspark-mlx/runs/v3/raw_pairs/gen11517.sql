@@ -1,0 +1,1 @@
+SELECT e.id, e.level AS employee_level, m.manager_id AS manager_manager_id FROM employees AS e LEFT JOIN employees AS m ON e.manager_id = m.id WHERE LOWER(m.email) LIKE '%iam%' OR e.job_title IN ('Analyst', 'Engineer', 'Designer')

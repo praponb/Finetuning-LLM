@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CAST(temp_c AS INT) temp_c_int FROM device_readings WHERE reading_ts >= DATE '2025-09-01') SELECT * FROM (SELECT firmware, device_code, temp_c FROM cleaned) src PIVOT (MAX(temp_c) AS value_sum FOR device_code IN ('DV-03' AS dv_03, 'DV-01' AS dv_01));

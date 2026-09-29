@@ -1,0 +1,1 @@
+WITH filtered_orders AS (SELECT * FROM orders WHERE status = 'COMPLETED'), order_month_summary AS (SELECT DATE_TRUNC('MONTH', order_date) order_month, customer_id, SUM(discount) total_discount FROM filtered_orders GROUP BY DATE_TRUNC('MONTH', order_date), customer_id) SELECT * FROM order_month_summary WHERE total_discount < 2.4;

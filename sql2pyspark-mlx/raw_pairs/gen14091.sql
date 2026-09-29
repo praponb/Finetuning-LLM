@@ -1,0 +1,1 @@
+with order_summary as (select order_id, round(stddev(amount), 2) as stddev_amount, count(distinct amount) as unique_orders from payments group by order_id) select o.order_date, os.stddev_amount, os.unique_orders from orders o left outer join order_summary os on o.id = os.order_id where os.unique_orders > 8 order by o.order_date;

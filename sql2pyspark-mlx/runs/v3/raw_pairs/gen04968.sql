@@ -1,0 +1,1 @@
+SELECT status, SUM(monthly_fee) AS total_monthly_fee, COUNT(*) AS cnt, SUM(SUM(monthly_fee)) OVER (ORDER BY status) AS cumulative_monthly_fee FROM subscriptions WHERE MONTH(start_date) IN (1, 10, 11) GROUP BY status ORDER BY cumulative_monthly_fee DESC;

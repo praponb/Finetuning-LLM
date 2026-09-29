@@ -1,0 +1,1 @@
+SELECT QUARTER(last_restock) last_restock_quarter, ROUND(AVG(quantity), 2) avg_quantity, MAX(quantity) - MIN(quantity) quantity_range, ROUND(STDDEV(quantity), 2) stddev_quantity FROM inventory GROUP BY last_restock_quarter ORDER BY quantity_range;

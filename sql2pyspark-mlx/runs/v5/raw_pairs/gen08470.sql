@@ -1,0 +1,1 @@
+SELECT city FROM customers WHERE signup_date BETWEEN '2023-10-06' AND '2024-03-01' UNION SELECT city FROM stores ORDER BY city DESC

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, c.city, MAX(s.monthly_fee) AS max_monthly_fee FROM subscriptions s LEFT JOIN customers c ON s.customer_id = c.id WHERE YEAR(s.end_date) >= 2024 GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM'), c.city ORDER BY signup_month, max_monthly_fee DESC, city LIMIT 3;

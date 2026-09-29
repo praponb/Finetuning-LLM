@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, coupon_codes, pos + 1 AS position, elem.product_id, elem.qty, elem.price FROM carts LATERAL VIEW POSEXPLODE(items) t AS pos, elem) SELECT id, customer_id, coupon_codes, position, product_id, price FROM exploded ORDER BY price;

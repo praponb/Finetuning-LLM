@@ -1,0 +1,1 @@
+SELECT status, plan, ROUND((100 * SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_premium, AVG(monthly_fee) avg_monthly_fee, MAX(monthly_fee) max_monthly_fee FROM subscriptions GROUP BY status, plan ORDER BY avg_monthly_fee ASC, plan DESC;

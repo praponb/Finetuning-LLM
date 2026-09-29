@@ -1,0 +1,1 @@
+SELECT CASE WHEN carrier IN ('DHL', 'FedEx') THEN 'core' ELSE 'other' END AS carrier_group, status, ROUND(STDDEV(cost), 2) AS stddev_cost, SUM(cost) AS total_cost FROM shipments WHERE shipped_date BETWEEN '2024-05-01' AND '2025-05-01' GROUP BY CASE WHEN carrier IN ('DHL', 'FedEx') THEN 'core' ELSE 'other' END, status;

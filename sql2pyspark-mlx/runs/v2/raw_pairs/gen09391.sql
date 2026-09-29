@@ -1,0 +1,1 @@
+SELECT d.location, COUNT(e.id) AS employee_count, SORT_ARRAY(COLLECT_SET(e.job_title)) AS job_title_list FROM departments d LEFT JOIN employees e ON e.dept_id = d.id GROUP BY d.location ORDER BY location ASC;

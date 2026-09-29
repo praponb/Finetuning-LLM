@@ -1,0 +1,1 @@
+SELECT CASE WHEN d.budget >= 3129000 THEN 'high' WHEN d.budget >= 668000 THEN 'mid' ELSE 'low' END AS budget_bucket, ROUND(AVG(e.salary), 2) AS avg_salary, MAX(e.salary) - MIN(e.salary) AS salary_range FROM employees e RIGHT JOIN departments d ON e.dept_id = d.id GROUP BY CASE WHEN d.budget >= 3129000 THEN 'high' WHEN d.budget >= 668000 THEN 'mid' ELSE 'low' END;

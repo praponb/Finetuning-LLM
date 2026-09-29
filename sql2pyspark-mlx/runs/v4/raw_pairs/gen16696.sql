@@ -1,0 +1,1 @@
+SELECT *, MAX(balance) OVER (PARTITION BY status, account_type) AS status_max_balance, SUM(balance) OVER (PARTITION BY customer_id) AS customer_id_sum_balance, FIRST_VALUE(balance) IGNORE NULLS OVER (PARTITION BY customer_id ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_balance FROM accounts;

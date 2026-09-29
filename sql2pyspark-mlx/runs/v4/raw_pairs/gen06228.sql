@@ -1,0 +1,1 @@
+SELECT QUARTER(signup_date) AS signup_quarter, SUM(CASE WHEN segment = 'Corporate' THEN 1 ELSE 0 END) AS corporate_count FROM customers GROUP BY 1 HAVING SUM(CASE WHEN segment = 'Corporate' THEN 1 ELSE 0 END) < 32

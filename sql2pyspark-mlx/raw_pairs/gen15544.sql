@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, AVG(unit_price) AS avg_unit_price FROM order_items GROUP BY product_id) AS sub WHERE avg_unit_price < 140 ORDER BY avg_unit_price, product_id LIMIT 20

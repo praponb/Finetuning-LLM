@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY order_id) SELECT o.id, o.amount, o.order_date, os.unit_price_range FROM orders o JOIN order_stats os ON o.id = os.order_id WHERE os.unit_price_range > 28 ORDER BY 3;

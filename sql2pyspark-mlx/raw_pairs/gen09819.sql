@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, MAX(amount) - MIN(amount) amount_range FROM transactions WHERE NOT is_flagged GROUP BY account_id) SELECT a.id, a.opened_date, a.account_type, tba.amount_range FROM accounts a LEFT JOIN transactions_by_account tba ON a.id = tba.account_id;

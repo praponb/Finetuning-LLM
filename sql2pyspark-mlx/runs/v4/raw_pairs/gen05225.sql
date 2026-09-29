@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, AVG(unit_price) AS avg_unit_price FROM order_items WHERE unit_price < 190 AND product_id IN (16, 20, 29) AND order_id = 37 GROUP BY product_id, quantity_bucket ORDER BY quantity_bucket DESC, product_id

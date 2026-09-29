@@ -1,0 +1,1 @@
+WITH recent_suppliers AS (SELECT * FROM suppliers WHERE city = 'Singapore'), country_summary AS (SELECT country, COUNT(rating) AS rating_count, ROUND(AVG(rating), 2) AS avg_rating FROM recent_suppliers GROUP BY country) SELECT country, rating_count, avg_rating FROM country_summary ORDER BY avg_rating DESC, country ASC;

@@ -1,0 +1,1 @@
+select orders.status, sum(case when payments.status = 'REFUNDED' then payments.amount else 0 end) as refunded_amount from payments inner join orders on payments.order_id = orders.id where orders.shipping_fee < 25 group by orders.status order by refunded_amount, status limit 3

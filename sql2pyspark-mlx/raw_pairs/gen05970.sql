@@ -1,0 +1,1 @@
+SELECT segment, country, ROUND((100 * SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_new_york, ROUND(AVG(age), 2) avg_age, COUNT(CASE WHEN segment = 'Corporate' THEN 1 END) corporate_count FROM customers WHERE name IS NOT NULL GROUP BY segment, country HAVING pct_new_york < 46;

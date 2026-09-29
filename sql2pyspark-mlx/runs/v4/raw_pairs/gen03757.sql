@@ -1,0 +1,1 @@
+WITH Base AS (SELECT *, COALESCE(budget, 0) AS budget_filled FROM departments WHERE budget < 2906000 AND location IN ('Tokyo', 'Singapore')), agg AS (SELECT location, dept_name, COUNT(CASE WHEN location = 'New York' THEN 1 END) AS new_york_count FROM Base GROUP BY location, dept_name) SELECT * FROM agg

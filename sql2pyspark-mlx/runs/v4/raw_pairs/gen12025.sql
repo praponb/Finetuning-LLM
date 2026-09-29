@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, UPPER(country) AS country_upper FROM customers WHERE signup_date < '2024-03-01') SELECT * FROM cleaned QUALIFY ROW_NUMBER() OVER (PARTITION BY city ORDER BY credit_limit, id) = 1

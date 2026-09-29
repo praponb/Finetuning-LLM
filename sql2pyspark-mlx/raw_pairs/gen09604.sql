@@ -1,0 +1,1 @@
+WITH orders_by_store AS (SELECT store_id, ROUND((100 * SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_store FROM orders GROUP BY store_id) SELECT s.store_name, obs.pct_store FROM stores s INNER JOIN orders_by_store obs ON s.id = obs.store_id

@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.txn_time, transactions.is_flagged, accounts.balance, accounts.account_type FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id WHERE NOT (transactions.txn_type = 'REFUND' AND accounts.balance < 74000);

@@ -1,0 +1,1 @@
+with order_summary as (select order_id, concat_ws(', ', sort_array(collect_set(carrier))) as carrier_values from shipments group by order_id) select o.id, o.channel, os.carrier_values from orders o inner join order_summary os on o.id = os.order_id order by os.carrier_values

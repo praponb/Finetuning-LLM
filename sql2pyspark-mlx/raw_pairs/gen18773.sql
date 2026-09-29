@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.balance, accounts.opened_date FROM accounts WHERE accounts.balance BETWEEN 65000 AND 73000 AND NOT EXISTS (SELECT 1 FROM transactions WHERE transactions.account_id = accounts.id AND transactions.is_flagged)

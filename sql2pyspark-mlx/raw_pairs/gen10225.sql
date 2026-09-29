@@ -1,0 +1,1 @@
+SELECT id, product_id, order_id, quantity, ROUND(quantity / SUM(quantity) OVER (PARTITION BY product_id, order_id), 3) quantity_share, COUNT(*) OVER (PARTITION BY product_id) product_id_count FROM order_items;

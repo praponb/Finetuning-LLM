@@ -1,0 +1,1 @@
+with session_totals as (select session_id, round(avg(duration_sec), 2) as avg_duration_sec from web_events where event_time >= '2024-10-01' group by session_id) select s.id, s.browser, st.avg_duration_sec from sessions s left join session_totals st on s.id = st.session_id where st.avg_duration_sec >= 20 order by avg_duration_sec asc

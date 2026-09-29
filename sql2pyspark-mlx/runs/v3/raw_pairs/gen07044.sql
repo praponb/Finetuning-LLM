@@ -1,0 +1,1 @@
+SELECT ss.units, ss.revenue, p.product_name, s.region, COALESCE(s.region, 'Unknown') AS region_filled FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN stores s ON s.id = ss.store_id

@@ -1,0 +1,1 @@
+WITH ValidPayments AS (SELECT * FROM payments WHERE order_id IS NOT NULL), Agg AS (SELECT status, SUM(CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END) AS bank_transfer_count, COUNT(CASE WHEN status = 'FAILED' THEN 1 END) AS failed_count FROM ValidPayments GROUP BY status) SELECT status, bank_transfer_count, failed_count FROM Agg ORDER BY status

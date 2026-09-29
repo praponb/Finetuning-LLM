@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM suppliers s WHERE NOT EXISTS (SELECT 1 FROM products x WHERE x.supplier_id = s.id AND x.cost < 410)) SELECT id, country, city, rating, CASE WHEN country RLIKE '^(UK|JP)$' THEN 'PRIORITY' WHEN country RLIKE '^(TH|US)$' THEN 'CORE' ELSE 'OTHER_ZONE' END AS country_zone FROM eligible ORDER BY country DESC NULLS FIRST;

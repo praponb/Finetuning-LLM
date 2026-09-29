@@ -1,0 +1,1 @@
+SELECT id, name, email, segment, signup_date, credit_limit, age, LAG(credit_limit, 1, 0) OVER (PARTITION BY segment ORDER BY age, id) AS prev_credit_limit, CORR(credit_limit, age) OVER (PARTITION BY city) AS corr_credit_limit_age FROM customers

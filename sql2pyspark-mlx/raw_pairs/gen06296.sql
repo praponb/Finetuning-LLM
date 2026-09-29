@@ -1,0 +1,1 @@
+SELECT id, customer_id, ship_to, EXISTS(coupon_codes, c -> c LIKE 'W%') AS has_welcome_code, ship_to.city AS ship_city, COALESCE(ship_to.country, 'UNKNOWN') AS country_or_unknown FROM carts WHERE customer_id IN (14, 20, 36);

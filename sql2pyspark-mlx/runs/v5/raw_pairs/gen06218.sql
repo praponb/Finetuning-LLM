@@ -1,0 +1,1 @@
+with cleaned as (select id, customer_id, device, browser, started_at, to_date(started_at) as started_at_date, coalesce(country, 'OTHER') as country_clean from sessions where browser is not null and started_at >= timestamp '2023-09-21 18:00:00') select * from cleaned qualify row_number() over (partition by customer_id, device order by started_at desc, id) = 1;

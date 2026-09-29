@@ -1,0 +1,1 @@
+select accounts.balance, accounts.status, accounts.opened_date, transactions.is_flagged from accounts inner join transactions on accounts.id = transactions.account_id where transactions.txn_type != 'REFUND'

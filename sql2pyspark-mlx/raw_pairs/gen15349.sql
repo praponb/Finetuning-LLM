@@ -1,0 +1,1 @@
+SELECT id, service, log_ts, level, latency_ms, payload_json, context, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').retries AS retry_count, COALESCE(context['version'], 'direct') AS version_or_default, context['version'] AS version FROM app_logs;

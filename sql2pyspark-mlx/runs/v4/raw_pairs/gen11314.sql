@@ -1,0 +1,1 @@
+SELECT status, plan, unique_customers, min_end_date FROM (SELECT status, plan, COUNT(DISTINCT monthly_fee) unique_customers, MIN(end_date) min_end_date FROM subscriptions GROUP BY status, plan) agg WHERE unique_customers > 8;

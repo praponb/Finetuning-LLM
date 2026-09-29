@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, host, log_ts, latency_ms, status_code, attr_key, value FROM app_logs LATERAL VIEW EXPLODE(context) t AS attr_key, value) SELECT id, service, attr_key, value, CASE WHEN attr_key RLIKE '^(version|region)$' THEN 'OTHER_ZONE' WHEN attr_key RLIKE '^(trace)$' THEN 'GROUP_A' ELSE 'CORE' END AS attr_key_zone FROM lines

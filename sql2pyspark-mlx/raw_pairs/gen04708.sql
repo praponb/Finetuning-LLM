@@ -1,0 +1,1 @@
+with session_stats as (select session_id, round(stddev(duration_sec), 2) stddev_duration_sec from web_events where session_id in (13, 18, 23, 26) group by session_id) select s.id, s.country, ss.stddev_duration_sec from sessions s join session_stats ss on s.id = ss.session_id where ss.stddev_duration_sec > 34 order by stddev_duration_sec desc

@@ -1,0 +1,1 @@
+SELECT opened_month, region, avg_sqft FROM (SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, region, AVG(sqft) AS avg_sqft FROM stores WHERE city IN ('Bangkok', 'Berlin') GROUP BY DATE_TRUNC('MONTH', opened_date), region) AS sub WHERE avg_sqft > 15200 ORDER BY opened_month DESC

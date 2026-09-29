@@ -1,0 +1,1 @@
+select o.channel, count(distinct oi.unit_price) as unique_products from order_items oi inner join products p on oi.product_id = p.id left join orders o on oi.order_id = o.id where p.supplier_id in (6, 16, 36) group by o.channel having count(distinct oi.unit_price) > 2;

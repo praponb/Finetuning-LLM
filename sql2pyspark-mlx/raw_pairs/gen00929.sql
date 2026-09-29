@@ -1,0 +1,1 @@
+select status, round((100 * sum(case when method = 'bank_transfer' then 1 else 0 end)) / count(*), 1) as pct_bank_transfer, round((100 * sum(case when method = 'promptpay' then 1 else 0 end)) / count(*), 1) as pct_promptpay from payments group by 1 order by status asc;

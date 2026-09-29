@@ -1,0 +1,1 @@
+SELECT id, method, paid_at, CASE WHEN status IN ('FAILED', 'REFUNDED') THEN 'Priority' ELSE 'Other' END AS status_group, DATE_TRUNC('year', paid_at) AS paid_at_period FROM payments WHERE status = 'SUCCESS' OR order_id IS NOT NULL ORDER BY paid_at;

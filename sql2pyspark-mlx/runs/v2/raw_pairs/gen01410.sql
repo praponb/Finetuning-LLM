@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) signup_year, SUM(p.amount) total_amount FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id RIGHT OUTER JOIN customers c ON o.customer_id = c.id GROUP BY YEAR(c.signup_date) ORDER BY total_amount DESC, signup_year LIMIT 10;

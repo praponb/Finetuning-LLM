@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(DISTINCT unit_price) AS unique_orders FROM order_items GROUP BY 1 HAVING unique_orders > 4;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, account_type, balance FROM accounts WHERE opened_date < '2024-08-19') PIVOT (COUNT(balance) FOR account_type IN ('CHECKING', 'LOAN', 'CREDIT', 'SAVINGS')) ORDER BY opened_month;

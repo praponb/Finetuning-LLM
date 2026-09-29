@@ -1,0 +1,1 @@
+WITH scored AS (SELECT id, channel, promo_code, starts_on, discount_pct, LAG(discount_pct) OVER w_grp AS prev_discount_pct, ROW_NUMBER() OVER w_grp AS row_seq FROM promotions WINDOW w_grp AS (PARTITION BY channel, promo_code ORDER BY discount_pct, id)) SELECT id, channel, promo_code, starts_on, discount_pct, row_seq FROM scored ORDER BY id LIMIT 10

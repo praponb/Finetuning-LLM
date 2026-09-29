@@ -1,0 +1,1 @@
+select id, city, rating, country, round(avg(rating) over (partition by city order by rating, id rows between 3 preceding and current row), 2) as rating_moving_avg_4, sum(rating) over (partition by city, country order by rating, id rows between unbounded preceding and current row) as running_rating from suppliers order by running_rating asc;

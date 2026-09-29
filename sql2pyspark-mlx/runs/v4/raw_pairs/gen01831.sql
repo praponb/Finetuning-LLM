@@ -1,0 +1,1 @@
+SELECT QUARTER(paid_at) AS paid_quarter, CASE WHEN amount >= 1230 THEN 'high' WHEN amount >= 700 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(*) AS row_count FROM payments GROUP BY QUARTER(paid_at), CASE WHEN amount >= 1230 THEN 'high' WHEN amount >= 700 THEN 'mid' ELSE 'low' END;

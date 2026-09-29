@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range FROM orders GROUP BY customer_id) SELECT c.id, c.is_active, c.email, cs.shipping_fee_range FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.shipping_fee_range > 61 ORDER BY id

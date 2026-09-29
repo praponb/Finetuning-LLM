@@ -1,0 +1,1 @@
+SELECT e.id, e.email AS employee_email, e.salary AS employee_salary, m.job_title AS manager_job_title, m.hire_date AS manager_hire_date FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.email LIKE '%@yahoo.com' ORDER BY employee_email;

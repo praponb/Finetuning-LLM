@@ -1,0 +1,1 @@
+select p.category, count(*) as num_rows, sum(a.quantity) as total_quantity, grouping_id() as grouping_level from inventory a join products p on a.product_id = p.id group by rollup (p.category) order by category desc nulls last

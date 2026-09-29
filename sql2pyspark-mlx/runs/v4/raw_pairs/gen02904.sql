@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('QUARTER', started_at) AS quarter_start, COUNT(*) FILTER (WHERE browser = 'Firefox') AS firefox_rows, MIN(started_at) AS started_at FROM sessions GROUP BY 1 ORDER BY firefox_rows DESC NULLS LAST

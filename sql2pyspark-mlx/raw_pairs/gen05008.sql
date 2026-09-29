@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(duration_sec, 0) AS duration_sec_rounded, ROUND(duration_sec, 2) AS duration_sec_rounded_2 FROM web_events WHERE event_type IN ('add_to_cart', 'click', 'purchase')) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time DESC, id ASC) AS rank_in_group FROM cleaned) ranked WHERE rank_in_group = 1;

@@ -1,0 +1,1 @@
+SELECT promo_code, COUNT(*) FILTER (WHERE channel = 'store') AS store_rows, PERCENTILE_APPROX(discount_pct, ARRAY(0.25, 0.5, 0.75)) AS discount_pct_quartiles FROM promotions GROUP BY promo_code ORDER BY promo_code DESC;

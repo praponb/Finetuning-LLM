@@ -1,0 +1,1 @@
+select * from (select case when balance >= 83000 then 'high' when balance >= 23000 then 'mid' else 'low' end as balance_bucket, account_type, balance from accounts) pivot (avg(balance) for account_type in ('CHECKING', 'SAVINGS', 'LOAN', 'CREDIT'));

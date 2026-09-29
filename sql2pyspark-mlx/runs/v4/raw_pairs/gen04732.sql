@@ -1,0 +1,1 @@
+with exploded as (select id, effective_from, explode_outer(discounts) as element from price_tiers) select *, cume_dist() over (order by element desc) as element_cume_dist, cume_dist() over (order by element) as element_cume_dist_2, dense_rank() over (order by element desc nulls last) as element_dense_rank from exploded

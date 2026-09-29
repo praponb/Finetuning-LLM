@@ -1,0 +1,1 @@
+SELECT channel, MAX(order_date) AS latest_order_date, SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END) AS mobile_count FROM orders GROUP BY channel HAVING AVG(shipping_fee) > 33 ORDER BY 2, channel LIMIT 3

@@ -1,0 +1,1 @@
+WITH SessionStats AS (SELECT session_id, ROUND((100 * SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_search, SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END) AS click_count FROM web_events GROUP BY session_id) SELECT s.id, s.country, s.browser, S.pct_search, S.click_count FROM sessions s JOIN SessionStats S ON s.id = S.session_id;

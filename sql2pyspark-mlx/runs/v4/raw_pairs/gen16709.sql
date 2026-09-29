@@ -1,0 +1,1 @@
+SELECT customer_id, ROUND(SUM(amount) / NULLIF(COUNT(CASE WHEN channel = 'web' THEN 1 END), 0), 2) AS amount_per_web, COUNT(*) FILTER (WHERE channel = 'mobile') AS mobile_rows, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders GROUP BY customer_id;

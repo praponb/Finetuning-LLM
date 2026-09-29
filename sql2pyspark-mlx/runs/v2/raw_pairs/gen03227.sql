@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(p.id) AS payment_count, AVG(p.amount) AS avg_amount, ROUND((100 * SUM(CASE WHEN p.method = 'card' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_card FROM orders o LEFT JOIN payments p ON p.order_id = o.id GROUP BY o.channel ORDER BY pct_card DESC;

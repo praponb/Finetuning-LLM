@@ -1,0 +1,1 @@
+SELECT id, order_id, product_id, quantity, unit_price, AVG(quantity) OVER (PARTITION BY product_id ORDER BY unit_price, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) quantity_avg_3, ROUND(quantity / SUM(quantity) OVER (PARTITION BY order_id), 4) quantity_share FROM order_items WHERE product_id IS NULL;

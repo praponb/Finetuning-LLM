@@ -1,0 +1,1 @@
+SELECT category, MONTH(launch_date) AS launch_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values, MAX(launch_date) AS latest_launch_date FROM products WHERE ARRAY_CONTAINS(tags, 'eco') GROUP BY category, MONTH(launch_date) ORDER BY launch_month DESC, category;

@@ -1,0 +1,1 @@
+SELECT c.id, c.email, c.signup_date, t.max_monthly_fee, t.min_end_date FROM customers c LEFT JOIN (SELECT customer_id, MAX(monthly_fee) max_monthly_fee, MIN(end_date) min_end_date FROM subscriptions WHERE status = 'ACTIVE' GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.max_monthly_fee > 70 ORDER BY min_end_date ASC

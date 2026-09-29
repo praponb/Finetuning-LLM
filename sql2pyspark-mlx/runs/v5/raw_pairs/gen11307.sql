@@ -1,0 +1,1 @@
+select order_id, round(stddev(unit_price), 2) as stddev_unit_price from order_items where product_id is null and (product_id is null or order_id in (21, 25, 28, 39)) group by order_id having stddev_unit_price < 51 order by order_id asc limit 5

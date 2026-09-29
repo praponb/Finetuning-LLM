@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, MAX(sale_date) latest_sale_date, MAX(units) max_units FROM store_sales WHERE MONTH(sale_date) IN (3, 8, 11) GROUP BY product_id) SELECT p.price, p.launch_date, ps.latest_sale_date, ps.max_units FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id;

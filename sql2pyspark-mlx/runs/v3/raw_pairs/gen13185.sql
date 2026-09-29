@@ -1,0 +1,1 @@
+SELECT orders.channel, MIN(shipments.cost) AS min_cost, MAX(shipments.cost) - MIN(shipments.cost) AS cost_range FROM shipments FULL OUTER JOIN orders ON shipments.order_id = orders.id WHERE orders.store_id IN (1, 2, 5) GROUP BY orders.channel HAVING MIN(shipments.cost) >= 66;

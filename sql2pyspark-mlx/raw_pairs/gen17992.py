@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_orders.alias("o")
+    .join(df_stores.alias("s"), F.col("o.store_id") == F.col("s.id"), "outer")
+    .groupBy(F.date_trunc("MONTH", F.col("s.opened_date")).alias("opened_month"))
+    .agg(
+        F.round(F.avg(F.col("o.amount")), 2).alias("avg_amount"),
+        F.count(F.when(F.col("o.status") == "RETURNED", 1)).alias("returned_count"),
+    )
+    .orderBy(F.col("returned_count").desc(), F.col("avg_amount").desc())
+)

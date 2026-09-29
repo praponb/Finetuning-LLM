@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CAST(balance AS INT) AS balance_int FROM accounts WHERE opened_date > DATE '2023-04-01' AND status IS NOT NULL) SELECT dim.segment, dim.city, e.account_type, COUNT(*) AS cnt, MAX(e.balance) AS max_balance FROM cleaned e INNER JOIN customers dim ON e.customer_id = dim.id GROUP BY dim.segment, dim.city, e.account_type;

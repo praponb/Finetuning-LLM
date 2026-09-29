@@ -1,0 +1,1 @@
+SELECT accounts.status, SORT_ARRAY(COLLECT_SET(transactions.txn_type)) AS txn_type_list, SUM(CASE WHEN transactions.txn_type = 'FEE' THEN 1 ELSE 0 END) AS fee_count FROM transactions LEFT JOIN accounts ON accounts.id = transactions.account_id WHERE transactions.merchant = 'Amazon' GROUP BY accounts.status;

@@ -1,0 +1,1 @@
+select event_type, max(duration_sec) as max_duration_sec, sort_array(collect_set(page)) as page_list from web_events where event_type = 'page_view' and duration_sec between 145 and 440 and event_time < '2024-07-31' group by event_type order by event_type desc, max_duration_sec;

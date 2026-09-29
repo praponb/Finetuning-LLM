@@ -1,0 +1,1 @@
+SELECT o.status, DATE_TRUNC('MONTH', o.order_date) AS order_month, ROUND((100 * SUM(CASE WHEN p.status = 'SUCCESS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_success, ROUND(AVG(p.amount), 2) AS avg_amount FROM payments p LEFT JOIN orders o ON o.id = p.order_id WHERE o.store_id IS NULL GROUP BY o.status, DATE_TRUNC('MONTH', o.order_date);

@@ -1,0 +1,1 @@
+WITH ranked_subscriptions AS (SELECT id, customer_id, start_date, end_date, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY start_date) AS rn FROM subscriptions) SELECT id, customer_id, start_date, end_date FROM ranked_subscriptions WHERE rn <= 3

@@ -1,0 +1,1 @@
+SELECT YEAR(launch_date) AS launch_year, ROUND(AVG(stock_qty), 2) AS avg_stock_qty, MAX(launch_date) AS last_launch_date, COUNT(price) AS price_count FROM products GROUP BY 1 ORDER BY last_launch_date ASC, launch_year ASC LIMIT 10;

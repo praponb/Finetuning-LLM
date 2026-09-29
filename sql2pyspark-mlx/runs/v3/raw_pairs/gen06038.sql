@@ -1,0 +1,1 @@
+SELECT QUARTER(signup_date) AS signup_quarter, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, COUNT(age) AS age_count FROM customers WHERE NOT (is_active = TRUE OR name LIKE '%Pim%') GROUP BY signup_quarter

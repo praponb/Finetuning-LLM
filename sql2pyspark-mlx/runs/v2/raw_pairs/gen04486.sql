@@ -1,0 +1,1 @@
+SELECT YEAR(delivered_date) AS delivered_year, SUM(cost) AS total_cost, COUNT(*) AS cnt, SUM(SUM(cost)) OVER (ORDER BY YEAR(delivered_date)) AS cumulative_cost FROM shipments GROUP BY YEAR(delivered_date);

@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, oi.quantity, o.channel, o.amount, c.country FROM order_items oi LEFT OUTER JOIN orders o ON oi.order_id = o.id JOIN customers c ON o.customer_id = c.id WHERE c.age >= 58 ORDER BY product_id DESC

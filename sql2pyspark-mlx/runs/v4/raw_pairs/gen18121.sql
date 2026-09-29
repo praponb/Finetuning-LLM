@@ -1,0 +1,1 @@
+with recent_customers as (select * from customers where country not in ('DE', 'SG', 'US') and credit_limit < 15700), customers_stats as (select city, count(age) as age_count, min(signup_date) as min_signup_date from recent_customers group by city) select city, age_count, min_signup_date from customers_stats where age_count >= 8

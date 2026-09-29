@@ -1,0 +1,1 @@
+SELECT id, product_name, category, brand, LAG(cost, 1) OVER w_recent AS prev_cost, ROUND(price / SUM(price) OVER (PARTITION BY brand), 4) AS price_share FROM products WINDOW w_recent AS (PARTITION BY supplier_id, category ORDER BY launch_date, id)

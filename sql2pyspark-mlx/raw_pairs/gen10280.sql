@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MIN(started_at) min_started_at, COUNT(*) num_sessions FROM sessions GROUP BY customer_id) SELECT c.country, cs.min_started_at, cs.num_sessions FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id

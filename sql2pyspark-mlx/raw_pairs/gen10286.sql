@@ -1,0 +1,1 @@
+WITH inventory_by_product AS (SELECT product_id, AVG(quantity) AS avg_quantity FROM inventory WHERE product_id = 6 GROUP BY product_id) SELECT p.id, p.supplier_id, p.launch_date, ibp.avg_quantity FROM products p LEFT JOIN inventory_by_product ibp ON p.id = ibp.product_id WHERE ibp.avg_quantity > 130 ORDER BY ibp.avg_quantity DESC;

@@ -1,0 +1,1 @@
+with store_summary as (select store_id, round(avg(revenue), 2) as avg_revenue, max(units) - min(units) as units_range from store_sales group by store_id) select s.id, s.sqft, ss.avg_revenue, ss.units_range from stores s left join store_summary ss on s.id = ss.store_id order by id desc;

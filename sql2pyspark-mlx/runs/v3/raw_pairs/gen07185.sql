@@ -1,0 +1,1 @@
+SELECT id, status, account_type, opened_date, balance, LEAD(balance, 2) OVER (PARTITION BY status, account_type ORDER BY opened_date, id) AS next_balance, ROW_NUMBER() OVER (ORDER BY opened_date, id) AS opened_date_row FROM accounts WHERE balance IS NOT NULL;

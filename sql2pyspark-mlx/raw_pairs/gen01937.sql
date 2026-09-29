@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT id, account_type FROM accounts EXCEPT DISTINCT SELECT id, account_type FROM accounts WHERE customer_id IS NULL), verified AS (SELECT s.* FROM accounts s INNER JOIN kept_keys k ON s.id = k.id AND s.account_type = k.account_type) SELECT customer_id, balance FROM verified ORDER BY balance ASC;

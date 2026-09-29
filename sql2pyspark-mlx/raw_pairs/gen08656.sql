@@ -1,0 +1,1 @@
+SELECT brand, CASE WHEN YEAR(launch_date) < 2024 THEN 'before_2024' WHEN YEAR(launch_date) = 2024 THEN '2024' ELSE 'after_2024' END AS launch_cohort, MIN(launch_date) AS first_launch_date, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list, COUNT(DISTINCT stock_qty) AS unique_suppliers FROM products GROUP BY 1, 2 ORDER BY launch_cohort;

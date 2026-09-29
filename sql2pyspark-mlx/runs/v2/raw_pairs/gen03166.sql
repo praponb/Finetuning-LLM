@@ -1,0 +1,1 @@
+select id, delivered_date, cost, case when cost >= 88 then 'High' when cost >= 35 then 'Medium' else 'Low' end as cost_band, round(cost * 0.85, 2) as cost_adjusted from shipments where delivered_date > '2025-07-01' and status <> 'RETURNED' and shipped_date > '2024-10-27' order by id;

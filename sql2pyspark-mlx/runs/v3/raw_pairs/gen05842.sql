@@ -1,0 +1,1 @@
+SELECT MONTH(last_restock) AS last_restock_month, store_id, MIN(last_restock) AS first_last_restock, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory WHERE store_id = 4 GROUP BY MONTH(last_restock), store_id;

@@ -1,0 +1,1 @@
+SELECT delivered_date AS event_date FROM shipments WHERE order_id IN (12, 14, 27, 35) INTERSECT SELECT signup_date AS event_date FROM customers WHERE email NOT LIKE '%@startup.io' ORDER BY event_date DESC;

@@ -1,0 +1,1 @@
+SELECT products.cost, products.price, t.unique_products FROM products LEFT JOIN (SELECT product_id, COUNT(DISTINCT quantity) AS unique_products FROM order_items GROUP BY product_id) t ON products.id = t.product_id ORDER BY unique_products DESC, price DESC;

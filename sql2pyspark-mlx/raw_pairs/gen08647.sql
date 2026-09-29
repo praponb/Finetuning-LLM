@@ -1,0 +1,1 @@
+select method, status, round((100 * sum(case when status = 'REFUNDED' then 1 else 0 end)) / count(*), 1) pct_refunded, count(distinct amount) unique_orders from payments group by method, status order by pct_refunded desc

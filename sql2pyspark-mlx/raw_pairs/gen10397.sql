@@ -1,0 +1,1 @@
+SELECT page, DATE_TRUNC('MONTH', event_time) AS event_month, MAX(event_time) AS latest_event_time, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, COUNT(CASE WHEN page = '/home' THEN 1 END) AS home_count FROM web_events GROUP BY 1, 2 ORDER BY 2 DESC, page ASC LIMIT 20;

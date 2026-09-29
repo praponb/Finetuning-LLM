@@ -1,0 +1,1 @@
+SELECT id, product_id, sale_date, revenue, revenue - LAG(revenue, 2) OVER (PARTITION BY product_id ORDER BY sale_date, id) AS revenue_change FROM store_sales WHERE store_id = 1 ORDER BY product_id DESC

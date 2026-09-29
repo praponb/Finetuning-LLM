@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, order_id, product_id, quantity, unit_price, quantity - unit_price AS line_total, GREATEST(unit_price, quantity) AS greatest_unit_price_quantity FROM order_items WHERE unit_price BETWEEN 150 AND 320) SELECT id, product_id, unit_price, line_total FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity DESC NULLS FIRST, id) = 1

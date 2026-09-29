@@ -1,0 +1,1 @@
+SELECT *, CAST(unit_price AS INT) AS unit_price_int, CEIL(unit_price) AS unit_price_whole FROM order_items WHERE unit_price < 230 AND (order_id IN (5, 11, 37) OR unit_price > 300) ORDER BY id DESC, product_id;

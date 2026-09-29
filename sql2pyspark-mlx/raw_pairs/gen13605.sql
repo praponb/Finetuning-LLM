@@ -1,0 +1,1 @@
+SELECT merchant, SIZE(COLLECT_SET(txn_type)) AS num_txn_types, COUNT(CASE WHEN merchant = 'Amazon' THEN 1 END) AS amazon_count, STDDEV_SAMP(amount) AS amount_stddev, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions GROUP BY merchant HAVING amazon_count > 1 ORDER BY num_txn_types DESC

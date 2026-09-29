@@ -1,0 +1,1 @@
+select case when cost >= 93 then 'HIGH' else 'LOW' end as cost_tier, status, sort_array(collect_set(carrier)) as carrier_list, count_if(status = 'IN_TRANSIT') as in_transit_events, max(cost) as max_cost from shipments group by cost_tier, status having in_transit_events < 1000

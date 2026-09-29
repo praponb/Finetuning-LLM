@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(unit_price / quantity, 2) AS line_total FROM order_items WHERE unit_price <= 360) SELECT id, order_id, metric, value FROM (SELECT id, order_id, unit_price, line_total FROM cleaned) src UNPIVOT (value FOR metric IN (unit_price AS UNIT_PRICE_VAL, line_total AS LINE_TOTAL)) unp;

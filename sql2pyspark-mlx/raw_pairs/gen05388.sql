@@ -1,0 +1,1 @@
+SELECT s.id, s.customer_id, s.browser, t.avg_duration_sec FROM sessions s LEFT JOIN (SELECT session_id, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events WHERE duration_sec IS NULL GROUP BY session_id) t ON s.id = t.session_id WHERE t.avg_duration_sec >= 65

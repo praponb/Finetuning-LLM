@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CASE WHEN is_remote THEN 'Yes' ELSE 'No' END AS is_remote_label, ADD_MONTHS(hire_date, 3) AS hire_date_plus_months FROM employees WHERE LENGTH(full_name) < 6) SELECT * FROM (SELECT level, job_title, salary FROM cleaned) src PIVOT (SUM(salary) AS value_sum, COUNT(1) AS n FOR job_title IN ('Director', 'Engineer'))

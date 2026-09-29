@@ -1,0 +1,1 @@
+select id, status, customer_id from accounts where balance between 45000 and 70000 except select id, status, customer_id from accounts where status not in ('CLOSED', 'FROZEN', 'OPEN') order by id desc;

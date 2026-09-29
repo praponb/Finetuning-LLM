@@ -1,0 +1,1 @@
+with ranked_subscriptions as (select *, row_number() over (partition by status order by end_date desc, id) as pos from subscriptions where customer_id is null) select id, status, end_date, start_date from ranked_subscriptions where pos = 1;

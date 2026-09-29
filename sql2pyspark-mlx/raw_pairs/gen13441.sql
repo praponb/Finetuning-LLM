@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT category, ROUND(AVG(cost), 2) AS avg_cost, ROUND((100 * SUM(CASE WHEN brand = 'Globex' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_globex FROM products GROUP BY category) AS t WHERE avg_cost > 21 ORDER BY category ASC;

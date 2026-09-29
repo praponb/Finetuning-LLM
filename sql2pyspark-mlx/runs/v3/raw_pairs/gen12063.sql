@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date, id) AS rnk FROM stores WHERE opened_date BETWEEN '2023-08-01' AND '2025-05-05') SELECT id, city, opened_date FROM numbered WHERE rnk = 1;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 680 THEN 'high' WHEN cost >= 140 THEN 'mid' ELSE 'low' END AS cost_bucket, COUNT(*) AS product_count, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products GROUP BY 1 HAVING product_count > 1 ORDER BY product_count DESC

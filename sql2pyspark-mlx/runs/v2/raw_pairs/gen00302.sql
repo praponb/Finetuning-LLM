@@ -1,0 +1,1 @@
+SELECT a.id, COUNT(t.id) AS transaction_count, SORT_ARRAY(COLLECT_SET(t.merchant)) AS merchant_list FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id WHERE a.opened_date BETWEEN '2025-04-01' AND '2025-05-16' GROUP BY a.id;

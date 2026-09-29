@@ -1,0 +1,1 @@
+WITH recent_orders AS (SELECT * FROM orders WHERE discount BETWEEN 0.16 AND 0.33), summary AS (SELECT channel, DATE_TRUNC('MONTH', order_date) AS order_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM recent_orders GROUP BY channel, DATE_TRUNC('MONTH', order_date)) SELECT channel, status_values FROM summary ORDER BY status_values DESC, channel;

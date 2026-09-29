@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CONCAT(supplier_name, ', ', city) AS supplier_name_city, COALESCE(city, 'N/A') AS city_filled FROM suppliers WHERE city IS NOT NULL) SELECT id FROM valid EXCEPT SELECT id FROM suppliers WHERE country = 'DE';

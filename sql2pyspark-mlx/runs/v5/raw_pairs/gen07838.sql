@@ -1,0 +1,1 @@
+with department_summary as (select dept_id, round(stddev(salary), 2) stddev_salary from employees group by dept_id) select departments.location, departments.budget, department_summary.stddev_salary from departments left join department_summary on departments.id = department_summary.dept_id where department_summary.stddev_salary > 24

@@ -1,0 +1,1 @@
+WITH OrderTotals AS (SELECT order_id, MIN(quantity) AS min_quantity FROM order_items GROUP BY order_id) SELECT o.id, o.store_id, o.customer_id, O.min_quantity FROM orders o LEFT JOIN OrderTotals O ON o.id = O.order_id WHERE O.min_quantity >= 3.7;

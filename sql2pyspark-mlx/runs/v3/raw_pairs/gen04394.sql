@@ -1,0 +1,1 @@
+SELECT QUARTER(c.signup_date) AS signup_quarter, SUM(CASE WHEN s.status = 'EXPIRED' THEN 1 ELSE 0 END) AS expired_count FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY QUARTER(c.signup_date) ORDER BY 1;

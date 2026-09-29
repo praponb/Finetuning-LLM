@@ -1,0 +1,32 @@
+from pyspark.sql import functions as F
+
+ok_by_site = (
+    df_meter_readings
+    .filter(F.col("quality") == "OK")
+    .groupBy("site_id")
+    .agg(
+        F.count("*").alias("ok_count"),
+        F.round(F.avg("kwh"), 2).alias("ok_avg_kwh"),
+    )
+)
+
+bad_by_site = (
+    df_meter_readings
+    .filter(F.col("quality") == "BAD")
+    .groupBy("site_id")
+    .agg(F.count("*").alias("bad_count"), F.sum("kwh").alias("bad_total_kwh"))
+)
+
+result = (
+    ok_by_site.alias("a")
+    .join(bad_by_site.alias("b"), F.col("a.site_id") == F.col("b.site_id"), "full")
+    .select(
+        F.coalesce(F.col("a.site_id"), F.col("b.site_id")).alias("site_id"),
+        F.coalesce(F.col("a.ok_count"), F.lit(0)).alias("ok_count"),
+        F.col("a.ok_avg_kwh"),
+        F.coalesce(F.col("b.bad_count"), F.lit(0)).alias("bad_count"),
+        F.coalesce(F.col("b.bad_total_kwh"), F.lit(0)).alias("bad_total_kwh"),
+        (F.coalesce(F.col("a.ok_count"), F.lit(0)) - F.coalesce(F.col("b.bad_count"), F.lit(0))).alias("ok_count_minus_bad_count"),
+    )
+    .orderBy("site_id")
+)

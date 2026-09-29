@@ -1,0 +1,1 @@
+select case when monthly_fee >= 267 then 'HIGH' else 'LOW' end as monthly_fee_tier, sort_array(collect_set(plan)) as plan_list, sort_array(collect_set(status)) as status_list, avg(monthly_fee) filter (where status = 'PAUSED') as paused_avg_monthly_fee from subscriptions group by 1 order by paused_avg_monthly_fee nulls last

@@ -1,0 +1,1 @@
+select ss.store_id, count(i.quantity) as quantity_count from inventory i left outer join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.store_id order by 1 desc;

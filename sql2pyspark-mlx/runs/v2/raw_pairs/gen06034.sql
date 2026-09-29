@@ -1,0 +1,1 @@
+SELECT st.city, DATE_TRUNC('MONTH', st.opened_date) AS opened_month, COUNT(DISTINCT s.cost) AS unique_carriers FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id INNER JOIN stores st ON st.id = o.store_id GROUP BY st.city, DATE_TRUNC('MONTH', st.opened_date) HAVING COUNT(DISTINCT s.cost) > 5 ORDER BY opened_month ASC, city ASC LIMIT 5

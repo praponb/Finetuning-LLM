@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions GROUP BY customer_id) SELECT c.id, c.name, cs.monthly_fee_range FROM customers c LEFT OUTER JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY monthly_fee_range;

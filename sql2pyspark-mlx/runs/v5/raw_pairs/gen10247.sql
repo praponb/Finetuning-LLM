@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, COALESCE(email, 'Unknown') AS email_filled, COALESCE(city, 'UNKNOWN') AS resolved_city FROM customers WHERE credit_limit >= 15200) SELECT s.id, s.country, s.age, x.status FROM base s LEFT JOIN LATERAL (SELECT c.status FROM orders c WHERE c.customer_id = s.id ORDER BY c.discount DESC, c.id DESC LIMIT 1) x ON TRUE

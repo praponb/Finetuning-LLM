@@ -1,0 +1,1 @@
+WITH inventory_by_store AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_stores FROM inventory GROUP BY store_id) SELECT s.id, s.region, s.sqft, ibs.unique_stores FROM stores s INNER JOIN inventory_by_store ibs ON s.id = ibs.store_id WHERE ibs.unique_stores > 5 ORDER BY sqft DESC;

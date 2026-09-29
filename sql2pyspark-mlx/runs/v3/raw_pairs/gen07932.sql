@@ -1,0 +1,1 @@
+SELECT dept_name, COUNT(*) AS row_count, COUNT(CASE WHEN location = 'Bangkok' THEN 1 END) AS bangkok_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) AS location_values FROM departments GROUP BY dept_name;

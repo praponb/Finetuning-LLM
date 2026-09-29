@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT id, segment FROM customers EXCEPT DISTINCT SELECT id, segment FROM customers WHERE city IN ('London', 'Berlin')), reconciled AS (SELECT s.* FROM customers s INNER JOIN kept_keys k ON s.id = k.id AND s.segment = k.segment) SELECT id, name, email, city, signup_date, is_active, age FROM reconciled

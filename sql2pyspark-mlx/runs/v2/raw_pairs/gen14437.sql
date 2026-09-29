@@ -1,0 +1,1 @@
+SELECT id, customer_id, opened_date, account_type FROM (SELECT *, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY opened_date) AS pos FROM accounts WHERE balance > 16000) AS ranked WHERE pos <= 3 ORDER BY id ASC

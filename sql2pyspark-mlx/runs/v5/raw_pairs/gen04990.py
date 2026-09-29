@@ -1,0 +1,16 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("manager_id")
+
+result = (
+    df_employees
+    .filter(F.col("level").isin(["L3", "L2"]))
+    .select(
+        "id",
+        "manager_id",
+        "salary",
+        F.avg("salary").over(w).alias("manager_id_avg_salary"),
+    )
+    .orderBy(F.col("salary").desc())
+)

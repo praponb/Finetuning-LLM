@@ -1,0 +1,1 @@
+SELECT s.region, AVG(i.quantity) AS avg_quantity, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i INNER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id GROUP BY s.region;

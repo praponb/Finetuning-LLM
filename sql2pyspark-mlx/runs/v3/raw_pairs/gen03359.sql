@@ -1,0 +1,1 @@
+SELECT id, supplier_id, launch_date, category FROM (SELECT id, supplier_id, launch_date, category, DENSE_RANK() OVER (PARTITION BY supplier_id ORDER BY launch_date DESC) AS pos FROM products) AS t WHERE pos <= 3 ORDER BY launch_date DESC;

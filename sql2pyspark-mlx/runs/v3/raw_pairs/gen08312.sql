@@ -1,0 +1,1 @@
+select s.city, s.country, avg(p.cost) as avg_cost from products p join suppliers s on s.id = p.supplier_id where s.rating between 3.9 and 4.1 group by s.city, s.country having avg(p.cost) >= 680 order by 3 desc

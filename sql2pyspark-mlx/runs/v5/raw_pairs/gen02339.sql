@@ -1,0 +1,1 @@
+SELECT stores.id, stores.region, COUNT(store_sales.id) store_sale_count, SUM(store_sales.revenue) total_revenue FROM stores LEFT JOIN store_sales ON stores.id = store_sales.store_id WHERE stores.city = 'Chiang Mai' GROUP BY stores.id, stores.region;

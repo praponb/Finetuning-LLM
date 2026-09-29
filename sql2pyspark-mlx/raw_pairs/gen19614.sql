@@ -1,0 +1,1 @@
+SELECT is_flagged, ROUND((100 * SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_amazon, MIN(txn_time) AS min_txn_time FROM transactions WHERE txn_time < '2023-08-16' AND (merchant NOT IN ('Starbucks', 'Grab') OR account_id = 13) GROUP BY is_flagged;

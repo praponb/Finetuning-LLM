@@ -1,0 +1,1 @@
+select t.id, t.txn_time, t.merchant, a.status, c.is_active, cast(t.is_flagged as int) as is_flagged_flag from transactions t right join accounts a on t.account_id = a.id inner join customers c on a.customer_id = c.id order by is_flagged_flag;

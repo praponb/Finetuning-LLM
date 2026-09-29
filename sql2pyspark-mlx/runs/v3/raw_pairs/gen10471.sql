@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, UPPER(full_name) AS full_name_upper FROM employees WHERE manager_id IN (11, 26)), is_remote_summary AS (SELECT is_remote, AVG(salary) AS avg_salary FROM base GROUP BY is_remote) SELECT * FROM is_remote_summary

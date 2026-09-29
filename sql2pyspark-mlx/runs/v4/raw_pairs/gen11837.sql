@@ -1,0 +1,1 @@
+SELECT sale_month, unique_stores FROM (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, COUNT(DISTINCT revenue) AS unique_stores FROM store_sales GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM')) AS sub WHERE unique_stores >= 6 ORDER BY unique_stores DESC;

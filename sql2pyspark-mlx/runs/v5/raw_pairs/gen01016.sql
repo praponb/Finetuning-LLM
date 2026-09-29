@@ -1,0 +1,1 @@
+SELECT id, event_type, event_time, duration_sec, SUM(duration_sec) OVER (PARTITION BY event_type ORDER BY event_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_duration_sec FROM web_events ORDER BY event_time, event_type;

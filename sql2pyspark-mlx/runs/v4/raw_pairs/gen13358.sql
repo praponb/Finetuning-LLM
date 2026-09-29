@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(we.id) AS web_event_count FROM sessions s LEFT JOIN web_events we ON we.session_id = s.id WHERE s.device IN ('mobile', 'desktop') GROUP BY s.id, s.country ORDER BY web_event_count DESC, country, id LIMIT 5;

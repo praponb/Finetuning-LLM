@@ -1,0 +1,1 @@
+WITH valid_customers AS (SELECT * FROM customers WHERE credit_limit < 10600), agg AS (SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM valid_customers GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM')) SELECT signup_month, city_list FROM agg ORDER BY signup_month LIMIT 20

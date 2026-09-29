@@ -1,0 +1,1 @@
+with latest as (select *, row_number() over (partition by level order by salary desc, id asc) as rn from employees qualify rn = 1) select id, full_name, dept_id, manager_id, job_title, salary, is_remote, level, rn, case when job_title rlike '^(Designer|Intern)$' then 'OTHER_ZONE' else 'CORE' end as job_title_zone from latest;

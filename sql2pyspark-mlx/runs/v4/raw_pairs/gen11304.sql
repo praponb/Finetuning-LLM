@@ -1,0 +1,1 @@
+SELECT MONTH(txn_time) AS txn_month, QUARTER(txn_time) AS txn_quarter, MIN(amount) AS min_amount, MAX(amount) AS max_amount FROM transactions WHERE is_flagged AND HOUR(txn_time) BETWEEN 11 AND 18 GROUP BY MONTH(txn_time), QUARTER(txn_time) ORDER BY txn_quarter;

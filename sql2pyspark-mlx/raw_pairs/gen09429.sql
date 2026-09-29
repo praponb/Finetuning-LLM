@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.amount >= 1630 THEN 'high' WHEN o.amount >= 770 THEN 'mid' ELSE 'low' END AS amount_bucket, ROUND(STDDEV(p.amount), 2) AS stddev_amount FROM payments p FULL OUTER JOIN orders o ON o.id = p.order_id GROUP BY CASE WHEN o.amount >= 1630 THEN 'high' WHEN o.amount >= 770 THEN 'mid' ELSE 'low' END ORDER BY amount_bucket ASC, stddev_amount DESC

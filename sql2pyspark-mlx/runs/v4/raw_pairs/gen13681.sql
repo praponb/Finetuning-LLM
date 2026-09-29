@@ -1,0 +1,1 @@
+SELECT a.account_type, ROUND((100 * SUM(CASE WHEN t.merchant = 'Starbucks' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_starbucks, ROUND((100 * SUM(CASE WHEN t.txn_type = 'DEBIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_debit FROM transactions t INNER JOIN accounts a ON t.account_id = a.id GROUP BY a.account_type ORDER BY pct_starbucks ASC, account_type ASC LIMIT 3

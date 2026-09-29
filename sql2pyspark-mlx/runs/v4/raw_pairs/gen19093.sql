@@ -1,0 +1,1 @@
+SELECT merchant, SUM(CASE WHEN txn_type = 'CREDIT' THEN amount ELSE 0 END) AS credit_amount FROM transactions WHERE is_flagged = FALSE AND merchant NOT IN ('7-Eleven', 'Shell', 'Grab') AND merchant = 'Grab' GROUP BY 1 ORDER BY credit_amount DESC, merchant ASC;

@@ -1,0 +1,1 @@
+SELECT id, host, level, GET_JSON_OBJECT(payload_json, '$.user.tier') AS user_tier, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').retries AS retry_count, ARRAY_CONTAINS(MAP_KEYS(context), 'version') AS has_version, COALESCE(context['region'], 'direct') AS region_or_default FROM app_logs;

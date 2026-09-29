@@ -1,0 +1,1 @@
+SELECT opened_month, region, sqft_count FROM (SELECT DATE_TRUNC('MONTH', opened_date) opened_month, region, COUNT(sqft) sqft_count FROM stores GROUP BY DATE_TRUNC('MONTH', opened_date), region) s WHERE sqft_count > 9 ORDER BY sqft_count, opened_month, region LIMIT 5

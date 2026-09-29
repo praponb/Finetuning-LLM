@@ -1,0 +1,1 @@
+select id, brand, launch_date, last_day(launch_date) as launch_date_month_end from products where supplier_id in (3, 5, 13, 32) and launch_date <= '2025-07-01' order by launch_date_month_end asc, id asc limit 10;

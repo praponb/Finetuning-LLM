@@ -1,0 +1,1 @@
+SELECT c.country, MIN(a.opened_date) min_opened_date, ROUND((100 * SUM(CASE WHEN a.status = 'OPEN' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_open FROM accounts a LEFT JOIN customers c ON c.id = a.customer_id GROUP BY c.country ORDER BY pct_open DESC, c.country LIMIT 10;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(opened_date) < 2024 THEN 'before_2024' WHEN YEAR(opened_date) = 2024 THEN '2024' ELSE 'after_2024' END opened_cohort, region, MIN(opened_date) first_opened_date FROM stores WHERE opened_date < '2023-03-03' GROUP BY ROLLUP(CASE WHEN YEAR(opened_date) < 2024 THEN 'before_2024' WHEN YEAR(opened_date) = 2024 THEN '2024' ELSE 'after_2024' END, region);

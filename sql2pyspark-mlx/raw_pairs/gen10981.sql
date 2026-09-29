@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, AVG(shipping_fee) avg_shipping_fee FROM orders GROUP BY customer_id) SELECT customers.id, customers.country, customer_stats.avg_shipping_fee FROM customers INNER JOIN customer_stats ON customers.id = customer_stats.customer_id WHERE customer_stats.avg_shipping_fee > 18;

@@ -1,0 +1,1 @@
+SELECT id, country, rating, LAG(rating, 1) OVER (PARTITION BY country ORDER BY rating, id) AS prev_rating, RANK() OVER (PARTITION BY country ORDER BY rating DESC) AS rnk FROM suppliers WHERE rating <= 2.4

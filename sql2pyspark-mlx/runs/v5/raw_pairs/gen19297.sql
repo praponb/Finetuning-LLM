@@ -1,0 +1,1 @@
+SELECT departments.id, departments.budget, departments.location, departments.dept_name FROM departments WHERE EXISTS (SELECT 1 FROM employees WHERE employees.dept_id = departments.id) ORDER BY dept_name, id LIMIT 20;

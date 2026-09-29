@@ -1,0 +1,1 @@
+SELECT ss.product_id, ss.store_id, AVG(i.quantity) AS avg_quantity, COUNT(i.quantity) AS quantity_count FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.quantity BETWEEN 205 AND 214 GROUP BY ss.product_id, ss.store_id ORDER BY quantity_count;

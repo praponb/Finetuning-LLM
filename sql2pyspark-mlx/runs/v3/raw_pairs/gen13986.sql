@@ -1,0 +1,1 @@
+select category, count(distinct stock_qty) unique_categorys from products where supplier_id in (2, 23, 25, 32) and stock_qty <= 207 and category in ('Books', 'Sports', 'Grocery') group by category order by unique_categorys desc, category

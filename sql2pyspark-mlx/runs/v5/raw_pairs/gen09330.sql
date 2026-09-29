@@ -1,0 +1,1 @@
+SELECT TO_DATE(event_time) AS event_day, SUM(duration_sec) AS total_duration_sec, COUNT(*) AS cnt, SUM(SUM(duration_sec)) OVER (ORDER BY TO_DATE(event_time)) AS cumulative_duration_sec FROM web_events WHERE duration_sec < 457 GROUP BY TO_DATE(event_time) ORDER BY cumulative_duration_sec ASC;

@@ -1,0 +1,1 @@
+SELECT c.country, COUNT(CASE WHEN o.status = 'COMPLETED' THEN 1 END) AS completed_count FROM orders o RIGHT OUTER JOIN customers c ON c.id = o.customer_id INNER JOIN stores s ON o.store_id = s.id GROUP BY c.country ORDER BY c.country;

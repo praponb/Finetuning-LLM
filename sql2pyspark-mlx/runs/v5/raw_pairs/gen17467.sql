@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, plan, currency, element FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_prices) x AS element) SELECT plan, element, CASE WHEN plan RLIKE '^(pro|enterprise)$' THEN 'PRIORITY' ELSE 'GROUP_B' END AS plan_zone FROM exploded

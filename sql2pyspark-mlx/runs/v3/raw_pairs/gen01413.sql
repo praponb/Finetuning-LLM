@@ -1,0 +1,1 @@
+SELECT s.id, s.store_name, t.min_last_restock FROM stores s LEFT JOIN (SELECT store_id, MIN(last_restock) AS min_last_restock FROM inventory WHERE last_restock BETWEEN '2024-10-01' AND '2025-03-01' GROUP BY store_id) t ON s.id = t.store_id;

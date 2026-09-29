@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.unit_price, oi.product_id, o.amount FROM order_items oi LEFT OUTER JOIN orders o ON o.id = oi.order_id WHERE oi.quantity = 6 ORDER BY oi.unit_price DESC, oi.quantity DESC;

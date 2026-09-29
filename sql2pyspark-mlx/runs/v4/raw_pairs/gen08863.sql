@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, order_id, MIN(unit_price) AS min_unit_price, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items WHERE unit_price <= 210 GROUP BY 1, 2 HAVING MIN(unit_price) < 180 ORDER BY quantity_bucket DESC;

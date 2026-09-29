@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CAST(paid_at AS DATE) AS paid_at_day, CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END AS is_success FROM payments WHERE order_id IS NOT NULL) SELECT status FROM base EXCEPT SELECT status FROM payments WHERE method IS NOT NULL

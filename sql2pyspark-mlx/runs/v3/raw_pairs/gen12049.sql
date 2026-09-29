@@ -1,0 +1,1 @@
+with valid_shipments as (select * from shipments where cost < 37 and carrier = 'FedEx' and order_id in (2, 20)), agg as (select date_trunc('MONTH', delivered_date) as delivered_month, date_trunc('MONTH', shipped_date) as shipped_month, sum(cost) as total_cost from valid_shipments group by date_trunc('MONTH', delivered_date), date_trunc('MONTH', shipped_date)) select * from agg;

@@ -1,0 +1,1 @@
+SELECT id, rating, supplier_name, LENGTH(supplier_name) AS supplier_name_length, CASE WHEN country IN ('DE', 'JP') THEN 'Group A' ELSE 'Other' END AS country_group FROM suppliers WHERE supplier_name IS NULL AND rating < 3.4

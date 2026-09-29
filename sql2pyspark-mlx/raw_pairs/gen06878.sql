@@ -1,0 +1,1 @@
+SELECT id, session_id, duration_sec, event_time, SUM(duration_sec) OVER (PARTITION BY session_id) AS session_id_sum_duration_sec, RANK() OVER (ORDER BY event_time) AS rnk FROM web_events WHERE session_id = 23;

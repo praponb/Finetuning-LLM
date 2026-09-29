@@ -1,0 +1,1 @@
+select s.customer_id, s.device, s.started_at, we.page, we.duration_sec, we.event_time, cast(s.started_at as date) as started_at_day from sessions s left join web_events we on s.id = we.session_id where s.started_at >= '2024-07-04' and s.started_at < '2023-05-06' order by started_at_day

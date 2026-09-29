@@ -1,0 +1,1 @@
+select * from (select location, dept_name, sum(budget) as total_budget, round(stddev(budget), 2) as stddev_budget from departments where budget < 3838000 group by location, dept_name) as s where stddev_budget >= 68 order by location, dept_name limit 5;

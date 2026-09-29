@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, MAX(quantity) AS max_quantity FROM inventory WHERE product_id IN (1, 7) GROUP BY store_id) SELECT s.id, s.opened_date, s.city, ss.max_quantity FROM stores s INNER JOIN store_summary ss ON s.id = ss.store_id ORDER BY s.city DESC;

@@ -1,0 +1,1 @@
+with product_totals as (select product_id, round(stddev(unit_price), 2) as stddev_unit_price from order_items group by product_id) select p.id, p.stock_qty, p.product_name, pt.stddev_unit_price from products p inner join product_totals pt on p.id = pt.product_id where pt.stddev_unit_price > 73;

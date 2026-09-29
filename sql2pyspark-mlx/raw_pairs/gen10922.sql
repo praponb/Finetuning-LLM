@@ -1,0 +1,1 @@
+SELECT job_title, YEAR(hire_date) hire_year, DATE_TRUNC('MONTH', hire_date) hire_month, AVG(salary) avg_salary, SORT_ARRAY(COLLECT_SET(job_title)) job_title_list FROM employees WHERE manager_id IN (20, 32, 35) AND email IS NULL AND job_title IN ('Manager', 'Intern', 'Analyst') GROUP BY job_title, YEAR(hire_date), DATE_TRUNC('MONTH', hire_date) HAVING AVG(salary) > 134000;

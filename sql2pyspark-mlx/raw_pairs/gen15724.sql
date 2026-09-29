@@ -1,0 +1,1 @@
+SELECT o.id, o.channel, o.customer_id, s.opened_date, s.region, c.city FROM orders o FULL OUTER JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON o.customer_id = c.id WHERE s.region NOT IN ('South', 'West');

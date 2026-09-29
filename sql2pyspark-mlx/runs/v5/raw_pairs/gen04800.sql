@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM store_sales WHERE product_id IN (3, 7, 9) AND (sale_date >= '2024-03-05' OR units <= 14)), summary AS (SELECT YEAR(sale_date) AS sale_year, store_id, MIN(units) AS min_units, MIN(sale_date) AS min_sale_date FROM Base GROUP BY YEAR(sale_date), store_id) SELECT * FROM summary WHERE min_units >= 20;

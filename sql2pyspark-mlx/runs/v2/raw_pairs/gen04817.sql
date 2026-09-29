@@ -1,0 +1,1 @@
+SELECT id, sale_date, revenue, product_id, store_id, units, LAG(revenue, 1) OVER (ORDER BY sale_date, id) AS prev_revenue, FIRST_VALUE(revenue) OVER (PARTITION BY product_id, store_id ORDER BY units, id) AS first_revenue FROM store_sales WHERE product_id IN (3, 5, 6, 7);

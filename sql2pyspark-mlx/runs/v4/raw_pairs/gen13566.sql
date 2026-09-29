@@ -1,0 +1,1 @@
+SELECT p.id, p.paid_at, p.amount, o.amount AS order_amount, c.credit_limit FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE c.age > 64 OR o.channel = 'mobile'

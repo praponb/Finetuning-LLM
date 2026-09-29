@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, page, duration_sec, ROW_NUMBER() OVER (PARTITION BY page ORDER BY duration_sec DESC, id) AS pos FROM web_events) SELECT id, page, duration_sec FROM ranked WHERE pos <= 5 ORDER BY page;

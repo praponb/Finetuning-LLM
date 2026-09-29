@@ -1,0 +1,1 @@
+SELECT s.id, s.city, COUNT(ss.id) AS store_sale_count FROM stores s LEFT JOIN store_sales ss ON s.id = ss.store_id WHERE LOWER(TRIM(s.store_name)) = 'downtown express' GROUP BY s.id, s.city ORDER BY s.id DESC

@@ -1,0 +1,1 @@
+select c.id, c.is_active, t.balance_range from customers c left join (select customer_id, max(balance) - min(balance) as balance_range from accounts where opened_date between '2023-03-01' and '2024-08-01' group by customer_id) t on c.id = t.customer_id order by id desc;

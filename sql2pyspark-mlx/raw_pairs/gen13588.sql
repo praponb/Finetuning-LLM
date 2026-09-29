@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, LAST_DAY(launch_date) AS launch_date_month_end, COALESCE(brand, 'DIRECT') AS brand_clean FROM products WHERE brand IS NOT NULL) SELECT id, brand, kpi, value FROM (SELECT id, brand, price, cost FROM cleaned) src UNPIVOT (value FOR kpi IN (price, cost))

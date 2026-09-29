@@ -1,0 +1,1 @@
+SELECT id, method, amount, paid_at FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount DESC, id) AS rnk FROM payments WHERE status != 'SUCCESS') AS ranked WHERE rnk = 1 ORDER BY method, amount DESC;

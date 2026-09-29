@@ -1,0 +1,1 @@
+select id, session_id, event_type, event_time, rank() over (partition by session_id, event_type order by event_time desc) as rnk, dense_rank() over (partition by session_id order by event_time desc) as dense_rnk from web_events;

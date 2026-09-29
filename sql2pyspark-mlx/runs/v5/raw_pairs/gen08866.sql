@@ -1,0 +1,1 @@
+SELECT customers.is_active, customers.name, sessions.customer_id FROM customers LEFT JOIN sessions ON customers.id = sessions.customer_id WHERE customers.email NOT LIKE '%@gmail.com' AND LENGTH(customers.email) < 8 ORDER BY customers.name, customer_id DESC;

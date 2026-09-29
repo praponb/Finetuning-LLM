@@ -1,0 +1,1 @@
+SELECT id, start_date, plan, monthly_fee, PERCENT_RANK() OVER (ORDER BY start_date) AS start_date_pct_rank, ROUND(monthly_fee / SUM(monthly_fee) OVER (PARTITION BY plan), 3) AS monthly_fee_share FROM subscriptions WHERE end_date <= '2023-08-01';

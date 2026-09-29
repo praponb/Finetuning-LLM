@@ -1,0 +1,1 @@
+with cleaned as (select *, round(duration_sec, 1) duration_sec_rounded, coalesce(page, 'NONE') resolved_page from web_events where page is not null) select *, row_number() over (partition by event_type, session_id order by duration_sec desc nulls first, id) as rank_in_group from cleaned qualify rank_in_group = 1

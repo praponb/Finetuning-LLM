@@ -1,0 +1,1 @@
+select id, full_name, email, dept_id, manager_id, job_title, salary, hire_date, is_remote, level, avg(salary) over (partition by manager_id order by hire_date asc, id asc rows between 2 preceding and 1 preceding) as salary_avg_2_prior, sum(salary) over (order by hire_date asc, id asc rows between unbounded preceding and current row) as cumulative_salary from employees;

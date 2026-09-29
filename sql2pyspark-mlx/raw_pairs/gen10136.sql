@@ -1,0 +1,1 @@
+select e.id, e.email, e.is_remote, e.manager_id, d.location, d.dept_name from employees e right join departments d on e.dept_id = d.id where d.location in ('New York', 'Chiang Mai') and e.dept_id in (25, 27, 32, 34);

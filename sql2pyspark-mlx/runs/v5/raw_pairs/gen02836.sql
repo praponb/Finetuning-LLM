@@ -1,0 +1,1 @@
+SELECT s.city, t.total_units, t.avg_revenue FROM stores s LEFT JOIN (SELECT store_id, SUM(units) total_units, AVG(revenue) avg_revenue FROM store_sales WHERE product_id IN (5, 10) GROUP BY store_id) t ON s.id = t.store_id WHERE t.avg_revenue >= 1700

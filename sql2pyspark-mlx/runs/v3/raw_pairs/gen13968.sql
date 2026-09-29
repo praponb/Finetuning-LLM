@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, COUNT(*) AS order_count, MAX(order_date) AS latest_order_date FROM orders GROUP BY customer_id) SELECT c.id, c.credit_limit, c.segment, cs.order_count, cs.latest_order_date FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id

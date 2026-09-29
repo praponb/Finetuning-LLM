@@ -1,0 +1,1 @@
+SELECT city, store_count, first_opened_date FROM (SELECT city, COUNT(*) AS store_count, MIN(opened_date) AS first_opened_date FROM stores WHERE region != 'South' GROUP BY city) AS t WHERE store_count > 4 ORDER BY store_count DESC;

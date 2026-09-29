@@ -1,0 +1,1 @@
+WITH recent_employees AS (SELECT * FROM employees WHERE NOT is_remote), employees_stats AS (SELECT DATE_TRUNC('MONTH', hire_date) AS hire_month, MIN(salary) AS min_salary, MAX(hire_date) AS last_hire_date FROM recent_employees GROUP BY DATE_TRUNC('MONTH', hire_date)) SELECT hire_month, min_salary FROM employees_stats

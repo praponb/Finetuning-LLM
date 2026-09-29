@@ -1,0 +1,1 @@
+select status, customer_id, month(opened_date) as opened_month, sum(balance) as total_balance, count(distinct balance) as unique_statuss from accounts group by status, customer_id, month(opened_date) order by status desc

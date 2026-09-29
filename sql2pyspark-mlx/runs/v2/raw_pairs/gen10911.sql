@@ -1,0 +1,1 @@
+select quarter(launch_date) as launch_quarter, brand, min(launch_date) as min_launch_date, max(cost) as max_cost, sort_array(collect_set(category)) as category_list from products where supplier_id = 17 group by quarter(launch_date), brand

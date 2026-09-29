@@ -1,0 +1,1 @@
+SELECT e.id, e.salary AS employee_salary, m.job_title AS manager_job_title, m.hire_date AS manager_hire_date, m.level AS manager_level FROM employees e JOIN employees m ON e.manager_id = m.id WHERE m.job_title <> 'Manager' AND e.job_title IS NOT NULL

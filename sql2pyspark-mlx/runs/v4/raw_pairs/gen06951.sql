@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, COUNT(*) AS cnt, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY order_id) SELECT o.store_id, os.cnt, os.unit_price_range FROM orders o JOIN order_stats os ON o.id = os.order_id WHERE os.unit_price_range > 57 ORDER BY cnt DESC

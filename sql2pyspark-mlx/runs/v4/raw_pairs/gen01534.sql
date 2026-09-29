@@ -1,0 +1,1 @@
+SELECT product_id, total_revenue, units_count FROM (SELECT product_id, SUM(revenue) AS total_revenue, COUNT(units) AS units_count FROM store_sales GROUP BY product_id) AS t WHERE total_revenue < 20000 ORDER BY product_id DESC;

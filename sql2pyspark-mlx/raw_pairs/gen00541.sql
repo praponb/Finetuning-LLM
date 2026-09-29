@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, i.last_restock, p.supplier_id, s.store_name, CAST(i.quantity AS DOUBLE) AS quantity_str FROM inventory i LEFT JOIN products p ON p.id = i.product_id JOIN stores s ON i.store_id = s.id WHERE s.opened_date <= '2024-06-01'

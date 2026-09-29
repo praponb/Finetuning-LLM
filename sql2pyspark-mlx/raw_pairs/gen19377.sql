@@ -1,0 +1,1 @@
+SELECT e.id, e.dept_id AS employee_dept_id, e.level AS employee_level, e.email AS employee_email, m.job_title AS manager_job_title, COALESCE(e.job_title, 'unassigned') AS job_title_filled FROM employees e LEFT JOIN employees m ON e.manager_id = m.id

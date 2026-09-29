@@ -1,0 +1,1 @@
+SELECT customers.id, customers.is_active, customers.email, t.stddev_monthly_fee FROM customers INNER JOIN (SELECT customer_id, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions WHERE customer_id = 34 GROUP BY customer_id) t ON customers.id = t.customer_id ORDER BY stddev_monthly_fee DESC;

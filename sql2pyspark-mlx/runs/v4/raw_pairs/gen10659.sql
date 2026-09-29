@@ -1,0 +1,1 @@
+SELECT CASE WHEN revenue >= 4100 THEN 'high' WHEN revenue >= 1800 THEN 'mid' ELSE 'low' END AS revenue_bucket, store_id, product_id, MAX(revenue) AS max_revenue, COUNT(*) AS store_sale_count, COUNT(*) AS row_count FROM store_sales WHERE units >= 39 GROUP BY CASE WHEN revenue >= 4100 THEN 'high' WHEN revenue >= 1800 THEN 'mid' ELSE 'low' END, store_id, product_id;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, COALESCE(quantity, 0) quantity_filled FROM order_items WHERE quantity <= 3), summary AS (SELECT order_id, SUM(unit_price) total_unit_price, SUM(quantity_filled) total_quantity_filled FROM base GROUP BY order_id) SELECT * FROM summary WHERE total_unit_price < 1100 ORDER BY order_id

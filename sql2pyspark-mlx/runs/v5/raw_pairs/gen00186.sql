@@ -1,0 +1,1 @@
+SELECT QUARTER(a.opened_date) opened_quarter, MAX(t.amount) max_amount, MIN(t.amount) min_amount FROM transactions t INNER JOIN accounts a ON a.id = t.account_id LEFT JOIN customers c ON a.customer_id = c.id WHERE a.opened_date BETWEEN '2023-09-01' AND '2025-03-01' GROUP BY QUARTER(a.opened_date) HAVING MAX(t.amount) >= 3100 ORDER BY max_amount;

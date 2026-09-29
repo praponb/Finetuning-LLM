@@ -1,0 +1,1 @@
+SELECT MONTH(a.opened_date) opened_month, MAX(t.amount) - MIN(t.amount) amount_range FROM transactions t INNER JOIN accounts a ON a.id = t.account_id RIGHT JOIN customers c ON a.customer_id = c.id WHERE t.amount IS NOT NULL GROUP BY MONTH(a.opened_date)

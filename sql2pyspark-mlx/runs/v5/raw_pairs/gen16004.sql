@@ -1,0 +1,1 @@
+SELECT id, brand, launch_date, stock_qty, price, ROUND(AVG(stock_qty) OVER (PARTITION BY brand ORDER BY launch_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS stock_qty_moving_avg_4, NTILE(3) OVER (ORDER BY price, id) AS quartile FROM products;

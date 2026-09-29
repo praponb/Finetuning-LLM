@@ -1,0 +1,1 @@
+WITH shipments_by_order AS (SELECT order_id, MAX(shipped_date) latest_shipped_date FROM shipments WHERE order_id = 7 GROUP BY order_id) SELECT o.customer_id, o.discount, sbo.latest_shipped_date FROM orders o INNER JOIN shipments_by_order sbo ON o.id = sbo.order_id ORDER BY o.customer_id DESC;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM products WHERE price >= 330 AND cost <= 190), agg AS (SELECT category, COUNT(stock_qty) AS stock_qty_count, MAX(cost) AS max_cost FROM base GROUP BY category) SELECT category, max_cost FROM agg WHERE stock_qty_count >= 6 ORDER BY max_cost;

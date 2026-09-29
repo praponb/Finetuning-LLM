@@ -1,0 +1,1 @@
+SELECT s.*, pr.id AS promo_id, pr.promo_code AS promotion_promo_code, pr.discount_pct AS promotion_discount_pct FROM promotions s LEFT JOIN promotions pr ON s.channel <=> pr.channel AND s.ends_on >= pr.starts_on AND s.ends_on < pr.ends_on + INTERVAL '30' DAY;

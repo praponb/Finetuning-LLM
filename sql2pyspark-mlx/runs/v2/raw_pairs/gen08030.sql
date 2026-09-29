@@ -1,0 +1,1 @@
+SELECT products.brand, COUNT(order_items.quantity) AS quantity_count, ROUND(AVG(order_items.quantity), 2) AS avg_quantity FROM order_items INNER JOIN products ON products.id = order_items.product_id GROUP BY products.brand ORDER BY quantity_count

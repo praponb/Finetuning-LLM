@@ -1,0 +1,1 @@
+SELECT product_id, MONTH(last_restock) last_restock_month, COUNT(quantity) quantity_count, MAX(last_restock) latest_last_restock, COUNT(DISTINCT quantity) unique_products FROM inventory GROUP BY ROLLUP(product_id, MONTH(last_restock));

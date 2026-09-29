@@ -1,0 +1,1 @@
+select * from (select case when budget >= 4327000 then 'high' when budget >= 1729000 then 'mid' else 'low' end as budget_bucket, count(budget) as budget_count from departments group by case when budget >= 4327000 then 'high' when budget >= 1729000 then 'mid' else 'low' end) as agg where budget_count > 5 order by budget_count desc, budget_bucket limit 10;

@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.store_id, inventory.product_id, products.supplier_id, products.category, suppliers.supplier_name FROM inventory INNER JOIN products ON inventory.product_id = products.id INNER JOIN suppliers ON products.supplier_id = suppliers.id;

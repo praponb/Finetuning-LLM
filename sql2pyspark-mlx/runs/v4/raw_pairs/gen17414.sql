@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3379000 THEN 'high' WHEN budget >= 1522000 THEN 'mid' ELSE 'low' END budget_bucket, SUM(budget) total_budget, DENSE_RANK() OVER (ORDER BY SUM(budget) DESC) AS budget_rank FROM departments GROUP BY CASE WHEN budget >= 3379000 THEN 'high' WHEN budget >= 1522000 THEN 'mid' ELSE 'low' END ORDER BY budget_bucket;

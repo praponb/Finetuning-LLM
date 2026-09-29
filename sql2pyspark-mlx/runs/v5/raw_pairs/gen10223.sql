@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, COUNT(CASE WHEN txn_type = 'DEBIT' THEN 1 END) AS debit_count FROM transactions GROUP BY account_id) SELECT a.account_type, a.customer_id, at.debit_count FROM accounts a JOIN account_totals at ON a.id = at.account_id ORDER BY at.debit_count DESC, a.customer_id DESC

@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3981000 THEN 'high' WHEN budget >= 650000 THEN 'mid' ELSE 'low' END AS budget_bucket, ROUND((100 * SUM(CASE WHEN location = 'Tokyo' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_tokyo FROM departments GROUP BY CASE WHEN budget >= 3981000 THEN 'high' WHEN budget >= 650000 THEN 'mid' ELSE 'low' END ORDER BY budget_bucket DESC

@@ -1,0 +1,1 @@
+select case when units >= 41 then 'high' when units >= 10 then 'mid' else 'low' end as units_bucket, count(units) as units_count, round(avg(revenue), 2) as avg_revenue from store_sales where month(sale_date) in (3, 5, 8) group by case when units >= 41 then 'high' when units >= 10 then 'mid' else 'low' end order by units_bucket

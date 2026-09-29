@@ -1,0 +1,1 @@
+SELECT id, account_id, amount, txn_time, ROUND(amount / SUM(amount) OVER (PARTITION BY account_id), 3) amount_share, LEAD(amount, 1) OVER (PARTITION BY account_id ORDER BY txn_time, id) next_amount FROM transactions

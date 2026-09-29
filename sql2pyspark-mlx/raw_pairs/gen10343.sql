@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM stores WHERE store_name LIKE '%Kiosk%' AND region IS NOT NULL AND UPPER(TRIM(store_name)) = 'RIVERSIDE'), OpenedMonthSummary AS (SELECT MONTH(opened_date) AS opened_month, MAX(sqft) AS max_sqft, COUNT(*) AS cnt FROM Base GROUP BY MONTH(opened_date)) SELECT opened_month, max_sqft, cnt FROM OpenedMonthSummary ORDER BY cnt DESC, opened_month DESC LIMIT 5;

@@ -1,0 +1,1 @@
+with valid as (select *, upper(status) as status_upper, case when status in ('EXPIRED', 'PAUSED') then 'Group A' else 'Other' end as status_group from subscriptions where end_date >= date '2023-07-23') select id, customer_id from valid except all select id, customer_id from subscriptions where status = 'PAUSED'

@@ -1,0 +1,1 @@
+SELECT country, COUNT(*) AS num_suppliers, MAX(rating) AS max_rating, MAX(rating) - MIN(rating) AS rating_range FROM suppliers WHERE supplier_name LIKE '%Sup%' AND (country = 'TH' OR city = 'Berlin') GROUP BY 1 ORDER BY 3;

@@ -1,0 +1,1 @@
+select product_id, year(sale_date) as sale_year, month(sale_date) as sale_month, min(units) as min_units from store_sales where revenue > 1600 group by product_id, year(sale_date), month(sale_date) order by sale_month desc;

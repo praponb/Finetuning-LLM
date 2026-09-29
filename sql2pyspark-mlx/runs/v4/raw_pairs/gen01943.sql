@@ -1,0 +1,1 @@
+WITH kept AS (SELECT s.* FROM products s WHERE EXISTS (SELECT 1 FROM inventory ch WHERE ch.product_id = s.id AND ch.product_id IN (4, 5, 6, 10))) SELECT id, product_name, category, brand, price, stock_qty, launch_date, tags, supplier_id FROM kept ORDER BY stock_qty NULLS FIRST;

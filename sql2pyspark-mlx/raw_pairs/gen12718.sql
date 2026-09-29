@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', shipped_date) AS activity_month, CASE WHEN cost >= 81 THEN 'PREMIUM' ELSE 'STANDARD' END AS cost_tier, STDDEV_SAMP(cost) AS cost_stddev, STDDEV_SAMP(cost) AS cost_stddev_2, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM shipments GROUP BY DATE_TRUNC('MONTH', shipped_date), CASE WHEN cost >= 81 THEN 'PREMIUM' ELSE 'STANDARD' END;

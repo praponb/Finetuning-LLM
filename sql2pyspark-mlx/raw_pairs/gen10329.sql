@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, COUNT(DISTINCT quantity) AS unique_stores FROM inventory GROUP BY product_id) SELECT p.id, p.product_name, ps.unique_stores FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id WHERE ps.unique_stores >= 8 ORDER BY unique_stores, id LIMIT 10;

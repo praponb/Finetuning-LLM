@@ -1,0 +1,1 @@
+SELECT o.id, o.shipping_fee, o.amount, t.avg_amount FROM orders o INNER JOIN (SELECT order_id, AVG(amount) avg_amount FROM payments WHERE method IN ('card', 'promptpay') GROUP BY order_id) t ON o.id = t.order_id ORDER BY o.amount, id LIMIT 50;

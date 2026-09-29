@@ -1,0 +1,1 @@
+WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY amount NULLS LAST, id) AS rn FROM payments QUALIFY rn = 1) SELECT DATE_TRUNC('QUARTER', paid_at) AS quarter_start, APPROX_PERCENTILE(amount, ARRAY(0.25, 0.5, 0.75)) AS amount_quartiles, COUNT(*) AS event_count FROM latest GROUP BY 1 HAVING COUNT(*) > 1

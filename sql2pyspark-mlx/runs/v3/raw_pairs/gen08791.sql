@@ -1,0 +1,1 @@
+select date_trunc('MONTH', start_date) as start_month, customer_id, count(case when plan = 'enterprise' then 1 end) as enterprise_count, sort_array(collect_set(plan)) as plan_list from subscriptions where plan != 'premium' group by date_trunc('MONTH', start_date), customer_id having enterprise_count > 1;

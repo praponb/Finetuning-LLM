@@ -1,0 +1,1 @@
+select channel, concat_ws(', ', sort_array(collect_set(channel))) as channel_values, sum(case when status = 'RETURNED' then discount else 0 end) as returned_discount from orders group by channel order by returned_discount

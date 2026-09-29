@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, plan, monthly_fee, status, DENSE_RANK() OVER (PARTITION BY plan ORDER BY monthly_fee) AS pos FROM subscriptions) SELECT id, plan, monthly_fee, status FROM ranked WHERE pos = 1;

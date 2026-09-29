@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, o.status, o.discount, p.category, p.product_name FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id JOIN products p ON oi.product_id = p.id ORDER BY o.discount DESC;

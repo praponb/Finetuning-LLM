@@ -1,0 +1,1 @@
+select i.id, i.product_id, p.price, p.stock_qty, s.city, s.country from inventory i inner join products p on i.product_id = p.id right outer join suppliers s on p.supplier_id = s.id order by country desc

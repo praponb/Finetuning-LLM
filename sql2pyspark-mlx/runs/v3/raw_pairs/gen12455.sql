@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, SUM(CASE WHEN status = 'PENDING' THEN 1 ELSE 0 END) AS pending_count FROM orders GROUP BY DATE_FORMAT(order_date, 'yyyy-MM') ORDER BY pending_count DESC;

@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, level, status_code, key, value FROM app_logs LATERAL VIEW EXPLODE(context) e AS key, value) SELECT id, key, value, CASE WHEN key RLIKE '^(region|version)$' THEN 'GROUP_B' WHEN key RLIKE '^(trace)$' THEN 'CORE' ELSE 'EXTENDED' END AS key_zone FROM exploded ORDER BY id DESC NULLS FIRST

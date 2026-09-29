@@ -1,0 +1,1 @@
+select * from (select *, row_number() over (partition by supplier_id order by price desc, id) as rn from products where launch_date between '2024-04-01' and '2024-10-01') as r where rn = 1 order by category desc

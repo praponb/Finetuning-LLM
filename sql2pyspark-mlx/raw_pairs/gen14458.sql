@@ -1,0 +1,1 @@
+SELECT o.id, o.channel, o.shipping_fee, s.region, c.credit_limit, c.country FROM orders o JOIN stores s ON s.id = o.store_id LEFT JOIN customers c ON c.id = o.customer_id WHERE s.opened_date < '2025-07-24' AND LENGTH(s.store_name) > 13 ORDER BY o.shipping_fee DESC

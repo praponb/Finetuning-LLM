@@ -1,0 +1,1 @@
+SELECT ROUND(AVG(duration_sec), 2) AS avg_duration_sec, COUNT(DISTINCT duration_sec) AS unique_sessions, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE duration_sec BETWEEN 305 AND 382 AND duration_sec <> 429;

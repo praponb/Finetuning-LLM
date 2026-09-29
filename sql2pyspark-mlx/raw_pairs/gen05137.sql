@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, ROUND(STDDEV(salary), 2) AS stddev_salary, AVG(salary) AS avg_salary FROM employees WHERE level IN ('L3', 'L1') GROUP BY dept_id) SELECT d.budget, ebd.stddev_salary, ebd.avg_salary FROM departments d LEFT JOIN employees_by_department ebd ON d.id = ebd.dept_id ORDER BY avg_salary DESC;

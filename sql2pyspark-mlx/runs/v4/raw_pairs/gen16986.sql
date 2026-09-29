@@ -1,0 +1,1 @@
+WITH web_events_by_session AS (SELECT session_id, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events WHERE TO_DATE(event_time) < '2024-04-15' GROUP BY session_id) SELECT s.id, s.country, s.started_at, webs.page_list FROM sessions s LEFT JOIN web_events_by_session webs ON s.id = webs.session_id

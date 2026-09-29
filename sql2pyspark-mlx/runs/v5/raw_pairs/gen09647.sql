@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT order_id, status FROM payments EXCEPT SELECT order_id, status FROM payments WHERE order_id IN (8, 38)), kept_rows AS (SELECT s.* FROM payments s INNER JOIN matched_keys k ON s.order_id = k.order_id AND s.status = k.status) SELECT id, order_id, status FROM kept_rows ORDER BY status DESC NULLS FIRST

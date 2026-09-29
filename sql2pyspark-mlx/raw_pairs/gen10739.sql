@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT p.brand, COUNT(*) AS cnt, MAX(e.quantity) AS max_quantity, GROUPING_ID() AS gid FROM inventory e INNER JOIN products p ON e.product_id = p.id GROUP BY ROLLUP (p.brand)) SELECT cnt, max_quantity, gid FROM rollup_totals ORDER BY gid ASC NULLS FIRST, max_quantity ASC

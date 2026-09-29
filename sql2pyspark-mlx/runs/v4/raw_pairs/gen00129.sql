@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, MIN(event_time) AS min_event_time FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, s.device, ss.min_event_time FROM sessions s LEFT JOIN session_stats ss ON s.id = ss.session_id

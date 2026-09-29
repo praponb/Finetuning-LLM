@@ -1,0 +1,1 @@
+select city, signup_month, unique_citys from (select city, date_format(signup_date, 'yyyy-MM') as signup_month, count(distinct age) as unique_citys from customers where is_active = true group by city, date_format(signup_date, 'yyyy-MM')) as x where unique_citys > 8 order by city asc, signup_month asc limit 5;

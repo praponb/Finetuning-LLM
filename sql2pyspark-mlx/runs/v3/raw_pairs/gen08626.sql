@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count FROM transactions GROUP BY account_id) SELECT a.status, a.account_type, at.refund_count FROM accounts a LEFT JOIN account_totals at ON a.id = at.account_id WHERE at.refund_count > 61 ORDER BY at.refund_count DESC

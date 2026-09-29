@@ -1,0 +1,1 @@
+SELECT shipped_date AS event_date, 'shipment' AS source FROM shipments WHERE order_id IS NOT NULL UNION SELECT hire_date AS event_date, 'employee' AS source FROM employees WHERE full_name LIKE 'Al%' ORDER BY source

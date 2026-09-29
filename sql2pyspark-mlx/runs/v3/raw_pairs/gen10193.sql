@@ -1,0 +1,1 @@
+SELECT channel, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count, SUM(discount) AS total_discount FROM orders GROUP BY channel HAVING COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) >= 2

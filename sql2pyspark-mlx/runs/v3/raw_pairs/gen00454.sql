@@ -1,0 +1,1 @@
+WITH StoreSummary AS (SELECT store_id, SUM(CASE WHEN status = 'SHIPPED' THEN discount ELSE 0 END) AS shipped_discount FROM orders GROUP BY store_id) SELECT s.id, s.store_name, S.shipped_discount FROM stores s LEFT JOIN StoreSummary S ON s.id = S.store_id ORDER BY s.store_name DESC, id;

@@ -1,0 +1,1 @@
+SELECT d.id, d.budget, d.dept_name, t.job_title_list, t.l5_count FROM departments d JOIN (SELECT dept_id, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, COUNT(CASE WHEN level = 'L5' THEN 1 END) AS l5_count FROM employees GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY d.dept_name DESC, l5_count DESC

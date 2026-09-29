@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, ROUND(STDDEV(amount), 2) AS stddev_amount, MIN(txn_time) AS min_txn_time FROM transactions WHERE is_flagged = TRUE GROUP BY account_id) SELECT a.id, a.balance, as.stddev_amount, as.min_txn_time FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id WHERE as.stddev_amount > 80 ORDER BY a.id, 3 DESC

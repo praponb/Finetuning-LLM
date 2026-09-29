@@ -1,0 +1,29 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.orderBy("entry_price", "id").rowsBetween(-2, Window.currentRow)
+
+flattened_attrs = (
+    df_price_tiers
+    .select(
+        "id",
+        "tier_limits",
+        "tier_prices",
+        F.zip_with("tier_prices", "discounts", lambda p, d: F.round(p * (1 - d), 2)).alias("net_prices"),
+        F.aggregate("tier_prices", F.lit(0.0), lambda acc, p: acc + p, lambda acc: F.round(acc / F.size("tier_prices"), 2)).alias("avg_tier_price"),
+        F.element_at("tier_prices", 1).alias("entry_price"),
+        F.array_min("tier_prices").alias("lowest_price"),
+    )
+)
+
+result = (
+    flattened_attrs
+    .select(
+        "id",
+        "entry_price",
+        "lowest_price",
+        F.count("lowest_price").over(w).alias("last3_count_lowest_price"),
+        F.min("lowest_price").over(w).alias("last3_min_lowest_price"),
+        F.sum("lowest_price").over(w).alias("last3_sum_lowest_price"),
+    )
+)

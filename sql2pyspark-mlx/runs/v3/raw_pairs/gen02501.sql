@@ -1,0 +1,1 @@
+WITH FilteredInventory AS (SELECT * FROM inventory WHERE quantity != 134 AND quantity > 206), product_id_summary AS (SELECT product_id, store_id, COUNT(DISTINCT quantity) AS unique_products, AVG(quantity) AS avg_quantity FROM FilteredInventory GROUP BY product_id, store_id) SELECT product_id, store_id, unique_products, avg_quantity FROM product_id_summary ORDER BY store_id DESC;

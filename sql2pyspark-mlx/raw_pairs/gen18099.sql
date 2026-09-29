@@ -1,0 +1,1 @@
+SELECT e.manager_id AS employee_manager_id, m.level AS manager_level, m.full_name AS manager_full_name, m.manager_id AS manager_manager_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.full_name LIKE 'FR%'

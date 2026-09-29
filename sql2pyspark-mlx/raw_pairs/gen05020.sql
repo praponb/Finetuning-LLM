@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, ROUND(STDDEV(price), 2) AS stddev_price, MAX(launch_date) AS last_launch_date FROM products WHERE category = 'Electronics' GROUP BY supplier_id) SELECT s.city, s.country, st.stddev_price, st.last_launch_date FROM suppliers s JOIN supplier_totals st ON s.id = st.supplier_id;

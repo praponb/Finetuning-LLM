@@ -1,0 +1,1 @@
+SELECT signup_month, country, uk_count FROM (SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, country, SUM(CASE WHEN country = 'UK' THEN 1 ELSE 0 END) AS uk_count FROM customers GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM'), country) AS s WHERE uk_count < 47 ORDER BY country;

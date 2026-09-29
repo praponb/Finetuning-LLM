@@ -1,0 +1,1 @@
+with numbered as (select id, order_id, amount, status, row_number() over (partition by order_id order by amount desc, id) as pos from payments) select * from numbered where pos <= 2 order by amount asc;

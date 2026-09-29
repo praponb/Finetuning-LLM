@@ -1,0 +1,1 @@
+SELECT id, browser, started_at, device, DENSE_RANK() OVER (PARTITION BY browser ORDER BY started_at) AS started_at_dense_rank, RANK() OVER (PARTITION BY device ORDER BY started_at) AS rnk FROM sessions ORDER BY id DESC;

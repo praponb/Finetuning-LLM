@@ -1,0 +1,1 @@
+SELECT d.location, e.job_title, CASE WHEN e.is_remote THEN 'Yes' ELSE 'No' END is_remote_label FROM departments d INNER JOIN employees e ON d.id = e.dept_id WHERE e.level IS NOT NULL AND e.is_remote ORDER BY e.job_title, location;

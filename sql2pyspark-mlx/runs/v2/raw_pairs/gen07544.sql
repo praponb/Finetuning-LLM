@@ -1,0 +1,1 @@
+select i.id, i.quantity, s.sqft, s.store_name, p.stock_qty from inventory i inner join stores s on i.store_id = s.id left join products p on i.product_id = p.id where i.last_restock between '2023-04-01' and '2025-06-30' order by stock_qty desc;

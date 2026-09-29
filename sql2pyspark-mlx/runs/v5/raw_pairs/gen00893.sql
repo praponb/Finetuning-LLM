@@ -1,0 +1,1 @@
+SELECT *, SUM(duration_sec) OVER (PARTITION BY page) AS page_sum_duration_sec, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time DESC, id) AS event_seq, COUNT(duration_sec) OVER (ORDER BY CAST(event_time AS BIGINT) RANGE BETWEEN 2592000 PRECEDING AND CURRENT ROW) AS duration_sec_count_30d FROM web_events WHERE event_type = 'purchase';

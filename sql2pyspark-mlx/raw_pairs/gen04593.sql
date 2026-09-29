@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, MIN(cost) AS min_cost, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM shipments WHERE delivered_date < '2023-06-10' GROUP BY order_id) SELECT o.status, o.store_id, os.min_cost, os.status_list FROM orders o INNER JOIN order_stats os ON o.id = os.order_id ORDER BY o.store_id DESC;

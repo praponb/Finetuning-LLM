@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, COALESCE(country, 'N/A') AS country_filled FROM sessions WHERE browser IS NOT NULL AND device IN ('tablet', 'desktop')) SELECT s.* FROM cleaned s WHERE NOT EXISTS (SELECT 1 FROM web_events x WHERE x.session_id = s.id AND x.event_time < s.started_at);

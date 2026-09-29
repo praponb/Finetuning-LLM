@@ -1,0 +1,1 @@
+SELECT id, name, country, city, segment, is_active, credit_limit, age, DENSE_RANK() OVER (PARTITION BY city ORDER BY age DESC NULLS LAST) AS age_dense_rank, RANK() OVER (PARTITION BY city ORDER BY age DESC NULLS FIRST) AS age_rank FROM customers WHERE country IN ('SG', 'JP');

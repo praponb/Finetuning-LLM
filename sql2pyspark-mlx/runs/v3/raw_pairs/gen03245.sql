@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM transactions WHERE merchant != 'Amazon'), Summary AS (SELECT txn_type, merchant, MAX(amount) AS max_amount FROM src GROUP BY txn_type, merchant) SELECT * FROM Summary WHERE max_amount >= 2600 ORDER BY max_amount DESC

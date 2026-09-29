@@ -1,0 +1,1 @@
+SELECT i.store_id, ss.store_id AS store_sale_store_id, ss.revenue, ROUND(ss.units * 0.85, 2) AS units_scaled FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id IN (1, 2, 3) ORDER BY store_sale_store_id DESC

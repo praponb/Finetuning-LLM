@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, MAX(o.shipping_fee) AS max_shipping_fee FROM orders o INNER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM') HAVING MAX(o.shipping_fee) > 35;

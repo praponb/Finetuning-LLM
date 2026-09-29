@@ -1,0 +1,1 @@
+SELECT region, city, COUNT(CASE WHEN region = 'East' THEN 1 END) AS east_count, MAX(opened_date) AS latest_opened_date, COUNT(CASE WHEN region = 'Central' THEN 1 END) AS central_count FROM stores WHERE city = 'London' GROUP BY region, city HAVING central_count >= 2;

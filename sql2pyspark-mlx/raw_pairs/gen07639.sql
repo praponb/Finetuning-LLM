@@ -1,0 +1,1 @@
+SELECT src.*, pr.id AS promo_id, pr.promo_code, pr.discount_pct FROM orders src JOIN promotions pr ON COALESCE(src.channel, 'web') = pr.channel AND src.order_date >= pr.starts_on AND src.order_date <= DATE_ADD(pr.ends_on, 3);

@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4344000 THEN 'high' WHEN budget >= 1839000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, COUNT(CASE WHEN dept_name = 'Sales' THEN 1 END) AS sales_count FROM departments WHERE budget <= 3206000 GROUP BY budget_bucket, location ORDER BY 2, budget_bucket LIMIT 1

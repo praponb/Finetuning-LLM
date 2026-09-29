@@ -1,0 +1,1 @@
+with Src as (select *, lower(level) as level_lower from employees where is_remote and job_title = 'Engineer' and salary < 86000), summary as (select job_title, max(salary) as max_salary from Src group by job_title) select job_title, max_salary from summary where max_salary < 130000 order by 1 asc limit 10

@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM subscriptions GROUP BY customer_id) SELECT c.id, c.signup_date, c.email, cs.avg_monthly_fee, cs.status_list FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.avg_monthly_fee > 79 ORDER BY signup_date;

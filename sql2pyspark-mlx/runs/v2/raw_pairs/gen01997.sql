@@ -1,0 +1,1 @@
+SELECT QUARTER(s.opened_date) AS opened_quarter, AVG(o.amount) AS avg_amount FROM orders o INNER JOIN customers c ON c.id = o.customer_id INNER JOIN stores s ON o.store_id = s.id GROUP BY QUARTER(s.opened_date)

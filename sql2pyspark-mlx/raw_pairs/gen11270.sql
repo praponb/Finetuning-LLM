@@ -1,0 +1,3 @@
+SELECT *
+FROM customers
+QUALIFY ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date NULLS FIRST, id) = 1

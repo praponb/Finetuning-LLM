@@ -1,0 +1,1 @@
+select id, customer_id, end_date, monthly_fee, lead(monthly_fee, 2, 0) over (partition by customer_id order by end_date, id) as next_monthly_fee from subscriptions where customer_id is null order by 3;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, SUBSTRING(event_type, 1, 3) AS event_type_prefix FROM web_events WHERE session_id IN (4, 6, 10, 20)), Agg AS (SELECT MONTH(event_time) AS event_month, MAX(duration_sec) AS max_duration_sec FROM base GROUP BY MONTH(event_time)) SELECT * FROM Agg ORDER BY 1 DESC LIMIT 5;

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, MAX(o.order_date) AS last_order_date, ROUND((100 * SUM(CASE WHEN o.channel = 'web' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_web FROM orders o INNER JOIN stores s ON s.id = o.store_id INNER JOIN customers c ON o.customer_id = c.id WHERE o.amount BETWEEN 840 AND 1270 GROUP BY DATE_TRUNC('MONTH', s.opened_date)

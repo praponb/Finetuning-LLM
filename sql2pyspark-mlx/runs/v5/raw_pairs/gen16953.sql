@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, tier_value FROM price_tiers LATERAL VIEW EXPLODE(tier_prices) li AS tier_value) SELECT plan, COUNT_IF(plan = 'pro') AS pro_events, COUNT(DISTINCT plan) AS distinct_plans, COUNT_IF(plan = 'pro') AS pro_events_2, SIZE(COLLECT_SET(plan)) AS num_plans, GROUPING_ID() AS grouping_id FROM flattened GROUP BY CUBE (plan) ORDER BY plan NULLS LAST;

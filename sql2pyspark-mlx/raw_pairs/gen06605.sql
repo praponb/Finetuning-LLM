@@ -1,0 +1,1 @@
+select p.category, sum(i.quantity) as total_quantity, count(i.quantity) as quantity_count from inventory i full outer join products p on p.id = i.product_id inner join suppliers s on p.supplier_id = s.id where month(i.last_restock) in (1, 7, 9) group by p.category order by total_quantity desc, category limit 10;

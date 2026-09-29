@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, name, email, segment, is_active, age, REGEXP_EXTRACT(email, '@(.+)$', 1) AS email_domain, CONCAT(country, ' - ', city) AS country_city FROM customers WHERE signup_date > DATE '2023-07-29') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY age DESC, id) AS latest_rank FROM cleaned) x WHERE latest_rank = 1;

@@ -1,0 +1,1 @@
+select round(avg(sqft), 2) avg_sqft, sum(case when city = 'New York' then sqft else 0 end) new_york_sqft from stores where city in ('Berlin', 'Singapore') and (city = 'Bangkok' or region != 'South') order by new_york_sqft desc

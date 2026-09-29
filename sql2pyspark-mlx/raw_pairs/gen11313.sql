@@ -1,0 +1,1 @@
+SELECT location, COUNT(*) AS num_departments, ROUND(AVG(budget), 2) AS avg_budget FROM departments WHERE dept_name IN ('Marketing', 'Legal', 'HR') AND dept_name NOT IN ('Sales', 'Legal') GROUP BY location ORDER BY num_departments, avg_budget

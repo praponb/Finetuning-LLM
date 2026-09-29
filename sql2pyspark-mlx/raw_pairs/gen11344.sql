@@ -1,0 +1,1 @@
+select case when unit_price >= 430 then 'high' when unit_price >= 140 then 'mid' else 'low' end as unit_price_bucket, product_id, round(stddev(quantity), 2) as stddev_quantity, max(quantity) - min(quantity) as quantity_range, sum(unit_price * quantity) as revenue from order_items group by unit_price_bucket, product_id order by quantity_range, 2 desc;

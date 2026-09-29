@@ -1,0 +1,1 @@
+with sessions_by_customer as (select customer_id, sort_array(collect_set(country)) country_list from sessions group by customer_id) select c.id, c.name, sbc.country_list from customers c inner join sessions_by_customer sbc on c.id = sbc.customer_id;

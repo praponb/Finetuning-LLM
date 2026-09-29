@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.sqft >= 15627 THEN 'high' WHEN s.sqft >= 5779 THEN 'mid' ELSE 'low' END AS sqft_bucket, s.city, SUM(ss.revenue) AS total_revenue FROM store_sales ss LEFT OUTER JOIN stores s ON ss.store_id = s.id WHERE ss.store_id IN (3, 4) GROUP BY CASE WHEN s.sqft >= 15627 THEN 'high' WHEN s.sqft >= 5779 THEN 'mid' ELSE 'low' END, s.city;

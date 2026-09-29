@@ -1,0 +1,1 @@
+SELECT brand, COUNT(*) FILTER (WHERE category = 'Grocery') AS grocery_rows, MIN(price) AS min_price, ROUND(SUM(stock_qty) / NULLIF(COUNT(CASE WHEN category = 'Grocery' THEN 1 END), 0), 2) AS stock_qty_per_grocery FROM products GROUP BY brand HAVING MIN(price) > 0 ORDER BY min_price NULLS LAST;

@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(p.id) AS payment_count, COUNT(DISTINCT p.amount) AS unique_statuss, MAX(p.amount) AS max_amount FROM orders o LEFT JOIN payments p ON o.id = p.order_id WHERE o.customer_id IN (17, 26, 27) GROUP BY o.channel HAVING COUNT(DISTINCT p.amount) >= 2 ORDER BY max_amount DESC

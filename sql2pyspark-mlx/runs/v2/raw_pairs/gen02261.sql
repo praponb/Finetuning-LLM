@@ -1,0 +1,1 @@
+SELECT id, city, rating, country, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating, id) AS row_num, DENSE_RANK() OVER (PARTITION BY country ORDER BY rating DESC) AS dense_rnk FROM suppliers ORDER BY dense_rnk;

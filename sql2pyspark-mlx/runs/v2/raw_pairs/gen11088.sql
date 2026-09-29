@@ -1,0 +1,1 @@
+SELECT id, status, order_id, cost, MIN(cost) OVER (PARTITION BY status, order_id) AS status_min_cost, FIRST_VALUE(status) OVER (PARTITION BY order_id ORDER BY cost, id) AS first_status FROM shipments WHERE MONTH(delivered_date) IN (3, 5, 8);

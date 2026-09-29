@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT s.city, s.region, COUNT(*) AS num_rows, AVG(e.revenue) AS avg_revenue FROM store_sales e JOIN stores s ON e.store_id = s.id GROUP BY GROUPING SETS ((s.city, s.region), (s.city))) SELECT num_rows FROM dim_totals ORDER BY num_rows NULLS LAST

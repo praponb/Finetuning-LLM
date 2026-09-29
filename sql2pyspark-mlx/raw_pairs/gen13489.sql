@@ -1,0 +1,1 @@
+with product_stats as (select product_id, round(stddev(unit_price), 2) stddev_unit_price from order_items where unit_price < 120 group by product_id) select p.launch_date, p.price, ps.stddev_unit_price from products p join product_stats ps on p.id = ps.product_id;

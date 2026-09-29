@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, YEAR(s.opened_date) AS opened_year, AVG(o.amount) AS avg_amount FROM orders o JOIN stores s ON o.store_id = s.id JOIN customers c ON c.id = o.customer_id WHERE s.store_name LIKE '%Cent%' GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM'), YEAR(s.opened_date);

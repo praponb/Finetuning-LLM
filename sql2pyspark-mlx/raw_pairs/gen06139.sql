@@ -1,0 +1,1 @@
+SELECT o.channel, o.status, MIN(p.paid_at) min_paid_at, AVG(p.amount) avg_amount FROM payments p LEFT JOIN orders o ON o.id = p.order_id WHERE o.shipping_fee > 31 GROUP BY o.channel, o.status ORDER BY o.channel;

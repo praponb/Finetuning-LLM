@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.store_id, p.cost, p.launch_date, s.rating, s.country FROM inventory i JOIN products p ON i.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE ARRAY_CONTAINS(p.tags, 'new') ORDER BY last_restock DESC;

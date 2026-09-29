@@ -1,0 +1,1 @@
+SELECT p.brand, MAX(ss.units) AS max_units, MAX(ss.sale_date) AS latest_sale_date FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE ss.store_id IN (1, 2, 3, 6) GROUP BY p.brand;

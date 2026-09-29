@@ -1,0 +1,1 @@
+SELECT method, HOUR(paid_at) AS paid_hour, ROUND(STDDEV(amount), 2) AS stddev_amount, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM payments GROUP BY method, HOUR(paid_at) HAVING stddev_amount > 73 ORDER BY paid_hour

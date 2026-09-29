@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT d.region, COUNT(*) AS cnt, MAX(s.revenue) AS max_revenue, ROUND(SUM(s.units), 2) AS total_units FROM store_sales s JOIN stores d ON s.store_id = d.id GROUP BY d.region) SELECT region, cnt FROM by_dimension ORDER BY region;

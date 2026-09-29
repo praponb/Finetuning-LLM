@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, RANK() OVER (PARTITION BY status ORDER BY monthly_fee DESC) AS row_num FROM subscriptions) SELECT id, status, monthly_fee, end_date FROM ranked WHERE row_num <= 1 ORDER BY monthly_fee

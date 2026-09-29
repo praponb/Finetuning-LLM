@@ -1,0 +1,1 @@
+SELECT id, customer_id, coupon_codes, ship_to, attributes['utm_source'] AS utm_source, COALESCE(attributes['device'], 'direct') AS device_or_default, ARRAY_CONTAINS(coupon_codes, 'SPRING10') AS used_spring10 FROM carts;

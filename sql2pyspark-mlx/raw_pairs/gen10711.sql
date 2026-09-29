@@ -1,0 +1,17 @@
+WITH ranked_inventory AS (
+    SELECT
+        id,
+        product_id,
+        quantity,
+        last_restock,
+        RANK() OVER (PARTITION BY product_id ORDER BY quantity) AS rn
+    FROM inventory
+    WHERE quantity = 157
+)
+SELECT
+    id,
+    product_id,
+    quantity,
+    last_restock
+FROM ranked_inventory
+WHERE rn <= 5

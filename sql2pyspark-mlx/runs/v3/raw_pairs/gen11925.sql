@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT * FROM transactions WHERE txn_type != 'DEBIT' OR TO_DATE(txn_time) < '2023-07-01'), summary AS (SELECT txn_type, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM valid_transactions GROUP BY txn_type) SELECT txn_type, merchant_list FROM summary ORDER BY txn_type DESC;

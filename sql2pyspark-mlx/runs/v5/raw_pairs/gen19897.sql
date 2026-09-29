@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LEAST(temp_c, humidity) AS least_temp_c_humidity FROM device_readings WHERE pressure > 1015) SELECT * FROM (SELECT firmware, device_code, temp_c FROM valid) src PIVOT (SUM(temp_c) AS amount, COUNT(1) AS n FOR device_code IN ('DV-03' AS dv_03, 'DV-04' AS dv_04));

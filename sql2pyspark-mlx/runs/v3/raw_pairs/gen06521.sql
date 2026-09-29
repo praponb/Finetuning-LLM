@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', hire_date) AS hire_month, is_remote, CASE WHEN salary >= 135000 THEN 'high' WHEN salary >= 76000 THEN 'mid' ELSE 'low' END AS salary_bucket, AVG(salary) AS avg_salary FROM employees GROUP BY DATE_TRUNC('MONTH', hire_date), is_remote, CASE WHEN salary >= 135000 THEN 'high' WHEN salary >= 76000 THEN 'mid' ELSE 'low' END;

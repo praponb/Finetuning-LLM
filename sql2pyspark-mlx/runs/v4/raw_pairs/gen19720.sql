@@ -1,0 +1,1 @@
+select stores.id, stores.city, stores.sqft from stores where stores.city in ('Berlin', 'London') and not exists (select 1 from store_sales where store_sales.store_id = stores.id and store_sales.revenue between 1800 and 2000);

@@ -1,0 +1,1 @@
+SELECT event_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, COUNT(*) AS row_count FROM web_events WHERE session_id IN (3, 25, 30, 37) OR page IN ('/home', '/checkout', '/cart') GROUP BY event_type

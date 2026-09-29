@@ -1,0 +1,1 @@
+SELECT products.id, products.price, products.launch_date, suppliers.city, suppliers.supplier_name, suppliers.country FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE suppliers.country != 'JP' AND products.category IN ('Home', 'Sports', 'Fashion');

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, SUM(balance) total_balance, COUNT(balance) balance_count, MAX(balance) - MIN(balance) balance_range FROM accounts GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM') ORDER BY total_balance ASC, opened_month ASC LIMIT 50;

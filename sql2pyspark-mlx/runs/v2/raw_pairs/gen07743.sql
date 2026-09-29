@@ -1,0 +1,1 @@
+WITH order_items_by_product AS (SELECT product_id, AVG(quantity) avg_quantity FROM order_items WHERE quantity = 8 GROUP BY product_id) SELECT p.id, p.brand, p.cost, oibp.avg_quantity FROM products p LEFT JOIN order_items_by_product oibp ON p.id = oibp.product_id WHERE oibp.avg_quantity > 5.1 ORDER BY cost;

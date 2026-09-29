@@ -1,0 +1,1 @@
+SELECT s.*, top1.units, top1.sale_date FROM products s JOIN LATERAL (SELECT c.units, c.sale_date FROM store_sales c WHERE c.product_id = s.id AND c.sale_date <= s.launch_date ORDER BY c.sale_date DESC, c.id DESC LIMIT 1) top1 ON TRUE

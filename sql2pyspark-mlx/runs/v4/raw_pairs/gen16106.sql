@@ -1,0 +1,1 @@
+select case when quantity >= 7 then 'high' when quantity >= 3 then 'mid' else 'low' end as quantity_bucket, count(distinct unit_price) as unique_orders from order_items group by case when quantity >= 7 then 'high' when quantity >= 3 then 'mid' else 'low' end having unique_orders < 5 order by 1 desc limit 10;

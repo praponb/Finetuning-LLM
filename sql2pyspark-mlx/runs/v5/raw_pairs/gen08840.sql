@@ -1,0 +1,1 @@
+SELECT id, order_id, delivered_date, cost, status, ROUND(AVG(cost) OVER (PARTITION BY order_id ORDER BY delivered_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_3, LAG(cost, 1, 0) OVER (PARTITION BY status, order_id ORDER BY delivered_date, id) AS prev_cost FROM shipments

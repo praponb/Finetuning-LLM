@@ -1,0 +1,1 @@
+SELECT id, txn_type, CASE WHEN txn_type IN ('FEE', 'CREDIT') THEN 'Group A' ELSE 'Other' END AS txn_type_group, ROUND(amount, 2) AS amount_rounded FROM transactions WHERE txn_type != 'CREDIT' AND HOUR(txn_time) BETWEEN 12 AND 16 AND is_flagged ORDER BY txn_type, id LIMIT 5

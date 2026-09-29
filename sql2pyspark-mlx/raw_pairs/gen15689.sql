@@ -1,0 +1,1 @@
+select is_flagged, round((100 * sum(case when txn_type = 'CREDIT' then 1 else 0 end)) / count(*), 1) as pct_credit, max(txn_time) as latest_txn_time from transactions where account_id in (5, 19, 21, 26) and account_id in (1, 3, 16, 33) and not is_flagged group by is_flagged order by pct_credit desc, latest_txn_time, is_flagged limit 5;

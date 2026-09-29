@@ -1,0 +1,1 @@
+SELECT account_type, APPROX_PERCENTILE(balance, ARRAY(0.25, 0.5, 0.75)) AS balance_quartiles, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list, COUNT(CASE WHEN status = 'OPEN' THEN 1 END) AS open_count FROM accounts GROUP BY account_type

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, status, SUM(monthly_fee) AS total_monthly_fee, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions GROUP BY DATE_FORMAT(end_date, 'yyyy-MM'), status ORDER BY total_monthly_fee DESC, end_month, status LIMIT 20

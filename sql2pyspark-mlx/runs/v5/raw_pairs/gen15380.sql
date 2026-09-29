@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, coupon_codes, rec.product_id, rec.qty, rec.price, rec.promo FROM carts LATERAL VIEW OUTER EXPLODE(items) e AS rec) SELECT id, product_id, qty, price, promo FROM flattened ORDER BY product_id DESC, id;

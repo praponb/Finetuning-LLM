@@ -1,0 +1,1 @@
+select ss.sale_date, ss.revenue, p.brand, p.product_name, s.opened_date from store_sales ss left join products p on ss.product_id = p.id inner join stores s on ss.store_id = s.id where s.city in ('Singapore', 'Chiang Mai')

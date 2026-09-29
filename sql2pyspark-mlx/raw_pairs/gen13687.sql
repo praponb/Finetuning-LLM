@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, LAST_DAY(hire_date) AS hire_date_month_end, COALESCE(level, 'UNKNOWN') AS level_clean FROM employees WHERE hire_date >= DATE '2023-04-27' AND manager_id IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY salary DESC, id) AS row_num FROM filtered QUALIFY row_num = 1;

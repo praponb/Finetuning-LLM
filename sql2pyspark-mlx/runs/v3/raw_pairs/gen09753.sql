@@ -1,0 +1,1 @@
+select location, case when location in ('Bangkok', 'New York') then 'tier_1' else 'other' end as location_group, round(avg(budget), 2) as avg_budget from departments group by rollup(location, case when location in ('Bangkok', 'New York') then 'tier_1' else 'other' end) order by location_group, avg_budget desc

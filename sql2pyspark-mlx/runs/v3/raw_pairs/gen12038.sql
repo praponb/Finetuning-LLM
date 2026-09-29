@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, AVG(quantity) AS avg_quantity FROM inventory WHERE quantity > 126 GROUP BY store_id) SELECT s.store_name, ss.avg_quantity FROM stores s JOIN store_summary ss ON s.id = ss.store_id WHERE ss.avg_quantity >= 200 ORDER BY avg_quantity DESC, s.store_name ASC

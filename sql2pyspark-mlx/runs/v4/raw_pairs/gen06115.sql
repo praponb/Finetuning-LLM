@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, SUM(CASE WHEN category = 'Fashion' THEN 1 ELSE 0 END) AS fashion_count FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, s.country, pbs.fashion_count FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY s.supplier_name DESC, id LIMIT 1;

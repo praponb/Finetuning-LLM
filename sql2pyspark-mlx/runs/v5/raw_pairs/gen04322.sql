@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT *, RANK() OVER (PARTITION BY order_id ORDER BY delivered_date) AS row_num FROM shipments) SELECT id, order_id, delivered_date FROM Ranked WHERE row_num <= 1 ORDER BY 3, id DESC;

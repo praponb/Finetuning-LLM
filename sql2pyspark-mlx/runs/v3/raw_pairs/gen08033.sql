@@ -1,0 +1,1 @@
+SELECT p.id, p.supplier_id, p.category FROM products p WHERE EXISTS (SELECT 1 FROM store_sales ss WHERE ss.product_id = p.id AND ss.sale_date BETWEEN '2024-08-01' AND '2025-07-01') ORDER BY p.category DESC, id LIMIT 10;

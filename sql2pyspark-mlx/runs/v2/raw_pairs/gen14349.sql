@@ -1,0 +1,1 @@
+SELECT country, city, ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_berlin, MIN(rating) AS min_rating FROM suppliers GROUP BY country, city HAVING ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 56 ORDER BY country

@@ -1,0 +1,1 @@
+SELECT rating_bucket, avg_rating, min_rating FROM (SELECT CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.9 THEN 'mid' ELSE 'low' END AS rating_bucket, AVG(rating) AS avg_rating, MIN(rating) AS min_rating FROM suppliers GROUP BY CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.9 THEN 'mid' ELSE 'low' END) AS t WHERE avg_rating < 3.6;

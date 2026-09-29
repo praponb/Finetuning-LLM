@@ -1,0 +1,1 @@
+with supplier_summary as (select supplier_id, count(distinct cost) as unique_suppliers, min(launch_date) as min_launch_date from products group by supplier_id) select s.id, s.country, s.supplier_name, ss.unique_suppliers, ss.min_launch_date from suppliers s inner join supplier_summary ss on s.id = ss.supplier_id

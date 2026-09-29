@@ -1,0 +1,1 @@
+SELECT s.id, s.balance, s.status, x.transaction_amount, x.txn_type FROM accounts s LEFT JOIN LATERAL (SELECT c.amount AS transaction_amount, c.txn_type FROM transactions c WHERE c.account_id = s.id ORDER BY c.amount DESC, c.id DESC LIMIT 1) x ON TRUE

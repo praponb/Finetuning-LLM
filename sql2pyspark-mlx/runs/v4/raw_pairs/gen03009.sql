@@ -1,0 +1,1 @@
+SELECT e.id, e.level AS employee_level, e.email AS employee_email, e.manager_id AS employee_manager_id, m.job_title AS manager_job_title, m.level AS manager_level FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.manager_id = 11 ORDER BY e.email DESC, id LIMIT 10;

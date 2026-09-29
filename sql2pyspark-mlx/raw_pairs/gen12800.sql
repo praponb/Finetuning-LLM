@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at DESC, id) AS rn FROM sessions) ranked WHERE rn = 1) SELECT id, customer_id, device, started_at, country, CASE WHEN device RLIKE '^(mobile|tablet)$' THEN 'PRIORITY' WHEN device RLIKE '^(desktop)$' THEN 'OTHER_ZONE' ELSE 'GROUP_A' END AS device_zone FROM deduped ORDER BY country;

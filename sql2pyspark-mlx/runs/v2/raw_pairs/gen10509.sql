@@ -1,0 +1,1 @@
+select hour(txn_time) as txn_hour, merchant, txn_type, avg(amount) as avg_amount, max(amount) as max_amount from transactions group by hour(txn_time), merchant, txn_type order by merchant desc, txn_type, txn_hour limit 3;

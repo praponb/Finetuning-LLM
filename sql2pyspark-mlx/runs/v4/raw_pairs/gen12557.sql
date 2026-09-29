@@ -1,0 +1,1 @@
+SELECT location, CASE WHEN budget >= 4436000 THEN 'high' WHEN budget >= 2053000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(budget) AS total_budget FROM departments GROUP BY location, budget_bucket ORDER BY total_budget DESC;

@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, level, latency_ms, key, v FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS key, v) SELECT *, PERCENT_RANK() OVER (PARTITION BY level ORDER BY latency_ms DESC) AS latency_ms_percent_rank, DENSE_RANK() OVER (ORDER BY latency_ms DESC) AS latency_ms_dense_rank FROM exploded WHERE level IN ('INFO', 'DEBUG', 'WARN');

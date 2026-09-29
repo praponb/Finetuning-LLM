@@ -1,0 +1,1 @@
+SELECT c.city, SUM(CASE WHEN o.status = 'CANCELLED' THEN o.discount ELSE 0 END) AS cancelled_discount FROM orders o INNER JOIN customers c ON c.id = o.customer_id WHERE c.segment <> 'SMB' GROUP BY c.city

@@ -1,0 +1,1 @@
+select a.id, a.opened_date, t.stddev_amount from accounts a join (select account_id, round(stddev(amount), 2) as stddev_amount from transactions group by account_id) t on a.id = t.account_id where t.stddev_amount > 60 order by opened_date;

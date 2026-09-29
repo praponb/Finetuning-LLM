@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, COUNT(o.shipping_fee) AS shipping_fee_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(o.channel))) AS channel_values FROM orders o JOIN customers c ON o.customer_id = c.id LEFT OUTER JOIN stores s ON s.id = o.store_id GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM') ORDER BY 1 DESC LIMIT 10;

@@ -1,0 +1,1 @@
+SELECT id, order_id, delivered_date, status, cost, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY delivered_date, id) AS delivered_date_row, AVG(cost) OVER (PARTITION BY status) AS status_avg_cost FROM shipments ORDER BY cost DESC, delivered_date_row

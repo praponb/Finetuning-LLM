@@ -1,0 +1,1 @@
+SELECT id, tags, product_name, CASE WHEN stock_qty >= 356 THEN 'High' WHEN stock_qty >= 62 THEN 'Medium' ELSE 'Low' END stock_qty_level FROM products WHERE ARRAY_CONTAINS(tags, 'bestseller') AND (SIZE(tags) > 1 OR price >= 480)

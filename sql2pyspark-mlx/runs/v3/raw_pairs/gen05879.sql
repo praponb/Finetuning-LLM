@@ -1,0 +1,1 @@
+WITH recent_web_events AS (SELECT * FROM web_events WHERE session_id = 39 AND HOUR(event_time) BETWEEN 9 AND 15), summary AS (SELECT page, SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) search_duration_sec FROM recent_web_events GROUP BY page) SELECT page, search_duration_sec FROM summary ORDER BY 1

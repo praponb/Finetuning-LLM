@@ -1,0 +1,1 @@
+select *, row_number() over (partition by status order by balance, id) as event_seq, ntile(5) over (partition by account_type, customer_id order by balance desc, id) as balance_bucket, first_value(balance, true) over w_ordered as first_known_balance from accounts window w_ordered as (order by opened_date, id rows between unbounded preceding and current row);

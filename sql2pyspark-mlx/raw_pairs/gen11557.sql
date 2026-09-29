@@ -1,0 +1,1 @@
+select dept_name, case when budget >= 3640000 then 'high' when budget >= 1133000 then 'mid' else 'low' end as budget_bucket, count(*) as row_count, min(budget) as min_budget from departments where budget between 2976000 and 3853000 group by dept_name, case when budget >= 3640000 then 'high' when budget >= 1133000 then 'mid' else 'low' end order by dept_name

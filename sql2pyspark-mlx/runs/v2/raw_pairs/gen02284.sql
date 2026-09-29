@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, store_id, units, product_id, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY units DESC, id) AS rn FROM store_sales WHERE sale_date < '2025-09-14') SELECT id, store_id, units, product_id FROM ranked WHERE rn <= 5 ORDER BY 1 DESC;

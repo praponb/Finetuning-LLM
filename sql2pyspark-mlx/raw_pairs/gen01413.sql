@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, RANK() OVER (PARTITION BY status ORDER BY opened_date DESC) AS rn FROM accounts WHERE YEAR(opened_date) >= 2024) SELECT * FROM ranked WHERE rn = 1 ORDER BY opened_date, rn DESC

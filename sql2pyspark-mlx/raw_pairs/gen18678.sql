@@ -1,0 +1,1 @@
+SELECT opened_quarter, status, avg_balance FROM (SELECT QUARTER(opened_date) AS opened_quarter, status, AVG(balance) AS avg_balance FROM accounts GROUP BY QUARTER(opened_date), status) AS t WHERE avg_balance > 58000

@@ -1,0 +1,1 @@
+SELECT e.manager_id, e.dept_id, e.level, d.location, d.dept_name, d.budget FROM employees e INNER JOIN departments d ON e.dept_id = d.id WHERE e.job_title != 'Manager' OR e.salary BETWEEN 80000 AND 129000 ORDER BY level ASC;

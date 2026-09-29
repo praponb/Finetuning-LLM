@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, txn_type, amount, txn_time, merchant, is_flagged, CAST(is_flagged AS INT) AS is_flagged_flag FROM transactions WHERE txn_time >= TIMESTAMP '2023-07-09 13:00:00' AND merchant IS NOT NULL) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY txn_time DESC NULLS LAST, id) AS row_num FROM base) t WHERE row_num = 1;

@@ -1,0 +1,1 @@
+SELECT e.hire_date AS employee_hire_date, e.level AS employee_level, m.salary AS manager_salary, m.dept_id AS manager_dept_id, m.job_title AS manager_job_title FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id WHERE m.full_name LIKE 'Pi%' ORDER BY e.level;

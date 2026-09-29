@@ -1,0 +1,1 @@
+select id, humidity, status_bits, lead(status_bits, 1) over (partition by year(reading_ts) order by pressure, id) next_status_bits, row_number() over (partition by device_code order by status_bits desc, id) row_seq, sum(temp_c) over (partition by device_code order by pressure, id rows between unbounded preceding and current row) running_temp_c from device_readings

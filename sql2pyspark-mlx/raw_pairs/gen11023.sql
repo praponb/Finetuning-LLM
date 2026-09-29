@@ -1,0 +1,1 @@
+SELECT departments.id, departments.budget, departments.dept_name, departments.location FROM departments WHERE departments.dept_name = 'Legal' AND NOT EXISTS (SELECT 1 FROM employees WHERE employees.dept_id = departments.id AND employees.job_title IN ('Manager', 'Analyst')) ORDER BY departments.budget DESC, location

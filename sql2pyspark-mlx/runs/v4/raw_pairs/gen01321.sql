@@ -1,0 +1,1 @@
+select id, sale_date, product_id, revenue, date_format(sale_date, 'MMM yyyy') as sale_date_label, revenue - units as revenue_per_unit from store_sales where product_id in (2, 8, 9) and sale_date < '2023-08-01'

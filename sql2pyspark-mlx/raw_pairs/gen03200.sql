@@ -1,0 +1,1 @@
+with valid as (select id, order_id, carrier, delivered_date, cost, status, add_months(shipped_date, 6) as shipped_date_plus_months from shipments where delivered_date < '2024-10-01') select id, delivered_date, status, shipped_date_plus_months from (select *, rank() over (partition by status, order_id order by delivered_date desc) as rn from valid) t where rn = 1

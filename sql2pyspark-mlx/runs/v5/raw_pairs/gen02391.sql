@@ -1,0 +1,1 @@
+WITH ranked_suppliers AS (SELECT id, city, rating, country, DENSE_RANK() OVER (PARTITION BY city ORDER BY rating) AS rn FROM suppliers WHERE country NOT IN ('US', 'TH')) SELECT id, city, rating, country FROM ranked_suppliers WHERE rn <= 3

@@ -1,0 +1,1 @@
+SELECT status, pct_success, failed_amount FROM (SELECT status, ROUND((100 * SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_success, SUM(CASE WHEN status = 'FAILED' THEN amount ELSE 0 END) AS failed_amount FROM payments WHERE amount >= 1410 GROUP BY status) AS s WHERE failed_amount > 48 ORDER BY pct_success DESC

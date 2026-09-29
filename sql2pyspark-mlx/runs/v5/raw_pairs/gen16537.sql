@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, currency, element FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_prices) x AS element) SELECT id, plan, effective_from, COUNT(element) OVER (PARTITION BY currency) AS currency_count_element, RANK() OVER (ORDER BY element DESC) AS element_rank, AVG(element) OVER (PARTITION BY currency) AS currency_avg_element FROM lines;

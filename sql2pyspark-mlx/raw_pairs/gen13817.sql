@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, city FROM (SELECT id, segment, signup_date, city, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date DESC, id) AS rn FROM customers WHERE credit_limit > 5700) AS r WHERE rn <= 2;

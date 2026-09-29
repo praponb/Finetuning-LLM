@@ -1,0 +1,1 @@
+SELECT we.id, we.session_id, s.device, c.is_active, c.age FROM web_events we RIGHT JOIN sessions s ON s.id = we.session_id LEFT JOIN customers c ON s.customer_id = c.id WHERE HOUR(s.started_at) BETWEEN 12 AND 20 ORDER BY c.age

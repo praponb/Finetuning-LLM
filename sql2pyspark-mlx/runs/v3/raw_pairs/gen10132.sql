@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.rating, t.max_cost FROM suppliers s INNER JOIN (SELECT supplier_id, MAX(cost) AS max_cost FROM products WHERE supplier_id IN (5, 24, 35, 40) GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY id ASC, s.rating DESC LIMIT 10

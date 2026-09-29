@@ -1,0 +1,1 @@
+WITH recent_inventory AS (SELECT * FROM inventory WHERE store_id IN (1, 2, 4, 6) AND store_id IN (1, 2, 3, 4)), agg AS (SELECT store_id, product_id, SUM(quantity) AS total_quantity FROM recent_inventory GROUP BY store_id, product_id) SELECT store_id, product_id, total_quantity FROM agg WHERE total_quantity > 970 ORDER BY total_quantity DESC, store_id, product_id LIMIT 5;

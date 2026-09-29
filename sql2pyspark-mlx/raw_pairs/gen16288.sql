@@ -1,0 +1,1 @@
+SELECT p.method, p.amount, p.status, o.shipping_fee, o.channel, CEIL(p.amount) AS amount_whole FROM payments p LEFT JOIN orders o ON p.order_id = o.id WHERE p.paid_at >= '2025-07-01' AND o.amount < 1300

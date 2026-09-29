@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.3 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END AS rating_bucket, MAX(rating) - MIN(rating) AS rating_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM suppliers GROUP BY 1 HAVING rating_range < 31

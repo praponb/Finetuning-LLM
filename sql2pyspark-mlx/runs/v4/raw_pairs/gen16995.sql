@@ -1,0 +1,1 @@
+SELECT TO_DATE(event_time) AS event_day, AVG(duration_sec) AS avg_duration_sec, COUNT(CASE WHEN event_type = 'add_to_cart' THEN 1 END) AS add_to_cart_count FROM web_events WHERE duration_sec <> 335 AND duration_sec <= 164 AND duration_sec IS NULL GROUP BY event_day

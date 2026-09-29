@@ -1,0 +1,1 @@
+SELECT we.duration_sec, s.browser, c.city, TO_DATE(we.event_time) AS event_time_date FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE we.duration_sec = 339 AND we.page IN ('/search', '/home') ORDER BY s.browser DESC;

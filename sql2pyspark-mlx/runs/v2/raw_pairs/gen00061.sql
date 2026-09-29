@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, oi.quantity, oi.product_id, o.channel, o.order_date, o.amount FROM order_items oi JOIN orders o ON oi.order_id = o.id WHERE o.shipping_fee >= 33 ORDER BY quantity DESC, id LIMIT 3;

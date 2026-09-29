@@ -1,0 +1,2 @@
+v7 training data: data/ (make data N=20000 SEED=7), 16,923 train
+Tue Sep 29 15:04:49 +07 2026

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM shipments WHERE order_id = 4 AND (status != 'DELIVERED' OR cost <= 48)), Summary AS (SELECT carrier, MAX(cost) AS max_cost FROM base GROUP BY carrier) SELECT carrier, max_cost FROM Summary WHERE max_cost > 66 ORDER BY max_cost DESC;

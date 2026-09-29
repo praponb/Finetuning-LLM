@@ -1,0 +1,1 @@
+SELECT *, CAST(paid_at AS DATE) AS paid_at_day, DATE_TRUNC('year', paid_at) AS paid_at_period FROM payments WHERE amount <= 1130 AND order_id = 40 AND order_id IN (24, 31, 35, 37) ORDER BY paid_at_day;

@@ -1,0 +1,1 @@
+SELECT event_type, CONCAT_WS('-', event_type, page) AS event_type_page_key, TRIM(event_type) AS clean_event_type FROM web_events WHERE duration_sec != 326 AND (duration_sec = 307 OR event_type IN ('click', 'page_view', 'purchase')) ORDER BY event_type;

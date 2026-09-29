@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, ROUND(STDDEV(cost), 2) AS stddev_cost FROM shipments GROUP BY order_id) SELECT o.id, o.status, os.stddev_cost FROM orders o LEFT OUTER JOIN order_summary os ON o.id = os.order_id ORDER BY o.id DESC

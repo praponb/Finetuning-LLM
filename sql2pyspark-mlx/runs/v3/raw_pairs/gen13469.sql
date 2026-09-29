@@ -1,0 +1,1 @@
+SELECT hire_month, min_hire_date, unique_job_titles FROM (SELECT MONTH(hire_date) AS hire_month, MIN(hire_date) AS min_hire_date, COUNT(DISTINCT salary) AS unique_job_titles FROM employees WHERE job_title IN ('Director', 'Intern') GROUP BY MONTH(hire_date)) AS agg WHERE unique_job_titles > 5;

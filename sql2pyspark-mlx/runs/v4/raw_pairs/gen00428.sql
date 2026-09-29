@@ -1,0 +1,1 @@
+SELECT city, region, MAX(sqft) AS max_sqft, ROUND(STDDEV(sqft), 2) AS stddev_sqft FROM stores GROUP BY city, region HAVING COUNT(DISTINCT sqft) >= 1 ORDER BY stddev_sqft DESC, city ASC, region ASC LIMIT 3

@@ -1,0 +1,1 @@
+SELECT account_type, ROUND(STDDEV(balance), 2) AS stddev_balance, MIN(opened_date) AS first_opened_date FROM accounts WHERE status IS NOT NULL AND opened_date > '2023-11-15' GROUP BY account_type ORDER BY first_opened_date

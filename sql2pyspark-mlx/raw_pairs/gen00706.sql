@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT p.city, e.brand, COUNT(*) AS rows_total, MAX(e.stock_qty) AS max_stock_qty FROM products e INNER JOIN suppliers p ON e.supplier_id = p.id GROUP BY GROUPING SETS ((p.city, e.brand), (p.city), ())) SELECT rows_total, max_stock_qty FROM by_dimension

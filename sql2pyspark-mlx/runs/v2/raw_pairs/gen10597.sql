@@ -1,0 +1,1 @@
+SELECT o.id, o.status, COUNT(s.id) AS shipment_count, ROUND((100 * SUM(CASE WHEN s.carrier = 'UPS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_ups, SORT_ARRAY(COLLECT_SET(s.carrier)) AS carrier_list FROM orders o LEFT JOIN shipments s ON s.order_id = o.id WHERE o.customer_id IS NULL GROUP BY o.id, o.status ORDER BY status DESC, id LIMIT 50

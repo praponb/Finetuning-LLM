@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, order_date, status, amount, discount, shipping_fee, shipping_fee - discount AS shipping_fee_minus_discount FROM orders WHERE store_id IS NOT NULL) SELECT * FROM cleaned QUALIFY ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipping_fee_minus_discount, id) = 1;

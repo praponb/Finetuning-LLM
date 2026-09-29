@@ -1,0 +1,1 @@
+SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range, SUM(quantity) AS total_quantity, MIN(quantity) AS min_quantity FROM inventory WHERE last_restock <= '2025-10-01' AND store_id = 4 GROUP BY product_id HAVING total_quantity > 1000 ORDER BY 2;

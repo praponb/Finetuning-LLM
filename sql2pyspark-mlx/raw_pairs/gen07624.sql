@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CAST(started_at AS DATE) AS started_at_day FROM sessions WHERE started_at >= TIMESTAMP '2023-03-01 19:00:00' AND country IN ('SG', 'JP')) SELECT device FROM valid INTERSECT ALL SELECT device FROM sessions WHERE TO_DATE(started_at) < '2024-07-03'

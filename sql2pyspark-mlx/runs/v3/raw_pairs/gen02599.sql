@@ -1,0 +1,1 @@
+SELECT store_name, opened_date, ROUND(sqft * 1.15, 2) AS sqft_scaled, CONCAT_WS(',', store_name, city) AS store_name_city_key FROM stores WHERE store_name LIKE '%Siam%' OR sqft BETWEEN 7491 AND 12064;

@@ -1,0 +1,1 @@
+SELECT status, QUARTER(end_date) AS end_quarter, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, ROUND((100 * SUM(CASE WHEN plan = 'standard' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_standard FROM subscriptions GROUP BY 1, 2 ORDER BY pct_standard, status, end_quarter LIMIT 5;

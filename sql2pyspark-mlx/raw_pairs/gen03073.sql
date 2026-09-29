@@ -1,0 +1,1 @@
+with lines as (select id, plan, explode(tier_prices) as element from price_tiers) select id, plan, element, max(element) over (partition by plan) as plan_max_element, percent_rank() over (partition by plan order by element) as element_percent_rank from lines;

@@ -1,0 +1,1 @@
+SELECT opened_month, city, bangkok_count, total_sqft FROM (SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, city, SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END) AS bangkok_count, SUM(sqft) AS total_sqft FROM stores GROUP BY DATE_TRUNC('MONTH', opened_date), city) AS sub WHERE total_sqft > 63000 ORDER BY total_sqft DESC, opened_month, city LIMIT 10

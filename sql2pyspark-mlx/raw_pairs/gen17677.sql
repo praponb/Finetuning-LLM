@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, SUM(ss.revenue) AS total_revenue FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM') HAVING SUM(ss.revenue) >= 24000;

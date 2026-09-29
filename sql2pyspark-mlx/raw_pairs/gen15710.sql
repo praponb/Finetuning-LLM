@@ -1,0 +1,1 @@
+WITH ProductSummary AS (SELECT product_id, AVG(units) AS avg_units, MIN(revenue) AS min_revenue FROM store_sales WHERE revenue >= 1900 GROUP BY product_id) SELECT p.id, p.stock_qty, p.category, P.avg_units, P.min_revenue FROM products p INNER JOIN ProductSummary P ON p.id = P.product_id ORDER BY category ASC;

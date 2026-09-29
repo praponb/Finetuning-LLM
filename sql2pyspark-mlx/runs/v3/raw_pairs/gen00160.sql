@@ -1,0 +1,1 @@
+SELECT e.level AS employee_level, e.job_title AS employee_job_title, m.hire_date AS manager_hire_date, m.is_remote AS manager_is_remote, ROUND(e.salary, 2) AS salary_rounded FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id;

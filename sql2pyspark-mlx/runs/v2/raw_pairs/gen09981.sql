@@ -1,0 +1,1 @@
+select event_type, page, min_duration_sec, first_event_time from (select event_type, page, min(duration_sec) as min_duration_sec, min(event_time) as first_event_time from web_events group by event_type, page) as sub where min_duration_sec >= 390 order by first_event_time, event_type, page limit 1;

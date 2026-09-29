@@ -1,0 +1,1 @@
+SELECT MONTH(start_date) AS start_month, COUNT(DISTINCT monthly_fee) AS unique_customers, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count FROM subscriptions WHERE YEAR(end_date) = 2023 GROUP BY MONTH(start_date) HAVING MAX(monthly_fee) < 160

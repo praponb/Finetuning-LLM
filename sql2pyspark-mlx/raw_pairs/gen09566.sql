@@ -1,0 +1,1 @@
+SELECT customers.email, customers.city, t.min_started_at FROM customers LEFT JOIN (SELECT customer_id, MIN(started_at) min_started_at FROM sessions WHERE browser = 'Safari' GROUP BY customer_id) t ON customers.id = t.customer_id;

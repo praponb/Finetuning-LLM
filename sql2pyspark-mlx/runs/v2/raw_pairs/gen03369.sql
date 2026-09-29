@@ -1,0 +1,8 @@
+select
+    id,
+    status,
+    start_date,
+    monthly_fee,
+    round(avg(monthly_fee) over (partition by status order by start_date, id rows between 6 preceding and current row), 2) monthly_fee_moving_avg_7,
+    round(avg(monthly_fee) over (partition by status order by start_date, id rows between 2 preceding and current row), 2) monthly_fee_moving_avg_3
+from subscriptions;

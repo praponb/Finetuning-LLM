@@ -1,0 +1,1 @@
+SELECT c.country, c.age, t.chrome_count FROM customers c LEFT JOIN (SELECT customer_id, COUNT(CASE WHEN browser = 'Chrome' THEN 1 END) AS chrome_count FROM sessions WHERE customer_id IN (5, 26) GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.chrome_count > 8 ORDER BY c.country ASC

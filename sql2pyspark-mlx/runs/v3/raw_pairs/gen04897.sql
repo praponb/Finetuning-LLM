@@ -1,0 +1,1 @@
+SELECT location, avg_budget, location_list FROM (SELECT location, ROUND(AVG(budget), 2) AS avg_budget, SORT_ARRAY(COLLECT_SET(location)) AS location_list FROM departments GROUP BY location) AS t WHERE avg_budget < 47 ORDER BY avg_budget DESC

@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT dim.country, dim.city, COUNT(*) AS num_rows, SUM(a.amount) AS total_amount FROM orders a INNER JOIN customers dim ON a.customer_id = dim.id GROUP BY GROUPING SETS ((dim.country, dim.city), (dim.country), ())) SELECT country, city, num_rows, total_amount FROM by_dimension ORDER BY country DESC NULLS LAST;

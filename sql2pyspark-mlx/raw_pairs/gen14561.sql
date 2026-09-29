@@ -1,0 +1,1 @@
+SELECT customer_id, ROUND((100 * SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_store, COUNT(*) AS order_count FROM orders WHERE channel IN ('partner', 'store', 'web') AND order_date BETWEEN '2023-11-01' AND '2024-10-01' GROUP BY customer_id

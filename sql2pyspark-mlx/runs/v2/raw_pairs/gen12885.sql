@@ -1,0 +1,1 @@
+select event_type, page, round(stddev(duration_sec), 2) as stddev_duration_sec, count(*) as cnt from web_events where event_type = 'search' and session_id in (14, 23, 24, 33) group by event_type, page having stddev_duration_sec < 26 order by page

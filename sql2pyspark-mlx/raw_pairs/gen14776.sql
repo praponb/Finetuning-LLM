@@ -1,0 +1,1 @@
+with store_summary as (select store_id, count(*) as num_orders, count(case when status = 'SHIPPED' then 1 end) as shipped_count from orders where amount >= 460 group by store_id) select s.id, s.opened_date, ss.num_orders, ss.shipped_count from stores s join store_summary ss on s.id = ss.store_id;

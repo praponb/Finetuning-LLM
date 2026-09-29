@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.customer_id, sessions.country, sessions.device FROM sessions WHERE EXISTS (SELECT 1 FROM web_events WHERE web_events.session_id = sessions.id AND web_events.page NOT IN ('/home', '/product')) ORDER BY sessions.country DESC;

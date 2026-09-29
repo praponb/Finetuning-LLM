@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, page, duration_sec, FIRST_VALUE(page) OVER (PARTITION BY session_id ORDER BY event_time, id) AS first_page, ROUND(AVG(duration_sec) OVER (PARTITION BY session_id ORDER BY event_time, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS duration_sec_moving_avg_3 FROM web_events ORDER BY 4 ASC;

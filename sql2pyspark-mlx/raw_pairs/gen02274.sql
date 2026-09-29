@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.product_id, ss.units FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id = 8 AND YEAR(i.last_restock) = 2024 ORDER BY id DESC

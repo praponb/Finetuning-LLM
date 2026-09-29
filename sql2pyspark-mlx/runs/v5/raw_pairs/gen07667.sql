@@ -1,0 +1,1 @@
+SELECT YEAR(event_time) AS event_year, SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) AS search_duration_sec, AVG(duration_sec) AS avg_duration_sec, MIN(duration_sec) AS min_duration_sec FROM web_events GROUP BY YEAR(event_time);

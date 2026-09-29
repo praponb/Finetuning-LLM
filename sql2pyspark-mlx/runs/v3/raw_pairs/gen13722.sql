@@ -1,0 +1,4 @@
+SELECT product_id, SUM(revenue) total_revenue, ROUND(SUM(revenue) * 100.0 / SUM(SUM(revenue)) OVER (), 2) AS pct_of_total
+FROM store_sales
+WHERE product_id = 8
+GROUP BY product_id

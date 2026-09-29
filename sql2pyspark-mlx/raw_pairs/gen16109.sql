@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CEIL(units) AS units_whole, ROUND(units, 2) AS units_rounded FROM store_sales WHERE sale_date > DATE '2023-06-06') SELECT * FROM (SELECT id, store_id, units_rounded, revenue FROM base) src UNPIVOT (value FOR metric IN (units_rounded, revenue))

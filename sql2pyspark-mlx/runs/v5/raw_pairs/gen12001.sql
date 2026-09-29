@@ -1,0 +1,1 @@
+WITH kept AS (SELECT s.* FROM customers s WHERE NOT EXISTS (SELECT 1 FROM accounts c WHERE c.customer_id = s.id AND c.opened_date < s.signup_date)) SELECT id, name, email, signup_date, credit_limit, age FROM kept ORDER BY id DESC NULLS FIRST

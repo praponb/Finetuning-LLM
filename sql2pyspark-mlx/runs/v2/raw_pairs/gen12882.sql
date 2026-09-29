@@ -1,0 +1,1 @@
+SELECT id, status, amount, shipping_fee FROM (SELECT id, status, amount, shipping_fee, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount DESC, id) AS pos FROM orders) AS t WHERE pos <= 3 ORDER BY id DESC;

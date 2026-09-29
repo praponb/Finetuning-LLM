@@ -1,0 +1,1 @@
+select s.id, s.country, t.stddev_duration_sec from sessions s left join (select session_id, round(stddev(duration_sec), 2) as stddev_duration_sec from web_events where event_type not in ('add_to_cart', 'page_view') group by session_id) t on s.id = t.session_id where t.stddev_duration_sec >= 72;

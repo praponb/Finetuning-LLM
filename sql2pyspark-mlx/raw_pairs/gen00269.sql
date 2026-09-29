@@ -1,0 +1,1 @@
+with base as (select *, length(status) as status_length, coalesce(channel, 'N/A') as channel_clean from orders where order_date > to_date('2023-06-14') and store_id is not null) select channel, id from base intersect select channel, id from orders where order_date between '2023-03-01' and '2025-10-09'

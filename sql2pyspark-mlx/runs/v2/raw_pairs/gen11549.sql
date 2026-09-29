@@ -1,0 +1,1 @@
+WITH valid_departments AS (SELECT * FROM departments WHERE dept_name IN ('HR', 'Finance') AND dept_name IN ('Engineering', 'Marketing') AND budget < 3764000), summary AS (SELECT dept_name, COUNT(budget) AS budget_count FROM valid_departments GROUP BY dept_name) SELECT dept_name, budget_count FROM summary;

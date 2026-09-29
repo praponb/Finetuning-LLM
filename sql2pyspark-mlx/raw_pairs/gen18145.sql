@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, DAY(sale_date) AS sale_date_day, ROUND(revenue, 1) AS revenue_rounded FROM store_sales WHERE units BETWEEN 31 AND 35) SELECT * FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY store_id, product_id ORDER BY revenue_rounded DESC, id ASC) = 1

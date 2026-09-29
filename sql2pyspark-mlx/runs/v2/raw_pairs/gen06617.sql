@@ -1,0 +1,1 @@
+SELECT status, unique_statuss FROM (SELECT status, COUNT(DISTINCT discount) AS unique_statuss FROM orders WHERE MONTH(order_date) IN (5, 8, 9) GROUP BY status) AS t WHERE unique_statuss < 9 ORDER BY status LIMIT 10

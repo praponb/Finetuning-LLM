@@ -1,0 +1,1 @@
+select a.customer_id, max(t.txn_time) as latest_txn_time, sort_array(collect_set(t.merchant)) as merchant_list from transactions t left join accounts a on t.account_id = a.id where month(a.opened_date) in (3, 9, 11) group by a.customer_id

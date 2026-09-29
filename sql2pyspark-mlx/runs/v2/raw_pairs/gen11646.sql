@@ -1,0 +1,1 @@
+with base as (select * from products where product_name is not null), Agg as (select brand, sum(case when brand = 'Globex' then cost else 0 end) globex_cost, max(price) max_price from base group by brand) select brand, globex_cost, max_price from Agg where max_price > 1030 order by brand, globex_cost desc;

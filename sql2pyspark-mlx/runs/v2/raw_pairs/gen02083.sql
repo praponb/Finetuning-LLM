@@ -1,0 +1,1 @@
+SELECT id, order_id, delivered_date, CASE WHEN status IN ('IN_TRANSIT', 'DELIVERED') THEN 'Group A' ELSE 'Other' END AS status_group FROM shipments WHERE status = 'LOST' OR status != 'LOST' ORDER BY 1, delivered_date

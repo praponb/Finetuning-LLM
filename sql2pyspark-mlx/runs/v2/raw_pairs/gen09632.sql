@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, order_id, ROUND(AVG(unit_price), 2) AS avg_unit_price, SUM(unit_price * quantity) AS revenue FROM order_items WHERE NOT (order_id IN (12, 23, 38) AND (quantity BETWEEN 4 AND 6 OR product_id IN (1, 4, 10))) GROUP BY 1, 2 HAVING avg_unit_price > 40 ORDER BY revenue;

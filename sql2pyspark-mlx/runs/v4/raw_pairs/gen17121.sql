@@ -1,0 +1,1 @@
+SELECT id, plan, effective_from, currency, ARRAY_MIN(tier_prices) AS lowest_price, ELEMENT_AT(tier_prices, 1) AS entry_price, ZIP_WITH(tier_prices, discounts, (p, d) -> ROUND(p * (1 - d), 2)) AS net_prices FROM price_tiers;

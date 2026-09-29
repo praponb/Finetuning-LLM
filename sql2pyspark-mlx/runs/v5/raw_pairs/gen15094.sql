@@ -1,0 +1,1 @@
+with lines as (select id, explode(tier_prices) as element from price_tiers) select case when element >= 74 then 'LARGE' else 'SMALL' end as element_tier, count(distinct id) as distinct_ids, count(distinct id) as distinct_ids_2, approx_percentile(element, array(0.25, 0.5, 0.75)) as element_quartiles from lines group by case when element >= 74 then 'LARGE' else 'SMALL' end

@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.session_id, sessions.device, sessions.started_at, TRIM(sessions.country) AS clean_country FROM web_events RIGHT JOIN sessions ON web_events.session_id = sessions.id WHERE web_events.event_type != 'add_to_cart' OR web_events.event_time < '2023-10-01';

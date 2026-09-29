@@ -1,0 +1,1 @@
+select e.id, e.manager_id as employee_manager_id, e.email as employee_email, e.dept_id as employee_dept_id, m.full_name as manager_full_name, substring(m.job_title, 1, 3) as job_title_prefix from employees e inner join employees m on e.manager_id = m.id where e.hire_date between '2023-10-25' and '2025-03-01' and e.job_title = 'Analyst';

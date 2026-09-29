@@ -1,0 +1,1 @@
+with PaymentsByOrder as (select order_id, count(*) as num_payments, count(distinct amount) as unique_orders from payments group by order_id) select o.id, o.store_id, o.shipping_fee, P.num_payments, P.unique_orders from orders o inner join PaymentsByOrder P on o.id = P.order_id;

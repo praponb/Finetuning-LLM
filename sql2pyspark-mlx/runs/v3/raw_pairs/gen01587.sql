@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, account_type, ROUND(AVG(balance), 2) AS avg_balance FROM accounts WHERE customer_id = 7 GROUP BY DATE_TRUNC('MONTH', opened_date), account_type) AS x WHERE avg_balance < 31 ORDER BY account_type DESC, 3 DESC;

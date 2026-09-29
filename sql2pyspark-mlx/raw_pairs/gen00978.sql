@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, reading_ts, humidity, pressure, firmware, ROUND(status_bits / humidity, 2) AS status_bits_per_humidity FROM device_readings WHERE reading_ts > DATE '2025-09-01') SELECT * FROM (SELECT id, status_bits_per_humidity, pressure, humidity FROM base) src UNPIVOT (val FOR metric_name IN (status_bits_per_humidity, pressure, humidity))

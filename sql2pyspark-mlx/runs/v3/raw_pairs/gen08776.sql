@@ -1,0 +1,1 @@
+SELECT departments.id, departments.location, departments.budget, t.stddev_salary FROM departments LEFT OUTER JOIN (SELECT dept_id, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees WHERE dept_id IN (12, 30) GROUP BY dept_id) t ON departments.id = t.dept_id;

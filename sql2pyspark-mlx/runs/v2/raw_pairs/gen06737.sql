@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, MAX(quantity) AS max_quantity, COUNT(*) AS cnt FROM inventory WHERE store_id IN (2, 3, 6) GROUP BY store_id) SELECT s.id, s.region, s.store_name, st.max_quantity, st.cnt FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id ORDER BY st.cnt DESC;

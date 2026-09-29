@@ -1,0 +1,1 @@
+with numbered as (select id, dept_name, budget, row_number() over (partition by dept_name order by budget desc, id) as row_num from departments) select id, dept_name, budget from numbered where row_num = 1 order by dept_name asc;

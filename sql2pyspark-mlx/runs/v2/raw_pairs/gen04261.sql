@@ -1,0 +1,1 @@
+SELECT HOUR(paid_at) AS paid_hour, QUARTER(paid_at) AS paid_quarter, COUNT(CASE WHEN method = 'bank_transfer' THEN 1 END) AS bank_transfer_count, MAX(amount) AS max_amount FROM payments GROUP BY HOUR(paid_at), QUARTER(paid_at) HAVING MAX(amount) >= 1240;

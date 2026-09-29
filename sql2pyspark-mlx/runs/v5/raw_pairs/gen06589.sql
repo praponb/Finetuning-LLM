@@ -1,0 +1,1 @@
+SELECT dim.city, s.category, COUNT(*) AS cnt, ROUND(AVG(s.cost), 2) AS avg_cost, MIN(s.stock_qty) AS min_stock_qty FROM products s JOIN suppliers dim ON s.supplier_id = dim.id GROUP BY GROUPING SETS ((dim.city, s.category), (dim.city), ()) ORDER BY category DESC

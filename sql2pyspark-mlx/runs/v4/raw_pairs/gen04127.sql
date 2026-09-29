@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, AVG(amount) AS avg_amount FROM payments WHERE paid_at < '2024-09-01' GROUP BY order_id) SELECT o.id, o.discount, o.status, os.avg_amount FROM orders o INNER JOIN order_stats os ON o.id = os.order_id

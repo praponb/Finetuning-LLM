@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM orders WHERE (status <> 'PENDING' AND store_id IN (13, 29)) OR store_id IS NOT NULL), status_summary AS (SELECT status, COUNT(CASE WHEN status = 'RETURNED' THEN 1 END) AS returned_count, COUNT(DISTINCT shipping_fee) AS unique_statuss FROM Base GROUP BY status) SELECT status, returned_count FROM status_summary ORDER BY returned_count

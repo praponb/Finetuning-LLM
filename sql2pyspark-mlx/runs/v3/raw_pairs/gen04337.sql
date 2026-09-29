@@ -1,0 +1,1 @@
+WITH ranked_store_sales AS (SELECT id, store_id, units, product_id, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY units, id) AS rnk FROM store_sales) SELECT id, store_id, units, product_id FROM ranked_store_sales WHERE rnk = 1 ORDER BY product_id;

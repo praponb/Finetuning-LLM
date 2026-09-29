@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, COUNT(o.discount) AS discount_count FROM orders o INNER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id GROUP BY DATE_TRUNC('MONTH', s.opened_date) ORDER BY discount_count DESC, opened_month DESC

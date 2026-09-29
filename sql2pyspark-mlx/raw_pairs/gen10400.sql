@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, s.city, p.product_name, p.cost FROM store_sales ss RIGHT JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id WHERE ARRAY_CONTAINS(p.tags, 'eco') AND s.city = 'Chiang Mai';

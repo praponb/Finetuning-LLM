@@ -1,0 +1,1 @@
+SELECT id, product_id, units, store_id, revenue, PERCENT_RANK() OVER (PARTITION BY product_id ORDER BY units DESC) AS units_pct_rank, FIRST_VALUE(revenue) OVER (PARTITION BY store_id, product_id ORDER BY units DESC, id) AS first_revenue FROM store_sales ORDER BY first_revenue DESC, id;

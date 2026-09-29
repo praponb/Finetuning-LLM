@@ -1,0 +1,1 @@
+SELECT id, page, duration_sec, ROW_NUMBER() OVER (PARTITION BY page ORDER BY duration_sec DESC, id) AS row_num FROM web_events WHERE event_type IN ('page_view', 'search', 'purchase') ORDER BY row_num DESC

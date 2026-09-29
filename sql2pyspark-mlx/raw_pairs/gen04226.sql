@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT c.country, s.channel, COUNT(*) AS cnt, MAX(s.shipping_fee) AS max_shipping_fee, MAX(s.discount) AS max_discount, GROUPING_ID() AS gid FROM orders s JOIN customers c ON s.customer_id = c.id GROUP BY ROLLUP (c.country, s.channel)) SELECT country, channel, cnt, max_shipping_fee, max_discount FROM rollup_totals ORDER BY country DESC;

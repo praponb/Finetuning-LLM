@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN carrier IN ('DHL', 'Kerry') THEN 'tier_1' ELSE 'other' END AS carrier_group, MIN(cost) AS min_cost, COUNT(cost) AS cost_count FROM shipments GROUP BY CASE WHEN carrier IN ('DHL', 'Kerry') THEN 'tier_1' ELSE 'other' END) AS t WHERE cost_count >= 4;

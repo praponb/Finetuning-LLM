@@ -1,0 +1,1 @@
+SELECT s.city, ROUND(AVG(o.shipping_fee), 2) AS avg_shipping_fee, SUM(CASE WHEN o.channel = 'store' THEN 1 ELSE 0 END) AS store_count FROM orders o INNER JOIN stores s ON o.store_id = s.id GROUP BY s.city HAVING SUM(CASE WHEN o.channel = 'store' THEN 1 ELSE 0 END) > 61

@@ -1,0 +1,1 @@
+select year(hire_date) hire_year, sum(salary) total_salary, dense_rank() over (order by sum(salary) desc) as salary_rank from employees where lower(email) like '%ob.%' group by year(hire_date) order by salary_rank desc, hire_year asc limit 10

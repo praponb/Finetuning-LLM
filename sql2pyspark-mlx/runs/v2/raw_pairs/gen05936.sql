@@ -1,0 +1,1 @@
+SELECT method, COUNT(amount) AS amount_count, MAX(amount) - MIN(amount) AS amount_range FROM payments WHERE order_id = 7 AND amount >= 430 AND amount < 1340 GROUP BY method ORDER BY 2 DESC, method LIMIT 50;

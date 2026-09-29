@@ -1,0 +1,1 @@
+SELECT id, txn_time, CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END AS is_refund, SUBSTRING(txn_type, 1, 3) AS txn_type_prefix FROM transactions WHERE amount > 2800 AND amount < 2900 AND account_id IN (5, 10)

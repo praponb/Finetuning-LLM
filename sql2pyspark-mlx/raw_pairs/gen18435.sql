@@ -1,0 +1,1 @@
+select s.id, s.shipped_date, s.order_id, s.carrier from shipments s where s.status not in ('RETURNED', 'DELIVERED', 'IN_TRANSIT') and s.order_id in (select id from orders where amount between 830 and 1570) order by carrier;

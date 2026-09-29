@@ -1,0 +1,1 @@
+select id, region, opened_date, store_name from (select *, row_number() over (partition by region order by opened_date desc, id) as row_num from stores) as r where row_num <= 3 order by opened_date, id;

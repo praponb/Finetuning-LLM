@@ -1,0 +1,1 @@
+SELECT id, country, city, rating, COUNT(*) OVER (PARTITION BY country) AS country_count, PERCENT_RANK() OVER (PARTITION BY country, city ORDER BY rating) AS rating_pct_rank FROM suppliers ORDER BY country DESC

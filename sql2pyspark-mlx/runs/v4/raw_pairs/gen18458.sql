@@ -1,0 +1,1 @@
+with store_stats as (select store_id, round(avg(units), 2) as avg_units from store_sales group by store_id) select stores.id, stores.store_name, stores.sqft, store_stats.avg_units from stores left outer join store_stats on stores.id = store_stats.store_id order by store_stats.avg_units;

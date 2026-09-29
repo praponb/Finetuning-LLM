@@ -1,0 +1,1 @@
+WITH ProductStats AS (SELECT product_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price, SUM(unit_price) AS total_unit_price FROM order_items GROUP BY product_id) SELECT p.id, p.supplier_id, P.stddev_unit_price, P.total_unit_price FROM products p JOIN ProductStats P ON p.id = P.product_id WHERE P.stddev_unit_price > 34 ORDER BY 3 DESC, p.id

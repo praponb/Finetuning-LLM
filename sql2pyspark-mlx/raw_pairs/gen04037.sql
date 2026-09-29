@@ -1,0 +1,1 @@
+SELECT *, CASE WHEN region = 'South' THEN 1 ELSE 0 END is_south, COALESCE(store_name, 'unassigned') store_name_filled FROM stores WHERE city = 'Berlin' AND YEAR(opened_date) >= 2023 ORDER BY store_name_filled DESC

@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, plan, effective_from, EXPLODE_OUTER(discounts) AS element FROM price_tiers) SELECT id, plan, DENSE_RANK() OVER (PARTITION BY plan ORDER BY element DESC NULLS FIRST) AS element_dense_rank, CUME_DIST() OVER (ORDER BY element) AS element_cume_dist, PERCENT_RANK() OVER (PARTITION BY plan ORDER BY element NULLS LAST) AS element_percent_rank FROM exploded;

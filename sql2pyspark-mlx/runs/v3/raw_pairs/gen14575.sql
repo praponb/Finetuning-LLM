@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, TRIM(status) AS clean_status FROM accounts WHERE account_type IN ('CHECKING', 'LOAN', 'CREDIT')), account_type_summary AS (SELECT account_type, MAX(opened_date) AS last_opened_date FROM base GROUP BY account_type) SELECT account_type, last_opened_date FROM account_type_summary ORDER BY last_opened_date;

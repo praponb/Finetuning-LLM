@@ -1,0 +1,1 @@
+select o.status, count(p.id) as payment_count, count(distinct p.amount) as unique_statuss, min(p.paid_at) as first_paid_at from orders o left outer join payments p on o.id = p.order_id where p.status = 'REFUNDED' group by o.status order by first_paid_at asc, status asc limit 5;

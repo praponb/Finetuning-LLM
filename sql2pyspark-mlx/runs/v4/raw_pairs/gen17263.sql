@@ -1,0 +1,1 @@
+with account_stats as (select account_id, max(amount) - min(amount) as amount_range from transactions where merchant in ('Lazada', 'Grab', 'Shell') group by account_id) select a.id, a.status, a.account_type, as.amount_range from accounts a left join account_stats as on a.id = as.account_id order by 2;

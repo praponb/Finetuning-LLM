@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, DATEDIFF(starts_on, ends_on) / 7 AS weeks_ends_on_to_starts_on FROM promotions WHERE ends_on >= DATE '2023-09-13' AND channel IS NOT NULL) SELECT channel, promo_code FROM base INTERSECT ALL SELECT channel, promo_code FROM promotions WHERE ends_on <= '2023-10-01';

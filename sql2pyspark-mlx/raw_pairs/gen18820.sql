@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, SUM(revenue) AS total_revenue FROM store_sales GROUP BY product_id) SELECT products.id, products.product_name, products.price, product_totals.total_revenue FROM products INNER JOIN product_totals ON products.id = product_totals.product_id WHERE product_totals.total_revenue > 22000 ORDER BY products.product_name, products.price DESC

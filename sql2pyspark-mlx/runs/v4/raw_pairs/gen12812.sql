@@ -1,0 +1,1 @@
+select status, date_format(order_date, 'yyyy-MM') as order_month, count(distinct amount) as unique_customers from orders where shipping_fee >= 32 and amount < 1530 group by status, date_format(order_date, 'yyyy-MM');

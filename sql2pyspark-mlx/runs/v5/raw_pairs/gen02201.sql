@@ -1,0 +1,1 @@
+SELECT MONTH(stores.opened_date) AS opened_month, COUNT(DISTINCT inventory.quantity) AS unique_stores FROM inventory JOIN products ON inventory.product_id = products.id JOIN stores ON inventory.store_id = stores.id GROUP BY MONTH(stores.opened_date)

@@ -1,0 +1,1 @@
+SELECT id, brand, launch_date, category, cost, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY launch_date, id) AS launch_date_row, DENSE_RANK() OVER (PARTITION BY category ORDER BY cost DESC) AS cost_dense_rank FROM products WHERE LENGTH(product_name) >= 14 ORDER BY launch_date DESC;

@@ -1,0 +1,1 @@
+SELECT we.session_id, s.customer_id, c.age, c.email, DATE_FORMAT(we.event_time, 'yyyy-MM') AS event_time_label FROM web_events we RIGHT OUTER JOIN sessions s ON we.session_id = s.id LEFT OUTER JOIN customers c ON s.customer_id = c.id ORDER BY age DESC;

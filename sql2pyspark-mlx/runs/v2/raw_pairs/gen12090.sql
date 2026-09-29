@@ -1,0 +1,1 @@
+SELECT stores.region, COUNT(inventory.quantity) AS quantity_count, ROUND(AVG(inventory.quantity), 2) AS avg_quantity FROM inventory INNER JOIN stores ON inventory.store_id = stores.id WHERE YEAR(stores.opened_date) >= 2023 GROUP BY stores.region

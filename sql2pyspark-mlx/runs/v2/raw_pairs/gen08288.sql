@@ -1,0 +1,1 @@
+select o.status, count(*) as payment_count from payments p inner join orders o on p.order_id = o.id left outer join stores s on s.id = o.store_id where s.city <> 'Tokyo' group by o.status order by payment_count desc, status limit 5;

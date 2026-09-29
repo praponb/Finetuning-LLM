@@ -1,0 +1,1 @@
+SELECT MONTH(signup_date) AS signup_month, MIN(age) AS min_age, ROUND((100 * SUM(CASE WHEN segment = 'SMB' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_smb FROM customers WHERE name LIKE '%Rossi%' OR segment NOT IN ('Corporate', 'Consumer') GROUP BY MONTH(signup_date)

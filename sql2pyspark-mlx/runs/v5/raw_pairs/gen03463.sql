@@ -1,0 +1,1 @@
+WITH ranked_products AS (SELECT id, category, cost, launch_date, DENSE_RANK() OVER (PARTITION BY category ORDER BY cost DESC) AS pos FROM products WHERE brand = 'Stark') SELECT * FROM ranked_products WHERE pos <= 5 ORDER BY launch_date;

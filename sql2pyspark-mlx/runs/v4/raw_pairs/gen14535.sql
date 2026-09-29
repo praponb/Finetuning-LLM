@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT * FROM transactions WHERE is_flagged AND (amount >= 2400 OR amount BETWEEN 1300 AND 3800)), Agg AS (SELECT HOUR(txn_time) AS txn_hour, MAX(amount) AS max_amount FROM valid_transactions GROUP BY HOUR(txn_time)) SELECT txn_hour, max_amount FROM Agg ORDER BY txn_hour

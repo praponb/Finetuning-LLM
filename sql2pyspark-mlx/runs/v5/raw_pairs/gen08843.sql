@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_products FROM inventory GROUP BY store_id) SELECT s.id, s.store_name, st.unique_products FROM stores s JOIN store_totals st ON s.id = st.store_id ORDER BY s.store_name

@@ -1,0 +1,1 @@
+SELECT products.brand, MAX(inventory.quantity) AS max_quantity FROM inventory INNER JOIN products ON products.id = inventory.product_id WHERE products.launch_date <= '2024-02-09' GROUP BY products.brand ORDER BY max_quantity DESC;

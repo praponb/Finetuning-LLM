@@ -1,0 +1,1 @@
+SELECT HOUR(txn_time) AS txn_hour, SUM(amount) AS total_amount, COUNT(*) AS cnt, SUM(SUM(amount)) OVER (ORDER BY HOUR(txn_time)) AS cumulative_amount FROM transactions GROUP BY HOUR(txn_time) ORDER BY total_amount DESC, cumulative_amount DESC

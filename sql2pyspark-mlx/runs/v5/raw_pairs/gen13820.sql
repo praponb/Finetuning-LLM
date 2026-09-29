@@ -1,0 +1,1 @@
+SELECT *, LAST_DAY(end_date) AS end_date_month_end, DATE_ADD(end_date, 18) AS end_date_plus_18d FROM subscriptions WHERE end_date >= '2025-03-01' OR start_date BETWEEN '2023-05-01' AND '2025-02-01' ORDER BY start_date, end_date_plus_18d;

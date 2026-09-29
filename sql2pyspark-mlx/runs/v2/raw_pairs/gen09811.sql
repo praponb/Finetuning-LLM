@@ -1,0 +1,1 @@
+SELECT location, SUM(budget) AS total_budget, RANK() OVER (ORDER BY SUM(budget) DESC) AS budget_rank FROM departments WHERE location IN ('Singapore', 'Chiang Mai', 'Bangkok') GROUP BY location ORDER BY budget_rank DESC;

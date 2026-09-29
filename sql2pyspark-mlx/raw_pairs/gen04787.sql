@@ -1,0 +1,1 @@
+SELECT id, temp_c, humidity, status_bits, firmware, AVG(temp_c) OVER (PARTITION BY MONTH(reading_ts), device_code ORDER BY CAST(reading_ts AS BIGINT) RANGE BETWEEN 3600 PRECEDING AND CURRENT ROW) AS temp_c_avg_1h, NTILE(4) OVER (PARTITION BY device_code ORDER BY pressure, id) AS pressure_bucket FROM device_readings;

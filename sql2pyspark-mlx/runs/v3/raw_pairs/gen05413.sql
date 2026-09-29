@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, c.country, SUM(CASE WHEN s.plan = 'premium' THEN 1 ELSE 0 END) AS premium_count FROM subscriptions s JOIN customers c ON c.id = s.customer_id GROUP BY MONTH(c.signup_date), c.country ORDER BY country DESC;

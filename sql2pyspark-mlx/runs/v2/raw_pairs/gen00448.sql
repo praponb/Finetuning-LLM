@@ -1,0 +1,1 @@
+SELECT *, ROUND(sqft, 2) AS sqft_rounded FROM stores WHERE (store_name IS NOT NULL AND LOWER(store_name) LIKE '%irp%') OR city NOT IN ('Singapore', 'New York', 'London') ORDER BY opened_date, id LIMIT 3;

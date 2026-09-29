@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.quantity, inventory.store_id, store_sales.product_id FROM inventory JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE NOT (store_sales.product_id IN (2, 9, 10) OR inventory.product_id IN (4, 6, 7)) ORDER BY inventory.store_id DESC, store_sales.product_id DESC

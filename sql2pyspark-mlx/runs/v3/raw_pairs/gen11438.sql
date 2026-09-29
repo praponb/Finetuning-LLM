@@ -1,0 +1,1 @@
+SELECT o.discount, s.opened_date, s.store_name, s.city, UPPER(o.status) AS status_upper FROM orders o INNER JOIN stores s ON o.store_id = s.id WHERE o.channel NOT IN ('mobile', 'partner') ORDER BY opened_date, 4

@@ -1,0 +1,1 @@
+SELECT method, HOUR(paid_at) AS paid_hour, AVG(amount) AS avg_amount FROM payments WHERE TO_DATE(paid_at) < '2025-02-17' AND method = 'paypal' GROUP BY method, HOUR(paid_at) ORDER BY method ASC, paid_hour ASC LIMIT 3;

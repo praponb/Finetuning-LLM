@@ -1,0 +1,1 @@
+with valid as (select *, round(salary * 100, 2) salary_adjusted from employees where hire_date >= date '2023-06-28') select * from (select id, dept_id, salary_adjusted, salary from valid) src unpivot (metric_value for kpi in (salary_adjusted, salary));

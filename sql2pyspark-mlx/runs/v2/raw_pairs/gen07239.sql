@@ -1,0 +1,1 @@
+SELECT YEAR(paid_at) AS paid_year, method, COUNT(*) AS row_count, SUM(amount) AS total_amount, COUNT(*) AS cnt FROM payments WHERE order_id IS NOT NULL OR amount <= 1310 GROUP BY YEAR(paid_at), method HAVING SUM(CASE WHEN method = 'bank_transfer' THEN amount ELSE 0 END) < 31 ORDER BY row_count;

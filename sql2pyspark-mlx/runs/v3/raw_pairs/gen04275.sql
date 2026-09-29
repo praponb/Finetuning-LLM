@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(order_date) AS order_month, SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed_count, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders GROUP BY MONTH(order_date)) AS agg WHERE completed_count < 39 ORDER BY completed_count DESC

@@ -1,0 +1,13 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_order_items
+    .groupBy(
+        "order_id",
+        F.when(F.col("unit_price") >= 370, "high").when(F.col("unit_price") >= 90, "mid").otherwise("low").alias("unit_price_bucket"),
+        F.when(F.col("quantity") >= 8, "high").when(F.col("quantity") >= 3, "mid").otherwise("low").alias("quantity_bucket"),
+    )
+    .agg(F.count("*").alias("num_order_items"))
+    .filter(F.col("num_order_items") >= 4)
+    .orderBy(F.col("num_order_items").desc(), F.col("unit_price_bucket").desc())
+)

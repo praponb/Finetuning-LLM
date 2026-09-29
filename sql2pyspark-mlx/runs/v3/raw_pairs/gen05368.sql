@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, MAX(ss.revenue) AS max_revenue, COUNT(DISTINCT ss.units) AS unique_products FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON p.id = ss.product_id GROUP BY DATE_FORMAT(p.launch_date, 'yyyy-MM') ORDER BY max_revenue, launch_month LIMIT 3;

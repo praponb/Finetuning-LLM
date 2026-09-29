@@ -1,0 +1,1 @@
+WITH filtered_web_events AS (SELECT * FROM web_events WHERE NOT (event_type IN ('page_view', 'purchase') AND page NOT IN ('/product', '/search', '/cart'))), Agg AS (SELECT event_type, AVG(duration_sec) AS avg_duration_sec FROM filtered_web_events GROUP BY event_type) SELECT * FROM Agg;

@@ -1,0 +1,1 @@
+SELECT a.id, a.status, a.balance, t.refund_count, t.avg_amount FROM accounts a LEFT JOIN (SELECT account_id, COUNT(CASE WHEN txn_type = 'REFUND' THEN 1 END) AS refund_count, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.avg_amount > 74 ORDER BY avg_amount, status;

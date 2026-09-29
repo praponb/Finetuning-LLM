@@ -1,0 +1,1 @@
+select brand, home_count from (select brand, sum(case when category = 'Home' then 1 else 0 end) as home_count from products where cost <= 350 group by brand) as t where home_count >= 74 order by brand asc;

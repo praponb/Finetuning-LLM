@@ -1,0 +1,1 @@
+SELECT account_type, COUNT(*) AS num_accounts, ROUND((100 * SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_savings, MIN(opened_date) AS first_opened_date FROM accounts GROUP BY account_type HAVING SUM(balance) > 378000 ORDER BY first_opened_date, account_type LIMIT 5;

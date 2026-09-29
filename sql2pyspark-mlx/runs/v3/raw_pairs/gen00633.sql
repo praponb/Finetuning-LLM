@@ -1,0 +1,1 @@
+SELECT s.city, SUM(ss.revenue) AS total_revenue, MAX(ss.units) AS max_units FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE s.city != 'Bangkok' GROUP BY s.city HAVING max_units >= 24

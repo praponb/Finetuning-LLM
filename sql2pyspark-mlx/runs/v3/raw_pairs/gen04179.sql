@@ -1,0 +1,1 @@
+WITH sessions_by_customer AS (SELECT customer_id, MAX(started_at) AS last_started_at, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(device))) AS device_values FROM sessions GROUP BY customer_id) SELECT c.id, c.email, c.is_active, sbc.last_started_at, sbc.device_values FROM customers c JOIN sessions_by_customer sbc ON c.id = sbc.customer_id;

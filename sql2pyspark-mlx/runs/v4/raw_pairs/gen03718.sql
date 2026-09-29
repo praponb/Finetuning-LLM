@@ -1,0 +1,1 @@
+SELECT id, tags, stock_qty, CASE WHEN cost >= 670 THEN 'High' WHEN cost >= 230 THEN 'Medium' ELSE 'Low' END cost_tier, LENGTH(category) category_length FROM products WHERE brand = 'Acme' ORDER BY 3 DESC, cost_tier;

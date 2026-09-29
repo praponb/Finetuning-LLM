@@ -1,0 +1,1 @@
+SELECT c.segment, MAX(o.shipping_fee) - MIN(o.shipping_fee) AS shipping_fee_range, ROUND(AVG(o.discount), 2) AS avg_discount FROM orders o LEFT OUTER JOIN customers c ON o.customer_id = c.id JOIN stores s ON o.store_id = s.id GROUP BY c.segment ORDER BY shipping_fee_range ASC

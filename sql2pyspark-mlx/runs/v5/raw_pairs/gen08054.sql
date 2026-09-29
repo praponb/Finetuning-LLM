@@ -1,0 +1,1 @@
+SELECT supplier_id, tags, price / NULLIF(stock_qty, 0) AS price_per_stock_qty, CONCAT(brand, ' - ', product_name) AS brand_product_name FROM products WHERE category IN ('Sports', 'Books', 'Home') ORDER BY price_per_stock_qty DESC

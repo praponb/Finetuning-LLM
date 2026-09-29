@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, i.last_restock, p.price, p.brand, s.region, CASE WHEN i.quantity >= 231 THEN 'High' WHEN i.quantity >= 91 THEN 'Medium' ELSE 'Low' END AS quantity_level FROM inventory i JOIN products p ON i.product_id = p.id LEFT OUTER JOIN stores s ON i.store_id = s.id WHERE p.product_name LIKE 'Wa%'

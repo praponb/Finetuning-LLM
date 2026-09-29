@@ -1,0 +1,1 @@
+SELECT p.id, p.category, COUNT(i.id) AS inventory_count, AVG(i.quantity) AS avg_quantity, SUM(i.quantity) AS total_quantity FROM products p INNER JOIN inventory i ON p.id = i.product_id WHERE p.category IN ('Home', 'Fashion') GROUP BY p.id, p.category ORDER BY avg_quantity DESC

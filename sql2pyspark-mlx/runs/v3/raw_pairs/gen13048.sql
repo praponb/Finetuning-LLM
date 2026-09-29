@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY cost DESC, id) AS rnk FROM shipments WHERE status IN ('LOST', 'RETURNED')) AS r WHERE rnk <= 1 ORDER BY cost DESC, id DESC

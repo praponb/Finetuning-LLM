@@ -1,0 +1,1 @@
+SELECT event_type, ROUND(AVG(duration_sec), 2) avg_duration_sec, COUNT(duration_sec) duration_sec_count FROM web_events WHERE duration_sec <= 305 AND duration_sec >= 181 GROUP BY 1 HAVING SUM(duration_sec) > 2600 ORDER BY 3

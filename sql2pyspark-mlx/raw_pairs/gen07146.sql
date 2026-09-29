@@ -1,0 +1,1 @@
+SELECT s.id, s.store_id, s.order_date, s.channel, s.discount, latest.quantity, latest.order_item_unit_price FROM orders s JOIN LATERAL (SELECT c.quantity, c.unit_price AS order_item_unit_price FROM order_items c WHERE c.order_id = s.id ORDER BY c.quantity DESC, c.id DESC LIMIT 1) latest ON TRUE;

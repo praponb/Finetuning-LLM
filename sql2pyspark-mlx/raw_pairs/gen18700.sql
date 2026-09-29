@@ -1,0 +1,1 @@
+select id, customer_id, balance, opened_date, status, rank() over (partition by status order by balance nulls first) as balance_rank, row_number() over (partition by account_type order by balance desc, id) as seq_no, lag(balance, 2) over (partition by customer_id, account_type order by opened_date, id) as prev_balance from accounts

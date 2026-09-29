@@ -1,0 +1,1 @@
+SELECT status, unique_statuss, avg_monthly_fee FROM (SELECT status, COUNT(DISTINCT monthly_fee) AS unique_statuss, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM subscriptions GROUP BY status) AS sub WHERE avg_monthly_fee > 40 ORDER BY unique_statuss;

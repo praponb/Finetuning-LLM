@@ -1,0 +1,1 @@
+SELECT p.id, p.amount, o.status, o.shipping_fee, s.sqft FROM payments p FULL OUTER JOIN orders o ON o.id = p.order_id INNER JOIN stores s ON o.store_id = s.id WHERE p.paid_at >= '2025-05-28' AND p.order_id IS NULL

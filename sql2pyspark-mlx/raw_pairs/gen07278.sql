@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('WEEK', started_at) AS week_start, device, (UNIX_TIMESTAMP(MAX(started_at)) - UNIX_TIMESTAMP(MIN(started_at))) / 60 AS duration_min, SIZE(COLLECT_SET(browser)) AS num_browsers, COUNT_IF(country = 'TH') AS th_events FROM sessions GROUP BY GROUPING SETS ((DATE_TRUNC('WEEK', started_at), device), (DATE_TRUNC('WEEK', started_at)));

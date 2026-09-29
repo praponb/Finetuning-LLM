@@ -1,0 +1,1 @@
+SELECT o.status, SUM(CASE WHEN s.status = 'RETURNED' THEN s.cost ELSE 0 END) AS returned_cost, MIN(s.shipped_date) AS min_shipped_date FROM shipments s INNER JOIN orders o ON s.order_id = o.id GROUP BY o.status;

@@ -1,0 +1,1 @@
+select id, product_name, category, brand, price, cost, stock_qty, launch_date, tags, supplier_id, sum(price) over (partition by supplier_id, brand) as supplier_id_sum_price, corr(price, cost) over (partition by supplier_id) as corr_price_cost, lag(price, 1) over (order by price asc, id asc) as prev_price from products

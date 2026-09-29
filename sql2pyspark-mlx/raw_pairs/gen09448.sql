@@ -1,0 +1,1 @@
+select channel, sort_array(collect_set(channel)) as channel_list, round(stddev(amount), 2) as stddev_amount from orders group by channel having round(stddev(amount), 2) > 59 order by channel, stddev_amount desc limit 1

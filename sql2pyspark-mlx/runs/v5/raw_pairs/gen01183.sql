@@ -1,0 +1,1 @@
+SELECT id, host, log_ts, level, latency_ms, status_code, payload_json, GET_JSON_OBJECT(payload_json, '$.user.id') AS user_id, context['region'] AS region, context['trace'] AS trace, CAST((status_code & 2) != 0 AS INT) AS has_fault FROM app_logs;

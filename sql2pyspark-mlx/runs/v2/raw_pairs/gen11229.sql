@@ -1,0 +1,1 @@
+SELECT page, event_type, MIN(event_time) AS min_event_time, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events WHERE HOUR(event_time) BETWEEN 12 AND 20 GROUP BY page, event_type HAVING avg_duration_sec > 79

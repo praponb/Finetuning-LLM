@@ -1,0 +1,1 @@
+WITH AccountTotals AS (SELECT account_id, COUNT(CASE WHEN txn_type = 'DEBIT' THEN 1 END) AS debit_count FROM transactions GROUP BY account_id) SELECT a.account_type, A.debit_count FROM accounts a LEFT OUTER JOIN AccountTotals A ON a.id = A.account_id WHERE A.debit_count >= 4;

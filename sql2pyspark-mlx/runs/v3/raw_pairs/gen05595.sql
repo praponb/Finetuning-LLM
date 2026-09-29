@@ -1,0 +1,1 @@
+select id, product_id, last_restock, quantity, store_id, first_value(quantity) over (partition by product_id order by last_restock, id) as first_quantity, lag(quantity, 1, 0) over (partition by store_id order by last_restock, id) as prev_quantity from inventory;

@@ -35,6 +35,7 @@ A reference for the directories, scripts, configuration files, datasets and arti
 | [schemas.py](../sql2pyspark-mlx/schemas.py) | Table catalog & sample data | `Column`, `Table`, `TABLES`, `EXTRA_TABLES`, `make_rows()`, `make_dataframes()`, `train_tables()`, `holdout_tables()`, `extra_train_tables()` | 17 base + 5 extra train + 5 base + 1 extra hold-out tables; seeded DataFrames |
 | [sqlspec.py](../sql2pyspark-mlx/sqlspec.py) | Dual-rendering query objects | Expressions `E`, `Col`, `Lit`, `Raw`, `BinOp`, `Fn`, `Case`, `Cast`, `Agg`, `WinFn`; predicates `P`, `Cmp`, `InList`, `Between`, `Like`, `IsNull`, `And`, `Or`, `Not`; query objects `WinSpec`, `Rel`, `Join`, `Semi`, `Sel`; `Style`, `Ctx`, `render_code()` | Matching `.sql(style)` and `.py(ctx)` text from one object tree |
 | [generate_dataset.py](../sql2pyspark-mlx/generate_dataset.py) | Compositional query generator | Families `fam_select`, `fam_agg`, `fam_join`, `fam_join_agg`, `fam_window`, `fam_topn`, `fam_cte_agg_join`, `fam_cte_chain`, `fam_derived`, `fam_subquery`, `fam_setop`, `fam_special`; helpers `atom()`, `where()`, `derive()`, `make_agg()`, `make_key()`, `add_order()` | `raw_pairs/genNNNNN.sql` + `.py`, `meta_generated.jsonl` (deterministic for a given `--seed`) |
+| [complex_v8/](../sql2pyspark-mlx/complex_v8/README.md) | Standalone complex dataset build & v8 LoRA config | 20 new tables in 6 new domains (`catalog.py`), 8 multi-stage query families (`generate.py`), Spark verification (`verify.py`, 12,999/13,000 ok), split builder (`build.py`), LoRA config (`lora_config.yaml`) | `data/` (10k train), `data_mix/` (17k train), `raw_pairs/` |
 | [advanced.py](../sql2pyspark-mlx/advanced.py) | v4/v5 stage-based families | Stages `stg_clean`, `stg_dedup`, `stg_windows`, `stg_session`, `stg_join`, `stg_lateral`, `stg_anti`, `stg_setop`, `stg_agg`, `stg_join_agg` (v5), `stg_pivot`, `stg_unpivot`, `stg_final`, `stg_explode`, `stg_nested_select`; families `fam_adv_*` and `fam_pipeline`; `run_pipeline()`, `try_stages()`, `bind()` | Appended to `generate_dataset.FAMILIES` (same `raw_pairs/` output) |
 | [handwritten_pairs.py](../sql2pyspark-mlx/handwritten_pairs.py) | Curated pairs | Helper `P(sql, body, order)`, list `PAIRS` (105 pairs) | `raw_pairs/hwNNN.sql` + `.py`, `meta_handwritten.jsonl` |
 | [verify_pairs.py](../sql2pyspark-mlx/verify_pairs.py) | Spark dual-execution check | `Checker`, `Result`, `compare()`, `norm()`, `rows_of()`, multiprocess CLI | `verified.jsonl`, `verify_report.json`, `verify_failures.jsonl` |
@@ -55,17 +56,18 @@ A reference for the directories, scripts, configuration files, datasets and arti
 
 ---
 
-## 📦 Dequantized Export (`sql2pyspark-hf/`, v3)
+## 📦 Dequantized Export (`sql2pyspark-hf/`, v7)
 
 | File | Purpose | Size / Format | Role in Pipeline |
 | :--- | :--- | :--- | :--- |
-| `config.json` | Model architecture | JSON (712 B) | Qwen2 causal LM parameters (`torch_dtype: bfloat16`) |
+| `config.json` | Model architecture | JSON (714 B) | Qwen2 causal LM parameters (`torch_dtype: bfloat16`) |
 | `chat_template.jinja` | Chat template | Jinja (2.5 KB) | ChatML formatting with `<\|im_start\|>` |
 | `tokenizer.json` | BPE tokenizer | JSON (11.4 MB) | Qwen2.5 tokenizer |
 | `tokenizer_config.json` | Tokenizer settings | JSON (729 B) | Special tokens |
-| `model-00001-of-00002.safetensors` | BF16 weights, shard 1 | 5.36 GB | Input for GGUF conversion |
-| `model-00002-of-00002.safetensors` | BF16 weights, shard 2 | 816 MB | Input for GGUF conversion |
-| `model.safetensors.index.json` | Shard index | JSON (37 KB) | Maps tensors to shards |
+| `model-00001-of-00003.safetensors` | BF16 weights, shard 1 | 5.34 GB | Input for GGUF conversion |
+| `model-00002-of-00003.safetensors` | BF16 weights, shard 2 | 5.26 GB | Input for GGUF conversion |
+| `model-00003-of-00003.safetensors` | BF16 weights, shard 3 | 4.62 GB | Input for GGUF conversion |
+| `model.safetensors.index.json` | Shard index | JSON (29 KB) | Maps tensors to shards |
 | `README.md` | Model card | Markdown | Metadata, licence and short description |
 
 ---
@@ -109,4 +111,4 @@ A reference for the directories, scripts, configuration files, datasets and arti
 
 `archive/` (~14 GB: the template-based v1 dataset, adapters, fused model, HF export and GGUF; the first fine-tune on the non-Coder `Qwen2.5-3B-Instruct`; a 3-example trial run) and the legacy `mlx-env/` venv were deleted on 2026-09-27. `sql2pyspark:v1` in Ollama keeps its own copy of the v1 model.
 
-Other folders: `llama.cpp/` (upstream checkout, used only for `convert_hf_to_gguf.py`). `sql2pyspark-hf/` (~5.8 GB) is only needed as input for `make gguf` and is recreated by `make fuse`.
+Other folders: `llama.cpp/` (upstream checkout, used only for `convert_hf_to_gguf.py`). `sql2pyspark-hf/` (~15.2 GB BF16) is only needed as input for `make gguf` and is recreated by `make fuse`.

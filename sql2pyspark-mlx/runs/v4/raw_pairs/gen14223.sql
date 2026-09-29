@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, product_id, quantity, last_restock, ROUND(quantity * 100, 2) AS adjusted_quantity FROM inventory WHERE last_restock >= TO_DATE('2023-09-23')) SELECT * FROM cleaned QUALIFY ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_restock DESC, id) = 1;

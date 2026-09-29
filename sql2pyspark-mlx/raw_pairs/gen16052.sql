@@ -1,0 +1,1 @@
+SELECT s.id, s.sqft, s.region, t.mobile_discount, t.shipping_fee_range FROM stores s JOIN (SELECT store_id, SUM(CASE WHEN channel = 'mobile' THEN discount ELSE 0 END) AS mobile_discount, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range FROM orders WHERE status = 'CANCELLED' GROUP BY store_id) t ON s.id = t.store_id

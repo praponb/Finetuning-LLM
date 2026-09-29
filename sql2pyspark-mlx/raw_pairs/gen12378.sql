@@ -1,0 +1,1 @@
+select account_id, sum(case when merchant = 'Amazon' then amount else 0 end) as amazon_amount from transactions where is_flagged = false and merchant in ('Shell', 'Lazada') and amount between 1700 and 3100 group by account_id;

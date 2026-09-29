@@ -1,0 +1,1 @@
+WITH EmployeesByDepartment AS (SELECT dept_id, SUM(salary) AS total_salary, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE email LIKE '%@startup.io' GROUP BY dept_id) SELECT d.id, d.location, d.budget, E.total_salary, E.avg_salary FROM departments d LEFT JOIN EmployeesByDepartment E ON d.id = E.dept_id ORDER BY d.id DESC;

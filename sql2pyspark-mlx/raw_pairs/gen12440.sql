@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, COUNT(CASE WHEN segment = 'SMB' THEN 1 END) AS smb_count FROM customers GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM') HAVING COUNT(CASE WHEN segment = 'SMB' THEN 1 END) >= 3;

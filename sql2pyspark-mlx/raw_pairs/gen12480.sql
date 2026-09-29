@@ -1,0 +1,1 @@
+select started_at, case when device = 'mobile' then 1 else 0 end as is_mobile, substring(device, 1, 4) as device_prefix from sessions where device in ('mobile', 'desktop', 'tablet') and customer_id in (6, 30, 32, 35)

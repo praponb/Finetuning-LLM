@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM orders WHERE amount IS NOT NULL), agg AS (SELECT DATE_TRUNC('MONTH', order_date) AS order_month, MIN(discount) AS min_discount, MAX(order_date) AS last_order_date FROM base GROUP BY DATE_TRUNC('MONTH', order_date)) SELECT order_month, min_discount, last_order_date FROM agg ORDER BY min_discount ASC;

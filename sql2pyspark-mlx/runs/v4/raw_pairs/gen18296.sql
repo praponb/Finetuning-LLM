@@ -1,0 +1,1 @@
+with eligible as (select s.* from sessions s where not exists (select 1 from web_events c where c.session_id = s.id and c.event_time >= s.started_at)) select s.id, s.customer_id, s.browser, (select max(x.balance) from accounts x where x.customer_id = s.customer_id) as max_account_balance from eligible s order by customer_id desc

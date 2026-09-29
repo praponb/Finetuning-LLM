@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM orders WHERE YEAR(order_date) >= 2024 AND shipping_fee >= 14), orders_stats AS (SELECT channel, COUNT(*) AS row_count FROM base GROUP BY channel) SELECT * FROM orders_stats ORDER BY 2 DESC, channel LIMIT 10

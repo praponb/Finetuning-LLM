@@ -1,0 +1,1 @@
+select s.id, s.status, s.order_id, o.shipping_fee, st.store_name, st.sqft, substring(st.city, 1, 3) as city_prefix from shipments s left join orders o on o.id = s.order_id right join stores st on o.store_id = st.id order by s.status;

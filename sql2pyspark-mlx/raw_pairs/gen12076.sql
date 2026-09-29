@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.opened_date, t.latest_txn_time FROM accounts INNER JOIN (SELECT account_id, MAX(txn_time) AS latest_txn_time FROM transactions WHERE txn_type != 'REFUND' GROUP BY account_id) t ON accounts.id = t.account_id ORDER BY accounts.id LIMIT 5;

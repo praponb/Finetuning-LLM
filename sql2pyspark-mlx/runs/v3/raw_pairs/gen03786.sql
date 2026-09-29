@@ -1,0 +1,1 @@
+SELECT e.id, e.level AS employee_level, e.full_name AS employee_full_name, e.hire_date AS employee_hire_date, m.salary AS manager_salary FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE m.salary BETWEEN 131000 AND 134000 ORDER BY manager_salary DESC, id DESC

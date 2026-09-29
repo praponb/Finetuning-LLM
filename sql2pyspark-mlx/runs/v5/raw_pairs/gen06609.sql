@@ -1,0 +1,1 @@
+SELECT *, CASE WHEN event_type IN ('page_view', 'purchase') THEN 'Group A' ELSE 'Other' END AS event_type_group, CAST(duration_sec AS STRING) AS duration_sec_str FROM web_events WHERE duration_sec <> 407

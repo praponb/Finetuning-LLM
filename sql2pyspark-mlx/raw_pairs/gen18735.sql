@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1380 THEN 'high' WHEN amount >= 550 THEN 'mid' ELSE 'low' END AS amount_bucket, status, method, MAX(amount) AS max_amount, COUNT(CASE WHEN status = 'REFUNDED' THEN 1 END) AS refunded_count FROM payments GROUP BY 1, 2, 3 HAVING MAX(amount) < 910 ORDER BY max_amount DESC

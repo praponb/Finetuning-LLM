@@ -1,0 +1,1 @@
+SELECT t.merchant, a.status, a.account_type, c.email FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id RIGHT OUTER JOIN customers c ON c.id = a.customer_id WHERE c.city = 'Singapore' ORDER BY a.status;

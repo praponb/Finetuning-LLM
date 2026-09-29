@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, order_id, product_id, quantity, unit_price, LEAST(unit_price, quantity) AS least_unit_price_quantity FROM order_items WHERE unit_price >= 300) SELECT product_id, id FROM valid INTERSECT ALL SELECT product_id, id FROM order_items WHERE quantity > 5;

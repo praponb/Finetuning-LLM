@@ -1,0 +1,1 @@
+SELECT t.txn_type, a.status, a.account_type, c.credit_limit FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON c.id = a.customer_id WHERE c.credit_limit < 8500 AND t.merchant = 'Grab' ORDER BY credit_limit DESC

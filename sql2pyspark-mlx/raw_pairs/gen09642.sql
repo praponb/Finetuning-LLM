@@ -1,0 +1,1 @@
+WITH TopOrderItems AS (SELECT id, product_id, quantity, RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) row_num FROM order_items) SELECT id, product_id, quantity FROM TopOrderItems WHERE row_num <= 3 ORDER BY 2;

@@ -1,0 +1,1 @@
+WITH payments_by_order AS (SELECT order_id, MAX(amount) max_amount FROM payments WHERE status IN ('REFUNDED', 'SUCCESS') GROUP BY order_id) SELECT o.id, o.amount, o.store_id, pbo.max_amount FROM orders o LEFT JOIN payments_by_order pbo ON o.id = pbo.order_id

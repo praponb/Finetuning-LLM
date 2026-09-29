@@ -1,0 +1,1 @@
+select year(s.opened_date) as opened_year, count(ss.units) as units_count from store_sales ss right join stores s on s.id = ss.store_id right join products p on ss.product_id = p.id group by year(s.opened_date) order by opened_year desc limit 50;

@@ -1,0 +1,1 @@
+SELECT id, device_code, pressure, status_bits, firmware, ROUND(temp_c / SUM(temp_c) OVER (PARTITION BY device_code), 4) AS temp_c_share, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY status_bits, id) AS event_seq FROM device_readings WHERE temp_c < 37

@@ -1,0 +1,1 @@
+select a.status, count(t.id) transaction_count, count(t.amount) amount_count, sort_array(collect_set(t.merchant)) merchant_list from accounts a left join transactions t on a.id = t.account_id where a.customer_id is null group by a.status having count(t.id) > 4 order by status, transaction_count desc

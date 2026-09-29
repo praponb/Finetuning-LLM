@@ -1,0 +1,1 @@
+SELECT location, CASE WHEN location IN ('Chiang Mai', 'Tokyo') THEN 'priority' ELSE 'other' END AS location_group, dept_name, COUNT(budget) AS budget_count, MIN(budget) AS min_budget FROM departments GROUP BY location, location_group, dept_name ORDER BY dept_name DESC, location_group DESC;

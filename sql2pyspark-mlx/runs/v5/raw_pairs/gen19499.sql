@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, t.amount_count FROM accounts a INNER JOIN (SELECT account_id, COUNT(amount) AS amount_count FROM transactions WHERE account_id IN (2, 19, 23, 33) GROUP BY account_id) t ON a.id = t.account_id;

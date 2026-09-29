@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.product_id, oi.order_id, p.product_name, p.supplier_id, oi.unit_price - oi.quantity AS line_total FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id WHERE oi.order_id = 5 OR SIZE(p.tags) > 2 ORDER BY supplier_id;

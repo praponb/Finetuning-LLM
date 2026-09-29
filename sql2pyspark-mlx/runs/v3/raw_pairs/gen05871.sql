@@ -1,0 +1,1 @@
+SELECT id, brand, stock_qty, category, supplier_id, cost, FIRST_VALUE(category) OVER (PARTITION BY brand ORDER BY stock_qty, id) AS first_category, ROUND(cost / SUM(cost) OVER (PARTITION BY supplier_id, category), 3) AS cost_share FROM products ORDER BY id DESC, brand DESC;

@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.device, sessions.country, t.min_duration_sec FROM sessions JOIN (SELECT session_id, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE session_id IN (3, 31) GROUP BY session_id) t ON sessions.id = t.session_id WHERE t.min_duration_sec > 270;

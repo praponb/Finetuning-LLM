@@ -1,0 +1,1 @@
+WITH top_inventory AS (SELECT id, product_id, last_restock, quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_restock DESC, id) AS pos FROM inventory WHERE quantity != 61) SELECT id, product_id, last_restock, quantity FROM top_inventory WHERE pos <= 3 ORDER BY id DESC;

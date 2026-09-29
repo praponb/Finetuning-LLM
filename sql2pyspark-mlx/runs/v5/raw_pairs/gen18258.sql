@@ -1,0 +1,1 @@
+select id, order_id, cost, shipped_date from (select id, order_id, cost, shipped_date, row_number() over (partition by order_id order by cost desc, id) as rnk from shipments) as t where rnk <= 1 order by order_id desc, id asc;

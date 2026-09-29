@@ -1,0 +1,1 @@
+SELECT ss.revenue, ss.units, p.launch_date, s.opened_date, s.store_name FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id LEFT JOIN stores s ON ss.store_id = s.id ORDER BY s.opened_date;

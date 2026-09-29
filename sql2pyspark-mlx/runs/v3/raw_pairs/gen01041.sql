@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, p.brand, p.launch_date, s.supplier_name FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE i.product_id IN (6, 10);

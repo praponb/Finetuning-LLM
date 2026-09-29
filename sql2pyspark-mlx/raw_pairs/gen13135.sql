@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', started_at) AS activity_month, country, COUNT(*) AS event_count, SORT_ARRAY(COLLECT_SET(country)) AS country_list, GROUPING_ID() AS grouping_id FROM sessions GROUP BY GROUPING SETS ((DATE_TRUNC('MONTH', started_at), country), (DATE_TRUNC('MONTH', started_at)), ());

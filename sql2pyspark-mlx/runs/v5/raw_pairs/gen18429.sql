@@ -1,0 +1,1 @@
+SELECT d.id, d.location, COUNT(e.id) AS employee_count, COUNT(CASE WHEN e.job_title = 'Analyst' THEN 1 END) AS analyst_count FROM departments d LEFT OUTER JOIN employees e ON d.id = e.dept_id GROUP BY d.id, d.location;

@@ -1,0 +1,1 @@
+SELECT e.salary AS employee_salary, e.job_title AS employee_job_title, m.manager_id AS manager_manager_id, m.salary AS manager_salary FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id;

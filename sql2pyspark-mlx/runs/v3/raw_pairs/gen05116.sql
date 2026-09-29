@@ -1,0 +1,1 @@
+SELECT CASE WHEN merchant IN ('Amazon', 'Lazada') THEN 'group_a' ELSE 'other' END AS merchant_group, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions WHERE NOT is_flagged GROUP BY 1 ORDER BY merchant_group;

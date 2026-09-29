@@ -1,0 +1,1 @@
+SELECT id, order_id, carrier, delivered_date, cost, ROUND(AVG(cost) OVER (PARTITION BY order_id, carrier ORDER BY delivered_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_3, SUM(cost) OVER (PARTITION BY carrier ORDER BY delivered_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_cost FROM shipments ORDER BY delivered_date DESC;

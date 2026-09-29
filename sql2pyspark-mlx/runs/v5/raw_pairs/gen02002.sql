@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, currency, tier_value FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_limits) li AS tier_value) SELECT id, plan, PERCENT_RANK() OVER (ORDER BY tier_value) AS tier_value_percent_rank, SUM(tier_value) OVER (PARTITION BY plan) AS plan_sum_tier_value FROM lines WHERE MONTH(effective_from) IN (3, 4, 10);

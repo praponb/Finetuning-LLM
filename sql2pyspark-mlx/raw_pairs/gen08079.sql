@@ -1,0 +1,1 @@
+SELECT id, city, sqft, opened_date, region, ROW_NUMBER() OVER (PARTITION BY city ORDER BY sqft DESC, id) AS row_num, SUM(sqft) OVER (PARTITION BY DATE_TRUNC('WEEK', opened_date), region ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_sqft FROM stores WHERE city IN ('Bangkok', 'Tokyo') ORDER BY running_sqft;

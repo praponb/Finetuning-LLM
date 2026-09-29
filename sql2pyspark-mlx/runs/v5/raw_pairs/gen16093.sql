@@ -1,0 +1,1 @@
+WITH store_sales_by_product AS (SELECT product_id, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales WHERE units BETWEEN 19 AND 27 GROUP BY product_id) SELECT p.id, p.stock_qty, p.price, ssbp.stddev_units FROM products p INNER JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id ORDER BY id DESC, price;

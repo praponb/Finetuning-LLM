@@ -1,0 +1,1 @@
+SELECT channel, ROUND(STDDEV(discount), 2) AS stddev_discount, MIN(order_date) AS min_order_date, AVG(amount) AS avg_amount FROM orders GROUP BY channel HAVING ROUND(STDDEV(discount), 2) < 52 ORDER BY avg_amount;

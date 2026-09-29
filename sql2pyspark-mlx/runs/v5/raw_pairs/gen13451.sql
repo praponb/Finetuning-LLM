@@ -1,0 +1,1 @@
+SELECT p.product_name, p.launch_date, t.stddev_quantity, t.total_count FROM products p LEFT OUTER JOIN (SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(*) AS total_count FROM order_items WHERE product_id IS NULL GROUP BY product_id) t ON p.id = t.product_id WHERE t.total_count > 6 ORDER BY launch_date

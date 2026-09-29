@@ -1,0 +1,1 @@
+SELECT CASE WHEN age >= 69 THEN 'high' WHEN age >= 39 THEN 'mid' ELSE 'low' END AS age_bucket, segment, ROUND((100 * SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_tokyo, MIN(signup_date) AS min_signup_date FROM customers WHERE signup_date >= '2025-10-26' OR country = 'UK' GROUP BY age_bucket, segment ORDER BY age_bucket DESC, segment

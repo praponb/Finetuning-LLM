@@ -1,0 +1,1 @@
+SELECT CASE WHEN salary >= 153000 THEN 'high' WHEN salary >= 64000 THEN 'mid' ELSE 'low' END AS salary_bucket, COUNT(*) AS row_count, MAX(hire_date) AS last_hire_date FROM employees GROUP BY CASE WHEN salary >= 153000 THEN 'high' WHEN salary >= 64000 THEN 'mid' ELSE 'low' END HAVING COUNT(*) >= 4 ORDER BY last_hire_date DESC, row_count DESC

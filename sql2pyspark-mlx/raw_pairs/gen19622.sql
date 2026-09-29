@@ -1,0 +1,1 @@
+select sessions.id, sessions.browser, sessions.started_at, sessions.customer_id, customers.is_active from sessions join customers on customers.id = sessions.customer_id where sessions.browser = 'Firefox' order by sessions.browser desc

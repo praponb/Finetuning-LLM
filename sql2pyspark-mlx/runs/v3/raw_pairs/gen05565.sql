@@ -1,0 +1,1 @@
+SELECT s.id, s.started_at, s.device, s.browser, c.age, c.credit_limit, CASE WHEN c.segment IN ('Consumer', 'Corporate') THEN 'Group A' ELSE 'Other' END AS segment_group FROM sessions s INNER JOIN customers c ON c.id = s.customer_id WHERE c.age BETWEEN 32 AND 67 ORDER BY segment_group;

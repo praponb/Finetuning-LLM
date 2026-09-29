@@ -1,0 +1,1 @@
+with supplier_summary as (select supplier_id, sum(case when category = 'Fashion' then price else 0 end) as fashion_price from products where stock_qty is null group by supplier_id) select s.id, s.rating, s.city, ss.fashion_price from suppliers s inner join supplier_summary ss on s.id = ss.supplier_id where ss.fashion_price > 21 order by rating desc

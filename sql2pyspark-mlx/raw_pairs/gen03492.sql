@@ -1,0 +1,1 @@
+select id, page, event_time, cast(duration_sec as double) as duration_sec_num, coalesce(duration_sec, 0) as duration_sec_filled from web_events where event_time >= '2024-10-01' or duration_sec <> 134 order by page desc

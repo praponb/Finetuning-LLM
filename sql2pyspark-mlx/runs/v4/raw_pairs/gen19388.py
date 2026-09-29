@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_products.alias("p")
+    .join(df_order_items.alias("oi"), F.col("p.id") == F.col("oi.product_id"), "left")
+    .select(
+        F.col("p.cost"),
+        F.col("p.price"),
+        F.col("p.category"),
+        F.col("oi.product_id"),
+    )
+)

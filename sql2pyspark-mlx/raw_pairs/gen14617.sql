@@ -1,0 +1,1 @@
+SELECT p.category, MAX(i.last_restock) AS last_last_restock, SUM(i.quantity) AS total_quantity FROM inventory i RIGHT JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE s.country = 'US' GROUP BY p.category ORDER BY p.category

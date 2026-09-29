@@ -1,0 +1,1 @@
+select year(launch_date) as launch_year, count(stock_qty) as stock_qty_count, count(case when category = 'Books' then 1 end) as books_count, max(launch_date) as last_launch_date from products group by launch_year order by books_count

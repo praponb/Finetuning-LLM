@@ -1,0 +1,1 @@
+SELECT a.status, COUNT(t.id) AS transaction_count FROM accounts a LEFT OUTER JOIN transactions t ON a.id = t.account_id WHERE a.customer_id IN (7, 24) GROUP BY a.status ORDER BY status, transaction_count

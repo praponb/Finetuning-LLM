@@ -1,0 +1,1 @@
+SELECT page, SUM(duration_sec) AS total_duration_sec, ROUND((100 * SUM(CASE WHEN event_type = 'add_to_cart' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_add_to_cart FROM web_events GROUP BY page ORDER BY page;

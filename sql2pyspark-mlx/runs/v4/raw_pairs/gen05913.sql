@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, COUNT(DISTINCT monthly_fee) AS unique_plans, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values, SUM(monthly_fee) AS total_monthly_fee FROM subscriptions GROUP BY end_month ORDER BY unique_plans, end_month LIMIT 50

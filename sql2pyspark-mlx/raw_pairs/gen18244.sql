@@ -1,0 +1,1 @@
+select d.account_type, a.txn_type, count(*) as rows_total, max(a.amount) as max_amount from transactions a inner join accounts d on a.account_id = d.id group by cube (d.account_type, a.txn_type) order by rows_total nulls last

@@ -1,0 +1,1 @@
+SELECT s.id, s.delivered_date FROM shipments s WHERE s.carrier IS NOT NULL AND s.order_id IN (SELECT id FROM orders WHERE order_date BETWEEN '2024-02-18' AND '2024-09-04') ORDER BY delivered_date DESC, id LIMIT 50

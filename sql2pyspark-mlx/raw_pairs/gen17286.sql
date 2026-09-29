@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DAY(start_date) start_date_day FROM subscriptions WHERE YEAR(end_date) >= 2025) SELECT customer_id FROM cleaned EXCEPT SELECT customer_id FROM subscriptions WHERE plan = 'premium'

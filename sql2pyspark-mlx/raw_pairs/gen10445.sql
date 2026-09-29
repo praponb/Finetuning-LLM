@@ -1,0 +1,1 @@
+SELECT id, merchant, txn_time, amount, account_id, SUM(amount) OVER (PARTITION BY merchant ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount DESC, id) AS amount_row FROM transactions

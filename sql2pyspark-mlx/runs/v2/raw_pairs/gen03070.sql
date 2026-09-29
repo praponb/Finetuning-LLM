@@ -1,0 +1,1 @@
+select id, carrier, shipped_date, cost, sum(cost) over (partition by carrier order by shipped_date, id rows between unbounded preceding and current row) as running_cost from shipments where delivered_date <= '2023-05-14' order by running_cost;

@@ -1,0 +1,1 @@
+select s.id, s.country, s.city from suppliers s where upper(trim(s.supplier_name)) = 'TOKYO TRADERS' and exists (select 1 from products p where p.supplier_id = s.id and p.price is not null) order by city;

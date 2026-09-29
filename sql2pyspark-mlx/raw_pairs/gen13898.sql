@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.started_at, sessions.device, sessions.browser FROM sessions WHERE sessions.country = 'TH' AND NOT EXISTS (SELECT 1 FROM web_events WHERE web_events.session_id = sessions.id AND web_events.duration_sec IS NOT NULL)

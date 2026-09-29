@@ -1,0 +1,1 @@
+WITH filtered_stores AS (SELECT * FROM stores WHERE opened_date > '2023-08-01'), Agg AS (SELECT city, MAX(sqft) - MIN(sqft) sqft_range FROM filtered_stores GROUP BY city) SELECT * FROM Agg WHERE sqft_range > 57 ORDER BY city DESC

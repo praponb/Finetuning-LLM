@@ -1,0 +1,1 @@
+select product_id, case when quantity >= 8 then 'high' when quantity >= 3 then 'mid' else 'low' end as quantity_bucket, order_id, avg(unit_price) as avg_unit_price, sum(unit_price) as total_unit_price from order_items group by product_id, quantity_bucket, order_id having count(distinct unit_price) >= 2;

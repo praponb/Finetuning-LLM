@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, COUNT(*) AS num_store_sales FROM store_sales GROUP BY product_id) SELECT p.category, p.supplier_id, pt.num_store_sales FROM products p INNER JOIN product_totals pt ON p.id = pt.product_id WHERE pt.num_store_sales >= 5

@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, level, latency_ms, status_code, k, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS k, attr_value) SELECT service, latency_ms, status_code, attr_value, CASE WHEN service RLIKE '^(auth|search)$' THEN 'CORE' WHEN service RLIKE '^(billing|checkout)$' THEN 'EXTENDED' ELSE 'GROUP_B' END AS service_zone FROM flattened;

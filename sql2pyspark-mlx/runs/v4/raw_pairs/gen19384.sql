@@ -1,0 +1,1 @@
+SELECT we.id, we.page, we.session_id, we.event_time FROM web_events we WHERE we.event_type NOT IN ('search', 'add_to_cart', 'page_view') AND we.session_id IN (SELECT id FROM sessions WHERE browser IN ('Safari', 'Edge')) ORDER BY we.page DESC

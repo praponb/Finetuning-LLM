@@ -1,0 +1,1 @@
+select method, round((100 * sum(case when status = 'FAILED' then 1 else 0 end)) / count(*), 1) as pct_failed from payments where method is not null and order_id = 25 group by method having round((100 * sum(case when status = 'FAILED' then 1 else 0 end)) / count(*), 1) >= 56 order by method limit 5

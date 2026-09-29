@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, country, city, rating, SUBSTRING(city, 1, 4) AS city_prefix FROM suppliers WHERE city IS DISTINCT FROM 'Berlin') SELECT id, country FROM valid INTERSECT SELECT id, country FROM suppliers WHERE country NOT IN ('UK', 'SG')

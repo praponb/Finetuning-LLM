@@ -1,0 +1,1 @@
+with src as (select * from shipments where month(delivered_date) in (4, 8, 12) and cost <= 37), StatusSummary as (select status, sort_array(collect_set(carrier)) carrier_list, sort_array(collect_set(status)) status_list from src group by status) select * from StatusSummary order by status;

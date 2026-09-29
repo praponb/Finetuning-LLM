@@ -1,0 +1,1 @@
+SELECT status, account_type, SUM(CASE WHEN status = 'CLOSED' THEN balance ELSE 0 END) AS closed_balance, SUM(balance) AS total_balance, MIN(balance) AS min_balance FROM accounts WHERE YEAR(opened_date) = 2025 GROUP BY status, account_type

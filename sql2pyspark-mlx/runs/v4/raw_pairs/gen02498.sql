@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, MAX(amount) AS max_amount, COUNT(amount) AS amount_count FROM transactions WHERE txn_type = 'DEBIT' GROUP BY account_id) SELECT a.id, a.account_type, a.customer_id, tba.max_amount, tba.amount_count FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY a.id DESC

@@ -1,0 +1,1 @@
+select store_id, product_id, sum(quantity) total_quantity, count(quantity) quantity_count from inventory where year(last_restock) >= 2024 group by store_id, product_id order by product_id desc, store_id limit 20;

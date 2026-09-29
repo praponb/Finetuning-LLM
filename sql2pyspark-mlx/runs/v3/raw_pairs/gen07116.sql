@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM inventory WHERE store_id IN (1, 2, 4) AND product_id IN (1, 9) AND product_id = 6), summary AS (SELECT product_id, QUARTER(last_restock) AS last_restock_quarter, ROUND(AVG(quantity), 2) AS avg_quantity FROM base GROUP BY product_id, QUARTER(last_restock)) SELECT * FROM summary ORDER BY product_id;

@@ -1,0 +1,1 @@
+WITH ranked_employees AS (SELECT id, manager_id, hire_date, DENSE_RANK() OVER (PARTITION BY manager_id ORDER BY hire_date DESC) rnk FROM employees) SELECT * FROM ranked_employees WHERE rnk = 1 ORDER BY manager_id, hire_date;

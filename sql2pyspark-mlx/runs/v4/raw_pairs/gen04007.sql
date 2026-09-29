@@ -1,0 +1,1 @@
+select session_id, min(duration_sec) as min_duration_sec, min(event_time) as first_event_time from web_events group by session_id having sum(case when page = '/product' then 1 else 0 end) < 52 order by first_event_time desc, min_duration_sec desc;

@@ -1,0 +1,1 @@
+SELECT s.id, s.country, s.supplier_name, t.umbrella_cost, t.avg_price FROM suppliers s LEFT JOIN (SELECT supplier_id, SUM(CASE WHEN brand = 'Umbrella' THEN cost ELSE 0 END) AS umbrella_cost, ROUND(AVG(price), 2) AS avg_price FROM products WHERE ARRAY_CONTAINS(tags, 'eco') GROUP BY supplier_id) t ON s.id = t.supplier_id;

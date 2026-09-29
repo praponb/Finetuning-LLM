@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, ROUND(STDDEV(cost), 2) AS stddev_cost, SUM(CASE WHEN carrier = 'DHL' THEN cost ELSE 0 END) AS dhl_cost FROM shipments GROUP BY order_id) SELECT o.discount, o.channel, os.stddev_cost, os.dhl_cost FROM orders o JOIN order_summary os ON o.id = os.order_id

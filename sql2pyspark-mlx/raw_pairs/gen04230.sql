@@ -1,0 +1,1 @@
+SELECT product_id, store_id, avg_quantity FROM (SELECT product_id, store_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY product_id, store_id) AS agg WHERE avg_quantity > 27 ORDER BY product_id DESC;

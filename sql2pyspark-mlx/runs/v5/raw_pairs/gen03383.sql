@@ -1,0 +1,1 @@
+SELECT is_remote, QUARTER(hire_date) AS hire_quarter, ROUND((100 * SUM(CASE WHEN job_title = 'Intern' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_intern FROM employees GROUP BY is_remote, QUARTER(hire_date)

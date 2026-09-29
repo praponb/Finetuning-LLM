@@ -1,0 +1,1 @@
+SELECT p.country, src.page, COUNT(*) AS num_rows, MAX(src.duration_sec) AS max_duration_sec FROM web_events src INNER JOIN sessions p ON src.session_id = p.id GROUP BY GROUPING SETS ((p.country, src.page), (p.country), ());

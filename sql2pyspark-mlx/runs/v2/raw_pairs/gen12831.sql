@@ -1,0 +1,1 @@
+SELECT s.id, s.region, t.total_count, t.amount_range FROM stores s INNER JOIN (SELECT store_id, COUNT(*) AS total_count, MAX(amount) - MIN(amount) AS amount_range FROM orders WHERE channel IN ('store', 'web', 'partner') GROUP BY store_id) t ON s.id = t.store_id WHERE t.amount_range > 75 ORDER BY total_count DESC, id LIMIT 1

@@ -1,0 +1,1 @@
+SELECT DISTINCT level FROM employees ORDER BY 1;

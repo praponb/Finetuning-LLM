@@ -1,0 +1,1 @@
+SELECT s.city, AVG(i.quantity) AS avg_quantity, COUNT(*) AS num_inventory FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.city ORDER BY num_inventory DESC

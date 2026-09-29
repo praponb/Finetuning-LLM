@@ -1,0 +1,1 @@
+SELECT oi.unit_price, oi.quantity, o.store_id, p.stock_qty, p.cost FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id INNER JOIN products p ON oi.product_id = p.id WHERE oi.product_id IN (2, 7, 8) ORDER BY quantity DESC;

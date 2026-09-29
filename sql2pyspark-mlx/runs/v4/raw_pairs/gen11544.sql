@@ -1,0 +1,1 @@
+with valid as (select *, concat_ws('/', browser, device) as browser_device_key from sessions where started_at >= date '2023-09-05') select * from valid qualify row_number() over (partition by customer_id order by started_at desc nulls last, id) = 1

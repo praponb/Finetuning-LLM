@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT e.*, b.launch_date FROM order_items e LEFT JOIN products b ON e.product_id <=> b.id) SELECT s.id, s.order_id, s.product_id, s.unit_price, s.launch_date, (SELECT AVG(x.cost) FROM shipments x WHERE x.order_id = s.order_id) AS avg_shipment_cost FROM enriched s

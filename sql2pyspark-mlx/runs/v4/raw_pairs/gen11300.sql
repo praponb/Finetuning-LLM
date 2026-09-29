@@ -1,0 +1,1 @@
+with order_summary as (select order_id, max(delivered_date) latest_delivered_date, min(shipped_date) first_shipped_date from shipments where shipped_date > '2025-08-31' group by order_id) select o.id, o.shipping_fee, o.discount, os.latest_delivered_date, os.first_shipped_date from orders o join order_summary os on o.id = os.order_id order by o.discount desc;

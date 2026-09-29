@@ -1,0 +1,1 @@
+SELECT s.*, latest.product_brand, latest.product_price FROM suppliers s LEFT JOIN LATERAL (SELECT c.brand AS product_brand, c.price AS product_price FROM products c WHERE c.supplier_id = s.id ORDER BY c.cost DESC, c.id DESC LIMIT 1) latest ON TRUE

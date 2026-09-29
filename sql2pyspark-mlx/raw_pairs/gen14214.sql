@@ -1,0 +1,1 @@
+WITH filtered_web_events AS (SELECT * FROM web_events WHERE event_type IN ('add_to_cart', 'search', 'page_view') OR page IN ('/cart', '/search', '/home')), agg AS (SELECT page, MAX(event_time) AS last_event_time FROM filtered_web_events GROUP BY page) SELECT page, last_event_time FROM agg;

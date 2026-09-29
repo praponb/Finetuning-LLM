@@ -1,0 +1,1 @@
+select case when revenue >= 4100 then 'high' when revenue >= 1400 then 'mid' else 'low' end revenue_bucket, min(units) min_units from store_sales where revenue >= 3800 and product_id in (1, 5) group by 1 order by revenue_bucket

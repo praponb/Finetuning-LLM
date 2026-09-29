@@ -1,0 +1,1 @@
+SELECT web_events.duration_sec, sessions.customer_id, sessions.device, CASE WHEN web_events.event_type IN ('click', 'purchase') THEN 'Tier 1' ELSE 'Other' END AS event_type_group FROM web_events LEFT JOIN sessions ON web_events.session_id = sessions.id WHERE sessions.country IN ('US', 'DE', 'SG') AND sessions.customer_id IN (28, 31) ORDER BY duration_sec DESC;

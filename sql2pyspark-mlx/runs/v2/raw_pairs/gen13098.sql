@@ -1,0 +1,1 @@
+select case when s.rating >= 3.9 then 'high' when s.rating >= 2.4 then 'mid' else 'low' end as rating_bucket, concat_ws(', ', sort_array(collect_set(p.brand))) as brand_values from products p join suppliers s on p.supplier_id = s.id where size(p.tags) > 1 group by case when s.rating >= 3.9 then 'high' when s.rating >= 2.4 then 'mid' else 'low' end order by rating_bucket;

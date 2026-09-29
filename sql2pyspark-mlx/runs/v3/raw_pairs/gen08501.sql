@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, customer_id, balance, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY balance DESC, id) AS pos FROM accounts WHERE YEAR(opened_date) >= 2025) SELECT * FROM numbered WHERE pos = 1 ORDER BY id;

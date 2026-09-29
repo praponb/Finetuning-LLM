@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.country, sessions.device, customers.email, CONCAT_WS('/', customers.email, customers.segment) AS email_segment_key FROM sessions JOIN customers ON sessions.customer_id = customers.id;

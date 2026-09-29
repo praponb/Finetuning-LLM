@@ -1,0 +1,1 @@
+SELECT country, unique_countrys FROM (SELECT country, COUNT(DISTINCT rating) AS unique_countrys FROM suppliers WHERE rating BETWEEN 2.5 AND 2.7 GROUP BY country) AS t WHERE unique_countrys >= 9 ORDER BY country;

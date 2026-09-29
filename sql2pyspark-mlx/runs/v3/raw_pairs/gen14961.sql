@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, MAX(launch_date) AS last_launch_date FROM products WHERE supplier_id IS NULL GROUP BY supplier_id) SELECT s.id, s.supplier_name, s.rating, st.last_launch_date FROM suppliers s LEFT JOIN supplier_totals st ON s.id = st.supplier_id ORDER BY last_launch_date

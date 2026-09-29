@@ -1,0 +1,1 @@
+select case when rating >= 3.8 then 'high' when rating >= 2.1 then 'mid' else 'low' end as rating_bucket, sum(case when city = 'Berlin' then 1 else 0 end) as berlin_count, sum(rating) as total_rating from suppliers group by 1 order by total_rating desc;

@@ -1,0 +1,1 @@
+SELECT id, opened_date, city, LAST_VALUE(city) OVER (ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_city FROM stores;

@@ -1,0 +1,1 @@
+WITH valid_products AS (SELECT * FROM products WHERE supplier_id IS NOT NULL), summary AS (SELECT category, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, MIN(launch_date) AS first_launch_date FROM valid_products GROUP BY category) SELECT category, category_values, first_launch_date FROM summary ORDER BY first_launch_date DESC, category LIMIT 1

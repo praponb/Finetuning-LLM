@@ -1,0 +1,1 @@
+SELECT country, CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(DISTINCT rating) AS unique_countrys, SUM(CASE WHEN country = 'UK' THEN 1 ELSE 0 END) AS uk_count FROM suppliers WHERE city IN ('Singapore', 'New York') AND rating > 2.6 GROUP BY 1, 2;

@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, MIN(sale_date) AS min_sale_date, MIN(sale_date) AS first_sale_date FROM store_sales WHERE units >= 40 GROUP BY store_id) SELECT s.id, s.opened_date, st.min_sale_date, st.first_sale_date FROM stores s JOIN store_totals st ON s.id = st.store_id ORDER BY id DESC

@@ -1,0 +1,1 @@
+SELECT c.city, c.country, ROUND((100 * SUM(CASE WHEN a.status = 'CLOSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_closed, MAX(a.opened_date) AS latest_opened_date FROM accounts a LEFT JOIN customers c ON c.id = a.customer_id GROUP BY c.city, c.country HAVING pct_closed > 49 ORDER BY country, city LIMIT 5;

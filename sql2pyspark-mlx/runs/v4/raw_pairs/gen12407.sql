@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM stores WHERE region = 'North'), region_summary AS (SELECT region, ROUND(AVG(sqft), 2) AS avg_sqft, MAX(sqft) - MIN(sqft) AS sqft_range FROM Base GROUP BY region) SELECT * FROM region_summary ORDER BY region;

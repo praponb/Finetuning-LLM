@@ -1,0 +1,1 @@
+SELECT CASE WHEN status_bits >= 9 THEN 'HIGH' ELSE 'LOW' END AS status_bits_tier, device_code, APPROX_PERCENTILE(pressure, 0.9) AS pressure_p90, COUNT(*) AS event_count FROM device_readings GROUP BY CASE WHEN status_bits >= 9 THEN 'HIGH' ELSE 'LOW' END, device_code

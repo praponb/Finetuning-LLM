@@ -1,0 +1,1 @@
+SELECT id, city, region, opened_date, NTILE(5) OVER (PARTITION BY region, city ORDER BY sqft, id) AS sqft_bucket, ROW_NUMBER() OVER (PARTITION BY MONTH(opened_date), city ORDER BY opened_date DESC, id) AS row_seq FROM stores

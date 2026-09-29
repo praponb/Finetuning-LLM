@@ -1,0 +1,1 @@
+select status, month(end_date) as end_month, count(*) as subscription_count, round(stddev(monthly_fee), 2) as stddev_monthly_fee from subscriptions where status = 'CANCELLED' group by status, month(end_date)

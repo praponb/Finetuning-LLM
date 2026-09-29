@@ -1,0 +1,1 @@
+select p.id, p.category, t.units_count, t.avg_revenue from products p inner join (select product_id, count(units) as units_count, avg(revenue) as avg_revenue from store_sales where sale_date > '2023-08-01' group by product_id) t on p.id = t.product_id order by units_count desc, id limit 3;

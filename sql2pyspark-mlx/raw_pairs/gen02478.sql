@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM customers WHERE NOT is_active), agg AS (SELECT city, MAX(age) AS max_age FROM base GROUP BY city) SELECT city, max_age FROM agg WHERE max_age > 31 ORDER BY city ASC, max_age DESC;

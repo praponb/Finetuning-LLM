@@ -1,0 +1,1 @@
+SELECT country, AVG(credit_limit) avg_credit_limit FROM customers WHERE city IN ('London', 'Berlin', 'Chiang Mai') AND country IN ('TH', 'JP', 'SG') AND segment = 'Corporate' GROUP BY country HAVING AVG(credit_limit) >= 12400 ORDER BY country, 2 DESC

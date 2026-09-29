@@ -1,0 +1,1 @@
+SELECT paid_at, method, TO_DATE(paid_at) AS paid_at_date, INITCAP(TRIM(status)) AS status_title FROM payments WHERE method IN ('bank_transfer', 'paypal') AND (status = 'FAILED' OR status IN ('REFUNDED', 'FAILED')) ORDER BY paid_at_date, paid_at

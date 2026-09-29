@@ -1,0 +1,1 @@
+SELECT category, SUM(CASE WHEN category = 'Sports' THEN price ELSE 0 END) AS sports_price, SUM(CASE WHEN category = 'Home' THEN 1 ELSE 0 END) AS home_count FROM products GROUP BY category HAVING SUM(CASE WHEN category = 'Home' THEN 1 ELSE 0 END) < 69 ORDER BY sports_price DESC;

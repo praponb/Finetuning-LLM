@@ -1,0 +1,1 @@
+select id, customer_id, sum(monthly_fee) over (partition by status order by monthly_fee, id rows between unbounded preceding and current row) as cumulative_monthly_fee, lag(monthly_fee, 2) over (partition by plan order by start_date, id) as prev_monthly_fee from subscriptions

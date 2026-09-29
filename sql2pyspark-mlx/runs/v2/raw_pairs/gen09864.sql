@@ -1,0 +1,1 @@
+select id, status, opened_date, customer_id from (select id, status, opened_date, customer_id, row_number() over (partition by status order by opened_date, id) as rn from accounts) as r where rn <= 3 order by status desc

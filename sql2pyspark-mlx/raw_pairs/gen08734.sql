@@ -1,0 +1,1 @@
+WITH recent_subscriptions AS (SELECT * FROM subscriptions WHERE plan = 'premium' AND YEAR(start_date) = 2024), agg AS (SELECT status, COUNT(monthly_fee) AS monthly_fee_count, MAX(end_date) AS last_end_date FROM recent_subscriptions GROUP BY status) SELECT * FROM agg WHERE monthly_fee_count >= 5 ORDER BY last_end_date, status DESC

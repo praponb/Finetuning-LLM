@@ -1,0 +1,1 @@
+SELECT id, order_id, carrier, delivered_date, cost, status, shipped_date, LEAD(cost, 1) OVER (PARTITION BY order_id, carrier ORDER BY delivered_date, id) AS next_cost, RANK() OVER (PARTITION BY status ORDER BY shipped_date) AS rnk FROM shipments ORDER BY next_cost DESC

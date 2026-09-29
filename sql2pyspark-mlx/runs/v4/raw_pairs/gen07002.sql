@@ -1,0 +1,1 @@
+SELECT CASE WHEN carrier IN ('Flash', 'Kerry') THEN 'priority' ELSE 'other' END AS carrier_group, SUM(cost) AS total_cost, SUM(SUM(cost)) OVER (ORDER BY CASE WHEN carrier IN ('Flash', 'Kerry') THEN 'priority' ELSE 'other' END) AS cumulative_cost FROM shipments GROUP BY CASE WHEN carrier IN ('Flash', 'Kerry') THEN 'priority' ELSE 'other' END;

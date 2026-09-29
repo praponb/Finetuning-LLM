@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.sqft >= 17884 THEN 'high' WHEN s.sqft >= 6820 THEN 'mid' ELSE 'low' END AS sqft_bucket, AVG(i.quantity) AS avg_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON s.id = i.store_id GROUP BY CASE WHEN s.sqft >= 17884 THEN 'high' WHEN s.sqft >= 6820 THEN 'mid' ELSE 'low' END

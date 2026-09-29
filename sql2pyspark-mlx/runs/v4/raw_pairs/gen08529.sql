@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, name, email, country, city, segment, is_active, credit_limit, age, CAST(is_active AS INT) AS is_active_flag FROM customers WHERE signup_date >= DATE '2023-05-27') SELECT * FROM (SELECT segment, city, country, age FROM cleaned) src PIVOT (MAX(age) AS total FOR country IN ('DE', 'UK'));

@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.product_id, i.last_restock, ss.product_id AS store_sale_product_id, ss.sale_date FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id = 9 AND ss.units IS NOT NULL ORDER BY ss.product_id DESC, i.id ASC

@@ -1,0 +1,1 @@
+WITH top_order_items AS (SELECT id, product_id, unit_price, RANK() OVER (PARTITION BY product_id ORDER BY unit_price DESC) AS rn FROM order_items WHERE quantity BETWEEN 6 AND 7) SELECT id, product_id, unit_price FROM top_order_items WHERE rn <= 5

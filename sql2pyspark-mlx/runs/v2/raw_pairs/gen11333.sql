@@ -1,0 +1,1 @@
+SELECT MONTH(last_restock) AS last_restock_month, SUM(quantity) AS total_quantity, ROUND(SUM(quantity) * 100.0 / SUM(SUM(quantity)) OVER (), 2) AS pct_of_total FROM inventory WHERE product_id IN (2, 8) GROUP BY MONTH(last_restock);

@@ -1,0 +1,1 @@
+SELECT p.method, o.customer_id, o.order_date, o.shipping_fee, CASE WHEN p.method = 'card' THEN 1 ELSE 0 END is_card FROM payments p LEFT JOIN orders o ON p.order_id = o.id WHERE o.customer_id IN (28, 37) AND o.store_id IS NULL;

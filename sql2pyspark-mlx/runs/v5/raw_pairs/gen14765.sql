@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, attr_key, v FROM carts LATERAL VIEW EXPLODE(attributes) e AS attr_key, v) SELECT s.id, s.customer_id, s.attr_key, s.v, (SELECT SUM(t2.monthly_fee) FROM subscriptions t2 WHERE t2.customer_id = s.customer_id) AS sum_subscription_monthly_fee FROM lines s ORDER BY customer_id;

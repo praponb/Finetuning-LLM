@@ -1,0 +1,1 @@
+with ranked as (select id, segment, signup_date, country, row_number() over (partition by segment order by signup_date desc, id) as rn from customers) select id, segment, signup_date, country from ranked where rn <= 2 order by country asc, signup_date desc;

@@ -1,0 +1,1 @@
+SELECT status, ROUND(AVG(monthly_fee), 2) avg_monthly_fee, MAX(monthly_fee) max_monthly_fee, ROUND((100 * SUM(CASE WHEN plan = 'basic' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_basic FROM subscriptions WHERE customer_id IN (15, 31) AND customer_id = 20 GROUP BY status;

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, COUNT(*) AS num_payments, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM payments GROUP BY order_id) SELECT o.discount, os.num_payments, os.status_values FROM orders o JOIN order_summary os ON o.id = os.order_id;

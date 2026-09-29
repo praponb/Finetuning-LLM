@@ -1,0 +1,1 @@
+SELECT id, category, launch_date, cost, supplier_id, price, ROUND(AVG(cost) OVER (PARTITION BY category ORDER BY launch_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_4, FIRST_VALUE(price) OVER (PARTITION BY supplier_id ORDER BY launch_date, id) AS first_price FROM products;

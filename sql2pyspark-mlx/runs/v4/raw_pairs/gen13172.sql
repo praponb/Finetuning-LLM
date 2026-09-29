@@ -1,0 +1,1 @@
+SELECT s.city, MAX(ss.units) AS max_units, AVG(ss.units) AS avg_units FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE ss.store_id IN (5, 6) GROUP BY s.city HAVING AVG(ss.units) > 15 ORDER BY s.city;

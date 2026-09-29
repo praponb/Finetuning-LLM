@@ -1,0 +1,1 @@
+SELECT status, CASE WHEN plan IN ('standard', 'basic') THEN 'priority' ELSE 'other' END AS plan_group, SUM(CASE WHEN status = 'EXPIRED' THEN monthly_fee ELSE 0 END) AS expired_monthly_fee FROM subscriptions WHERE customer_id IN (6, 11, 14) OR status IN ('PAUSED', 'ACTIVE', 'CANCELLED') GROUP BY 1, 2 ORDER BY status, plan_group LIMIT 50;

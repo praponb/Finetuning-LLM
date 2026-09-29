@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT *, INITCAP(TRIM(txn_type)) txn_type_title FROM transactions WHERE merchant IN ('Lazada', '7-Eleven', 'Shell') OR merchant IN ('7-Eleven', 'Shell')), agg AS (SELECT txn_type, COUNT(CASE WHEN merchant = 'Amazon' THEN 1 END) amazon_count, MAX(amount) max_amount FROM valid_transactions GROUP BY txn_type) SELECT * FROM agg

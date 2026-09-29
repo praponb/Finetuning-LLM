@@ -1,0 +1,1 @@
+WITH filtered_suppliers AS (SELECT * FROM suppliers WHERE city = 'Chiang Mai'), suppliers_stats AS (SELECT city, country, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM filtered_suppliers GROUP BY city, country) SELECT * FROM suppliers_stats ORDER BY country ASC, city ASC LIMIT 50;

@@ -1,0 +1,1 @@
+SELECT we.id, we.page, we.duration_sec, we.session_id, s.country, s.customer_id, s.browser FROM web_events we INNER JOIN sessions s ON s.id = we.session_id WHERE we.session_id IN (20, 27, 30, 34) AND we.event_type IN ('click', 'page_view')

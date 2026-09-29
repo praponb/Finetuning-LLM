@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT id, product_id, quantity FROM inventory QUALIFY ROW_NUMBER() OVER (PARTITION BY product_id, store_id ORDER BY quantity NULLS FIRST, id) = 1) SELECT s.id, s.product_id, (SELECT MAX(t2.quantity) FROM order_items t2 WHERE t2.product_id = s.product_id) AS max_order_item_quantity FROM deduped s ORDER BY max_order_item_quantity DESC NULLS FIRST

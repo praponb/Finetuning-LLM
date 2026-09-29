@@ -1,0 +1,1 @@
+SELECT we.session_id, s.started_at, s.country, s.customer_id, DATE_FORMAT(s.started_at, 'yyyy-MM') AS started_at_label FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id WHERE we.event_type <> 'search' OR s.started_at < '2024-02-14';

@@ -1,0 +1,1 @@
+select e.id, e.hire_date as employee_hire_date, m.level as manager_level, m.salary as manager_salary, m.full_name as manager_full_name, concat_ws('-', e.job_title, e.full_name) as job_title_full_name_key from employees e left join employees m on e.manager_id = m.id;

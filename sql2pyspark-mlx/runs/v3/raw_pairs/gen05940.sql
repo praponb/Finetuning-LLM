@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, p.launch_date FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id WHERE ss.sale_date <= '2024-08-23' AND ss.revenue > 1000 ORDER BY launch_date, ss.id DESC

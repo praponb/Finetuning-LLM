@@ -1,0 +1,1 @@
+SELECT order_id, SUM(unit_price) AS total_unit_price, COUNT(*) AS cnt, SUM(SUM(unit_price)) OVER (ORDER BY order_id) AS cumulative_unit_price FROM order_items WHERE quantity < 8 GROUP BY order_id ORDER BY cnt DESC

@@ -1,0 +1,1 @@
+SELECT s.id, s.name, s.email, s.country, s.city, s.is_active, s.credit_limit, latest.subscription_monthly_fee FROM customers s JOIN LATERAL (SELECT c.monthly_fee AS subscription_monthly_fee FROM subscriptions c WHERE c.customer_id = s.id AND c.start_date <= s.signup_date ORDER BY c.start_date DESC, c.id DESC LIMIT 1) latest ON TRUE

@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.rating >= 4.5 THEN 'high' WHEN s.rating >= 2.3 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(*) AS row_count, MIN(p.launch_date) AS first_launch_date FROM products p FULL OUTER JOIN suppliers s ON p.supplier_id = s.id GROUP BY CASE WHEN s.rating >= 4.5 THEN 'high' WHEN s.rating >= 2.3 THEN 'mid' ELSE 'low' END ORDER BY row_count DESC

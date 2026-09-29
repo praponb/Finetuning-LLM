@@ -1,0 +1,1 @@
+SELECT id, customer_id, balance FROM (SELECT id, customer_id, balance, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY balance DESC, id) AS rn FROM accounts) AS t WHERE rn <= 5 ORDER BY balance DESC

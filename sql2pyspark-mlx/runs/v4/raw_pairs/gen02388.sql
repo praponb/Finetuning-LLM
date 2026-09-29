@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, DATEDIFF(CURRENT_DATE(), opened_date) AS days_since_opened_date, CONCAT(account_type, '/', status) AS account_type_status FROM accounts WHERE opened_date > DATE '2024-02-07') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date NULLS FIRST, id) AS rn FROM valid) t WHERE rn = 1;

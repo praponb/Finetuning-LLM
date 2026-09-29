@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, AVG(quantity) AS avg_quantity, MIN(last_restock) AS min_last_restock FROM inventory WHERE last_restock <= '2023-04-01' GROUP BY product_id) SELECT p.id, p.cost, pt.avg_quantity, pt.min_last_restock FROM products p LEFT JOIN product_totals pt ON p.id = pt.product_id

@@ -1,0 +1,1 @@
+WITH shipments_by_order AS (SELECT order_id, COUNT(cost) AS cost_count, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM shipments GROUP BY order_id) SELECT o.store_id, o.shipping_fee, sbo.cost_count, sbo.status_list FROM orders o LEFT JOIN shipments_by_order sbo ON o.id = sbo.order_id;

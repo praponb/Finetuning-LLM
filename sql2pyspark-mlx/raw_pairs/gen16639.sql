@@ -1,0 +1,1 @@
+SELECT id, carrier, shipped_date, cost, order_id, delivered_date, SUM(cost) OVER (PARTITION BY carrier ORDER BY shipped_date, id) AS running_cost, LEAD(cost, 1, 0) OVER (PARTITION BY order_id ORDER BY delivered_date, id) AS next_cost FROM shipments

@@ -1,0 +1,1 @@
+select id, plan, tier_prices, transform(tier_prices, (p, i) -> round(p * tier_limits[i], 2)) as tier_revenue_caps, zip_with(tier_prices, discounts, (p, d) -> round(p * (1 - d), 2)) as net_prices, slice(tier_limits, 1, 2) as first_two_limits, array_min(tier_prices) as lowest_price, element_at(tier_prices, 1) as entry_price from price_tiers where plan in ('pro', 'starter');

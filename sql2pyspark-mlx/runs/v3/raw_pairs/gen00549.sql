@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, status, COUNT(*) AS cnt, COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) AS closed_count FROM accounts GROUP BY ROLLUP(DATE_TRUNC('MONTH', opened_date), status);

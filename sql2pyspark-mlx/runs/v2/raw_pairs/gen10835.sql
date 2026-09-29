@@ -1,0 +1,1 @@
+SELECT dept_name, CASE WHEN budget >= 3872000 THEN 'high' WHEN budget >= 1907000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(CASE WHEN dept_name = 'Sales' THEN 1 ELSE 0 END) AS sales_count FROM departments GROUP BY dept_name, budget_bucket HAVING SUM(CASE WHEN dept_name = 'Sales' THEN 1 ELSE 0 END) >= 37 ORDER BY budget_bucket;

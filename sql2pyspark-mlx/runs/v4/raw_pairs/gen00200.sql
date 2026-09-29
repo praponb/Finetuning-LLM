@@ -1,0 +1,1 @@
+with ranked as (select id, location, budget, dept_name, row_number() over (partition by location order by budget, id) as row_num from departments where dept_name = 'HR') select * from ranked where row_num <= 5

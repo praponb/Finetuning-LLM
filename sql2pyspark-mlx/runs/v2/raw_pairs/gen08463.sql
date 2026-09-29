@@ -1,0 +1,1 @@
+select city, sum(case when city = 'Bangkok' then 1 else 0 end) as bangkok_count, sum(sqft) as total_sqft from stores where sqft <> 10013 and month(opened_date) in (5, 10, 11) group by city order by city

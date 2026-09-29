@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM inventory WHERE quantity IS NOT NULL AND last_restock < '2024-10-01'), InventoryStats AS (SELECT product_id, SUM(quantity) AS total_quantity, MIN(last_restock) AS min_last_restock FROM base GROUP BY product_id) SELECT * FROM InventoryStats WHERE total_quantity < 1310 ORDER BY product_id DESC

@@ -1,0 +1,1 @@
+with base as (select *, length(status) as status_length from accounts where account_type = 'CREDIT'), summary as (select account_type, sum(case when account_type = 'CREDIT' then balance else 0 end) as credit_balance from base group by account_type) select account_type, credit_balance from summary where credit_balance < 34;

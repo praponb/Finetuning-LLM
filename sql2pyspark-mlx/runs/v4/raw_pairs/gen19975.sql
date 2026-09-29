@@ -1,0 +1,1 @@
+SELECT CASE WHEN stores.region IN ('North', 'West') THEN 'tier_1' ELSE 'other' END AS region_group, COUNT(*) AS order_count, ROUND(STDDEV(orders.discount), 2) AS stddev_discount FROM orders JOIN stores ON stores.id = orders.store_id WHERE stores.city IN ('London', 'Bangkok') GROUP BY CASE WHEN stores.region IN ('North', 'West') THEN 'tier_1' ELSE 'other' END;

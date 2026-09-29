@@ -1,0 +1,1 @@
+select id, quantity, last_restock, date_trunc('MONTH', last_restock) as last_restock_period, case when quantity >= 229 then 'High' when quantity >= 117 then 'Medium' else 'Low' end as quantity_level from inventory where (product_id = 8 and last_restock between '2023-03-01' and '2025-09-26') or last_restock <= '2025-09-01' order by quantity desc

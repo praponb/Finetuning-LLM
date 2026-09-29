@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, c.is_active, COUNT(DISTINCT s.browser) AS unique_browsers FROM sessions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY YEAR(c.signup_date), c.is_active

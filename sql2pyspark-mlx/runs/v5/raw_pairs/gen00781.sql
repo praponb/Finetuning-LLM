@@ -1,0 +1,1 @@
+SELECT YEAR(signup_date) signup_year, SORT_ARRAY(COLLECT_SET(segment)) segment_list FROM customers WHERE signup_date <= '2024-04-01' OR email LIKE '%@company.co' GROUP BY YEAR(signup_date) ORDER BY signup_year DESC;

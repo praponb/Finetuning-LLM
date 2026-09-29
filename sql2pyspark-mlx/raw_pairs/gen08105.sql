@@ -1,0 +1,1 @@
+select i.product_id, i.store_id, p.product_name from inventory i inner join products p on p.id = i.product_id where p.category = 'Grocery' and p.stock_qty between 238 and 305 order by product_name desc

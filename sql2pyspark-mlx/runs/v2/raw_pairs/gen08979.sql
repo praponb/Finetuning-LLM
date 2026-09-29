@@ -1,0 +1,1 @@
+select case when rating >= 4.1 then 'high' when rating >= 1.7 then 'mid' else 'low' end as rating_bucket, count(rating) as rating_count, round(stddev(rating), 2) as stddev_rating from suppliers where city = 'London' and supplier_name like 'Si%' group by case when rating >= 4.1 then 'high' when rating >= 1.7 then 'mid' else 'low' end order by rating_count desc, stddev_rating desc

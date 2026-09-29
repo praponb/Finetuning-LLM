@@ -1,0 +1,1 @@
+WITH ProductsBySupplier AS (SELECT supplier_id, ROUND(STDDEV(cost), 2) AS stddev_cost, MIN(cost) AS min_cost FROM products WHERE category IN ('Sports', 'Home') GROUP BY supplier_id) SELECT s.id, s.city, s.country, P.stddev_cost, P.min_cost FROM suppliers s LEFT JOIN ProductsBySupplier P ON s.id = P.supplier_id WHERE P.min_cost >= 540 ORDER BY id, P.stddev_cost DESC;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN salary >= 152000 THEN 'high' WHEN salary >= 65000 THEN 'mid' ELSE 'low' END AS salary_bucket, AVG(salary) AS avg_salary FROM employees WHERE is_remote AND hire_date <= '2025-10-01' AND NOT is_remote GROUP BY CASE WHEN salary >= 152000 THEN 'high' WHEN salary >= 65000 THEN 'mid' ELSE 'low' END ORDER BY salary_bucket DESC;

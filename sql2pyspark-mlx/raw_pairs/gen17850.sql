@@ -1,0 +1,1 @@
+with exploded as (select id, plan, effective_from, tier_value from price_tiers lateral view outer explode(discounts) e as tier_value) select plan, effective_from from exploded order by effective_from desc nulls last;

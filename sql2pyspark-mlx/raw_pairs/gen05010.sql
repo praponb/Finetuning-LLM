@@ -1,0 +1,1 @@
+select p.browser, a.event_type, count(*) as rows_total, min(a.duration_sec) as min_duration_sec from web_events a inner join sessions p on a.session_id = p.id group by rollup (p.browser, a.event_type);

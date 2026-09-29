@@ -1,0 +1,1 @@
+WITH ranked_employees AS (SELECT id, job_title, hire_date, level, ROW_NUMBER() OVER (PARTITION BY job_title ORDER BY hire_date, id) AS row_num FROM employees) SELECT id, job_title, hire_date, level FROM ranked_employees WHERE row_num = 1

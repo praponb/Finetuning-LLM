@@ -1,0 +1,1 @@
+SELECT c.city, COUNT(a.balance) AS balance_count, COUNT(*) AS total_count FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE a.customer_id = 15 GROUP BY c.city ORDER BY balance_count, city LIMIT 5;

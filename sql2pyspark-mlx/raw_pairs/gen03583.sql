@@ -1,0 +1,1 @@
+SELECT status, MIN(paid_at) first_paid_at, COUNT(DISTINCT amount) unique_statuss FROM payments WHERE HOUR(paid_at) BETWEEN 9 AND 13 AND TO_DATE(paid_at) >= '2023-03-04' GROUP BY status HAVING COUNT(DISTINCT amount) > 5 ORDER BY unique_statuss DESC, status LIMIT 3;

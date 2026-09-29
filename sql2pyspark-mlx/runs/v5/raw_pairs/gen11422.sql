@@ -1,0 +1,1 @@
+with flattened as (select id, customer_id, created_at, tag from carts lateral view outer explode(coupon_codes) e as tag) select customer_id, count_if(tag = 'WELCOME5') as welcome5_events, count(distinct customer_id) as distinct_customer_ids from flattened group by customer_id order by welcome5_events

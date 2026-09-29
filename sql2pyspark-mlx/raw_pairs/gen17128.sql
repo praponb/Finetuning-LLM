@@ -1,0 +1,1 @@
+SELECT p.category, MIN(ss.revenue) AS min_revenue, MAX(ss.units) AS max_units FROM store_sales ss LEFT JOIN products p ON p.id = ss.product_id WHERE MONTH(p.launch_date) IN (2, 9, 12) GROUP BY p.category HAVING min_revenue >= 2400 ORDER BY category DESC

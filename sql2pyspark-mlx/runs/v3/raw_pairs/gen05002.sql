@@ -1,0 +1,1 @@
+SELECT event_type, MIN(duration_sec) AS min_duration_sec, COUNT(DISTINCT duration_sec) AS unique_sessions, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY event_type ORDER BY min_duration_sec, avg_duration_sec DESC

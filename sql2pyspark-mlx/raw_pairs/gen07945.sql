@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, COUNT(CASE WHEN level = 'L3' THEN 1 END) AS l3_count, COUNT(DISTINCT salary) AS unique_levels FROM employees GROUP BY dept_id) SELECT d.id, d.location, d.budget, ds.l3_count, ds.unique_levels FROM departments d JOIN department_summary ds ON d.id = ds.dept_id WHERE ds.l3_count > 4 ORDER BY ds.l3_count DESC;

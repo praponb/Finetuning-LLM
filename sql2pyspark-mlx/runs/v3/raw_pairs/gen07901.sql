@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, store_id, units, revenue, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY units DESC, id) AS rn FROM store_sales) SELECT id, store_id, units, revenue FROM ranked WHERE rn <= 5 ORDER BY units;

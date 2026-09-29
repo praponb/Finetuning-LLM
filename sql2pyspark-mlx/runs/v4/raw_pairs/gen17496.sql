@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM employees QUALIFY ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY hire_date DESC NULLS FIRST, id) = 1) SELECT manager_id, MAX(salary) AS max_salary, COUNT(CASE WHEN level = 'L3' THEN 1 END) AS l3_count, APPROX_PERCENTILE(salary, ARRAY(0.25, 0.5, 0.75)) AS salary_quartiles FROM latest GROUP BY manager_id;

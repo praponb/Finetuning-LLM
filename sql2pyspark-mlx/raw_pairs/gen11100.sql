@@ -1,0 +1,1 @@
+SELECT i.product_id, i.last_restock, s.region, s.store_name, p.launch_date FROM inventory i LEFT JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id WHERE i.product_id IN (3, 4, 5)

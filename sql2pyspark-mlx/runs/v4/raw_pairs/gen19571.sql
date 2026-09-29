@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE event_type IN ('click', 'add_to_cart') GROUP BY session_id) SELECT s.id, s.started_at, ss.min_duration_sec FROM sessions s LEFT OUTER JOIN session_stats ss ON s.id = ss.session_id WHERE ss.min_duration_sec >= 410;

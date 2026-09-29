@@ -1,0 +1,1 @@
+select transactions.id, transactions.merchant, transactions.account_id, accounts.status, accounts.account_type, accounts.balance from transactions join accounts on transactions.account_id = accounts.id where accounts.opened_date between '2023-08-01' and '2025-07-24' order by account_id desc, id desc

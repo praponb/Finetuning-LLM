@@ -1,0 +1,1 @@
+SELECT i.product_id, i.quantity, s.sqft, p.supplier_id FROM inventory i LEFT OUTER JOIN stores s ON s.id = i.store_id LEFT OUTER JOIN products p ON i.product_id = p.id WHERE i.store_id = 1 AND p.brand NOT IN ('Initech', 'Globex')

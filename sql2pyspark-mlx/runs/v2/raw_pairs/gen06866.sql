@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 212 THEN 'high' WHEN quantity >= 74 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(*) AS cnt FROM inventory GROUP BY CASE WHEN quantity >= 212 THEN 'high' WHEN quantity >= 74 THEN 'mid' ELSE 'low' END ORDER BY 1;

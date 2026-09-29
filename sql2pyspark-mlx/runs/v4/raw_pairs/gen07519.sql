@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM accounts WHERE YEAR(opened_date) = 2023 AND opened_date BETWEEN '2024-05-01' AND '2025-01-19' AND balance <= 26000), agg AS (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, MIN(balance) AS min_balance FROM src GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) SELECT * FROM agg ORDER BY opened_month ASC

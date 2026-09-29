@@ -1,0 +1,1 @@
+SELECT event_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, SUM(CASE WHEN event_type = 'purchase' THEN duration_sec ELSE 0 END) AS purchase_duration_sec FROM web_events WHERE session_id IN (12, 13, 19, 40) GROUP BY event_type ORDER BY purchase_duration_sec DESC, event_type LIMIT 5

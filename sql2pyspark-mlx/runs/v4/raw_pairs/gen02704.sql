@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN status IN ('OPEN', 'CLOSED') THEN 'core' ELSE 'other' END AS status_group, status, balance FROM accounts) PIVOT (AVG(balance) FOR status IN ('CLOSED', 'OPEN', 'FROZEN'));

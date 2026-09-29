@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('QUARTER', opened_date) AS quarter_start, COUNT(*) AS row_count, SUM(CASE WHEN city = 'New York' THEN sqft ELSE 0 END) AS new_york_sqft FROM stores GROUP BY DATE_TRUNC('QUARTER', opened_date) HAVING COUNT(*) < 1000;

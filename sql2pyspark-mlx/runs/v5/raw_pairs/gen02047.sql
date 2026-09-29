@@ -1,0 +1,1 @@
+SELECT product_id, DATE_TRUNC('MONTH', last_restock) AS last_restock_month, SUM(quantity) AS total_quantity FROM inventory WHERE store_id IN (5, 6) GROUP BY product_id, DATE_TRUNC('MONTH', last_restock)

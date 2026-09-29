@@ -1,0 +1,1 @@
+with recent_orders as (select * from orders where status in ('SHIPPED', 'COMPLETED', 'CANCELLED') and shipping_fee >= 33 and status <> 'PENDING'), orders_stats as (select store_id, max(discount) as max_discount from recent_orders group by store_id) select * from orders_stats where max_discount >= 0.21;

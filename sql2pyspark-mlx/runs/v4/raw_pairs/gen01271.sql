@@ -1,0 +1,1 @@
+select product_id, date_trunc('quarter', last_restock) as quarter_start, count(*) as num_rows, stddev_samp(quantity) as quantity_stddev, round(avg(quantity), 2) as avg_quantity, grouping_id() as gid from inventory group by grouping sets ((product_id, date_trunc('quarter', last_restock)), (product_id)) order by avg_quantity desc nulls last

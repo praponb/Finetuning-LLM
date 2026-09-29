@@ -1,0 +1,1 @@
+WITH recent_order_items AS (SELECT * FROM order_items WHERE product_id IN (16, 18, 26)), order_items_stats AS (SELECT product_id, COUNT(*) AS cnt, COUNT(quantity) AS quantity_count FROM recent_order_items GROUP BY product_id) SELECT product_id, cnt, quantity_count FROM order_items_stats WHERE cnt >= 6 ORDER BY cnt, quantity_count DESC

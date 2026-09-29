@@ -1,0 +1,1 @@
+SELECT is_active, DATE_TRUNC('MONTH', signup_date) AS signup_month, MIN(signup_date) AS first_signup_date, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit FROM customers WHERE country = 'US' GROUP BY 1, 2 HAVING ROUND(STDDEV(credit_limit), 2) < 46;

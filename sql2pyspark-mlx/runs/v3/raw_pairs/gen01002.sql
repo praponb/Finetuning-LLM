@@ -1,0 +1,1 @@
+SELECT employees.is_remote, employees.job_title, employees.manager_id, departments.location, departments.budget, departments.dept_name FROM employees LEFT OUTER JOIN departments ON employees.dept_id = departments.id WHERE departments.budget IS NOT NULL AND YEAR(employees.hire_date) = 2024;

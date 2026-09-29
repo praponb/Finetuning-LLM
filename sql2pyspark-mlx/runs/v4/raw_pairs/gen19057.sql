@@ -1,0 +1,1 @@
+WITH with_dims AS (SELECT s.*, p.signup_date, p.country, p.segment FROM accounts s LEFT JOIN customers p ON s.customer_id = p.id) SELECT id, account_type, opened_date, status, signup_date, country, segment FROM with_dims

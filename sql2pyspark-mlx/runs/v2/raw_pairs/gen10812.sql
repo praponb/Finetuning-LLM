@@ -1,0 +1,1 @@
+SELECT oi.quantity, o.channel, o.status, c.country, c.city FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id LEFT JOIN customers c ON c.id = o.customer_id WHERE c.country IN ('US', 'UK', 'SG')

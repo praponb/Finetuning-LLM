@@ -1,0 +1,1 @@
+select count(sqft) as sqft_count, min(opened_date) as first_opened_date, max(sqft) - min(sqft) as sqft_range from stores where opened_date > '2023-03-06' and city in ('New York', 'London', 'Bangkok') and length(store_name) < 13 order by sqft_range

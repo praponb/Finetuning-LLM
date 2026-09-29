@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM subscriptions QUALIFY ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY monthly_fee DESC, id) = 1) SELECT id, start_date, end_date, monthly_fee, status, CASE WHEN status RLIKE '^(EXPIRED|PAUSED)$' THEN 'CORE' ELSE 'GROUP_B' END AS status_zone FROM latest ORDER BY status;

@@ -1,0 +1,1 @@
+SELECT store_id, COUNT(DISTINCT revenue) AS unique_products, COUNT(*) AS total_count FROM store_sales WHERE revenue BETWEEN 2100 AND 3100 GROUP BY store_id HAVING COUNT(DISTINCT revenue) < 1 ORDER BY unique_products DESC, store_id LIMIT 50;

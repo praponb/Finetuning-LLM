@@ -1,0 +1,1 @@
+SELECT id, stock_qty, brand, product_name, LENGTH(category) AS category_length, LAST_DAY(launch_date) AS launch_date_month_end FROM products WHERE UPPER(TRIM(product_name)) = 'USB-C HUB' AND ARRAY_CONTAINS(tags, 'new');

@@ -1,0 +1,1 @@
+SELECT page, SUM(CASE WHEN page = '/checkout' THEN 1 ELSE 0 END) AS checkout_count, SUM(CASE WHEN page = '/home' THEN 1 ELSE 0 END) AS home_count FROM web_events WHERE event_type = 'add_to_cart' AND session_id IN (14, 22) AND session_id = 38 GROUP BY 1 ORDER BY page

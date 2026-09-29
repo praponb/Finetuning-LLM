@@ -1,0 +1,1 @@
+select s.device, s.browser, c.name, round(c.credit_limit * 100, 2) as credit_limit_adjusted from sessions s left join customers c on c.id = s.customer_id where s.customer_id is null or s.country = 'SG';

@@ -1,0 +1,1 @@
+select *, row_number() over (partition by segment order by age, id) as seq_no, cume_dist() over (partition by segment order by credit_limit nulls first) as credit_limit_cume_dist, first_value(segment, true) over (order by signup_date, id rows between unbounded preceding and current row) as first_known_segment from customers;

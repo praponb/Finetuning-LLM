@@ -1,0 +1,1 @@
+SELECT s.id, s.order_id, s.cost, s.shipped_date, o.shipping_fee, o.discount, o.order_date FROM shipments s INNER JOIN orders o ON o.id = s.order_id WHERE s.status IN ('RETURNED', 'DELIVERED', 'IN_TRANSIT') AND o.order_date > '2025-08-30';

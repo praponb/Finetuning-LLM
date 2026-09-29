@@ -1,0 +1,1 @@
+SELECT p.id, p.status, p.amount, o.customer_id, o.store_id, c.age FROM payments p FULL OUTER JOIN orders o ON p.order_id = o.id LEFT OUTER JOIN customers c ON o.customer_id = c.id WHERE p.order_id IN (3, 12, 20, 40) AND p.paid_at >= '2024-07-01';

@@ -1,0 +1,1 @@
+select * from (select date_trunc('MONTH', order_date) as order_month, max(shipping_fee) - min(shipping_fee) as shipping_fee_range, round((100 * sum(case when status = 'CANCELLED' then 1 else 0 end)) / count(*), 1) as pct_cancelled from orders group by date_trunc('MONTH', order_date)) as sub where pct_cancelled >= 30;

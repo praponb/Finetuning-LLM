@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY method ORDER BY amount DESC) AS rn FROM payments) x WHERE rn = 1) SELECT id, order_id, method, amount, paid_at, status, rn FROM latest ORDER BY amount DESC;

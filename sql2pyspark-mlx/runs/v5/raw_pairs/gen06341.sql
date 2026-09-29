@@ -1,0 +1,1 @@
+SELECT id, order_id, unit_price, ROUND(quantity * 0.9, 2) AS quantity_adjusted, CASE WHEN quantity >= 7 THEN 'High' WHEN quantity >= 3 THEN 'Medium' ELSE 'Low' END AS quantity_level FROM order_items WHERE order_id = 18 AND unit_price > 200 ORDER BY quantity_adjusted DESC;

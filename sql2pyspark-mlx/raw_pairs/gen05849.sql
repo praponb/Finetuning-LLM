@@ -1,0 +1,1 @@
+SELECT status, SORT_ARRAY(COLLECT_SET(status)) AS status_list, SUM(CASE WHEN plan = 'standard' THEN monthly_fee ELSE 0 END) AS standard_monthly_fee, COUNT(DISTINCT customer_id) AS distinct_customer_ids, COUNT(CASE WHEN status = 'ACTIVE' THEN 1 END) AS active_count FROM subscriptions GROUP BY status ORDER BY standard_monthly_fee DESC NULLS FIRST;

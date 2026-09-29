@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('WEEK', last_restock) AS week_start, COUNT(DISTINCT id) AS distinct_ids, COUNT(DISTINCT product_id) AS distinct_product_ids, ROUND(AVG(quantity), 2) AS avg_quantity, STDDEV_SAMP(quantity) AS quantity_stddev, GROUPING(DATE_TRUNC('WEEK', last_restock)) AS grouping_id FROM inventory GROUP BY CUBE (DATE_TRUNC('WEEK', last_restock))

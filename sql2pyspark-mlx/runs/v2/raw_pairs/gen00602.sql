@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') signup_month, COUNT(*) total_count, MAX(o.amount) - MIN(o.amount) amount_range FROM orders o JOIN customers c ON o.customer_id = c.id LEFT JOIN stores s ON o.store_id = s.id WHERE c.city = 'Berlin' GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM')

@@ -1,0 +1,10 @@
+select
+    id,
+    effective_from,
+    currency,
+    zip_with(tier_prices, discounts, (p, d) -> round(p * (1 - d), 2)) as net_prices,
+    aggregate(tier_prices, cast(0 as double), (acc, p) -> acc + p, acc -> round(acc / size(tier_prices), 2)) as avg_tier_price,
+    element_at(tier_prices, 1) as entry_price,
+    transform(tier_prices, (p, i) -> round(p * tier_limits[i], 2)) as tier_revenue_caps,
+    array_min(tier_prices) as lowest_price
+from price_tiers

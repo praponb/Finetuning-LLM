@@ -1,0 +1,1 @@
+SELECT order_id, last_delivered_date, max_cost FROM (SELECT order_id, MAX(delivered_date) last_delivered_date, MAX(cost) max_cost FROM shipments WHERE cost <= 63 GROUP BY order_id) s WHERE max_cost >= 55 ORDER BY max_cost DESC, order_id LIMIT 20;

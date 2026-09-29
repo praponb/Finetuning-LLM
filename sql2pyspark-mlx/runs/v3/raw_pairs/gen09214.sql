@@ -1,0 +1,1 @@
+select round((100 * sum(case when status = 'EXPIRED' then 1 else 0 end)) / count(*), 1) pct_expired, sort_array(collect_set(status)) status_list, count(monthly_fee) monthly_fee_count from subscriptions order by 1 desc;

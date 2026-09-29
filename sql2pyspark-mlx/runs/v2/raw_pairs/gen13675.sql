@@ -1,0 +1,1 @@
+SELECT o.channel, t.in_transit_count FROM orders o INNER JOIN (SELECT order_id, SUM(CASE WHEN status = 'IN_TRANSIT' THEN 1 ELSE 0 END) AS in_transit_count FROM shipments WHERE YEAR(shipped_date) >= 2024 GROUP BY order_id) t ON o.id = t.order_id WHERE t.in_transit_count >= 73 ORDER BY in_transit_count

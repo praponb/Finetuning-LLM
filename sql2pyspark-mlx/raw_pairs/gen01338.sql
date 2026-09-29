@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 250 THEN 'high' WHEN quantity >= 102 THEN 'mid' ELSE 'low' END AS quantity_bucket, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(*) AS total_count FROM inventory WHERE store_id = 1 AND product_id IN (5, 10) GROUP BY quantity_bucket ORDER BY quantity_bucket LIMIT 3

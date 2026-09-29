@@ -1,0 +1,1 @@
+SELECT QUARTER(last_restock) AS last_restock_quarter, COUNT(*) AS num_inventory FROM inventory WHERE store_id IN (4, 5, 6) AND YEAR(last_restock) = 2024 GROUP BY QUARTER(last_restock) ORDER BY last_restock_quarter DESC;

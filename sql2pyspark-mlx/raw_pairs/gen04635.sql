@@ -1,0 +1,1 @@
+SELECT id, device, TRIM(country) AS clean_country, LOWER(device) AS device_lower FROM sessions WHERE device IN ('mobile', 'desktop', 'tablet') AND browser = 'Edge' AND TO_DATE(started_at) < '2023-06-11';

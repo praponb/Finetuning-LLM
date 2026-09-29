@@ -1,0 +1,1 @@
+SELECT *, NTILE(3) OVER w_hist AS quantity_bucket, LAG(unit_price, 2) OVER w_grp AS prev_unit_price FROM order_items WINDOW w_hist AS (ORDER BY quantity DESC, id ASC), w_grp AS (PARTITION BY order_id ORDER BY unit_price ASC, id ASC);

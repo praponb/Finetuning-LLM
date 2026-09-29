@@ -1,0 +1,1 @@
+select s.country, round((100 * sum(case when p.brand = 'Acme' then 1 else 0 end)) / count(*), 1) pct_acme from products p inner join suppliers s on p.supplier_id = s.id where s.rating >= 1.9 group by s.country

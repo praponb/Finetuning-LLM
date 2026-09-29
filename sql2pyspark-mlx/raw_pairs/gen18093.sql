@@ -1,0 +1,1 @@
+select month(c.signup_date) as signup_month, sum(case when s.plan = 'standard' then s.monthly_fee else 0 end) as standard_monthly_fee, count(s.monthly_fee) as monthly_fee_count from subscriptions s join customers c on s.customer_id = c.id group by month(c.signup_date);

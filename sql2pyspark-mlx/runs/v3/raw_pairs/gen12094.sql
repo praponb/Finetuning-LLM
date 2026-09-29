@@ -1,0 +1,1 @@
+SELECT id, brand, launch_date, price, category, supplier_id, cost, SUM(price) OVER (PARTITION BY brand ORDER BY launch_date, id) AS running_price, LEAD(cost, 2) OVER (PARTITION BY category, supplier_id ORDER BY launch_date, id) AS next_cost FROM products WHERE launch_date <= '2023-08-20' ORDER BY launch_date

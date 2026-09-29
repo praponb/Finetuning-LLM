@@ -1,0 +1,1 @@
+WITH top_employees AS (SELECT id, level, hire_date, ROW_NUMBER() OVER (PARTITION BY level ORDER BY hire_date DESC, id) AS rnk FROM employees) SELECT id, level, hire_date FROM top_employees WHERE rnk = 1 ORDER BY id, 2

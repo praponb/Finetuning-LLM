@@ -1,0 +1,1 @@
+SELECT id, status, shipped_date, delivered_date, order_id, cost, FIRST_VALUE(delivered_date) OVER (PARTITION BY status ORDER BY shipped_date DESC, id) AS first_delivered_date, MAX(cost) OVER (PARTITION BY order_id, status) AS order_id_max_cost FROM shipments;

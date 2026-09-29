@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END rating_bucket, CASE WHEN city IN ('Berlin', 'London') THEN 'priority' ELSE 'other' END city_group, country, ROUND(AVG(rating), 2) avg_rating FROM suppliers WHERE LENGTH(supplier_name) > 10 GROUP BY rating_bucket, city_group, country ORDER BY city_group

@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4038000 THEN 'high' WHEN budget >= 810000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, dept_name, MAX(budget) - MIN(budget) AS budget_range, COUNT(CASE WHEN dept_name = 'Finance' THEN 1 END) AS finance_count FROM departments WHERE location = 'Bangkok' OR budget < 2836000 GROUP BY 1, 2, 3 ORDER BY location, budget_bucket, dept_name LIMIT 20

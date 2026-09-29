@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, customer_id, plan, start_date, end_date, monthly_fee, status, INITCAP(TRIM(status)) status_title FROM subscriptions WHERE MONTH(start_date) IN (5, 8, 9)) SELECT * FROM (SELECT status, plan, monthly_fee FROM valid) src PIVOT (MAX(monthly_fee) FOR plan IN ('enterprise', 'standard'))

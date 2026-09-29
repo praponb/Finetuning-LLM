@@ -1,0 +1,1 @@
+WITH valid_inventory AS (SELECT * FROM inventory WHERE last_restock < '2024-07-26' AND store_id IN (1, 2, 4) AND quantity >= 148), agg AS (SELECT product_id, COUNT(*) AS inventory_count FROM valid_inventory GROUP BY product_id) SELECT * FROM agg WHERE inventory_count < 8 ORDER BY product_id DESC LIMIT 10

@@ -1,0 +1,1 @@
+SELECT DISTINCT category FROM products WHERE brand IS NOT NULL

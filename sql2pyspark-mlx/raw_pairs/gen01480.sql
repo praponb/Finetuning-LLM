@@ -1,0 +1,1 @@
+SELECT p.id, p.status, p.order_id, p.method, o.discount, o.store_id, DATE_TRUNC('MONTH', p.paid_at) AS paid_at_period FROM payments p LEFT JOIN orders o ON p.order_id = o.id WHERE o.order_date <= '2024-06-01' AND p.paid_at >= '2025-10-01' ORDER BY paid_at_period DESC

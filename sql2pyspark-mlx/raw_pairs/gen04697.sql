@@ -1,0 +1,1 @@
+select s.country, count(i.quantity) as quantity_count from inventory i full outer join products p on i.product_id = p.id inner join suppliers s on p.supplier_id = s.id group by s.country order by s.country, quantity_count desc limit 5;

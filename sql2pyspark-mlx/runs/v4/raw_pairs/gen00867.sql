@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, ROUND(AVG(o.amount), 2) AS avg_amount FROM orders o INNER JOIN customers c ON c.id = o.customer_id LEFT OUTER JOIN stores s ON o.store_id = s.id WHERE o.amount >= 1090 GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM') HAVING avg_amount >= 55

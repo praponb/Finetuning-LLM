@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(browser))) AS browser_values, SUM(CASE WHEN country = 'JP' THEN 1 ELSE 0 END) AS jp_count FROM sessions GROUP BY customer_id) SELECT c.id, c.is_active, c.city, cs.browser_values, cs.jp_count FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id

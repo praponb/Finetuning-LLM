@@ -1,0 +1,1 @@
+SELECT YEAR(order_date) AS order_year, MIN(discount) AS min_discount, MAX(discount) AS max_discount FROM orders WHERE shipping_fee < 16 GROUP BY YEAR(order_date) HAVING min_discount < 0.36 ORDER BY order_year DESC LIMIT 1;

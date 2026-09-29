@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, items, ARRAY_MAX(TRANSFORM(items, li -> li.price)) AS max_item_price, SIZE(attributes) AS num_attributes, ship_to.country AS ship_country, FORALL(items, li -> li.qty <= 5) AS all_small_qty, TRANSFORM(FILTER(items, li -> li.promo IS NOT NULL), li -> STRUCT(li.product_id AS pid, ROUND(li.price * 0.9, 2) AS discounted_price)) AS promo_lines FROM carts;

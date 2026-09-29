@@ -1,0 +1,1 @@
+SELECT dept_name, SUM(CASE WHEN location = 'London' THEN budget ELSE 0 END) AS london_budget, MAX(budget) - MIN(budget) AS budget_range FROM departments GROUP BY 1 ORDER BY dept_name, london_budget DESC;

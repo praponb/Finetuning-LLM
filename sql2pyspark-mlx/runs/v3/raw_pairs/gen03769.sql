@@ -1,0 +1,1 @@
+SELECT a.id, a.opened_date, t.grab_amount, t.amazon_count FROM accounts a INNER JOIN (SELECT account_id, SUM(CASE WHEN merchant = 'Grab' THEN amount ELSE 0 END) AS grab_amount, COUNT(CASE WHEN merchant = 'Amazon' THEN 1 END) AS amazon_count FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.grab_amount > 55 ORDER BY t.amazon_count DESC, id LIMIT 3;

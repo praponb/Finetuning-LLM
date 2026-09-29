@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, MAX(order_date) AS latest_order_date FROM orders WHERE status NOT IN ('COMPLETED', 'PENDING') GROUP BY customer_id) SELECT c.id, c.credit_limit, c.country, cs.latest_order_date FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id;

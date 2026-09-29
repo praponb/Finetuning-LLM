@@ -1,0 +1,1 @@
+SELECT category, tags, cost, DATEDIFF(CURRENT_DATE(), launch_date) AS days_since_launch_date, WEEKOFYEAR(launch_date) AS launch_date_weekofyear FROM products WHERE category IN ('Home', 'Sports') AND category = 'Fashion'

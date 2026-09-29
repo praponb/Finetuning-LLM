@@ -1,0 +1,1 @@
+with filtered as (select *, length(country) as country_length, coalesce(city, 'UNKNOWN') as city_clean from suppliers where city is not null) select id, country from filtered intersect all select id, country from suppliers where country <> 'DE';

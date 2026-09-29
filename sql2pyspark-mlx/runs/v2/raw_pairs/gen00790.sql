@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, COUNT(*) row_count, MAX(quantity) - MIN(quantity) quantity_range FROM inventory GROUP BY product_id) SELECT p.launch_date, ps.row_count, ps.quantity_range FROM products p JOIN product_summary ps ON p.id = ps.product_id WHERE ps.quantity_range >= 69 ORDER BY launch_date DESC

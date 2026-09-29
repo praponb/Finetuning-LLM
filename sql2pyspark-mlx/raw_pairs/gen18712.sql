@@ -1,0 +1,1 @@
+select c.city, c.is_active, t.unique_devices, t.edge_count from customers c left join (select customer_id, count(distinct device) as unique_devices, sum(case when browser = 'Edge' then 1 else 0 end) as edge_count from sessions where customer_id in (1, 24) group by customer_id) t on c.id = t.customer_id order by city asc

@@ -1,0 +1,1 @@
+select we.id, we.event_time, s.customer_id, s.device, c.is_active from web_events we inner join sessions s on we.session_id = s.id right join customers c on s.customer_id = c.id where s.browser not in ('Firefox', 'Chrome') and c.country in ('UK', 'US', 'JP') order by s.device desc

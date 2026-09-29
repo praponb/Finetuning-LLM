@@ -1,0 +1,1 @@
+SELECT channel, COUNT(CASE WHEN status = 'COMPLETED' THEN 1 END) AS completed_count, SUM(shipping_fee) AS total_shipping_fee FROM orders GROUP BY channel ORDER BY total_shipping_fee, channel LIMIT 10;

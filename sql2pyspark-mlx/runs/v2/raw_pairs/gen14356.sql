@@ -1,0 +1,1 @@
+select o.id, o.status, o.order_date, o.store_id from orders o where o.store_id in (select id from stores where lower(trim(store_name)) = 'siam flagship') order by order_date, o.store_id desc, id limit 10

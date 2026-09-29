@@ -1,0 +1,1 @@
+SELECT id, order_id, method, NTILE(3) OVER (ORDER BY amount DESC, id) AS amount_bucket, SUM(amount) OVER (PARTITION BY status) AS status_sum_amount, RANK() OVER (PARTITION BY method, status ORDER BY amount DESC) AS amount_rank FROM payments;

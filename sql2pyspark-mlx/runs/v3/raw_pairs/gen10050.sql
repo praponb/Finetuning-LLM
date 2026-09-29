@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.product_id, inventory.store_id, inventory.last_restock FROM inventory WHERE inventory.store_id NOT IN (SELECT id FROM stores WHERE city != 'Chiang Mai') ORDER BY 2, id DESC;

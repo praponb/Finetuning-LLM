@@ -1,0 +1,1 @@
+select city, case when rating >= 4.3 then 'high' when rating >= 2.4 then 'mid' else 'low' end as rating_bucket, sum(case when city = 'Chiang Mai' then 1 else 0 end) as chiang_mai_count, sum(rating) as total_rating from suppliers group by 1, 2 order by chiang_mai_count;

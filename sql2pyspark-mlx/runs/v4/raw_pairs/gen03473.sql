@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT id FROM departments INTERSECT ALL SELECT id FROM departments WHERE budget > 1556000), reconciled AS (SELECT s.* FROM departments s INNER JOIN matched_keys k ON s.id = k.id) SELECT budget FROM reconciled ORDER BY budget DESC NULLS LAST;

@@ -1,0 +1,1 @@
+select e.email as employee_email, e.manager_id as employee_manager_id, e.is_remote as employee_is_remote, m.level as manager_level, m.dept_id as manager_dept_id, m.email as manager_email from employees as e left outer join employees as m on e.manager_id = m.id where m.manager_id is null and e.manager_id in (11, 16, 21, 24)

@@ -1,0 +1,12 @@
+WITH TopCustomers AS (
+    SELECT
+        id,
+        segment,
+        credit_limit,
+        ROW_NUMBER() OVER (PARTITION BY segment ORDER BY credit_limit, id) AS rn
+    FROM customers
+)
+SELECT id, segment, credit_limit
+FROM TopCustomers
+WHERE rn <= 1
+ORDER BY segment DESC, 3 DESC

@@ -1,0 +1,1 @@
+with ranked as (select * from (select *, row_number() over (partition by store_id order by quantity desc nulls first, id) as rank_in_group from inventory) x where rank_in_group = 1) select id, product_id, quantity from ranked;

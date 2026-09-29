@@ -1,0 +1,1 @@
+SELECT p.id, p.status, p.amount, p.order_id, o.order_date, o.amount AS order_amount FROM payments p INNER JOIN orders o ON p.order_id = o.id WHERE o.order_date > '2024-12-01' AND p.status != 'FAILED' ORDER BY order_amount DESC

@@ -1,0 +1,1 @@
+select id, order_id, quantity, lead(quantity, 1) over (partition by product_id order by unit_price, id) as next_quantity, row_number() over (partition by order_id order by unit_price, id) as seq_no, dense_rank() over (partition by product_id order by unit_price desc) as unit_price_dense_rank from order_items;

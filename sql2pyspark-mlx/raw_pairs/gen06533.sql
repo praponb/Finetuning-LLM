@@ -1,0 +1,1 @@
+select i.id, i.quantity from inventory i where i.last_restock between '2024-11-01' and '2025-05-01' and i.store_id not in (select id from stores where lower(store_name) like '%ld %') order by id desc, i.quantity;

@@ -1,0 +1,1 @@
+with FilteredWebEvents as (select * from web_events where duration_sec != 352), EventMonthSummary as (select date_trunc('MONTH', event_time) as event_month, sort_array(collect_set(event_type)) as event_type_list from FilteredWebEvents group by date_trunc('MONTH', event_time)) select * from EventMonthSummary;

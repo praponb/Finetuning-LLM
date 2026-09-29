@@ -1,0 +1,1 @@
+SELECT oi.product_id, oi.quantity, o.shipping_fee, p.brand, p.category FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id INNER JOIN products p ON oi.product_id = p.id WHERE o.shipping_fee > 30 ORDER BY product_id, o.shipping_fee

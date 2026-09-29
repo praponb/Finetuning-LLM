@@ -1,0 +1,1 @@
+SELECT event_type, ROUND((100 * SUM(CASE WHEN page = '/cart' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cart FROM web_events WHERE HOUR(event_time) BETWEEN 12 AND 19 GROUP BY event_type ORDER BY pct_cart DESC

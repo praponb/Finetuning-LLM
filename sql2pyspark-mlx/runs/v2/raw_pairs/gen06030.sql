@@ -1,0 +1,1 @@
+SELECT id, city, rating, supplier_name FROM (SELECT id, city, rating, supplier_name, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS rnk FROM suppliers) AS ranked WHERE rnk <= 1 ORDER BY city ASC;

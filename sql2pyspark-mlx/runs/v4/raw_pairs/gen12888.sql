@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN balance >= 71000 THEN 'high' WHEN balance >= 21000 THEN 'mid' ELSE 'low' END AS balance_bucket, account_type, balance FROM accounts) PIVOT (SUM(balance) FOR account_type IN ('SAVINGS', 'CREDIT'))

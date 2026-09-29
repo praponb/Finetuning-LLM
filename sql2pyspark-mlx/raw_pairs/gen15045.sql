@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, customer_id, created_at, coupon_codes, entry.product_id, entry.price, entry.promo FROM carts LATERAL VIEW OUTER EXPLODE(items) t AS entry) SELECT s.id, s.customer_id, s.price, s.promo, (SELECT MAX(o2.discount) FROM orders o2 WHERE o2.customer_id = s.customer_id) AS max_order_discount FROM flattened s;

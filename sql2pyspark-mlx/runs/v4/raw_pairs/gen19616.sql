@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.last_restock, inventory.quantity, stores.city, stores.opened_date FROM inventory LEFT OUTER JOIN stores ON inventory.store_id = stores.id WHERE YEAR(stores.opened_date) = 2023 AND inventory.store_id IN (1, 5, 6) ORDER BY inventory.last_restock

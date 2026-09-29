@@ -1,0 +1,1 @@
+SELECT id, product_id, unit_price, quantity, ROUND(unit_price / SUM(unit_price) OVER (PARTITION BY product_id), 3) AS unit_price_share, quantity - LAG(quantity, 1) OVER (PARTITION BY product_id ORDER BY quantity, id) AS quantity_change FROM order_items WHERE unit_price <= 330 ORDER BY unit_price;

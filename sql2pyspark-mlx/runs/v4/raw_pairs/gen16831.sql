@@ -1,0 +1,1 @@
+WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id, order_id ORDER BY quantity DESC, id) AS rank_in_group FROM order_items QUALIFY rank_in_group = 1) SELECT id, order_id, product_id, unit_price, rank_in_group FROM latest ORDER BY id NULLS LAST LIMIT 5;

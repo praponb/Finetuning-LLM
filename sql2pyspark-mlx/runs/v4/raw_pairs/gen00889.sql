@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, product_id, quantity, unit_price, CAST(unit_price AS INT) AS unit_price_int FROM order_items WHERE product_id IS NOT NULL) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity NULLS LAST, id) AS latest_rank FROM valid) ranked WHERE latest_rank = 1

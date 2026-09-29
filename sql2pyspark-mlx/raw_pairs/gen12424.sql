@@ -1,0 +1,1 @@
+WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id) AS dedup_rank FROM suppliers QUALIFY dedup_rank = 1) SELECT id, city, rating, dedup_rank, CASE WHEN city RLIKE '^(Berlin|New York)$' THEN 'OTHER_ZONE' ELSE 'EXTENDED' END AS city_zone FROM latest ORDER BY city_zone NULLS LAST

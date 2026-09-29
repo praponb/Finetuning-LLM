@@ -1,0 +1,1 @@
+SELECT id, order_id, unit_price, quantity, SUM(quantity) OVER (PARTITION BY order_id ORDER BY unit_price, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_quantity FROM order_items ORDER BY quantity ASC, running_quantity ASC;

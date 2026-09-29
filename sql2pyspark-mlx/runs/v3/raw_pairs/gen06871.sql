@@ -1,0 +1,1 @@
+with customer_summary as (select customer_id, count(balance) as balance_count, sum(case when status = 'CLOSED' then 1 else 0 end) as closed_count from accounts group by customer_id) select c.age, c.segment, cs.balance_count, cs.closed_count from customers c inner join customer_summary cs on c.id = cs.customer_id where cs.balance_count >= 9 order by c.segment

@@ -1,0 +1,1 @@
+select month(txn_time) txn_month, sum(amount) total_amount, dense_rank() over (order by sum(amount) desc) as rnk from transactions where is_flagged group by month(txn_time) order by rnk, total_amount desc, txn_month limit 10;

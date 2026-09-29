@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, status, shipped_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date DESC, id) AS row_num FROM shipments WHERE status = 'IN_TRANSIT') SELECT * FROM ranked WHERE row_num <= 2 ORDER BY id;

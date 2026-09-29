@@ -1,0 +1,1 @@
+with recent_transactions as (select * from transactions where account_id in (12, 13, 28, 29) or txn_time >= '2023-08-01'), summary as (select account_id, min(amount) as min_amount from recent_transactions group by account_id) select * from summary where min_amount < 2100 order by min_amount desc;

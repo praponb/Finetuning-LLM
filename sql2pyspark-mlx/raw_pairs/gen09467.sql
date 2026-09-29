@@ -1,0 +1,1 @@
+SELECT product_id, sale_quarter, row_count, stddev_revenue FROM (SELECT product_id, QUARTER(sale_date) AS sale_quarter, COUNT(*) AS row_count, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales GROUP BY product_id, QUARTER(sale_date)) AS x WHERE stddev_revenue >= 41

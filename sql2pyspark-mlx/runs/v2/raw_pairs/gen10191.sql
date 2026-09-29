@@ -1,0 +1,1 @@
+WITH TransactionsByAccount AS (SELECT account_id, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions WHERE account_id IN (3, 5, 12, 34) GROUP BY account_id) SELECT accounts.balance, TransactionsByAccount.merchant_list FROM accounts JOIN TransactionsByAccount ON accounts.id = TransactionsByAccount.account_id;

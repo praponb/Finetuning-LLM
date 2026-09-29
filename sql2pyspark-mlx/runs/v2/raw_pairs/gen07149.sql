@@ -1,0 +1,1 @@
+SELECT o.channel, ROUND((100 * SUM(CASE WHEN p.status = 'FAILED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_failed, AVG(p.amount) AS avg_amount FROM payments p RIGHT JOIN orders o ON o.id = p.order_id GROUP BY o.channel ORDER BY avg_amount;

@@ -1,0 +1,1 @@
+SELECT id, delivered_date, carrier, shipped_date, cost, ROW_NUMBER() OVER (ORDER BY delivered_date, id) AS row_num, LEAD(cost, 1) OVER (PARTITION BY carrier ORDER BY shipped_date, id) AS next_cost FROM shipments WHERE carrier = 'Flash'

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', o.order_date) AS order_month, MAX(s.cost) - MIN(s.cost) AS cost_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.status))) AS status_values FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id GROUP BY DATE_TRUNC('MONTH', o.order_date) ORDER BY order_month DESC LIMIT 10;

@@ -1,0 +1,1 @@
+SELECT store_id, quantity_count, unique_stores FROM (SELECT store_id, COUNT(quantity) AS quantity_count, COUNT(DISTINCT quantity) AS unique_stores FROM inventory WHERE quantity > 200 GROUP BY store_id) AS s WHERE unique_stores > 9 ORDER BY unique_stores;

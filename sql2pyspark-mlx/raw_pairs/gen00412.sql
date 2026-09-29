@@ -1,0 +1,1 @@
+with account_stats as (select account_id, round(avg(amount), 2) as avg_amount from transactions group by account_id) select a.customer_id, a.balance, as.avg_amount from accounts a inner join account_stats as on a.id = as.account_id where as.avg_amount > 75 order by avg_amount desc;

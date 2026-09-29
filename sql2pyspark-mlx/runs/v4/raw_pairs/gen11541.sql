@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, created_at, elem.product_id, elem.qty, elem.price FROM carts LATERAL VIEW OUTER EXPLODE(items) t AS elem) SELECT *, RANK() OVER (PARTITION BY customer_id ORDER BY product_id NULLS LAST) AS product_id_rank, AVG(product_id) OVER (PARTITION BY customer_id) AS customer_id_avg_product_id FROM exploded

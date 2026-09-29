@@ -1,0 +1,1 @@
+select date_format(s.opened_date, 'yyyy-MM') opened_month, s.region, sort_array(collect_set(o.channel)) channel_list from orders o left outer join stores s on o.store_id = s.id group by date_format(s.opened_date, 'yyyy-MM'), s.region

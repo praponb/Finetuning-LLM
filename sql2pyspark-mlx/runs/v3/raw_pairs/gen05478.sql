@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_products, COUNT(quantity) AS quantity_count FROM inventory GROUP BY store_id) SELECT s.region, s.sqft, ss.unique_products, ss.quantity_count FROM stores s JOIN store_summary ss ON s.id = ss.store_id WHERE ss.unique_products >= 4 ORDER BY s.region DESC

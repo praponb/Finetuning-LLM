@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, currency, EXPLODE_OUTER(tier_prices) AS element FROM price_tiers) SELECT *, CUME_DIST() OVER (ORDER BY element ASC) AS element_cume_dist, CUME_DIST() OVER (ORDER BY element DESC NULLS LAST) AS element_cume_dist_2 FROM flattened;

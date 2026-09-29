@@ -1,0 +1,1 @@
+with valid as (select id, order_id, product_id, quantity, unit_price, round(unit_price, 1) as unit_price_rounded from order_items where unit_price between 220 and 290) select *, row_number() over (partition by order_id, product_id order by unit_price nulls first, id) as rn from valid qualify rn = 1

@@ -1,0 +1,1 @@
+select year(sale_date) as sale_year, product_id, sum(revenue) as total_revenue, avg(revenue) as avg_revenue from store_sales where revenue < 3900 group by year(sale_date), product_id order by total_revenue desc;

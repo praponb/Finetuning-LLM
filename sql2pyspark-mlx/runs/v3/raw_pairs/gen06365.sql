@@ -1,0 +1,1 @@
+with valid_orders as (select * from orders where order_date < '2025-02-01'), orders_stats as (select status, month(order_date) as order_month, round(avg(shipping_fee), 2) as avg_shipping_fee from valid_orders group by status, month(order_date)) select * from orders_stats order by avg_shipping_fee desc;

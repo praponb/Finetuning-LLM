@@ -1,0 +1,1 @@
+SELECT merchant, ROUND(STDDEV(amount), 2) AS stddev_amount, ROUND((100 * SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refund FROM transactions WHERE txn_time >= '2024-02-01' AND (amount >= 2200 OR txn_type = 'FEE') GROUP BY merchant;

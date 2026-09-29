@@ -1,0 +1,1 @@
+SELECT txn_type, amount_count, amount_range FROM (SELECT txn_type, COUNT(amount) AS amount_count, MAX(amount) - MIN(amount) AS amount_range FROM transactions GROUP BY txn_type) AS sub WHERE amount_range >= 38 ORDER BY txn_type;

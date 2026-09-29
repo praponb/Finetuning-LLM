@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(STDDEV(rating), 2) AS stddev_rating FROM suppliers GROUP BY CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END ORDER BY stddev_rating DESC

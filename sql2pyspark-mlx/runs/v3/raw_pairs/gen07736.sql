@@ -1,0 +1,1 @@
+SELECT *, CASE WHEN quantity >= 240 THEN 'High' WHEN quantity >= 46 THEN 'Medium' ELSE 'Low' END AS quantity_tier, DATEDIFF(CURRENT_DATE(), last_restock) AS days_since_last_restock FROM inventory WHERE store_id = 4 ORDER BY id DESC;

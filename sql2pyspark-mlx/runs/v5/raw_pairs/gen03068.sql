@@ -1,0 +1,1 @@
+SELECT d.id, d.location, d.dept_name, t.unique_depts, t.level_values FROM departments d INNER JOIN (SELECT dept_id, COUNT(DISTINCT salary) AS unique_depts, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values FROM employees WHERE is_remote GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY t.level_values, d.location;

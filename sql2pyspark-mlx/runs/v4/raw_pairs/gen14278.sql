@@ -1,0 +1,1 @@
+WITH store_sales_by_product AS (SELECT product_id, MAX(units) max_units, MIN(sale_date) first_sale_date FROM store_sales WHERE units BETWEEN 34 AND 35 GROUP BY product_id) SELECT p.launch_date, p.supplier_id, ssbp.max_units, ssbp.first_sale_date FROM products p INNER JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id WHERE ssbp.max_units >= 30;

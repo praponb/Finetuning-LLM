@@ -1,0 +1,1 @@
+SELECT id, event_type, duration_sec, session_id FROM (SELECT *, RANK() OVER (PARTITION BY event_type ORDER BY duration_sec DESC) AS row_num FROM web_events) AS r WHERE row_num <= 1 ORDER BY event_type, duration_sec

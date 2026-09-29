@@ -1,0 +1,1 @@
+SELECT id, status, amount, customer_id, channel, LAST_VALUE(customer_id) OVER (PARTITION BY status ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_customer_id, DENSE_RANK() OVER (PARTITION BY channel ORDER BY amount) AS dense_rnk FROM orders;

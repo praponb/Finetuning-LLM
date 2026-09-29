@@ -1,0 +1,1 @@
+with orders_by_store as (select store_id, sum(case when channel = 'web' then 1 else 0 end) as web_count from orders where amount >= 1310 group by store_id) select s.city, s.opened_date, obs.web_count from stores s join orders_by_store obs on s.id = obs.store_id order by obs.web_count, city desc;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN revenue >= 4200 THEN 'high' WHEN revenue >= 1000 THEN 'mid' ELSE 'low' END AS revenue_bucket, MIN(sale_date) AS min_sale_date, SUM(revenue) AS total_revenue FROM store_sales GROUP BY CASE WHEN revenue >= 4200 THEN 'high' WHEN revenue >= 1000 THEN 'mid' ELSE 'low' END ORDER BY 2 DESC, revenue_bucket LIMIT 20;

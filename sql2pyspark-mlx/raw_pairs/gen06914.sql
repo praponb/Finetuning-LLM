@@ -1,0 +1,1 @@
+SELECT s.id, s.order_id, s.carrier, o.channel, o.store_id, c.signup_date, LAST_DAY(o.order_date) AS order_date_month_end FROM shipments s JOIN orders o ON s.order_id = o.id JOIN customers c ON o.customer_id = c.id WHERE s.cost < 27

@@ -1,0 +1,1 @@
+SELECT is_flagged, DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions GROUP BY is_flagged, DATE_FORMAT(txn_time, 'yyyy-MM') HAVING SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END) < 77 ORDER BY stddev_amount

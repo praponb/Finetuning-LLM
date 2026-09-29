@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, FLOOR(quantity) quantity_whole, CAST(quantity AS DOUBLE) quantity_str FROM order_items WHERE product_id IS NOT NULL AND order_id IN (7, 8, 15, 26)) SELECT product_id FROM base EXCEPT ALL SELECT product_id FROM order_items WHERE quantity BETWEEN 7 AND 8

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, unit_price - quantity AS line_total FROM order_items WHERE quantity = 5) SELECT * FROM (SELECT id, product_id, unit_price, line_total FROM cleaned) src UNPIVOT INCLUDE NULLS (reading FOR metric_name IN (unit_price, line_total))

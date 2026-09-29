@@ -1,0 +1,1 @@
+SELECT s.device, c.name, c.signup_date, c.city FROM sessions s INNER JOIN customers c ON c.id = s.customer_id WHERE s.browser != 'Safari' OR s.browser IN ('Safari', 'Chrome', 'Firefox') ORDER BY c.city DESC;

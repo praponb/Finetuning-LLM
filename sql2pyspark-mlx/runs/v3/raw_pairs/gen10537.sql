@@ -1,0 +1,1 @@
+select case when cost >= 83 then 'high' when cost >= 27 then 'mid' else 'low' end as cost_bucket, sum(cost) as total_cost, rank() over (order by sum(cost) desc) as rnk from shipments group by case when cost >= 83 then 'high' when cost >= 27 then 'mid' else 'low' end order by 2 desc;

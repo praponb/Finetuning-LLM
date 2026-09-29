@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.is_flagged, transactions.merchant, transactions.txn_type FROM transactions WHERE transactions.account_id IN (7, 26) AND transactions.account_id IN (SELECT id FROM accounts WHERE account_type IN ('CREDIT', 'SAVINGS')) ORDER BY txn_type ASC;

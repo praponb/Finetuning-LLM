@@ -1,0 +1,1 @@
+SELECT is_flagged, txn_type, amount_range, merchant_list FROM (SELECT is_flagged, txn_type, MAX(amount) - MIN(amount) AS amount_range, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions GROUP BY is_flagged, txn_type) AS x WHERE amount_range >= 44 ORDER BY amount_range

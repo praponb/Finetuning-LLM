@@ -1,0 +1,1 @@
+SELECT status, DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders WHERE discount <= 0.35 GROUP BY status, order_month HAVING MIN(shipping_fee) >= 29

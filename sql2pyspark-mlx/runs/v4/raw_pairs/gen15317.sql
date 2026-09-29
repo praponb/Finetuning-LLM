@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LENGTH(carrier) AS carrier_length, CASE WHEN status IN ('DELIVERED', 'LOST') THEN 'Core' ELSE 'Other' END AS status_group FROM shipments WHERE shipped_date >= DATE '2023-09-19' AND order_id IS NOT NULL AND status != 'DELIVERED') SELECT s.*, o.amount FROM valid s LEFT JOIN orders o ON s.order_id = o.id

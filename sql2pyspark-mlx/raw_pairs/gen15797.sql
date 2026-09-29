@@ -1,0 +1,1 @@
+SELECT o.channel, MAX(oi.unit_price) - MIN(oi.unit_price) AS unit_price_range, MAX(oi.quantity) AS max_quantity FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id JOIN orders o ON oi.order_id = o.id WHERE p.launch_date > '2024-02-01' GROUP BY o.channel

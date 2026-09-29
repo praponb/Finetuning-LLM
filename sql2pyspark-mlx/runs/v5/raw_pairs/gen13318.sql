@@ -1,0 +1,1 @@
+SELECT id, product_id, unit_price, quantity, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY unit_price DESC) AS unit_price_dense_rank, LEAD(quantity, 1) OVER (PARTITION BY product_id ORDER BY unit_price, id) AS next_quantity FROM order_items WHERE quantity != 4;

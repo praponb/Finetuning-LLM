@@ -1,0 +1,1 @@
+SELECT s.browser, YEAR(s.started_at) AS started_year, COUNT(DISTINCT we.duration_sec) AS unique_event_types, ROUND(STDDEV(we.duration_sec), 2) AS stddev_duration_sec FROM web_events we RIGHT OUTER JOIN sessions s ON we.session_id = s.id WHERE we.page != '/search' GROUP BY s.browser, YEAR(s.started_at) HAVING COUNT(DISTINCT we.duration_sec) > 3

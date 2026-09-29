@@ -1,0 +1,1 @@
+select *, lead(balance) over w_recent as next_balance, row_number() over w_recent as event_seq from accounts where opened_date > '2023-06-01' window w_recent as (partition by account_type, status order by balance, id)

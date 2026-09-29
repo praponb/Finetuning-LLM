@@ -1,0 +1,1 @@
+with valid_transactions as (select *, datediff(current_date(), txn_time) as days_since_txn_time from transactions where amount > 1600), Agg as (select txn_type, min(txn_time) as first_txn_time from valid_transactions group by txn_type) select txn_type, first_txn_time from Agg

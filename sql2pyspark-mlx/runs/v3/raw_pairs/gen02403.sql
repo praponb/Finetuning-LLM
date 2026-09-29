@@ -1,0 +1,1 @@
+SELECT p.category, MIN(ss.units) AS min_units, AVG(ss.revenue) AS avg_revenue FROM store_sales ss JOIN products p ON ss.product_id = p.id LEFT OUTER JOIN suppliers s ON s.id = p.supplier_id GROUP BY p.category HAVING AVG(ss.revenue) >= 3800;

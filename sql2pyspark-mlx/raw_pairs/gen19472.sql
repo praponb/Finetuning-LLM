@@ -1,0 +1,1 @@
+SELECT shipments.id, shipments.delivered_date, orders.discount, stores.sqft FROM shipments INNER JOIN orders ON shipments.order_id = orders.id INNER JOIN stores ON orders.store_id = stores.id ORDER BY shipments.id DESC, shipments.delivered_date DESC;

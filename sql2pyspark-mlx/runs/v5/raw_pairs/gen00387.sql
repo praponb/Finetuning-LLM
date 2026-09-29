@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM orders GROUP BY customer_id) SELECT c.id, c.signup_date, cs.status_list FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY signup_date

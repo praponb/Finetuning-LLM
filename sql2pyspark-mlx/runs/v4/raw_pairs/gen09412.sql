@@ -1,0 +1,1 @@
+WITH latest AS (SELECT *, RANK() OVER (PARTITION BY store_id ORDER BY quantity DESC NULLS LAST) AS row_num FROM inventory QUALIFY row_num = 1) SELECT id, store_id, last_restock, row_num FROM latest ORDER BY last_restock DESC, id DESC

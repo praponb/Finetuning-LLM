@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, COUNT(p.id) AS product_count, AVG(p.stock_qty) AS avg_stock_qty, MAX(p.cost) AS max_cost FROM suppliers s LEFT OUTER JOIN products p ON s.id = p.supplier_id WHERE p.launch_date > '2023-09-30' GROUP BY s.id, s.supplier_name;

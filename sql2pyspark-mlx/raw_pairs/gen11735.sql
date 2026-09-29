@@ -1,0 +1,1 @@
+SELECT p.id, p.category, COUNT(ss.id) store_sale_count FROM products p INNER JOIN store_sales ss ON ss.product_id = p.id WHERE p.price BETWEEN 920 AND 1100 GROUP BY p.id, p.category ORDER BY category, store_sale_count

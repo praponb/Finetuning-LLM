@@ -1,0 +1,1 @@
+select i.id, i.store_id, i.product_id, i.quantity, ss.revenue, ss.units, ss.sale_date, floor(ss.units) units_whole from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.units < 33

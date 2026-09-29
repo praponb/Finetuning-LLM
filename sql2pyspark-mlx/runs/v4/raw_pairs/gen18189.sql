@@ -1,0 +1,1 @@
+with cleaned as (select id, product_name, brand, price, cost, stock_qty, launch_date, supplier_id, concat_ws('-', category, brand) as category_brand_key from products where launch_date >= date '2023-11-21' and supplier_id is not null) select * from (select supplier_id, brand, price from cleaned) src pivot (max(price) for brand in ('Acme', 'Stark'));

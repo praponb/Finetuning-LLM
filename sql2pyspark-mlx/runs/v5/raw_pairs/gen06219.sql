@@ -1,0 +1,1 @@
+select i.id, i.product_id, i.quantity, p.cost, s.city, s.supplier_name from inventory i left join products p on p.id = i.product_id join suppliers s on p.supplier_id = s.id where i.last_restock < '2025-08-24' and s.city in ('Berlin', 'Singapore');

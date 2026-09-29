@@ -1,0 +1,1 @@
+SELECT product_id, avg_quantity, quantity_count FROM (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(quantity) AS quantity_count FROM inventory GROUP BY product_id) AS sub WHERE quantity_count >= 3 ORDER BY avg_quantity

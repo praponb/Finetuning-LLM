@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, status, paid_at, DENSE_RANK() OVER (PARTITION BY status ORDER BY paid_at) AS pos FROM payments) SELECT id, status, paid_at FROM numbered WHERE pos = 1 ORDER BY status DESC;

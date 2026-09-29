@@ -1,0 +1,1 @@
+WITH filtered_suppliers AS (SELECT *, CAST(rating AS INT) AS rating_int FROM suppliers WHERE city IN ('Tokyo', 'Berlin', 'Bangkok') AND LENGTH(supplier_name) >= 14), suppliers_stats AS (SELECT country, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM filtered_suppliers GROUP BY country) SELECT * FROM suppliers_stats ORDER BY country;

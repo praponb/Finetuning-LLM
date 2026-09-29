@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, session_id, event_type, event_time, duration_sec, CAST(duration_sec AS DOUBLE) AS duration_sec_num FROM web_events WHERE event_time >= TIMESTAMP '2023-10-21 19:00:00') SELECT * FROM (SELECT session_id, event_type, duration_sec_num FROM base) src PIVOT (SUM(duration_sec_num) AS amount FOR event_type IN ('add_to_cart' AS add_to_cart, 'search' AS search));

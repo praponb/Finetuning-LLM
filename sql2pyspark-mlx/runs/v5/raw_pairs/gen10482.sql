@@ -1,0 +1,1 @@
+SELECT c.credit_limit, c.segment, c.country, s.started_at FROM customers c LEFT JOIN sessions s ON s.customer_id = c.id WHERE s.country IN ('US', 'SG') OR s.customer_id = 10 ORDER BY credit_limit DESC, started_at;

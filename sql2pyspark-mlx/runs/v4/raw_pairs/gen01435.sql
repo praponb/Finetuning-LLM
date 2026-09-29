@@ -1,0 +1,1 @@
+select id, coupon_codes, attributes, exists(items, x -> x.price > 100) as has_premium_item, coalesce(attributes['gift'], 'direct') as gift_or_default, ship_to.zip as ship_zip, coalesce(attributes['device'], 'direct') as device_or_default from carts;

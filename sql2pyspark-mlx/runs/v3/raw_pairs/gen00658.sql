@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, AVG(shipping_fee) AS avg_shipping_fee FROM orders WHERE channel IN ('store', 'web', 'mobile') GROUP BY store_id) SELECT s.id, s.region, st.avg_shipping_fee FROM stores s INNER JOIN store_totals st ON s.id = st.store_id WHERE st.avg_shipping_fee > 38;

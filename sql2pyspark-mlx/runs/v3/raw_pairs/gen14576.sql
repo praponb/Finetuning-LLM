@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT carrier, status, COUNT(cost) cost_count, SUM(CASE WHEN carrier = 'Kerry' THEN 1 ELSE 0 END) kerry_count FROM shipments WHERE carrier IN ('FedEx', 'UPS', 'Flash') GROUP BY carrier, status) sub WHERE cost_count < 8 ORDER BY 3, kerry_count DESC

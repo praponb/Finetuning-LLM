@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(oi.id) AS order_item_count FROM orders o LEFT OUTER JOIN order_items oi ON o.id = oi.order_id WHERE o.channel = 'mobile' GROUP BY o.channel HAVING COUNT(oi.id) >= 3 ORDER BY channel LIMIT 10;

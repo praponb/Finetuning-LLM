@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, ROUND(duration_sec, 2) AS duration_sec_rounded FROM web_events WHERE page <> '/home' AND TO_DATE(event_time) >= '2024-09-01' AND session_id IN (15, 23, 35, 40)), PageSummary AS (SELECT page, COUNT(DISTINCT duration_sec) AS unique_pages FROM base GROUP BY page) SELECT page, unique_pages FROM PageSummary WHERE unique_pages > 10;

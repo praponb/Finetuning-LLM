@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CONCAT(location, ', ', dept_name) AS location_dept_name FROM departments WHERE location IN ('London', 'Singapore')) SELECT * FROM (SELECT location, dept_name, budget FROM base) src PIVOT (SUM(budget) FOR dept_name IN ('Finance' AS finance, 'Marketing' AS marketing))

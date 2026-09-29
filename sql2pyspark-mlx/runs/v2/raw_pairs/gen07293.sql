@@ -1,0 +1,1 @@
+SELECT CASE WHEN stock_qty >= 315 THEN 'high' WHEN stock_qty >= 107 THEN 'mid' ELSE 'low' END stock_qty_bucket, SUM(stock_qty) total_stock_qty FROM products GROUP BY CASE WHEN stock_qty >= 315 THEN 'high' WHEN stock_qty >= 107 THEN 'mid' ELSE 'low' END HAVING SUM(stock_qty) < 2100

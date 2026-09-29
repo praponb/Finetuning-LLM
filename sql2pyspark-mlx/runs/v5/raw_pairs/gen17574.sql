@@ -1,0 +1,1 @@
+SELECT products.id, products.cost, products.product_name, products.supplier_id, suppliers.supplier_name, suppliers.city FROM products LEFT OUTER JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.cost BETWEEN 490 AND 610 ORDER BY cost, id LIMIT 1;

@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, COUNT(DISTINCT stock_qty) AS unique_brands FROM products GROUP BY supplier_id) SELECT s.id, s.rating, pbs.unique_brands FROM suppliers s LEFT OUTER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY s.id ASC, unique_brands DESC

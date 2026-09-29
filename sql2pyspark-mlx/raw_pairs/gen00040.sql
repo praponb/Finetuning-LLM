@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, ROUND(balance * 0.9, 2) AS adjusted_balance, COALESCE(status, 'N/A') AS status_filled FROM accounts WHERE balance BETWEEN 36000 AND 69000) SELECT * FROM (SELECT id, customer_id, adjusted_balance, balance FROM valid) src UNPIVOT (reading FOR metric_name IN (adjusted_balance AS ADJUSTED_BALANCE, balance))

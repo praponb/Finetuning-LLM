@@ -1,0 +1,1 @@
+WITH recent_order_items AS (SELECT * FROM order_items WHERE quantity IS NULL), summary AS (SELECT product_id, ROUND(STDDEV(unit_price), 2) stddev_unit_price FROM recent_order_items GROUP BY product_id) SELECT product_id, stddev_unit_price FROM summary

@@ -1,0 +1,1 @@
+SELECT s.region, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id LEFT JOIN stores s ON ss.store_id = s.id WHERE ss.product_id IN (4, 6, 7, 9) GROUP BY s.region ORDER BY revenue_range DESC, region LIMIT 10;

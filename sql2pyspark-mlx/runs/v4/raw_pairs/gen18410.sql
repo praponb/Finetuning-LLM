@@ -1,0 +1,1 @@
+select i.id, i.last_restock, i.store_id, i.product_id, ss.units, date_trunc('WEEK', i.last_restock) last_restock_period from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.quantity between 140 and 144;

@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, host, level, status_code, key, v FROM app_logs LATERAL VIEW EXPLODE(context) li AS key, v) SELECT id, service, host, status_code, key, v, CASE WHEN service RLIKE '^(search|billing)$' THEN 'OTHER_ZONE' ELSE 'EXTENDED' END AS service_zone FROM flattened ORDER BY host ASC NULLS LAST, service_zone DESC;

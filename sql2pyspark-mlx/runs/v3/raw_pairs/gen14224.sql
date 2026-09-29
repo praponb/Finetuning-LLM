@@ -1,0 +1,1 @@
+SELECT order_items.product_id, order_items.unit_price, orders.channel, orders.customer_id, products.stock_qty FROM order_items INNER JOIN orders ON order_items.order_id = orders.id INNER JOIN products ON products.id = order_items.product_id WHERE ARRAY_CONTAINS(products.tags, 'bestseller') ORDER BY products.stock_qty DESC;

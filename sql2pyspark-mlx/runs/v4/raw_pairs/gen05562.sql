@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, COALESCE(duration_sec, 0) AS duration_sec_filled, LENGTH(event_type) AS event_type_length, COALESCE(page, 'N/A') AS page_clean FROM web_events WHERE page IS NOT NULL AND page IN ('/home', '/search', '/checkout')) SELECT id FROM base INTERSECT ALL SELECT id FROM web_events WHERE event_time >= '2025-09-01'

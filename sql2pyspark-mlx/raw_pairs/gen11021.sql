@@ -1,0 +1,1 @@
+SELECT o.id, o.customer_id, t.status_values, t.min_shipped_date FROM orders o INNER JOIN (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, MIN(shipped_date) AS min_shipped_date FROM shipments WHERE shipped_date <= '2023-12-01' GROUP BY order_id) t ON o.id = t.order_id ORDER BY o.id DESC, o.customer_id DESC LIMIT 50

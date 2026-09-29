@@ -1,0 +1,1 @@
+select d.id, d.dept_name, t.manager_count, t.l4_count from departments d join (select dept_id, sum(case when job_title = 'Manager' then 1 else 0 end) as manager_count, sum(case when level = 'L4' then 1 else 0 end) as l4_count from employees group by dept_id) t on d.id = t.dept_id where t.l4_count > 44 order by d.dept_name, t.l4_count desc;

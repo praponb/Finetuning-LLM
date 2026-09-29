@@ -1,0 +1,1 @@
+SELECT i.product_id, p.launch_date, s.opened_date, s.city, ROUND(s.sqft * 0.85, 2) AS adjusted_sqft FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN stores s ON s.id = i.store_id WHERE s.opened_date > '2024-03-01' OR i.product_id IN (3, 7);

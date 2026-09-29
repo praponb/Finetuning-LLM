@@ -1,0 +1,1 @@
+SELECT dept_name, AVG(budget) AS avg_budget, ROUND(STDDEV(budget), 2) AS stddev_budget, SORT_ARRAY(COLLECT_SET(location)) AS location_list FROM departments WHERE budget < 3276000 GROUP BY dept_name ORDER BY dept_name;

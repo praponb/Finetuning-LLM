@@ -1,0 +1,1 @@
+select c.city, sort_array(collect_set(o.status)) as status_list, min(o.order_date) as first_order_date from orders o join customers c on c.id = o.customer_id left outer join stores s on o.store_id = s.id where o.amount < 600 group by c.city order by 3 desc, c.city desc

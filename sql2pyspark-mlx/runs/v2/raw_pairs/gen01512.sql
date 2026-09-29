@@ -1,0 +1,1 @@
+WITH filtered_store_sales AS (SELECT *, DATE_FORMAT(sale_date, 'yyyy-MM-dd') AS sale_date_label FROM store_sales WHERE product_id IN (1, 7)), store_id_summary AS (SELECT store_id, COUNT(*) AS total_count, ROUND(STDDEV(units), 2) AS stddev_units FROM filtered_store_sales GROUP BY store_id) SELECT * FROM store_id_summary;

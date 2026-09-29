@@ -1,0 +1,1 @@
+select a.status, max(t.txn_time) as last_txn_time, max(t.amount) - min(t.amount) as amount_range from transactions t right join accounts a on t.account_id = a.id group by a.status order by status desc, last_txn_time

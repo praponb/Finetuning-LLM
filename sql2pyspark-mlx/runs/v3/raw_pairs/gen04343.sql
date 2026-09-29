@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, a.customer_id, a.status, c.name, c.email FROM accounts a INNER JOIN customers c ON a.customer_id = c.id WHERE a.account_type IN ('CHECKING', 'LOAN', 'SAVINGS') ORDER BY a.balance;

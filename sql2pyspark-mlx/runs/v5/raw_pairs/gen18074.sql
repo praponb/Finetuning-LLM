@@ -1,0 +1,1 @@
+SELECT order_id, product_id, max_unit_price FROM (SELECT order_id, product_id, MAX(unit_price) AS max_unit_price FROM order_items GROUP BY order_id, product_id) AS agg WHERE max_unit_price > 350 ORDER BY product_id DESC, order_id ASC LIMIT 10;

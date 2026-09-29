@@ -1,0 +1,1 @@
+SELECT web_events.event_time, sessions.browser, sessions.device, customers.segment FROM web_events FULL OUTER JOIN sessions ON web_events.session_id = sessions.id RIGHT JOIN customers ON customers.id = sessions.customer_id

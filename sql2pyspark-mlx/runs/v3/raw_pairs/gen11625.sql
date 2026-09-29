@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(*) AS total_count, MAX(ss.revenue) AS max_revenue FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id GROUP BY s.city HAVING COUNT(*) > 5

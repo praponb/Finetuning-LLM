@@ -1,0 +1,1 @@
+SELECT p.supplier_id, p.category, t.units_count FROM products p JOIN (SELECT product_id, COUNT(units) AS units_count FROM store_sales GROUP BY product_id) t ON p.id = t.product_id WHERE t.units_count >= 7 ORDER BY p.category;

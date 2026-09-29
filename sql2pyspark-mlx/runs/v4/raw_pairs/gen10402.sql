@@ -1,0 +1,1 @@
+select id, created_at, coupon_codes, attributes['device'] as device, coalesce(ship_to.zip, 'UNKNOWN') as zip_or_unknown, array_join(array_sort(coupon_codes), ',') as coupons_text from carts where size(coupon_codes) >= 1;

@@ -1,0 +1,1 @@
+select accounts.opened_date, t.first_txn_time from accounts left join (select account_id, min(txn_time) as first_txn_time from transactions group by account_id) t on accounts.id = t.account_id order by accounts.opened_date desc;

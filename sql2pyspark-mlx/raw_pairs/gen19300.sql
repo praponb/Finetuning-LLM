@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, host, latency_ms, k, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) x AS k, attr_value) SELECT host, latency_ms, attr_value, SUM(latency_ms) OVER w_grp host_sum_latency_ms, CUME_DIST() OVER (ORDER BY latency_ms ASC NULLS LAST) latency_ms_cume_dist FROM lines WINDOW w_grp AS (PARTITION BY host)

@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, SUM(CASE WHEN job_title = 'Analyst' THEN 1 ELSE 0 END) AS analyst_count FROM employees WHERE email IS NOT NULL GROUP BY dept_id) SELECT d.dept_name, ds.analyst_count FROM departments d LEFT JOIN department_summary ds ON d.id = ds.dept_id WHERE ds.analyst_count >= 24

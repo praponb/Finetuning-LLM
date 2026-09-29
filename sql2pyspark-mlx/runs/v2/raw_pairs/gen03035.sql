@@ -1,0 +1,1 @@
+SELECT dept_name, MAX(budget) - MIN(budget) AS budget_range FROM departments WHERE dept_name NOT IN ('Marketing', 'Sales', 'Finance') AND location IN ('New York', 'Singapore') GROUP BY 1 HAVING MAX(budget) - MIN(budget) >= 63

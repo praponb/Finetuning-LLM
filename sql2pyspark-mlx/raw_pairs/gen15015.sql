@@ -1,0 +1,1 @@
+select i.store_id, i.product_id, p.product_name, p.supplier_id, s.opened_date, date_trunc('month', i.last_restock) as last_restock_period from inventory i inner join products p on i.product_id = p.id inner join stores s on s.id = i.store_id;

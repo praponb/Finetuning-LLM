@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM inventory WHERE last_restock <= '2024-08-01'), summary AS (SELECT product_id, AVG(quantity) AS avg_quantity, MIN(quantity) AS min_quantity FROM src GROUP BY product_id) SELECT * FROM summary WHERE min_quantity < 220 ORDER BY avg_quantity DESC, product_id DESC;

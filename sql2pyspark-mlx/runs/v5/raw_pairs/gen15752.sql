@@ -1,0 +1,1 @@
+SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC NULLS LAST, id ASC) AS rn FROM stores QUALIFY rn = 1;

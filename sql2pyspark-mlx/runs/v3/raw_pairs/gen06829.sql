@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, MAX(sqft) AS max_sqft, MAX(opened_date) AS last_opened_date FROM stores GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM') HAVING MAX(sqft) < 13900 ORDER BY last_opened_date, opened_month LIMIT 10;

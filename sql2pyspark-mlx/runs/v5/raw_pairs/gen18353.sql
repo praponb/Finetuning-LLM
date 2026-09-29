@@ -1,0 +1,1 @@
+select d.location, t.intern_count, t.avg_salary from departments d inner join (select dept_id, count(case when job_title = 'Intern' then 1 end) as intern_count, avg(salary) as avg_salary from employees where job_title in ('Designer', 'Engineer') group by dept_id) t on d.id = t.dept_id order by t.intern_count desc, d.location desc;

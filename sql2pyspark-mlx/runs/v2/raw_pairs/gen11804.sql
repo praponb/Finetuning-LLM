@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(event_time, 'yyyy-MM') event_month, SUM(CASE WHEN page = '/checkout' THEN duration_sec ELSE 0 END) checkout_duration_sec FROM web_events WHERE event_type IN ('add_to_cart', 'page_view') GROUP BY 1;

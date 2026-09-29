@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, city, region, opened_date, sqft, LAST_DAY(opened_date) opened_date_month_end, CAST(sqft AS DOUBLE) sqft_num, COALESCE(region, 'UNKNOWN') resolved_region FROM stores WHERE YEAR(opened_date) >= 2025) SELECT *, RANK() OVER (PARTITION BY city ORDER BY sqft DESC) AS row_num FROM cleaned QUALIFY row_num = 1;

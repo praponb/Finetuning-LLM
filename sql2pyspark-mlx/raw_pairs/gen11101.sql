@@ -1,0 +1,1 @@
+select quarter(a.opened_date) as opened_quarter, sum(t.amount) as total_amount from transactions t inner join accounts a on t.account_id = a.id left join customers c on a.customer_id = c.id where t.account_id in (1, 8) group by quarter(a.opened_date) having total_amount > 15000 order by opened_quarter desc limit 1;

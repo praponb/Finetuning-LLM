@@ -1,0 +1,1 @@
+with filtered_stores as (select * from stores where month(opened_date) in (2, 4, 9) or sqft between 8468 and 12490), region_summary as (select region, sum(sqft) as total_sqft from filtered_stores group by region) select region, total_sqft from region_summary where total_sqft < 76000 order by total_sqft desc

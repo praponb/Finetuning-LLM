@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, i.last_restock, ss.sale_date, ss.revenue, ss.store_id FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE MONTH(i.last_restock) IN (5, 9, 10) AND ss.units <= 11 ORDER BY i.id DESC;

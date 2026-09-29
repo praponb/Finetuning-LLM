@@ -1,0 +1,1 @@
+SELECT promo_code, DATE_TRUNC('MONTH', ends_on) AS activity_month, COUNT_IF(channel = 'mobile') AS mobile_events, ROUND(AVG(discount_pct), 2) AS avg_discount_pct, RANK() OVER (PARTITION BY promo_code ORDER BY COUNT_IF(channel = 'mobile') DESC) AS mobile_events_rank FROM promotions GROUP BY promo_code, DATE_TRUNC('MONTH', ends_on)

@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items GROUP BY order_id) SELECT orders.id, orders.discount, orders.shipping_fee, order_stats.stddev_unit_price FROM orders LEFT OUTER JOIN order_stats ON orders.id = order_stats.order_id WHERE order_stats.stddev_unit_price >= 61

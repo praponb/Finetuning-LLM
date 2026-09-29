@@ -1,0 +1,21 @@
+from pyspark.sql import functions as F
+
+valid_inventory = (
+    df_inventory
+    .filter(F.col("product_id").isin([4, 5, 8, 9]) & F.col("last_restock").between("2023-06-01", "2023-08-05"))
+    .withColumn("last_restock_day", F.dayofmonth("last_restock"))
+)
+
+summary = (
+    valid_inventory
+    .groupBy(
+        F.when(F.year("last_restock") < 2024, "before_2024").when(F.year("last_restock") == 2024, "2024").otherwise("after_2024").alias("last_restock_cohort"),
+    )
+    .agg(F.max("quantity").alias("max_quantity"))
+)
+
+result = (
+    summary
+    .select("last_restock_cohort", "max_quantity")
+    .orderBy("last_restock_cohort", F.col("max_quantity").desc())
+)

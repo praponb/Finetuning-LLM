@@ -1,0 +1,1 @@
+SELECT o.status, o.channel, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price FROM order_items oi JOIN products p ON oi.product_id = p.id JOIN orders o ON oi.order_id = o.id WHERE o.channel IS NOT NULL GROUP BY o.status, o.channel ORDER BY status, avg_unit_price, channel LIMIT 10

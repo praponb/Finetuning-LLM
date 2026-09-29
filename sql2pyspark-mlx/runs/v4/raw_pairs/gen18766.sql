@@ -1,0 +1,1 @@
+SELECT o.channel, MAX(s.delivered_date) AS last_delivered_date, COUNT(CASE WHEN s.carrier = 'DHL' THEN 1 END) AS dhl_count FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id WHERE o.amount >= 610 GROUP BY o.channel ORDER BY last_delivered_date;

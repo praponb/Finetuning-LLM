@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, MIN(amount) min_amount FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, a.balance, tba.min_amount FROM accounts a LEFT JOIN transactions_by_account tba ON a.id = tba.account_id WHERE tba.min_amount >= 2100 ORDER BY tba.min_amount;

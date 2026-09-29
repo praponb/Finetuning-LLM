@@ -1,0 +1,1 @@
+SELECT p.id, p.status, p.paid_at, o.store_id, c.segment FROM payments p JOIN orders o ON o.id = p.order_id LEFT JOIN customers c ON o.customer_id = c.id WHERE o.channel IN ('web', 'mobile') ORDER BY paid_at DESC, id LIMIT 20

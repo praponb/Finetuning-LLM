@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, SUM(CASE WHEN category = 'Home' THEN 1 ELSE 0 END) AS home_count FROM products GROUP BY supplier_id) SELECT s.id, s.country, s.city, ss.home_count FROM suppliers s LEFT OUTER JOIN supplier_stats ss ON s.id = ss.supplier_id ORDER BY country

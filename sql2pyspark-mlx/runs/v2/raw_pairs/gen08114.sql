@@ -1,0 +1,1 @@
+with AccountStats as (select account_id, round(avg(amount), 2) as avg_amount from transactions where amount between 2600 and 3800 group by account_id) select a.status, A.avg_amount from accounts a join AccountStats A on a.id = A.account_id where A.avg_amount >= 30

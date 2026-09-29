@@ -1,0 +1,1 @@
+SELECT delivered_month, order_id, unique_carriers FROM (SELECT DATE_TRUNC('MONTH', delivered_date) AS delivered_month, order_id, COUNT(DISTINCT cost) AS unique_carriers FROM shipments GROUP BY DATE_TRUNC('MONTH', delivered_date), order_id) AS x WHERE unique_carriers >= 4 ORDER BY unique_carriers DESC, delivered_month, order_id LIMIT 50;

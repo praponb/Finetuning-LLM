@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 3700 THEN 'PREMIUM' ELSE 'STANDARD' END AS amount_tier, ROUND(SUM(amount) / NULLIF(COUNT(CASE WHEN merchant = 'Lazada' THEN 1 END), 0), 2) AS amount_per_lazada, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list, STDDEV_SAMP(amount) AS amount_stddev FROM transactions GROUP BY 1 HAVING STDDEV_SAMP(amount) > 0 ORDER BY amount_tier NULLS LAST

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(paid_at, 'yyyy-MM') AS paid_month, status, COUNT(*) AS row_count FROM payments GROUP BY DATE_FORMAT(paid_at, 'yyyy-MM'), status) AS t WHERE row_count > 6 ORDER BY paid_month

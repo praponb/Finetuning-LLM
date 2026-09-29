@@ -1,0 +1,1 @@
+select event_type, sum(duration_sec) as total_duration_sec, count(*) as cnt, rank() over (order by sum(duration_sec) desc) as rnk from web_events where page in ('/home', '/checkout', '/search') group by event_type order by event_type, cnt desc;

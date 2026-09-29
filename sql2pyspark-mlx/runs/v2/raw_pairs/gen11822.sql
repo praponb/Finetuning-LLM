@@ -1,0 +1,1 @@
+SELECT customers.city, SUM(CASE WHEN accounts.account_type = 'CREDIT' THEN accounts.balance ELSE 0 END) credit_balance FROM accounts JOIN customers ON accounts.customer_id = customers.id WHERE accounts.balance > 56000 GROUP BY customers.city ORDER BY credit_balance

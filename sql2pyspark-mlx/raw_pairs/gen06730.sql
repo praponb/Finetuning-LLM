@@ -1,0 +1,1 @@
+select dept_id, level, level_list, l1_salary from (select dept_id, level, sort_array(collect_set(level)) as level_list, sum(case when level = 'L1' then salary else 0 end) as l1_salary from employees group by dept_id, level) as s where l1_salary < 76;

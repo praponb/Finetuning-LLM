@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_customers.alias("c")
+    .join(df_accounts.alias("a"), F.col("c.id") == F.col("a.customer_id"), "left_anti")
+    .select(
+        F.col("c.id"),
+        F.col("c.name"),
+        F.col("c.is_active"),
+        F.col("c.signup_date"),
+    )
+)

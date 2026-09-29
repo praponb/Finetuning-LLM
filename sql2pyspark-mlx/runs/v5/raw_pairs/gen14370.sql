@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY pressure DESC NULLS FIRST, id) AS rn FROM device_readings) x WHERE rn = 1) SELECT id, device_code, reading_ts, temp_c, pressure, firmware, rn FROM deduped;

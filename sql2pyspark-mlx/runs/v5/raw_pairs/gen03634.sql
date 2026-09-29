@@ -1,0 +1,1 @@
+select order_year, max_discount, total_discount from (select year(order_date) as order_year, max(discount) as max_discount, sum(discount) as total_discount from orders where channel = 'store' group by year(order_date)) as s where max_discount > 0.39 order by order_year desc;

@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, EXPLODE_OUTER(coupon_codes) AS element FROM carts) SELECT element, COUNT(*) FILTER (WHERE element = 'BUNDLE') AS bundle_rows, COUNT(*) FILTER (WHERE element = 'SPRING10') AS spring10_rows FROM lines GROUP BY element HAVING COUNT(*) FILTER (WHERE element = 'BUNDLE') > 1

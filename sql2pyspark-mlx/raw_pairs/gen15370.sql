@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY browser ORDER BY started_at, id) pos FROM sessions WHERE HOUR(started_at) BETWEEN 11 AND 16) SELECT id, browser, started_at FROM numbered WHERE pos = 1 ORDER BY browser DESC, started_at;

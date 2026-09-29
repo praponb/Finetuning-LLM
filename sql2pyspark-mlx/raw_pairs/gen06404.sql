@@ -1,0 +1,1 @@
+SELECT category, brand, price_range, sports_count FROM (SELECT category, brand, MAX(price) - MIN(price) price_range, COUNT(CASE WHEN category = 'Sports' THEN 1 END) sports_count FROM products GROUP BY category, brand) x WHERE price_range >= 79 ORDER BY brand;

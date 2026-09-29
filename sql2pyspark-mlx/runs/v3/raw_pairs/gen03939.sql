@@ -1,0 +1,1 @@
+SELECT id, discount, amount, channel, FIRST_VALUE(amount) OVER (ORDER BY discount DESC, id) AS first_amount, MIN(amount) OVER (PARTITION BY channel) AS channel_min_amount FROM orders ORDER BY first_amount DESC

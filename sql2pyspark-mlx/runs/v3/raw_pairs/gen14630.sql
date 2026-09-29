@@ -1,0 +1,1 @@
+select e.hire_date as employee_hire_date, e.is_remote as employee_is_remote, e.full_name as employee_full_name, m.level as manager_level, lower(e.email) as email_lower from employees e inner join employees m on e.manager_id = m.id where e.full_name like 'Da%' or upper(trim(e.email)) = 'EMMA@OUTLOOK.COM' order by employee_hire_date;

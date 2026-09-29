@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY promo_code ORDER BY ends_on, id) AS row_num FROM promotions QUALIFY row_num = 1) SELECT id, channel, promo_code, starts_on, discount_pct, row_num FROM ranked ORDER BY channel DESC NULLS FIRST, starts_on DESC;

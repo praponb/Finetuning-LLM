@@ -1,0 +1,1 @@
+select id, session_id, event_time, duration_sec, event_type, lead(duration_sec, 1) over (partition by session_id order by event_time, id) as next_duration_sec, rank() over (partition by event_type order by event_time desc) as rnk from web_events

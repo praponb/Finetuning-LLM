@@ -1,0 +1,1 @@
+select date_format(signup_date, 'yyyy-MM') as signup_month, is_active, min(signup_date) as first_signup_date, count(case when city = 'Tokyo' then 1 end) as tokyo_count from customers where is_active and country = 'JP' group by signup_month, is_active having count(case when city = 'Tokyo' then 1 end) > 2 order by tokyo_count desc, signup_month, is_active limit 3

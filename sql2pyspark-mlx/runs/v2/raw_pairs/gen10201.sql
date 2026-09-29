@@ -1,0 +1,1 @@
+select * from (select dept_name, min(budget) as min_budget, max(budget) as max_budget from departments where location = 'Bangkok' group by dept_name) as s where min_budget >= 1253000 order by min_budget asc, 1 asc

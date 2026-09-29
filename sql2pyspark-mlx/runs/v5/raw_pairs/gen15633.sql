@@ -1,0 +1,1 @@
+with valid as (select id, supplier_name, country, city, upper(trim(supplier_name)) as supplier_name_normalized, ceil(rating) as rating_whole from suppliers where city is not null) select * from valid qualify row_number() over (partition by city, country order by rating_whole desc nulls last, id) = 1;

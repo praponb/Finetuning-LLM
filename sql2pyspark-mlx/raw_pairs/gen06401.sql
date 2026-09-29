@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, effective_from, currency, element FROM price_tiers LATERAL VIEW EXPLODE(discounts) e AS element) SELECT id, currency, element, MAX(element) OVER (PARTITION BY currency) AS currency_max_element, RANK() OVER (ORDER BY element DESC) AS element_rank, RANK() OVER (PARTITION BY currency ORDER BY element) AS element_rank_2 FROM exploded

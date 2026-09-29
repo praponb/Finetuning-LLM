@@ -1,0 +1,1 @@
+SELECT id, store_id, amount, order_date FROM (SELECT id, store_id, amount, order_date, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY amount) AS pos FROM orders) AS r WHERE pos <= 2 ORDER BY 1, store_id

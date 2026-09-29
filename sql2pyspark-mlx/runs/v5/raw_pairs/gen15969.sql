@@ -1,0 +1,1 @@
+select t.merchant, a.opened_date, a.account_type, c.signup_date, c.is_active from transactions t inner join accounts a on t.account_id = a.id left join customers c on a.customer_id = c.id where a.balance > 44000;

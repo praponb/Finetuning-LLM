@@ -1,0 +1,1 @@
+SELECT txn_day, avg_amount, txn_type_list FROM (SELECT TO_DATE(txn_time) AS txn_day, AVG(amount) AS avg_amount, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions WHERE is_flagged = FALSE GROUP BY TO_DATE(txn_time)) AS sub WHERE avg_amount >= 1100;

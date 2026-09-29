@@ -1,0 +1,1 @@
+SELECT id, store_id, SUM(quantity) OVER w_ordered cumulative_quantity, LAG(quantity, 1) OVER (PARTITION BY store_id ORDER BY last_restock, id) prev_quantity FROM inventory WINDOW w_ordered AS (ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW);

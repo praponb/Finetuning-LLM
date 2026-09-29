@@ -1,0 +1,1 @@
+SELECT id, name, email, country, city, segment, signup_date, is_active, credit_limit, age, CORR(credit_limit, age) OVER w_running AS corr_credit_limit_age, CORR(credit_limit, age) OVER w_running AS corr_credit_limit_age_2 FROM customers WINDOW w_running AS (PARTITION BY segment);

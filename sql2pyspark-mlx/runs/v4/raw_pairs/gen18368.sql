@@ -1,0 +1,1 @@
+WITH recent_store_sales AS (SELECT * FROM store_sales WHERE units <= 38 AND YEAR(sale_date) = 2023), agg AS (SELECT store_id, product_id, MAX(revenue) - MIN(revenue) revenue_range, SUM(units) total_units FROM recent_store_sales GROUP BY store_id, product_id) SELECT store_id, product_id, revenue_range, total_units FROM agg WHERE revenue_range > 57 ORDER BY total_units

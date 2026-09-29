@@ -1,0 +1,1 @@
+SELECT accounts.status, MAX(transactions.txn_time) AS last_txn_time FROM transactions LEFT JOIN accounts ON accounts.id = transactions.account_id JOIN customers ON accounts.customer_id = customers.id GROUP BY accounts.status ORDER BY last_txn_time

@@ -1,0 +1,1 @@
+SELECT s.country, COUNT(p.id) AS product_count FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE s.supplier_name IS NULL GROUP BY s.country ORDER BY s.country, product_count DESC LIMIT 5

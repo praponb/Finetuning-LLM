@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, MAX(hire_date) AS last_hire_date, MAX(salary) - MIN(salary) AS salary_range FROM employees GROUP BY dept_id) SELECT d.location, ebd.last_hire_date, ebd.salary_range FROM departments d INNER JOIN employees_by_department ebd ON d.id = ebd.dept_id

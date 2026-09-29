@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(last_restock) < 2024 THEN 'before_2024' WHEN YEAR(last_restock) = 2024 THEN '2024' ELSE 'after_2024' END AS last_restock_cohort, COUNT(DISTINCT quantity) AS unique_products, COUNT(*) AS inventory_count FROM inventory WHERE product_id IN (6, 9) AND quantity BETWEEN 129 AND 163 GROUP BY 1

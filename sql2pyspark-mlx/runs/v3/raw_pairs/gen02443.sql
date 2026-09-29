@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, d.budget, t.pct_director FROM departments d INNER JOIN (SELECT dept_id, ROUND((100 * SUM(CASE WHEN job_title = 'Director' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_director FROM employees GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY dept_name DESC, id LIMIT 5;

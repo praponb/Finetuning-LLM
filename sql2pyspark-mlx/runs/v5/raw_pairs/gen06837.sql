@@ -1,0 +1,1 @@
+with base as (select *, case when budget >= 3984000 then 'High' when budget >= 1796000 then 'Medium' else 'Low' end as budget_tier from departments where dept_name is null) select location, dept_name from base except select location, dept_name from departments where budget > 3108000;

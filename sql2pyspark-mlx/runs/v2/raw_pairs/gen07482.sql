@@ -1,0 +1,1 @@
+SELECT c.is_active, c.city, COUNT(p.amount) AS amount_count, SUM(CASE WHEN p.method = 'card' THEN 1 ELSE 0 END) AS card_count FROM payments p FULL OUTER JOIN orders o ON p.order_id = o.id LEFT OUTER JOIN customers c ON o.customer_id = c.id GROUP BY c.is_active, c.city HAVING SUM(CASE WHEN p.method = 'card' THEN 1 ELSE 0 END) >= 50 ORDER BY card_count DESC;

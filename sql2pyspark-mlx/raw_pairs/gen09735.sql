@@ -1,0 +1,1 @@
+SELECT location, CASE WHEN budget >= 4386000 THEN 'high' WHEN budget >= 1981000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(CASE WHEN dept_name = 'Finance' THEN 1 ELSE 0 END) AS finance_count, COUNT(*) AS cnt, MAX(budget) - MIN(budget) AS budget_range FROM departments GROUP BY 1, 2 HAVING MAX(budget) - MIN(budget) < 74 ORDER BY finance_count DESC, budget_bucket;

@@ -1,0 +1,1 @@
+SELECT id, balance, CASE WHEN account_type IN ('SAVINGS', 'CREDIT') THEN 'Group A' ELSE 'Other' END AS account_type_group FROM accounts WHERE account_type = 'SAVINGS' AND (balance > 62000 OR status = 'OPEN') ORDER BY balance;

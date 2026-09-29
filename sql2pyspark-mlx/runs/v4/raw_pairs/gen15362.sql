@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, session_id, duration_sec, event_time, DENSE_RANK() OVER (PARTITION BY session_id ORDER BY duration_sec DESC) rn FROM web_events) SELECT id, session_id, duration_sec, event_time FROM ranked WHERE rn <= 3 ORDER BY event_time

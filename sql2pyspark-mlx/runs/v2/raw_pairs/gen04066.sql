@@ -1,0 +1,1 @@
+SELECT s.supplier_name, t.avg_cost FROM suppliers s INNER JOIN (SELECT supplier_id, ROUND(AVG(cost), 2) AS avg_cost FROM products WHERE cost IS NOT NULL GROUP BY supplier_id) t ON s.id = t.supplier_id

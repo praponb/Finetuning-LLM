@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, ROUND(AVG(ss.revenue), 2) AS avg_revenue, MAX(ss.units) AS max_units FROM store_sales ss LEFT OUTER JOIN stores s ON ss.store_id = s.id WHERE ss.product_id IN (3, 4, 7) GROUP BY DATE_TRUNC('MONTH', s.opened_date) HAVING ROUND(AVG(ss.revenue), 2) > 74 ORDER BY opened_month;

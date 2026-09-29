@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, ROUND(STDDEV(discount), 2) stddev_discount FROM orders GROUP BY customer_id) SELECT c.id, c.city, ct.stddev_discount FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id WHERE ct.stddev_discount > 49 ORDER BY id, c.city

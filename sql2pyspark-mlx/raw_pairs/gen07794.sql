@@ -1,0 +1,1 @@
+select i.id, i.last_restock, i.quantity, i.store_id from inventory i where i.last_restock between '2023-04-01' and '2024-09-18' and i.product_id in (select id from products where price <= 700) order by 1 desc

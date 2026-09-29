@@ -1,0 +1,1 @@
+SELECT id, method, amount, status, ROW_NUMBER() OVER (PARTITION BY method, status ORDER BY paid_at DESC, id) AS seq_no, NTILE(4) OVER (PARTITION BY order_id ORDER BY amount, id) AS amount_bucket, ROW_NUMBER() OVER (PARTITION BY DATE_TRUNC('MONTH', paid_at) ORDER BY amount DESC, id) AS event_seq FROM payments WHERE amount BETWEEN 500 AND 950;

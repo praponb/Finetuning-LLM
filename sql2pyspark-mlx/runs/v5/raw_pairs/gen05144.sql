@@ -1,0 +1,1 @@
+with filtered as (select *, trim(plan) clean_plan from subscriptions where start_date >= date '2023-02-27' and customer_id is not null) select *, row_number() over (partition by customer_id order by end_date desc nulls first, id asc) as latest_rank from filtered qualify latest_rank = 1;

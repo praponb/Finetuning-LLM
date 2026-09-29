@@ -1,0 +1,1 @@
+SELECT *, RANK() OVER (PARTITION BY customer_id ORDER BY discount) discount_rank, CUME_DIST() OVER w_part discount_cume_dist, NTILE(3) OVER (PARTITION BY status ORDER BY shipping_fee DESC, id) shipping_fee_bucket FROM orders WHERE store_id IS NULL WINDOW w_part AS (PARTITION BY store_id, customer_id ORDER BY discount DESC);

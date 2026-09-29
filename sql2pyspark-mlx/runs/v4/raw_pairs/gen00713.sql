@@ -1,0 +1,1 @@
+SELECT o.channel, MAX(oi.unit_price) - MIN(oi.unit_price) AS unit_price_range FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id GROUP BY o.channel ORDER BY o.channel, unit_price_range DESC;

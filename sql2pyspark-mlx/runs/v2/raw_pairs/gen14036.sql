@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_type, a.opened_date, UPPER(a.account_type) AS account_type_upper FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE t.txn_time >= '2024-05-08' AND a.account_type IN ('CREDIT', 'LOAN') ORDER BY opened_date;

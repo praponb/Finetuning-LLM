@@ -1,0 +1,1 @@
+SELECT c.city, c.age, t.last_started_at, t.browser_values FROM customers c INNER JOIN (SELECT customer_id, MAX(started_at) AS last_started_at, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(browser))) AS browser_values FROM sessions GROUP BY customer_id) t ON c.id = t.customer_id

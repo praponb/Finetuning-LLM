@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM products s WHERE EXISTS (SELECT 1 FROM order_items c WHERE c.product_id = s.id AND c.quantity <> 4)) SELECT id, product_name, category, launch_date, tags, CASE WHEN product_name RLIKE '^(Desk Lamp|Backpack XL)$' THEN 'PRIORITY' ELSE 'EXTENDED' END AS product_name_zone FROM not_flagged;

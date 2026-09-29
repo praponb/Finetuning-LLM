@@ -1,0 +1,1 @@
+select a.account_type, date_trunc('MONTH', a.opened_date) as opened_month, round(stddev(t.amount), 2) as stddev_amount from transactions t inner join accounts a on t.account_id = a.id where t.is_flagged group by a.account_type, date_trunc('MONTH', a.opened_date);

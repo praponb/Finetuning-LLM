@@ -1,0 +1,1 @@
+SELECT c.id, c.signup_date, c.segment, t.num_accounts, t.balance_count FROM customers c INNER JOIN (SELECT customer_id, COUNT(*) AS num_accounts, COUNT(balance) AS balance_count FROM accounts GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.num_accounts > 8 ORDER BY num_accounts, c.segment, id LIMIT 5;

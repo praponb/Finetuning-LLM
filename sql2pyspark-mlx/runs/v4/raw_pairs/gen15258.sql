@@ -1,0 +1,1 @@
+WITH valid_shipments AS (SELECT *, CONCAT_WS('-', status, carrier) AS status_carrier_key FROM shipments WHERE status = 'IN_TRANSIT' AND order_id IS NOT NULL), agg AS (SELECT status, MIN(cost) AS min_cost FROM valid_shipments GROUP BY status) SELECT * FROM agg WHERE min_cost >= 71

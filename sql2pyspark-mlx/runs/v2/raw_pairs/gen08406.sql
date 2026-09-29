@@ -1,0 +1,1 @@
+SELECT p.brand, AVG(i.quantity) AS avg_quantity FROM inventory i LEFT JOIN products p ON i.product_id = p.id JOIN stores s ON i.store_id = s.id GROUP BY p.brand HAVING AVG(i.quantity) >= 170 ORDER BY p.brand DESC

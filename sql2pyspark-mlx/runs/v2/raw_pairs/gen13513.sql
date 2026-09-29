@@ -1,0 +1,1 @@
+select is_remote, job_title, sum(case when job_title = 'Intern' then 1 else 0 end) as intern_count, count(*) as employee_count from employees where full_name is not null group by is_remote, job_title having sum(case when job_title = 'Intern' then 1 else 0 end) > 24 order by intern_count, employee_count desc

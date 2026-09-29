@@ -1,0 +1,1 @@
+SELECT product_id, QUARTER(last_restock) AS last_restock_quarter, MIN(quantity) AS min_quantity FROM inventory GROUP BY product_id, QUARTER(last_restock) HAVING MIN(quantity) >= 60 ORDER BY last_restock_quarter DESC;

@@ -1,0 +1,1 @@
+WITH OrderSummary AS (SELECT order_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items GROUP BY order_id) SELECT o.id, o.discount, o.shipping_fee, O.quantity_range FROM orders o INNER JOIN OrderSummary O ON o.id = O.order_id WHERE O.quantity_range >= 47 ORDER BY O.quantity_range DESC

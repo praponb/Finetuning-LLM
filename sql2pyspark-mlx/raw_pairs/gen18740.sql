@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.store_id, products.product_name, suppliers.city FROM inventory INNER JOIN products ON products.id = inventory.product_id INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.cost < 340

@@ -1,0 +1,1 @@
+SELECT id, customer_id, store_id, amount, status, RANK() OVER (PARTITION BY customer_id, store_id ORDER BY amount DESC) AS rnk, COUNT(*) OVER (PARTITION BY status) AS status_count FROM orders WHERE order_date <= '2023-09-12' ORDER BY customer_id, status_count DESC;

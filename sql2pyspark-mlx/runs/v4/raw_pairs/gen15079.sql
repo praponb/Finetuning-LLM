@@ -1,0 +1,1 @@
+with account_summary as (select account_id, sum(case when txn_type = 'DEBIT' then amount else 0 end) as debit_amount from transactions where txn_type not in ('REFUND', 'FEE', 'DEBIT') group by account_id) select a.status, a.customer_id, as.debit_amount from accounts a left join account_summary as on a.id = as.account_id where as.debit_amount > 41 order by a.status;

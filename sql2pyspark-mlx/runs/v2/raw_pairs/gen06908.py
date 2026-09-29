@@ -1,0 +1,11 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_web_events
+    .filter((F.col("event_type") == "add_to_cart") & F.col("page").isNotNull())
+    .groupBy(
+        F.to_date("event_time").alias("event_day"),
+        F.quarter("event_time").alias("event_quarter"),
+    )
+    .agg(F.min("duration_sec").alias("min_duration_sec"))
+)

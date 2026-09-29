@@ -1,0 +1,1 @@
+SELECT c.segment, c.city, ROUND(AVG(we.duration_sec), 2) AS avg_duration_sec FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id LEFT JOIN customers c ON s.customer_id = c.id WHERE s.device IN ('mobile', 'desktop') GROUP BY c.segment, c.city

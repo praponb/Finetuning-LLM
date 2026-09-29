@@ -1,0 +1,1 @@
+SELECT sessions.browser, t.unique_pages FROM sessions LEFT JOIN (SELECT session_id, COUNT(DISTINCT duration_sec) AS unique_pages FROM web_events WHERE duration_sec BETWEEN 263 AND 446 GROUP BY session_id) t ON sessions.id = t.session_id

@@ -1,0 +1,1 @@
+SELECT *, LAG(amount) OVER w_running prev_amount, LEAD(amount) OVER w_running next_amount, ROW_NUMBER() OVER w_running event_seq, NTILE(10) OVER w_ordered amount_bucket FROM transactions WINDOW w_running AS (PARTITION BY account_id ORDER BY amount, id), w_ordered AS (PARTITION BY txn_type ORDER BY amount DESC, id)

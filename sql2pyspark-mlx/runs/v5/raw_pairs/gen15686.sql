@@ -1,0 +1,1 @@
+WITH ranked_orders AS (SELECT id, channel, discount, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY discount DESC, id) AS rnk FROM orders) SELECT id, channel, discount FROM ranked_orders WHERE rnk = 1 ORDER BY channel DESC, 1 DESC;

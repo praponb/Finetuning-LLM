@@ -1,0 +1,1 @@
+with cleaned as (select id, session_id, page, event_time, duration_sec, datediff(current_date(), event_time) as days_since_event_time from web_events where event_time > timestamp '2023-04-27 08:00:00') select * from (select session_id, page, duration_sec from cleaned) src pivot (max(duration_sec) as total, count(1) as n for page in ('/home' as home, '/search' as search));

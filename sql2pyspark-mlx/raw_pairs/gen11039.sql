@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, ROUND(AVG(amount), 2) AS avg_amount FROM transactions WHERE TO_DATE(txn_time) >= '2025-01-01' GROUP BY account_id) SELECT a.id, a.account_type, as.avg_amount FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id WHERE as.avg_amount >= 75 ORDER BY id DESC;

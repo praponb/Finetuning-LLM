@@ -1,0 +1,1 @@
+SELECT id, customer_id, opened_date, balance, LEAD(balance, 1) OVER (PARTITION BY customer_id ORDER BY opened_date, id) next_balance, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY balance, id) row_num FROM accounts WHERE YEAR(opened_date) = 2024

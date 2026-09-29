@@ -1,0 +1,1 @@
+SELECT a.status, a.opened_date, a.account_type, t.txn_time, t.txn_type, SUBSTRING(a.account_type, 1, 4) AS account_type_prefix FROM accounts a LEFT OUTER JOIN transactions t ON t.account_id = a.id WHERE a.status IN ('OPEN', 'CLOSED', 'FROZEN') ORDER BY t.txn_time, txn_type;

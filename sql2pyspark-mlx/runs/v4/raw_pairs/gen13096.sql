@@ -1,0 +1,1 @@
+SELECT sale_month, total_revenue, latest_sale_date FROM (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, SUM(revenue) AS total_revenue, MAX(sale_date) AS latest_sale_date FROM store_sales WHERE revenue <= 1900 GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM')) AS s WHERE total_revenue > 20000 ORDER BY sale_month DESC

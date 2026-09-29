@@ -1,0 +1,1 @@
+SELECT ss.id, ss.units, s.store_name, p.category, p.cost FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON ss.product_id = p.id WHERE p.supplier_id IN (17, 21, 39) ORDER BY cost DESC;

@@ -1,0 +1,1 @@
+select o.id, o.status, count(oi.id) as order_item_count from orders o left outer join order_items oi on oi.order_id = o.id where oi.order_id in (8, 17) group by o.id, o.status order by o.status, id desc limit 5

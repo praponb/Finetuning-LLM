@@ -1,0 +1,1 @@
+SELECT *, ROUND(quantity * 1.15, 2) AS quantity_adjusted, ROUND(unit_price, 1) AS unit_price_rounded FROM order_items WHERE order_id IN (7, 24, 28, 38) AND quantity != 5 AND unit_price BETWEEN 300 AND 340 ORDER BY order_id DESC;

@@ -1,0 +1,1 @@
+WITH filtered_stores AS (SELECT * FROM stores WHERE opened_date >= '2025-10-01'), stores_stats AS (SELECT QUARTER(opened_date) opened_quarter, AVG(sqft) avg_sqft FROM filtered_stores GROUP BY QUARTER(opened_date)) SELECT opened_quarter, avg_sqft FROM stores_stats WHERE avg_sqft >= 5200

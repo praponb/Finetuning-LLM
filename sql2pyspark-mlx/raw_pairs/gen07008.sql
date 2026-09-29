@@ -1,0 +1,1 @@
+with enriched as (select s.id, s.customer_id, s.device, p.email from sessions s inner join customers p on s.customer_id <=> p.id where length(p.name) >= 8) select device, count(case when device = 'mobile' then 1 end) as mobile_count, count_if(device = 'desktop') as desktop_events from enriched group by device order by device asc nulls last;

@@ -1,0 +1,1 @@
+SELECT s.browser, we.event_type, we.duration_sec, we.event_time, CONCAT(we.page, ', ', we.event_type) AS page_event_type FROM sessions s LEFT JOIN web_events we ON s.id = we.session_id WHERE we.session_id IN (19, 21, 22)

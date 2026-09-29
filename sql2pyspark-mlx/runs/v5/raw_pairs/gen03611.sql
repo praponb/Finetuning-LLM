@@ -1,0 +1,1 @@
+SELECT s.id, s.customer_id, s.store_id, s.order_date, s.status, s.channel, s.discount, s.shipping_fee, x.payment_amount FROM orders s LEFT JOIN LATERAL (SELECT c.amount AS payment_amount FROM payments c WHERE c.order_id = s.id ORDER BY c.amount DESC, c.id DESC LIMIT 1) x ON TRUE;

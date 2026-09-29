@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, AVG(quantity) AS avg_quantity FROM order_items GROUP BY CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END, product_id

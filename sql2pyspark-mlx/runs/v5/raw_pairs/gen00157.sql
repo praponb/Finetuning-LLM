@@ -1,0 +1,1 @@
+SELECT id, brand, category, price, supplier_id, stock_qty, ROW_NUMBER() OVER (PARTITION BY brand, category ORDER BY price DESC, id) AS rn, AVG(stock_qty) OVER (PARTITION BY supplier_id) AS supplier_id_avg_stock_qty FROM products WHERE supplier_id = 29 ORDER BY category ASC, price DESC

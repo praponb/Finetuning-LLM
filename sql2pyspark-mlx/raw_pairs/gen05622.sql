@@ -1,0 +1,1 @@
+SELECT s.id, s.name, s.email, s.city, s.segment, s.signup_date, s.is_active, top1.device, top1.session_browser FROM customers s LEFT JOIN LATERAL (SELECT c.device, c.browser AS session_browser FROM sessions c WHERE c.customer_id = s.id ORDER BY c.started_at DESC, c.id DESC LIMIT 1) top1 ON TRUE

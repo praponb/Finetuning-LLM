@@ -1,0 +1,1 @@
+SELECT QUARTER(o.order_date) AS order_quarter, o.channel, SORT_ARRAY(COLLECT_SET(p.status)) AS status_list FROM payments p RIGHT JOIN orders o ON p.order_id = o.id GROUP BY QUARTER(o.order_date), o.channel ORDER BY order_quarter DESC;

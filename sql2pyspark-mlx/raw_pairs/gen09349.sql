@@ -1,0 +1,1 @@
+SELECT c.signup_date, t.avg_monthly_fee FROM customers c JOIN (SELECT customer_id, ROUND(AVG(monthly_fee), 2) avg_monthly_fee FROM subscriptions GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.avg_monthly_fee >= 28 ORDER BY c.signup_date DESC

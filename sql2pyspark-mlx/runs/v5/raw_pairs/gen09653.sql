@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN salary >= 156000 THEN 'high' WHEN salary >= 66000 THEN 'mid' ELSE 'low' END AS salary_bucket, SUM(CASE WHEN level = 'L5' THEN 1 ELSE 0 END) AS l5_count, SORT_ARRAY(COLLECT_SET(level)) AS level_list FROM employees GROUP BY CASE WHEN salary >= 156000 THEN 'high' WHEN salary >= 66000 THEN 'mid' ELSE 'low' END) AS agg WHERE l5_count < 74;

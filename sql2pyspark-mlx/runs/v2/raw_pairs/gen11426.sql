@@ -1,0 +1,1 @@
+select order_month, stddev_discount from (select date_format(order_date, 'yyyy-MM') as order_month, round(stddev(discount), 2) as stddev_discount from orders group by date_format(order_date, 'yyyy-MM')) as t where stddev_discount >= 46 order by order_month;

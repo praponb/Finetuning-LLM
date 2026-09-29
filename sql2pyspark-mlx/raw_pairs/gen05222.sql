@@ -1,0 +1,1 @@
+SELECT QUARTER(paid_at) AS paid_quarter, method, MAX(amount) - MIN(amount) AS amount_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values FROM payments WHERE status IN ('SUCCESS', 'FAILED') GROUP BY paid_quarter, method HAVING MAX(amount) - MIN(amount) > 57

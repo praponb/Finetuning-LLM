@@ -1,0 +1,1 @@
+SELECT o.status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.carrier))) AS carrier_values, SUM(s.cost) AS total_cost FROM shipments s LEFT JOIN orders o ON o.id = s.order_id INNER JOIN customers c ON c.id = o.customer_id GROUP BY o.status ORDER BY carrier_values

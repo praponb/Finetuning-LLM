@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, COALESCE(unit_price, 0) AS unit_price_filled, quantity + unit_price AS line_total FROM order_items WHERE product_id IS NOT NULL AND order_id IN (12, 18, 24, 33)) SELECT product_id, id FROM cleaned EXCEPT ALL SELECT product_id, id FROM order_items WHERE quantity <> 5;

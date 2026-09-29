@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS rn FROM departments) SELECT id, dept_name, budget, location FROM ranked WHERE rn = 1 ORDER BY dept_name

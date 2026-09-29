@@ -1,0 +1,1 @@
+with dim_totals as (select c.segment, a.status, count(*) as cnt, round(sum(a.amount), 2) as total_amount from orders a inner join customers c on a.customer_id = c.id group by c.segment, a.status) select segment, status, total_amount from dim_totals order by status desc

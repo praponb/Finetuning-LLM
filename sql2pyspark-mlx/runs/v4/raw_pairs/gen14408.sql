@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, COUNT(DISTINCT quantity) AS unique_stores FROM inventory GROUP BY product_id) SELECT p.stock_qty, pt.unique_stores FROM products p LEFT JOIN product_totals pt ON p.id = pt.product_id WHERE pt.unique_stores > 8 ORDER BY unique_stores DESC, stock_qty ASC

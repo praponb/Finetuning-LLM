@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, log_ts, latency_ms, key, v FROM app_logs LATERAL VIEW EXPLODE(context) e AS key, v) SELECT id, service, latency_ms, key, v, CASE WHEN service RLIKE '^(auth|checkout)$' THEN 'OTHER_ZONE' ELSE 'GROUP_B' END AS service_zone FROM lines ORDER BY service_zone NULLS LAST

@@ -1,0 +1,1 @@
+select s.id, s.browser, t.avg_duration_sec from sessions s left join (select session_id, avg(duration_sec) as avg_duration_sec from web_events where duration_sec != 411 group by session_id) t on s.id = t.session_id where t.avg_duration_sec >= 140 order by browser

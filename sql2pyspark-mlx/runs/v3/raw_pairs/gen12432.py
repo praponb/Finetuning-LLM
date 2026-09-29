@@ -1,0 +1,10 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_transactions
+    .groupBy("is_flagged", "merchant")
+    .agg(
+        F.count("*").alias("cnt"),
+        F.count("amount").alias("amount_count"),
+    )
+)

@@ -1,0 +1,1 @@
+with top_inventory as (select *, rank() over (partition by store_id order by quantity desc) as pos from inventory) select id, store_id, quantity, last_restock from top_inventory where pos = 1 order by last_restock desc

@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1680 THEN 'high' WHEN amount >= 350 THEN 'mid' ELSE 'low' END AS amount_bucket, SUM(CASE WHEN method = 'card' THEN 1 ELSE 0 END) AS card_count, ROUND(AVG(amount), 2) AS avg_amount FROM payments WHERE status <> 'REFUNDED' GROUP BY CASE WHEN amount >= 1680 THEN 'high' WHEN amount >= 350 THEN 'mid' ELSE 'low' END ORDER BY 3 DESC, amount_bucket;

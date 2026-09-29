@@ -1,0 +1,1 @@
+SELECT category, STDDEV_SAMP(stock_qty) AS stock_qty_stddev, SORT_ARRAY(COLLECT_SET(category)) AS category_list, STDDEV_SAMP(cost) AS cost_stddev FROM products GROUP BY ROLLUP (category) ORDER BY category DESC NULLS LAST

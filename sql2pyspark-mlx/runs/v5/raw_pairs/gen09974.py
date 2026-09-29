@@ -1,0 +1,13 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_orders.alias("o")
+    .join(df_shipments.alias("s"), F.col("s.order_id") == F.col("o.id"), "left")
+    .select(
+        F.col("o.status"),
+        F.col("o.channel"),
+        F.col("o.store_id"),
+        F.col("s.order_id"),
+    )
+    .orderBy("channel")
+)

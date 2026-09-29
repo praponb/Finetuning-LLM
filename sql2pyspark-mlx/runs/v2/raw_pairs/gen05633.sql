@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(*) AS row_count FROM inventory GROUP BY store_id) SELECT s.id, s.opened_date, s.city, st.row_count FROM stores s INNER JOIN store_totals st ON s.id = st.store_id WHERE st.row_count > 5;

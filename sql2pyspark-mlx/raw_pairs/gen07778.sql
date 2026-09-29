@@ -1,0 +1,1 @@
+SELECT id, account_id, txn_time, amount, merchant, SUM(amount) OVER (PARTITION BY account_id ORDER BY txn_time, id) AS running_amount, COUNT(*) OVER (PARTITION BY merchant) AS merchant_count FROM transactions WHERE txn_time >= '2025-01-28';

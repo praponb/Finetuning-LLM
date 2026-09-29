@@ -1,0 +1,1 @@
+WITH with_windows AS (SELECT id, budget, LEAD(budget) OVER w_hist AS next_budget, LAG(budget) OVER w_hist AS prev_budget, ROW_NUMBER() OVER w_hist AS event_seq FROM departments WINDOW w_hist AS (PARTITION BY location, dept_name ORDER BY budget, id)) SELECT id, prev_budget FROM with_windows ORDER BY id DESC NULLS LAST

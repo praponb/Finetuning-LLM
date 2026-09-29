@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, MAX(amount) AS max_amount FROM orders WHERE channel IN ('partner', 'mobile') GROUP BY store_id) SELECT s.id, s.region, s.opened_date, ss.max_amount FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id WHERE ss.max_amount > 950 ORDER BY s.id;

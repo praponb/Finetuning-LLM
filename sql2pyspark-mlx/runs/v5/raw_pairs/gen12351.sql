@@ -1,0 +1,1 @@
+select dim.channel, dim.status as order_status, s.status as shipment_status, count(*) as cnt, round(avg(s.cost), 2) as avg_cost from shipments s inner join orders dim on s.order_id = dim.id group by dim.channel, dim.status, s.status;

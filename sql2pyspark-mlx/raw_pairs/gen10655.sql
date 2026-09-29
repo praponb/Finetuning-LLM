@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, host, latency_ms, attr_key, v FROM app_logs LATERAL VIEW OUTER EXPLODE(context) t AS attr_key, v) SELECT host, latency_ms, attr_key, v, CASE WHEN host RLIKE '^(h4|h2)$' THEN 'OTHER_ZONE' ELSE 'GROUP_B' END AS host_zone FROM exploded ORDER BY latency_ms

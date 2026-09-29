@@ -1,0 +1,1 @@
+SELECT id, job_title, salary, hire_date, AVG(salary) OVER (ORDER BY hire_date, id ROWS BETWEEN 5 PRECEDING AND 1 PRECEDING) AS salary_avg_5_prior, SUM(salary) OVER (ORDER BY hire_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_salary FROM employees

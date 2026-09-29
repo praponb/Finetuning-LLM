@@ -1,0 +1,1 @@
+select id, device, browser, country, row_number() over (partition by device order by started_at, id) row_seq, row_number() over w_grp event_seq from sessions where device not in ('desktop', 'tablet') window w_grp as (partition by year(started_at), country order by started_at, id);

@@ -1,0 +1,1 @@
+SELECT id, city, segment, credit_limit, signup_date, ROW_NUMBER() OVER (PARTITION BY city, segment ORDER BY credit_limit DESC, id) AS row_num, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date, id) AS row_num_2 FROM customers WHERE is_active;

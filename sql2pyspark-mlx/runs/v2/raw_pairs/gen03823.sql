@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.country FROM suppliers s WHERE NOT EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND ARRAY_CONTAINS(p.tags, 'new')) ORDER BY country DESC, id LIMIT 5;

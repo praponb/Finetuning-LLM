@@ -1,0 +1,1 @@
+SELECT id, dept_id, job_title, hire_date, RANK() OVER (PARTITION BY dept_id, job_title ORDER BY hire_date) AS hire_date_rank, FIRST_VALUE(dept_id) OVER (PARTITION BY job_title ORDER BY hire_date, id) AS first_dept_id FROM employees

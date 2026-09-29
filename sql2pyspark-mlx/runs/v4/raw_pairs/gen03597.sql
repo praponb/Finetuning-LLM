@@ -1,0 +1,1 @@
+SELECT id, manager_id, hire_date, salary FROM (SELECT id, manager_id, hire_date, salary, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date, id) AS rn FROM employees WHERE manager_id IS NULL) AS t WHERE rn <= 3

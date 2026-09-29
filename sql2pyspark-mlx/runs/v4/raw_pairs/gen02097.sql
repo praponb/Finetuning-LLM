@@ -1,0 +1,1 @@
+SELECT ss.product_id, QUARTER(ss.sale_date) AS sale_quarter, MIN(i.last_restock) AS min_last_restock, COUNT(i.quantity) AS quantity_count FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id IN (2, 3, 7) GROUP BY ss.product_id, QUARTER(ss.sale_date) ORDER BY sale_quarter DESC, product_id LIMIT 20;

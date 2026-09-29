@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, ROUND(STDDEV(amount), 2) stddev_amount FROM transactions GROUP BY account_id) SELECT a.id, a.balance, tba.stddev_amount FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY id DESC

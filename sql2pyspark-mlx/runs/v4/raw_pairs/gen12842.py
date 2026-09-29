@@ -1,0 +1,13 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_web_events
+    .groupBy("page")
+    .agg(
+        F.concat_ws(", ", F.sort_array(F.collect_set("event_type"))).alias("event_type_values"),
+        F.max("duration_sec").alias("max_duration_sec"),
+    )
+    .filter(F.col("max_duration_sec") > 150)
+    .select("page", "event_type_values", "max_duration_sec")
+    .orderBy("max_duration_sec")
+)

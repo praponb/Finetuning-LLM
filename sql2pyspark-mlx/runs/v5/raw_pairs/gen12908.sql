@@ -1,0 +1,1 @@
+with kept_keys as (select order_id, product_id from order_items intersect select order_id, product_id from order_items where quantity < 7), reconciled as (select s.* from order_items s inner join kept_keys k on s.order_id = k.order_id and s.product_id = k.product_id) select id, order_id, product_id, quantity, unit_price from reconciled order by quantity nulls last

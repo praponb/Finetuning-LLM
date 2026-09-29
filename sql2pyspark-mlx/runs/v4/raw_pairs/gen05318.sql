@@ -1,0 +1,1 @@
+select s.start_date, s.monthly_fee, s.end_date, c.credit_limit, c.email from subscriptions s right outer join customers c on s.customer_id = c.id where s.end_date between '2023-03-07' and '2024-03-14';

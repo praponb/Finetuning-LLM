@@ -1,0 +1,1 @@
+select s.city, round(avg(p.cost), 2) as avg_cost, count(case when p.brand = 'Initech' then 1 end) as initech_count from products p left join suppliers s on p.supplier_id = s.id group by s.city order by avg_cost

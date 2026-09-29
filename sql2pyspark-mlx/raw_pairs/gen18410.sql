@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(category)) AS category_list FROM products WHERE cost <= 390 GROUP BY supplier_id) SELECT suppliers.id, suppliers.city, suppliers.rating, products_by_supplier.category_list FROM suppliers JOIN products_by_supplier ON suppliers.id = products_by_supplier.supplier_id;

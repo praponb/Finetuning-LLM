@@ -1,0 +1,1 @@
+SELECT departments.location, departments.budget, departments.dept_name, employees.email, employees.job_title, employees.hire_date FROM departments LEFT JOIN employees ON employees.dept_id = departments.id WHERE departments.location = 'Chiang Mai' ORDER BY job_title DESC, dept_name;

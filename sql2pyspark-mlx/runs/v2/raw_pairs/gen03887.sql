@@ -1,0 +1,1 @@
+SELECT s.country, we.page, we.event_time, we.event_type, UPPER(we.page) AS page_upper FROM sessions s INNER JOIN web_events we ON we.session_id = s.id WHERE HOUR(s.started_at) BETWEEN 8 AND 11 AND we.page IS NOT NULL ORDER BY we.event_type;

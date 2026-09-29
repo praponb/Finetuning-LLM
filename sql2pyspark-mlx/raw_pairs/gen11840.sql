@@ -1,0 +1,1 @@
+with exploded as (select c.id, c.coupon_codes, pos, rec.product_id, rec.qty, rec.price from carts c lateral view outer posexplode(c.items) x as pos, rec) select id, coupon_codes, pos, qty from exploded order by id;

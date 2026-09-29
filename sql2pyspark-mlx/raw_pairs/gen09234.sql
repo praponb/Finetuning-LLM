@@ -1,0 +1,1 @@
+SELECT e.id, e.hire_date, e.full_name, d.budget, d.dept_name, d.location FROM employees e INNER JOIN departments d ON e.dept_id = d.id WHERE e.level = 'L5' AND d.location NOT IN ('Chiang Mai', 'Singapore')

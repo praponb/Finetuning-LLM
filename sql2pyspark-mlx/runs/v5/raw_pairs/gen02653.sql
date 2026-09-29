@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, AVG(quantity) AS avg_quantity FROM inventory WHERE product_id IN (3, 4) GROUP BY product_id) SELECT p.launch_date, p.stock_qty, ps.avg_quantity FROM products p LEFT JOIN product_stats ps ON p.id = ps.product_id WHERE ps.avg_quantity >= 90;

@@ -1,0 +1,1 @@
+WITH OrderStats AS (SELECT order_id, COUNT(DISTINCT amount) AS unique_statuss FROM payments GROUP BY order_id) SELECT o.order_date, o.amount, O.unique_statuss FROM orders o INNER JOIN OrderStats O ON o.id = O.order_id ORDER BY unique_statuss DESC;

@@ -1,0 +1,1 @@
+SELECT location, dept_name, legal_budget, location_values FROM (SELECT location, dept_name, SUM(CASE WHEN dept_name = 'Legal' THEN budget ELSE 0 END) legal_budget, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) location_values FROM departments GROUP BY location, dept_name) s WHERE legal_budget < 33 ORDER BY dept_name;

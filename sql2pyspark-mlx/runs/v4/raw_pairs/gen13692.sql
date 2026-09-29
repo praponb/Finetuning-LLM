@@ -1,0 +1,1 @@
+with base as (select * from store_sales where units <= 26), StoreSalesStats as (select store_id, round(avg(revenue), 2) avg_revenue from base group by store_id) select * from StoreSalesStats where avg_revenue < 79 order by avg_revenue desc;

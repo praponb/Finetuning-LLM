@@ -1,0 +1,1 @@
+SELECT status, order_id, ROUND(AVG(cost), 2) AS avg_cost, STDDEV_SAMP(cost) AS cost_stddev, SUM(CASE WHEN status = 'RETURNED' THEN cost ELSE 0 END) AS returned_cost, GROUPING(status) AS grouping_level FROM shipments GROUP BY GROUPING SETS ((status, order_id), (status), ());

@@ -1,0 +1,1 @@
+select *, last_value(units) ignore nulls over (partition by product_id, store_id order by units, id rows between unbounded preceding and current row) as last_known_units, row_number() over w_running as row_seq from store_sales window w_running as (partition by product_id, store_id order by revenue, id)

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CASE WHEN channel IN ('partner', 'web') THEN 'Priority' ELSE 'Other' END AS channel_group, DAY(order_date) AS order_date_day, COALESCE(channel, 'UNKNOWN') AS channel_clean FROM orders WHERE order_date >= '2025-05-16') SELECT channel, customer_id FROM valid EXCEPT ALL SELECT channel, customer_id FROM orders WHERE order_date <= '2025-08-01'

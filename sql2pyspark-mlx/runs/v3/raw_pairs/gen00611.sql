@@ -1,0 +1,1 @@
+SELECT MONTH(ss.sale_date) AS sale_month, MAX(i.last_restock) AS latest_last_restock FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY MONTH(ss.sale_date) ORDER BY latest_last_restock, sale_month LIMIT 3

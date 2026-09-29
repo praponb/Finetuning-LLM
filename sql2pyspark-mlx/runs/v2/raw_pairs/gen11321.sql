@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.product_id, order_items.unit_price FROM order_items WHERE order_items.product_id NOT IN (SELECT id FROM products WHERE supplier_id IN (34, 35)) ORDER BY unit_price DESC, id DESC LIMIT 1;

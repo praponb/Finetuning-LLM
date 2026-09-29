@@ -1,0 +1,1 @@
+SELECT CASE WHEN brand IN ('Stark', 'Acme') THEN 'priority' ELSE 'other' END brand_group, MAX(launch_date) latest_launch_date, MIN(price) min_price FROM products WHERE launch_date BETWEEN '2024-09-01' AND '2024-10-01' GROUP BY brand_group;

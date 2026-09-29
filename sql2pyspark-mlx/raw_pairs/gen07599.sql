@@ -1,0 +1,1 @@
+SELECT d.country, d.city, COUNT(*) AS cnt, ROUND(AVG(s.cost), 2) AS avg_cost, ROUND(SUM(s.stock_qty), 2) AS total_stock_qty, GROUPING_ID() AS gid FROM products s INNER JOIN suppliers d ON s.supplier_id = d.id GROUP BY ROLLUP (d.country, d.city);

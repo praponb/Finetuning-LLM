@@ -1,0 +1,1 @@
+SELECT ss.id, ss.store_id, p.price, s.supplier_name, s.rating FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE ss.units BETWEEN 23 AND 31 AND s.country != 'DE'

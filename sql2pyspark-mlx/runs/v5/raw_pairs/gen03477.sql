@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty FROM products GROUP BY supplier_id) SELECT suppliers.id, suppliers.country, supplier_totals.stddev_stock_qty FROM suppliers INNER JOIN supplier_totals ON suppliers.id = supplier_totals.supplier_id ORDER BY id DESC, supplier_totals.stddev_stock_qty DESC;

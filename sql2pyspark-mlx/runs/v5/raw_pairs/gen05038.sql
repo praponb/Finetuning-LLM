@@ -1,0 +1,1 @@
+SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) AS max_quantity FROM inventory WHERE last_restock < '2024-06-29' AND store_id IN (1, 3, 5, 6) GROUP BY store_id HAVING MAX(quantity) > 60;

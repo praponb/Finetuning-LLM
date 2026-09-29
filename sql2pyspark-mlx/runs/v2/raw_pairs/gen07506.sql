@@ -1,0 +1,1 @@
+SELECT event_type, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events WHERE page IN ('/checkout', '/home', '/search') AND duration_sec > 141 GROUP BY event_type HAVING duration_sec_range >= 62

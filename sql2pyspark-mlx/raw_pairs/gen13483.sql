@@ -1,0 +1,1 @@
+with product_summary as (select product_id, max(sale_date) as last_sale_date from store_sales group by product_id) select p.id, p.brand, p.stock_qty, ps.last_sale_date from products p left join product_summary ps on p.id = ps.product_id

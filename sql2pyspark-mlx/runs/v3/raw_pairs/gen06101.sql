@@ -1,0 +1,1 @@
+SELECT p.id, p.brand, COUNT(oi.id) AS order_item_count, ROUND(STDDEV(oi.unit_price), 2) AS stddev_unit_price FROM products p LEFT JOIN order_items oi ON oi.product_id = p.id WHERE p.cost IS NOT NULL GROUP BY p.id, p.brand ORDER BY p.brand DESC;

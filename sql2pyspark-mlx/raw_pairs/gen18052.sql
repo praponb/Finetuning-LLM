@@ -1,0 +1,1 @@
+select id, txn_type, txn_time from (select *, row_number() over (partition by txn_type order by txn_time, id) as row_num from transactions where hour(txn_time) between 9 and 13) as r where row_num = 1 order by id, txn_type desc

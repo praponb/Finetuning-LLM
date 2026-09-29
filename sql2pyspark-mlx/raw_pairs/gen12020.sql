@@ -1,0 +1,1 @@
+select p.brand, count(*) as rows_total, sum(s.units) as total_units, min(s.revenue) as min_revenue, grouping_id() as gid from store_sales s inner join products p on s.product_id = p.id group by rollup (p.brand) order by rows_total;

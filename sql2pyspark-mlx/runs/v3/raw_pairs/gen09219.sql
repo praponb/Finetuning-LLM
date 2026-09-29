@@ -1,0 +1,1 @@
+select status, count(amount) amount_count, sum(case when status = 'FAILED' then 1 else 0 end) failed_count, sum(case when status = 'SUCCESS' then amount else 0 end) success_amount from payments where amount between 570 and 1250 and order_id in (5, 7, 18) group by status;

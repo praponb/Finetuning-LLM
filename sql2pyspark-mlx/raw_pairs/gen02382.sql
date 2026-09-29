@@ -1,0 +1,1 @@
+WITH top_orders AS (SELECT id, status, shipping_fee, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipping_fee DESC, id) AS pos FROM orders WHERE order_date > '2024-04-01') SELECT id, status, shipping_fee FROM top_orders WHERE pos = 1;

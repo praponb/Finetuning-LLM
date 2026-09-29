@@ -1,0 +1,1 @@
+SELECT i.last_restock, i.quantity, s.opened_date, s.city, s.sqft, CASE WHEN s.sqft >= 12337 THEN 'High' WHEN s.sqft >= 3166 THEN 'Medium' ELSE 'Low' END AS sqft_level FROM inventory i INNER JOIN stores s ON i.store_id = s.id WHERE i.store_id = 3 AND s.store_name LIKE '%Kiosk%'

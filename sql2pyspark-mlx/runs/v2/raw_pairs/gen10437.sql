@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, c.city, ROUND((100 * SUM(CASE WHEN s.plan = 'enterprise' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_enterprise FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE c.credit_limit BETWEEN 14500 AND 16100 GROUP BY YEAR(c.signup_date), c.city ORDER BY pct_enterprise DESC

@@ -1,0 +1,1 @@
+WITH CustomerTotals AS (SELECT customer_id, AVG(balance) AS avg_balance FROM accounts GROUP BY customer_id) SELECT c.country, c.name, C.avg_balance FROM customers c LEFT JOIN CustomerTotals C ON c.id = C.customer_id ORDER BY avg_balance DESC

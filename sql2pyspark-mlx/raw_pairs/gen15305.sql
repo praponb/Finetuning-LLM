@@ -1,0 +1,1 @@
+with src as (select *, quantity * unit_price as line_total from order_items where product_id = 37 and (quantity = 4 or order_id = 20)), order_items_stats as (select product_id, count(line_total) as line_total_count from src group by product_id) select * from order_items_stats;

@@ -1,0 +1,1 @@
+WITH top_customers AS (SELECT id, segment, credit_limit, RANK() OVER (PARTITION BY segment ORDER BY credit_limit) AS rnk FROM customers WHERE age BETWEEN 32 AND 39) SELECT id, segment, credit_limit FROM top_customers WHERE rnk <= 3;

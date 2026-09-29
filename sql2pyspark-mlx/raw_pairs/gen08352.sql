@@ -1,0 +1,1 @@
+WITH filtered_products AS (SELECT * FROM products WHERE stock_qty >= 256 AND launch_date > '2023-11-05'), agg AS (SELECT category, SORT_ARRAY(COLLECT_SET(brand)) brand_list FROM filtered_products GROUP BY category) SELECT * FROM agg ORDER BY category DESC

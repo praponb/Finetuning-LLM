@@ -1,0 +1,5 @@
+SELECT *
+FROM employees
+WHERE salary BETWEEN 103000 AND 117000 AND UPPER(TRIM(email)) = 'GRACE.KIM@GMAIL.COM' AND dept_id = 12
+ORDER BY hire_date, id
+LIMIT 10;

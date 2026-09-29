@@ -1,0 +1,1 @@
+select c.id, c.city, t.monthly_fee_count from customers c inner join (select customer_id, count(monthly_fee) as monthly_fee_count from subscriptions where start_date < '2024-03-20' group by customer_id) t on c.id = t.customer_id where t.monthly_fee_count > 9 order by id asc limit 5

@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(p.id) AS product_count, SORT_ARRAY(COLLECT_SET(p.brand)) AS brand_list FROM suppliers s INNER JOIN products p ON s.id = p.supplier_id WHERE s.country = 'TH' GROUP BY s.city ORDER BY product_count DESC, city

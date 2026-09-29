@@ -1,0 +1,1 @@
+with deduped as (select *, row_number() over (partition by session_id, event_type order by duration_sec nulls last, id) as rn from web_events qualify rn = 1) select id, session_id, page, event_time, rn from deduped

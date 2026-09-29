@@ -1,0 +1,1 @@
+SELECT id, customer_id, browser, started_at, LAST_VALUE(country, TRUE) OVER (PARTITION BY TO_DATE(started_at), customer_id ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_country FROM sessions

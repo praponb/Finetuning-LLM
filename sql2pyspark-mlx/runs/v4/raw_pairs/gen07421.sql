@@ -1,0 +1,1 @@
+SELECT *, CASE WHEN device IN ('mobile', 'tablet') THEN 'Tier 1' ELSE 'Other' END AS device_group, INITCAP(TRIM(browser)) AS browser_title FROM sessions WHERE browser IN ('Chrome', 'Firefox', 'Safari') AND country IN ('JP', 'US')

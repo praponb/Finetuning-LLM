@@ -1,0 +1,1 @@
+SELECT * FROM sessions QUALIFY RANK() OVER (PARTITION BY country ORDER BY started_at DESC) = 1

@@ -1,0 +1,1 @@
+select * from (select year(last_restock) as last_restock_year, store_id, sum(quantity) as total_quantity from inventory where last_restock between '2023-12-20' and '2024-05-01' group by year(last_restock), store_id) as agg where total_quantity >= 790 order by store_id desc, last_restock_year desc limit 20

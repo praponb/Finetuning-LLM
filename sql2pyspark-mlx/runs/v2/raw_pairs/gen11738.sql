@@ -1,0 +1,1 @@
+SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range, MAX(last_restock) AS latest_last_restock, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY product_id HAVING MAX(quantity) - MIN(quantity) > 46;

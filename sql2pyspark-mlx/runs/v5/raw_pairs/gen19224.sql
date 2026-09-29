@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3273000 THEN 'high' WHEN budget >= 1613000 THEN 'mid' ELSE 'low' END budget_bucket, COUNT(DISTINCT budget) unique_dept_names, SUM(CASE WHEN dept_name = 'Marketing' THEN 1 ELSE 0 END) marketing_count FROM departments WHERE budget BETWEEN 3083000 AND 3605000 GROUP BY budget_bucket ORDER BY budget_bucket DESC

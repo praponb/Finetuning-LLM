@@ -1,0 +1,1 @@
+SELECT country, smb_count, max_credit_limit FROM (SELECT country, SUM(CASE WHEN segment = 'SMB' THEN 1 ELSE 0 END) AS smb_count, MAX(credit_limit) AS max_credit_limit FROM customers GROUP BY country) AS s WHERE max_credit_limit > 15800 ORDER BY smb_count DESC;

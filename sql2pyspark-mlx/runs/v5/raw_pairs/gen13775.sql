@@ -1,0 +1,1 @@
+SELECT CASE WHEN units >= 34 THEN 'high' WHEN units >= 10 THEN 'mid' ELSE 'low' END units_bucket, DATE_FORMAT(sale_date, 'yyyy-MM') sale_month, MAX(sale_date) last_sale_date, AVG(units) avg_units, MAX(units) - MIN(units) units_range FROM store_sales WHERE store_id = 2 GROUP BY units_bucket, sale_month ORDER BY last_sale_date, sale_month, units_bucket LIMIT 1;

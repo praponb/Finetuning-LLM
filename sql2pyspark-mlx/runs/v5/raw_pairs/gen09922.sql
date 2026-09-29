@@ -1,0 +1,1 @@
+select date_trunc('MONTH', p.launch_date) as launch_month, max(oi.quantity) as max_quantity, count(*) as num_order_items from order_items oi inner join products p on oi.product_id = p.id group by date_trunc('MONTH', p.launch_date) having count(*) > 4

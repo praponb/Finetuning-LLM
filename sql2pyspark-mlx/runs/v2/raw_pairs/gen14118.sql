@@ -1,0 +1,1 @@
+select case when unit_price >= 400 then 'high' when unit_price >= 190 then 'mid' else 'low' end as unit_price_bucket, product_id, max(unit_price) as max_unit_price, count(*) as num_order_items from order_items group by 1, 2 order by max_unit_price, unit_price_bucket;

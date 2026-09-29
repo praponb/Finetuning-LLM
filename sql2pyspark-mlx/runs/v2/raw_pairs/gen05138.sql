@@ -1,0 +1,1 @@
+SELECT p.brand, SUM(ss.units) AS total_units FROM store_sales ss RIGHT JOIN products p ON ss.product_id = p.id INNER JOIN stores s ON ss.store_id = s.id GROUP BY p.brand ORDER BY total_units DESC, brand LIMIT 10;

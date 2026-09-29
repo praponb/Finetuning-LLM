@@ -1,0 +1,99 @@
+{
+  "verified_pairs": 12999,
+  "excluded_eval_overlap": 0,
+  "dropped_too_long": 175,
+  "train": 10000,
+  "valid": 500,
+  "test": 300,
+  "empty_result_pairs": {
+    "train": 0,
+    "valid": 0,
+    "test": 0
+  },
+  "train_tokens": {
+    "mean": 1163,
+    "p50": 1045,
+    "p95": 2421,
+    "max": 2999
+  },
+  "signature_overlap_train_valid": 0,
+  "signature_overlap_train_test": 0,
+  "family_counts": {
+    "train": {
+      "cx_setop": 1355,
+      "cx_reshape": 944,
+      "cx_interval": 730,
+      "cx_grouping": 1043,
+      "cx_pipeline": 2786,
+      "cx_sessionize": 861,
+      "cx_window_heavy": 1690,
+      "cx_full_outer": 591
+    },
+    "valid": {
+      "cx_pipeline": 153,
+      "cx_grouping": 65,
+      "cx_interval": 29,
+      "cx_reshape": 69,
+      "cx_sessionize": 87,
+      "cx_setop": 72,
+      "cx_window_heavy": 25
+    },
+    "test": {
+      "cx_setop": 77,
+      "cx_sessionize": 33,
+      "cx_grouping": 20,
+      "cx_pipeline": 87,
+      "cx_interval": 13,
+      "cx_reshape": 31,
+      "cx_window_heavy": 39
+    }
+  },
+  "top_features_train": {
+    "filter": 6471,
+    "derive": 6270,
+    "named_window": 3284,
+    "windows": 2916,
+    "join_inner": 2133,
+    "many_windows": 2113,
+    "group_by": 1436,
+    "no_filter": 1222,
+    "join_left": 1201,
+    "order_limit": 956,
+    "scalar_subquery_select": 796,
+    "unpivot": 793,
+    "dedup_row_number": 763,
+    "join_child_inner": 753,
+    "agg_cte_left_join": 752,
+    "sessionize": 750,
+    "grouping_sets": 724,
+    "pivot": 723,
+    "union_all": 711,
+    "compare_to_group": 703,
+    "multi_join": 694,
+    "grouping_id": 641,
+    "coalesce_keys": 591,
+    "full_outer_join": 591,
+    "scalar_subquery_filter": 561,
+    "union_positional": 520,
+    "exists": 510,
+    "top_n_filter": 493,
+    "session_metrics": 464,
+    "union_by_name": 457,
+    "having": 448,
+    "union_literal_tag": 439,
+    "range_join": 422,
+    "join_child_left": 389,
+    "not_exists": 379,
+    "rollup": 375,
+    "cube": 364,
+    "self_join_range": 308,
+    "union_then_aggregate": 306,
+    "union_distinct": 266
+  },
+  "data_mix": {
+    "train": 17000,
+    "new": 10000,
+    "from_v7": 7000,
+    "valid": 1000
+  }
+}

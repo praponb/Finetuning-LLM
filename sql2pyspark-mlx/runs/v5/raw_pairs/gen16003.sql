@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CASE WHEN rating >= 4.6 THEN 'High' WHEN rating >= 1.6 THEN 'Medium' ELSE 'Low' END AS rating_level FROM suppliers WHERE city IS NOT NULL AND rating <= 3.8) SELECT id FROM base EXCEPT ALL SELECT id FROM suppliers WHERE city IN ('London', 'Berlin', 'Tokyo')

@@ -1,0 +1,1 @@
+SELECT event_month, min_duration_sec FROM (SELECT DATE_TRUNC('MONTH', event_time) AS event_month, MIN(duration_sec) AS min_duration_sec FROM web_events GROUP BY DATE_TRUNC('MONTH', event_time)) AS t WHERE min_duration_sec < 400;

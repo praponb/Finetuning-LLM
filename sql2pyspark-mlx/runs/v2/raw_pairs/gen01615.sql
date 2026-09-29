@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, event_type FROM (SELECT id, session_id, event_time, event_type, DENSE_RANK() OVER (PARTITION BY session_id ORDER BY event_time DESC) AS row_num FROM web_events WHERE session_id = 4) AS ranked WHERE row_num <= 5;

@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, currency, EXPLODE_OUTER(tier_prices) AS val FROM price_tiers) SELECT plan, currency, RANK() OVER (PARTITION BY plan ORDER BY val NULLS LAST) AS val_rank FROM lines WHERE currency = 'EUR'

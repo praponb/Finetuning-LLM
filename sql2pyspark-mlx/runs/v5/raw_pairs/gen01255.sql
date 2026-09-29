@@ -1,0 +1,1 @@
+SELECT customers.id, customers.country, COUNT(orders.id) AS order_count FROM customers LEFT JOIN orders ON orders.customer_id = customers.id WHERE orders.amount > 770 GROUP BY customers.id, customers.country;

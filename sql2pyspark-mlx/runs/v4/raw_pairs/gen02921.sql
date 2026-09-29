@@ -1,0 +1,1 @@
+select case when txn_type in ('REFUND', 'FEE') then 'core' else 'other' end as txn_type_group, max(amount) - min(amount) as amount_range from transactions where txn_type = 'DEBIT' group by txn_type_group order by amount_range asc

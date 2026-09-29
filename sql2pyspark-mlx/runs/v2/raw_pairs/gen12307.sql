@@ -1,0 +1,1 @@
+SELECT i.store_id, p.cost, s.supplier_name FROM inventory i RIGHT JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE i.last_restock BETWEEN '2024-10-01' AND '2025-06-24' ORDER BY p.cost DESC, store_id DESC

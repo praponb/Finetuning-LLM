@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, RANK() OVER (PARTITION BY customer_id ORDER BY end_date DESC) AS pos FROM subscriptions WHERE end_date > '2025-04-01') SELECT id, customer_id, end_date, monthly_fee FROM ranked WHERE pos <= 5 ORDER BY customer_id DESC, end_date DESC

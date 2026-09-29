@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, SUM(units) AS total_units FROM store_sales WHERE revenue BETWEEN 3200 AND 3800 GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM')) AS t WHERE total_units > 220;

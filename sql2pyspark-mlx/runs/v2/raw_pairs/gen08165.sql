@@ -1,0 +1,1 @@
+select brand, sum(case when brand = 'Globex' then 1 else 0 end) as globex_count, max(launch_date) as latest_launch_date from products where not (brand != 'Umbrella' and product_name like 'C%' and price < 830) group by 1;

@@ -1,0 +1,1 @@
+SELECT country, is_active, COUNT(age) AS age_count, MAX(signup_date) AS last_signup_date FROM customers WHERE signup_date >= '2025-07-29' AND (segment IN ('SMB', 'Consumer', 'Corporate') OR country = 'JP') GROUP BY 1, 2 ORDER BY last_signup_date DESC, age_count;

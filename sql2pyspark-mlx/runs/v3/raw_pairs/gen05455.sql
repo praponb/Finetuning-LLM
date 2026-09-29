@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, MIN(p.paid_at) AS first_paid_at FROM payments p LEFT JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id GROUP BY DATE_TRUNC('MONTH', s.opened_date) ORDER BY opened_month ASC

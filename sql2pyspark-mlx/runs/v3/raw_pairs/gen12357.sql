@@ -1,0 +1,1 @@
+SELECT oi.quantity, oi.order_id, o.shipping_fee, o.store_id, c.email FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE o.status IN ('PENDING', 'COMPLETED') ORDER BY oi.quantity DESC, order_id;

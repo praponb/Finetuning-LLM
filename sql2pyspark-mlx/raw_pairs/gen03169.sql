@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.order_id, products.product_name, products.cost, suppliers.supplier_name, suppliers.country FROM order_items LEFT JOIN products ON order_items.product_id = products.id LEFT JOIN suppliers ON products.supplier_id = suppliers.id WHERE MONTH(products.launch_date) IN (4, 5, 9) ORDER BY cost, order_items.order_id DESC;

@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, MONTH(c.signup_date) AS signup_month, COUNT(DISTINCT s.monthly_fee) AS unique_customers FROM subscriptions s FULL OUTER JOIN customers c ON s.customer_id = c.id GROUP BY YEAR(c.signup_date), MONTH(c.signup_date)

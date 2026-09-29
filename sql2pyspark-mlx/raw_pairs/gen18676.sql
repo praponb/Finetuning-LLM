@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(order_date) < 2024 THEN 'before_2024' WHEN YEAR(order_date) = 2024 THEN '2024' ELSE 'after_2024' END order_cohort, COUNT(*) total_count FROM orders WHERE shipping_fee <= 39 AND order_date >= '2025-05-01' GROUP BY order_cohort

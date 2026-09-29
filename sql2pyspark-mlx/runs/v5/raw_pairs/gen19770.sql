@@ -1,0 +1,1 @@
+select case when country in ('TH', 'JP') then 'core' else 'other' end as country_group, sum(rating) as total_rating, count(*) as cnt, rank() over (order by sum(rating) desc) as rnk from suppliers where length(supplier_name) > 14 group by case when country in ('TH', 'JP') then 'core' else 'other' end;

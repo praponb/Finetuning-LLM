@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, MAX(duration_sec) AS max_duration_sec, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events WHERE session_id IN (20, 21) GROUP BY session_id) SELECT s.id, s.country, s.started_at, ss.max_duration_sec, ss.unique_event_types FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id;

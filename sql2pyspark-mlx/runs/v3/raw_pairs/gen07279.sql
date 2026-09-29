@@ -1,0 +1,1 @@
+SELECT category, pct_acme, cost_count FROM (SELECT category, ROUND((100 * SUM(CASE WHEN brand = 'Acme' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_acme, COUNT(cost) AS cost_count FROM products GROUP BY category) AS t WHERE pct_acme > 62 ORDER BY pct_acme;

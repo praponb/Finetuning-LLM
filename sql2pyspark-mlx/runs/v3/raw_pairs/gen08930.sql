@@ -1,0 +1,1 @@
+SELECT o.customer_id, SUM(s.cost) AS total_cost FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id LEFT JOIN stores st ON o.store_id = st.id WHERE o.shipping_fee BETWEEN 24 AND 33 GROUP BY o.customer_id HAVING SUM(s.cost) >= 170

@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, MAX(event_time) AS last_event_time, AVG(duration_sec) AS avg_duration_sec FROM web_events WHERE event_type IN ('click', 'page_view', 'purchase') GROUP BY session_id) SELECT s.id, s.device, ss.last_event_time, ss.avg_duration_sec FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id WHERE ss.avg_duration_sec >= 190;

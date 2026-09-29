@@ -1,0 +1,1 @@
+SELECT id, manager_id, hire_date, salary, job_title, ROUND(AVG(salary) OVER (PARTITION BY manager_id ORDER BY hire_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS salary_moving_avg_3, salary - LAG(salary, 1) OVER (PARTITION BY job_title ORDER BY hire_date, id) AS salary_change FROM employees WHERE is_remote

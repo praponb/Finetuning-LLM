@@ -1,0 +1,1 @@
+select id, status, monthly_fee, end_date, last_value(end_date) over (partition by status order by monthly_fee desc, id rows between unbounded preceding and unbounded following) as last_end_date from subscriptions

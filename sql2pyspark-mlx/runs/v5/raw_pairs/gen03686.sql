@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, host, latency_ms, key, v FROM app_logs LATERAL VIEW EXPLODE(context) li AS key, v) SELECT id, service, host, latency_ms, key, CASE WHEN host RLIKE '^(h1|h3)$' THEN 'GROUP_B' WHEN host RLIKE '^(h2|h4)$' THEN 'GROUP_A' ELSE 'EXTENDED' END AS host_zone FROM lines ORDER BY key ASC;

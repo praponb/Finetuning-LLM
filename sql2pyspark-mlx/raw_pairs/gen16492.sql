@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, channel, promo_code, starts_on, discount_pct, DAYOFWEEK(ends_on) AS ends_on_dayofweek, DATEDIFF(starts_on, ends_on) / 7 AS weeks_ends_on_to_starts_on FROM promotions WHERE channel IS NOT NULL AND channel IS DISTINCT FROM 'store') SELECT channel, id FROM filtered INTERSECT ALL SELECT channel, id FROM promotions WHERE MONTH(ends_on) IN (2, 4, 12)

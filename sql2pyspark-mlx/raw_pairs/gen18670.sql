@@ -1,0 +1,1 @@
+select products.product_name, products.cost, products.brand, suppliers.supplier_name, suppliers.rating from products inner join suppliers on suppliers.id = products.supplier_id where suppliers.city in ('New York', 'Bangkok') and products.price between 1090 and 1130

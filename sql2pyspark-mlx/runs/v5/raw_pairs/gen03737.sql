@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, product_name, category, price, launch_date, supplier_id, ARRAY_CONTAINS(tags, 'sale') AS is_sale FROM products WHERE brand IS NOT NULL) SELECT * FROM (SELECT supplier_id, category, price FROM valid) src PIVOT (AVG(price) FOR category IN ('Grocery' AS grocery, 'Books' AS books));

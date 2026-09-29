@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, host, log_ts, latency_ms, status_code, attr_key, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) t AS attr_key, value) SELECT id, host, CORR(status_code, latency_ms) OVER (PARTITION BY host) AS corr_status_code_latency_ms FROM flattened

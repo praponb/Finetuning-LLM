@@ -1,0 +1,1 @@
+SELECT s.id, s.order_id, o.shipping_fee, o.amount, st.opened_date, st.sqft FROM shipments s RIGHT OUTER JOIN orders o ON s.order_id = o.id LEFT OUTER JOIN stores st ON o.store_id = st.id WHERE st.region = 'West' ORDER BY st.opened_date ASC;

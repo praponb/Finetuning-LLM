@@ -1,0 +1,1 @@
+SELECT a.customer_id, a.status, t.max_amount, t.pct_7_eleven FROM accounts a JOIN (SELECT account_id, MAX(amount) AS max_amount, ROUND((100 * SUM(CASE WHEN merchant = '7-Eleven' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_7_eleven FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.pct_7_eleven >= 78 ORDER BY customer_id DESC

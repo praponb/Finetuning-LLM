@@ -1,0 +1,1 @@
+select c.id, c.credit_limit, t.avg_monthly_fee, t.total_monthly_fee from customers c inner join (select customer_id, round(avg(monthly_fee), 2) as avg_monthly_fee, sum(monthly_fee) as total_monthly_fee from subscriptions group by customer_id) t on c.id = t.customer_id where t.total_monthly_fee >= 610 order by total_monthly_fee, id limit 3;

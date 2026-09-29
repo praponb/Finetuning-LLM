@@ -1,0 +1,1 @@
+SELECT *, AVG(quantity) OVER w_running AS running_avg_quantity, SUM(quantity) OVER w_running AS running_sum_quantity, MIN(quantity) OVER w_running AS running_min_quantity, MAX(quantity) OVER w_running AS running_max_quantity FROM inventory WINDOW w_running AS (PARTITION BY store_id ORDER BY quantity ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW);

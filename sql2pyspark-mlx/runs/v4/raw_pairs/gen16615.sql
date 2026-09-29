@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, INITCAP(TRIM(name)) name_title, TRIM(name) clean_name FROM customers WHERE email IS NOT NULL) SELECT s.*, x.order_order_date FROM filtered s JOIN LATERAL (SELECT c.order_date AS order_order_date FROM orders c WHERE c.customer_id = s.id ORDER BY c.shipping_fee DESC, c.id DESC LIMIT 1) x ON TRUE;

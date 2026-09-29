@@ -1,0 +1,1 @@
+SELECT product_id, AVG(revenue) AS avg_revenue, MAX(units) - MIN(units) AS units_range FROM store_sales WHERE sale_date BETWEEN '2023-06-01' AND '2024-04-03' GROUP BY product_id HAVING AVG(revenue) > 1800

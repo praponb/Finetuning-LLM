@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') opened_month, s.region, ROUND(STDDEV(ss.units), 2) stddev_units, COUNT(*) num_store_sales FROM store_sales ss JOIN stores s ON ss.store_id = s.id WHERE MONTH(s.opened_date) IN (2, 7, 11) GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM'), s.region ORDER BY opened_month

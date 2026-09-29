@@ -1,0 +1,1 @@
+SELECT status, DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, ROUND(AVG(amount), 2) AS avg_amount, MIN(order_date) AS min_order_date, MAX(order_date) AS last_order_date FROM orders WHERE (amount >= 1190 AND status != 'COMPLETED') OR customer_id IS NULL GROUP BY status, DATE_FORMAT(order_date, 'yyyy-MM') HAVING ROUND(AVG(amount), 2) >= 72 ORDER BY last_order_date DESC, status

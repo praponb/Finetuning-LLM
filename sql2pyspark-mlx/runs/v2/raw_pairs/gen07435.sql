@@ -1,0 +1,1 @@
+SELECT dept_name, CASE WHEN budget >= 3705000 THEN 'high' WHEN budget >= 1865000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(CASE WHEN dept_name = 'Finance' THEN budget ELSE 0 END) AS finance_budget, SUM(CASE WHEN location = 'London' THEN 1 ELSE 0 END) AS london_count FROM departments GROUP BY 1, 2 HAVING MIN(budget) > 2233000 ORDER BY dept_name DESC;

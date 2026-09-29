@@ -1,0 +1,1 @@
+SELECT s.id, s.start_date, s.monthly_fee, s.end_date, c.signup_date, c.credit_limit, UPPER(s.status) AS status_upper FROM subscriptions s LEFT JOIN customers c ON s.customer_id = c.id ORDER BY c.signup_date

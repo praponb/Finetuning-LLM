@@ -1,0 +1,1 @@
+WITH RecentSuppliers AS (SELECT * FROM suppliers WHERE country = 'DE'), agg AS (SELECT city, CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(*) AS cnt FROM RecentSuppliers GROUP BY city, CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END) SELECT * FROM agg WHERE cnt > 7 ORDER BY city DESC;

@@ -1,0 +1,1 @@
+WITH recent_web_events AS (SELECT * FROM web_events WHERE duration_sec >= 242), summary AS (SELECT page, COUNT(duration_sec) AS duration_sec_count FROM recent_web_events GROUP BY page) SELECT page, duration_sec_count FROM summary ORDER BY page DESC;

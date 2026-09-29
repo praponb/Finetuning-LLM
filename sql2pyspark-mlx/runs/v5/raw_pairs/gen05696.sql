@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, AVG(balance) AS avg_balance FROM accounts GROUP BY customer_id) SELECT c.id, c.credit_limit, cs.avg_balance FROM customers c LEFT OUTER JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY cs.avg_balance DESC, id DESC

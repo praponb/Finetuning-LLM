@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.credit_limit, top1.device, top1.browser FROM customers s JOIN LATERAL (SELECT c.device, c.browser FROM sessions c WHERE c.customer_id = s.id ORDER BY c.started_at DESC, c.id DESC LIMIT 1) top1 ON TRUE;

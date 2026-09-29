@@ -1,0 +1,1 @@
+SELECT *, LAST_VALUE(status, TRUE) OVER (PARTITION BY account_type ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_status, MIN(balance) OVER w_ordered AS customer_id_min_balance FROM accounts WINDOW w_ordered AS (PARTITION BY customer_id);

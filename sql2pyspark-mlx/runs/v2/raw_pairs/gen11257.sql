@@ -1,0 +1,1 @@
+SELECT id, status, shipped_date, cost, LAG(cost, 1) OVER (PARTITION BY status ORDER BY shipped_date, id) AS prev_cost, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date DESC, id) AS rn FROM shipments WHERE carrier NOT IN ('Kerry', 'UPS', 'Flash')

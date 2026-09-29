@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM departments WHERE location IS NOT NULL AND budget >= 2673000), agg AS (SELECT dept_name, ROUND((100 * SUM(CASE WHEN dept_name = 'Engineering' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_engineering, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) AS location_values FROM src GROUP BY dept_name) SELECT * FROM agg ORDER BY dept_name, 3;

@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, COUNT(DISTINCT balance) AS unique_statuss, SUM(balance) AS total_balance FROM accounts WHERE balance >= 24000 GROUP BY customer_id) SELECT c.id, c.name, c.country, cs.unique_statuss, cs.total_balance FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.unique_statuss >= 10 ORDER BY 4, id DESC;

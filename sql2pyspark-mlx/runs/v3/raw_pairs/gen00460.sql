@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, SORT_ARRAY(COLLECT_SET(status)) status_list FROM orders WHERE channel NOT IN ('mobile', 'partner', 'web') GROUP BY store_id) SELECT s.sqft, s.city, ss.status_list FROM stores s INNER JOIN store_summary ss ON s.id = ss.store_id ORDER BY sqft DESC

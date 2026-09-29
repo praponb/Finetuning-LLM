@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, level, salary, ROW_NUMBER() OVER (PARTITION BY level ORDER BY salary, id) AS rnk FROM employees WHERE full_name LIKE '%MILLE%') SELECT * FROM ranked WHERE rnk <= 3 ORDER BY 2;

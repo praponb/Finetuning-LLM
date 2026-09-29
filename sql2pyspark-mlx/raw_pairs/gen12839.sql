@@ -1,0 +1,1 @@
+with store_sales_by_product as (select product_id, min(revenue) as min_revenue, max(units) as max_units from store_sales group by product_id) select p.id, p.brand, p.supplier_id, ssbp.min_revenue, ssbp.max_units from products p left join store_sales_by_product ssbp on p.id = ssbp.product_id where ssbp.max_units > 38

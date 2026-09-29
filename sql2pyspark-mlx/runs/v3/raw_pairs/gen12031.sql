@@ -1,0 +1,1 @@
+select id, customer_id, browser, upper(browser) as browser_upper, coalesce(browser, 'N/A') as browser_filled from sessions where started_at < '2025-09-01' and browser != 'Edge' and device in ('mobile', 'desktop', 'tablet');

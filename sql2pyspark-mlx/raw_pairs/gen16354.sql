@@ -1,0 +1,1 @@
+SELECT channel, promo_code, COUNT(CASE WHEN promo_code = 'VIP' THEN 1 END) AS vip_count, COUNT(*) FILTER (WHERE channel = 'store') AS store_rows, COUNT(*) AS row_count FROM promotions GROUP BY 1, 2 ORDER BY promo_code NULLS FIRST

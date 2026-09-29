@@ -1,0 +1,1 @@
+select p.id, p.category, count(ss.id) as store_sale_count, max(ss.sale_date) as last_sale_date, min(ss.sale_date) as first_sale_date from products p left join store_sales ss on p.id = ss.product_id group by p.id, p.category order by first_sale_date asc;

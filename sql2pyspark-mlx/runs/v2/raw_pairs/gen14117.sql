@@ -1,0 +1,1 @@
+SELECT carrier, kerry_count, cost_range FROM (SELECT carrier, COUNT(CASE WHEN carrier = 'Kerry' THEN 1 END) AS kerry_count, MAX(cost) - MIN(cost) AS cost_range FROM shipments GROUP BY carrier) AS t WHERE kerry_count >= 6 ORDER BY cost_range;

@@ -1,0 +1,1 @@
+select *, concat_ws('/', region, store_name) as region_store_name_key, floor(sqft) as sqft_whole from stores where opened_date between '2023-09-28' and '2024-07-01' or length(store_name) > 8 order by city

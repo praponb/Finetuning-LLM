@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, MIN(price) AS min_price FROM products GROUP BY supplier_id) SELECT s.supplier_name, s.city, ss.min_price FROM suppliers s JOIN supplier_stats ss ON s.id = ss.supplier_id;

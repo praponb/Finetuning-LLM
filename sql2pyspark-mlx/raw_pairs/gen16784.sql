@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, last_restock, LAG(quantity) OVER (PARTITION BY product_id ORDER BY last_restock ASC, id ASC) AS prev_quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_restock ASC, id ASC) AS event_seq FROM inventory;

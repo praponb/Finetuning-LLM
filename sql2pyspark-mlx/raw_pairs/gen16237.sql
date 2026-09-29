@@ -1,0 +1,1 @@
+SELECT country, SUM(CASE WHEN country = 'JP' THEN rating ELSE 0 END) AS jp_rating FROM suppliers WHERE country NOT IN ('JP', 'TH', 'US') AND supplier_name IS NOT NULL GROUP BY country ORDER BY country DESC

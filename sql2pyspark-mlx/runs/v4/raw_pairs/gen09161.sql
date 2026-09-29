@@ -1,0 +1,1 @@
+SELECT p.brand, p.supplier_id, t.total_count FROM products p LEFT JOIN (SELECT product_id, COUNT(*) total_count FROM order_items WHERE product_id IS NOT NULL GROUP BY product_id) t ON p.id = t.product_id WHERE t.total_count >= 4

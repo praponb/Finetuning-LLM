@@ -1,0 +1,1 @@
+SELECT city, MAX(rating) AS max_rating, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM suppliers WHERE supplier_name IS NOT NULL AND supplier_name LIKE '%City%' GROUP BY city HAVING MAX(rating) < 3.1 ORDER BY city_values

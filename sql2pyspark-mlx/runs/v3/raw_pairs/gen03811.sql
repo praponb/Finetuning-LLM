@@ -1,0 +1,1 @@
+select inventory.id, inventory.store_id, stores.opened_date, products.brand from inventory join stores on stores.id = inventory.store_id join products on inventory.product_id = products.id where not (products.brand in ('Globex', 'Initech') and products.price > 1190);

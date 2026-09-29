@@ -1,0 +1,1 @@
+select dept_name, location, max(budget) - min(budget) as budget_range from departments where location = 'New York' and budget > 2636000 and dept_name = 'Engineering' group by dept_name, location having budget_range > 35;

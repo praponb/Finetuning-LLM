@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1340 THEN 'high' WHEN amount >= 560 THEN 'mid' ELSE 'low' END AS amount_bucket, order_id, method, MAX(amount) AS max_amount, MIN(paid_at) AS first_paid_at FROM payments WHERE status IN ('SUCCESS', 'FAILED', 'REFUNDED') AND order_id = 39 AND order_id IN (3, 36, 39) GROUP BY 1, 2, 3 ORDER BY method DESC, amount_bucket DESC

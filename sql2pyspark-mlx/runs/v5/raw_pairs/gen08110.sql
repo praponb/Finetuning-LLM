@@ -1,0 +1,1 @@
+SELECT suppliers.country, ROUND(AVG(products.cost), 2) AS avg_cost, SORT_ARRAY(COLLECT_SET(products.category)) AS category_list FROM products FULL OUTER JOIN suppliers ON suppliers.id = products.supplier_id GROUP BY suppliers.country ORDER BY suppliers.country DESC LIMIT 50

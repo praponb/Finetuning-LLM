@@ -1,0 +1,1 @@
+SELECT store_id, CASE WHEN units >= 43 THEN 'high' WHEN units >= 19 THEN 'mid' ELSE 'low' END units_bucket, MIN(revenue) min_revenue, COUNT(revenue) revenue_count, SUM(revenue) total_revenue FROM store_sales GROUP BY store_id, units_bucket ORDER BY min_revenue DESC;

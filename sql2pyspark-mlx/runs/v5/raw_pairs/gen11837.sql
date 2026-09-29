@@ -1,0 +1,1 @@
+WITH AccountSummary AS (SELECT account_id, SUM(CASE WHEN merchant = 'Lazada' THEN amount ELSE 0 END) AS lazada_amount, MIN(amount) AS min_amount FROM transactions GROUP BY account_id) SELECT a.opened_date, A.lazada_amount, A.min_amount FROM accounts a LEFT JOIN AccountSummary A ON a.id = A.account_id;

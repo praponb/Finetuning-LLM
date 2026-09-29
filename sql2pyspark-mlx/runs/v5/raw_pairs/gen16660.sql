@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, effective_from, currency, val FROM price_tiers LATERAL VIEW EXPLODE(discounts) t AS val) SELECT id, effective_from, val, SUM(val) OVER (PARTITION BY currency) AS currency_sum_val, SUM(val) OVER (PARTITION BY currency) AS currency_sum_val_2, MIN(val) OVER (PARTITION BY currency) AS currency_min_val FROM lines WHERE currency IN ('THB', 'USD');

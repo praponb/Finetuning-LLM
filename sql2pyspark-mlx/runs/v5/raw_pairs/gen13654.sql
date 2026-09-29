@@ -1,0 +1,1 @@
+select product_id, case when year(sale_date) < 2024 then 'before_2024' when year(sale_date) = 2024 then '2024' else 'after_2024' end as sale_cohort, round(avg(units), 2) as avg_units, count(units) as units_count from store_sales where revenue >= 3400 and sale_date <= '2024-08-01' group by 1, 2;

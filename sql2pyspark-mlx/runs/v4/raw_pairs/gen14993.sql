@@ -1,0 +1,1 @@
+WITH recent_customers AS (SELECT * FROM customers WHERE age != 44 AND (segment NOT IN ('Corporate', 'Consumer') OR segment IN ('Consumer', 'SMB'))), agg AS (SELECT country, MIN(signup_date) AS first_signup_date FROM recent_customers GROUP BY country) SELECT * FROM agg

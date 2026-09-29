@@ -1,0 +1,1 @@
+with top_web_events as (select *, rank() over (partition by session_id order by duration_sec desc) as rnk from web_events) select * from top_web_events where rnk <= 2 order by session_id desc, event_type desc

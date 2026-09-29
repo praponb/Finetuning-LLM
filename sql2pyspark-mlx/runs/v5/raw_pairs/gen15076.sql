@@ -1,0 +1,1 @@
+SELECT s.country, t.avg_duration_sec, t.stddev_duration_sec FROM sessions s INNER JOIN (SELECT session_id, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id ORDER BY 3 DESC

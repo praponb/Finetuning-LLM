@@ -1,0 +1,1 @@
+WITH recent_store_sales AS (SELECT * FROM store_sales WHERE revenue > 3900 AND units >= 14), agg AS (SELECT MONTH(sale_date) AS sale_month, MAX(units) - MIN(units) AS units_range, COUNT(units) AS units_count FROM recent_store_sales GROUP BY MONTH(sale_date)) SELECT sale_month, units_count FROM agg WHERE units_count > 3 ORDER BY sale_month DESC, units_count DESC;

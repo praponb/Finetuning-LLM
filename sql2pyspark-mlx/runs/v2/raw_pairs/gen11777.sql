@@ -1,0 +1,1 @@
+SELECT channel, DATE_FORMAT(order_date, 'yyyy-MM') order_month, store_id, ROUND((100 * SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_mobile FROM orders WHERE status = 'RETURNED' GROUP BY 1, 2, 3 ORDER BY order_month

@@ -1,0 +1,1 @@
+SELECT id, customer_id, status, account_type, CASE WHEN account_type IN ('CHECKING', 'SAVINGS') THEN 'Tier 1' ELSE 'Other' END AS account_type_group FROM accounts WHERE account_type IN ('CREDIT', 'LOAN') ORDER BY id DESC LIMIT 5

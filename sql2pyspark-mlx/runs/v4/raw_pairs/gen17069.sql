@@ -1,0 +1,1 @@
+SELECT p.brand, SUM(i.quantity) AS total_quantity, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i INNER JOIN products p ON p.id = i.product_id INNER JOIN stores s ON i.store_id = s.id WHERE i.last_restock >= '2024-07-01' GROUP BY p.brand ORDER BY total_quantity DESC, brand ASC LIMIT 10;

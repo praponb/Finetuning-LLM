@@ -1,0 +1,1 @@
+select o.id, o.status, count(p.id) as payment_count, max(p.amount) as max_amount from orders o left outer join payments p on o.id = p.order_id group by o.id, o.status having max(p.amount) >= 1040 order by status, payment_count

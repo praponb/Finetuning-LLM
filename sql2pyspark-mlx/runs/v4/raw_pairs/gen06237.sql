@@ -1,0 +1,1 @@
+SELECT *, NTILE(4) OVER (ORDER BY quantity DESC, id) AS quantity_bucket, AVG(quantity) OVER (PARTITION BY store_id ORDER BY quantity, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS quantity_avg_2 FROM inventory

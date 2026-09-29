@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.last_restock, inventory.quantity, products.cost, products.stock_qty, stores.opened_date, stores.region, CASE WHEN products.cost >= 640 THEN 'High' WHEN products.cost >= 120 THEN 'Medium' ELSE 'Low' END AS cost_tier FROM inventory LEFT JOIN products ON products.id = inventory.product_id LEFT JOIN stores ON stores.id = inventory.store_id;

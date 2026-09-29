@@ -1,0 +1,1 @@
+with base as (select *, case when browser in ('Edge', 'Chrome') then 'Group A' else 'Other' end as browser_group from sessions where started_at >= date '2023-09-09') select device, id from base except select device, id from sessions where started_at >= '2023-09-01';

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM suppliers WHERE city IN ('New York', 'London', 'Singapore')), suppliers_stats AS (SELECT country, ROUND((100 * SUM(CASE WHEN country = 'US' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_us, ROUND(STDDEV(rating), 2) AS stddev_rating FROM base GROUP BY country) SELECT country, pct_us FROM suppliers_stats;

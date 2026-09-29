@@ -1,0 +1,1 @@
+SELECT status, method, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, COUNT(DISTINCT amount) AS unique_statuss FROM payments WHERE HOUR(paid_at) BETWEEN 12 AND 19 AND paid_at >= '2024-10-01' GROUP BY status, method HAVING COUNT(DISTINCT amount) >= 3 ORDER BY status_values DESC;

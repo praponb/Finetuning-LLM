@@ -1,0 +1,1 @@
+SELECT id, budget, CASE WHEN budget >= 4398000 THEN 'High' WHEN budget >= 1088000 THEN 'Medium' ELSE 'Low' END AS budget_band FROM departments WHERE budget >= 3344000 AND dept_name IS NOT NULL AND dept_name = 'Finance';

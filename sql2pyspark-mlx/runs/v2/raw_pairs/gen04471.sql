@@ -1,0 +1,1 @@
+SELECT c.is_active, QUARTER(c.signup_date) AS signup_quarter, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(we.event_type))) AS event_type_values, MAX(we.event_time) AS last_event_time FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON c.id = s.customer_id GROUP BY c.is_active, QUARTER(c.signup_date);

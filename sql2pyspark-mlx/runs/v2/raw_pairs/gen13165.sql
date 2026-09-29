@@ -1,0 +1,1 @@
+select page, case when duration_sec >= 506 then 'high' when duration_sec >= 130 then 'mid' else 'low' end as duration_sec_bucket, max(duration_sec) as max_duration_sec, count(duration_sec) as duration_sec_count, sum(case when page = '/search' then 1 else 0 end) as search_count from web_events group by 1, 2 having max_duration_sec > 160;

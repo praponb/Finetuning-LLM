@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, host, log_ts, status_code, key, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS key, attr_value) SELECT id, service, host, log_ts, status_code, key, attr_value, CASE WHEN host RLIKE '^(h3|h2)$' THEN 'GROUP_A' WHEN host RLIKE '^(h1|h4)$' THEN 'PRIORITY' ELSE 'CORE' END AS host_zone FROM exploded

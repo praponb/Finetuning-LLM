@@ -1,0 +1,1 @@
+select case when s.sqft >= 12997 then 'high' when s.sqft >= 7643 then 'mid' else 'low' end as sqft_bucket, avg(p.amount) as avg_amount from payments p right outer join orders o on o.id = p.order_id inner join stores s on s.id = o.store_id group by case when s.sqft >= 12997 then 'high' when s.sqft >= 7643 then 'mid' else 'low' end order by sqft_bucket asc;

@@ -1,0 +1,1 @@
+select p.id, p.order_id, p.paid_at, o.shipping_fee, c.is_active from payments p join orders o on p.order_id = o.id join customers c on o.customer_id = c.id where to_date(p.paid_at) >= '2025-06-01' order by p.order_id desc

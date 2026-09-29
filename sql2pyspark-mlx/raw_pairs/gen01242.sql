@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, full_name, email, manager_id, job_title, hire_date, is_remote, level, INITCAP(TRIM(full_name)) full_name_title FROM employees WHERE hire_date > DATE '2023-07-09' AND salary <= 79000) SELECT e.id, e.manager_id, e.is_remote, e.level, e.full_name_title, p.job_title AS employee_job_title FROM valid e INNER JOIN employees p ON e.manager_id <=> p.id;

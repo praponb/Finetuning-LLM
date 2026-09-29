@@ -1,0 +1,1 @@
+SELECT customers.country, DATE_FORMAT(customers.signup_date, 'yyyy-MM') signup_month, COUNT(CASE WHEN orders.channel = 'web' THEN 1 END) web_count FROM orders INNER JOIN customers ON orders.customer_id = customers.id INNER JOIN stores ON orders.store_id = stores.id GROUP BY customers.country, DATE_FORMAT(customers.signup_date, 'yyyy-MM') ORDER BY signup_month

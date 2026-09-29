@@ -1,0 +1,1 @@
+select case when o.amount >= 1630 then 'high' when o.amount >= 590 then 'mid' else 'low' end as amount_bucket, max(oi.quantity) as max_quantity, avg(oi.unit_price) as avg_unit_price from order_items oi join orders o on oi.order_id = o.id group by case when o.amount >= 1630 then 'high' when o.amount >= 590 then 'mid' else 'low' end;

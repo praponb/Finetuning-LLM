@@ -1,0 +1,1 @@
+with recent_shipments as (select * from shipments where delivered_date < '2024-03-03'), agg as (select carrier, round(stddev(cost), 2) as stddev_cost from recent_shipments group by carrier) select carrier, stddev_cost from agg where stddev_cost > 76

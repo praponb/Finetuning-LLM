@@ -1,0 +1,1 @@
+SELECT YEAR(p.launch_date) AS launch_year, COUNT(DISTINCT ss.units) AS unique_products FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE s.country IN ('TH', 'SG') GROUP BY YEAR(p.launch_date) ORDER BY unique_products DESC

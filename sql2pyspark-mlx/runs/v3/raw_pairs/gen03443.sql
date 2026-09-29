@@ -1,0 +1,1 @@
+select id, city, signup_date, age, country, credit_limit, lead(age, 1) over (partition by city order by signup_date, id) next_age, lag(credit_limit, 1, 0) over (partition by country order by signup_date, id) prev_credit_limit from customers;

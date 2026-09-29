@@ -1,0 +1,1 @@
+WITH valid_subscriptions AS (SELECT * FROM subscriptions WHERE plan IN ('basic', 'standard')), subscriptions_stats AS (SELECT plan, MAX(start_date) AS latest_start_date, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM valid_subscriptions GROUP BY plan) SELECT * FROM subscriptions_stats ORDER BY plan;

@@ -1,0 +1,1 @@
+SELECT MONTH(order_date) AS order_month, customer_id, COUNT(DISTINCT shipping_fee) AS unique_stores FROM orders WHERE channel IN ('web', 'store', 'partner') AND status IN ('PENDING', 'SHIPPED') AND amount >= 770 GROUP BY CUBE(MONTH(order_date), customer_id) ORDER BY order_month, 2 DESC

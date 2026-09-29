@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('QUARTER', txn_time) AS quarter_start, SUM(amount) AS total_amount, COUNT(DISTINCT id) AS distinct_ids, SUM(CASE WHEN txn_type = 'REFUND' THEN amount ELSE 0 END) AS refund_amount, SIZE(COLLECT_SET(merchant)) AS num_merchants FROM transactions GROUP BY DATE_TRUNC('QUARTER', txn_time) HAVING refund_amount < 1000000 ORDER BY total_amount NULLS FIRST;

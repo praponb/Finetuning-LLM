@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM orders WHERE discount < 0.36 OR YEAR(order_date) >= 2025), orders_stats AS (SELECT store_id, SUM(CASE WHEN channel = 'partner' THEN discount ELSE 0 END) partner_discount FROM base GROUP BY store_id) SELECT store_id, partner_discount FROM orders_stats WHERE partner_discount < 57 ORDER BY store_id

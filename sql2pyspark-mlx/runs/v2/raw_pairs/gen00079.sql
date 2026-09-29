@@ -1,0 +1,1 @@
+SELECT status, SUM(CASE WHEN carrier = 'FedEx' THEN cost ELSE 0 END) AS fedex_cost, AVG(cost) AS avg_cost FROM shipments WHERE carrier IN ('UPS', 'FedEx', 'DHL') AND delivered_date > '2024-10-01' GROUP BY 1 HAVING avg_cost < 45 ORDER BY avg_cost DESC, status LIMIT 10

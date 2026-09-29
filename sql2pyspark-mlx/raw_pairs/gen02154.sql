@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, FLOOR(pressure) AS pressure_whole FROM device_readings WHERE reading_ts > TIMESTAMP '2025-09-01 04:00:00' AND temp_c < 25) SELECT firmware, device_code FROM cleaned EXCEPT SELECT firmware, device_code FROM device_readings WHERE status_bits > 3

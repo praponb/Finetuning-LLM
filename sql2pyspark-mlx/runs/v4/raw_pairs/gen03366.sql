@@ -1,0 +1,1 @@
+with filtered as (select *, size(tags) as tags_count from products where supplier_id is not null) select * from (select id, category, price, cost from filtered) src unpivot (reading for metric_name in (price as PRICE_VAL, cost as COST))

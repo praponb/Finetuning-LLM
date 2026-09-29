@@ -1,0 +1,1 @@
+SELECT o.id, o.discount, t.payment_count, t.latest_paid_at FROM orders o LEFT JOIN (SELECT order_id, COUNT(*) AS payment_count, MAX(paid_at) AS latest_paid_at FROM payments WHERE method = 'promptpay' GROUP BY order_id) t ON o.id = t.order_id WHERE t.payment_count > 8

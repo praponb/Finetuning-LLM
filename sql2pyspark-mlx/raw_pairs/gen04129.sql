@@ -1,0 +1,1 @@
+select s.id, s.started_at, s.browser, s.customer_id, c.city, c.email, coalesce(c.segment, 'unassigned') segment_filled from sessions s join customers c on s.customer_id = c.id order by s.customer_id, 1 desc

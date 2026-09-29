@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, order_id, carrier, shipped_date, delivered_date, DATE_ADD(shipped_date, 84) AS shipped_date_plus_84d, CASE WHEN status = 'LOST' THEN 1 ELSE 0 END AS is_lost FROM shipments WHERE order_id IS NOT NULL) SELECT order_id, id FROM cleaned EXCEPT ALL SELECT order_id, id FROM shipments WHERE order_id = 5

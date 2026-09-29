@@ -1,0 +1,1 @@
+select *, rank() over w_running as balance_rank, avg(balance) over (partition by customer_id order by balance, id rows between 6 preceding and 1 preceding) as balance_avg_6_prior from accounts window w_running as (partition by customer_id order by balance desc nulls last);

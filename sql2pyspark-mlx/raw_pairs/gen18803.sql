@@ -1,0 +1,1 @@
+select s.region, s.sqft, ss.sale_date, ss.product_id, last_day(ss.sale_date) as sale_date_month_end from stores s left join store_sales ss on s.id = ss.store_id where length(s.store_name) < 13 order by s.sqft

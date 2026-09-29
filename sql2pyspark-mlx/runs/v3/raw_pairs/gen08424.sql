@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, MIN(quantity) AS min_quantity, AVG(quantity) AS avg_quantity FROM order_items GROUP BY order_id) SELECT orders.channel, orders.customer_id, order_stats.min_quantity, order_stats.avg_quantity FROM orders INNER JOIN order_stats ON orders.id = order_stats.order_id WHERE order_stats.avg_quantity > 2.8 ORDER BY orders.channel

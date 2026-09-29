@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.started_at, sessions.browser FROM sessions WHERE EXISTS (SELECT 1 FROM web_events WHERE web_events.session_id = sessions.id AND web_events.session_id IN (6, 15, 16, 17)) ORDER BY started_at DESC

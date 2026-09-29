@@ -1,0 +1,1 @@
+SELECT transactions.account_id, transactions.is_flagged, accounts.opened_date, accounts.account_type, customers.is_active FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id INNER JOIN customers ON accounts.customer_id = customers.id WHERE accounts.opened_date <= '2024-04-26';

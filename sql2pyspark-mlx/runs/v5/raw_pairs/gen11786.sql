@@ -1,0 +1,1 @@
+WITH Src AS (SELECT * FROM payments WHERE amount >= 660), method_summary AS (SELECT method, status, COUNT(DISTINCT amount) AS unique_orders, ROUND(STDDEV(amount), 2) AS stddev_amount FROM Src GROUP BY method, status) SELECT method, status, unique_orders, stddev_amount FROM method_summary WHERE unique_orders >= 9 ORDER BY stddev_amount DESC, status;

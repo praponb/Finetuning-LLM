@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, COUNT(CASE WHEN txn_type = 'DEBIT' THEN 1 END) AS debit_count, MIN(amount) AS min_amount FROM transactions WHERE txn_time >= '2025-05-06' GROUP BY account_id) SELECT a.account_type, tba.debit_count, tba.min_amount FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY tba.min_amount DESC;

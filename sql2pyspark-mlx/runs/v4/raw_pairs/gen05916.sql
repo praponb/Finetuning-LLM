@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', launch_date) AS activity_month, supplier_id, BIT_OR(stock_qty) AS stock_qty_bit_or, COUNT(*) AS cnt, APPROX_PERCENTILE(cost, 0.95) AS cost_p95, GROUPING(DATE_TRUNC('MONTH', launch_date)) AS grouping_id FROM products GROUP BY ROLLUP (DATE_TRUNC('MONTH', launch_date), supplier_id)

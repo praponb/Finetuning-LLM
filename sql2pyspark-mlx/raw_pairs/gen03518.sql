@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM transactions QUALIFY ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY txn_time, id) = 1) SELECT id, txn_type, amount, txn_time, merchant, is_flagged FROM latest ORDER BY txn_time DESC NULLS FIRST;

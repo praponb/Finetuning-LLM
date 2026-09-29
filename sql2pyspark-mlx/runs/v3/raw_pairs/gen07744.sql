@@ -1,0 +1,1 @@
+select customer_id, min(opened_date) as first_opened_date, max(balance) - min(balance) as balance_range, round(stddev(balance), 2) as stddev_balance from accounts group by customer_id order by 1 desc limit 50

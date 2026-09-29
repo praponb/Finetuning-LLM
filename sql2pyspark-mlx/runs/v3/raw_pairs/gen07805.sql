@@ -1,0 +1,1 @@
+SELECT status, order_id, YEAR(shipped_date) AS shipped_date_year, ADD_MONTHS(delivered_date, 12) AS delivered_date_plus_months FROM shipments WHERE carrier = 'FedEx' AND (delivered_date BETWEEN '2024-12-01' AND '2025-07-01' OR shipped_date > '2024-04-01')

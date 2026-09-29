@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, EXPLODE(tier_limits) AS tier_value FROM price_tiers) SELECT id, plan, effective_from, tier_value, CASE WHEN plan RLIKE '^(starter|enterprise)$' THEN 'EXTENDED' WHEN plan RLIKE '^(basic|pro)$' THEN 'GROUP_A' ELSE 'CORE' END AS plan_zone FROM lines ORDER BY tier_value NULLS LAST;

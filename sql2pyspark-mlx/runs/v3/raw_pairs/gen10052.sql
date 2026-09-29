@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) AS rn FROM departments WHERE budget BETWEEN 2932000 AND 3236000) SELECT id, location, budget FROM ranked WHERE rn <= 3

@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values FROM shipments WHERE carrier <> 'DHL' GROUP BY order_id) SELECT o.id, o.channel, o.shipping_fee, ot.status_values FROM orders o LEFT OUTER JOIN order_totals ot ON o.id = ot.order_id

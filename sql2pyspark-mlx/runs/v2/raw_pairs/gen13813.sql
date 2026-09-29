@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4204000 THEN 'high' WHEN budget >= 1080000 THEN 'mid' ELSE 'low' END AS budget_bucket, dept_name, ROUND(STDDEV(budget), 2) AS stddev_budget, COUNT(DISTINCT budget) AS unique_dept_names FROM departments WHERE budget BETWEEN 1540000 AND 2292000 GROUP BY budget_bucket, dept_name;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN budget >= 4483000 THEN 'high' WHEN budget >= 1500000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, COUNT(budget) AS budget_count FROM departments WHERE location IN ('Bangkok', 'New York') GROUP BY CASE WHEN budget >= 4483000 THEN 'high' WHEN budget >= 1500000 THEN 'mid' ELSE 'low' END, location) AS agg WHERE budget_count > 9

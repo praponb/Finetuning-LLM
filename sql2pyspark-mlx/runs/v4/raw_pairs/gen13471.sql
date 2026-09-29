@@ -1,0 +1,1 @@
+with session_stats as (select session_id, max(event_time) as latest_event_time from web_events group by session_id) select s.id, s.started_at, s.country, ss.latest_event_time from sessions s inner join session_stats ss on s.id = ss.session_id order by latest_event_time;

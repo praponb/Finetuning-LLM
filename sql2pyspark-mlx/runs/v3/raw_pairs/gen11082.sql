@@ -1,0 +1,1 @@
+SELECT t.id, t.amount, t.txn_type, a.account_type, a.opened_date, c.country, c.city FROM transactions t LEFT JOIN accounts a ON a.id = t.account_id LEFT JOIN customers c ON a.customer_id = c.id WHERE t.txn_type IN ('DEBIT', 'CREDIT', 'FEE');

@@ -1,0 +1,1 @@
+select quarter(launch_date) as launch_quarter, round(stddev(price), 2) as stddev_price, round(avg(stock_qty), 2) as avg_stock_qty from products group by 1 having count(case when category = 'Sports' then 1 end) < 4 order by launch_quarter desc limit 10

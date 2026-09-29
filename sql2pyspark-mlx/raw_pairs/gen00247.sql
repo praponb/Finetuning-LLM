@@ -1,0 +1,1 @@
+with lines as (select id, created_at, coupon_codes, k, v from carts lateral view explode(attributes) li as k, v) select id, coupon_codes, k, v, case when k rlike '^(gift|utm_source)$' then 'OTHER_ZONE' when k rlike '^(device|weight_kg)$' then 'GROUP_A' else 'PRIORITY' end as k_zone from lines order by k desc nulls last;

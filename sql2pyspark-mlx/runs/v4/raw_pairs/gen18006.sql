@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM stores s WHERE NOT EXISTS (SELECT 1 FROM inventory x WHERE x.store_id = s.id AND x.last_restock >= s.opened_date)) SELECT id, store_name, opened_date, CASE WHEN store_name RLIKE '^(Downtown Express|Siam Flagship)$' THEN 'CORE' ELSE 'OTHER_ZONE' END AS store_name_zone FROM eligible

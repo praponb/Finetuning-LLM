@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.quantity, i.last_restock, ss.sale_date, ss.revenue, ss.product_id FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.last_restock >= '2025-05-01' AND ss.product_id IN (3, 4, 5, 9)

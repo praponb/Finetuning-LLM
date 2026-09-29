@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT id, event_time, LAG(duration_sec, 2) OVER (PARTITION BY session_id ORDER BY event_time, id) AS prev_duration_sec, NTILE(10) OVER (PARTITION BY page ORDER BY duration_sec, id) AS duration_sec_bucket FROM web_events) SELECT id, event_time, prev_duration_sec FROM enriched ORDER BY event_time DESC;

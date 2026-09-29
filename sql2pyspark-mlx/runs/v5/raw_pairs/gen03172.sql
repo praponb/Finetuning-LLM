@@ -1,0 +1,1 @@
+with DepartmentTotals as (select dept_id, max(salary) as max_salary, count(*) as employee_count from employees group by dept_id) select d.id, d.location, d.budget, D.max_salary, D.employee_count from departments d left join DepartmentTotals D on d.id = D.dept_id where D.max_salary > 58000 order by location, d.id desc

@@ -1,0 +1,1 @@
+SELECT MONTH(o.order_date) AS order_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.carrier))) AS carrier_values FROM shipments s JOIN orders o ON s.order_id = o.id WHERE o.customer_id IN (5, 10) GROUP BY MONTH(o.order_date) ORDER BY carrier_values, order_month DESC

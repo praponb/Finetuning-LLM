@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_accounts
+    .select(
+        "id",
+        "status",
+        "balance",
+        "opened_date",
+        F.coalesce("status", F.lit("unassigned")).alias("status_filled"),
+    )
+)

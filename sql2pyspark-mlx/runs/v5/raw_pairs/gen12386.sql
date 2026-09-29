@@ -1,0 +1,5 @@
+SELECT DISTINCT channel
+FROM orders
+WHERE order_date BETWEEN '2023-04-18' AND '2025-08-01'
+ORDER BY channel
+LIMIT 3;

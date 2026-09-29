@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name AS employee_full_name, m.salary AS manager_salary, m.full_name AS manager_full_name, m.level AS manager_level FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE m.is_remote = TRUE AND m.manager_id IN (3, 12, 19, 29) ORDER BY e.full_name DESC;

@@ -1,0 +1,1 @@
+with base as (select *, length(channel) channel_length, coalesce(channel, 'OTHER') channel_filled from promotions where channel is not null and channel is not distinct from 'mobile') select promo_code from base except select promo_code from promotions where promo_code != 'SPRING10'

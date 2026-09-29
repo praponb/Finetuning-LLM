@@ -1,0 +1,1 @@
+select p.category, count(distinct oi.quantity) as unique_products, sum(oi.quantity * oi.unit_price) as revenue from order_items oi join products p on oi.product_id = p.id left join orders o on o.id = oi.order_id group by p.category order by category desc;

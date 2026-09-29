@@ -1,0 +1,1 @@
+SELECT p.product_name, p.launch_date, oi.unit_price, oi.product_id FROM products p INNER JOIN order_items oi ON p.id = oi.product_id WHERE ARRAY_CONTAINS(p.tags, 'new') OR oi.order_id IN (15, 22, 36);

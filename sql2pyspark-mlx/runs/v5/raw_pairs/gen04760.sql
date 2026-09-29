@@ -1,0 +1,1 @@
+with numbered as (select id, product_id, units, sale_date, rank() over (partition by product_id order by units) pos from store_sales) select id, product_id, units, sale_date from numbered where pos <= 1 order by sale_date desc;

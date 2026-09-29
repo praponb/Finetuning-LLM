@@ -1,0 +1,1 @@
+SELECT is_active, SUM(CASE WHEN country = 'US' THEN credit_limit ELSE 0 END) AS us_credit_limit FROM customers WHERE country IN ('DE', 'US') GROUP BY is_active HAVING us_credit_limit < 66 ORDER BY 2 DESC;

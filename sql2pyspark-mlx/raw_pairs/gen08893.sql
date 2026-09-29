@@ -1,0 +1,1 @@
+SELECT YEAR(opened_date) AS opened_year, SORT_ARRAY(COLLECT_SET(region)) AS region_list FROM stores WHERE (store_name IS NOT NULL AND sqft BETWEEN 11524 AND 15940) OR sqft > 5853 GROUP BY YEAR(opened_date) ORDER BY opened_year DESC LIMIT 20

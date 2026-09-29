@@ -1,0 +1,1 @@
+SELECT id, job_title, salary, level, hire_date, ROUND(salary / SUM(salary) OVER (PARTITION BY job_title), 3) AS salary_share, RANK() OVER (PARTITION BY level ORDER BY hire_date) AS hire_date_rank FROM employees;

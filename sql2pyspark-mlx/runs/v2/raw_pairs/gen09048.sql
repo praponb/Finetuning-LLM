@@ -1,0 +1,1 @@
+select order_items.id, order_items.product_id, order_items.unit_price, orders.store_id, orders.shipping_fee, customers.credit_limit, replace(customers.name, ' ', '-') name_slug from order_items left join orders on order_items.order_id = orders.id left join customers on orders.customer_id = customers.id where customers.country <> 'US';

@@ -1,0 +1,1 @@
+SELECT city FROM customers INTERSECT SELECT city FROM stores WHERE sqft IS NOT NULL ORDER BY city

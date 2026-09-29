@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM subscriptions WHERE monthly_fee < 160), agg AS (SELECT plan, SUM(CASE WHEN status = 'CANCELLED' THEN monthly_fee ELSE 0 END) AS cancelled_monthly_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM src GROUP BY plan) SELECT * FROM agg WHERE cancelled_monthly_fee < 34 ORDER BY plan_values, plan

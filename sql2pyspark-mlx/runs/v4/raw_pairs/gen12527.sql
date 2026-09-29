@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', p.launch_date) launch_month, p.category, MAX(oi.unit_price) - MIN(oi.unit_price) unit_price_range, ROUND(AVG(oi.quantity), 2) avg_quantity FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id LEFT OUTER JOIN products p ON p.id = oi.product_id WHERE oi.unit_price IS NOT NULL GROUP BY DATE_TRUNC('MONTH', p.launch_date), p.category;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, name, segment, is_active, credit_limit, age, LENGTH(name) AS name_length, COALESCE(age, 0) AS age_filled FROM customers WHERE segment IS NOT NULL AND city != 'Chiang Mai') SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY age_filled DESC, id) AS latest_rank FROM filtered QUALIFY latest_rank = 1;

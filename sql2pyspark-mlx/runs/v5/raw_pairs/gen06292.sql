@@ -1,0 +1,1 @@
+select segment, max(age) - min(age) as age_range, round(avg(credit_limit), 2) as avg_credit_limit from customers where not is_active and signup_date <= '2025-05-01' group by segment having sum(case when city = 'Bangkok' then age else 0 end) > 56 order by segment limit 3

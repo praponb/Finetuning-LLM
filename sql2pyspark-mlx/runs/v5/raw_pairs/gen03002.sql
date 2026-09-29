@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, supplier_name, country, city, CASE WHEN country = 'DE' THEN 1 ELSE 0 END AS is_de FROM suppliers WHERE supplier_name NOT LIKE '%Sia%') SELECT city, id FROM cleaned EXCEPT SELECT city, id FROM suppliers WHERE country = 'US';

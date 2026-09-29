@@ -1,0 +1,1 @@
+select category, price_range, latest_launch_date from (select category, max(price) - min(price) as price_range, max(launch_date) as latest_launch_date from products where length(product_name) > 6 group by category) as s where price_range >= 80

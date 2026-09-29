@@ -1,0 +1,14 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_departments.alias("d")
+    .join(df_employees.alias("e"), F.col("e.dept_id") == F.col("d.id"), "left")
+    .filter(F.col("d.location") == "London")
+    .groupBy(F.col("d.id"), F.col("d.location"))
+    .agg(
+        F.count(F.col("e.id")).alias("employee_count"),
+        F.sort_array(F.collect_set(F.col("e.job_title"))).alias("job_title_list"),
+    )
+    .orderBy("location", "id")
+    .limit(50)
+)

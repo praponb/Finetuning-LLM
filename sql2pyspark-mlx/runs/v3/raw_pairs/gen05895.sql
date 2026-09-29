@@ -1,0 +1,1 @@
+WITH top_inventory AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock DESC, id) rnk FROM inventory WHERE quantity <> 76) SELECT * FROM top_inventory WHERE rnk = 1 ORDER BY rnk;

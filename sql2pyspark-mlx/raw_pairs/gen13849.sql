@@ -1,0 +1,1 @@
+SELECT id, job_title, hire_date FROM (SELECT id, job_title, hire_date, ROW_NUMBER() OVER (PARTITION BY job_title ORDER BY hire_date, id) AS rnk FROM employees) AS r WHERE rnk <= 3 ORDER BY hire_date, id DESC;

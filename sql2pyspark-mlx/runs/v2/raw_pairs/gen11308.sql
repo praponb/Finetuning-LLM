@@ -1,0 +1,1 @@
+SELECT is_active, segment, uk_count FROM (SELECT is_active, segment, COUNT(CASE WHEN country = 'UK' THEN 1 END) AS uk_count FROM customers WHERE segment = 'Consumer' GROUP BY is_active, segment) AS agg WHERE uk_count < 4 ORDER BY uk_count DESC;

@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY promo_code, channel ORDER BY ends_on, id) AS latest_rank FROM promotions QUALIFY latest_rank = 1) SELECT id, channel, promo_code, ends_on, discount_pct, CASE WHEN promo_code RLIKE '^(VIP|SPRING10)$' THEN 'EXTENDED' ELSE 'GROUP_A' END AS promo_code_zone FROM deduped

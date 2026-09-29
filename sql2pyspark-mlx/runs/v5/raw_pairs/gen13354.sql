@@ -1,0 +1,1 @@
+SELECT id, dept_name, budget, ROW_NUMBER() OVER (ORDER BY budget ASC, id ASC) AS event_seq, LAG(budget, 2) OVER (PARTITION BY dept_name, location ORDER BY budget ASC, id ASC) AS prev_budget, AVG(budget) OVER (PARTITION BY dept_name ORDER BY budget ASC, id ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS budget_avg_2 FROM departments

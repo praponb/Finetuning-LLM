@@ -1,0 +1,1 @@
+SELECT products.id, products.launch_date, products.supplier_id, suppliers.supplier_name, suppliers.city FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE suppliers.supplier_name LIKE 'Eu%' ORDER BY id DESC, launch_date;

@@ -1,0 +1,1 @@
+SELECT emp.id, emp.is_remote AS employee_is_remote, emp.hire_date AS employee_hire_date, emp.manager_id AS employee_manager_id, mgr.email AS manager_email FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.manager_id = 6 AND mgr.salary < 128000;

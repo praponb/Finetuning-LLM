@@ -1,0 +1,1 @@
+SELECT status, plan, status_values, max_monthly_fee FROM (SELECT status, plan, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values, MAX(monthly_fee) max_monthly_fee FROM subscriptions WHERE MONTH(start_date) IN (4, 5, 7) GROUP BY status, plan) sub WHERE max_monthly_fee < 170;

@@ -1,0 +1,1 @@
+select id, customer_id, account_type, date_format(opened_date, 'yyyy-MM-dd') as opened_date_label, datediff(current_date(), opened_date) as days_since_opened_date from accounts where customer_id in (38, 39) order by customer_id desc, opened_date_label;

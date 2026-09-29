@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, account_type, opened_date, status, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY opened_date DESC, id) AS rn FROM accounts) AS r WHERE rn <= 3 ORDER BY account_type ASC, opened_date ASC

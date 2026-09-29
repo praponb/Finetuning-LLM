@@ -1,0 +1,1 @@
+with with_last as (select s.*, latest.employee_hire_date from departments s join lateral (select c.hire_date as employee_hire_date from employees c where c.dept_id = s.id order by c.salary desc, c.id desc limit 1) latest on true) select id, dept_name, location, employee_hire_date from with_last order by id nulls last;

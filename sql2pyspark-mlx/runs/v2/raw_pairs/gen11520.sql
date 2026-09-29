@@ -1,0 +1,1 @@
+SELECT p.supplier_id, SUM(oi.unit_price * oi.quantity) AS revenue, COUNT(*) AS row_count FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id FULL OUTER JOIN products p ON oi.product_id = p.id WHERE oi.order_id IN (20, 29, 30) GROUP BY p.supplier_id HAVING COUNT(*) > 2

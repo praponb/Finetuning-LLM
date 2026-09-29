@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, p.brand, p.stock_qty, s.store_name, s.city, LAST_DAY(p.launch_date) AS launch_date_month_end FROM inventory i LEFT OUTER JOIN products p ON i.product_id = p.id JOIN stores s ON i.store_id = s.id WHERE i.last_restock >= '2023-06-28';

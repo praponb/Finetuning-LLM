@@ -1,0 +1,1 @@
+SELECT t.id, t.is_flagged, t.merchant, a.opened_date, c.credit_limit, c.signup_date FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE a.balance < 32000 OR t.account_id IN (1, 8, 33, 38)

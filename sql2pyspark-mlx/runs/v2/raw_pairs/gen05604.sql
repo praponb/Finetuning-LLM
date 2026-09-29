@@ -1,0 +1,1 @@
+SELECT HOUR(event_time) event_hour, event_type, MAX(event_time) latest_event_time FROM web_events WHERE NOT (session_id IN (3, 20, 21, 34) OR duration_sec <= 417) GROUP BY HOUR(event_time), event_type;

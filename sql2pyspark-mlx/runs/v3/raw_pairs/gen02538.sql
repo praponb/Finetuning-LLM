@@ -1,0 +1,1 @@
+SELECT sqft, opened_date, city, DATEDIFF(CURRENT_DATE(), opened_date) AS days_since_opened_date FROM stores WHERE LOWER(TRIM(store_name)) = 'airport kiosk' AND store_name LIKE '%Exp%' AND sqft <= 10229 ORDER BY sqft DESC, days_since_opened_date DESC

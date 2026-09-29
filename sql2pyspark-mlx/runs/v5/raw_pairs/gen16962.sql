@@ -1,0 +1,1 @@
+WITH RankedInventory AS (SELECT id, store_id, last_restock, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY last_restock) AS pos FROM inventory WHERE last_restock > '2024-04-01') SELECT * FROM RankedInventory WHERE pos <= 3;

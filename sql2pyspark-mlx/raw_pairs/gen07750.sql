@@ -1,0 +1,1 @@
+SELECT account_type, balance, opened_date, CASE WHEN balance >= 78000 THEN 'High' WHEN balance >= 26000 THEN 'Medium' ELSE 'Low' END AS balance_level, SUBSTRING(account_type, 1, 4) AS account_type_prefix FROM accounts WHERE status NOT IN ('OPEN', 'FROZEN') AND account_type = 'SAVINGS' ORDER BY account_type_prefix DESC;

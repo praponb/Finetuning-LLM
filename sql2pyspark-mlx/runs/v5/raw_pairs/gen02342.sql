@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.unit_price, order_items.order_id, products.category, products.stock_qty, suppliers.rating, suppliers.supplier_name FROM order_items JOIN products ON order_items.product_id = products.id FULL OUTER JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.price > 960 ORDER BY unit_price DESC

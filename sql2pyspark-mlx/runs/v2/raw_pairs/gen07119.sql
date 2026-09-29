@@ -1,0 +1,1 @@
+SELECT order_items.order_id, order_items.product_id, products.stock_qty, products.launch_date, orders.amount, orders.store_id FROM order_items LEFT JOIN products ON products.id = order_items.product_id RIGHT JOIN orders ON order_items.order_id = orders.id ORDER BY order_items.product_id DESC;

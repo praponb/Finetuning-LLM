@@ -1,0 +1,1 @@
+SELECT c.city, MAX(s.monthly_fee) - MIN(s.monthly_fee) AS monthly_fee_range FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY c.city HAVING MAX(s.monthly_fee) - MIN(s.monthly_fee) >= 24 ORDER BY city DESC LIMIT 5;

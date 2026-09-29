@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, COUNT(amount) amount_count, MAX(amount) - MIN(amount) amount_range FROM transactions WHERE is_flagged = TRUE GROUP BY account_id) SELECT a.opened_date, as.amount_count, as.amount_range FROM accounts a INNER JOIN account_stats as ON a.id = as.account_id WHERE as.amount_count > 4;

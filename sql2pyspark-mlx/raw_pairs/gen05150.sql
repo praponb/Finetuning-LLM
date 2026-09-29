@@ -1,0 +1,1 @@
+select month(end_date) as end_month, max(end_date) as last_end_date, sum(case when plan = 'premium' then monthly_fee else 0 end) as premium_monthly_fee from subscriptions where end_date >= '2023-10-26' group by month(end_date) order by last_end_date, end_month limit 5

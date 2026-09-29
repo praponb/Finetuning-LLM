@@ -1,0 +1,1 @@
+SELECT e.id, e.dept_id AS employee_dept_id, e.full_name AS employee_full_name, e.job_title AS employee_job_title, m.salary AS manager_salary, m.manager_id AS manager_manager_id, COALESCE(e.job_title, 'Unknown') AS job_title_filled FROM employees e LEFT JOIN employees m ON e.manager_id = m.id;

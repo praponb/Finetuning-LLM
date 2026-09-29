@@ -1,0 +1,1 @@
+SELECT s.device, COUNT(we.id) AS web_event_count, SUM(CASE WHEN we.event_type = 'purchase' THEN we.duration_sec ELSE 0 END) AS purchase_duration_sec, COUNT(we.duration_sec) AS duration_sec_count FROM sessions s LEFT OUTER JOIN web_events we ON we.session_id = s.id GROUP BY s.device ORDER BY purchase_duration_sec;

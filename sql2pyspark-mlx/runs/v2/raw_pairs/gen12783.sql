@@ -1,0 +1,1 @@
+SELECT event_year, event_type, avg_duration_sec FROM (SELECT YEAR(event_time) event_year, event_type, AVG(duration_sec) avg_duration_sec FROM web_events GROUP BY YEAR(event_time), event_type) s WHERE avg_duration_sec < 210 ORDER BY event_year

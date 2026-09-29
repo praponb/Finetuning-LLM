@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT s.city, a.brand, COUNT(*) AS rows_total, ROUND(SUM(a.cost), 2) AS total_cost, AVG(a.stock_qty) AS avg_stock_qty, GROUPING_ID() AS gid FROM products a INNER JOIN suppliers s ON a.supplier_id = s.id GROUP BY GROUPING SETS ((s.city, a.brand), (s.city), ())) SELECT city, brand, total_cost FROM by_dimension

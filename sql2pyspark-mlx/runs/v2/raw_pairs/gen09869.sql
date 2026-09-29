@@ -1,0 +1,1 @@
+SELECT we.id, we.session_id, s.customer_id, s.country, CONCAT(we.event_type, ' ', we.page) AS event_type_page FROM web_events we JOIN sessions s ON s.id = we.session_id WHERE NOT (s.started_at >= '2023-10-01' OR we.duration_sec > 200) ORDER BY 2 DESC;

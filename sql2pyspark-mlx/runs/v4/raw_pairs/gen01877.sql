@@ -1,0 +1,1 @@
+SELECT account_id, min_amount, starbucks_count FROM (SELECT account_id, MIN(amount) AS min_amount, SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END) AS starbucks_count FROM transactions WHERE merchant = 'Shell' GROUP BY account_id) AS t WHERE starbucks_count > 42 ORDER BY starbucks_count DESC

@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT region FROM stores EXCEPT SELECT region FROM stores WHERE city = 'Berlin'), verified AS (SELECT s.* FROM stores s INNER JOIN remaining_keys k ON s.region = k.region) SELECT region, opened_date, sqft FROM verified

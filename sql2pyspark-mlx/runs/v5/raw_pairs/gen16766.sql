@@ -1,0 +1,1 @@
+select id, account_id, amount, txn_time, round(amount / sum(amount) over (partition by account_id), 3) as amount_share, first_value(amount) over (partition by account_id order by txn_time desc, id) as first_amount from transactions where hour(txn_time) between 8 and 13;

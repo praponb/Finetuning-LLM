@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 16182 THEN 'high' WHEN sqft >= 4284 THEN 'mid' ELSE 'low' END AS sqft_bucket, ROUND(AVG(sqft), 2) AS avg_sqft, SUM(sqft) AS total_sqft FROM stores WHERE opened_date BETWEEN '2023-05-19' AND '2023-07-04' AND LENGTH(store_name) < 10 GROUP BY 1 ORDER BY sqft_bucket, total_sqft;

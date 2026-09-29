@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', order_date) AS order_month, channel, status, COUNT(CASE WHEN channel = 'mobile' THEN 1 END) AS mobile_count FROM orders WHERE amount >= 750 GROUP BY 1, 2, 3 ORDER BY mobile_count;

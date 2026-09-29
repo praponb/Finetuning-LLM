@@ -1,0 +1,1 @@
+select is_flagged, account_id, max(amount) as max_amount, round((100 * sum(case when txn_type = 'REFUND' then 1 else 0 end)) / count(*), 1) as pct_refund from transactions group by is_flagged, account_id order by max_amount desc, account_id;

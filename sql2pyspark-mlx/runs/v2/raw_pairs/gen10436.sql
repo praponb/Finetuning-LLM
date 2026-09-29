@@ -1,0 +1,1 @@
+select region, round(stddev(sqft), 2) as stddev_sqft, sum(case when city = 'Berlin' then 1 else 0 end) as berlin_count from stores where sqft is not null and sqft > 10540 group by region having min(sqft) >= 12900 order by berlin_count desc, region desc

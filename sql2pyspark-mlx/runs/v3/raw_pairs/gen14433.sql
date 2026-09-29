@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM subscriptions WHERE customer_id IS NULL), agg AS (SELECT status, SORT_ARRAY(COLLECT_SET(plan)) plan_list, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) cancelled_count FROM src GROUP BY status) SELECT status, plan_list, cancelled_count FROM agg ORDER BY status LIMIT 10

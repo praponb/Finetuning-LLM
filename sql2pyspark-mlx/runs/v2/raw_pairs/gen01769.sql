@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM customers WHERE LENGTH(name) >= 7), summary AS (SELECT segment, DATE_TRUNC('MONTH', signup_date) AS signup_month, SORT_ARRAY(COLLECT_SET(city)) AS city_list, ROUND(AVG(credit_limit), 2) AS avg_credit_limit FROM base GROUP BY segment, DATE_TRUNC('MONTH', signup_date)) SELECT * FROM summary WHERE avg_credit_limit > 74 ORDER BY segment ASC

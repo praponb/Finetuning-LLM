@@ -1,0 +1,1 @@
+SELECT e.id, e.manager_id AS employee_manager_id, m.dept_id AS manager_dept_id, m.is_remote AS manager_is_remote, m.full_name AS manager_full_name FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.hire_date <= '2024-04-15' ORDER BY m.dept_id DESC

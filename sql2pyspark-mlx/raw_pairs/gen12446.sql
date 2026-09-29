@@ -1,0 +1,1 @@
+SELECT event_quarter, row_count, last_event_time FROM (SELECT QUARTER(event_time) AS event_quarter, COUNT(*) AS row_count, MAX(event_time) AS last_event_time FROM web_events WHERE page IS NULL GROUP BY QUARTER(event_time)) AS x WHERE row_count >= 4 ORDER BY row_count DESC

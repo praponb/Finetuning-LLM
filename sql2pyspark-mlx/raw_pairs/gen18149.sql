@@ -1,0 +1,1 @@
+SELECT hire_date, salary, DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_date_label, SUBSTRING(full_name, 1, 3) AS full_name_prefix FROM employees WHERE NOT is_remote ORDER BY salary DESC, hire_date_label;

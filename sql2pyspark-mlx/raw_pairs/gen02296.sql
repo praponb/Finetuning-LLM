@@ -1,0 +1,1 @@
+SELECT e.id, e.is_remote AS employee_is_remote, e.hire_date AS employee_hire_date, m.salary AS manager_salary, m.email AS manager_email FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE e.hire_date <= '2023-04-01' AND e.level IN ('L1', 'L4') ORDER BY manager_email

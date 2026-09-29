@@ -1,0 +1,1 @@
+select case when p.cost >= 540 then 'high' when p.cost >= 200 then 'mid' else 'low' end as cost_bucket, count(distinct oi.quantity) as unique_orders from order_items oi join products p on oi.product_id = p.id where oi.product_id in (3, 6) group by case when p.cost >= 540 then 'high' when p.cost >= 200 then 'mid' else 'low' end;

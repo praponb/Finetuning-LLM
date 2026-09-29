@@ -1,0 +1,1 @@
+WITH store_sales_by_store AS (SELECT store_id, MAX(sale_date) latest_sale_date FROM store_sales GROUP BY store_id) SELECT s.city, ssbs.latest_sale_date FROM stores s INNER JOIN store_sales_by_store ssbs ON s.id = ssbs.store_id ORDER BY 1;

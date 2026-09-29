@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM subscriptions WHERE plan NOT IN ('basic', 'premium') OR monthly_fee <= 80), agg AS (SELECT status, COUNT(CASE WHEN plan = 'standard' THEN 1 END) AS standard_count FROM base GROUP BY status) SELECT * FROM agg ORDER BY standard_count, status LIMIT 20;

@@ -1,0 +1,1 @@
+SELECT a.status, SUM(t.amount) AS total_amount, ROUND(AVG(t.amount), 2) AS avg_amount FROM transactions t JOIN accounts a ON t.account_id = a.id GROUP BY a.status ORDER BY total_amount DESC, status LIMIT 5

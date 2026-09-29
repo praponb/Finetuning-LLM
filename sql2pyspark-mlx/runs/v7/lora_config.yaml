@@ -1,0 +1,43 @@
+# LoRA fine-tune of Qwen2.5-Coder-7B-Instruct (4-bit MLX) on the SQL -> PySpark dataset.
+# v7: CONTINUES from the v6 adapters (resume_adapter_file) with half the peak learning rate, on the v7 dataset: the v5
+# mix plus DATEDIFF arithmetic, UNIONs of unrelated columns with IS NOT NULL filters, and windows partitioned by date
+# expressions. v6 trained fresh 7B adapters (peak 1e-4); v1-v5 used Qwen2.5-Coder-3B (configs in runs/v2..v6/).
+# Run from sql2pyspark-mlx/:   mlx_lm.lora -c lora_config.yaml
+model: mlx-community/Qwen2.5-Coder-7B-Instruct-4bit
+train: true
+fine_tune_type: lora
+data: ./data                 # train.jsonl / valid.jsonl / test.jsonl from convert_sql_pyspark.py
+adapter_path: ./adapters
+resume_adapter_file: ./runs/v6/adapters/adapters.safetensors   # v7: start from v6
+seed: 0
+
+# 600 optimizer updates of 4 samples, done as 2,400 micro-batches of 1 with gradient accumulation (v6: 4,800).
+# 7B dry run on the 64 longest samples (2026-09-28): batch 2 + checkpointing -> Metal OOM; batch 1 + checkpointing
+# -> 9.0 GB peak (v6 full run: 10.1 GB), ~40-50 trained tokens/s. ~4.2 h on a base M2.
+iters: 2400
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200          # longest v4 training sample: 3,119 tokens (v3 data: max 603)
+mask_prompt: true            # loss only on the assistant (PySpark) tokens
+grad_checkpoint: true        # needed for v4's long samples (~40% slower); v2/v3 ran without it
+
+num_layers: 8                # adapt the last 8 of 28 transformer blocks (3B: 8 of 36)
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+
+optimizer: adamw
+learning_rate: 5.0e-5          # v7: half of v6's peak, since it continues from v6 (as v5 did from v4)
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-6
+  arguments: [5.0e-5, 550, 5.0e-6]    # [init, decay_steps, end]  (optimizer updates)
+
+steps_per_report: 50
+steps_per_eval: 800           # micro-batches: 3 evals + the initial one (7B validation is slow)
+val_batches: 100             # 100 held-out-signature samples per eval (batch 1)
+save_every: 200               # frequent checkpoints so train_resumable.py loses little after a crash
+test: false
+test_batches: 200

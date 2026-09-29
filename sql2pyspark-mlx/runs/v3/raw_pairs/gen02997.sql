@@ -1,0 +1,1 @@
+select inventory.id, inventory.product_id, inventory.quantity, store_sales.product_id as store_sale_product_id, store_sales.revenue, store_sales.units from inventory inner join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id

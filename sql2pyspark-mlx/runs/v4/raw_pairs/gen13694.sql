@@ -1,0 +1,1 @@
+SELECT id, country, device, CONCAT(country, ' - ', browser) AS country_browser FROM sessions WHERE country NOT IN ('UK', 'SG', 'US') AND country IN ('US', 'UK', 'DE') AND started_at >= '2023-07-01' ORDER BY id LIMIT 10

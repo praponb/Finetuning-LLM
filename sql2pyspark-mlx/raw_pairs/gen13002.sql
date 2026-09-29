@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3733000 THEN 'high' WHEN budget >= 1303000 THEN 'mid' ELSE 'low' END AS budget_bucket, SORT_ARRAY(COLLECT_SET(dept_name)) AS dept_name_list FROM departments GROUP BY budget_bucket HAVING MIN(budget) < 1378000 ORDER BY budget_bucket ASC LIMIT 1;

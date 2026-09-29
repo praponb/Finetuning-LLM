@@ -1,0 +1,1 @@
+SELECT session_id, ROUND(duration_sec * 1.1, 2) duration_sec_adjusted, INITCAP(TRIM(page)) page_title FROM web_events WHERE session_id = 1 OR event_type IN ('page_view', 'search', 'add_to_cart') ORDER BY duration_sec_adjusted DESC;

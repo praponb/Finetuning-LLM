@@ -1,0 +1,1 @@
+with account_stats as (select account_id, concat_ws(', ', sort_array(collect_set(txn_type))) as txn_type_values from transactions group by account_id) select a.balance, a.customer_id, as.txn_type_values from accounts a inner join account_stats as on a.id = as.account_id order by txn_type_values

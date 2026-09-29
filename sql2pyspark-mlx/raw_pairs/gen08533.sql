@@ -1,0 +1,1 @@
+SELECT status, MAX(cost) - MIN(cost) AS cost_range FROM shipments WHERE delivered_date BETWEEN '2023-08-18' AND '2024-11-01' AND shipped_date >= '2023-09-01' AND order_id IN (7, 17, 19, 34) GROUP BY status HAVING MAX(cost) - MIN(cost) < 54 ORDER BY 2, status LIMIT 5;

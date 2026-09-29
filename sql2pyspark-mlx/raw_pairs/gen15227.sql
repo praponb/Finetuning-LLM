@@ -1,0 +1,1 @@
+SELECT product_id, store_id, COUNT(DISTINCT units) AS unique_stores, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales WHERE product_id = 9 GROUP BY product_id, store_id ORDER BY revenue_range DESC, product_id, store_id LIMIT 20;

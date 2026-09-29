@@ -1,0 +1,1 @@
+SELECT CASE WHEN p.category IN ('Grocery', 'Books') THEN 'tier_1' ELSE 'other' END AS category_group, COUNT(*) AS row_count FROM order_items oi LEFT OUTER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON oi.product_id = p.id WHERE o.shipping_fee > 21 GROUP BY CASE WHEN p.category IN ('Grocery', 'Books') THEN 'tier_1' ELSE 'other' END ORDER BY 1, row_count;

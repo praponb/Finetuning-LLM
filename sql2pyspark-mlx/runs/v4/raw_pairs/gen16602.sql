@@ -1,0 +1,1 @@
+select case when rating >= 3.7 then 'high' when rating >= 2.2 then 'mid' else 'low' end as rating_bucket, concat_ws(', ', sort_array(collect_set(city))) as city_values, count(distinct rating) as unique_citys from suppliers group by 1 order by unique_citys;

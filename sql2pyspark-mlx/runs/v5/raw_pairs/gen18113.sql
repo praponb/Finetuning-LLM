@@ -1,0 +1,1 @@
+SELECT carrier, DATE_TRUNC('MONTH', delivered_date) AS delivered_month, SUM(cost) AS total_cost FROM shipments WHERE shipped_date < '2025-02-01' GROUP BY carrier, DATE_TRUNC('MONTH', delivered_date) HAVING SUM(CASE WHEN carrier = 'FedEx' THEN 1 ELSE 0 END) >= 39

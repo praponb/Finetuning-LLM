@@ -1,0 +1,1 @@
+select id, salary, dept_id, hire_date, row_number() over (order by salary desc, id) row_num, percent_rank() over (partition by dept_id order by hire_date) hire_date_pct_rank from employees where manager_id is null

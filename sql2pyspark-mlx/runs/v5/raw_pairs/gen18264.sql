@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.region, x.amount, x.status FROM stores s LEFT JOIN LATERAL (SELECT c.amount, c.status FROM orders c WHERE c.store_id = s.id ORDER BY c.amount DESC, c.id DESC LIMIT 1) x ON TRUE;

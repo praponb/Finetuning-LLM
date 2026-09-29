@@ -1,0 +1,1 @@
+select oi.id, oi.unit_price, o.order_date, o.channel, c.age from order_items oi inner join orders o on oi.order_id = o.id inner join customers c on o.customer_id = c.id order by o.order_date desc, id limit 10;

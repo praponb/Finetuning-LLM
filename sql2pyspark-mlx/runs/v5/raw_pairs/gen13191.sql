@@ -1,0 +1,1 @@
+SELECT id, product_id, last_restock FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id, product_id ORDER BY last_restock DESC NULLS FIRST, id) AS rank_in_group FROM inventory) t WHERE rank_in_group = 1;

@@ -1,0 +1,1 @@
+SELECT id, carrier, delivered_date, cost, status, LEAD(cost, 1) OVER (PARTITION BY carrier ORDER BY delivered_date, id) AS next_cost, ROUND(cost / SUM(cost) OVER (PARTITION BY status, carrier), 3) AS cost_share FROM shipments WHERE carrier NOT IN ('DHL', 'Flash', 'Kerry') ORDER BY carrier ASC, delivered_date ASC;

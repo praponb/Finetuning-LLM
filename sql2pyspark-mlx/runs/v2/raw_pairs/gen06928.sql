@@ -1,0 +1,1 @@
+SELECT id, session_id, page, duration_sec, event_time, RANK() OVER (PARTITION BY session_id, page ORDER BY duration_sec DESC) AS rnk, SUM(duration_sec) OVER (PARTITION BY page ORDER BY event_time, id) AS running_duration_sec FROM web_events WHERE page = '/search'

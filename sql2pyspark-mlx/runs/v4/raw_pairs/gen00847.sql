@@ -1,0 +1,1 @@
+with deduped as (select * from order_items qualify row_number() over (partition by product_id order by quantity, id) = 1) select order_id, round(avg(unit_price), 2) as avg_unit_price, avg(unit_price) as avg_unit_price_2, count(distinct order_id) as distinct_order_ids from deduped group by order_id having distinct_order_ids > 1 order by order_id desc nulls first

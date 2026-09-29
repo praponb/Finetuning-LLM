@@ -1,0 +1,1 @@
+select s.device, count(distinct we.duration_sec) as unique_event_types from web_events we right outer join sessions s on s.id = we.session_id group by s.device order by device desc, unique_event_types desc limit 5

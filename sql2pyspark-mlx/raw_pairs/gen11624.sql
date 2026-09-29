@@ -1,0 +1,1 @@
+SELECT c.segment, ROUND(AVG(s.monthly_fee), 2) AS avg_monthly_fee, COUNT(DISTINCT s.monthly_fee) AS unique_plans FROM subscriptions s JOIN customers c ON s.customer_id = c.id GROUP BY c.segment ORDER BY avg_monthly_fee DESC;

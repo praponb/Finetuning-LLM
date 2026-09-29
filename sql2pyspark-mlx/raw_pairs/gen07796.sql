@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, store_id, product_id, units, revenue, CASE WHEN revenue >= 3200 THEN 'High' WHEN revenue >= 1300 THEN 'Medium' ELSE 'Low' END AS revenue_tier FROM store_sales WHERE store_id IN (4, 5)) SELECT store_id FROM valid INTERSECT SELECT store_id FROM store_sales WHERE product_id IN (7, 8);

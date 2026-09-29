@@ -1,0 +1,1 @@
+WITH order_items_by_order AS (SELECT order_id, COUNT(DISTINCT quantity) AS unique_orders, AVG(quantity) AS avg_quantity FROM order_items GROUP BY order_id) SELECT o.order_date, oibo.unique_orders, oibo.avg_quantity FROM orders o INNER JOIN order_items_by_order oibo ON o.id = oibo.order_id WHERE oibo.avg_quantity >= 7.7 ORDER BY unique_orders DESC;

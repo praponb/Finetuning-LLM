@@ -1,0 +1,1 @@
+with order_totals as (select order_id, max(quantity) - min(quantity) as quantity_range, count(distinct unit_price) as unique_orders from order_items group by order_id) select orders.store_id, order_totals.quantity_range, order_totals.unique_orders from orders inner join order_totals on orders.id = order_totals.order_id order by order_totals.quantity_range desc;

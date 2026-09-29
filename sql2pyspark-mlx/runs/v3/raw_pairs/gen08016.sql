@@ -1,0 +1,1 @@
+SELECT id, supplier_name, rating, city, CASE WHEN rating >= 3.5 THEN 'High' WHEN rating >= 2.5 THEN 'Medium' ELSE 'Low' END AS rating_band, CONCAT(country, ' ', city) AS country_city FROM suppliers WHERE rating BETWEEN 2.8 AND 4.0 OR country IN ('UK', 'TH') ORDER BY rating DESC;

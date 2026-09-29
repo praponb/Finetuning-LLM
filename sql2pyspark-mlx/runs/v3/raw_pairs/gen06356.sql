@@ -1,0 +1,1 @@
+SELECT a.id, a.status, a.opened_date, t.amount_count, t.stddev_amount FROM accounts a LEFT JOIN (SELECT account_id, COUNT(amount) AS amount_count, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.stddev_amount >= 70 ORDER BY t.stddev_amount DESC

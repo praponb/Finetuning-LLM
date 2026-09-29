@@ -1,0 +1,1 @@
+select *, case when dept_name = 'Sales' then 1 else 0 end is_sales from departments where dept_name in ('Legal', 'Engineering') and location in ('Tokyo', 'London', 'New York') order by is_sales desc, id limit 5;

@@ -1,0 +1,1 @@
+SELECT status, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count, SUM(CASE WHEN channel = 'mobile' THEN discount ELSE 0 END) AS mobile_discount, SUM(CASE WHEN channel = 'web' THEN discount ELSE 0 END) AS web_discount FROM orders WHERE channel <> 'store' AND shipping_fee > 14 GROUP BY status ORDER BY cancelled_count, mobile_discount DESC, status LIMIT 10;

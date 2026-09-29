@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MIN(opened_date) AS min_opened_date, COUNT(*) AS row_count FROM accounts GROUP BY customer_id) SELECT c.city, c.name, cs.min_opened_date, cs.row_count FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY c.city DESC

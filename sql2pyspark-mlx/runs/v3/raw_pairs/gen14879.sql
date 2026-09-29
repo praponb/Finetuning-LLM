@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, merchant, txn_time, RANK() OVER (PARTITION BY merchant ORDER BY txn_time DESC) AS rnk FROM transactions WHERE merchant IS NOT NULL) SELECT id, merchant, txn_time FROM numbered WHERE rnk <= 2 ORDER BY id ASC;

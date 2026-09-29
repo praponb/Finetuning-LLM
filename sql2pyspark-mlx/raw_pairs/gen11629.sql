@@ -1,0 +1,1 @@
+with filtered as (select id, carrier, shipped_date, delivered_date, cost, status, concat(carrier, '/', status) as carrier_status from shipments where delivered_date > to_date('2023-08-24')) select * from filtered qualify row_number() over (partition by status order by delivered_date desc, id asc) = 1;

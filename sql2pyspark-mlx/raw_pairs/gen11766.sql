@@ -1,0 +1,1 @@
+with ranked as (select * from sessions qualify row_number() over (partition by customer_id order by started_at, id) = 1) select id, customer_id, device, started_at, country, case when country rlike '^(JP|TH)$' then 'OTHER_ZONE' when country rlike '^(US|SG)$' then 'PRIORITY' else 'GROUP_A' end as country_zone from ranked order by device desc;

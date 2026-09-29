@@ -1,0 +1,1 @@
+select txn_type, count(case when merchant = 'Grab' then 1 end) as grab_count, count(case when merchant = '7-Eleven' then 1 end) as 7_eleven_count from transactions group by txn_type having count(case when merchant = '7-Eleven' then 1 end) > 2;

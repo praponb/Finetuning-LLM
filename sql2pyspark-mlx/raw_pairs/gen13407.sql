@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, created_at, attr_key, value FROM carts LATERAL VIEW OUTER EXPLODE(attributes) li AS attr_key, value) SELECT created_at, attr_key, CASE WHEN attr_key RLIKE '^(weight_kg|utm_source)$' THEN 'EXTENDED' ELSE 'CORE' END AS attr_key_zone FROM lines

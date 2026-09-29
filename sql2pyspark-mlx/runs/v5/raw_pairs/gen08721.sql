@@ -1,0 +1,1 @@
+select id, plan, end_date, monthly_fee, round(avg(monthly_fee) over (partition by plan order by end_date, id rows between 3 preceding and current row), 2) as monthly_fee_moving_avg_4, rank() over (partition by plan order by monthly_fee desc) as rnk from subscriptions;

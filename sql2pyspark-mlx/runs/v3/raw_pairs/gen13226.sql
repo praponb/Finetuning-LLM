@@ -1,0 +1,1 @@
+select id, region, opened_date, city, sqft, rank() over (partition by region order by opened_date) rnk, sum(sqft) over (partition by city order by opened_date, id) running_sqft from stores where region in ('South', 'Central')

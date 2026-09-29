@@ -1,0 +1,1 @@
+SELECT id, status, LAST_DAY(opened_date) AS opened_date_month_end FROM accounts WHERE account_type = 'LOAN' AND (status IN ('OPEN', 'FROZEN') OR status IN ('FROZEN', 'OPEN', 'CLOSED')) ORDER BY status DESC;

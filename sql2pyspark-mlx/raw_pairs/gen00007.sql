@@ -1,0 +1,1 @@
+SELECT id, started_at, customer_id, LEAD(started_at, 1) OVER (PARTITION BY TO_DATE(started_at), customer_id ORDER BY started_at, id) AS next_started_at FROM sessions ORDER BY customer_id, next_started_at;

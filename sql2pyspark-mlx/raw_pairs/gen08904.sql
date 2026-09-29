@@ -1,0 +1,1 @@
+SELECT CASE WHEN job_title IN ('Director', 'Manager') THEN 'group_a' ELSE 'other' END AS job_title_group, SUM(CASE WHEN job_title = 'Analyst' THEN salary ELSE 0 END) AS analyst_salary, MAX(salary) AS max_salary FROM employees GROUP BY job_title_group;

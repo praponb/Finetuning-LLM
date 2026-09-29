@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.product_id, inventory.store_id, products.cost, products.product_name, stores.region FROM inventory INNER JOIN products ON inventory.product_id = products.id LEFT JOIN stores ON inventory.store_id = stores.id ORDER BY products.cost ASC, id ASC LIMIT 20;

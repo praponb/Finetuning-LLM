@@ -1,0 +1,1 @@
+select t.id, t.amount, t.txn_type, t.merchant, a.customer_id, a.status, cast(t.amount as int) amount_int from transactions t left outer join accounts a on t.account_id = a.id where t.merchant not in ('Lazada', 'Shell', 'Amazon') and a.customer_id in (1, 11, 17, 22)

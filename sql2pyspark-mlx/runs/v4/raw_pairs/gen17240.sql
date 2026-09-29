@@ -1,0 +1,1 @@
+SELECT id, order_id, paid_at, amount, amount - LAG(amount, 2, 0) OVER (PARTITION BY order_id ORDER BY paid_at, id) AS amount_change, SUM(amount) OVER (ORDER BY paid_at, id) AS running_amount FROM payments WHERE amount > 1430

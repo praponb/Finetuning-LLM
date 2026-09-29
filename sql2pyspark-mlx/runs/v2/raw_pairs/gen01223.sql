@@ -1,0 +1,1 @@
+WITH filtered_transactions AS (SELECT * FROM transactions WHERE txn_time >= '2025-06-11' OR amount > 2400), agg AS (SELECT account_id, merchant, MAX(txn_time) latest_txn_time FROM filtered_transactions GROUP BY account_id, merchant) SELECT account_id, merchant, latest_txn_time FROM agg ORDER BY merchant;

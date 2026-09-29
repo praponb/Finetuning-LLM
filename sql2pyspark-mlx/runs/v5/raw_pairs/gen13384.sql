@@ -1,0 +1,1 @@
+SELECT txn_type, COUNT(*) AS row_count, MIN(amount) AS min_amount, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions GROUP BY txn_type HAVING stddev_amount > 53 ORDER BY txn_type, stddev_amount DESC;

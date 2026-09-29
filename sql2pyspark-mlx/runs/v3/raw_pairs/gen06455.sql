@@ -1,0 +1,1 @@
+select dept_name, case when budget >= 4405000 then 'high' when budget >= 873000 then 'mid' else 'low' end as budget_bucket, concat_ws(', ', sort_array(collect_set(location))) as location_values, round(avg(budget), 2) as avg_budget from departments group by rollup(dept_name, case when budget >= 4405000 then 'high' when budget >= 873000 then 'mid' else 'low' end)

@@ -1,0 +1,1 @@
+SELECT id, status, delivered_date, cost, order_id, LEAD(cost, 1) OVER (PARTITION BY status ORDER BY delivered_date, id) AS next_cost, ROW_NUMBER() OVER (PARTITION BY order_id, status ORDER BY cost DESC, id) AS row_num FROM shipments WHERE order_id IN (5, 21, 27);

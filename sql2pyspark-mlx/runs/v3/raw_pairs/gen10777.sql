@@ -1,0 +1,1 @@
+with Ranked as (select id, browser, started_at, row_number() over (partition by browser order by started_at desc, id) as row_num from sessions where to_date(started_at) < '2023-10-06') select id, browser, started_at from Ranked where row_num <= 3;

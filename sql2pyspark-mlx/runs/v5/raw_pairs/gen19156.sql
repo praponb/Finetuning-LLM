@@ -1,0 +1,1 @@
+WITH valid_shipments AS (SELECT * FROM shipments WHERE shipped_date <= '2025-05-01' AND cost BETWEEN 56 AND 90), Summary AS (SELECT status, carrier, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(carrier))) AS carrier_values, SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END) AS lost_count FROM valid_shipments GROUP BY status, carrier) SELECT * FROM Summary WHERE lost_count >= 58

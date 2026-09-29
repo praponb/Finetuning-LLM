@@ -1,0 +1,1 @@
+WITH RankedInventory AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS pos FROM inventory WHERE last_restock > '2025-01-01') SELECT id, product_id, quantity, last_restock FROM RankedInventory WHERE pos <= 3 ORDER BY last_restock;

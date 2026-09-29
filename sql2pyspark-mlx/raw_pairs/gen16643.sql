@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.customer_id, customers.country, customers.city, customers.name, CONCAT_WS('-', customers.segment, customers.email) AS segment_email_key FROM sessions LEFT JOIN customers ON sessions.customer_id = customers.id

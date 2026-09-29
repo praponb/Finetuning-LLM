@@ -1,0 +1,1 @@
+SELECT *, LEAD(balance, 1) OVER (PARTITION BY account_type ORDER BY balance, id) AS next_balance, ROW_NUMBER() OVER (PARTITION BY customer_id, account_type ORDER BY opened_date, id) AS row_seq FROM accounts

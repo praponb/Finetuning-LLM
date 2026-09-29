@@ -1,0 +1,1 @@
+with filtered as (select id, store_id, sale_date, units, last_day(sale_date) sale_date_month_end from store_sales where product_id in (2, 3, 4)) select *, round(units / sum(units) over (partition by store_id), 4) units_share, row_number() over w_ordered event_seq from filtered window w_ordered as (partition by store_id order by units, id);

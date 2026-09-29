@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, ROUND(AVG(duration_sec), 2) avg_duration_sec, COUNT(CASE WHEN page = '/cart' THEN 1 END) cart_count FROM web_events GROUP BY session_id) SELECT s.device, s.browser, ss.avg_duration_sec, ss.cart_count FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id;

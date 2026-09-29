@@ -1,0 +1,1 @@
+SELECT emp.is_remote AS employee_is_remote, mgr.email AS manager_email, mgr.manager_id AS manager_manager_id FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE NOT (emp.dept_id IN (7, 11, 12) AND emp.level = 'L1');

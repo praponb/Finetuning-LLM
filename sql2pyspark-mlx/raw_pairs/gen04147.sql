@@ -1,0 +1,1 @@
+SELECT id, channel, amount, COALESCE(amount, 0) AS amount_filled, GREATEST(amount, discount) AS greatest_amount_discount FROM orders WHERE customer_id = 15 AND store_id = 31 ORDER BY channel, id LIMIT 5;

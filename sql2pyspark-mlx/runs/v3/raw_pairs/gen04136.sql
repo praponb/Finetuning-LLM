@@ -1,0 +1,1 @@
+SELECT YEAR(sale_date) AS sale_year, COUNT(*) AS store_sale_count FROM store_sales WHERE NOT (store_id IN (2, 5) AND units BETWEEN 15 AND 20) GROUP BY sale_year HAVING COUNT(*) < 4 ORDER BY sale_year DESC LIMIT 5;

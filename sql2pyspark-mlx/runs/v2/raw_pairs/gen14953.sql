@@ -1,0 +1,1 @@
+select p.id, p.amount, o.status, s.city from payments p inner join orders o on p.order_id = o.id inner join stores s on o.store_id = s.id where upper(s.store_name) like '%ALL%' and o.channel is null order by s.city;

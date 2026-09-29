@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, DATE_SUB(opened_date, 85) opened_date_minus_85d FROM accounts WHERE opened_date > DATE '2023-03-22' AND status IS DISTINCT FROM 'OPEN') SELECT id, customer_id, account_type, balance, opened_date, status, opened_date_minus_85d FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY opened_date, id) AS row_num FROM base) x WHERE row_num = 1;

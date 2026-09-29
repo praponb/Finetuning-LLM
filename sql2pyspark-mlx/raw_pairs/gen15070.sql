@@ -1,0 +1,1 @@
+select id, session_id, concat_ws('-', page, event_type) as page_event_type_key, case when page = '/home' then 1 else 0 end as is_home from web_events where event_time >= '2025-08-01' or page in ('/product', '/checkout', '/home')

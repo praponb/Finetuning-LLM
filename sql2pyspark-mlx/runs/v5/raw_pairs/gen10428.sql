@@ -1,0 +1,1 @@
+SELECT products.cost, store_sales.units, store_sales.sale_date, store_sales.product_id, ROUND(store_sales.revenue / store_sales.units, 2) AS revenue_per_unit FROM products LEFT JOIN store_sales ON store_sales.product_id = products.id WHERE store_sales.store_id IN (3, 6)

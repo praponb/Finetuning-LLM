@@ -1,0 +1,1 @@
+SELECT id, product_id, units, sale_date FROM (SELECT id, product_id, units, sale_date, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY units DESC, id) AS row_num FROM store_sales) AS t WHERE row_num = 1

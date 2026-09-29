@@ -1,0 +1,2 @@
+select cost
+from shipments

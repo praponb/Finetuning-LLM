@@ -1,0 +1,1 @@
+select category, sum(case when category = 'Electronics' then price else 0 end) as electronics_price, sum(stock_qty) as total_stock_qty from products where launch_date <= '2025-07-31' and supplier_id = 16 and supplier_id = 32 group by category order by category;

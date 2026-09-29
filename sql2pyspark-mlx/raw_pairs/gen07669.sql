@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_accounts FROM transactions GROUP BY account_id) SELECT a.id, a.customer_id, tba.unique_accounts FROM accounts a JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY id LIMIT 50

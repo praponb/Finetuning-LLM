@@ -1,0 +1,1 @@
+SELECT CASE WHEN a.balance >= 77000 THEN 'high' WHEN a.balance >= 8000 THEN 'mid' ELSE 'low' END balance_bucket, MIN(t.txn_time) min_txn_time FROM transactions t JOIN accounts a ON a.id = t.account_id GROUP BY CASE WHEN a.balance >= 77000 THEN 'high' WHEN a.balance >= 8000 THEN 'mid' ELSE 'low' END ORDER BY balance_bucket ASC;

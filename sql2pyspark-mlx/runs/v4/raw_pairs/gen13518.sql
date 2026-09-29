@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', started_at) AS activity_month, customer_id, DATE_TRUNC('QUARTER', started_at) AS quarter_start, COUNT(*) AS cnt, MAX(started_at) AS last_started_at, MAX(started_at) AS ended_at FROM sessions GROUP BY activity_month, customer_id, quarter_start ORDER BY customer_id;

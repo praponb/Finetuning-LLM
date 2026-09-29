@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(txn_time) AS txn_month, COUNT(amount) AS amount_count, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY MONTH(txn_time)) AS sub WHERE amount_count > 7 ORDER BY txn_month DESC;

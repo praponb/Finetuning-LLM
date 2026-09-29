@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE (store_id IN (2, 4, 5) AND units = 20) OR sale_date <= '2025-07-01'), agg AS (SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, COUNT(*) AS store_sale_count FROM base GROUP BY DATE_TRUNC('MONTH', sale_date)) SELECT sale_month, store_sale_count FROM agg WHERE store_sale_count > 6 ORDER BY sale_month DESC;

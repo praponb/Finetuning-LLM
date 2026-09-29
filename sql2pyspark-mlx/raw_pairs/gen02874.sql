@@ -1,0 +1,1 @@
+SELECT paid_day, avg_amount FROM (SELECT TO_DATE(paid_at) AS paid_day, ROUND(AVG(amount), 2) AS avg_amount FROM payments WHERE order_id IN (31, 36) GROUP BY TO_DATE(paid_at)) AS t WHERE avg_amount >= 62 ORDER BY paid_day ASC

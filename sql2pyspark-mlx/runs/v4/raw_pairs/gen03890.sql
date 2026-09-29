@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, oi.product_id, o.channel, c.segment, c.age, o.amount + o.shipping_fee AS amount_with_shipping FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id JOIN customers c ON o.customer_id = c.id ORDER BY c.age DESC, o.channel;

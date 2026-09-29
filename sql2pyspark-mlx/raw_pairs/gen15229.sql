@@ -1,0 +1,1 @@
+SELECT p.id, p.category, p.supplier_id, t.num_order_items, t.quantity_count FROM products p LEFT JOIN (SELECT product_id, COUNT(*) AS num_order_items, COUNT(quantity) AS quantity_count FROM order_items WHERE product_id = 40 GROUP BY product_id) t ON p.id = t.product_id WHERE t.num_order_items > 8 ORDER BY 1 DESC;

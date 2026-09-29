@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM shipments WHERE status NOT IN ('LOST', 'DELIVERED') AND status = 'RETURNED'), agg AS (SELECT carrier, SUM(CASE WHEN carrier = 'Kerry' THEN 1 ELSE 0 END) AS kerry_count FROM src GROUP BY carrier) SELECT * FROM agg ORDER BY carrier DESC

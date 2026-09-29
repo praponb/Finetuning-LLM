@@ -1,0 +1,1 @@
+with ProductSummary as (select product_id, sum(quantity) as total_quantity from order_items group by product_id) select p.id, p.brand, p.stock_qty, P.total_quantity from products p left outer join ProductSummary P on p.id = P.product_id where P.total_quantity > 25 order by stock_qty desc

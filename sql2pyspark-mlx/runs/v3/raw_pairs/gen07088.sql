@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, o.customer_id, c.segment, c.signup_date FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id LEFT OUTER JOIN customers c ON o.customer_id = c.id ORDER BY quantity DESC;

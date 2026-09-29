@@ -1,0 +1,1 @@
+SELECT QUARTER(signup_date) AS signup_quarter, COUNT(DISTINCT credit_limit) AS unique_segments, SUM(CASE WHEN city = 'Berlin' THEN credit_limit ELSE 0 END) AS berlin_credit_limit, COUNT(CASE WHEN segment = 'Corporate' THEN 1 END) AS corporate_count FROM customers WHERE LOWER(TRIM(email)) = 'grace.kim@gmail.com' GROUP BY QUARTER(signup_date) ORDER BY berlin_credit_limit DESC

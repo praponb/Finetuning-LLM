@@ -1,0 +1,1 @@
+SELECT id, store_id, channel, amount, ROUND(amount / SUM(amount) OVER (PARTITION BY store_id, channel), 3) AS amount_share, AVG(amount) OVER (PARTITION BY store_id) AS store_id_avg_amount FROM orders;

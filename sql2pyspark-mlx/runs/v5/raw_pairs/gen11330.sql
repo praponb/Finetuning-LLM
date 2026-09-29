@@ -1,0 +1,1 @@
+SELECT p.brand, MIN(ss.sale_date) AS min_sale_date, AVG(ss.units) AS avg_units FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id FULL OUTER JOIN suppliers s ON s.id = p.supplier_id WHERE p.supplier_id = 39 GROUP BY p.brand ORDER BY brand ASC, avg_units ASC;

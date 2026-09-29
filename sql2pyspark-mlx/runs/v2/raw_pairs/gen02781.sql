@@ -1,0 +1,1 @@
+SELECT products.category, products.stock_qty, products.price, store_sales.units, store_sales.sale_date FROM products LEFT OUTER JOIN store_sales ON products.id = store_sales.product_id WHERE MONTH(store_sales.sale_date) IN (2, 7, 9);

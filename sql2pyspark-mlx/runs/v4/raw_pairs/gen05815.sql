@@ -1,0 +1,1 @@
+SELECT product_id, store_id, SUM(units) AS total_units, ROUND(AVG(revenue), 2) AS avg_revenue FROM store_sales WHERE revenue <= 1700 GROUP BY product_id, store_id HAVING ROUND(AVG(revenue), 2) >= 23 ORDER BY avg_revenue DESC, product_id ASC;

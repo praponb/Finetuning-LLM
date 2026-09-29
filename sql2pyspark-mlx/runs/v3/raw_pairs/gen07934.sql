@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(DISTINCT shipping_fee) AS unique_customers, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders WHERE customer_id = 35 GROUP BY store_id) SELECT s.id, s.sqft, st.unique_customers, st.channel_list FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id WHERE st.unique_customers > 9;

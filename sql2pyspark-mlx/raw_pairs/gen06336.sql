@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, effective_from, EXPLODE(tier_limits) AS val FROM price_tiers) SELECT id, val, CUME_DIST() OVER (ORDER BY val DESC) AS val_cume_dist, CUME_DIST() OVER w_running AS val_cume_dist_2, PERCENT_RANK() OVER (ORDER BY val ASC NULLS LAST) AS val_percent_rank FROM exploded WINDOW w_running AS (PARTITION BY MONTH(effective_from) ORDER BY val ASC);

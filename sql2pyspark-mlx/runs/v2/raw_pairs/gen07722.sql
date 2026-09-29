@@ -1,0 +1,1 @@
+SELECT category, brand, SORT_ARRAY(COLLECT_SET(category)) AS category_list, COUNT(DISTINCT cost) AS unique_suppliers FROM products WHERE category = 'Fashion' AND (launch_date <= '2024-07-18' OR supplier_id IN (15, 39)) GROUP BY category, brand HAVING COUNT(DISTINCT cost) >= 5;

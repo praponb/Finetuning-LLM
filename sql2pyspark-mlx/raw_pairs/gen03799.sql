@@ -1,0 +1,1 @@
+select case when monthly_fee >= 261 then 'HIGH' else 'LOW' end as monthly_fee_tier, date_trunc('quarter', start_date) as quarter_start, count_if(status = 'PAUSED') as paused_events, sum(monthly_fee) as total_monthly_fee from subscriptions group by case when monthly_fee >= 261 then 'HIGH' else 'LOW' end, date_trunc('quarter', start_date) order by monthly_fee_tier;

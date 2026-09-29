@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 82 THEN 'high' WHEN cost >= 28 THEN 'mid' ELSE 'low' END AS cost_bucket, COUNT(*) AS row_count FROM shipments WHERE carrier = 'Kerry' GROUP BY CASE WHEN cost >= 82 THEN 'high' WHEN cost >= 28 THEN 'mid' ELSE 'low' END;

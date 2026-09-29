@@ -1,0 +1,1 @@
+SELECT id, tags, cost, supplier_id, stock_qty + price AS stock_qty_plus_price, CASE WHEN brand IN ('Acme', 'Stark') THEN 'Priority' ELSE 'Other' END AS brand_group FROM products WHERE MONTH(launch_date) IN (4, 5, 10);

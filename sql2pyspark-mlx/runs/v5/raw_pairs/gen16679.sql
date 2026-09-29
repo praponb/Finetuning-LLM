@@ -1,0 +1,1 @@
+select status, round(stddev(monthly_fee), 2) as stddev_monthly_fee from subscriptions where monthly_fee >= 210 or status in ('PAUSED', 'ACTIVE') group by 1 having round(stddev(monthly_fee), 2) >= 36 order by status

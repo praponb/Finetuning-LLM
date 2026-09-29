@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT category, brand FROM products EXCEPT SELECT category, brand FROM products WHERE category = 'Sports'), reconciled AS (SELECT s.* FROM products s INNER JOIN matched_keys k ON s.category = k.category AND s.brand = k.brand) SELECT product_name, category, price, cost, stock_qty, launch_date, tags FROM reconciled ORDER BY cost DESC NULLS FIRST;

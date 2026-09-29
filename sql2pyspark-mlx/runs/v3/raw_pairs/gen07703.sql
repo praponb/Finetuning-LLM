@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN country IN ('SG', 'UK') THEN 'tier_1' ELSE 'other' END AS country_group, segment, age FROM customers) PIVOT (COUNT(age) FOR segment IN ('SMB', 'Consumer', 'Corporate'))

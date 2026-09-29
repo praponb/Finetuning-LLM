@@ -1,0 +1,1 @@
+SELECT QUARTER(s.opened_date) AS opened_quarter, CASE WHEN s.sqft >= 14677 THEN 'high' WHEN s.sqft >= 3443 THEN 'mid' ELSE 'low' END AS sqft_bucket, MIN(ss.revenue) AS min_revenue FROM store_sales ss JOIN stores s ON ss.store_id = s.id GROUP BY QUARTER(s.opened_date), CASE WHEN s.sqft >= 14677 THEN 'high' WHEN s.sqft >= 3443 THEN 'mid' ELSE 'low' END

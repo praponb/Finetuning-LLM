@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.status, COUNT(transactions.id) AS transaction_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(transactions.txn_type))) AS txn_type_values FROM accounts LEFT JOIN transactions ON accounts.id = transactions.account_id WHERE accounts.status = 'FROZEN' GROUP BY accounts.id, accounts.status ORDER BY status DESC

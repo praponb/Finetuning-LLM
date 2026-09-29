@@ -1,0 +1,1 @@
+SELECT ss.revenue, ss.product_id, p.price, p.launch_date, s.supplier_name FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE s.supplier_name LIKE '%Lion%' AND ss.product_id IN (2, 6)

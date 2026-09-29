@@ -1,0 +1,1 @@
+SELECT order_items.product_id, products.price, orders.customer_id, orders.shipping_fee FROM order_items JOIN products ON order_items.product_id = products.id JOIN orders ON order_items.order_id = orders.id ORDER BY customer_id DESC;

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LENGTH(browser) AS browser_length FROM sessions WHERE country IS NOT DISTINCT FROM 'SG') SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM web_events c WHERE c.session_id = s.id AND c.event_time < '2025-10-23');

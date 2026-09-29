@@ -1,0 +1,1 @@
+select location, pct_bangkok from (select location, round((100 * sum(case when location = 'Bangkok' then 1 else 0 end)) / count(*), 1) as pct_bangkok from departments where dept_name in ('Legal', 'HR') group by location) as x where pct_bangkok < 27 order by pct_bangkok desc

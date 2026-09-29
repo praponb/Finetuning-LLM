@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, event_type, duration_sec, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY duration_sec DESC, id) rn FROM web_events) SELECT * FROM numbered WHERE rn <= 5 ORDER BY id DESC, duration_sec DESC;

@@ -1,0 +1,1 @@
+select id, country, started_at, customer_id from (select *, row_number() over (partition by country order by started_at desc, id) as pos from sessions where started_at >= '2025-04-01') as ranked where pos = 1;

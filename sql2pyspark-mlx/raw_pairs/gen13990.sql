@@ -1,0 +1,1 @@
+select country, city, round(stddev(rating), 2) stddev_rating, max(rating) - min(rating) rating_range, round((100 * sum(case when city = 'Tokyo' then 1 else 0 end)) / count(*), 1) pct_tokyo from suppliers where city not in ('Singapore', 'Chiang Mai') group by country, city having sum(case when city = 'Chiang Mai' then rating else 0 end) >= 53

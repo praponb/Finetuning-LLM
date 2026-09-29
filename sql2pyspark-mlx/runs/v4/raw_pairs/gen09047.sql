@@ -1,0 +1,1 @@
+SELECT id, store_id, product_id, units, sale_date, DENSE_RANK() OVER (PARTITION BY store_id, product_id ORDER BY units DESC) AS units_dense_rank, units - LAG(units, 1) OVER (PARTITION BY store_id ORDER BY sale_date, id) AS units_change FROM store_sales WHERE sale_date > '2024-06-01';

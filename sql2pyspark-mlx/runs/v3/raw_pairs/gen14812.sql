@@ -1,0 +1,1 @@
+SELECT city, ROUND(STDDEV(sqft), 2) AS stddev_sqft, MIN(opened_date) AS min_opened_date FROM stores WHERE opened_date <= '2023-07-02' OR MONTH(opened_date) IN (1, 6, 11) GROUP BY city ORDER BY min_opened_date DESC

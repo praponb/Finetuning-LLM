@@ -1,0 +1,1 @@
+SELECT s.id, s.started_at, s.device, t.latest_event_time, t.total_duration_sec FROM sessions s INNER JOIN (SELECT session_id, MAX(event_time) AS latest_event_time, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.total_duration_sec >= 1700 ORDER BY id DESC, s.device LIMIT 20

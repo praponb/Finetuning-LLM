@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM stores WHERE region = 'East'), Agg AS (SELECT city, region, MIN(sqft) AS min_sqft FROM src GROUP BY city, region) SELECT city, min_sqft FROM Agg WHERE min_sqft > 15700 ORDER BY min_sqft DESC, city;

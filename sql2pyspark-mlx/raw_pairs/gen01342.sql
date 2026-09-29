@@ -1,0 +1,1 @@
+SELECT dim.browser, dim.country, e.page, COUNT(*) AS cnt, AVG(e.duration_sec) AS avg_duration_sec FROM web_events e JOIN sessions dim ON e.session_id = dim.id GROUP BY dim.browser, dim.country, e.page ORDER BY cnt NULLS FIRST;

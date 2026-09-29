@@ -1,0 +1,1 @@
+select account_type, case when status in ('OPEN', 'FROZEN') then 'core' else 'other' end as status_group, sum(case when status = 'OPEN' then 1 else 0 end) as open_count, count(*) as account_count from accounts where (balance < 64000 and account_type = 'CHECKING') or opened_date < '2025-08-31' group by 1, 2

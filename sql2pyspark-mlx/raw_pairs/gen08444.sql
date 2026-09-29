@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, SORT_ARRAY(tags) AS sorted_tags, LAST_DAY(launch_date) AS launch_date_month_end, COALESCE(brand, 'NONE') AS brand_filled FROM products WHERE ARRAY_CONTAINS(tags, 'clearance')) SELECT s.* FROM base s WHERE EXISTS (SELECT 1 FROM inventory ch WHERE ch.product_id = s.id AND ch.last_restock >= s.launch_date);

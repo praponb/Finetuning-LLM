@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', shipped_date) AS shipped_month, carrier, SORT_ARRAY(COLLECT_SET(status)) AS status_list, MIN(cost) AS min_cost FROM shipments GROUP BY DATE_TRUNC('MONTH', shipped_date), carrier) AS agg WHERE min_cost > 40 ORDER BY min_cost DESC

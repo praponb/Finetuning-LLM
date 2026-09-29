@@ -1,0 +1,1 @@
+WITH recent_employees AS (SELECT * FROM employees WHERE email IS NOT NULL AND job_title IN ('Director', 'Intern', 'Analyst')), employees_stats AS (SELECT level, SUM(salary) AS total_salary, MAX(salary) AS max_salary FROM recent_employees GROUP BY level) SELECT level, total_salary, max_salary FROM employees_stats ORDER BY max_salary DESC

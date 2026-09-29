@@ -1,0 +1,1 @@
+SELECT id, status_code, context['trace'] AS trace, COALESCE(context['version'], 'none') AS version_or_default, COALESCE(context['region'], 'direct') AS region_or_default FROM app_logs WHERE status_code BETWEEN 272 AND 305

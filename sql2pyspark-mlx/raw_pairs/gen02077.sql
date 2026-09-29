@@ -1,0 +1,1 @@
+SELECT dept_name, CASE WHEN budget >= 3530000 THEN 'high' WHEN budget >= 1381000 THEN 'mid' ELSE 'low' END AS budget_bucket, MIN(budget) AS min_budget FROM departments GROUP BY dept_name, CASE WHEN budget >= 3530000 THEN 'high' WHEN budget >= 1381000 THEN 'mid' ELSE 'low' END ORDER BY min_budget DESC, dept_name, budget_bucket LIMIT 20;

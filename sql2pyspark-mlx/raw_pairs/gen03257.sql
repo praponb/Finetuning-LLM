@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, customer_id FROM sessions QUALIFY ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC NULLS LAST, id) = 1) SELECT customer_id, COUNT(DISTINCT id) AS distinct_ids, COUNT(DISTINCT customer_id) AS distinct_customer_ids FROM ranked GROUP BY customer_id HAVING distinct_customer_ids < 1000 ORDER BY distinct_ids;

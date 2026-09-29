@@ -1,0 +1,1 @@
+with latest as (select * from employees qualify row_number() over (partition by job_title order by salary desc, id) = 1) select id, full_name, email, manager_id, job_title, salary, is_remote from latest order by id limit 20;

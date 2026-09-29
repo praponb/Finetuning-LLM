@@ -1,0 +1,1 @@
+with kept_keys as (select store_id from store_sales except select store_id from store_sales where revenue between 1300 and 2500), verified as (select s.* from store_sales s join kept_keys k on s.store_id = k.store_id) select store_id, product_id, sale_date from verified order by product_id, store_id desc;

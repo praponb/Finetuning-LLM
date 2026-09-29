@@ -1,0 +1,1 @@
+WITH CustomerSummary AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM sessions GROUP BY customer_id) SELECT c.credit_limit, c.city, C.country_list FROM customers c INNER JOIN CustomerSummary C ON c.id = C.customer_id ORDER BY credit_limit DESC, city DESC;

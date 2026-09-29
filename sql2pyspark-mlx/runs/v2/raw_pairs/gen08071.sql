@@ -1,0 +1,1 @@
+SELECT s.id, s.store_name, s.opened_date, s.region FROM stores s WHERE NOT EXISTS (SELECT 1 FROM inventory i WHERE i.store_id = s.id AND i.product_id IN (1, 6, 9, 10)) ORDER BY id DESC, s.store_name DESC

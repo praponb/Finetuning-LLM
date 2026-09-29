@@ -1,0 +1,1 @@
+SELECT CASE WHEN monthly_fee >= 226 THEN 'high' WHEN monthly_fee >= 46 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM subscriptions GROUP BY CASE WHEN monthly_fee >= 226 THEN 'high' WHEN monthly_fee >= 46 THEN 'mid' ELSE 'low' END, customer_id ORDER BY monthly_fee_bucket, customer_id LIMIT 5;

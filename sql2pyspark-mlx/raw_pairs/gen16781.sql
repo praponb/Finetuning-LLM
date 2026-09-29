@@ -1,0 +1,1 @@
+with base as (select *, array_join(tags, ', ') as tags_text, coalesce(brand, 'N/A') as brand_clean from products where brand is distinct from 'Stark') select s.* from base s where exists (select 1 from store_sales x where x.product_id = s.id and x.sale_date <= s.launch_date)

@@ -1,0 +1,1 @@
+SELECT supplier_id, SUM(CASE WHEN category = 'Electronics' THEN 1 ELSE 0 END) electronics_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values FROM products GROUP BY supplier_id HAVING SUM(CASE WHEN category = 'Electronics' THEN 1 ELSE 0 END) >= 54 ORDER BY supplier_id DESC

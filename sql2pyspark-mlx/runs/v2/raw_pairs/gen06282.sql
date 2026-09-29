@@ -1,0 +1,1 @@
+SELECT p.brand, SUM(oi.quantity * oi.unit_price) AS revenue, MAX(oi.quantity) AS max_quantity FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE p.supplier_id IS NOT NULL GROUP BY p.brand;

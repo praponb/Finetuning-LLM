@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.order_id, p.stock_qty, p.supplier_id, s.supplier_name FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE s.supplier_name IS NULL ORDER BY order_id DESC, id

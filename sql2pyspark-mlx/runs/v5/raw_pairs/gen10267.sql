@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, carrier, shipped_date, delivered_date, cost, status, TRIM(carrier) clean_carrier FROM shipments WHERE delivered_date > TO_DATE('2023-04-23') AND MONTH(shipped_date) IN (9, 10, 11)) SELECT * FROM (SELECT status, carrier, cost FROM valid) src PIVOT (SUM(cost) AS value_sum FOR carrier IN ('Kerry' AS kerry, 'UPS' AS ups))

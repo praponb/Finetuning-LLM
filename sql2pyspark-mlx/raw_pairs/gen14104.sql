@@ -1,0 +1,1 @@
+WITH valid_accounts AS (SELECT * FROM accounts WHERE customer_id IS NOT NULL), AccountsStats AS (SELECT status, ROUND(AVG(balance), 2) avg_balance FROM valid_accounts GROUP BY status) SELECT * FROM AccountsStats

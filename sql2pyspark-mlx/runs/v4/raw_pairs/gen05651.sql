@@ -1,0 +1,1 @@
+SELECT *, CUME_DIST() OVER (ORDER BY credit_limit DESC NULLS FIRST) credit_limit_cume_dist, NTILE(10) OVER (PARTITION BY city ORDER BY age, id) age_bucket, AVG(age) OVER (PARTITION BY segment) segment_avg_age FROM customers

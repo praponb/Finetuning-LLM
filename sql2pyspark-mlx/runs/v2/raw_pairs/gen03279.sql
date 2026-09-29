@@ -1,0 +1,1 @@
+SELECT c.city, SORT_ARRAY(COLLECT_SET(s.carrier)) carrier_list FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id RIGHT JOIN customers c ON c.id = o.customer_id GROUP BY c.city ORDER BY c.city;

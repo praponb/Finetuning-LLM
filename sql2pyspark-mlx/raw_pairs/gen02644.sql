@@ -1,0 +1,1 @@
+WITH valid_customers AS (SELECT * FROM customers WHERE segment IN ('SMB', 'Corporate')), Agg AS (SELECT segment, SUM(CASE WHEN segment = 'Corporate' THEN credit_limit ELSE 0 END) AS corporate_credit_limit, SUM(credit_limit) AS total_credit_limit FROM valid_customers GROUP BY segment) SELECT segment, corporate_credit_limit FROM Agg

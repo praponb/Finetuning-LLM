@@ -1,0 +1,1 @@
+select case when plan in ('basic', 'enterprise') then 'core' else 'other' end as plan_group, min(start_date) as min_start_date, avg(monthly_fee) as avg_monthly_fee from subscriptions where plan in ('basic', 'standard') and start_date <= '2024-12-01' group by 1 order by min_start_date desc;

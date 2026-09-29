@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, store_name, city, region, opened_date, sqft, UPPER(city) AS city_upper FROM stores WHERE opened_date > TO_DATE('2023-06-14') AND region IS NOT NULL) SELECT s.*, latest.units FROM cleaned s LEFT JOIN LATERAL (SELECT c.units FROM store_sales c WHERE c.store_id = s.id ORDER BY c.revenue DESC, c.id DESC LIMIT 1) latest ON TRUE;

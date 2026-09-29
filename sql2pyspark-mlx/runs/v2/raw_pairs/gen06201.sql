@@ -1,0 +1,1 @@
+select ss.id, ss.store_id, p.launch_date, s.country, s.rating from store_sales ss left join products p on ss.product_id = p.id inner join suppliers s on p.supplier_id = s.id where s.city in ('Singapore', 'New York', 'Berlin') and s.supplier_name like '%City%' order by s.country, id limit 10;

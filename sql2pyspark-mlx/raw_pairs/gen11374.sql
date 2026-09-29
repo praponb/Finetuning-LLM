@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, product_name, category, brand, price, cost, stock_qty, tags, supplier_id, LOWER(product_name) AS product_name_lower, COALESCE(brand, 'NONE') AS brand_clean FROM products WHERE launch_date > TO_DATE('2023-07-06')) SELECT a.*, s.supplier_name, s.country, s.rating FROM cleaned a LEFT JOIN suppliers s ON a.supplier_id = s.id;

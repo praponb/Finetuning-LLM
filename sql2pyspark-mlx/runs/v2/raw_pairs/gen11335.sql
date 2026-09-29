@@ -1,0 +1,1 @@
+SELECT store_id, avg_quantity, quantity_count FROM (SELECT store_id, AVG(quantity) AS avg_quantity, COUNT(quantity) AS quantity_count FROM inventory GROUP BY store_id) AS x WHERE avg_quantity >= 100 ORDER BY quantity_count, store_id DESC LIMIT 5

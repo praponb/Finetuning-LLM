@@ -1,0 +1,1 @@
+SELECT c.segment, SUM(CASE WHEN s.status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count FROM subscriptions s LEFT OUTER JOIN customers c ON s.customer_id = c.id WHERE s.end_date >= '2025-05-01' GROUP BY c.segment ORDER BY segment DESC LIMIT 5

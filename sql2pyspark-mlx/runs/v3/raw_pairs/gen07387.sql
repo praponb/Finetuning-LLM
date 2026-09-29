@@ -1,0 +1,1 @@
+SELECT page, unique_sessions, total_count FROM (SELECT page, COUNT(DISTINCT duration_sec) AS unique_sessions, COUNT(*) AS total_count FROM web_events WHERE page IN ('/home', '/search', '/cart') GROUP BY page) AS x WHERE unique_sessions > 8

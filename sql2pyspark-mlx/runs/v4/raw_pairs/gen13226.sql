@@ -1,0 +1,1 @@
+SELECT opened_date, region, CONCAT_WS('-', store_name, region) AS store_name_region_key FROM stores WHERE region IN ('North', 'West') AND YEAR(opened_date) = 2025 AND region IN ('North', 'Central') ORDER BY opened_date DESC

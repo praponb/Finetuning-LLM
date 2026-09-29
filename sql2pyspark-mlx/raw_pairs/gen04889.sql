@@ -1,0 +1,1 @@
+select month(s.opened_date) as opened_month, s.city, sum(case when p.method = 'card' then 1 else 0 end) as card_count, count(*) as row_count from payments p right outer join orders o on o.id = p.order_id inner join stores s on o.store_id = s.id group by month(s.opened_date), s.city order by opened_month desc

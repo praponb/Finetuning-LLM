@@ -1,0 +1,1 @@
+with customer_stats as (select customer_id, min(opened_date) as first_opened_date, sum(balance) as total_balance from accounts group by customer_id) select c.id, c.city, c.credit_limit, cs.first_opened_date, cs.total_balance from customers c left join customer_stats cs on c.id = cs.customer_id order by c.credit_limit;

@@ -1,0 +1,1 @@
+select month(signup_date) as signup_month, concat_ws(', ', sort_array(collect_set(segment))) as segment_values, sum(case when city = 'Bangkok' then 1 else 0 end) as bangkok_count from customers group by month(signup_date) having sum(credit_limit) >= 28000;

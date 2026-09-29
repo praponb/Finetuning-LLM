@@ -1,0 +1,1 @@
+select * from (select event_type, max(duration_sec) - min(duration_sec) as duration_sec_range, avg(duration_sec) as avg_duration_sec from web_events where session_id in (19, 27, 30, 37) group by event_type) as t where avg_duration_sec < 300

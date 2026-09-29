@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, credit_limit, FIRST_VALUE(credit_limit) OVER (PARTITION BY segment ORDER BY signup_date DESC, id) AS first_credit_limit, SUM(credit_limit) OVER (PARTITION BY YEAR(signup_date), segment ORDER BY signup_date, id) AS running_credit_limit FROM customers;

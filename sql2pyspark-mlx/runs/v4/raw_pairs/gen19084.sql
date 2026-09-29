@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM accounts WHERE opened_date > '2023-06-07'), summary AS (SELECT account_type, MONTH(opened_date) AS opened_month, COUNT(balance) AS balance_count, SUM(balance) AS total_balance FROM src GROUP BY account_type, MONTH(opened_date)) SELECT account_type, opened_month, total_balance FROM summary ORDER BY total_balance DESC

@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, currency, EXPLODE(discounts) AS tier_value FROM price_tiers) SELECT id, plan, effective_from, currency, tier_value, PERCENT_RANK() OVER (PARTITION BY currency ORDER BY tier_value DESC NULLS LAST) AS tier_value_percent_rank FROM flattened WHERE currency = 'EUR';

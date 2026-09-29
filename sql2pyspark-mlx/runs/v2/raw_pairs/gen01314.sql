@@ -1,0 +1,1 @@
+select country, sum(credit_limit) as total_credit_limit, dense_rank() over (order by sum(credit_limit) desc) as credit_limit_rank from customers group by country order by total_credit_limit, country limit 20;

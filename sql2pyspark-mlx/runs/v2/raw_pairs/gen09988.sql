@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, AVG(duration_sec) AS avg_duration_sec, MAX(duration_sec) AS max_duration_sec FROM web_events WHERE TO_DATE(event_time) < '2025-03-01' GROUP BY session_id) SELECT s.device, ss.avg_duration_sec, ss.max_duration_sec FROM sessions s INNER JOIN session_stats ss ON s.id = ss.session_id WHERE ss.max_duration_sec >= 190;

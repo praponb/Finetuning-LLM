@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, a.balance, c.credit_limit, c.city, c.name FROM accounts a INNER JOIN customers c ON c.id = a.customer_id WHERE c.segment NOT IN ('SMB', 'Corporate', 'Consumer') OR a.balance BETWEEN 37000 AND 73000

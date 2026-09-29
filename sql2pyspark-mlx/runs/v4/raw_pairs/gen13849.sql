@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CONCAT_WS(',', product_name, category) product_name_category_key FROM products WHERE stock_qty < 235 OR brand IS NULL), launch_year_summary AS (SELECT YEAR(launch_date) launch_year, MAX(launch_date) last_launch_date FROM base GROUP BY YEAR(launch_date)) SELECT launch_year, last_launch_date FROM launch_year_summary ORDER BY launch_year DESC LIMIT 5

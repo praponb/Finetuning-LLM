@@ -1,0 +1,1 @@
+SELECT emp.id, emp.full_name AS employee_full_name, mgr.job_title AS manager_job_title, mgr.is_remote AS manager_is_remote, mgr.full_name AS manager_full_name FROM employees emp INNER JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.job_title IN ('Director', 'Engineer');

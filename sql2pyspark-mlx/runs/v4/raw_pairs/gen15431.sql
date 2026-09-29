@@ -1,0 +1,1 @@
+select id, order_id, cost, shipped_date, dense_rank() over (partition by order_id order by cost desc) as cost_dense_rank, cost - lag(cost, 1) over (partition by order_id order by shipped_date, id) as cost_change from shipments where delivered_date <= '2023-07-29'

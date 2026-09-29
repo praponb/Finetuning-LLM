@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END quantity_bucket, AVG(quantity) avg_quantity, COUNT(quantity) quantity_count FROM order_items GROUP BY CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END HAVING COUNT(unit_price) > 2;

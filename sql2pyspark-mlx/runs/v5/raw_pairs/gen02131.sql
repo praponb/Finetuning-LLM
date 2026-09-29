@@ -1,0 +1,1 @@
+SELECT city, MAX(opened_date) AS last_opened_date, ROUND((100 * SUM(CASE WHEN region = 'West' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_west FROM stores WHERE store_name IS NULL GROUP BY city ORDER BY city DESC;

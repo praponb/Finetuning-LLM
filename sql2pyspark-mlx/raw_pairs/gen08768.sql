@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT account_type, status, ROUND((100 * SUM(CASE WHEN account_type = 'LOAN' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_loan FROM accounts WHERE customer_id IN (3, 13) GROUP BY account_type, status) AS agg WHERE pct_loan >= 34;

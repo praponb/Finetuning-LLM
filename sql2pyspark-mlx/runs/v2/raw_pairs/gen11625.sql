@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY product_id) SELECT p.id, p.supplier_id, ps.unit_price_count FROM products p LEFT OUTER JOIN product_summary ps ON p.id = ps.product_id WHERE ps.unit_price_count > 5 ORDER BY p.id DESC

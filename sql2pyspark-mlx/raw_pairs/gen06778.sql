@@ -1,0 +1,1 @@
+SELECT product_id, store_id, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales GROUP BY product_id, store_id HAVING MAX(revenue) - MIN(revenue) < 36 ORDER BY product_id DESC, store_id DESC;

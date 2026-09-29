@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT id, device_code, temp_c, humidity, pressure, firmware FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY reading_ts DESC, id) AS rn FROM device_readings) ranked WHERE rn = 1) SELECT id, device_code, temp_c, firmware, CASE WHEN device_code RLIKE '^(DV-01|DV-04)$' THEN 'CORE' ELSE 'OTHER_ZONE' END AS device_code_zone FROM deduped;

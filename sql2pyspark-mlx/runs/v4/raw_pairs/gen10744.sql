@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.0 THEN 'mid' ELSE 'low' END AS rating_bucket, city, MAX(rating) - MIN(rating) AS rating_range, SUM(rating) AS total_rating, COUNT(*) AS cnt FROM suppliers GROUP BY rating_bucket, city HAVING COUNT(rating) >= 4 ORDER BY rating_bucket;

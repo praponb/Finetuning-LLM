@@ -1,0 +1,1 @@
+SELECT product_id, COUNT(quantity) AS quantity_count FROM order_items WHERE product_id IN (7, 17, 40) AND unit_price BETWEEN 200 AND 230 AND unit_price BETWEEN 130 AND 180 GROUP BY product_id ORDER BY product_id DESC LIMIT 1;

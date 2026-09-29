@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(rating, 0) AS rating_rounded, COALESCE(city, 'NONE') AS city_filled FROM suppliers WHERE country NOT IN ('UK', 'TH')) SELECT s.* FROM cleaned s WHERE EXISTS (SELECT 1 FROM products c WHERE c.supplier_id = s.id AND c.launch_date > '2025-02-11')

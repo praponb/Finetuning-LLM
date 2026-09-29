@@ -1,0 +1,1 @@
+SELECT manager_id, QUARTER(hire_date) AS hire_quarter, MONTH(hire_date) AS hire_month, SUM(salary) AS total_salary, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values FROM employees WHERE email IS NULL GROUP BY manager_id, QUARTER(hire_date), MONTH(hire_date) ORDER BY manager_id DESC, hire_quarter, hire_month LIMIT 50

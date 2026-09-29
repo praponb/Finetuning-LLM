@@ -1,0 +1,1 @@
+select s.*, x.product_stock_qty, x.category from suppliers s left join lateral (select c.stock_qty as product_stock_qty, c.category from products c where c.supplier_id = s.id order by c.price desc, c.id desc limit 1) x on true;

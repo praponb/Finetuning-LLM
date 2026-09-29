@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, MIN(start_date) AS min_start_date FROM subscriptions WHERE customer_id = 28 AND status IN ('PAUSED', 'CANCELLED', 'EXPIRED') GROUP BY DATE_FORMAT(end_date, 'yyyy-MM');

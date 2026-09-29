@@ -1,0 +1,1 @@
+SELECT country, AVG(age) avg_age, COUNT(CASE WHEN country = 'JP' THEN 1 END) jp_count, COUNT(age) age_count FROM customers WHERE city NOT IN ('Singapore', 'London', 'Bangkok') GROUP BY 1 HAVING COUNT(CASE WHEN country = 'US' THEN 1 END) < 5;

@@ -1,0 +1,1 @@
+SELECT cost_bucket, cost_range FROM (SELECT CASE WHEN cost >= 73 THEN 'high' WHEN cost >= 49 THEN 'mid' ELSE 'low' END AS cost_bucket, MAX(cost) - MIN(cost) AS cost_range FROM shipments GROUP BY CASE WHEN cost >= 73 THEN 'high' WHEN cost >= 49 THEN 'mid' ELSE 'low' END) AS x WHERE cost_range >= 66

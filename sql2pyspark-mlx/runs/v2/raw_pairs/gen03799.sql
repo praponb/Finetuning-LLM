@@ -1,0 +1,1 @@
+select session_id, event_type, count(*) as row_count, min(duration_sec) as min_duration_sec, sort_array(collect_set(event_type)) as event_type_list from web_events where page in ('/checkout', '/cart', '/product') and page not in ('/home', '/search', '/product') group by session_id, event_type having row_count > 5

@@ -1,0 +1,1 @@
+WITH EmployeesByDepartment AS (SELECT dept_id, MAX(hire_date) AS latest_hire_date, SUM(salary) AS total_salary FROM employees GROUP BY dept_id) SELECT d.location, d.dept_name, E.latest_hire_date, E.total_salary FROM departments d INNER JOIN EmployeesByDepartment E ON d.id = E.dept_id WHERE E.total_salary >= 742000 ORDER BY 4;

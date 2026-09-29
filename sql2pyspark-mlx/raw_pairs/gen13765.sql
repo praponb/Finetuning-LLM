@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.device, sessions.customer_id FROM sessions WHERE sessions.browser IN ('Chrome', 'Firefox') AND sessions.id IN (SELECT session_id FROM web_events WHERE event_time < '2023-09-01')

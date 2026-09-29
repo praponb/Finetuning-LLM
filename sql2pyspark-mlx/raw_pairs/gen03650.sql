@@ -1,0 +1,1 @@
+SELECT id, category, stock_qty, CASE WHEN brand = 'Initech' THEN 1 ELSE 0 END AS is_initech, CONCAT_WS('-', category, brand) AS category_brand_key FROM products WHERE brand IS NULL AND MONTH(launch_date) IN (3, 7, 10);

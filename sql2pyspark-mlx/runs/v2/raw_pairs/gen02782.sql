@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, SUM(salary) AS total_salary FROM employees GROUP BY dept_id) SELECT d.id, d.location, d.budget, ds.total_salary FROM departments d INNER JOIN department_summary ds ON d.id = ds.dept_id WHERE ds.total_salary >= 390000 ORDER BY total_salary DESC, id LIMIT 10;

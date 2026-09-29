@@ -1,0 +1,1 @@
+SELECT CASE WHEN txn_type IN ('CREDIT', 'DEBIT') THEN 'tier_1' ELSE 'other' END txn_type_group, COUNT(CASE WHEN txn_type = 'REFUND' THEN 1 END) refund_count FROM transactions WHERE account_id IN (6, 19) GROUP BY CASE WHEN txn_type IN ('CREDIT', 'DEBIT') THEN 'tier_1' ELSE 'other' END

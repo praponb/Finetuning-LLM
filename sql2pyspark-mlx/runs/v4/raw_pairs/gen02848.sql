@@ -1,0 +1,1 @@
+SELECT o.id, o.discount, o.store_id, o.channel FROM orders o WHERE o.status IN ('SHIPPED', 'RETURNED') AND o.store_id NOT IN (SELECT id FROM stores WHERE city IN ('Berlin', 'Tokyo', 'London')) ORDER BY store_id;

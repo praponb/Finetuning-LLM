@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, COUNT(DISTINCT amount) unique_merchants, ROUND(AVG(amount), 2) avg_amount FROM transactions WHERE account_id = 35 GROUP BY account_id) SELECT a.id, a.status, a.customer_id, as.unique_merchants, as.avg_amount FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id WHERE as.avg_amount >= 38;

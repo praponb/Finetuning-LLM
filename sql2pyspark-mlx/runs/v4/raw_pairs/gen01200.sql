@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, RANK() OVER (PARTITION BY region, city ORDER BY sqft NULLS LAST) AS rn FROM stores QUALIFY rn = 1) SELECT region, COUNT(CASE WHEN region = 'South' THEN 1 END) AS south_count, BIT_AND(sqft) AS sqft_bit_and FROM deduped GROUP BY region HAVING BIT_AND(sqft) > 1

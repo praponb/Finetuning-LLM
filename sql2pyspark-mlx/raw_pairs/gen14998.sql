@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, UPPER(supplier_name) AS supplier_name_upper FROM suppliers WHERE country IN ('US', 'JP') OR supplier_name LIKE 'Pac%'), city_summary AS (SELECT city, SUM(rating) AS total_rating, COUNT(rating) AS rating_count FROM base GROUP BY city) SELECT city, rating_count FROM city_summary ORDER BY city

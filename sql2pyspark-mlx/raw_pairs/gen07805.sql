@@ -1,0 +1,1 @@
+select o.id, o.status, count(oi.id) as order_item_count, count(distinct oi.quantity) as unique_products from orders o left join order_items oi on oi.order_id = o.id group by o.id, o.status order by unique_products desc, id, status limit 5;

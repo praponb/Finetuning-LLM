@@ -1,0 +1,1 @@
+with exploded as (select id, level, status_code, attr_key, value from app_logs lateral view explode(context) e as attr_key, value) select case when status_code >= 450 then 'HIGH' else 'LOW' end as status_code_tier, sum(status_code) as total_status_code, sum(case when level = 'WARN' then status_code else 0 end) as warn_status_code from exploded group by 1;

@@ -1,0 +1,1 @@
+SELECT id, city, opened_date, store_name FROM (SELECT id, city, opened_date, store_name, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS pos FROM stores WHERE city IN ('Singapore', 'Berlin', 'Bangkok')) AS r WHERE pos <= 2

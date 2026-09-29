@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4428000 THEN 'high' WHEN budget >= 768000 THEN 'mid' ELSE 'low' END AS budget_bucket, ROUND(AVG(budget), 2) AS avg_budget, SUM(CASE WHEN location = 'Berlin' THEN 1 ELSE 0 END) AS berlin_count FROM departments GROUP BY 1 HAVING SUM(CASE WHEN location = 'Berlin' THEN 1 ELSE 0 END) < 25;

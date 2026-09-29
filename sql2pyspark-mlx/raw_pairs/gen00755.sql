@@ -1,0 +1,1 @@
+SELECT level, QUARTER(hire_date) hire_quarter, SUM(CASE WHEN job_title = 'Designer' THEN salary ELSE 0 END) designer_salary, ROUND((100 * SUM(CASE WHEN job_title = 'Manager' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_manager FROM employees WHERE level IN ('L1', 'L3') GROUP BY level, QUARTER(hire_date);

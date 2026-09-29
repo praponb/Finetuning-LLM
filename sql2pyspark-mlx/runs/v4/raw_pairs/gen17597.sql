@@ -1,0 +1,1 @@
+SELECT i.quantity, i.product_id, p.brand, s.city, DATE_TRUNC('year', i.last_restock) last_restock_period FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN stores s ON i.store_id = s.id

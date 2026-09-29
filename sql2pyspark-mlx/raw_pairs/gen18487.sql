@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, country, started_at, RANK() OVER (PARTITION BY country ORDER BY started_at) AS pos FROM sessions) SELECT id, country, started_at FROM ranked WHERE pos <= 2 ORDER BY id DESC;

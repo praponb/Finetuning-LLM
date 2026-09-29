@@ -1,0 +1,1 @@
+select s.id, s.country, count(we.id) web_event_count, round(avg(we.duration_sec), 2) avg_duration_sec, sum(case when we.event_type = 'add_to_cart' then we.duration_sec else 0 end) add_to_cart_duration_sec from sessions s left join web_events we on s.id = we.session_id where we.duration_sec between 333 and 358 group by s.id, s.country order by web_event_count asc

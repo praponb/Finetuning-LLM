@@ -1,0 +1,1 @@
+SELECT o.channel, AVG(oi.unit_price) AS avg_unit_price, SUM(oi.quantity * oi.unit_price) AS revenue FROM order_items oi JOIN orders o ON oi.order_id = o.id JOIN products p ON oi.product_id = p.id WHERE o.status IN ('PENDING', 'COMPLETED', 'RETURNED') GROUP BY o.channel HAVING SUM(oi.quantity * oi.unit_price) > 21

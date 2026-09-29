@@ -1,0 +1,1 @@
+SELECT AVG(cost) AS avg_cost, SUM(CASE WHEN carrier = 'Flash' THEN cost ELSE 0 END) AS flash_cost, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM shipments WHERE status != 'DELIVERED' ORDER BY flash_cost

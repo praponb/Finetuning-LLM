@@ -1,0 +1,8 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_departments
+    .filter(~F.col("location").isin(["Singapore", "New York"]))
+    .select("id", "dept_name", "location")
+    .orderBy(F.col("id").desc())
+)

@@ -1,0 +1,1 @@
+WITH top_subscriptions AS (SELECT id, plan, monthly_fee, status, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY monthly_fee DESC, id) AS row_num FROM subscriptions) SELECT id, plan, monthly_fee, status FROM top_subscriptions WHERE row_num = 1 ORDER BY plan

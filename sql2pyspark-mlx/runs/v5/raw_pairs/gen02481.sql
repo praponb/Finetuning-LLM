@@ -1,0 +1,1 @@
+SELECT id, job_title, hire_date FROM (SELECT id, job_title, hire_date, ROW_NUMBER() OVER (PARTITION BY job_title ORDER BY hire_date DESC, id) AS pos FROM employees WHERE job_title = 'Analyst') AS t WHERE pos = 1 ORDER BY job_title;

@@ -1,0 +1,1 @@
+select date_format(sale_date, 'yyyy-MM') as sale_month, store_id, round(avg(units), 2) as avg_units, round(avg(revenue), 2) as avg_revenue from store_sales where sale_date < '2024-08-01' group by sale_month, store_id

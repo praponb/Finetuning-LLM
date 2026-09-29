@@ -1,0 +1,1 @@
+SELECT product_id, last_restock_month, unique_stores, min_quantity FROM (SELECT product_id, MONTH(last_restock) AS last_restock_month, COUNT(DISTINCT quantity) AS unique_stores, MIN(quantity) AS min_quantity FROM inventory GROUP BY product_id, MONTH(last_restock)) AS x WHERE min_quantity > 120

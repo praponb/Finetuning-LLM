@@ -1,0 +1,1 @@
+SELECT o.discount, o.customer_id, t.max_amount FROM orders o LEFT OUTER JOIN (SELECT order_id, MAX(amount) max_amount FROM payments GROUP BY order_id) t ON o.id = t.order_id ORDER BY o.customer_id DESC, t.max_amount DESC;

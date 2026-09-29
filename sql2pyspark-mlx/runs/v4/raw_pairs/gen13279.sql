@@ -1,0 +1,1 @@
+select product_id, case when unit_price >= 320 then 'high' when unit_price >= 60 then 'mid' else 'low' end as unit_price_bucket, max(quantity) - min(quantity) as quantity_range, sum(quantity * unit_price) as revenue from order_items where unit_price < 340 and product_id is not null group by product_id, unit_price_bucket order by revenue desc;

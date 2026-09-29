@@ -1,0 +1,1 @@
+SELECT method, order_id, status, AVG(amount) AS avg_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values FROM payments WHERE order_id IN (7, 21, 30) AND paid_at >= '2025-10-30' GROUP BY method, order_id, status ORDER BY order_id DESC

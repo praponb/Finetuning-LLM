@@ -1,0 +1,1 @@
+WITH filtered_store_sales AS (SELECT * FROM store_sales WHERE units BETWEEN 17 AND 28 AND (store_id IN (1, 3, 5, 6) OR units > 39)), summary AS (SELECT YEAR(sale_date) AS sale_year, SUM(units) AS total_units FROM filtered_store_sales GROUP BY YEAR(sale_date)) SELECT * FROM summary WHERE total_units < 210 ORDER BY total_units DESC;

@@ -1,0 +1,1 @@
+SELECT o.id, o.status, s.opened_date, s.city, c.city AS customer_city, CASE WHEN s.region IN ('Central', 'West') THEN 'Core' ELSE 'Other' END AS region_group FROM orders o RIGHT JOIN stores s ON s.id = o.store_id LEFT JOIN customers c ON o.customer_id = c.id WHERE UPPER(s.store_name) LIKE '%OWN%' ORDER BY city, region_group

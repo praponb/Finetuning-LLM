@@ -1,0 +1,1 @@
+select s.id, count(we.id) as web_event_count, min(we.event_time) as min_event_time from sessions s left outer join web_events we on we.session_id = s.id where s.customer_id = 14 group by s.id having web_event_count >= 1 order by id;

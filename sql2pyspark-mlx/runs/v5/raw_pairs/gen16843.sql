@@ -1,0 +1,1 @@
+select case when age >= 72 then 'high' when age >= 33 then 'mid' else 'low' end as age_bucket, sum(age) as total_age, sum(sum(age)) over (order by case when age >= 72 then 'high' when age >= 33 then 'mid' else 'low' end) as cumulative_age from customers group by case when age >= 72 then 'high' when age >= 33 then 'mid' else 'low' end order by cumulative_age desc;

@@ -1,0 +1,1 @@
+SELECT s.customer_id, TO_DATE(s.started_at) AS started_day, ROUND(STDDEV(we.duration_sec), 2) AS stddev_duration_sec FROM web_events we INNER JOIN sessions s ON s.id = we.session_id WHERE HOUR(s.started_at) BETWEEN 7 AND 14 GROUP BY s.customer_id, TO_DATE(s.started_at) HAVING ROUND(STDDEV(we.duration_sec), 2) > 62

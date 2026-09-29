@@ -1,0 +1,1 @@
+SELECT order_items.unit_price, order_items.quantity, orders.amount, products.cost, products.price FROM order_items INNER JOIN orders ON order_items.order_id = orders.id INNER JOIN products ON order_items.product_id = products.id ORDER BY products.cost DESC

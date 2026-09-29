@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT id, region FROM stores EXCEPT SELECT id, region FROM stores WHERE store_name LIKE 'Do%'), reconciled AS (SELECT s.* FROM stores s INNER JOIN matched_keys k ON s.id = k.id AND s.region = k.region) SELECT id, region, opened_date, sqft FROM reconciled;

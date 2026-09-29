@@ -1,0 +1,1 @@
+SELECT e.id, e.dept_id employee_dept_id, e.hire_date employee_hire_date, e.manager_id employee_manager_id, m.manager_id manager_manager_id, m.email manager_email, m.is_remote manager_is_remote, COALESCE(m.email, 'N/A') email_filled FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.salary <= 87000

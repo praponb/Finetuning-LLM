@@ -1,0 +1,1 @@
+SELECT device_code, SUM(pressure) AS total_pressure, SUM(CASE WHEN device_code = 'DV-04' THEN pressure ELSE 0 END) AS dv_04_pressure, STDDEV_SAMP(status_bits) AS status_bits_stddev FROM device_readings GROUP BY 1 ORDER BY device_code

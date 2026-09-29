@@ -1,0 +1,1 @@
+select s.id, s.plan, s.monthly_fee, s.customer_id, c.age, round(s.monthly_fee, 2) as monthly_fee_rounded from subscriptions s left outer join customers c on s.customer_id = c.id where s.customer_id = 7 and c.credit_limit between 10500 and 13200 order by s.customer_id desc

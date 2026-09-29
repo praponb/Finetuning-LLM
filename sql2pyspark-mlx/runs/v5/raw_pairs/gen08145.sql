@@ -1,0 +1,1 @@
+SELECT stores.sqft, stores.city, t.avg_shipping_fee FROM stores INNER JOIN (SELECT store_id, AVG(shipping_fee) AS avg_shipping_fee FROM orders WHERE discount > 0.26 GROUP BY store_id) t ON stores.id = t.store_id ORDER BY 2

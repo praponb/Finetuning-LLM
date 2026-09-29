@@ -1,0 +1,1 @@
+SELECT revenue_bucket, max_units FROM (SELECT CASE WHEN revenue >= 4100 THEN 'high' WHEN revenue >= 800 THEN 'mid' ELSE 'low' END AS revenue_bucket, MAX(units) AS max_units FROM store_sales GROUP BY CASE WHEN revenue >= 4100 THEN 'high' WHEN revenue >= 800 THEN 'mid' ELSE 'low' END) AS s WHERE max_units < 12;

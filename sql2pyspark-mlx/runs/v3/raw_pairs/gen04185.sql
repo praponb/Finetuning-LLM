@@ -1,0 +1,1 @@
+SELECT s.city, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i RIGHT JOIN products p ON p.id = i.product_id LEFT JOIN stores s ON s.id = i.store_id WHERE i.product_id IN (4, 8) GROUP BY s.city HAVING MAX(i.quantity) - MIN(i.quantity) >= 55 ORDER BY s.city;

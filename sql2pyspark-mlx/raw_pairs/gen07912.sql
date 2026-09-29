@@ -1,0 +1,1 @@
+with AccountSummary as (select account_id, sum(case when merchant = 'Grab' then 1 else 0 end) as grab_count from transactions group by account_id) select a.opened_date, a.customer_id, A.grab_count from accounts a left join AccountSummary A on a.id = A.account_id where A.grab_count >= 66 order by A.grab_count;

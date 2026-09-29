@@ -1,0 +1,1 @@
+SELECT id, job_title, salary, manager_id, DENSE_RANK() OVER (PARTITION BY job_title ORDER BY salary DESC) AS salary_dense_rank, ROUND(salary / SUM(salary) OVER (PARTITION BY manager_id), 3) AS salary_share FROM employees WHERE NOT is_remote

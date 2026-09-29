@@ -1,0 +1,1 @@
+SELECT plan, start_year, paused_count, min_monthly_fee FROM (SELECT plan, YEAR(start_date) AS start_year, COUNT(CASE WHEN status = 'PAUSED' THEN 1 END) AS paused_count, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions WHERE monthly_fee >= 200 GROUP BY plan, YEAR(start_date)) AS agg WHERE min_monthly_fee >= 180 ORDER BY plan

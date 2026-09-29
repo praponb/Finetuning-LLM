@@ -1,0 +1,1 @@
+SELECT id, quantity, CASE WHEN quantity >= 184 THEN 'High' WHEN quantity >= 45 THEN 'Medium' ELSE 'Low' END AS quantity_band, DATE_FORMAT(last_restock, 'yyyy-MM-dd') AS last_restock_label FROM inventory WHERE product_id IN (1, 2, 6, 8) AND store_id IN (1, 3, 4, 5);

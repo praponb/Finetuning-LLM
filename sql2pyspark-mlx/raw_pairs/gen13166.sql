@@ -1,0 +1,1 @@
+SELECT dept_name, PERCENTILE_APPROX(budget, 0.95) AS budget_p95, SORT_ARRAY(COLLECT_SET(dept_name)) AS dept_name_list, COUNT(DISTINCT id) AS distinct_ids, MAX(budget) FILTER (WHERE location = 'Tokyo') AS tokyo_max_budget, ROUND(SUM(budget) / NULLIF(COUNT(CASE WHEN dept_name = 'Engineering' THEN 1 END), 0), 2) AS budget_per_engineering FROM departments GROUP BY 1

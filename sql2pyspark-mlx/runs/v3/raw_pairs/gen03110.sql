@@ -1,0 +1,1 @@
+select p.id, p.product_name, count(ss.id) as store_sale_count, avg(ss.revenue) as avg_revenue from products p left join store_sales ss on ss.product_id = p.id group by p.id, p.product_name order by avg_revenue, p.id, product_name limit 10

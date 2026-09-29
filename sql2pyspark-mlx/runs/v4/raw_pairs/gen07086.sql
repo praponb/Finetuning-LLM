@@ -1,0 +1,1 @@
+SELECT *, LAST_VALUE(price) IGNORE NULLS OVER (PARTITION BY category ORDER BY stock_qty, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) last_known_price, NTILE(10) OVER (ORDER BY cost DESC, id) cost_bucket, DENSE_RANK() OVER (PARTITION BY brand ORDER BY price DESC NULLS FIRST) price_dense_rank FROM products

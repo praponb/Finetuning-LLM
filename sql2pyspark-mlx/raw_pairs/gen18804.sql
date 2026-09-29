@@ -1,0 +1,1 @@
+SELECT departments.location, departments.budget, departments.dept_name, employees.dept_id, employees.hire_date FROM departments LEFT JOIN employees ON employees.dept_id = departments.id WHERE employees.hire_date >= '2023-07-31' AND employees.dept_id IN (2, 25);

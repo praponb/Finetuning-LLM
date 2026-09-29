@@ -1,0 +1,1 @@
+with filtered_employees as (select * from employees where level = 'L3'), summary as (select level, is_remote, sort_array(collect_set(level)) as level_list, max(salary) - min(salary) as salary_range from filtered_employees group by level, is_remote) select level, is_remote, salary_range from summary;

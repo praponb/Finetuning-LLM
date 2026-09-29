@@ -1,0 +1,1 @@
+select * from (select date_format(hire_date, 'yyyy-MM') as hire_month, manager_id, sum(case when job_title = 'Designer' then salary else 0 end) as designer_salary from employees group by date_format(hire_date, 'yyyy-MM'), manager_id) as agg where designer_salary > 67 order by designer_salary desc, hire_month asc, manager_id asc limit 5;

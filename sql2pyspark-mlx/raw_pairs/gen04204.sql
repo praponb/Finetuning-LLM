@@ -1,0 +1,1 @@
+select hour(paid_at) paid_hour, status, avg(amount) avg_amount from payments where method not in ('promptpay', 'card') group by hour(paid_at), status having avg_amount >= 1260 order by avg_amount, paid_hour;

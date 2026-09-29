@@ -1,0 +1,1 @@
+SELECT o.shipping_fee, o.customer_id, c.name, s.store_name, IF(c.is_active, 'Yes', 'No') is_active_label FROM orders o RIGHT JOIN customers c ON o.customer_id = c.id LEFT JOIN stores s ON o.store_id = s.id WHERE c.email LIKE '%@GMAIL.COM' ORDER BY store_name ASC

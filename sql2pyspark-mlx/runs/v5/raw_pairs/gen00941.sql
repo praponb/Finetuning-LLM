@@ -1,0 +1,1 @@
+SELECT category, DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, brand, COUNT(*) AS total_count, MIN(launch_date) AS first_launch_date FROM products GROUP BY category, DATE_FORMAT(launch_date, 'yyyy-MM'), brand ORDER BY category, first_launch_date;

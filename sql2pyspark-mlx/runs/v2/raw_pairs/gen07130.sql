@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, MIN(duration_sec) min_duration_sec FROM web_events GROUP BY session_id) SELECT s.device, ss.min_duration_sec FROM sessions s LEFT OUTER JOIN session_stats ss ON s.id = ss.session_id ORDER BY min_duration_sec

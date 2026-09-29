@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT id, channel, promo_code, ends_on, discount_pct, LEAD(discount_pct, 1, 0) OVER (PARTITION BY channel ORDER BY ends_on, id) next_discount_pct, ROUND(discount_pct / SUM(discount_pct) OVER (PARTITION BY channel), 4) discount_pct_share FROM promotions) SELECT id, channel, discount_pct FROM enriched ORDER BY id NULLS FIRST LIMIT 10;

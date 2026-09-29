@@ -1,0 +1,1 @@
+SELECT *, SUM(cost) OVER (PARTITION BY order_id, carrier ORDER BY delivered_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_cost, CUME_DIST() OVER w_ordered AS cost_cume_dist FROM shipments WINDOW w_ordered AS (PARTITION BY carrier, order_id ORDER BY cost NULLS LAST)

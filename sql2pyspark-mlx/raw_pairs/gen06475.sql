@@ -1,0 +1,1 @@
+with cleaned as (select id, store_id, sale_date, units, greatest(units, revenue) as greatest_units_revenue, revenue + units as revenue_per_unit from store_sales where sale_date >= date '2023-08-24') select * from (select id, store_id, greatest_units_revenue, revenue_per_unit from cleaned) src unpivot (val for kpi in (greatest_units_revenue, revenue_per_unit));

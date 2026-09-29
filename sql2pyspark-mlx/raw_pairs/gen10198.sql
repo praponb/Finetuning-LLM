@@ -1,0 +1,1 @@
+select plan, round(datediff(end_date, start_date) / 30, 1) as months_start_date_to_end_date, datediff(end_date, start_date) as days_start_date_to_end_date from subscriptions where customer_id = 35 and year(end_date) >= 2024;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.status IN ('SHIPPED', 'COMPLETED') THEN 'core' ELSE 'other' END AS status_group, o.status, COUNT(*) AS total_count FROM shipments s JOIN orders o ON s.order_id = o.id GROUP BY CASE WHEN o.status IN ('SHIPPED', 'COMPLETED') THEN 'core' ELSE 'other' END, o.status;

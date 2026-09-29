@@ -1,0 +1,1 @@
+SELECT t.id, t.merchant, t.is_flagged, a.opened_date, a.status, c.signup_date, c.age FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE a.balance IS NOT NULL

@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT * FROM transactions WHERE amount <= 2300), summary AS (SELECT is_flagged, merchant, SUM(CASE WHEN merchant = 'Amazon' THEN amount ELSE 0 END) AS amazon_amount, COUNT(*) AS row_count FROM valid_transactions GROUP BY is_flagged, merchant) SELECT * FROM summary WHERE row_count >= 9 ORDER BY amazon_amount, merchant DESC;

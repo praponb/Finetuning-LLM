@@ -1,0 +1,1 @@
+SELECT country, MAX(rating) AS max_rating FROM suppliers WHERE LOWER(TRIM(supplier_name)) = 'global supply' AND supplier_name LIKE 'P%' GROUP BY country HAVING MIN(rating) > 3.1 ORDER BY max_rating DESC;

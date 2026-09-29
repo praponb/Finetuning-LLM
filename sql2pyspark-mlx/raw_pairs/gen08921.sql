@@ -1,0 +1,1 @@
+with inventory_by_store as (select store_id, min(last_restock) as first_last_restock from inventory group by store_id) select stores.store_name, inventory_by_store.first_last_restock from stores inner join inventory_by_store on stores.id = inventory_by_store.store_id;

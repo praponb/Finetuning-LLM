@@ -1,0 +1,1 @@
+select year(p.launch_date) as launch_year, avg(oi.quantity) as avg_quantity, max(oi.unit_price) - min(oi.unit_price) as unit_price_range from order_items oi left outer join orders o on o.id = oi.order_id inner join products p on oi.product_id = p.id group by year(p.launch_date) order by avg_quantity desc;

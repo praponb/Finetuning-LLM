@@ -1,0 +1,1 @@
+select month(products.launch_date) launch_month, min(store_sales.revenue) min_revenue from store_sales inner join products on products.id = store_sales.product_id full outer join stores on store_sales.store_id = stores.id where array_contains(products.tags, 'eco') group by month(products.launch_date) having min_revenue >= 2800 order by launch_month desc limit 10

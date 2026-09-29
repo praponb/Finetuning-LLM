@@ -1,0 +1,1 @@
+SELECT page, SUM(duration_sec) AS total_duration_sec, MIN(duration_sec) AS min_duration_sec, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY page ORDER BY total_duration_sec;

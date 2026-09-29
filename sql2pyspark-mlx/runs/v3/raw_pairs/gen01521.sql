@@ -1,0 +1,1 @@
+WITH filtered_departments AS (SELECT * FROM departments WHERE budget < 2229000 AND location IN ('Berlin', 'Bangkok', 'Singapore') AND dept_name = 'Legal'), agg AS (SELECT dept_name, SUM(CASE WHEN dept_name = 'HR' THEN budget ELSE 0 END) hr_budget FROM filtered_departments GROUP BY dept_name) SELECT dept_name, hr_budget FROM agg ORDER BY hr_budget ASC

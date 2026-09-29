@@ -1,0 +1,1 @@
+SELECT event_type, page, COUNT(DISTINCT duration_sec) unique_pages FROM web_events WHERE HOUR(event_time) BETWEEN 12 AND 19 AND event_time < '2025-05-01' GROUP BY CUBE(event_type, page) ORDER BY unique_pages DESC;

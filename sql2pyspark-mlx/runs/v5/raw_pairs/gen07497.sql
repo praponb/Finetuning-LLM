@@ -1,0 +1,3 @@
+SELECT DISTINCT country
+FROM suppliers
+ORDER BY 1;

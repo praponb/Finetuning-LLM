@@ -1,0 +1,1 @@
+WITH top_inventory AS (SELECT id, store_id, quantity, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY quantity DESC) AS rnk FROM inventory) SELECT id, store_id, quantity FROM top_inventory WHERE rnk = 1;

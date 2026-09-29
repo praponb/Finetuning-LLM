@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(*) AS order_item_count FROM order_items WHERE quantity != 3 AND (product_id IS NOT NULL OR order_id IN (16, 19, 39)) GROUP BY CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END ORDER BY quantity_bucket;

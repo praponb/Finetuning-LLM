@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT a.*, b.price, b.brand, b.launch_date FROM order_items a LEFT JOIN products b ON a.product_id = b.id) SELECT id, order_id, unit_price, price, brand FROM enriched ORDER BY brand DESC NULLS LAST

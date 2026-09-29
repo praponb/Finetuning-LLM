@@ -1,0 +1,1 @@
+SELECT account_id, AVG(amount) AS avg_amount, COUNT(CASE WHEN merchant = 'Starbucks' THEN 1 END) AS starbucks_count FROM transactions WHERE account_id = 31 AND txn_time >= '2024-05-01' GROUP BY 1 HAVING starbucks_count > 4 ORDER BY avg_amount ASC

@@ -1,0 +1,1 @@
+WITH joined AS (SELECT e.*, d.country FROM subscriptions e LEFT JOIN customers d ON e.customer_id = d.id) SELECT id, customer_id, end_date, monthly_fee, status, country, CASE WHEN country RLIKE '^(SG|US)$' THEN 'GROUP_A' ELSE 'PRIORITY' END AS country_zone FROM joined ORDER BY country DESC, end_date DESC;

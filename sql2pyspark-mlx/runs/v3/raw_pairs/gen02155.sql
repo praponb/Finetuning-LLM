@@ -1,0 +1,1 @@
+SELECT id, status, cost, carrier, LAST_VALUE(carrier) OVER (PARTITION BY status ORDER BY cost DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_carrier, SUM(cost) OVER (PARTITION BY carrier) AS carrier_sum_cost FROM shipments;

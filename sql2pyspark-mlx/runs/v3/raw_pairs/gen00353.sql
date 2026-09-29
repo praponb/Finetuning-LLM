@@ -1,0 +1,1 @@
+SELECT rating_bucket, avg_rating FROM (SELECT CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, AVG(rating) AS avg_rating FROM suppliers GROUP BY CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END) AS s WHERE avg_rating >= 3.3 ORDER BY avg_rating;

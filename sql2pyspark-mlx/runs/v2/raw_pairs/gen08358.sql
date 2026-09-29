@@ -1,0 +1,1 @@
+SELECT country, rating_bucket, min_rating FROM (SELECT country, CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, MIN(rating) AS min_rating FROM suppliers GROUP BY country, CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END) AS t WHERE min_rating > 3.9;

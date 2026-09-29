@@ -1,0 +1,1 @@
+SELECT id, start_date, monthly_fee, status, monthly_fee - LAG(monthly_fee, 1) OVER (ORDER BY start_date, id) AS monthly_fee_change, ROW_NUMBER() OVER (PARTITION BY status ORDER BY monthly_fee DESC, id) AS rn FROM subscriptions WHERE end_date BETWEEN '2023-06-01' AND '2023-08-30';

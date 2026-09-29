@@ -1,0 +1,1 @@
+with base as (select *, case when city = 'New York' then 1 else 0 end as is_new_york from suppliers where length(supplier_name) < 10) select city, id from base intersect select city, id from suppliers where rating >= 3.0

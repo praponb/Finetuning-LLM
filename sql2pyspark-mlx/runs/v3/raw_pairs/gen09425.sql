@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LEAST(revenue, units) AS least_revenue_units FROM store_sales WHERE product_id IN (1, 9) AND YEAR(sale_date) >= 2024), summary AS (SELECT MONTH(sale_date) AS sale_month, ROUND(STDDEV(units), 2) AS stddev_units FROM base GROUP BY MONTH(sale_date)) SELECT * FROM summary WHERE stddev_units > 34 ORDER BY sale_month DESC

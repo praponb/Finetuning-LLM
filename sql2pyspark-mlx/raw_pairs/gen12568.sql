@@ -1,0 +1,1 @@
+SELECT CASE WHEN city IN ('London', 'Singapore') THEN 'tier_1' ELSE 'other' END AS city_group, SUM(CASE WHEN city = 'Singapore' THEN rating ELSE 0 END) AS singapore_rating, SUM(rating) AS total_rating FROM suppliers GROUP BY city_group

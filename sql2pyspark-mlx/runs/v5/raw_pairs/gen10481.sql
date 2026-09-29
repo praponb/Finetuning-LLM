@@ -1,0 +1,1 @@
+WITH with_latest AS (SELECT s.id, s.device, s.browser, s.started_at, s.country, x.web_event_event_type FROM sessions s JOIN LATERAL (SELECT c.event_type AS web_event_event_type FROM web_events c WHERE c.session_id = s.id ORDER BY c.event_time DESC, c.id DESC LIMIT 1) x ON TRUE) SELECT id, device, started_at, country, web_event_event_type FROM with_latest;

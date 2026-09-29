@@ -1,0 +1,1 @@
+SELECT s.id, COUNT(ss.id) AS store_sale_count, COUNT(ss.revenue) AS revenue_count, MAX(ss.units) AS max_units FROM stores s LEFT OUTER JOIN store_sales ss ON s.id = ss.store_id WHERE s.store_name IS NULL GROUP BY s.id

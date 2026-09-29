@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 80 THEN 'high' WHEN cost >= 44 THEN 'mid' ELSE 'low' END AS cost_bucket, COUNT(CASE WHEN status = 'LOST' THEN 1 END) AS lost_count, MIN(cost) AS min_cost FROM shipments WHERE NOT (status = 'RETURNED' OR cost IS NOT NULL) GROUP BY 1 HAVING AVG(cost) > 43;

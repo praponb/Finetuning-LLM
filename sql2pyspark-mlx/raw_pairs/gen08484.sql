@@ -1,0 +1,1 @@
+SELECT d.category, d.brand, COUNT(*) AS rows_total, ROUND(AVG(e.revenue), 2) AS avg_revenue, MIN(e.units) AS min_units, GROUPING_ID() AS grouping_level FROM store_sales e INNER JOIN products d ON e.product_id = d.id GROUP BY GROUPING SETS ((d.category, d.brand), (d.category), ())

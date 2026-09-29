@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM customers QUALIFY RANK() OVER (PARTITION BY city ORDER BY credit_limit DESC) = 1) SELECT id, email, country, city, segment, signup_date, is_active, credit_limit, CASE WHEN country RLIKE '^(TH|US)$' THEN 'CORE' WHEN country RLIKE '^(SG|JP)$' THEN 'GROUP_A' ELSE 'OTHER_ZONE' END AS country_zone FROM deduped ORDER BY segment NULLS FIRST;

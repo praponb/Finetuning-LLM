@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 91 THEN 'high' WHEN cost >= 22 THEN 'mid' ELSE 'low' END AS cost_bucket, SUM(CASE WHEN carrier = 'Flash' THEN cost ELSE 0 END) AS flash_cost, COUNT(cost) AS cost_count FROM shipments GROUP BY cost_bucket HAVING SUM(CASE WHEN carrier = 'Flash' THEN cost ELSE 0 END) >= 37 ORDER BY cost_count DESC

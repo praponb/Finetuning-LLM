@@ -1,0 +1,1 @@
+with exploded as (select id, coupon_codes, pos, entry.product_id, entry.qty, entry.price, entry.promo from carts lateral view posexplode(items) t as pos, entry) select id, coupon_codes, pos, product_id, qty, price, promo from exploded

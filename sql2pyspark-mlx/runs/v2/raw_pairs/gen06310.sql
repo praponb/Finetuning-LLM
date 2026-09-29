@@ -1,0 +1,1 @@
+SELECT id, city, opened_date, sqft, region, SUM(sqft) OVER (PARTITION BY city ORDER BY opened_date, id) running_sqft, SUM(sqft) OVER (PARTITION BY region ORDER BY opened_date, id) running_sqft_2 FROM stores WHERE store_name IS NOT NULL;

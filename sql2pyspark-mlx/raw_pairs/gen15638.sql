@@ -1,0 +1,1 @@
+SELECT order_id, COUNT(*) AS row_count, ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_returned, SUM(CASE WHEN carrier = 'DHL' THEN cost ELSE 0 END) AS dhl_cost FROM shipments WHERE order_id = 29 AND (cost <= 68 OR status IN ('DELIVERED', 'RETURNED', 'IN_TRANSIT')) GROUP BY 1 ORDER BY dhl_cost DESC, row_count DESC;

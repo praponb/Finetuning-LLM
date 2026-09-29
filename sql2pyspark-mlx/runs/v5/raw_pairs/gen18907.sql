@@ -1,0 +1,1 @@
+SELECT subscriptions.end_date, subscriptions.start_date, subscriptions.monthly_fee, customers.email, customers.age FROM subscriptions FULL OUTER JOIN customers ON subscriptions.customer_id = customers.id WHERE customers.city IN ('Tokyo', 'New York', 'Singapore') ORDER BY start_date, age DESC

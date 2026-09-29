@@ -1,0 +1,1 @@
+SELECT id, order_id, cost, ROUND(cost / SUM(cost) OVER (PARTITION BY order_id), 3) AS cost_share, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY cost DESC, id) AS cost_row FROM shipments WHERE order_id IS NOT NULL;

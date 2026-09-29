@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT *, DENSE_RANK() OVER (PARTITION BY category ORDER BY launch_date DESC) AS rn FROM products) SELECT id, category, launch_date FROM Numbered WHERE rn <= 3 ORDER BY category DESC, launch_date ASC;

@@ -1,0 +1,1 @@
+with sessions_by_customer as (select customer_id, sum(case when browser = 'Firefox' then 1 else 0 end) as firefox_count from sessions group by customer_id) select customers.id, customers.credit_limit, sessions_by_customer.firefox_count from customers left outer join sessions_by_customer on customers.id = sessions_by_customer.customer_id order by customers.id desc;

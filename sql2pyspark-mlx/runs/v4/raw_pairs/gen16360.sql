@@ -1,0 +1,1 @@
+SELECT o.customer_id, o.status, SORT_ARRAY(COLLECT_SET(s.carrier)) AS carrier_list, COUNT(CASE WHEN s.carrier = 'UPS' THEN 1 END) AS ups_count FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE o.status IN ('RETURNED', 'CANCELLED', 'PENDING') GROUP BY o.customer_id, o.status

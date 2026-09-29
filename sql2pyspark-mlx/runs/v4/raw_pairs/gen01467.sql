@@ -1,0 +1,1 @@
+with deduped as (select *, row_number() over (partition by region, city order by opened_date desc nulls last, id) as rank_in_group from stores qualify rank_in_group = 1) select id, store_name, city, region, opened_date, sqft, rank_in_group from deduped

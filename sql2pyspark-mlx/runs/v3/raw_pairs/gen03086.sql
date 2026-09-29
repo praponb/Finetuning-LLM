@@ -1,0 +1,1 @@
+SELECT COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) cancelled_count, SORT_ARRAY(COLLECT_SET(plan)) plan_list, COUNT(*) num_subscriptions FROM subscriptions WHERE MONTH(end_date) IN (5, 6, 10) AND YEAR(end_date) = 2023;

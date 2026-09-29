@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status, carrier ORDER BY shipped_date DESC, id) AS rn FROM shipments) ranked WHERE rn = 1) SELECT s.id, s.order_id, s.carrier, s.shipped_date, s.delivered_date, s.rn, (SELECT SUM(p2.amount) FROM payments p2 WHERE p2.order_id = s.order_id) AS sum_payment_amount FROM latest s ORDER BY sum_payment_amount

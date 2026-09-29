@@ -1,0 +1,11 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_inventory
+    .filter(F.col("store_id").isin([1, 2]))
+    .groupBy("product_id", "store_id")
+    .agg(
+        F.round(F.avg("quantity"), 2).alias("avg_quantity"),
+        F.count("quantity").alias("quantity_count"),
+    )
+)

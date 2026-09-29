@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, SUM(revenue) AS total_revenue, COUNT(DISTINCT revenue) AS unique_stores FROM store_sales GROUP BY store_id) SELECT s.id, s.store_name, s.sqft, ss.total_revenue, ss.unique_stores FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id WHERE ss.total_revenue >= 16000 ORDER BY s.store_name DESC, sqft DESC;

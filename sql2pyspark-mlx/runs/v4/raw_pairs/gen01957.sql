@@ -1,0 +1,1 @@
+SELECT e.full_name AS employee_full_name, m.is_remote AS manager_is_remote, m.dept_id AS manager_dept_id, m.hire_date AS manager_hire_date FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.manager_id = 18 AND e.manager_id = 1

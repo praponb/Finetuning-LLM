@@ -1,0 +1,1 @@
+WITH ProductSummary AS (SELECT product_id, MIN(units) AS min_units FROM store_sales WHERE YEAR(sale_date) = 2024 GROUP BY product_id) SELECT p.product_name, p.launch_date, P.min_units FROM products p INNER JOIN ProductSummary P ON p.id = P.product_id WHERE P.min_units >= 38

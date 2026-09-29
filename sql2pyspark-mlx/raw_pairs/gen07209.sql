@@ -1,0 +1,1 @@
+SELECT city_group, avg_rating, rating_count FROM (SELECT CASE WHEN city IN ('Tokyo', 'Singapore') THEN 'group_a' ELSE 'other' END AS city_group, ROUND(AVG(rating), 2) AS avg_rating, COUNT(rating) AS rating_count FROM suppliers GROUP BY CASE WHEN city IN ('Tokyo', 'Singapore') THEN 'group_a' ELSE 'other' END) AS t WHERE avg_rating >= 50 ORDER BY avg_rating DESC

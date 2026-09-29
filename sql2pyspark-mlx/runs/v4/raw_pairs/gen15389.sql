@@ -1,0 +1,1 @@
+WITH with_dims AS (SELECT e.*, d.order_date, d.shipping_fee FROM order_items e LEFT JOIN orders d ON e.order_id = d.id) SELECT DATE_TRUNC('MONTH', order_date) AS activity_month, MIN(shipping_fee) AS min_shipping_fee, BIT_OR(quantity) AS quantity_bit_or, PERCENTILE_APPROX(shipping_fee, 0.95) AS shipping_fee_p95 FROM with_dims GROUP BY 1 ORDER BY quantity_bit_or DESC NULLS FIRST

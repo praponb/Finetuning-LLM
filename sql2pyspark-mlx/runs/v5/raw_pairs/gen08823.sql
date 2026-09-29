@@ -1,0 +1,1 @@
+SELECT p.dept_name, a.job_title, COUNT(*) AS rows_total, MIN(a.salary) AS min_salary FROM employees a LEFT JOIN departments p ON a.dept_id = p.id GROUP BY GROUPING SETS ((p.dept_name, a.job_title), (p.dept_name));

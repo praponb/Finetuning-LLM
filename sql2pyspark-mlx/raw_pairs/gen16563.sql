@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, TRIM(dept_name) AS clean_dept_name FROM departments WHERE location IN ('London', 'New York', 'Berlin')) SELECT id, dept_name, location, budget, clean_dept_name FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name, location ORDER BY budget DESC, id) AS dedup_rank FROM base) ranked WHERE dedup_rank = 1;

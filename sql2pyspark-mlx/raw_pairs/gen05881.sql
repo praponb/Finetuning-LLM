@@ -1,0 +1,1 @@
+SELECT id, status, cost FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY cost DESC, id) AS pos FROM shipments WHERE MONTH(delivered_date) IN (4, 6, 12)) AS r WHERE pos <= 5 ORDER BY cost DESC;

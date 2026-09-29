@@ -1,0 +1,1 @@
+SELECT p.brand, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range, ROUND(AVG(ss.units), 2) AS avg_units FROM store_sales ss JOIN products p ON p.id = ss.product_id RIGHT OUTER JOIN stores s ON s.id = ss.store_id WHERE s.city != 'Singapore' GROUP BY p.brand ORDER BY revenue_range DESC, brand LIMIT 20

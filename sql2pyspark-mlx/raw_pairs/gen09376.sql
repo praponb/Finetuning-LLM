@@ -1,0 +1,1 @@
+SELECT id, customer_id, browser, CONCAT_WS('/', device, country) AS device_country_key, INITCAP(TRIM(browser)) AS browser_title FROM sessions WHERE device NOT IN ('desktop', 'mobile') OR device NOT IN ('tablet', 'mobile')

@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, oi.product_id, p.brand, p.supplier_id, o.store_id, o.amount FROM order_items oi RIGHT JOIN products p ON oi.product_id = p.id JOIN orders o ON oi.order_id = o.id ORDER BY o.store_id DESC, o.amount DESC

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM stores WHERE region <> 'North' GROUP BY DATE_TRUNC('MONTH', opened_date) ORDER BY city_values

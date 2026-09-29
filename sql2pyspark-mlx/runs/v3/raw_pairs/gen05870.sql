@@ -1,0 +1,1 @@
+SELECT we.id, we.event_type, we.event_time, s.country, s.started_at, c.age, CONCAT(we.page, ', ', we.event_type) page_event_type FROM web_events we LEFT OUTER JOIN sessions s ON we.session_id = s.id LEFT OUTER JOIN customers c ON c.id = s.customer_id WHERE we.event_type IN ('page_view', 'click', 'purchase');

@@ -1,0 +1,1 @@
+SELECT p.device, p.browser, COUNT(*) AS rows_total, ROUND(AVG(s.duration_sec), 2) AS avg_duration_sec, GROUPING_ID() AS grouping_level FROM web_events s INNER JOIN sessions p ON s.session_id = p.id GROUP BY ROLLUP (p.device, p.browser);

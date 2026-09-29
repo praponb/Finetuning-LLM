@@ -1,0 +1,1 @@
+SELECT c.country, c.segment, a.channel, COUNT(*) AS cnt, AVG(a.discount) AS avg_discount, AVG(a.shipping_fee) AS avg_shipping_fee FROM orders a INNER JOIN customers c ON a.customer_id = c.id GROUP BY CUBE (c.country, c.segment, a.channel);

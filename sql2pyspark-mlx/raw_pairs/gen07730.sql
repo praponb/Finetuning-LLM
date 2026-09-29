@@ -1,0 +1,1 @@
+WITH orders_by_store AS (SELECT store_id, ROUND(STDDEV(amount), 2) AS stddev_amount, COUNT(*) AS total_count FROM orders GROUP BY store_id) SELECT s.sqft, s.city, obs.stddev_amount, obs.total_count FROM stores s LEFT OUTER JOIN orders_by_store obs ON s.id = obs.store_id WHERE obs.total_count > 4

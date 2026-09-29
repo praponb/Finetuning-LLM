@@ -1,0 +1,1 @@
+select id, city, supplier_name, initcap(trim(city)) as city_title from suppliers where city in ('Berlin', 'Chiang Mai') and country not in ('JP', 'TH') order by city_title desc, supplier_name desc, id limit 10

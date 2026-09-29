@@ -1,0 +1,1 @@
+SELECT p.id, p.stock_qty, p.product_name, s.country, s.supplier_name, CASE WHEN p.cost >= 570 THEN 'High' WHEN p.cost >= 110 THEN 'Medium' ELSE 'Low' END AS cost_tier FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.launch_date BETWEEN '2023-08-08' AND '2024-08-01'

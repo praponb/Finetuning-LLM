@@ -1,0 +1,1 @@
+SELECT id, status, amount, shipping_fee, store_id, MAX(amount) OVER (PARTITION BY status) status_max_amount, FIRST_VALUE(store_id) OVER (ORDER BY shipping_fee, id) first_store_id FROM orders WHERE channel IN ('partner', 'store') ORDER BY shipping_fee DESC;

@@ -1,0 +1,1 @@
+WITH recent_departments AS (SELECT * FROM departments WHERE dept_name IN ('HR', 'Marketing')), dept_name_summary AS (SELECT dept_name, ROUND(STDDEV(budget), 2) AS stddev_budget FROM recent_departments GROUP BY dept_name) SELECT * FROM dept_name_summary ORDER BY dept_name, stddev_budget;

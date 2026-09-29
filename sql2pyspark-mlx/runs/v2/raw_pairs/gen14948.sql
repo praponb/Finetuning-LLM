@@ -1,0 +1,1 @@
+select o.status, count(distinct oi.quantity) unique_orders from order_items oi right join orders o on o.id = oi.order_id group by o.status having count(distinct oi.quantity) > 1 order by unique_orders desc;

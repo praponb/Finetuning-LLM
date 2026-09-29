@@ -1,0 +1,1 @@
+select id, account_type, balance, row_number() over (order by balance, id) as seq_no, sum(balance) over w_recent as running_balance from accounts window w_recent as (partition by date_trunc('WEEK', opened_date), status order by opened_date, id rows between unbounded preceding and current row);

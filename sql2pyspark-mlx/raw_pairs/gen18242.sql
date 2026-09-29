@@ -1,0 +1,1 @@
+SELECT orders.channel, MAX(payments.paid_at) AS last_paid_at, ROUND(AVG(payments.amount), 2) AS avg_amount FROM payments INNER JOIN orders ON payments.order_id = orders.id GROUP BY orders.channel HAVING ROUND(AVG(payments.amount), 2) > 39;

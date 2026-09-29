@@ -1,0 +1,1 @@
+WITH filtered_transactions AS (SELECT * FROM transactions WHERE NOT (is_flagged AND is_flagged = FALSE)), transactions_stats AS (SELECT account_id, MAX(amount) - MIN(amount) AS amount_range FROM filtered_transactions GROUP BY account_id) SELECT account_id, amount_range FROM transactions_stats WHERE amount_range >= 59 ORDER BY amount_range, account_id LIMIT 20;

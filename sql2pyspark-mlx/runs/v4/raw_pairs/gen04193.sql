@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, currency, element FROM price_tiers LATERAL VIEW EXPLODE(discounts) e AS element) SELECT *, COUNT(element) OVER w_grp currency_count_element, STDDEV_SAMP(element) OVER w_grp currency_stddev_samp_element FROM lines WINDOW w_grp AS (PARTITION BY currency);

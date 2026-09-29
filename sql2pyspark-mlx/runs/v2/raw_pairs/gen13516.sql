@@ -1,0 +1,1 @@
+SELECT p.id, p.category, t.min_revenue, t.unique_stores FROM products p JOIN (SELECT product_id, MIN(revenue) AS min_revenue, COUNT(DISTINCT revenue) AS unique_stores FROM store_sales GROUP BY product_id) t ON p.id = t.product_id ORDER BY p.id

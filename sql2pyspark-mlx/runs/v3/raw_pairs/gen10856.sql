@@ -1,0 +1,1 @@
+SELECT payments.id, payments.status, payments.amount, payments.method, orders.order_date, orders.channel, orders.amount AS order_amount FROM payments INNER JOIN orders ON payments.order_id = orders.id WHERE payments.method IN ('paypal', 'cash');

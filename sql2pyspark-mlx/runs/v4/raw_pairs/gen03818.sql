@@ -1,0 +1,1 @@
+select id, duration_sec, session_id, initcap(trim(event_type)) as event_type_title, round(duration_sec, 0) as duration_sec_rounded from web_events where session_id in (16, 25, 28) and duration_sec > 471;

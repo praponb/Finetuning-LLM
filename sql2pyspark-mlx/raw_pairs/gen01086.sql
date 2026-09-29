@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.6 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(AVG(rating), 2) AS avg_rating, COUNT(rating) AS rating_count FROM suppliers GROUP BY rating_bucket ORDER BY rating_bucket DESC

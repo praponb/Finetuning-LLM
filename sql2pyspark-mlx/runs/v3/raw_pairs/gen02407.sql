@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, MAX(units) AS max_units, MAX(units) - MIN(units) AS units_range, MIN(units) AS min_units FROM store_sales GROUP BY sale_cohort ORDER BY max_units DESC

@@ -1,0 +1,1 @@
+SELECT e.email AS employee_email, e.job_title AS employee_job_title, m.dept_id AS manager_dept_id, m.is_remote AS manager_is_remote FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.job_title IN ('Engineer', 'Director') AND e.email LIKE '%@startup.io' ORDER BY e.email, employee_job_title;

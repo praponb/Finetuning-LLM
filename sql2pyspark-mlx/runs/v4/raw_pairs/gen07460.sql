@@ -1,0 +1,1 @@
+SELECT stores.id, stores.city, t.avg_discount, t.unique_customers FROM stores INNER JOIN (SELECT store_id, ROUND(AVG(discount), 2) AS avg_discount, COUNT(DISTINCT discount) AS unique_customers FROM orders WHERE customer_id IS NULL GROUP BY store_id) t ON stores.id = t.store_id ORDER BY unique_customers DESC;

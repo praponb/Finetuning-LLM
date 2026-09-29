@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, currency, tier_value FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_prices) e AS tier_value) SELECT *, MAX(tier_value) OVER (PARTITION BY currency) AS currency_max_tier_value, DENSE_RANK() OVER (PARTITION BY currency ORDER BY tier_value DESC) AS tier_value_dense_rank FROM flattened

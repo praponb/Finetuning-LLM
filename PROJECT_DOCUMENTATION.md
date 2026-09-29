@@ -85,7 +85,7 @@ Finetuning-LLM/
 ├── kimi_repair.py                # Kimi K3 check + repair loop (app and eval)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
-├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v6, 7B); Ollama keeps its own copies
+├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v7, 7B); Ollama keeps its own copies
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh
@@ -94,6 +94,7 @@ Finetuning-LLM/
 │   ├── sqlspec.py                # Dual-rendering expression/query objects
 │   ├── generate_dataset.py       # Compositional query generator (12 families + v4/v5 families)
 │   ├── advanced.py               # v4/v5 stage-based families (pipelines, advanced SQL, nested data)
+│   ├── complex_v8/               # 10k complex pairs dataset build (20 new tables, 8 families), LoRA config
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # Parallel PySpark verification
 │   ├── convert_sql_pyspark.py    # Signature splitter & chat formatter
@@ -103,9 +104,9 @@ Finetuning-LLM/
 │   ├── data/                     # train.jsonl (16.9k), valid.jsonl, test.jsonl, *_meta.jsonl
 │   ├── raw_pairs/                # Generated pairs, verified.jsonl & reports
 │   ├── adapters/                 # LoRA weights (+ checkpoints), v7 (v6 in runs/v6/)
-│   ├── runs/v2/ … runs/v5/       # Backups: adapters, data, raw pairs, logs, configs
+│   ├── runs/v2/ … runs/v6/       # Backups: adapters, data, raw pairs, logs, configs
 │   └── sql2pyspark-model/        # Fused 4-bit MLX model
-├── sql2pyspark-hf/               # Dequantized BF16 fused model (~5.8 GB on disk, v5)
+├── sql2pyspark-hf/               # Dequantized BF16 fused model (~15.2 GB on disk, v7)
 ├── eval/                         # Execution-based evaluation
 │   ├── build_holdout.py          # 62 hand-written queries on unseen tables
 │   ├── holdout.jsonl             # Hold-out benchmark
@@ -120,7 +121,10 @@ Finetuning-LLM/
 │   ├── post_training_v4.sh       # v4 export + evaluation chain
 │   ├── post_training_v5.sh       # v5 export + evaluation chain
 │   ├── post_training_v6.sh       # v6 export + evaluation chain (--timeout 600)
-│   └── results/                  # <tag>__<set>.json results (+ v2/v3/v4-split, v5-repair, v5-repeat-penalty)
+│   ├── start_training_v7.sh      # v7 unattended training launcher
+│   ├── post_training_v7.sh       # v7 post-training export + eval chain
+│   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
+│   └── results/                  # <tag>__<set>.json results (+ v2..v4-split, v5..v7-repair, v7-repair-rules)
 └── llama.cpp/                    # Upstream checkout used for convert_hf_to_gguf.py
 ```
 
@@ -383,7 +387,7 @@ v7 continues from v6 (600 updates, peak LR 5e-5, 4 h 58 min) on data that adds `
 | v4 hold-out (25) | 3 | 14 | **16** | ✅ > 14 |
 | Real-world queries (4) | 0 | 0 | 0 | ❌ ≥ 1 |
 
-v6, the first 7B model, beats or ties v5 on every set: it fixes 4 of v5's 6 hold-out failures (incl. `holdout053` and `holdout058`) with no new ones, gets all 25 complex hold-out queries right and solves a v4-hold-out pipeline for the first time. It misses only the real-world condition, which no model has met (`real001` still loops; the other three now parse but fail on column qualifiers). It was promoted (`make promote TAG=v8 PREV=v7`); v5 is kept as `sql2pyspark:v5`. Cost: ~2x slower answers (~10 s per hold-out query) and ~8 GB in Ollama.
+v6, the first 7B model, beats or ties v5 on every set: it fixes 4 of v5's 6 hold-out failures (incl. `holdout053` and `holdout058`) with no new ones, gets all 25 complex hold-out queries right and solves a v4-hold-out pipeline for the first time. It misses only the real-world condition, which no model has met (`real001` still loops; the other three now parse but fail on column qualifiers). It was promoted (`make promote TAG=v6 PREV=v5`); v5 is kept as `sql2pyspark:v5`. Cost: ~2x slower answers (~10 s per hold-out query) and ~8 GB in Ollama.
 
 ### v5 decision (2026-09-28)
 | Eval set | v3 | v4 | v5 | Rule |
@@ -492,7 +496,7 @@ The Makefile defaults are `BASE ?= mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`
 **Promotion rule** (since v5): hold-out ≥ the current model's (59/62), classic-family queries of the fixed test set ≥ v3 − 2 (94/97), better than v3 on the v4 hold-out set, ≥ 1/4 real-world queries, and no regression on the fixed test set overall.
 
 **Automated Post-Training Chain**:
-`eval/post_training_v6.sh` coordinates end-to-end post-training automation: polls `sql2pyspark-mlx/train.log` until `mlx_lm.lora` exits cleanly, executes `make export TAG=v8`, runs all 4 evaluation benchmark sets with `--timeout 600`, and restarts the Dockerized Streamlit service.
+`eval/post_training_v6.sh` coordinates end-to-end post-training automation for v6: polls `sql2pyspark-mlx/train.log` until `mlx_lm.lora` exits cleanly, executes `make export TAG=v6`, runs all 4 evaluation benchmark sets with `--timeout 600`, and restarts the Dockerized Streamlit service. For v7, `eval/start_training_v7.sh` and `eval/post_training_v7.sh` provide automated training, export (`TAG=v7`), evaluation, and Kimi repair benchmarking.
 
 **Docker** works for everything except training: `docker-compose.yml` defines an `app` service (Streamlit, using the host's Ollama), a `tools` profile (Java 17 + PySpark for the data pipeline and evaluation) and an optional `ollama` profile; both images use `python:3.12-slim-bookworm`. Verified: the app container, the v3 dataset build (`make data` in `tools`) and the v3 hold-out evaluation in `tools` (59/62, identical to the native run). MLX training can't run in Docker on a Mac, and Docker should be stopped during training (its VM takes ~8 GB).
 

@@ -1,0 +1,1 @@
+SELECT id, channel, starts_on, discount_pct, COUNT(discount_pct) OVER w_hist channel_count_discount_pct, ROUND(discount_pct / SUM(discount_pct) OVER (PARTITION BY promo_code), 4) discount_pct_share, NTILE(5) OVER (PARTITION BY YEAR(ends_on), promo_code ORDER BY discount_pct, id) discount_pct_bucket FROM promotions WINDOW w_hist AS (PARTITION BY channel)

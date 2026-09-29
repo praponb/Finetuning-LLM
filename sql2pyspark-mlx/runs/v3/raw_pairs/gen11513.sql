@@ -1,0 +1,1 @@
+SELECT s.region, AVG(o.discount) avg_discount, MAX(o.order_date) latest_order_date FROM orders o INNER JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON c.id = o.customer_id GROUP BY s.region;

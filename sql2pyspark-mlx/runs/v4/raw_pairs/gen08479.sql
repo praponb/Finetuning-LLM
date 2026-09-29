@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, currency, element FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_limits) x AS element) SELECT id, effective_from, currency, element FROM lines ORDER BY effective_from NULLS LAST

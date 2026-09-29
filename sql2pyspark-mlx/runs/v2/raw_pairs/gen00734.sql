@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(rating) AS rating_count FROM suppliers GROUP BY CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END) AS t WHERE rating_count < 4;

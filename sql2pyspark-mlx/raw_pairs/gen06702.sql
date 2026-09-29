@@ -1,0 +1,1 @@
+SELECT status, DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, COUNT(*) AS num_subscriptions, AVG(monthly_fee) AS avg_monthly_fee FROM subscriptions WHERE monthly_fee < 180 OR start_date BETWEEN '2023-05-01' AND '2024-10-01' GROUP BY status, DATE_FORMAT(end_date, 'yyyy-MM') HAVING COUNT(*) < 4 ORDER BY avg_monthly_fee DESC;

@@ -1,0 +1,1 @@
+SELECT id, location, dept_name, budget, CASE WHEN budget >= 3659000 THEN 'High' WHEN budget >= 710000 THEN 'Medium' ELSE 'Low' END AS budget_tier, CASE WHEN location = 'Tokyo' THEN 1 ELSE 0 END AS is_tokyo FROM departments WHERE location = 'Bangkok';

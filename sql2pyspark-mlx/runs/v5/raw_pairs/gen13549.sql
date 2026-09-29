@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT dept_name, location, AVG(budget) avg_budget, ROUND((100 * SUM(CASE WHEN dept_name = 'HR' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_hr FROM departments WHERE budget >= 2097000 GROUP BY dept_name, location) s WHERE pct_hr < 54;

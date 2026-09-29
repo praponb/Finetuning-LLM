@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT firmware, device_code, humidity FROM device_readings) src PIVOT (MAX(humidity) AS total, COUNT(1) AS item_count FOR device_code IN ('DV-02' AS dv_02, 'DV-01' AS dv_01, 'DV-03' AS dv_03));

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN country IN ('DE', 'TH') THEN 'core' ELSE 'other' END AS country_group, city, credit_limit FROM customers) PIVOT (MAX(credit_limit) FOR city IN ('Tokyo', 'Berlin', 'New York', 'Singapore'))

@@ -1,0 +1,1 @@
+SELECT s.id, s.city, t.unique_stores, t.revenue_count FROM stores s INNER JOIN (SELECT store_id, COUNT(DISTINCT revenue) AS unique_stores, COUNT(revenue) AS revenue_count FROM store_sales GROUP BY store_id) t ON s.id = t.store_id ORDER BY unique_stores DESC;

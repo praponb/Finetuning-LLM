@@ -1,0 +1,1 @@
+select shipments.id, shipments.order_id, shipments.status, orders.shipping_fee, length(shipments.carrier) as carrier_length from shipments inner join orders on shipments.order_id = orders.id where orders.status = 'COMPLETED' and orders.status in ('CANCELLED', 'PENDING') order by shipping_fee desc;

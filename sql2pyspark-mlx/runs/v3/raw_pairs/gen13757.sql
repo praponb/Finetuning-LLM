@@ -1,0 +1,1 @@
+select order_id, case when quantity >= 8 then 'high' when quantity >= 4 then 'mid' else 'low' end as quantity_bucket, max(unit_price) as max_unit_price from order_items group by 1, 2 having max_unit_price > 140

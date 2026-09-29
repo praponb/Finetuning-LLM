@@ -1,0 +1,1 @@
+SELECT status, method, order_id, COUNT(DISTINCT amount) AS unique_statuss, MIN(paid_at) AS first_paid_at FROM payments WHERE status = 'SUCCESS' AND amount > 1320 GROUP BY status, method, order_id ORDER BY method ASC

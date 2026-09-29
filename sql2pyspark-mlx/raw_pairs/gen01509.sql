@@ -1,0 +1,1 @@
+select ss.product_id, round(avg(i.quantity), 2) as avg_quantity, sum(i.quantity) as total_quantity from inventory i inner join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where year(i.last_restock) = 2025 group by ss.product_id having total_quantity > 380 order by total_quantity desc;

@@ -1,0 +1,14 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_products.alias("p")
+    .join(df_inventory.alias("i"), F.col("i.product_id") == F.col("p.id"), "inner")
+    .filter(F.col("i.store_id").isin([2, 5, 6]))
+    .groupBy(F.col("p.id"), F.col("p.brand"))
+    .agg(
+        F.count(F.col("i.id")).alias("inventory_count"),
+        F.min(F.col("i.quantity")).alias("min_quantity"),
+    )
+    .orderBy("min_quantity", F.col("id").desc(), "brand")
+    .limit(10)
+)

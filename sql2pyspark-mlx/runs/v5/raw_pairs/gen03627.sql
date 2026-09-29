@@ -1,0 +1,1 @@
+select case when rating >= 3.9 then 'high' when rating >= 2.2 then 'mid' else 'low' end rating_bucket, count(case when country = 'US' then 1 end) us_count from suppliers where city = 'Chiang Mai' and supplier_name is not null group by rating_bucket having us_count >= 3

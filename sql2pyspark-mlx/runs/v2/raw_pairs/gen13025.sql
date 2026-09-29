@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', event_time) AS event_month, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events WHERE session_id = 1 GROUP BY DATE_TRUNC('MONTH', event_time)) AS agg WHERE unique_event_types < 8 ORDER BY unique_event_types ASC;

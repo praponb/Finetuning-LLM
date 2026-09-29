@@ -1,0 +1,1 @@
+SELECT a.id, a.status, COUNT(t.id) transaction_count, MIN(t.amount) min_amount, ROUND(AVG(t.amount), 2) avg_amount FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id GROUP BY a.id, a.status ORDER BY min_amount DESC, id, status LIMIT 5

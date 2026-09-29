@@ -1,0 +1,1 @@
+WITH EmployeesByDepartment AS (SELECT dept_id, SUM(CASE WHEN job_title = 'Engineer' THEN salary ELSE 0 END) AS engineer_salary FROM employees GROUP BY dept_id) SELECT d.id, d.budget, E.engineer_salary FROM departments d INNER JOIN EmployeesByDepartment E ON d.id = E.dept_id ORDER BY d.id DESC

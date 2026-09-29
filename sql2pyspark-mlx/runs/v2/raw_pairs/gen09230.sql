@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, p.price, p.stock_qty, s.city, s.supplier_name FROM order_items oi LEFT OUTER JOIN products p ON oi.product_id = p.id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE oi.order_id IN (2, 17, 24);

@@ -1,0 +1,1 @@
+SELECT id, store_id, product_id, quantity, last_restock, LAG(quantity) OVER (PARTITION BY store_id, product_id ORDER BY last_restock, id) AS prev_quantity, LEAD(quantity) OVER (PARTITION BY store_id, product_id ORDER BY last_restock, id) AS next_quantity, ROW_NUMBER() OVER (PARTITION BY store_id, product_id ORDER BY last_restock, id) AS seq_no FROM inventory;

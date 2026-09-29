@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, COUNT(*) AS product_count, AVG(price) AS avg_price FROM products WHERE price IS NOT NULL GROUP BY supplier_id) SELECT s.id, s.city, s.rating, st.product_count, st.avg_price FROM suppliers s LEFT JOIN supplier_totals st ON s.id = st.supplier_id ORDER BY s.id

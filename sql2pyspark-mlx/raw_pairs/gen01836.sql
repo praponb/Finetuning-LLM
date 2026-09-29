@@ -1,0 +1,1 @@
+SELECT id, dept_name, budget, LAG(budget) OVER (PARTITION BY dept_name ORDER BY budget ASC, id ASC) AS prev_budget, LEAD(budget) OVER (PARTITION BY dept_name ORDER BY budget ASC, id ASC) AS next_budget, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget ASC, id ASC) AS row_seq FROM departments

@@ -1,0 +1,1 @@
+SELECT p.stock_qty, p.launch_date, ss.store_id, ss.revenue, ss.sale_date FROM products p LEFT OUTER JOIN store_sales ss ON p.id = ss.product_id WHERE MONTH(ss.sale_date) IN (2, 7, 9) OR p.stock_qty > 152;

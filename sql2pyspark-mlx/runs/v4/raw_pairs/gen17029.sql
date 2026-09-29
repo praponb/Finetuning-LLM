@@ -1,0 +1,1 @@
+SELECT we.id, we.duration_sec, s.browser, s.customer_id, c.city, c.is_active, CASE WHEN c.credit_limit >= 12200 THEN 'High' WHEN c.credit_limit >= 8200 THEN 'Medium' ELSE 'Low' END AS credit_limit_tier FROM web_events we FULL OUTER JOIN sessions s ON s.id = we.session_id JOIN customers c ON c.id = s.customer_id WHERE c.city = 'Chiang Mai'

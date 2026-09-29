@@ -1,0 +1,1 @@
+WITH valid_employees AS (SELECT * FROM employees WHERE job_title = 'Designer' AND salary < 135000), hire_month_summary AS (SELECT DATE_TRUNC('MONTH', hire_date) hire_month, MIN(salary) min_salary FROM valid_employees GROUP BY DATE_TRUNC('MONTH', hire_date)) SELECT hire_month, min_salary FROM hire_month_summary WHERE min_salary > 119000 ORDER BY hire_month DESC;

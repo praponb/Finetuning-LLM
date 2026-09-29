@@ -1,0 +1,1 @@
+select id, order_id, paid_at, amount from (select *, rank() over (partition by order_id order by paid_at desc) as row_num from payments where order_id is null) as r where row_num <= 3 order by paid_at

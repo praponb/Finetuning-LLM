@@ -1,0 +1,1 @@
+SELECT account_type, status, balance, CONCAT(status, ', ', account_type) AS status_account_type, DATE_TRUNC('month', opened_date) AS opened_date_period FROM accounts WHERE status IS NOT NULL AND status IS NULL AND balance <= 28000 ORDER BY status, opened_date_period

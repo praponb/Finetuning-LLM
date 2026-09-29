@@ -1,0 +1,1 @@
+SELECT employees.id, employees.is_remote, employees.full_name, departments.budget FROM employees LEFT JOIN departments ON employees.dept_id = departments.id WHERE departments.budget >= 1088000 ORDER BY id LIMIT 20

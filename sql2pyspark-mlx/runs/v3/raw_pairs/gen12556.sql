@@ -1,0 +1,4 @@
+SELECT DISTINCT dept_name
+FROM departments
+WHERE budget BETWEEN 1209000 AND 1611000
+ORDER BY dept_name DESC;

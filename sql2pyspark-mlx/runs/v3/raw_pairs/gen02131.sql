@@ -1,0 +1,1 @@
+SELECT s.id, s.country, t.avg_price FROM suppliers s JOIN (SELECT supplier_id, AVG(price) AS avg_price FROM products WHERE MONTH(launch_date) IN (9, 10, 11) GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.avg_price >= 450 ORDER BY avg_price DESC, id LIMIT 5;

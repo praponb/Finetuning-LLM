@@ -1,0 +1,1 @@
+with order_stats as (select order_id, min(unit_price) as min_unit_price from order_items where quantity > 6 group by order_id) select o.status, os.min_unit_price from orders o inner join order_stats os on o.id = os.order_id order by min_unit_price;

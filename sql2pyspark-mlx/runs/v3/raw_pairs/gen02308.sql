@@ -1,0 +1,5 @@
+SELECT *
+FROM orders
+WHERE customer_id IS NOT NULL
+ORDER BY 4, id
+LIMIT 20;

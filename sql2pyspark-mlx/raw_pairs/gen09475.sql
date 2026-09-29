@@ -1,0 +1,1 @@
+SELECT plan, DATE_TRUNC('MONTH', end_date) AS end_month, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM subscriptions GROUP BY 1, 2 ORDER BY stddev_monthly_fee DESC

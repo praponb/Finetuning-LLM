@@ -1,0 +1,1 @@
+select id, device, started_at, browser, last_value(browser) over (partition by device order by started_at desc, id rows between unbounded preceding and unbounded following) as last_browser from sessions where device = 'mobile';

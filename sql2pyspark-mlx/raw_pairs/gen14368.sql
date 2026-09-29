@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_time, t.amount, a.balance, c.signup_date, c.country FROM transactions t JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE c.email LIKE '%@gmail.com' ORDER BY a.balance;

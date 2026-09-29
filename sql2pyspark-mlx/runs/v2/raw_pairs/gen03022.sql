@@ -1,0 +1,1 @@
+SELECT id, account_type, balance, customer_id FROM (SELECT id, account_type, balance, customer_id, DENSE_RANK() OVER (PARTITION BY account_type ORDER BY balance) AS row_num FROM accounts WHERE MONTH(opened_date) IN (1, 5, 10)) AS r WHERE row_num <= 5;

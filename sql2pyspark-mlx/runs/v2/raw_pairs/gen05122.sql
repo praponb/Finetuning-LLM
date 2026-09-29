@@ -1,0 +1,1 @@
+select id, order_id, shipped_date, carrier, cost, first_value(carrier) over (partition by order_id order by shipped_date, id) as first_carrier, lag(cost, 1) over (partition by order_id order by shipped_date, id) as prev_cost from shipments;

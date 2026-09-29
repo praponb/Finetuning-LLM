@@ -1,0 +1,1 @@
+SELECT event_time, event_type, session_id, CASE WHEN page = '/home' THEN 1 ELSE 0 END AS is_home, SUBSTRING(event_type, 1, 2) AS event_type_prefix FROM web_events WHERE duration_sec IS NULL ORDER BY session_id, event_type DESC

@@ -1,0 +1,1 @@
+WITH filtered_products AS (SELECT *, SIZE(tags) AS tags_count FROM products WHERE product_name LIKE '%Bottl%' OR brand = 'Initech'), launch_month_summary AS (SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, MIN(launch_date) AS min_launch_date FROM filtered_products GROUP BY DATE_FORMAT(launch_date, 'yyyy-MM')) SELECT * FROM launch_month_summary ORDER BY launch_month;

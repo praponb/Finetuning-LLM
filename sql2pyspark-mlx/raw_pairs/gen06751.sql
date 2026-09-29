@@ -1,0 +1,1 @@
+SELECT dept_name, location, SORT_ARRAY(COLLECT_SET(location)) location_list, ROUND(AVG(budget), 2) avg_budget FROM departments WHERE dept_name IN ('Finance', 'Marketing') GROUP BY dept_name, location;

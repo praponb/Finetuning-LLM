@@ -1,0 +1,1 @@
+SELECT d.id, COUNT(e.id) AS employee_count, MIN(e.salary) AS min_salary, COUNT(DISTINCT e.salary) AS unique_job_titles FROM departments d LEFT JOIN employees e ON e.dept_id = d.id GROUP BY d.id ORDER BY 2

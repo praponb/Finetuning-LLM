@@ -1,0 +1,1 @@
+SELECT sessions.device, sessions.started_at, sessions.browser, customers.name FROM sessions JOIN customers ON sessions.customer_id = customers.id WHERE customers.country NOT IN ('US', 'TH', 'SG') ORDER BY device ASC

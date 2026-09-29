@@ -1,0 +1,1 @@
+SELECT id, quantity, DATE_TRUNC('WEEK', last_restock) AS last_restock_period FROM inventory WHERE last_restock > '2023-10-12' AND product_id IN (1, 3, 5, 7) AND product_id IN (2, 3, 7) ORDER BY quantity

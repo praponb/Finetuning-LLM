@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, COUNT(DISTINCT cost) AS unique_carriers FROM shipments WHERE status NOT IN ('RETURNED', 'DELIVERED') GROUP BY order_id) SELECT o.store_id, o.customer_id, os.unique_carriers FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id

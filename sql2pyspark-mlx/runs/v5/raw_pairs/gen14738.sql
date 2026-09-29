@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, customer_id, monthly_fee, status, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY monthly_fee DESC, id) pos FROM subscriptions WHERE customer_id IN (10, 18, 26, 37)) SELECT id, customer_id, monthly_fee, status FROM numbered WHERE pos <= 3;

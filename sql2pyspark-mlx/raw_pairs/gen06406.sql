@@ -1,0 +1,1 @@
+select id, city, country, signup_date, age, segment, credit_limit, round(avg(age) over (partition by city, country order by signup_date, id rows between 6 preceding and current row), 2) age_moving_avg_7, ntile(4) over (partition by segment order by credit_limit desc, id) bucket from customers where upper(name) like '%ACK%' order by signup_date;

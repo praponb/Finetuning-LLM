@@ -1,0 +1,1 @@
+SELECT s.city, ROUND(STDDEV(ss.revenue), 2) AS stddev_revenue FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id JOIN products p ON ss.product_id = p.id WHERE ARRAY_CONTAINS(p.tags, 'new') GROUP BY s.city HAVING stddev_revenue >= 63 ORDER BY stddev_revenue DESC;

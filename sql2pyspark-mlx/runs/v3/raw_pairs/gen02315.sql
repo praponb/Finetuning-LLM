@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(DISTINCT oi.quantity) AS unique_orders, AVG(oi.quantity) AS avg_quantity FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY s.city ORDER BY avg_quantity DESC, city ASC LIMIT 50

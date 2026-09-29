@@ -1,0 +1,1 @@
+SELECT id, location, budget, LAG(budget, 2) OVER (PARTITION BY location ORDER BY budget, id) AS prev_budget, LAG(budget, 1) OVER (PARTITION BY location ORDER BY budget, id) AS prev_budget_2 FROM departments WHERE dept_name = 'Legal' ORDER BY 4, location DESC;

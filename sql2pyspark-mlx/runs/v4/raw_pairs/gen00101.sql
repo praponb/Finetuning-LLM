@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1650 THEN 'high' WHEN amount >= 600 THEN 'mid' ELSE 'low' END AS amount_bucket, AVG(amount) AS avg_amount, MAX(amount) - MIN(amount) AS amount_range FROM payments WHERE order_id = 2 AND amount >= 870 GROUP BY 1 HAVING MAX(amount) - MIN(amount) < 76;

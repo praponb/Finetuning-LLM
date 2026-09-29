@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, currency, tier_value FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_limits) t AS tier_value) SELECT id, effective_from, currency, tier_value, CASE WHEN currency RLIKE '^(USD|THB)$' THEN 'GROUP_B' ELSE 'GROUP_A' END AS currency_zone FROM lines ORDER BY currency NULLS LAST

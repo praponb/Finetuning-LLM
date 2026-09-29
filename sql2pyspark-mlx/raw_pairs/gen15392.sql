@@ -1,0 +1,1 @@
+select oi.quantity, oi.product_id, o.shipping_fee, p.brand from order_items oi inner join orders o on oi.order_id = o.id inner join products p on p.id = oi.product_id where o.amount <= 1120 or oi.order_id = 29 order by quantity desc

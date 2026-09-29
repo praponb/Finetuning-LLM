@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(order_date, 'yyyy-MM') order_month, ROUND(AVG(shipping_fee), 2) avg_shipping_fee, ROUND((100 * SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_cancelled FROM orders GROUP BY DATE_FORMAT(order_date, 'yyyy-MM') HAVING ROUND((100 * SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) < 54;

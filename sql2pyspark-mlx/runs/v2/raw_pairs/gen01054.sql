@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT order_id, method, COUNT(DISTINCT amount) AS unique_orders, COUNT(CASE WHEN status = 'SUCCESS' THEN 1 END) AS success_count FROM payments WHERE HOUR(paid_at) BETWEEN 9 AND 12 GROUP BY order_id, method) AS agg WHERE success_count >= 8;

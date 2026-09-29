@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, level, latency_ms, k, v FROM app_logs LATERAL VIEW EXPLODE(context) e AS k, v) SELECT id, k, LAG(latency_ms) OVER w_running AS prev_latency_ms, ROW_NUMBER() OVER w_running AS event_seq FROM lines WHERE k IN ('region', 'trace') WINDOW w_running AS (PARTITION BY level, k ORDER BY latency_ms, id, k)

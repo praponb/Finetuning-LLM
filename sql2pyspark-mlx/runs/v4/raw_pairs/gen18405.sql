@@ -1,0 +1,1 @@
+SELECT id, brand, launch_date, cost, supplier_id, category, LEAD(cost, 1, 0) OVER (PARTITION BY brand ORDER BY launch_date, id) next_cost, LAST_VALUE(category) OVER (PARTITION BY supplier_id ORDER BY cost DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_category FROM products;

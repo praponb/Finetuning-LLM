@@ -1,0 +1,1 @@
+select store_id, sum(quantity) as total_quantity, count(*) as cnt, sum(sum(quantity)) over (order by store_id) as cumulative_quantity from inventory where last_restock between '2023-06-01' and '2025-09-13' group by store_id order by cumulative_quantity;

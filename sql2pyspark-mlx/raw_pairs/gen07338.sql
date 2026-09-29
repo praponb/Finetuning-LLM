@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, city, rating, country, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS rn FROM suppliers WHERE city IN ('Singapore', 'Tokyo', 'New York')) AS ranked WHERE rn = 1

@@ -1,0 +1,1 @@
+SELECT CASE WHEN discount >= 0.44 THEN 'high' WHEN discount >= 0.16 THEN 'mid' ELSE 'low' END AS discount_bucket, AVG(discount) AS avg_discount FROM orders WHERE customer_id = 21 AND customer_id IS NULL AND store_id = 12 GROUP BY 1 ORDER BY avg_discount;

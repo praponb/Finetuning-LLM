@@ -1,0 +1,1 @@
+SELECT product_id, order_id, COUNT(DISTINCT unit_price) AS unique_orders, SUM(unit_price * quantity) AS revenue, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY 1, 2 ORDER BY order_id DESC

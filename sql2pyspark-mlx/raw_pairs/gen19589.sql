@@ -1,0 +1,1 @@
+select country, stddev_age, age_range from (select country, round(stddev(age), 2) as stddev_age, max(age) - min(age) as age_range from customers where credit_limit is not null group by country) as agg where stddev_age > 44 order by country;

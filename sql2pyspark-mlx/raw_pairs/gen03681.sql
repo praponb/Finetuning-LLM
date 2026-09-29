@@ -1,0 +1,1 @@
+WITH recent_inventory AS (SELECT * FROM inventory WHERE quantity <= 132 AND last_restock <= '2023-06-17'), Agg AS (SELECT product_id, AVG(quantity) AS avg_quantity FROM recent_inventory GROUP BY product_id) SELECT * FROM Agg;

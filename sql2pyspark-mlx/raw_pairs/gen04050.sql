@@ -1,0 +1,1 @@
+SELECT s.id, s.device, COUNT(we.id) AS web_event_count, COUNT(we.duration_sec) AS duration_sec_count FROM sessions s JOIN web_events we ON s.id = we.session_id GROUP BY s.id, s.device ORDER BY id DESC;

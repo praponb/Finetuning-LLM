@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, COUNT(t.id) AS transaction_count, SUM(CASE WHEN t.txn_type = 'CREDIT' THEN t.amount ELSE 0 END) AS credit_amount FROM accounts a LEFT OUTER JOIN transactions t ON t.account_id = a.id WHERE a.status IN ('FROZEN', 'CLOSED') GROUP BY a.id, a.account_type HAVING SUM(CASE WHEN t.txn_type = 'CREDIT' THEN t.amount ELSE 0 END) > 33;

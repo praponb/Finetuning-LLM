@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MIN(quantity) AS min_quantity, COUNT(quantity) AS quantity_count FROM inventory GROUP BY product_id) SELECT p.id, p.supplier_id, p.launch_date, pt.min_quantity, pt.quantity_count FROM products p LEFT OUTER JOIN product_totals pt ON p.id = pt.product_id ORDER BY min_quantity DESC;

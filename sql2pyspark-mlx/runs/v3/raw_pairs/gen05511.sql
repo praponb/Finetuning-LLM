@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN unit_price >= 390 THEN 'high' WHEN unit_price >= 80 THEN 'mid' ELSE 'low' END unit_price_bucket, MAX(quantity) max_quantity, SUM(unit_price * quantity) revenue FROM order_items GROUP BY CASE WHEN unit_price >= 390 THEN 'high' WHEN unit_price >= 80 THEN 'mid' ELSE 'low' END) x WHERE max_quantity >= 3.2

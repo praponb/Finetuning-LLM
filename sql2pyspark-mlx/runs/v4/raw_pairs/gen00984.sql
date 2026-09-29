@@ -1,0 +1,1 @@
+SELECT e.id, e.job_title AS employee_job_title, e.manager_id AS employee_manager_id, e.email AS employee_email, m.salary AS manager_salary, m.hire_date AS manager_hire_date, m.dept_id AS manager_dept_id FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id WHERE m.email IS NOT NULL;

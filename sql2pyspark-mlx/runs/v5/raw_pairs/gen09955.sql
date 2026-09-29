@@ -1,0 +1,1 @@
+select start_month, num_subscriptions, max_monthly_fee from (select date_format(start_date, 'yyyy-MM') as start_month, count(*) as num_subscriptions, max(monthly_fee) as max_monthly_fee from subscriptions where customer_id is null group by date_format(start_date, 'yyyy-MM')) as agg where max_monthly_fee > 70;

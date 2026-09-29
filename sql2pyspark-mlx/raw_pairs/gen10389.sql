@@ -1,0 +1,1 @@
+SELECT CASE WHEN units >= 32 THEN 'high' WHEN units >= 18 THEN 'mid' ELSE 'low' END AS units_bucket, SUM(units) AS total_units, SUM(SUM(units)) OVER (ORDER BY CASE WHEN units >= 32 THEN 'high' WHEN units >= 18 THEN 'mid' ELSE 'low' END) AS cumulative_units FROM store_sales GROUP BY CASE WHEN units >= 32 THEN 'high' WHEN units >= 18 THEN 'mid' ELSE 'low' END ORDER BY 3 DESC;

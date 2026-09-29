@@ -1,0 +1,1 @@
+SELECT status, SUM(shipping_fee) total_shipping_fee, COUNT(CASE WHEN channel = 'store' THEN 1 END) store_count, MAX(amount) - MIN(amount) amount_range FROM orders GROUP BY status ORDER BY store_count DESC, total_shipping_fee DESC

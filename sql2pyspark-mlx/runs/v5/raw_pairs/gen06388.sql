@@ -1,0 +1,1 @@
+select c.country, month(c.signup_date) as signup_month, min(s.monthly_fee) as min_monthly_fee from subscriptions s left join customers c on s.customer_id = c.id group by c.country, month(c.signup_date);

@@ -1,0 +1,1 @@
+select id, plan, start_date, end_date, monthly_fee, status, ntile(3) over (partition by status order by monthly_fee, id) as monthly_fee_bucket, ntile(4) over (partition by status, plan order by monthly_fee, id) as monthly_fee_bucket_2 from subscriptions where start_date < '2025-04-01'

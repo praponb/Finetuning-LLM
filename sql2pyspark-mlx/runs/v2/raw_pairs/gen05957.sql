@@ -1,0 +1,1 @@
+select year(a.opened_date) as opened_year, sum(case when t.txn_type = 'REFUND' then 1 else 0 end) as refund_count from transactions t left outer join accounts a on t.account_id = a.id right outer join customers c on a.customer_id = c.id where t.is_flagged group by year(a.opened_date) order by opened_year, refund_count desc;

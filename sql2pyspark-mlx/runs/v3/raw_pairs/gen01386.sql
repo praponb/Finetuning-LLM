@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM orders WHERE customer_id IS NULL AND customer_id IS NULL), orders_stats AS (SELECT store_id, MAX(order_date) AS last_order_date, SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed_count FROM base GROUP BY store_id) SELECT store_id, completed_count FROM orders_stats WHERE completed_count >= 24;

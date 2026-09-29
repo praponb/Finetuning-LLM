@@ -1,0 +1,1 @@
+with Ranked as (select id, status, shipped_date, cost, row_number() over (partition by status order by shipped_date desc, id) rnk from shipments) select id, status, shipped_date, cost from Ranked where rnk = 1 order by cost desc

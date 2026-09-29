@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM orders WHERE channel != 'store' AND shipping_fee <= 40), summary AS (SELECT channel, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count, AVG(shipping_fee) AS avg_shipping_fee FROM src GROUP BY channel) SELECT * FROM summary ORDER BY avg_shipping_fee DESC, channel

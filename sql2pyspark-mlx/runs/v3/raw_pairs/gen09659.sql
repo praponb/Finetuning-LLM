@@ -1,0 +1,1 @@
+SELECT CASE WHEN city IN ('Berlin', 'Bangkok') THEN 'priority' ELSE 'other' END AS city_group, COUNT(*) AS store_count, MAX(opened_date) AS last_opened_date FROM stores WHERE store_name LIKE '%Sia%' AND (store_name LIKE '%Centra%' OR LENGTH(store_name) > 14) GROUP BY 1 HAVING COUNT(*) >= 3 ORDER BY 3 ASC, city_group ASC LIMIT 5

@@ -1,0 +1,1 @@
+SELECT is_flagged, CASE WHEN amount >= 3400 THEN 'high' WHEN amount >= 600 THEN 'mid' ELSE 'low' END AS amount_bucket, MIN(txn_time) AS first_txn_time, MAX(amount) - MIN(amount) AS amount_range, ROUND(AVG(amount), 2) AS avg_amount FROM transactions WHERE txn_type IN ('FEE', 'CREDIT') GROUP BY is_flagged, amount_bucket

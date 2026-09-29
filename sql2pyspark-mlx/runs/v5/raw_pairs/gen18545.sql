@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM products WHERE (category = 'Grocery' AND category IN ('Home', 'Fashion', 'Books')) OR stock_qty != 355), products_stats AS (SELECT YEAR(launch_date) AS launch_year, ROUND(AVG(cost), 2) AS avg_cost FROM src GROUP BY YEAR(launch_date)) SELECT * FROM products_stats ORDER BY avg_cost DESC, launch_year;

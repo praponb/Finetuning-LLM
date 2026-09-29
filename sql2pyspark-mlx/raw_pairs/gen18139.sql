@@ -1,0 +1,1 @@
+SELECT p.id, p.brand, COUNT(i.id) AS inventory_count, COUNT(i.quantity) AS quantity_count FROM products p INNER JOIN inventory i ON p.id = i.product_id WHERE i.store_id IN (2, 4, 5, 6) GROUP BY p.id, p.brand

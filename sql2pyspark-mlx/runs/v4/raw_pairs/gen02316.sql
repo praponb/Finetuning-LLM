@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales GROUP BY store_id) SELECT s.id, s.sqft, s.region, st.stddev_units FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id ORDER BY st.stddev_units, id DESC;

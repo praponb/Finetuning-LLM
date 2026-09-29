@@ -1,0 +1,1 @@
+SELECT CASE WHEN region IN ('Central', 'East') THEN 'core' ELSE 'other' END AS region_group, SUM(sqft) AS total_sqft, ROUND(SUM(sqft) * 100.0 / SUM(SUM(sqft)) OVER (), 2) AS pct_of_total FROM stores GROUP BY CASE WHEN region IN ('Central', 'East') THEN 'core' ELSE 'other' END

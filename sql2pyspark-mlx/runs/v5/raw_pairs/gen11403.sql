@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 90 THEN 'high' WHEN cost >= 25 THEN 'mid' ELSE 'low' END AS cost_bucket, MIN(cost) AS min_cost, COUNT(*) AS num_shipments FROM shipments GROUP BY CASE WHEN cost >= 90 THEN 'high' WHEN cost >= 25 THEN 'mid' ELSE 'low' END;

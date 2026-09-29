@@ -1,0 +1,1 @@
+select o.discount, s.region, c.city, c.age from orders o join stores s on o.store_id = s.id join customers c on o.customer_id = c.id where o.discount between 0.11 and 0.15 and s.store_name like 'Ai%';

@@ -1,0 +1,1 @@
+select month(end_date) as end_month, status, min(start_date) as min_start_date, sum(case when plan = 'premium' then 1 else 0 end) as premium_count from subscriptions group by month(end_date), status having sum(case when plan = 'premium' then 1 else 0 end) > 38

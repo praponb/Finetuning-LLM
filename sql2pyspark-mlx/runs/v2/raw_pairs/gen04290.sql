@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, t.txn_type_list, t.unique_txn_types FROM accounts a LEFT JOIN (SELECT account_id, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list, COUNT(DISTINCT amount) AS unique_txn_types FROM transactions WHERE account_id IN (4, 30) GROUP BY account_id) t ON a.id = t.account_id ORDER BY unique_txn_types DESC;

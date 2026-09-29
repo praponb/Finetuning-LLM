@@ -1,0 +1,1 @@
+with ranked as (select id, customer_id, opened_date, row_number() over (partition by customer_id order by opened_date desc, id) as pos from accounts) select id, customer_id, opened_date from ranked where pos = 1;

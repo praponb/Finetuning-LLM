@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE units IS NOT NULL), summary AS (SELECT product_id, store_id, MIN(revenue) AS min_revenue FROM base GROUP BY product_id, store_id) SELECT * FROM summary ORDER BY store_id ASC

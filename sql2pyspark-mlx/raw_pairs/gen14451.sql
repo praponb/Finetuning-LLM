@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 13093 THEN 'high' WHEN sqft >= 8034 THEN 'mid' ELSE 'low' END AS sqft_bucket, COUNT(DISTINCT sqft) AS unique_regions, COUNT(CASE WHEN city = 'New York' THEN 1 END) AS new_york_count, COUNT(sqft) AS sqft_count FROM stores WHERE city = 'Berlin' AND store_name LIKE '%Downto%' AND MONTH(opened_date) IN (8, 9, 10) GROUP BY sqft_bucket ORDER BY unique_regions

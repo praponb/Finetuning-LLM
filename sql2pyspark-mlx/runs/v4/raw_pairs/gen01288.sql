@@ -1,0 +1,1 @@
+WITH RankedInventory AS (SELECT id, product_id, quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS row_num FROM inventory) SELECT id, product_id, quantity FROM RankedInventory WHERE row_num <= 5

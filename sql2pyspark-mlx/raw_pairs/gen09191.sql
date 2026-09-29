@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, COUNT(cost) AS cost_count, ROUND((100 * SUM(CASE WHEN brand = 'Stark' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_stark FROM products GROUP BY supplier_id) SELECT s.supplier_name, s.city, st.cost_count, st.pct_stark FROM suppliers s INNER JOIN supplier_totals st ON s.id = st.supplier_id WHERE st.pct_stark > 78;

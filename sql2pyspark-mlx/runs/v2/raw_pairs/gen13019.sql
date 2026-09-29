@@ -1,0 +1,1 @@
+SELECT o.store_id, MAX(oi.quantity) - MIN(oi.quantity) quantity_range, COUNT(oi.unit_price) unit_price_count FROM order_items oi RIGHT OUTER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id GROUP BY o.store_id ORDER BY o.store_id DESC;

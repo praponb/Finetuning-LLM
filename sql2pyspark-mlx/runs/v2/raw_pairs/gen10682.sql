@@ -1,0 +1,1 @@
+SELECT id, customer_id, balance, opened_date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY balance DESC, id) AS row_num FROM accounts WHERE account_type IN ('CREDIT', 'SAVINGS', 'LOAN')) AS t WHERE row_num <= 3 ORDER BY balance DESC

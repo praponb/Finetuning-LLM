@@ -1,0 +1,1 @@
+WITH recent_customers AS (SELECT * FROM customers WHERE YEAR(signup_date) = 2023 AND segment NOT IN ('SMB', 'Consumer')), agg AS (SELECT city, SUM(CASE WHEN segment = 'Corporate' THEN 1 ELSE 0 END) AS corporate_count FROM recent_customers GROUP BY city) SELECT * FROM agg

@@ -1,0 +1,1 @@
+select id, is_active, date_trunc('YEAR', signup_date) as signup_date_period, credit_limit * age as credit_limit_times_age from customers where segment not in ('SMB', 'Corporate') and segment is not null;

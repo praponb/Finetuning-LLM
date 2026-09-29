@@ -1,0 +1,1 @@
+with Numbered as (select id, account_id, txn_time, merchant, row_number() over (partition by account_id order by txn_time desc, id) as pos from transactions where txn_time < '2025-06-01') select id, account_id, txn_time, merchant from Numbered where pos = 1 order by account_id desc;

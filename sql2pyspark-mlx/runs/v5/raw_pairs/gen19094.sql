@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, AVG(balance) AS avg_balance, MAX(balance) AS max_balance FROM accounts GROUP BY customer_id) SELECT c.id, c.segment, cs.avg_balance, cs.max_balance FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.avg_balance > 68000;

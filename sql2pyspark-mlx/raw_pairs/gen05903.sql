@@ -1,0 +1,1 @@
+SELECT o.id, o.discount, c.city, c.age, s.city AS store_city, s.region FROM orders o INNER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id WHERE o.shipping_fee IS NOT NULL

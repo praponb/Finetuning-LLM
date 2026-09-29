@@ -1,0 +1,1 @@
+SELECT customers.is_active, COUNT(transactions.amount) amount_count, SUM(transactions.amount) total_amount FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id INNER JOIN customers ON customers.id = accounts.customer_id GROUP BY customers.is_active ORDER BY 2, is_active LIMIT 10

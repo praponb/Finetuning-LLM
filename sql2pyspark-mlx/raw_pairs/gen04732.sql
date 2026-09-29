@@ -1,0 +1,1 @@
+select sum(case when city = 'Berlin' then 1 else 0 end) as berlin_count, max(credit_limit) - min(credit_limit) as credit_limit_range from customers where city in ('New York', 'Chiang Mai', 'Bangkok') and signup_date between '2024-10-01' and '2025-10-01';

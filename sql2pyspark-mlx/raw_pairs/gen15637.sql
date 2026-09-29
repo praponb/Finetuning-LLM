@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, customer_id, account_type, balance, opened_date, status, SUBSTRING(account_type, 1, 3) AS account_type_prefix FROM accounts WHERE status IS NOT NULL AND status != 'OPEN') SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM transactions ch WHERE ch.account_id = s.id AND ch.txn_time <= s.opened_date);

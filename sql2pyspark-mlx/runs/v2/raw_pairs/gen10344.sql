@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions WHERE txn_type NOT IN ('CREDIT', 'REFUND') GROUP BY account_id) SELECT accounts.id, accounts.account_type, accounts.customer_id, account_summary.merchant_list FROM accounts LEFT OUTER JOIN account_summary ON accounts.id = account_summary.account_id ORDER BY id

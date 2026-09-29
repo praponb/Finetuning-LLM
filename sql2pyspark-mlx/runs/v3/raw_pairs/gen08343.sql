@@ -1,0 +1,1 @@
+select ss.id, ss.store_id, p.brand, p.cost, s.supplier_name from store_sales ss join products p on ss.product_id = p.id left outer join suppliers s on p.supplier_id = s.id where p.category in ('Electronics', 'Books') order by ss.id desc;

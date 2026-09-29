@@ -1,0 +1,1 @@
+SELECT customers.city, MIN(subscriptions.end_date) AS first_end_date, COUNT(subscriptions.monthly_fee) AS monthly_fee_count FROM subscriptions INNER JOIN customers ON subscriptions.customer_id = customers.id GROUP BY customers.city;

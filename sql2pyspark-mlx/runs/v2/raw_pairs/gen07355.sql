@@ -1,0 +1,1 @@
+select t.merchant, a.account_type, a.opened_date, c.segment, c.country from transactions t join accounts a on a.id = t.account_id join customers c on a.customer_id = c.id where a.account_type != 'LOAN' order by a.opened_date;

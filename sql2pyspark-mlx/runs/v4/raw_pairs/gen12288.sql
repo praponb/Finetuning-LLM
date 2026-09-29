@@ -1,0 +1,1 @@
+SELECT store_id, AVG(amount) AS avg_amount, COUNT(CASE WHEN channel = 'web' THEN 1 END) AS web_count, COUNT(DISTINCT customer_id) AS distinct_customer_ids, PERCENTILE_APPROX(discount, ARRAY(0.25, 0.5, 0.75)) AS discount_quartiles FROM orders GROUP BY store_id ORDER BY distinct_customer_ids DESC NULLS FIRST;

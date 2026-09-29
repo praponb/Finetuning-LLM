@@ -1,0 +1,1 @@
+SELECT i.store_id, ss.sale_date, ROUND(i.quantity, 2) AS quantity_rounded FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.revenue >= 1200 OR ss.product_id IN (4, 6, 9, 10)

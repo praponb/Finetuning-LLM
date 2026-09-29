@@ -1,0 +1,1 @@
+select status, sum(monthly_fee) as total_monthly_fee, count(*) as cnt, dense_rank() over (order by sum(monthly_fee) desc) as monthly_fee_rank from subscriptions where monthly_fee < 170 group by status order by total_monthly_fee desc, monthly_fee_rank

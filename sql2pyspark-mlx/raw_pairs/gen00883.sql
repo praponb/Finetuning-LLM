@@ -1,0 +1,1 @@
+select inventory.id, inventory.quantity, stores.opened_date, products.stock_qty, products.launch_date from inventory join stores on inventory.store_id = stores.id join products on inventory.product_id = products.id where inventory.store_id in (1, 4) order by quantity desc, id limit 50

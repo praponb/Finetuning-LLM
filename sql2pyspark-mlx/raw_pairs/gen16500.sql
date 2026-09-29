@@ -1,0 +1,1 @@
+SELECT customers.country, COUNT(*) AS total_count FROM sessions INNER JOIN customers ON customers.id = sessions.customer_id WHERE TO_DATE(sessions.started_at) >= '2023-10-09' GROUP BY customers.country;

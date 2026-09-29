@@ -1,0 +1,1 @@
+SELECT id, category, stock_qty, supplier_id, launch_date, RANK() OVER (PARTITION BY category ORDER BY stock_qty) AS rnk, SUM(stock_qty) OVER (PARTITION BY supplier_id ORDER BY launch_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_stock_qty FROM products WHERE stock_qty = 365;

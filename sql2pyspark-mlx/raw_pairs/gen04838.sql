@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.duration_sec, web_events.event_time, web_events.event_type, sessions.browser, sessions.device FROM web_events INNER JOIN sessions ON web_events.session_id = sessions.id WHERE web_events.session_id IN (3, 19, 20, 38) OR sessions.browser IN ('Edge', 'Firefox', 'Safari') ORDER BY web_events.id DESC

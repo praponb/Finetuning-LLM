@@ -1,0 +1,1 @@
+SELECT p.id, p.amount, p.method, p.paid_at, o.discount, ROUND(o.discount * 1.1, 2) discount_scaled FROM payments p INNER JOIN orders o ON p.order_id = o.id WHERE HOUR(p.paid_at) BETWEEN 8 AND 12 ORDER BY p.id DESC, discount_scaled DESC LIMIT 5

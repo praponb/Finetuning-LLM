@@ -1,0 +1,1 @@
+SELECT CASE WHEN balance >= 69000 THEN 'high' WHEN balance >= 10000 THEN 'mid' ELSE 'low' END balance_bucket, AVG(balance) avg_balance FROM accounts WHERE balance IS NOT NULL AND account_type = 'CHECKING' GROUP BY 1 ORDER BY avg_balance

@@ -1,0 +1,1 @@
+SELECT sale_date, units, DATE_TRUNC('MONTH', sale_date) AS sale_date_period FROM store_sales WHERE NOT (product_id = 8 AND (units > 37 OR sale_date <= '2023-09-01')) ORDER BY sale_date DESC, sale_date_period

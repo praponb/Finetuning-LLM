@@ -1,0 +1,1 @@
+SELECT s.*, latest.inventory_quantity, latest.last_restock FROM products s JOIN LATERAL (SELECT c.quantity AS inventory_quantity, c.last_restock FROM inventory c WHERE c.product_id = s.id AND c.last_restock <= s.launch_date ORDER BY c.last_restock DESC, c.id DESC LIMIT 1) latest ON TRUE;

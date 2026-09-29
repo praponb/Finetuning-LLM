@@ -1,0 +1,1 @@
+SELECT last_restock_quarter, quantity_count FROM (SELECT QUARTER(last_restock) AS last_restock_quarter, COUNT(quantity) AS quantity_count FROM inventory WHERE quantity BETWEEN 156 AND 225 GROUP BY QUARTER(last_restock)) AS t WHERE quantity_count > 9 ORDER BY quantity_count DESC, last_restock_quarter LIMIT 1

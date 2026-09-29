@@ -1,0 +1,1 @@
+WITH SessionStats AS (SELECT session_id, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events WHERE duration_sec >= 443 GROUP BY session_id) SELECT s.id, s.browser, s.country, S.avg_duration_sec FROM sessions s INNER JOIN SessionStats S ON s.id = S.session_id ORDER BY country, avg_duration_sec, id LIMIT 5;

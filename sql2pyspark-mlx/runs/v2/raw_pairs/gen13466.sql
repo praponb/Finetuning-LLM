@@ -1,0 +1,1 @@
+with Src as (select * from web_events where hour(event_time) between 11 and 19 or duration_sec > 134), event_type_summary as (select event_type, max(duration_sec) as max_duration_sec from Src group by event_type) select event_type, max_duration_sec from event_type_summary where max_duration_sec >= 380 order by event_type limit 10

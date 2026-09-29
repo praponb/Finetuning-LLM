@@ -1,0 +1,1 @@
+WITH recent_orders AS (SELECT * FROM orders WHERE discount > 0.16 AND discount > 0.17 AND status = 'SHIPPED'), summary AS (SELECT channel, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM recent_orders GROUP BY channel) SELECT * FROM summary ORDER BY channel

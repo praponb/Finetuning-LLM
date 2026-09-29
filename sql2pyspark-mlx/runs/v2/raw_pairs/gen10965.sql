@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 3100 THEN 'high' WHEN amount >= 1600 THEN 'mid' ELSE 'low' END AS amount_bucket, MAX(txn_time) AS last_txn_time FROM transactions GROUP BY CASE WHEN amount >= 3100 THEN 'high' WHEN amount >= 1600 THEN 'mid' ELSE 'low' END ORDER BY last_txn_time ASC

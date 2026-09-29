@@ -1,0 +1,1 @@
+SELECT c.segment, ROUND(AVG(s.cost), 2) AS avg_cost, SUM(CASE WHEN s.status = 'DELIVERED' THEN s.cost ELSE 0 END) AS delivered_cost FROM shipments s INNER JOIN orders o ON s.order_id = o.id LEFT JOIN customers c ON o.customer_id = c.id WHERE c.is_active = TRUE GROUP BY c.segment

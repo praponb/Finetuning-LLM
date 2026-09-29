@@ -1,0 +1,1 @@
+SELECT id, status, cost, carrier, delivered_date, ROUND(cost / SUM(cost) OVER (PARTITION BY status), 3) cost_share, ROUND(AVG(cost) OVER (PARTITION BY carrier ORDER BY delivered_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) cost_moving_avg_3 FROM shipments WHERE MONTH(delivered_date) IN (3, 9, 10)

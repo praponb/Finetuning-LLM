@@ -1,0 +1,1 @@
+SELECT p.channel, e.carrier, COUNT(*) AS num_rows, MAX(e.cost) AS max_cost, GROUPING_ID() AS level_id FROM shipments e INNER JOIN orders p ON e.order_id = p.id GROUP BY CUBE (p.channel, e.carrier) ORDER BY channel NULLS LAST

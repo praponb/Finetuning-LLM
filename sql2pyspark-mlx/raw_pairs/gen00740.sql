@@ -1,0 +1,1 @@
+SELECT plan, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, SUM(CASE WHEN status = 'ACTIVE' THEN monthly_fee ELSE 0 END) AS active_monthly_fee, MAX(end_date) AS last_end_date FROM subscriptions WHERE customer_id = 20 AND (monthly_fee >= 140 OR start_date > '2023-03-01') GROUP BY plan HAVING MAX(monthly_fee) - MIN(monthly_fee) >= 51 ORDER BY active_monthly_fee

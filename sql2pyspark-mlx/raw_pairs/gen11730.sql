@@ -1,0 +1,1 @@
+select region, sum(case when city = 'Bangkok' then 1 else 0 end) as bangkok_count from stores where lower(store_name) like '%all%' and sqft between 8248 and 8405 group by region having sum(case when city = 'Bangkok' then 1 else 0 end) < 63 order by region limit 5

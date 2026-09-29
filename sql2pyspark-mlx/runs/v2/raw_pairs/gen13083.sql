@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, SUM(units) AS total_units, COUNT(DISTINCT units) AS unique_stores, MIN(revenue) AS min_revenue FROM store_sales GROUP BY DATE_TRUNC('MONTH', sale_date);

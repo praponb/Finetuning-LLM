@@ -1,0 +1,1 @@
+SELECT status, credit_count FROM (SELECT status, COUNT(CASE WHEN account_type = 'CREDIT' THEN 1 END) AS credit_count FROM accounts WHERE account_type = 'LOAN' GROUP BY status) AS t WHERE credit_count > 6 ORDER BY status;

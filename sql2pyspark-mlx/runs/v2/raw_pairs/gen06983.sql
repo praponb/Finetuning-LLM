@@ -1,0 +1,1 @@
+select s.country, t.stddev_duration_sec, t.checkout_count from sessions s join (select session_id, round(stddev(duration_sec), 2) as stddev_duration_sec, count(case when page = '/checkout' then 1 end) as checkout_count from web_events where event_type in ('page_view', 'add_to_cart') group by session_id) t on s.id = t.session_id order by t.checkout_count desc

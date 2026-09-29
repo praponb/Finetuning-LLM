@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_type, a.account_type, c.age FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id JOIN customers c ON a.customer_id = c.id WHERE a.status NOT IN ('CLOSED', 'FROZEN') AND c.is_active ORDER BY age DESC;

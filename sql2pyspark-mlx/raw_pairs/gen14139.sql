@@ -1,0 +1,1 @@
+SELECT id, dept_name, budget, NTILE(3) OVER w_part AS budget_bucket, DENSE_RANK() OVER (PARTITION BY location, dept_name ORDER BY budget DESC NULLS FIRST) AS budget_dense_rank FROM departments WINDOW w_part AS (PARTITION BY location ORDER BY budget DESC, id)

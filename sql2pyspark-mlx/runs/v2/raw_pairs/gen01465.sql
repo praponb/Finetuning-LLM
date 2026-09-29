@@ -1,0 +1,1 @@
+with session_stats as (select session_id, round(stddev(duration_sec), 2) as stddev_duration_sec, sum(duration_sec) as total_duration_sec from web_events group by session_id) select s.id, s.browser, ss.stddev_duration_sec, ss.total_duration_sec from sessions s join session_stats ss on s.id = ss.session_id where ss.stddev_duration_sec >= 55;

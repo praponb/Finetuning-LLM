@@ -1,0 +1,6 @@
+SELECT
+    CASE WHEN sqft >= 12514 THEN 'LARGE' ELSE 'SMALL' END AS sqft_tier,
+    SORT_ARRAY(COLLECT_SET(region)) AS region_list,
+    COUNT(*) AS cnt
+FROM stores
+GROUP BY CASE WHEN sqft >= 12514 THEN 'LARGE' ELSE 'SMALL' END

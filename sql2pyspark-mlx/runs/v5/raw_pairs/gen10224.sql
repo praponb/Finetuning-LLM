@@ -1,0 +1,1 @@
+select d.dept_name, e.level, count(*) as cnt, avg(e.salary) as avg_salary from employees e left join departments d on e.dept_id = d.id group by rollup (d.dept_name, e.level) order by level nulls last;

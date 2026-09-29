@@ -1,0 +1,1 @@
+SELECT id, status, store_id, customer_id, CASE WHEN shipping_fee >= 35 THEN 'High' WHEN shipping_fee >= 10 THEN 'Medium' ELSE 'Low' END AS shipping_fee_level FROM orders WHERE status NOT IN ('CANCELLED', 'SHIPPED', 'PENDING') AND (status = 'CANCELLED' OR status IN ('COMPLETED', 'SHIPPED', 'PENDING'))

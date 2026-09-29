@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CONCAT(carrier, ', ', status) carrier_status, COALESCE(carrier, 'OTHER') resolved_carrier FROM shipments WHERE shipped_date >= DATE '2023-03-01') SELECT * FROM (SELECT order_id, status, cost FROM filtered) src PIVOT (AVG(cost) FOR status IN ('IN_TRANSIT', 'DELIVERED', 'LOST'))

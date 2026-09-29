@@ -1,0 +1,1 @@
+select case when unit_price >= 370 then 'high' when unit_price >= 140 then 'mid' else 'low' end as unit_price_bucket, max(quantity) - min(quantity) as quantity_range from order_items where unit_price > 210 group by case when unit_price >= 370 then 'high' when unit_price >= 140 then 'mid' else 'low' end;

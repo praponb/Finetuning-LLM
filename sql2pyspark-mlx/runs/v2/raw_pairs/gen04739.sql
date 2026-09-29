@@ -1,0 +1,1 @@
+WITH SupplierTotals AS (SELECT supplier_id, MIN(cost) AS min_cost, COUNT(*) AS num_products FROM products WHERE brand != 'Umbrella' GROUP BY supplier_id) SELECT s.id, s.country, s.supplier_name, S.min_cost, S.num_products FROM suppliers s LEFT JOIN SupplierTotals S ON s.id = S.supplier_id WHERE S.min_cost > 690 ORDER BY s.id DESC, num_products;

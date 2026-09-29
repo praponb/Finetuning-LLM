@@ -1,0 +1,1 @@
+with filtered as (select *, initcap(trim(supplier_name)) supplier_name_title from suppliers where city is distinct from 'Bangkok' and rating >= 4.1) select id from filtered except select id from suppliers where city in ('Tokyo', 'London');

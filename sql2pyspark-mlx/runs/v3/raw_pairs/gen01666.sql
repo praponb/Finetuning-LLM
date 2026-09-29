@@ -1,0 +1,1 @@
+SELECT a.status, t.txn_time, t.txn_type, t.account_id, COALESCE(a.balance, 0) AS balance_filled FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id WHERE t.merchant IN ('Grab', 'Starbucks', 'Amazon') AND t.account_id = 34 ORDER BY txn_type ASC;

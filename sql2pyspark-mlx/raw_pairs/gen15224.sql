@@ -1,0 +1,1 @@
+select p.supplier_id, p.category, sum(i.quantity) as total_quantity, count(i.quantity) as quantity_count from inventory i right outer join products p on i.product_id = p.id join suppliers s on p.supplier_id = s.id where p.launch_date < '2024-10-01' group by p.supplier_id, p.category having count(i.quantity) >= 5

@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, order_id, paid_at, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY paid_at DESC) AS rnk FROM payments) SELECT id, order_id, paid_at FROM ranked WHERE rnk <= 2 ORDER BY id DESC

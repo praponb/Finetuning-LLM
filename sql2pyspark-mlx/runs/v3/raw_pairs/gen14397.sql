@@ -1,0 +1,1 @@
+select s.browser, sum(case when we.page = '/search' then we.duration_sec else 0 end) as search_duration_sec from web_events we inner join sessions s on we.session_id = s.id left outer join customers c on s.customer_id = c.id group by s.browser order by search_duration_sec desc

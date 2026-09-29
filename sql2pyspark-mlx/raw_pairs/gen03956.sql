@@ -1,0 +1,1 @@
+with lines as (select id, effective_from, explode(discounts) as element from price_tiers) select id, effective_from, dense_rank() over (order by element desc) as element_dense_rank, dense_rank() over (order by element) as element_dense_rank_2 from lines where element < 35

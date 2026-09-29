@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, COUNT(DISTINCT country) AS unique_countrys FROM sessions GROUP BY customer_id) SELECT c.country, cs.unique_countrys FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY cs.unique_countrys DESC;

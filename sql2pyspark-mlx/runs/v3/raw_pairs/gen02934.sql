@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, MIN(revenue) AS min_revenue, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales WHERE revenue >= 2500 GROUP BY product_id) SELECT p.id, p.price, ps.min_revenue, ps.stddev_revenue FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id WHERE ps.stddev_revenue >= 63 ORDER BY id, p.price DESC

@@ -1,0 +1,1 @@
+SELECT MONTH(customers.signup_date) AS signup_month, customers.city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(sessions.device))) AS device_values FROM sessions INNER JOIN customers ON sessions.customer_id = customers.id GROUP BY MONTH(customers.signup_date), customers.city ORDER BY device_values;

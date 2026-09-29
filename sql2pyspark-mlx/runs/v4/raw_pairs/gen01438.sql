@@ -1,0 +1,1 @@
+SELECT amount, method, status, TO_DATE(paid_at) AS paid_at_date, CASE WHEN method IN ('promptpay', 'bank_transfer') THEN 'Tier 1' ELSE 'Other' END AS method_group FROM payments WHERE amount <= 1150 OR method IS NOT NULL

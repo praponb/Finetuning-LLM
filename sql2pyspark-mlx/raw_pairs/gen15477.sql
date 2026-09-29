@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1720 THEN 'high' WHEN amount >= 330 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(DISTINCT amount) AS unique_orders FROM payments GROUP BY amount_bucket HAVING unique_orders < 2;

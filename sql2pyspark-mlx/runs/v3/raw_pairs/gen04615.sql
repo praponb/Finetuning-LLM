@@ -1,0 +1,1 @@
+SELECT o.customer_id, o.channel, t.max_amount FROM orders o JOIN (SELECT order_id, MAX(amount) AS max_amount FROM payments WHERE paid_at < '2025-01-01' GROUP BY order_id) t ON o.id = t.order_id WHERE t.max_amount > 900 ORDER BY channel, o.customer_id DESC;

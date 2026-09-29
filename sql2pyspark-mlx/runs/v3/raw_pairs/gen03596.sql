@@ -1,0 +1,1 @@
+SELECT account_type, min_balance, stddev_balance FROM (SELECT account_type, MIN(balance) AS min_balance, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts GROUP BY account_type) AS s WHERE stddev_balance >= 40 ORDER BY min_balance DESC, account_type LIMIT 5;

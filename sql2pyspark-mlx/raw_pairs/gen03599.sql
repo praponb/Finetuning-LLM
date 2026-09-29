@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, product_id, units, sale_date, RANK() OVER (PARTITION BY product_id ORDER BY units DESC) AS rnk FROM store_sales) SELECT id, product_id, units, sale_date FROM numbered WHERE rnk <= 5 ORDER BY units DESC;

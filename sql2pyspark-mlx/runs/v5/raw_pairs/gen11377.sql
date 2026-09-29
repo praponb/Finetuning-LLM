@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales WHERE store_id IN (3, 5, 6) AND revenue >= 2900 GROUP BY 1 ORDER BY sale_cohort

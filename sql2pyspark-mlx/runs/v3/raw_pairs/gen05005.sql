@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT level, SORT_ARRAY(COLLECT_SET(level)) AS level_list, COUNT(CASE WHEN job_title = 'Manager' THEN 1 END) AS manager_count FROM employees WHERE is_remote GROUP BY level) AS agg WHERE manager_count > 4

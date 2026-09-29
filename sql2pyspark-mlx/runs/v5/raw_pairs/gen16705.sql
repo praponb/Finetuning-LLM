@@ -1,0 +1,1 @@
+SELECT event_type, event_month, unique_event_types FROM (SELECT event_type, DATE_FORMAT(event_time, 'yyyy-MM') event_month, COUNT(DISTINCT duration_sec) unique_event_types FROM web_events GROUP BY event_type, DATE_FORMAT(event_time, 'yyyy-MM')) sub WHERE unique_event_types < 10 ORDER BY unique_event_types DESC;

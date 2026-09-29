@@ -1,0 +1,1 @@
+select id, is_active, email, datediff(current_date(), signup_date) as days_since_signup_date, date_format(signup_date, 'MMM yyyy') as signup_date_label from customers where signup_date <= '2025-04-01';

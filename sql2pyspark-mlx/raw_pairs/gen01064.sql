@@ -1,0 +1,1 @@
+select id, device_code, reading_ts, temp_c, pressure, firmware, ntile(5) over (partition by device_code order by status_bits desc, id) as status_bits_bucket, round(pressure / sum(pressure) over (partition by year(reading_ts)), 4) as pressure_share from device_readings;

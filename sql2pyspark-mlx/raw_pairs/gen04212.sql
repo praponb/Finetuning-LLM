@@ -1,0 +1,1 @@
+with top_employees as (select *, row_number() over (partition by job_title order by hire_date desc, id) as rnk from employees where level not in ('L1', 'L4', 'L5')) select * from top_employees where rnk <= 5;

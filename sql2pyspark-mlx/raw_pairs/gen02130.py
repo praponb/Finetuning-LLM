@@ -1,0 +1,14 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_orders.alias("o")
+    .join(df_payments.alias("p"), F.col("o.id") == F.col("p.order_id"), "left_anti")
+    .select(
+        F.col("o.id"),
+        F.col("o.order_date"),
+        F.col("o.channel"),
+        F.col("o.discount"),
+    )
+    .orderBy("channel", "id")
+    .limit(50)
+)

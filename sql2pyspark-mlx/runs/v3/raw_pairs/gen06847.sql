@@ -1,0 +1,1 @@
+SELECT orders.id, orders.channel, orders.store_id, t.total_quantity, t.unit_price_range FROM orders INNER JOIN (SELECT order_id, SUM(quantity) AS total_quantity, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY order_id) t ON orders.id = t.order_id WHERE t.total_quantity > 19 ORDER BY total_quantity, unit_price_range

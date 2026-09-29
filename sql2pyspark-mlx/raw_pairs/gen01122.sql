@@ -1,0 +1,1 @@
+SELECT product_id, stddev_quantity, cnt FROM (SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(*) AS cnt FROM inventory WHERE last_restock < '2024-07-01' GROUP BY product_id) AS x WHERE cnt > 4 ORDER BY product_id DESC LIMIT 50;

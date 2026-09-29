@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, currency, tier_value FROM price_tiers LATERAL VIEW EXPLODE(discounts) e AS tier_value) SELECT plan, effective_from, currency, CUME_DIST() OVER (PARTITION BY currency, plan ORDER BY tier_value NULLS LAST) AS tier_value_cume_dist, SUM(tier_value) OVER (PARTITION BY currency) AS currency_sum_tier_value FROM lines

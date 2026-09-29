@@ -1,0 +1,1 @@
+SELECT we.page, s.customer_id, s.started_at, c.is_active, c.credit_limit FROM web_events we LEFT JOIN sessions s ON s.id = we.session_id INNER JOIN customers c ON c.id = s.customer_id WHERE c.city IS NULL ORDER BY s.customer_id DESC

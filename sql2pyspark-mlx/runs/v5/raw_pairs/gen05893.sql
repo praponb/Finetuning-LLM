@@ -1,0 +1,1 @@
+select date_trunc('MONTH', event_time) as event_month, round(avg(duration_sec), 2) as avg_duration_sec, sort_array(collect_set(event_type)) as event_type_list, sum(case when page = '/cart' then 1 else 0 end) as cart_count from web_events group by date_trunc('MONTH', event_time) order by cart_count desc, event_month limit 10;

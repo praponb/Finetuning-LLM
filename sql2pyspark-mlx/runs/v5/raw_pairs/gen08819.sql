@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees GROUP BY dept_id) SELECT d.id, d.location, dt.job_title_list FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id;

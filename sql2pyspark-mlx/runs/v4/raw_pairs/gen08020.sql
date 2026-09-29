@@ -1,0 +1,1 @@
+select c.is_active, count(*) as row_count, min(oi.unit_price) as min_unit_price from order_items oi inner join orders o on o.id = oi.order_id inner join customers c on c.id = o.customer_id group by c.is_active;

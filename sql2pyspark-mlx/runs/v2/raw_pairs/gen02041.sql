@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, dept_name, budget, location, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS rnk FROM departments) SELECT id, dept_name, budget, location FROM numbered WHERE rnk <= 2 ORDER BY id DESC;

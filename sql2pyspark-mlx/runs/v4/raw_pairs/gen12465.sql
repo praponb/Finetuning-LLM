@@ -1,0 +1,1 @@
+SELECT products.id, products.supplier_id, products.price, suppliers.country FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE ARRAY_CONTAINS(products.tags, 'new') ORDER BY products.id DESC, country ASC

@@ -1,0 +1,1 @@
+select subscriptions.id, subscriptions.customer_id, subscriptions.end_date, subscriptions.status, customers.credit_limit from subscriptions left join customers on subscriptions.customer_id = customers.id order by subscriptions.id desc limit 5

@@ -1,0 +1,1 @@
+SELECT job_title, CASE WHEN salary >= 122000 THEN 'high' WHEN salary >= 60000 THEN 'mid' ELSE 'low' END AS salary_bucket, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, MAX(salary) - MIN(salary) AS salary_range FROM employees WHERE email LIKE '%@outlook.com' GROUP BY job_title, salary_bucket ORDER BY 4 DESC, job_title, salary_bucket LIMIT 3

@@ -1,0 +1,1 @@
+select id, plan, monthly_fee, customer_id, end_date, avg(monthly_fee) over (partition by plan) as plan_avg_monthly_fee, sum(monthly_fee) over (partition by customer_id order by end_date, id rows between unbounded preceding and current row) as running_monthly_fee from subscriptions where status in ('PAUSED', 'EXPIRED');

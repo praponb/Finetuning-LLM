@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CAST(unit_price AS INT) AS unit_price_int FROM order_items WHERE product_id IN (7, 29)) SELECT order_id, id FROM valid EXCEPT SELECT order_id, id FROM order_items WHERE quantity BETWEEN 5 AND 6;

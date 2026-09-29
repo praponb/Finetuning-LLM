@@ -1,0 +1,1 @@
+select s.browser, sum(case when we.page = '/home' then 1 else 0 end) as home_count, sort_array(collect_set(we.page)) as page_list from web_events we join sessions s on we.session_id = s.id left join customers c on s.customer_id = c.id where month(c.signup_date) in (3, 11, 12) group by s.browser order by home_count desc, browser asc limit 50;

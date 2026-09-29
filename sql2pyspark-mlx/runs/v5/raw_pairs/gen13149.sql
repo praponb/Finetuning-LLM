@@ -1,0 +1,1 @@
+SELECT dim.city, s.status, COUNT(*) AS rows_total, MAX(s.monthly_fee) AS max_monthly_fee, GROUPING_ID() AS gid FROM subscriptions s INNER JOIN customers dim ON s.customer_id = dim.id GROUP BY ROLLUP (dim.city, s.status)

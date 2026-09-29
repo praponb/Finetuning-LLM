@@ -1,0 +1,1 @@
+select case when amount >= 3000 then 'LARGE' else 'SMALL' end as amount_tier, count(*) as num_rows, min(txn_time) as first_txn_time from transactions group by case when amount >= 3000 then 'LARGE' else 'SMALL' end having count(*) > 1 order by num_rows desc nulls last;

@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_departments
+    .filter(F.col("location") != "Bangkok")
+    .select(
+        "id",
+        "budget",
+        F.concat_ws("/", "dept_name", "location").alias("dept_name_location_key"),
+        F.coalesce("budget", F.lit(0)).alias("budget_filled"),
+    )
+)

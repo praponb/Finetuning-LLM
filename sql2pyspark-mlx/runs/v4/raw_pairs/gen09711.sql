@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, p.product_name, p.supplier_id, s.supplier_name FROM inventory i LEFT OUTER JOIN products p ON p.id = i.product_id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.country != 'US' AND LOWER(s.supplier_name) LIKE '%aci%' ORDER BY p.supplier_id

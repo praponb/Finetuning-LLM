@@ -1,0 +1,1 @@
+with filtered as (select *, concat_ws('-', job_title, email) job_title_email_key, coalesce(job_title, 'N/A') resolved_job_title from employees where hire_date > date '2023-12-08' and length(full_name) >= 8) select * from (select dept_id, level, salary from filtered) src pivot (max(salary) as total, count(1) as cnt for level in ('L3' as l3, 'L1' as l1))

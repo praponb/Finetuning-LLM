@@ -1,0 +1,1 @@
+with base as (select *, date_trunc('WEEK', event_time) as event_time_period from web_events where event_time > to_timestamp('2023-12-19 12:00:00') and page is not null and event_type != 'page_view') select a.*, p.browser, p.country, p.device from base a left join sessions p on a.session_id = p.id

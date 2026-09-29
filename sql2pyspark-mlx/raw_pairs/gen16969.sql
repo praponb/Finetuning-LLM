@@ -1,0 +1,1 @@
+SELECT txn_type, MAX(amount) - MIN(amount) AS amount_range, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fee FROM transactions GROUP BY txn_type HAVING MAX(amount) - MIN(amount) < 34 ORDER BY amount_range ASC

@@ -1,0 +1,1 @@
+SELECT we.id, we.duration_sec, s.device, c.segment, c.signup_date, SUBSTRING(we.page, 1, 2) AS page_prefix FROM web_events we INNER JOIN sessions s ON s.id = we.session_id INNER JOIN customers c ON s.customer_id = c.id WHERE s.customer_id IS NOT NULL ORDER BY signup_date, s.device;

@@ -1,0 +1,1 @@
+select o.channel, o.order_date, t.cost_range, t.status_values from orders o inner join (select order_id, max(cost) - min(cost) as cost_range, concat_ws(', ', sort_array(collect_set(status))) as status_values from shipments group by order_id) t on o.id = t.order_id order by status_values desc, cost_range desc;

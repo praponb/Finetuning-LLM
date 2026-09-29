@@ -1,0 +1,1 @@
+SELECT method, ROUND(STDDEV(amount), 2) stddev_amount, COUNT(CASE WHEN status = 'SUCCESS' THEN 1 END) success_count FROM payments WHERE method = 'card' AND method NOT IN ('paypal', 'cash') GROUP BY 1 ORDER BY method, success_count DESC;

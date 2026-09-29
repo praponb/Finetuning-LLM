@@ -1,0 +1,1 @@
+SELECT id, status, order_id, delivered_date, DENSE_RANK() OVER (PARTITION BY status, order_id ORDER BY delivered_date DESC) AS dense_rnk FROM shipments WHERE status IN ('RETURNED', 'LOST', 'IN_TRANSIT')

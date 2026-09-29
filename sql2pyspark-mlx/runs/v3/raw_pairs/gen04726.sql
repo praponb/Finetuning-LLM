@@ -1,0 +1,1 @@
+select last_restock_quarter, store_id, quantity_count from (select quarter(last_restock) as last_restock_quarter, store_id, count(quantity) as quantity_count from inventory where store_id = 3 group by quarter(last_restock), store_id) as sub where quantity_count >= 6 order by last_restock_quarter asc;

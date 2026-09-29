@@ -1,0 +1,1 @@
+select o.id, o.channel, count(oi.id) as order_item_count, round(stddev(oi.unit_price), 2) as stddev_unit_price, avg(oi.unit_price) as avg_unit_price from orders o join order_items oi on oi.order_id = o.id where o.amount >= 1530 group by o.id, o.channel order by id, channel limit 50;

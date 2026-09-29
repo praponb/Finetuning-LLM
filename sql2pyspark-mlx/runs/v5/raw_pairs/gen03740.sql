@@ -1,0 +1,1 @@
+SELECT channel, CASE WHEN status IN ('SHIPPED', 'RETURNED') THEN 'core' ELSE 'other' END AS status_group, SUM(amount) AS total_amount FROM orders WHERE amount >= 1170 GROUP BY CUBE(channel, CASE WHEN status IN ('SHIPPED', 'RETURNED') THEN 'core' ELSE 'other' END)

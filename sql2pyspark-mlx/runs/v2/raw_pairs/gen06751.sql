@@ -1,0 +1,1 @@
+with account_totals as (select account_id, count(*) as cnt from transactions group by account_id) select a.opened_date, at.cnt from accounts a left join account_totals at on a.id = at.account_id order by cnt, opened_date

@@ -1,0 +1,1 @@
+SELECT p.id, p.cost, p.supplier_id FROM products p WHERE p.category IN ('Books', 'Electronics') AND p.supplier_id IN (SELECT id FROM suppliers WHERE city = 'Singapore') ORDER BY p.cost DESC, id LIMIT 10;

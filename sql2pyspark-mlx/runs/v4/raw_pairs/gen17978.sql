@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LOWER(city) AS city_lower, COALESCE(city, 'UNKNOWN') AS city_clean FROM suppliers WHERE city IS NOT NULL) SELECT * FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) = 1;

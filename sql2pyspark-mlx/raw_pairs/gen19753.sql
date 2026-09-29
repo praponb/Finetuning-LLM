@@ -1,0 +1,1 @@
+select month(c.signup_date) as signup_month, sum(case when o.channel = 'web' then o.amount else 0 end) as web_amount from orders o inner join stores s on o.store_id = s.id inner join customers c on o.customer_id = c.id group by month(c.signup_date);

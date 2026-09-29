@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CONCAT(email, ' ', full_name) AS email_full_name, INITCAP(TRIM(level)) AS level_title FROM employees WHERE manager_id IS NULL) SELECT src.*, d.dept_name FROM filtered src LEFT JOIN departments d ON src.dept_id = d.id

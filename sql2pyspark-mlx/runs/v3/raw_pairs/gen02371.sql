@@ -1,0 +1,1 @@
+SELECT customer_id, status, MIN(start_date) AS min_start_date, AVG(monthly_fee) AS avg_monthly_fee, COUNT(*) AS cnt FROM subscriptions WHERE end_date BETWEEN '2024-09-01' AND '2024-09-28' AND customer_id IS NOT NULL GROUP BY customer_id, status ORDER BY customer_id DESC

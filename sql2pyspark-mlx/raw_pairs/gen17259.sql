@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT d.channel, d.status AS order_status, a.method, COUNT(*) AS cnt, ROUND(SUM(a.amount), 2) AS total_amount FROM payments a INNER JOIN orders d ON a.order_id = d.id GROUP BY ROLLUP (d.channel, d.status, a.method)) SELECT method, cnt FROM rollup_totals ORDER BY method, cnt;

@@ -1,0 +1,1 @@
+SELECT account_type, MAX(balance) AS max_balance FROM accounts WHERE balance < 50000 AND account_type IN ('CHECKING', 'CREDIT', 'LOAN') GROUP BY account_type HAVING max_balance >= 27000 ORDER BY 1 DESC, max_balance DESC LIMIT 5;

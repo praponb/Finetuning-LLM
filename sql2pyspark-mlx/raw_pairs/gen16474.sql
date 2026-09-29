@@ -1,0 +1,1 @@
+SELECT id, customer_id, amount, order_date, discount, RANK() OVER (PARTITION BY customer_id ORDER BY amount DESC) AS rnk, LAG(discount, 1) OVER (PARTITION BY customer_id ORDER BY order_date, id) AS prev_discount FROM orders

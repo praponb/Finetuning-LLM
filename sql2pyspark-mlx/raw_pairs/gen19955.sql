@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, p.launch_date, p.stock_qty, o.shipping_fee, o.store_id FROM order_items oi JOIN products p ON p.id = oi.product_id JOIN orders o ON oi.order_id = o.id ORDER BY id, stock_qty

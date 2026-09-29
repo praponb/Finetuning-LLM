@@ -1,0 +1,1 @@
+WITH gaps AS (SELECT *, CASE WHEN paid_at - LAG(paid_at) OVER (PARTITION BY method ORDER BY paid_at, id) > INTERVAL 90 DAYS THEN 1 ELSE 0 END AS session_start_flag FROM payments) SELECT *, SUM(session_start_flag) OVER (PARTITION BY method ORDER BY paid_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS session_no FROM gaps

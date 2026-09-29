@@ -1,0 +1,1 @@
+SELECT products.brand, MAX(inventory.quantity) - MIN(inventory.quantity) AS quantity_range FROM inventory JOIN products ON inventory.product_id = products.id GROUP BY products.brand HAVING MAX(inventory.quantity) - MIN(inventory.quantity) > 49;

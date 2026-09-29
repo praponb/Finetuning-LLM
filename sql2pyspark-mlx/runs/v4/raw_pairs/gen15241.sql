@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, MAX(revenue) - MIN(revenue) AS revenue_range, MAX(sale_date) AS latest_sale_date, COUNT(*) AS row_count FROM store_sales GROUP BY 1 HAVING AVG(units) >= 34 ORDER BY latest_sale_date ASC

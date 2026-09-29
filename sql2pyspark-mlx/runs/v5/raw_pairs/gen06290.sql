@@ -1,0 +1,1 @@
+with RankedAccounts as (select *, rank() over (partition by account_type order by balance desc) as row_num from accounts where balance between 21000 and 24000) select id, account_type, balance, status from RankedAccounts where row_num <= 3;

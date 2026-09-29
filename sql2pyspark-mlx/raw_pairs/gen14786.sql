@@ -1,0 +1,1 @@
+SELECT id, location, SUBSTRING(location, 1, 4) AS location_prefix, SUBSTRING(location, 1, 2) AS location_prefix_2 FROM departments WHERE dept_name NOT IN ('HR', 'Sales', 'Finance') ORDER BY location_prefix_2 DESC, id LIMIT 10

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, SUM(unit_price) AS total_unit_price FROM order_items GROUP BY order_id) SELECT o.channel, o.customer_id, os.total_unit_price FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.total_unit_price > 2200 ORDER BY total_unit_price DESC, channel;

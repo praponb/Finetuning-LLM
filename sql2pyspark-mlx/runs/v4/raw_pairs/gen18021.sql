@@ -1,0 +1,1 @@
+SELECT country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, MIN(signup_date) AS first_signup_date FROM customers WHERE age < 45 AND segment <> 'SMB' AND country = 'JP' GROUP BY country ORDER BY country_values ASC, country ASC LIMIT 50

@@ -1,0 +1,1 @@
+select s.city, month(s.opened_date) opened_month, count(*) num_order_items from order_items oi inner join orders o on oi.order_id = o.id inner join stores s on o.store_id = s.id group by s.city, month(s.opened_date) order by 3 desc, opened_month desc, city limit 5;

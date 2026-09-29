@@ -1,0 +1,1 @@
+SELECT QUARTER(p.launch_date) AS launch_quarter, MIN(ss.sale_date) AS min_sale_date FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id LEFT OUTER JOIN products p ON ss.product_id = p.id WHERE s.city = 'Tokyo' GROUP BY QUARTER(p.launch_date) ORDER BY launch_quarter DESC, min_sale_date

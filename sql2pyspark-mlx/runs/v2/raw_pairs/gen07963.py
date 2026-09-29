@@ -1,0 +1,17 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_orders.alias("o")
+    .join(df_stores.alias("s"), F.col("s.id") == F.col("o.store_id"), "left")
+    .join(df_customers.alias("c"), F.col("o.customer_id") == F.col("c.id"), "left")
+    .select(
+        F.col("o.id"),
+        F.col("o.order_date"),
+        F.col("o.status"),
+        F.col("s.region"),
+        F.col("s.store_name"),
+        F.col("c.is_active"),
+        F.col("c.signup_date"),
+        F.date_format(F.col("s.opened_date"), "yyyy-MM-dd").alias("opened_date_label"),
+    )
+)

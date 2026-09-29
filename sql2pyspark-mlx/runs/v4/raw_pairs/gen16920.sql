@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.quantity, order_items.order_id FROM order_items WHERE order_items.product_id = 36 AND order_items.order_id IN (SELECT id FROM orders WHERE customer_id IS NULL) ORDER BY quantity DESC;

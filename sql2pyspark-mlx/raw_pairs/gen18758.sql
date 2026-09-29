@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, MIN(txn_time) AS min_txn_time, MIN(amount) AS min_amount FROM transactions GROUP BY account_id) SELECT a.balance, as.min_txn_time, as.min_amount FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id WHERE as.min_amount > 3200 ORDER BY min_txn_time ASC;

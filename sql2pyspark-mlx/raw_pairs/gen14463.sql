@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, SUM(stock_qty) AS total_stock_qty FROM products WHERE stock_qty BETWEEN 200 AND 206 GROUP BY supplier_id) SELECT s.id, s.country, pbs.total_stock_qty FROM suppliers s LEFT OUTER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY s.id DESC;

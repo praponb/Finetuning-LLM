@@ -1,0 +1,1 @@
+select ss.product_id, ss.store_id, round(avg(i.quantity), 2) as avg_quantity, min(i.last_restock) as first_last_restock from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.product_id, ss.store_id order by ss.store_id desc

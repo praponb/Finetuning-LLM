@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.store_id, products.cost, products.brand, stores.store_name, stores.region FROM inventory LEFT JOIN products ON inventory.product_id = products.id INNER JOIN stores ON inventory.store_id = stores.id WHERE inventory.product_id IN (2, 6, 8) AND stores.sqft <> 11783;

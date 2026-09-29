@@ -1,0 +1,1 @@
+WITH recent_transactions AS (SELECT * FROM transactions WHERE NOT (txn_type = 'FEE' AND TO_DATE(txn_time) < '2025-03-29')), agg AS (SELECT merchant, ROUND(AVG(amount), 2) AS avg_amount, COUNT(amount) AS amount_count FROM recent_transactions GROUP BY merchant) SELECT * FROM agg

@@ -1,0 +1,1 @@
+with filtered_orders as (select * from orders where order_date <= '2024-02-01'), orders_stats as (select channel, round(stddev(shipping_fee), 2) as stddev_shipping_fee from filtered_orders group by channel) select channel, stddev_shipping_fee from orders_stats where stddev_shipping_fee < 47;

@@ -1,0 +1,1 @@
+with department_summary as (select dept_id, max(salary) - min(salary) as salary_range from employees group by dept_id) select d.id, d.location, ds.salary_range from departments d left join department_summary ds on d.id = ds.dept_id where ds.salary_range > 78;

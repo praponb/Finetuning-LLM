@@ -1,0 +1,1 @@
+select s.region, max(ss.sale_date) as last_sale_date from store_sales ss inner join products p on p.id = ss.product_id left join stores s on ss.store_id = s.id where s.sqft is not null group by s.region order by region limit 3

@@ -1,0 +1,1 @@
+SELECT id, merchant, amount, account_id, FIRST_VALUE(account_id) OVER (PARTITION BY merchant ORDER BY amount DESC, id) AS first_account_id, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount, id) AS rn FROM transactions WHERE amount < 3500 ORDER BY id DESC

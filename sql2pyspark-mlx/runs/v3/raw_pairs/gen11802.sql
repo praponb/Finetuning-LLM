@@ -1,0 +1,1 @@
+SELECT p.id, p.order_id, p.status, o.status order_status, o.amount, s.sqft FROM payments p FULL OUTER JOIN orders o ON p.order_id = o.id LEFT OUTER JOIN stores s ON s.id = o.store_id WHERE s.region IN ('Central', 'South', 'East') AND s.region = 'Central' ORDER BY id;

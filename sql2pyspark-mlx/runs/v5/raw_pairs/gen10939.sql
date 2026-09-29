@@ -1,0 +1,1 @@
+WITH scored AS (SELECT *, LEAD(salary) OVER w_grp AS next_salary, ROW_NUMBER() OVER w_grp AS row_seq FROM employees WINDOW w_grp AS (PARTITION BY job_title ORDER BY hire_date ASC, id ASC)) SELECT id, full_name, hire_date, is_remote, level, next_salary FROM scored;

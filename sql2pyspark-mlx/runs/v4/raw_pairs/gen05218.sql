@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(order_date, 'yyyy-MM') order_month, COUNT(shipping_fee) shipping_fee_count, AVG(shipping_fee) avg_shipping_fee FROM orders WHERE discount >= 0.28 GROUP BY DATE_FORMAT(order_date, 'yyyy-MM') HAVING shipping_fee_count >= 2 ORDER BY shipping_fee_count DESC;

@@ -1,0 +1,1 @@
+with StoreSummary as (select store_id, min(order_date) as min_order_date, count(case when status = 'SHIPPED' then 1 end) as shipped_count from orders group by store_id) select s.id, s.city, s.store_name, S.min_order_date, S.shipped_count from stores s left join StoreSummary S on s.id = S.store_id order by shipped_count desc

@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, SUBSTRING(city, 1, 3) AS city_prefix FROM suppliers WHERE UPPER(supplier_name) LIKE '%OKY%'), Summary AS (SELECT country, city, ROUND(AVG(rating), 2) AS avg_rating, MIN(rating) AS min_rating FROM base GROUP BY country, city) SELECT * FROM Summary ORDER BY min_rating ASC

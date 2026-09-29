@@ -1,0 +1,1 @@
+SELECT QUARTER(s.opened_date) opened_quarter, CASE WHEN s.city IN ('Tokyo', 'London') THEN 'core' ELSE 'other' END city_group, COUNT(ss.units) units_count FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id GROUP BY QUARTER(s.opened_date), CASE WHEN s.city IN ('Tokyo', 'London') THEN 'core' ELSE 'other' END HAVING units_count >= 2 ORDER BY units_count;

@@ -1,0 +1,1 @@
+SELECT dept_id, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, MAX(hire_date) AS latest_hire_date FROM employees WHERE (salary >= 115000 AND hire_date <= '2025-01-01') OR dept_id = 19 GROUP BY dept_id ORDER BY dept_id DESC, latest_hire_date DESC LIMIT 50;

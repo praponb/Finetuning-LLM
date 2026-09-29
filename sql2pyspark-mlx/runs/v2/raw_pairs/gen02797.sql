@@ -1,0 +1,1 @@
+SELECT event_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values, SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END) AS click_count FROM web_events WHERE page = '/checkout' AND (event_type = 'click' OR event_time >= '2023-12-01') GROUP BY event_type HAVING SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END) < 30;

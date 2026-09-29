@@ -1,0 +1,1 @@
+SELECT 'store_sale' AS record_type, sale_date AS event_date FROM store_sales WHERE units > 21 UNION SELECT 'shipment' AS record_type, shipped_date AS event_date FROM shipments WHERE carrier IS NOT NULL;

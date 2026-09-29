@@ -1,0 +1,1 @@
+SELECT status, SUM(CASE WHEN carrier = 'Kerry' THEN 1 ELSE 0 END) AS kerry_count, COUNT(CASE WHEN carrier = 'FedEx' THEN 1 END) AS fedex_count FROM shipments WHERE carrier IN ('Flash', 'Kerry') AND (cost IS NOT NULL OR cost >= 95) GROUP BY status;

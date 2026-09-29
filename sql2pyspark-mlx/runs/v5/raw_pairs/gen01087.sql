@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, COUNT(*) product_count, COUNT(DISTINCT stock_qty) unique_categorys FROM products GROUP BY supplier_id) SELECT s.id, s.rating, st.product_count, st.unique_categorys FROM suppliers s LEFT JOIN supplier_totals st ON s.id = st.supplier_id

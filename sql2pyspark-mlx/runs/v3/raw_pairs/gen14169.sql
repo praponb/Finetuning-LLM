@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, AVG(units) AS avg_units FROM store_sales WHERE MONTH(sale_date) IN (9, 10, 11) GROUP BY store_id) SELECT s.id, s.region, s.store_name, ss.avg_units FROM stores s LEFT OUTER JOIN store_summary ss ON s.id = ss.store_id

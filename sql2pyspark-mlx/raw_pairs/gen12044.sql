@@ -1,0 +1,1 @@
+SELECT brand, category, MAX(cost) AS max_cost, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products WHERE LOWER(TRIM(product_name)) = 'backpack xl' OR ARRAY_CONTAINS(tags, 'sale') GROUP BY brand, category;

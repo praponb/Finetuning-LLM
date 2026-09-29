@@ -1,0 +1,1 @@
+SELECT id, region, store_name, opened_date, INITCAP(TRIM(city)) AS city_title, CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END AS is_chiang_mai FROM stores WHERE UPPER(TRIM(store_name)) = 'AIRPORT KIOSK'

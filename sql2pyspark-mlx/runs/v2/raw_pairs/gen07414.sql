@@ -1,0 +1,1 @@
+SELECT s.country, SUM(we.duration_sec) total_duration_sec, MIN(we.event_time) min_event_time FROM web_events we RIGHT JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id GROUP BY s.country;

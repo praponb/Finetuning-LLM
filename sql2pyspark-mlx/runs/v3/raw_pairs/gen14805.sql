@@ -1,0 +1,1 @@
+SELECT region, CASE WHEN city IN ('Berlin', 'Bangkok') THEN 'tier_1' ELSE 'other' END AS city_group, SUM(CASE WHEN city = 'Singapore' THEN sqft ELSE 0 END) AS singapore_sqft, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values FROM stores GROUP BY region, CASE WHEN city IN ('Berlin', 'Bangkok') THEN 'tier_1' ELSE 'other' END ORDER BY region ASC, 2 ASC LIMIT 10;

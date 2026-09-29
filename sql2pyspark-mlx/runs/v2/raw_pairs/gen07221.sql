@@ -1,0 +1,1 @@
+SELECT s.city, t.discount_count, t.stddev_amount FROM stores s JOIN (SELECT store_id, COUNT(discount) AS discount_count, ROUND(STDDEV(amount), 2) AS stddev_amount FROM orders GROUP BY store_id) t ON s.id = t.store_id WHERE t.discount_count >= 6 ORDER BY stddev_amount DESC

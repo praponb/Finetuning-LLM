@@ -1,0 +1,1 @@
+SELECT id, event_type, duration_sec, page, event_time, RANK() OVER (PARTITION BY event_type ORDER BY duration_sec) rnk, LAG(duration_sec, 1) OVER (PARTITION BY page ORDER BY event_time, id) prev_duration_sec FROM web_events ORDER BY duration_sec DESC, event_type

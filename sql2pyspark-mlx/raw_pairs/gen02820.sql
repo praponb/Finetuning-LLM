@@ -1,0 +1,1 @@
+select * from (select month(signup_date) as signup_month, concat_ws(', ', sort_array(collect_set(segment))) as segment_values, sum(case when city = 'Berlin' then 1 else 0 end) as berlin_count from customers where not is_active group by month(signup_date)) as s where berlin_count >= 70 order by berlin_count, signup_month limit 5

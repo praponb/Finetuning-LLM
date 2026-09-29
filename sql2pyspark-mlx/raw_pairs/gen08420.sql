@@ -1,0 +1,1 @@
+with lines as (select base.id, base.customer_id, rec.product_id, rec.qty, rec.price, rec.promo from carts base lateral view outer explode(base.items) t as rec) select product_id, qty, price, promo from lines

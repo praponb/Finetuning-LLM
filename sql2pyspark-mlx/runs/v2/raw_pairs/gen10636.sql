@@ -1,0 +1,1 @@
+WITH recent_inventory AS (SELECT * FROM inventory WHERE last_restock >= '2024-10-25' AND (last_restock > '2024-09-01' OR store_id IN (2, 3))), summary AS (SELECT product_id, SUM(quantity) AS total_quantity, AVG(quantity) AS avg_quantity FROM recent_inventory GROUP BY product_id) SELECT product_id, total_quantity, avg_quantity FROM summary ORDER BY total_quantity ASC

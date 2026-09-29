@@ -1,0 +1,1 @@
+SELECT CASE WHEN duration_sec >= 538 THEN 'high' WHEN duration_sec >= 239 THEN 'mid' ELSE 'low' END AS duration_sec_bucket, SUM(duration_sec) AS total_duration_sec, DENSE_RANK() OVER (ORDER BY SUM(duration_sec) DESC) AS rnk FROM web_events GROUP BY CASE WHEN duration_sec >= 538 THEN 'high' WHEN duration_sec >= 239 THEN 'mid' ELSE 'low' END

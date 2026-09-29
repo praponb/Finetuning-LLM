@@ -1,0 +1,1 @@
+select category, sum(cost) as total_cost, count(*) as cnt, dense_rank() over (order by sum(cost) desc) as cost_rank from products where category <> 'Grocery' group by category order by cost_rank desc, total_cost;

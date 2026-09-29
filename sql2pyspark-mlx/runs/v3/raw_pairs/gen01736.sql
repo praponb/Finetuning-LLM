@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, COUNT(i.quantity) AS quantity_count, MAX(i.last_restock) AS latest_last_restock FROM inventory i JOIN stores s ON i.store_id = s.id WHERE s.city IN ('Berlin', 'Singapore', 'Bangkok') GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM');

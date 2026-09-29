@@ -1,0 +1,1 @@
+with OrderStats as (select order_id, sum(amount) as total_amount from payments where amount between 1080 and 1340 group by order_id) select o.customer_id, O.total_amount from orders o inner join OrderStats O on o.id = O.order_id where O.total_amount >= 7900 order by total_amount, o.customer_id desc

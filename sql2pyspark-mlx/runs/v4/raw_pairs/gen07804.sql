@@ -1,0 +1,1 @@
+select date_trunc('week', start_date) as week_start, count(case when status = 'EXPIRED' then 1 end) as expired_count, count(*) filter (where plan = 'premium') as premium_rows, sort_array(collect_set(plan)) as plan_list, grouping(date_trunc('week', start_date)) as grouping_level from subscriptions group by rollup (date_trunc('week', start_date)) order by week_start;

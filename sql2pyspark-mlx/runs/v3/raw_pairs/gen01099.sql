@@ -1,0 +1,1 @@
+with recent_order_items as (select * from order_items where product_id is null or unit_price > 340), product_id_summary as (select product_id, order_id, avg(quantity) as avg_quantity, max(quantity) - min(quantity) as quantity_range from recent_order_items group by product_id, order_id) select * from product_id_summary where quantity_range >= 43 order by 4

@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM accounts WHERE balance <= 75000), accounts_stats AS (SELECT status, MIN(opened_date) AS first_opened_date FROM src GROUP BY status) SELECT status, first_opened_date FROM accounts_stats ORDER BY status DESC;

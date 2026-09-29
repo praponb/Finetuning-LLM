@@ -1,0 +1,1 @@
+SELECT e.id, e.job_title AS employee_job_title, e.dept_id AS employee_dept_id, m.hire_date AS manager_hire_date FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.job_title IS NOT NULL OR m.manager_id IN (21, 39);

@@ -1,0 +1,1 @@
+SELECT store_id, avg_quantity, last_last_restock FROM (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY store_id) AS agg WHERE avg_quantity < 49 ORDER BY store_id, avg_quantity

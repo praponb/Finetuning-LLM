@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, status FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY plan, status ORDER BY monthly_fee DESC NULLS LAST, id) AS rank_in_group FROM subscriptions) ranked WHERE rank_in_group = 1) SELECT id FROM ranked ORDER BY id DESC NULLS FIRST;

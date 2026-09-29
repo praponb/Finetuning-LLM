@@ -1,0 +1,1 @@
+SELECT o.amount, t.returned_count FROM orders o INNER JOIN (SELECT order_id, COUNT(CASE WHEN status = 'RETURNED' THEN 1 END) AS returned_count FROM shipments GROUP BY order_id) t ON o.id = t.order_id WHERE t.returned_count >= 9 ORDER BY amount;

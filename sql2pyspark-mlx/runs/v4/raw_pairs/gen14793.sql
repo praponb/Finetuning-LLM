@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY customer_id, status ORDER BY end_date DESC NULLS FIRST) AS rn FROM subscriptions) t WHERE rn = 1) SELECT s.id, s.customer_id, s.plan, s.start_date, s.end_date, s.status, s.rn, (SELECT SUM(t2.monthly_fee) FROM subscriptions t2 WHERE t2.customer_id = s.customer_id) AS sum_subscription_monthly_fee FROM latest s;

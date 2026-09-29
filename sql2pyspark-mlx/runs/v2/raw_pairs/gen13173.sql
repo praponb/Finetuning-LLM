@@ -1,0 +1,1 @@
+select products.id, products.launch_date, t.avg_units from products inner join (select product_id, avg(units) as avg_units from store_sales where revenue > 1100 group by product_id) t on products.id = t.product_id where t.avg_units >= 27 order by launch_date desc, id limit 5;

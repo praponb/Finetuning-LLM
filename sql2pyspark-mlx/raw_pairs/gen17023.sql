@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, LENGTH(status) AS status_length, COALESCE(status, 'OTHER') AS resolved_status FROM accounts WHERE opened_date >= DATE '2023-05-24' AND status IS NOT NULL) SELECT id, status FROM filtered EXCEPT SELECT id, status FROM accounts WHERE opened_date >= '2024-12-16';

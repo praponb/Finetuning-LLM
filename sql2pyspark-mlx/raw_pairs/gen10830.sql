@@ -1,0 +1,1 @@
+SELECT id, duration_sec, event_type, TRIM(page) AS clean_page, COALESCE(duration_sec, 0) AS duration_sec_filled FROM web_events WHERE page NOT IN ('/checkout', '/search') AND session_id IN (6, 28) AND event_time < '2024-07-01'

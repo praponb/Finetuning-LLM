@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MAX(units) - MIN(units) AS units_range, COUNT(DISTINCT revenue) AS unique_stores FROM store_sales GROUP BY product_id) SELECT p.id, p.price, pt.units_range, pt.unique_stores FROM products p LEFT JOIN product_totals pt ON p.id = pt.product_id WHERE pt.unique_stores >= 8 ORDER BY units_range DESC

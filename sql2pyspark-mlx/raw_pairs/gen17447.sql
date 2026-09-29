@@ -1,0 +1,1 @@
+select * from (select id, customer_id, monthly_fee, plan, rank() over (partition by customer_id order by monthly_fee) rnk from subscriptions where end_date < '2024-09-04') ranked where rnk <= 3 order by rnk desc, 3 desc;

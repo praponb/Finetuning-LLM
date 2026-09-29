@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.sale_date, store_sales.store_id FROM store_sales WHERE store_sales.revenue BETWEEN 1600 AND 1800 AND store_sales.product_id NOT IN (SELECT id FROM products WHERE stock_qty >= 132)

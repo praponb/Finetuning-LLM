@@ -1,0 +1,1 @@
+with ranked as (select id, city, opened_date, region, row_number() over (partition by city order by opened_date, id) as row_num from stores where sqft > 14685) select id, city, opened_date, region from ranked where row_num <= 3 order by id desc;

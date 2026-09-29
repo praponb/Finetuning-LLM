@@ -1,0 +1,1 @@
+SELECT orders.id, orders.shipping_fee, orders.store_id, orders.discount, customers.email, customers.city FROM orders LEFT JOIN customers ON orders.customer_id = customers.id WHERE orders.channel IN ('store', 'partner') AND orders.store_id IS NOT NULL;

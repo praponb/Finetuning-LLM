@@ -1,0 +1,1 @@
+select i.id, i.last_restock, i.store_id, s.city, p.supplier_id from inventory i left join stores s on s.id = i.store_id inner join products p on p.id = i.product_id where s.sqft between 10660 and 13262

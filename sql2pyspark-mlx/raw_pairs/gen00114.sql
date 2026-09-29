@@ -1,0 +1,1 @@
+select case when quantity >= 266 then 'high' when quantity >= 68 then 'mid' else 'low' end quantity_bucket, count(distinct quantity) unique_products from inventory where quantity < 155 and store_id in (1, 4) and year(last_restock) = 2025 group by 1

@@ -1,0 +1,1 @@
+WITH filtered_inventory AS (SELECT *, ROUND(quantity * 100, 2) AS adjusted_quantity FROM inventory WHERE product_id IN (4, 7, 8, 9)), inventory_stats AS (SELECT product_id, ROUND(STDDEV(adjusted_quantity), 2) AS stddev_adjusted_quantity FROM filtered_inventory GROUP BY product_id) SELECT * FROM inventory_stats ORDER BY stddev_adjusted_quantity DESC;

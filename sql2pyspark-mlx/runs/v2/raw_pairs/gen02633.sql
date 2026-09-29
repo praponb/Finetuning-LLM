@@ -1,0 +1,1 @@
+SELECT o.id, o.order_date, o.discount, t.last_shipped_date, t.first_delivered_date FROM orders o LEFT JOIN (SELECT order_id, MAX(shipped_date) AS last_shipped_date, MIN(delivered_date) AS first_delivered_date FROM shipments GROUP BY order_id) t ON o.id = t.order_id ORDER BY o.order_date ASC

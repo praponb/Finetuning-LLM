@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, store_id, product_id, units, revenue, ROUND(units / revenue, 2) AS revenue_per_unit FROM store_sales WHERE sale_date > DATE '2023-09-26' AND units < 15) SELECT CASE WHEN units >= 34 THEN 'PREMIUM' ELSE 'STANDARD' END AS units_tier, SUM(revenue) AS total_revenue, COUNT(*) AS cnt, BIT_OR(units) AS units_bit_or FROM valid GROUP BY units_tier;

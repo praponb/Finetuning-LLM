@@ -1,0 +1,1 @@
+SELECT id, region, sqft, DENSE_RANK() OVER (PARTITION BY region ORDER BY sqft DESC) AS dense_rnk, ROW_NUMBER() OVER (PARTITION BY region ORDER BY sqft DESC, id) AS sqft_row FROM stores WHERE city IN ('Berlin', 'Singapore');

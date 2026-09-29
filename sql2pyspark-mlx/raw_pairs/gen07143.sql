@@ -1,0 +1,1 @@
+SELECT id, page, duration_sec FROM (SELECT id, page, duration_sec, DENSE_RANK() OVER (PARTITION BY page ORDER BY duration_sec DESC) AS pos FROM web_events) AS ranked WHERE pos <= 3 ORDER BY duration_sec DESC

@@ -1,0 +1,1 @@
+SELECT delivered_date, shipped_date, order_id, CONCAT_WS('-', carrier, status) AS carrier_status_key FROM shipments WHERE MONTH(delivered_date) IN (1, 10, 12) AND cost BETWEEN 61 AND 88 AND carrier NOT IN ('Kerry', 'DHL');

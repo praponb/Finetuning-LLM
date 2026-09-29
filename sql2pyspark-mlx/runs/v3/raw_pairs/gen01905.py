@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_sessions.alias("sessions")
+    .join(df_customers.alias("customers"), F.col("sessions.customer_id") == F.col("customers.id"), "left")
+    .filter((F.col("sessions.device") == "mobile") & (F.col("customers.credit_limit") > 15800))
+    .select(
+        F.col("sessions.browser"),
+        F.col("sessions.customer_id"),
+        F.col("customers.credit_limit"),
+    )
+)

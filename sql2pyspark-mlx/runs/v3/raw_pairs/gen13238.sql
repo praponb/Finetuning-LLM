@@ -1,0 +1,1 @@
+SELECT status, MONTH(opened_date) AS opened_month, SUM(balance) AS total_balance, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM accounts GROUP BY status, opened_month ORDER BY status ASC

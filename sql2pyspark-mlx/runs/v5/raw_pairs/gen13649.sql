@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, MAX(amount) - MIN(amount) AS amount_range FROM orders WHERE store_id = 39 GROUP BY store_id) SELECT stores.region, store_summary.amount_range FROM stores JOIN store_summary ON stores.id = store_summary.store_id WHERE store_summary.amount_range >= 66;

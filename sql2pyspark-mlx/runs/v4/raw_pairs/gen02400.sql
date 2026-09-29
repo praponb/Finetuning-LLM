@@ -1,0 +1,1 @@
+WITH SupplierSummary AS (SELECT supplier_id, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products GROUP BY supplier_id) SELECT s.id, s.rating, s.supplier_name, S.avg_stock_qty FROM suppliers s INNER JOIN SupplierSummary S ON s.id = S.supplier_id;

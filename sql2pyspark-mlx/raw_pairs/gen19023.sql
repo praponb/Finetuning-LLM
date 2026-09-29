@@ -1,0 +1,1 @@
+select we.id, we.event_time, we.duration_sec, s.device, s.started_at, c.name, c.is_active from web_events we inner join sessions s on we.session_id = s.id inner join customers c on c.id = s.customer_id order by s.device desc, s.started_at;

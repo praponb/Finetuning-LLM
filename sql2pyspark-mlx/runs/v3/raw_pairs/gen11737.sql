@@ -1,0 +1,1 @@
+SELECT HOUR(event_time) AS event_hour, SUM(duration_sec) AS total_duration_sec, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE duration_sec >= 167 OR event_time >= '2024-03-01' GROUP BY event_hour HAVING SUM(duration_sec) > 2100 ORDER BY event_hour DESC

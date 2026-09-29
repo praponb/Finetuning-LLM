@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', hire_date) hire_month, is_remote, job_title, SUM(CASE WHEN job_title = 'Designer' THEN salary ELSE 0 END) designer_salary FROM employees GROUP BY 1, 2, 3 ORDER BY designer_salary DESC;

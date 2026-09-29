@@ -1,0 +1,1 @@
+with base as (select *, datediff(current_date(), reading_ts) as days_since_reading_ts from device_readings where reading_ts < '2025-05-10') select * from (select *, row_number() over (partition by device_code order by days_since_reading_ts, id) as dedup_rank from base) t where dedup_rank = 1;

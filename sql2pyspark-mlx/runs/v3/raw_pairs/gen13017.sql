@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, SUM(CASE WHEN s.browser = 'Edge' THEN 1 ELSE 0 END) AS edge_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.device))) AS device_values FROM sessions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM')

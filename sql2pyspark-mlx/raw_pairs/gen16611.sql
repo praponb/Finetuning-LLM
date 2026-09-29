@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, COALESCE(units, 0) units_filled FROM store_sales WHERE sale_date > DATE '2023-07-13') SELECT * FROM (SELECT id, product_id, revenue, units_filled FROM valid) src UNPIVOT INCLUDE NULLS (val FOR kpi IN (revenue, units_filled));

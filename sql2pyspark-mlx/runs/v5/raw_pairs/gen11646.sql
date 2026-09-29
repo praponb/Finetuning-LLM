@@ -1,0 +1,1 @@
+SELECT emp.id, emp.hire_date AS employee_hire_date, emp.salary AS employee_salary, emp.dept_id AS employee_dept_id, mgr.email AS manager_email FROM employees AS emp LEFT OUTER JOIN employees AS mgr ON emp.manager_id = mgr.id ORDER BY id DESC;

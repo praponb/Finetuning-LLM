@@ -1,0 +1,1 @@
+WITH recent_accounts AS (SELECT * FROM accounts WHERE account_type IN ('SAVINGS', 'CREDIT', 'LOAN') AND balance > 64000), accounts_stats AS (SELECT account_type, MIN(balance) AS min_balance, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM recent_accounts GROUP BY account_type) SELECT account_type, status_list FROM accounts_stats ORDER BY account_type;

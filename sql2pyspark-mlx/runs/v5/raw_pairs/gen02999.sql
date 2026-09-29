@@ -1,0 +1,1 @@
+WITH top_payments AS (SELECT id, method, paid_at, DENSE_RANK() OVER (PARTITION BY method ORDER BY paid_at DESC) AS pos FROM payments WHERE order_id IS NOT NULL) SELECT * FROM top_payments WHERE pos <= 3

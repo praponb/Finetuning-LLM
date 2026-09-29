@@ -1,0 +1,1 @@
+SELECT status, channel, COUNT(*) AS cnt, SUM(CASE WHEN status = 'CANCELLED' THEN amount ELSE 0 END) AS cancelled_amount FROM orders WHERE amount < 1540 GROUP BY status, channel HAVING SUM(CASE WHEN status = 'CANCELLED' THEN amount ELSE 0 END) < 23

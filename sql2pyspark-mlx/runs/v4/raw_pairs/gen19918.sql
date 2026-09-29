@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, store_id, product_id, sale_date, units, revenue, FLOOR(units) AS units_whole FROM store_sales WHERE revenue > 3300) SELECT *, NTILE(5) OVER (PARTITION BY product_id ORDER BY units_whole DESC, id) AS units_whole_bucket, LEAD(revenue, 1) OVER w_running AS next_revenue FROM base WINDOW w_running AS (ORDER BY units, id);

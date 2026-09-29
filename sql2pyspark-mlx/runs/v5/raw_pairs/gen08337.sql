@@ -1,0 +1,1 @@
+SELECT i.store_id, i.quantity, i.last_restock, ss.sale_date, ss.revenue, ss.product_id FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.store_id IN (3, 5) OR ss.revenue < 1100;

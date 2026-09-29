@@ -1,0 +1,1 @@
+SELECT MONTH(s.opened_date) AS opened_month, COUNT(p.amount) AS amount_count FROM payments p JOIN orders o ON o.id = p.order_id JOIN stores s ON o.store_id = s.id WHERE o.status IN ('SHIPPED', 'COMPLETED') GROUP BY MONTH(s.opened_date) ORDER BY amount_count DESC;

@@ -1,0 +1,1 @@
+SELECT id, host, log_ts, level, latency_ms, payload_json, context, context['region'] AS region, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text FROM app_logs WHERE host NOT IN ('h1', 'h2')

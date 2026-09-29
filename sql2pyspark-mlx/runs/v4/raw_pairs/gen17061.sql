@@ -1,0 +1,1 @@
+SELECT p.launch_date, t.revenue, t.unit_price_count FROM products p INNER JOIN (SELECT product_id, SUM(quantity * unit_price) AS revenue, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY product_id) t ON p.id = t.product_id ORDER BY revenue

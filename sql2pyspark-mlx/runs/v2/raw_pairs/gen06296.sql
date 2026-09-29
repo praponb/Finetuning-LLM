@@ -1,0 +1,1 @@
+with product_summary as (select product_id, round(avg(quantity), 2) as avg_quantity, max(quantity) as max_quantity from inventory group by product_id) select p.id, p.category, p.launch_date, ps.avg_quantity, ps.max_quantity from products p left join product_summary ps on p.id = ps.product_id;

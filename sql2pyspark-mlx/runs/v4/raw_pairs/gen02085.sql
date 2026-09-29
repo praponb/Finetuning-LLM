@@ -1,0 +1,1 @@
+with exploded as (select id, customer_id, coupon_codes, inline(items) from carts) select s.id, s.customer_id, s.product_id, s.promo, case when promo rlike '^(VIP|WELCOME5)$' then 'GROUP_A' else 'PRIORITY' end as promo_zone, (select sum(x.monthly_fee) from subscriptions x where x.customer_id = s.customer_id) as sum_subscription_monthly_fee from exploded s order by customer_id desc

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END) AS tokyo_count FROM customers GROUP BY 1 HAVING SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END) < 21 ORDER BY signup_month;

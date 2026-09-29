@@ -1,0 +1,1 @@
+WITH RankedWebEvents AS (SELECT id, page, duration_sec, event_time, ROW_NUMBER() OVER (PARTITION BY page ORDER BY duration_sec DESC, id) AS pos FROM web_events) SELECT id, page, duration_sec, event_time FROM RankedWebEvents WHERE pos <= 3 ORDER BY id, page DESC

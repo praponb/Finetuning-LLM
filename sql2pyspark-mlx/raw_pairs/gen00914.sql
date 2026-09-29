@@ -1,0 +1,1 @@
+SELECT id, start_date, DATEDIFF(start_date, end_date) AS days_end_date_to_start_date, CONCAT_WS('-', status, plan) AS status_plan_key FROM subscriptions WHERE end_date BETWEEN '2023-12-10' AND '2024-04-01' AND customer_id = 25

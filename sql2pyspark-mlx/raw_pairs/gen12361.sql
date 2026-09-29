@@ -1,0 +1,1 @@
+SELECT status, COUNT(CASE WHEN status = 'FAILED' THEN 1 END) AS failed_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, MAX(amount) - MIN(amount) AS amount_range FROM payments GROUP BY status

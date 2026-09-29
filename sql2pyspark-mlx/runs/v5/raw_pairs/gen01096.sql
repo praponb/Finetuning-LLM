@@ -1,0 +1,1 @@
+select case when quantity >= 237 then 'high' when quantity >= 103 then 'mid' else 'low' end as quantity_bucket, sum(quantity) as total_quantity, count(*) as cnt, max(last_restock) as latest_last_restock from inventory group by 1 having count(*) < 1;

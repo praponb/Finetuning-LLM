@@ -1,0 +1,1 @@
+select id, account_type, status, balance, opened_date, row_number() over (partition by account_type, status order by balance desc, id) as balance_row, rank() over (order by opened_date desc) as rnk from accounts where balance > 71000;

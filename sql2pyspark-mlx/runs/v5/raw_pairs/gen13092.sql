@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, carrier, shipped_date, order_id, DENSE_RANK() OVER (PARTITION BY carrier ORDER BY shipped_date DESC) AS pos FROM shipments) SELECT id, carrier, shipped_date, order_id FROM ranked WHERE pos <= 3 ORDER BY id DESC;

@@ -1,0 +1,1 @@
+SELECT customers.id, customers.is_active FROM customers WHERE NOT EXISTS (SELECT 1 FROM subscriptions WHERE subscriptions.customer_id = customers.id AND subscriptions.end_date BETWEEN '2023-11-01' AND '2023-11-20');

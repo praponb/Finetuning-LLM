@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, coupon_codes, key, v FROM carts LATERAL VIEW EXPLODE(attributes) li AS key, v) SELECT id, coupon_codes, key, v, CASE WHEN key RLIKE '^(weight_kg|device)$' THEN 'GROUP_B' ELSE 'GROUP_A' END AS key_zone FROM exploded ORDER BY key_zone DESC NULLS FIRST;

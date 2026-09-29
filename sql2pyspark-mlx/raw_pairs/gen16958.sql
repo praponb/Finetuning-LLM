@@ -1,0 +1,1 @@
+with deduped as (select *, row_number() over (partition by product_id order by quantity nulls last, id) as rank_in_group from order_items qualify rank_in_group = 1) select case when unit_price >= 440 then 'HIGH' else 'LOW' end as unit_price_tier, count(*) as num_rows, count(*) as cnt from deduped group by case when unit_price >= 440 then 'HIGH' else 'LOW' end

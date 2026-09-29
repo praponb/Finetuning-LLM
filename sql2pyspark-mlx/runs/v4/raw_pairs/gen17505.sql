@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, COUNT(*) AS total_count, SUM(CASE WHEN device = 'mobile' THEN 1 ELSE 0 END) AS mobile_count FROM sessions WHERE HOUR(started_at) BETWEEN 12 AND 15 GROUP BY customer_id) SELECT c.id, c.credit_limit, c.city, ct.total_count, ct.mobile_count FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id

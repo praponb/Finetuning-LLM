@@ -1,0 +1,1 @@
+select o.customer_id, sort_array(collect_set(s.status)) as status_list from shipments s inner join orders o on s.order_id = o.id full outer join stores st on st.id = o.store_id where s.status <> 'RETURNED' group by o.customer_id order by customer_id

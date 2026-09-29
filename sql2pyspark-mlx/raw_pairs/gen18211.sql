@@ -1,0 +1,1 @@
+SELECT CASE WHEN location IN ('New York', 'Chiang Mai') THEN 'tier_1' ELSE 'other' END AS location_group, SUM(CASE WHEN dept_name = 'Marketing' THEN 1 ELSE 0 END) AS marketing_count FROM departments GROUP BY 1 ORDER BY 2, 1 LIMIT 1

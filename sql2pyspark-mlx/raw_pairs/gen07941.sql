@@ -1,0 +1,1 @@
+WITH ProductSummary AS (SELECT product_id, COUNT(revenue) AS revenue_count, MIN(sale_date) AS min_sale_date FROM store_sales GROUP BY product_id) SELECT p.id, p.category, P.revenue_count, P.min_sale_date FROM products p INNER JOIN ProductSummary P ON p.id = P.product_id ORDER BY P.min_sale_date DESC

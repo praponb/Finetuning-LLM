@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN credit_limit >= 12700 THEN 'high' WHEN credit_limit >= 5400 THEN 'mid' ELSE 'low' END AS credit_limit_bucket, ROUND(AVG(age), 2) AS avg_age FROM customers GROUP BY CASE WHEN credit_limit >= 12700 THEN 'high' WHEN credit_limit >= 5400 THEN 'mid' ELSE 'low' END) AS s WHERE avg_age >= 32 ORDER BY avg_age DESC;

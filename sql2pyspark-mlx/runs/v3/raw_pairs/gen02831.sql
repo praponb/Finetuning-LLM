@@ -1,0 +1,1 @@
+SELECT s.rating, s.city, s.supplier_name, p.price, p.category, LENGTH(p.category) AS category_length FROM suppliers s LEFT OUTER JOIN products p ON s.id = p.supplier_id WHERE ARRAY_CONTAINS(p.tags, 'bestseller') AND p.stock_qty = 373

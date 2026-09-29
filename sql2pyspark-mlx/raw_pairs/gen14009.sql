@@ -1,0 +1,1 @@
+SELECT o.channel, SUM(oi.unit_price) AS total_unit_price FROM order_items oi LEFT OUTER JOIN products p ON oi.product_id = p.id LEFT OUTER JOIN orders o ON oi.order_id = o.id WHERE o.amount >= 1050 GROUP BY o.channel HAVING SUM(oi.unit_price) >= 1400 ORDER BY total_unit_price DESC, channel ASC LIMIT 1

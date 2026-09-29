@@ -1,0 +1,1 @@
+select location, round((100 * sum(case when dept_name = 'Legal' then 1 else 0 end)) / count(*), 1) as pct_legal, count(*) as row_count from departments where location is not null and budget > 1550000 group by location having row_count < 5

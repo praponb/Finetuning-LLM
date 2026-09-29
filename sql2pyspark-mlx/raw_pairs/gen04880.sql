@@ -1,0 +1,1 @@
+SELECT MONTH(paid_at) AS paid_month, COUNT(amount) AS amount_count FROM payments WHERE order_id IS NOT NULL AND (amount >= 640 OR method = 'promptpay') GROUP BY MONTH(paid_at) HAVING amount_count > 3 ORDER BY paid_month

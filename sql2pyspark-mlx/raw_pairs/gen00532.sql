@@ -1,0 +1,1 @@
+WITH top_payments AS (SELECT *, RANK() OVER (PARTITION BY order_id ORDER BY paid_at DESC) AS row_num FROM payments) SELECT id, order_id, paid_at, method FROM top_payments WHERE row_num <= 1 ORDER BY paid_at ASC;

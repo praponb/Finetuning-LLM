@@ -1,0 +1,1 @@
+SELECT *, ROUND(price, 1) AS price_rounded, DATE_TRUNC('YEAR', launch_date) AS launch_date_period FROM products WHERE ARRAY_CONTAINS(tags, 'premium') AND category = 'Grocery' AND price <= 970 ORDER BY stock_qty DESC;

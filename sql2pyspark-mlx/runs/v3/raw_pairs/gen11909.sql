@@ -1,0 +1,1 @@
+SELECT plan, monthly_fee_count, min_monthly_fee FROM (SELECT plan, COUNT(monthly_fee) AS monthly_fee_count, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions WHERE customer_id = 22 GROUP BY plan) AS s WHERE min_monthly_fee < 90 ORDER BY monthly_fee_count DESC, plan;

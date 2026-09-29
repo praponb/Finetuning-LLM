@@ -1,0 +1,1 @@
+WITH DepartmentStats AS (SELECT dept_id, ROUND(STDDEV(salary), 2) stddev_salary FROM employees GROUP BY dept_id) SELECT d.location, d.budget, D.stddev_salary FROM departments d INNER JOIN DepartmentStats D ON d.id = D.dept_id;

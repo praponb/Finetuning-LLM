@@ -1,0 +1,1 @@
+select id, customer_id, monthly_fee, start_date, datediff(current_date(), end_date) / 30 months_since_end_date from subscriptions where plan <> 'standard' and start_date >= '2023-11-01' order by months_since_end_date desc;

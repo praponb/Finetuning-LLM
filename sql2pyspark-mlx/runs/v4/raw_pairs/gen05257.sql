@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items GROUP BY order_id) SELECT orders.id, orders.store_id, orders.order_date, order_totals.quantity_range FROM orders INNER JOIN order_totals ON orders.id = order_totals.order_id ORDER BY store_id, id LIMIT 5;

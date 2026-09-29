@@ -1,0 +1,1 @@
+SELECT status, method, order_id, MIN(paid_at) AS first_paid_at FROM payments WHERE amount > 990 AND (status IN ('SUCCESS', 'REFUNDED', 'FAILED') OR amount BETWEEN 590 AND 1460) GROUP BY status, method, order_id ORDER BY method, status, order_id LIMIT 10

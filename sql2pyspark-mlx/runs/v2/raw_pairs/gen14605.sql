@@ -1,0 +1,1 @@
+SELECT i.product_id, i.store_id, s.sqft, s.store_name, p.brand FROM inventory i JOIN stores s ON i.store_id = s.id JOIN products p ON i.product_id = p.id WHERE i.store_id IN (1, 4, 5) OR s.store_name LIKE 'Sia%'

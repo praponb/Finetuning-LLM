@@ -1,0 +1,1 @@
+SELECT MONTH(order_date) AS order_month, CASE WHEN discount >= 0.42 THEN 'high' WHEN discount >= 0.1 THEN 'mid' ELSE 'low' END AS discount_bucket, SUM(amount) AS total_amount FROM orders WHERE shipping_fee IS NOT NULL AND shipping_fee < 24 GROUP BY 1, 2

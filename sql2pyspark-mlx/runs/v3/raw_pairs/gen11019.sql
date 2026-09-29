@@ -1,0 +1,1 @@
+SELECT is_active, MIN(signup_date) AS min_signup_date, SUM(CASE WHEN segment = 'Corporate' THEN 1 ELSE 0 END) AS corporate_count, MAX(credit_limit) - MIN(credit_limit) AS credit_limit_range FROM customers GROUP BY 1 ORDER BY credit_limit_range

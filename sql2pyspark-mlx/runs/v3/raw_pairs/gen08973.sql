@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, DENSE_RANK() OVER (PARTITION BY dept_id ORDER BY salary DESC) AS row_num FROM employees WHERE full_name NOT LIKE '%Park%') SELECT id, dept_id, salary, hire_date FROM ranked WHERE row_num <= 1;

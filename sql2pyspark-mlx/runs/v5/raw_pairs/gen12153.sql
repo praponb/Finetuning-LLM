@@ -1,0 +1,1 @@
+SELECT s.id, s.customer_id, s.plan, s.start_date, c.name, c.signup_date, c.age, UPPER(c.name) AS name_upper FROM subscriptions s FULL OUTER JOIN customers c ON c.id = s.customer_id WHERE c.signup_date > '2023-04-01' ORDER BY s.plan DESC, c.signup_date;

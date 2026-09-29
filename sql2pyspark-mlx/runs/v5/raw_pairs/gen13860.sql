@@ -1,0 +1,1 @@
+SELECT a.status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(t.txn_type))) AS txn_type_values, MAX(t.amount) AS max_amount FROM transactions t LEFT OUTER JOIN accounts a ON t.account_id = a.id WHERE a.opened_date < '2024-08-06' GROUP BY a.status ORDER BY txn_type_values, max_amount DESC;

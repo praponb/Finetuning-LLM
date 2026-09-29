@@ -1,0 +1,1 @@
+WITH WebEventsBySession AS (SELECT session_id, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list FROM web_events GROUP BY session_id) SELECT s.id, s.country, W.event_type_list FROM sessions s INNER JOIN WebEventsBySession W ON s.id = W.session_id;

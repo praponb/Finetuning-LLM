@@ -1,0 +1,1 @@
+select oi.id, oi.product_id, p.brand, o.channel, o.status from order_items oi inner join products p on oi.product_id = p.id inner join orders o on o.id = oi.order_id where o.customer_id in (1, 6, 23) order by id

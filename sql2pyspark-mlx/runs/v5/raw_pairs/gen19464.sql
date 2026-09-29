@@ -1,0 +1,1 @@
+select s.region, s.store_name, t.avg_quantity, t.min_last_restock from stores s inner join (select store_id, round(avg(quantity), 2) as avg_quantity, min(last_restock) as min_last_restock from inventory group by store_id) t on s.id = t.store_id order by t.avg_quantity;

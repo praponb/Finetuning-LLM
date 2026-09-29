@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.account_id, accounts.account_type FROM transactions INNER JOIN accounts ON accounts.id = transactions.account_id WHERE accounts.customer_id IS NULL AND accounts.customer_id IS NULL ORDER BY accounts.account_type DESC;

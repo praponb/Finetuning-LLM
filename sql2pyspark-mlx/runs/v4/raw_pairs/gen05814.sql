@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM customers WHERE country IN ('SG', 'US') AND country IN ('UK', 'JP', 'DE')), Agg AS (SELECT segment, QUARTER(signup_date) AS signup_quarter, COUNT(*) AS cnt, MIN(age) AS min_age FROM base GROUP BY segment, QUARTER(signup_date)) SELECT segment, signup_quarter, cnt, min_age FROM Agg WHERE min_age > 48 ORDER BY segment;

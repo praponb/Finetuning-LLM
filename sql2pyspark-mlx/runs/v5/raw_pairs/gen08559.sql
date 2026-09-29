@@ -1,0 +1,1 @@
+select id, product_id, unit_price, lag(quantity, 2) over (partition by order_id order by unit_price, id) as prev_quantity, cume_dist() over (partition by order_id order by quantity nulls last) as quantity_cume_dist from order_items

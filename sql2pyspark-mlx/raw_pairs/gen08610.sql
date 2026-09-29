@@ -1,0 +1,1 @@
+SELECT *, LEAD(amount) OVER w_part AS next_amount, LEAD(discount) OVER w_part AS next_discount, LAG(discount) OVER w_part AS prev_discount, ROW_NUMBER() OVER w_part AS seq_no, ROW_NUMBER() OVER (PARTITION BY status ORDER BY order_date, id) AS event_seq FROM orders WINDOW w_part AS (PARTITION BY customer_id ORDER BY amount, id);

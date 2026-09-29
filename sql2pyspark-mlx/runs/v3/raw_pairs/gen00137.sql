@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(quantity) AS max_quantity, COUNT(*) AS cnt FROM order_items WHERE (quantity BETWEEN 3 AND 5 AND product_id IS NOT NULL) OR product_id IS NULL GROUP BY 1 ORDER BY quantity_bucket DESC, max_quantity DESC LIMIT 50;

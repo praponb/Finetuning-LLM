@@ -1,0 +1,1 @@
+SELECT is_remote, job_title_values, avg_salary FROM (SELECT is_remote, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values, ROUND(AVG(salary), 2) AS avg_salary FROM employees GROUP BY is_remote) AS t WHERE avg_salary < 30 ORDER BY job_title_values, is_remote LIMIT 10;

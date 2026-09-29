@@ -1,0 +1,1 @@
+SELECT s.id, s.status, s.shipped_date, o.order_date, o.store_id, c.country, c.city FROM shipments s LEFT JOIN orders o ON o.id = s.order_id LEFT JOIN customers c ON o.customer_id = c.id WHERE c.country IN ('DE', 'TH', 'JP') ORDER BY store_id;

@@ -1,0 +1,1 @@
+SELECT s.cost, s.carrier, s.delivered_date, o.channel FROM shipments s INNER JOIN orders o ON s.order_id = o.id WHERE YEAR(s.shipped_date) = 2024 OR s.shipped_date BETWEEN '2023-11-01' AND '2025-04-30' ORDER BY delivered_date DESC;

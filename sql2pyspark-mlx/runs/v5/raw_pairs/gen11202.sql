@@ -1,0 +1,1 @@
+SELECT o.status AS order_status, s.status AS shipment_status, COUNT(*) AS num_rows, ROUND(SUM(s.cost), 2) AS total_cost FROM shipments s INNER JOIN orders o ON s.order_id = o.id GROUP BY o.status, s.status

@@ -1,0 +1,1 @@
+SELECT ss.revenue, ss.store_id, p.cost, s.city, s.store_name, LOWER(s.city) AS city_lower FROM store_sales ss FULL OUTER JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE ss.product_id IN (1, 7, 10);

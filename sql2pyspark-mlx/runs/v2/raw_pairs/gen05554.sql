@@ -1,0 +1,1 @@
+SELECT o.status, MAX(s.shipped_date) AS latest_shipped_date, SUM(CASE WHEN s.carrier = 'DHL' THEN 1 ELSE 0 END) AS dhl_count FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN stores st ON o.store_id = st.id WHERE s.status = 'LOST' GROUP BY o.status ORDER BY dhl_count DESC, status LIMIT 5

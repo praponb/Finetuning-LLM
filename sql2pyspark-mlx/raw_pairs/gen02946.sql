@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(store_sales.sale_date, 'yyyy-MM') AS sale_month, MIN(inventory.quantity) AS min_quantity FROM inventory INNER JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id GROUP BY DATE_FORMAT(store_sales.sale_date, 'yyyy-MM') HAVING MIN(inventory.quantity) >= 230 ORDER BY sale_month ASC

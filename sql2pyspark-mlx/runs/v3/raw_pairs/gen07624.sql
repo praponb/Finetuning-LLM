@@ -1,0 +1,1 @@
+SELECT orders.shipping_fee, orders.store_id, orders.status, customers.segment, customers.is_active, customers.name FROM orders INNER JOIN customers ON orders.customer_id = customers.id WHERE LENGTH(customers.email) < 7 ORDER BY customers.name DESC, segment

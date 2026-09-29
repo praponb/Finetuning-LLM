@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, i.last_restock, p.product_name, s.city, s.store_name FROM inventory i JOIN products p ON p.id = i.product_id LEFT JOIN stores s ON i.store_id = s.id WHERE p.category NOT IN ('Home', 'Sports', 'Books')

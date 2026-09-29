@@ -1,0 +1,1 @@
+SELECT plan, SUM(monthly_fee) AS total_monthly_fee, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions WHERE customer_id = 35 AND monthly_fee < 140 GROUP BY plan HAVING SUM(monthly_fee) >= 1190 ORDER BY plan, total_monthly_fee DESC;

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LOWER(category) AS category_lower FROM products WHERE brand IS NOT NULL AND supplier_id IN (7, 18, 36)) SELECT * FROM (SELECT supplier_id, category, stock_qty FROM valid) src PIVOT (AVG(stock_qty) FOR category IN ('Fashion', 'Books'));

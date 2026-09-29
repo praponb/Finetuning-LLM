@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.balance FROM accounts WHERE EXISTS (SELECT 1 FROM transactions WHERE transactions.account_id = accounts.id AND transactions.txn_type = 'FEE');

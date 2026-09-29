@@ -1,0 +1,1 @@
+with base as (select *, date_format(reading_ts, 'yyyy-MM') as reading_ts_label from device_readings where reading_ts >= date '2025-09-01') select * from (select firmware, device_code, status_bits from base) src pivot (sum(status_bits) as value_sum, count(1) as n for device_code in ('DV-02' as dv_02, 'DV-01' as dv_01))

@@ -1,0 +1,1 @@
+SELECT * FROM departments WHERE NOT (budget >= 3954000 AND budget BETWEEN 2749000 AND 3617000) ORDER BY location DESC, id LIMIT 50;

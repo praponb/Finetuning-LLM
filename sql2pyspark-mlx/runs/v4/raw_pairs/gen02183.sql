@@ -1,0 +1,1 @@
+SELECT COUNT(quantity) AS quantity_count, MAX(quantity) - MIN(quantity) AS quantity_range, MIN(last_restock) AS first_last_restock FROM inventory WHERE product_id IN (2, 5, 7, 10) AND YEAR(last_restock) = 2024 AND store_id = 5 ORDER BY first_last_restock;

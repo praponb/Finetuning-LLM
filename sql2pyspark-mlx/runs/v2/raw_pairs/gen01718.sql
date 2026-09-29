@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT id, plan, end_date, start_date, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY end_date DESC, id) AS row_num FROM subscriptions) SELECT id, plan, end_date, start_date FROM Numbered WHERE row_num = 1 ORDER BY id DESC;

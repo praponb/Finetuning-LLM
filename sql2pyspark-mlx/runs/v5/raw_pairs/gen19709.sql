@@ -1,0 +1,1 @@
+select s.*, x.transaction_amount, x.txn_type from accounts s join lateral (select c.amount as transaction_amount, c.txn_type from transactions c where c.account_id = s.id order by c.amount desc, c.id desc limit 1) x on true

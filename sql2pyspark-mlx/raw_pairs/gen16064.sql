@@ -1,0 +1,1 @@
+SELECT e.dept_id employee_dept_id, e.email employee_email, e.salary employee_salary, m.level manager_level, m.email manager_email, m.manager_id manager_manager_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id

@@ -1,0 +1,1 @@
+select t.id, t.amount, t.merchant, a.status, a.balance, c.email, c.credit_limit from transactions t right join accounts a on t.account_id = a.id full outer join customers c on a.customer_id = c.id where c.signup_date > '2024-08-19' or c.city is not null order by c.credit_limit asc;

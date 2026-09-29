@@ -1,0 +1,1 @@
+select id, product_id, quantity, last_restock, ntile(5) over (order by quantity, id) as quantity_bucket, lead(quantity, 1) over (order by quantity, id) as next_quantity, lead(quantity, 1) over (partition by product_id, store_id order by last_restock, id) as next_quantity_2 from inventory where quantity <> 227;

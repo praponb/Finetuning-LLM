@@ -1,0 +1,1 @@
+SELECT s.id, s.store_name, COUNT(i.id) AS inventory_count, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity, COUNT(i.quantity) AS quantity_count FROM stores s LEFT OUTER JOIN inventory i ON i.store_id = s.id WHERE s.region = 'Central' GROUP BY s.id, s.store_name;

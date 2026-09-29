@@ -1,0 +1,1 @@
+SELECT id, status, delivered_date, cost, carrier, shipped_date, LEAD(cost, 2) OVER (PARTITION BY status ORDER BY delivered_date, id) AS next_cost, LAG(cost, 1) OVER (PARTITION BY carrier ORDER BY shipped_date, id) AS prev_cost FROM shipments ORDER BY id

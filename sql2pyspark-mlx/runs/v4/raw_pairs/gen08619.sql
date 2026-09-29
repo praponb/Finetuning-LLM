@@ -1,0 +1,1 @@
+with valid as (select id, store_name, region, opened_date, date_format(opened_date, 'MMM yyyy') as opened_date_label, coalesce(region, 'UNKNOWN') as region_clean from stores where opened_date > date '2023-10-01' and city = 'London') select region, id from valid intersect select region, id from stores where city = 'Chiang Mai';

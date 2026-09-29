@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, DENSE_RANK() OVER (PARTITION BY plan ORDER BY monthly_fee DESC) AS row_num FROM subscriptions WHERE start_date <= '2024-08-04') SELECT * FROM ranked WHERE row_num <= 2 ORDER BY 6 DESC;

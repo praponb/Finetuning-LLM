@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM inventory WHERE (quantity IS NOT NULL AND quantity >= 233) OR quantity BETWEEN 91 AND 94), agg AS (SELECT store_id, product_id, SUM(quantity) AS total_quantity FROM base GROUP BY store_id, product_id) SELECT store_id, product_id, total_quantity FROM agg

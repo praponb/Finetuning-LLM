@@ -1,0 +1,1 @@
+SELECT c.segment, COUNT(*) AS total_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.country))) AS country_values FROM sessions s RIGHT JOIN customers c ON c.id = s.customer_id WHERE s.country IN ('TH', 'UK', 'JP') GROUP BY c.segment

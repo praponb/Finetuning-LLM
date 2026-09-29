@@ -1,0 +1,1 @@
+with web_events_by_session as (select session_id, sum(case when event_type = 'click' then 1 else 0 end) click_count from web_events group by session_id) select s.browser, webs.click_count from sessions s left outer join web_events_by_session webs on s.id = webs.session_id order by webs.click_count desc

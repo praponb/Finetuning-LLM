@@ -1,0 +1,1 @@
+SELECT s.id, s.browser, COUNT(we.id) web_event_count, MIN(we.duration_sec) min_duration_sec FROM sessions s LEFT OUTER JOIN web_events we ON we.session_id = s.id WHERE s.customer_id IS NULL GROUP BY s.id, s.browser HAVING MIN(we.duration_sec) >= 260 ORDER BY browser

@@ -1,0 +1,1 @@
+with product_summary as (select product_id, avg(revenue) as avg_revenue from store_sales group by product_id) select products.category, product_summary.avg_revenue from products join product_summary on products.id = product_summary.product_id order by products.category, avg_revenue desc

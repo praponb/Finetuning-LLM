@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, credit_limit, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date, id) AS row_num, ROUND(credit_limit / SUM(credit_limit) OVER (PARTITION BY segment), 3) AS credit_limit_share FROM customers ORDER BY row_num;

@@ -1,0 +1,1 @@
+select month(opened_date) as opened_month, sum(case when city = 'New York' then sqft else 0 end) as new_york_sqft, count(case when city = 'Chiang Mai' then 1 end) as chiang_mai_count from stores where sqft >= 9279 group by 1 having sum(case when city = 'New York' then sqft else 0 end) < 32;

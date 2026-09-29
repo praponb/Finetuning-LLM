@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CEIL(amount) AS amount_whole, ROUND(amount, 1) AS amount_rounded FROM payments WHERE order_id IS NOT NULL AND order_id IN (2, 18, 23)) SELECT * FROM (SELECT id, status, amount, amount_rounded FROM filtered) src UNPIVOT (reading FOR kpi IN (amount, amount_rounded));

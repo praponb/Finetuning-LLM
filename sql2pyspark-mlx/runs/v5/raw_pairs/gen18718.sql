@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT s.city, COUNT(*) AS cnt, MAX(e.units) AS max_units, MIN(e.revenue) AS min_revenue FROM store_sales e INNER JOIN stores s ON e.store_id = s.id GROUP BY ROLLUP (s.city)) SELECT city, cnt, max_units, min_revenue FROM dim_totals;

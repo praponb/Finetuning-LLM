@@ -1,0 +1,1 @@
+select date_trunc('MONTH', start_date) as start_month, status, count(case when plan = 'premium' then 1 end) as premium_count, count(case when plan = 'enterprise' then 1 end) as enterprise_count from subscriptions group by start_month, status order by status desc, start_month limit 10;

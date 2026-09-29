@@ -1,0 +1,1 @@
+SELECT we.id, we.page, we.event_time, s.country, s.browser, c.credit_limit, c.is_active, CASE WHEN s.device = 'mobile' THEN 1 ELSE 0 END AS is_mobile FROM web_events we JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id WHERE c.city <> 'Singapore' OR we.page IS NOT NULL

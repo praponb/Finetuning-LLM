@@ -1,0 +1,1 @@
+WITH ranked_subscriptions AS (SELECT id, customer_id, monthly_fee, plan, RANK() OVER (PARTITION BY customer_id ORDER BY monthly_fee DESC) AS row_num FROM subscriptions) SELECT id, customer_id, monthly_fee, plan FROM ranked_subscriptions WHERE row_num <= 5

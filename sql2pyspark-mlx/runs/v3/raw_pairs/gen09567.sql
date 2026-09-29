@@ -1,0 +1,1 @@
+SELECT c.country, COUNT(o.id) AS order_count, MIN(o.shipping_fee) AS min_shipping_fee, SUM(CASE WHEN o.status = 'SHIPPED' THEN 1 ELSE 0 END) AS shipped_count FROM customers c INNER JOIN orders o ON o.customer_id = c.id GROUP BY c.country

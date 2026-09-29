@@ -1,0 +1,1 @@
+SELECT job_title, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values, MAX(salary) - MIN(salary) AS salary_range FROM employees WHERE NOT is_remote AND manager_id IS NOT NULL AND full_name NOT LIKE 'Ivy%' GROUP BY job_title ORDER BY job_title_values;

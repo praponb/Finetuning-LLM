@@ -1,0 +1,1 @@
+SELECT id, store_id, quantity, LAG(quantity) OVER w_hist prev_quantity, ROW_NUMBER() OVER w_hist event_seq FROM inventory WHERE product_id = 4 WINDOW w_hist AS (PARTITION BY store_id ORDER BY quantity, id)

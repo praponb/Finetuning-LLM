@@ -1,0 +1,1 @@
+select id, city, opened_date, sqft, lag(sqft) over w_hist as prev_sqft, row_number() over w_hist as row_seq, row_number() over (partition by city, region order by opened_date desc, id) as row_seq_2 from stores window w_hist as (partition by region order by sqft, id);

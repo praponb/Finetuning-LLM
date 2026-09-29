@@ -1,0 +1,1 @@
+SELECT order_id, status, COUNT(DISTINCT amount) unique_orders, MAX(paid_at) latest_paid_at FROM payments WHERE status NOT IN ('FAILED', 'REFUNDED') AND status = 'REFUNDED' AND amount > 1410 GROUP BY order_id, status HAVING COUNT(DISTINCT amount) < 5;

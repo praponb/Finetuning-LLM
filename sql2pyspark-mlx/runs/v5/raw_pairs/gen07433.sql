@@ -1,0 +1,1 @@
+select we.event_time, s.started_at, s.country, c.age, c.segment from web_events we inner join sessions s on we.session_id = s.id full outer join customers c on s.customer_id = c.id where s.customer_id = 16 and s.started_at >= '2023-07-01'

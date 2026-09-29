@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, COALESCE(dept_name, 'Unknown') AS dept_name_filled FROM departments WHERE budget < 2194000) SELECT * FROM (SELECT dept_name, location, budget FROM cleaned) src PIVOT (SUM(budget) FOR location IN ('Tokyo' AS tokyo, 'Singapore' AS singapore, 'London' AS london));

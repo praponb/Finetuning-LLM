@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT merchant, SUM(amount) AS total_amount, SUM(CASE WHEN merchant = 'Starbucks' THEN amount ELSE 0 END) AS starbucks_amount FROM transactions WHERE is_flagged GROUP BY merchant) AS t WHERE starbucks_amount < 58 ORDER BY merchant

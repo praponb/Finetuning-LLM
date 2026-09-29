@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM products WHERE brand = 'Acme'), products_stats AS (SELECT brand, COUNT(CASE WHEN category = 'Fashion' THEN 1 END) AS fashion_count FROM src GROUP BY brand) SELECT brand, fashion_count FROM products_stats WHERE fashion_count > 5;

@@ -1,0 +1,1 @@
+with order_totals as (select order_id, count(*) as row_count, min(delivered_date) as first_delivered_date from shipments where order_id = 24 group by order_id) select o.customer_id, o.shipping_fee, ot.row_count, ot.first_delivered_date from orders o inner join order_totals ot on o.id = ot.order_id where ot.row_count >= 7 order by o.customer_id desc

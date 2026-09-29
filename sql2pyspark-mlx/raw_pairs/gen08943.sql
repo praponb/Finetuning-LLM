@@ -1,0 +1,1 @@
+SELECT id, dept_name, location, budget, CONCAT_WS('/', location, dept_name) AS location_dept_name_key, INITCAP(TRIM(dept_name)) AS dept_name_title FROM departments WHERE dept_name IN ('Marketing', 'Sales', 'Engineering') AND budget > 1351000;

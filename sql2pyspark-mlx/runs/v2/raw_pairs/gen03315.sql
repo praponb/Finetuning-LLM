@@ -1,0 +1,1 @@
+SELECT s.id, s.city, COUNT(p.id) AS product_count, ROUND((100 * SUM(CASE WHEN p.brand = 'Initech' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_initech FROM suppliers s INNER JOIN products p ON p.supplier_id = s.id GROUP BY s.id, s.city ORDER BY 3 DESC;

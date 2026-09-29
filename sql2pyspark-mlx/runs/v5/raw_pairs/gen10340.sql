@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, customer_id, account_type, opened_date, FLOOR(balance) balance_whole, INITCAP(TRIM(status)) status_title FROM accounts WHERE opened_date >= DATE '2023-06-09' AND status IS NOT NULL) SELECT account_type FROM filtered EXCEPT SELECT account_type FROM accounts WHERE balance > 40000

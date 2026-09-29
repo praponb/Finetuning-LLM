@@ -1,0 +1,1 @@
+SELECT id, city, sqft, opened_date FROM (SELECT id, city, sqft, opened_date, ROW_NUMBER() OVER (PARTITION BY city ORDER BY sqft, id) AS row_num FROM stores) AS ranked WHERE row_num <= 5 ORDER BY id DESC

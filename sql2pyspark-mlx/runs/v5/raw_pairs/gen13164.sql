@@ -1,0 +1,1 @@
+SELECT id, order_id, amount, paid_at FROM (SELECT id, order_id, amount, paid_at, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY amount DESC) AS rn FROM payments) AS r WHERE rn = 1 ORDER BY order_id DESC

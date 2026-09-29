@@ -1,0 +1,1 @@
+select id, event_type, event_time, duration_sec from (select id, event_type, event_time, duration_sec, row_number() over (partition by event_type order by event_time desc, id) as rnk from web_events where page = '/product') as t where rnk <= 3

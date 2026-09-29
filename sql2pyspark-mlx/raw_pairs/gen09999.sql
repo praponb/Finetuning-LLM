@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, customer_id, store_id, status, channel, discount, shipping_fee, DATEDIFF(CURRENT_DATE(), order_date) AS days_since_order_date FROM orders WHERE discount IS NOT NULL) SELECT * FROM (SELECT customer_id, channel, discount FROM cleaned) src PIVOT (AVG(discount) AS total, COUNT(1) AS cnt FOR channel IN ('web', 'partner', 'store'))

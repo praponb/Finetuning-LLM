@@ -1,0 +1,1 @@
+WITH top_employees AS (SELECT id, dept_id, salary, email, DENSE_RANK() OVER (PARTITION BY dept_id ORDER BY salary) AS pos FROM employees) SELECT id, dept_id, salary, email FROM top_employees WHERE pos = 1

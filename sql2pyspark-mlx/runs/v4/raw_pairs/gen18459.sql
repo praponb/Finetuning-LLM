@@ -1,0 +1,1 @@
+SELECT s.city, MAX(oi.quantity) AS max_quantity, COUNT(oi.quantity) AS quantity_count FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.brand != 'Initech' GROUP BY s.city

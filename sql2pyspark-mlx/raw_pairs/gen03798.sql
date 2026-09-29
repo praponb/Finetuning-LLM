@@ -1,0 +1,1 @@
+with store_totals as (select store_id, concat_ws(', ', sort_array(collect_set(channel))) as channel_values, sum(case when channel = 'partner' then 1 else 0 end) as partner_count from orders group by store_id) select s.id, s.city, st.channel_values, st.partner_count from stores s inner join store_totals st on s.id = st.store_id order by s.city desc

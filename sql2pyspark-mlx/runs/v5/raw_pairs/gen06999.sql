@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATE_TRUNC('YEAR', opened_date) AS opened_date_period, COALESCE(status, 'NONE') AS resolved_status FROM accounts WHERE status <> 'CLOSED') SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY balance DESC NULLS LAST, id) AS latest_rank FROM filtered QUALIFY latest_rank = 1

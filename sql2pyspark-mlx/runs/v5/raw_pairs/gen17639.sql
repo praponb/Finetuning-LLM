@@ -1,0 +1,1 @@
+select p.brand, date_format(p.launch_date, 'yyyy-MM') as launch_month, count(ss.revenue) as revenue_count from store_sales ss inner join products p on ss.product_id = p.id right join suppliers s on p.supplier_id = s.id group by p.brand, date_format(p.launch_date, 'yyyy-MM');

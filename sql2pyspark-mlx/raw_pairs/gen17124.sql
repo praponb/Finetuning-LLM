@@ -1,0 +1,1 @@
+with valid_shipments as (select *, lower(status) status_lower from shipments where order_id = 13 and cost <= 85), Agg as (select carrier, status, count(cost) cost_count from valid_shipments group by carrier, status) select carrier, status, cost_count from Agg order by cost_count desc

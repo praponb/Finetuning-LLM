@@ -1,0 +1,1 @@
+SELECT is_flagged, COUNT(amount) AS amount_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE amount > 3900 AND TO_DATE(txn_time) >= '2025-03-01' GROUP BY is_flagged;

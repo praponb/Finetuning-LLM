@@ -1,0 +1,1 @@
+SELECT id, balance, opened_date, CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END AS is_checking FROM accounts WHERE account_type IN ('SAVINGS', 'LOAN', 'CHECKING') ORDER BY opened_date DESC, balance

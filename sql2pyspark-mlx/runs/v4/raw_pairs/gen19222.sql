@@ -1,0 +1,1 @@
+WITH metrics AS (SELECT *, FIRST_VALUE(job_title) IGNORE NULLS OVER w_recent first_known_job_title, MAX(salary) OVER (PARTITION BY manager_id, job_title) manager_id_max_salary FROM employees WINDOW w_recent AS (ORDER BY hire_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)) SELECT id, full_name, email, job_title, salary, is_remote, level FROM metrics ORDER BY salary;

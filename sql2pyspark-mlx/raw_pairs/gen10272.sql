@@ -1,0 +1,1 @@
+SELECT s.order_id, o.store_id, o.shipping_fee, c.country, c.signup_date FROM shipments s INNER JOIN orders o ON s.order_id = o.id RIGHT JOIN customers c ON o.customer_id = c.id ORDER BY order_id, shipping_fee

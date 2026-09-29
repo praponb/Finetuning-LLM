@@ -1,0 +1,1 @@
+SELECT o.status AS order_status, o.channel, src.method, COUNT(*) AS rows_total, MIN(src.amount) AS min_amount FROM payments src LEFT JOIN orders o ON src.order_id = o.id GROUP BY o.status, o.channel, src.method ORDER BY min_amount DESC NULLS LAST;

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CONCAT(job_title, ', ', full_name) AS job_title_full_name, COALESCE(job_title, 'N/A') AS job_title_filled FROM employees WHERE level IS NOT NULL) SELECT d.location, a.job_title, COUNT(*) AS rows_total, SUM(a.salary) AS total_salary FROM cleaned a LEFT JOIN departments d ON a.dept_id = d.id GROUP BY d.location, a.job_title

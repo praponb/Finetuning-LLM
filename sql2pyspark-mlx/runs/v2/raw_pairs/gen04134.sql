@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM transactions WHERE merchant IN ('Starbucks', '7-Eleven', 'Grab')), agg AS (SELECT DATE_FORMAT(txn_time, 'yyyy-MM') txn_month, MAX(amount) - MIN(amount) amount_range, MAX(txn_time) latest_txn_time FROM src GROUP BY DATE_FORMAT(txn_time, 'yyyy-MM')) SELECT txn_month, amount_range, latest_txn_time FROM agg;

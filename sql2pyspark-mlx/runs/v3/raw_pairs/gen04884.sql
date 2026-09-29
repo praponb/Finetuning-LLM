@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) opened_quarter, COUNT(DISTINCT balance) unique_statuss, SUM(balance) total_balance, COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) closed_count FROM accounts WHERE opened_date >= '2025-03-01' GROUP BY QUARTER(opened_date) ORDER BY unique_statuss DESC, opened_quarter LIMIT 1

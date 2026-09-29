@@ -1,0 +1,1 @@
+SELECT o.shipping_fee, o.channel, t.max_amount FROM orders o INNER JOIN (SELECT order_id, MAX(amount) AS max_amount FROM payments WHERE order_id IS NULL GROUP BY order_id) t ON o.id = t.order_id ORDER BY max_amount, o.channel DESC;

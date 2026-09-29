@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM orders WHERE MONTH(order_date) IN (2, 3, 5) GROUP BY store_id) SELECT s.id, s.city, s.opened_date, ss.status_list FROM stores s LEFT JOIN store_summary ss ON s.id = ss.store_id

@@ -1,0 +1,1 @@
+SELECT id, category, cost, supplier_id, launch_date, SUM(cost) OVER (PARTITION BY category) AS category_sum_cost, LAG(cost, 1) OVER (PARTITION BY category, supplier_id ORDER BY launch_date, id) AS prev_cost FROM products;

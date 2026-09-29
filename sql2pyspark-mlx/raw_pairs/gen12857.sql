@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM store_sales WHERE revenue <= 2100), agg AS (SELECT product_id, store_id, MIN(sale_date) AS first_sale_date FROM src GROUP BY product_id, store_id) SELECT * FROM agg ORDER BY store_id DESC, product_id DESC LIMIT 50

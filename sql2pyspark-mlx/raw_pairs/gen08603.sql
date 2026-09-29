@@ -1,0 +1,1 @@
+with lines as (select id, effective_from, explode(tier_prices) as element from price_tiers) select id, effective_from, element, cume_dist() over (order by element desc nulls first) as element_cume_dist, percent_rank() over (order by element nulls last) as element_percent_rank, rank() over (order by element nulls last) as element_rank from lines;

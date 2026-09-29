@@ -1,0 +1,1 @@
+select country, sort_array(collect_set(country)) as country_list, round((100 * sum(case when city = 'London' then 1 else 0 end)) / count(*), 1) as pct_london from suppliers group by 1 order by 3 desc;

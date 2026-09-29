@@ -1,0 +1,1 @@
+SELECT product_id, SUM(revenue) AS total_revenue, COUNT(*) AS cnt, DENSE_RANK() OVER (ORDER BY SUM(revenue) DESC) AS revenue_rank FROM store_sales GROUP BY product_id ORDER BY cnt DESC, total_revenue DESC

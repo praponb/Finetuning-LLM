@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.6 THEN 'mid' ELSE 'low' END rating_bucket, COUNT(rating) rating_count FROM suppliers WHERE rating IS NOT NULL GROUP BY 1 HAVING rating_count < 5 ORDER BY rating_count DESC, rating_bucket LIMIT 5;

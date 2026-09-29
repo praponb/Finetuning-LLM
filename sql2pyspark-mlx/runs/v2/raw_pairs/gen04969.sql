@@ -1,0 +1,1 @@
+select date_format(delivered_date, 'yyyy-MM') as delivered_month, max(cost) - min(cost) as cost_range, count(cost) as cost_count, count(case when status = 'DELIVERED' then 1 end) as delivered_count from shipments group by date_format(delivered_date, 'yyyy-MM') having count(cost) > 4 order by delivered_month

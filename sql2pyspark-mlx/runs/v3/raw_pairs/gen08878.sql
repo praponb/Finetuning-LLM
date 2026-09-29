@@ -1,0 +1,1 @@
+select date_trunc('MONTH', launch_date) as launch_month, sum(case when category = 'Fashion' then stock_qty else 0 end) as fashion_stock_qty from products where stock_qty < 136 group by date_trunc('MONTH', launch_date) having avg(cost) < 430;

@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT country, city FROM customers INTERSECT ALL SELECT country, city FROM customers WHERE city <> 'Berlin'), reconciled AS (SELECT s.* FROM customers s INNER JOIN kept_keys k ON s.country = k.country AND s.city = k.city) SELECT name, email, country, city, segment, signup_date, is_active, age FROM reconciled

@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, s.city, p.category, p.stock_qty, COALESCE(p.stock_qty, 0) AS stock_qty_filled FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id RIGHT OUTER JOIN products p ON p.id = ss.product_id

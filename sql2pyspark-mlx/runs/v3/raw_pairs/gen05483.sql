@@ -1,0 +1,1 @@
+SELECT p.stock_qty, p.supplier_id, oi.product_id, oi.quantity, oi.unit_price FROM products p LEFT JOIN order_items oi ON oi.product_id = p.id WHERE oi.quantity >= 7 AND oi.unit_price < 310 ORDER BY product_id;

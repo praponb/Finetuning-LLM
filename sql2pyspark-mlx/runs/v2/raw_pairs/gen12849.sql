@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 230 THEN 'high' WHEN quantity >= 45 THEN 'mid' ELSE 'low' END quantity_bucket, COUNT(*) num_inventory FROM inventory WHERE quantity != 159 OR product_id IN (5, 6) GROUP BY quantity_bucket HAVING num_inventory >= 2 ORDER BY quantity_bucket;

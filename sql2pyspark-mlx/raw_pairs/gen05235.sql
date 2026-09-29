@@ -1,0 +1,1 @@
+SELECT status, order_id, COUNT(DISTINCT amount) AS unique_orders, MAX(paid_at) AS latest_paid_at, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values FROM payments GROUP BY status, order_id ORDER BY latest_paid_at

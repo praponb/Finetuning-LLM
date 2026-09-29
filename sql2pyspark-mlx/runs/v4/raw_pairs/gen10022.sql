@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, MAX(quantity) - MIN(quantity) AS quantity_range, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY 1, 2 HAVING MAX(quantity) - MIN(quantity) > 40;

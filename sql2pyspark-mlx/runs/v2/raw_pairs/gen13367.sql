@@ -1,0 +1,1 @@
+SELECT dept_name, ROUND(STDDEV(budget), 2) AS stddev_budget, COUNT(CASE WHEN location = 'London' THEN 1 END) AS london_count, SUM(CASE WHEN dept_name = 'Sales' THEN budget ELSE 0 END) AS sales_budget FROM departments WHERE (budget > 1825000 AND budget < 3003000) OR location IS NOT NULL GROUP BY dept_name HAVING ROUND(STDDEV(budget), 2) > 52;

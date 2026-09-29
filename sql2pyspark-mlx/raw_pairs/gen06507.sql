@@ -1,0 +1,1 @@
+SELECT c.is_active, c.segment, SUM(CASE WHEN s.country = 'UK' THEN 1 ELSE 0 END) AS uk_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.device))) AS device_values FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE c.age >= 53 GROUP BY c.is_active, c.segment ORDER BY uk_count, segment

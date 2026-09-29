@@ -1,0 +1,1 @@
+select i.id, i.quantity, i.last_restock, ss.sale_date, ss.store_id, ss.revenue from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.store_id in (2, 4, 6) and i.product_id = 9

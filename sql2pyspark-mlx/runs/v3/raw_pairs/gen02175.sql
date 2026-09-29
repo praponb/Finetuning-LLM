@@ -1,0 +1,1 @@
+select carrier, sum(case when status = 'RETURNED' then cost else 0 end) as returned_cost, count(*) as row_count, count(*) as cnt from shipments where year(shipped_date) >= 2023 group by carrier having count(*) > 4 order by returned_cost

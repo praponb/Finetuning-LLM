@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, city, credit_limit FROM customers WHERE age BETWEEN 53 AND 54) PIVOT (MAX(credit_limit) FOR city IN ('Tokyo', 'Bangkok', 'Chiang Mai')) ORDER BY signup_month

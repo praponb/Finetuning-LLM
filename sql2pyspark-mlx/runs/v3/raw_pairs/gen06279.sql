@@ -1,0 +1,1 @@
+select event_type, sum(case when event_type = 'purchase' then duration_sec else 0 end) as purchase_duration_sec, min(duration_sec) as min_duration_sec from web_events group by 1 having purchase_duration_sec < 35 order by purchase_duration_sec

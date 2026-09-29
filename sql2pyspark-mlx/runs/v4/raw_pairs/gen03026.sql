@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 7 THEN 'LARGE' ELSE 'SMALL' END AS quantity_tier, order_id, ROUND(AVG(quantity), 2) AS avg_quantity, CORR(unit_price, quantity) AS corr_unit_price_quantity, BIT_AND(quantity) AS quantity_bit_and, BIT_OR(quantity) AS quantity_bit_or FROM order_items GROUP BY 1, 2;

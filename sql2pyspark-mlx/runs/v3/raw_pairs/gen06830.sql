@@ -1,0 +1,1 @@
+SELECT payments.id, payments.paid_at, orders.customer_id, orders.order_date, customers.email FROM payments JOIN orders ON payments.order_id = orders.id FULL OUTER JOIN customers ON customers.id = orders.customer_id WHERE customers.signup_date <= '2023-12-01';

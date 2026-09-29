@@ -1,0 +1,1 @@
+SELECT city, COUNT(CASE WHEN country = 'US' THEN 1 END) us_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) country_values, COUNT(*) num_suppliers FROM suppliers GROUP BY city HAVING num_suppliers > 2

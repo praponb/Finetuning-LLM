@@ -1,0 +1,1 @@
+WITH recent_inventory AS (SELECT * FROM inventory WHERE quantity <= 72), product_id_summary AS (SELECT product_id, store_id, COUNT(*) AS row_count, MAX(quantity) - MIN(quantity) AS quantity_range FROM recent_inventory GROUP BY product_id, store_id) SELECT * FROM product_id_summary WHERE row_count > 7 ORDER BY row_count DESC;

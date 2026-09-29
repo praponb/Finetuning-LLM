@@ -1,0 +1,1 @@
+SELECT id, store_id, product_id, last_restock, RANK() OVER (ORDER BY quantity) AS quantity_rank, NTILE(4) OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS quantity_bucket, SUM(quantity) OVER (PARTITION BY product_id ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_quantity FROM inventory;

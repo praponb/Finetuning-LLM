@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.id, c.credit_limit, cs.stddev_monthly_fee FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.stddev_monthly_fee > 76

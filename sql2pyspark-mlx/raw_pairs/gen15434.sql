@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date, id) AS dedup_rank FROM accounts QUALIFY dedup_rank = 1) SELECT id, account_type, opened_date, dedup_rank, CASE WHEN account_type RLIKE '^(CHECKING|LOAN)$' THEN 'OTHER_ZONE' ELSE 'PRIORITY' END AS account_type_zone FROM ranked ORDER BY opened_date DESC

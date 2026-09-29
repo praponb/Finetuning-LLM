@@ -1,0 +1,1 @@
+select p.id, p.brand, count(i.id) as inventory_count, min(i.last_restock) as first_last_restock, round(stddev(i.quantity), 2) as stddev_quantity from products p left join inventory i on i.product_id = p.id group by p.id, p.brand order by id, brand limit 3

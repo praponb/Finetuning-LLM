@@ -1,0 +1,1 @@
+SELECT o.id, o.amount, o.discount, t.avg_amount FROM orders o LEFT JOIN (SELECT order_id, ROUND(AVG(amount), 2) AS avg_amount FROM payments WHERE amount >= 940 GROUP BY order_id) t ON o.id = t.order_id ORDER BY amount ASC;

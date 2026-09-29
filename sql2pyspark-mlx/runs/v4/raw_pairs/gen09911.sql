@@ -1,0 +1,1 @@
+select c.country, round(avg(we.duration_sec), 2) as avg_duration_sec from web_events we inner join sessions s on s.id = we.session_id inner join customers c on s.customer_id = c.id group by c.country order by avg_duration_sec, country;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, device_code, reading_ts, pressure, status_bits, DATEDIFF(CURRENT_DATE(), reading_ts) AS days_since_reading_ts, ROUND(pressure * 1.1, 2) AS pressure_scaled FROM device_readings WHERE reading_ts >= DATE '2025-09-01') SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY device_code ORDER BY status_bits ASC) AS rn FROM base) x WHERE rn = 1

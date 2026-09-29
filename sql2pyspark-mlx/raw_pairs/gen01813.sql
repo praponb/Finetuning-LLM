@@ -1,0 +1,1 @@
+SELECT id, city, country, rating, SUM(rating) OVER (PARTITION BY city, country) city_sum_rating, LEAD(rating, 1) OVER (PARTITION BY country ORDER BY rating, id) next_rating FROM suppliers WHERE city IS NULL ORDER BY city_sum_rating;

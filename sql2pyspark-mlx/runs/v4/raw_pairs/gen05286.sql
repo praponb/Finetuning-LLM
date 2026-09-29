@@ -1,0 +1,1 @@
+select * from (select case when cost >= 740 then 'high' when cost >= 240 then 'mid' else 'low' end as cost_bucket, min(price) as min_price, round(stddev(price), 2) as stddev_price from products group by case when cost >= 740 then 'high' when cost >= 240 then 'mid' else 'low' end) as sub where stddev_price >= 67 order by min_price;

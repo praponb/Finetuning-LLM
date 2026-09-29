@@ -1,0 +1,1 @@
+SELECT stores.region, MIN(orders.amount) AS min_amount FROM orders INNER JOIN stores ON stores.id = orders.store_id INNER JOIN customers ON customers.id = orders.customer_id WHERE customers.age IS NULL GROUP BY stores.region ORDER BY region;

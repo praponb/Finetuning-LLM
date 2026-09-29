@@ -1,0 +1,1 @@
+SELECT e.id, e.job_title AS employee_job_title, e.salary AS employee_salary, e.email AS employee_email, m.email AS manager_email, m.manager_id AS manager_manager_id, m.dept_id AS manager_dept_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE YEAR(e.hire_date) = 2025 ORDER BY employee_email, e.id DESC;

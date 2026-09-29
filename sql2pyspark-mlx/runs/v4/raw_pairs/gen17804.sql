@@ -1,0 +1,1 @@
+select id, merchant, txn_time, amount, account_id, round(avg(amount) over (partition by merchant order by txn_time, id rows between 3 preceding and current row), 2) as amount_moving_avg_4, dense_rank() over (partition by account_id order by amount desc) as amount_dense_rank from transactions

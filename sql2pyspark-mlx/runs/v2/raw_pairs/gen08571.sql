@@ -1,0 +1,1 @@
+SELECT s.country, ROUND(STDDEV(oi.quantity), 2) AS stddev_quantity FROM order_items oi JOIN products p ON oi.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE p.price >= 720 GROUP BY s.country ORDER BY stddev_quantity, country LIMIT 50

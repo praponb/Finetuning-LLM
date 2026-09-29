@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, status, end_date, plan, RANK() OVER (PARTITION BY status ORDER BY end_date DESC) AS rnk FROM subscriptions WHERE status IN ('ACTIVE', 'EXPIRED', 'PAUSED')) SELECT * FROM numbered WHERE rnk <= 3;

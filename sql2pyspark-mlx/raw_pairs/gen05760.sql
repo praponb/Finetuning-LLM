@@ -1,0 +1,1 @@
+SELECT id, session_id, event_type, page, event_time, SUM(duration_sec) OVER w_recent AS duration_sec_sum_7d, CUME_DIST() OVER (PARTITION BY page ORDER BY duration_sec NULLS LAST) AS duration_sec_cume_dist FROM web_events WINDOW w_recent AS (PARTITION BY page ORDER BY CAST(event_time AS BIGINT) RANGE BETWEEN 604800 PRECEDING AND CURRENT ROW)

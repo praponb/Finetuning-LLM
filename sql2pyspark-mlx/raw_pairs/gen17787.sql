@@ -1,0 +1,1 @@
+select year(o.order_date) as order_year, round(avg(p.amount), 2) as avg_amount from payments p inner join orders o on p.order_id = o.id inner join customers c on o.customer_id = c.id where o.shipping_fee is not null group by year(o.order_date) having avg_amount > 30 order by order_year;

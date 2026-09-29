@@ -1,0 +1,1 @@
+SELECT YEAR(launch_date) AS launch_year, supplier_id, COUNT(CASE WHEN brand = 'Umbrella' THEN 1 END) AS umbrella_count FROM products WHERE cost BETWEEN 300 AND 510 GROUP BY YEAR(launch_date), supplier_id ORDER BY launch_year

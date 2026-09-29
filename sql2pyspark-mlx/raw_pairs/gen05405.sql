@@ -1,0 +1,1 @@
+SELECT a.status, MIN(t.txn_time) AS min_txn_time, SUM(CASE WHEN t.merchant = 'Shell' THEN 1 ELSE 0 END) AS shell_count FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE NOT t.is_flagged GROUP BY a.status

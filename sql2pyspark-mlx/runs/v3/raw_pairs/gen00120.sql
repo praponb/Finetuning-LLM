@@ -1,0 +1,1 @@
+WITH filtered_shipments AS (SELECT * FROM shipments WHERE cost > 55), agg AS (SELECT carrier, MONTH(delivered_date) AS delivered_month, SUM(CASE WHEN carrier = 'UPS' THEN cost ELSE 0 END) AS ups_cost FROM filtered_shipments GROUP BY carrier, MONTH(delivered_date)) SELECT carrier, ups_cost FROM agg ORDER BY carrier;

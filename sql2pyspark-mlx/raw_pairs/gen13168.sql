@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, p.cost, o.amount, oi.quantity - oi.unit_price AS line_total FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id WHERE o.store_id IN (28, 33)

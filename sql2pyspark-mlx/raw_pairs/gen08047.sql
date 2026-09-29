@@ -1,0 +1,1 @@
+SELECT e.id, e.job_title AS employee_job_title, m.level AS manager_level, m.salary AS manager_salary, m.email AS manager_email FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.full_name LIKE '%Brown%' ORDER BY manager_salary DESC, manager_level DESC

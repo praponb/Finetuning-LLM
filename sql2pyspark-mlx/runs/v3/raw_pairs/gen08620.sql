@@ -1,0 +1,1 @@
+SELECT txn_month, transaction_count, unique_accounts FROM (SELECT MONTH(txn_time) AS txn_month, COUNT(*) AS transaction_count, COUNT(DISTINCT amount) AS unique_accounts FROM transactions GROUP BY MONTH(txn_time)) AS sub WHERE unique_accounts < 8

@@ -1,0 +1,1 @@
+SELECT session_id, page, event_time, UPPER(event_type) AS event_type_upper, CASE WHEN event_type = 'click' THEN 1 ELSE 0 END AS is_click FROM web_events WHERE event_type = 'click' AND page IS NULL AND event_type <> 'add_to_cart'

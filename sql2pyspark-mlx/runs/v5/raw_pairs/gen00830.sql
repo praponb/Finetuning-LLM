@@ -1,0 +1,1 @@
+SELECT s.id, s.started_at, s.country, x.event_type, x.page FROM sessions s LEFT JOIN LATERAL (SELECT c.event_type, c.page FROM web_events c WHERE c.session_id = s.id ORDER BY c.event_time DESC, c.id DESC LIMIT 1) x ON TRUE

@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, COUNT(*) AS num_store_sales FROM store_sales WHERE sale_date BETWEEN '2023-03-01' AND '2025-07-18' GROUP BY CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END;

@@ -1,0 +1,1 @@
+SELECT id, store_id, customer_id, order_date, shipping_fee, LAG(shipping_fee, 1) OVER (PARTITION BY store_id, customer_id ORDER BY order_date, id) AS prev_shipping_fee FROM orders WHERE discount BETWEEN 0.2 AND 0.39

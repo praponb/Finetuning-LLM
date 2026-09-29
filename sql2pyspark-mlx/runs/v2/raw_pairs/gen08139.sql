@@ -1,0 +1,1 @@
+WITH InventoryByStore AS (SELECT store_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE last_restock < '2024-10-01' GROUP BY store_id) SELECT s.opened_date, s.city, I.quantity_range FROM stores s INNER JOIN InventoryByStore I ON s.id = I.store_id WHERE I.quantity_range > 74 ORDER BY 3 DESC;

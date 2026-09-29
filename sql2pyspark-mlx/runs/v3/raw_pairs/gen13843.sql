@@ -1,0 +1,1 @@
+SELECT departments.id, departments.location, COUNT(employees.id) AS employee_count FROM departments JOIN employees ON departments.id = employees.dept_id WHERE departments.budget > 2191000 GROUP BY departments.id, departments.location HAVING COUNT(employees.id) >= 2 ORDER BY id DESC, employee_count DESC, location LIMIT 20;

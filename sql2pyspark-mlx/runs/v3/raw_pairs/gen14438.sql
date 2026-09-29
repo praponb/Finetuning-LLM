@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM suppliers WHERE supplier_name IS NOT NULL OR city = 'Bangkok'), suppliers_stats AS (SELECT country, SUM(CASE WHEN country = 'US' THEN rating ELSE 0 END) AS us_rating, SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) AS sg_count FROM src GROUP BY country) SELECT country, us_rating, sg_count FROM suppliers_stats WHERE us_rating < 73 ORDER BY 3

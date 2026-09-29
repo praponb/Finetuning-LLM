@@ -1,0 +1,1 @@
+select o.customer_id, o.status, o.store_id, c.name, c.is_active, case when c.country = 'TH' then 1 else 0 end as is_th from orders o left join customers c on o.customer_id = c.id where o.channel = 'store' and o.channel not in ('store', 'web') order by is_th desc, o.store_id desc

@@ -1,0 +1,1 @@
+select o.status, concat_ws(', ', sort_array(collect_set(s.carrier))) as carrier_values, sum(case when s.status = 'DELIVERED' then 1 else 0 end) as delivered_count from shipments s inner join orders o on s.order_id = o.id group by o.status order by carrier_values;

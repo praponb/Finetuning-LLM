@@ -1,0 +1,1 @@
+select job_title, count(*) as total_count, concat_ws(', ', sort_array(collect_set(job_title))) as job_title_values from employees where hire_date < '2023-07-18' group by job_title order by job_title desc limit 5;

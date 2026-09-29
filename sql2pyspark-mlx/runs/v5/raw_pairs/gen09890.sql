@@ -1,0 +1,1 @@
+with cleaned as (select *, array_join(tags, '|') as tags_text, coalesce(brand, 'DIRECT') as brand_clean from products where upper(product_name) like '%FFI%') select * from (select category, brand, stock_qty from cleaned) src pivot (max(stock_qty) as amount, count(1) as n for brand in ('Acme', 'Initech'))

@@ -1,0 +1,1 @@
+SELECT p.category, p.brand, MIN(ss.sale_date) AS first_sale_date, ROUND(AVG(ss.revenue), 2) AS avg_revenue FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id GROUP BY p.category, p.brand HAVING ROUND(AVG(ss.revenue), 2) >= 30 ORDER BY 2 ASC;

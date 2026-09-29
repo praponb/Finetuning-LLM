@@ -1,0 +1,1 @@
+SELECT signup_date, 'customer' AS kind FROM customers WHERE signup_date IS NOT NULL UNION SELECT shipped_date AS signup_date, 'shipment' AS kind FROM shipments WHERE shipped_date IS NOT NULL ORDER BY signup_date

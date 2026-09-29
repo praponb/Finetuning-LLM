@@ -35,7 +35,7 @@ sequenceDiagram
 
 ## 🦙 Ollama Serving Engine
 
-Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v6** (the 7B model, since 2026-09-28; 7.9 GB loaded, ~10 s per hold-out query vs. ~4 s for the 3B); `sql2pyspark:v5` (the previous `latest`, 3B), `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the last export (v6, 8.1 GB).
+Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v7** (the 7B model continued from v6, since 2026-09-29; 7.9 GB loaded, ~9 s per hold-out query vs. ~4 s for the 3B); `sql2pyspark:v6` (the previous `latest`, 7B), `sql2pyspark:v5` (3B), `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the last export (v7, 8.1 GB).
 
 ### Server Address
 - Default: `http://localhost:11434`

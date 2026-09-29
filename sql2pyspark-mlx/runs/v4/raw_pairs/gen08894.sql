@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY credit_limit DESC NULLS FIRST, id) AS dedup_rank FROM customers) t WHERE dedup_rank = 1) SELECT id, name, email, country, signup_date, is_active, credit_limit FROM latest;

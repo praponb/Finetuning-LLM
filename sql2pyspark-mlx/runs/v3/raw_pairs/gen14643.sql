@@ -1,0 +1,1 @@
+select store_id, case when quantity >= 214 then 'high' when quantity >= 93 then 'mid' else 'low' end as quantity_bucket, avg(quantity) as avg_quantity from inventory where last_restock > '2024-08-01' group by store_id, case when quantity >= 214 then 'high' when quantity >= 93 then 'mid' else 'low' end;

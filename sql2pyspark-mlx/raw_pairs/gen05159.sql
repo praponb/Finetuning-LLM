@@ -1,0 +1,1 @@
+SELECT o.discount, t.method_values FROM orders o LEFT OUTER JOIN (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values FROM payments GROUP BY order_id) t ON o.id = t.order_id

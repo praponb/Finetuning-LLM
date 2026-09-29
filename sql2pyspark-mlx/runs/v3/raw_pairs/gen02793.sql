@@ -1,0 +1,1 @@
+SELECT oi.product_id, oi.order_id, p.supplier_id, p.category, o.discount FROM order_items oi JOIN products p ON p.id = oi.product_id LEFT JOIN orders o ON oi.order_id = o.id WHERE p.supplier_id IS NOT NULL AND o.store_id = 11;

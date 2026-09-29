@@ -1,0 +1,1 @@
+with base as (select *, case when budget >= 3234000 then 'High' when budget >= 880000 then 'Medium' else 'Low' end as budget_tier from departments where dept_name = 'Engineering' and budget > 1750000), summary as (select dept_name, sum(budget) as total_budget from base group by dept_name) select * from summary where total_budget > 8987000;

@@ -1,0 +1,1 @@
+SELECT o.id, o.amount, o.customer_id, c.is_active, c.email, c.signup_date FROM orders o LEFT JOIN customers c ON c.id = o.customer_id WHERE c.name LIKE '%Grace%' AND c.credit_limit BETWEEN 12000 AND 13100 ORDER BY signup_date

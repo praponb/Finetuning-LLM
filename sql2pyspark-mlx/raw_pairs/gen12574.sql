@@ -1,0 +1,1 @@
+select e.id, e.salary as employee_salary, e.manager_id as employee_manager_id, e.job_title as employee_job_title, m.email as manager_email, m.salary as manager_salary, m.level as manager_level from employees e left join employees m on e.manager_id = m.id where m.salary < 133000 order by manager_email desc, employee_manager_id desc

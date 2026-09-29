@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_time, t.txn_type, a.balance, a.account_type, a.status FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id WHERE a.opened_date BETWEEN '2023-03-01' AND '2023-05-05' ORDER BY txn_time;

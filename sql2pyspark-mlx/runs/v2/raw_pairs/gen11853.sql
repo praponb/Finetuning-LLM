@@ -1,0 +1,1 @@
+select i.id, i.store_id, i.product_id, s.opened_date, date_sub(i.last_restock, 84) last_restock_minus_84d from inventory i left outer join stores s on i.store_id = s.id where s.sqft between 8812 and 12221 order by opened_date desc, id asc limit 5;

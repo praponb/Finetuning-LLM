@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3810000 THEN 'high' WHEN budget >= 640000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(budget) AS total_budget, RANK() OVER (ORDER BY SUM(budget) DESC) AS rnk FROM departments GROUP BY CASE WHEN budget >= 3810000 THEN 'high' WHEN budget >= 640000 THEN 'mid' ELSE 'low' END;

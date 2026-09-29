@@ -1,0 +1,1 @@
+SELECT i.quantity, i.product_id, ss.sale_date, ss.product_id AS store_sale_product_id, DATE_TRUNC('WEEK', i.last_restock) AS last_restock_period FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id ORDER BY last_restock_period DESC;

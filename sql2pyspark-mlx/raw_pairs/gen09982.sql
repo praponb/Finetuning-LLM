@@ -1,0 +1,1 @@
+WITH ranked_subscriptions AS (SELECT id, status, monthly_fee, ROW_NUMBER() OVER (PARTITION BY status ORDER BY monthly_fee DESC, id) AS rn FROM subscriptions) SELECT id, status, monthly_fee FROM ranked_subscriptions WHERE rn <= 3;

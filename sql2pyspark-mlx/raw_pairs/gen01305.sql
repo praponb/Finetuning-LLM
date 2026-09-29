@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(paid_at) < 2024 THEN 'before_2024' WHEN YEAR(paid_at) = 2024 THEN '2024' ELSE 'after_2024' END AS paid_cohort, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, ROUND(AVG(amount), 2) AS avg_amount, MIN(amount) AS min_amount FROM payments GROUP BY paid_cohort ORDER BY min_amount DESC;

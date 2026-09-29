@@ -1,0 +1,1 @@
+with flagged as (select *, case when started_at - lag(started_at) over (partition by browser order by started_at, id) > interval 60 days then 1 else 0 end as is_new_burst from sessions) select *, sum(is_new_burst) over (partition by browser order by started_at, id rows between unbounded preceding and current row) as burst_id from flagged;

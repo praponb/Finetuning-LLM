@@ -1,0 +1,1 @@
+SELECT channel, status, customer_id, AVG(discount) AS avg_discount, SUM(CASE WHEN status = 'PENDING' THEN 1 ELSE 0 END) AS pending_count FROM orders GROUP BY channel, status, customer_id HAVING SUM(CASE WHEN status = 'PENDING' THEN 1 ELSE 0 END) < 69 ORDER BY pending_count

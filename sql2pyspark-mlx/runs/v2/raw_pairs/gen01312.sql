@@ -1,0 +1,1 @@
+with StoreSalesByStore as (select store_id, avg(revenue) as avg_revenue from store_sales where sale_date <= '2025-10-15' group by store_id) select s.id, s.sqft, s.city, S.avg_revenue from stores s inner join StoreSalesByStore S on s.id = S.store_id where S.avg_revenue >= 1300 order by s.id desc

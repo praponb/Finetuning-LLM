@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, log_ts, latency_ms, status_code, attr_key, value FROM app_logs LATERAL VIEW EXPLODE(context) e AS attr_key, value) SELECT DATE_TRUNC('DAY', log_ts) AS activity_day, ROUND(AVG(latency_ms), 2) AS avg_latency_ms, MIN(log_ts) AS first_seen FROM lines GROUP BY 1

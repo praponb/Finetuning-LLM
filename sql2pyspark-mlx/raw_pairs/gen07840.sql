@@ -1,0 +1,1 @@
+SELECT MONTH(p.launch_date) launch_month, MIN(oi.unit_price) min_unit_price, COUNT(DISTINCT oi.quantity) unique_products FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id GROUP BY MONTH(p.launch_date)

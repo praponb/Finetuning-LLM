@@ -1,0 +1,1 @@
+with matched_keys as (select carrier from shipments intersect select carrier from shipments where cost > 50), reconciled as (select s.* from shipments s inner join matched_keys k on s.carrier = k.carrier) select id, carrier, delivered_date, cost from reconciled order by id desc nulls first;

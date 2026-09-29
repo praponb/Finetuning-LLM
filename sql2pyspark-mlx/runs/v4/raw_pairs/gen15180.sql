@@ -1,0 +1,1 @@
+WITH recent_shipments AS (SELECT * FROM shipments WHERE carrier = 'Flash'), agg AS (SELECT carrier, status, ROUND((100 * SUM(CASE WHEN carrier = 'UPS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_ups FROM recent_shipments GROUP BY carrier, status) SELECT carrier, status, pct_ups FROM agg

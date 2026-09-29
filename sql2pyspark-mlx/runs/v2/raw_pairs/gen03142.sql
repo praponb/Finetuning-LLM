@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values, SUM(CASE WHEN level = 'L3' THEN salary ELSE 0 END) AS l3_salary FROM employees WHERE dept_id = 6 AND is_remote GROUP BY DATE_FORMAT(hire_date, 'yyyy-MM')

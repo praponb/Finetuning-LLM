@@ -1,0 +1,1 @@
+select id, plan, effective_from, tier_limits, element_at(tier_prices, 1) as entry_price, transform(tier_prices, (p, i) -> round(p * tier_limits[i], 2)) as tier_revenue_caps, array_min(tier_prices) as lowest_price from price_tiers where month(effective_from) in (2, 6, 12)

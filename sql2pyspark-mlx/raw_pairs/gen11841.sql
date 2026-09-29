@@ -1,0 +1,1 @@
+select browser, date_trunc('week', started_at) as week_start, count(*) as event_count, count_if(browser = 'Edge') as edge_events, max(started_at) as last_started_at, min(started_at) as started_at, count(*) filter (where browser = 'Chrome') as chrome_rows from sessions group by 1, 2 order by chrome_rows;

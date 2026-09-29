@@ -1,0 +1,1 @@
+with department_totals as (select dept_id, max(hire_date) as last_hire_date from employees group by dept_id) select departments.id, departments.location, departments.budget, department_totals.last_hire_date from departments inner join department_totals on departments.id = department_totals.dept_id order by last_hire_date;

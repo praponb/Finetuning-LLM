@@ -1,0 +1,1 @@
+with valid as (select id, account_type, balance, opened_date, case when account_type in ('CREDIT', 'SAVINGS') then 'Core' else 'Other' end as account_type_group, coalesce(status, 'DIRECT') as status_filled from accounts where status is null) select id from valid except all select id from accounts where opened_date >= '2025-04-06'

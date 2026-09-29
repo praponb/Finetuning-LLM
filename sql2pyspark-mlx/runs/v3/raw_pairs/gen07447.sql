@@ -1,0 +1,1 @@
+select id, category, launch_date, stock_qty, round(avg(stock_qty) over (partition by category order by launch_date, id rows between 3 preceding and current row), 2) as stock_qty_moving_avg_4 from products

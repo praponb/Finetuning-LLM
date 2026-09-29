@@ -1,0 +1,1 @@
+SELECT unit_price, product_id, order_id, unit_price - quantity AS line_total, CAST(unit_price AS INT) AS unit_price_int FROM order_items WHERE unit_price BETWEEN 130 AND 170 ORDER BY unit_price_int DESC

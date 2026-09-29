@@ -1,0 +1,1 @@
+SELECT id, page, UPPER(page) AS page_upper, LOWER(page) AS page_lower FROM web_events WHERE duration_sec > 132 AND page = '/cart' AND event_type IN ('search', 'purchase', 'add_to_cart') ORDER BY page_upper, id DESC;

@@ -1,0 +1,1 @@
+select date_trunc('week', opened_date) as week_start, count(case when account_type = 'SAVINGS' then 1 end) as savings_count, round(sum(balance) / nullif(count(case when status = 'OPEN' then 1 end), 0), 2) as balance_per_open, count(*) as cnt from accounts group by date_trunc('week', opened_date) order by cnt;

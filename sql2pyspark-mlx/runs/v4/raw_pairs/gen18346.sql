@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.merchant, transactions.txn_time, transactions.txn_type, accounts.opened_date, accounts.balance, accounts.status FROM transactions JOIN accounts ON transactions.account_id = accounts.id WHERE accounts.opened_date < '2023-12-15'

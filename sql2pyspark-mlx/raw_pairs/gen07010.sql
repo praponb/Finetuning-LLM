@@ -1,0 +1,1 @@
+select ss.id, ss.product_id, ss.units, ss.store_id, p.brand, p.supplier_id, p.price from store_sales ss join products p on ss.product_id = p.id where p.supplier_id is not null order by ss.store_id desc

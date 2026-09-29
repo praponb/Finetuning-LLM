@@ -1,0 +1,1 @@
+SELECT event_type, YEAR(event_time) AS event_year, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY event_type, YEAR(event_time) HAVING duration_sec_range > 66 ORDER BY duration_sec_range DESC

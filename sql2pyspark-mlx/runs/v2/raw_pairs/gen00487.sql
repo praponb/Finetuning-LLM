@@ -1,0 +1,1 @@
+SELECT id, balance, opened_date, DATEDIFF(CURRENT_DATE(), opened_date) AS days_since_opened_date, CASE WHEN balance >= 88000 THEN 'High' WHEN balance >= 23000 THEN 'Medium' ELSE 'Low' END AS balance_band FROM accounts WHERE (balance BETWEEN 18000 AND 75000 AND balance BETWEEN 41000 AND 47000) OR customer_id = 27;

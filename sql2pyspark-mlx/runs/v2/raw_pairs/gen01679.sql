@@ -1,0 +1,1 @@
+SELECT c.id, c.is_active, c.signup_date, t.credit_count, t.savings_count FROM customers c LEFT JOIN (SELECT customer_id, COUNT(CASE WHEN account_type = 'CREDIT' THEN 1 END) credit_count, COUNT(CASE WHEN account_type = 'SAVINGS' THEN 1 END) savings_count FROM accounts WHERE customer_id IN (4, 5, 32) GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.savings_count > 5;

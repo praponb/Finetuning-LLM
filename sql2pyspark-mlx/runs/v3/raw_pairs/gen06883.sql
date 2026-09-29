@@ -1,0 +1,1 @@
+WITH SupplierStats AS (SELECT supplier_id, MAX(price) max_price, COUNT(*) row_count FROM products WHERE brand IN ('Initech', 'Umbrella', 'Acme') GROUP BY supplier_id) SELECT s.supplier_name, S.max_price, S.row_count FROM suppliers s LEFT JOIN SupplierStats S ON s.id = S.supplier_id;

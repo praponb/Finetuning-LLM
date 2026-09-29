@@ -1,0 +1,1 @@
+select p.id, p.method, p.status, p.amount, o.shipping_fee from payments p join orders o on p.order_id = o.id where o.customer_id in (15, 23, 28) and o.status = 'SHIPPED' order by p.amount, p.id limit 5

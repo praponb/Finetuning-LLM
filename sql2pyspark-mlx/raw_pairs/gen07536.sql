@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT plan, CASE WHEN status IN ('PAUSED', 'EXPIRED') THEN 'priority' ELSE 'other' END AS status_group, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions GROUP BY plan, CASE WHEN status IN ('PAUSED', 'EXPIRED') THEN 'priority' ELSE 'other' END) AS t WHERE min_monthly_fee > 80

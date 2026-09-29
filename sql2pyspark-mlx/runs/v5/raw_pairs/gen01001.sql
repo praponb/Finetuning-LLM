@@ -1,0 +1,1 @@
+select d.id, d.location, d.budget, t.unique_depts, t.avg_salary from departments d join (select dept_id, count(distinct salary) as unique_depts, avg(salary) as avg_salary from employees where manager_id = 35 group by dept_id) t on d.id = t.dept_id where t.unique_depts > 3 order by id desc;

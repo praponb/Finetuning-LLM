@@ -1,0 +1,1 @@
+select * from (select month(start_date) as start_month, quarter(start_date) as start_quarter, min(end_date) as min_end_date, max(monthly_fee) as max_monthly_fee from subscriptions where customer_id = 40 group by month(start_date), quarter(start_date)) as agg where max_monthly_fee >= 230;

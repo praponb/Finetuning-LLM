@@ -1,0 +1,1 @@
+SELECT payments.id, payments.status, payments.order_id, orders.customer_id, orders.status AS order_status FROM payments INNER JOIN orders ON payments.order_id = orders.id WHERE orders.channel = 'partner' AND payments.method = 'card'

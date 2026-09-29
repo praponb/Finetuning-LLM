@@ -1,0 +1,1 @@
+SELECT p.supplier_id, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id GROUP BY p.supplier_id HAVING ROUND(AVG(i.quantity), 2) > 76;

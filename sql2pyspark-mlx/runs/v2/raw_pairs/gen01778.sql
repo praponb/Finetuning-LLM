@@ -1,0 +1,1 @@
+SELECT p.category, SUM(oi.quantity) AS total_quantity, AVG(oi.unit_price) AS avg_unit_price FROM order_items oi LEFT OUTER JOIN products p ON oi.product_id = p.id LEFT OUTER JOIN orders o ON o.id = oi.order_id GROUP BY p.category;

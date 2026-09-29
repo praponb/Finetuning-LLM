@@ -1,0 +1,1 @@
+select case when dept_name in ('HR', 'Legal') then 'tier_1' else 'other' end as dept_name_group, case when budget >= 4279000 then 'high' when budget >= 1723000 then 'mid' else 'low' end as budget_bucket, round(avg(budget), 2) as avg_budget from departments group by 1, 2 having round(avg(budget), 2) >= 32;

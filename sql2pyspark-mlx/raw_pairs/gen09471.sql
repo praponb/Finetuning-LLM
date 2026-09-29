@@ -1,0 +1,1 @@
+SELECT *, COALESCE(browser, 'unassigned') browser_filled, DATEDIFF(CURRENT_DATE(), started_at) days_since_started_at FROM sessions WHERE browser IN ('Firefox', 'Edge', 'Chrome') AND customer_id IN (22, 26, 33, 35)

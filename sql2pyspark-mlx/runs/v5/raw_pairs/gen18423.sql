@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, MAX(cost) AS max_cost, MAX(launch_date) AS last_launch_date FROM products WHERE price > 680 GROUP BY supplier_id) SELECT s.id, s.country, s.rating, ss.max_cost, ss.last_launch_date FROM suppliers s LEFT JOIN supplier_stats ss ON s.id = ss.supplier_id WHERE ss.max_cost >= 720 ORDER BY last_launch_date;

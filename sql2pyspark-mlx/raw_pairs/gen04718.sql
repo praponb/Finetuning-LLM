@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.plan, subscriptions.status FROM subscriptions WHERE subscriptions.start_date <= '2024-08-01' AND subscriptions.customer_id IN (SELECT id FROM customers WHERE age = 54) ORDER BY plan DESC, id ASC LIMIT 10;

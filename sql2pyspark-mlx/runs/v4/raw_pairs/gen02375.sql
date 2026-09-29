@@ -1,0 +1,1 @@
+WITH SessionStats AS (SELECT session_id, COUNT(CASE WHEN event_type = 'purchase' THEN 1 END) AS purchase_count FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, S.purchase_count FROM sessions s JOIN SessionStats S ON s.id = S.session_id

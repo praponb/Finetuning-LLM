@@ -1,0 +1,1 @@
+SELECT sessions.started_at, sessions.browser, sessions.device, customers.city, customers.segment, customers.signup_date FROM sessions INNER JOIN customers ON sessions.customer_id = customers.id WHERE customers.is_active OR customers.city IN ('New York', 'Bangkok') ORDER BY customers.city ASC

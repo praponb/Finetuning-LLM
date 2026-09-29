@@ -1,0 +1,1 @@
+SELECT signup_date AS event_date, 'customer' AS record_type FROM customers WHERE signup_date IS NOT NULL UNION ALL SELECT launch_date AS event_date, 'product' AS record_type FROM products WHERE launch_date IS NOT NULL

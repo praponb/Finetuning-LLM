@@ -1,0 +1,1 @@
+SELECT e.email, e.salary, d.location FROM employees e LEFT OUTER JOIN departments d ON e.dept_id = d.id WHERE e.job_title IN ('Director', 'Designer') AND e.salary >= 112000 ORDER BY e.salary DESC, d.location;

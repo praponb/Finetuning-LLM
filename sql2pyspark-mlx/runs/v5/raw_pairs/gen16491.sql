@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, city, opened_date, sqft, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS rn FROM stores) SELECT id, city, opened_date, sqft FROM numbered WHERE rn <= 3 ORDER BY sqft DESC;

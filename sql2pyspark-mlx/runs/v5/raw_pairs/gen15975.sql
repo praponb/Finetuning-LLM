@@ -1,0 +1,1 @@
+SELECT we.duration_sec, we.event_time, we.session_id, s.browser, s.customer_id, COALESCE(we.page, 'unassigned') AS page_filled FROM web_events we LEFT OUTER JOIN sessions s ON we.session_id = s.id WHERE we.duration_sec > 298 ORDER BY we.event_time

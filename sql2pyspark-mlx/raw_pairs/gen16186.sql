@@ -1,0 +1,1 @@
+WITH metrics AS (SELECT id, name, country, city, segment, signup_date, is_active, age, LEAD(age, 2) OVER (PARTITION BY country ORDER BY credit_limit, id) AS next_age, ROUND(age / SUM(age) OVER (PARTITION BY country), 4) AS age_share FROM customers) SELECT id, signup_date, is_active, age FROM metrics ORDER BY id, age LIMIT 5;

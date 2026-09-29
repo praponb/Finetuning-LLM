@@ -1,0 +1,1 @@
+select id, store_id, product_id, quantity, last_restock, row_number() over (partition by store_id order by quantity, id) as row_seq, row_number() over (partition by store_id, product_id order by last_restock, id) as event_seq, count(quantity) over (partition by product_id) as product_id_count_quantity from inventory

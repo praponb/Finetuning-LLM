@@ -1,0 +1,13 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_sessions.alias("s")
+    .join(df_web_events.alias("we"), F.col("we.session_id") == F.col("s.id"), "inner")
+    .select(
+        F.col("s.country"),
+        F.col("we.session_id"),
+        F.col("we.event_time"),
+        F.col("we.page"),
+    )
+    .orderBy(F.col("session_id").desc())
+)

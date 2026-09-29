@@ -1,0 +1,1 @@
+SELECT signup_month, total_age, max_age FROM (SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, SUM(age) AS total_age, MAX(age) AS max_age FROM customers GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM')) AS x WHERE max_age > 31

@@ -1,0 +1,1 @@
+SELECT status, carrier, YEAR(shipped_date) AS shipped_year, MIN(delivered_date) AS first_delivered_date, SUM(CASE WHEN carrier = 'Kerry' THEN 1 ELSE 0 END) AS kerry_count, SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) AS returned_count FROM shipments WHERE order_id IN (12, 17) AND status != 'LOST' GROUP BY status, carrier, YEAR(shipped_date) ORDER BY first_delivered_date

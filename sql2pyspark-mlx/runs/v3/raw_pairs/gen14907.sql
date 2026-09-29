@@ -1,0 +1,1 @@
+with store_stats as (select store_id, round(avg(discount), 2) as avg_discount, max(discount) - min(discount) as discount_range from orders group by store_id) select s.id, s.region, s.sqft, ss.avg_discount, ss.discount_range from stores s inner join store_stats ss on s.id = ss.store_id

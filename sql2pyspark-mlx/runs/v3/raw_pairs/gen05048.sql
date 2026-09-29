@@ -1,0 +1,1 @@
+SELECT s.region, s.city, MAX(ss.sale_date) AS latest_sale_date, COUNT(*) AS total_count FROM store_sales ss FULL OUTER JOIN stores s ON ss.store_id = s.id LEFT OUTER JOIN products p ON ss.product_id = p.id WHERE ss.units <= 12 GROUP BY s.region, s.city ORDER BY latest_sale_date DESC

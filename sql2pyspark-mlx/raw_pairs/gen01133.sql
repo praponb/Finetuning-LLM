@@ -1,0 +1,1 @@
+select product_id, store_id, avg(quantity) as avg_quantity, count(*) as num_inventory from inventory where product_id in (2, 5, 7, 8) or product_id in (5, 7, 9) group by 1, 2 having avg_quantity < 180;

@@ -1,0 +1,1 @@
+WITH with_last AS (SELECT s.id, s.email, s.country, s.age, top1.device FROM customers s JOIN LATERAL (SELECT c.device FROM sessions c WHERE c.customer_id = s.id AND c.started_at <= s.signup_date ORDER BY c.started_at DESC, c.id DESC LIMIT 1) top1 ON TRUE) SELECT id, email, country, age, device FROM with_last ORDER BY id DESC

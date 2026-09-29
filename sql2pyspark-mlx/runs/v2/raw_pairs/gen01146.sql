@@ -1,0 +1,1 @@
+WITH AccountSummary AS (SELECT account_id, SUM(CASE WHEN txn_type = 'REFUND' THEN amount ELSE 0 END) AS refund_amount FROM transactions WHERE account_id IN (10, 11) GROUP BY account_id) SELECT a.status, A.refund_amount FROM accounts a INNER JOIN AccountSummary A ON a.id = A.account_id ORDER BY refund_amount DESC;

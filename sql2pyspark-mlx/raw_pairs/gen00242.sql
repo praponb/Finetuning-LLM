@@ -1,0 +1,1 @@
+select quarter(opened_date) as opened_quarter, customer_id, sum(balance) as total_balance, count(case when status = 'FROZEN' then 1 end) as frozen_count, count(distinct balance) as unique_statuss from accounts group by 1, 2 having unique_statuss >= 2 order by unique_statuss asc, frozen_count desc

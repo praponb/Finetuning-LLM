@@ -1,0 +1,25 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("country").orderBy(F.col("age").desc(), "id")
+
+deduped = (
+    df_customers
+    .withColumn("row_num", F.row_number().over(w))
+    .filter(F.col("row_num") == 1)
+    .drop("row_num")
+)
+
+result = (
+    deduped
+    .select(
+        "id",
+        "name",
+        "email",
+        "country",
+        "city",
+        "signup_date",
+        "credit_limit",
+        "age",
+    )
+)

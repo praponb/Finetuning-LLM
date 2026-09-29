@@ -1,0 +1,1 @@
+SELECT country, PERCENTILE_APPROX(rating, 0.5) AS rating_p50, COUNT(*) AS row_count, APPROX_PERCENTILE(rating, ARRAY(0.25, 0.5, 0.75)) AS rating_quartiles, COUNT(DISTINCT country) AS distinct_countries FROM suppliers GROUP BY 1 ORDER BY rating_p50 DESC;

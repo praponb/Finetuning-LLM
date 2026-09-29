@@ -1,0 +1,1 @@
+SELECT ss.id, ss.revenue, p.price, p.brand, s.supplier_name FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id ORDER BY ss.id DESC LIMIT 3

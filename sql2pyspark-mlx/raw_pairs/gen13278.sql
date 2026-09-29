@@ -1,0 +1,1 @@
+SELECT CASE WHEN merchant IN ('7-Eleven', 'Starbucks') THEN 'tier_1' ELSE 'other' END AS merchant_group, COUNT(amount) AS amount_count, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY merchant_group ORDER BY avg_amount DESC, amount_count DESC;

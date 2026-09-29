@@ -1,0 +1,1 @@
+WITH filtered_products AS (SELECT * FROM products WHERE supplier_id IS NOT NULL), launch_year_summary AS (SELECT YEAR(launch_date) AS launch_year, COUNT(CASE WHEN category = 'Electronics' THEN 1 END) AS electronics_count FROM filtered_products GROUP BY YEAR(launch_date)) SELECT * FROM launch_year_summary WHERE electronics_count >= 5 ORDER BY electronics_count

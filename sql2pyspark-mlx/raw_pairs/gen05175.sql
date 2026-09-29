@@ -1,0 +1,1 @@
+select * from (select account_type, sum(case when status = 'CLOSED' then 1 else 0 end) as closed_count from accounts group by account_type) as s where closed_count > 41 order by closed_count desc, account_type limit 5;

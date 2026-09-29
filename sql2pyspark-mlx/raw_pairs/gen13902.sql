@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, customer_id, monthly_fee, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY monthly_fee DESC, id) AS row_num FROM subscriptions WHERE start_date >= '2025-07-01') AS ranked WHERE row_num <= 2;

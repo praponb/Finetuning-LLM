@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, COUNT(*) AS total_count, MIN(last_restock) AS first_last_restock FROM inventory WHERE product_id = 8 GROUP BY product_id) SELECT products.supplier_id, product_totals.total_count, product_totals.first_last_restock FROM products LEFT OUTER JOIN product_totals ON products.id = product_totals.product_id;

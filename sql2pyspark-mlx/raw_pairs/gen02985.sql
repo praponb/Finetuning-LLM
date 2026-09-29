@@ -1,0 +1,1 @@
+SELECT city, SUM(CASE WHEN country = 'UK' THEN rating ELSE 0 END) AS uk_rating, MAX(rating) AS max_rating, ROUND((100 * SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_bangkok FROM suppliers GROUP BY city HAVING ROUND((100 * SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END)) / COUNT(*), 1) >= 24 ORDER BY city

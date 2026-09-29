@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT id, country, rating, supplier_name, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating, id) AS pos FROM suppliers) SELECT id, country, rating, supplier_name FROM Numbered WHERE pos = 1 ORDER BY rating DESC;

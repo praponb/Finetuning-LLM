@@ -1,0 +1,1 @@
+with cleaned as (select *, cast(is_active as int) as is_active_flag from customers where segment is not null and segment <> 'SMB') select s.* from cleaned s where exists (select 1 from orders ch where ch.customer_id = s.id and ch.order_date >= s.signup_date);

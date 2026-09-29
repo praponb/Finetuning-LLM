@@ -1,0 +1,1 @@
+WITH recent_web_events AS (SELECT *, LENGTH(page) AS page_length FROM web_events WHERE page <> '/home'), web_events_stats AS (SELECT session_id, MAX(duration_sec) AS max_duration_sec, AVG(duration_sec) AS avg_duration_sec FROM recent_web_events GROUP BY session_id) SELECT * FROM web_events_stats WHERE avg_duration_sec >= 200 ORDER BY avg_duration_sec DESC, max_duration_sec DESC

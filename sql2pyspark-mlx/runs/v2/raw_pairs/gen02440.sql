@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, MONTH(sale_date) AS sale_date_month FROM store_sales WHERE product_id IN (4, 8)), agg AS (SELECT store_id, MAX(revenue) AS max_revenue FROM src GROUP BY store_id) SELECT * FROM agg WHERE max_revenue > 2600;

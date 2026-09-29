@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, COUNT(CASE WHEN event_type = 'purchase' THEN 1 END) AS purchase_count FROM web_events GROUP BY session_id) SELECT s.country, s.browser, ss.duration_sec_range, ss.purchase_count FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id;

@@ -1,0 +1,1 @@
+SELECT p.id, p.product_name, COUNT(ss.id) store_sale_count, COUNT(ss.units) units_count, COUNT(DISTINCT ss.revenue) unique_products FROM products p LEFT JOIN store_sales ss ON ss.product_id = p.id WHERE p.price IS NOT NULL GROUP BY p.id, p.product_name

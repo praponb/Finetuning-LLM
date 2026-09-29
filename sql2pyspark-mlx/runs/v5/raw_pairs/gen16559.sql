@@ -1,0 +1,1 @@
+select p.id, p.stock_qty, p.category, t.order_item_count from products p join (select product_id, count(*) as order_item_count from order_items group by product_id) t on p.id = t.product_id where t.order_item_count >= 6 order by 4 desc, p.stock_qty desc;

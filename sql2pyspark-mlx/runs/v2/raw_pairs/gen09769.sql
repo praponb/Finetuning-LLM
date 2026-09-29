@@ -1,0 +1,1 @@
+SELECT i.quantity, i.last_restock, i.product_id, ss.units, ss.store_id FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.store_id IN (2, 3, 5, 6);

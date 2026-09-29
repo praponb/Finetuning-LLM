@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, SUM(sqft) AS total_sqft, COUNT(*) AS cnt, RANK() OVER (ORDER BY SUM(sqft) DESC) AS sqft_rank FROM stores WHERE sqft <= 9717 GROUP BY DATE_TRUNC('MONTH', opened_date) ORDER BY cnt DESC;

@@ -1,0 +1,1 @@
+SELECT d.id, d.budget, t.latest_hire_date, t.max_salary FROM departments d LEFT JOIN (SELECT dept_id, MAX(hire_date) latest_hire_date, MAX(salary) max_salary FROM employees WHERE level IN ('L2', 'L1', 'L3') GROUP BY dept_id) t ON d.id = t.dept_id

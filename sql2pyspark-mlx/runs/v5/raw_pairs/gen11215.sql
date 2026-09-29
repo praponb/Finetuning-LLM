@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, EXPLODE_OUTER(tier_limits) AS tier_value FROM price_tiers) SELECT id, plan, effective_from, tier_value, CASE WHEN plan RLIKE '^(starter|enterprise)$' THEN 'PRIORITY' ELSE 'OTHER_ZONE' END AS plan_zone FROM flattened ORDER BY plan_zone NULLS FIRST

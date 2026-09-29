@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, effective_from, currency, tier_value FROM price_tiers LATERAL VIEW EXPLODE(tier_limits) t AS tier_value) SELECT effective_from, currency, tier_value, PERCENT_RANK() OVER (ORDER BY tier_value NULLS FIRST) tier_value_percent_rank, DENSE_RANK() OVER (ORDER BY tier_value NULLS LAST) tier_value_dense_rank FROM exploded

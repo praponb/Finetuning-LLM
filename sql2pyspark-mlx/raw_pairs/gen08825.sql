@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, LEAST(stock_qty, price) AS least_stock_qty_price FROM products WHERE brand = 'Umbrella' AND supplier_id IS NOT NULL) SELECT id, brand FROM cleaned EXCEPT DISTINCT SELECT id, brand FROM products WHERE category <> 'Sports'

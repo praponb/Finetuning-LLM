@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, oi.product_id, oi.quantity FROM order_items oi WHERE oi.unit_price BETWEEN 120 AND 310 AND oi.product_id IN (SELECT id FROM products WHERE brand NOT IN ('Umbrella', 'Acme'))

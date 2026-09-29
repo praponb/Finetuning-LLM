@@ -1,0 +1,1 @@
+select id, customer_id, opened_date, status, balance, row_number() over (partition by customer_id order by opened_date, id) as rn, rank() over (partition by status order by balance) as balance_rank from accounts;

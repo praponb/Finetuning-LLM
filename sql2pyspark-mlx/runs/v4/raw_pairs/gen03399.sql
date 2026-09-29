@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.last_restock, inventory.product_id, inventory.store_id, products.supplier_id, products.category, products.stock_qty, CONCAT(products.brand, ' - ', products.category) AS brand_category FROM inventory LEFT JOIN products ON inventory.product_id = products.id ORDER BY id DESC LIMIT 3;

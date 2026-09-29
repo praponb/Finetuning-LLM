@@ -1,0 +1,1 @@
+select ss.id, ss.store_id, ss.units, ss.sale_date, s.region, s.city, s.store_name, round(ss.units * 1.15, 2) adjusted_units from store_sales ss inner join stores s on ss.store_id = s.id where ss.revenue between 1700 and 2100 or s.region in ('South', 'East', 'North')

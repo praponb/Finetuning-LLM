@@ -1,0 +1,1 @@
+SELECT id, city, signup_date, email FROM (SELECT id, city, signup_date, email, ROW_NUMBER() OVER (PARTITION BY city ORDER BY signup_date DESC, id) AS rnk FROM customers) AS t WHERE rnk <= 3 ORDER BY id DESC, city DESC;

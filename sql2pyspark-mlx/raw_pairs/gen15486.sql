@@ -1,0 +1,1 @@
+with base as (select * from products where brand is not null), products_stats as (select case when price >= 910 then 'high' when price >= 370 then 'mid' else 'low' end as price_bucket, round(avg(cost), 2) as avg_cost from base group by case when price >= 910 then 'high' when price >= 370 then 'mid' else 'low' end) select price_bucket, avg_cost from products_stats;

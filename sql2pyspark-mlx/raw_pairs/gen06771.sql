@@ -1,0 +1,1 @@
+SELECT p.id, p.category, t.max_quantity, t.unit_price_count FROM products p LEFT JOIN (SELECT product_id, MAX(quantity) max_quantity, COUNT(unit_price) unit_price_count FROM order_items GROUP BY product_id) t ON p.id = t.product_id WHERE t.max_quantity >= 5.0;

@@ -1,0 +1,1 @@
+SELECT e.id, e.hire_date AS employee_hire_date, e.salary AS employee_salary, m.salary AS manager_salary, m.manager_id AS manager_manager_id, m.full_name AS manager_full_name FROM employees e LEFT JOIN employees m ON e.manager_id = m.id

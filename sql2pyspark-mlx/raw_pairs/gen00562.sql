@@ -1,0 +1,1 @@
+select p.brand, count(ss.id) as store_sale_count, max(ss.units) - min(ss.units) as units_range from products p left outer join store_sales ss on ss.product_id = p.id group by p.brand order by units_range, 1 desc

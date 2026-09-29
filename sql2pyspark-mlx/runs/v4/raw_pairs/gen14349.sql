@@ -1,0 +1,1 @@
+WITH recent_shipments AS (SELECT * FROM shipments WHERE order_id = 3 AND status = 'IN_TRANSIT'), CarrierSummary AS (SELECT carrier, status, COUNT(cost) AS cost_count, MIN(delivered_date) AS min_delivered_date FROM recent_shipments GROUP BY carrier, status) SELECT * FROM CarrierSummary WHERE cost_count < 9

@@ -1,0 +1,1 @@
+select d.id, d.dept_name, t.first_hire_date, t.l5_count from departments d left join (select dept_id, min(hire_date) as first_hire_date, sum(case when level = 'L5' then 1 else 0 end) as l5_count from employees group by dept_id) t on d.id = t.dept_id where t.l5_count > 24 order by dept_name;

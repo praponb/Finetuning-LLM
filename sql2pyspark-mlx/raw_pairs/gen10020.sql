@@ -1,0 +1,1 @@
+SELECT inventory.quantity, products.launch_date, products.category, suppliers.country, suppliers.city FROM inventory LEFT OUTER JOIN products ON products.id = inventory.product_id JOIN suppliers ON suppliers.id = products.supplier_id WHERE inventory.product_id IN (1, 7, 10) ORDER BY suppliers.city ASC;

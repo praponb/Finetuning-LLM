@@ -1,0 +1,1 @@
+SELECT s.id, s.city, COUNT(p.id) AS product_count, SUM(CASE WHEN p.brand = 'Stark' THEN 1 ELSE 0 END) AS stark_count FROM suppliers s INNER JOIN products p ON p.supplier_id = s.id WHERE s.city = 'Bangkok' GROUP BY s.id, s.city HAVING product_count >= 3;

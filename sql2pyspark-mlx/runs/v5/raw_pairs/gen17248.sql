@@ -1,0 +1,1 @@
+SELECT id, log_ts, latency_ms, context['version'] AS version, ARRAY_CONTAINS(MAP_KEYS(context), 'region') AS has_region, COALESCE(context['trace'], 'none') AS trace_or_default, SHIFTRIGHT(status_code, 2) AS status_code_high, COALESCE(context['region'], 'unknown') AS region_or_default FROM app_logs

@@ -1,0 +1,1 @@
+SELECT job_title, MONTH(hire_date) AS hire_month, AVG(salary) AS avg_salary, MAX(salary) - MIN(salary) AS salary_range FROM employees WHERE hire_date >= '2023-07-18' AND NOT is_remote GROUP BY job_title, MONTH(hire_date) ORDER BY salary_range DESC;

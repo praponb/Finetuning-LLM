@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CASE WHEN unit_price >= 320 THEN 'High' WHEN unit_price >= 70 THEN 'Medium' ELSE 'Low' END AS unit_price_band, unit_price - quantity AS line_total FROM order_items WHERE unit_price <= 150) SELECT product_id, COUNT(DISTINCT order_id) AS distinct_order_ids, AVG(unit_price) AS avg_unit_price FROM cleaned GROUP BY product_id ORDER BY avg_unit_price DESC;

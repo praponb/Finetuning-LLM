@@ -1,0 +1,1 @@
+SELECT id, items, attributes, ship_to.country AS ship_country, ARRAY_JOIN(ARRAY_SORT(coupon_codes), ',') AS coupons_text, TRANSFORM(items, x -> x.product_id) AS product_ids, attributes['utm_source'] AS utm_source, ARRAY_MAX(TRANSFORM(items, x -> x.price)) AS max_item_price FROM carts

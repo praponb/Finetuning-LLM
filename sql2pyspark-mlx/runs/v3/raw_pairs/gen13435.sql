@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.discount >= 0.36 THEN 'high' WHEN o.discount >= 0.19 THEN 'mid' ELSE 'low' END discount_bucket, ROUND((100 * SUM(CASE WHEN s.status = 'LOST' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_lost FROM shipments s RIGHT JOIN orders o ON s.order_id = o.id GROUP BY CASE WHEN o.discount >= 0.36 THEN 'high' WHEN o.discount >= 0.19 THEN 'mid' ELSE 'low' END;

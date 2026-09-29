@@ -1,0 +1,1 @@
+SELECT CASE WHEN duration_sec >= 517 THEN 'high' WHEN duration_sec >= 156 THEN 'mid' ELSE 'low' END AS duration_sec_bucket, DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, COUNT(*) AS web_event_count, MAX(event_time) AS last_event_time FROM web_events GROUP BY duration_sec_bucket, event_month ORDER BY duration_sec_bucket, event_month LIMIT 5

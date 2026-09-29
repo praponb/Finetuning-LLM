@@ -1,0 +1,1 @@
+select id, status, channel, shipping_fee, round(shipping_fee / amount, 2) as amount_with_shipping from orders where order_date >= '2023-08-10' and order_date between '2023-06-24' and '2025-05-01' order by status asc;

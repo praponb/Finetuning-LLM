@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at DESC NULLS LAST, id) AS row_num FROM payments QUALIFY row_num = 1) SELECT id, method, paid_at, status FROM ranked ORDER BY method DESC NULLS LAST;

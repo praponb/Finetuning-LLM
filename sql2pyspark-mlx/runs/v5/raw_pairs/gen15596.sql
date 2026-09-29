@@ -1,0 +1,1 @@
+SELECT e.job_title AS employee_job_title, e.level AS employee_level, COUNT(*) AS num_rows, AVG(a.salary) AS avg_salary FROM employees a INNER JOIN employees e ON a.manager_id = e.id GROUP BY ROLLUP (e.job_title, e.level)

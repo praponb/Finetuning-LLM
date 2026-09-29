@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, price * stock_qty price_times_stock_qty, INITCAP(TRIM(category)) category_title FROM products WHERE ARRAY_CONTAINS(tags, 'premium')) SELECT s.* FROM cleaned s WHERE EXISTS (SELECT 1 FROM inventory ch WHERE ch.product_id = s.id AND ch.last_restock < '2024-09-09')

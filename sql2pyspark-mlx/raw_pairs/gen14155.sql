@@ -1,0 +1,1 @@
+with customer_totals as (select customer_id, count(case when device = 'mobile' then 1 end) as mobile_count from sessions group by customer_id) select c.id, c.is_active, ct.mobile_count from customers c left join customer_totals ct on c.id = ct.customer_id where ct.mobile_count > 9

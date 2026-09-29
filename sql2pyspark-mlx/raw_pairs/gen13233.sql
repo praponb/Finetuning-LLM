@@ -1,0 +1,1 @@
+SELECT s.id, s.browser, s.started_at, t.max_duration_sec, t.duration_sec_count FROM sessions s INNER JOIN (SELECT session_id, MAX(duration_sec) AS max_duration_sec, COUNT(duration_sec) AS duration_sec_count FROM web_events WHERE session_id IN (8, 10) GROUP BY session_id) t ON s.id = t.session_id ORDER BY t.duration_sec_count ASC

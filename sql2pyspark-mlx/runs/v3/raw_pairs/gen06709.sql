@@ -1,0 +1,1 @@
+with ranked_transactions as (select *, row_number() over (partition by merchant order by txn_time desc, id) as rn from transactions) select id, merchant, txn_time, is_flagged from ranked_transactions where rn <= 2 order by merchant;

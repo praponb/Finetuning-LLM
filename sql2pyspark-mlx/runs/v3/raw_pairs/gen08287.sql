@@ -1,0 +1,1 @@
+SELECT region, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, city, SUM(CASE WHEN city = 'Chiang Mai' THEN sqft ELSE 0 END) AS chiang_mai_sqft, SUM(sqft) AS total_sqft, AVG(sqft) AS avg_sqft FROM stores WHERE sqft < 9938 GROUP BY region, DATE_FORMAT(opened_date, 'yyyy-MM'), city HAVING MAX(sqft) > 7300 ORDER BY avg_sqft DESC

@@ -1,0 +1,1 @@
+SELECT o.id, o.customer_id, s.store_name, s.opened_date, c.city, CASE WHEN o.shipping_fee >= 33 THEN 'High' WHEN o.shipping_fee >= 12 THEN 'Medium' ELSE 'Low' END AS shipping_fee_tier FROM orders o JOIN stores s ON o.store_id = s.id JOIN customers c ON o.customer_id = c.id WHERE UPPER(c.email) LIKE '%RAN%' AND o.order_date >= '2024-02-01' ORDER BY customer_id DESC

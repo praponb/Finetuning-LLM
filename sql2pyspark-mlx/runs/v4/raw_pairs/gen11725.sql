@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(p.id) AS product_count, MAX(p.cost) AS max_cost, SORT_ARRAY(COLLECT_SET(p.brand)) AS brand_list FROM suppliers s LEFT JOIN products p ON p.supplier_id = s.id WHERE s.city = 'Bangkok' GROUP BY s.id, s.country

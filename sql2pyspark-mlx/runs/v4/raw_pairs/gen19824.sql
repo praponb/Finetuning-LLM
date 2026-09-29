@@ -1,0 +1,1 @@
+SELECT id, country, signup_date, age, city, LEAD(age, 1) OVER (PARTITION BY country ORDER BY signup_date, id) AS next_age, RANK() OVER (PARTITION BY country, city ORDER BY signup_date DESC) AS signup_date_rank FROM customers WHERE signup_date < '2024-09-10'

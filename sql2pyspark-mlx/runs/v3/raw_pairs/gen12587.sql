@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(delivered_date, 'yyyy-MM') delivered_month, MONTH(shipped_date) shipped_month, MIN(shipped_date) min_shipped_date, COUNT(DISTINCT cost) unique_carriers FROM shipments GROUP BY CUBE(DATE_FORMAT(delivered_date, 'yyyy-MM'), MONTH(shipped_date)) ORDER BY delivered_month;

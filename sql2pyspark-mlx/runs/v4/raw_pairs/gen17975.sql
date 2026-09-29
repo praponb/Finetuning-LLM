@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, region, sqft, RANK() OVER (PARTITION BY region ORDER BY sqft DESC) rn FROM stores WHERE city NOT IN ('Tokyo', 'London')) SELECT * FROM ranked WHERE rn <= 3 ORDER BY rn DESC;

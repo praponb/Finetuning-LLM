@@ -1,0 +1,1 @@
+SELECT segment, CASE WHEN credit_limit >= 14500 THEN 'high' WHEN credit_limit >= 3600 THEN 'mid' ELSE 'low' END AS credit_limit_bucket, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit, COUNT(credit_limit) AS credit_limit_count, SUM(CASE WHEN segment = 'SMB' THEN 1 ELSE 0 END) AS smb_count FROM customers GROUP BY 1, 2 ORDER BY smb_count DESC, stddev_credit_limit DESC

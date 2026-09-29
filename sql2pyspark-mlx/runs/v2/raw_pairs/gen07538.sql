@@ -1,0 +1,1 @@
+select case when rating >= 3.6 then 'high' when rating >= 2.2 then 'mid' else 'low' end as rating_bucket, avg(rating) as avg_rating, concat_ws(', ', sort_array(collect_set(city))) as city_values from suppliers where city not in ('Singapore', 'New York') group by case when rating >= 3.6 then 'high' when rating >= 2.2 then 'mid' else 'low' end having count(*) < 5;

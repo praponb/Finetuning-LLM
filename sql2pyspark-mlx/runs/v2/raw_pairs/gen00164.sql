@@ -1,0 +1,1 @@
+with employees_by_department as (select dept_id, sort_array(collect_set(job_title)) as job_title_list, sort_array(collect_set(level)) as level_list from employees where manager_id = 4 group by dept_id) select d.id, d.location, ebd.job_title_list, ebd.level_list from departments d left outer join employees_by_department ebd on d.id = ebd.dept_id;

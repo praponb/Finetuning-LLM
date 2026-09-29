@@ -1,0 +1,1 @@
+WITH orders_by_store AS (SELECT store_id, COUNT(DISTINCT discount) AS unique_statuss FROM orders WHERE shipping_fee >= 14 GROUP BY store_id) SELECT s.region, s.sqft, obs.unique_statuss FROM stores s LEFT OUTER JOIN orders_by_store obs ON s.id = obs.store_id WHERE obs.unique_statuss > 3 ORDER BY unique_statuss

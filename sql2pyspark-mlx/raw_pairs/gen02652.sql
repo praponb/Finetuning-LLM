@@ -1,0 +1,1 @@
+SELECT e.id, e.job_title AS employee_job_title, e.email AS employee_email, e.manager_id AS employee_manager_id, m.level AS manager_level FROM employees AS e INNER JOIN employees AS m ON e.manager_id = m.id WHERE e.job_title <> 'Intern';

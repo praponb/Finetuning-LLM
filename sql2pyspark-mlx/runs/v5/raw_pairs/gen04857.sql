@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, COUNT(*) AS total_count FROM products WHERE ARRAY_CONTAINS(tags, 'sale') GROUP BY supplier_id) SELECT s.id, s.supplier_name, ss.total_count FROM suppliers s LEFT JOIN supplier_stats ss ON s.id = ss.supplier_id WHERE ss.total_count > 6;

@@ -1,0 +1,17 @@
+WITH ranked_payments AS (
+    SELECT
+        id,
+        method,
+        paid_at,
+        amount,
+        ROW_NUMBER() OVER (PARTITION BY method ORDER BY paid_at DESC, id) AS pos
+    FROM payments
+)
+SELECT
+    id,
+    method,
+    paid_at,
+    amount
+FROM ranked_payments
+WHERE pos <= 3
+ORDER BY method DESC

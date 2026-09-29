@@ -1,0 +1,1 @@
+WITH web_events_by_session AS (SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE session_id IN (24, 25) GROUP BY session_id) SELECT s.device, s.country, webs.duration_sec_range, webs.min_duration_sec FROM sessions s LEFT JOIN web_events_by_session webs ON s.id = webs.session_id;

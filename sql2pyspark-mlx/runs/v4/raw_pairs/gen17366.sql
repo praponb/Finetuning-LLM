@@ -1,0 +1,1 @@
+SELECT store_id, units, revenue, FLOOR(revenue) AS revenue_whole, DATE_SUB(sale_date, 35) AS sale_date_minus_35d FROM store_sales WHERE revenue IS NOT NULL AND store_id = 6 AND revenue <= 1500 ORDER BY store_id DESC

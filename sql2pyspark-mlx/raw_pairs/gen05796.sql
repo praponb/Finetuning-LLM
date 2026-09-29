@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.id, c.country, ct.avg_monthly_fee, ct.min_monthly_fee FROM customers c LEFT JOIN customer_totals ct ON c.id = ct.customer_id;

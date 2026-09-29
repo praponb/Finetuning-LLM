@@ -1,0 +1,1 @@
+SELECT d.id, d.budget, t.avg_salary, t.min_salary FROM departments d LEFT JOIN (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary, MIN(salary) AS min_salary FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.min_salary > 70000 ORDER BY min_salary DESC, avg_salary DESC;

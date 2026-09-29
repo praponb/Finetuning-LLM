@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM order_items WHERE order_id IN (10, 12, 25)), agg AS (SELECT product_id, order_id, COUNT(DISTINCT unit_price) AS unique_products, COUNT(*) AS order_item_count FROM base GROUP BY product_id, order_id) SELECT product_id, order_id, unique_products, order_item_count FROM agg ORDER BY product_id DESC;

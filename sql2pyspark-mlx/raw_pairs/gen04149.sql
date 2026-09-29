@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM subscriptions WHERE (status <> 'CANCELLED' AND YEAR(start_date) >= 2023) OR plan <> 'enterprise'), subscriptions_stats AS (SELECT status, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, MIN(end_date) AS first_end_date FROM src GROUP BY status) SELECT status, avg_monthly_fee, first_end_date FROM subscriptions_stats ORDER BY avg_monthly_fee DESC

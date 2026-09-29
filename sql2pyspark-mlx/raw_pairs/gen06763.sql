@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT s.city, COUNT(*) AS cnt, AVG(e.revenue) AS avg_revenue FROM store_sales e INNER JOIN stores s ON e.store_id = s.id GROUP BY s.city) SELECT city, cnt FROM by_dimension ORDER BY cnt DESC

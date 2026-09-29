@@ -1,0 +1,1 @@
+select s.id, s.browser, t.unique_pages, t.stddev_duration_sec from sessions s left join (select session_id, count(distinct duration_sec) unique_pages, round(stddev(duration_sec), 2) stddev_duration_sec from web_events where page in ('/checkout', '/product') group by session_id) t on s.id = t.session_id where t.stddev_duration_sec >= 64 order by browser;

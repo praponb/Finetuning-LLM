@@ -1,0 +1,1 @@
+select store_id, corr(units, revenue) as corr_units_revenue, count(distinct product_id) as distinct_product_ids, round(avg(revenue), 2) as avg_revenue, grouping(store_id) as grouping_level from store_sales group by rollup (store_id) order by corr_units_revenue desc nulls last;

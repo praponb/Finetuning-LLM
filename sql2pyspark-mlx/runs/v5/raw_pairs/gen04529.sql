@@ -1,0 +1,1 @@
+WITH recent_order_items AS (SELECT *, ROUND(quantity * 1.07, 2) AS quantity_adjusted FROM order_items WHERE quantity != 3), order_id_summary AS (SELECT order_id, COUNT(*) AS cnt FROM recent_order_items GROUP BY order_id) SELECT order_id, cnt FROM order_id_summary;

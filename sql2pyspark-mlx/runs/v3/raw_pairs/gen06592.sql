@@ -1,0 +1,1 @@
+select year(paid_at) as paid_year, count(case when method = 'bank_transfer' then 1 end) as bank_transfer_count, round(avg(amount), 2) as avg_amount, sort_array(collect_set(status)) as status_list from payments group by year(paid_at);

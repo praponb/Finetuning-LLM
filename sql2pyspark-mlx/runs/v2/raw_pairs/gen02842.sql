@@ -1,0 +1,1 @@
+SELECT id, account_id, txn_time, amount, txn_type, ROUND(AVG(amount) OVER (PARTITION BY account_id ORDER BY txn_time, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) amount_moving_avg_7, MAX(amount) OVER (PARTITION BY txn_type) txn_type_max_amount FROM transactions ORDER BY txn_time, amount_moving_avg_7 DESC

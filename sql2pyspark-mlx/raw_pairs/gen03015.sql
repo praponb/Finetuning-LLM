@@ -1,0 +1,1 @@
+WITH Src AS (SELECT * FROM accounts WHERE balance >= 38000), summary AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(account_type)) account_type_list FROM Src GROUP BY customer_id) SELECT customer_id, account_type_list FROM summary ORDER BY 1 DESC;

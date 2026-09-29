@@ -1,0 +1,1 @@
+select date_trunc('MONTH', signup_date) signup_month, city, round(avg(age), 2) avg_age, sort_array(collect_set(city)) city_list, max(credit_limit) - min(credit_limit) credit_limit_range from customers group by date_trunc('MONTH', signup_date), city;

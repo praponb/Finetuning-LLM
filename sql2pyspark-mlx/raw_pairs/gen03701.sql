@@ -1,0 +1,1 @@
+with store_stats as (select store_id, max(amount) - min(amount) amount_range, min(order_date) min_order_date from orders where month(order_date) in (2, 7, 9) group by store_id) select s.id, s.opened_date, ss.amount_range, ss.min_order_date from stores s left join store_stats ss on s.id = ss.store_id order by s.opened_date desc

@@ -1,0 +1,1 @@
+select p.category, count(i.id) inventory_count, avg(i.quantity) avg_quantity, count(distinct i.quantity) unique_products from products p join inventory i on i.product_id = p.id where p.category = 'Home' group by p.category;

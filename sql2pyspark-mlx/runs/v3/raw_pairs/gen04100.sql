@@ -1,0 +1,1 @@
+select id, status, paid_at, method, rank() over (partition by status order by paid_at desc) as paid_at_rank, rank() over (partition by method order by paid_at) as paid_at_rank_2 from payments where order_id is not null;

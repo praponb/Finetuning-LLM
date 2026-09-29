@@ -1,0 +1,1 @@
+select o.status, o.order_date, t.avg_unit_price, t.max_quantity from orders o left join (select order_id, round(avg(unit_price), 2) as avg_unit_price, max(quantity) as max_quantity from order_items group by order_id) t on o.id = t.order_id where t.avg_unit_price >= 63 order by o.status;

@@ -1,0 +1,1 @@
+select manager_id, is_remote, concat_ws(', ', sort_array(collect_set(job_title))) as job_title_values from employees where full_name like '%Ivy%' group by 1, 2 having sum(case when job_title = 'Intern' then 1 else 0 end) < 42 order by job_title_values

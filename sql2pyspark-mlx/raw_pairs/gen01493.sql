@@ -1,0 +1,1 @@
+select account_id, merchant, round((100 * sum(case when merchant = 'Lazada' then 1 else 0 end)) / count(*), 1) as pct_lazada, count(amount) as amount_count, min(txn_time) as min_txn_time from transactions group by rollup(account_id, merchant) order by pct_lazada, amount_count;

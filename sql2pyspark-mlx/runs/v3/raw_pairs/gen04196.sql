@@ -1,0 +1,1 @@
+WITH sessions_by_customer AS (SELECT customer_id, COUNT(CASE WHEN country = 'US' THEN 1 END) AS us_count FROM sessions WHERE country = 'JP' GROUP BY customer_id) SELECT c.id, c.city, sbc.us_count FROM customers c INNER JOIN sessions_by_customer sbc ON c.id = sbc.customer_id WHERE sbc.us_count >= 8 ORDER BY c.id;

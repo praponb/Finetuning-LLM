@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(*) AS order_item_count, MAX(unit_price) - MIN(unit_price) AS unit_price_range, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY quantity_bucket ORDER BY unit_price_count DESC, unit_price_range DESC

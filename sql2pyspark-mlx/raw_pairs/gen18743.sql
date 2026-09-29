@@ -1,0 +1,1 @@
+SELECT p.category, ROUND(STDDEV(oi.unit_price), 2) AS stddev_unit_price, SUM(oi.unit_price * oi.quantity) AS revenue FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id INNER JOIN orders o ON oi.order_id = o.id WHERE oi.order_id = 21 GROUP BY p.category

@@ -1,0 +1,1 @@
+SELECT id, customer_id, plan, start_date, FIRST_VALUE(monthly_fee) IGNORE NULLS OVER (ORDER BY start_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) first_known_monthly_fee, AVG(monthly_fee) OVER (PARTITION BY plan ORDER BY monthly_fee, id ROWS BETWEEN 5 PRECEDING AND 1 PRECEDING) monthly_fee_avg_5_prior FROM subscriptions WHERE customer_id = 29;

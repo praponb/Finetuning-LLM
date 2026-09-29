@@ -1,0 +1,1 @@
+select id, account_type, status, case when account_type in ('CREDIT', 'CHECKING') then 'Priority' else 'Other' end as account_type_group from accounts where status = 'OPEN' order by account_type_group desc, id limit 5;

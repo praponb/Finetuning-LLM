@@ -1,0 +1,11 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("product_id").orderBy("last_restock", "id")
+
+result = (
+    df_inventory
+    .withColumn("pos", F.row_number().over(w))
+    .filter(F.col("pos") <= 5)
+    .select("id", "product_id", "last_restock")
+)

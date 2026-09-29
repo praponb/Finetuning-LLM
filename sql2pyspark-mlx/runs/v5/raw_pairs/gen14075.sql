@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, MAX(started_at) AS latest_started_at, COUNT(DISTINCT browser) AS unique_browsers FROM sessions WHERE country = 'SG' GROUP BY customer_id) SELECT c.id, c.age, c.segment, cs.latest_started_at, cs.unique_browsers FROM customers c LEFT OUTER JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.unique_browsers > 6 ORDER BY 5 DESC

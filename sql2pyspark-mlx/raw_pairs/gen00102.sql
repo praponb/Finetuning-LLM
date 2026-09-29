@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, store_id, product_id, quantity, ADD_MONTHS(last_restock, 6) AS last_restock_plus_months, DAYOFWEEK(last_restock) AS last_restock_dayofweek FROM inventory WHERE last_restock >= DATE '2023-03-29') SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS dedup_rank FROM base QUALIFY dedup_rank = 1

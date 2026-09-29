@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_id, txn_type ORDER BY txn_time DESC NULLS FIRST, id) AS rn FROM transactions QUALIFY rn = 1) SELECT id, account_id, txn_type, amount, txn_time, rn FROM deduped ORDER BY account_id NULLS FIRST;

@@ -1,0 +1,1 @@
+with flattened as (select id, plan, effective_from, currency, element from price_tiers lateral view outer explode(tier_limits) x as element) select plan, effective_from, element, case when plan rlike '^(basic|pro)$' then 'EXTENDED' when plan rlike '^(starter|enterprise)$' then 'CORE' else 'GROUP_A' end as plan_zone from flattened order by element asc;

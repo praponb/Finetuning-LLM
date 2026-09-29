@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_time, t.txn_type, t.merchant, a.status, a.balance, a.customer_id FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id WHERE a.status <> 'FROZEN' OR a.status = 'CLOSED' ORDER BY 7;

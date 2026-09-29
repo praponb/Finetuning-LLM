@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT channel, id FROM promotions INTERSECT ALL SELECT channel, id FROM promotions WHERE discount_pct > 0.2), reconciled AS (SELECT s.* FROM promotions s INNER JOIN remaining_keys k ON s.channel = k.channel AND s.id = k.id) SELECT id, channel, promo_code, starts_on FROM reconciled ORDER BY starts_on DESC, channel DESC

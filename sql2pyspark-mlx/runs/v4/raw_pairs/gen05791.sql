@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at ASC, id ASC) AS latest_rank FROM payments QUALIFY latest_rank = 1) SELECT id, method, amount, paid_at, latest_rank, CASE WHEN method RLIKE '^(cash|promptpay)$' THEN 'OTHER_ZONE' WHEN method RLIKE '^(card|paypal)$' THEN 'CORE' ELSE 'PRIORITY' END AS method_zone FROM ranked

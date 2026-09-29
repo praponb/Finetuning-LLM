@@ -1,0 +1,1 @@
+with product_totals as (select product_id, round(avg(quantity), 2) as avg_quantity from inventory where store_id in (3, 5) group by product_id) select p.category, pt.avg_quantity from products p inner join product_totals pt on p.id = pt.product_id where pt.avg_quantity >= 29 order by 1 asc;

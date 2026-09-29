@@ -1,0 +1,1 @@
+SELECT o.id, o.status, COUNT(p.id) AS payment_count, SUM(CASE WHEN p.method = 'card' THEN 1 ELSE 0 END) AS card_count FROM orders o LEFT JOIN payments p ON o.id = p.order_id WHERE o.discount <= 0.4 GROUP BY o.id, o.status HAVING payment_count >= 3 ORDER BY 1 DESC, status LIMIT 3

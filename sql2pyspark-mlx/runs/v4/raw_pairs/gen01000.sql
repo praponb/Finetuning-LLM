@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.customer_id, sessions.started_at, sessions.device FROM sessions WHERE sessions.device = 'tablet' AND sessions.customer_id NOT IN (SELECT id FROM customers WHERE segment NOT IN ('Consumer', 'Corporate', 'SMB'));

@@ -1,0 +1,1 @@
+SELECT oi.quantity, oi.order_id, p.supplier_id, p.price, s.supplier_name FROM order_items oi RIGHT OUTER JOIN products p ON oi.product_id = p.id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id ORDER BY price DESC, order_id DESC

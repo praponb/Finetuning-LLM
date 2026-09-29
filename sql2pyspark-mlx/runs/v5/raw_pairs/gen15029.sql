@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', start_date) AS start_month, MIN(start_date) AS min_start_date, MAX(monthly_fee) AS max_monthly_fee, AVG(monthly_fee) AS avg_monthly_fee FROM subscriptions WHERE NOT (customer_id IN (3, 25, 27, 39) AND YEAR(start_date) = 2023 AND start_date BETWEEN '2024-03-01' AND '2024-09-14') GROUP BY DATE_TRUNC('MONTH', start_date) ORDER BY avg_monthly_fee DESC;

@@ -1,0 +1,1 @@
+select country, max(rating) as max_rating, sum(case when city = 'Berlin' then 1 else 0 end) as berlin_count from suppliers where country = 'US' and supplier_name like '%Supply%' group by country having max_rating < 4.1;

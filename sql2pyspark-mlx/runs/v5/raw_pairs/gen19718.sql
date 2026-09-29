@@ -1,0 +1,1 @@
+SELECT we.id, we.page, s.country, c.credit_limit, c.city FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE s.browser IN ('Safari', 'Chrome');

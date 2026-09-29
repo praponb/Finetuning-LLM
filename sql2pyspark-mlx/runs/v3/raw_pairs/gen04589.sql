@@ -1,0 +1,1 @@
+SELECT id, status, end_date, monthly_fee, plan, start_date, FIRST_VALUE(monthly_fee) OVER (PARTITION BY status ORDER BY end_date, id) AS first_monthly_fee, LAG(monthly_fee, 2) OVER (PARTITION BY plan ORDER BY start_date, id) AS prev_monthly_fee FROM subscriptions ORDER BY monthly_fee DESC

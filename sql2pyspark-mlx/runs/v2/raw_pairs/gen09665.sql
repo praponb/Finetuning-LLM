@@ -1,0 +1,1 @@
+select ss.id, ss.revenue, p.stock_qty, s.country, s.rating from store_sales ss inner join products p on ss.product_id = p.id left outer join suppliers s on s.id = p.supplier_id where ss.product_id in (2, 5, 6, 8) or s.rating <= 3.0

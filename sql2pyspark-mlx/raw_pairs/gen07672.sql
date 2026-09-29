@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, host, log_ts, status_code, key, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) t AS key, value) SELECT id, service, host, log_ts, status_code, key, value FROM lines ORDER BY host DESC

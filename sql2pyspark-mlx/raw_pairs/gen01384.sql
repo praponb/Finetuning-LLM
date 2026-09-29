@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, country, credit_limit, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date, id) AS row_num, MIN(credit_limit) OVER (PARTITION BY segment, country) AS segment_min_credit_limit FROM customers WHERE LENGTH(name) > 14 ORDER BY country DESC;

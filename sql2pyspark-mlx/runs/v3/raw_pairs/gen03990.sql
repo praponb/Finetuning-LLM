@@ -1,0 +1,1 @@
+SELECT inventory.store_id, inventory.quantity, inventory.last_restock, store_sales.revenue, CEIL(inventory.quantity) AS quantity_whole FROM inventory INNER JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE inventory.store_id IN (1, 2, 3) ORDER BY quantity DESC;

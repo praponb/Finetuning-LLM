@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items WHERE order_id = 25 OR order_id = 5 GROUP BY product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END ORDER BY product_id

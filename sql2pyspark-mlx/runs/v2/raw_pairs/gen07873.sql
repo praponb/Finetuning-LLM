@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT country, SUM(CASE WHEN city = 'Tokyo' THEN rating ELSE 0 END) AS tokyo_rating, MAX(rating) - MIN(rating) AS rating_range FROM suppliers GROUP BY country) AS x WHERE tokyo_rating < 39 ORDER BY rating_range DESC

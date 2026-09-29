@@ -1,0 +1,1 @@
+SELECT session_id, page, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, MAX(event_time) AS last_event_time, COUNT(duration_sec) AS duration_sec_count FROM web_events WHERE event_type = 'purchase' GROUP BY session_id, page;

@@ -1,0 +1,1 @@
+SELECT id, category, launch_date, cost, ROUND(AVG(cost) OVER (PARTITION BY category ORDER BY launch_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_7, AVG(cost) OVER (PARTITION BY category) AS category_avg_cost FROM products WHERE product_name IS NOT NULL ORDER BY category DESC, cost_moving_avg_7 DESC

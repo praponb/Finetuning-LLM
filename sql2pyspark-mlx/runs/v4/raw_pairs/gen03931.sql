@@ -1,0 +1,1 @@
+WITH recent_accounts AS (SELECT * FROM accounts WHERE balance <= 61000), summary AS (SELECT account_type, COUNT(DISTINCT balance) AS unique_account_types FROM recent_accounts GROUP BY account_type) SELECT * FROM summary WHERE unique_account_types > 6 ORDER BY account_type LIMIT 20

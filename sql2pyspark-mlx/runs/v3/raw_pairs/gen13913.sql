@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(p.id) AS product_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.brand))) AS brand_values, SUM(CASE WHEN p.brand = 'Stark' THEN 1 ELSE 0 END) AS stark_count FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id GROUP BY s.id, s.country ORDER BY s.id ASC;

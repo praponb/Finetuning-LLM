@@ -1,0 +1,1 @@
+select dim.city, s.channel, count(*) as cnt, round(avg(s.amount), 2) as avg_amount, min(s.shipping_fee) as min_shipping_fee, grouping_id() as gid from orders s inner join stores dim on s.store_id = dim.id group by grouping sets ((dim.city, s.channel), (dim.city), ()) order by cnt desc nulls last;

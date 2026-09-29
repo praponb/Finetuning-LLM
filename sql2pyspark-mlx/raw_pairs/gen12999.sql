@@ -1,0 +1,1 @@
+with enriched as (select src.*, p.shipping_fee from order_items src inner join orders p on src.order_id = p.id) select s.id, s.order_id, s.product_id, s.unit_price, (select max(s2.units) from store_sales s2 where s2.product_id = s.product_id) as max_store_sale_units from enriched s

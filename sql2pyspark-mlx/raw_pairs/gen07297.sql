@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, MIN(started_at) AS min_started_at, SUM(CASE WHEN browser = 'Edge' THEN 1 ELSE 0 END) AS edge_count FROM sessions WHERE customer_id IN (5, 10, 23) GROUP BY customer_id) SELECT c.id, c.credit_limit, ct.min_started_at, ct.edge_count FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id WHERE ct.edge_count >= 52;

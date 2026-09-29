@@ -1,0 +1,1 @@
+SELECT id, brand, launch_date, cost, supplier_id, price, LEAD(cost, 1) OVER (PARTITION BY brand ORDER BY launch_date, id) AS next_cost, price - LAG(price, 1, 0) OVER (PARTITION BY supplier_id ORDER BY launch_date, id) AS price_change FROM products WHERE cost >= 290 ORDER BY supplier_id DESC, cost DESC

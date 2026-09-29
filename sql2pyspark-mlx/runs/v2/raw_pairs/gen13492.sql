@@ -1,0 +1,1 @@
+select date_trunc('MONTH', paid_at) paid_month, sum(amount) total_amount, count(*) cnt, round(sum(amount) * 100.0 / sum(sum(amount)) over (), 2) as pct_of_total from payments group by date_trunc('MONTH', paid_at) order by paid_month, pct_of_total desc;

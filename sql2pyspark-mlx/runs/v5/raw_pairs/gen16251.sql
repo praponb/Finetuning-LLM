@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.quantity, p.supplier_id, s.rating, s.supplier_name FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id ORDER BY i.store_id DESC

@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, value FROM carts LATERAL VIEW OUTER EXPLODE(coupon_codes) x AS value) SELECT value, COUNT_IF(value = 'BUNDLE') AS bundle_events, SORT_ARRAY(COLLECT_SET(value)) AS value_list, COUNT(*) AS cnt, COUNT(CASE WHEN value = 'SPRING10' THEN 1 END) AS spring10_count FROM flattened GROUP BY value;

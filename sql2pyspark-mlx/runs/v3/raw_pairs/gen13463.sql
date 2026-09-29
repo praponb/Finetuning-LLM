@@ -1,0 +1,1 @@
+SELECT page, total_duration_sec FROM (SELECT page, SUM(duration_sec) AS total_duration_sec FROM web_events WHERE event_time >= '2023-08-01' GROUP BY page) AS t WHERE total_duration_sec >= 2200 ORDER BY page;

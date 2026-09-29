@@ -1,0 +1,1 @@
+SELECT id, order_id, paid_at, amount, status, SUM(amount) OVER (PARTITION BY order_id ORDER BY paid_at, id) AS running_amount, ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at, id) AS paid_at_row FROM payments WHERE status = 'FAILED' ORDER BY 6 DESC, order_id

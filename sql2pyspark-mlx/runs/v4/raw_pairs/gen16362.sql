@@ -1,0 +1,1 @@
+SELECT id, opened_date, ROUND(balance, 2) AS balance_rounded, CASE WHEN balance >= 73000 THEN 'High' WHEN balance >= 6000 THEN 'Medium' ELSE 'Low' END AS balance_band FROM accounts WHERE status = 'FROZEN' AND customer_id IN (5, 14, 30, 32)

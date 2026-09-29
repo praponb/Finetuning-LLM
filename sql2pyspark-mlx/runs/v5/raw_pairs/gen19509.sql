@@ -1,0 +1,1 @@
+SELECT s.id, s.region, s.opened_date, latest.revenue FROM stores s JOIN LATERAL (SELECT c.revenue FROM store_sales c WHERE c.store_id = s.id ORDER BY c.sale_date DESC, c.id DESC LIMIT 1) latest ON TRUE;

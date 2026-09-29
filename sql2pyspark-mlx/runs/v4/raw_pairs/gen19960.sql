@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN method IN ('promptpay', 'paypal') THEN 'core' ELSE 'other' END AS method_group, method, COUNT(*) AS cnt FROM payments WHERE status = 'SUCCESS' GROUP BY CASE WHEN method IN ('promptpay', 'paypal') THEN 'core' ELSE 'other' END, method) AS t WHERE cnt > 4 ORDER BY cnt DESC, method_group, method LIMIT 10;

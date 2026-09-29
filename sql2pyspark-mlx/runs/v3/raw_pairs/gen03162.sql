@@ -1,0 +1,1 @@
+SELECT MONTH(hire_date) AS hire_month, SUM(CASE WHEN level = 'L5' THEN salary ELSE 0 END) AS l5_salary FROM employees WHERE dept_id IN (6, 23, 24, 35) AND full_name IS NOT NULL GROUP BY hire_month HAVING l5_salary > 45

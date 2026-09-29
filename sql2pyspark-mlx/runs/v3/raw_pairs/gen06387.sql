@@ -1,0 +1,1 @@
+SELECT p.id, p.launch_date, p.stock_qty FROM products p WHERE MONTH(p.launch_date) IN (5, 10, 12) AND EXISTS (SELECT 1 FROM inventory i WHERE i.product_id = p.id) ORDER BY p.stock_qty DESC, p.launch_date DESC;

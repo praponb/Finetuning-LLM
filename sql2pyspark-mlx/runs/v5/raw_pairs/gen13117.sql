@@ -1,0 +1,1 @@
+WITH DepartmentSummary AS (SELECT dept_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees GROUP BY dept_id) SELECT d.id, d.location, D.level_values, D.job_title_list FROM departments d JOIN DepartmentSummary D ON d.id = D.dept_id ORDER BY id DESC LIMIT 1

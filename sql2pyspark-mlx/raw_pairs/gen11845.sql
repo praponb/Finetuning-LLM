@@ -1,0 +1,1 @@
+SELECT id, segment, country, signup_date, age, age - LAG(age, 1, 0) OVER (PARTITION BY segment, country ORDER BY signup_date, id) age_change, ROUND(age / SUM(age) OVER (PARTITION BY country), 3) age_share FROM customers;

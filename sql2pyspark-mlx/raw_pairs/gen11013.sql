@@ -1,0 +1,1 @@
+SELECT s.city, AVG(p.price) AS avg_price, MIN(p.price) AS min_price FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id WHERE s.supplier_name LIKE 'Sia%' GROUP BY s.city ORDER BY avg_price DESC, city LIMIT 20;

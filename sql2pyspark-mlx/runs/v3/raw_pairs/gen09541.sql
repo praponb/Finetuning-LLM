@@ -1,0 +1,1 @@
+SELECT CASE WHEN units >= 44 THEN 'high' WHEN units >= 20 THEN 'mid' ELSE 'low' END AS units_bucket, DATE_TRUNC('MONTH', sale_date) AS sale_month, product_id, SUM(units) AS total_units FROM store_sales WHERE units < 24 GROUP BY units_bucket, sale_month, product_id HAVING COUNT(DISTINCT units) >= 5 ORDER BY sale_month, total_units DESC

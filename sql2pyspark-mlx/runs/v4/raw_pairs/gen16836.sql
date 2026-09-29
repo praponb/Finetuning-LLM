@@ -1,0 +1,1 @@
+with with_windows as (select *, lag(duration_sec, 1) over (partition by page order by duration_sec, id) as prev_duration_sec, rank() over (partition by event_type, session_id order by duration_sec desc nulls first) as duration_sec_rank from web_events) select id, event_type, page, event_time, prev_duration_sec, duration_sec_rank from with_windows order by page desc

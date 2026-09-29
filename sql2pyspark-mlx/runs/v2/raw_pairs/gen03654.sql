@@ -1,0 +1,1 @@
+SELECT MONTH(txn_time) txn_month, SORT_ARRAY(COLLECT_SET(merchant)) merchant_list, COUNT(CASE WHEN merchant = '7-Eleven' THEN 1 END) 7_eleven_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) txn_type_values FROM transactions WHERE amount BETWEEN 1500 AND 3900 GROUP BY MONTH(txn_time)

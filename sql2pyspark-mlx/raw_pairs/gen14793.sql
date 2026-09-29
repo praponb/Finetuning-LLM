@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, store_id, quantity, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY quantity, id) AS row_num FROM inventory WHERE product_id IN (7, 8)) SELECT id, store_id, quantity FROM numbered WHERE row_num = 1

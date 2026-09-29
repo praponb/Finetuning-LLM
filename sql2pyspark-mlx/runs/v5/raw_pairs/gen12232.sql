@@ -1,0 +1,1 @@
+WITH top_employees AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY hire_date DESC, id) AS rnk FROM employees WHERE job_title = 'Designer') SELECT id, dept_id, hire_date, is_remote FROM top_employees WHERE rnk <= 3 ORDER BY dept_id DESC

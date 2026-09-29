@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, COUNT(stock_qty) AS stock_qty_count, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range FROM products WHERE ARRAY_CONTAINS(tags, 'premium') GROUP BY supplier_id) SELECT s.rating, s.country, st.stock_qty_count, st.stock_qty_range FROM suppliers s INNER JOIN supplier_totals st ON s.id = st.supplier_id;

@@ -1,0 +1,1 @@
+select id, plan, end_date, monthly_fee, sum(monthly_fee) over (partition by plan order by end_date, id rows between unbounded preceding and current row) as running_monthly_fee from subscriptions where customer_id = 20 order by plan desc

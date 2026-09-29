@@ -1,0 +1,1 @@
+SELECT id, location, budget FROM (SELECT id, location, budget, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) row_num FROM departments) ranked WHERE row_num <= 3 ORDER BY location;

@@ -1,0 +1,1 @@
+SELECT s.opened_date, s.city, t.latest_last_restock, t.total_quantity FROM stores s JOIN (SELECT store_id, MAX(last_restock) latest_last_restock, SUM(quantity) total_quantity FROM inventory GROUP BY store_id) t ON s.id = t.store_id ORDER BY s.opened_date, t.latest_last_restock DESC

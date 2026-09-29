@@ -1,0 +1,8 @@
+SELECT
+    id,
+    plan,
+    start_date,
+    monthly_fee,
+    SUM(monthly_fee) OVER (PARTITION BY plan ORDER BY start_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_monthly_fee
+FROM subscriptions
+WHERE monthly_fee >= 190

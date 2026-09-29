@@ -1,0 +1,1 @@
+SELECT id, email, segment, signup_date, age, ROUND(age / SUM(age) OVER (PARTITION BY city), 4) AS age_share, CUME_DIST() OVER (PARTITION BY segment, city ORDER BY age NULLS FIRST) AS age_cume_dist FROM customers

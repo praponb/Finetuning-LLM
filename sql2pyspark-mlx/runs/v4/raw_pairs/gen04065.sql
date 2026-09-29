@@ -1,0 +1,1 @@
+select country, month(signup_date) as signup_month, max(signup_date) as last_signup_date, count(credit_limit) as credit_limit_count, min(signup_date) as min_signup_date from customers where is_active group by country, month(signup_date);

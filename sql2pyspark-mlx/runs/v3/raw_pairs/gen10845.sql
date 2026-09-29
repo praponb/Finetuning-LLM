@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, MIN(salary) AS min_salary, SORT_ARRAY(COLLECT_SET(level)) AS level_list FROM employees GROUP BY dept_id) SELECT d.id, d.budget, dt.min_salary, dt.level_list FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.min_salary >= 86000 ORDER BY budget DESC, min_salary DESC

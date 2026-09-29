@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, MIN(revenue) AS min_revenue FROM store_sales GROUP BY product_id) SELECT p.id, p.category, ps.min_revenue FROM products p JOIN product_stats ps ON p.id = ps.product_id

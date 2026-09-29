@@ -1,0 +1,9 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_accounts
+    .filter(F.col("account_type") == "CREDIT")
+    .select("account_type")
+    .distinct()
+    .orderBy("account_type")
+)

@@ -1,0 +1,1 @@
+SELECT event_type, ROUND((100 * SUM(CASE WHEN page = '/home' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_home, SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END) search_count FROM web_events WHERE event_type NOT IN ('page_view', 'search') GROUP BY event_type ORDER BY search_count, pct_home DESC;

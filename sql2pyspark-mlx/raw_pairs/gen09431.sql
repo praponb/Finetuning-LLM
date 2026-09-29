@@ -1,0 +1,1 @@
+SELECT opened_month, region, total_sqft FROM (SELECT MONTH(opened_date) AS opened_month, region, SUM(sqft) AS total_sqft FROM stores GROUP BY MONTH(opened_date), region) AS x WHERE total_sqft < 63000;

@@ -1,0 +1,1 @@
+SELECT *, SUM(price) OVER (PARTITION BY category, supplier_id) AS category_sum_price, CORR(price, stock_qty) OVER w_ordered AS corr_price_stock_qty, SUM(stock_qty) OVER w_grp AS cumulative_stock_qty FROM products WINDOW w_ordered AS (PARTITION BY supplier_id), w_grp AS (PARTITION BY supplier_id ORDER BY price, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW);

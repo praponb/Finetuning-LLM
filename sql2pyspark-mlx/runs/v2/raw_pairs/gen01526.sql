@@ -1,0 +1,1 @@
+SELECT a.account_type, COUNT(*) AS transaction_count, MIN(t.txn_time) AS first_txn_time FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE a.status = 'CLOSED' GROUP BY a.account_type ORDER BY 2 DESC

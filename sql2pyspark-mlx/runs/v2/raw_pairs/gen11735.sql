@@ -1,0 +1,1 @@
+SELECT MONTH(signup_date) AS signup_month, city, SUM(CASE WHEN segment = 'Corporate' THEN 1 ELSE 0 END) AS corporate_count FROM customers WHERE city != 'Tokyo' GROUP BY 1, 2 ORDER BY city DESC, signup_month DESC

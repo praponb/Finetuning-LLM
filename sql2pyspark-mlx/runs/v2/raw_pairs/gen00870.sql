@@ -1,0 +1,1 @@
+SELECT i.product_id, i.last_restock, i.quantity, p.category, p.cost, LAST_DAY(i.last_restock) AS last_restock_month_end FROM inventory i LEFT OUTER JOIN products p ON i.product_id = p.id WHERE p.cost < 460 OR i.product_id IN (1, 5, 6, 7) ORDER BY product_id, cost DESC;

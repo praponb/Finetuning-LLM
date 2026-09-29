@@ -1,0 +1,1 @@
+WITH ValidEmployees AS (SELECT * FROM employees WHERE is_remote AND job_title NOT IN ('Engineer', 'Analyst', 'Director') AND is_remote), agg AS (SELECT level, MAX(salary) - MIN(salary) AS salary_range, COUNT(DISTINCT salary) AS unique_managers FROM ValidEmployees GROUP BY level) SELECT level, salary_range, unique_managers FROM agg ORDER BY level DESC

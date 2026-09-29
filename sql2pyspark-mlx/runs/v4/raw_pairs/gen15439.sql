@@ -1,0 +1,1 @@
+with ranked_orders as (select *, row_number() over (partition by status order by amount desc, id) as row_num from orders where shipping_fee >= 39) select * from ranked_orders where row_num = 1 order by amount desc

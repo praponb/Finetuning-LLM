@@ -1,0 +1,1 @@
+SELECT products.supplier_id, COUNT(DISTINCT store_sales.revenue) AS unique_products, MAX(store_sales.revenue) AS max_revenue FROM store_sales LEFT OUTER JOIN products ON store_sales.product_id = products.id WHERE products.category = 'Electronics' GROUP BY products.supplier_id ORDER BY max_revenue DESC, supplier_id LIMIT 5

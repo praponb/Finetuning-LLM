@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.revenue, p.stock_qty, p.category, s.city FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id RIGHT JOIN suppliers s ON p.supplier_id = s.id WHERE ss.product_id = 10

@@ -1,0 +1,1 @@
+with account_totals as (select account_id, max(amount) - min(amount) as amount_range from transactions group by account_id) select accounts.id, accounts.opened_date, account_totals.amount_range from accounts join account_totals on accounts.id = account_totals.account_id where account_totals.amount_range > 72;

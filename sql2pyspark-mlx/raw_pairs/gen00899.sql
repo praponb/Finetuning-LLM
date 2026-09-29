@@ -1,0 +1,1 @@
+select p.category, p.price, p.brand, oi.unit_price, oi.quantity, floor(p.cost) as cost_whole from products p left join order_items oi on p.id = oi.product_id where oi.order_id in (18, 35) and p.price <= 420;

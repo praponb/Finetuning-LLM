@@ -1,0 +1,1 @@
+select shipped_date, cost, delivered_date, initcap(trim(carrier)) carrier_title, lower(carrier) carrier_lower from shipments where shipped_date between '2024-03-01' and '2024-09-30' and carrier in ('DHL', 'FedEx') order by carrier_title, carrier_lower

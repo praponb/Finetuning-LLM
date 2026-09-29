@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(shipped_date) < 2024 THEN 'before_2024' WHEN YEAR(shipped_date) = 2024 THEN '2024' ELSE 'after_2024' END AS shipped_cohort, MAX(cost) AS max_cost, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(carrier))) AS carrier_values FROM shipments GROUP BY 1 HAVING MAX(cost) < 89

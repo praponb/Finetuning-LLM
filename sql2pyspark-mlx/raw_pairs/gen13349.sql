@@ -1,0 +1,1 @@
+SELECT p.category, MIN(i.last_restock) AS min_last_restock, AVG(i.quantity) AS avg_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id WHERE p.product_name IS NOT NULL GROUP BY p.category ORDER BY min_last_restock ASC;

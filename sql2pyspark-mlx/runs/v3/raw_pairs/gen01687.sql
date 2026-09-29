@@ -1,0 +1,1 @@
+select id, level, hire_date, salary, sum(salary) over (partition by level order by hire_date, id rows between unbounded preceding and current row) as running_salary from employees order by running_salary desc;

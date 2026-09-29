@@ -1,0 +1,1 @@
+select * from (select account_type, avg(balance) as avg_balance, sum(case when status = 'FROZEN' then balance else 0 end) as frozen_balance from accounts group by account_type) as agg where frozen_balance >= 57 order by account_type desc

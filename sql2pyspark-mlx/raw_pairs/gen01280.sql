@@ -1,0 +1,1 @@
+select c.city, concat_ws(', ', sort_array(collect_set(o.channel))) as channel_values from orders o full outer join stores s on o.store_id = s.id inner join customers c on o.customer_id = c.id group by c.city

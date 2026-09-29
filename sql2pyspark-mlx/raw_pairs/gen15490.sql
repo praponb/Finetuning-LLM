@@ -1,0 +1,1 @@
+SELECT orders.id, orders.amount, orders.customer_id, t.min_amount, t.max_amount FROM orders INNER JOIN (SELECT order_id, MIN(amount) AS min_amount, MAX(amount) AS max_amount FROM payments WHERE order_id IN (21, 40) GROUP BY order_id) t ON orders.id = t.order_id;

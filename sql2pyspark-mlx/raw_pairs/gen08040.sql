@@ -1,0 +1,1 @@
+with filtered_store_sales as (select * from store_sales where units < 29 and month(sale_date) in (1, 6, 8) and revenue > 3800), store_id_summary as (select store_id, round(avg(units), 2) as avg_units, min(revenue) as min_revenue from filtered_store_sales group by store_id) select store_id, avg_units, min_revenue from store_id_summary order by store_id desc;

@@ -1,0 +1,1 @@
+SELECT id, quantity, last_restock, SUM(quantity) OVER (ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_quantity, LAST_VALUE(quantity) IGNORE NULLS OVER (PARTITION BY DATE_TRUNC('month', last_restock), product_id ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_quantity FROM inventory;

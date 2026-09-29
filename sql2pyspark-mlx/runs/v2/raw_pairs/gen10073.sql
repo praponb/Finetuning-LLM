@@ -1,0 +1,1 @@
+select ss.units, ss.product_id, p.category, p.price, s.supplier_name, s.city from store_sales ss inner join products p on ss.product_id = p.id inner join suppliers s on p.supplier_id = s.id order by category

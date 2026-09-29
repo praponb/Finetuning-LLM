@@ -1,0 +1,1 @@
+select level, job_title, count(distinct salary) as unique_managers, sum(case when level = 'L2' then 1 else 0 end) as l2_count from employees where full_name is not null group by level, job_title order by job_title;

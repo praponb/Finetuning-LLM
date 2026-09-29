@@ -1,0 +1,1 @@
+SELECT CASE WHEN units >= 33 THEN 'LARGE' ELSE 'SMALL' END AS units_tier, DATE_TRUNC('QUARTER', sale_date) AS quarter_start, COUNT(DISTINCT product_id) AS distinct_product_ids, STDDEV_SAMP(units) AS units_stddev, APPROX_PERCENTILE(revenue, ARRAY(0.25, 0.5, 0.75)) AS revenue_quartiles FROM store_sales GROUP BY units_tier, quarter_start;

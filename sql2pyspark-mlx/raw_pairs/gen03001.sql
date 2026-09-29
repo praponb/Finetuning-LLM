@@ -1,0 +1,1 @@
+with account_totals as (select account_id, round(avg(amount), 2) as avg_amount from transactions group by account_id) select accounts.opened_date, accounts.account_type, account_totals.avg_amount from accounts join account_totals on accounts.id = account_totals.account_id where account_totals.avg_amount > 26 order by accounts.account_type;

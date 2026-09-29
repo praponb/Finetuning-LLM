@@ -1,0 +1,1 @@
+select *, round(amount / sum(amount) over (partition by merchant, account_id), 4) as amount_share, rank() over (partition by merchant, txn_type order by amount desc) as amount_rank, percent_rank() over (order by amount desc nulls first) as amount_percent_rank from transactions where merchant <> 'Shell';

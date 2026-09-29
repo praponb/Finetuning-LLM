@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, device_code, pressure, firmware, temp_c - status_bits temp_c_minus_status_bits FROM device_readings WHERE humidity >= 61) SELECT id, device_code, metric, reading FROM (SELECT id, device_code, pressure, temp_c_minus_status_bits FROM base) src UNPIVOT (reading FOR metric IN (pressure, temp_c_minus_status_bits))

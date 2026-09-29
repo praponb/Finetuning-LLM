@@ -1,0 +1,1 @@
+with kept_keys as (select store_id, id from inventory except distinct select store_id, id from inventory where store_id in (1, 5)), kept_rows as (select s.* from inventory s join kept_keys k on s.store_id = k.store_id and s.id = k.id) select id, product_id, last_restock from kept_rows order by last_restock nulls first

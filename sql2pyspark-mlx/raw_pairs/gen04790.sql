@@ -1,0 +1,1 @@
+SELECT id, product_id, last_restock, quantity, store_id, LEAD(quantity, 1) OVER (PARTITION BY product_id ORDER BY last_restock, id) AS next_quantity, LEAD(quantity, 1) OVER (PARTITION BY store_id ORDER BY last_restock, id) AS next_quantity_2 FROM inventory WHERE YEAR(last_restock) >= 2023 ORDER BY id DESC, next_quantity_2 DESC;

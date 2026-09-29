@@ -1,0 +1,51 @@
+{
+  "total": 15105,
+  "ok": 15105,
+  "pass_rate": 1.0,
+  "ok_but_empty_result": 1717,
+  "by_status": {
+    "ok": 15105
+  },
+  "by_family": {
+    "agg": {
+      "ok": 2244
+    },
+    "cte_agg_join": {
+      "ok": 1047
+    },
+    "cte_chain": {
+      "ok": 733
+    },
+    "derived": {
+      "ok": 546
+    },
+    "handwritten": {
+      "ok": 105
+    },
+    "join": {
+      "ok": 1839
+    },
+    "join_agg": {
+      "ok": 1121
+    },
+    "select": {
+      "ok": 2149
+    },
+    "setop": {
+      "ok": 1044
+    },
+    "special": {
+      "ok": 795
+    },
+    "subquery": {
+      "ok": 1366
+    },
+    "topn": {
+      "ok": 953
+    },
+    "window": {
+      "ok": 1163
+    }
+  },
+  "seconds": 561.6
+}

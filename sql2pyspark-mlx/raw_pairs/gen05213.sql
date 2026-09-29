@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, host, level, k, value FROM app_logs LATERAL VIEW EXPLODE(context) li AS k, value) SELECT host, k, SIZE(COLLECT_SET(level)) AS num_levels, SORT_ARRAY(COLLECT_SET(k)) AS k_list, SORT_ARRAY(COLLECT_SET(service)) AS service_list FROM flattened GROUP BY host, k HAVING SIZE(COLLECT_SET(level)) > 1;

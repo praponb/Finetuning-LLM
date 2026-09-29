@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, name, CAST(is_active AS INT) AS is_active_flag FROM customers WHERE credit_limit > 10900 AND signup_date BETWEEN '2024-08-01' AND '2025-10-01' ORDER BY is_active_flag DESC, id DESC LIMIT 3;

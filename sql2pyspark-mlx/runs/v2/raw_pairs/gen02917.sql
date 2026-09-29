@@ -1,0 +1,1 @@
+SELECT status, min_balance, stddev_balance FROM (SELECT status, MIN(balance) AS min_balance, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts WHERE customer_id = 23 GROUP BY status) AS x WHERE min_balance < 74000 ORDER BY status DESC LIMIT 5;

@@ -1,0 +1,1 @@
+SELECT QUARTER(order_date) order_quarter, MIN(shipping_fee) min_shipping_fee, MAX(order_date) latest_order_date FROM orders GROUP BY QUARTER(order_date) HAVING COUNT(CASE WHEN channel = 'web' THEN 1 END) > 3;

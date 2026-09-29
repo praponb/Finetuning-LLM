@@ -1,0 +1,1 @@
+SELECT category, DATE_FORMAT(launch_date, 'yyyy-MM') launch_month, SORT_ARRAY(COLLECT_SET(category)) category_list, MAX(cost) max_cost FROM products GROUP BY category, DATE_FORMAT(launch_date, 'yyyy-MM')

@@ -1,0 +1,1 @@
+SELECT status, cnt, delivered_cost FROM (SELECT status, COUNT(*) AS cnt, SUM(CASE WHEN status = 'DELIVERED' THEN cost ELSE 0 END) AS delivered_cost FROM shipments WHERE MONTH(shipped_date) IN (1, 3, 7) GROUP BY status) AS x WHERE delivered_cost >= 62 ORDER BY delivered_cost DESC;

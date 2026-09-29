@@ -1,0 +1,1 @@
+WITH store_sales_by_store AS (SELECT store_id, MAX(revenue) AS max_revenue FROM store_sales GROUP BY store_id) SELECT s.id, s.sqft, s.store_name, ssbs.max_revenue FROM stores s LEFT JOIN store_sales_by_store ssbs ON s.id = ssbs.store_id ORDER BY s.sqft DESC;

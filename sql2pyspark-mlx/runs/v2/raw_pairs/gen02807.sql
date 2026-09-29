@@ -1,0 +1,1 @@
+SELECT QUARTER(c.signup_date) AS signup_quarter, c.city, ROUND((100 * SUM(CASE WHEN s.status = 'IN_TRANSIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_in_transit FROM shipments s LEFT JOIN orders o ON s.order_id = o.id LEFT JOIN customers c ON o.customer_id = c.id WHERE c.segment = 'SMB' GROUP BY QUARTER(c.signup_date), c.city ORDER BY pct_in_transit DESC;

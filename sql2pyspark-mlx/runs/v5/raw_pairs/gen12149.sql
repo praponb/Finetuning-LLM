@@ -1,0 +1,1 @@
+select id, dept_name, budget, location from (select id, dept_name, budget, location, row_number() over (partition by dept_name order by budget, id) as row_num from departments) as r where row_num <= 5 order by dept_name;

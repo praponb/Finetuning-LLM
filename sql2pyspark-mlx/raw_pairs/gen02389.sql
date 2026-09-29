@@ -1,0 +1,1 @@
+SELECT c.is_active, c.segment, MAX(o.shipping_fee) AS max_shipping_fee, AVG(o.shipping_fee) AS avg_shipping_fee FROM orders o JOIN customers c ON o.customer_id = c.id RIGHT JOIN stores s ON o.store_id = s.id GROUP BY c.is_active, c.segment

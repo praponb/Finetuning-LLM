@@ -1,0 +1,1 @@
+select city, country, round(stddev(age), 2) as stddev_age, sum(case when country = 'US' then credit_limit else 0 end) as us_credit_limit from customers where lower(email) like '%enr%' and segment = 'SMB' group by city, country having sum(case when country = 'US' then credit_limit else 0 end) < 63

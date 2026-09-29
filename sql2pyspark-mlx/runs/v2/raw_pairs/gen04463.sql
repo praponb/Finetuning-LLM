@@ -1,0 +1,1 @@
+SELECT product_id, AVG(quantity) AS avg_quantity, COUNT(unit_price) AS unit_price_count, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items GROUP BY product_id ORDER BY unit_price_count DESC, product_id LIMIT 5

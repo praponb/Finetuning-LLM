@@ -1,0 +1,1 @@
+with latest_match as (select s.id, s.sqft, latest.sale_date, latest.revenue from stores s left join lateral (select c.sale_date, c.revenue from store_sales c where c.store_id = s.id and c.sale_date <= s.opened_date order by c.sale_date desc, c.id desc limit 1) latest on true) select id, sqft, sale_date, revenue from latest_match

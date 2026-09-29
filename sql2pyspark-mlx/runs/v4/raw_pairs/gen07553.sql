@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, customer_id, store_id, order_date, status, channel, amount, discount, shipping_fee, UPPER(channel) AS channel_upper, COALESCE(channel, 'DIRECT') AS channel_clean FROM orders WHERE discount > 0.33) SELECT status, channel FROM base INTERSECT SELECT status, channel FROM orders WHERE amount BETWEEN 890 AND 1510

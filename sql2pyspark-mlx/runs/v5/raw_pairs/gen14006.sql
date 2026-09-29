@@ -1,0 +1,1 @@
+SELECT o.id, o.status, o.customer_id, o.channel FROM orders o WHERE o.status IN ('RETURNED', 'SHIPPED') AND NOT EXISTS (SELECT 1 FROM shipments s WHERE s.order_id = o.id AND s.status = 'DELIVERED') ORDER BY channel, id LIMIT 10

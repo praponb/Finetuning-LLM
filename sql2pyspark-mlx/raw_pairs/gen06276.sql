@@ -1,0 +1,1 @@
+WITH RecentPayments AS (SELECT *, HOUR(paid_at) AS paid_at_hour FROM payments WHERE amount <= 1280 AND order_id = 25), summary AS (SELECT method, status, MIN(paid_at) AS min_paid_at FROM RecentPayments GROUP BY method, status) SELECT method, status, min_paid_at FROM summary ORDER BY method DESC

@@ -1,0 +1,1 @@
+with latest as (select * from (select *, row_number() over (partition by account_id order by txn_time nulls last, id) as latest_rank from transactions) x where latest_rank = 1) select id, account_id, amount, txn_time, is_flagged from latest order by txn_time desc nulls first;

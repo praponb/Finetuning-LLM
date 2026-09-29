@@ -1,0 +1,1 @@
+SELECT id, balance, opened_date, NTILE(3) OVER (PARTITION BY account_type ORDER BY balance, id) AS balance_bucket, NTILE(10) OVER (ORDER BY balance DESC, id) AS balance_bucket_2 FROM accounts WHERE customer_id IN (10, 13, 26, 35);

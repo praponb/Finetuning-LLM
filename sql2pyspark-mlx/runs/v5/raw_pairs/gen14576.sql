@@ -1,0 +1,1 @@
+SELECT d.brand, d.category, COUNT(*) AS num_rows, MIN(e.quantity) AS min_quantity, GROUPING_ID() AS grouping_level FROM inventory e INNER JOIN products d ON e.product_id = d.id GROUP BY ROLLUP (d.brand, d.category);

@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, MAX(o.shipping_fee) - MIN(o.shipping_fee) AS shipping_fee_range, ROUND(AVG(o.discount), 2) AS avg_discount FROM orders o LEFT OUTER JOIN stores s ON o.store_id = s.id LEFT OUTER JOIN customers c ON c.id = o.customer_id GROUP BY MONTH(c.signup_date) HAVING MAX(o.shipping_fee) - MIN(o.shipping_fee) >= 40 ORDER BY signup_month

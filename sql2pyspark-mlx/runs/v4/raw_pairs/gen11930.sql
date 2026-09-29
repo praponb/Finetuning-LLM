@@ -1,0 +1,3 @@
+SELECT *
+FROM customers
+WHERE credit_limit BETWEEN 5600 AND 7400 AND signup_date BETWEEN '2024-01-01' AND '2025-03-01';

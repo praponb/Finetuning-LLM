@@ -1,0 +1,1 @@
+SELECT payments.id, payments.order_id, payments.paid_at, payments.method, orders.store_id, orders.shipping_fee FROM payments INNER JOIN orders ON payments.order_id = orders.id WHERE orders.shipping_fee BETWEEN 35 AND 36

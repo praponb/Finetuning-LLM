@@ -1,0 +1,1 @@
+SELECT c.country, c.signup_date, c.city, o.order_date FROM customers c JOIN orders o ON c.id = o.customer_id WHERE c.name LIKE '%Diaz%' AND o.discount BETWEEN 0.11 AND 0.13 ORDER BY c.country, o.order_date

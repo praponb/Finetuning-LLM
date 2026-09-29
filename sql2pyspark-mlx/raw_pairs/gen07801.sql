@@ -1,0 +1,1 @@
+select id, host, level, latency_ms, status_code, payload_json, context['version'] as version, shiftright(status_code, 2) as status_code_high, cast((status_code & 1) != 0 as int) as is_flagged, context['region'] as region from app_logs where level <> 'ERROR';

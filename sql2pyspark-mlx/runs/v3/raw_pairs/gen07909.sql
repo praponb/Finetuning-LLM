@@ -1,0 +1,1 @@
+SELECT stores.region, ROUND(AVG(store_sales.revenue), 2) AS avg_revenue FROM store_sales INNER JOIN products ON products.id = store_sales.product_id INNER JOIN stores ON store_sales.store_id = stores.id WHERE YEAR(stores.opened_date) = 2025 GROUP BY stores.region

@@ -1,0 +1,1 @@
+SELECT transactions.txn_type, transactions.merchant, accounts.status, customers.name FROM transactions JOIN accounts ON transactions.account_id = accounts.id LEFT JOIN customers ON accounts.customer_id = customers.id WHERE customers.segment IN ('Corporate', 'Consumer');

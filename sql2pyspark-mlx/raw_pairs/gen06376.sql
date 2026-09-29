@@ -1,0 +1,1 @@
+SELECT brand, avg_cost, latest_launch_date FROM (SELECT brand, AVG(cost) AS avg_cost, MAX(launch_date) AS latest_launch_date FROM products GROUP BY brand) AS agg WHERE avg_cost > 550 ORDER BY avg_cost

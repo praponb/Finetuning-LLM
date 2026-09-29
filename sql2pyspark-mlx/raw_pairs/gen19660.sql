@@ -1,0 +1,1 @@
+SELECT id, brand, launch_date, stock_qty, LEAD(stock_qty, 1) OVER (PARTITION BY brand ORDER BY launch_date, id) AS next_stock_qty FROM products WHERE launch_date BETWEEN '2024-01-01' AND '2024-04-01' ORDER BY next_stock_qty DESC;

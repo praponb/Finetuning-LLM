@@ -1,0 +1,1 @@
+SELECT p.category, MAX(i.last_restock) AS last_last_restock, COUNT(DISTINCT i.quantity) AS unique_products FROM inventory i INNER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id WHERE i.last_restock >= '2023-07-01' GROUP BY p.category;

@@ -1,0 +1,1 @@
+with cleaned as (select *, month(event_time) as event_time_month from web_events where event_time >= '2025-10-01' and page is not null) select * from (select *, row_number() over (partition by event_type order by event_time_month desc nulls last, id) as dedup_rank from cleaned) x where dedup_rank = 1

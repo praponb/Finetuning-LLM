@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY salary, id) AS latest_rank FROM employees QUALIFY latest_rank = 1) SELECT id, full_name, email, dept_id, job_title, salary, hire_date, is_remote, level, CASE WHEN level RLIKE '^(L2|L5)$' THEN 'OTHER_ZONE' ELSE 'GROUP_B' END AS level_zone FROM ranked ORDER BY level DESC

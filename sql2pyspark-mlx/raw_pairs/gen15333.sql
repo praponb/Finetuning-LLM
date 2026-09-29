@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, currency, tier_value FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_prices) li AS tier_value) SELECT id, currency, tier_value, CASE WHEN currency RLIKE '^(USD|EUR)$' THEN 'CORE' WHEN currency RLIKE '^(THB)$' THEN 'EXTENDED' ELSE 'OTHER_ZONE' END AS currency_zone FROM lines ORDER BY currency_zone DESC NULLS FIRST;

@@ -1,0 +1,1 @@
+with payments_by_order as (select order_id, round(avg(amount), 2) avg_amount from payments where method != 'promptpay' group by order_id) select o.status, o.order_date, pbo.avg_amount from orders o inner join payments_by_order pbo on o.id = pbo.order_id where pbo.avg_amount >= 35;

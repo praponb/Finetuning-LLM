@@ -1,0 +1,1 @@
+SELECT level, MAX(salary) - MIN(salary) AS salary_range, MAX(salary) AS max_salary FROM employees WHERE salary > 103000 AND (salary <= 83000 OR email LIKE '%@company.co') GROUP BY level ORDER BY level DESC

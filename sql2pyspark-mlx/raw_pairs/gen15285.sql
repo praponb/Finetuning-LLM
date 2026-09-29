@@ -1,0 +1,1 @@
+SELECT t.id, t.merchant, t.is_flagged, a.status, a.account_type, a.customer_id FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE a.opened_date BETWEEN '2023-08-01' AND '2025-06-01' ORDER BY id DESC;

@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary FROM employees GROUP BY dept_id) SELECT d.location, d.dept_name, dt.avg_salary FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id ORDER BY d.dept_name

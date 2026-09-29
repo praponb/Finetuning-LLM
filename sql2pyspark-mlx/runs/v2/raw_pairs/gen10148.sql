@@ -1,0 +1,1 @@
+WITH shipments_by_order AS (SELECT order_id, MIN(cost) AS min_cost FROM shipments GROUP BY order_id) SELECT o.id, o.amount, sbo.min_cost FROM orders o INNER JOIN shipments_by_order sbo ON o.id = sbo.order_id ORDER BY id DESC;

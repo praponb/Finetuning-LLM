@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.revenue, store_sales.sale_date, stores.region, products.category, products.price, COALESCE(stores.store_name, 'N/A') store_name_filled FROM store_sales JOIN stores ON stores.id = store_sales.store_id LEFT OUTER JOIN products ON store_sales.product_id = products.id ORDER BY price ASC

@@ -1,0 +1,1 @@
+SELECT s.country, QUARTER(s.started_at) started_quarter, MAX(we.duration_sec) - MIN(we.duration_sec) duration_sec_range FROM web_events we FULL OUTER JOIN sessions s ON s.id = we.session_id WHERE HOUR(s.started_at) BETWEEN 12 AND 19 GROUP BY s.country, QUARTER(s.started_at) HAVING MAX(we.duration_sec) - MIN(we.duration_sec) > 35;

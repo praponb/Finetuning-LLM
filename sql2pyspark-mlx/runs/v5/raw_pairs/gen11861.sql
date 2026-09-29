@@ -1,0 +1,1 @@
+select p.dept_name, p.location, e.level, count(*) as num_rows, avg(e.salary) as avg_salary from employees e join departments p on e.dept_id = p.id group by p.dept_name, p.location, e.level order by avg_salary asc

@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, AVG(quantity) AS avg_quantity FROM inventory GROUP BY product_id) SELECT p.category, ps.avg_quantity FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id;

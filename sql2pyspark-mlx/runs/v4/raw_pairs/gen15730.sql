@@ -1,0 +1,1 @@
+SELECT COUNT(DISTINCT quantity) AS unique_orders, SUM(unit_price) AS total_unit_price, MAX(unit_price) AS max_unit_price FROM order_items WHERE order_id IN (23, 36) OR order_id IN (25, 39) ORDER BY unique_orders;

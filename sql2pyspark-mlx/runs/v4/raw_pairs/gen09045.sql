@@ -1,0 +1,1 @@
+with flagged as (select *, case when started_at - lag(started_at) over (partition by browser order by started_at, id) > interval '30' day then 1 else 0 end as session_start_flag from sessions) select *, sum(session_start_flag) over (partition by browser order by started_at, id rows between unbounded preceding and current row) as session_id from flagged;

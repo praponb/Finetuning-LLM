@@ -1,0 +1,1 @@
+SELECT YEAR(orders.order_date) AS order_year, ROUND((100 * SUM(CASE WHEN payments.status = 'SUCCESS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_success, COUNT(CASE WHEN payments.method = 'promptpay' THEN 1 END) AS promptpay_count FROM payments JOIN orders ON payments.order_id = orders.id WHERE orders.shipping_fee > 25 GROUP BY YEAR(orders.order_date);

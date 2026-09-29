@@ -1,0 +1,1 @@
+with base as (select *, case when category = 'Home' then 1 else 0 end as is_home from products where price <= 430), Agg as (select category, month(launch_date) as launch_month, round(stddev(is_home), 2) as stddev_is_home from base group by category, month(launch_date)) select category, launch_month, stddev_is_home from Agg where stddev_is_home < 79

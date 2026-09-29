@@ -1,0 +1,1 @@
+SELECT status, shipping_fee_count, stddev_discount FROM (SELECT status, COUNT(shipping_fee) AS shipping_fee_count, ROUND(STDDEV(discount), 2) AS stddev_discount FROM orders WHERE store_id IS NOT NULL GROUP BY status) AS x WHERE stddev_discount > 46 ORDER BY 3 DESC;

@@ -1,0 +1,1 @@
+SELECT suppliers.id, suppliers.rating, suppliers.country FROM suppliers WHERE suppliers.country NOT IN ('UK', 'SG', 'JP') AND NOT EXISTS (SELECT 1 FROM products WHERE products.supplier_id = suppliers.id AND products.category <> 'Fashion')

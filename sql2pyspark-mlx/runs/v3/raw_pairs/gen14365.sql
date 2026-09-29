@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, SUM(CASE WHEN status = 'SUCCESS' THEN amount ELSE 0 END) AS success_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM payments GROUP BY order_id) SELECT o.id, o.customer_id, ot.success_amount, ot.status_values FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.success_amount > 42;

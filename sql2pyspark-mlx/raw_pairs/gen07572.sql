@@ -1,0 +1,1 @@
+SELECT p.brand, AVG(i.quantity) AS avg_quantity, MAX(i.last_restock) AS latest_last_restock FROM inventory i INNER JOIN products p ON p.id = i.product_id WHERE p.stock_qty >= 256 GROUP BY p.brand ORDER BY brand;

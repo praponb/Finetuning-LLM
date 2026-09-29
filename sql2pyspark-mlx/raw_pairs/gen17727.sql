@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, AVG(revenue) AS avg_revenue FROM store_sales GROUP BY store_id) SELECT s.id, s.opened_date, s.sqft, ss.avg_revenue FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id ORDER BY avg_revenue, opened_date DESC;

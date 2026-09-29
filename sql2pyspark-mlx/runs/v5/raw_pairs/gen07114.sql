@@ -1,0 +1,1 @@
+SELECT paid_day, card_amount FROM (SELECT TO_DATE(paid_at) paid_day, SUM(CASE WHEN method = 'card' THEN amount ELSE 0 END) card_amount FROM payments GROUP BY TO_DATE(paid_at)) agg WHERE card_amount > 22 ORDER BY paid_day

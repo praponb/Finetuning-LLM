@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM shipments WHERE shipped_date >= '2024-09-07' AND shipped_date >= '2024-09-01'), summary AS (SELECT QUARTER(shipped_date) AS shipped_quarter, COUNT(CASE WHEN carrier = 'UPS' THEN 1 END) AS ups_count FROM base GROUP BY QUARTER(shipped_date)) SELECT shipped_quarter, ups_count FROM summary WHERE ups_count < 5 ORDER BY ups_count DESC, shipped_quarter ASC;

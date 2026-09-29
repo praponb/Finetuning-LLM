@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('WEEK', launch_date) AS week_start, brand, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list, COUNT(DISTINCT brand) AS distinct_brands, PERCENTILE_APPROX(cost, 0.95) AS cost_p95 FROM products GROUP BY DATE_TRUNC('WEEK', launch_date), brand HAVING PERCENTILE_APPROX(cost, 0.95) > 0

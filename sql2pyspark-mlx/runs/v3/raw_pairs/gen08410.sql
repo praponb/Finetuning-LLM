@@ -1,0 +1,1 @@
+SELECT payments.id, payments.amount, payments.order_id, orders.channel, orders.status, customers.age, COALESCE(orders.discount, 0) AS discount_filled FROM payments LEFT JOIN orders ON payments.order_id = orders.id INNER JOIN customers ON customers.id = orders.customer_id ORDER BY status DESC

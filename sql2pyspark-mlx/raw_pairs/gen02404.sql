@@ -1,0 +1,1 @@
+WITH recent_store_sales AS (SELECT * FROM store_sales WHERE revenue >= 1800), summary AS (SELECT store_id, SUM(revenue) AS total_revenue FROM recent_store_sales GROUP BY store_id) SELECT store_id, total_revenue FROM summary WHERE total_revenue > 15000 ORDER BY 1 DESC LIMIT 20

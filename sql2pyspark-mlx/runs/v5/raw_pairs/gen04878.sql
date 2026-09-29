@@ -1,0 +1,1 @@
+SELECT e.job_title AS employee_job_title, e.salary AS employee_salary, e.full_name AS employee_full_name, m.salary AS manager_salary, m.email AS manager_email FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.is_remote ORDER BY e.salary, employee_job_title DESC

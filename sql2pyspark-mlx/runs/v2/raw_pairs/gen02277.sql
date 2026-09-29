@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.rating >= 4.1 THEN 'high' WHEN s.rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(p.stock_qty) AS stock_qty_count FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.stock_qty BETWEEN 116 AND 174 GROUP BY CASE WHEN s.rating >= 4.1 THEN 'high' WHEN s.rating >= 2.4 THEN 'mid' ELSE 'low' END

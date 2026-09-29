@@ -1,0 +1,1 @@
+SELECT suppliers.id, suppliers.supplier_name, t.total_count, t.min_cost FROM suppliers INNER JOIN (SELECT supplier_id, COUNT(*) AS total_count, MIN(cost) AS min_cost FROM products GROUP BY supplier_id) t ON suppliers.id = t.supplier_id ORDER BY t.total_count DESC, id LIMIT 1;

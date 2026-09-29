@@ -1,0 +1,1 @@
+SELECT s.id, s.status, s.channel, s.amount, s.discount, top1.unit_price, top1.quantity FROM orders s JOIN LATERAL (SELECT c.unit_price, c.quantity FROM order_items c WHERE c.order_id = s.id ORDER BY c.quantity DESC, c.id DESC LIMIT 1) top1 ON TRUE

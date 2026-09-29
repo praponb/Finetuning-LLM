@@ -1,0 +1,1 @@
+SELECT stores.region, MIN(payments.amount) AS min_amount, COUNT(*) AS cnt FROM payments LEFT OUTER JOIN orders ON payments.order_id = orders.id INNER JOIN stores ON stores.id = orders.store_id GROUP BY stores.region ORDER BY min_amount;

@@ -1,0 +1,1 @@
+SELECT a.id, a.status, a.account_type FROM accounts a WHERE a.opened_date < '2025-10-21' AND EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND t.merchant = '7-Eleven') ORDER BY a.id DESC

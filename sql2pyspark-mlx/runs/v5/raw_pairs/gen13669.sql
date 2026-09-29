@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM shipments WHERE NOT (cost >= 83 AND (status != 'DELIVERED' OR carrier IN ('FedEx', 'Kerry', 'DHL')))), shipments_stats AS (SELECT order_id, ROUND((100 * SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_lost FROM base GROUP BY order_id) SELECT * FROM shipments_stats WHERE pct_lost >= 72 ORDER BY order_id DESC, pct_lost DESC;

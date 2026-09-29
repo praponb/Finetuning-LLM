@@ -1,0 +1,1 @@
+WITH store_sales_by_product AS (SELECT product_id, ROUND(STDDEV(units), 2) AS stddev_units, MIN(revenue) AS min_revenue FROM store_sales GROUP BY product_id) SELECT p.id, p.category, ssbp.stddev_units, ssbp.min_revenue FROM products p INNER JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id ORDER BY min_revenue DESC, id LIMIT 10

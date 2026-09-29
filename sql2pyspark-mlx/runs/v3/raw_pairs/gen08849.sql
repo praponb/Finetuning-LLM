@@ -1,0 +1,1 @@
+select inventory.quantity, inventory.store_id, products.launch_date, stores.opened_date, stores.city from inventory full outer join products on inventory.product_id = products.id left join stores on inventory.store_id = stores.id;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, LEAST(revenue, units) AS least_revenue_units, GREATEST(revenue, units) AS greatest_revenue_units FROM store_sales WHERE store_id IN (1, 6)) SELECT s.*, p.stock_qty, p.price, p.launch_date FROM filtered s LEFT JOIN products p ON s.product_id = p.id;

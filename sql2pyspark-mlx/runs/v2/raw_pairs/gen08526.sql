@@ -1,0 +1,1 @@
+select * from (select date_format(order_date, 'yyyy-MM') as order_month, count(*) as cnt from orders group by date_format(order_date, 'yyyy-MM')) as sub where cnt < 7 order by order_month, cnt desc limit 5;

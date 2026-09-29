@@ -1,0 +1,1 @@
+SELECT account_id, avg_amount, debit_amount FROM (SELECT account_id, ROUND(AVG(amount), 2) AS avg_amount, SUM(CASE WHEN txn_type = 'DEBIT' THEN amount ELSE 0 END) AS debit_amount FROM transactions GROUP BY account_id) AS sub WHERE avg_amount > 50 ORDER BY account_id DESC LIMIT 5

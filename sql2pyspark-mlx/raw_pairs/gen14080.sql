@@ -1,0 +1,1 @@
+SELECT oi.product_id, p.price, p.brand, s.rating FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE oi.order_id IN (10, 13, 23, 25) AND ARRAY_CONTAINS(p.tags, 'bestseller')

@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions WHERE plan = 'basic' GROUP BY customer_id) SELECT c.id, c.credit_limit, cs.min_monthly_fee FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.min_monthly_fee > 110 ORDER BY credit_limit DESC;

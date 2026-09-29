@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT * FROM transactions WHERE amount <= 3100), TxnDaySummary AS (SELECT TO_DATE(txn_time) txn_day, COUNT(DISTINCT amount) unique_txn_types FROM valid_transactions GROUP BY TO_DATE(txn_time)) SELECT txn_day, unique_txn_types FROM TxnDaySummary WHERE unique_txn_types < 8 ORDER BY txn_day DESC;

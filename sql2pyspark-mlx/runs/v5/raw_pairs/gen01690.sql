@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC NULLS FIRST, id) AS rank_in_group FROM suppliers QUALIFY rank_in_group = 1) SELECT id, rating, rank_in_group FROM ranked ORDER BY rating DESC

@@ -1,0 +1,1 @@
+SELECT s.country, CASE WHEN s.rating >= 3.8 THEN 'high' WHEN s.rating >= 2.2 THEN 'mid' ELSE 'low' END rating_bucket, AVG(p.cost) avg_cost FROM products p INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY s.country, CASE WHEN s.rating >= 3.8 THEN 'high' WHEN s.rating >= 2.2 THEN 'mid' ELSE 'low' END;

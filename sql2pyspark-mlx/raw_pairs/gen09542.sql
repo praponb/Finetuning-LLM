@@ -1,0 +1,1 @@
+SELECT CASE WHEN salary >= 128000 THEN 'high' WHEN salary >= 65000 THEN 'mid' ELSE 'low' END AS salary_bucket, ROUND((100 * SUM(CASE WHEN level = 'L1' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l1 FROM employees WHERE manager_id IN (23, 26, 28, 34) GROUP BY CASE WHEN salary >= 128000 THEN 'high' WHEN salary >= 65000 THEN 'mid' ELSE 'low' END

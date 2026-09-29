@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, currency, EXPLODE_OUTER(tier_limits) AS element FROM price_tiers) SELECT id, plan, effective_from, currency, element, CASE WHEN currency RLIKE '^(USD|THB)$' THEN 'EXTENDED' WHEN currency RLIKE '^(EUR)$' THEN 'OTHER_ZONE' ELSE 'CORE' END AS currency_zone FROM flattened ORDER BY id;

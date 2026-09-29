@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC NULLS LAST, id) AS dedup_rank FROM suppliers) ranked WHERE dedup_rank = 1) SELECT id, supplier_name, country, city, dedup_rank FROM deduped ORDER BY city DESC NULLS LAST

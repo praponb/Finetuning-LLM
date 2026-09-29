@@ -1,0 +1,1 @@
+WITH CustomerStats AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(device)) device_list, MAX(started_at) latest_started_at FROM sessions WHERE device <> 'tablet' GROUP BY customer_id) SELECT c.id, c.segment, C.device_list, C.latest_started_at FROM customers c LEFT JOIN CustomerStats C ON c.id = C.customer_id ORDER BY id;

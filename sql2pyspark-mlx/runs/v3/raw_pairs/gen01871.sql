@@ -1,0 +1,1 @@
+SELECT store_id, MONTH(last_restock) AS last_restock_month, SUM(quantity) AS total_quantity, COUNT(*) AS inventory_count, MIN(last_restock) AS first_last_restock FROM inventory GROUP BY store_id, MONTH(last_restock)

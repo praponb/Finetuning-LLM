@@ -1,0 +1,1 @@
+SELECT s.country, AVG(we.duration_sec) avg_duration_sec, MAX(we.duration_sec) max_duration_sec FROM web_events we LEFT OUTER JOIN sessions s ON we.session_id = s.id GROUP BY s.country ORDER BY 1 DESC;

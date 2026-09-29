@@ -1,0 +1,1 @@
+SELECT s.city, s.region, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.status))) AS status_values, SUM(p.amount) AS total_amount FROM payments p INNER JOIN orders o ON p.order_id = o.id FULL OUTER JOIN stores s ON s.id = o.store_id WHERE s.region NOT IN ('West', 'North') GROUP BY s.city, s.region HAVING SUM(p.amount) >= 3700

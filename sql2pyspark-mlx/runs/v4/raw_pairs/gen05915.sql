@@ -1,0 +1,1 @@
+with ranked_stores as (select id, region, opened_date, city, dense_rank() over (partition by region order by opened_date) as row_num from stores) select id, region, opened_date, city from ranked_stores where row_num = 1;

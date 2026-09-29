@@ -1,0 +1,1 @@
+with flattened as (select id, plan, effective_from, currency, explode_outer(tier_limits) as val from price_tiers) select effective_from, currency, stddev_samp(val) over (partition by date_trunc('MONTH', effective_from), plan) as effective_from_period_stddev_samp_val, percent_rank() over (order by val desc) as val_percent_rank from flattened;

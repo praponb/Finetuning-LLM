@@ -1,0 +1,1 @@
+SELECT s.id, s.cost, o.status, o.customer_id, c.segment, c.signup_date FROM shipments s JOIN orders o ON o.id = s.order_id JOIN customers c ON o.customer_id = c.id WHERE c.credit_limit BETWEEN 9000 AND 14700 ORDER BY status ASC, s.cost ASC

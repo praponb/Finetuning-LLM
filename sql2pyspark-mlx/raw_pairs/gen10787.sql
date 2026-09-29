@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM customers s WHERE EXISTS (SELECT 1 FROM sessions ch WHERE ch.customer_id = s.id AND ch.started_at < s.signup_date)) SELECT id, name, email, country, city, segment, signup_date, is_active FROM not_flagged ORDER BY city DESC NULLS FIRST

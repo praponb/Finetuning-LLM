@@ -1,0 +1,1 @@
+SELECT account_id, ROUND((100 * SUM(CASE WHEN merchant = '7-Eleven' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_7_eleven, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list, MIN(amount) AS min_amount FROM transactions GROUP BY account_id ORDER BY pct_7_eleven

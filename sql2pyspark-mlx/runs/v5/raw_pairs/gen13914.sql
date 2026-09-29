@@ -1,0 +1,1 @@
+SELECT MONTH(o.order_date) AS order_month, o.channel, COUNT(DISTINCT s.cost) AS unique_orders, MAX(s.cost) AS max_cost FROM shipments s JOIN orders o ON s.order_id = o.id JOIN stores st ON o.store_id = st.id GROUP BY MONTH(o.order_date), o.channel ORDER BY o.channel DESC, order_month LIMIT 10

@@ -1,0 +1,1 @@
+SELECT id, channel, promo_code, starts_on, ends_on, discount_pct, NTILE(4) OVER (PARTITION BY channel ORDER BY discount_pct, id) AS discount_pct_bucket, LAST_VALUE(channel, TRUE) OVER (PARTITION BY promo_code ORDER BY starts_on, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_channel FROM promotions

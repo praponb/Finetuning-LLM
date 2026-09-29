@@ -1,0 +1,1 @@
+select date_trunc('MONTH', delivered_date) as delivered_month, round((100 * sum(case when carrier = 'FedEx' then 1 else 0 end)) / count(*), 1) as pct_fedex, min(cost) as min_cost, count(case when carrier = 'Flash' then 1 end) as flash_count from shipments where status in ('RETURNED', 'LOST', 'DELIVERED') and status = 'LOST' group by date_trunc('MONTH', delivered_date);

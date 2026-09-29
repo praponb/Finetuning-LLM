@@ -1,0 +1,1 @@
+with exploded as (select id, service, host, log_ts, latency_ms, status_code, k, attr_value from app_logs lateral view outer explode(context) x as k, attr_value) select id, service, host, latency_ms, attr_value, corr(status_code, latency_ms) over (partition by k) as corr_status_code_latency_ms from exploded

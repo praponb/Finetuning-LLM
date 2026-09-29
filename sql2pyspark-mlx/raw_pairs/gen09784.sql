@@ -1,0 +1,1 @@
+SELECT event_type, AVG(duration_sec) AS avg_duration_sec, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE page = '/search' AND page IN ('/home', '/product', '/search') AND duration_sec IS NOT NULL GROUP BY event_type ORDER BY event_type ASC;

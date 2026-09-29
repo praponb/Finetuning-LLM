@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, COUNT(DISTINCT unit_price) AS unique_orders, AVG(quantity) AS avg_quantity FROM order_items GROUP BY order_id) SELECT o.customer_id, ot.unique_orders, ot.avg_quantity FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id ORDER BY customer_id DESC

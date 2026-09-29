@@ -1,0 +1,1 @@
+WITH SessionsByCustomer AS (SELECT customer_id, SUM(CASE WHEN device = 'desktop' THEN 1 ELSE 0 END) AS desktop_count FROM sessions WHERE browser = 'Safari' GROUP BY customer_id) SELECT c.id, c.name, S.desktop_count FROM customers c JOIN SessionsByCustomer S ON c.id = S.customer_id WHERE S.desktop_count > 22 ORDER BY c.id ASC LIMIT 5;

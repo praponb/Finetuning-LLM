@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT YEAR(opened_date) AS opened_year, account_type, SUM(CASE WHEN status = 'CLOSED' THEN balance ELSE 0 END) AS closed_balance, COUNT(DISTINCT balance) AS unique_customers FROM accounts GROUP BY YEAR(opened_date), account_type) AS sub WHERE closed_balance < 69 ORDER BY unique_customers DESC, account_type, opened_year LIMIT 50;

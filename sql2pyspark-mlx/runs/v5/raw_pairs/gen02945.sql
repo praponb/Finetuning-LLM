@@ -1,0 +1,1 @@
+SELECT p.id, p.brand, p.stock_qty, p.supplier_id, s.supplier_name, s.country FROM products p JOIN suppliers s ON p.supplier_id = s.id WHERE NOT (p.product_name LIKE '%Hub%' OR p.cost <= 410) ORDER BY supplier_name DESC, supplier_id;

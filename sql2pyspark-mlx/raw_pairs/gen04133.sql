@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, COUNT(DISTINCT salary) AS unique_job_titles, MIN(salary) AS min_salary FROM employees WHERE manager_id = 20 GROUP BY dept_id) SELECT d.budget, ds.unique_job_titles, ds.min_salary FROM departments d INNER JOIN department_summary ds ON d.id = ds.dept_id WHERE ds.unique_job_titles >= 8;

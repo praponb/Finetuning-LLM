@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.3 THEN 'high' WHEN rating >= 2.0 THEN 'mid' ELSE 'low' END AS rating_bucket, city, MIN(rating) AS min_rating FROM suppliers WHERE city != 'Chiang Mai' OR supplier_name IS NULL GROUP BY 1, 2;

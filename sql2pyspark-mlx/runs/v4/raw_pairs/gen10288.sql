@@ -1,0 +1,1 @@
+select case when cost >= 700 then 'high' when cost >= 150 then 'mid' else 'low' end as cost_bucket, category, round((100 * sum(case when category = 'Fashion' then 1 else 0 end)) / count(*), 1) as pct_fashion from products where stock_qty != 332 and array_contains(tags, 'bestseller') and launch_date >= '2024-02-09' group by 1, 2 order by pct_fashion desc

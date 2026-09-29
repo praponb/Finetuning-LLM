@@ -1,0 +1,1 @@
+select id, order_id, amount, paid_at, lag(amount) over w_ordered as prev_amount, row_number() over w_ordered as seq_no, lead(amount, 1) over w_recent as next_amount from payments window w_ordered as (partition by method, status order by amount, id), w_recent as (partition by order_id order by paid_at, id);

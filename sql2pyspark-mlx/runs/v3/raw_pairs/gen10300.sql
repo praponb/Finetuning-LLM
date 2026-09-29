@@ -1,0 +1,1 @@
+SELECT product_id, order_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items WHERE quantity > 6 AND product_id IN (24, 28, 31, 35) AND product_id = 14 GROUP BY product_id, order_id HAVING MAX(quantity) - MIN(quantity) >= 78;

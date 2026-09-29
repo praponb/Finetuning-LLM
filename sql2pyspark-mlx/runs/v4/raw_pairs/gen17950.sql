@@ -1,0 +1,1 @@
+with department_stats as (select dept_id, round(stddev(salary), 2) as stddev_salary from employees group by dept_id) select departments.id, departments.budget, department_stats.stddev_salary from departments inner join department_stats on departments.id = department_stats.dept_id where department_stats.stddev_salary > 36 order by id;

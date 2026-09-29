@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, duration_sec, ROUND(AVG(duration_sec) OVER (PARTITION BY session_id ORDER BY event_time, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS duration_sec_moving_avg_4, RANK() OVER (PARTITION BY session_id ORDER BY duration_sec DESC) AS duration_sec_rank FROM web_events

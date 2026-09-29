@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, order_id, AVG(unit_price) AS avg_unit_price FROM order_items WHERE (product_id = 19 AND unit_price <= 180) OR unit_price >= 130 GROUP BY CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END, order_id HAVING avg_unit_price >= 170;

@@ -1,0 +1,1 @@
+SELECT id, promo_code, ends_on, SUM(discount_pct) OVER w_part AS cumulative_discount_pct, LEAD(discount_pct, 2) OVER (PARTITION BY promo_code ORDER BY starts_on, id) AS next_discount_pct FROM promotions WHERE ends_on > '2023-10-02' WINDOW w_part AS (PARTITION BY channel ORDER BY discount_pct, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW);

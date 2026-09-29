@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY starts_on DESC, id) AS rn FROM promotions) t WHERE rn = 1) SELECT id, channel, starts_on, ends_on, rn, CASE WHEN channel RLIKE '^(mobile|store)$' THEN 'PRIORITY' WHEN channel RLIKE '^(web|partner)$' THEN 'GROUP_A' ELSE 'OTHER_ZONE' END AS channel_zone FROM deduped

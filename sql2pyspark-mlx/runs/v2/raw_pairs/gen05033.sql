@@ -1,0 +1,1 @@
+WITH recent_customers AS (SELECT * FROM customers WHERE segment <> 'Consumer' AND signup_date BETWEEN '2024-09-01' AND '2025-10-01'), city_summary AS (SELECT city, COUNT(*) AS num_customers FROM recent_customers GROUP BY city) SELECT * FROM city_summary WHERE num_customers < 5 ORDER BY num_customers, city LIMIT 3

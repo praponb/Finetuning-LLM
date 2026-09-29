@@ -1,0 +1,1 @@
+SELECT id, status, DATEDIFF(delivered_date, shipped_date) / 7 AS weeks_shipped_date_to_delivered_date FROM shipments WHERE order_id = 40 AND MONTH(shipped_date) IN (2, 3, 6) AND cost IS NOT NULL ORDER BY id LIMIT 10

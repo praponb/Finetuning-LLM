@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('YEAR', starts_on) AS year_start, DATE_TRUNC('MONTH', starts_on) AS activity_month, PERCENTILE_APPROX(discount_pct, 0.95) AS discount_pct_p95, COUNT(DISTINCT promo_code) AS distinct_promo_codes, COUNT_IF(promo_code = 'SPRING10') AS spring10_events FROM promotions GROUP BY 1, 2 ORDER BY distinct_promo_codes DESC

@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, MIN(quantity) AS min_quantity FROM order_items WHERE order_id IN (3, 7, 9, 39) AND order_id IN (11, 16, 22, 38) AND quantity >= 4 GROUP BY quantity_bucket HAVING min_quantity > 7.0 ORDER BY quantity_bucket DESC

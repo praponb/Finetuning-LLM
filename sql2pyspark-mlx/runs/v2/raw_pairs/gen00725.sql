@@ -1,0 +1,1 @@
+SELECT MONTH(order_date) AS order_month, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list, ROUND(AVG(amount), 2) AS avg_amount FROM orders WHERE status = 'CANCELLED' GROUP BY MONTH(order_date) HAVING SUM(CASE WHEN channel = 'mobile' THEN shipping_fee ELSE 0 END) > 38 ORDER BY order_month DESC;

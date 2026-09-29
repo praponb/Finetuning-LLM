@@ -1,0 +1,1 @@
+with lines as (select id, service, host, latency_ms, status_code, attr_key, attr_value from app_logs lateral view outer explode(context) x as attr_key, attr_value) select id, service, latency_ms, status_code, attr_key, attr_value from lines;

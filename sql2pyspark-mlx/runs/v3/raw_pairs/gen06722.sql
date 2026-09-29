@@ -1,0 +1,1 @@
+SELECT id, job_title, salary, dept_id, hire_date, LAST_VALUE(dept_id) OVER (PARTITION BY job_title ORDER BY salary DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_dept_id, SUM(salary) OVER (PARTITION BY job_title ORDER BY hire_date, id) AS running_salary FROM employees

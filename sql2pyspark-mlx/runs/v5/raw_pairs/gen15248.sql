@@ -1,0 +1,1 @@
+SELECT o.status AS order_status, e.carrier, COUNT(*) AS cnt, AVG(e.cost) AS avg_cost FROM shipments e LEFT JOIN orders o ON e.order_id = o.id GROUP BY o.status, e.carrier ORDER BY avg_cost DESC NULLS FIRST

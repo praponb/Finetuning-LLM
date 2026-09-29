@@ -1,0 +1,1 @@
+select product_id, case when quantity >= 198 then 'high' when quantity >= 32 then 'mid' else 'low' end as quantity_bucket, month(last_restock) as last_restock_month, max(last_restock) as last_last_restock from inventory group by 1, 2, 3;

@@ -1,0 +1,1 @@
+SELECT accounts.account_type, accounts.customer_id, accounts.balance, customers.email, customers.credit_limit, customers.is_active FROM accounts JOIN customers ON customers.id = accounts.customer_id WHERE customers.segment IS NOT NULL;

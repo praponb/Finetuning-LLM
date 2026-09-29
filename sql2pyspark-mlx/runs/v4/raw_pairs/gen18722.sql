@@ -1,0 +1,1 @@
+SELECT id, customer_id, order_date, discount, status, shipping_fee, SUM(discount) OVER (PARTITION BY customer_id ORDER BY order_date, id) AS running_discount, ROUND(AVG(shipping_fee) OVER (PARTITION BY status ORDER BY order_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS shipping_fee_moving_avg_7 FROM orders WHERE status NOT IN ('CANCELLED', 'SHIPPED')

@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, i.product_id, s.sqft, s.opened_date, p.product_name, p.cost FROM inventory i INNER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id WHERE s.city = 'Singapore' AND SIZE(p.tags) >= 2

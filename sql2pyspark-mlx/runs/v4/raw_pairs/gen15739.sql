@@ -1,0 +1,1 @@
+SELECT id, status, start_date, monthly_fee FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY start_date DESC, id) AS pos FROM subscriptions WHERE MONTH(end_date) IN (1, 3, 10)) AS r WHERE pos = 1;

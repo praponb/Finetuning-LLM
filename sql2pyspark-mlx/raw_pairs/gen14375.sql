@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(p.amount) AS amount_count FROM payments p LEFT JOIN orders o ON p.order_id = o.id JOIN stores s ON o.store_id = s.id WHERE o.status IN ('RETURNED', 'CANCELLED') GROUP BY s.city ORDER BY s.city DESC;

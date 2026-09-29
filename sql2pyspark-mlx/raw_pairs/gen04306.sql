@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, product_id, last_restock, COALESCE(quantity, 0) AS quantity_filled FROM inventory WHERE quantity > 173) SELECT p.brand, COUNT(*) AS cnt, MIN(s.quantity_filled) AS min_quantity_filled FROM cleaned s INNER JOIN products p ON s.product_id = p.id GROUP BY CUBE (p.brand);

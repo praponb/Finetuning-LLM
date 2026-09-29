@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, account_type, status, MAX(balance) - MIN(balance) AS balance_range FROM accounts WHERE status IS NULL AND account_type = 'CREDIT' GROUP BY 1, 2, 3 HAVING balance_range > 40;

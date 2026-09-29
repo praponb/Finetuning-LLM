@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, ss.revenue, s.store_name, p.cost FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON ss.product_id = p.id WHERE UPPER(TRIM(s.store_name)) = 'SIAM FLAGSHIP';

@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(CASE WHEN status = 'RETURNED' THEN 1 END) returned_count, MAX(amount) max_amount FROM orders GROUP BY store_id) SELECT s.id, s.city, st.returned_count, st.max_amount FROM stores s INNER JOIN store_totals st ON s.id = st.store_id ORDER BY st.returned_count DESC

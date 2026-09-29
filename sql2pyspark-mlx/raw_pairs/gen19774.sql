@@ -1,0 +1,1 @@
+WITH orders_by_store AS (SELECT store_id, ROUND(STDDEV(amount), 2) stddev_amount FROM orders GROUP BY store_id) SELECT s.city, s.region, obs.stddev_amount FROM stores s LEFT JOIN orders_by_store obs ON s.id = obs.store_id WHERE obs.stddev_amount > 25 ORDER BY region ASC;

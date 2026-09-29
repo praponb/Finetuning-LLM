@@ -1,0 +1,1 @@
+SELECT c.country, MIN(s.started_at) AS min_started_at, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.country))) AS country_values FROM sessions s LEFT OUTER JOIN customers c ON c.id = s.customer_id GROUP BY c.country ORDER BY country, 3 LIMIT 10;

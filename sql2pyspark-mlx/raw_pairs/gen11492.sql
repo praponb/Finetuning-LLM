@@ -1,0 +1,1 @@
+SELECT o.customer_id, o.amount, o.status, s.store_name, s.opened_date, s.sqft, CONCAT_WS('-', s.store_name, s.region) AS store_name_region_key FROM orders o LEFT JOIN stores s ON o.store_id = s.id WHERE MONTH(s.opened_date) IN (2, 5, 10) OR s.city = 'Berlin' ORDER BY opened_date

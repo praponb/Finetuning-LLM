@@ -1,0 +1,1 @@
+SELECT ss.id, ss.units, ss.sale_date, ss.store_id, p.product_name, p.cost, p.price FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id WHERE NOT (ss.store_id IN (1, 4, 5) AND ss.store_id IN (1, 2, 3, 6));

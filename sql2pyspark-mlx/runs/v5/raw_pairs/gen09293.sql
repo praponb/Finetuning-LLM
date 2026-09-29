@@ -1,0 +1,1 @@
+SELECT id, account_type, balance, opened_date, CUME_DIST() OVER w_ordered AS balance_cume_dist, AVG(balance) OVER (PARTITION BY customer_id ORDER BY opened_date, id ROWS BETWEEN 5 PRECEDING AND 1 PRECEDING) AS balance_avg_5_prior FROM accounts WHERE account_type = 'CHECKING' WINDOW w_ordered AS (PARTITION BY status ORDER BY balance DESC);

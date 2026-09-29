@@ -1,0 +1,1 @@
+SELECT CASE WHEN d.budget >= 3866000 THEN 'high' WHEN d.budget >= 1362000 THEN 'mid' ELSE 'low' END budget_bucket, SUM(e.salary) total_salary, MAX(e.hire_date) latest_hire_date FROM employees e LEFT JOIN departments d ON e.dept_id = d.id GROUP BY CASE WHEN d.budget >= 3866000 THEN 'high' WHEN d.budget >= 1362000 THEN 'mid' ELSE 'low' END ORDER BY budget_bucket;

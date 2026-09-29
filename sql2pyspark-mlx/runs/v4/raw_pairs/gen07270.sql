@@ -1,0 +1,1 @@
+SELECT s.id, s.browser, c.credit_limit, c.city, c.is_active FROM sessions s INNER JOIN customers c ON c.id = s.customer_id WHERE s.device IN ('desktop', 'tablet', 'mobile') AND c.credit_limit >= 11500

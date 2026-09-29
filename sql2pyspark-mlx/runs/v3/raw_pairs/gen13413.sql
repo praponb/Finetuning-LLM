@@ -1,0 +1,1 @@
+select event_type, sum(case when page = '/product' then 1 else 0 end) as product_count from web_events where event_type in ('page_view', 'add_to_cart') and duration_sec is not null group by event_type order by product_count desc, event_type

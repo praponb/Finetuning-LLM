@@ -1,0 +1,1 @@
+SELECT a.customer_id, COUNT(CASE WHEN t.merchant = 'Lazada' THEN 1 END) lazada_count FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id WHERE a.balance < 69000 GROUP BY a.customer_id ORDER BY lazada_count DESC, a.customer_id DESC LIMIT 10

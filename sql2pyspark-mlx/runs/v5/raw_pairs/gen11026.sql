@@ -1,0 +1,1 @@
+select products.category, products.cost, inventory.product_id, inventory.store_id, inventory.quantity from products left join inventory on products.id = inventory.product_id where inventory.last_restock >= '2023-04-19';

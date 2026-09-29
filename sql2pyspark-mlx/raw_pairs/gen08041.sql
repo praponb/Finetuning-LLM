@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, brand, stock_qty, DENSE_RANK() OVER (PARTITION BY brand ORDER BY stock_qty DESC) AS rnk FROM products WHERE brand IS NOT NULL) SELECT id, brand, stock_qty FROM numbered WHERE rnk <= 2;

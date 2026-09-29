@@ -1,0 +1,1 @@
+with store_stats as (select store_id, sum(quantity) as total_quantity, max(quantity) - min(quantity) as quantity_range from inventory group by store_id) select s.sqft, s.region, ss.total_quantity, ss.quantity_range from stores s inner join store_stats ss on s.id = ss.store_id where ss.quantity_range >= 25;

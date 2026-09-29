@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, COUNT(CASE WHEN merchant = 'Grab' THEN 1 END) AS grab_count FROM transactions WHERE NOT is_flagged GROUP BY account_id) SELECT accounts.id, accounts.customer_id, account_stats.grab_count FROM accounts JOIN account_stats ON accounts.id = account_stats.account_id WHERE account_stats.grab_count >= 5;

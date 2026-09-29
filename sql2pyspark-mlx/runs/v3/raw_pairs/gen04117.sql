@@ -1,0 +1,1 @@
+SELECT brand, category_values, stddev_stock_qty FROM (SELECT brand, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty FROM products GROUP BY brand) AS agg WHERE stddev_stock_qty < 29 ORDER BY 3 DESC;

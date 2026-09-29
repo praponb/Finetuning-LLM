@@ -1,0 +1,1 @@
+SELECT inventory.product_id, inventory.quantity, store_sales.revenue, store_sales.store_id, store_sales.sale_date FROM inventory JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id;

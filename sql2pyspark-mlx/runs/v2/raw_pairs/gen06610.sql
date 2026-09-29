@@ -1,0 +1,1 @@
+SELECT accounts.account_type, COUNT(transactions.id) AS transaction_count, SUM(CASE WHEN transactions.merchant = 'Amazon' THEN transactions.amount ELSE 0 END) AS amazon_amount FROM accounts LEFT OUTER JOIN transactions ON accounts.id = transactions.account_id WHERE MONTH(accounts.opened_date) IN (2, 6, 9) GROUP BY accounts.account_type ORDER BY amazon_amount DESC

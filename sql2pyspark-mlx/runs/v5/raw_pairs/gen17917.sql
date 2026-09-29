@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, COUNT(DISTINCT revenue) AS unique_products, MIN(revenue) AS min_revenue, COUNT(units) AS units_count FROM store_sales WHERE product_id IN (4, 6, 8) GROUP BY sale_month HAVING SUM(units) > 90 ORDER BY min_revenue DESC;

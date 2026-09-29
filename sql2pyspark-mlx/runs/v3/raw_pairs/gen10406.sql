@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, COUNT(CASE WHEN country = 'US' THEN 1 END) AS us_count, MAX(started_at) AS latest_started_at FROM sessions WHERE device = 'desktop' GROUP BY customer_id) SELECT c.id, c.city, cs.us_count, cs.latest_started_at FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY cs.latest_started_at;

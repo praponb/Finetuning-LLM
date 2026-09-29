@@ -1,0 +1,1 @@
+SELECT s.browser, SUM(CASE WHEN we.page = '/cart' THEN 1 ELSE 0 END) AS cart_count, MAX(we.event_time) AS latest_event_time FROM web_events we INNER JOIN sessions s ON s.id = we.session_id GROUP BY s.browser ORDER BY latest_event_time;

@@ -1,0 +1,1 @@
+WITH AccountStats AS (SELECT account_id, COUNT(*) AS num_transactions FROM transactions WHERE txn_type IN ('CREDIT', 'DEBIT', 'REFUND') GROUP BY account_id) SELECT a.id, a.account_type, a.customer_id, A.num_transactions FROM accounts a JOIN AccountStats A ON a.id = A.account_id

@@ -1,0 +1,1 @@
+SELECT ss.id, ss.units, p.brand, s.city, COALESCE(s.rating, 0) AS rating_filled FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id ORDER BY ss.units DESC;

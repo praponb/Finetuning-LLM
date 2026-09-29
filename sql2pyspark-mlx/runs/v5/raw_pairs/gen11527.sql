@@ -1,0 +1,1 @@
+SELECT c.segment, c.is_active, COUNT(s.monthly_fee) AS monthly_fee_count, MIN(s.monthly_fee) AS min_monthly_fee FROM subscriptions s FULL OUTER JOIN customers c ON c.id = s.customer_id WHERE s.status NOT IN ('EXPIRED', 'PAUSED', 'CANCELLED') GROUP BY c.segment, c.is_active HAVING COUNT(s.monthly_fee) > 2

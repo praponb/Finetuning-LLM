@@ -1,0 +1,1 @@
+SELECT dept_name, SUM(budget) AS total_budget, COUNT(*) AS cnt, RANK() OVER (ORDER BY SUM(budget) DESC) AS rnk FROM departments WHERE dept_name = 'Engineering' GROUP BY dept_name ORDER BY cnt DESC, total_budget;

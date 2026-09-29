@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 12260 THEN 'high' WHEN sqft >= 4941 THEN 'mid' ELSE 'low' END AS sqft_bucket, region, SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END) AS tokyo_count, MAX(sqft) - MIN(sqft) AS sqft_range, COUNT(DISTINCT sqft) AS unique_citys FROM stores GROUP BY sqft_bucket, region

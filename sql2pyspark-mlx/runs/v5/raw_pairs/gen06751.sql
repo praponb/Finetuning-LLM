@@ -1,0 +1,1 @@
+SELECT id, service, log_ts, level, latency_ms, status_code, payload_json, context, GET_JSON_OBJECT(payload_json, '$.user.tier') AS user_tier, SHIFTRIGHT(status_code, 2) AS status_code_high, context['version'] AS version, ARRAY_CONTAINS(MAP_KEYS(context), 'version') AS has_version FROM app_logs WHERE status_code <= 331

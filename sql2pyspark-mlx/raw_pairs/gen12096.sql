@@ -1,0 +1,1 @@
+select status, paid_month, total_amount from (select status, date_trunc('MONTH', paid_at) as paid_month, sum(amount) as total_amount from payments group by status, date_trunc('MONTH', paid_at)) as s where total_amount < 3000 order by paid_month desc;

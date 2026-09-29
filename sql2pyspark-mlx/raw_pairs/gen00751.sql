@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(DISTINCT oi.quantity) AS unique_orders, MAX(oi.unit_price) - MIN(oi.unit_price) AS unit_price_range FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id GROUP BY o.channel ORDER BY unit_price_range;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, city, credit_limit FROM customers WHERE country = 'DE') PIVOT (MAX(credit_limit) FOR city IN ('Singapore', 'London', 'New York', 'Bangkok')) ORDER BY signup_month

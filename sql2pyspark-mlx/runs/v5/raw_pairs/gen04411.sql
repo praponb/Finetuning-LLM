@@ -1,0 +1,1 @@
+SELECT s.id, s.customer_id, s.account_type, s.opened_date, top1.txn_time FROM accounts s LEFT JOIN LATERAL (SELECT c.txn_time FROM transactions c WHERE c.account_id = s.id AND c.txn_time <= s.opened_date ORDER BY c.txn_time DESC, c.id DESC LIMIT 1) top1 ON TRUE

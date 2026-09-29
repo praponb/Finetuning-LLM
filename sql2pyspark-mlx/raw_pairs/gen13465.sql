@@ -1,0 +1,1 @@
+with by_dimension as (select p.channel, e.status as shipment_status, count(*) as rows_total, min(e.cost) as min_cost from shipments e left join orders p on e.order_id = p.id group by p.channel, e.status) select channel, shipment_status, rows_total, min_cost from by_dimension order by rows_total desc nulls first

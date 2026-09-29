@@ -1,0 +1,1 @@
+SELECT product_id, MONTH(sale_date) AS sale_month, COUNT(*) AS row_count, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales WHERE revenue < 2700 AND store_id IN (2, 4, 6) GROUP BY product_id, sale_month ORDER BY sale_month;

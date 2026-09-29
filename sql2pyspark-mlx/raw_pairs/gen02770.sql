@@ -1,0 +1,1 @@
+SELECT CASE WHEN credit_limit >= 13800 THEN 'high' WHEN credit_limit >= 3900 THEN 'mid' ELSE 'low' END credit_limit_bucket, SORT_ARRAY(COLLECT_SET(segment)) segment_list, ROUND((100 * SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_sg FROM customers WHERE city = 'Singapore' OR signup_date <= '2025-01-20' GROUP BY 1

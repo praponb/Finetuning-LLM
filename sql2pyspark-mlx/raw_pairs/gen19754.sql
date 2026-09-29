@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, supplier_name, city, rating, CONCAT(city, ' - ', country) AS city_country, COALESCE(city, 'N/A') AS city_filled FROM suppliers WHERE city IS NOT NULL) SELECT id, city FROM valid EXCEPT SELECT id, city FROM suppliers WHERE rating > 2.2

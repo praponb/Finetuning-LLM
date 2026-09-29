@@ -1,0 +1,1 @@
+with account_summary as (select account_id, max(txn_time) as latest_txn_time, sum(amount) as total_amount from transactions where amount <= 3600 group by account_id) select a.id, a.customer_id, as.latest_txn_time, as.total_amount from accounts a left outer join account_summary as on a.id = as.account_id where as.total_amount >= 21000;

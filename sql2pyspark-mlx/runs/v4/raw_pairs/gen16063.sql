@@ -1,0 +1,1 @@
+SELECT a.id, a.status, a.opened_date FROM accounts a WHERE a.customer_id = 35 AND a.customer_id NOT IN (SELECT id FROM customers WHERE segment = 'Corporate') ORDER BY opened_date, a.status, id LIMIT 20;

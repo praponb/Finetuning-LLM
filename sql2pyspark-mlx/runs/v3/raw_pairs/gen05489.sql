@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', o.order_date) AS order_month, o.channel, AVG(oi.unit_price) AS avg_unit_price FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id LEFT JOIN products p ON oi.product_id = p.id WHERE YEAR(p.launch_date) >= 2024 GROUP BY DATE_TRUNC('MONTH', o.order_date), o.channel ORDER BY avg_unit_price DESC, order_month, channel LIMIT 5

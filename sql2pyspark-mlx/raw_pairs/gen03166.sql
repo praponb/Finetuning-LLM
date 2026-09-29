@@ -1,0 +1,1 @@
+SELECT country, SUM(CASE WHEN country = 'TH' THEN 1 ELSE 0 END) AS th_count, AVG(age) AS avg_age, ROUND(AVG(credit_limit), 2) AS avg_credit_limit FROM customers GROUP BY country HAVING SUM(CASE WHEN country = 'TH' THEN 1 ELSE 0 END) < 27 ORDER BY avg_credit_limit DESC;

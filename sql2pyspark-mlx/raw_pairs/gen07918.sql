@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(*) AS num_order_items FROM order_items WHERE unit_price <= 110 GROUP BY order_id) SELECT o.status, o.shipping_fee, os.stddev_quantity, os.num_order_items FROM orders o LEFT JOIN order_summary os ON o.id = os.order_id WHERE os.num_order_items >= 7;

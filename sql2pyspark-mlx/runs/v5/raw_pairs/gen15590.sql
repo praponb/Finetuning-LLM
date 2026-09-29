@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CAST(is_remote AS INT) AS is_remote_flag FROM employees WHERE UPPER(TRIM(full_name)) = 'OLIVIA GARCIA') SELECT DATE_TRUNC('MONTH', hire_date) AS activity_month, SUM(salary) AS total_salary, COUNT(*) FILTER (WHERE level = 'L3') AS l3_rows, STDDEV_SAMP(salary) AS salary_stddev FROM valid GROUP BY activity_month

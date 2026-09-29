@@ -1,0 +1,1 @@
+SELECT YEAR(order_date) AS order_year, status, SORT_ARRAY(COLLECT_SET(status)) AS status_list, ROUND(AVG(discount), 2) AS avg_discount FROM orders WHERE status <> 'SHIPPED' GROUP BY order_year, status HAVING ROUND(AVG(discount), 2) < 37 ORDER BY order_year DESC;

@@ -1,0 +1,1 @@
+select o.channel, count(distinct s.cost) unique_orders from shipments s inner join orders o on s.order_id = o.id inner join stores st on st.id = o.store_id where st.opened_date >= '2025-07-01' group by o.channel order by unique_orders desc;

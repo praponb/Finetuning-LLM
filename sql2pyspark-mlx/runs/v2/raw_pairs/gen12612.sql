@@ -1,0 +1,1 @@
+SELECT a.status, COUNT(DISTINCT t.amount) AS unique_txn_types, COUNT(DISTINCT t.amount) AS unique_accounts FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id GROUP BY a.status ORDER BY a.status ASC

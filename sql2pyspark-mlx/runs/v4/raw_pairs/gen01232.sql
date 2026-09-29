@@ -1,0 +1,1 @@
+select opened_date as event_date, 'account' as source from accounts union all select delivered_date as event_date, 'shipment' as source from shipments where delivered_date <= '2025-04-12' order by event_date

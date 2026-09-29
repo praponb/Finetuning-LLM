@@ -1,0 +1,1 @@
+WITH web_events_by_session AS (SELECT session_id, COUNT(duration_sec) duration_sec_count FROM web_events WHERE duration_sec <> 399 GROUP BY session_id) SELECT s.id, s.customer_id, webs.duration_sec_count FROM sessions s LEFT OUTER JOIN web_events_by_session webs ON s.id = webs.session_id WHERE webs.duration_sec_count >= 10;

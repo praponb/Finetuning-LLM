@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.quantity, i.store_id, ss.revenue, DATE_ADD(i.last_restock, 72) AS last_restock_plus_72d FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.quantity <> 68;

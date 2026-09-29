@@ -1,0 +1,1 @@
+SELECT id, store_id, last_restock, product_id, CASE WHEN quantity >= 247 THEN 'High' WHEN quantity >= 50 THEN 'Medium' ELSE 'Low' END AS quantity_level FROM inventory ORDER BY product_id DESC, id LIMIT 5

@@ -1,0 +1,1 @@
+SELECT d.dept_name, CASE WHEN d.location IN ('Berlin', 'Tokyo') THEN 'priority' ELSE 'other' END AS location_group, COUNT(CASE WHEN e.job_title = 'Director' THEN 1 END) AS director_count FROM employees e LEFT JOIN departments d ON e.dept_id = d.id GROUP BY d.dept_name, CASE WHEN d.location IN ('Berlin', 'Tokyo') THEN 'priority' ELSE 'other' END

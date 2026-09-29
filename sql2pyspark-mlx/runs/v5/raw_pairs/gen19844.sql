@@ -1,0 +1,1 @@
+SELECT id, country, signup_date, age, city, SUM(age) OVER (PARTITION BY country ORDER BY signup_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_age, SUM(age) OVER (PARTITION BY city ORDER BY signup_date, id) AS running_age_2 FROM customers;

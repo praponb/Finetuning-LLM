@@ -1,0 +1,1 @@
+SELECT YEAR(txn_time) AS txn_year, SUM(CASE WHEN txn_type = 'DEBIT' THEN amount ELSE 0 END) AS debit_amount FROM transactions WHERE is_flagged = TRUE AND amount > 1700 AND amount BETWEEN 3000 AND 3200 GROUP BY txn_year

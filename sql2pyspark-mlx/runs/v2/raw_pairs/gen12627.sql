@@ -1,0 +1,1 @@
+SELECT e.email, d.location, d.dept_name, d.budget, DATE_FORMAT(e.hire_date, 'yyyy-MM') hire_date_label FROM employees e RIGHT JOIN departments d ON e.dept_id = d.id WHERE d.location = 'Tokyo' AND e.email LIKE '%@company.co' ORDER BY 1 DESC

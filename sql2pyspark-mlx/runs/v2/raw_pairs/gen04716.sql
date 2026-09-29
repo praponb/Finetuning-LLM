@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, SUM(CASE WHEN channel = 'web' THEN 1 ELSE 0 END) AS web_count, MIN(shipping_fee) AS min_shipping_fee FROM orders GROUP BY store_id) SELECT s.id, s.store_name, s.region, ss.web_count, ss.min_shipping_fee FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id WHERE ss.web_count >= 68 ORDER BY s.store_name DESC;

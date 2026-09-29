@@ -1,0 +1,1 @@
+SELECT o.status, o.channel, SUM(CASE WHEN s.status = 'IN_TRANSIT' THEN 1 ELSE 0 END) AS in_transit_count FROM shipments s RIGHT JOIN orders o ON s.order_id = o.id GROUP BY o.status, o.channel ORDER BY channel

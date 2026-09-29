@@ -1,0 +1,1 @@
+SELECT o.channel, YEAR(o.order_date) AS order_year, AVG(oi.quantity) AS avg_quantity FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id JOIN products p ON p.id = oi.product_id WHERE oi.unit_price < 360 GROUP BY o.channel, YEAR(o.order_date) HAVING AVG(oi.quantity) > 4.8 ORDER BY order_year DESC, channel LIMIT 5;

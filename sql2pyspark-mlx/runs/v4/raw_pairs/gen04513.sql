@@ -1,0 +1,1 @@
+select p.category, max(oi.quantity) as max_quantity from order_items oi left join orders o on o.id = oi.order_id join products p on p.id = oi.product_id where o.store_id is null group by p.category order by p.category limit 50;

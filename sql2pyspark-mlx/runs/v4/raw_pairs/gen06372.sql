@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT brand, category FROM products INTERSECT SELECT brand, category FROM products WHERE LOWER(product_name) LIKE '%apt%'), kept_rows AS (SELECT s.* FROM products s INNER JOIN kept_keys k ON s.brand = k.brand AND s.category = k.category) SELECT id, product_name, category, brand, price, stock_qty, launch_date, tags FROM kept_rows ORDER BY price DESC;

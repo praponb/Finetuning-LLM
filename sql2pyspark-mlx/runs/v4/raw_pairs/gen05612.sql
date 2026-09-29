@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, store_id, last_restock, MIN(quantity) OVER (PARTITION BY product_id) product_id_min_quantity, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock, id) row_num FROM inventory;

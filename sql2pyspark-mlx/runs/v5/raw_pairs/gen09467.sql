@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, host, log_ts, level, latency_ms, status_code, k, v FROM app_logs LATERAL VIEW EXPLODE(context) x AS k, v) SELECT id, service, host, log_ts, level, latency_ms, status_code, k, v FROM lines ORDER BY latency_ms, status_code

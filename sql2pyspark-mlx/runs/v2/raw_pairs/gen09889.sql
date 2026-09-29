@@ -1,0 +1,1 @@
+SELECT country, MAX(credit_limit) max_credit_limit, COUNT(DISTINCT credit_limit) unique_segments FROM customers WHERE age != 59 AND country != 'TH' AND segment = 'Corporate' GROUP BY country ORDER BY max_credit_limit DESC, unique_segments DESC;

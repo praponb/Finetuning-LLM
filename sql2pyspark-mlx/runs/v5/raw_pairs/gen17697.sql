@@ -1,0 +1,1 @@
+with supplier_stats as (select supplier_id, sum(stock_qty) as total_stock_qty, sum(cost) as total_cost from products where brand in ('Umbrella', 'Globex', 'Acme') group by supplier_id) select s.id, s.supplier_name, s.rating, ss.total_stock_qty, ss.total_cost from suppliers s join supplier_stats ss on s.id = ss.supplier_id order by ss.total_stock_qty desc, id limit 50

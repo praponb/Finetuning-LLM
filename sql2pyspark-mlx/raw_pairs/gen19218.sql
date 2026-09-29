@@ -1,0 +1,1 @@
+with SessionTotals as (select session_id, min(event_time) as min_event_time from web_events group by session_id) select s.country, S.min_event_time from sessions s left join SessionTotals S on s.id = S.session_id order by min_event_time asc;

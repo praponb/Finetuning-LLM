@@ -1,0 +1,1 @@
+with Base as (select *, case when merchant = '7-Eleven' then 1 else 0 end as is_7_eleven from transactions where account_id in (6, 28)), summary as (select txn_type, min(txn_time) as min_txn_time from Base group by txn_type) select txn_type, min_txn_time from summary order by txn_type desc;

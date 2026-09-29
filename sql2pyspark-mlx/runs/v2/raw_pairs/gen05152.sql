@@ -1,0 +1,1 @@
+SELECT id, manager_id, hire_date, salary, LAST_VALUE(salary) OVER (PARTITION BY manager_id ORDER BY hire_date DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_salary FROM employees

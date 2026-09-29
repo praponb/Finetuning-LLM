@@ -1,0 +1,1 @@
+SELECT order_items.order_id, orders.channel, orders.shipping_fee, products.cost, products.brand FROM order_items JOIN orders ON order_items.order_id = orders.id LEFT JOIN products ON order_items.product_id = products.id ORDER BY cost DESC

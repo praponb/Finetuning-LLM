@@ -1,0 +1,1 @@
+SELECT QUARTER(hire_date) AS hire_quarter, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, MIN(hire_date) AS min_hire_date FROM employees WHERE dept_id IN (10, 36) GROUP BY QUARTER(hire_date) HAVING SUM(CASE WHEN job_title = 'Director' THEN 1 ELSE 0 END) < 75

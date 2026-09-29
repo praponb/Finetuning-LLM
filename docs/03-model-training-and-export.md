@@ -11,7 +11,8 @@ The project has used two base models in the `Qwen2.5-Coder` family:
 | Version | Base Model | Layers | Parameters | Context / Seq Len | Role |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **v1–v5** | `mlx-community/Qwen2.5-Coder-3B-Instruct-4bit` | 36 transformer blocks | 3.09 B | 3,200 tokens (v4/v5) | Fast training (~5.5 h) and fast serving (~3-4 s/query). Solves 95% of hold-out queries. |
-| **v6** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Higher capacity for long, multi-CTE pipelines and complex nested expressions (v6: best on every eval set; still loops on `real001`). |
+| **v6–v7** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Higher capacity for long, multi-CTE pipelines and complex nested expressions (v7: 61/62 holdout, 137/150 fixed test). |
+| **v8** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Fine-tuned on `complex_v8` (10,000 new complex pairs + 7,000 v7 mix, 20 new tables in 6 domains). |
 
 ### Why scale from 3B to 7B in v6?
 Across v1 through v5, 3B models achieved 95% accuracy on classic queries and 56% on v4 features, but scored 0/4 on real-world queries due to repetition loops (`real001` repeating window definitions until token exhaustion) and syntax slips under heavy nesting. While Kimi K3 repair fixes these in post-processing, a larger 7B base model provides the intrinsic representation capacity needed to generate dense, multi-stage pipelines end-to-end.
@@ -251,8 +252,10 @@ Current tags:
 
 `sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v7** weights (last completed export); Ollama keeps its own copy of every tag. The v2–v6 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` … `runs/v6/` (v7's adapters are in `sql2pyspark-mlx/adapters/`; v6 was trained on the v5 data); their GGUFs live inside Ollama. To serve a model on another machine (e.g. the Ubuntu server behind sql2pyspark.praponb.com), copy `sql2pyspark.gguf` and `Modelfile` there and run `ollama create sql2pyspark -f Modelfile`; see [Server Deployment](08-server-deployment.md).
 
-The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v8`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
+The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v6`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
 
 For v7, [eval/start_training_v7.sh](../eval/start_training_v7.sh) and [eval/post_training_v7.sh](../eval/post_training_v7.sh) provide unattended orchestration: waits for the v7 dataset build and v6 Kimi repair, terminates background Docker and Ollama models to free GPU memory, starts `make train` (2,400 steps, ~4.2 h), runs `make export TAG=v7`, benchmarks across all 4 evaluation sets with `--timeout 600`, reloads Docker, and executes the Kimi K3 repair loop on v7's real-query replies.
+
+For v8, [eval/start_training_v8.sh](../eval/start_training_v8.sh) and [eval/post_training_v8.sh](../eval/post_training_v8.sh) automate the training of `complex_v8` (`lora_config.yaml`, continuing from v7 adapters on the 10,000 new pairs + 7,000 v7 mix), export as `sql2pyspark:v8`, and run evaluation across all benchmarks including the new complex_v8 test set sample.
 
 The model is served at `POST http://localhost:11434/api/chat`.

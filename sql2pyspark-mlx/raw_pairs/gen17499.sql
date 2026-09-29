@@ -1,0 +1,1 @@
+SELECT ss.sale_date, ss.store_id, p.product_name, p.cost, s.city FROM store_sales ss RIGHT OUTER JOIN products p ON ss.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id ORDER BY ss.sale_date DESC;

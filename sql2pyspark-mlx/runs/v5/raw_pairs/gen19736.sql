@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, currency, val FROM price_tiers LATERAL VIEW OUTER EXPLODE(discounts) e AS val) SELECT plan, currency, val, SUM(val) OVER (PARTITION BY plan) AS plan_sum_val, RANK() OVER (PARTITION BY currency ORDER BY val DESC) AS val_rank FROM flattened

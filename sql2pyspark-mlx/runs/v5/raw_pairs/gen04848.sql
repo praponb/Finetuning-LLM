@@ -1,0 +1,1 @@
+SELECT dept_name, CASE WHEN budget >= 3813000 THEN 'high' WHEN budget >= 906000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(budget) AS budget_count, AVG(budget) AS avg_budget FROM departments GROUP BY 1, 2 HAVING SUM(CASE WHEN location = 'London' THEN budget ELSE 0 END) >= 30 ORDER BY budget_count DESC

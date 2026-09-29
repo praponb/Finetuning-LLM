@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, is_active, SUM(age) AS total_age, COUNT(*) AS customer_count, AVG(credit_limit) AS avg_credit_limit FROM customers WHERE signup_date > '2024-03-03' GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM'), is_active ORDER BY customer_count DESC, signup_month, is_active LIMIT 10;

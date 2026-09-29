@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN status IN ('CLOSED', 'FROZEN') THEN 'core' ELSE 'other' END status_group, SUM(balance) total_balance FROM accounts WHERE status IN ('FROZEN', 'CLOSED') GROUP BY CASE WHEN status IN ('CLOSED', 'FROZEN') THEN 'core' ELSE 'other' END) x WHERE total_balance > 196000;

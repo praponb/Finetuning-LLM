@@ -1,0 +1,1 @@
+select *, sum(amount) over (partition by account_id order by amount, id rows between unbounded preceding and current row) running_amount, max(amount) over (partition by account_id, merchant order by cast(txn_time as bigint) range between 604800 preceding and current row) amount_max_7d from transactions;

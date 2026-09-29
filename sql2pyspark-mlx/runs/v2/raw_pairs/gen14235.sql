@@ -1,0 +1,1 @@
+WITH RankedAccounts AS (SELECT id, status, opened_date, RANK() OVER (PARTITION BY status ORDER BY opened_date DESC) AS rn FROM accounts) SELECT id, status, opened_date FROM RankedAccounts WHERE rn <= 5 ORDER BY id DESC

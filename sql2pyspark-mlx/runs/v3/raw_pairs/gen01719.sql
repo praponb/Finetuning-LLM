@@ -1,0 +1,1 @@
+SELECT a.account_type, SUM(CASE WHEN t.txn_type = 'CREDIT' THEN 1 ELSE 0 END) AS credit_count, MIN(t.amount) AS min_amount FROM transactions t LEFT JOIN accounts a ON a.id = t.account_id GROUP BY a.account_type

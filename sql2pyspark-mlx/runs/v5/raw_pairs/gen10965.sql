@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END AS rating_bucket, MAX(rating) - MIN(rating) AS rating_range, COUNT(rating) AS rating_count, MAX(rating) AS max_rating FROM suppliers WHERE LENGTH(supplier_name) >= 14 AND country IN ('UK', 'SG') AND country IN ('TH', 'JP') GROUP BY rating_bucket HAVING COUNT(rating) < 2

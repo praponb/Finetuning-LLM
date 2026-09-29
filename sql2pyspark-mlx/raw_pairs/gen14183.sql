@@ -1,0 +1,1 @@
+SELECT id, account_id, txn_time, merchant FROM (SELECT *, DENSE_RANK() OVER (PARTITION BY account_id ORDER BY txn_time DESC) AS pos FROM transactions WHERE txn_type IN ('REFUND', 'FEE')) AS t WHERE pos = 1;

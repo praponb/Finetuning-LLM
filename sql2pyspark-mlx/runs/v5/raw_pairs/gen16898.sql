@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.device FROM sessions WHERE sessions.country NOT IN ('DE', 'TH', 'US') AND sessions.customer_id IN (SELECT id FROM customers WHERE segment NOT IN ('SMB', 'Consumer')) ORDER BY device DESC

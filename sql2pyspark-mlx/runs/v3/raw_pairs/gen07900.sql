@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, p.launch_date, p.cost, s.sqft, s.region FROM inventory i INNER JOIN products p ON p.id = i.product_id LEFT JOIN stores s ON i.store_id = s.id WHERE SIZE(p.tags) > 2 OR LOWER(s.store_name) LIKE '%all%' ORDER BY p.cost DESC;

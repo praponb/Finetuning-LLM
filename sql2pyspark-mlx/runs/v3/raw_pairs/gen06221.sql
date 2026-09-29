@@ -1,0 +1,1 @@
+select s.id, s.browser, s.started_at, s.device, c.credit_limit, concat_ws(',', s.country, s.device) as country_device_key from sessions s inner join customers c on c.id = s.customer_id where not (s.customer_id = 35 or s.device in ('mobile', 'tablet'));

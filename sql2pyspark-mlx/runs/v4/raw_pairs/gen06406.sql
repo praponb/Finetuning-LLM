@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT firmware FROM device_readings EXCEPT SELECT firmware FROM device_readings WHERE firmware = '2.0.1'), kept_rows AS (SELECT s.* FROM device_readings s INNER JOIN kept_keys k ON s.firmware = k.firmware) SELECT id, device_code, reading_ts, temp_c, humidity, pressure, status_bits FROM kept_rows ORDER BY status_bits DESC

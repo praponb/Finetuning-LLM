@@ -1,0 +1,1 @@
+with base as (select id, customer_id, account_type, balance, opened_date, status, abs(balance) as abs_balance, coalesce(status, 'OTHER') as resolved_status from accounts where status is distinct from 'CLOSED' and customer_id is not null) select * from (select status, account_type, abs_balance from base) src pivot (max(abs_balance) for account_type in ('CREDIT', 'SAVINGS'));

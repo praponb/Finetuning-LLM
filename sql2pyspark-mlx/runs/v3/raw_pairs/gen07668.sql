@@ -1,0 +1,1 @@
+SELECT CASE WHEN credit_limit >= 12700 THEN 'high' WHEN credit_limit >= 7100 THEN 'mid' ELSE 'low' END AS credit_limit_bucket, SUM(CASE WHEN segment = 'SMB' THEN credit_limit ELSE 0 END) AS smb_credit_limit FROM customers GROUP BY credit_limit_bucket ORDER BY smb_credit_limit;

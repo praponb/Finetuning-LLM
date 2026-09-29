@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE last_restock < '2023-03-07' GROUP BY product_id) SELECT p.id, p.cost, p.product_name, pt.quantity_range FROM products p JOIN product_totals pt ON p.id = pt.product_id ORDER BY product_name;

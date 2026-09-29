@@ -1,0 +1,1 @@
+SELECT CASE WHEN monthly_fee >= 223 THEN 'LARGE' ELSE 'SMALL' END AS monthly_fee_tier, COUNT_IF(status = 'EXPIRED') AS expired_events, SIZE(COLLECT_SET(plan)) AS num_plans, COUNT(*) FILTER (WHERE plan = 'basic') AS basic_rows FROM subscriptions GROUP BY monthly_fee_tier ORDER BY monthly_fee_tier DESC

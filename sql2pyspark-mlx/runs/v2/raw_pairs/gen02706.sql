@@ -1,0 +1,1 @@
+select date_trunc('MONTH', sale_date) as sale_month, sum(revenue) as total_revenue from store_sales where product_id = 7 and product_id in (3, 4, 5, 7) and revenue between 3600 and 3900 group by sale_month having sum(revenue) >= 20000

@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, MIN(delivered_date) first_delivered_date FROM shipments WHERE carrier IS NOT NULL GROUP BY order_id) SELECT o.discount, o.order_date, os.first_delivered_date FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id ORDER BY discount DESC;

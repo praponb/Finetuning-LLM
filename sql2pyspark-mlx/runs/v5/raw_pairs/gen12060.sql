@@ -1,0 +1,4 @@
+SELECT p.id, p.launch_date, s.rating
+FROM products p
+LEFT JOIN suppliers s ON p.supplier_id = s.id
+WHERE p.category <> 'Fashion' AND s.rating > 2.7;

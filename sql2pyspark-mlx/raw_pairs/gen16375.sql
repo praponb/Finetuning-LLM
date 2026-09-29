@@ -1,0 +1,1 @@
+SELECT o.status, COUNT(CASE WHEN s.carrier = 'Kerry' THEN 1 END) AS kerry_count, MAX(s.cost) - MIN(s.cost) AS cost_range FROM shipments s INNER JOIN orders o ON s.order_id = o.id WHERE o.store_id IS NULL GROUP BY o.status HAVING kerry_count >= 3

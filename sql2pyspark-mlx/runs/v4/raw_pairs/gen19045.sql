@@ -1,0 +1,1 @@
+SELECT s.city, MONTH(s.opened_date) AS opened_month, MIN(i.quantity) AS min_quantity FROM inventory i LEFT JOIN stores s ON s.id = i.store_id JOIN products p ON i.product_id = p.id WHERE p.supplier_id = 18 GROUP BY s.city, MONTH(s.opened_date);

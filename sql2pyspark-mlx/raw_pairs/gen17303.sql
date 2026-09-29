@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, amount, UPPER(status) AS status_upper FROM payments WHERE paid_at >= TO_TIMESTAMP('2023-10-18 16:00:00') AND paid_at < '2025-09-01') SELECT id, amount, LAG(amount, 1, 0) OVER (ORDER BY amount, id) AS prev_amount, LEAD(amount, 1, 0) OVER (ORDER BY amount, id) AS next_amount, LEAD(amount, 1, 0) OVER (ORDER BY amount, id) AS next_amount_2 FROM cleaned;

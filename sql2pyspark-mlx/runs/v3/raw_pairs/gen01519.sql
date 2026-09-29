@@ -1,0 +1,1 @@
+select is_flagged, sum(amount) as total_amount, round(sum(amount) * 100.0 / sum(sum(amount)) over (), 2) as pct_of_total from transactions where account_id in (17, 40) group by is_flagged order by total_amount;

@@ -1,0 +1,1 @@
+SELECT s.id, s.browser, COUNT(we.id) web_event_count, COUNT(we.duration_sec) duration_sec_count, SUM(CASE WHEN we.event_type = 'click' THEN 1 ELSE 0 END) click_count FROM sessions s LEFT JOIN web_events we ON s.id = we.session_id GROUP BY s.id, s.browser HAVING COUNT(we.duration_sec) > 3 ORDER BY 3;

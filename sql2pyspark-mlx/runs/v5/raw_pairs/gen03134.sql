@@ -1,0 +1,1 @@
+SELECT id, shipped_date, carrier, LAST_VALUE(carrier) OVER (ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_carrier FROM shipments WHERE carrier <> 'Kerry';

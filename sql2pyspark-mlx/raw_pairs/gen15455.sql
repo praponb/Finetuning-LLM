@@ -1,0 +1,1 @@
+select t.id, t.account_id, t.txn_type, a.account_type, a.balance, c.age from transactions t full outer join accounts a on t.account_id = a.id inner join customers c on a.customer_id = c.id where a.status = 'OPEN' and a.balance <= 67000;

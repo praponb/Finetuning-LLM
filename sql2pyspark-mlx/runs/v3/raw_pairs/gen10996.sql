@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', launch_date) AS launch_month, category, SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END) AS umbrella_count FROM products GROUP BY DATE_TRUNC('MONTH', launch_date), category;

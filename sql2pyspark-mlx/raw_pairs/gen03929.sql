@@ -1,0 +1,1 @@
+SELECT ss.store_id, ss.product_id, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id IN (1, 3, 7, 10) GROUP BY ss.store_id, ss.product_id

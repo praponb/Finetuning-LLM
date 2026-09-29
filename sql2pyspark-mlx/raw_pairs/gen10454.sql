@@ -1,0 +1,1 @@
+select id, city, sqft, store_name, add_months(opened_date, 6) opened_date_plus_months from stores where month(opened_date) in (4, 5, 7) and opened_date between '2023-07-01' and '2024-08-01' order by city desc;

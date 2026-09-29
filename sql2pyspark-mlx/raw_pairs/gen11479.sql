@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', p.launch_date) AS launch_month, ROUND(AVG(i.quantity), 2) AS avg_quantity, MIN(i.last_restock) AS first_last_restock FROM inventory i LEFT JOIN products p ON p.id = i.product_id INNER JOIN stores s ON i.store_id = s.id WHERE s.city = 'London' GROUP BY DATE_TRUNC('MONTH', p.launch_date);

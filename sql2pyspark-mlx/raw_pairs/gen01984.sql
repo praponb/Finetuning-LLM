@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, channel, promo_code, ends_on, discount_pct, ADD_MONTHS(starts_on, 6) AS starts_on_plus_months FROM promotions WHERE channel IS NOT NULL AND promo_code IN ('VIP', 'WELCOME5')) SELECT promo_code, channel FROM filtered INTERSECT SELECT promo_code, channel FROM promotions WHERE promo_code = 'BUNDLE';

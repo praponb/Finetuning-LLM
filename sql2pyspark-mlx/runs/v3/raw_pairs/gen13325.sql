@@ -1,0 +1,1 @@
+SELECT payments.id, payments.order_id, orders.status, orders.store_id, orders.order_date, CAST(payments.amount AS INT) AS amount_int FROM payments JOIN orders ON payments.order_id = orders.id WHERE payments.status IN ('SUCCESS', 'FAILED') AND orders.amount IS NOT NULL;

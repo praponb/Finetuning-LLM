@@ -1,0 +1,1 @@
+select case when amount >= 1590 then 'high' when amount >= 430 then 'mid' else 'low' end as amount_bucket, round((100 * sum(case when method = 'promptpay' then 1 else 0 end)) / count(*), 1) as pct_promptpay, min(amount) as min_amount from payments group by case when amount >= 1590 then 'high' when amount >= 430 then 'mid' else 'low' end order by amount_bucket;

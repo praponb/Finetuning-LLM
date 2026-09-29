@@ -1,0 +1,1 @@
+SELECT unit_price, CASE WHEN unit_price >= 350 THEN 'High' WHEN unit_price >= 130 THEN 'Medium' ELSE 'Low' END AS unit_price_tier FROM order_items WHERE product_id IS NULL AND (product_id IN (25, 35, 36) OR quantity BETWEEN 4 AND 6)

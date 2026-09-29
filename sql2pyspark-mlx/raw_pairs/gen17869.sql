@@ -1,0 +1,1 @@
+WITH RecentStores AS (SELECT * FROM stores WHERE opened_date >= '2023-05-01'), region_summary AS (SELECT region, SUM(CASE WHEN region = 'East' THEN 1 ELSE 0 END) AS east_count FROM RecentStores GROUP BY region) SELECT * FROM region_summary WHERE east_count > 79 ORDER BY east_count, region;

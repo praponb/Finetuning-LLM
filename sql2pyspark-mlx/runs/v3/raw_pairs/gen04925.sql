@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM shipments WHERE order_id IN (19, 36)), summary AS (SELECT order_id, MAX(cost) AS max_cost FROM base GROUP BY order_id) SELECT * FROM summary WHERE max_cost < 82 ORDER BY order_id DESC LIMIT 10;

@@ -1,0 +1,1 @@
+SELECT t.id, t.account_id, t.txn_type, a.account_type, a.customer_id, c.city, CEIL(c.age) AS age_whole FROM transactions t RIGHT JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON c.id = a.customer_id WHERE t.account_id = 3 ORDER BY a.customer_id DESC;

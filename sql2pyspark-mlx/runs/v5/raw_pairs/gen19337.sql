@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN method IN ('promptpay', 'paypal') THEN 'core' ELSE 'other' END AS method_group, MIN(amount) AS min_amount, SUM(CASE WHEN method = 'cash' THEN 1 ELSE 0 END) AS cash_count FROM payments GROUP BY CASE WHEN method IN ('promptpay', 'paypal') THEN 'core' ELSE 'other' END) AS sub WHERE cash_count > 52

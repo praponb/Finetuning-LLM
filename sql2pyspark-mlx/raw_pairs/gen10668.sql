@@ -1,0 +1,1 @@
+with filtered as (select *, add_months(launch_date, 1) as launch_date_plus_months, initcap(trim(product_name)) as product_name_title, coalesce(brand, 'NONE') as brand_filled from products where brand is distinct from 'Initech' and category = 'Home') select * from (select id, brand, cost, price from filtered) src unpivot (val for measure in (cost as COST_VAL, price))

@@ -1,0 +1,1 @@
+select o.channel, o.status, max(oi.unit_price) as max_unit_price, max(oi.quantity) as max_quantity from order_items oi inner join orders o on oi.order_id = o.id where o.shipping_fee > 27 group by o.channel, o.status order by o.channel desc

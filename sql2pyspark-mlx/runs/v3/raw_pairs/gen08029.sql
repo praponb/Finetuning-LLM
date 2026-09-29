@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, status, balance, account_type, ROW_NUMBER() OVER (PARTITION BY status ORDER BY balance DESC, id) rn FROM accounts WHERE account_type != 'LOAN') SELECT id, status, balance, account_type FROM ranked WHERE rn = 1

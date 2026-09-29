@@ -1,0 +1,1 @@
+SELECT channel, SUM(shipping_fee) AS total_shipping_fee FROM orders WHERE status IN ('RETURNED', 'COMPLETED', 'CANCELLED') GROUP BY channel HAVING total_shipping_fee >= 140 ORDER BY total_shipping_fee DESC;

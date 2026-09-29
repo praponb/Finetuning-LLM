@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(i.quantity) quantity_count, MIN(i.quantity) min_quantity FROM inventory i LEFT JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.city HAVING MIN(i.quantity) > 130 ORDER BY min_quantity ASC;

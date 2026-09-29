@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, AVG(salary) AS avg_salary, ROUND((100 * SUM(CASE WHEN level = 'L3' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l3 FROM employees WHERE hire_date <= '2024-07-15' GROUP BY dept_id) SELECT d.id, d.budget, d.dept_name, ds.avg_salary, ds.pct_l3 FROM departments d LEFT OUTER JOIN department_summary ds ON d.id = ds.dept_id ORDER BY 1;

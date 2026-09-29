@@ -1,0 +1,1 @@
+SELECT c.id, c.is_active, c.country, t.total_count FROM customers c INNER JOIN (SELECT customer_id, COUNT(*) AS total_count FROM sessions WHERE customer_id IS NULL GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY t.total_count DESC, id LIMIT 10

@@ -1,0 +1,1 @@
+SELECT id, budget, CONCAT(dept_name, ' - ', location) AS dept_name_location FROM departments WHERE dept_name NOT IN ('Finance', 'Marketing') AND location IN ('London', 'New York', 'Singapore') AND location IN ('Bangkok', 'Berlin');

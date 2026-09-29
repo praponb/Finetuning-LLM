@@ -1,0 +1,1 @@
+SELECT id, revenue, product_id, store_id, units, ROW_NUMBER() OVER (ORDER BY revenue, id) row_num, LAST_VALUE(revenue) OVER (PARTITION BY product_id, store_id ORDER BY units DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_revenue FROM store_sales

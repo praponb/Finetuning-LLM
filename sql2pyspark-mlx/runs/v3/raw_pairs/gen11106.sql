@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, oi.quantity, o.customer_id, c.is_active FROM order_items oi JOIN orders o ON o.id = oi.order_id RIGHT JOIN customers c ON c.id = o.customer_id WHERE o.amount BETWEEN 1320 AND 1350;

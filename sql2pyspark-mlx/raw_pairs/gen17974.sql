@@ -1,0 +1,2 @@
+SELECT carrier
+FROM shipments;

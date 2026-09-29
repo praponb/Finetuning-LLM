@@ -1,0 +1,1 @@
+SELECT s.order_id, s.delivered_date, o.customer_id, o.discount, o.shipping_fee FROM shipments s LEFT JOIN orders o ON s.order_id = o.id WHERE MONTH(o.order_date) IN (10, 11, 12) OR MONTH(s.shipped_date) IN (3, 5, 7);

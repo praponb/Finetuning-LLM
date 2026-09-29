@@ -1,0 +1,1 @@
+SELECT customer_id, status, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, SUM(CASE WHEN status = 'ACTIVE' THEN monthly_fee ELSE 0 END) AS active_monthly_fee, COUNT(DISTINCT monthly_fee) AS unique_customers FROM subscriptions WHERE customer_id IN (11, 40) AND monthly_fee IS NOT NULL GROUP BY CUBE(customer_id, status) ORDER BY customer_id DESC;

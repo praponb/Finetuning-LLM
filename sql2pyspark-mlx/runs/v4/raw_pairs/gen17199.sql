@@ -1,0 +1,1 @@
+select date_trunc('quarter', order_date) as quarter_start, count_if(channel = 'mobile') as mobile_events, approx_percentile(shipping_fee, array(0.25, 0.5, 0.75)) as shipping_fee_quartiles, count(case when channel = 'mobile' then 1 end) as mobile_count from orders group by 1

@@ -1,0 +1,1 @@
+select * from (select quarter(event_time) as event_quarter, sum(case when page = '/search' then 1 else 0 end) as search_count from web_events group by quarter(event_time)) as s where search_count < 59 order by event_quarter desc, search_count desc;

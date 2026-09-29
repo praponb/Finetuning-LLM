@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, account_id, amount, txn_time, merchant, CONCAT_WS('/', txn_type, merchant) AS txn_type_merchant_key FROM transactions WHERE account_id IN (16, 26, 35)) SELECT * FROM (SELECT account_id, merchant, amount FROM valid) src PIVOT (SUM(amount) AS amount, COUNT(1) AS cnt FOR merchant IN ('Amazon' AS amazon, 'Starbucks' AS starbucks));

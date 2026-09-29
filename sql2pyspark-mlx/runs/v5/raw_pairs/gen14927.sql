@@ -1,0 +1,1 @@
+with src as (select * from shipments where month(shipped_date) in (4, 5, 9) and order_id in (7, 13, 16, 22)), summary as (select status, count(case when carrier = 'Kerry' then 1 end) kerry_count from src group by status) select status, kerry_count from summary where kerry_count > 7

@@ -1,0 +1,1 @@
+SELECT products.id, products.product_name, products.launch_date FROM products WHERE products.stock_qty <> 339 AND EXISTS (SELECT 1 FROM inventory WHERE inventory.product_id = products.id) ORDER BY launch_date DESC;

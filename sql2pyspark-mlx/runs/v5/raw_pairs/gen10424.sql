@@ -1,0 +1,1 @@
+WITH lines AS (SELECT src.id, src.customer_id, pos + 1 AS item_no, item.qty, item.price FROM carts src LATERAL VIEW POSEXPLODE(src.items) t AS pos, item) SELECT s.id, s.customer_id, s.item_no, s.qty, (SELECT SUM(o2.amount) FROM orders o2 WHERE o2.customer_id = s.customer_id) AS sum_order_amount FROM lines s ORDER BY id DESC NULLS LAST

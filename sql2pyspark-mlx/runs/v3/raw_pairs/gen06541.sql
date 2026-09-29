@@ -1,0 +1,1 @@
+SELECT p.category, MAX(i.quantity) - MIN(i.quantity) quantity_range, ROUND(AVG(i.quantity), 2) avg_quantity FROM inventory i LEFT OUTER JOIN products p ON i.product_id = p.id GROUP BY p.category HAVING ROUND(AVG(i.quantity), 2) > 78

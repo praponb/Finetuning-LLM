@@ -1,0 +1,1 @@
+select shipments.id, shipments.shipped_date from shipments where shipments.order_id in (select id from orders where status in ('PENDING', 'CANCELLED', 'SHIPPED')) order by shipments.id, shipped_date desc

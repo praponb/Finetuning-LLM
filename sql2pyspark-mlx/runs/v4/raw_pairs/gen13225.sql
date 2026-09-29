@@ -1,0 +1,1 @@
+WITH flagged AS (SELECT *, CASE WHEN reading_ts - LAG(reading_ts) OVER (PARTITION BY device_code ORDER BY reading_ts ASC, id ASC) > INTERVAL 15 MINUTES THEN 1 ELSE 0 END AS new_group_flag FROM device_readings) SELECT *, SUM(new_group_flag) OVER (PARTITION BY device_code ORDER BY reading_ts ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS session_id FROM flagged

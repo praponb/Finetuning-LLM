@@ -1,0 +1,3 @@
+select id, store_id
+from store_sales
+where store_id in (2, 6);

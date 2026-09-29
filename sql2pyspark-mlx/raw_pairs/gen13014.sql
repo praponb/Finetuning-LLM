@@ -1,0 +1,1 @@
+select year(end_date) as end_year, max(monthly_fee) - min(monthly_fee) as monthly_fee_range, round((100 * sum(case when status = 'EXPIRED' then 1 else 0 end)) / count(*), 1) as pct_expired from subscriptions group by year(end_date)

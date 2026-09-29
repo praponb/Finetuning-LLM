@@ -1,0 +1,1 @@
+SELECT *, FLOOR(balance) AS balance_whole, CASE WHEN balance >= 78000 THEN 'High' WHEN balance >= 18000 THEN 'Medium' ELSE 'Low' END AS balance_band FROM accounts WHERE status = 'CLOSED' AND balance IS NOT NULL AND account_type <> 'LOAN'

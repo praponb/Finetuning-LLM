@@ -1,0 +1,1 @@
+SELECT order_id, status, COUNT(DISTINCT carrier) AS distinct_carriers, PERCENTILE_APPROX(cost, 0.95) AS cost_p95, ROUND(SUM(cost) / NULLIF(COUNT(CASE WHEN carrier = 'DHL' THEN 1 END), 0), 2) AS cost_per_dhl FROM shipments GROUP BY GROUPING SETS ((order_id, status), (order_id)) HAVING PERCENTILE_APPROX(cost, 0.95) > 0 ORDER BY status DESC;

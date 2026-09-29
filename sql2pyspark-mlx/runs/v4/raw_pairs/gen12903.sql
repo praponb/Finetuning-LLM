@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, COALESCE(status, 'unassigned') AS status_filled FROM accounts WHERE account_type IN ('LOAN', 'CHECKING')) SELECT * FROM (SELECT customer_id, status, account_type, balance FROM valid) src PIVOT (MAX(balance) AS amount, COUNT(1) AS item_count FOR account_type IN ('CREDIT', 'LOAN', 'CHECKING'));

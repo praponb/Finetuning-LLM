@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(start_date, 'yyyy-MM') AS start_month, SUM(monthly_fee) AS total_monthly_fee, COUNT(*) AS cnt, SUM(SUM(monthly_fee)) OVER (ORDER BY DATE_FORMAT(start_date, 'yyyy-MM')) AS cumulative_monthly_fee FROM subscriptions WHERE monthly_fee BETWEEN 170 AND 200 GROUP BY DATE_FORMAT(start_date, 'yyyy-MM') ORDER BY 1

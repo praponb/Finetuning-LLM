@@ -1,0 +1,1 @@
+SELECT id, account_id, amount, merchant, txn_time, NTILE(10) OVER (PARTITION BY account_id ORDER BY amount DESC, id) AS bucket, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY txn_time DESC, id) AS rn FROM transactions

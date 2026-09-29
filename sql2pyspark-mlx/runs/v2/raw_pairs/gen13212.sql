@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, credit_limit, ROUND(AVG(credit_limit) OVER (PARTITION BY segment ORDER BY signup_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) credit_limit_moving_avg_7 FROM customers;

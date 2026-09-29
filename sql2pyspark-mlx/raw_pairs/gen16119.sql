@@ -1,0 +1,1 @@
+select o.channel, sum(oi.quantity) as total_quantity from order_items oi full outer join orders o on oi.order_id = o.id where oi.quantity >= 5 group by o.channel having total_quantity >= 38 order by channel limit 3;

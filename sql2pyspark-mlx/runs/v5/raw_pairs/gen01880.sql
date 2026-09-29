@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 4500 THEN 'high' WHEN amount >= 800 THEN 'mid' ELSE 'low' END AS amount_bucket, ROUND(AVG(amount), 2) AS avg_amount, MIN(txn_time) AS first_txn_time FROM transactions WHERE NOT is_flagged AND (account_id = 6 OR account_id IN (1, 3, 20, 29)) GROUP BY amount_bucket HAVING ROUND(AVG(amount), 2) > 25 ORDER BY avg_amount DESC;

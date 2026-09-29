@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, customer_id, start_date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY monthly_fee DESC NULLS FIRST, id) AS rn FROM subscriptions) ranked WHERE rn = 1) SELECT id, customer_id, start_date FROM ranked ORDER BY start_date DESC;

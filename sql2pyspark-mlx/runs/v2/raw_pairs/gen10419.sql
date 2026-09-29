@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(ss.id) store_sale_count, COUNT(DISTINCT ss.units) unique_products, AVG(ss.units) avg_units FROM stores s LEFT JOIN store_sales ss ON ss.store_id = s.id WHERE s.city <> 'London' GROUP BY s.city ORDER BY avg_units DESC;

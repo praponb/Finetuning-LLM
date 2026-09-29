@@ -1,0 +1,1 @@
+SELECT status, method, SORT_ARRAY(COLLECT_SET(status)) AS status_list, SUM(amount) AS total_amount FROM payments WHERE method != 'bank_transfer' AND method NOT IN ('paypal', 'bank_transfer', 'card') AND method = 'card' GROUP BY status, method;

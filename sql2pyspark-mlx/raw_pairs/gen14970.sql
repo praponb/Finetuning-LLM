@@ -1,0 +1,1 @@
+SELECT t.account_id, t.amount, a.customer_id, c.credit_limit, c.credit_limit + c.age AS credit_limit_plus_age FROM transactions t JOIN accounts a ON t.account_id = a.id LEFT OUTER JOIN customers c ON a.customer_id = c.id;

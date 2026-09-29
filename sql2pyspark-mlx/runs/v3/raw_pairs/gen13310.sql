@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, p.stock_qty, p.cost, s.sqft, UPPER(s.store_name) AS store_name_upper FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id

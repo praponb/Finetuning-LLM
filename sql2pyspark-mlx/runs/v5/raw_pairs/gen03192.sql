@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, customer_id, balance, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY balance DESC) AS rnk FROM accounts) SELECT id, customer_id, balance FROM ranked WHERE rnk = 1 ORDER BY customer_id DESC;

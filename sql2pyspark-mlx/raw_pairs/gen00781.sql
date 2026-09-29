@@ -1,0 +1,1 @@
+SELECT QUARTER(last_restock) last_restock_quarter, ROUND(AVG(quantity), 2) avg_quantity, COUNT(DISTINCT quantity) unique_stores, SUM(quantity) total_quantity FROM inventory WHERE product_id IN (7, 9, 10) GROUP BY QUARTER(last_restock)

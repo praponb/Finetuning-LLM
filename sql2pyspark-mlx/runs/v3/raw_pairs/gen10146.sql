@@ -1,0 +1,1 @@
+SELECT p.id, p.method, p.amount, o.customer_id, s.opened_date, DATE_FORMAT(s.opened_date, 'yyyy-MM-dd') AS opened_date_label FROM payments p LEFT JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE s.store_name LIKE 'Old%' AND p.status IN ('REFUNDED', 'SUCCESS', 'FAILED');

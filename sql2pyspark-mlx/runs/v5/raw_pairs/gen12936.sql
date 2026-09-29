@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory WHERE store_id = 2 GROUP BY store_id) SELECT stores.store_name, stores.sqft, store_summary.avg_quantity FROM stores LEFT JOIN store_summary ON stores.id = store_summary.store_id WHERE store_summary.avg_quantity >= 20

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(revenue / units, 2) revenue_per_unit FROM store_sales WHERE units = 29) SELECT * FROM (SELECT id, store_id, revenue, revenue_per_unit FROM cleaned) src UNPIVOT (reading FOR metric IN (revenue AS REVENUE, revenue_per_unit AS REVENUE_PER_UNIT));

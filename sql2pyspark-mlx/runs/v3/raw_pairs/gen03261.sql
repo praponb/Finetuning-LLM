@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM shipments WHERE shipped_date > '2023-08-01'), agg AS (SELECT status, carrier, COUNT(DISTINCT cost) AS unique_statuss FROM base GROUP BY status, carrier) SELECT * FROM agg ORDER BY unique_statuss;

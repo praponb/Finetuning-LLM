@@ -1,0 +1,1 @@
+SELECT id, store_id, product_id, sale_date, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY revenue DESC, id ASC) AS seq_no, ROUND(units / SUM(units) OVER (PARTITION BY product_id), 4) AS units_share, LAG(revenue, 1) OVER w_ordered AS prev_revenue FROM store_sales WINDOW w_ordered AS (PARTITION BY product_id ORDER BY sale_date ASC, id ASC);

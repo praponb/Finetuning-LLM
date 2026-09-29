@@ -1,0 +1,1 @@
+SELECT CASE WHEN units >= 41 THEN 'high' WHEN units >= 14 THEN 'mid' ELSE 'low' END AS units_bucket, MAX(units) - MIN(units) AS units_range, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales WHERE store_id IN (2, 5) OR units = 29 GROUP BY 1 HAVING MAX(units) - MIN(units) < 48 ORDER BY units_range, units_bucket LIMIT 1

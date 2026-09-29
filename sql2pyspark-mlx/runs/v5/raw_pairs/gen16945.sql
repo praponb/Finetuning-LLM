@@ -1,0 +1,1 @@
+SELECT s.id, COUNT(o.id) AS order_count, SORT_ARRAY(COLLECT_SET(o.status)) AS status_list FROM stores s LEFT JOIN orders o ON s.id = o.store_id GROUP BY s.id ORDER BY order_count DESC, s.id DESC LIMIT 5;

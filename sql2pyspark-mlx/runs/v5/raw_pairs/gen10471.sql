@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', launch_date) AS launch_month, SUM(CASE WHEN brand = 'Globex' THEN 1 ELSE 0 END) AS globex_count FROM products WHERE price BETWEEN 450 AND 810 GROUP BY DATE_TRUNC('MONTH', launch_date) ORDER BY globex_count;

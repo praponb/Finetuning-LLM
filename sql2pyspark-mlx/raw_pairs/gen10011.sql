@@ -1,0 +1,1 @@
+with numbered as (select *, row_number() over (partition by product_id order by quantity desc, id) as row_num from order_items where quantity between 7 and 8) select * from numbered where row_num <= 3 order by order_id

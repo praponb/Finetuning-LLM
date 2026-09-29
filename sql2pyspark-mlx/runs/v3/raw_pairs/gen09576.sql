@@ -1,0 +1,1 @@
+SELECT i.product_id, i.quantity, i.store_id, ss.revenue, ss.units, ss.sale_date FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id IN (4, 5, 8) AND ss.units <= 38 ORDER BY ss.units;

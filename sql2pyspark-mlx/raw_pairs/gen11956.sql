@@ -1,0 +1,1 @@
+SELECT account_type, status, SUM(CASE WHEN status = 'OPEN' THEN 1 ELSE 0 END) open_count, MAX(balance) - MIN(balance) balance_range FROM accounts WHERE NOT (account_type = 'CREDIT' AND customer_id = 14) GROUP BY account_type, status HAVING MAX(balance) - MIN(balance) > 60 ORDER BY open_count ASC, status ASC

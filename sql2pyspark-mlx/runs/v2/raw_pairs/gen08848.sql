@@ -1,0 +1,1 @@
+SELECT MONTH(signup_date) signup_month, SUM(credit_limit) total_credit_limit, ROUND(STDDEV(age), 2) stddev_age, MAX(credit_limit) max_credit_limit FROM customers WHERE LOWER(email) LIKE '%rac%' AND (LOWER(email) LIKE '%vy@%' OR city IN ('New York', 'Singapore', 'Berlin')) GROUP BY MONTH(signup_date) HAVING stddev_age >= 66 ORDER BY max_credit_limit;

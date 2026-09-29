@@ -1,0 +1,1 @@
+with TopSubscriptions as (select *, row_number() over (partition by customer_id order by end_date desc, id) as pos from subscriptions where status in ('CANCELLED', 'ACTIVE')) select * from TopSubscriptions where pos = 1

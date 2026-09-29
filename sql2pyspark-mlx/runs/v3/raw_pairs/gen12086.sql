@@ -1,0 +1,1 @@
+SELECT is_flagged, amount_range, merchant_values FROM (SELECT is_flagged, MAX(amount) - MIN(amount) AS amount_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions GROUP BY is_flagged) AS s WHERE amount_range >= 46 ORDER BY merchant_values, amount_range;

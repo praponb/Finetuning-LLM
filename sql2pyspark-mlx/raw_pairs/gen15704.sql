@@ -1,0 +1,1 @@
+SELECT id, full_name, email, is_remote, SUM(salary) OVER (ORDER BY hire_date ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_salary, LAG(salary, 1) OVER (ORDER BY hire_date ASC, id ASC) AS prev_salary FROM employees WHERE email LIKE '%@GMAIL.COM'

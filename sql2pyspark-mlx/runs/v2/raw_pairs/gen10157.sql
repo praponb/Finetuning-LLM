@@ -1,0 +1,1 @@
+SELECT id, dept_name, budget, location, SUM(budget) OVER (PARTITION BY dept_name) dept_name_sum_budget, COUNT(*) OVER (PARTITION BY location) location_count FROM departments ORDER BY dept_name_sum_budget ASC;

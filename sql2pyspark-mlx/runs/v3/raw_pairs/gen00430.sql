@@ -1,0 +1,1 @@
+select store_id, product_id, min(sale_date) as first_sale_date, min(revenue) as min_revenue, round(stddev(revenue), 2) as stddev_revenue from store_sales where store_id = 3 and store_id in (1, 4) and revenue between 1100 and 2300 group by store_id, product_id;

@@ -1,0 +1,1 @@
+with department_summary as (select dept_id, avg(salary) as avg_salary from employees group by dept_id) select d.budget, ds.avg_salary from departments d left join department_summary ds on d.id = ds.dept_id where ds.avg_salary > 143000 order by ds.avg_salary

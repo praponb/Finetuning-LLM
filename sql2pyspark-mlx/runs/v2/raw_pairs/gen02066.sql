@@ -1,0 +1,1 @@
+WITH recent_accounts AS (SELECT * FROM accounts WHERE balance >= 62000), account_type_summary AS (SELECT account_type, COUNT(*) cnt, MAX(opened_date) latest_opened_date FROM recent_accounts GROUP BY account_type) SELECT account_type, cnt, latest_opened_date FROM account_type_summary ORDER BY account_type, cnt DESC;

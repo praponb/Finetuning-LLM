@@ -1,0 +1,1 @@
+SELECT s.browser, MIN(we.duration_sec) AS min_duration_sec, COUNT(we.duration_sec) AS duration_sec_count FROM web_events we RIGHT JOIN sessions s ON we.session_id = s.id WHERE s.country = 'JP' GROUP BY s.browser HAVING MIN(we.duration_sec) > 130

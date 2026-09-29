@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, currency, element FROM price_tiers LATERAL VIEW OUTER EXPLODE(discounts) t AS element) SELECT id, currency, element, CASE WHEN currency RLIKE '^(THB|USD)$' THEN 'CORE' ELSE 'PRIORITY' END AS currency_zone FROM lines ORDER BY currency_zone

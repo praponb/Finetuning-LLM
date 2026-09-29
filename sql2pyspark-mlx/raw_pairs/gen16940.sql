@@ -1,0 +1,1 @@
+SELECT MIN(txn_time) AS min_txn_time, MAX(txn_time) AS last_txn_time, COUNT(CASE WHEN txn_type = 'REFUND' THEN 1 END) AS refund_count FROM transactions WHERE merchant != 'Lazada' ORDER BY min_txn_time ASC

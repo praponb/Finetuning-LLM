@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, SUM(CASE WHEN a.account_type = 'CHECKING' THEN 1 ELSE 0 END) AS checking_count FROM accounts a INNER JOIN customers c ON c.id = a.customer_id GROUP BY MONTH(c.signup_date);

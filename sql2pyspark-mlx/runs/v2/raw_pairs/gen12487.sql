@@ -1,0 +1,1 @@
+SELECT SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list, AVG(duration_sec) AS avg_duration_sec, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events ORDER BY avg_duration_sec DESC;

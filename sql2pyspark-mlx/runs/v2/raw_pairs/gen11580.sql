@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, CONCAT_WS('-', method, status) AS method_status_key FROM payments WHERE amount BETWEEN 510 AND 1070), OrderIdSummary AS (SELECT order_id, SORT_ARRAY(COLLECT_SET(method)) AS method_list, MIN(paid_at) AS first_paid_at FROM src GROUP BY order_id) SELECT order_id, method_list, first_paid_at FROM OrderIdSummary ORDER BY order_id LIMIT 1

@@ -1,0 +1,1 @@
+with ranked_sessions as (select id, country, started_at, customer_id, row_number() over (partition by country order by started_at, id) rn from sessions where browser = 'Firefox') select * from ranked_sessions where rn <= 2;

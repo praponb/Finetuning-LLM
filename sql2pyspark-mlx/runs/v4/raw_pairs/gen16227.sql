@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.customer_id FROM accounts WHERE accounts.customer_id IS NULL AND accounts.customer_id NOT IN (SELECT id FROM customers WHERE LENGTH(name) < 6) ORDER BY customer_id DESC, id ASC LIMIT 1

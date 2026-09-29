@@ -1,0 +1,1 @@
+select id, created_at, items, attributes, exists(coupon_codes, c -> c like 'W%') as has_welcome_code, forall(items, i -> i.qty <= 5) as all_small_qty, exists(items, i -> i.price > 100) as has_premium_item from carts

@@ -1,0 +1,1 @@
+select i.id, i.quantity, i.product_id, p.launch_date, p.stock_qty, s.store_name from inventory i full outer join products p on p.id = i.product_id inner join stores s on i.store_id = s.id where year(s.opened_date) >= 2024 and i.last_restock >= '2023-12-28' order by p.stock_qty desc

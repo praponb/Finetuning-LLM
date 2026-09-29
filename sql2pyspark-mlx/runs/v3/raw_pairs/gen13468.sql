@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, country, rating FROM suppliers) PIVOT (COUNT(rating) FOR country IN ('UK', 'DE', 'TH', 'US')) ORDER BY rating_bucket

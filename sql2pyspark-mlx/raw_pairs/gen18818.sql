@@ -1,0 +1,1 @@
+SELECT o.id, o.customer_id, t.promptpay_count, t.stddev_amount FROM orders o INNER JOIN (SELECT order_id, COUNT(CASE WHEN method = 'promptpay' THEN 1 END) AS promptpay_count, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments GROUP BY order_id) t ON o.id = t.order_id ORDER BY stddev_amount DESC

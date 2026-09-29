@@ -1,0 +1,1 @@
+with top_web_events as (select *, rank() over (partition by event_type order by duration_sec) rn from web_events) select id, event_type, duration_sec, page from top_web_events where rn <= 2 order by id, event_type desc;

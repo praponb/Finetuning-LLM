@@ -1,0 +1,1 @@
+WITH ranked_stores AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY region ORDER BY opened_date DESC, id) AS rn FROM stores) SELECT id, region, opened_date FROM ranked_stores WHERE rn <= 2 ORDER BY region DESC

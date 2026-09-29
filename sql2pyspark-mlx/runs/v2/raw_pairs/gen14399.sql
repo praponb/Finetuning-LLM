@@ -1,0 +1,1 @@
+select c.city, c.is_active, a.customer_id, a.account_type, a.balance, initcap(trim(a.account_type)) as account_type_title from customers c left join accounts a on c.id = a.customer_id where c.signup_date < '2023-09-01' and a.status = 'OPEN' order by account_type_title desc

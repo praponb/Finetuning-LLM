@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM customers WHERE city IS NOT NULL), CustomersStats AS (SELECT segment, COUNT(age) AS age_count, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM src GROUP BY segment) SELECT * FROM CustomersStats WHERE age_count < 9 ORDER BY segment ASC, age_count DESC LIMIT 1;

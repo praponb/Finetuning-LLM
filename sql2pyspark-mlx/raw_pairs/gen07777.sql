@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, store_id, product_id, sale_date, units, units - revenue AS revenue_per_unit, DATEDIFF(CURRENT_DATE(), sale_date) AS days_since_sale_date FROM store_sales WHERE sale_date >= TO_DATE('2023-09-16') AND MONTH(sale_date) IN (8, 9, 12)) SELECT * FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY sale_date NULLS FIRST, id) = 1

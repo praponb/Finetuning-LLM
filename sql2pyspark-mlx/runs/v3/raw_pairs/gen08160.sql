@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.status IN ('PENDING', 'COMPLETED') THEN 'priority' ELSE 'other' END AS status_group, SUM(oi.unit_price * oi.quantity) AS revenue FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id GROUP BY CASE WHEN o.status IN ('PENDING', 'COMPLETED') THEN 'priority' ELSE 'other' END

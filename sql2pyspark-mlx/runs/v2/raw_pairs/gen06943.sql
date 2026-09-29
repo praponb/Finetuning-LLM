@@ -1,0 +1,1 @@
+SELECT id, shipped_date, CASE WHEN cost >= 84 THEN 'High' WHEN cost >= 28 THEN 'Medium' ELSE 'Low' END AS cost_tier FROM shipments WHERE NOT ((carrier IN ('UPS', 'Flash', 'Kerry') AND status IN ('LOST', 'IN_TRANSIT', 'RETURNED')) OR cost BETWEEN 26 AND 47)

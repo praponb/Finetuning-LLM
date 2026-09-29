@@ -1,0 +1,1 @@
+select p.category, count(distinct oi.quantity) unique_products from order_items oi inner join products p on oi.product_id = p.id left join orders o on o.id = oi.order_id where oi.order_id in (18, 31) group by p.category order by category asc, unique_products asc;

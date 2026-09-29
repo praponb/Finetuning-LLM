@@ -1,0 +1,1 @@
+SELECT id, end_date, start_date FROM subscriptions WHERE plan IN ('standard', 'premium', 'basic') UNION ALL SELECT id, end_date, start_date FROM subscriptions WHERE customer_id IN (5, 21, 34) ORDER BY id

@@ -1,0 +1,1 @@
+SELECT id, country, city, rating, DENSE_RANK() OVER (PARTITION BY country, city ORDER BY rating DESC NULLS FIRST) rating_dense_rank, ROW_NUMBER() OVER (ORDER BY rating, id) event_seq, AVG(rating) OVER (PARTITION BY city ORDER BY rating, id ROWS BETWEEN 5 PRECEDING AND 1 PRECEDING) rating_avg_5_prior FROM suppliers

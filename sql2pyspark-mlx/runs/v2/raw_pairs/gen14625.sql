@@ -1,0 +1,1 @@
+WITH RecentOrderItems AS (SELECT *, ROUND(quantity, 0) AS quantity_rounded FROM order_items WHERE unit_price >= 310), summary AS (SELECT product_id, MAX(unit_price) AS max_unit_price, COUNT(unit_price) AS unit_price_count FROM RecentOrderItems GROUP BY product_id) SELECT product_id, max_unit_price, unit_price_count FROM summary WHERE unit_price_count >= 7 ORDER BY product_id;

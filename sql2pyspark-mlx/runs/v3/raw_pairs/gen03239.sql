@@ -1,0 +1,1 @@
+SELECT orders.id, orders.customer_id, orders.status, stores.sqft, customers.city, customers.is_active FROM orders INNER JOIN stores ON orders.store_id = stores.id LEFT JOIN customers ON customers.id = orders.customer_id;

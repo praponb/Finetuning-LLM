@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, oi.unit_price, p.cost, s.city, s.supplier_name FROM order_items oi INNER JOIN products p ON p.id = oi.product_id LEFT JOIN suppliers s ON s.id = p.supplier_id ORDER BY s.supplier_name ASC

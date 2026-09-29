@@ -1,0 +1,1 @@
+SELECT status, plan, YEAR(end_date) AS end_year, SUM(CASE WHEN plan = 'basic' THEN 1 ELSE 0 END) AS basic_count, ROUND((100 * SUM(CASE WHEN status = 'PAUSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_paused FROM subscriptions WHERE YEAR(start_date) >= 2023 GROUP BY 1, 2, 3;

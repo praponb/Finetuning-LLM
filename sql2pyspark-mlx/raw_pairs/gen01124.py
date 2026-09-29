@@ -1,0 +1,19 @@
+from pyspark.sql import functions as F
+
+lines = (
+    df_app_logs
+    .select(
+        "id",
+        "host",
+        "log_ts",
+        "level",
+        "latency_ms",
+        "status_code",
+        F.explode_outer("context").alias("key", "attr_value"),
+    )
+)
+
+result = (
+    lines
+    .select("host", "log_ts", "level", "latency_ms", "status_code", "key", "attr_value")
+)

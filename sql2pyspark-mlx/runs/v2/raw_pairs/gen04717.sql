@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount DESC, id) AS rn FROM payments WHERE paid_at < '2023-10-11') SELECT id, status, amount, order_id FROM Numbered WHERE rn <= 1 ORDER BY status;

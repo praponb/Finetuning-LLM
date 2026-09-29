@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1600 THEN 'high' WHEN amount >= 480 THEN 'mid' ELSE 'low' END AS amount_bucket, SUM(CASE WHEN status = 'RETURNED' THEN shipping_fee ELSE 0 END) AS returned_shipping_fee, MIN(order_date) AS first_order_date FROM orders WHERE status <> 'RETURNED' GROUP BY 1 ORDER BY returned_shipping_fee

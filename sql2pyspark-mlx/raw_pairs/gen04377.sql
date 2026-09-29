@@ -1,0 +1,1 @@
+with lines as (select id, service, log_ts, level, key, value from app_logs lateral view outer explode(context) t as key, value) select id, log_ts, level, key, case when level rlike '^(WARN|ERROR)$' then 'GROUP_A' when level rlike '^(INFO|DEBUG)$' then 'EXTENDED' else 'PRIORITY' end as level_zone from lines order by level_zone desc;

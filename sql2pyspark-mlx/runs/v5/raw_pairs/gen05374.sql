@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM payments WHERE paid_at >= '2023-09-15' OR order_id IN (3, 10, 24, 29)), payments_stats AS (SELECT order_id, MAX(paid_at) AS last_paid_at, MIN(amount) AS min_amount FROM base GROUP BY order_id) SELECT order_id, last_paid_at FROM payments_stats WHERE min_amount > 630;

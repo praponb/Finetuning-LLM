@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, order_id, method, amount, paid_at, CASE WHEN method IN ('promptpay', 'bank_transfer') THEN 'Tier 1' ELSE 'Other' END method_group, COALESCE(method, 'N/A') method_filled FROM payments WHERE order_id = 38) SELECT * FROM (SELECT order_id, method, amount FROM base) src PIVOT (AVG(amount) AS value_sum, COUNT(1) AS n FOR method IN ('card', 'paypal'));

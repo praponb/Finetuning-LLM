@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN revenue >= 3300 THEN 'high' WHEN revenue >= 1600 THEN 'mid' ELSE 'low' END AS revenue_bucket, ROUND(AVG(revenue), 2) AS avg_revenue, COUNT(*) AS store_sale_count, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales GROUP BY 1, 2 HAVING COUNT(*) > 4 ORDER BY stddev_units, product_id, revenue_bucket LIMIT 1;

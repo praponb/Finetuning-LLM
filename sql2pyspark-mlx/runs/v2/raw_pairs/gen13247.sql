@@ -1,0 +1,1 @@
+SELECT employees.id, employees.salary, employees.full_name, employees.level, departments.location, departments.budget, departments.dept_name, UPPER(departments.location) AS location_upper FROM employees FULL OUTER JOIN departments ON departments.id = employees.dept_id ORDER BY location;

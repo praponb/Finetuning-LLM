@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, t.refund_amount FROM accounts a INNER JOIN (SELECT account_id, SUM(CASE WHEN txn_type = 'REFUND' THEN amount ELSE 0 END) AS refund_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY t.refund_amount;

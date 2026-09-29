@@ -1,0 +1,1 @@
+SELECT id, status, shipping_fee, customer_id, order_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipping_fee, id) AS shipping_fee_row, SUM(shipping_fee) OVER (PARTITION BY status, customer_id ORDER BY order_date, id) AS running_shipping_fee FROM orders ORDER BY order_date, id

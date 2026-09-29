@@ -1,0 +1,1 @@
+SELECT c.is_active, c.country, COUNT(s.cost) cost_count, COUNT(CASE WHEN s.carrier = 'DHL' THEN 1 END) dhl_count FROM shipments s LEFT JOIN orders o ON s.order_id = o.id JOIN customers c ON o.customer_id = c.id GROUP BY c.is_active, c.country

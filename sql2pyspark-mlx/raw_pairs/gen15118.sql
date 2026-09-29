@@ -1,0 +1,1 @@
+SELECT id, salary, dept_id, hire_date, email, DENSE_RANK() OVER (ORDER BY salary) AS salary_dense_rank, FIRST_VALUE(email) OVER (PARTITION BY dept_id ORDER BY hire_date DESC, id) AS first_email FROM employees ORDER BY email DESC;

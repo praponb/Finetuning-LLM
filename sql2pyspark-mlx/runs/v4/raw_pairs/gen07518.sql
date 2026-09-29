@@ -1,0 +1,1 @@
+SELECT inventory.last_restock, inventory.quantity, inventory.store_id, store_sales.sale_date, store_sales.store_id AS store_sale_store_id FROM inventory JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id ORDER BY quantity;

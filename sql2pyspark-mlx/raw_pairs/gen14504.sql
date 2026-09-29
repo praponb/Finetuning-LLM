@@ -1,0 +1,1 @@
+select id, account_id, amount, is_flagged from (select id, account_id, amount, is_flagged, row_number() over (partition by account_id order by amount desc, id) as rnk from transactions where hour(txn_time) between 12 and 16) as t where rnk <= 1 order by amount desc

@@ -1,0 +1,1 @@
+with recent_shipments as (select * from shipments where status = 'IN_TRANSIT'), summary as (select status, order_id, concat_ws(', ', sort_array(collect_set(carrier))) as carrier_values from recent_shipments group by status, order_id) select status, order_id, carrier_values from summary order by order_id desc

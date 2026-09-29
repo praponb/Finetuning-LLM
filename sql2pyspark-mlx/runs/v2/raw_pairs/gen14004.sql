@@ -1,0 +1,1 @@
+SELECT p.category, ROUND(STDDEV(oi.quantity), 2) stddev_quantity, AVG(oi.quantity) avg_quantity FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id WHERE p.brand IN ('Globex', 'Acme', 'Stark') GROUP BY p.category;

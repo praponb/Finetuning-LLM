@@ -1,0 +1,1 @@
+SELECT id, product_name, category, brand, cost, tags, supplier_id FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY supplier_id, brand ORDER BY stock_qty DESC NULLS LAST, id) AS dedup_rank FROM products) x WHERE dedup_rank = 1;

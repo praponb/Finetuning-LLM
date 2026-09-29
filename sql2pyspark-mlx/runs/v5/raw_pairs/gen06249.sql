@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, latency_ms, status_code, k, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) li AS k, value) SELECT id, latency_ms, status_code, k, CORR(status_code, latency_ms) OVER (PARTITION BY k) AS corr_status_code_latency_ms FROM exploded;

@@ -1,0 +1,1 @@
+SELECT t.id, t.account_id, t.txn_time, a.balance, a.account_type, c.credit_limit FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id WHERE c.segment IN ('Corporate', 'Consumer')

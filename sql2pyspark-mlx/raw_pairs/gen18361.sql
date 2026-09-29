@@ -1,0 +1,6 @@
+SELECT cost
+FROM shipments
+INTERSECT
+SELECT amount
+FROM orders
+WHERE order_date BETWEEN '2024-04-01' AND '2024-10-01';

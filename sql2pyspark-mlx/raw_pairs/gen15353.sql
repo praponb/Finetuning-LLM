@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MAX(units) - MIN(units) AS units_range FROM store_sales WHERE units BETWEEN 12 AND 38 GROUP BY product_id) SELECT p.id, p.cost, pt.units_range FROM products p INNER JOIN product_totals pt ON p.id = pt.product_id ORDER BY p.cost

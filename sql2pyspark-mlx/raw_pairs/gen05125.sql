@@ -1,0 +1,11 @@
+SELECT
+    products.id,
+    products.brand,
+    t.min_unit_price,
+    t.unit_price_count
+FROM products
+INNER JOIN (SELECT product_id, MIN(unit_price) AS min_unit_price, COUNT(unit_price) AS unit_price_count
+    FROM order_items
+    GROUP BY product_id) t ON products.id = t.product_id
+WHERE t.min_unit_price >= 280
+ORDER BY unit_price_count DESC;

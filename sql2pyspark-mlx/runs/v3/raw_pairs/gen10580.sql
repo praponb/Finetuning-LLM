@@ -1,0 +1,1 @@
+SELECT COUNT(sqft) AS sqft_count, ROUND((100 * SUM(CASE WHEN region = 'North' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_north FROM stores WHERE MONTH(opened_date) IN (2, 7, 12) AND store_name NOT LIKE '%River%'

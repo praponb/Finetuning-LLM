@@ -1,0 +1,1 @@
+SELECT p.brand, ROUND(AVG(ss.revenue), 2) AS avg_revenue, COUNT(*) AS store_sale_count FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id GROUP BY p.brand HAVING avg_revenue >= 33 ORDER BY p.brand ASC

@@ -1,0 +1,1 @@
+SELECT p.id, p.product_name, p.cost, p.category FROM products p WHERE p.launch_date <= '2024-06-14' AND NOT EXISTS (SELECT 1 FROM store_sales ss WHERE ss.product_id = p.id AND ss.units BETWEEN 17 AND 33);

@@ -1,0 +1,1 @@
+select month(hire_date) as hire_month, job_title, min(salary) as min_salary, round(stddev(salary), 2) as stddev_salary, concat_ws(', ', sort_array(collect_set(level))) as level_values from employees group by month(hire_date), job_title;

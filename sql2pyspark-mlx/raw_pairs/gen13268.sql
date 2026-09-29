@@ -1,0 +1,1 @@
+SELECT id, manager_id, salary FROM (SELECT id, manager_id, salary, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY salary, id) AS row_num FROM employees WHERE salary <= 143000) AS ranked WHERE row_num = 1;

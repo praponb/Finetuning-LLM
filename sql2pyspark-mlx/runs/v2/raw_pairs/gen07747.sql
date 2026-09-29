@@ -1,0 +1,1 @@
+SELECT i.last_restock, i.quantity, s.store_name, COALESCE(s.sqft, 0) AS sqft_filled FROM inventory i INNER JOIN stores s ON i.store_id = s.id WHERE s.city IN ('Tokyo', 'Berlin', 'Chiang Mai') AND LENGTH(s.store_name) > 12;

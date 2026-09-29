@@ -1,0 +1,1 @@
+select i.id, i.store_id, i.product_id, p.stock_qty, p.cost, s.rating from inventory i inner join products p on i.product_id = p.id full outer join suppliers s on p.supplier_id = s.id where i.last_restock >= '2025-07-01' order by i.id desc

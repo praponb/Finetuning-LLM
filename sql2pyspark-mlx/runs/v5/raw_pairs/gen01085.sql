@@ -1,0 +1,1 @@
+select id, balance, account_type, customer_id, datediff(current_date(), opened_date) as days_since_opened_date, case when status = 'FROZEN' then 1 else 0 end as is_frozen from accounts where balance >= 30000 and balance > 24000 and balance > 70000 order by balance

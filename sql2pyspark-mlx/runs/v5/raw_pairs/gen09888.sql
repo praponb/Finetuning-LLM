@@ -1,0 +1,1 @@
+WITH filtered_customers AS (SELECT * FROM customers WHERE country IN ('UK', 'SG')), customers_stats AS (SELECT is_active, MIN(signup_date) AS min_signup_date, COUNT(DISTINCT age) AS unique_countrys FROM filtered_customers GROUP BY is_active) SELECT * FROM customers_stats;

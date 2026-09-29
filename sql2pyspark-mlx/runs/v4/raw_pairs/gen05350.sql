@@ -1,0 +1,1 @@
+SELECT CASE WHEN status_bits >= 11 THEN 'LARGE' ELSE 'SMALL' END AS status_bits_tier, COUNT(CASE WHEN device_code = 'DV-01' THEN 1 END) AS dv_01_count, MIN(reading_ts) AS first_reading_ts, CORR(humidity, temp_c) AS corr_humidity_temp_c FROM device_readings GROUP BY CASE WHEN status_bits >= 11 THEN 'LARGE' ELSE 'SMALL' END ORDER BY status_bits_tier;

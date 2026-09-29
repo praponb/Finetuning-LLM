@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', event_time) AS event_month, ROUND((100 * SUM(CASE WHEN page = '/search' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_search, COUNT(*) AS total_count FROM web_events WHERE duration_sec IS NOT NULL AND event_type = 'page_view' GROUP BY DATE_TRUNC('MONTH', event_time) ORDER BY total_count, event_month LIMIT 10;

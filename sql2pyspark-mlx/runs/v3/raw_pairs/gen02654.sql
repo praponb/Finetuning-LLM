@@ -1,0 +1,1 @@
+SELECT id, merchant, txn_time FROM (SELECT id, merchant, txn_time, RANK() OVER (PARTITION BY merchant ORDER BY txn_time DESC) AS row_num FROM transactions WHERE txn_type = 'REFUND') AS t WHERE row_num <= 3 ORDER BY merchant

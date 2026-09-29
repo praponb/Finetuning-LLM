@@ -1,0 +1,1 @@
+SELECT id, status, cost, order_id FROM (SELECT id, status, cost, order_id, RANK() OVER (PARTITION BY status ORDER BY cost DESC) AS pos FROM shipments WHERE order_id IN (3, 6, 16, 19)) AS ranked WHERE pos <= 3;

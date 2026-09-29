@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CASE WHEN category IN ('Sports', 'Books') THEN 'Core' ELSE 'Other' END AS category_group FROM products WHERE supplier_id IS NOT NULL) SELECT p.city, s.category, COUNT(*) AS rows_total, MIN(s.stock_qty) AS min_stock_qty, AVG(s.price) AS avg_price FROM valid s INNER JOIN suppliers p ON s.supplier_id = p.id GROUP BY p.city, s.category;

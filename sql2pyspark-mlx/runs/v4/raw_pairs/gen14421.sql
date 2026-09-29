@@ -1,0 +1,1 @@
+select order_id, avg(unit_price) avg_unit_price, round(stddev(quantity), 2) stddev_quantity, sum(unit_price * quantity) revenue from order_items where unit_price <= 110 group by order_id order by revenue desc

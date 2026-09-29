@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', txn_time) txn_month, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_fee, ROUND((100 * SUM(CASE WHEN merchant = 'Lazada' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_lazada FROM transactions GROUP BY DATE_TRUNC('MONTH', txn_time)

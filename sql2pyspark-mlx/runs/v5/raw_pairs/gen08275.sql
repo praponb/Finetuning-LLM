@@ -1,0 +1,1 @@
+SELECT p.brand, MIN(ss.units) AS min_units FROM store_sales ss RIGHT JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id GROUP BY p.brand ORDER BY min_units DESC, brand DESC LIMIT 3

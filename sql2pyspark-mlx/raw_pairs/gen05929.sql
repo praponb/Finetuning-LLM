@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT country, city FROM suppliers EXCEPT SELECT country, city FROM suppliers WHERE country = 'US'), kept_rows AS (SELECT s.* FROM suppliers s JOIN remaining_keys k ON s.country = k.country AND s.city = k.city) SELECT id, supplier_name, country, city, rating FROM kept_rows ORDER BY country;

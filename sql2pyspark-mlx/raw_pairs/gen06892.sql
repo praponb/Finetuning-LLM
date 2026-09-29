@@ -1,0 +1,1 @@
+select id, browser, started_at, device from (select id, browser, started_at, device, dense_rank() over (partition by browser order by started_at desc) row_num from sessions) r where row_num = 1 order by id desc, device asc

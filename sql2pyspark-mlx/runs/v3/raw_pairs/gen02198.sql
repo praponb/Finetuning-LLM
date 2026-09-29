@@ -1,0 +1,1 @@
+WITH recent_accounts AS (SELECT * FROM accounts WHERE status != 'FROZEN' AND account_type IN ('SAVINGS', 'LOAN', 'CHECKING')), agg AS (SELECT customer_id, YEAR(opened_date) AS opened_year, MAX(balance) - MIN(balance) AS balance_range FROM recent_accounts GROUP BY customer_id, YEAR(opened_date)) SELECT customer_id, opened_year FROM agg WHERE balance_range < 40 ORDER BY opened_year

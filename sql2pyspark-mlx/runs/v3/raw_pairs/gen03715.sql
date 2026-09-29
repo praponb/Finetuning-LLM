@@ -1,0 +1,1 @@
+SELECT YEAR(ss.sale_date) AS sale_year, ss.product_id, SUM(i.quantity) AS total_quantity, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id IN (8, 10) GROUP BY YEAR(ss.sale_date), ss.product_id;

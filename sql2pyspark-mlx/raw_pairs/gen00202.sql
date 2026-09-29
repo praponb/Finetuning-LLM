@@ -1,0 +1,1 @@
+with cleaned as (select *, case when dept_name in ('Legal', 'Finance') then 'Priority' else 'Other' end as dept_name_group, coalesce(budget, 0) as budget_filled from departments where dept_name is distinct from 'Marketing') select *, row_number() over (partition by location order by budget_filled, id) as rn from cleaned qualify rn = 1

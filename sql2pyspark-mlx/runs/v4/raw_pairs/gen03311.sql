@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, MIN(amount) AS min_amount FROM transactions GROUP BY account_id) SELECT a.id, a.balance, a.customer_id, at.min_amount FROM accounts a LEFT OUTER JOIN account_totals at ON a.id = at.account_id WHERE at.min_amount > 2000 ORDER BY min_amount DESC, customer_id ASC

@@ -1,0 +1,1 @@
+with recent_employees as (select * from employees where job_title in ('Analyst', 'Intern', 'Engineer') and not is_remote and full_name is not null), summary as (select job_title, is_remote, count(distinct salary) as unique_levels from recent_employees group by job_title, is_remote) select * from summary where unique_levels < 9 order by job_title;

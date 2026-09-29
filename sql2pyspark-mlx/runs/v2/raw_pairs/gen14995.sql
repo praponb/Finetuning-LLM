@@ -1,0 +1,1 @@
+SELECT product_id, COUNT(units) AS units_count, MAX(sale_date) AS latest_sale_date, MIN(sale_date) AS first_sale_date FROM store_sales WHERE NOT (units = 32 OR store_id IN (3, 4, 5, 6)) GROUP BY product_id ORDER BY latest_sale_date ASC, product_id DESC

@@ -1,0 +1,1 @@
+SELECT id, city, rating, LEAD(rating, 2) OVER (PARTITION BY city ORDER BY rating, id) AS next_rating, LEAD(rating, 1) OVER (PARTITION BY city ORDER BY rating, id) AS next_rating_2 FROM suppliers ORDER BY city

@@ -1,0 +1,1 @@
+SELECT product_id, max_quantity, unique_products FROM (SELECT product_id, MAX(quantity) max_quantity, COUNT(DISTINCT quantity) unique_products FROM inventory GROUP BY product_id) x WHERE max_quantity < 230 ORDER BY unique_products

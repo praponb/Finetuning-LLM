@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT QUARTER(sale_date) AS sale_quarter, store_id, ROUND(AVG(revenue), 2) AS avg_revenue, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales GROUP BY QUARTER(sale_date), store_id) AS x WHERE stddev_revenue > 73 ORDER BY stddev_revenue DESC

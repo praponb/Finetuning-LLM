@@ -1,0 +1,1 @@
+SELECT event_type, page, COUNT(DISTINCT duration_sec) AS unique_event_types, COUNT(duration_sec) AS duration_sec_count FROM web_events GROUP BY 1, 2 HAVING duration_sec_count < 4 ORDER BY event_type ASC

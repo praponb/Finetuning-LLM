@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(DISTINCT ss.revenue) unique_products FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id WHERE p.stock_qty <> 317 GROUP BY s.city HAVING COUNT(DISTINCT ss.revenue) > 4;

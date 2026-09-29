@@ -1,0 +1,1 @@
+select accounts.status, accounts.customer_id, accounts.account_type, customers.city, customers.email from accounts inner join customers on customers.id = accounts.customer_id where accounts.balance < 78000;

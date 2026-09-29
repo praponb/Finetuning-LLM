@@ -1,0 +1,1 @@
+select s.region, round(stddev(ss.revenue), 2) as stddev_revenue, max(ss.units) as max_units from store_sales ss join stores s on ss.store_id = s.id where s.opened_date between '2024-01-24' and '2025-07-13' group by s.region having stddev_revenue > 70 order by 1

@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT region, city FROM stores INTERSECT SELECT region, city FROM stores WHERE store_name LIKE 'M%'), reconciled AS (SELECT s.* FROM stores s INNER JOIN remaining_keys k ON s.region = k.region AND s.city = k.city) SELECT store_name, opened_date, sqft FROM reconciled ORDER BY sqft DESC, opened_date;

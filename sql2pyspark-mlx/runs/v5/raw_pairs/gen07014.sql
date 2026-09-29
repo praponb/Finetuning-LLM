@@ -1,0 +1,1 @@
+SELECT launch_month, category, acme_cost, initech_price FROM (SELECT MONTH(launch_date) launch_month, category, SUM(CASE WHEN brand = 'Acme' THEN cost ELSE 0 END) acme_cost, SUM(CASE WHEN brand = 'Initech' THEN price ELSE 0 END) initech_price FROM products GROUP BY MONTH(launch_date), category) s WHERE initech_price > 23 ORDER BY initech_price, launch_month, category LIMIT 20

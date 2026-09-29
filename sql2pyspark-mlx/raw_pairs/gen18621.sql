@@ -1,0 +1,1 @@
+SELECT s.delivered_date, o.discount, st.city, st.sqft, LENGTH(st.store_name) AS store_name_length FROM shipments s INNER JOIN orders o ON s.order_id = o.id RIGHT JOIN stores st ON o.store_id = st.id WHERE s.order_id IN (6, 10, 13)

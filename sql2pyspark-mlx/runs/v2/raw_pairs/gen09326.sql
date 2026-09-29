@@ -1,0 +1,1 @@
+SELECT customer_id, status, start_date, DATEDIFF(CURRENT_DATE(), start_date) AS days_since_start_date, ROUND(monthly_fee, 0) AS monthly_fee_rounded FROM subscriptions WHERE monthly_fee > 220 ORDER BY 1 DESC, monthly_fee_rounded;

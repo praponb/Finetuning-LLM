@@ -1,0 +1,1 @@
+SELECT *, TRIM(location) AS clean_location, CONCAT_WS('-', location, dept_name) AS location_dept_name_key FROM departments WHERE location IN ('Tokyo', 'Bangkok') AND budget >= 3289000 ORDER BY location_dept_name_key;

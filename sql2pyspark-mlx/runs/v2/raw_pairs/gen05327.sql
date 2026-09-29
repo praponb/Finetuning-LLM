@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name AS employee_full_name, e.salary AS employee_salary, m.manager_id AS manager_manager_id, m.dept_id AS manager_dept_id, m.level AS manager_level, CONCAT_WS('-', m.level, m.full_name) AS level_full_name_key FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.is_remote ORDER BY e.salary, employee_full_name DESC;

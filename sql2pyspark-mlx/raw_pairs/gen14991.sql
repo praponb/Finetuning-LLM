@@ -1,0 +1,1 @@
+select id, order_id, paid_at, concat_ws('-', status, method) as status_method_key, length(method) as method_length from payments where method in ('paypal', 'card', 'promptpay') order by status_method_key asc, id asc limit 1;

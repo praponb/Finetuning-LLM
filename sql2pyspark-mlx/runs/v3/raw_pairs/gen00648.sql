@@ -1,0 +1,1 @@
+WITH filtered_orders AS (SELECT * FROM orders WHERE MONTH(order_date) IN (3, 5, 12)), agg AS (SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, SUM(CASE WHEN status = 'SHIPPED' THEN 1 ELSE 0 END) AS shipped_count FROM filtered_orders GROUP BY DATE_FORMAT(order_date, 'yyyy-MM')) SELECT * FROM agg WHERE shipped_count > 38 ORDER BY shipped_count DESC, order_month LIMIT 10;

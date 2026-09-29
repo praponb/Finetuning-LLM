@@ -1,0 +1,1 @@
+SELECT id, page, duration_sec, session_id, event_time, DENSE_RANK() OVER (PARTITION BY page ORDER BY duration_sec) AS duration_sec_dense_rank, ROUND(AVG(duration_sec) OVER (PARTITION BY session_id ORDER BY event_time, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS duration_sec_moving_avg_7 FROM web_events WHERE duration_sec BETWEEN 143 AND 406

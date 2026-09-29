@@ -1,0 +1,1 @@
+SELECT MONTH(txn_time) AS txn_month, ROUND((100 * SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refund FROM transactions GROUP BY MONTH(txn_time) HAVING COUNT(amount) > 1 ORDER BY pct_refund DESC, txn_month DESC LIMIT 50;

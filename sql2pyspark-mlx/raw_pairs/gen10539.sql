@@ -1,0 +1,1 @@
+SELECT status, discount_range, total_shipping_fee FROM (SELECT status, MAX(discount) - MIN(discount) AS discount_range, SUM(shipping_fee) AS total_shipping_fee FROM orders GROUP BY status) AS s WHERE discount_range >= 75 ORDER BY total_shipping_fee

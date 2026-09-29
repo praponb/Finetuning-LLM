@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, level, latency_ms, key, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) e AS key, attr_value) SELECT id, level, latency_ms, key, ROUND(latency_ms / SUM(latency_ms) OVER (PARTITION BY level), 4) AS latency_ms_share, LAG(latency_ms, 1) OVER (ORDER BY latency_ms, id, key) AS prev_latency_ms FROM flattened WHERE level = 'ERROR'

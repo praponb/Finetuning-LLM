@@ -1,0 +1,1 @@
+SELECT level, COUNT(CASE WHEN job_title = 'Engineer' THEN 1 END) AS engineer_count, APPROX_PERCENTILE(salary, ARRAY(0.25, 0.5, 0.75)) AS salary_quartiles, PERCENTILE_APPROX(salary, 0.9) AS salary_p90 FROM employees GROUP BY level HAVING COUNT(CASE WHEN job_title = 'Engineer' THEN 1 END) >= 1 ORDER BY engineer_count DESC;

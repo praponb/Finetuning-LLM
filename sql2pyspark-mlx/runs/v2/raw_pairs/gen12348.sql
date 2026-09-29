@@ -1,0 +1,1 @@
+SELECT customer_id, opened_quarter, frozen_count FROM (SELECT customer_id, QUARTER(opened_date) AS opened_quarter, SUM(CASE WHEN status = 'FROZEN' THEN 1 ELSE 0 END) AS frozen_count FROM accounts WHERE customer_id = 40 GROUP BY customer_id, QUARTER(opened_date)) AS s WHERE frozen_count >= 65

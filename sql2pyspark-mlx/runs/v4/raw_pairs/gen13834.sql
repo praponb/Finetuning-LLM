@@ -1,0 +1,1 @@
+select store_sales.product_id, round(avg(inventory.quantity), 2) as avg_quantity from inventory left join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id group by store_sales.product_id having avg_quantity > 51

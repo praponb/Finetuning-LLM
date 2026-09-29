@@ -1,0 +1,1 @@
+SELECT YEAR(txn_time) AS txn_year, AVG(amount) AS avg_amount, COUNT(amount) AS amount_count FROM transactions WHERE is_flagged = TRUE AND (HOUR(txn_time) BETWEEN 12 AND 17 OR amount <= 2000) GROUP BY YEAR(txn_time);

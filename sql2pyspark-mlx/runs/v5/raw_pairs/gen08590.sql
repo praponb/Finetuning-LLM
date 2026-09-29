@@ -1,0 +1,1 @@
+with lines as (select id, plan, effective_from, explode_outer(tier_prices) as element from price_tiers) select plan, case when plan rlike '^(pro|basic)$' then 'GROUP_A' when plan rlike '^(starter|enterprise)$' then 'EXTENDED' else 'CORE' end as plan_zone from lines order by plan_zone desc nulls last, plan;

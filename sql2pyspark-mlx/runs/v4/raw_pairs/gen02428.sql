@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, SUM(CASE WHEN level = 'L5' THEN salary ELSE 0 END) AS l5_salary, SUM(CASE WHEN level = 'L1' THEN 1 ELSE 0 END) AS l1_count FROM employees GROUP BY dept_id) SELECT d.id, d.budget, d.dept_name, ebd.l5_salary, ebd.l1_count FROM departments d JOIN employees_by_department ebd ON d.id = ebd.dept_id WHERE ebd.l1_count >= 20

@@ -1,0 +1,1 @@
+SELECT o.status, COUNT(s.id) AS shipment_count, SUM(s.cost) AS total_cost FROM orders o LEFT JOIN shipments s ON s.order_id = o.id GROUP BY o.status HAVING total_cost > 310 ORDER BY 2 DESC, total_cost;

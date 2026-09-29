@@ -1,0 +1,1 @@
+SELECT o.id, o.shipping_fee, o.discount, c.email, s.sqft, s.opened_date FROM orders o LEFT JOIN customers c ON o.customer_id = c.id RIGHT JOIN stores s ON s.id = o.store_id WHERE c.country = 'TH' ORDER BY id DESC;

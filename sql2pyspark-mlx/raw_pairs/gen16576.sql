@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, oi.product_id, p.category, o.customer_id FROM order_items oi JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON o.id = oi.order_id ORDER BY id DESC, product_id DESC LIMIT 50;

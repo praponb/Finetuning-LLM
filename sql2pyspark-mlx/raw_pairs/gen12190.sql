@@ -1,0 +1,1 @@
+with base as (select * from orders where discount is null or status in ('SHIPPED', 'RETURNED', 'PENDING')), orders_stats as (select channel, customer_id, sort_array(collect_set(status)) as status_list from base group by channel, customer_id) select * from orders_stats order by customer_id desc, channel;

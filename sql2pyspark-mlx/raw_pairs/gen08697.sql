@@ -1,0 +1,1 @@
+SELECT customer_id, SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END) AS enterprise_count FROM subscriptions WHERE end_date >= '2024-12-28' GROUP BY customer_id ORDER BY customer_id DESC, enterprise_count LIMIT 50;

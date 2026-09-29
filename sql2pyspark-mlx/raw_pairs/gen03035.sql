@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, created_at, key, v FROM carts LATERAL VIEW EXPLODE(attributes) li AS key, v) SELECT id, created_at, key, v, CASE WHEN key RLIKE '^(utm_source|gift)$' THEN 'GROUP_A' WHEN key RLIKE '^(device|weight_kg)$' THEN 'OTHER_ZONE' ELSE 'CORE' END AS key_zone FROM lines ORDER BY id NULLS FIRST, created_at DESC

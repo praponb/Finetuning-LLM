@@ -1,0 +1,1 @@
+SELECT d.id, d.budget, t.unique_managers, t.salary_range FROM departments d LEFT JOIN (SELECT dept_id, COUNT(DISTINCT salary) unique_managers, MAX(salary) - MIN(salary) salary_range FROM employees GROUP BY dept_id) t ON d.id = t.dept_id;

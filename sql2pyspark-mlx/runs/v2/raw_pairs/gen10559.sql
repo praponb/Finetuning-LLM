@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_type, t.is_flagged, t.account_id, a.status, a.customer_id FROM transactions t LEFT OUTER JOIN accounts a ON a.id = t.account_id WHERE a.account_type IN ('LOAN', 'SAVINGS') ORDER BY account_id ASC;

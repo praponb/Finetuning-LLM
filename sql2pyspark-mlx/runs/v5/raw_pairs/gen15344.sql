@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, COALESCE(revenue, 0) AS revenue_filled, revenue + units AS revenue_per_unit FROM store_sales WHERE sale_date >= DATE '2023-02-15' AND revenue > 2200) SELECT product_id, id FROM filtered EXCEPT SELECT product_id, id FROM store_sales WHERE revenue < 3600;

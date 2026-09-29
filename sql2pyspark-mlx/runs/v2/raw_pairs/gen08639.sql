@@ -1,0 +1,1 @@
+SELECT YEAR(p.launch_date) AS launch_year, MAX(oi.unit_price) AS max_unit_price FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE p.category = 'Grocery' GROUP BY YEAR(p.launch_date) ORDER BY launch_year DESC LIMIT 20

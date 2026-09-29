@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT YEAR(shipped_date) AS shipped_year, COUNT(DISTINCT cost) AS unique_orders, COUNT(*) AS row_count FROM shipments GROUP BY YEAR(shipped_date)) AS agg WHERE unique_orders > 4 ORDER BY shipped_year DESC

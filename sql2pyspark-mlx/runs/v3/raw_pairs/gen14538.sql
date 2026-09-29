@@ -1,0 +1,1 @@
+SELECT id, order_id, unit_price, product_id, quantity, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY unit_price DESC) AS dense_rnk, SUM(unit_price) OVER (PARTITION BY product_id ORDER BY quantity, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_unit_price FROM order_items WHERE quantity = 6;

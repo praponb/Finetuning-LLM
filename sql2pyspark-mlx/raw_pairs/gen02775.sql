@@ -1,0 +1,1 @@
+SELECT id, opened_date, FIRST_VALUE(balance) IGNORE NULLS OVER (ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_balance, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY opened_date DESC, id) AS event_seq FROM accounts

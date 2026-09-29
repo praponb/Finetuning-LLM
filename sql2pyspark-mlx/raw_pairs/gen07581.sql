@@ -1,0 +1,8 @@
+SELECT country
+FROM sessions
+WHERE HOUR(started_at) BETWEEN 8 AND 12
+UNION ALL
+SELECT status
+FROM accounts
+WHERE balance BETWEEN 40000 AND 52000
+ORDER BY country;

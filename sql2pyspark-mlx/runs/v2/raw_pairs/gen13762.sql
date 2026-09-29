@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, SUM(CASE WHEN status = 'IN_TRANSIT' THEN cost ELSE 0 END) AS in_transit_cost, COUNT(*) AS shipment_count FROM shipments GROUP BY order_id) SELECT o.id, o.order_date, ot.in_transit_cost, ot.shipment_count FROM orders o LEFT JOIN order_totals ot ON o.id = ot.order_id WHERE ot.in_transit_cost > 65 ORDER BY ot.in_transit_cost DESC

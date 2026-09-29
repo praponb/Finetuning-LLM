@@ -1,0 +1,1 @@
+SELECT customer_id, YEAR(opened_date) AS opened_year, COUNT(CASE WHEN account_type = 'CREDIT' THEN 1 END) AS credit_count FROM accounts WHERE customer_id IN (16, 17, 30, 38) AND opened_date BETWEEN '2023-05-06' AND '2023-06-01' GROUP BY customer_id, YEAR(opened_date)

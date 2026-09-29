@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM store_sales WHERE revenue >= 2200), store_sales_stats AS (SELECT QUARTER(sale_date) AS sale_quarter, AVG(revenue) AS avg_revenue FROM src GROUP BY QUARTER(sale_date)) SELECT sale_quarter, avg_revenue FROM store_sales_stats;

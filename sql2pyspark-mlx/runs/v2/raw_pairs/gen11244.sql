@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.plan, customers.credit_limit, CAST(customers.is_active AS INT) AS is_active_flag FROM subscriptions JOIN customers ON subscriptions.customer_id = customers.id WHERE customers.signup_date BETWEEN '2025-06-01' AND '2025-09-28' AND customers.city IN ('New York', 'Berlin', 'Bangkok')

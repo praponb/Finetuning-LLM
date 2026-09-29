@@ -1,0 +1,1 @@
+SELECT id, page, duration_sec, SUM(duration_sec) OVER (PARTITION BY MONTH(event_time) ORDER BY duration_sec, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_duration_sec, ROW_NUMBER() OVER (ORDER BY event_time, id) AS row_seq, NTILE(4) OVER (PARTITION BY session_id ORDER BY duration_sec, id) AS duration_sec_bucket FROM web_events

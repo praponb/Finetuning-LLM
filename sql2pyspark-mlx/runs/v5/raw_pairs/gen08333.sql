@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN shipping_fee >= 37 THEN 'high' WHEN shipping_fee >= 9 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, status, shipping_fee FROM orders) PIVOT (AVG(shipping_fee) FOR status IN ('SHIPPED', 'RETURNED'))

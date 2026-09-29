@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 330 THEN 'high' WHEN unit_price >= 180 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(*) AS order_item_count FROM order_items GROUP BY CASE WHEN unit_price >= 330 THEN 'high' WHEN unit_price >= 180 THEN 'mid' ELSE 'low' END ORDER BY unit_price_bucket ASC LIMIT 10;

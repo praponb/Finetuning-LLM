@@ -1,0 +1,1 @@
+SELECT p.product_name, p.stock_qty, p.brand, oi.product_id, oi.quantity, oi.unit_price, LOWER(p.category) AS category_lower FROM products p INNER JOIN order_items oi ON oi.product_id = p.id WHERE oi.unit_price >= 240 AND p.launch_date > '2023-10-01' ORDER BY product_id DESC, p.brand

@@ -1,0 +1,1 @@
+WITH filtered_web_events AS (SELECT *, DAY(event_time) event_time_day FROM web_events WHERE NOT (page IS NOT NULL AND page = '/search')), page_summary AS (SELECT page, ROUND(AVG(duration_sec), 2) avg_duration_sec FROM filtered_web_events GROUP BY page) SELECT page, avg_duration_sec FROM page_summary WHERE avg_duration_sec > 43 ORDER BY avg_duration_sec DESC

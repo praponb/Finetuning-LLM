@@ -1,0 +1,1 @@
+SELECT opened_month, pct_credit FROM (SELECT MONTH(opened_date) AS opened_month, ROUND((100 * SUM(CASE WHEN account_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_credit FROM accounts GROUP BY MONTH(opened_date)) AS x WHERE pct_credit >= 59 ORDER BY opened_month

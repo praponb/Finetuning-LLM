@@ -1,0 +1,1 @@
+select region, concat_ws(', ', sort_array(collect_set(city))) as city_values, sum(sqft) as total_sqft, round((100 * sum(case when city = 'Tokyo' then 1 else 0 end)) / count(*), 1) as pct_tokyo from stores where opened_date <= '2023-05-01' and store_name like '%Centr%' group by region having pct_tokyo > 46 order by pct_tokyo desc

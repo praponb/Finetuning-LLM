@@ -1,0 +1,1 @@
+SELECT CASE WHEN page IN ('/checkout', '/home') THEN 'tier_1' ELSE 'other' END AS page_group, SUM(duration_sec) AS total_duration_sec, COUNT(*) AS cnt, ROUND(SUM(duration_sec) * 100.0 / SUM(SUM(duration_sec)) OVER (), 2) AS pct_of_total FROM web_events GROUP BY CASE WHEN page IN ('/checkout', '/home') THEN 'tier_1' ELSE 'other' END ORDER BY cnt DESC;

@@ -1,0 +1,1 @@
+select id, segment, credit_limit, city, age, row_number() over (partition by segment order by credit_limit, id) as credit_limit_row, row_number() over (partition by city order by age, id) as rn from customers;

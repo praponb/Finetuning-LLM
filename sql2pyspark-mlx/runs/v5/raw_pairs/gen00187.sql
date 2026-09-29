@@ -1,0 +1,1 @@
+SELECT id, city, rating, LEAD(rating, 1) OVER w_recent AS next_rating, ROUND(rating / SUM(rating) OVER (PARTITION BY country), 4) AS rating_share, LAG(rating, 1, 0) OVER w_recent AS prev_rating FROM suppliers WHERE supplier_name LIKE '%Globa%' WINDOW w_recent AS (PARTITION BY country ORDER BY rating, id)

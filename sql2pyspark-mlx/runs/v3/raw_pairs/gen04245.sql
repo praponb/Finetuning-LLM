@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, ss.product_id, p.category, p.launch_date, p.brand FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id WHERE p.stock_qty = 333 AND p.price < 740 ORDER BY 1 DESC;

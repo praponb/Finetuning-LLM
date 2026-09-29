@@ -1,0 +1,1 @@
+SELECT page_group, click_duration_sec FROM (SELECT CASE WHEN page IN ('/cart', '/home') THEN 'core' ELSE 'other' END AS page_group, SUM(CASE WHEN event_type = 'click' THEN duration_sec ELSE 0 END) AS click_duration_sec FROM web_events GROUP BY CASE WHEN page IN ('/cart', '/home') THEN 'core' ELSE 'other' END) AS agg WHERE click_duration_sec < 77;

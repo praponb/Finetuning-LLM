@@ -1,0 +1,1 @@
+SELECT i.product_id, i.quantity, s.sqft, p.stock_qty, p.launch_date FROM inventory i LEFT OUTER JOIN stores s ON i.store_id = s.id LEFT OUTER JOIN products p ON i.product_id = p.id WHERE p.cost >= 450 ORDER BY p.stock_qty

@@ -1,0 +1,7 @@
+with flagged as (
+    select *, case when lag(reading_ts) over (partition by device_code order by reading_ts, id) is null
+                 or reading_ts > lag(reading_ts) over (partition by device_code order by reading_ts, id) + interval 45 minutes then 1 else 0 end as new_group_flag
+    from device_readings
+)
+select *, sum(new_group_flag) over (partition by device_code order by reading_ts, id rows between unbounded preceding and current row) as island_id
+from flagged;

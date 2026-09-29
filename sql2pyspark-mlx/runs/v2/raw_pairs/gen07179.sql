@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, MAX(started_at) AS latest_started_at FROM sessions WHERE customer_id = 34 GROUP BY customer_id) SELECT c.id, c.age, c.is_active, ct.latest_started_at FROM customers c LEFT JOIN customer_totals ct ON c.id = ct.customer_id

@@ -1,0 +1,1 @@
+SELECT status, carrier, SUM(CASE WHEN carrier = 'Flash' THEN 1 ELSE 0 END) flash_count FROM shipments WHERE delivered_date <= '2024-02-01' OR order_id IN (6, 28) GROUP BY 1, 2 HAVING SUM(CASE WHEN carrier = 'Kerry' THEN 1 ELSE 0 END) < 60;

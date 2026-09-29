@@ -1,0 +1,1 @@
+SELECT s.browser, s.device, s.customer_id, we.event_type, we.event_time, we.page FROM sessions s LEFT JOIN web_events we ON s.id = we.session_id WHERE s.browser NOT IN ('Safari', 'Chrome', 'Firefox') ORDER BY we.event_time, page;

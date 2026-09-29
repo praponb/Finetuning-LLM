@@ -1,0 +1,1 @@
+SELECT store_id, SUM(quantity) AS total_quantity, COUNT(*) AS cnt, SUM(SUM(quantity)) OVER (ORDER BY store_id) AS cumulative_quantity FROM inventory WHERE YEAR(last_restock) >= 2023 GROUP BY store_id ORDER BY store_id DESC

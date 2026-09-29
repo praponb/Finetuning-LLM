@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT QUARTER(signup_date) AS signup_quarter, SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END) AS chiang_mai_count FROM customers GROUP BY QUARTER(signup_date)) AS agg WHERE chiang_mai_count > 37 ORDER BY chiang_mai_count

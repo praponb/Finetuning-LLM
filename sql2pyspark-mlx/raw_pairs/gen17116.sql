@@ -1,0 +1,1 @@
+SELECT o.id, o.channel, COUNT(s.id) AS shipment_count, COUNT(s.cost) AS cost_count FROM orders o LEFT OUTER JOIN shipments s ON o.id = s.order_id WHERE s.order_id IS NOT NULL GROUP BY o.id, o.channel;

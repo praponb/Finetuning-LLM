@@ -1,0 +1,1 @@
+SELECT id, store_id, quantity, product_id FROM (SELECT *, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY quantity DESC) row_num FROM inventory WHERE MONTH(last_restock) IN (5, 8, 12)) ranked WHERE row_num <= 3

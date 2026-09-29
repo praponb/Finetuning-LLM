@@ -1,0 +1,1 @@
+SELECT id, product_id, revenue, units, ROUND(revenue / SUM(revenue) OVER (PARTITION BY product_id), 3) AS revenue_share, NTILE(2) OVER (PARTITION BY product_id ORDER BY units DESC, id) AS units_ntile FROM store_sales ORDER BY revenue DESC;

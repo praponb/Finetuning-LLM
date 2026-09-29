@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, COUNT(*) AS cnt, MAX(last_restock) AS latest_last_restock FROM inventory GROUP BY store_id) SELECT stores.id, stores.opened_date, store_summary.cnt, store_summary.latest_last_restock FROM stores INNER JOIN store_summary ON stores.id = store_summary.store_id WHERE store_summary.cnt >= 6 ORDER BY latest_last_restock DESC;

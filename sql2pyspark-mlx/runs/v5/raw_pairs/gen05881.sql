@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, MAX(amount) max_amount, MIN(amount) min_amount FROM payments WHERE method IN ('cash', 'paypal') GROUP BY order_id) SELECT o.customer_id, o.channel, os.max_amount, os.min_amount FROM orders o JOIN order_stats os ON o.id = os.order_id WHERE os.min_amount > 540 ORDER BY o.customer_id DESC;

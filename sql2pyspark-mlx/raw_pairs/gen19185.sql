@@ -1,0 +1,1 @@
+SELECT products.id, products.category, products.brand, suppliers.rating, suppliers.city, suppliers.country, DATEDIFF(CURRENT_DATE(), products.launch_date) / 365 AS years_since_launch_date FROM products INNER JOIN suppliers ON suppliers.id = products.supplier_id

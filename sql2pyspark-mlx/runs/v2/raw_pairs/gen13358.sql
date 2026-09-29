@@ -1,0 +1,1 @@
+SELECT CASE WHEN credit_limit >= 15600 THEN 'high' WHEN credit_limit >= 7100 THEN 'mid' ELSE 'low' END credit_limit_bucket, MIN(signup_date) first_signup_date, ROUND(AVG(age), 2) avg_age FROM customers WHERE country IN ('JP', 'US', 'SG') OR country IN ('SG', 'UK', 'DE') GROUP BY credit_limit_bucket;

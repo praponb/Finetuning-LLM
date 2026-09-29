@@ -1,0 +1,1 @@
+with base as (select *, coalesce(duration_sec, 0) as duration_sec_filled from web_events where page is not null) select * from base qualify row_number() over (partition by session_id order by duration_sec_filled desc nulls last, id asc) = 1

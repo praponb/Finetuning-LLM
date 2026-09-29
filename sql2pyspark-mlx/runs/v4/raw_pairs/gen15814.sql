@@ -1,0 +1,1 @@
+with valid_employees as (select * from employees where hire_date < '2024-09-12'), LevelSummary as (select level, max(hire_date) as last_hire_date from valid_employees group by level) select * from LevelSummary

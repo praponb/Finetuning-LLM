@@ -1,0 +1,1 @@
+SELECT brand, MIN(price) AS min_price, ROUND((100 * SUM(CASE WHEN brand = 'Acme' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_acme, SUM(CASE WHEN category = 'Books' THEN 1 ELSE 0 END) AS books_count FROM products GROUP BY brand ORDER BY books_count, brand LIMIT 50

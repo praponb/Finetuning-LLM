@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, ROUND(STDDEV(balance), 2) AS stddev_balance, ROUND(AVG(balance), 2) AS avg_balance FROM accounts GROUP BY customer_id) SELECT c.signup_date, ct.stddev_balance, ct.avg_balance FROM customers c LEFT OUTER JOIN customer_totals ct ON c.id = ct.customer_id WHERE ct.stddev_balance > 41 ORDER BY ct.avg_balance ASC

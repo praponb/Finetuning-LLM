@@ -1,0 +1,1 @@
+select case when revenue >= 4400 then 'high' when revenue >= 1600 then 'mid' else 'low' end as revenue_bucket, store_id, count(distinct revenue) as unique_stores, count(*) as num_store_sales from store_sales where not (sale_date between '2023-07-10' and '2023-10-19' or units >= 39) group by 1, 2 having count(*) >= 2 order by store_id desc

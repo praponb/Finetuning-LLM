@@ -1,0 +1,1 @@
+select i.quantity, p.brand, p.launch_date, s.supplier_name from inventory i inner join products p on i.product_id = p.id inner join suppliers s on p.supplier_id = s.id where p.supplier_id in (5, 6, 10, 35) and s.city = 'Chiang Mai';

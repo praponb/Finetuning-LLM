@@ -1,0 +1,1 @@
+SELECT e.job_title AS employee_job_title, e.email AS employee_email, e.level AS employee_level, m.job_title AS manager_job_title, m.email AS manager_email, m.dept_id AS manager_dept_id FROM employees e INNER JOIN employees m ON e.manager_id = m.id;

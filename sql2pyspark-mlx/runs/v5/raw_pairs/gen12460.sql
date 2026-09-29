@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, brand, price, cost, stock_qty, launch_date, supplier_id, SUBSTRING(brand, 1, 4) AS brand_prefix, ADD_MONTHS(launch_date, 3) AS launch_date_plus_months FROM products WHERE launch_date > DATE '2023-07-06') SELECT *, RANK() OVER (PARTITION BY brand ORDER BY cost DESC NULLS FIRST) AS row_num FROM base QUALIFY row_num = 1;

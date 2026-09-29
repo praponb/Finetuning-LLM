@@ -1,0 +1,1 @@
+SELECT txn_type, merchant, ROUND((100 * SUM(CASE WHEN merchant = 'Grab' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_grab FROM transactions WHERE NOT is_flagged AND is_flagged GROUP BY txn_type, merchant HAVING COUNT(DISTINCT amount) >= 5 ORDER BY pct_grab ASC, txn_type ASC

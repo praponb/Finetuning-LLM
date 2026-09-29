@@ -1,0 +1,1 @@
+SELECT t.id, t.merchant, a.account_type, DATE_FORMAT(a.opened_date, 'yyyy-MM') AS opened_date_label FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE t.txn_time < '2025-01-01' AND TO_DATE(t.txn_time) < '2023-12-01';

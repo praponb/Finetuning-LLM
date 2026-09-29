@@ -1,0 +1,1 @@
+select * from (select status, max(cost) - min(cost) as cost_range, sort_array(collect_set(status)) as status_list from shipments group by status) as x where cost_range > 60 order by status, cost_range desc limit 3

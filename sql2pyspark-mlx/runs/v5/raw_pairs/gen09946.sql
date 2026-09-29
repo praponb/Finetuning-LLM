@@ -1,0 +1,1 @@
+SELECT MONTH(sale_date) AS sale_month, store_id, MAX(sale_date) AS last_sale_date, MIN(units) AS min_units, COUNT(DISTINCT units) AS unique_products FROM store_sales WHERE sale_date > '2024-08-01' GROUP BY sale_month, store_id HAVING min_units < 37 ORDER BY sale_month, store_id LIMIT 50;

@@ -1,0 +1,1 @@
+SELECT id, country, rating FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id) AS rn FROM suppliers WHERE LENGTH(supplier_name) >= 7) AS ranked WHERE rn <= 1 ORDER BY country

@@ -1,0 +1,1 @@
+select o.store_id, o.customer_id, round(stddev(p.amount), 2) as stddev_amount, round((100 * sum(case when p.method = 'paypal' then 1 else 0 end)) / count(*), 1) as pct_paypal from payments p left join orders o on o.id = p.order_id group by o.store_id, o.customer_id

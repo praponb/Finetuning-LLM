@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, AVG(cost) AS avg_cost FROM products WHERE stock_qty <> 382 GROUP BY supplier_id) SELECT s.supplier_name, s.rating, pbs.avg_cost FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id WHERE pbs.avg_cost > 450;

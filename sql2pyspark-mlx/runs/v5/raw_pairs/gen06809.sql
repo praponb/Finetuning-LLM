@@ -1,0 +1,1 @@
+with product_stats as (select product_id, max(sale_date) as last_sale_date, round(avg(revenue), 2) as avg_revenue from store_sales group by product_id) select p.launch_date, p.category, ps.last_sale_date, ps.avg_revenue from products p left join product_stats ps on p.id = ps.product_id

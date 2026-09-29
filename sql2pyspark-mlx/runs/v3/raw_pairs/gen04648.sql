@@ -1,0 +1,1 @@
+SELECT t.id, t.account_id, t.is_flagged, a.opened_date, a.status FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE t.account_id IN (1, 8, 17) ORDER BY a.opened_date, t.account_id DESC

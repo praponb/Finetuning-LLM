@@ -1,0 +1,1 @@
+SELECT CASE WHEN job_title IN ('Intern', 'Engineer') THEN 'core' ELSE 'other' END AS job_title_group, ROUND(STDDEV(salary), 2) AS stddev_salary, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees WHERE LENGTH(full_name) < 14 GROUP BY job_title_group ORDER BY stddev_salary DESC

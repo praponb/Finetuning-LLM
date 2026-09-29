@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY amount DESC, id) AS row_num FROM payments WHERE amount BETWEEN 750 AND 1240) SELECT id, order_id, amount, status FROM numbered WHERE row_num <= 3 ORDER BY order_id;

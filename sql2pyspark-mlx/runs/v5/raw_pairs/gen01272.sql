@@ -1,0 +1,1 @@
+SELECT location, SUM(CASE WHEN location = 'New York' THEN budget ELSE 0 END) AS new_york_budget, ROUND(AVG(budget), 2) AS avg_budget FROM departments WHERE location IN ('London', 'Singapore', 'Chiang Mai') GROUP BY location ORDER BY avg_budget, location LIMIT 1;

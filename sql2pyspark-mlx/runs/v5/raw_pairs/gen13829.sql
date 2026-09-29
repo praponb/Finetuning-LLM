@@ -1,0 +1,1 @@
+select case when year(start_date) < 2024 then 'before_2024' when year(start_date) = 2024 then '2024' else 'after_2024' end as start_cohort, sort_array(collect_set(plan)) as plan_list from subscriptions group by case when year(start_date) < 2024 then 'before_2024' when year(start_date) = 2024 then '2024' else 'after_2024' end

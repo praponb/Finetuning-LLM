@@ -1,0 +1,1 @@
+select store_id, year(sale_date) as sale_year, max(sale_date) as latest_sale_date, round(avg(revenue), 2) as avg_revenue, round(stddev(revenue), 2) as stddev_revenue from store_sales where product_id in (2, 9) and store_id in (2, 3, 5) group by rollup(store_id, year(sale_date)) order by sale_year desc

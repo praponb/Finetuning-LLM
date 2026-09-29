@@ -1,0 +1,1 @@
+WITH recent_suppliers AS (SELECT * FROM suppliers WHERE supplier_name LIKE 'E%' AND (city IN ('Bangkok', 'Tokyo') OR country <> 'UK')), Summary AS (SELECT city, SUM(rating) AS total_rating FROM recent_suppliers GROUP BY city) SELECT * FROM Summary ORDER BY city, total_rating

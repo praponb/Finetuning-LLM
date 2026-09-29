@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT product_id, store_id, ROUND(STDDEV(revenue), 2) AS stddev_revenue, MIN(units) AS min_units FROM store_sales GROUP BY product_id, store_id) AS x WHERE min_units >= 14 ORDER BY min_units DESC, product_id, store_id LIMIT 20

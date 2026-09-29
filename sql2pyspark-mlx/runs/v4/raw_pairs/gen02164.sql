@@ -1,0 +1,1 @@
+WITH ProductTotals AS (SELECT product_id, ROUND(AVG(unit_price), 2) avg_unit_price, SUM(quantity * unit_price) revenue FROM order_items GROUP BY product_id) SELECT p.id, p.cost, p.stock_qty, P.avg_unit_price, P.revenue FROM products p LEFT JOIN ProductTotals P ON p.id = P.product_id WHERE P.avg_unit_price >= 24 ORDER BY stock_qty DESC;

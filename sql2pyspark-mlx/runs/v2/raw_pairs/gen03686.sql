@@ -1,0 +1,1 @@
+select store_id, quarter(last_restock) as last_restock_quarter, min(quantity) as min_quantity, max(last_restock) as latest_last_restock, max(quantity) as max_quantity from inventory group by store_id, last_restock_quarter having max(quantity) < 170 order by min_quantity desc, last_restock_quarter desc, store_id limit 50;

@@ -1,0 +1,1 @@
+SELECT event_time, event_type, LOWER(event_type) AS event_type_lower FROM web_events WHERE event_type IN ('purchase', 'click') AND (page NOT IN ('/product', '/home', '/cart') OR session_id IN (11, 30, 38)) ORDER BY event_time ASC, event_type ASC;

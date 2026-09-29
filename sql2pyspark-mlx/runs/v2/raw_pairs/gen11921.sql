@@ -1,0 +1,1 @@
+SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, AVG(unit_price) AS avg_unit_price, MAX(unit_price) AS max_unit_price FROM order_items WHERE unit_price > 180 AND unit_price BETWEEN 190 AND 320 GROUP BY 1 ORDER BY product_id DESC

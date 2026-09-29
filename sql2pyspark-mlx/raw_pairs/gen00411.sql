@@ -1,0 +1,1 @@
+SELECT s.started_at, t.stddev_duration_sec, t.total_count FROM sessions s JOIN (SELECT session_id, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, COUNT(*) AS total_count FROM web_events GROUP BY session_id) t ON s.id = t.session_id ORDER BY stddev_duration_sec, t.total_count;

@@ -1,0 +1,1 @@
+SELECT channel, status, COUNT(DISTINCT amount) AS unique_statuss, ROUND(AVG(shipping_fee), 2) AS avg_shipping_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM orders GROUP BY channel, status HAVING COUNT(DISTINCT amount) < 1 ORDER BY avg_shipping_fee DESC

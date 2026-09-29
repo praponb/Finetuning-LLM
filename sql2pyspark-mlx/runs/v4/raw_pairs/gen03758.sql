@@ -1,0 +1,1 @@
+select case when amount >= 4000 then 'HIGH' else 'LOW' end as amount_tier, account_id, count(case when txn_type = 'CREDIT' then 1 end) as credit_count, count(*) as num_rows, count_if(merchant = 'Grab') as grab_events, size(collect_set(merchant)) as num_merchants, count(distinct account_id) as distinct_account_ids from transactions group by 1, 2

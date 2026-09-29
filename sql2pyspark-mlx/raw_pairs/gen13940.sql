@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id, status ORDER BY delivered_date DESC NULLS LAST, id) AS rn FROM shipments) ranked WHERE rn = 1) SELECT DATE_TRUNC('WEEK', shipped_date) AS week_start, status, ROUND(AVG(cost), 2) AS avg_cost, SUM(cost) AS total_cost FROM latest GROUP BY week_start, status;

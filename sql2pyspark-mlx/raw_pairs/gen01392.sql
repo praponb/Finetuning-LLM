@@ -1,0 +1,1 @@
+with lines as (select id, created_at, key, attr_value from carts lateral view explode(attributes) li as key, attr_value) select id, created_at, key, case when key rlike '^(device|gift)$' then 'CORE' when key rlike '^(utm_source|weight_kg)$' then 'GROUP_B' else 'GROUP_A' end as key_zone from lines order by id desc nulls last

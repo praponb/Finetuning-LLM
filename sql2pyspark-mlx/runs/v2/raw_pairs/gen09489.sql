@@ -1,0 +1,1 @@
+SELECT s.city, s.opened_date, t.total_amount, t.partner_count FROM stores s INNER JOIN (SELECT store_id, SUM(amount) AS total_amount, COUNT(CASE WHEN channel = 'partner' THEN 1 END) AS partner_count FROM orders WHERE channel = 'store' GROUP BY store_id) t ON s.id = t.store_id WHERE t.total_amount >= 8300 ORDER BY s.city DESC;

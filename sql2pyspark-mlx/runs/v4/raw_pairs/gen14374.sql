@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, DAYOFWEEK(opened_date) AS opened_date_dayofweek, CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END AS is_chiang_mai FROM stores WHERE sqft < 7926) SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY is_chiang_mai DESC, id) AS dedup_rank FROM base QUALIFY dedup_rank = 1

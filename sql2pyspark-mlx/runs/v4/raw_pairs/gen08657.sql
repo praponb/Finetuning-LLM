@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, host, latency_ms, k, value FROM app_logs LATERAL VIEW EXPLODE(context) li AS k, value) SELECT id, host, latency_ms, k, value FROM exploded ORDER BY latency_ms NULLS LAST, id DESC;

@@ -1,0 +1,1 @@
+SELECT s.device, COUNT(we.id) AS web_event_count, ROUND((100 * SUM(CASE WHEN we.page = '/search' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_search FROM sessions s LEFT JOIN web_events we ON we.session_id = s.id GROUP BY s.device ORDER BY pct_search DESC, device LIMIT 3

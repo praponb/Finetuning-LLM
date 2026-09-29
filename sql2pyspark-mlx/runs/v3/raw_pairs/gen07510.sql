@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, ROUND(STDDEV(amount), 2) AS stddev_amount, MAX(txn_time) AS last_txn_time FROM transactions WHERE is_flagged GROUP BY account_id) SELECT a.balance, a.opened_date, as.stddev_amount, as.last_txn_time FROM accounts a INNER JOIN account_stats as ON a.id = as.account_id

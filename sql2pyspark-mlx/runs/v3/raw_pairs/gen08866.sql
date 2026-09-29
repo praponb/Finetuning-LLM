@@ -1,0 +1,1 @@
+SELECT status, CASE WHEN discount >= 0.37 THEN 'high' WHEN discount >= 0.06 THEN 'mid' ELSE 'low' END discount_bucket, ROUND((100 * SUM(CASE WHEN channel = 'partner' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_partner, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) cancelled_count FROM orders GROUP BY status, discount_bucket ORDER BY pct_partner DESC;

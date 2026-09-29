@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LENGTH(carrier) AS carrier_length, INITCAP(TRIM(status)) AS status_title FROM shipments WHERE delivered_date > '2023-07-01') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status, carrier ORDER BY delivered_date DESC, id) AS rn FROM base) ranked WHERE rn = 1;

@@ -1,0 +1,1 @@
+SELECT d.id, d.location, COUNT(e.id) AS employee_count FROM departments d LEFT OUTER JOIN employees e ON e.dept_id = d.id WHERE d.dept_name IN ('Engineering', 'Sales') GROUP BY d.id, d.location HAVING COUNT(e.id) >= 5 ORDER BY id DESC, location ASC

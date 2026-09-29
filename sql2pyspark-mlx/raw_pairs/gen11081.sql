@@ -1,0 +1,1 @@
+SELECT id, supplier_id, launch_date, stock_qty, LAG(stock_qty, 2) OVER (PARTITION BY supplier_id ORDER BY launch_date, id) AS prev_stock_qty FROM products WHERE product_name LIKE '%Smar%' ORDER BY prev_stock_qty;

@@ -1,0 +1,1 @@
+WITH SessionsByCustomer AS (SELECT customer_id, COUNT(CASE WHEN browser = 'Chrome' THEN 1 END) chrome_count FROM sessions GROUP BY customer_id) SELECT customers.id, customers.signup_date, SessionsByCustomer.chrome_count FROM customers LEFT JOIN SessionsByCustomer ON customers.id = SessionsByCustomer.customer_id WHERE SessionsByCustomer.chrome_count >= 8

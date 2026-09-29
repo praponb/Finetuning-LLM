@@ -1,0 +1,1 @@
+with ranked_web_events as (select id, session_id, duration_sec, row_number() over (partition by session_id order by duration_sec, id) rn from web_events) select id, session_id, duration_sec from ranked_web_events where rn <= 5 order by 2 desc, 1 desc

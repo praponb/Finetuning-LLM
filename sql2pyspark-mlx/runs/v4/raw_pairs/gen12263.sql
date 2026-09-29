@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', end_date) AS end_month, status, SUM(monthly_fee) AS total_monthly_fee FROM subscriptions WHERE start_date <= '2025-08-01' AND status = 'PAUSED' AND status IN ('ACTIVE', 'EXPIRED') GROUP BY 1, 2;

@@ -1,0 +1,1 @@
+SELECT o.status, SORT_ARRAY(COLLECT_SET(s.status)) AS status_list, MAX(s.shipped_date) AS latest_shipped_date FROM shipments s LEFT JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id WHERE MONTH(c.signup_date) IN (2, 6, 11) GROUP BY o.status ORDER BY latest_shipped_date;

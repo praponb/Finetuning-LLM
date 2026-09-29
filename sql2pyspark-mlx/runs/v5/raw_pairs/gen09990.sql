@@ -1,0 +1,1 @@
+WITH AccountStats AS (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions WHERE txn_type = 'CREDIT' GROUP BY account_id) SELECT a.id, a.status, A.txn_type_values FROM accounts a LEFT JOIN AccountStats A ON a.id = A.account_id ORDER BY a.status DESC;

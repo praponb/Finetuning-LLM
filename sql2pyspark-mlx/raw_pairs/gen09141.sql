@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, EXPLODE(coupon_codes) AS element FROM carts) SELECT element, COUNT(*) FILTER (WHERE element = 'SPRING10') AS spring10_rows, COUNT(DISTINCT element) AS distinct_elements, COUNT(*) AS cnt, COUNT(DISTINCT customer_id) AS distinct_customer_ids FROM lines GROUP BY element

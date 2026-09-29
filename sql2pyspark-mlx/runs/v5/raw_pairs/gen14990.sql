@@ -1,0 +1,1 @@
+with ranked as (select *, row_number() over (partition by method order by paid_at, id) as pos from payments where to_date(paid_at) >= '2023-12-19') select id, method, paid_at, amount from ranked where pos <= 3 order by id desc;

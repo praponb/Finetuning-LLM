@@ -1,0 +1,1 @@
+select city, th_count from (select city, sum(case when country = 'TH' then 1 else 0 end) as th_count from suppliers where supplier_name like 'Li%' group by city) as agg where th_count > 75 order by 2, city desc;

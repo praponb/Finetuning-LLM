@@ -1,0 +1,1 @@
+select supplier_id, date_trunc('MONTH', launch_date) launch_month, sum(case when brand = 'Initech' then 1 else 0 end) initech_count, sum(case when category = 'Electronics' then 1 else 0 end) electronics_count from products where cost >= 640 group by supplier_id, date_trunc('MONTH', launch_date)

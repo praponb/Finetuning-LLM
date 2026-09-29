@@ -1,0 +1,1 @@
+select account_type, status, sum(case when status = 'OPEN' then 1 else 0 end) as open_count from accounts where opened_date > '2023-09-01' or status not in ('FROZEN', 'CLOSED') group by account_type, status order by account_type, status;

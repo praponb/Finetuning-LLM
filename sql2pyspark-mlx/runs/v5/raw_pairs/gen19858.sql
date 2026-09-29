@@ -1,0 +1,1 @@
+SELECT c.is_active, SUM(CASE WHEN s.device = 'desktop' THEN 1 ELSE 0 END) desktop_count, SORT_ARRAY(COLLECT_SET(s.browser)) browser_list FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.country = 'DE' GROUP BY c.is_active;

@@ -1,0 +1,1 @@
+SELECT product_id, quantity_bucket, quantity_count FROM (SELECT product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END quantity_bucket, COUNT(quantity) quantity_count FROM order_items GROUP BY product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END) s WHERE quantity_count > 5;

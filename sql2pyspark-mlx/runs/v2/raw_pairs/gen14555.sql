@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, country, signup_date, age, RANK() OVER (PARTITION BY country ORDER BY signup_date DESC) AS rn FROM customers) SELECT id, country, signup_date, age FROM numbered WHERE rn <= 2

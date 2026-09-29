@@ -1,0 +1,1 @@
+select id, manager_id, hire_date, level from (select id, manager_id, hire_date, level, row_number() over (partition by manager_id order by hire_date desc, id) as rnk from employees) as ranked where rnk <= 1;

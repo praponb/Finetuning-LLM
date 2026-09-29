@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MIN(opened_date) AS first_opened_date, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM accounts GROUP BY customer_id) SELECT c.signup_date, cs.first_opened_date, cs.status_list FROM customers c JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY signup_date, cs.first_opened_date DESC;

@@ -1,0 +1,1 @@
+select e.id, e.salary as employee_salary, e.is_remote as employee_is_remote, m.full_name as manager_full_name, m.dept_id as manager_dept_id from employees as e left join employees as m on e.manager_id = m.id

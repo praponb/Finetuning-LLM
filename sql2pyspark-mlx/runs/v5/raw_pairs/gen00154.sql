@@ -1,0 +1,1 @@
+SELECT customers.city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(sessions.country))) country_values, MIN(sessions.started_at) min_started_at FROM sessions FULL OUTER JOIN customers ON sessions.customer_id = customers.id GROUP BY customers.city;

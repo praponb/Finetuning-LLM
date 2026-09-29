@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN category IN ('Home', 'Grocery') THEN 'group_a' ELSE 'other' END AS category_group, brand, price FROM products) PIVOT (COUNT(price) FOR brand IN ('Initech', 'Globex', 'Umbrella', 'Stark')) ORDER BY category_group

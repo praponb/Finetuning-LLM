@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY opened_date DESC, id) AS row_num FROM accounts WHERE balance BETWEEN 62000 AND 76000) AS r WHERE row_num <= 5 ORDER BY row_num, id DESC

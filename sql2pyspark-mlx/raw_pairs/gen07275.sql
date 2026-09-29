@@ -1,0 +1,1 @@
+SELECT o.id, COUNT(p.id) payment_count, COUNT(CASE WHEN p.status = 'FAILED' THEN 1 END) failed_count, COUNT(DISTINCT p.amount) unique_statuss FROM orders o LEFT OUTER JOIN payments p ON o.id = p.order_id WHERE p.method IN ('promptpay', 'bank_transfer') GROUP BY o.id ORDER BY payment_count, o.id;

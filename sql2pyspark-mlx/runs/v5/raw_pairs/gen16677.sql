@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, supplier_id, launch_date, brand, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY launch_date DESC, id) AS rnk FROM products WHERE cost IS NOT NULL) SELECT * FROM ranked WHERE rnk <= 3 ORDER BY id DESC

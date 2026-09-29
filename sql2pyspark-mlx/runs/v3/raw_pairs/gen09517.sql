@@ -1,0 +1,1 @@
+SELECT s.city, DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, SUM(o.amount) AS total_amount, COUNT(CASE WHEN o.status = 'PENDING' THEN 1 END) AS pending_count FROM orders o LEFT JOIN customers c ON c.id = o.customer_id JOIN stores s ON o.store_id = s.id GROUP BY s.city, DATE_FORMAT(s.opened_date, 'yyyy-MM')

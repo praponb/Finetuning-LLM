@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, coupon_codes, items, SIZE(attributes) AS num_attributes, TRANSFORM(FILTER(items, i -> i.promo IS NOT NULL), i -> STRUCT(i.product_id AS pid, ROUND(i.price * 0.9, 2) AS discounted_price)) AS promo_lines, COALESCE(attributes['gift'], 'none') AS gift_or_default, FORALL(items, i -> i.qty <= 5) AS all_small_qty FROM carts;

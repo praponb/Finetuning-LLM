@@ -1,0 +1,1 @@
+select emp.hire_date as employee_hire_date, emp.job_title as employee_job_title, emp.salary as employee_salary, mgr.email as manager_email, mgr.full_name as manager_full_name, mgr.level as manager_level from employees emp left outer join employees mgr on emp.manager_id = mgr.id where emp.full_name like 'Oli%' order by manager_full_name asc, employee_hire_date asc;

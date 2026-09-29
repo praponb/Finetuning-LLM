@@ -1,0 +1,1 @@
+select id, product_id, quantity, last_restock from (select id, product_id, quantity, last_restock, rank() over (partition by product_id order by quantity) row_num from inventory where year(last_restock) = 2025) t where row_num <= 5 order by quantity

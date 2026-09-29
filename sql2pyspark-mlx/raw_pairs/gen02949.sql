@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM shipments WHERE MONTH(delivered_date) IN (5, 7, 8) AND status != 'LOST' AND delivered_date BETWEEN '2024-12-30' AND '2025-04-01'), status_summary AS (SELECT status, SUM(CASE WHEN carrier = 'UPS' THEN cost ELSE 0 END) AS ups_cost, ROUND(STDDEV(cost), 2) AS stddev_cost FROM src GROUP BY status) SELECT * FROM status_summary WHERE stddev_cost > 24;

@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, ROUND(AVG(o.shipping_fee), 2) AS avg_shipping_fee FROM orders o FULL OUTER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id GROUP BY YEAR(c.signup_date) HAVING ROUND(AVG(o.shipping_fee), 2) >= 59 ORDER BY avg_shipping_fee;

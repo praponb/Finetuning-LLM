@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, channel, promo_code, starts_on, ends_on, discount_pct, DATE_FORMAT(starts_on, 'MMM yyyy') AS starts_on_label FROM promotions WHERE channel IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY promo_code ORDER BY discount_pct ASC, id ASC) AS row_num FROM cleaned QUALIFY row_num = 1

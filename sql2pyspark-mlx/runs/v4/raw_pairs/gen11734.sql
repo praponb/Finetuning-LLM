@@ -1,0 +1,1 @@
+SELECT s.supplier_name, s.country, t.max_stock_qty, t.latest_launch_date FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, MAX(stock_qty) AS max_stock_qty, MAX(launch_date) AS latest_launch_date FROM products WHERE stock_qty BETWEEN 111 AND 340 GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY s.country;

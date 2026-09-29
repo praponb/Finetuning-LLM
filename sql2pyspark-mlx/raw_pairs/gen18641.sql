@@ -1,0 +1,1 @@
+SELECT id, full_name, email, dept_id, manager_id, job_title, salary, is_remote, level, RANK() OVER (PARTITION BY level, job_title ORDER BY salary DESC) AS salary_rank, LEAD(salary, 1) OVER w_running AS next_salary FROM employees WINDOW w_running AS (PARTITION BY dept_id ORDER BY salary ASC, id ASC)

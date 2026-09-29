@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, MAX(start_date) AS last_start_date FROM subscriptions GROUP BY customer_id) SELECT c.age, c.country, cs.last_start_date FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY c.country;

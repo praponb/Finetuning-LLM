@@ -1,0 +1,1 @@
+WITH store_sales_by_product AS (SELECT product_id, MAX(revenue) AS max_revenue, COUNT(units) AS units_count FROM store_sales GROUP BY product_id) SELECT p.id, p.stock_qty, ssbp.max_revenue, ssbp.units_count FROM products p LEFT OUTER JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id ORDER BY stock_qty

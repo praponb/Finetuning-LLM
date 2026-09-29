@@ -1,0 +1,1 @@
+SELECT status, QUARTER(order_date) AS order_quarter, ROUND((100 * SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cancelled FROM orders WHERE (channel IN ('partner', 'mobile', 'web') AND amount > 1100) OR shipping_fee IS NOT NULL GROUP BY status, QUARTER(order_date) ORDER BY status;

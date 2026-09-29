@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT customer_id, account_type, balance FROM accounts) src PIVOT (MAX(balance) AS total, COUNT(1) AS cnt FOR account_type IN ('LOAN' AS loan, 'CHECKING' AS checking, 'SAVINGS' AS savings))

@@ -1,0 +1,1 @@
+select case when amount >= 4400 then 'high' when amount >= 600 then 'mid' else 'low' end as amount_bucket, txn_type, min(txn_time) as first_txn_time from transactions where merchant != 'Amazon' group by amount_bucket, txn_type

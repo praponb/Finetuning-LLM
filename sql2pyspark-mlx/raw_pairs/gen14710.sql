@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT id, store_id FROM orders EXCEPT ALL SELECT id, store_id FROM orders WHERE amount BETWEEN 680 AND 1220), reconciled AS (SELECT s.* FROM orders s INNER JOIN matched_keys k ON s.id = k.id AND s.store_id = k.store_id) SELECT id, store_id, order_date, amount, shipping_fee FROM reconciled ORDER BY store_id NULLS LAST;

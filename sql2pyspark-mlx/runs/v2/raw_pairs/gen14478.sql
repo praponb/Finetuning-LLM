@@ -1,0 +1,1 @@
+SELECT id, customer_id, balance, opened_date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY balance DESC, id) AS rnk FROM accounts WHERE account_type <> 'LOAN') AS r WHERE rnk <= 2

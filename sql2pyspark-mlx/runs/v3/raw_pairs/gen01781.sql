@@ -1,0 +1,1 @@
+SELECT ss.store_id, DATE_TRUNC('MONTH', ss.sale_date) sale_month, MIN(i.quantity) min_quantity, COUNT(DISTINCT i.quantity) unique_products FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY ss.store_id, DATE_TRUNC('MONTH', ss.sale_date);

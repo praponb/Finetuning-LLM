@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary, MAX(salary) - MIN(salary) AS salary_range FROM employees WHERE job_title = 'Director' GROUP BY dept_id) SELECT d.location, dt.avg_salary, dt.salary_range FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.avg_salary > 46;

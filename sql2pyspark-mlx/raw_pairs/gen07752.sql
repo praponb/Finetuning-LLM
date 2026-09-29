@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values FROM products WHERE stock_qty IS NOT NULL GROUP BY supplier_id) SELECT s.id, s.supplier_name, s.city, ss.brand_values FROM suppliers s JOIN supplier_summary ss ON s.id = ss.supplier_id;

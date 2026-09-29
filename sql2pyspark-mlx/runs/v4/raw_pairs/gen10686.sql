@@ -1,0 +1,1 @@
+SELECT s.cost, s.carrier, o.status, o.amount, st.city, st.opened_date FROM shipments s LEFT JOIN orders o ON o.id = s.order_id INNER JOIN stores st ON o.store_id = st.id WHERE s.order_id IS NOT NULL ORDER BY st.opened_date;

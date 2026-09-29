@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, COUNT(DISTINCT sqft) AS unique_regions, MAX(opened_date) AS latest_opened_date, COUNT(DISTINCT sqft) AS unique_citys FROM stores WHERE sqft >= 8108 AND store_name LIKE '%Cen%' AND city NOT IN ('Singapore', 'New York', 'London') GROUP BY 1 HAVING COUNT(DISTINCT sqft) > 5

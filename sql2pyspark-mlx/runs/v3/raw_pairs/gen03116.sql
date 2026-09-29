@@ -1,0 +1,1 @@
+SELECT status, MIN(balance) AS min_balance FROM accounts WHERE balance > 74000 OR account_type NOT IN ('CREDIT', 'SAVINGS', 'LOAN') GROUP BY status HAVING MIN(balance) >= 23000 ORDER BY min_balance DESC, status LIMIT 3;

@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT s.*, d.status AS order_status FROM payments s LEFT JOIN orders d ON s.order_id = d.id) SELECT id, order_id, paid_at, status, CASE WHEN status RLIKE '^(FAILED|SUCCESS)$' THEN 'CORE' WHEN status RLIKE '^(REFUNDED)$' THEN 'GROUP_A' ELSE 'EXTENDED' END AS status_zone FROM enriched ORDER BY order_id

@@ -1,0 +1,1 @@
+SELECT amount, 'order' AS source FROM orders WHERE status NOT IN ('PENDING', 'SHIPPED') UNION SELECT cost, 'product' AS source FROM products WHERE launch_date BETWEEN '2024-06-01' AND '2024-08-15' ORDER BY source

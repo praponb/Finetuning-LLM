@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, MIN(started_at) AS first_started_at, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(device))) AS device_values FROM sessions WHERE device = 'tablet' GROUP BY customer_id) SELECT c.id, c.name, c.segment, cs.first_started_at, cs.device_values FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY c.segment DESC;

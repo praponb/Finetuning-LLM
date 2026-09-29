@@ -1,0 +1,1 @@
+SELECT txn_type, fee_amount FROM (SELECT txn_type, SUM(CASE WHEN txn_type = 'FEE' THEN amount ELSE 0 END) AS fee_amount FROM transactions WHERE txn_time >= '2023-03-12' GROUP BY txn_type) AS agg WHERE fee_amount < 31;

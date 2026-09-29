@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, COUNT(*) AS order_item_count FROM order_items GROUP BY product_id) SELECT products.price, product_stats.order_item_count FROM products INNER JOIN product_stats ON products.id = product_stats.product_id WHERE product_stats.order_item_count >= 4 ORDER BY products.price

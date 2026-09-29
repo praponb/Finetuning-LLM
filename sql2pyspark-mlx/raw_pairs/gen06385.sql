@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.event_type, web_events.duration_sec, web_events.event_time FROM web_events WHERE web_events.session_id NOT IN (SELECT id FROM sessions WHERE country IN ('TH', 'UK', 'DE')) ORDER BY event_time DESC, id LIMIT 50;

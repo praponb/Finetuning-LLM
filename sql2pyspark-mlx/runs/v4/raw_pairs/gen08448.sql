@@ -1,0 +1,1 @@
+with supplier_totals as (select supplier_id, round((100 * sum(case when brand = 'Initech' then 1 else 0 end)) / count(*), 1) as pct_initech, count(*) as total_count from products group by supplier_id) select s.id, s.country, s.supplier_name, st.pct_initech, st.total_count from suppliers s inner join supplier_totals st on s.id = st.supplier_id;

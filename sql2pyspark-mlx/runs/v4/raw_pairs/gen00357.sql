@@ -1,0 +1,1 @@
+select date_format(order_date, 'yyyy-MM') as order_month, sum(case when status = 'SHIPPED' then shipping_fee else 0 end) as shipped_shipping_fee from orders where discount <= 0.39 group by date_format(order_date, 'yyyy-MM') having sum(case when status = 'SHIPPED' then shipping_fee else 0 end) > 72;

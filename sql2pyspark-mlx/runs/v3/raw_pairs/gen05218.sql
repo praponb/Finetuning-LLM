@@ -1,0 +1,1 @@
+SELECT account_type, customer_id FROM accounts WHERE opened_date BETWEEN '2023-10-12' AND '2024-05-01' INTERSECT SELECT account_type, customer_id FROM accounts WHERE status = 'OPEN' ORDER BY customer_id;

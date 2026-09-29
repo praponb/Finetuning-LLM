@@ -1,0 +1,1 @@
+SELECT src.id, src.account_id, src.txn_type, src.amount, src.txn_time, src.merchant, src.is_flagged, a.status FROM transactions src LEFT JOIN accounts a ON src.account_id = a.id WHERE a.account_type = 'LOAN';

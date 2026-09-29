@@ -1,0 +1,1 @@
+SELECT p.brand, MAX(i.quantity) AS max_quantity, MIN(i.quantity) AS min_quantity FROM inventory i JOIN products p ON i.product_id = p.id JOIN stores s ON i.store_id = s.id WHERE i.last_restock < '2023-06-01' GROUP BY p.brand ORDER BY min_quantity;

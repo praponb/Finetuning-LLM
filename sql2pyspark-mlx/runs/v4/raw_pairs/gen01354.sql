@@ -1,0 +1,1 @@
+SELECT method, SUM(CASE WHEN status = 'FAILED' THEN 1 ELSE 0 END) AS failed_count, ROUND(AVG(amount), 2) AS avg_amount, COUNT(amount) AS amount_count FROM payments WHERE status NOT IN ('SUCCESS', 'REFUNDED', 'FAILED') GROUP BY method

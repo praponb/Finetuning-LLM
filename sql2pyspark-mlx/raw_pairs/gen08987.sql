@@ -1,0 +1,1 @@
+SELECT a.balance, a.account_type, a.status, t.txn_time, t.merchant FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id WHERE a.account_type NOT IN ('SAVINGS', 'CHECKING') ORDER BY status DESC;

@@ -1,0 +1,1 @@
+SELECT id, status, opened_date FROM (SELECT id, status, opened_date, DENSE_RANK() OVER (PARTITION BY status ORDER BY opened_date) AS rnk FROM accounts WHERE status NOT IN ('FROZEN', 'CLOSED')) AS t WHERE rnk <= 3 ORDER BY status

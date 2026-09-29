@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LOWER(supplier_name) AS supplier_name_lower FROM suppliers WHERE rating > 2.2) SELECT s.*, x.product_price FROM base s JOIN LATERAL (SELECT c.price AS product_price FROM products c WHERE c.supplier_id = s.id ORDER BY c.price DESC, c.id DESC LIMIT 1) x ON TRUE

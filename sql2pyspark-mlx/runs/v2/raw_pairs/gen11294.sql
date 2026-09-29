@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, p.stock_qty, p.category, o.discount, o.status FROM order_items oi JOIN products p ON p.id = oi.product_id LEFT JOIN orders o ON o.id = oi.order_id WHERE oi.product_id IN (29, 37) ORDER BY id DESC;

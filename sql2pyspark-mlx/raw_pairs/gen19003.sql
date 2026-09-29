@@ -1,0 +1,1 @@
+SELECT customer_id, plan, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions WHERE customer_id IN (9, 22, 35) AND (start_date BETWEEN '2024-02-01' AND '2025-09-01' OR customer_id IS NULL) GROUP BY customer_id, plan ORDER BY plan DESC;

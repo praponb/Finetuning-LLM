@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, t.pct_shell FROM accounts a LEFT JOIN (SELECT account_id, ROUND((100 * SUM(CASE WHEN merchant = 'Shell' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_shell FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.pct_shell > 76 ORDER BY id, customer_id DESC

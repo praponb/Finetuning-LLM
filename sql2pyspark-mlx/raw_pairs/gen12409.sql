@@ -1,0 +1,8 @@
+select
+    id,
+    session_id,
+    event_time,
+    duration_sec,
+    sum(duration_sec) over (partition by session_id order by event_time, id rows between unbounded preceding and current row) as running_duration_sec
+from web_events
+where session_id in (12, 13);

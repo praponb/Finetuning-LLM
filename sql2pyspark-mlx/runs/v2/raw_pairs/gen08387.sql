@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM products WHERE launch_date < '2025-07-28'), agg AS (SELECT brand, category, COUNT(DISTINCT cost) AS unique_categorys, COUNT(DISTINCT price) AS unique_brands FROM base GROUP BY brand, category) SELECT brand, category, unique_categorys, unique_brands FROM agg WHERE unique_brands > 6 ORDER BY unique_brands ASC

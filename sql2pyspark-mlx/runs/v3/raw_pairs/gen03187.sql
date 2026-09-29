@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, c.city, c.email FROM accounts a RIGHT JOIN customers c ON a.customer_id = c.id WHERE NOT (a.status NOT IN ('OPEN', 'CLOSED', 'FROZEN') AND LENGTH(c.email) >= 10) ORDER BY a.id, a.customer_id DESC;

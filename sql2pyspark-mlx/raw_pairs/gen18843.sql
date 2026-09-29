@@ -1,0 +1,1 @@
+with valid_products as (select *, substring(product_name, 1, 2) as product_name_prefix from products where stock_qty < 332 and stock_qty <> 185), Summary as (select category, round(stddev(cost), 2) as stddev_cost, min(launch_date) as min_launch_date from valid_products group by category) select category, min_launch_date from Summary order by category asc, min_launch_date asc

@@ -1,0 +1,1 @@
+select a.balance, t.debit_count from accounts a join (select account_id, count(case when txn_type = 'DEBIT' then 1 end) as debit_count from transactions where account_id in (13, 27, 40) group by account_id) t on a.id = t.account_id

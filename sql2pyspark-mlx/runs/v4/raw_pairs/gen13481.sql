@@ -1,0 +1,1 @@
+select country, count(rating) as rating_count, round(stddev(rating), 2) as stddev_rating from suppliers where supplier_name is not null and city not in ('Singapore', 'New York') and rating < 2.5 group by country having round(stddev(rating), 2) >= 59 order by rating_count desc, country limit 1

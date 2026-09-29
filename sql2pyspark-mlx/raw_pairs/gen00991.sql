@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('WEEK', started_at) AS week_start, device, SIZE(COLLECT_SET(device)) AS num_devices, COUNT(CASE WHEN country = 'SG' THEN 1 END) AS sg_count, (UNIX_TIMESTAMP(MAX(started_at)) - UNIX_TIMESTAMP(MIN(started_at))) / 60 AS span_minutes, GROUPING_ID() AS grouping_level FROM sessions GROUP BY ROLLUP (DATE_TRUNC('WEEK', started_at), device) HAVING sg_count > 1;

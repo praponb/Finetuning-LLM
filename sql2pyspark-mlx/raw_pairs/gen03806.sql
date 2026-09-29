@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 3900 THEN 'HIGH' ELSE 'LOW' END AS amount_tier, account_id, MAX(amount) AS max_amount, COUNT(DISTINCT id) AS distinct_ids, PERCENT_RANK() OVER (PARTITION BY CASE WHEN amount >= 3900 THEN 'HIGH' ELSE 'LOW' END ORDER BY MAX(amount) DESC) AS max_amount_percent_rank FROM transactions GROUP BY CASE WHEN amount >= 3900 THEN 'HIGH' ELSE 'LOW' END, account_id

@@ -1,0 +1,1 @@
+SELECT products.id, products.stock_qty, products.brand FROM products WHERE products.product_name IS NOT NULL AND NOT EXISTS (SELECT 1 FROM order_items WHERE order_items.product_id = products.id) ORDER BY stock_qty

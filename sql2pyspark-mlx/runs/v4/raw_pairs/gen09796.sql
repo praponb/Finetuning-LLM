@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, host, level, key, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) t AS key, attr_value) SELECT id, service, host, level, key, attr_value FROM exploded ORDER BY host DESC

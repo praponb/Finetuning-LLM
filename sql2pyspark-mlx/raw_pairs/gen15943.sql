@@ -1,0 +1,1 @@
+SELECT *, COUNT(balance) OVER (PARTITION BY customer_id, account_type) AS customer_id_count_balance, AVG(balance) OVER (PARTITION BY DATE_TRUNC('week', opened_date), customer_id ORDER BY opened_date, id ROWS BETWEEN 2 PRECEDING AND 1 PRECEDING) AS balance_avg_2_prior FROM accounts

@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, SUM(amount) total_amount FROM transactions GROUP BY account_id) SELECT a.account_type, a.balance, as.total_amount FROM accounts a LEFT JOIN account_stats as ON a.id = as.account_id WHERE as.total_amount > 7000 ORDER BY balance DESC

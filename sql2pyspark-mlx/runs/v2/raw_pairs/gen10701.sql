@@ -1,0 +1,1 @@
+SELECT id, level, salary, manager_id, hire_date, MIN(salary) OVER (PARTITION BY level) AS level_min_salary, salary - LAG(salary, 2) OVER (PARTITION BY manager_id ORDER BY hire_date, id) AS salary_change FROM employees ORDER BY level;

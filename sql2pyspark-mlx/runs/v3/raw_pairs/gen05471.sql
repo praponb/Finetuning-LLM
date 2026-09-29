@@ -1,0 +1,1 @@
+SELECT customer_id, MAX(shipping_fee) AS max_shipping_fee, SUM(CASE WHEN channel = 'web' THEN discount ELSE 0 END) AS web_discount FROM orders WHERE channel = 'web' AND store_id IS NULL GROUP BY customer_id;

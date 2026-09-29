@@ -1,0 +1,1 @@
+SELECT departments.id, departments.location, departments.budget, t.unique_job_titles FROM departments INNER JOIN (SELECT dept_id, COUNT(DISTINCT salary) AS unique_job_titles FROM employees GROUP BY dept_id) t ON departments.id = t.dept_id;

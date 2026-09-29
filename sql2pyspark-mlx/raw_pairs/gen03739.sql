@@ -1,0 +1,1 @@
+SELECT p.id, p.paid_at, p.amount, p.method, o.store_id, DATEDIFF(CURRENT_DATE(), p.paid_at) AS days_since_paid_at FROM payments p JOIN orders o ON p.order_id = o.id WHERE o.customer_id IN (26, 29) ORDER BY days_since_paid_at, id LIMIT 50;

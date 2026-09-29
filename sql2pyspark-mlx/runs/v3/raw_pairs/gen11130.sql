@@ -1,0 +1,1 @@
+select *, coalesce(unit_price, 0) unit_price_filled, case when unit_price >= 400 then 'High' when unit_price >= 180 then 'Medium' else 'Low' end unit_price_tier from order_items where quantity between 6 and 7

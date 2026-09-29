@@ -1,0 +1,1 @@
+SELECT city, segment, CASE WHEN segment IN ('Consumer', 'Corporate') THEN 'Tier 1' ELSE 'Other' END AS segment_group, DATEDIFF(CURRENT_DATE(), signup_date) AS days_since_signup_date FROM customers WHERE email LIKE '%@GMAIL.COM'

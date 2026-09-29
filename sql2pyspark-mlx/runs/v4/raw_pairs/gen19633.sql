@@ -1,0 +1,1 @@
+SELECT a.opened_date, t.latest_txn_time, t.merchant_list FROM accounts a INNER JOIN (SELECT account_id, MAX(txn_time) AS latest_txn_time, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions WHERE txn_type = 'FEE' GROUP BY account_id) t ON a.id = t.account_id ORDER BY latest_txn_time, opened_date

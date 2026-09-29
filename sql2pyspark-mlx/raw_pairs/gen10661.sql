@@ -1,0 +1,1 @@
+SELECT id, dept_name, SUBSTRING(dept_name, 1, 3) dept_name_prefix, FLOOR(budget) budget_whole FROM departments WHERE dept_name IN ('Finance', 'Marketing', 'Sales') AND dept_name = 'Finance' ORDER BY budget_whole DESC, id LIMIT 50

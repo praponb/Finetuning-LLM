@@ -1,0 +1,1 @@
+SELECT SUM(CASE WHEN carrier = 'UPS' THEN 1 ELSE 0 END) AS ups_count FROM shipments ORDER BY 1 ASC

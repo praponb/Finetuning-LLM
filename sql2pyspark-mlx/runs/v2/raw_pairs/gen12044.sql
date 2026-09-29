@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, COUNT(CASE WHEN account_type = 'SAVINGS' THEN 1 END) AS savings_count, MAX(balance) AS max_balance FROM accounts GROUP BY 1 ORDER BY opened_month ASC, 3 DESC

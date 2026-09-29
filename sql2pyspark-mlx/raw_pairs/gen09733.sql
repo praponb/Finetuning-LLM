@@ -1,0 +1,1 @@
+select avg(quantity) as avg_quantity, min(quantity) as min_quantity, round(stddev(quantity), 2) as stddev_quantity from inventory where not ((quantity = 182 and year(last_restock) = 2025) or last_restock < '2023-04-01');

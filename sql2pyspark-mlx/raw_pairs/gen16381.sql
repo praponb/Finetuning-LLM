@@ -1,0 +1,1 @@
+SELECT store_id, sale_month, max_revenue FROM (SELECT store_id, DATE_FORMAT(sale_date, 'yyyy-MM') sale_month, MAX(revenue) max_revenue FROM store_sales WHERE product_id IN (1, 2, 4, 9) GROUP BY store_id, DATE_FORMAT(sale_date, 'yyyy-MM')) agg WHERE max_revenue > 1200;

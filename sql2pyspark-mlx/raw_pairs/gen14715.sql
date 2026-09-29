@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, oi.quantity, p.launch_date, p.supplier_id, o.discount, o.amount FROM order_items oi JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE p.category = 'Fashion' AND p.product_name LIKE '%Hub%' ORDER BY product_id DESC, id LIMIT 1

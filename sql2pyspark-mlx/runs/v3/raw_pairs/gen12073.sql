@@ -1,0 +1,1 @@
+with department_stats as (select dept_id, max(hire_date) as last_hire_date from employees group by dept_id) select d.id, d.location, d.budget, ds.last_hire_date from departments d inner join department_stats ds on d.id = ds.dept_id order by ds.last_hire_date asc, d.budget asc;

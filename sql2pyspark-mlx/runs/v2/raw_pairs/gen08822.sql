@@ -1,0 +1,1 @@
+SELECT i.store_id, i.product_id, p.price, s.country, s.city, ROUND(s.rating * 1.1, 2) AS rating_scaled FROM inventory i JOIN products p ON i.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id ORDER BY store_id DESC;

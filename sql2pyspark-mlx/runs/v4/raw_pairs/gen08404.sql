@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, INITCAP(TRIM(supplier_name)) AS supplier_name_title, CEIL(rating) AS rating_whole, COALESCE(city, 'DIRECT') AS city_filled FROM suppliers WHERE LOWER(supplier_name) LIKE '%oky%') SELECT * FROM (SELECT country, city, rating_whole FROM base) src PIVOT (AVG(rating_whole) FOR city IN ('Berlin' AS berlin, 'Chiang Mai' AS chiang_mai, 'Tokyo' AS tokyo));

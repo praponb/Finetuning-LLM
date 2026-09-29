@@ -1,0 +1,1 @@
+WITH filtered_transactions AS (SELECT *, CAST(is_flagged AS INT) AS is_flagged_flag FROM transactions WHERE is_flagged), transactions_stats AS (SELECT merchant, COUNT(amount) AS amount_count FROM filtered_transactions GROUP BY merchant) SELECT * FROM transactions_stats ORDER BY merchant ASC

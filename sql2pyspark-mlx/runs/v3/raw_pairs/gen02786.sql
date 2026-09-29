@@ -1,0 +1,1 @@
+SELECT method, DATE_TRUNC('MONTH', paid_at) AS paid_month, MIN(amount) AS min_amount, SUM(CASE WHEN method = 'bank_transfer' THEN amount ELSE 0 END) AS bank_transfer_amount FROM payments GROUP BY method, paid_month HAVING min_amount < 1040 ORDER BY min_amount

@@ -1,0 +1,1 @@
+select * from (select case when rating >= 4.4 then 'high' when rating >= 2.0 then 'mid' else 'low' end as rating_bucket, city, rating from suppliers) pivot (sum(rating) for city in ('Berlin', 'Tokyo', 'New York', 'London'));

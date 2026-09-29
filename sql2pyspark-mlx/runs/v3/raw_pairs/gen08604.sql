@@ -1,0 +1,1 @@
+with valid_products as (select * from products where stock_qty <= 247 and (brand in ('Stark', 'Globex', 'Umbrella') or cost > 390)), summary as (select brand, min(cost) as min_cost from valid_products group by brand) select * from summary where min_cost >= 310 order by brand, min_cost desc limit 10

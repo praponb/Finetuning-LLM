@@ -1,0 +1,1 @@
+SELECT store_id, DATE_TRUNC('QUARTER', last_restock) AS quarter_start, ROUND(AVG(quantity), 2) AS avg_quantity, APPROX_PERCENTILE(quantity, 0.95) AS quantity_p95, STDDEV_SAMP(quantity) AS quantity_stddev FROM inventory GROUP BY store_id, DATE_TRUNC('QUARTER', last_restock)

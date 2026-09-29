@@ -1,0 +1,1 @@
+select id, product_id, unit_price, order_id, quantity, last_value(order_id) over (partition by product_id order by unit_price, id rows between unbounded preceding and unbounded following) as last_order_id, max(quantity) over (partition by order_id, product_id) as order_id_max_quantity from order_items where order_id in (3, 31, 37)

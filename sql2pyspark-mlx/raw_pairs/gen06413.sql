@@ -1,0 +1,1 @@
+SELECT we.id, we.duration_sec, we.page, s.country, s.customer_id, s.browser, DATE_TRUNC('MONTH', s.started_at) AS started_at_period FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE we.duration_sec < 443

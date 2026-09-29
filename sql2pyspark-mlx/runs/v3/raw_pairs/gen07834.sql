@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(unit_price * quantity) AS revenue, COUNT(*) AS cnt, MIN(unit_price) AS min_unit_price FROM order_items WHERE unit_price BETWEEN 200 AND 240 OR unit_price < 370 GROUP BY 1, 2

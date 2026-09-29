@@ -1,0 +1,1 @@
+SELECT s.id, s.opened_date, s.city, s.store_name FROM stores s WHERE s.region IN ('East', 'West', 'Central') AND EXISTS (SELECT 1 FROM inventory i WHERE i.store_id = s.id AND i.last_restock BETWEEN '2023-07-01' AND '2025-04-01');

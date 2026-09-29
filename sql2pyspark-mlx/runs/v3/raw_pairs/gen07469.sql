@@ -1,0 +1,1 @@
+SELECT store_id, quantity_count FROM (SELECT store_id, COUNT(quantity) AS quantity_count FROM inventory WHERE quantity < 150 GROUP BY store_id) AS t WHERE quantity_count >= 10 ORDER BY 2 DESC, store_id LIMIT 5

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT product_id, order_id, AVG(quantity) AS avg_quantity, SUM(quantity) AS total_quantity FROM order_items WHERE product_id = 17 GROUP BY product_id, order_id) AS x WHERE avg_quantity > 7.3

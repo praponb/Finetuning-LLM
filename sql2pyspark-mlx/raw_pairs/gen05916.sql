@@ -1,0 +1,1 @@
+SELECT MONTH(paid_at) AS paid_month, order_id, ROUND((100 * SUM(CASE WHEN method = 'promptpay' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_promptpay FROM payments WHERE amount BETWEEN 740 AND 1250 AND paid_at < '2024-06-08' AND order_id = 8 GROUP BY paid_month, order_id HAVING pct_promptpay > 25 ORDER BY pct_promptpay, paid_month, order_id LIMIT 5;

@@ -1,0 +1,1 @@
+select account_type, count(*) as account_count, max(balance) as max_balance from accounts where account_type in ('CREDIT', 'CHECKING') group by account_type having account_count < 2 order by max_balance;

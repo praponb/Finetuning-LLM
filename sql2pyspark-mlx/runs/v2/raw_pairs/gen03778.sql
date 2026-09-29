@@ -1,0 +1,1 @@
+SELECT CASE WHEN units >= 31 THEN 'high' WHEN units >= 20 THEN 'mid' ELSE 'low' END units_bucket, MAX(sale_date) last_sale_date, SUM(units) total_units FROM store_sales WHERE store_id IN (1, 3, 5) GROUP BY CASE WHEN units >= 31 THEN 'high' WHEN units >= 20 THEN 'mid' ELSE 'low' END ORDER BY last_sale_date ASC

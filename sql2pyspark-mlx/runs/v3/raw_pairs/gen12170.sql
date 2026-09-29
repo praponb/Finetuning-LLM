@@ -1,0 +1,1 @@
+select s.region, month(s.opened_date) opened_month, count(i.quantity) quantity_count, max(i.quantity) - min(i.quantity) quantity_range from inventory i left outer join stores s on s.id = i.store_id join products p on i.product_id = p.id group by s.region, month(s.opened_date) order by opened_month desc;

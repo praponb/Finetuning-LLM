@@ -1,0 +1,1 @@
+SELECT location, SUM(CASE WHEN dept_name = 'Marketing' THEN budget ELSE 0 END) AS marketing_budget, COUNT(budget) AS budget_count FROM departments WHERE dept_name IS NOT NULL GROUP BY location ORDER BY budget_count;

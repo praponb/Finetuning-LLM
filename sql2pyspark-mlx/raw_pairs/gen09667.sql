@@ -1,0 +1,1 @@
+SELECT job_title, dept_id, manager_id, STDDEV_SAMP(salary) AS salary_stddev, APPROX_PERCENTILE(salary, 0.5) AS salary_p50, APPROX_PERCENTILE(salary, ARRAY(0.25, 0.5, 0.75)) AS salary_quartiles, GROUPING(job_title) AS grouping_id FROM employees GROUP BY CUBE (job_title, dept_id, manager_id) ORDER BY manager_id

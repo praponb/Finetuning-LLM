@@ -1,0 +1,1 @@
+SELECT id, page, duration_sec, NTILE(10) OVER (PARTITION BY page ORDER BY duration_sec, id) duration_sec_bucket, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY event_time DESC, id) event_seq FROM web_events

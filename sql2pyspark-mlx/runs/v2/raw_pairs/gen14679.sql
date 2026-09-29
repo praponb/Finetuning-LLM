@@ -1,0 +1,1 @@
+SELECT orders.status, orders.channel, orders.amount, shipments.cost, shipments.delivered_date FROM orders LEFT OUTER JOIN shipments ON orders.id = shipments.order_id WHERE orders.customer_id IS NOT NULL

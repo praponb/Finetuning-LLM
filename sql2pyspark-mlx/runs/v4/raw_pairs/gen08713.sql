@@ -1,0 +1,1 @@
+select case when amount >= 3200 then 'high' when amount >= 2000 then 'mid' else 'low' end as amount_bucket, round(avg(amount), 2) as avg_amount from transactions where txn_type = 'REFUND' group by case when amount >= 3200 then 'high' when amount >= 2000 then 'mid' else 'low' end

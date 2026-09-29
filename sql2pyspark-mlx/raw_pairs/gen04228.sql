@@ -1,0 +1,1 @@
+SELECT id, store_id, CASE WHEN quantity >= 189 THEN 'High' WHEN quantity >= 63 THEN 'Medium' ELSE 'Low' END AS quantity_level FROM inventory WHERE quantity != 188 AND product_id = 6 AND last_restock BETWEEN '2023-03-01' AND '2024-11-13' ORDER BY store_id DESC;

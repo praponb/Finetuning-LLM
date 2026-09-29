@@ -1,0 +1,1 @@
+SELECT o.channel, c.name, s.sqft FROM orders o RIGHT JOIN customers c ON c.id = o.customer_id INNER JOIN stores s ON o.store_id = s.id WHERE c.signup_date BETWEEN '2023-06-17' AND '2025-02-08' OR UPPER(c.name) LIKE '%RAC%' ORDER BY name DESC;

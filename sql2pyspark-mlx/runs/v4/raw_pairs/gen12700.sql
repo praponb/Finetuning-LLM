@@ -1,0 +1,1 @@
+with base as (select * from transactions where is_flagged), summary as (select txn_type, month(txn_time) as txn_month, sum(case when merchant = 'Starbucks' then amount else 0 end) as starbucks_amount, min(txn_time) as min_txn_time from base group by txn_type, month(txn_time)) select * from summary where starbucks_amount > 36;

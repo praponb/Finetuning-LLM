@@ -1,0 +1,1 @@
+select i.id, i.last_restock, p.product_name, p.cost, s.supplier_name, s.rating from inventory i join products p on p.id = i.product_id full outer join suppliers s on p.supplier_id = s.id where i.last_restock >= '2024-06-19'

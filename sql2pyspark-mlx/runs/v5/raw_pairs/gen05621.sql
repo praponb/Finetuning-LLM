@@ -1,0 +1,1 @@
+SELECT id, supplier_id, price, stock_qty FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY price DESC, id) AS row_num FROM products) AS t WHERE row_num <= 3 ORDER BY stock_qty DESC, id;

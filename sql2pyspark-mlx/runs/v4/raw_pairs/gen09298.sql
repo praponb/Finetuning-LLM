@@ -1,0 +1,1 @@
+WITH department_stats AS (SELECT dept_id, COUNT(*) AS num_employees, MAX(hire_date) AS last_hire_date FROM employees WHERE is_remote = TRUE GROUP BY dept_id) SELECT d.id, d.budget, d.dept_name, ds.num_employees, ds.last_hire_date FROM departments d LEFT OUTER JOIN department_stats ds ON d.id = ds.dept_id

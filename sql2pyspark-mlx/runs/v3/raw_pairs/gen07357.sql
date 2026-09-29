@@ -1,0 +1,1 @@
+SELECT e.id, e.salary AS employee_salary, e.full_name AS employee_full_name, e.email AS employee_email, m.manager_id AS manager_manager_id, m.salary AS manager_salary, m.email AS manager_email, SPLIT(LOWER(e.email), '@')[0] AS email_user FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE NOT m.is_remote ORDER BY m.salary DESC;

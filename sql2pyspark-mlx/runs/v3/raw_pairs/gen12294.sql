@@ -1,0 +1,1 @@
+SELECT stores.region, QUARTER(stores.opened_date) AS opened_quarter, MAX(shipments.cost) - MIN(shipments.cost) AS cost_range FROM shipments INNER JOIN orders ON shipments.order_id = orders.id LEFT JOIN stores ON orders.store_id = stores.id GROUP BY stores.region, QUARTER(stores.opened_date);

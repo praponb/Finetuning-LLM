@@ -1,0 +1,1 @@
+SELECT is_active, pct_sg FROM (SELECT is_active, ROUND((100 * SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_sg FROM customers GROUP BY is_active) x WHERE pct_sg > 60 ORDER BY pct_sg DESC;

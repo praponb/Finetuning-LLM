@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, FLOOR(age) AS age_whole FROM customers WHERE age >= 38 AND email NOT LIKE '%@startup.io'), summary AS (SELECT is_active, ROUND(AVG(age_whole), 2) AS avg_age_whole, ROUND(STDDEV(age_whole), 2) AS stddev_age_whole FROM src GROUP BY is_active) SELECT * FROM summary WHERE stddev_age_whole >= 70 ORDER BY stddev_age_whole DESC, avg_age_whole DESC;

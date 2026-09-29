@@ -1,0 +1,1 @@
+WITH with_latest AS (SELECT s.*, x.job_title FROM departments s JOIN LATERAL (SELECT c.job_title FROM employees c WHERE c.dept_id = s.id ORDER BY c.hire_date DESC, c.id DESC LIMIT 1) x ON TRUE) SELECT id, budget FROM with_latest;

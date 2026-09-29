@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, order_id, amount, paid_at, CASE WHEN method IN ('bank_transfer', 'promptpay') THEN 'Priority' ELSE 'Other' END AS method_group, DATE_TRUNC('YEAR', paid_at) AS paid_at_period FROM payments WHERE method NOT IN ('promptpay', 'card')) SELECT order_id FROM filtered EXCEPT ALL SELECT order_id FROM payments WHERE method != 'promptpay';

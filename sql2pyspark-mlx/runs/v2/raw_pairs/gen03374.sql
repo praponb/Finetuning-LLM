@@ -1,0 +1,1 @@
+select id, product_id, unit_price, quantity, lag(quantity, 1, 0) over (partition by product_id order by unit_price, id) as prev_quantity from order_items where order_id in (9, 29) order by unit_price desc

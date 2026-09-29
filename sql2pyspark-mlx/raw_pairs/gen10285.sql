@@ -1,0 +1,1 @@
+SELECT order_id, YEAR(delivered_date) AS delivered_year, COUNT(cost) AS cost_count FROM shipments WHERE status NOT IN ('IN_TRANSIT', 'RETURNED', 'LOST') AND status = 'LOST' AND order_id IN (16, 17, 34) GROUP BY 1, 2 ORDER BY order_id DESC, cost_count, delivered_year LIMIT 3

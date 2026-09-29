@@ -1,0 +1,1 @@
+SELECT id, location, budget, dept_name, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget, id) AS row_num, LAG(budget, 1) OVER (PARTITION BY dept_name ORDER BY budget, id) AS prev_budget FROM departments;

@@ -1,0 +1,1 @@
+select case when unit_price >= 300 then 'high' when unit_price >= 170 then 'mid' else 'low' end as unit_price_bucket, round(avg(unit_price), 2) as avg_unit_price, count(unit_price) as unit_price_count, max(quantity) as max_quantity from order_items where order_id in (29, 32, 33) group by unit_price_bucket order by unit_price_count, max_quantity desc;

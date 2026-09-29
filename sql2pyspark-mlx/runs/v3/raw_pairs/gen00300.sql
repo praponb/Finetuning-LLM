@@ -1,0 +1,1 @@
+select emp.hire_date as employee_hire_date, mgr.manager_id as manager_manager_id, mgr.dept_id as manager_dept_id, mgr.level as manager_level from employees emp inner join employees mgr on emp.manager_id = mgr.id;

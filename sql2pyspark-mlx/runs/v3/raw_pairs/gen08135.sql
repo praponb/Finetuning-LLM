@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.product_id, s.opened_date, s.store_name, p.stock_qty, p.category FROM inventory i INNER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id WHERE i.quantity >= 164;

@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, ROUND((100 * SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_closed FROM accounts WHERE status IS NOT NULL AND balance BETWEEN 56000 AND 78000 AND opened_date > '2023-05-28' GROUP BY QUARTER(opened_date) HAVING pct_closed >= 74 ORDER BY opened_quarter DESC

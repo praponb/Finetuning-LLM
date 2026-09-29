@@ -1,0 +1,1 @@
+SELECT promo_code, STDDEV_SAMP(discount_pct) AS discount_pct_stddev, SUM(discount_pct) AS total_discount_pct, AVG(discount_pct) FILTER (WHERE channel = 'store') AS store_avg_discount_pct FROM promotions GROUP BY promo_code HAVING discount_pct_stddev >= 0 ORDER BY total_discount_pct NULLS FIRST;

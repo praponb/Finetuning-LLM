@@ -1,0 +1,1 @@
+WITH top_stores AS (SELECT id, region, sqft, store_name, ROW_NUMBER() OVER (PARTITION BY region ORDER BY sqft, id) AS pos FROM stores WHERE city = 'Tokyo') SELECT id, region, sqft, store_name FROM top_stores WHERE pos <= 3 ORDER BY id, sqft;

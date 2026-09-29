@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(p.id) AS product_count, SORT_ARRAY(COLLECT_SET(p.category)) AS category_list, SORT_ARRAY(COLLECT_SET(p.brand)) AS brand_list FROM suppliers s LEFT OUTER JOIN products p ON s.id = p.supplier_id WHERE s.country = 'JP' GROUP BY s.id, s.country

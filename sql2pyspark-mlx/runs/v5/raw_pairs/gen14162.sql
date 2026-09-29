@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 440 THEN 'high' WHEN unit_price >= 80 THEN 'mid' ELSE 'low' END unit_price_bucket, AVG(unit_price) avg_unit_price, COUNT(DISTINCT unit_price) unique_orders, COUNT(quantity) quantity_count FROM order_items WHERE quantity <= 3 GROUP BY 1 ORDER BY unit_price_bucket LIMIT 50;

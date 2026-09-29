@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, AVG(units) avg_units FROM store_sales GROUP BY store_id) SELECT s.id, s.opened_date, ss.avg_units FROM stores s LEFT OUTER JOIN store_stats ss ON s.id = ss.store_id ORDER BY avg_units DESC;

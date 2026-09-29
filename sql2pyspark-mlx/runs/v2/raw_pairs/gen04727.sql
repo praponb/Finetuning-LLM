@@ -1,0 +1,1 @@
+SELECT p.brand, MONTH(p.launch_date) AS launch_month, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i INNER JOIN products p ON i.product_id = p.id WHERE i.store_id = 4 GROUP BY p.brand, MONTH(p.launch_date) ORDER BY brand, quantity_range DESC, launch_month LIMIT 5;

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items GROUP BY order_id) SELECT orders.shipping_fee, orders.channel, order_summary.stddev_unit_price FROM orders INNER JOIN order_summary ON orders.id = order_summary.order_id WHERE order_summary.stddev_unit_price > 66

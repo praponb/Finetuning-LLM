@@ -1,0 +1,1 @@
+SELECT id, units, revenue, CUME_DIST() OVER (PARTITION BY store_id ORDER BY units) AS units_cume_dist, ROW_NUMBER() OVER (PARTITION BY product_id, store_id ORDER BY units DESC, id) AS seq_no, MIN(revenue) OVER (PARTITION BY store_id, product_id) AS store_id_min_revenue FROM store_sales;

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', sale_date) AS activity_month, BIT_AND(units) AS units_bit_and, CORR(revenue, units) AS corr_revenue_units, CORR(units, revenue) AS corr_units_revenue, COUNT(*) AS event_count, PERCENTILE_APPROX(units, 0.5) AS units_p50, ROUND(AVG(revenue), 2) AS avg_revenue FROM store_sales GROUP BY DATE_TRUNC('MONTH', sale_date) ORDER BY corr_revenue_units NULLS FIRST;

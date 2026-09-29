@@ -1,0 +1,1 @@
+SELECT TO_DATE(paid_at) AS paid_day, order_id, AVG(amount) AS avg_amount, SORT_ARRAY(COLLECT_SET(method)) AS method_list, COUNT(CASE WHEN status = 'SUCCESS' THEN 1 END) AS success_count FROM payments GROUP BY TO_DATE(paid_at), order_id HAVING avg_amount >= 1030

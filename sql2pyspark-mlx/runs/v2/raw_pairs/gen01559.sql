@@ -1,0 +1,1 @@
+SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range, COUNT(DISTINCT quantity) AS unique_products FROM order_items WHERE unit_price BETWEEN 190 AND 220 GROUP BY product_id HAVING quantity_range > 21

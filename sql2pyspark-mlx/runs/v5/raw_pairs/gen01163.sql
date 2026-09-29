@@ -1,0 +1,1 @@
+SELECT ss.units, ss.sale_date, p.price, p.launch_date, s.city, s.sqft FROM store_sales ss JOIN products p ON ss.product_id = p.id LEFT OUTER JOIN stores s ON ss.store_id = s.id ORDER BY launch_date, units DESC

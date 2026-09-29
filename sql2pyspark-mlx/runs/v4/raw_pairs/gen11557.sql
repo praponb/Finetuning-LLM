@@ -1,0 +1,1 @@
+SELECT e.id, e.job_title AS employee_job_title, e.hire_date AS employee_hire_date, m.dept_id AS manager_dept_id FROM employees AS e INNER JOIN employees AS m ON e.manager_id = m.id WHERE m.level = 'L4' ORDER BY employee_job_title ASC;

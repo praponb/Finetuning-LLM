@@ -1,0 +1,1 @@
+select id, session_id, event_type, page, event_time, duration_sec, row_number() over (partition by to_date(event_time) order by event_time desc, id) as seq_no, sum(duration_sec) over w_hist as session_id_sum_duration_sec from web_events where event_time < '2024-06-01' window w_hist as (partition by session_id);

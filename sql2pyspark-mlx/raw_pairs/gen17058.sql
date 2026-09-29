@@ -1,0 +1,1 @@
+with recent_stores as (select * from stores where store_name like '%Expr%' or region not in ('North', 'South')), summary as (select city, region, avg(sqft) avg_sqft, round((100 * sum(case when region = 'North' then 1 else 0 end)) / count(*), 1) pct_north from recent_stores group by city, region) select city, region, avg_sqft from summary order by city;

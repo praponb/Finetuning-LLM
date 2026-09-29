@@ -1,0 +1,1 @@
+SELECT id, method, status, ROW_NUMBER() OVER w_part AS row_seq, NTILE(3) OVER w_part AS amount_bucket, STDDEV_SAMP(amount) OVER (PARTITION BY order_id) AS order_id_stddev_samp_amount FROM payments WINDOW w_part AS (ORDER BY amount DESC, id);

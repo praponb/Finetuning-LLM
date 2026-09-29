@@ -1,0 +1,1 @@
+select method, total_amount, payment_count from (select method, sum(amount) as total_amount, count(*) as payment_count from payments group by method) as sub where total_amount > 9000 order by total_amount desc, method;

@@ -1,0 +1,1 @@
+select p.category, round(avg(i.quantity), 2) as avg_quantity, max(i.last_restock) as last_last_restock from inventory i left join products p on p.id = i.product_id where p.product_name like 'Lap%' group by p.category;

@@ -1,0 +1,1 @@
+SELECT o.id, COUNT(s.id) AS shipment_count, MIN(s.cost) AS min_cost, ROUND((100 * SUM(CASE WHEN s.carrier = 'FedEx' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fedex FROM orders o LEFT JOIN shipments s ON o.id = s.order_id WHERE o.discount < 0.36 GROUP BY o.id HAVING COUNT(s.id) >= 1

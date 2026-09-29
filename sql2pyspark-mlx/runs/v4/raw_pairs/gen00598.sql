@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, p.price, p.category, s.rating, s.supplier_name, INITCAP(TRIM(p.brand)) AS brand_title FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id ORDER BY supplier_name DESC;

@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, EXPLODE_OUTER(tier_prices) AS tier_value FROM price_tiers) SELECT id, plan, tier_value, PERCENT_RANK() OVER w_running AS tier_value_percent_rank FROM lines WINDOW w_running AS (ORDER BY tier_value DESC);

@@ -1,0 +1,1 @@
+SELECT CASE WHEN age >= 58 THEN 'high' WHEN age >= 43 THEN 'mid' ELSE 'low' END AS age_bucket, MONTH(signup_date) AS signup_month, COUNT(DISTINCT age) AS unique_citys, MAX(age) AS max_age FROM customers WHERE country != 'US' OR YEAR(signup_date) = 2025 GROUP BY 1, 2 HAVING max_age < 50;

@@ -1,0 +1,1 @@
+WITH RankedOrders AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY discount DESC, id) AS rnk FROM orders WHERE shipping_fee <= 22) SELECT id, channel, discount FROM RankedOrders WHERE rnk <= 2 ORDER BY channel;

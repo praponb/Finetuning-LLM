@@ -1,0 +1,1 @@
+SELECT i.store_id, ss.product_id, ss.units, ss.revenue FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.sale_date > '2023-03-01' AND i.last_restock > '2024-10-13' ORDER BY ss.revenue DESC;

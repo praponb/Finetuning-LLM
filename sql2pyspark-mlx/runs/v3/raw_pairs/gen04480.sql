@@ -1,0 +1,1 @@
+WITH valid_stores AS (SELECT * FROM stores WHERE sqft = 15721), region_summary AS (SELECT region, DATE_TRUNC('MONTH', opened_date) AS opened_month, COUNT(CASE WHEN region = 'North' THEN 1 END) AS north_count FROM valid_stores GROUP BY region, DATE_TRUNC('MONTH', opened_date)) SELECT region, opened_month, north_count FROM region_summary ORDER BY north_count DESC;

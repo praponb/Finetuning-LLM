@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) AS max_quantity FROM inventory WHERE quantity < 182 GROUP BY store_id) SELECT s.id, s.region, ss.avg_quantity, ss.max_quantity FROM stores s INNER JOIN store_summary ss ON s.id = ss.store_id;

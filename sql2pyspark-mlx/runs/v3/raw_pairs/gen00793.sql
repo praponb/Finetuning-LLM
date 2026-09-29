@@ -1,0 +1,1 @@
+select e.email as employee_email, e.dept_id as employee_dept_id, e.is_remote as employee_is_remote, m.email as manager_email, m.hire_date as manager_hire_date, m.level as manager_level, cast(e.is_remote as int) as is_remote_flag from employees e inner join employees m on e.manager_id = m.id where m.manager_id is not null and m.hire_date < '2024-07-21';

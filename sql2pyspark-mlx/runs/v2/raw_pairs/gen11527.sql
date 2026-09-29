@@ -1,0 +1,1 @@
+SELECT product_id, AVG(unit_price) AS avg_unit_price, SUM(quantity * unit_price) AS revenue, COUNT(DISTINCT unit_price) AS unique_orders FROM order_items GROUP BY product_id HAVING COUNT(DISTINCT unit_price) < 4 ORDER BY avg_unit_price DESC;

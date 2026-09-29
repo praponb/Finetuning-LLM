@@ -1,0 +1,1 @@
+select s.*, top1.order_item_quantity from products s join lateral (select c.quantity as order_item_quantity from order_items c where c.product_id = s.id order by c.unit_price desc, c.id desc limit 1) top1 on true

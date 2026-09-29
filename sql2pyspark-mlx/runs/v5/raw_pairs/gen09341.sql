@@ -1,0 +1,1 @@
+with deduped as (select *, row_number() over (partition by location order by budget nulls last, id) as dedup_rank from departments qualify dedup_rank = 1) select id, location, dedup_rank, case when location rlike '^(London|Berlin)$' then 'OTHER_ZONE' else 'GROUP_B' end as location_zone from deduped

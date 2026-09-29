@@ -1,0 +1,1 @@
+WITH kept AS (SELECT s.* FROM orders s WHERE NOT EXISTS (SELECT 1 FROM order_items ch WHERE ch.order_id = s.id AND ch.product_id = 27)) SELECT id, customer_id, store_id, order_date, status, channel, amount, discount, shipping_fee, CASE WHEN channel RLIKE '^(store|partner)$' THEN 'GROUP_B' ELSE 'CORE' END AS channel_zone FROM kept ORDER BY customer_id DESC, amount ASC;

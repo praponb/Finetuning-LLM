@@ -1,0 +1,1 @@
+select year(opened_date) opened_year, city, round(avg(sqft), 2) avg_sqft, count(*) store_count from stores where region not in ('East', 'Central') and (city in ('New York', 'Chiang Mai') or city = 'Chiang Mai') group by cube(year(opened_date), city) order by store_count;

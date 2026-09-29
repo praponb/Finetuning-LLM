@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, MIN(duration_sec) AS min_duration_sec FROM web_events GROUP BY session_id) SELECT s.device, s.customer_id, ss.min_duration_sec FROM sessions s JOIN session_summary ss ON s.id = ss.session_id ORDER BY customer_id DESC

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, customer_id, device, started_at, country, TRIM(device) AS clean_device FROM sessions WHERE HOUR(started_at) BETWEEN 9 AND 15) SELECT country, MAX(started_at) AS ended_at, COUNT(*) FILTER (WHERE country = 'JP') AS jp_rows FROM cleaned GROUP BY country ORDER BY jp_rows NULLS LAST

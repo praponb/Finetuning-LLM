@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, COUNT(*) AS num_subscriptions FROM subscriptions WHERE customer_id IN (12, 24, 38) GROUP BY customer_id) SELECT c.email, c.segment, cs.avg_monthly_fee, cs.num_subscriptions FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id

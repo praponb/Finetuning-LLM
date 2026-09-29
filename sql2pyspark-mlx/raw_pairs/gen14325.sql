@@ -1,0 +1,1 @@
+SELECT id, txn_type, txn_time, amount FROM (SELECT id, txn_type, txn_time, amount, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY txn_time DESC, id) AS rnk FROM transactions) AS ranked WHERE rnk <= 2 ORDER BY id

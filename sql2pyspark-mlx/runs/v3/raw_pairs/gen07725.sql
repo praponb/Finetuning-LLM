@@ -1,0 +1,1 @@
+select id, city, rating, lead(rating, 1) over (partition by city order by rating, id) as next_rating, sum(rating) over (partition by city order by rating, id rows between unbounded preceding and current row) as running_rating from suppliers order by rating, city desc;

@@ -1,0 +1,1 @@
+SELECT s.city, MAX(oi.unit_price) AS max_unit_price, COUNT(DISTINCT oi.unit_price) AS unique_products FROM order_items oi JOIN products p ON p.id = oi.product_id JOIN suppliers s ON s.id = p.supplier_id GROUP BY s.city ORDER BY city

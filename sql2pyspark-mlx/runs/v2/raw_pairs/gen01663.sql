@@ -1,0 +1,1 @@
+select is_flagged, sum(case when merchant = '7-Eleven' then 1 else 0 end) as 7_eleven_count, count(case when txn_type = 'FEE' then 1 end) as fee_count from transactions where amount >= 3900 group by is_flagged having sum(case when merchant = '7-Eleven' then 1 else 0 end) > 31 order by fee_count desc;

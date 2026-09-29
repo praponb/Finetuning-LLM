@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, log_ts, level, latency_ms, k, v FROM app_logs LATERAL VIEW OUTER EXPLODE(context) li AS k, v) SELECT id, log_ts, level, latency_ms, v FROM exploded ORDER BY level DESC NULLS LAST;

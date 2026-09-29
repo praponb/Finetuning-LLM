@@ -1,0 +1,1 @@
+SELECT e.hire_date AS employee_hire_date, e.job_title AS employee_job_title, m.hire_date AS manager_hire_date, TRIM(e.level) AS clean_level FROM employees e JOIN employees m ON e.manager_id = m.id ORDER BY e.hire_date DESC, clean_level DESC

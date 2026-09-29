@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, host, log_ts, status_code, k, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) x AS k, value) SELECT id, service, log_ts, status_code, CASE WHEN service RLIKE '^(checkout|search)$' THEN 'PRIORITY' ELSE 'EXTENDED' END AS service_zone FROM exploded ORDER BY service_zone;

@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM departments s WHERE EXISTS (SELECT 1 FROM employees x WHERE x.dept_id = s.id AND MONTH(x.hire_date) IN (2, 5, 12))) SELECT id, dept_name, location, CASE WHEN dept_name RLIKE '^(HR|Engineering)$' THEN 'PRIORITY' ELSE 'GROUP_A' END AS dept_name_zone FROM eligible ORDER BY location DESC, dept_name

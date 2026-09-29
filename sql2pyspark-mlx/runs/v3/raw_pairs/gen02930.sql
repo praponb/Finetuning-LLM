@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CAST(quantity AS STRING) AS quantity_num FROM inventory WHERE quantity BETWEEN 92 AND 97 OR last_restock BETWEEN '2023-04-01' AND '2023-05-01'), summary AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM base GROUP BY store_id) SELECT store_id, avg_quantity FROM summary ORDER BY avg_quantity ASC, store_id DESC;

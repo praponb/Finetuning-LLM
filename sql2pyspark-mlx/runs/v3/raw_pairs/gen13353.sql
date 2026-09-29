@@ -1,0 +1,1 @@
+SELECT s.region, QUARTER(s.opened_date) AS opened_quarter, MAX(i.quantity) - MIN(i.quantity) AS quantity_range, COUNT(i.quantity) AS quantity_count FROM inventory i LEFT JOIN stores s ON i.store_id = s.id GROUP BY s.region, QUARTER(s.opened_date) ORDER BY opened_quarter DESC, region LIMIT 3;

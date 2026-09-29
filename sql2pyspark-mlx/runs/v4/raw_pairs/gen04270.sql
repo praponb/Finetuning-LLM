@@ -1,0 +1,1 @@
+SELECT *, NTILE(10) OVER (PARTITION BY channel, status ORDER BY discount DESC, id) AS discount_bucket, LAST_VALUE(shipping_fee) IGNORE NULLS OVER (ORDER BY shipping_fee, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_shipping_fee FROM orders;

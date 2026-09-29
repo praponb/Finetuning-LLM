@@ -1,0 +1,1 @@
+select case when rating >= 4.0 then 'high' when rating >= 2.0 then 'mid' else 'low' end as rating_bucket, max(rating) - min(rating) as rating_range, round((100 * sum(case when country = 'US' then 1 else 0 end)) / count(*), 1) as pct_us, count(distinct rating) as unique_citys from suppliers where rating <= 2.1 group by rating_bucket having max(rating) - min(rating) >= 76;

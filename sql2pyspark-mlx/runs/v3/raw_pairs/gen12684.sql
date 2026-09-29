@@ -1,0 +1,1 @@
+WITH department_stats AS (SELECT dept_id, MIN(hire_date) AS first_hire_date, ROUND((100 * SUM(CASE WHEN job_title = 'Analyst' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_analyst FROM employees WHERE is_remote GROUP BY dept_id) SELECT d.id, d.dept_name, ds.first_hire_date, ds.pct_analyst FROM departments d LEFT JOIN department_stats ds ON d.id = ds.dept_id ORDER BY pct_analyst DESC;

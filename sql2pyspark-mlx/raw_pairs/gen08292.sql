@@ -1,0 +1,1 @@
+select products.id, products.cost, products.price, t.first_last_restock from products join (select product_id, min(last_restock) as first_last_restock from inventory group by product_id) t on products.id = t.product_id order by t.first_last_restock, products.price desc, id limit 10;

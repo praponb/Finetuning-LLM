@@ -1,0 +1,1 @@
+SELECT c.segment, COUNT(DISTINCT s.cost) AS unique_statuss, ROUND((100 * SUM(CASE WHEN s.status = 'IN_TRANSIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_in_transit FROM shipments s INNER JOIN orders o ON o.id = s.order_id LEFT OUTER JOIN customers c ON o.customer_id = c.id WHERE o.store_id = 23 GROUP BY c.segment ORDER BY unique_statuss DESC, segment LIMIT 10

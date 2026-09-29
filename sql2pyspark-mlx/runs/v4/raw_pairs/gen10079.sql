@@ -1,0 +1,1 @@
+select id, coupon_codes, items, coalesce(attributes['utm_source'], 'none') as utm_source_or_default, ship_to.country as ship_country, attributes['device'] as device, try_cast(attributes['weight_kg'] as double) as weight_kg from carts

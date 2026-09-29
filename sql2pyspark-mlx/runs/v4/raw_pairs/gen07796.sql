@@ -1,0 +1,1 @@
+SELECT status, COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) AS closed_count FROM accounts WHERE balance >= 44000 AND opened_date >= '2023-09-23' GROUP BY status HAVING COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) >= 1

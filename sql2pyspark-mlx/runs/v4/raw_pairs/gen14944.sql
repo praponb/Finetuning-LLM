@@ -1,0 +1,1 @@
+select * from (select case when units >= 36 then 'high' when units >= 14 then 'mid' else 'low' end as units_bucket, max(revenue) as max_revenue from store_sales where units between 20 and 31 group by case when units >= 36 then 'high' when units >= 14 then 'mid' else 'low' end) as x where max_revenue >= 2100

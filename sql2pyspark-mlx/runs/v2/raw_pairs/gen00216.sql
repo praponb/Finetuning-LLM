@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, MIN(quantity) AS min_quantity FROM inventory WHERE NOT (store_id IN (1, 2, 3, 6) OR quantity != 166) GROUP BY DATE_FORMAT(last_restock, 'yyyy-MM') ORDER BY min_quantity DESC, last_restock_month LIMIT 10

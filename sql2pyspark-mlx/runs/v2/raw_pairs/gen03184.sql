@@ -1,0 +1,1 @@
+WITH department_stats AS (SELECT dept_id, SUM(CASE WHEN level = 'L3' THEN 1 ELSE 0 END) AS l3_count FROM employees WHERE salary >= 140000 GROUP BY dept_id) SELECT d.id, d.budget, d.dept_name, ds.l3_count FROM departments d LEFT JOIN department_stats ds ON d.id = ds.dept_id WHERE ds.l3_count >= 39 ORDER BY budget;

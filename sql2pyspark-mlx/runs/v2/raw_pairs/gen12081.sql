@@ -1,0 +1,1 @@
+SELECT dept_name, location, COUNT(DISTINCT budget) AS unique_dept_names, COUNT(CASE WHEN location = 'Berlin' THEN 1 END) AS berlin_count FROM departments WHERE budget <= 1383000 AND location = 'London' GROUP BY ROLLUP(dept_name, location) ORDER BY unique_dept_names DESC;

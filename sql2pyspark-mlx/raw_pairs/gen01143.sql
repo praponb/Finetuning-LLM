@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, plan, effective_from, element FROM price_tiers LATERAL VIEW EXPLODE(tier_limits) e AS element) SELECT plan, effective_from, element, CASE WHEN plan RLIKE '^(enterprise|basic)$' THEN 'PRIORITY' ELSE 'OTHER_ZONE' END AS plan_zone FROM exploded ORDER BY effective_from NULLS LAST, plan

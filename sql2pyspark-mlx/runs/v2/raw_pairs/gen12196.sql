@@ -1,0 +1,1 @@
+SELECT id, category, price, launch_date FROM (SELECT id, category, price, launch_date, ROW_NUMBER() OVER (PARTITION BY category ORDER BY price DESC, id) AS rn FROM products WHERE brand IN ('Umbrella', 'Acme', 'Globex')) AS r WHERE rn <= 2 ORDER BY 4

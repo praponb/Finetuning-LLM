@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE merchant IN ('Grab', 'Shell') GROUP BY account_id) SELECT a.status, a.customer_id, as.stddev_amount FROM accounts a INNER JOIN account_stats as ON a.id = as.account_id WHERE as.stddev_amount >= 25 ORDER BY a.customer_id DESC;

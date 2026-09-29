@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT dim.device, a.page, COUNT(*) AS num_rows, MIN(a.duration_sec) AS min_duration_sec FROM web_events a JOIN sessions dim ON a.session_id = dim.id GROUP BY dim.device, a.page) SELECT device, page, min_duration_sec FROM dim_totals ORDER BY device DESC;

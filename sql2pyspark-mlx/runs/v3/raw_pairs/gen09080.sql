@@ -1,0 +1,1 @@
+with ProductTotals as (select product_id, avg(unit_price) as avg_unit_price from order_items where product_id in (6, 11, 21, 28) group by product_id) select products.id, products.price, products.cost, ProductTotals.avg_unit_price from products inner join ProductTotals on products.id = ProductTotals.product_id where ProductTotals.avg_unit_price > 170 order by products.price desc;

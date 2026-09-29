@@ -1,0 +1,1 @@
+SELECT d.dept_name, d.location, MAX(e.salary) - MIN(e.salary) AS salary_range, COUNT(DISTINCT e.salary) AS unique_depts FROM employees e INNER JOIN departments d ON e.dept_id = d.id GROUP BY d.dept_name, d.location HAVING MAX(e.salary) - MIN(e.salary) > 24;

@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.order_id, o.shipping_fee, o.amount, p.category FROM order_items oi JOIN orders o ON oi.order_id = o.id LEFT JOIN products p ON p.id = oi.product_id WHERE LENGTH(p.product_name) >= 6 AND oi.quantity != 7;

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, COUNT(CASE WHEN city = 'Berlin' THEN 1 END) AS berlin_count FROM customers GROUP BY DATE_TRUNC('MONTH', signup_date) HAVING COUNT(CASE WHEN city = 'Berlin' THEN 1 END) > 3;

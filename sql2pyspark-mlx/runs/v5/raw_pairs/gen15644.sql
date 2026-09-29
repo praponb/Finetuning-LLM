@@ -1,0 +1,1 @@
+WITH RecentDepartments AS (SELECT * FROM departments WHERE location = 'Tokyo'), summary AS (SELECT location, MAX(budget) AS max_budget FROM RecentDepartments GROUP BY location) SELECT * FROM summary WHERE max_budget > 2064000;

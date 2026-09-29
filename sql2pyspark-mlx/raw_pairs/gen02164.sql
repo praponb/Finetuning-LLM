@@ -1,0 +1,1 @@
+WITH ranked_store_sales AS (SELECT *, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY sale_date) AS pos FROM store_sales WHERE sale_date >= '2023-05-01') SELECT * FROM ranked_store_sales WHERE pos <= 3 ORDER BY revenue DESC

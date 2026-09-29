@@ -1,0 +1,1 @@
+with src as (select * from suppliers where rating > 4.0), suppliers_stats as (select city, min(rating) as min_rating from src group by city) select city, min_rating from suppliers_stats where min_rating >= 3.2;

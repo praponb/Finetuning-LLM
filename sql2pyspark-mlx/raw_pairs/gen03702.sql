@@ -1,0 +1,1 @@
+SELECT DISTINCT country, city FROM customers WHERE age BETWEEN 41 AND 66

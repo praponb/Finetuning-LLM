@@ -1,0 +1,1 @@
+select page, pct_search, latest_event_time from (select page, round((100 * sum(case when event_type = 'search' then 1 else 0 end)) / count(*), 1) as pct_search, max(event_time) as latest_event_time from web_events where to_date(event_time) < '2025-06-01' group by page) as sub where pct_search >= 60 order by pct_search, latest_event_time desc, page limit 20;

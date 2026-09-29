@@ -1,0 +1,1 @@
+SELECT ROUND((100 * SUM(CASE WHEN status = 'IN_TRANSIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_in_transit FROM shipments WHERE cost BETWEEN 82 AND 90 OR status IN ('LOST', 'IN_TRANSIT', 'DELIVERED');

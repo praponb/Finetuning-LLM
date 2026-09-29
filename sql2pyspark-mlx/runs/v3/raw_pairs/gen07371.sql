@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, DENSE_RANK() OVER (PARTITION BY account_type ORDER BY opened_date DESC) AS rnk FROM accounts WHERE status NOT IN ('CLOSED', 'OPEN')) SELECT * FROM ranked WHERE rnk <= 3 ORDER BY opened_date;

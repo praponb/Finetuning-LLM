@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN salary >= 119000 THEN 'high' WHEN salary >= 71000 THEN 'mid' ELSE 'low' END salary_bucket, YEAR(hire_date) hire_year, SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END) l2_count FROM employees GROUP BY CASE WHEN salary >= 119000 THEN 'high' WHEN salary >= 71000 THEN 'mid' ELSE 'low' END, YEAR(hire_date)) x WHERE l2_count >= 21;

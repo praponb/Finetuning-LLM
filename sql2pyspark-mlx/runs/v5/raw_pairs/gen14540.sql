@@ -1,0 +1,1 @@
+select case when budget >= 3376000 then 'high' when budget >= 1705000 then 'mid' else 'low' end as budget_bucket, sort_array(collect_set(dept_name)) as dept_name_list from departments where dept_name is not null and location <> 'Bangkok' group by 1

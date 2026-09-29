@@ -1,0 +1,1 @@
+SELECT subscriptions.customer_id, subscriptions.status, subscriptions.monthly_fee, customers.credit_limit, customers.signup_date, IF(customers.is_active, 'Yes', 'No') AS is_active_label FROM subscriptions JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.plan = 'standard' AND subscriptions.status IN ('CANCELLED', 'ACTIVE', 'PAUSED')

@@ -1,0 +1,1 @@
+select stores.region, max(inventory.quantity) - min(inventory.quantity) as quantity_range, max(inventory.quantity) as max_quantity from inventory inner join stores on stores.id = inventory.store_id group by stores.region order by quantity_range desc

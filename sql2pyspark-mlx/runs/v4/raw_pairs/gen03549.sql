@@ -1,0 +1,1 @@
+WITH ranked_stores AS (SELECT id, region, sqft, store_name, RANK() OVER (PARTITION BY region ORDER BY sqft DESC) AS pos FROM stores) SELECT id, region, sqft, store_name FROM ranked_stores WHERE pos <= 5;

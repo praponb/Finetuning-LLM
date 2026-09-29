@@ -1,0 +1,1 @@
+with inventory_by_store as (select store_id, sum(quantity) as total_quantity from inventory where store_id in (4, 6) group by store_id) select s.id, s.opened_date, s.region, ibs.total_quantity from stores s left join inventory_by_store ibs on s.id = ibs.store_id order by s.region;

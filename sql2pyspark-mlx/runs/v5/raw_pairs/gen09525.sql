@@ -1,0 +1,1 @@
+with scored as (select id, order_id, product_id, avg(unit_price) over (partition by product_id) as product_id_avg_unit_price, rank() over (partition by product_id order by quantity desc nulls last) as quantity_rank from order_items) select id, product_id_avg_unit_price, quantity_rank from scored;

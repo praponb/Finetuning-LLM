@@ -1,0 +1,1 @@
+select date_trunc('hour', reading_ts) as hour_window, stddev_samp(humidity) as humidity_stddev, sum(case when device_code = 'DV-03' then humidity else 0 end) as dv_03_humidity, count(case when device_code = 'DV-02' then 1 end) as dv_02_count, sum(case when device_code = 'DV-03' then temp_c else 0 end) as dv_03_temp_c from device_readings group by 1 order by dv_03_temp_c desc;

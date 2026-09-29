@@ -1,0 +1,1 @@
+with src as (select * from subscriptions where end_date <= '2024-10-07'), agg as (select plan, min(monthly_fee) as min_monthly_fee from src group by plan) select plan, min_monthly_fee from agg where min_monthly_fee >= 130 order by plan, min_monthly_fee desc

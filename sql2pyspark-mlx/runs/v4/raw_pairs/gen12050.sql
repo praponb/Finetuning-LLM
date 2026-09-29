@@ -1,0 +1,1 @@
+SELECT product_id, COUNT(DISTINCT unit_price) unique_orders, MAX(quantity) - MIN(quantity) quantity_range FROM order_items WHERE product_id IS NOT NULL OR unit_price BETWEEN 200 AND 330 GROUP BY product_id HAVING quantity_range < 37 ORDER BY unique_orders

@@ -1,0 +1,1 @@
+select accounts.id, accounts.customer_id, customers.country from accounts full outer join customers on accounts.customer_id = customers.id where customers.country = 'DE' and customers.country not in ('UK', 'TH');

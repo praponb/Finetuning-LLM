@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, AVG(amount) AS avg_amount FROM transactions GROUP BY account_id) SELECT a.balance, a.account_type, at.avg_amount FROM accounts a JOIN account_totals at ON a.id = at.account_id WHERE at.avg_amount > 1400

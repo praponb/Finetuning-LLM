@@ -1,0 +1,1 @@
+SELECT MIN(budget) AS min_budget, SUM(CASE WHEN dept_name = 'Finance' THEN budget ELSE 0 END) AS finance_budget FROM departments WHERE dept_name <> 'Marketing' AND location IS NULL AND dept_name = 'Engineering' ORDER BY finance_budget DESC

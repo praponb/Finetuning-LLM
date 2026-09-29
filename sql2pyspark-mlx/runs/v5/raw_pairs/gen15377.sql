@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, account_type, COUNT(*) AS row_count FROM accounts WHERE status IN ('CLOSED', 'OPEN', 'FROZEN') AND status IN ('CLOSED', 'OPEN', 'FROZEN') AND account_type = 'LOAN' GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM'), account_type

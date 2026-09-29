@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.sqft, t.stddev_shipping_fee, t.avg_amount FROM stores s INNER JOIN (SELECT store_id, ROUND(STDDEV(shipping_fee), 2) AS stddev_shipping_fee, AVG(amount) AS avg_amount FROM orders GROUP BY store_id) t ON s.id = t.store_id WHERE t.stddev_shipping_fee >= 21 ORDER BY city ASC;

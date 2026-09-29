@@ -1,0 +1,1 @@
+select oi.id, oi.product_id, oi.order_id, p.cost, o.status, o.order_date, cast(oi.quantity as string) as quantity_num from order_items oi inner join products p on oi.product_id = p.id inner join orders o on oi.order_id = o.id where oi.order_id in (4, 36) and o.store_id = 16 order by order_date;

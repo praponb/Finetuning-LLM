@@ -1,0 +1,1 @@
+select * from (select case when shipping_fee >= 33 then 'high' when shipping_fee >= 10 then 'mid' else 'low' end as shipping_fee_bucket, channel, discount from orders) pivot (sum(discount) for channel in ('partner', 'web'))

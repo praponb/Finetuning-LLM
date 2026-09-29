@@ -1,0 +1,1 @@
+WITH valid_products AS (SELECT * FROM products WHERE category = 'Sports'), products_stats AS (SELECT category, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM valid_products GROUP BY category) SELECT category, avg_stock_qty FROM products_stats WHERE avg_stock_qty < 40 ORDER BY avg_stock_qty DESC, category LIMIT 5

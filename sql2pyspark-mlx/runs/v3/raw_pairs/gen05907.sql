@@ -1,0 +1,1 @@
+SELECT o.id, o.status, COUNT(s.id) AS shipment_count, MAX(s.shipped_date) AS last_shipped_date, ROUND(STDDEV(s.cost), 2) AS stddev_cost FROM orders o LEFT JOIN shipments s ON o.id = s.order_id WHERE s.status = 'LOST' GROUP BY o.id, o.status

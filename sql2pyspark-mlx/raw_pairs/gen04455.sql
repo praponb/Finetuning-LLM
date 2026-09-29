@@ -1,0 +1,1 @@
+select c.id, c.email, c.is_active, t.stddev_monthly_fee, t.plan_list from customers c inner join (select customer_id, round(stddev(monthly_fee), 2) as stddev_monthly_fee, sort_array(collect_set(plan)) as plan_list from subscriptions group by customer_id) t on c.id = t.customer_id where t.stddev_monthly_fee >= 51;

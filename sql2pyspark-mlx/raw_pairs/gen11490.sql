@@ -1,0 +1,1 @@
+select status, account_type, max(balance) - min(balance) as balance_range, min(balance) as min_balance from accounts group by status, account_type having sum(case when account_type = 'SAVINGS' then balance else 0 end) > 26

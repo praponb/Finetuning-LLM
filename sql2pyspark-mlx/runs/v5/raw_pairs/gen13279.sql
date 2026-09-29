@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, element FROM price_tiers LATERAL VIEW EXPLODE(discounts) e AS element) SELECT id, element, DENSE_RANK() OVER (PARTITION BY plan ORDER BY element DESC) AS element_dense_rank FROM flattened WHERE element BETWEEN 37 AND 56;

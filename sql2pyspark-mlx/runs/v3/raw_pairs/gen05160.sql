@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, SUM(revenue) AS total_revenue FROM store_sales GROUP BY product_id) SELECT p.id, p.launch_date, p.brand, ps.total_revenue FROM products p JOIN product_summary ps ON p.id = ps.product_id

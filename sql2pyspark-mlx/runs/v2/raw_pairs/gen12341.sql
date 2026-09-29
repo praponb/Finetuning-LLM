@@ -1,0 +1,1 @@
+SELECT MONTH(txn_time) AS txn_month, account_id, SUM(amount) AS total_amount, MAX(txn_time) AS latest_txn_time FROM transactions WHERE merchant = 'Starbucks' AND txn_time < '2025-02-01' GROUP BY ROLLUP(MONTH(txn_time), account_id) ORDER BY total_amount

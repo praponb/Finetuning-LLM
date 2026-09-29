@@ -1,0 +1,1 @@
+with valid as (select *, round(revenue / units, 2) as revenue_per_unit from store_sales where sale_date > to_date('2024-03-15')) select *, row_number() over (partition by product_id order by sale_date desc, id) as row_num from valid qualify row_num = 1

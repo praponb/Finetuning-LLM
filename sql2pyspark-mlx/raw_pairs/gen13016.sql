@@ -1,0 +1,1 @@
+SELECT id, full_name, email, dept_id, job_title, salary, level, MIN(salary) OVER w_recent AS last4_min_salary, SUM(salary) OVER w_recent AS last4_sum_salary, AVG(salary) OVER w_recent AS last4_avg_salary FROM employees WHERE hire_date >= '2024-02-01' WINDOW w_recent AS (PARTITION BY dept_id, job_title ORDER BY hire_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW);

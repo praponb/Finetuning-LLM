@@ -1,0 +1,1 @@
+with flattened as (select id, customer_id, coupon_codes, pos, li_item.product_id, li_item.qty, li_item.promo from carts lateral view posexplode(items) li as pos, li_item) select id, pos, product_id, promo from flattened

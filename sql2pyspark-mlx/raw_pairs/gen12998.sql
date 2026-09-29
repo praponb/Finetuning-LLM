@@ -1,0 +1,1 @@
+SELECT id, store_id, sale_date, units, revenue, SUM(units) OVER w_ordered AS running_sum_units, COUNT(units) OVER w_ordered AS running_count_units, MIN(units) OVER w_ordered AS running_min_units FROM store_sales WHERE store_id = 2 WINDOW w_ordered AS (PARTITION BY store_id, product_id ORDER BY sale_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW);

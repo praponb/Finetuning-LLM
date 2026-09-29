@@ -1,0 +1,1 @@
+WITH top_orders AS (SELECT id, store_id, shipping_fee, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY shipping_fee, id) rnk FROM orders) SELECT id, store_id, shipping_fee FROM top_orders WHERE rnk <= 3 ORDER BY store_id DESC;

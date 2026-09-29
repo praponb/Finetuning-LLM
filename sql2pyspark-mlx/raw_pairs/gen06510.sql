@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, MIN(cost) AS min_cost FROM shipments WHERE status <> 'LOST' GROUP BY order_id) SELECT o.id, o.channel, os.min_cost FROM orders o INNER JOIN order_stats os ON o.id = os.order_id ORDER BY id ASC

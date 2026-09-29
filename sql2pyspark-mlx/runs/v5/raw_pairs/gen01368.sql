@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM store_sales WHERE product_id IN (1, 3)), store_id_summary AS (SELECT store_id, ROUND(AVG(revenue), 2) AS avg_revenue FROM src GROUP BY store_id) SELECT store_id, avg_revenue FROM store_id_summary WHERE avg_revenue > 29 ORDER BY store_id, avg_revenue;

@@ -1,0 +1,1 @@
+SELECT i.product_id, s.sqft, s.opened_date, CASE WHEN i.quantity >= 259 THEN 'High' WHEN i.quantity >= 43 THEN 'Medium' ELSE 'Low' END AS quantity_level FROM inventory i INNER JOIN stores s ON i.store_id = s.id;

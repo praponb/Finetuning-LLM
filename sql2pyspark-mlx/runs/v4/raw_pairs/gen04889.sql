@@ -1,0 +1,1 @@
+SELECT id, host, log_ts, level, latency_ms, payload_json, COALESCE(context['region'], 'none') AS region_or_default, COALESCE(context['trace'], 'unknown') AS trace_or_default, context['trace'] AS trace, GET_JSON_OBJECT(payload_json, '$.user.id') AS user_id FROM app_logs;

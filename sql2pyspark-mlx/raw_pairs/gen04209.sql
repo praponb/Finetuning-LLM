@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, host, log_ts, level, latency_ms, k, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS k, attr_value) SELECT id, service, log_ts, latency_ms, k, SUM(latency_ms) OVER (PARTITION BY host ORDER BY CAST(log_ts AS BIGINT) RANGE BETWEEN 7200 PRECEDING AND CURRENT ROW) AS latency_ms_sum_2h FROM lines;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN shipping_fee >= 43 THEN 'high' WHEN shipping_fee >= 9 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, SUM(amount) AS total_amount FROM orders WHERE shipping_fee >= 35 AND amount < 710 GROUP BY CASE WHEN shipping_fee >= 43 THEN 'high' WHEN shipping_fee >= 9 THEN 'mid' ELSE 'low' END HAVING total_amount > 6900

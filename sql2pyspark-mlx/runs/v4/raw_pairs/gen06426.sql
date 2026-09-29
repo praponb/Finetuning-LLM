@@ -1,0 +1,1 @@
+SELECT method, status, MAX(amount) - MIN(amount) amount_range, MIN(amount) min_amount FROM payments WHERE status != 'SUCCESS' AND amount BETWEEN 910 AND 1070 AND method = 'card' GROUP BY method, status

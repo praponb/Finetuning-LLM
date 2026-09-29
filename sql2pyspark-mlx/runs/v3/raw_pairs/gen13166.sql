@@ -1,0 +1,1 @@
+select case when quantity >= 7 then 'high' when quantity >= 2 then 'mid' else 'low' end quantity_bucket, min(unit_price) min_unit_price, max(unit_price) - min(unit_price) unit_price_range from order_items where quantity between 6 and 8 group by case when quantity >= 7 then 'high' when quantity >= 2 then 'mid' else 'low' end having count(quantity) > 3

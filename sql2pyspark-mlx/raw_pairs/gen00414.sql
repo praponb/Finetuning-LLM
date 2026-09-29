@@ -1,0 +1,1 @@
+select case when unit_price >= 420 then 'high' when unit_price >= 120 then 'mid' else 'low' end unit_price_bucket, product_id, count(*) num_order_items, sum(quantity) total_quantity from order_items where unit_price <= 380 group by 1, 2 order by total_quantity desc;

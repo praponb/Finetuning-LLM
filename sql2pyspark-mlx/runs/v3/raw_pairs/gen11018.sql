@@ -1,0 +1,1 @@
+SELECT CASE WHEN level IN ('L4', 'L3') THEN 'priority' ELSE 'other' END AS level_group, COUNT(CASE WHEN job_title = 'Engineer' THEN 1 END) AS engineer_count FROM employees WHERE NOT (manager_id = 38 AND is_remote = TRUE) GROUP BY 1 HAVING COUNT(CASE WHEN job_title = 'Engineer' THEN 1 END) > 3 ORDER BY 1

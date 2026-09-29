@@ -1,0 +1,1 @@
+SELECT products.id, products.brand, t.first_sale_date, t.unique_products FROM products LEFT OUTER JOIN (SELECT product_id, MIN(sale_date) first_sale_date, COUNT(DISTINCT revenue) unique_products FROM store_sales GROUP BY product_id) t ON products.id = t.product_id WHERE t.unique_products > 7;

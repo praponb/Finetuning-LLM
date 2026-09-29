@@ -1,0 +1,1 @@
+select date_format(sale_date, 'yyyy-MM') as sale_month, sum(revenue) as total_revenue, sum(sum(revenue)) over (order by date_format(sale_date, 'yyyy-MM')) as cumulative_revenue from store_sales where revenue < 2300 group by date_format(sale_date, 'yyyy-MM') order by 1;

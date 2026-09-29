@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT product_id, MIN(last_restock) AS min_last_restock, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY product_id) AS t WHERE avg_quantity >= 30 ORDER BY min_last_restock DESC, product_id LIMIT 3

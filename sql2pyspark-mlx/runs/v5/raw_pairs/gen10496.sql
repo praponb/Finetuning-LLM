@@ -1,0 +1,1 @@
+SELECT MAX(sqft) - MIN(sqft) AS sqft_range, SUM(CASE WHEN region = 'East' THEN 1 ELSE 0 END) AS east_count FROM stores WHERE LOWER(TRIM(store_name)) = 'siam flagship' OR region = 'North' ORDER BY east_count DESC;

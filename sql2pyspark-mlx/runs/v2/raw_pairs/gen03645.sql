@@ -1,0 +1,1 @@
+with src as (select * from customers where is_active), CustomersStats as (select is_active, round((100 * sum(case when city = 'Chiang Mai' then 1 else 0 end)) / count(*), 1) as pct_chiang_mai from src group by is_active) select is_active, pct_chiang_mai from CustomersStats order by pct_chiang_mai desc, is_active limit 20

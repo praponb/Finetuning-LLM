@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM customers s WHERE NOT EXISTS (SELECT 1 FROM sessions c WHERE c.customer_id = s.id AND c.device IN ('desktop', 'mobile', 'tablet'))) SELECT id, name, email, city, segment, signup_date, is_active, credit_limit, age, CASE WHEN name RLIKE '^(Grace Kim|  Carol Diaz)$' THEN 'GROUP_B' ELSE 'EXTENDED' END AS name_zone FROM eligible;

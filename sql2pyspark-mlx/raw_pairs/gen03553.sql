@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, COUNT(*) AS total_count, COUNT(CASE WHEN event_type = 'search' THEN 1 END) AS search_count FROM web_events GROUP BY session_id) SELECT s.id, s.device, s.customer_id, ss.total_count, ss.search_count FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id WHERE ss.search_count > 3

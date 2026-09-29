@@ -1,0 +1,1 @@
+SELECT e.job_title AS employee_job_title, e.level AS employee_level, m.hire_date AS manager_hire_date, m.dept_id AS manager_dept_id, ROUND(m.salary, 1) AS salary_rounded FROM employees AS e LEFT JOIN employees AS m ON e.manager_id = m.id WHERE m.full_name NOT LIKE 'Noa%' AND e.dept_id IN (38, 40) ORDER BY m.dept_id DESC, salary_rounded

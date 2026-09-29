@@ -1,0 +1,1 @@
+SELECT o.id, o.customer_id, o.order_date, o.status FROM orders o WHERE o.discount >= 0.39 AND EXISTS (SELECT 1 FROM payments p WHERE p.order_id = o.id AND p.order_id IS NOT NULL) ORDER BY o.order_date

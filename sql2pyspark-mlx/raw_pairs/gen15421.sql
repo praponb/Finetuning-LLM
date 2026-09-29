@@ -1,0 +1,1 @@
+SELECT CASE WHEN age >= 57 THEN 'high' WHEN age >= 37 THEN 'mid' ELSE 'low' END age_bucket, SORT_ARRAY(COLLECT_SET(segment)) segment_list, COUNT(age) age_count, ROUND(STDDEV(credit_limit), 2) stddev_credit_limit FROM customers GROUP BY age_bucket ORDER BY stddev_credit_limit DESC;

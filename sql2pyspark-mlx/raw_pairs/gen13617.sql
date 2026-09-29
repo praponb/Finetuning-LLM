@@ -1,0 +1,1 @@
+with enriched as (select a.id, a.order_id, a.shipped_date, a.cost, a.status, d.amount from shipments a inner join orders d on a.order_id = d.id) select s.id, s.order_id, s.shipped_date, s.cost, (select min(x.amount) from payments x where x.order_id = s.order_id) as min_payment_amount from enriched s order by order_id nulls first;

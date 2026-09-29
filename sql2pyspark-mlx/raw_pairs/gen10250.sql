@@ -1,0 +1,1 @@
+SELECT id, order_id, quantity, product_id, MIN(quantity) OVER (PARTITION BY order_id) AS order_id_min_quantity, RANK() OVER (PARTITION BY product_id, order_id ORDER BY quantity DESC) AS rnk FROM order_items

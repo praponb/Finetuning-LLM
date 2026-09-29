@@ -1,0 +1,1 @@
+WITH joined AS (SELECT a.*, b.status, b.opened_date FROM transactions a LEFT JOIN accounts b ON a.account_id = b.id) SELECT id, txn_type, amount, merchant, is_flagged, opened_date, CASE WHEN merchant RLIKE '^(Shell|Starbucks)$' THEN 'PRIORITY' WHEN merchant RLIKE '^(Grab|7-Eleven)$' THEN 'OTHER_ZONE' ELSE 'GROUP_B' END AS merchant_zone FROM joined;

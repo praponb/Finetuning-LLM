@@ -1,0 +1,1 @@
+WITH filtered_order_items AS (SELECT * FROM order_items WHERE unit_price >= 340 AND product_id IS NULL), order_id_summary AS (SELECT order_id, MAX(unit_price) AS max_unit_price FROM filtered_order_items GROUP BY order_id) SELECT order_id, max_unit_price FROM order_id_summary;

@@ -1,0 +1,1 @@
+with exploded as (select id, created_at, coupon_codes, k, v from carts lateral view explode(attributes) x as k, v) select date_trunc('hour', created_at) as hour_window, count(*) as event_count, sort_array(collect_set(k)) as k_list from exploded group by date_trunc('hour', created_at);

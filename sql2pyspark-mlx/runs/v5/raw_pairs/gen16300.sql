@@ -1,0 +1,1 @@
+SELECT plan, DATE_FORMAT(start_date, 'yyyy-MM') AS start_month, customer_id, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count FROM subscriptions GROUP BY plan, DATE_FORMAT(start_date, 'yyyy-MM'), customer_id HAVING SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) >= 29 ORDER BY plan ASC

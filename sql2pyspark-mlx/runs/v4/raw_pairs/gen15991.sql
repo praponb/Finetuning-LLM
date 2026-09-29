@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, SUM(monthly_fee) AS total_monthly_fee, COUNT(*) AS row_count FROM subscriptions GROUP BY customer_id) SELECT c.city, cs.total_monthly_fee, cs.row_count FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.total_monthly_fee >= 470

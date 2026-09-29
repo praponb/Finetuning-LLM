@@ -1,0 +1,1 @@
+SELECT c.country, MONTH(c.signup_date) AS signup_month, COUNT(*) AS num_web_events, COUNT(CASE WHEN we.page = '/checkout' THEN 1 END) AS checkout_count FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id GROUP BY c.country, MONTH(c.signup_date);

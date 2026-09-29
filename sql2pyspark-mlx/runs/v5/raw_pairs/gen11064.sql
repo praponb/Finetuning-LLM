@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CONCAT(city, ' - ', supplier_name) AS city_supplier_name, CONCAT(supplier_name, ' - ', country) AS supplier_name_country FROM suppliers WHERE city IN ('Singapore', 'Tokyo')) SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id) AS row_num FROM filtered QUALIFY row_num = 1

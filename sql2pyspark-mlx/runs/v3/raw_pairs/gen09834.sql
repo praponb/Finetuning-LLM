@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, ROUND(AVG(stock_qty), 2) AS avg_stock_qty, COUNT(DISTINCT price) AS unique_categorys FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, pbs.avg_stock_qty, pbs.unique_categorys FROM suppliers s JOIN products_by_supplier pbs ON s.id = pbs.supplier_id

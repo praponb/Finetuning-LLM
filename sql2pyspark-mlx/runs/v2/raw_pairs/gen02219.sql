@@ -1,0 +1,1 @@
+SELECT MONTH(stores.opened_date) AS opened_month, AVG(payments.amount) AS avg_amount, COUNT(payments.amount) AS amount_count FROM payments FULL OUTER JOIN orders ON payments.order_id = orders.id LEFT OUTER JOIN stores ON orders.store_id = stores.id WHERE stores.sqft > 4799 GROUP BY MONTH(stores.opened_date) HAVING COUNT(payments.amount) >= 3;

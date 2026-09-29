@@ -1,0 +1,1 @@
+select case when unit_price >= 350 then 'high' when unit_price >= 70 then 'mid' else 'low' end as unit_price_bucket, sum(unit_price) as total_unit_price, dense_rank() over (order by sum(unit_price) desc) as unit_price_rank from order_items group by case when unit_price >= 350 then 'high' when unit_price >= 70 then 'mid' else 'low' end order by unit_price_bucket, unit_price_rank;

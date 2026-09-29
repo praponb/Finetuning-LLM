@@ -1,0 +1,1 @@
+with recent_customers as (select *, ceil(age) age_whole from customers where (upper(trim(email)) = 'DAVID.LEE@GMAIL.COM' and not is_active) or email is not null), agg as (select city, country, min(signup_date) min_signup_date from recent_customers group by city, country) select city, country, min_signup_date from agg order by min_signup_date, country desc

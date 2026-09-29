@@ -1,0 +1,1 @@
+with recent_suppliers as (select *, upper(trim(supplier_name)) as supplier_name_normalized from suppliers where country in ('US', 'TH')), country_summary as (select country, count(*) as supplier_count, concat_ws(', ', sort_array(collect_set(city))) as city_values from recent_suppliers group by country) select country, supplier_count from country_summary;

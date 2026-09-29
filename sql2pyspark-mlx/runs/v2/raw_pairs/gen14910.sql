@@ -1,0 +1,1 @@
+SELECT s.order_id, o.shipping_fee, o.amount, c.age, c.signup_date FROM shipments s LEFT OUTER JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE o.customer_id IN (11, 12) AND o.amount > 820 ORDER BY signup_date;

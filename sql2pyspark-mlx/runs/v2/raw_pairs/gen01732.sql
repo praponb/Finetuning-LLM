@@ -1,0 +1,1 @@
+WITH ranked_web_events AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec DESC, id) AS rnk FROM web_events) SELECT id, session_id, duration_sec, page FROM ranked_web_events WHERE rnk = 1 ORDER BY page DESC

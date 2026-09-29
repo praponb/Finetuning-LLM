@@ -1,0 +1,1 @@
+SELECT store_id, COUNT(*) AS row_count, MAX(quantity) - MIN(quantity) AS quantity_range, MAX(quantity) AS max_quantity FROM inventory WHERE last_restock BETWEEN '2023-07-18' AND '2024-09-01' GROUP BY store_id HAVING MAX(quantity) - MIN(quantity) > 49

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN merchant IN ('Grab', '7-Eleven') THEN 'tier_1' ELSE 'other' END AS merchant_group, is_flagged, MIN(txn_time) AS first_txn_time, COUNT(DISTINCT amount) AS unique_accounts FROM transactions WHERE merchant = 'Amazon' GROUP BY CASE WHEN merchant IN ('Grab', '7-Eleven') THEN 'tier_1' ELSE 'other' END, is_flagged) AS x WHERE unique_accounts > 4

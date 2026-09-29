@@ -1,0 +1,1 @@
+SELECT id, dept_id, manager_id, hire_date, salary, NTILE(2) OVER (PARTITION BY dept_id, manager_id ORDER BY hire_date, id) AS hire_date_ntile, ROUND(salary / SUM(salary) OVER (PARTITION BY manager_id), 3) AS salary_share FROM employees WHERE job_title = 'Analyst' ORDER BY hire_date

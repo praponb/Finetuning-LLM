@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE units BETWEEN 27 AND 37), summary AS (SELECT YEAR(sale_date) AS sale_year, MIN(sale_date) AS min_sale_date FROM base GROUP BY YEAR(sale_date)) SELECT sale_year, min_sale_date FROM summary ORDER BY sale_year DESC;

@@ -1,0 +1,1 @@
+with filtered as (select id, order_id, carrier, shipped_date, cost, coalesce(cost, 0) as cost_filled from shipments where shipped_date >= to_date('2023-02-23') and cost < 34) select id, shipped_date, cost, cost_filled from filtered qualify row_number() over (partition by carrier order by cost_filled desc, id) = 1

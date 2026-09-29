@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, store_id, AVG(quantity) AS avg_quantity, COUNT(quantity) AS quantity_count FROM inventory GROUP BY DATE_FORMAT(last_restock, 'yyyy-MM'), store_id) AS sub WHERE avg_quantity >= 230 ORDER BY avg_quantity;

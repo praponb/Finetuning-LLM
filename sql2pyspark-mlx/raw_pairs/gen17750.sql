@@ -1,0 +1,1 @@
+SELECT c.id, c.country, COUNT(s.id) session_count, SUM(CASE WHEN s.country = 'UK' THEN 1 ELSE 0 END) uk_count, SORT_ARRAY(COLLECT_SET(s.country)) country_list FROM customers c LEFT JOIN sessions s ON c.id = s.customer_id WHERE s.country = 'DE' GROUP BY c.id, c.country HAVING uk_count > 70;

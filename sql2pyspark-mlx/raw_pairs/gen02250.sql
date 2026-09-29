@@ -1,0 +1,1 @@
+WITH filtered_stores AS (SELECT * FROM stores WHERE region = 'East' AND city = 'Singapore'), city_summary AS (SELECT city, ROUND(STDDEV(sqft), 2) AS stddev_sqft, ROUND(AVG(sqft), 2) AS avg_sqft FROM filtered_stores GROUP BY city) SELECT * FROM city_summary ORDER BY stddev_sqft DESC, city ASC LIMIT 5;

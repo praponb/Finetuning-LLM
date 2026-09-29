@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, store_id, quantity, last_restock, ROUND(quantity, 0) quantity_rounded FROM inventory WHERE quantity = 87) SELECT s.id, s.store_id, s.last_restock, b.region FROM base s LEFT JOIN stores b ON s.store_id = b.id

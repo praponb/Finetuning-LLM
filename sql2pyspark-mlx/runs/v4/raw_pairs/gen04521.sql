@@ -1,0 +1,1 @@
+with exploded as (select id, customer_id, created_at, explode(coupon_codes) as element from carts) select s.id, s.customer_id, (select sum(t2.discount) from orders t2 where t2.customer_id = s.customer_id) as sum_order_discount from exploded s order by id desc nulls first;

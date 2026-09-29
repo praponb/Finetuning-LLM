@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATE_ADD(launch_date, 14) AS launch_date_plus_14d, COALESCE(brand, 'UNKNOWN') AS resolved_brand FROM products WHERE launch_date >= DATE '2024-04-11') SELECT s.* FROM filtered s WHERE EXISTS (SELECT 1 FROM store_sales c WHERE c.product_id = s.id AND c.sale_date <= '2023-04-08');

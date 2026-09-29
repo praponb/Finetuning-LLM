@@ -1,0 +1,1 @@
+SELECT order_id, COUNT(*) AS row_count, COUNT(DISTINCT unit_price) AS unique_orders FROM order_items WHERE (order_id IN (28, 30, 36, 38) AND unit_price > 270) OR product_id IN (28, 36) GROUP BY order_id HAVING COUNT(*) < 5 ORDER BY unique_orders;

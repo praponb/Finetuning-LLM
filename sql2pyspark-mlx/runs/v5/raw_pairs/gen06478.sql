@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(paid_at) < 2024 THEN 'before_2024' WHEN YEAR(paid_at) = 2024 THEN '2024' ELSE 'after_2024' END AS paid_cohort, method, ROUND((100 * SUM(CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_bank_transfer, AVG(amount) AS avg_amount FROM payments WHERE amount > 1040 GROUP BY 1, 2 HAVING avg_amount < 1280;

@@ -1,0 +1,1 @@
+with exploded as (select id, log_ts, level, latency_ms, status_code, key, v from app_logs lateral view explode(context) t as key, v) select id, level, latency_ms, status_code, key, v from exploded order by id desc nulls first;

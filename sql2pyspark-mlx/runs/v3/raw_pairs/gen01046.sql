@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, status, delivered_date, DENSE_RANK() OVER (PARTITION BY status ORDER BY delivered_date DESC) rn FROM shipments WHERE shipped_date BETWEEN '2025-02-01' AND '2025-09-03') SELECT id, status, delivered_date FROM numbered WHERE rn <= 5;

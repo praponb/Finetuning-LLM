@@ -1,0 +1,1 @@
+select * from (select brand, sum(stock_qty) as total_stock_qty, count(distinct stock_qty) as unique_categorys from products group by brand) as t where unique_categorys >= 5 order by total_stock_qty desc

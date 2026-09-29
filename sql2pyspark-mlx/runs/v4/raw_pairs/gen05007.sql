@@ -1,0 +1,1 @@
+WITH ranked_departments AS (SELECT id, dept_name, budget, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS rnk FROM departments WHERE dept_name IN ('Engineering', 'HR')) SELECT id, dept_name, budget FROM ranked_departments WHERE rnk <= 5;

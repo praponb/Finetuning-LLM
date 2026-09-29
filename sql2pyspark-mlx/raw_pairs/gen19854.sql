@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) AS account_type_values, SUM(CASE WHEN status = 'CLOSED' THEN balance ELSE 0 END) AS closed_balance, MAX(balance) - MIN(balance) AS balance_range FROM accounts GROUP BY opened_quarter ORDER BY balance_range DESC, opened_quarter LIMIT 50;

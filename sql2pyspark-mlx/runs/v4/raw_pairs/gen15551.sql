@@ -1,0 +1,1 @@
+select case when year(signup_date) < 2024 then 'before_2024' when year(signup_date) = 2024 then '2024' else 'after_2024' end as signup_cohort, country, count(case when country = 'UK' then 1 end) as uk_count from customers where is_active group by signup_cohort, country having count(distinct credit_limit) < 2 order by signup_cohort;

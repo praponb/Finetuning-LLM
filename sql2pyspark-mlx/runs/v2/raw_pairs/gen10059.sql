@@ -1,0 +1,1 @@
+SELECT s.id, s.region, s.store_name, t.avg_revenue FROM stores s INNER JOIN (SELECT store_id, AVG(revenue) AS avg_revenue FROM store_sales WHERE store_id IN (1, 2, 5, 6) GROUP BY store_id) t ON s.id = t.store_id

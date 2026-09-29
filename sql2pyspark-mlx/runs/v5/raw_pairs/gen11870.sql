@@ -1,0 +1,1 @@
+SELECT event_type, CASE WHEN duration_sec >= 379 THEN 'high' WHEN duration_sec >= 79 THEN 'mid' ELSE 'low' END duration_sec_bucket, ROUND(AVG(duration_sec), 2) avg_duration_sec FROM web_events GROUP BY event_type, duration_sec_bucket HAVING ROUND(AVG(duration_sec), 2) < 63;

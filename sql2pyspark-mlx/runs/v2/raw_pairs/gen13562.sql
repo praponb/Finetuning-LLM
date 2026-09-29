@@ -1,0 +1,1 @@
+SELECT YEAR(s.opened_date) AS opened_year, DATE_TRUNC('MONTH', s.opened_date) AS opened_month, COUNT(DISTINCT p.amount) AS unique_methods FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE s.city != 'Tokyo' GROUP BY YEAR(s.opened_date), DATE_TRUNC('MONTH', s.opened_date) ORDER BY opened_month;

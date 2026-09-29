@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, MAX(s.monthly_fee) AS max_monthly_fee, COUNT(s.monthly_fee) AS monthly_fee_count FROM subscriptions s LEFT OUTER JOIN customers c ON s.customer_id = c.id WHERE c.city = 'London' GROUP BY DATE_TRUNC('MONTH', c.signup_date) HAVING monthly_fee_count > 5 ORDER BY signup_month LIMIT 10;

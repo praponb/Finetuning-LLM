@@ -1,0 +1,1 @@
+select location, pct_bangkok, london_budget from (select location, round((100 * sum(case when location = 'Bangkok' then 1 else 0 end)) / count(*), 1) pct_bangkok, sum(case when location = 'London' then budget else 0 end) london_budget from departments where budget between 1300000 and 3427000 group by location) x where pct_bangkok > 76;

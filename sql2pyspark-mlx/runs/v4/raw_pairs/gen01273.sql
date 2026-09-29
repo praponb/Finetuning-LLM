@@ -1,0 +1,1 @@
+SELECT city, ROUND(AVG(sqft), 2) AS avg_sqft, MAX(sqft) AS max_sqft FROM stores WHERE opened_date BETWEEN '2024-06-01' AND '2025-09-01' AND region NOT IN ('West', 'South') GROUP BY 1 ORDER BY max_sqft DESC;

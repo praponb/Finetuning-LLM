@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, event_type, duration_sec, PERCENT_RANK() OVER (PARTITION BY session_id ORDER BY event_time) event_time_pct_rank, LAG(duration_sec, 2) OVER (PARTITION BY event_type ORDER BY event_time, id) prev_duration_sec FROM web_events ORDER BY event_time_pct_rank;

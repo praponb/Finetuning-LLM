@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, COUNT(*) AS row_count, ROUND(AVG(oi.quantity), 2) AS avg_quantity FROM order_items oi JOIN orders o ON o.id = oi.order_id LEFT JOIN customers c ON o.customer_id = c.id GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM');

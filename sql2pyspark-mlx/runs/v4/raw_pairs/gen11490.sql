@@ -1,0 +1,1 @@
+select *, round(pressure / sum(pressure) over (partition by device_code), 4) as pressure_share, last_value(pressure) ignore nulls over (partition by device_code order by reading_ts, id rows between unbounded preceding and current row) as last_known_pressure, row_number() over (partition by device_code order by temp_c, id) as row_seq from device_readings;

@@ -1,0 +1,1 @@
+SELECT c.id, COUNT(s.id) AS session_count, COUNT(DISTINCT s.customer_id) AS unique_customers FROM customers c INNER JOIN sessions s ON c.id = s.customer_id WHERE c.city IN ('New York', 'Tokyo') GROUP BY c.id ORDER BY unique_customers, c.id DESC;

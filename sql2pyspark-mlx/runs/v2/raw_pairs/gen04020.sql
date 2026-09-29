@@ -1,0 +1,1 @@
+WITH InventoryByStore AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_products FROM inventory WHERE last_restock BETWEEN '2023-07-01' AND '2024-02-01' GROUP BY store_id) SELECT s.sqft, I.unique_products FROM stores s JOIN InventoryByStore I ON s.id = I.store_id ORDER BY I.unique_products DESC

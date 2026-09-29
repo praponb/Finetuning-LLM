@@ -1,0 +1,1 @@
+WITH order_items_by_order AS (SELECT order_id, SUM(unit_price) AS total_unit_price, SUM(quantity * unit_price) AS revenue FROM order_items WHERE order_id IN (5, 26, 39) GROUP BY order_id) SELECT o.id, o.amount, o.status, oibo.total_unit_price, oibo.revenue FROM orders o JOIN order_items_by_order oibo ON o.id = oibo.order_id WHERE oibo.revenue > 39 ORDER BY oibo.revenue DESC;

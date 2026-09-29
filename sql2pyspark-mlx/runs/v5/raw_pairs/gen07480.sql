@@ -1,0 +1,1 @@
+SELECT t.id, t.account_id, t.amount, t.txn_type, a.opened_date FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE t.txn_type NOT IN ('DEBIT', 'FEE') AND a.customer_id IS NULL ORDER BY txn_type, id DESC;

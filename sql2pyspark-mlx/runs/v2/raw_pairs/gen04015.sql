@@ -1,0 +1,1 @@
+SELECT channel, AVG(shipping_fee) AS avg_shipping_fee, SUM(CASE WHEN channel = 'partner' THEN 1 ELSE 0 END) AS partner_count FROM orders GROUP BY channel ORDER BY avg_shipping_fee DESC, partner_count DESC, channel LIMIT 10

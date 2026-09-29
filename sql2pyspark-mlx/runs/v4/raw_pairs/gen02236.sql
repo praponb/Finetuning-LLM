@@ -1,0 +1,1 @@
+select case when unit_price >= 310 then 'PREMIUM' else 'STANDARD' end as unit_price_tier, product_id, count(distinct id) as distinct_ids, bit_or(quantity) as quantity_bit_or, percentile_approx(quantity, 0.95) as quantity_p95 from order_items group by unit_price_tier, product_id having bit_or(quantity) > 1 order by product_id

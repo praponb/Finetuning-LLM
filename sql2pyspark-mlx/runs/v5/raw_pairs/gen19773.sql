@@ -1,0 +1,1 @@
+SELECT id, customer_id, amount, status FROM (SELECT id, customer_id, amount, status, RANK() OVER (PARTITION BY customer_id ORDER BY amount DESC) AS row_num FROM orders) AS ranked WHERE row_num = 1 ORDER BY amount DESC

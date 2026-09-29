@@ -1,0 +1,1 @@
+select *, round(revenue, 2) revenue_rounded, case when revenue >= 3500 then 'High' when revenue >= 1100 then 'Medium' else 'Low' end revenue_level from store_sales where units >= 20 order by revenue asc, id asc limit 20

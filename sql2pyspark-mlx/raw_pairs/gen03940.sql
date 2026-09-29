@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, ROUND(amount, 1) AS amount_rounded, COALESCE(merchant, 'DIRECT') AS merchant_clean FROM transactions WHERE merchant IS DISTINCT FROM 'Shell') SELECT id, account_id, kpi, metric_value FROM (SELECT id, account_id, amount, amount_rounded FROM filtered) src UNPIVOT (metric_value FOR kpi IN (amount AS AMOUNT_VAL, amount_rounded AS AMOUNT_ROUNDED)) long_rows

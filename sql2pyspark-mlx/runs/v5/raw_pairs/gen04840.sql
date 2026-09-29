@@ -1,0 +1,1 @@
+SELECT plan, SUM(CASE WHEN plan = 'standard' THEN 1 ELSE 0 END) AS standard_count FROM subscriptions WHERE customer_id IS NULL AND end_date < '2024-07-01' GROUP BY plan HAVING SUM(CASE WHEN plan = 'standard' THEN 1 ELSE 0 END) < 55 ORDER BY plan, standard_count DESC LIMIT 5;

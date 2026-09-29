@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_accounts
+    .select(
+        "id",
+        "status",
+        "account_type",
+        "balance",
+        F.ceil("balance").alias("balance_whole"),
+    )
+)

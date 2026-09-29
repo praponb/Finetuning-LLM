@@ -1,0 +1,1 @@
+SELECT YEAR(p.launch_date) AS launch_year, p.brand, AVG(ss.units) AS avg_units, MAX(ss.revenue) AS max_revenue FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN stores s ON s.id = ss.store_id GROUP BY YEAR(p.launch_date), p.brand;

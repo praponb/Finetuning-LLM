@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM employees WHERE YEAR(hire_date) >= 2023 AND full_name IS NOT NULL), Summary AS (SELECT is_remote, level, MAX(hire_date) AS latest_hire_date FROM Base GROUP BY is_remote, level) SELECT is_remote, latest_hire_date FROM Summary ORDER BY latest_hire_date, is_remote;

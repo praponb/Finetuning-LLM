@@ -1,0 +1,1 @@
+SELECT product_id, revenue FROM (SELECT product_id, SUM(unit_price * quantity) AS revenue FROM order_items WHERE quantity BETWEEN 6 AND 7 GROUP BY product_id) AS x WHERE revenue > 53 ORDER BY revenue DESC

@@ -1,0 +1,1 @@
+SELECT id, event_type, event_time FROM (SELECT id, event_type, event_time, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY event_time DESC, id) AS row_num FROM web_events) AS r WHERE row_num <= 3 ORDER BY event_time DESC

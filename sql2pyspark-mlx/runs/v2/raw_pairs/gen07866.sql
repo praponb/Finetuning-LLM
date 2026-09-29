@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(*) AS row_count, ROUND(STDDEV(ss.revenue), 2) AS stddev_revenue FROM store_sales ss LEFT OUTER JOIN stores s ON ss.store_id = s.id JOIN products p ON p.id = ss.product_id WHERE p.supplier_id IN (13, 30) GROUP BY p.category ORDER BY category ASC;

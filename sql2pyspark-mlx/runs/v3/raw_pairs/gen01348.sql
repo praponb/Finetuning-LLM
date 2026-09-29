@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, ROUND((100 * SUM(CASE WHEN category = 'Books' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_books FROM products GROUP BY supplier_id) SELECT s.rating, s.supplier_name, ss.pct_books FROM suppliers s INNER JOIN supplier_stats ss ON s.id = ss.supplier_id WHERE ss.pct_books >= 62 ORDER BY rating DESC

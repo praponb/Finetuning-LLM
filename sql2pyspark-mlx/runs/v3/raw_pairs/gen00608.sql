@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, MIN(we.event_time) AS first_event_time, MAX(we.duration_sec) - MIN(we.duration_sec) AS duration_sec_range FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id GROUP BY MONTH(c.signup_date) ORDER BY first_event_time DESC;

@@ -1,0 +1,1 @@
+SELECT id, product_id, sale_date, revenue, store_id, units, FIRST_VALUE(revenue) OVER (PARTITION BY product_id ORDER BY sale_date, id) AS first_revenue, ROUND(units / SUM(units) OVER (PARTITION BY store_id), 3) AS units_share FROM store_sales WHERE product_id IN (4, 9)

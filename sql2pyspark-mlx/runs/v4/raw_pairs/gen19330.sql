@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT id, status, paid_at, method, ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at, id) AS rn FROM payments WHERE order_id IS NULL) SELECT id, status, paid_at, method FROM Ranked WHERE rn <= 2;

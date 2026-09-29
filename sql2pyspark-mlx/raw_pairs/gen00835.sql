@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM departments s WHERE NOT EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND c.level = 'L5')) SELECT id, dept_name, location, CASE WHEN location RLIKE '^(Bangkok|Tokyo)$' THEN 'EXTENDED' WHEN location RLIKE '^(Chiang Mai|New York)$' THEN 'PRIORITY' ELSE 'CORE' END AS location_zone FROM eligible;

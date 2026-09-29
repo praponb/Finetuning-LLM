@@ -1,0 +1,1 @@
+SELECT customers.country, customers.city, SUM(transactions.amount) total_amount FROM transactions JOIN accounts ON transactions.account_id = accounts.id RIGHT OUTER JOIN customers ON accounts.customer_id = customers.id GROUP BY customers.country, customers.city

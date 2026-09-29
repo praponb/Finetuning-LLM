@@ -1,0 +1,1 @@
+select case when budget >= 4222000 then 'high' when budget >= 1477000 then 'mid' else 'low' end budget_bucket, round((100 * sum(case when location = 'Singapore' then 1 else 0 end)) / count(*), 1) pct_singapore from departments where dept_name not in ('Marketing', 'Finance') group by 1 having round((100 * sum(case when location = 'Singapore' then 1 else 0 end)) / count(*), 1) > 24

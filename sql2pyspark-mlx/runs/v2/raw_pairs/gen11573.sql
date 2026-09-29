@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MIN(quantity) AS min_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY product_id) SELECT p.cost, p.category, pt.min_quantity, pt.stddev_quantity FROM products p JOIN product_totals pt ON p.id = pt.product_id ORDER BY stddev_quantity;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT carrier, SUM(CASE WHEN status = 'DELIVERED' THEN cost ELSE 0 END) AS delivered_cost, COUNT(CASE WHEN carrier = 'Flash' THEN 1 END) AS flash_count FROM shipments GROUP BY carrier) AS t WHERE flash_count >= 6;

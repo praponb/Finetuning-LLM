@@ -1,0 +1,1 @@
+SELECT departments.budget, t.avg_salary, t.l3_count FROM departments LEFT JOIN (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary, SUM(CASE WHEN level = 'L3' THEN 1 ELSE 0 END) AS l3_count FROM employees GROUP BY dept_id) t ON departments.id = t.dept_id WHERE t.avg_salary >= 64 ORDER BY avg_salary;

@@ -1,0 +1,1 @@
+select quarter(c.signup_date) signup_quarter, count(*) transaction_count from transactions t inner join accounts a on t.account_id = a.id full outer join customers c on c.id = a.customer_id group by quarter(c.signup_date);

@@ -1,0 +1,1 @@
+SELECT id, temp_c, humidity, status_bits, firmware, AVG(temp_c) OVER (PARTITION BY device_code) AS device_code_avg_temp_c, AVG(humidity) OVER (PARTITION BY MONTH(reading_ts), device_code ORDER BY temp_c, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS humidity_avg_6_prior FROM device_readings WHERE pressure > 1008;

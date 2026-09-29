@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, store_id, product_id, sale_date, units - revenue AS revenue_per_unit FROM store_sales WHERE units < 12) SELECT product_id, store_id FROM base EXCEPT SELECT product_id, store_id FROM store_sales WHERE product_id IN (3, 10)

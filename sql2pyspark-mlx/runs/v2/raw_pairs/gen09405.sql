@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(oi.quantity) AS quantity_count, MIN(oi.unit_price) AS min_unit_price FROM order_items oi JOIN orders o ON oi.order_id = o.id GROUP BY o.channel HAVING quantity_count >= 4 ORDER BY o.channel ASC;

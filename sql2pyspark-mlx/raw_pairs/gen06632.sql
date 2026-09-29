@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT city, country FROM suppliers EXCEPT DISTINCT SELECT city, country FROM suppliers WHERE rating >= 3.7), reconciled AS (SELECT s.* FROM suppliers s INNER JOIN remaining_keys k ON s.city = k.city AND s.country = k.country) SELECT city FROM reconciled ORDER BY city DESC

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM transactions WHERE txn_type = 'REFUND'), agg AS (SELECT txn_type, ROUND(AVG(amount), 2) AS avg_amount FROM base GROUP BY txn_type) SELECT txn_type, avg_amount FROM agg WHERE avg_amount > 23;

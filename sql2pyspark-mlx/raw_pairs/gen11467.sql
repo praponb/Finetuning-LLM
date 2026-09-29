@@ -1,0 +1,1 @@
+SELECT s.id, s.cost, s.delivered_date, o.discount, o.shipping_fee, st.city FROM shipments s RIGHT OUTER JOIN orders o ON s.order_id = o.id FULL OUTER JOIN stores st ON o.store_id = st.id WHERE st.region = 'East' AND o.channel != 'partner' ORDER BY id DESC;

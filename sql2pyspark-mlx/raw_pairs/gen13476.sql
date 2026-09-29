@@ -1,0 +1,1 @@
+SELECT id, created_at, coupon_codes, attributes, EXISTS(items, item -> item.price > 100) AS has_premium_item, TRY_CAST(attributes['weight_kg'] AS DOUBLE) AS weight_kg, COALESCE(ship_to.country, 'UNKNOWN') AS country_or_unknown FROM carts

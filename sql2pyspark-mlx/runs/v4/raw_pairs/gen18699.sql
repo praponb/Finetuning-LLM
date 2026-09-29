@@ -1,0 +1,1 @@
+SELECT city, COUNT(*) FILTER (WHERE country = 'DE') AS de_rows, ROUND(AVG(rating), 2) AS avg_rating, SUM(rating) FILTER (WHERE city = 'Chiang Mai') AS chiang_mai_total_rating, SIZE(COLLECT_SET(country)) AS num_countries, ROUND(SUM(rating) / NULLIF(COUNT(CASE WHEN country = 'TH' THEN 1 END), 0), 2) AS rating_per_th FROM suppliers GROUP BY city ORDER BY avg_rating;

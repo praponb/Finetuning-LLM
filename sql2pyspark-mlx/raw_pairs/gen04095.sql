@@ -1,0 +1,1 @@
+with ranked_accounts as (select id, customer_id, balance, row_number() over (partition by customer_id order by balance desc, id) as row_num from accounts) select id, customer_id, balance from ranked_accounts where row_num = 1

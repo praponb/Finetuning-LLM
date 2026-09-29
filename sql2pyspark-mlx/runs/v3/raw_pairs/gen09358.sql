@@ -1,0 +1,1 @@
+with ranked as (select id, store_id, quantity, rank() over (partition by store_id order by quantity) as row_num from inventory where last_restock between '2023-12-25' and '2025-04-08') select * from ranked where row_num <= 3;

@@ -1,0 +1,1 @@
+SELECT dept_name, location, MAX(budget) max_budget, COUNT(budget) budget_count FROM departments WHERE location = 'Chiang Mai' AND budget < 3788000 GROUP BY dept_name, location HAVING COUNT(CASE WHEN location = 'Berlin' THEN 1 END) > 2;

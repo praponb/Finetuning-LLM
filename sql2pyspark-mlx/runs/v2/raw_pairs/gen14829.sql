@@ -1,0 +1,1 @@
+SELECT s.device, COUNT(*) AS total_count, ROUND(STDDEV(we.duration_sec), 2) AS stddev_duration_sec FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id GROUP BY s.device HAVING ROUND(STDDEV(we.duration_sec), 2) >= 50 ORDER BY stddev_duration_sec DESC;

@@ -1,0 +1,18 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("status").orderBy("opened_date", "id")
+
+result = (
+    df_accounts
+    .filter(F.col("balance").between(31000, 57000))
+    .select(
+        "id",
+        "status",
+        "opened_date",
+        "balance",
+        F.row_number().over(w).alias("rn"),
+    )
+    .filter(F.col("rn") <= 3)
+    .select("id", "status", "opened_date", "balance")
+)

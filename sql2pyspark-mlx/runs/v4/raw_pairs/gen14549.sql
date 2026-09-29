@@ -1,0 +1,1 @@
+select products.id, products.stock_qty, t.revenue, t.avg_unit_price from products left join (select product_id, sum(quantity * unit_price) as revenue, round(avg(unit_price), 2) as avg_unit_price from order_items group by product_id) t on products.id = t.product_id

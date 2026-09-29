@@ -1,0 +1,1 @@
+with department_totals as (select dept_id, count(case when level = 'L4' then 1 end) as l4_count, max(salary) as max_salary from employees group by dept_id) select d.dept_name, dt.l4_count, dt.max_salary from departments d join department_totals dt on d.id = dt.dept_id;

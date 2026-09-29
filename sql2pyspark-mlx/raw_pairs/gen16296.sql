@@ -1,0 +1,1 @@
+SELECT emp.id, emp.job_title employee_job_title, emp.manager_id employee_manager_id, mgr.dept_id manager_dept_id, mgr.email manager_email, mgr.job_title manager_job_title FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.full_name LIKE 'FRA%'

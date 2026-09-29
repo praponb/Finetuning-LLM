@@ -1,0 +1,1 @@
+SELECT e.salary AS employee_salary, e.manager_id AS employee_manager_id, m.dept_id AS manager_dept_id, m.is_remote AS manager_is_remote FROM employees e JOIN employees m ON e.manager_id = m.id WHERE m.is_remote = TRUE OR MONTH(m.hire_date) IN (3, 6, 10) ORDER BY employee_manager_id ASC;

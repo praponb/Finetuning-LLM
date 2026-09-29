@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, MIN(salary) AS min_salary FROM employees GROUP BY dept_id) SELECT departments.id, departments.budget, department_totals.min_salary FROM departments INNER JOIN department_totals ON departments.id = department_totals.dept_id WHERE department_totals.min_salary > 62000;

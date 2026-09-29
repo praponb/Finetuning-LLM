@@ -1,0 +1,1 @@
+select date_trunc('MONTH', order_date) order_month, round((100 * sum(case when status = 'COMPLETED' then 1 else 0 end)) / count(*), 1) pct_completed from orders where status in ('PENDING', 'SHIPPED', 'CANCELLED') group by date_trunc('MONTH', order_date)

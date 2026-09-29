@@ -1,0 +1,1 @@
+SELECT order_items.order_id, order_items.quantity, products.supplier_id, orders.store_id, orders.amount FROM order_items JOIN products ON order_items.product_id = products.id JOIN orders ON order_items.order_id = orders.id WHERE products.product_name LIKE 'De%';

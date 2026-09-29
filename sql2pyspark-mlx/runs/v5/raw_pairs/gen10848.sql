@@ -1,0 +1,1 @@
+SELECT id, log_ts, payload_json, context, context['region'] AS region, COALESCE(context['version'], 'unknown') AS version_or_default, context['trace'] AS trace FROM app_logs WHERE log_ts >= '2023-04-13';

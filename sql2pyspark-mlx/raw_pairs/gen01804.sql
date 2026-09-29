@@ -1,0 +1,1 @@
+WITH recent_suppliers AS (SELECT * FROM suppliers WHERE city NOT IN ('Singapore', 'Tokyo') AND rating <= 2.3 AND rating > 2.6), agg AS (SELECT country, city, SUM(rating) AS total_rating FROM recent_suppliers GROUP BY country, city) SELECT * FROM agg WHERE total_rating > 12 ORDER BY total_rating DESC;

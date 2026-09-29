@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, MIN(txn_time) AS first_txn_time, ROUND(STDDEV(amount), 2) AS stddev_amount, SUM(CASE WHEN txn_type = 'CREDIT' THEN amount ELSE 0 END) AS credit_amount FROM transactions GROUP BY DATE_TRUNC('MONTH', txn_time)

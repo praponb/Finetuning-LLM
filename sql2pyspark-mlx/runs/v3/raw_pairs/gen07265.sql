@@ -1,0 +1,1 @@
+select id, txn_time, account_id, round(amount, 0) as amount_rounded from transactions where txn_type in ('DEBIT', 'FEE', 'REFUND') and is_flagged = true and txn_type = 'FEE' order by txn_time desc, amount_rounded desc

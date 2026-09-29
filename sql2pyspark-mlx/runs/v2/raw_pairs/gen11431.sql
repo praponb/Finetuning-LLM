@@ -1,0 +1,1 @@
+SELECT dept_id, AVG(salary) AS avg_salary, ROUND((100 * SUM(CASE WHEN job_title = 'Analyst' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_analyst, SUM(CASE WHEN level = 'L4' THEN 1 ELSE 0 END) AS l4_count FROM employees GROUP BY dept_id ORDER BY dept_id DESC, pct_analyst

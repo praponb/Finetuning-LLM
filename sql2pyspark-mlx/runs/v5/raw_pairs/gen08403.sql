@@ -1,0 +1,1 @@
+SELECT status, method, MAX(amount) AS max_amount, SUM(CASE WHEN method = 'card' THEN amount ELSE 0 END) AS card_amount FROM payments GROUP BY status, method ORDER BY max_amount DESC, method, status LIMIT 3;

@@ -1,0 +1,1 @@
+WITH ranked_subscriptions AS (SELECT id, status, monthly_fee, end_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY monthly_fee, id) AS rnk FROM subscriptions WHERE status IN ('PAUSED', 'ACTIVE', 'CANCELLED')) SELECT id, status, monthly_fee, end_date FROM ranked_subscriptions WHERE rnk = 1

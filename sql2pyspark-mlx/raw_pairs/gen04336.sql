@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, oi.order_id, p.category, p.stock_qty, o.store_id FROM order_items oi RIGHT JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id WHERE p.stock_qty BETWEEN 276 AND 351 AND o.customer_id IS NOT NULL

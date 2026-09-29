@@ -1,0 +1,1 @@
+with ranked_accounts as (select id, status, balance, opened_date, row_number() over (partition by status order by balance desc, id) as rnk from accounts) select id, status, balance, opened_date from ranked_accounts where rnk <= 3 order by status asc

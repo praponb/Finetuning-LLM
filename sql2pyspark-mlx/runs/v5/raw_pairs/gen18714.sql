@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY country, city ORDER BY rating DESC, id ASC) AS dedup_rank FROM suppliers) ranked WHERE dedup_rank = 1) SELECT id, city, rating, CASE WHEN city RLIKE '^(Chiang Mai|Berlin)$' THEN 'CORE' ELSE 'EXTENDED' END AS city_zone FROM deduped ORDER BY city_zone DESC

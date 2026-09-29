@@ -1,0 +1,1 @@
+select s.region, round(avg(ss.units), 2) as avg_units, round(stddev(ss.units), 2) as stddev_units from store_sales ss join stores s on ss.store_id = s.id left outer join products p on p.id = ss.product_id group by s.region

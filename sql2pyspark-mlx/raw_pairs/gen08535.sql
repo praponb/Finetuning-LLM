@@ -1,0 +1,1 @@
+select merchant, unique_accounts, avg_amount from (select merchant, count(distinct amount) as unique_accounts, round(avg(amount), 2) as avg_amount from transactions group by merchant) as s where avg_amount < 66 order by unique_accounts desc;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CONCAT_WS(',', status, method) AS status_method_key, COALESCE(method, 'DIRECT') AS resolved_method FROM payments WHERE method IS NOT NULL) SELECT id, order_id, resolved_method FROM filtered QUALIFY RANK() OVER (PARTITION BY method, order_id ORDER BY amount DESC) = 1

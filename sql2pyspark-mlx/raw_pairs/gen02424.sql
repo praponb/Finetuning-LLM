@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(*) AS total_count FROM store_sales ss RIGHT JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE ARRAY_CONTAINS(p.tags, 'sale') GROUP BY s.city

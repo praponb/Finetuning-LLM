@@ -1,0 +1,1 @@
+SELECT COUNT(CASE WHEN country = 'SG' THEN 1 END) AS sg_count, SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END) AS bangkok_count FROM suppliers WHERE country IN ('DE', 'UK') AND rating <= 3.5 ORDER BY sg_count DESC;

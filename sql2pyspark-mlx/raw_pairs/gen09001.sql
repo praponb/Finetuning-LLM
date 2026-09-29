@@ -1,0 +1,1 @@
+select stores.store_name, stores.opened_date, inventory.last_restock from stores left join inventory on stores.id = inventory.store_id where inventory.product_id in (1, 10) order by stores.store_name desc, opened_date;

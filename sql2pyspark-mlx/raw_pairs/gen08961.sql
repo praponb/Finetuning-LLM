@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, MIN(event_time) min_event_time FROM web_events WHERE session_id IN (12, 40) GROUP BY session_id) SELECT s.id, s.browser, ss.min_event_time FROM sessions s LEFT JOIN session_summary ss ON s.id = ss.session_id ORDER BY min_event_time DESC

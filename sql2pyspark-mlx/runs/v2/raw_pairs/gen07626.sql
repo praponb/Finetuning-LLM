@@ -1,0 +1,1 @@
+SELECT o.channel, o.customer_id, t.min_cost, t.cost_count FROM orders o LEFT JOIN (SELECT order_id, MIN(cost) AS min_cost, COUNT(cost) AS cost_count FROM shipments GROUP BY order_id) t ON o.id = t.order_id WHERE t.min_cost >= 36

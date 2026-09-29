@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, supplier_name, country, rating, TRIM(city) AS clean_city, COALESCE(rating, 0) AS rating_filled FROM suppliers WHERE UPPER(supplier_name) LIKE '%ION%') SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC NULLS FIRST, id) AS rn FROM base QUALIFY rn = 1;

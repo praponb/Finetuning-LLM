@@ -1,0 +1,1 @@
+SELECT id, email, level, is_remote, CASE WHEN salary >= 131000 THEN 'High' WHEN salary >= 65000 THEN 'Medium' ELSE 'Low' END AS salary_band FROM employees WHERE dept_id IN (12, 18, 26) AND job_title <> 'Analyst';

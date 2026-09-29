@@ -1,0 +1,1 @@
+select month(last_restock) as last_restock_month, store_id, max(last_restock) as last_last_restock, min(quantity) as min_quantity from inventory where last_restock between '2024-05-11' and '2025-04-01' and (quantity > 160 or store_id in (1, 2, 3, 4)) group by 1, 2 order by last_restock_month;

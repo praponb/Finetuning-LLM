@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, a.opened_date FROM accounts a WHERE a.account_type NOT IN ('CHECKING', 'CREDIT') AND EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id) ORDER BY a.balance, id LIMIT 10;

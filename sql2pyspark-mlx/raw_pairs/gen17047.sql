@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY unit_price DESC NULLS FIRST, id ASC) AS rn FROM order_items) ranked WHERE rn = 1) SELECT s.id, s.order_id, s.rn, (SELECT MIN(s2.cost) FROM shipments s2 WHERE s2.order_id = s.order_id) AS min_shipment_cost FROM deduped s ORDER BY order_id DESC NULLS LAST

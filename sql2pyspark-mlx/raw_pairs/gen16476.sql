@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CONCAT(firmware, ' ', device_code) AS firmware_device_code FROM device_readings WHERE reading_ts >= TO_TIMESTAMP('2025-09-01 06:00:00')) SELECT id, device_code, kpi, reading FROM (SELECT id, device_code, humidity, pressure, temp_c FROM filtered) src UNPIVOT (reading FOR kpi IN (humidity AS HUMIDITY, pressure AS PRESSURE_VAL, temp_c AS TEMP_C_VAL)) unp

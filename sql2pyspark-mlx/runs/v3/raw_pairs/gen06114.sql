@@ -1,0 +1,1 @@
+select id, store_id, last_restock, product_id from (select id, store_id, last_restock, product_id, row_number() over (partition by store_id order by last_restock desc, id) as pos from inventory where quantity > 236) as ranked where pos <= 5 order by last_restock desc

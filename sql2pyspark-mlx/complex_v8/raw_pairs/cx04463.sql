@@ -1,0 +1,8 @@
+SELECT id
+FROM courses
+EXCEPT
+SELECT id
+FROM enrollments
+WHERE score BETWEEN 8.7 AND 79.2
+  AND enrolled_at < TIMESTAMP '2025-02-18 10:00:00'
+ORDER BY id DESC

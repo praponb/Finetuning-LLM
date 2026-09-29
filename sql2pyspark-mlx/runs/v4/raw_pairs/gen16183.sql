@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT supplier_id, category, ROUND(STDDEV(cost), 2) AS stddev_cost, ROUND(STDDEV(price), 2) AS stddev_price FROM products GROUP BY supplier_id, category) AS agg WHERE stddev_cost < 31 ORDER BY supplier_id DESC;

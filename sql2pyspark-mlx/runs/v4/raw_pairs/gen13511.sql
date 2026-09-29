@@ -1,0 +1,1 @@
+WITH joined AS (SELECT e.*, p.browser FROM web_events e INNER JOIN sessions p ON e.session_id = p.id) SELECT id, session_id, event_type, page, event_time, duration_sec, browser FROM joined ORDER BY id DESC NULLS FIRST LIMIT 10;

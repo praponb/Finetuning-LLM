@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, created_at, key, v FROM carts LATERAL VIEW OUTER EXPLODE(attributes) e AS key, v) SELECT key, COUNT(*) AS event_count, (UNIX_TIMESTAMP(MAX(created_at)) - UNIX_TIMESTAMP(MIN(created_at))) / 60 AS duration_min FROM exploded GROUP BY key ORDER BY event_count DESC

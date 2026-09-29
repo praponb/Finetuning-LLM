@@ -1,0 +1,1 @@
+SELECT products.brand, MIN(inventory.last_restock) first_last_restock FROM inventory RIGHT OUTER JOIN products ON inventory.product_id = products.id INNER JOIN stores ON inventory.store_id = stores.id GROUP BY products.brand

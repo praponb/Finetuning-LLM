@@ -1,0 +1,1 @@
+select inventory.id, inventory.store_id, inventory.product_id, inventory.quantity, store_sales.sale_date, store_sales.revenue, last_day(store_sales.sale_date) as sale_date_month_end from inventory left outer join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id order by id desc

@@ -1,0 +1,1 @@
+SELECT c.id, c.credit_limit, t.max_shipping_fee FROM customers c INNER JOIN (SELECT customer_id, MAX(shipping_fee) AS max_shipping_fee FROM orders WHERE customer_id IN (20, 23) GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY max_shipping_fee

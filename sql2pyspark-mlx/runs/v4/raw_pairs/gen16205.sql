@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM transactions WHERE NOT is_flagged OR amount >= 2500), merchant_summary AS (SELECT merchant, COUNT(CASE WHEN txn_type = 'REFUND' THEN 1 END) AS refund_count FROM base GROUP BY merchant) SELECT merchant, refund_count FROM merchant_summary WHERE refund_count < 9 ORDER BY merchant DESC;

@@ -1,0 +1,1 @@
+WITH recent_orders AS (SELECT * FROM orders WHERE channel != 'web' AND channel IN ('mobile', 'web', 'store')), agg AS (SELECT status, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range FROM recent_orders GROUP BY status) SELECT * FROM agg WHERE shipping_fee_range > 54;

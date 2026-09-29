@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, MIN(amount) AS min_amount FROM transactions WHERE txn_type = 'FEE' GROUP BY account_id) SELECT a.id, a.opened_date, a.status, as.min_amount FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id WHERE as.min_amount > 1300 ORDER BY status

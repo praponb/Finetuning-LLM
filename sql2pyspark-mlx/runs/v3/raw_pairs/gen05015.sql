@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.store_id, p.launch_date, s.rating, s.city FROM inventory i LEFT JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE i.product_id IN (5, 8) AND s.city <> 'Tokyo';

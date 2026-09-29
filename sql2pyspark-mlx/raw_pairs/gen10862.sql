@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, COUNT(DISTINCT quantity) AS unique_stores, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY product_id) SELECT p.id, p.cost, pt.unique_stores, pt.last_last_restock FROM products p JOIN product_totals pt ON p.id = pt.product_id;

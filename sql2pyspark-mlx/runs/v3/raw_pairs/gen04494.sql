@@ -1,0 +1,1 @@
+SELECT city, DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, SUM(CASE WHEN country = 'TH' THEN 1 ELSE 0 END) AS th_count FROM customers WHERE city IN ('London', 'Chiang Mai') OR LENGTH(name) < 7 GROUP BY ROLLUP(city, DATE_FORMAT(signup_date, 'yyyy-MM')) ORDER BY city, signup_month;

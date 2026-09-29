@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, SUM(amount) AS total_amount, ROUND(SUM(amount) * 100.0 / SUM(SUM(amount)) OVER (), 2) AS pct_of_total FROM transactions WHERE txn_time < '2024-10-01' GROUP BY DATE_TRUNC('MONTH', txn_time) ORDER BY txn_month DESC LIMIT 5;

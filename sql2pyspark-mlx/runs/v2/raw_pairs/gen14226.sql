@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, MAX(launch_date) AS last_launch_date, SUM(price) AS total_price FROM products GROUP BY supplier_id) SELECT s.country, s.rating, ss.last_launch_date, ss.total_price FROM suppliers s LEFT JOIN supplier_stats ss ON s.id = ss.supplier_id WHERE ss.total_price > 5700 ORDER BY s.country DESC

@@ -1,0 +1,1 @@
+with product_totals as (select product_id, count(*) as row_count, avg(quantity) as avg_quantity from order_items where product_id is null group by product_id) select p.id, p.product_name, p.category, pt.row_count, pt.avg_quantity from products p join product_totals pt on p.id = pt.product_id where pt.row_count >= 5 order by p.category, row_count desc;

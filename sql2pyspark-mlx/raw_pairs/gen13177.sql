@@ -1,0 +1,1 @@
+SELECT id, session_id, page, event_time, duration_sec, DENSE_RANK() OVER (ORDER BY duration_sec DESC) AS duration_sec_dense_rank, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY duration_sec DESC, id) AS seq_no FROM web_events WHERE page = '/checkout';

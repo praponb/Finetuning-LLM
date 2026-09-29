@@ -1,0 +1,1 @@
+SELECT i.last_restock, s.store_name, p.price, p.stock_qty FROM inventory i LEFT JOIN stores s ON s.id = i.store_id LEFT JOIN products p ON i.product_id = p.id WHERE p.brand != 'Acme' ORDER BY store_name DESC

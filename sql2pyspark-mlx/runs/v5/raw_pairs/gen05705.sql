@@ -1,0 +1,1 @@
+SELECT cost_bucket, max_cost FROM (SELECT CASE WHEN cost >= 81 THEN 'high' WHEN cost >= 30 THEN 'mid' ELSE 'low' END cost_bucket, MAX(cost) max_cost FROM shipments GROUP BY CASE WHEN cost >= 81 THEN 'high' WHEN cost >= 30 THEN 'mid' ELSE 'low' END) agg WHERE max_cost >= 33;

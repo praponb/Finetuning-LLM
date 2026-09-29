@@ -1,0 +1,1 @@
+SELECT plan, status, SUM(monthly_fee) AS total_monthly_fee, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count, COUNT(DISTINCT monthly_fee) AS unique_customers FROM subscriptions WHERE plan NOT IN ('premium', 'standard') AND status IN ('PAUSED', 'CANCELLED', 'EXPIRED') AND monthly_fee < 80 GROUP BY plan, status HAVING cancelled_count < 55

@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, a.opened_date FROM accounts a WHERE a.account_type IN ('CREDIT', 'CHECKING') AND a.customer_id NOT IN (SELECT id FROM customers WHERE email LIKE '%@gmail.com') ORDER BY opened_date DESC

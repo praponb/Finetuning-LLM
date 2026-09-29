@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.quantity, inventory.product_id FROM inventory WHERE MONTH(inventory.last_restock) IN (5, 7, 11) AND inventory.product_id NOT IN (SELECT id FROM products WHERE category IN ('Grocery', 'Home', 'Books')) ORDER BY id

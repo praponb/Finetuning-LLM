@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.unit_price, order_items.product_id, products.stock_qty, products.category, suppliers.supplier_name, suppliers.city FROM order_items FULL OUTER JOIN products ON products.id = order_items.product_id INNER JOIN suppliers ON suppliers.id = products.supplier_id WHERE order_items.order_id IN (8, 18, 32) AND suppliers.city IN ('Tokyo', 'London');

@@ -1,0 +1,1 @@
+SELECT CASE WHEN location IN ('Singapore', 'Chiang Mai') THEN 'core' ELSE 'other' END AS location_group, location, COUNT(DISTINCT budget) AS unique_locations FROM departments WHERE location IN ('Chiang Mai', 'Tokyo', 'Singapore') AND budget >= 3286000 GROUP BY CASE WHEN location IN ('Singapore', 'Chiang Mai') THEN 'core' ELSE 'other' END, location ORDER BY location_group DESC;

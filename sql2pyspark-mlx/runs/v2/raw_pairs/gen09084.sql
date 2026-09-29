@@ -1,0 +1,1 @@
+select method, status, max(amount) as max_amount, sum(case when method = 'card' then amount else 0 end) as card_amount from payments where status in ('SUCCESS', 'FAILED', 'REFUNDED') and amount between 940 and 1330 group by method, status having sum(case when method = 'paypal' then 1 else 0 end) < 62 order by 1;

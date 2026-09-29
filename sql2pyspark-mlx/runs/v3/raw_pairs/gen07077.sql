@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY DATE_FORMAT(event_time, 'yyyy-MM');

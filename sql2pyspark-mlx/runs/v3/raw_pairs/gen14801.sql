@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN age >= 65 THEN 'high' WHEN age >= 35 THEN 'mid' ELSE 'low' END AS age_bucket, YEAR(signup_date) AS signup_year, MIN(credit_limit) AS min_credit_limit, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM customers GROUP BY CASE WHEN age >= 65 THEN 'high' WHEN age >= 35 THEN 'mid' ELSE 'low' END, YEAR(signup_date)) AS sub WHERE min_credit_limit > 5600

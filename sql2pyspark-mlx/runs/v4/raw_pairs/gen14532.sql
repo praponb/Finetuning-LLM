@@ -1,0 +1,1 @@
+select *, last_value(sqft, true) over (order by sqft, id rows between unbounded preceding and current row) as last_known_sqft, avg(sqft) over (partition by city order by opened_date, id rows between 2 preceding and current row) as sqft_avg_2 from stores;

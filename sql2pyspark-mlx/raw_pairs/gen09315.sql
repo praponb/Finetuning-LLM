@@ -1,0 +1,1 @@
+SELECT a.status, a.balance, t.merchant, t.account_id, DATEDIFF(CURRENT_DATE(), t.txn_time) / 7 AS weeks_since_txn_time FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id ORDER BY status DESC

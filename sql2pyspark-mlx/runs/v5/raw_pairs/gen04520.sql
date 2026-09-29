@@ -1,0 +1,1 @@
+select city, case when country in ('SG', 'UK') then 'tier_1' else 'other' end as country_group, country, count(distinct rating) as unique_citys from suppliers where (country in ('TH', 'SG') and country = 'JP') or city is not null group by 1, 2, 3 order by unique_citys;

@@ -1,0 +1,1 @@
+with supplier_summary as (select supplier_id, sum(price) as total_price from products group by supplier_id) select s.id, s.supplier_name, ss.total_price from suppliers s left join supplier_summary ss on s.id = ss.supplier_id order by ss.total_price desc

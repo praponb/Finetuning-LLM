@@ -1,0 +1,1 @@
+SELECT *, COALESCE(city, 'N/A') AS city_filled, COALESCE(supplier_name, 'unassigned') AS supplier_name_filled FROM suppliers WHERE country <> 'DE' AND country NOT IN ('UK', 'DE', 'TH') AND city = 'London' ORDER BY city, country

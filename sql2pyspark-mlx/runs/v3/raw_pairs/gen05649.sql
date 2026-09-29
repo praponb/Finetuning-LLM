@@ -1,0 +1,1 @@
+SELECT p.method, p.order_id, p.amount, o.channel, o.status, o.store_id FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id WHERE o.status IN ('PENDING', 'SHIPPED', 'COMPLETED') AND o.status != 'PENDING' ORDER BY o.channel DESC;

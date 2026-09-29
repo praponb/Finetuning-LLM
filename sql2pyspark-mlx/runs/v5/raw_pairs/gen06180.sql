@@ -1,0 +1,1 @@
+SELECT orders.status, ROUND(STDDEV(shipments.cost), 2) AS stddev_cost FROM shipments INNER JOIN orders ON shipments.order_id = orders.id WHERE orders.channel IN ('store', 'partner', 'mobile') GROUP BY orders.status HAVING ROUND(STDDEV(shipments.cost), 2) >= 28 ORDER BY orders.status

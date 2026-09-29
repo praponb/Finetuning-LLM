@@ -1,0 +1,1 @@
+SELECT store_sales.product_id, COUNT(*) AS row_count, SUM(inventory.quantity) AS total_quantity FROM inventory INNER JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE inventory.store_id IN (1, 5, 6) GROUP BY store_sales.product_id ORDER BY row_count, product_id LIMIT 10

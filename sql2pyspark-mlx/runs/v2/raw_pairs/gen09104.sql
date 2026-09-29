@@ -1,0 +1,1 @@
+SELECT t.id, t.amount, t.account_id, a.customer_id, a.balance, c.credit_limit, IF(t.is_flagged, 'Yes', 'No') AS is_flagged_label FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id ORDER BY a.balance;

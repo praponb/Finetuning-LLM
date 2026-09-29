@@ -1,0 +1,1 @@
+SELECT we.event_time, we.page, s.device, s.customer_id, c.country FROM web_events we INNER JOIN sessions s ON we.session_id = s.id LEFT JOIN customers c ON s.customer_id = c.id WHERE s.device IN ('tablet', 'mobile', 'desktop')

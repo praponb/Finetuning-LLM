@@ -1,0 +1,1 @@
+SELECT s.customer_id, s.start_date, s.plan, c.signup_date, c.age, c.city FROM subscriptions s JOIN customers c ON s.customer_id = c.id WHERE s.end_date BETWEEN '2023-04-01' AND '2024-12-19' ORDER BY signup_date

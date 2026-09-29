@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, TRIM(category) clean_category FROM products WHERE supplier_id = 16 OR cost > 550), agg AS (SELECT supplier_id, ROUND(AVG(stock_qty), 2) avg_stock_qty FROM base GROUP BY supplier_id) SELECT supplier_id, avg_stock_qty FROM agg WHERE avg_stock_qty < 24 ORDER BY avg_stock_qty DESC, supplier_id DESC LIMIT 3

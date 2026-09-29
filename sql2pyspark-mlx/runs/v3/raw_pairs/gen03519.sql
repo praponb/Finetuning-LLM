@@ -1,0 +1,1 @@
+select id, order_id, paid_at, amount, round(avg(amount) over (partition by order_id order by paid_at, id rows between 3 preceding and current row), 2) as amount_moving_avg_4 from payments order by 2 desc

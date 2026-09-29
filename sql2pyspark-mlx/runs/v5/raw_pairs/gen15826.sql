@@ -1,0 +1,1 @@
+with kept as (select s.* from products s where not exists (select 1 from order_items x where x.product_id = s.id and x.product_id = 37)) select id, product_name, category, price, cost, stock_qty, launch_date, tags, supplier_id from kept order by cost desc

@@ -1,0 +1,1 @@
+SELECT QUARTER(start_date) AS start_quarter, status, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions WHERE plan = 'standard' AND end_date BETWEEN '2023-11-02' AND '2025-06-07' GROUP BY QUARTER(start_date), status HAVING monthly_fee_count >= 1

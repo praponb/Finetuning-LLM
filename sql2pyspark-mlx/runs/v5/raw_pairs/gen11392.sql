@@ -1,0 +1,1 @@
+SELECT id, location, dept_name, budget, CONCAT_WS(',', location, dept_name) AS location_dept_name_key, CONCAT(location, '/', dept_name) AS location_dept_name FROM departments WHERE location IN ('Tokyo', 'New York')

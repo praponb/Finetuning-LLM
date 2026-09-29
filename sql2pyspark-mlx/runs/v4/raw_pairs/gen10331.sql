@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.product_id, p.cost, p.brand, s.rating, s.city FROM inventory i INNER JOIN products p ON p.id = i.product_id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.supplier_name LIKE '%Lion%' AND LENGTH(s.supplier_name) < 13 ORDER BY s.rating DESC

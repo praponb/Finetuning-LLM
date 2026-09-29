@@ -1,0 +1,1 @@
+with orders_by_customer as (select customer_id, round((100 * sum(case when status = 'CANCELLED' then 1 else 0 end)) / count(*), 1) as pct_cancelled from orders group by customer_id) select c.signup_date, obc.pct_cancelled from customers c inner join orders_by_customer obc on c.id = obc.customer_id

@@ -1,0 +1,1 @@
+select case when balance >= 87000 then 'high' when balance >= 12000 then 'mid' else 'low' end as balance_bucket, status, count(case when account_type = 'LOAN' then 1 end) as loan_count from accounts where account_type <> 'CREDIT' or account_type <> 'SAVINGS' group by 1, 2 having loan_count > 1 order by status desc, loan_count;

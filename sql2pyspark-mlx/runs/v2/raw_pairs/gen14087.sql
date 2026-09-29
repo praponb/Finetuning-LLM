@@ -1,0 +1,1 @@
+SELECT a.status, t.credit_count FROM accounts a INNER JOIN (SELECT account_id, COUNT(CASE WHEN txn_type = 'CREDIT' THEN 1 END) AS credit_count FROM transactions WHERE merchant IS NULL GROUP BY account_id) t ON a.id = t.account_id WHERE t.credit_count > 7 ORDER BY credit_count DESC

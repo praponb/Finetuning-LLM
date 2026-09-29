@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.status, accounts.balance, t.last_txn_time FROM accounts JOIN (SELECT account_id, MAX(txn_time) last_txn_time FROM transactions GROUP BY account_id) t ON accounts.id = t.account_id ORDER BY t.last_txn_time DESC;

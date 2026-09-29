@@ -1,0 +1,1 @@
+SELECT s.id, s.country, s.rating, t.min_price FROM suppliers s JOIN (SELECT supplier_id, MIN(price) AS min_price FROM products WHERE price < 980 GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.min_price > 1100;

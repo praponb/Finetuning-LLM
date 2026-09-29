@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, CONCAT_WS('-', dept_name, location) AS dept_name_location_key FROM departments WHERE location = 'Bangkok'), location_summary AS (SELECT location, SORT_ARRAY(COLLECT_SET(location)) AS location_list FROM src GROUP BY location) SELECT location, location_list FROM location_summary ORDER BY location DESC;

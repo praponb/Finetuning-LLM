@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, SUM(units) AS total_units FROM store_sales GROUP BY product_id) SELECT products.launch_date, product_totals.total_units FROM products LEFT OUTER JOIN product_totals ON products.id = product_totals.product_id WHERE product_totals.total_units >= 200;

@@ -1,0 +1,1 @@
+select id, status, end_date, monthly_fee, round(avg(monthly_fee) over (partition by status order by end_date, id rows between 2 preceding and current row), 2) monthly_fee_moving_avg_3 from subscriptions where end_date > '2023-04-14';

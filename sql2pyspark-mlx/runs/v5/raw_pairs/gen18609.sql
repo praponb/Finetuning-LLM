@@ -1,0 +1,1 @@
+select * from (select quarter(launch_date) as launch_quarter, avg(stock_qty) as avg_stock_qty, count(distinct price) as unique_brands from products group by quarter(launch_date)) as x where unique_brands > 4 order by launch_quarter desc;

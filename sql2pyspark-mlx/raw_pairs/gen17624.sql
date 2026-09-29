@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 17872 THEN 'high' WHEN sqft >= 5302 THEN 'mid' ELSE 'low' END AS sqft_bucket, COUNT(*) AS row_count, MAX(sqft) AS max_sqft FROM stores WHERE LENGTH(store_name) > 10 GROUP BY 1 ORDER BY max_sqft DESC, row_count DESC

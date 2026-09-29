@@ -1,0 +1,1 @@
+with valid as (select *, date_trunc('YEAR', opened_date) opened_date_period, abs(balance) abs_balance, coalesce(status, 'DIRECT') resolved_status from accounts where customer_id = 13) select * from (select id, account_type, balance, abs_balance from valid) src unpivot (metric_value for measure in (balance, abs_balance));

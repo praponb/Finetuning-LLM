@@ -1,0 +1,1 @@
+SELECT e.full_name AS employee_full_name, e.email AS employee_email, m.email AS manager_email, m.salary AS manager_salary, m.hire_date AS manager_hire_date FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.salary <= 70000

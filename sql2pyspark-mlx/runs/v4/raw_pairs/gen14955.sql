@@ -1,0 +1,1 @@
+SELECT CASE WHEN shipping_fee >= 41 THEN 'high' WHEN shipping_fee >= 14 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, MAX(shipping_fee) AS max_shipping_fee, COUNT(CASE WHEN channel = 'mobile' THEN 1 END) AS mobile_count FROM orders GROUP BY shipping_fee_bucket HAVING MAX(shipping_fee) > 18;

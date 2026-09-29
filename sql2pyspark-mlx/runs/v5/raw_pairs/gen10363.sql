@@ -1,0 +1,1 @@
+SELECT MONTH(launch_date) launch_month, supplier_id, MAX(launch_date) latest_launch_date, COUNT(DISTINCT cost) unique_categorys FROM products GROUP BY CUBE(MONTH(launch_date), supplier_id) ORDER BY supplier_id DESC;

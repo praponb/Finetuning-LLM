@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time FROM (SELECT id, session_id, event_time, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY event_time DESC, id) AS rn FROM web_events) AS t WHERE rn <= 3 ORDER BY event_time DESC, session_id DESC;

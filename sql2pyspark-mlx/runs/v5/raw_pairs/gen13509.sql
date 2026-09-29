@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', order_date) AS order_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values, MIN(order_date) AS min_order_date FROM orders WHERE store_id IS NOT NULL AND (amount < 470 OR customer_id IN (3, 30, 38)) GROUP BY 1 ORDER BY min_order_date ASC

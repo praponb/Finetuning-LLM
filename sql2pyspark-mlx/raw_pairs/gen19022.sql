@@ -1,0 +1,1 @@
+SELECT CASE WHEN stock_qty >= 359 THEN 'high' WHEN stock_qty >= 116 THEN 'mid' ELSE 'low' END stock_qty_bucket, ROUND(AVG(cost), 2) avg_cost FROM products GROUP BY stock_qty_bucket ORDER BY stock_qty_bucket;

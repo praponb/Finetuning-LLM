@@ -1,0 +1,1 @@
+SELECT id, dept_id, job_title, hire_date, salary, COUNT(*) OVER (PARTITION BY dept_id) AS dept_id_count, LEAD(salary, 1) OVER (PARTITION BY job_title ORDER BY hire_date, id) AS next_salary FROM employees;

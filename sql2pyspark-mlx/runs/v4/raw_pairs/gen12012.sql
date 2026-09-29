@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY txn_time, id) AS pos FROM transactions WHERE amount <= 2300) SELECT * FROM numbered WHERE pos = 1 ORDER BY 3 DESC, amount DESC;

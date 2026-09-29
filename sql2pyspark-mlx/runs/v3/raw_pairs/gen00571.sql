@@ -1,0 +1,1 @@
+SELECT TO_DATE(s.started_at) AS started_day, SUM(CASE WHEN we.page = '/search' THEN we.duration_sec ELSE 0 END) AS search_duration_sec, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(we.event_type))) AS event_type_values FROM web_events we FULL OUTER JOIN sessions s ON we.session_id = s.id GROUP BY TO_DATE(s.started_at)

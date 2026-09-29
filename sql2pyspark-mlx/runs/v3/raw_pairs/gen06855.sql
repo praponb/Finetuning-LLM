@@ -1,0 +1,1 @@
+SELECT location, dept_name_values, total_budget FROM (SELECT location, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(dept_name))) AS dept_name_values, SUM(budget) AS total_budget FROM departments WHERE budget >= 1725000 GROUP BY location) AS agg WHERE total_budget > 10853000 ORDER BY dept_name_values, location LIMIT 1;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN YEAR(launch_date) < 2024 THEN 'before_2024' WHEN YEAR(launch_date) = 2024 THEN '2024' ELSE 'after_2024' END launch_cohort, AVG(price) avg_price FROM products GROUP BY CASE WHEN YEAR(launch_date) < 2024 THEN 'before_2024' WHEN YEAR(launch_date) = 2024 THEN '2024' ELSE 'after_2024' END) t WHERE avg_price < 630 ORDER BY avg_price;

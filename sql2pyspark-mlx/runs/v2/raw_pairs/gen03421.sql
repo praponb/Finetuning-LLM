@@ -1,0 +1,1 @@
+SELECT products.brand, SUM(inventory.quantity) total_quantity, ROUND(STDDEV(inventory.quantity), 2) stddev_quantity FROM inventory FULL OUTER JOIN stores ON stores.id = inventory.store_id LEFT OUTER JOIN products ON inventory.product_id = products.id GROUP BY products.brand HAVING total_quantity > 1020 ORDER BY total_quantity, stddev_quantity;

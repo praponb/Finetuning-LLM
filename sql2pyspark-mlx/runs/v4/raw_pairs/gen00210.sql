@@ -1,0 +1,1 @@
+with exploded as (select id, plan, effective_from, currency, tier_value from price_tiers lateral view explode(tier_prices) e as tier_value) select plan, effective_from, currency, tier_value from exploded order by tier_value;

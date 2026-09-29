@@ -1,0 +1,1 @@
+SELECT s.id, s.device, s.browser, s.country, c.signup_date, c.credit_limit, c.country AS customer_country, COALESCE(s.country, 'N/A') AS country_filled FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE c.city IN ('Chiang Mai', 'Bangkok')

@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(quantity) AS quantity_count FROM inventory WHERE quantity <= 184 GROUP BY store_id) SELECT s.region, s.store_name, st.stddev_quantity, st.quantity_count FROM stores s INNER JOIN store_totals st ON s.id = st.store_id WHERE st.quantity_count >= 4 ORDER BY store_name ASC, quantity_count DESC;

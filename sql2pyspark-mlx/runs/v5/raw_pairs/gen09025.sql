@@ -1,0 +1,1 @@
+SELECT id, revenue, units, store_id, CEIL(units) units_whole, DATEDIFF(CURRENT_DATE(), sale_date) days_since_sale_date FROM store_sales WHERE product_id IN (1, 4, 6, 9) AND (product_id IN (7, 8) OR revenue BETWEEN 1900 AND 2400)

@@ -1,0 +1,1 @@
+WITH filtered_subscriptions AS (SELECT * FROM subscriptions WHERE start_date < '2024-09-02'), subscriptions_stats AS (SELECT plan, ROUND((100 * SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cancelled FROM filtered_subscriptions GROUP BY plan) SELECT plan, pct_cancelled FROM subscriptions_stats;

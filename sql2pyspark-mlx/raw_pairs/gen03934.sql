@@ -1,0 +1,1 @@
+WITH ranked_suppliers AS (SELECT id, country, rating, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id) rnk FROM suppliers WHERE country <> 'TH') SELECT id, country, rating FROM ranked_suppliers WHERE rnk = 1 ORDER BY country;

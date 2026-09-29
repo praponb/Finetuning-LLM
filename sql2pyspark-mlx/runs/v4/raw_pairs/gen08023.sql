@@ -1,0 +1,1 @@
+with orders_by_store as (select store_id, avg(shipping_fee) as avg_shipping_fee from orders group by store_id) select s.id, s.sqft, s.city, obs.avg_shipping_fee from stores s left outer join orders_by_store obs on s.id = obs.store_id;

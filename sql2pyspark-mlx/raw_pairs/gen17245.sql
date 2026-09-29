@@ -1,0 +1,1 @@
+SELECT order_id, CASE WHEN unit_price >= 410 THEN 'high' WHEN unit_price >= 70 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(*) AS total_count, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items WHERE (quantity >= 3 AND unit_price <= 110) OR product_id IS NOT NULL GROUP BY 1, 2;

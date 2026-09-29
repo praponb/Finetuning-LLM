@@ -1,0 +1,1 @@
+select s.id, s.monthly_fee, s.customer_id, s.end_date, c.email, round(datediff(s.start_date, s.end_date) / 30, 1) as months_end_date_to_start_date from subscriptions s inner join customers c on c.id = s.customer_id

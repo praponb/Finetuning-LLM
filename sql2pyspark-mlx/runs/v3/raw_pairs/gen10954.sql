@@ -1,0 +1,1 @@
+SELECT CASE WHEN age >= 66 THEN 'high' WHEN age >= 38 THEN 'mid' ELSE 'low' END AS age_bucket, COUNT(*) AS cnt, AVG(credit_limit) AS avg_credit_limit FROM customers WHERE credit_limit <= 11900 OR age < 58 GROUP BY 1 ORDER BY age_bucket DESC

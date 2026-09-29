@@ -1,0 +1,1 @@
+select id, end_date, status, substring(status, 1, 2) status_prefix, concat_ws('-', plan, status) plan_status_key from subscriptions where not (status = 'CANCELLED' and (customer_id in (3, 26) or status != 'ACTIVE'));

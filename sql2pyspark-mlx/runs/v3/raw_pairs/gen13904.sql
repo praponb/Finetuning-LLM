@@ -1,0 +1,1 @@
+select id, store_id, sale_date, units, revenue, sum(units) over (partition by store_id order by sale_date, id rows between unbounded preceding and current row) as running_units, last_value(revenue) over (partition by store_id order by sale_date desc, id rows between unbounded preceding and unbounded following) as last_revenue from store_sales;

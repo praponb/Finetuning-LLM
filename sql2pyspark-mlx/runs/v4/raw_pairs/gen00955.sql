@@ -1,0 +1,1 @@
+SELECT c.name, t.avg_monthly_fee, t.first_start_date FROM customers c INNER JOIN (SELECT customer_id, AVG(monthly_fee) AS avg_monthly_fee, MIN(start_date) AS first_start_date FROM subscriptions WHERE start_date BETWEEN '2023-07-01' AND '2024-12-01' GROUP BY customer_id) t ON c.id = t.customer_id

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT dept_id, is_remote, SUM(CASE WHEN job_title = 'Designer' THEN 1 ELSE 0 END) AS designer_count FROM employees GROUP BY dept_id, is_remote) AS s WHERE designer_count >= 54 ORDER BY dept_id DESC, designer_count DESC, is_remote LIMIT 5;

@@ -1,0 +1,1 @@
+SELECT accounts.status, accounts.opened_date, customers.age, TRIM(accounts.account_type) AS clean_account_type FROM accounts INNER JOIN customers ON accounts.customer_id = customers.id WHERE customers.credit_limit >= 6000;

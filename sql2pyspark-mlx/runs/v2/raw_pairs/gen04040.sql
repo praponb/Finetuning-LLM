@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, c.country, COUNT(*) AS subscription_count FROM subscriptions s LEFT JOIN customers c ON s.customer_id = c.id GROUP BY MONTH(c.signup_date), c.country ORDER BY country;

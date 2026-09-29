@@ -1,0 +1,1 @@
+SELECT product_id, store_id, MIN(last_restock) AS first_last_restock, COUNT(quantity) AS quantity_count FROM inventory GROUP BY product_id, store_id HAVING COUNT(quantity) >= 1 ORDER BY first_last_restock DESC;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.browser IN ('Safari', 'Firefox') THEN 'group_a' ELSE 'other' END browser_group, SUM(CASE WHEN we.page = '/home' THEN 1 ELSE 0 END) home_count FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id GROUP BY CASE WHEN s.browser IN ('Safari', 'Firefox') THEN 'group_a' ELSE 'other' END

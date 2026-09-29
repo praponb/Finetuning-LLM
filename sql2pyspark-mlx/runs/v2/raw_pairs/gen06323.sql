@@ -1,0 +1,1 @@
+select sessions.id, sessions.device from sessions where sessions.started_at < '2023-03-04' and not exists (select 1 from web_events where web_events.session_id = sessions.id and web_events.event_time < '2024-11-21');

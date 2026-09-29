@@ -1,0 +1,1 @@
+WITH recent_order_items AS (SELECT * FROM order_items WHERE unit_price < 370 AND quantity < 7 AND quantity BETWEEN 3 AND 5), agg AS (SELECT product_id, COUNT(unit_price) AS unit_price_count, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM recent_order_items GROUP BY product_id) SELECT product_id, unit_price_count, unit_price_range FROM agg WHERE unit_price_range > 75;

@@ -1,0 +1,1 @@
+SELECT c.credit_limit, o.status, o.discount, CONCAT(c.segment, ' - ', c.name) AS segment_name FROM customers c INNER JOIN orders o ON o.customer_id = c.id WHERE c.is_active ORDER BY discount DESC, segment_name;

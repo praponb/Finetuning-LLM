@@ -1,0 +1,1 @@
+WITH recent_products AS (SELECT * FROM products WHERE SIZE(tags) > 2 AND launch_date < '2024-05-01'), ProductsStats AS (SELECT brand, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list FROM recent_products GROUP BY brand) SELECT * FROM ProductsStats ORDER BY brand DESC;

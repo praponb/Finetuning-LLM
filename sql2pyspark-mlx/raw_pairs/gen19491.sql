@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, COUNT(DISTINCT salary) AS unique_job_titles FROM employees GROUP BY dept_id) SELECT departments.id, departments.budget, department_summary.unique_job_titles FROM departments LEFT JOIN department_summary ON departments.id = department_summary.dept_id ORDER BY budget DESC

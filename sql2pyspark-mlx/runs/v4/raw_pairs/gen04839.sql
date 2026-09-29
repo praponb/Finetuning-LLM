@@ -1,0 +1,1 @@
+WITH metrics AS (SELECT id, dept_name, location, budget, NTILE(4) OVER (ORDER BY budget DESC, id) AS budget_bucket, AVG(budget) OVER (PARTITION BY location ORDER BY budget, id ROWS BETWEEN 2 PRECEDING AND 1 PRECEDING) AS budget_avg_2_prior FROM departments) SELECT id, dept_name, location, budget, budget_avg_2_prior FROM metrics ORDER BY budget DESC NULLS FIRST

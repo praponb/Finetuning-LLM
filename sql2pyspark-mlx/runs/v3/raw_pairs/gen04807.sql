@@ -1,0 +1,1 @@
+select oi.id, oi.unit_price, o.discount, o.order_date, p.price, p.stock_qty from order_items oi left outer join orders o on o.id = oi.order_id join products p on oi.product_id = p.id where oi.quantity > 5

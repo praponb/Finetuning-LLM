@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('YEAR', shipped_date) AS year_start, SUM(CASE WHEN carrier = 'Flash' THEN cost ELSE 0 END) AS flash_cost, APPROX_PERCENTILE(cost, 0.9) AS cost_p90 FROM shipments GROUP BY DATE_TRUNC('YEAR', shipped_date) ORDER BY cost_p90 DESC;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 248 THEN 'PREMIUM' ELSE 'STANDARD' END AS quantity_tier, MAX(quantity) AS max_quantity, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY 1 HAVING ROUND(AVG(quantity), 2) > 0 ORDER BY quantity_tier;

@@ -1,0 +1,1 @@
+select session_id, event_type, round(stddev(duration_sec), 2) as stddev_duration_sec, sum(case when event_type = 'page_view' then 1 else 0 end) as page_view_count, count(duration_sec) as duration_sec_count from web_events group by session_id, event_type having count(duration_sec) > 5 order by page_view_count desc;

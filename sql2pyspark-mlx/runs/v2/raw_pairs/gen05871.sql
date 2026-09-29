@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT id, city, rating, country, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS row_num FROM suppliers) SELECT id, city, rating, country FROM Numbered WHERE row_num = 1

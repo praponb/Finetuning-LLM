@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATE_FORMAT(event_time, 'MMM yyyy') AS event_time_label, COALESCE(page, 'OTHER') AS page_filled FROM web_events WHERE page IS NOT NULL AND page IS DISTINCT FROM '/cart') SELECT id, session_id, duration_sec, event_time_label FROM filtered QUALIFY RANK() OVER (PARTITION BY session_id ORDER BY event_time DESC) = 1

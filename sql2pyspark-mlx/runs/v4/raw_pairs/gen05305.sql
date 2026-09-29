@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, order_id, shipped_date, cost, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY shipped_date, id) AS rnk FROM shipments WHERE carrier IS NOT NULL) SELECT * FROM numbered WHERE rnk = 1 ORDER BY id;

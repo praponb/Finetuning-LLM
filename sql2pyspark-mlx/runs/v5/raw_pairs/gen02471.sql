@@ -1,0 +1,1 @@
+select id, end_date, monthly_fee, status, lag(monthly_fee, 2) over (order by end_date, id) as prev_monthly_fee, max(monthly_fee) over (partition by status) as status_max_monthly_fee from subscriptions;

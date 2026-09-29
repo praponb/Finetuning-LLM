@@ -1,0 +1,1 @@
+SELECT id, cost, delivered_date, status, INITCAP(TRIM(carrier)) AS carrier_title FROM shipments WHERE (carrier NOT IN ('Flash', 'FedEx') AND cost > 35) OR delivered_date <= '2023-06-02' ORDER BY cost DESC, delivered_date

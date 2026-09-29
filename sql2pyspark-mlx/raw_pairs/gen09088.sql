@@ -1,0 +1,1 @@
+SELECT sessions.id, COUNT(web_events.id) AS web_event_count, ROUND(AVG(web_events.duration_sec), 2) AS avg_duration_sec FROM sessions JOIN web_events ON web_events.session_id = sessions.id GROUP BY sessions.id ORDER BY avg_duration_sec ASC, id ASC LIMIT 5;

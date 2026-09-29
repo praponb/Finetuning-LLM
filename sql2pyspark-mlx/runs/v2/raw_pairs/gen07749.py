@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("product_id").orderBy("quantity")
+
+result = (
+    df_order_items
+    .select("id", "product_id", "quantity", F.rank().over(w).alias("rn"))
+    .filter(F.col("rn") <= 2)
+    .select("id", "product_id", "quantity")
+    .orderBy(F.col("id").desc())
+)

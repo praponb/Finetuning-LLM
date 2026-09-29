@@ -1,0 +1,1 @@
+SELECT DISTINCT city FROM suppliers WHERE rating BETWEEN 1.9 AND 3.5;

@@ -1,0 +1,1 @@
+select s.id, s.region, s.opened_date from stores s where s.opened_date > '2024-06-27' and exists (select 1 from inventory i where i.store_id = s.id and year(i.last_restock) = 2024) order by s.id desc;

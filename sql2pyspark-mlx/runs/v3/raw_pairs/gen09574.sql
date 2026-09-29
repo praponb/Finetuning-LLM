@@ -1,0 +1,1 @@
+SELECT YEAR(paid_at) AS paid_year, method, status, ROUND(AVG(amount), 2) AS avg_amount, MIN(paid_at) AS min_paid_at FROM payments WHERE order_id IS NOT NULL GROUP BY paid_year, method, status HAVING avg_amount >= 35

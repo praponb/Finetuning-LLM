@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, a.balance, a.status FROM accounts a WHERE a.customer_id IS NULL AND a.customer_id NOT IN (SELECT id FROM customers WHERE email LIKE '%@gmail.com') ORDER BY id DESC, status

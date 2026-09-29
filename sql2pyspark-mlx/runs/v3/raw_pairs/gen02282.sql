@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, LENGTH(product_name) product_name_length FROM products WHERE launch_date > '2023-07-29'), agg AS (SELECT brand, MAX(price) - MIN(price) price_range FROM src GROUP BY brand) SELECT brand, price_range FROM agg WHERE price_range > 21 ORDER BY brand, price_range

@@ -1,0 +1,1 @@
+SELECT id, status, shipping_fee FROM (SELECT id, status, shipping_fee, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipping_fee DESC, id) AS row_num FROM orders) AS t WHERE row_num <= 1 ORDER BY id DESC;

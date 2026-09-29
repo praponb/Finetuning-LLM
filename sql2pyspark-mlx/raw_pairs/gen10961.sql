@@ -1,0 +1,1 @@
+SELECT s.supplier_name, s.country, t.unique_brands, t.avg_cost FROM suppliers s JOIN (SELECT supplier_id, COUNT(DISTINCT price) AS unique_brands, ROUND(AVG(cost), 2) AS avg_cost FROM products WHERE ARRAY_CONTAINS(tags, 'new') GROUP BY supplier_id) t ON s.id = t.supplier_id

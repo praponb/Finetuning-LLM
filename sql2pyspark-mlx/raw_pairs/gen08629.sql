@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, ROUND((100 * SUM(CASE WHEN region = 'West' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_west FROM stores WHERE city = 'New York' AND sqft BETWEEN 5870 AND 11276 AND sqft BETWEEN 5039 AND 5814 GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM') ORDER BY pct_west DESC, opened_month DESC;

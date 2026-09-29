@@ -1,0 +1,1 @@
+with src as (select * from transactions where is_flagged), IsFlaggedSummary as (select is_flagged, merchant, sum(amount) as total_amount from src group by is_flagged, merchant) select is_flagged, merchant, total_amount from IsFlaggedSummary order by total_amount desc

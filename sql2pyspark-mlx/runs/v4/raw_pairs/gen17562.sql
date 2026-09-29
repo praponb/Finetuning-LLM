@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, MIN(txn_time) AS min_txn_time, MIN(amount) AS min_amount FROM transactions WHERE account_id = 30 GROUP BY account_id) SELECT accounts.opened_date, account_summary.min_txn_time, account_summary.min_amount FROM accounts INNER JOIN account_summary ON accounts.id = account_summary.account_id;

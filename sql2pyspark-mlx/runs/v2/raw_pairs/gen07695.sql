@@ -1,0 +1,1 @@
+SELECT s.id, s.started_at, s.device, s.country, c.is_active, IF(c.is_active, 'Yes', 'No') AS is_active_label FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE HOUR(s.started_at) BETWEEN 9 AND 14 AND c.country = 'DE'

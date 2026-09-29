@@ -1,0 +1,1 @@
+SELECT id, status, order_id, cost, NTILE(4) OVER (PARTITION BY status, order_id ORDER BY cost DESC, id) AS cost_ntile FROM shipments WHERE MONTH(delivered_date) IN (6, 10, 11) ORDER BY cost, order_id;

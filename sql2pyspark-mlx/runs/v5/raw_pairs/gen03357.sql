@@ -1,0 +1,1 @@
+select paid_quarter, status, stddev_amount from (select quarter(paid_at) as paid_quarter, status, round(stddev(amount), 2) as stddev_amount from payments where amount between 1030 and 1120 group by quarter(paid_at), status) as agg where stddev_amount >= 33

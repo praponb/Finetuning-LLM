@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(start_date) AS start_month, status, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM subscriptions GROUP BY MONTH(start_date), status) AS agg WHERE monthly_fee_range > 36 ORDER BY status ASC, start_month ASC LIMIT 5;

@@ -1,0 +1,1 @@
+WITH with_windows AS (SELECT id, product_id, AVG(quantity) OVER (PARTITION BY store_id ORDER BY quantity, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS quantity_avg_6, NTILE(3) OVER w_recent AS quantity_bucket FROM inventory WINDOW w_recent AS (PARTITION BY YEAR(last_restock) ORDER BY quantity, id)) SELECT id, product_id, quantity_avg_6, quantity_bucket FROM with_windows;

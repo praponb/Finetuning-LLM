@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, DATEDIFF(CURRENT_DATE(), sale_date) days_since_sale_date FROM store_sales WHERE product_id IN (7, 8, 9)) SELECT a.id, a.store_id, a.product_id, a.sale_date, a.units, a.days_since_sale_date, p.product_name FROM base a LEFT JOIN products p ON a.product_id = p.id WHERE ARRAY_CONTAINS(p.tags, 'sale');

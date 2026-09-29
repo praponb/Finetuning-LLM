@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM stores s WHERE NOT EXISTS (SELECT 1 FROM store_sales ch WHERE ch.store_id = s.id AND ch.sale_date < s.opened_date)) SELECT id, store_name, city, region, opened_date, sqft FROM not_flagged ORDER BY region DESC;

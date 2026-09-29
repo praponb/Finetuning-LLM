@@ -1,0 +1,1 @@
+select id, product_id, units from (select *, row_number() over (partition by product_id order by units desc, id) as row_num from store_sales where revenue between 3000 and 3300) as t where row_num <= 3 order by id, units;

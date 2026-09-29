@@ -1,0 +1,1 @@
+SELECT o.id, o.status, o.amount, c.name, c.signup_date, s.opened_date FROM orders o INNER JOIN customers c ON o.customer_id = c.id LEFT JOIN stores s ON s.id = o.store_id WHERE c.country = 'TH' ORDER BY s.opened_date

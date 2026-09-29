@@ -1,0 +1,1 @@
+SELECT store_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, MAX(last_restock) AS last_last_restock, MAX(last_restock) AS latest_last_restock FROM inventory GROUP BY store_id ORDER BY stddev_quantity DESC, store_id LIMIT 5

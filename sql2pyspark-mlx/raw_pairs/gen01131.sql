@@ -1,0 +1,1 @@
+SELECT id, sale_date, revenue, store_id, units, ROUND(AVG(revenue) OVER (ORDER BY sale_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS revenue_moving_avg_7, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY units DESC, id) AS units_row FROM store_sales WHERE units > 29

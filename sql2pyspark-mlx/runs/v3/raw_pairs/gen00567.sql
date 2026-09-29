@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, manager_id, hire_date, RANK() OVER (PARTITION BY manager_id ORDER BY hire_date DESC) rnk FROM employees WHERE LENGTH(email) >= 7) SELECT id, manager_id, hire_date FROM numbered WHERE rnk = 1 ORDER BY manager_id DESC

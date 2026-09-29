@@ -1,0 +1,1 @@
+SELECT id, store_id, last_restock, quantity, LEAD(quantity, 1) OVER (PARTITION BY store_id ORDER BY last_restock, id) AS next_quantity, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY last_restock) AS last_restock_dense_rank FROM inventory;

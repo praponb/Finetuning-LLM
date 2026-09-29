@@ -1,0 +1,1 @@
+SELECT we.session_id, s.country, c.email, c.city FROM web_events we INNER JOIN sessions s ON s.id = we.session_id INNER JOIN customers c ON c.id = s.customer_id WHERE TO_DATE(s.started_at) < '2025-10-02' AND we.page IN ('/checkout', '/product') ORDER BY city DESC

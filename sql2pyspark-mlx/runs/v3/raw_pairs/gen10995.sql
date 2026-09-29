@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, job_title, salary FROM employees) PIVOT (COUNT(salary) FOR job_title IN ('Analyst', 'Designer', 'Intern', 'Engineer')) ORDER BY hire_month;

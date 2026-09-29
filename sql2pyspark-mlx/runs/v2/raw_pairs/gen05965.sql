@@ -1,0 +1,1 @@
+WITH StoreTotals AS (SELECT store_id, ROUND((100 * SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_completed, COUNT(*) AS row_count FROM orders GROUP BY store_id) SELECT s.sqft, s.region, S.pct_completed, S.row_count FROM stores s INNER JOIN StoreTotals S ON s.id = S.store_id WHERE S.pct_completed > 61 ORDER BY sqft DESC;

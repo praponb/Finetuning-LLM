@@ -1,0 +1,1 @@
+SELECT suppliers.id, suppliers.supplier_name, suppliers.country, suppliers.rating FROM suppliers WHERE suppliers.rating > 2.9 AND suppliers.id IN (SELECT supplier_id FROM products WHERE price IS NOT NULL) ORDER BY rating DESC;

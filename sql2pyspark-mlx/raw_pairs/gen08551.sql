@@ -1,0 +1,1 @@
+SELECT id, order_id, paid_at, PERCENT_RANK() OVER (PARTITION BY order_id ORDER BY paid_at) AS paid_at_pct_rank FROM payments WHERE status IN ('REFUNDED', 'FAILED', 'SUCCESS') ORDER BY 4 DESC, paid_at;

@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, p.cost, s.region, s.store_name FROM inventory i LEFT JOIN products p ON i.product_id = p.id INNER JOIN stores s ON s.id = i.store_id WHERE p.price > 760 OR UPPER(TRIM(s.store_name)) = 'DOWNTOWN EXPRESS' ORDER BY store_name, region DESC;

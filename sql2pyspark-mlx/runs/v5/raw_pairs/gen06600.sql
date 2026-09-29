@@ -1,0 +1,1 @@
+SELECT account_id, DATE_TRUNC('MONTH', txn_time) AS txn_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list, MIN(amount) AS min_amount FROM transactions GROUP BY 1, 2 HAVING min_amount < 3200 ORDER BY merchant_values ASC, account_id ASC, txn_month ASC LIMIT 5;

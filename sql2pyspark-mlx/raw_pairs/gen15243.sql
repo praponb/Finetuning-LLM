@@ -1,0 +1,1 @@
+WITH ValidOrderItems AS (SELECT * FROM order_items WHERE unit_price >= 390), order_items_stats AS (SELECT order_id, MAX(unit_price) AS max_unit_price FROM ValidOrderItems GROUP BY order_id) SELECT order_id, max_unit_price FROM order_items_stats WHERE max_unit_price < 100 ORDER BY order_id DESC, max_unit_price DESC LIMIT 10

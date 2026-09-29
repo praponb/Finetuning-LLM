@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT YEAR(opened_date) AS opened_year, SUM(sqft) AS total_sqft, COUNT(CASE WHEN region = 'Central' THEN 1 END) AS central_count FROM stores WHERE region NOT IN ('West', 'North') GROUP BY YEAR(opened_date)) AS x WHERE total_sqft > 76000 ORDER BY total_sqft DESC;

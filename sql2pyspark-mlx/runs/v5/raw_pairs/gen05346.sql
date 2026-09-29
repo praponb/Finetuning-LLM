@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) opened_month, s.city, AVG(o.shipping_fee) avg_shipping_fee, SUM(CASE WHEN o.channel = 'web' THEN o.amount ELSE 0 END) web_amount FROM orders o RIGHT JOIN stores s ON o.store_id = s.id GROUP BY DATE_TRUNC('MONTH', s.opened_date), s.city ORDER BY city;

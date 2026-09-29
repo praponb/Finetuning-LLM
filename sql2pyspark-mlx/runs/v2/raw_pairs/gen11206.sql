@@ -1,0 +1,1 @@
+SELECT *, COALESCE(unit_price, 0) AS unit_price_filled, CASE WHEN unit_price >= 400 THEN 'High' WHEN unit_price >= 180 THEN 'Medium' ELSE 'Low' END AS unit_price_tier FROM order_items WHERE quantity BETWEEN 6 AND 7;

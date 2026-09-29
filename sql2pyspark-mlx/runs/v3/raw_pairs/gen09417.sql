@@ -1,0 +1,1 @@
+SELECT QUARTER(launch_date) AS launch_quarter, SUM(stock_qty) AS total_stock_qty, COUNT(CASE WHEN brand = 'Initech' THEN 1 END) AS initech_count FROM products WHERE brand NOT IN ('Globex', 'Stark') OR launch_date BETWEEN '2024-08-13' AND '2025-03-01' GROUP BY QUARTER(launch_date)

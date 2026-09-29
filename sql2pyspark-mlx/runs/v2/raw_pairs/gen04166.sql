@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(s.id) AS shipment_count, MAX(s.delivered_date) AS latest_delivered_date FROM orders o LEFT JOIN shipments s ON o.id = s.order_id GROUP BY o.channel ORDER BY channel, latest_delivered_date LIMIT 10;

@@ -1,0 +1,1 @@
+select product_id, date_trunc('MONTH', sale_date) as sale_month, max(revenue) as max_revenue, count(units) as units_count from store_sales group by 1, 2 order by max_revenue, product_id, sale_month limit 3

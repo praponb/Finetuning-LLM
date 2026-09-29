@@ -1,0 +1,1 @@
+SELECT city, DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, ROUND(AVG(sqft), 2) avg_sqft, ROUND(STDDEV(sqft), 2) stddev_sqft FROM stores WHERE region IN ('North', 'South') AND city = 'London' GROUP BY city, DATE_FORMAT(opened_date, 'yyyy-MM') HAVING ROUND(STDDEV(sqft), 2) >= 72

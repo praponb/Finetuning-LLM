@@ -1,0 +1,1 @@
+with flattened as (select id, service, log_ts, status_code, k, value from app_logs lateral view outer explode(context) e as k, value) select id, service, status_code, k, value, case when k rlike '^(trace|region)$' then 'CORE' when k rlike '^(version)$' then 'EXTENDED' else 'GROUP_A' end as k_zone from flattened order by id asc, status_code desc;

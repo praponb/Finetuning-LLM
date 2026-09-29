@@ -1,0 +1,1 @@
+SELECT txn_type, is_flagged, ROUND((100 * SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_starbucks FROM transactions GROUP BY 1, 2 ORDER BY txn_type ASC, is_flagged ASC LIMIT 3;

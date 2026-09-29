@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, store_name, city, region, opened_date, sqft, COALESCE(sqft, 0) AS sqft_filled FROM stores WHERE opened_date > DATE '2023-07-15' AND region = 'North') SELECT s.* FROM cleaned s WHERE NOT EXISTS (SELECT 1 FROM orders ch WHERE ch.store_id = s.id AND ch.order_date <= s.opened_date);

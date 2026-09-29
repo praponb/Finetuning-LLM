@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment, country ORDER BY credit_limit DESC NULLS FIRST, id) AS row_num FROM customers) x WHERE row_num = 1) SELECT id, name, email, country, segment, signup_date, is_active, credit_limit FROM ranked ORDER BY signup_date, country;

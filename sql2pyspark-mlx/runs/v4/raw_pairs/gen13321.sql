@@ -1,0 +1,1 @@
+SELECT id, created_at, coupon_codes, ship_to, ship_to.zip AS ship_zip, COALESCE(ship_to.zip, 'UNKNOWN') AS zip_or_unknown, attributes['utm_source'] AS utm_source, COALESCE(attributes['device'], 'none') AS device_or_default, FORALL(items, i -> i.qty <= 5) AS all_small_qty FROM carts

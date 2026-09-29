@@ -1,0 +1,1 @@
+SELECT emp.id, emp.job_title employee_job_title, emp.level employee_level, emp.email employee_email, mgr.hire_date manager_hire_date, mgr.is_remote manager_is_remote, mgr.salary manager_salary, CASE WHEN emp.is_remote THEN 'Yes' ELSE 'No' END is_remote_label FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.manager_id = 37 ORDER BY employee_level

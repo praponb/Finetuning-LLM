@@ -1,0 +1,1 @@
+SELECT order_items.product_id, order_items.unit_price, orders.customer_id, orders.status, customers.is_active, customers.credit_limit FROM order_items FULL OUTER JOIN orders ON orders.id = order_items.order_id LEFT JOIN customers ON customers.id = orders.customer_id WHERE customers.segment = 'Consumer';

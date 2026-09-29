@@ -1,0 +1,1 @@
+select s.browser, count(we.id) as web_event_count, max(we.event_time) as latest_event_time, round((100 * sum(case when we.page = '/home' then 1 else 0 end)) / count(*), 1) as pct_home from sessions s left join web_events we on s.id = we.session_id group by s.browser order by web_event_count desc;

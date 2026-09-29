@@ -1,0 +1,1 @@
+SELECT s.country, SUM(ss.units) total_units, ROUND(STDDEV(ss.units), 2) stddev_units FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY s.country ORDER BY stddev_units DESC, country LIMIT 5;

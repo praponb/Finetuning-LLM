@@ -1,0 +1,1 @@
+WITH recent_shipments AS (SELECT * FROM shipments WHERE cost BETWEEN 75 AND 76 AND shipped_date <= '2024-12-13'), summary AS (SELECT status, COUNT(DISTINCT cost) AS unique_carriers, SUM(cost) AS total_cost FROM recent_shipments GROUP BY status) SELECT status, unique_carriers, total_cost FROM summary WHERE unique_carriers < 9 ORDER BY total_cost, status LIMIT 1

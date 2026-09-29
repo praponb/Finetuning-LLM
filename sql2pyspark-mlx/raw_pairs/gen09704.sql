@@ -1,0 +1,1 @@
+SELECT order_id, product_id, SUM(unit_price) AS total_unit_price, COUNT(quantity) AS quantity_count FROM order_items GROUP BY order_id, product_id ORDER BY quantity_count DESC, product_id DESC, order_id LIMIT 50

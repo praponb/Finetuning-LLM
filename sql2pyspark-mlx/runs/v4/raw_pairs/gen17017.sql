@@ -1,0 +1,1 @@
+select id, order_id, unit_price, quantity from (select id, order_id, unit_price, quantity, row_number() over (partition by order_id order by unit_price desc, id) as rn from order_items where product_id in (2, 17)) as ranked where rn <= 1 order by id desc

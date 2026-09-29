@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.units, ss.revenue, s.city, s.sqft, LAST_DAY(ss.sale_date) AS sale_date_month_end FROM store_sales ss LEFT OUTER JOIN stores s ON ss.store_id = s.id WHERE s.city NOT IN ('Bangkok', 'Singapore') ORDER BY revenue DESC;

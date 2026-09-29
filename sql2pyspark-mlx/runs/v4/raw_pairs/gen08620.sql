@@ -1,0 +1,1 @@
+SELECT status, ROUND((100 * SUM(CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_checking FROM accounts WHERE balance <= 48000 AND account_type = 'SAVINGS' GROUP BY 1 HAVING ROUND((100 * SUM(CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 67;

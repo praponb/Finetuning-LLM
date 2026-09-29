@@ -1,0 +1,1 @@
+SELECT id, host, payload_json, SHIFTRIGHT(status_code, 2) AS status_code_high, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').retries AS retry_count, ARRAY_CONTAINS(MAP_KEYS(context), 'region') AS has_region, GET_JSON_OBJECT(payload_json, '$.user.id') AS user_id FROM app_logs WHERE host = 'h4';

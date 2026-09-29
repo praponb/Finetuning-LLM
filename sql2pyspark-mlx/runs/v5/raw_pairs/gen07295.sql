@@ -1,0 +1,1 @@
+SELECT status, APPROX_PERCENTILE(cost, ARRAY(0.25, 0.5, 0.75)) AS cost_quartiles, SORT_ARRAY(COLLECT_SET(status)) AS status_list, COUNT(*) FILTER (WHERE carrier = 'Kerry') AS kerry_rows, COUNT(DISTINCT status) AS distinct_status FROM shipments GROUP BY 1 HAVING distinct_status >= 1;

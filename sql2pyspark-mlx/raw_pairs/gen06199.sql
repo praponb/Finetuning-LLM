@@ -1,0 +1,1 @@
+select case when d.location in ('New York', 'Tokyo') then 'core' else 'other' end as location_group, sum(e.salary) as total_salary from employees e join departments d on e.dept_id = d.id group by case when d.location in ('New York', 'Tokyo') then 'core' else 'other' end having sum(e.salary) >= 475000 order by location_group desc limit 5

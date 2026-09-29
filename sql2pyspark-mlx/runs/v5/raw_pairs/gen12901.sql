@@ -1,0 +1,1 @@
+select d.budget, d.location, t.l4_salary, t.avg_salary from departments d inner join (select dept_id, sum(case when level = 'L4' then salary else 0 end) as l4_salary, avg(salary) as avg_salary from employees group by dept_id) t on d.id = t.dept_id order by t.avg_salary desc

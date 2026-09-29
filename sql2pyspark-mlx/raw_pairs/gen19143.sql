@@ -1,0 +1,1 @@
+select ss.store_id, min(i.quantity) as min_quantity from inventory i inner join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.product_id = 5 group by ss.store_id;

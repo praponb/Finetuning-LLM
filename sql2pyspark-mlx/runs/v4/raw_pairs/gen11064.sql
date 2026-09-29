@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, coupon_codes, pos, item.product_id, item.promo FROM carts LATERAL VIEW POSEXPLODE(items) li AS pos, item) SELECT id, pos, product_id, promo FROM lines ORDER BY product_id NULLS FIRST, id

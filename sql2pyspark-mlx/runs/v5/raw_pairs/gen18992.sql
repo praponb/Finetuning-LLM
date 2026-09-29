@@ -1,0 +1,1 @@
+SELECT CASE WHEN region IN ('North', 'East') THEN 'group_a' ELSE 'other' END AS region_group, MIN(sqft) AS min_sqft, COUNT(sqft) AS sqft_count, SUM(CASE WHEN region = 'West' THEN sqft ELSE 0 END) AS west_sqft FROM stores WHERE region = 'South' GROUP BY CASE WHEN region IN ('North', 'East') THEN 'group_a' ELSE 'other' END;

@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT * FROM transactions WHERE is_flagged = TRUE), transactions_stats AS (SELECT is_flagged, COUNT(*) AS total_count FROM valid_transactions GROUP BY is_flagged) SELECT is_flagged, total_count FROM transactions_stats WHERE total_count >= 5 ORDER BY total_count DESC, is_flagged LIMIT 10

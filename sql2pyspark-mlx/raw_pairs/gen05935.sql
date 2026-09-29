@@ -1,0 +1,1 @@
+SELECT c.city, COUNT(*) AS cnt FROM transactions t LEFT OUTER JOIN accounts a ON t.account_id = a.id LEFT OUTER JOIN customers c ON a.customer_id = c.id WHERE TO_DATE(t.txn_time) < '2024-08-01' GROUP BY c.city;

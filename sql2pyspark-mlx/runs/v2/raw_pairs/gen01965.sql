@@ -1,0 +1,1 @@
+SELECT YEAR(p.launch_date) launch_year, AVG(oi.quantity) avg_quantity FROM order_items oi INNER JOIN products p ON oi.product_id = p.id GROUP BY YEAR(p.launch_date) HAVING AVG(oi.quantity) >= 7.3 ORDER BY launch_year LIMIT 10

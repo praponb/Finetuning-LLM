@@ -1,0 +1,1 @@
+SELECT s.browser, s.customer_id, t.page_list FROM sessions s INNER JOIN (SELECT session_id, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events WHERE event_type IN ('click', 'purchase', 'add_to_cart') GROUP BY session_id) t ON s.id = t.session_id;

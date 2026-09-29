@@ -1,0 +1,1 @@
+SELECT level, CASE WHEN job_title IN ('Director', 'Analyst') THEN 'priority' ELSE 'other' END AS job_title_group, COUNT(*) AS employee_count, MAX(hire_date) AS last_hire_date, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE manager_id = 34 AND email LIKE '%@company.co' GROUP BY level, CASE WHEN job_title IN ('Director', 'Analyst') THEN 'priority' ELSE 'other' END

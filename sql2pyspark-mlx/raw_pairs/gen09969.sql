@@ -1,0 +1,1 @@
+SELECT monthly_fee, TRIM(plan) AS clean_plan, DATEDIFF(CURRENT_DATE(), end_date) / 365.25 AS years_since_end_date FROM subscriptions WHERE NOT (monthly_fee > 100 AND status NOT IN ('EXPIRED', 'ACTIVE')) ORDER BY clean_plan

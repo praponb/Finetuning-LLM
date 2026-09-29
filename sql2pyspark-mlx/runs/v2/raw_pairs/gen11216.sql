@@ -1,0 +1,1 @@
+SELECT p.brand, t.quantity_range, t.quantity_count FROM products p JOIN (SELECT product_id, MAX(quantity) - MIN(quantity) quantity_range, COUNT(quantity) quantity_count FROM inventory GROUP BY product_id) t ON p.id = t.product_id;

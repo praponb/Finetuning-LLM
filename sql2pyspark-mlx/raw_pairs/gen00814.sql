@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', last_restock) AS last_restock_month, MIN(quantity) AS min_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory GROUP BY DATE_TRUNC('MONTH', last_restock)) AS x WHERE quantity_range >= 25

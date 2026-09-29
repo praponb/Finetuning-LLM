@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, s.city, COUNT(*) AS inventory_count FROM inventory i RIGHT OUTER JOIN stores s ON i.store_id = s.id GROUP BY DATE_TRUNC('MONTH', s.opened_date), s.city ORDER BY opened_month;

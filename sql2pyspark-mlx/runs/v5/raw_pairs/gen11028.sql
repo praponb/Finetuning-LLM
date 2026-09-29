@@ -1,0 +1,1 @@
+SELECT QUARTER(customers.signup_date) AS signup_quarter, SORT_ARRAY(COLLECT_SET(orders.channel)) AS channel_list, MAX(orders.discount) AS max_discount FROM orders INNER JOIN stores ON stores.id = orders.store_id INNER JOIN customers ON orders.customer_id = customers.id WHERE customers.name LIKE '%Kim%' GROUP BY QUARTER(customers.signup_date) ORDER BY max_discount DESC;

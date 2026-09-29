@@ -1,0 +1,1 @@
+SELECT dept_name, MIN(budget) AS min_budget, ROUND(STDDEV(budget), 2) AS stddev_budget, SUM(CASE WHEN dept_name = 'Legal' THEN 1 ELSE 0 END) AS legal_count FROM departments WHERE budget < 1583000 AND dept_name IN ('Engineering', 'Finance') AND location = 'Chiang Mai' GROUP BY dept_name HAVING legal_count < 64 ORDER BY dept_name DESC

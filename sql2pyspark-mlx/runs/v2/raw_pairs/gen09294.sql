@@ -1,0 +1,1 @@
+select sessions.id, sessions.started_at, sessions.device from sessions where sessions.started_at < '2025-08-01' and exists (select 1 from web_events where web_events.session_id = sessions.id and web_events.session_id in (2, 5, 18)) order by sessions.device desc

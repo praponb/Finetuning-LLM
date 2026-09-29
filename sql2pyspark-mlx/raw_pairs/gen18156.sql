@@ -1,0 +1,1 @@
+SELECT c.is_active, DATE_TRUNC('MONTH', c.signup_date) AS signup_month, AVG(a.balance) AS avg_balance FROM accounts a RIGHT JOIN customers c ON a.customer_id = c.id WHERE a.opened_date >= '2024-06-01' GROUP BY c.is_active, DATE_TRUNC('MONTH', c.signup_date) HAVING AVG(a.balance) > 22000 ORDER BY 2, is_active LIMIT 5

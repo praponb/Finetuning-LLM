@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM orders s WHERE NOT EXISTS (SELECT 1 FROM payments c WHERE c.order_id = s.id AND c.paid_at <= s.order_date)) SELECT s.id, s.store_id, s.discount, (SELECT MIN(o2.shipping_fee) FROM orders o2 WHERE o2.store_id = s.store_id) AS min_order_shipping_fee FROM not_flagged s ORDER BY id;

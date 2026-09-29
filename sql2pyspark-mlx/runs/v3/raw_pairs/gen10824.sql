@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(rating) AS total_rating, COUNT(*) AS cnt, RANK() OVER (ORDER BY SUM(rating) DESC) AS rating_rank FROM suppliers WHERE rating > 2.9 GROUP BY CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END ORDER BY cnt DESC, rating_bucket;

@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(i.id) AS inventory_count, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM stores s LEFT JOIN inventory i ON s.id = i.store_id WHERE i.product_id IN (4, 5) GROUP BY s.city

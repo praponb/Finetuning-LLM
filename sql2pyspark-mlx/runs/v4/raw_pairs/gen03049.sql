@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fee, MIN(txn_time) AS first_txn_time FROM transactions GROUP BY account_id) SELECT a.id, a.account_type, a.opened_date, as.pct_fee, as.first_txn_time FROM accounts a LEFT JOIN account_stats as ON a.id = as.account_id;

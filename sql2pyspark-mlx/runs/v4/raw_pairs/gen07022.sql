@@ -1,0 +1,1 @@
+SELECT HOUR(event_time) AS event_hour, SUM(duration_sec) AS total_duration_sec, COUNT(*) AS cnt, DENSE_RANK() OVER (ORDER BY SUM(duration_sec) DESC) AS duration_sec_rank FROM web_events WHERE session_id IN (17, 28, 38) GROUP BY HOUR(event_time)

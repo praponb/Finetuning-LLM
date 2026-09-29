@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, category, brand, price, stock_qty, launch_date, supplier_id, COALESCE(product_name, 'N/A') AS product_name_filled FROM products WHERE launch_date > DATE '2023-11-02' AND brand IS NOT NULL) SELECT id, category FROM valid EXCEPT SELECT id, category FROM products WHERE category = 'Grocery';

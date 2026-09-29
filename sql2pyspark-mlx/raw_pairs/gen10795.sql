@@ -1,0 +1,1 @@
+SELECT id, amount, merchant, LAST_VALUE(merchant) OVER (ORDER BY amount DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_merchant FROM transactions WHERE account_id IN (11, 16, 26) ORDER BY merchant, amount DESC;

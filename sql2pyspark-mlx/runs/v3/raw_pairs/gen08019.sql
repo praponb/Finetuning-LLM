@@ -1,0 +1,1 @@
+select we.id, we.session_id, we.page, s.started_at, s.device, s.browser from web_events we join sessions s on we.session_id = s.id where s.started_at < '2023-03-11' order by s.started_at desc, id limit 5;

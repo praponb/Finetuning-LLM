@@ -1,0 +1,1 @@
+select case when rating >= 3.5 then 'high' when rating >= 1.7 then 'mid' else 'low' end as rating_bucket, country, sort_array(collect_set(city)) as city_list, count(distinct rating) as unique_citys from suppliers group by case when rating >= 3.5 then 'high' when rating >= 1.7 then 'mid' else 'low' end, country having sum(case when country = 'SG' then rating else 0 end) < 42;

@@ -1,0 +1,1 @@
+WITH order_items_by_product AS (SELECT product_id, COUNT(*) AS num_order_items, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY product_id) SELECT p.stock_qty, oibp.num_order_items, oibp.unit_price_range FROM products p JOIN order_items_by_product oibp ON p.id = oibp.product_id;

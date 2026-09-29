@@ -1,0 +1,1 @@
+select id, country, city, signup_date, is_active, credit_limit, age, lag(credit_limit) over w_grp as prev_credit_limit, lead(age) over w_grp as next_age, row_number() over w_grp as seq_no from customers window w_grp as (partition by segment order by credit_limit, id)

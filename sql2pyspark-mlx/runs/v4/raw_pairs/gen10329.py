@@ -1,0 +1,15 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("customer_id", "plan").orderBy(F.col("monthly_fee").desc())
+
+result = (
+    df_subscriptions
+    .select(
+        "id",
+        "customer_id",
+        "plan",
+        "monthly_fee",
+        F.rank().over(w).alias("monthly_fee_rank"),
+    )
+)

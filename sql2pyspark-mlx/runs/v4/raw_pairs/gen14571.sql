@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, host, log_ts, status_code, k, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) t AS k, value) SELECT host, STDDEV_SAMP(status_code) AS status_code_stddev, MIN(log_ts) AS started_at FROM exploded GROUP BY 1 ORDER BY status_code_stddev DESC NULLS LAST

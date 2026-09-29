@@ -1,0 +1,1 @@
+SELECT id, product_id, CASE WHEN unit_price >= 380 THEN 'High' WHEN unit_price >= 120 THEN 'Medium' ELSE 'Low' END unit_price_tier, unit_price * quantity line_total FROM order_items WHERE unit_price BETWEEN 230 AND 280 AND quantity BETWEEN 5 AND 8 ORDER BY line_total DESC

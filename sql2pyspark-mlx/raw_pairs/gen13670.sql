@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, country, started_at, RANK() OVER (PARTITION BY country ORDER BY started_at DESC) AS row_num FROM sessions) SELECT id, country, started_at FROM ranked WHERE row_num <= 3 ORDER BY id DESC, country;

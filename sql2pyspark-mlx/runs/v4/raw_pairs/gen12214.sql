@@ -1,0 +1,1 @@
+WITH valid_subscriptions AS (SELECT * FROM subscriptions WHERE plan = 'premium'), agg AS (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM valid_subscriptions GROUP BY customer_id) SELECT customer_id, plan_values FROM agg ORDER BY customer_id, plan_values DESC;

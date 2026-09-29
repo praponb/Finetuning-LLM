@@ -1,0 +1,1 @@
+WITH store_sales_by_product AS (SELECT product_id, MAX(sale_date) AS latest_sale_date, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales WHERE product_id = 8 GROUP BY product_id) SELECT p.price, ssbp.latest_sale_date, ssbp.revenue_range FROM products p LEFT JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id

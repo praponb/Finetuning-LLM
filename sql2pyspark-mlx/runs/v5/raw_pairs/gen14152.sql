@@ -1,0 +1,1 @@
+SELECT level, ROUND(AVG(salary), 2) AS avg_salary, MAX(salary) - MIN(salary) AS salary_range, SUM(CASE WHEN level = 'L5' THEN salary ELSE 0 END) AS l5_salary FROM employees GROUP BY level HAVING salary_range < 63 ORDER BY level

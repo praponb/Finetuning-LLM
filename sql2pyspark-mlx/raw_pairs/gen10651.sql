@@ -1,0 +1,1 @@
+SELECT a.customer_id, a.account_type, a.balance, t.is_flagged, t.merchant FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id WHERE t.is_flagged AND t.merchant = 'Lazada' ORDER BY customer_id DESC

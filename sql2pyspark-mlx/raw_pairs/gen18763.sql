@@ -1,0 +1,1 @@
+WITH ranked_payments AS (SELECT id, method, amount, order_id, RANK() OVER (PARTITION BY method ORDER BY amount DESC) AS rn FROM payments) SELECT id, method, amount, order_id FROM ranked_payments WHERE rn <= 5 ORDER BY 4 DESC, method;

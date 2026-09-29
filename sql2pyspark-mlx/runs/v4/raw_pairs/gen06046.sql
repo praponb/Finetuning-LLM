@@ -1,0 +1,1 @@
+select page, sum(duration_sec) as total_duration_sec, count(*) as cnt, sum(sum(duration_sec)) over (order by page) as cumulative_duration_sec from web_events where duration_sec between 151 and 375 group by page order by page desc;

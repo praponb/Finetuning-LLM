@@ -1,0 +1,1 @@
+with account_stats as (select account_id, max(amount) max_amount from transactions group by account_id) select accounts.status, account_stats.max_amount from accounts join account_stats on accounts.id = account_stats.account_id order by account_stats.max_amount;

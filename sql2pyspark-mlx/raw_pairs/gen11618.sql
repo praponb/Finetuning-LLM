@@ -1,0 +1,1 @@
+select status, month(paid_at) as paid_month, min(paid_at) as first_paid_at, round((100 * sum(case when method = 'cash' then 1 else 0 end)) / count(*), 1) as pct_cash, sum(case when method = 'paypal' then 1 else 0 end) as paypal_count from payments group by status, month(paid_at)

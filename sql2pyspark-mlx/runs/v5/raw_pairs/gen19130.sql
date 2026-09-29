@@ -1,0 +1,1 @@
+SELECT p.id, p.order_id, o.customer_id, c.email, CONCAT(p.method, '/', p.status) method_status FROM payments p INNER JOIN orders o ON p.order_id = o.id LEFT JOIN customers c ON o.customer_id = c.id WHERE c.credit_limit < 14600;

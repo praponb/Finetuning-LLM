@@ -1,0 +1,1 @@
+WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget ASC NULLS LAST, id ASC) AS row_num FROM departments QUALIFY row_num = 1) SELECT id, dept_name, location, budget, CASE WHEN dept_name RLIKE '^(HR|Legal)$' THEN 'GROUP_B' ELSE 'PRIORITY' END AS dept_name_zone FROM latest ORDER BY id ASC NULLS FIRST LIMIT 10

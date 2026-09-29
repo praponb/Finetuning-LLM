@@ -1,0 +1,1 @@
+with filtered_suppliers as (select * from suppliers where rating < 2.5 and rating between 3.5 and 4.1 and country in ('UK', 'JP', 'SG')), summary as (select city, avg(rating) avg_rating from filtered_suppliers group by city) select * from summary where avg_rating >= 2.5;

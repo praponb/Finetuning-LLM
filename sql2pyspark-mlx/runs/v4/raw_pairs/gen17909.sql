@@ -1,0 +1,1 @@
+SELECT id, budget, dept_name, SUBSTRING(dept_name, 1, 2) dept_name_prefix FROM departments WHERE NOT (dept_name <> 'Engineering' AND dept_name IN ('Legal', 'Engineering') AND location NOT IN ('Berlin', 'Tokyo', 'Singapore'));

@@ -1,0 +1,1 @@
+SELECT MONTH(p.launch_date) AS launch_month, SUM(ss.revenue) AS total_revenue, MIN(ss.units) AS min_units FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY MONTH(p.launch_date)

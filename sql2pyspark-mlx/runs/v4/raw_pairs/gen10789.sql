@@ -1,0 +1,1 @@
+WITH FilteredOrders AS (SELECT *, CASE WHEN channel = 'web' THEN 1 ELSE 0 END AS is_web FROM orders WHERE (MONTH(order_date) IN (1, 6, 9) AND amount > 1140) OR shipping_fee > 38), agg AS (SELECT status, MIN(shipping_fee) AS min_shipping_fee FROM FilteredOrders GROUP BY status) SELECT status, min_shipping_fee FROM agg WHERE min_shipping_fee >= 14

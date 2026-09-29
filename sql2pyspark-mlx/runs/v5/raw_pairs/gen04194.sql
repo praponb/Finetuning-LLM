@@ -1,0 +1,1 @@
+with lines as (select id, plan, effective_from, val from price_tiers lateral view explode(tier_limits) li as val) select plan, sort_array(collect_set(plan)) as plan_list, count(*) filter (where plan = 'starter') as starter_rows, avg(val) filter (where plan = 'starter') as starter_avg_val from lines group by plan order by plan desc;

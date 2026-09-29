@@ -1,0 +1,1 @@
+SELECT p.brand, ROUND(AVG(i.quantity), 2) AS avg_quantity, MIN(i.last_restock) AS first_last_restock FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT OUTER JOIN stores s ON s.id = i.store_id WHERE p.category = 'Books' GROUP BY p.brand ORDER BY p.brand DESC LIMIT 10;

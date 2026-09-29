@@ -1,0 +1,1 @@
+SELECT id, amount, paid_at, ROUND(amount, 0) AS amount_rounded, DATEDIFF(CURRENT_DATE(), paid_at) AS days_since_paid_at FROM payments WHERE paid_at >= '2023-10-23' AND order_id = 11 AND paid_at < '2025-10-03'

@@ -1,0 +1,1 @@
+SELECT p.category, p.brand, COUNT(*) AS num_rows, SUM(e.quantity) AS total_quantity FROM order_items e INNER JOIN products p ON e.product_id = p.id GROUP BY ROLLUP (p.category, p.brand) ORDER BY num_rows DESC NULLS FIRST;

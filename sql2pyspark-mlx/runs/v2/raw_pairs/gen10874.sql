@@ -1,0 +1,1 @@
+SELECT order_id, carrier, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, MAX(cost) - MIN(cost) AS cost_range FROM shipments WHERE order_id IS NULL OR cost > 80 GROUP BY order_id, carrier HAVING MAX(cost) - MIN(cost) > 59

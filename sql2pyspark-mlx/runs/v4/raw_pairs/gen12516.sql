@@ -1,0 +1,1 @@
+select date_trunc('year', sale_date) as year_start, count(distinct id) as distinct_ids, stddev_samp(units) as units_stddev, stddev_samp(units) as units_stddev_2, count(distinct product_id) as distinct_product_ids from store_sales group by rollup (date_trunc('year', sale_date)) having distinct_ids >= 1 order by units_stddev asc nulls first

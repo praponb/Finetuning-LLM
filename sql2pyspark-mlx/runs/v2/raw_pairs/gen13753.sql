@@ -1,0 +1,1 @@
+SELECT stores.id, stores.city, COUNT(inventory.id) AS inventory_count, MAX(inventory.quantity) AS max_quantity FROM stores LEFT JOIN inventory ON inventory.store_id = stores.id WHERE inventory.store_id IN (2, 3, 5, 6) GROUP BY stores.id, stores.city

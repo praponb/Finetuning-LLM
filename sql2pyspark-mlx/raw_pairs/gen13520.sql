@@ -1,0 +1,1 @@
+SELECT id, shipped_date, carrier, cost, LAST_DAY(delivered_date) AS delivered_date_month_end, ROUND(DATEDIFF(shipped_date, delivered_date) / 30, 1) AS months_delivered_date_to_shipped_date FROM shipments WHERE carrier = 'FedEx' OR shipped_date > '2023-10-01';

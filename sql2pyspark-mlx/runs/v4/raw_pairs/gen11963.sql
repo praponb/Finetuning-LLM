@@ -1,0 +1,1 @@
+WITH ranked_employees AS (SELECT *, DENSE_RANK() OVER (PARTITION BY job_title ORDER BY salary) AS pos FROM employees WHERE UPPER(email) LIKE '%RAC%') SELECT id, job_title, salary FROM ranked_employees WHERE pos <= 5

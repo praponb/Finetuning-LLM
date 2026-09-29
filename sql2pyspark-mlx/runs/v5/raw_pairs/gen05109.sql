@@ -1,0 +1,1 @@
+with recent_departments as (select *, cast(budget as int) as budget_int from departments where dept_name = 'Finance'), DepartmentsStats as (select location, min(budget) as min_budget from recent_departments group by location) select * from DepartmentsStats order by min_budget;

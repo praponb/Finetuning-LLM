@@ -1,0 +1,1 @@
+select a.status, t.txn_type_list, t.stddev_amount from accounts a inner join (select account_id, sort_array(collect_set(txn_type)) as txn_type_list, round(stddev(amount), 2) as stddev_amount from transactions where is_flagged group by account_id) t on a.id = t.account_id order by stddev_amount desc

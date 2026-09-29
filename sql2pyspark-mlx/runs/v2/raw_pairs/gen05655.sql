@@ -1,0 +1,1 @@
+SELECT DISTINCT region, city FROM stores ORDER BY 1 DESC, city ASC LIMIT 50

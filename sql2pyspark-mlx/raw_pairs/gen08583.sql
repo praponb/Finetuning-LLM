@@ -1,0 +1,1 @@
+SELECT id, status, paid_at, amount, ROUND(AVG(amount) OVER (PARTITION BY status ORDER BY paid_at, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_3 FROM payments WHERE order_id IS NULL

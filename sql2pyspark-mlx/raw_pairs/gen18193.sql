@@ -1,0 +1,1 @@
+WITH valid_stores AS (SELECT * FROM stores WHERE sqft >= 4544 AND store_name LIKE 'Ol%' AND city NOT IN ('Tokyo', 'Bangkok')), summary AS (SELECT city, MIN(opened_date) AS min_opened_date FROM valid_stores GROUP BY city) SELECT city, min_opened_date FROM summary ORDER BY city DESC
