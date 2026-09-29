@@ -1,0 +1,22 @@
+# systemd unit for the Streamlit app on an Ubuntu server (as on 192.168.1.49 after deploy/setup_server.sh).
+# Install: sudo cp deploy/sql2pyspark.service /etc/systemd/system/ && sudo systemctl daemon-reload
+#          && sudo systemctl enable --now sql2pyspark
+# The model is served by a native Ollama (ollama.service) on localhost:11434, the app's default OLLAMA_URL.
+[Unit]
+Description=SQL to PySpark Streamlit Web App
+After=network.target ollama.service
+
+[Service]
+Type=simple
+User=prapon
+WorkingDirectory=/home/prapon/Finetuning-LLM
+ExecStart=/home/prapon/web-env/bin/streamlit run app.py --server.port 8501 --server.address 0.0.0.0 --server.headless true
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+# Keeps the Kimi K3 repair OFF on a public site (an empty value wins over .env). Delete this line to enable it,
+# but only once a login (e.g. Cloudflare Access) protects the site.
+Environment=KIMI_API_KEY=
+
+[Install]
+WantedBy=multi-user.target

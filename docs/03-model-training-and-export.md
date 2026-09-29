@@ -249,7 +249,7 @@ Current tags:
 | `sql2pyspark:v2` | `fb27933c2519` | previous model; rollback: `ollama cp sql2pyspark:v2 sql2pyspark:latest` |
 | `sql2pyspark:v1` | `3dd2beaef9ff` | template-based v1 |
 
-`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v7** weights (last completed export); Ollama keeps its own copy of every tag. The v2–v6 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` … `runs/v6/` (v7's adapters are in `sql2pyspark-mlx/adapters/`; v6 was trained on the v5 data); their GGUFs live inside Ollama.
+`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v7** weights (last completed export); Ollama keeps its own copy of every tag. The v2–v6 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` … `runs/v6/` (v7's adapters are in `sql2pyspark-mlx/adapters/`; v6 was trained on the v5 data); their GGUFs live inside Ollama. To serve a model on another machine (e.g. the Ubuntu server behind sql2pyspark.praponb.com), copy `sql2pyspark.gguf` and `Modelfile` there and run `ollama create sql2pyspark -f Modelfile`; see [Server Deployment](08-server-deployment.md).
 
 The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v8`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
 

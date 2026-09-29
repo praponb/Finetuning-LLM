@@ -18,6 +18,7 @@ This is the single-file version of the guides in [docs/](docs/INDEX.md); each se
 8. [Ollama Serving & Streamlit Web UI](#8-ollama-serving--streamlit-web-ui)
 9. [Execution-Based Evaluation & Benchmarks](#9-execution-based-evaluation--benchmarks)
 10. [Operations Runbook & Makefile Reference](#10-operations-runbook--makefile-reference)
+11. [Server Deployment](#11-server-deployment)
 
 ---
 
@@ -86,7 +87,8 @@ Finetuning-LLM/
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
 ├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v6, 7B); Ollama keeps its own copies
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
-├── docs/                         # Detailed guides (INDEX.md + 01–07)
+├── docs/                         # Detailed guides (INDEX.md + 01–08)
+├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh
 ├── sql2pyspark-mlx/              # Data synthesis, verification & MLX training
 │   ├── schemas.py                # 17 base + 5 extra train, 5 base + 1 extra hold-out tables & sample data
 │   ├── sqlspec.py                # Dual-rendering expression/query objects
@@ -95,9 +97,9 @@ Finetuning-LLM/
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # Parallel PySpark verification
 │   ├── convert_sql_pyspark.py    # Signature splitter & chat formatter
-│   ├── lora_config.yaml          # MLX LoRA hyperparameters (v6: 7B model)
+│   ├── lora_config.yaml          # MLX LoRA hyperparameters (v7: 7B, continued from v6)
 │   ├── train_resumable.py        # Crash-proof training wrapper (`make train`)
-│   ├── train.log                 # Active training log (v6; v5 in runs/v5/)
+│   ├── train.log                 # Last training log (v7; v6 and v5 in runs/v6/, runs/v5/)
 │   ├── data/                     # train.jsonl (16.9k), valid.jsonl, test.jsonl, *_meta.jsonl
 │   ├── raw_pairs/                # Generated pairs, verified.jsonl & reports
 │   ├── adapters/                 # LoRA weights (+ checkpoints), v7 (v6 in runs/v6/)
@@ -495,3 +497,16 @@ The Makefile defaults are `BASE ?= mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`
 **Docker** works for everything except training: `docker-compose.yml` defines an `app` service (Streamlit, using the host's Ollama), a `tools` profile (Java 17 + PySpark for the data pipeline and evaluation) and an optional `ollama` profile; both images use `python:3.12-slim-bookworm`. Verified: the app container, the v3 dataset build (`make data` in `tools`) and the v3 hold-out evaluation in `tools` (59/62, identical to the native run). MLX training can't run in Docker on a Mac, and Docker should be stopped during training (its VM takes ~8 GB).
 
 Details, memory tips and troubleshooting: [docs/07-operations-runbook.md](docs/07-operations-runbook.md).
+
+---
+
+## 11. Server Deployment
+
+Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **https://sql2pyspark.praponb.com** is served from an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v7), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports.
+
+- **Sizing (v7, 7B Q8_0)**: ~8 GB RAM for Ollama + ~1.5 GB for the app and Spark + OS → 12 GB minimum, 16 GB recommended; ~25 GB disk (plan 50 GB). v5 (3B) fits in 8 GB RAM.
+- **Speed**: CPU only, the default query took 69 s end to end (M2 Mac: ~5 s); long SQL can exceed the 600 s timeout.
+- **Setup**: `deploy/setup_server.sh` (run once with `sudo`) installs Java 17, points the service at the repo and keeps the Kimi K3 repair off with `Environment=KIMI_API_KEY=` until a login (Cloudflare Access) protects the site; the unit is `deploy/sql2pyspark.service`.
+- **Updates**: `git pull && sudo systemctl restart sql2pyspark` for code; copy the new GGUF and `ollama create sql2pyspark -f Modelfile` for a new model.
+
+Full guide: [docs/08-server-deployment.md](docs/08-server-deployment.md).
