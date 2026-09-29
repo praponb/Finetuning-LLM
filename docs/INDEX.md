@@ -20,6 +20,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 | [Serving & Streamlit UI](05-serving-and-streamlit-ui.md) | Local Inference & Frontend | Frontend Developers, Users | Ollama `/api/chat` integration, `OLLAMA_URL`, Streamlit UI (`app.py`), code-block extraction, long-SQL repetition window, Kimi K3 static check & empty-table repair, containerized app with Java 17 + PySpark |
 | [File Catalog & Reference](06-file-catalog-and-reference.md) | Repository Index | All Contributors | Comprehensive reference of all scripts, datasets, configs, logs, and artifacts in the repository |
 | [Operations Runbook](07-operations-runbook.md) | Practical How-To & Makefile Guide | Developers, DevOps | Environment setup, Make targets (`TAG=v8 PREV=v7`), memory limits, Docker profiles, troubleshooting & FAQs |
+| [Server Deployment](08-server-deployment.md) | Hosting on Ubuntu + Cloudflare Tunnel | DevOps, Owners | Moving the trained GGUF to an Ubuntu server, RAM/disk sizing, native Ollama + systemd app (`deploy/`), Cloudflare Tunnel & Access for sql2pyspark.praponb.com, updates, troubleshooting (502, 1033, missing module) |
 | [User Manual](../USER_MANUAL.md) | End-User Guide & API Reference | End Users, Developers | Web UI walkthrough, Ollama CLI usage, REST API curl/Python examples, SQL feature support, Kimi K3 repair, troubleshooting |
 | [Master Project Documentation](../PROJECT_DOCUMENTATION.md) | All-in-One Guide | All Readers | Single-file consolidated summary of the entire documentation suite |
 
@@ -69,7 +70,9 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── 04-evaluation-and-benchmarking.md
 │   ├── 05-serving-and-streamlit-ui.md
 │   ├── 06-file-catalog-and-reference.md
-│   └── 07-operations-runbook.md
+│   ├── 07-operations-runbook.md
+│   └── 08-server-deployment.md
+├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh
 ├── sql2pyspark-mlx/              # Data synthesis, verification & MLX training
 │   ├── schemas.py                # Table catalog (17 base + 5 extra train, 5 base + 1 extra hold-out)
 │   ├── sqlspec.py                # Dual-rendering expression/query objects

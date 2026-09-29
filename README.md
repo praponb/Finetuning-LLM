@@ -353,6 +353,13 @@ Verified: the app container, the v3 dataset build in `tools` (15,105/15,105 pair
 Metal, which containers can't use), and Ollama in a container is CPU-only there, so native Ollama stays the recommended
 way to serve the model on macOS. Stop Docker before `make train`.
 
+## Server deployment
+
+The trained model also runs on a Linux server: **https://sql2pyspark.praponb.com** is served from a home Ubuntu machine
+(`192.168.1.49`, CPU only, native Ollama with v7, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS).
+v7 needs ~12–16 GB RAM and ~25 GB disk; without a GPU a typical query takes about a minute. Steps, sizing, updates and
+troubleshooting: [docs/08-server-deployment.md](docs/08-server-deployment.md); service files in `deploy/`.
+
 ## Layout
 
 ```
@@ -369,6 +376,7 @@ eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout
                    post_training_v4.sh, post_training_v5.sh, post_training_v6.sh, start_training_v7.sh, post_training_v7.sh,
                    results/ (+ v2-split/ … v7-repair/, v7-repair-rules/), logs-repair-rules/, *.log
 docker/, docker-compose.yml, .dockerignore          Docker setup
+deploy/            sql2pyspark.service (systemd unit), setup_server.sh: Ubuntu server hosting (docs/08)
 llama.cpp/         upstream checkout, used only for convert_hf_to_gguf.py
 ```
 

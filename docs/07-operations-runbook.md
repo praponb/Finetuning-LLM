@@ -187,6 +187,10 @@ What has been verified:
 
 ---
 
+## 🌐 Hosting on a server
+
+To serve the trained model from an Ubuntu server (the public site https://sql2pyspark.praponb.com), follow [Server Deployment](08-server-deployment.md): copy the GGUF, register it in a native Ollama, run the app as `sql2pyspark.service` (`deploy/`), and publish it through a Cloudflare Tunnel.
+
 ## 🩺 Troubleshooting & FAQ
 
 ### 1. "Cannot connect to Ollama" in Streamlit

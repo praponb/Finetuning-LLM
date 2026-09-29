@@ -48,6 +48,9 @@ streamlit run app.py
 ```
 Open your browser at **`http://localhost:8501`**.
 
+#### Public site
+The app is also hosted at **https://sql2pyspark.praponb.com** (an Ubuntu server without a GPU: a typical query takes about a minute, long SQL several minutes; the Kimi K3 repair is off there). Hosting details: [docs/08-server-deployment.md](docs/08-server-deployment.md).
+
 #### Running with Docker
 If you prefer running via Docker:
 ```bash
