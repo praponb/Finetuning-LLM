@@ -10,7 +10,7 @@ Training needs Apple MLX, so it stays on the Mac. The finished model is a plain 
 | :--- | :--- |
 | Host | `192.168.1.49` (LAN only), HP EliteDesk 705 G5 Desktop Mini, Ubuntu |
 | CPU / RAM / disk | 8 threads, 13 GB RAM (~11 GB free), 364 GB free; **no NVIDIA GPU** |
-| Model | Native Ollama (`ollama.service`), `sql2pyspark:latest` = **v7** (`d6a6a0edb9da`, 8.1 GB Q8_0) |
+| Model | Native Ollama (`ollama.service`), `sql2pyspark:latest` = **v8** (`aa01d9d717f7`, 8.1 GB Q8_0, since 2026-09-30); v7 kept as `sql2pyspark:v7` |
 | App | `sql2pyspark.service` (systemd, Streamlit on port 8501, venv `~/web-env`), code in `~/Finetuning-LLM` |
 | Public access | Cloudflare Tunnel (`cloudflared.service`): `sql2pyspark.praponb.com` → `http://localhost:8501` |
 
@@ -49,7 +49,7 @@ Training needs Apple MLX, so it stays on the Mac. The finished model is a plain 
 
 - **Code**: `cd ~/Finetuning-LLM && git pull && sudo systemctl restart sql2pyspark`.
 - **Model** (after a new fine-tune, `make export` and `make promote` on the Mac): `zsh deploy/update_model.sh v8 v7` copies the Mac's `sql2pyspark.gguf` to the server (`scp`, 8.1 GB), keeps the server's current `latest` as `sql2pyspark:v7`, registers the new file as `sql2pyspark:v8` (same `Modelfile` as the repo) and points `latest` at it; no sudo and no app restart needed. Rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v7 sql2pyspark:latest'`.
-- **Status 2026-09-30**: the setup script has been run (Java 17, `WorkingDirectory=/home/prapon/Finetuning-LLM`, Kimi off); **Cloudflare Access is not set up yet** (the public URL answers without a login), so keep `KIMI_API_KEY=` empty. The server still serves v7 until `deploy/update_model.sh` is run.
+- **Status 2026-09-30**: the setup script has been run (Java 17, `WorkingDirectory=/home/prapon/Finetuning-LLM`, Kimi off); **Cloudflare Access is not set up yet** (the public URL answers without a login), so keep `KIMI_API_KEY=` empty. v8 was deployed with `deploy/update_model.sh v8 v7` on 2026-09-30 (same model ID as the Mac; a GROUP BY test query took 17.8 s on the CPU).
 
 ## 🩺 Troubleshooting (seen during the setup)
 

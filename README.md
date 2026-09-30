@@ -7,19 +7,15 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) is the single-file technical guide;
 > [docs/INDEX.md](docs/INDEX.md) indexes the modular guides (architecture, data, training, evaluation, serving, file catalog, runbook).
 
-**Current model:** `sql2pyspark:latest` = **v7** (since 2026-09-29), 7B, continued from v6 on data that targets v6's
-gaps. It is the best model on every evaluation set: 61/62 on the hold-out (v6 60), 137/150 on the fixed test set (v6
-132) with **97/97** classic queries, and 16/25 on the v4-feature hold-out (tie with v6). Like every model it gets 0 of
-the 4 real-world queries right; the app's [Kimi K3 repair](#evaluation) fixes 3 or 4 of them. It answers in ~9 s per
-hold-out query (the 3B v5: ~4 s) and needs ~8 GB in Ollama. See [v7 results](#v7-results-2026-09-29). **v6** (the
-previous `latest`) is kept as `sql2pyspark:v6`: roll back with `ollama cp sql2pyspark:v6 sql2pyspark:latest`. v5 (3B),
-v4, v3, v2 and v1 stay available too.
-
-**Newest candidate:** `sql2pyspark:v8` (2026-09-30), v7 continued on the new [complex_v8 dataset](sql2pyspark-mlx/complex_v8/README.md)
-(10,000 verified multi-stage pairs on 20 new tables + 7,000 v7 pairs). Better than v7 on the v4 hold-out (18 vs. 16), the
-fixed test set (139 vs. 137, classic still 97/97) and the new complex test (60 vs. 31 of 100), and the first model whose
-real-world answers the Kimi K3 repair fixes 4/4 in both modes; but 60/62 on the hold-out (one column-qualification slip),
-so it misses the promotion rule by one query. **Not promoted yet** (owner's decision): see [v8 results](#v8-results-2026-09-30).
+**Current model:** `sql2pyspark:latest` = **v8** (since 2026-09-30, `aa01d9d717f7`), 7B, v7 continued on the new
+[complex_v8 dataset](sql2pyspark-mlx/complex_v8/README.md) (10,000 verified multi-stage pairs on 20 new tables + 7,000 v7
+pairs). Compared with v7 it is better on the v4-feature hold-out (18/25 vs. 16), the fixed test set (139/150 vs. 137,
+classic still **97/97**) and the new complex test (60/100 vs. 31), and it is the first model whose real-world answers the
+app's [Kimi K3 repair](#evaluation) fixes 4/4 in both modes; on the hold-out it scores 60/62 (v7 61: one
+column-qualification slip), so it missed the promotion rule by one query and was promoted by the owner's decision. Like
+every model it gets 0 of the 4 real-world queries right on its own. ~9 s per hold-out query, ~8 GB in Ollama. See
+[v8 results](#v8-results-2026-09-30). **v7** (the previous `latest`) is kept as `sql2pyspark:v7`: roll back with
+`ollama cp sql2pyspark:v7 sql2pyspark:latest`. v6, v5 (3B), v4, v3, v2 and v1 stay available too.
 
 ```
 schemas.py ─┐
@@ -242,8 +238,9 @@ queries, positional set operations, grouping sets, PIVOT/UNPIVOT, sessions, rang
   undefined alias, `WindowSpec.rows`, `F.try_cast`). The Kimi K3 repair fixes **4/4 on sample tables ($0.91) and 4/4 on
   empty tables ($0.81)** (`eval/results/v8-repair/`).
 
-**Decision**: pending the owner. Promote with `make promote TAG=v8 PREV=v7`; roll back with
-`ollama cp sql2pyspark:v7 sql2pyspark:latest`.
+**Decision**: it misses the hold-out condition by one query (and, like every model, the real-world one) but gains on
+every other set; the owner **promoted** it on 2026-09-30 (`make promote TAG=v8 PREV=v7`) and put it on the Ubuntu server
+(`deploy/update_model.sh v8 v7`). Roll back with `ollama cp sql2pyspark:v7 sql2pyspark:latest`.
 
 ### v7 results (2026-09-29)
 
