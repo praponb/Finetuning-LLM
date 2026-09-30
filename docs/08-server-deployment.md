@@ -13,8 +13,9 @@ Training needs Apple MLX, so it stays on the Mac. The finished model is a plain 
 | Model | Native Ollama (`ollama.service`), `sql2pyspark:latest` = **v8** (`aa01d9d717f7`, 8.1 GB Q8_0, since 2026-09-30); v7 kept as `sql2pyspark:v7` |
 | App | `sql2pyspark.service` (systemd, Streamlit on port 8501, venv `~/web-env`), code in `~/Finetuning-LLM` |
 | Public access | Cloudflare Tunnel (`cloudflared.service`): `sql2pyspark.praponb.com` → `http://localhost:8501` |
+| Login | Cloudflare Access (since 2026-09-30): application `sql2pyspark`, policy *Owner only*, Cloudflare or one-time PIN login, 24 h session |
 
-**Speed**: without a GPU v7 runs on the CPU. The default query took **69 s** end to end (on the M2 Mac: ~5 s). Long SQL (thousands of characters) can take several minutes and may exceed the app's 600 s timeout; serving v5 (3B, 3.3 GB) instead would be about 2x faster at slightly lower accuracy.
+**Speed**: without a GPU the 7B model runs on the CPU. v7's default query took **69 s** end to end in the app; a short GROUP BY query took **17.8 s** straight from Ollama with v8 (on the M2 Mac: ~5 s). Long SQL (thousands of characters) can take several minutes and may exceed the app's 600 s timeout; serving v5 (3B, 3.3 GB) instead would be about 2x faster at slightly lower accuracy.
 
 ## 📏 Sizing
 
@@ -38,18 +39,18 @@ Training needs Apple MLX, so it stays on the Mac. The finished model is a plain 
    sudo apt-get update && sudo apt-get install cloudflared
    ```
    Then in **Zero Trust → Networks → Tunnels → Create a tunnel → Cloudflared**, run the shown `sudo cloudflared service install <TOKEN>` on the server and add the public hostname `sql2pyspark.praponb.com` → Type **HTTP**, URL `localhost:8501` (or `127.0.0.1:8501`).
-6. **Login** (recommended before enabling Kimi): **Zero Trust → Access → Applications → Self-hosted** for `sql2pyspark.praponb.com`, policy *Allow* for your email.
+6. **Login** (required before enabling Kimi; done on 2026-09-30): in Cloudflare One, **Access controls → Applications → Create new application → Self-hosted and private**, public hostname `sql2pyspark` + `praponb.com`, **Create new policy** (*Allow*, Include → *Emails* → your address), keep *Accept all available identity providers*, **Create**. Then **Integrations → Identity providers → Add → One-time PIN**, so the login page also offers an emailed code (otherwise only *Sign in with Cloudflare*, which needs a Cloudflare account). Check: an unauthenticated `curl -I https://sql2pyspark.praponb.com/` must return `302` to `<team>.cloudflareaccess.com`.
 
 ## 🔒 Security
 
-- The app has no login of its own. With a key, the Kimi K3 repair spends money and sends the user's SQL and code to Moonshot's API, so the service keeps it off (`Environment=KIMI_API_KEY=`, an empty value that wins over `.env`). Enable it only behind a login: delete that line, then `sudo systemctl daemon-reload && sudo systemctl restart sql2pyspark`.
+- The app has no login of its own; Cloudflare Access provides it (only emails in the *Owner only* policy get through). With a key, the Kimi K3 repair spends money and sends the user's SQL and code to Moonshot's API, so the service keeps it off (`Environment=KIMI_API_KEY=`, an empty value that wins over `.env`). Enable it only behind a login: delete that line, then `sudo systemctl daemon-reload && sudo systemctl restart sql2pyspark`.
 - Ollama listens on `localhost:11434` only; the tunnel needs no inbound ports (`sudo ufw allow OpenSSH && sudo ufw enable` is safe).
 
 ## 🔄 Updates
 
 - **Code**: `cd ~/Finetuning-LLM && git pull && sudo systemctl restart sql2pyspark`.
 - **Model** (after a new fine-tune, `make export` and `make promote` on the Mac): `zsh deploy/update_model.sh v8 v7` copies the Mac's `sql2pyspark.gguf` to the server (`scp`, 8.1 GB), keeps the server's current `latest` as `sql2pyspark:v7`, registers the new file as `sql2pyspark:v8` (same `Modelfile` as the repo) and points `latest` at it; no sudo and no app restart needed. Rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v7 sql2pyspark:latest'`.
-- **Status 2026-09-30**: the setup script has been run (Java 17, `WorkingDirectory=/home/prapon/Finetuning-LLM`, Kimi off); **Cloudflare Access is not set up yet** (the public URL answers without a login), so keep `KIMI_API_KEY=` empty. v8 was deployed with `deploy/update_model.sh v8 v7` on 2026-09-30 (same model ID as the Mac; a GROUP BY test query took 17.8 s on the CPU).
+- **Status 2026-09-30**: the setup script has been run (Java 17, `WorkingDirectory=/home/prapon/Finetuning-LLM`, Kimi off); **Cloudflare Access is active** since 2026-09-30: Zero Trust team `odd-shape-7d9a`, self-hosted application `sql2pyspark` for `sql2pyspark.praponb.com` with the Allow policy *Owner only* (emails: the owner's address), session 24 h, login methods *Cloudflare* and *One-time PIN* (email code); unauthenticated requests get a 302 to `odd-shape-7d9a.cloudflareaccess.com`. To let someone else in, add their email to the *Owner only* policy (Access controls → Policies). Kimi can now be enabled on the server: remove the `Environment=KIMI_API_KEY=` line from the unit, `sudo systemctl daemon-reload && sudo systemctl restart sql2pyspark`. v8 was deployed with `deploy/update_model.sh v8 v7` on 2026-09-30 (same model ID as the Mac; a GROUP BY test query took 17.8 s on the CPU).
 
 ## 🩺 Troubleshooting (seen during the setup)
 

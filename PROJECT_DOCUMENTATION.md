@@ -88,7 +88,7 @@ Finetuning-LLM/
 ├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v8, 7B, = `latest`); Ollama keeps its own copies
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
-├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh
+├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh, update_model.sh
 ├── sql2pyspark-mlx/              # Data synthesis, verification & MLX training
 │   ├── schemas.py                # 17 base + 5 extra train, 5 base + 1 extra hold-out tables & sample data
 │   ├── sqlspec.py                # Dual-rendering expression/query objects
@@ -539,7 +539,8 @@ Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **
 
 - **Sizing (v7, 7B Q8_0)**: ~8 GB RAM for Ollama + ~1.5 GB for the app and Spark + OS → 12 GB minimum, 16 GB recommended; ~25 GB disk (plan 50 GB). v5 (3B) fits in 8 GB RAM.
 - **Speed**: CPU only, the default query took 69 s end to end (M2 Mac: ~5 s); long SQL can exceed the 600 s timeout.
-- **Setup**: `deploy/setup_server.sh` (run once with `sudo`) installs Java 17, points the service at the repo and keeps the Kimi K3 repair off with `Environment=KIMI_API_KEY=` until a login (Cloudflare Access) protects the site; the unit is `deploy/sql2pyspark.service`.
+- **Setup**: `deploy/setup_server.sh` (run once with `sudo`) installs Java 17, points the service at the repo and keeps the Kimi K3 repair off with `Environment=KIMI_API_KEY=` until a login protects the site; the unit is `deploy/sql2pyspark.service`.
+- **Login**: Cloudflare Access (since 2026-09-30) — application `sql2pyspark`, policy *Owner only*, sign-in with Cloudflare or an emailed one-time PIN; see docs/08.
 - **Updates**: `git pull && sudo systemctl restart sql2pyspark` for code; copy the new GGUF and `ollama create sql2pyspark -f Modelfile` for a new model.
 
 Full guide: [docs/08-server-deployment.md](docs/08-server-deployment.md).

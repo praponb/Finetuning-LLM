@@ -402,8 +402,10 @@ way to serve the model on macOS. Stop Docker before `make train`.
 ## Server deployment
 
 The trained model also runs on a Linux server: **https://sql2pyspark.praponb.com** is served from a home Ubuntu machine
-(`192.168.1.49`, CPU only, native Ollama with v7, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS).
-v7 needs ~12–16 GB RAM and ~25 GB disk; without a GPU a typical query takes about a minute. Steps, sizing, updates and
+(`192.168.1.49`, CPU only, native Ollama with v8, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS,
+**Cloudflare Access login**: owner's email only, sign in with Cloudflare or an emailed one-time code). The 7B model needs
+~12–16 GB RAM and ~25 GB disk; without a GPU a typical query takes 20 s to a minute. `deploy/update_model.sh` copies a
+newly promoted model to the server. Steps, sizing, updates and
 troubleshooting: [docs/08-server-deployment.md](docs/08-server-deployment.md); service files in `deploy/`.
 
 ## Layout
@@ -423,7 +425,7 @@ eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout
                    complex_v8_test.jsonl, complex_eval_v8.sh,
                    results/ (+ v2-split/ … v8-repair/, v7-repair-rules/), logs-repair-rules/, *.log
 docker/, docker-compose.yml, .dockerignore          Docker setup
-deploy/            sql2pyspark.service (systemd unit), setup_server.sh: Ubuntu server hosting (docs/08)
+deploy/            sql2pyspark.service (systemd unit), setup_server.sh, update_model.sh: Ubuntu server hosting (docs/08)
 llama.cpp/         upstream checkout, used only for convert_hf_to_gguf.py
 ```
 

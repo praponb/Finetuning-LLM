@@ -191,7 +191,7 @@ What has been verified:
 
 ## 🌐 Hosting on a server
 
-To serve the trained model from an Ubuntu server (the public site https://sql2pyspark.praponb.com), follow [Server Deployment](08-server-deployment.md): copy the GGUF, register it in a native Ollama, run the app as `sql2pyspark.service` (`deploy/`), and publish it through a Cloudflare Tunnel.
+To serve the trained model from an Ubuntu server (the public site https://sql2pyspark.praponb.com), follow [Server Deployment](08-server-deployment.md): copy the GGUF, register it in a native Ollama, run the app as `sql2pyspark.service` (`deploy/`), and publish it through a Cloudflare Tunnel behind a Cloudflare Access login. After promoting a new model on the Mac, `zsh deploy/update_model.sh <TAG> <PREV>` puts it on the server.
 
 ## 🩺 Troubleshooting & FAQ
 

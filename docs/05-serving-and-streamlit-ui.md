@@ -151,4 +151,4 @@ docker compose down
 The image includes Java 17 and PySpark for the Kimi K3 checks (2.1 GB; 0.8 GB before). `docker-compose.yml` reads `.env` if it exists (`env_file`, optional), so the key never goes into the image. The `app` container reaches the native Ollama on the host through `OLLAMA_URL=http://host.docker.internal:11434` (the default in `docker-compose.yml`) and reports healthy once Streamlit is up. Keep Ollama native on a Mac: containers can't use the Apple GPU. See the [Operations Runbook](07-operations-runbook.md#-docker) for the other profiles.
 
 ### On a Linux server
-The public site https://sql2pyspark.praponb.com runs on an Ubuntu server with native Ollama and the app as a systemd service behind a Cloudflare Tunnel; see [Server Deployment](08-server-deployment.md).
+The public site https://sql2pyspark.praponb.com runs on an Ubuntu server with native Ollama and the app as a systemd service behind a Cloudflare Tunnel and a Cloudflare Access login (allowed emails only; Cloudflare account or emailed one-time code); see [Server Deployment](08-server-deployment.md).
