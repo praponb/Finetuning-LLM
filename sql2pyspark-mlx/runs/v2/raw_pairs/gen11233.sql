@@ -1,1 +1,0 @@
-select id, monthly_fee, end_date, customer_id from subscriptions where monthly_fee >= (select max(monthly_fee) from subscriptions where start_date between '2023-09-01' and '2025-04-01') order by customer_id asc, id asc limit 3

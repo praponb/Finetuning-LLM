@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(STDDEV(rating), 2) AS stddev_rating, COUNT(DISTINCT rating) AS unique_citys FROM suppliers GROUP BY CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END HAVING ROUND(STDDEV(rating), 2) > 32

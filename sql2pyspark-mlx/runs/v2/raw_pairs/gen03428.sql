@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, CAST(is_flagged AS INT) AS is_flagged_flag FROM transactions WHERE account_id IN (1, 39)), agg AS (SELECT merchant, MIN(is_flagged_flag) AS min_is_flagged_flag FROM src GROUP BY merchant) SELECT merchant, min_is_flagged_flag FROM agg WHERE min_is_flagged_flag > 76 ORDER BY merchant DESC;

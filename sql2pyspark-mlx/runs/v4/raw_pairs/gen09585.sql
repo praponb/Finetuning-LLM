@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, carrier, shipped_date, status, INITCAP(TRIM(carrier)) AS carrier_title FROM shipments WHERE carrier IS NOT NULL AND status NOT IN ('LOST', 'IN_TRANSIT', 'DELIVERED')) SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY carrier ORDER BY shipped_date NULLS LAST) AS rn FROM cleaned) x WHERE rn = 1;

@@ -1,1 +1,0 @@
-WITH products_by_supplier AS (SELECT supplier_id, MIN(cost) min_cost FROM products WHERE stock_qty < 361 GROUP BY supplier_id) SELECT s.country, pbs.min_cost FROM suppliers s LEFT OUTER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY pbs.min_cost DESC, country;

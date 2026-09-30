@@ -1,1 +1,0 @@
-WITH top_shipments AS (SELECT id, status, shipped_date, cost, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date DESC, id) AS row_num FROM shipments WHERE carrier <> 'Kerry') SELECT id, status, shipped_date, cost FROM top_shipments WHERE row_num <= 3 ORDER BY shipped_date DESC

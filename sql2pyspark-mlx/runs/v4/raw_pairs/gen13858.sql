@@ -1,1 +1,0 @@
-SELECT e.id, e.full_name AS employee_full_name, m.full_name AS manager_full_name, m.level AS manager_level FROM employees e LEFT JOIN employees m ON e.manager_id = m.id ORDER BY m.full_name DESC, m.level ASC;

@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, MIN(started_at) AS min_started_at FROM sessions WHERE browser NOT IN ('Firefox', 'Chrome', 'Safari') GROUP BY customer_id) SELECT c.email, c.name, ct.min_started_at FROM customers c LEFT JOIN customer_totals ct ON c.id = ct.customer_id

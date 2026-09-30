@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, COUNT(*) cnt, SORT_ARRAY(COLLECT_SET(event_type)) event_type_list FROM web_events WHERE page = '/product' GROUP BY session_id) SELECT sessions.customer_id, session_totals.cnt, session_totals.event_type_list FROM sessions INNER JOIN session_totals ON sessions.id = session_totals.session_id ORDER BY sessions.customer_id DESC

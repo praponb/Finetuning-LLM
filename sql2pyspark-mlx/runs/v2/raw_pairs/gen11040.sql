@@ -1,1 +1,0 @@
-SELECT id, amount, store_id, order_date, CASE WHEN amount >= 1230 THEN 'High' WHEN amount >= 590 THEN 'Medium' ELSE 'Low' END AS amount_band FROM orders WHERE YEAR(order_date) = 2025 AND store_id IN (6, 7, 38) ORDER BY store_id DESC;

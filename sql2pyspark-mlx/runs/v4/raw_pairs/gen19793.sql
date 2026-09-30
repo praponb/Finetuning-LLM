@@ -1,1 +1,0 @@
-SELECT status, MAX(shipping_fee) AS max_shipping_fee, ROUND((100 * SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cancelled FROM orders GROUP BY status HAVING COUNT(*) < 1;

@@ -1,1 +1,0 @@
-select id, account_id, amount, txn_time, avg(amount) over (partition by account_id) as account_id_avg_amount, row_number() over (partition by account_id order by txn_time, id) as row_num from transactions;

@@ -1,1 +1,0 @@
-SELECT MONTH(orders.order_date) AS order_month, orders.customer_id, MAX(shipments.shipped_date) AS latest_shipped_date, MAX(shipments.cost) - MIN(shipments.cost) AS cost_range FROM shipments LEFT JOIN orders ON shipments.order_id = orders.id WHERE orders.discount < 0.15 GROUP BY MONTH(orders.order_date), orders.customer_id ORDER BY order_month, orders.customer_id DESC

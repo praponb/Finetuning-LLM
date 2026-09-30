@@ -1,1 +1,0 @@
-WITH top_store_sales AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY units, id) pos FROM store_sales) SELECT id, store_id, units FROM top_store_sales WHERE pos <= 3 ORDER BY store_id DESC, id DESC;

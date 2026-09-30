@@ -1,1 +1,0 @@
-select id, plan, customer_id, monthly_fee, row_number() over (partition by plan, customer_id order by monthly_fee desc, id) as rn from subscriptions where customer_id = 6 order by monthly_fee desc, plan;

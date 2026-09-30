@@ -1,1 +1,0 @@
-SELECT order_items.id, order_items.quantity, order_items.order_id, orders.discount, orders.customer_id, products.supplier_id FROM order_items RIGHT JOIN orders ON order_items.order_id = orders.id INNER JOIN products ON order_items.product_id = products.id WHERE orders.discount >= 0.24 ORDER BY customer_id DESC;

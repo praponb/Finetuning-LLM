@@ -1,1 +1,0 @@
-SELECT txn_quarter, merchant_values, cnt FROM (SELECT QUARTER(txn_time) AS txn_quarter, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values, COUNT(*) AS cnt FROM transactions WHERE txn_time >= '2023-05-29' GROUP BY QUARTER(txn_time)) AS t WHERE cnt < 8 ORDER BY txn_quarter ASC, cnt ASC LIMIT 3;

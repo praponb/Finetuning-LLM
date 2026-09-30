@@ -1,1 +1,0 @@
-SELECT method, SUM(CASE WHEN method = 'cash' THEN 1 ELSE 0 END) cash_count FROM payments WHERE method NOT IN ('card', 'paypal') AND paid_at < '2023-09-01' GROUP BY method HAVING MAX(amount) >= 630 ORDER BY 2

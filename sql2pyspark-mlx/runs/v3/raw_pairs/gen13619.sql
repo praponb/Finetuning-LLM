@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE page IN ('/cart', '/home') GROUP BY session_id) SELECT s.id, s.customer_id, s.started_at, ss.min_duration_sec FROM sessions s LEFT JOIN session_summary ss ON s.id = ss.session_id ORDER BY s.id DESC;

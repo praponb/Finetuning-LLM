@@ -1,1 +1,0 @@
-WITH top_inventory AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS rnk FROM inventory WHERE MONTH(last_restock) IN (1, 4, 7)) SELECT id, product_id, quantity, store_id FROM top_inventory WHERE rnk <= 2 ORDER BY product_id;

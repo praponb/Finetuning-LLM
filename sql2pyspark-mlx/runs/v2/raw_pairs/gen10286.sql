@@ -1,1 +1,0 @@
-SELECT id, customer_id, opened_date, account_type FROM (SELECT id, customer_id, opened_date, account_type, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY opened_date DESC, id) AS pos FROM accounts WHERE balance <= 73000) AS t WHERE pos <= 3 ORDER BY opened_date ASC;

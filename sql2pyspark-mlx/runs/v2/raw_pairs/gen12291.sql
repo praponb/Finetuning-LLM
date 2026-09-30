@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, customer_id, amount, status, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC, id) AS pos FROM orders) SELECT id, customer_id, amount, status FROM ranked WHERE pos <= 3

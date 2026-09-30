@@ -1,1 +1,0 @@
-SELECT s.region, COUNT(ss.revenue) AS revenue_count, COUNT(DISTINCT ss.units) AS unique_stores FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id WHERE LOWER(s.store_name) LIKE '%ld %' GROUP BY s.region HAVING unique_stores >= 5 ORDER BY revenue_count DESC

@@ -1,1 +1,0 @@
-WITH filtered_customers AS (SELECT *, DATE_ADD(signup_date, 27) AS signup_date_plus_27d FROM customers WHERE YEAR(signup_date) >= 2023 AND NOT is_active), customers_stats AS (SELECT segment, MIN(age) AS min_age, COUNT(DISTINCT age) AS unique_citys FROM filtered_customers GROUP BY segment) SELECT * FROM customers_stats

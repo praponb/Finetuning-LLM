@@ -1,1 +1,0 @@
-WITH recent_accounts AS (SELECT * FROM accounts WHERE status IS NULL AND customer_id = 37), summary AS (SELECT account_type, COUNT(*) AS num_accounts FROM recent_accounts GROUP BY account_type) SELECT account_type, num_accounts FROM summary ORDER BY num_accounts;

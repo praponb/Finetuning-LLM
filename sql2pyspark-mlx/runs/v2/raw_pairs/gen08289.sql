@@ -1,1 +1,0 @@
-SELECT s.cost, o.store_id, c.is_active, c.city, CASE WHEN s.carrier = 'Flash' THEN 1 ELSE 0 END AS is_flash FROM shipments s LEFT JOIN orders o ON s.order_id = o.id LEFT JOIN customers c ON o.customer_id = c.id WHERE s.carrier IN ('UPS', 'FedEx', 'Kerry') AND s.order_id IN (14, 17, 23, 24);

@@ -1,1 +1,0 @@
-with kept_keys as (select supplier_id from products intersect all select supplier_id from products where cost < 460), reconciled as (select s.* from products s inner join kept_keys k on s.supplier_id = k.supplier_id) select id, product_name, category, brand, price, stock_qty, launch_date, tags, supplier_id from reconciled order by launch_date nulls last, stock_qty

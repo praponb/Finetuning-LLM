@@ -1,1 +1,0 @@
-SELECT dim.country, s.status, COUNT(*) AS rows_total, MAX(s.balance) AS max_balance FROM accounts s JOIN customers dim ON s.customer_id = dim.id GROUP BY GROUPING SETS ((dim.country, s.status), (dim.country), ())

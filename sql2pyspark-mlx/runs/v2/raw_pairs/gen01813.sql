@@ -1,1 +1,0 @@
-select is_active, round(avg(credit_limit), 2) as avg_credit_limit, count(distinct credit_limit) as unique_segments from customers where is_active and is_active group by is_active order by avg_credit_limit desc;

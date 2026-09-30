@@ -1,1 +1,0 @@
-SELECT c.is_active, SUM(CASE WHEN p.method = 'card' THEN 1 ELSE 0 END) card_count, COUNT(p.amount) amount_count FROM payments p INNER JOIN orders o ON p.order_id = o.id LEFT JOIN customers c ON o.customer_id = c.id WHERE p.paid_at < '2023-04-01' GROUP BY c.is_active ORDER BY card_count, is_active LIMIT 1

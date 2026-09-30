@@ -1,1 +1,0 @@
-WITH ranked_products AS (SELECT id, supplier_id, stock_qty, price, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY stock_qty, id) AS rnk FROM products WHERE cost > 580) SELECT id, supplier_id, stock_qty, price FROM ranked_products WHERE rnk = 1;

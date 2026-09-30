@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM payments WHERE order_id IN (10, 14, 39) OR order_id IN (1, 17, 33, 38)), method_summary AS (SELECT method, status, SUM(CASE WHEN status = 'SUCCESS' THEN amount ELSE 0 END) AS success_amount, MAX(amount) - MIN(amount) AS amount_range FROM src GROUP BY method, status) SELECT method, status, amount_range FROM method_summary;

@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM stores WHERE city = 'Tokyo'), summary AS (SELECT MONTH(opened_date) AS opened_month, ROUND((100 * SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_tokyo, COUNT(DISTINCT sqft) AS unique_regions FROM src GROUP BY MONTH(opened_date)) SELECT * FROM summary ORDER BY 3 DESC;

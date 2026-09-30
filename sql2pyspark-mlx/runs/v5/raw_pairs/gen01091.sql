@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 350 THEN 'high' WHEN unit_price >= 80 THEN 'mid' ELSE 'low' END AS unit_price_bucket, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY 1 HAVING MAX(unit_price) - MIN(unit_price) > 56 ORDER BY unit_price_range DESC;

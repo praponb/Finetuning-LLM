@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, ROUND(sqft, 0) sqft_rounded FROM stores WHERE region = 'East'), summary AS (SELECT QUARTER(opened_date) opened_quarter, SORT_ARRAY(COLLECT_SET(region)) region_list FROM src GROUP BY QUARTER(opened_date)) SELECT opened_quarter, region_list FROM summary ORDER BY opened_quarter DESC LIMIT 1

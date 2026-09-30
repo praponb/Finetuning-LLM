@@ -1,1 +1,0 @@
-select country, city, concat_ws(', ', sort_array(collect_set(country))) as country_values, round(stddev(rating), 2) as stddev_rating from suppliers group by country, city order by country_values desc, country asc, city asc limit 5;

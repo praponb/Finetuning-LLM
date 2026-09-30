@@ -1,1 +1,0 @@
-SELECT CASE WHEN status IN ('CLOSED', 'FROZEN') THEN 'group_a' ELSE 'other' END AS status_group, status, COUNT(DISTINCT balance) AS unique_customers, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM accounts GROUP BY CASE WHEN status IN ('CLOSED', 'FROZEN') THEN 'group_a' ELSE 'other' END, status HAVING unique_customers < 1;

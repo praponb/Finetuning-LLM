@@ -1,1 +1,0 @@
-WITH StoreSummary AS (SELECT store_id, ROUND(AVG(units), 2) AS avg_units, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales WHERE revenue >= 1400 GROUP BY store_id) SELECT s.city, S.avg_units, S.stddev_revenue FROM stores s LEFT OUTER JOIN StoreSummary S ON s.id = S.store_id WHERE S.avg_units > 42;

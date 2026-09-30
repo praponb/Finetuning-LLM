@@ -1,1 +1,0 @@
-SELECT supplier_id, first_launch_date, acme_count FROM (SELECT supplier_id, MIN(launch_date) AS first_launch_date, COUNT(CASE WHEN brand = 'Acme' THEN 1 END) AS acme_count FROM products GROUP BY supplier_id) AS s WHERE acme_count < 7;

@@ -1,1 +1,0 @@
-SELECT account_type, status, SORT_ARRAY(COLLECT_SET(status)) AS status_list, MAX(opened_date) AS last_opened_date, SUM(CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END) AS checking_count FROM accounts WHERE customer_id IN (8, 25) GROUP BY 1, 2

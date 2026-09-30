@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT account_type, COUNT(balance) AS balance_count, SUM(CASE WHEN status = 'OPEN' THEN balance ELSE 0 END) AS open_balance FROM accounts WHERE balance >= 42000 GROUP BY account_type) AS agg WHERE balance_count < 6;

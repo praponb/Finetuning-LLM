@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT txn_type, account_id FROM transactions EXCEPT SELECT txn_type, account_id FROM transactions WHERE txn_time < '2025-03-01'), reconciled AS (SELECT s.* FROM transactions s INNER JOIN kept_keys k ON s.txn_type = k.txn_type AND s.account_id = k.account_id) SELECT amount, txn_time, merchant FROM reconciled ORDER BY merchant DESC, amount DESC

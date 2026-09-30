@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, COUNT(*) AS cnt, COUNT(*) AS web_event_count FROM web_events GROUP BY session_id) SELECT s.id, s.device, s.customer_id, ss.cnt, ss.web_event_count FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id;

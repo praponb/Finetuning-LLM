@@ -1,9 +1,0 @@
-SELECT
-    s.id,
-    s.device,
-    s.started_at,
-    t.page_values
-FROM sessions s
-JOIN (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values
-    FROM web_events
-    GROUP BY session_id) t ON s.id = t.session_id;

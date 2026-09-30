@@ -1,1 +1,0 @@
-SELECT id, dept_id, hire_date, full_name FROM (SELECT id, dept_id, hire_date, full_name, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY hire_date, id) AS rnk FROM employees) AS ranked WHERE rnk <= 5;

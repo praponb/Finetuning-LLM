@@ -1,1 +1,0 @@
-SELECT e.job_title AS employee_job_title, e.full_name AS employee_full_name, m.is_remote AS manager_is_remote, m.email AS manager_email, m.dept_id AS manager_dept_id FROM employees e INNER JOIN employees m ON e.manager_id = m.id ORDER BY employee_job_title

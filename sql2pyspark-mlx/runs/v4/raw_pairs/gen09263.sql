@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, oi.order_id, p.stock_qty, p.product_name, s.country, TRIM(p.category) AS clean_category FROM order_items oi INNER JOIN products p ON oi.product_id = p.id RIGHT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE oi.quantity BETWEEN 4 AND 5;

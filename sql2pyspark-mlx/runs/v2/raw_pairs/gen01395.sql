@@ -1,1 +1,0 @@
-SELECT status, AVG(monthly_fee) AS avg_monthly_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM subscriptions WHERE start_date >= '2023-07-01' AND plan IN ('enterprise', 'premium') AND customer_id IS NOT NULL GROUP BY status HAVING AVG(monthly_fee) < 100 ORDER BY avg_monthly_fee, status LIMIT 10;

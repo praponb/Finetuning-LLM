@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3416000 THEN 'high' WHEN budget >= 1439000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, COUNT(budget) AS budget_count FROM departments WHERE location <> 'Tokyo' GROUP BY budget_bucket, location ORDER BY budget_count DESC, budget_bucket DESC

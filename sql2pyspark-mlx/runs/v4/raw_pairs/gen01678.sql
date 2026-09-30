@@ -1,1 +1,0 @@
-SELECT category, COUNT(DISTINCT supplier_id) AS distinct_supplier_ids, ROUND(SUM(price) / NULLIF(COUNT(CASE WHEN brand = 'Initech' THEN 1 END), 0), 2) AS price_per_initech, STDDEV_SAMP(price) AS price_stddev, CORR(price, cost) AS corr_price_cost, PERCENTILE_APPROX(cost, 0.5) AS cost_p50 FROM products GROUP BY 1 HAVING COUNT(DISTINCT supplier_id) > 1 ORDER BY cost_p50;

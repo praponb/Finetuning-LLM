@@ -1,1 +1,0 @@
-WITH recent_suppliers AS (SELECT * FROM suppliers WHERE NOT ((city = 'Chiang Mai' AND country <> 'US') OR city <> 'New York')), country_summary AS (SELECT country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, MAX(rating) AS max_rating FROM recent_suppliers GROUP BY country) SELECT country, country_values FROM country_summary WHERE max_rating > 2.0;

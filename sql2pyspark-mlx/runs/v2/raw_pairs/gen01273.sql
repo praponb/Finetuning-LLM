@@ -1,1 +1,0 @@
-SELECT CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE session_id IN (2, 17) AND event_time < '2023-10-16' AND session_id IN (7, 13, 19, 24);

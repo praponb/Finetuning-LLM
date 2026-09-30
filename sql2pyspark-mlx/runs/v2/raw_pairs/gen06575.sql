@@ -1,1 +1,0 @@
-SELECT d.dept_name, t.stddev_salary FROM departments d JOIN (SELECT dept_id, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees WHERE manager_id IS NOT NULL GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.stddev_salary >= 70 ORDER BY stddev_salary ASC

@@ -1,1 +1,0 @@
-SELECT products.category, products.price, products.brand, order_items.product_id FROM products LEFT JOIN order_items ON products.id = order_items.product_id WHERE products.category IN ('Home', 'Grocery', 'Books') AND order_items.order_id IN (24, 31);

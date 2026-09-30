@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, COUNT(e.id) AS employee_count, MAX(e.salary) - MIN(e.salary) AS salary_range, ROUND(AVG(e.salary), 2) AS avg_salary FROM departments d LEFT JOIN employees e ON d.id = e.dept_id GROUP BY d.id, d.dept_name ORDER BY avg_salary DESC, id, dept_name LIMIT 3

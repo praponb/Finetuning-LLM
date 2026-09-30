@@ -1,1 +1,0 @@
-SELECT o.id, o.discount, t.unit_price_range, t.avg_quantity FROM orders o JOIN (SELECT order_id, MAX(unit_price) - MIN(unit_price) AS unit_price_range, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items GROUP BY order_id) t ON o.id = t.order_id ORDER BY t.unit_price_range;

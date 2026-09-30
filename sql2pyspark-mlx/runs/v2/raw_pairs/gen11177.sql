@@ -1,1 +1,0 @@
-SELECT a.status, a.account_type, a.customer_id, t.amount, t.is_flagged FROM accounts a INNER JOIN transactions t ON t.account_id = a.id WHERE a.account_type = 'CREDIT' AND a.customer_id IS NOT NULL ORDER BY a.customer_id DESC

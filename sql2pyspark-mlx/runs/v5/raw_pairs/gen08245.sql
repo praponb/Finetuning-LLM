@@ -1,1 +1,0 @@
-SELECT s.id, s.store_name, COUNT(i.id) AS inventory_count, SUM(i.quantity) AS total_quantity FROM stores s LEFT JOIN inventory i ON s.id = i.store_id WHERE s.city != 'New York' GROUP BY s.id, s.store_name HAVING SUM(i.quantity) > 1210 ORDER BY total_quantity, inventory_count;

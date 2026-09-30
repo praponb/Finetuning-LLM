@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(units) - MIN(units) AS units_range FROM store_sales GROUP BY store_id) SELECT s.region, s.sqft, ss.units_range FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id ORDER BY units_range DESC;

@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, city, MIN(opened_date) AS min_opened_date, MAX(opened_date) AS last_opened_date, ROUND(AVG(sqft), 2) AS avg_sqft FROM stores GROUP BY opened_quarter, city HAVING avg_sqft > 23 ORDER BY city

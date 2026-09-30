@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, customer_id, account_type, opened_date, SUBSTRING(account_type, 1, 2) AS account_type_prefix FROM accounts WHERE opened_date >= DATE '2023-05-12' AND customer_id IS NULL) SELECT s.* FROM filtered s WHERE NOT EXISTS (SELECT 1 FROM transactions ch WHERE ch.account_id = s.id AND ch.txn_time < s.opened_date)

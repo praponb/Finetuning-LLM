@@ -1,1 +1,0 @@
-SELECT city, COUNT(*) FILTER (WHERE city = 'Singapore') AS singapore_rows, COUNT_IF(city = 'Chiang Mai') AS chiang_mai_events, ROUND(AVG(rating), 2) AS avg_rating, COUNT(DISTINCT country) AS distinct_countries, AVG(rating) AS avg_rating_2 FROM suppliers GROUP BY city ORDER BY distinct_countries NULLS FIRST

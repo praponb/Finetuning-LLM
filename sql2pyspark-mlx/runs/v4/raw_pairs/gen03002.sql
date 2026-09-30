@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, ROUND(amount * 100, 2) AS amount_scaled FROM payments WHERE paid_at > TIMESTAMP '2024-01-14 12:00:00' AND order_id IS NOT NULL AND method IN ('bank_transfer', 'promptpay', 'paypal')) SELECT * FROM (SELECT id, method, amount, amount_scaled FROM cleaned) src UNPIVOT INCLUDE NULLS (val FOR kpi IN (amount AS AMOUNT_VAL, amount_scaled AS AMOUNT_SCALED));

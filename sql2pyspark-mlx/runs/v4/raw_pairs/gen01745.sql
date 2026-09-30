@@ -1,1 +1,0 @@
-WITH valid_accounts AS (SELECT * FROM accounts WHERE status = 'CLOSED' AND opened_date > '2024-08-24'), Agg AS (SELECT account_type, ROUND((100 * SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_savings FROM valid_accounts GROUP BY account_type) SELECT account_type, pct_savings FROM Agg WHERE pct_savings < 48

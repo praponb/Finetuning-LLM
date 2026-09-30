@@ -1,1 +1,0 @@
-SELECT payments.status, orders.order_date, orders.shipping_fee, orders.store_id FROM payments INNER JOIN orders ON payments.order_id = orders.id WHERE payments.paid_at < '2024-01-10' ORDER BY orders.shipping_fee DESC;

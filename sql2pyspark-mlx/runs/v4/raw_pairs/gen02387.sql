@@ -1,1 +1,0 @@
-SELECT *, CUME_DIST() OVER (PARTITION BY promo_code ORDER BY discount_pct DESC) AS discount_pct_cume_dist, ROW_NUMBER() OVER (ORDER BY discount_pct, id) AS row_seq, SUM(discount_pct) OVER (PARTITION BY promo_code ORDER BY starts_on, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_discount_pct FROM promotions

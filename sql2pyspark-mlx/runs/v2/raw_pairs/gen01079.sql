@@ -1,1 +1,0 @@
-select plan, sum(case when status = 'CANCELLED' then 1 else 0 end) as cancelled_count, round(avg(monthly_fee), 2) as avg_monthly_fee, count(monthly_fee) as monthly_fee_count from subscriptions group by plan order by monthly_fee_count desc

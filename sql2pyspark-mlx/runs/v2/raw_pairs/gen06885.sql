@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 310 THEN 'high' WHEN unit_price >= 140 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(quantity) AS quantity_count, SUM(unit_price) AS total_unit_price FROM order_items GROUP BY CASE WHEN unit_price >= 310 THEN 'high' WHEN unit_price >= 140 THEN 'mid' ELSE 'low' END ORDER BY total_unit_price DESC, quantity_count;

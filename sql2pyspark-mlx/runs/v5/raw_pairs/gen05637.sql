@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3100000 THEN 'high' WHEN budget >= 1225000 THEN 'mid' ELSE 'low' END budget_bucket, ROUND(STDDEV(budget), 2) stddev_budget, ROUND(AVG(budget), 2) avg_budget, COUNT(DISTINCT budget) unique_locations FROM departments GROUP BY 1 HAVING stddev_budget < 48 ORDER BY unique_locations, budget_bucket LIMIT 3;

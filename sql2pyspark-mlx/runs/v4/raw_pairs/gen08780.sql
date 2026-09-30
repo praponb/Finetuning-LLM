@@ -1,1 +1,0 @@
-SELECT t.id, t.is_flagged, t.account_id, a.customer_id, a.status, a.balance FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE HOUR(t.txn_time) BETWEEN 9 AND 16 AND t.txn_type IN ('DEBIT', 'CREDIT', 'FEE');

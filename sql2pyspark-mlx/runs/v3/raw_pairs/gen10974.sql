@@ -1,1 +1,0 @@
-select page, date_format(event_time, 'yyyy-MM') as event_month, sum(case when page = '/cart' then duration_sec else 0 end) as cart_duration_sec, count(*) as total_count from web_events where to_date(event_time) < '2023-10-23' and session_id = 12 group by rollup(page, date_format(event_time, 'yyyy-MM'))

@@ -1,1 +1,0 @@
-SELECT HOUR(paid_at) AS paid_hour, MAX(amount) AS max_amount, MAX(paid_at) AS last_paid_at, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values FROM payments WHERE method IN ('paypal', 'bank_transfer', 'promptpay') OR order_id = 24 GROUP BY 1 HAVING MAX(amount) >= 670 ORDER BY last_paid_at;

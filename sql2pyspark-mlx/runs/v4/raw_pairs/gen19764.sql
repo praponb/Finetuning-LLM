@@ -1,1 +1,0 @@
-SELECT customers.is_active, t.web_count, t.first_order_date FROM customers INNER JOIN (SELECT customer_id, COUNT(CASE WHEN channel = 'web' THEN 1 END) web_count, MIN(order_date) first_order_date FROM orders WHERE customer_id IN (9, 24, 25, 36) GROUP BY customer_id) t ON customers.id = t.customer_id WHERE t.web_count >= 9

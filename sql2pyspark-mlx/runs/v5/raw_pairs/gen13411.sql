@@ -1,1 +1,0 @@
-SELECT merchant, COUNT(*) AS row_count, COUNT(CASE WHEN txn_type = 'FEE' THEN 1 END) AS fee_count, MAX(amount) AS max_amount FROM transactions WHERE amount < 3200 OR txn_type = 'FEE' GROUP BY merchant;

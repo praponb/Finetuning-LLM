@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, RANK() OVER (PARTITION BY product_id ORDER BY unit_price DESC) AS pos FROM order_items WHERE unit_price >= 190) SELECT id, product_id, unit_price, quantity FROM numbered WHERE pos <= 5

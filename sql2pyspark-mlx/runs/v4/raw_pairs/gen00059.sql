@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN unit_price >= 400 THEN 'high' WHEN unit_price >= 150 THEN 'mid' ELSE 'low' END AS unit_price_bucket, order_id, MAX(unit_price) AS max_unit_price FROM order_items GROUP BY product_id, unit_price_bucket, order_id HAVING MAX(unit_price) >= 380 ORDER BY order_id DESC, product_id, unit_price_bucket LIMIT 1;

@@ -1,1 +1,0 @@
-SELECT *, PERCENT_RANK() OVER (PARTITION BY status ORDER BY monthly_fee DESC NULLS FIRST) AS monthly_fee_percent_rank, AVG(monthly_fee) OVER (PARTITION BY status ORDER BY end_date, id ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) AS monthly_fee_avg_3_prior, MIN(monthly_fee) OVER (PARTITION BY status) AS status_min_monthly_fee FROM subscriptions

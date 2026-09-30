@@ -1,1 +1,0 @@
-WITH AccountTotals AS (SELECT account_id, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, A.avg_amount FROM accounts a LEFT JOIN AccountTotals A ON a.id = A.account_id WHERE A.avg_amount >= 47

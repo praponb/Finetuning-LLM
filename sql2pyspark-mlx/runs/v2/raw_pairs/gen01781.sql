@@ -1,1 +1,0 @@
-SELECT product_id, DATE_TRUNC('MONTH', sale_date) sale_month, ROUND(AVG(units), 2) avg_units, MAX(units) - MIN(units) units_range FROM store_sales WHERE sale_date >= '2023-05-16' AND units < 26 AND revenue <= 3500 GROUP BY product_id, DATE_TRUNC('MONTH', sale_date);

@@ -1,1 +1,0 @@
-SELECT YEAR(c.signup_date) AS signup_year, MIN(s.started_at) AS min_started_at, COUNT(CASE WHEN s.device = 'mobile' THEN 1 END) AS mobile_count FROM sessions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY YEAR(c.signup_date) ORDER BY signup_year DESC;

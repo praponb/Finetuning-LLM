@@ -1,1 +1,0 @@
-SELECT MONTH(o.order_date) AS order_month, SUM(oi.unit_price) AS total_unit_price FROM order_items oi INNER JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id GROUP BY MONTH(o.order_date) HAVING SUM(oi.unit_price) > 2100 ORDER BY order_month DESC;

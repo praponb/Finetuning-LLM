@@ -1,1 +1,0 @@
-SELECT QUARTER(delivered_date) AS delivered_quarter, ROUND((100 * SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_lost, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list FROM shipments WHERE shipped_date >= '2024-12-01' GROUP BY QUARTER(delivered_date) HAVING ROUND((100 * SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 66;

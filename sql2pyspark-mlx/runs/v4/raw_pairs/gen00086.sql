@@ -1,1 +1,0 @@
-with valid as (select *, round(duration_sec * 0.9, 2) as adjusted_duration_sec from web_events where duration_sec <> 301) select page from valid except all select page from web_events where hour(event_time) between 7 and 10

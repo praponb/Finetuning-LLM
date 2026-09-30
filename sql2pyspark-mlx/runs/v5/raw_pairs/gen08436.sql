@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', event_time) AS event_month, SUM(duration_sec) AS total_duration_sec, ROUND(SUM(duration_sec) * 100.0 / SUM(SUM(duration_sec)) OVER (), 2) AS pct_of_total FROM web_events GROUP BY DATE_TRUNC('MONTH', event_time) ORDER BY total_duration_sec DESC, event_month LIMIT 3;

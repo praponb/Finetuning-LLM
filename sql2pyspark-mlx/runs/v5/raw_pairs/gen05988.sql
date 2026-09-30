@@ -1,1 +1,0 @@
-select id, delivered_date, cost, last_value(cost) over (order by delivered_date, id rows between unbounded preceding and unbounded following) as last_cost, row_number() over (order by delivered_date, id) as delivered_date_row from shipments where cost >= 90 order by id desc;

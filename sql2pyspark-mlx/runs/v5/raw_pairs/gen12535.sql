@@ -1,1 +1,0 @@
-with filtered as (select *, initcap(trim(status)) as status_title, coalesce(method, 'UNKNOWN') as method_clean from payments where paid_at > timestamp '2023-09-05 00:00:00' and paid_at >= '2023-05-01') select id from filtered intersect all select id from payments where order_id in (10, 23, 35);

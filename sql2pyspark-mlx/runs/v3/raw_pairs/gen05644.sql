@@ -1,1 +1,0 @@
-select * from (select location, dept_name, sum(case when location = 'New York' then budget else 0 end) as new_york_budget, round(stddev(budget), 2) as stddev_budget from departments group by location, dept_name) as s where stddev_budget > 31 order by new_york_budget desc;

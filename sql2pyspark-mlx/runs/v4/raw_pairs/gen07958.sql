@@ -1,1 +1,0 @@
-SELECT o.customer_id, MIN(oi.unit_price) AS min_unit_price, AVG(oi.quantity) AS avg_quantity FROM order_items oi JOIN orders o ON oi.order_id = o.id JOIN customers c ON o.customer_id = c.id GROUP BY o.customer_id ORDER BY min_unit_price DESC;

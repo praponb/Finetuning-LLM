@@ -1,1 +1,0 @@
-SELECT p.id, p.method, p.order_id, o.customer_id, o.discount, s.region FROM payments p FULL OUTER JOIN orders o ON p.order_id = o.id JOIN stores s ON o.store_id = s.id WHERE o.store_id IN (25, 36) ORDER BY region, id DESC

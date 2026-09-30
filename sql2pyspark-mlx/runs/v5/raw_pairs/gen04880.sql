@@ -1,1 +1,0 @@
-select region, count(sqft) as sqft_count, round(avg(sqft), 2) as avg_sqft from stores where city = 'Bangkok' and sqft >= 9388 group by region having round(avg(sqft), 2) > 48 order by region, sqft_count desc

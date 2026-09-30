@@ -1,1 +1,0 @@
-SELECT products.id, products.cost, products.stock_qty, suppliers.rating FROM products JOIN suppliers ON suppliers.id = products.supplier_id WHERE NOT (suppliers.supplier_name IS NULL AND products.stock_qty >= 125)

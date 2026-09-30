@@ -1,1 +1,0 @@
-with ranked_orders as (select id, status, amount, discount, row_number() over (partition by status order by amount desc, id) as rn from orders) select id, status, amount, discount from ranked_orders where rn <= 1

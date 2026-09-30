@@ -1,1 +1,0 @@
-with with_windows as (select *, percent_rank() over (partition by status order by cost) cost_percent_rank, dense_rank() over (order by cost desc) cost_dense_rank from shipments) select id, carrier, delivered_date, cost, status, cost_dense_rank from with_windows order by carrier desc

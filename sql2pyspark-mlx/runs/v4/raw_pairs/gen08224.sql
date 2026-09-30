@@ -1,1 +1,0 @@
-SELECT e.id, e.job_title, e.hire_date, e.full_name, d.dept_name, d.location, d.budget FROM employees e JOIN departments d ON e.dept_id = d.id WHERE d.dept_name IN ('Legal', 'Sales') ORDER BY id DESC LIMIT 50;

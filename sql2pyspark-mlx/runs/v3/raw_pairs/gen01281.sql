@@ -1,1 +1,0 @@
-SELECT YEAR(hire_date) hire_year, job_title, level, SUM(salary) total_salary, SORT_ARRAY(COLLECT_SET(job_title)) job_title_list FROM employees WHERE manager_id = 38 AND salary > 96000 GROUP BY 1, 2, 3

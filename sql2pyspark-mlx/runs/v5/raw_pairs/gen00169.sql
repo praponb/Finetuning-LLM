@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('YEAR', started_at) AS year_start, customer_id, COUNT(DISTINCT country) AS distinct_countries, (UNIX_TIMESTAMP(MAX(started_at)) - UNIX_TIMESTAMP(MIN(started_at))) / 60 AS span_minutes FROM sessions GROUP BY GROUPING SETS ((DATE_TRUNC('YEAR', started_at), customer_id), (DATE_TRUNC('YEAR', started_at))) ORDER BY year_start DESC NULLS LAST

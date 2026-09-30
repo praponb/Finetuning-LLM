@@ -1,1 +1,0 @@
-WITH ValidWebEvents AS (SELECT * FROM web_events WHERE event_time < '2025-07-01' OR session_id IN (10, 30)), web_events_stats AS (SELECT HOUR(event_time) AS event_hour, SUM(CASE WHEN page = '/search' THEN 1 ELSE 0 END) AS search_count FROM ValidWebEvents GROUP BY HOUR(event_time)) SELECT * FROM web_events_stats ORDER BY 2 DESC, event_hour DESC

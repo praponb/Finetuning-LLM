@@ -1,1 +1,0 @@
-select date_trunc('month', started_at) as activity_month, country, count_if(browser = 'Safari') as safari_events, sort_array(collect_set(country)) as country_list, sort_array(collect_set(browser)) as browser_list, grouping_id() as grouping_level from sessions group by cube (date_trunc('month', started_at), country)

@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', s.started_at) AS started_month, ROUND(AVG(we.duration_sec), 2) AS avg_duration_sec FROM web_events we LEFT JOIN sessions s ON s.id = we.session_id LEFT JOIN customers c ON s.customer_id = c.id GROUP BY DATE_TRUNC('MONTH', s.started_at) ORDER BY started_month ASC

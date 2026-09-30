@@ -1,1 +1,0 @@
-select *, avg(rating) over (partition by country, city order by rating, id rows between 3 preceding and 1 preceding) rating_avg_3_prior, max(rating) over w_part country_max_rating, sum(rating) over (partition by city, country order by rating, id rows between unbounded preceding and current row) cumulative_rating from suppliers window w_part as (partition by country);

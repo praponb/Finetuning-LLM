@@ -1,1 +1,0 @@
-SELECT customers.id, customers.country, customers.name FROM customers WHERE EXISTS (SELECT 1 FROM subscriptions WHERE subscriptions.customer_id = customers.id AND subscriptions.end_date < '2023-05-21') ORDER BY country ASC;

@@ -1,1 +1,0 @@
-SELECT MONTH(sale_date) sale_month, store_id, COUNT(DISTINCT revenue) unique_stores, MAX(sale_date) latest_sale_date FROM store_sales WHERE revenue BETWEEN 2100 AND 2500 GROUP BY MONTH(sale_date), store_id ORDER BY latest_sale_date DESC;

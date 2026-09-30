@@ -1,1 +1,0 @@
-SELECT * FROM employees WHERE salary BETWEEN 129000 AND 130000 AND dept_id = 24;

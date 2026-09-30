@@ -1,1 +1,0 @@
-select case when balance >= 69000 then 'high' when balance >= 7000 then 'mid' else 'low' end as balance_bucket, max(balance) - min(balance) as balance_range, sum(balance) as total_balance from accounts group by balance_bucket order by balance_range

@@ -1,1 +1,0 @@
-select o.status, count(case when s.carrier = 'UPS' then 1 end) as ups_count, concat_ws(', ', sort_array(collect_set(s.carrier))) as carrier_values from shipments s inner join orders o on s.order_id = o.id group by o.status

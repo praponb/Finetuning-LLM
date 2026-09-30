@@ -1,1 +1,0 @@
-WITH eligible AS (SELECT s.* FROM orders s WHERE NOT EXISTS (SELECT 1 FROM shipments x WHERE x.order_id = s.id AND x.status IN ('RETURNED', 'DELIVERED'))) SELECT id, customer_id, store_id, order_date, status, channel, amount, discount FROM eligible ORDER BY customer_id NULLS FIRST

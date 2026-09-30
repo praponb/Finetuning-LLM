@@ -1,1 +1,0 @@
-SELECT id, end_date, start_date, customer_id, DATE_FORMAT(end_date, 'yyyy-MM-dd') AS end_date_label, DATEDIFF(start_date, end_date) AS days_end_date_to_start_date FROM subscriptions WHERE monthly_fee BETWEEN 90 AND 100

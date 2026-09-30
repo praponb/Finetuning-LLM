@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN quantity >= 232 THEN 'high' WHEN quantity >= 113 THEN 'mid' ELSE 'low' END AS quantity_bucket, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) - MIN(quantity) AS quantity_range, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY 1, 2 HAVING ROUND(STDDEV(quantity), 2) > 55

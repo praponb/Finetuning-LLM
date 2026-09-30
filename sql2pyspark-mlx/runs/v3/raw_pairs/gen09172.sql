@@ -1,1 +1,0 @@
-select ss.revenue, ss.sale_date, p.stock_qty, s.country, s.rating, coalesce(s.supplier_name, 'N/A') supplier_name_filled from store_sales ss join products p on ss.product_id = p.id join suppliers s on p.supplier_id = s.id where s.city not in ('Chiang Mai', 'Singapore') order by supplier_name_filled, stock_qty desc;

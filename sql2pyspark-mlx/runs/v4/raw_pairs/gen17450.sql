@@ -1,1 +1,0 @@
-select city, avg_rating, london_count from (select city, avg(rating) as avg_rating, sum(case when city = 'London' then 1 else 0 end) as london_count from suppliers group by city) as sub where london_count < 62;

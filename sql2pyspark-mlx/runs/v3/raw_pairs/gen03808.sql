@@ -1,1 +1,0 @@
-SELECT s.shipped_date, s.status, o.order_date, c.country, c.signup_date, CASE WHEN c.is_active THEN 'Yes' ELSE 'No' END AS is_active_label FROM shipments s JOIN orders o ON s.order_id = o.id LEFT OUTER JOIN customers c ON o.customer_id = c.id

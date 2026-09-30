@@ -1,1 +1,0 @@
-SELECT accounts.status, transactions.account_id, TO_DATE(transactions.txn_time) txn_time_date FROM accounts LEFT OUTER JOIN transactions ON accounts.id = transactions.account_id WHERE transactions.merchant IS NOT NULL OR transactions.account_id IN (23, 32, 35, 36) ORDER BY status DESC;

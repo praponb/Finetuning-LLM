@@ -1,1 +1,0 @@
-SELECT MIN(opened_date) AS min_opened_date, MAX(sqft) - MIN(sqft) AS sqft_range FROM stores WHERE (region != 'South' AND sqft BETWEEN 5182 AND 12973) OR city IN ('Chiang Mai', 'New York') ORDER BY sqft_range DESC

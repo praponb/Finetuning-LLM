@@ -1,1 +1,0 @@
-SELECT end_quarter, unique_statuss FROM (SELECT QUARTER(end_date) AS end_quarter, COUNT(DISTINCT monthly_fee) AS unique_statuss FROM subscriptions WHERE plan IN ('standard', 'enterprise') GROUP BY QUARTER(end_date)) AS sub WHERE unique_statuss >= 9;

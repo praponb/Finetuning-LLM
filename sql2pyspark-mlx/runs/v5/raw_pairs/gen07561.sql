@@ -1,1 +1,0 @@
-SELECT s.id, s.customer_id, s.end_date, s.start_date FROM subscriptions s WHERE s.status = 'PAUSED' AND s.customer_id IN (SELECT id FROM customers WHERE email LIKE '%@yahoo.com') ORDER BY customer_id DESC

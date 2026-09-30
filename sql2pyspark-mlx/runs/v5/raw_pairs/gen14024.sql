@@ -1,1 +1,0 @@
-SELECT id, is_flagged, amount, IF(is_flagged, 'Yes', 'No') AS is_flagged_label, SUBSTRING(merchant, 1, 3) AS merchant_prefix FROM transactions WHERE txn_type = 'CREDIT' OR txn_time >= '2025-01-01' ORDER BY amount DESC, is_flagged_label

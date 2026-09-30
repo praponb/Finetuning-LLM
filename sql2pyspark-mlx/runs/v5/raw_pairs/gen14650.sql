@@ -1,1 +1,0 @@
-select store_sales.id, store_sales.revenue, products.brand, stores.opened_date from store_sales inner join products on store_sales.product_id = products.id inner join stores on store_sales.store_id = stores.id where stores.region = 'North' and store_sales.product_id in (5, 6) order by id limit 10;

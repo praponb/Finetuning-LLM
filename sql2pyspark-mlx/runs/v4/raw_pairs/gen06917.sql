@@ -1,1 +1,0 @@
-select quarter(s.opened_date) as opened_quarter, round((100 * sum(case when o.channel = 'store' then 1 else 0 end)) / count(*), 1) as pct_store from orders o inner join stores s on o.store_id = s.id where o.amount > 730 group by quarter(s.opened_date) having pct_store > 63 order by opened_quarter, pct_store desc limit 50

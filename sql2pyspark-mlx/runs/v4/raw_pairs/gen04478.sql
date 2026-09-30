@@ -1,1 +1,0 @@
-select status, mobile_shipping_fee, pct_returned from (select status, sum(case when channel = 'mobile' then shipping_fee else 0 end) as mobile_shipping_fee, round((100 * sum(case when status = 'RETURNED' then 1 else 0 end)) / count(*), 1) as pct_returned from orders group by status) as s where pct_returned >= 23;

@@ -1,1 +1,0 @@
-SELECT store_id, sale_month, stddev_revenue FROM (SELECT store_id, DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales WHERE product_id IN (1, 6, 10) GROUP BY store_id, DATE_FORMAT(sale_date, 'yyyy-MM')) AS x WHERE stddev_revenue > 42 ORDER BY store_id DESC

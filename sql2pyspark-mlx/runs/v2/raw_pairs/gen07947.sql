@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.store_id, store_sales.sale_date, stores.store_name, products.supplier_id FROM store_sales INNER JOIN stores ON store_sales.store_id = stores.id INNER JOIN products ON store_sales.product_id = products.id WHERE stores.opened_date < '2025-03-01' ORDER BY 2

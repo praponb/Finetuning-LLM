@@ -1,1 +1,0 @@
-SELECT account_type, status, MAX(balance) AS max_balance, SORT_ARRAY(COLLECT_SET(status)) AS status_list, AVG(balance) AS avg_balance FROM accounts GROUP BY CUBE(account_type, status) ORDER BY status, 1 DESC;

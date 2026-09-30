@@ -1,1 +1,0 @@
-select id, country, signup_date, segment, age, ntile(3) over (partition by country order by signup_date, id) signup_date_ntile, round(avg(age) over (partition by segment order by signup_date, id rows between 3 preceding and current row), 2) age_moving_avg_4 from customers order by signup_date desc, age_moving_avg_4 desc;

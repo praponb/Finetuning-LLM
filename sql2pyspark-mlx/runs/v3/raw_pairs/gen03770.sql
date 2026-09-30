@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, COUNT(*) AS inventory_count, MIN(last_restock) AS first_last_restock FROM inventory WHERE quantity BETWEEN 180 AND 226 GROUP BY product_id) SELECT p.id, p.stock_qty, p.brand, ps.inventory_count, ps.first_last_restock FROM products p LEFT JOIN product_summary ps ON p.id = ps.product_id ORDER BY inventory_count DESC

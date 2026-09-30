@@ -1,1 +1,0 @@
-SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) AS max_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE product_id = 9 GROUP BY store_id ORDER BY max_quantity DESC, avg_quantity ASC;

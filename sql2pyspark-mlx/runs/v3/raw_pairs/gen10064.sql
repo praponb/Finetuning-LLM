@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.amount FROM transactions WHERE transactions.txn_time >= '2023-06-01' AND transactions.account_id NOT IN (SELECT id FROM accounts WHERE customer_id IN (3, 16, 28)) ORDER BY amount DESC

@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity, unit_price, LEAD(quantity, 1, 0) OVER (PARTITION BY product_id ORDER BY quantity, id) AS next_quantity, LAG(quantity, 1) OVER (ORDER BY unit_price, id) AS prev_quantity FROM order_items

@@ -1,1 +1,0 @@
-SELECT supplier_id, MAX(price) - MIN(price) price_range FROM products WHERE (brand IN ('Umbrella', 'Globex') AND ARRAY_CONTAINS(tags, 'premium')) OR supplier_id IN (2, 8, 24, 27) GROUP BY supplier_id HAVING MAX(price) - MIN(price) > 26;

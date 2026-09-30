@@ -1,1 +1,0 @@
-SELECT s.id, s.city, t.category_list, t.pct_home FROM suppliers s INNER JOIN (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(category)) AS category_list, ROUND((100 * SUM(CASE WHEN category = 'Home' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_home FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY pct_home DESC;

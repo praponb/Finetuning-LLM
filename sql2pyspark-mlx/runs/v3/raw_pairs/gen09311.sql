@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3707000 THEN 'high' WHEN budget >= 1039000 THEN 'mid' ELSE 'low' END budget_bucket, COUNT(budget) budget_count FROM departments GROUP BY CASE WHEN budget >= 3707000 THEN 'high' WHEN budget >= 1039000 THEN 'mid' ELSE 'low' END ORDER BY budget_bucket

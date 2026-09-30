@@ -1,1 +1,0 @@
-WITH recent_orders AS (SELECT *, CASE WHEN shipping_fee >= 39 THEN 'High' WHEN shipping_fee >= 15 THEN 'Medium' ELSE 'Low' END AS shipping_fee_tier FROM orders WHERE customer_id = 35), agg AS (SELECT channel, status, ROUND(STDDEV(discount), 2) AS stddev_discount FROM recent_orders GROUP BY channel, status) SELECT channel, status, stddev_discount FROM agg ORDER BY status DESC

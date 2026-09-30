@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, created_at, EXPLODE(coupon_codes) AS value FROM carts) SELECT id, value, CASE WHEN value RLIKE '^(BUNDLE|VIP)$' THEN 'GROUP_B' ELSE 'GROUP_A' END AS value_zone FROM lines ORDER BY value_zone DESC;

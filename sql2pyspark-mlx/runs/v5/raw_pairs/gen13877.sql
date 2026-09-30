@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, unit_price - quantity AS line_total FROM order_items WHERE product_id IS NOT NULL) SELECT id, order_id, kpi, value FROM (SELECT id, order_id, unit_price, line_total FROM base) src UNPIVOT INCLUDE NULLS (value FOR kpi IN (unit_price AS UNIT_PRICE_VAL, line_total AS LINE_TOTAL_VAL));

@@ -1,1 +1,0 @@
-with customer_stats as (select customer_id, max(started_at) as last_started_at, sort_array(collect_set(country)) as country_list from sessions where device not in ('mobile', 'tablet') group by customer_id) select c.country, c.email, cs.last_started_at, cs.country_list from customers c join customer_stats cs on c.id = cs.customer_id order by c.email;

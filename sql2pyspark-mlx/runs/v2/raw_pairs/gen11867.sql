@@ -1,1 +1,0 @@
-SELECT p.category, YEAR(p.launch_date) launch_year, COUNT(DISTINCT i.quantity) unique_products FROM inventory i INNER JOIN products p ON i.product_id = p.id RIGHT OUTER JOIN stores s ON i.store_id = s.id WHERE i.product_id = 7 GROUP BY p.category, YEAR(p.launch_date);

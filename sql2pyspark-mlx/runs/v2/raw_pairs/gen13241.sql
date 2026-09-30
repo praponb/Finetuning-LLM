@@ -1,1 +1,0 @@
-SELECT c.id, c.name, t.first_order_date, t.min_order_date FROM customers c LEFT JOIN (SELECT customer_id, MIN(order_date) AS first_order_date, MIN(order_date) AS min_order_date FROM orders GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY min_order_date, name;

@@ -1,1 +1,0 @@
-SELECT e.id, e.dept_id AS employee_dept_id, m.hire_date AS manager_hire_date, m.is_remote AS manager_is_remote FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.email IS NOT NULL ORDER BY manager_hire_date;

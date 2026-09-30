@@ -1,1 +1,0 @@
-SELECT id, opened_date, balance, CASE WHEN account_type = 'LOAN' THEN 1 ELSE 0 END AS is_loan, COALESCE(balance, 0) AS balance_filled FROM accounts WHERE status IN ('OPEN', 'CLOSED') OR customer_id IN (30, 34, 36, 40);

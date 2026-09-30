@@ -1,1 +1,0 @@
-SELECT page, pct_home FROM (SELECT page, ROUND((100 * SUM(CASE WHEN page = '/home' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_home FROM web_events WHERE session_id IN (25, 28, 30, 36) GROUP BY page) AS t WHERE pct_home < 23

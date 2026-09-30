@@ -1,1 +1,0 @@
-SELECT c.country, a.status, COUNT(*) AS rows_total, SUM(a.monthly_fee) AS total_monthly_fee, GROUPING_ID() AS grouping_level FROM subscriptions a INNER JOIN customers c ON a.customer_id = c.id GROUP BY GROUPING SETS ((c.country, a.status), (c.country), ())

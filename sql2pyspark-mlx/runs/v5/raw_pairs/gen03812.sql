@@ -1,1 +1,0 @@
-WITH ranked_sessions AS (SELECT id, device, started_at, customer_id, RANK() OVER (PARTITION BY device ORDER BY started_at) AS pos FROM sessions) SELECT id, device, started_at, customer_id FROM ranked_sessions WHERE pos <= 3

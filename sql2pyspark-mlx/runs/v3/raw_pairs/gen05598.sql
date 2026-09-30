@@ -1,1 +1,0 @@
-WITH recent_employees AS (SELECT * FROM employees WHERE salary < 59000 AND dept_id IN (6, 17, 39)), hire_month_summary AS (SELECT MONTH(hire_date) AS hire_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM recent_employees GROUP BY MONTH(hire_date)) SELECT * FROM hire_month_summary;

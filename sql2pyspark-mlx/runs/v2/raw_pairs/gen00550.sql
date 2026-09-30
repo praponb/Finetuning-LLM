@@ -1,1 +1,0 @@
-SELECT i.store_id, i.quantity, s.sqft, s.opened_date, p.product_name FROM inventory i INNER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON p.id = i.product_id WHERE i.last_restock BETWEEN '2024-01-01' AND '2024-03-01' AND s.store_name LIKE 'Ma%';

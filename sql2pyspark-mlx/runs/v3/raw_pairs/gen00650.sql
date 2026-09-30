@@ -1,1 +1,0 @@
-SELECT c.id, c.signup_date, c.is_active FROM customers c WHERE c.country = 'JP' AND NOT EXISTS (SELECT 1 FROM subscriptions s WHERE s.customer_id = c.id AND s.customer_id IN (1, 10)) ORDER BY signup_date

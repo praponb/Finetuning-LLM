@@ -1,1 +1,0 @@
-select s.customer_id, s.country, t.unique_pages from sessions s join (select session_id, count(distinct duration_sec) as unique_pages from web_events group by session_id) t on s.id = t.session_id order by s.customer_id desc;

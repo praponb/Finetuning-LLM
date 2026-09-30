@@ -1,1 +1,0 @@
-with products_by_supplier as (select supplier_id, sum(stock_qty) as total_stock_qty, min(price) as min_price from products where price < 620 group by supplier_id) select s.id, s.rating, pbs.total_stock_qty, pbs.min_price from suppliers s inner join products_by_supplier pbs on s.id = pbs.supplier_id where pbs.min_price >= 510 order by id

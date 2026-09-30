@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, customer_id, plan, start_date, end_date, monthly_fee, CEIL(monthly_fee) AS monthly_fee_whole FROM subscriptions WHERE end_date > DATE '2024-02-04') SELECT customer_id, id FROM cleaned INTERSECT SELECT customer_id, id FROM subscriptions WHERE status IN ('ACTIVE', 'CANCELLED', 'EXPIRED')

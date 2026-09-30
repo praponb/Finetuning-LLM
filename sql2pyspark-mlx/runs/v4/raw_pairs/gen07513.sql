@@ -1,1 +1,0 @@
-with src as (select * from products where brand in ('Stark', 'Initech', 'Acme') and cost < 600), summary as (select category, sum(price) as total_price from src group by category) select * from summary order by total_price, category limit 10

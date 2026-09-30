@@ -1,1 +1,0 @@
-SELECT products.brand, MAX(inventory.last_restock) AS last_last_restock FROM inventory INNER JOIN products ON products.id = inventory.product_id INNER JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY products.brand ORDER BY last_last_restock;

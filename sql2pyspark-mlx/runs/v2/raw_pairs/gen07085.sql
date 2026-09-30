@@ -1,1 +1,0 @@
-SELECT brand, category, MIN(cost) AS min_cost FROM products WHERE UPPER(product_name) LIKE '%ACK%' AND launch_date > '2023-10-02' GROUP BY 1, 2 HAVING MIN(cost) >= 410 ORDER BY min_cost DESC, category ASC;

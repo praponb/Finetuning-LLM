@@ -1,1 +1,0 @@
-WITH ranked_employees AS (SELECT id, job_title, hire_date, email, ROW_NUMBER() OVER (PARTITION BY job_title ORDER BY hire_date DESC, id) row_num FROM employees) SELECT * FROM ranked_employees WHERE row_num <= 5;

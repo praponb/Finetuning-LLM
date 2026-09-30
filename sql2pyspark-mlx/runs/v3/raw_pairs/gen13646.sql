@@ -1,1 +1,0 @@
-SELECT p.supplier_id, MAX(ss.revenue) AS max_revenue FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id WHERE p.cost <= 570 GROUP BY p.supplier_id ORDER BY max_revenue, supplier_id LIMIT 3

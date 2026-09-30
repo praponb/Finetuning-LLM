@@ -1,1 +1,0 @@
-SELECT o.channel, MIN(oi.quantity) AS min_quantity, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id GROUP BY o.channel HAVING avg_unit_price >= 59 ORDER BY avg_unit_price DESC

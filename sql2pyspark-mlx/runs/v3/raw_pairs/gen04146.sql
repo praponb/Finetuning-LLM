@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, ROUND(STDDEV(amount), 2) AS stddev_amount FROM orders GROUP BY store_id) SELECT stores.id, stores.store_name, stores.region, store_totals.stddev_amount FROM stores INNER JOIN store_totals ON stores.id = store_totals.store_id WHERE store_totals.stddev_amount > 22 ORDER BY 4 DESC, id ASC LIMIT 3;

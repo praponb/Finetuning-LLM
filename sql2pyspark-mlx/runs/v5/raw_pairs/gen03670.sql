@@ -1,1 +1,0 @@
-SELECT id, event_time, duration_sec, AVG(duration_sec) OVER (PARTITION BY page, session_id) AS page_avg_duration_sec, DENSE_RANK() OVER (PARTITION BY event_type, session_id ORDER BY duration_sec NULLS LAST) AS duration_sec_dense_rank FROM web_events;

@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, status, shipped_date, carrier, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date DESC, id) AS pos FROM shipments) SELECT * FROM ranked WHERE pos <= 3 ORDER BY shipped_date

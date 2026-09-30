@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, COUNT(DISTINCT s.customer_id) AS unique_customers FROM sessions s INNER JOIN customers c ON c.id = s.customer_id GROUP BY DATE_TRUNC('MONTH', c.signup_date) ORDER BY unique_customers DESC;

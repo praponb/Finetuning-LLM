@@ -1,1 +1,0 @@
-select round((100 * sum(case when txn_type = 'DEBIT' then 1 else 0 end)) / count(*), 1) pct_debit, count(case when merchant = '7-Eleven' then 1 end) 7_eleven_count, max(amount) max_amount from transactions order by 7_eleven_count desc;

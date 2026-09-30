@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, LAST_DAY(hire_date) AS hire_date_month_end, TRIM(email) AS clean_email FROM employees WHERE level IN ('L2', 'L4')) SELECT job_title, id FROM filtered INTERSECT ALL SELECT job_title, id FROM employees WHERE level IN ('L3', 'L2', 'L4')

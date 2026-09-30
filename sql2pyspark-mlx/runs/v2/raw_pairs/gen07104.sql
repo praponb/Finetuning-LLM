@@ -1,1 +1,0 @@
-SELECT id, page, event_time, duration_sec, ROUND(AVG(duration_sec) OVER (PARTITION BY page ORDER BY event_time, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS duration_sec_moving_avg_3 FROM web_events WHERE session_id IN (16, 26, 27, 30);

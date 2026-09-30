@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, merchant, SUM(CASE WHEN txn_type = 'DEBIT' THEN amount ELSE 0 END) AS debit_amount FROM transactions GROUP BY txn_month, merchant ORDER BY txn_month, debit_amount

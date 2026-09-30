@@ -1,1 +1,0 @@
-WITH SupplierSummary AS (SELECT supplier_id, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range, SUM(CASE WHEN brand = 'Initech' THEN cost ELSE 0 END) AS initech_cost FROM products GROUP BY supplier_id) SELECT s.city, S.stock_qty_range, S.initech_cost FROM suppliers s INNER JOIN SupplierSummary S ON s.id = S.supplier_id

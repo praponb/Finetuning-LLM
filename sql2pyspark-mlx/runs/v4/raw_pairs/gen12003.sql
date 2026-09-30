@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, currency, EXPLODE(tier_limits) AS tier_value FROM price_tiers) SELECT currency, AVG(tier_value) FILTER (WHERE currency = 'EUR') AS eur_avg_tier_value, SIZE(COLLECT_SET(currency)) AS num_currencies, COUNT(DISTINCT currency) AS distinct_currencies FROM exploded GROUP BY ROLLUP (currency) HAVING eur_avg_tier_value > 0 ORDER BY currency DESC NULLS LAST

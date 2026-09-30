@@ -1,1 +1,0 @@
-WITH RankedTransactions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY txn_time DESC, id) AS pos FROM transactions) SELECT id, txn_type, txn_time FROM RankedTransactions WHERE pos <= 3

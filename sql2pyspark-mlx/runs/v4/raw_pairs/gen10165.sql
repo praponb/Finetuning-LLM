@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM orders WHERE amount >= 490), summary AS (SELECT channel, COUNT(CASE WHEN channel = 'partner' THEN 1 END) AS partner_count, MAX(amount) AS max_amount FROM src GROUP BY channel) SELECT channel, partner_count, max_amount FROM summary WHERE max_amount >= 1440 ORDER BY channel DESC LIMIT 3

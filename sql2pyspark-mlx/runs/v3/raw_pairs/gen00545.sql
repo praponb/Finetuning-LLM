@@ -1,1 +1,0 @@
-SELECT HOUR(event_time) event_hour, ROUND(STDDEV(duration_sec), 2) stddev_duration_sec, MAX(event_time) latest_event_time, COUNT(*) row_count FROM web_events WHERE (duration_sec BETWEEN 243 AND 276 AND event_time < '2024-05-01') OR event_type = 'click' GROUP BY 1 HAVING ROUND(STDDEV(duration_sec), 2) > 44

@@ -1,1 +1,0 @@
-SELECT status, channel, CASE WHEN discount >= 0.42 THEN 'high' WHEN discount >= 0.17 THEN 'mid' ELSE 'low' END AS discount_bucket, COUNT(shipping_fee) AS shipping_fee_count FROM orders GROUP BY 1, 2, 3 ORDER BY discount_bucket DESC;

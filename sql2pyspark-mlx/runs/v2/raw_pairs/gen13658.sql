@@ -1,1 +1,0 @@
-WITH valid_stores AS (SELECT * FROM stores WHERE region = 'West' AND UPPER(store_name) LIKE '%ALL%'), agg AS (SELECT region, city, MAX(sqft) AS max_sqft FROM valid_stores GROUP BY region, city) SELECT * FROM agg ORDER BY region DESC;

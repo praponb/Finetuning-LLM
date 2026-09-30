@@ -1,1 +1,0 @@
-SELECT QUARTER(orders.order_date) AS order_quarter, MAX(shipments.cost) - MIN(shipments.cost) AS cost_range FROM shipments JOIN orders ON shipments.order_id = orders.id WHERE shipments.order_id IS NULL GROUP BY QUARTER(orders.order_date)

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, SUM(CASE WHEN status = 'REFUNDED' THEN 1 ELSE 0 END) AS refunded_count FROM payments WHERE amount BETWEEN 840 AND 1160 GROUP BY status) AS t WHERE refunded_count > 72 ORDER BY status_values, status LIMIT 20

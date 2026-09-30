@@ -1,1 +1,0 @@
-WITH recent_store_sales AS (SELECT * FROM store_sales WHERE revenue < 3400), store_sales_stats AS (SELECT store_id, COUNT(revenue) AS revenue_count, COUNT(*) AS num_store_sales FROM recent_store_sales GROUP BY store_id) SELECT store_id, num_store_sales FROM store_sales_stats WHERE num_store_sales >= 9 ORDER BY num_store_sales DESC, store_id LIMIT 5

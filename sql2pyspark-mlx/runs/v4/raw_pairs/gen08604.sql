@@ -1,1 +1,0 @@
-SELECT id, session_id, event_type, page, event_time, duration_sec, AVG(duration_sec) OVER (PARTITION BY session_id, event_type ORDER BY event_time, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS duration_sec_avg_2, PERCENT_RANK() OVER (PARTITION BY page ORDER BY duration_sec DESC NULLS LAST) AS duration_sec_percent_rank FROM web_events

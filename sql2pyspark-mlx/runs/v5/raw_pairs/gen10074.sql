@@ -1,1 +1,0 @@
-SELECT YEAR(stores.opened_date) AS opened_year, MIN(store_sales.sale_date) AS min_sale_date, ROUND(AVG(store_sales.units), 2) AS avg_units FROM store_sales INNER JOIN products ON store_sales.product_id = products.id LEFT OUTER JOIN stores ON stores.id = store_sales.store_id WHERE store_sales.revenue BETWEEN 2200 AND 3600 GROUP BY YEAR(stores.opened_date) ORDER BY opened_year DESC

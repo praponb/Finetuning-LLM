@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, QUARTER(launch_date) AS launch_quarter, COUNT(stock_qty) AS stock_qty_count, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range FROM products WHERE supplier_id IS NOT NULL GROUP BY DATE_FORMAT(launch_date, 'yyyy-MM'), QUARTER(launch_date)) AS agg WHERE stock_qty_range > 74;

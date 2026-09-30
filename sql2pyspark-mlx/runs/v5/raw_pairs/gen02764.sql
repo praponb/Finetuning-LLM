@@ -1,1 +1,0 @@
-select s.id, s.store_id, s.status, s.channel, s.amount, s.discount, top1.order_item_quantity, top1.order_item_unit_price from orders s join lateral (select c.quantity as order_item_quantity, c.unit_price as order_item_unit_price from order_items c where c.order_id = s.id order by c.quantity desc, c.id desc limit 1) top1 on true

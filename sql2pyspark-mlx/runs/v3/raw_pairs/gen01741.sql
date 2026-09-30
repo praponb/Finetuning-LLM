@@ -1,1 +1,0 @@
-select p.id, p.amount, p.status, o.customer_id, c.credit_limit from payments p join orders o on p.order_id = o.id left join customers c on o.customer_id = c.id order by amount desc, 4 desc, id limit 3;

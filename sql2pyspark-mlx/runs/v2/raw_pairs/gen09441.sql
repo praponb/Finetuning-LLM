@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', opened_date) opened_month, MAX(balance) max_balance, MIN(opened_date) min_opened_date, ROUND(AVG(balance), 2) avg_balance FROM accounts GROUP BY DATE_TRUNC('MONTH', opened_date) HAVING MAX(balance) > 31000 ORDER BY max_balance DESC

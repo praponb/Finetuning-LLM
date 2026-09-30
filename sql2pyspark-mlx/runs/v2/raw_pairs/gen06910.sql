@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, COUNT(CASE WHEN country = 'UK' THEN 1 END) AS uk_count, COUNT(CASE WHEN device = 'tablet' THEN 1 END) AS tablet_count FROM sessions GROUP BY customer_id) SELECT c.id, c.segment, cs.uk_count, cs.tablet_count FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id

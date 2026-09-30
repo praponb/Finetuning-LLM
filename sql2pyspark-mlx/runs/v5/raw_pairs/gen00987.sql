@@ -1,1 +1,0 @@
-with valid as (select id, city, region, opened_date, case when region in ('West', 'South') then 'Group A' else 'Other' end as region_group, concat(store_name, ' - ', city) as store_name_city from stores where region is not null and region is distinct from 'Central') select city from valid except all select city from stores where opened_date >= '2025-10-09'

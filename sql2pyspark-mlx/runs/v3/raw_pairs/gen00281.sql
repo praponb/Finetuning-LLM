@@ -1,1 +1,0 @@
-SELECT suppliers.city, MIN(store_sales.revenue) AS min_revenue FROM store_sales JOIN products ON store_sales.product_id = products.id LEFT JOIN suppliers ON products.supplier_id = suppliers.id WHERE store_sales.units < 15 GROUP BY suppliers.city HAVING MIN(store_sales.revenue) >= 2900 ORDER BY city DESC LIMIT 1;

@@ -1,1 +1,0 @@
-WITH supplier_stats AS (SELECT supplier_id, MAX(launch_date) AS latest_launch_date FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, s.city, ss.latest_launch_date FROM suppliers s JOIN supplier_stats ss ON s.id = ss.supplier_id ORDER BY 1 DESC LIMIT 50;

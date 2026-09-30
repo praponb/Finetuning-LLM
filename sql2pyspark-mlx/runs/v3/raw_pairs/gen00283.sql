@@ -1,1 +1,0 @@
-WITH WebEventsBySession AS (SELECT session_id, MIN(duration_sec) min_duration_sec, SUM(duration_sec) total_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, W.min_duration_sec, W.total_duration_sec FROM sessions s JOIN WebEventsBySession W ON s.id = W.session_id WHERE W.min_duration_sec >= 340 ORDER BY min_duration_sec ASC, id ASC LIMIT 20

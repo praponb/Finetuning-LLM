@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT brand, CASE WHEN category IN ('Electronics', 'Grocery') THEN 'core' ELSE 'other' END AS category_group, COUNT(*) AS product_count FROM products WHERE price BETWEEN 690 AND 760 GROUP BY brand, CASE WHEN category IN ('Electronics', 'Grocery') THEN 'core' ELSE 'other' END) AS t WHERE product_count > 4 ORDER BY 2

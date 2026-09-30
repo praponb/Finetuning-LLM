@@ -1,1 +1,0 @@
-select case when budget >= 3278000 then 'high' when budget >= 1484000 then 'mid' else 'low' end as budget_bucket, sum(case when location = 'New York' then budget else 0 end) as new_york_budget, round((100 * sum(case when location = 'Berlin' then 1 else 0 end)) / count(*), 1) as pct_berlin from departments where location = 'Singapore' group by 1 order by pct_berlin;

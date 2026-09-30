@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, DATE_FORMAT(starts_on, 'yyyy-MM-dd') AS starts_on_label FROM promotions WHERE starts_on > DATE '2023-10-24') SELECT * FROM (SELECT promo_code, channel, discount_pct FROM valid) src PIVOT (SUM(discount_pct) AS value_sum, COUNT(1) AS cnt FOR channel IN ('mobile' AS mobile, 'partner' AS partner, 'web' AS web))

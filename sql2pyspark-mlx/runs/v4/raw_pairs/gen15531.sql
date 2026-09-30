@@ -1,1 +1,0 @@
-with filtered as (select *, round(budget * 1.07, 2) as budget_adjusted, lower(dept_name) as dept_name_lower from departments where dept_name is not null and location in ('New York', 'Berlin', 'Chiang Mai')) select * from (select *, rank() over (partition by location, dept_name order by budget desc nulls last) as row_num from filtered) ranked where row_num = 1

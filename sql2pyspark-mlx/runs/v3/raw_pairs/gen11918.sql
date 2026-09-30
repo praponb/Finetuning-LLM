@@ -1,1 +1,0 @@
-SELECT t.id, t.account_id, t.amount, a.status, a.customer_id, c.city, c.segment FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON c.id = a.customer_id ORDER BY customer_id DESC, id ASC LIMIT 5

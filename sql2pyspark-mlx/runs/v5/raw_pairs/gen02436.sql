@@ -1,1 +1,0 @@
-SELECT o.channel, ROUND((100 * SUM(CASE WHEN p.method = 'card' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_card, MAX(p.amount) AS max_amount FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE s.sqft < 9431 GROUP BY o.channel ORDER BY o.channel;

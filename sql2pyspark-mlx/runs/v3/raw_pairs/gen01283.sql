@@ -1,1 +1,0 @@
-WITH recent_suppliers AS (SELECT * FROM suppliers WHERE supplier_name LIKE '%GmbH%'), summary AS (SELECT city, ROUND((100 * SUM(CASE WHEN country = 'DE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_de FROM recent_suppliers GROUP BY city) SELECT * FROM summary ORDER BY pct_de;

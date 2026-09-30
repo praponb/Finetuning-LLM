@@ -1,1 +1,0 @@
-select p.category, round(stddev(oi.quantity), 2) as stddev_quantity, round(stddev(oi.unit_price), 2) as stddev_unit_price from order_items oi left join orders o on oi.order_id = o.id right join products p on oi.product_id = p.id group by p.category;

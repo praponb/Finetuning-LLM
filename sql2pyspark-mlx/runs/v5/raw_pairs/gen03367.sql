@@ -1,1 +1,0 @@
-SELECT oi.id, oi.quantity, oi.product_id, o.order_date, o.store_id, p.price, p.cost FROM order_items oi JOIN orders o ON oi.order_id = o.id LEFT JOIN products p ON oi.product_id = p.id ORDER BY id, o.store_id

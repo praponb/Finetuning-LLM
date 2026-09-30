@@ -1,1 +1,0 @@
-SELECT account_id, SUM(amount) AS total_amount, SUM(SUM(amount)) OVER (ORDER BY account_id) AS cumulative_amount FROM transactions WHERE amount >= 1100 GROUP BY account_id ORDER BY account_id, total_amount DESC LIMIT 50

@@ -1,1 +1,0 @@
-SELECT id, effective_from, tier_limits, discounts, ELEMENT_AT(tier_prices, 1) AS entry_price, SLICE(tier_limits, 1, 2) AS first_two_limits FROM price_tiers WHERE effective_from BETWEEN '2024-11-01' AND '2025-06-01'

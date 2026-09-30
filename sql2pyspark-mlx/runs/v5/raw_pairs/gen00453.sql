@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY level ORDER BY salary DESC, id) AS pos FROM employees WHERE dept_id IN (11, 26, 33)) SELECT id, level, salary, hire_date FROM numbered WHERE pos <= 2;

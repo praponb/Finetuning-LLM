@@ -1,1 +1,0 @@
-SELECT id, customer_id, end_date, monthly_fee FROM (SELECT id, customer_id, end_date, monthly_fee, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY end_date DESC, id) AS rnk FROM subscriptions) AS t WHERE rnk <= 3;

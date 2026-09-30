@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, MIN(event_time) AS first_event_time FROM web_events GROUP BY session_id) SELECT s.customer_id, s.country, st.first_event_time FROM sessions s JOIN session_totals st ON s.id = st.session_id;

@@ -1,1 +1,0 @@
-select * from (select case when rating >= 3.6 then 'high' when rating >= 2.1 then 'mid' else 'low' end rating_bucket, max(rating) max_rating from suppliers where country = 'JP' group by case when rating >= 3.6 then 'high' when rating >= 2.1 then 'mid' else 'low' end) sub where max_rating > 4.1 order by rating_bucket limit 3

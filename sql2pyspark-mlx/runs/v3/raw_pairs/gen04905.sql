@@ -1,1 +1,0 @@
-select id, location, budget, dept_name, last_value(dept_name) over (partition by location order by budget desc, id rows between unbounded preceding and unbounded following) as last_dept_name from departments;

@@ -1,1 +1,0 @@
-SELECT s.id, s.rating, t.min_launch_date FROM suppliers s LEFT JOIN (SELECT supplier_id, MIN(launch_date) AS min_launch_date FROM products WHERE product_name LIKE 'Lap%' GROUP BY supplier_id) t ON s.id = t.supplier_id

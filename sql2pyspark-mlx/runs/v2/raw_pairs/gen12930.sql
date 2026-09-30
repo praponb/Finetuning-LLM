@@ -1,1 +1,0 @@
-WITH top_store_sales AS (SELECT id, store_id, sale_date, revenue, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY sale_date, id) AS row_num FROM store_sales WHERE sale_date <= '2023-03-01') SELECT id, store_id, sale_date, revenue FROM top_store_sales WHERE row_num = 1;

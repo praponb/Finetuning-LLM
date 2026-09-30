@@ -1,1 +1,0 @@
-SELECT account_type, QUARTER(opened_date) AS opened_quarter, COUNT(balance) AS balance_count, COUNT(CASE WHEN account_type = 'CHECKING' THEN 1 END) AS checking_count FROM accounts GROUP BY CUBE(account_type, QUARTER(opened_date))

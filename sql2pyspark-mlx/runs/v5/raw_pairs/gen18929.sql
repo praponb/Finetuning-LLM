@@ -1,1 +1,0 @@
-select *, sum(amount) over (partition by status) as status_sum_amount, sum(amount) over (partition by status, order_id order by amount, id rows between unbounded preceding and current row) as running_amount, rank() over (partition by method order by amount) as amount_rank from payments where method = 'cash';

@@ -1,1 +1,0 @@
-SELECT id, created_at, coupon_codes, ship_to, attributes, COALESCE(ship_to.zip, 'UNKNOWN') AS zip_or_unknown, SIZE(FILTER(items, item -> item.qty >= 3)) AS bulk_lines, AGGREGATE(items, 0.0D, (acc, item) -> acc + item.qty * item.price, acc -> ROUND(acc, 2)) AS basket_amount FROM carts;

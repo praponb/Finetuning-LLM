@@ -1,1 +1,0 @@
-SELECT id, product_id, revenue, sale_date FROM (SELECT id, product_id, revenue, sale_date, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY revenue DESC) AS rnk FROM store_sales) AS t WHERE rnk = 1;

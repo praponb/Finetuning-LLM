@@ -1,1 +1,0 @@
-SELECT p.id, p.brand, COUNT(oi.id) AS order_item_count, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price, MIN(oi.unit_price) AS min_unit_price FROM products p INNER JOIN order_items oi ON oi.product_id = p.id GROUP BY p.id, p.brand ORDER BY avg_unit_price DESC;

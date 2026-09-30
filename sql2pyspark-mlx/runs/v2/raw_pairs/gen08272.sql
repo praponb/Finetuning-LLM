@@ -1,1 +1,0 @@
-select product_id, min(sale_date) as first_sale_date, max(units) - min(units) as units_range from store_sales where revenue between 2000 and 2700 and product_id in (3, 5, 10) group by 1 having max(units) - min(units) > 45 order by product_id desc, units_range;

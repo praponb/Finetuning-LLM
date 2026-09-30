@@ -1,1 +1,0 @@
-select dept_name, sales_count from (select dept_name, count(case when dept_name = 'Sales' then 1 end) as sales_count from departments where dept_name = 'Marketing' group by dept_name) as sub where sales_count > 9 order by dept_name desc, sales_count asc

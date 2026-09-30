@@ -1,1 +1,0 @@
-SELECT store_id, ROUND(AVG(units), 2) AS avg_units, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales WHERE units >= 35 AND store_id IN (5, 6) AND revenue >= 1500 GROUP BY 1 HAVING MAX(units) > 29;

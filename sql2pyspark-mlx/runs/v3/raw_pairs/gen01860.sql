@@ -1,1 +1,0 @@
-SELECT category, CASE WHEN price >= 1300 THEN 'high' WHEN price >= 240 THEN 'mid' ELSE 'low' END AS price_bucket, MAX(price) - MIN(price) AS price_range, MAX(cost) - MIN(cost) AS cost_range, ROUND(STDDEV(cost), 2) AS stddev_cost FROM products WHERE cost BETWEEN 440 AND 580 GROUP BY category, price_bucket HAVING cost_range >= 58;

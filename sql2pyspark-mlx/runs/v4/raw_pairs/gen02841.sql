@@ -1,1 +1,0 @@
-SELECT is_remote, CASE WHEN job_title IN ('Designer', 'Engineer') THEN 'group_a' ELSE 'other' END AS job_title_group, AVG(salary) AS avg_salary FROM employees GROUP BY is_remote, job_title_group ORDER BY avg_salary DESC, job_title_group;

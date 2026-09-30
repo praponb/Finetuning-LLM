@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions WHERE plan IN ('enterprise', 'basic', 'standard') GROUP BY customer_id) SELECT c.id, c.email, c.segment, cs.monthly_fee_count FROM customers c LEFT OUTER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.monthly_fee_count >= 6 ORDER BY id DESC, c.email DESC

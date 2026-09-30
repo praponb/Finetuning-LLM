@@ -1,1 +1,0 @@
-select p.supplier_id, p.brand, t.units_range, t.avg_units from products p inner join (select product_id, max(units) - min(units) as units_range, avg(units) as avg_units from store_sales where units < 23 group by product_id) t on p.id = t.product_id order by avg_units;

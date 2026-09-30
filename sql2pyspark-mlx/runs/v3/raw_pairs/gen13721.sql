@@ -1,1 +1,0 @@
-SELECT QUARTER(txn_time) AS txn_quarter, COUNT(amount) AS amount_count, COUNT(CASE WHEN txn_type = 'CREDIT' THEN 1 END) AS credit_count FROM transactions WHERE merchant IN ('Shell', 'Grab', 'Starbucks') GROUP BY QUARTER(txn_time);

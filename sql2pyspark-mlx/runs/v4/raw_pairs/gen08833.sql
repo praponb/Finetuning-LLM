@@ -1,1 +1,0 @@
-WITH filtered_stores AS (SELECT * FROM stores WHERE (city = 'Tokyo' AND city IN ('Singapore', 'Chiang Mai')) OR city = 'Bangkok'), stores_stats AS (SELECT region, COUNT(CASE WHEN city = 'Chiang Mai' THEN 1 END) AS chiang_mai_count FROM filtered_stores GROUP BY region) SELECT region, chiang_mai_count FROM stores_stats;

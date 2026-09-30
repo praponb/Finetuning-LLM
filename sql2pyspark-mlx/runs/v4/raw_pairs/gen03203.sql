@@ -1,1 +1,0 @@
-WITH ProductStats AS (SELECT product_id, MAX(units) - MIN(units) AS units_range, ROUND(AVG(units), 2) AS avg_units FROM store_sales WHERE units BETWEEN 12 AND 32 GROUP BY product_id) SELECT p.id, p.product_name, p.supplier_id, P.units_range, P.avg_units FROM products p LEFT OUTER JOIN ProductStats P ON p.id = P.product_id WHERE P.avg_units >= 54 ORDER BY p.id DESC;

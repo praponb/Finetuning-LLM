@@ -1,1 +1,0 @@
-SELECT CASE WHEN merchant IN ('Starbucks', 'Amazon') THEN 'group_a' ELSE 'other' END AS merchant_group, ROUND((100 * SUM(CASE WHEN merchant = '7-Eleven' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_7_eleven, MAX(amount) AS max_amount, SUM(amount) AS total_amount FROM transactions WHERE is_flagged OR amount BETWEEN 2100 AND 3000 GROUP BY 1 ORDER BY total_amount DESC

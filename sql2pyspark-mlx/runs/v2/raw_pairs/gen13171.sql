@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM orders WHERE shipping_fee >= 11 AND (status = 'PENDING' OR channel IN ('web', 'store', 'mobile'))), summary AS (SELECT MONTH(order_date) AS order_month, SUM(amount) AS total_amount FROM src GROUP BY MONTH(order_date)) SELECT order_month, total_amount FROM summary WHERE total_amount < 7200

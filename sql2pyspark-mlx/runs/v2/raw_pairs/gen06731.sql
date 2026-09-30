@@ -1,1 +1,0 @@
-SELECT o.id, o.status, COUNT(oi.id) AS order_item_count, MAX(oi.quantity) - MIN(oi.quantity) AS quantity_range FROM orders o LEFT JOIN order_items oi ON oi.order_id = o.id WHERE o.discount IS NULL GROUP BY o.id, o.status HAVING MAX(oi.quantity) - MIN(oi.quantity) >= 65

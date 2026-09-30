@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY unit_price, id) AS dedup_rank FROM order_items) ranked WHERE dedup_rank = 1) SELECT id, quantity, unit_price FROM latest ORDER BY unit_price DESC NULLS FIRST;

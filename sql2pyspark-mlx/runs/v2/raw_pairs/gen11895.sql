@@ -1,1 +1,0 @@
-SELECT store_sales.product_id, COUNT(*) AS num_inventory FROM inventory INNER JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE store_sales.units = 28 GROUP BY store_sales.product_id ORDER BY num_inventory;

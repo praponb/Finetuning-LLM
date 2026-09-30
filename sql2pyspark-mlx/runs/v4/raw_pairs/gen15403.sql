@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, s.cost, s.delivered_date, o.order_date, o.channel FROM shipments s LEFT OUTER JOIN orders o ON s.order_id = o.id WHERE s.order_id IN (13, 28, 40) ORDER BY cost DESC, channel ASC;

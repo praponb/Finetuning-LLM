@@ -1,1 +1,0 @@
-SELECT id, city, sqft, opened_date, NTILE(2) OVER (PARTITION BY city ORDER BY sqft DESC, id) sqft_ntile, LAST_VALUE(opened_date) OVER (PARTITION BY city ORDER BY sqft DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_opened_date FROM stores WHERE region = 'Central'

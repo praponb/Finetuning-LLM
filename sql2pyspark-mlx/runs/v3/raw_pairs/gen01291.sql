@@ -1,1 +1,0 @@
-SELECT a.opened_date, a.balance, t.txn_type, t.is_flagged FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id WHERE t.merchant NOT IN ('Shell', 'Lazada') AND a.account_type = 'SAVINGS' ORDER BY 2 DESC

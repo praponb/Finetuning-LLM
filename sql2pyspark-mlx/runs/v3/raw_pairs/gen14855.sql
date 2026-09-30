@@ -1,1 +1,0 @@
-WITH recent_accounts AS (SELECT *, FLOOR(balance) AS balance_whole FROM accounts WHERE balance >= 65000), agg AS (SELECT account_type, MAX(balance) - MIN(balance) AS balance_range FROM recent_accounts GROUP BY account_type) SELECT * FROM agg ORDER BY 1 DESC LIMIT 20;

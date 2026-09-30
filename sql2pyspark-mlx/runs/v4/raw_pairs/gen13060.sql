@@ -1,1 +1,0 @@
-with valid as (select *, lower(status) as status_lower from orders where discount < 0.24) select * from (select id, channel, shipping_fee, amount, discount from valid) src unpivot (metric_value for metric in (shipping_fee as SHIPPING_FEE_VAL, amount as AMOUNT, discount as DISCOUNT))

@@ -1,1 +1,0 @@
-SELECT s.opened_date, s.city, i.last_restock, DATE_TRUNC('month', i.last_restock) AS last_restock_period FROM stores s LEFT OUTER JOIN inventory i ON s.id = i.store_id WHERE i.quantity BETWEEN 98 AND 198 OR s.opened_date < '2025-07-26'

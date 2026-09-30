@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, DENSE_RANK() OVER (PARTITION BY status ORDER BY shipped_date DESC) pos FROM shipments) SELECT id, status, shipped_date, order_id FROM ranked WHERE pos <= 5 ORDER BY order_id DESC;

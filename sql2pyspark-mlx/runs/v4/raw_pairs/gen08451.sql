@@ -1,1 +1,0 @@
-with with_dims as (select src.*, b.salary as employee_salary from employees src left join employees b on src.manager_id = b.id) select id, email, manager_id, hire_date, is_remote, level from with_dims order by manager_id desc

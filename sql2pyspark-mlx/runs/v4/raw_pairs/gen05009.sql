@@ -1,1 +1,0 @@
-WITH ranked_departments AS (SELECT *, DENSE_RANK() OVER (PARTITION BY location ORDER BY budget DESC) rnk FROM departments) SELECT id, location, budget, dept_name FROM ranked_departments WHERE rnk <= 2 ORDER BY id DESC, dept_name

@@ -1,1 +1,0 @@
-with CustomerSummary as (select customer_id, count(distinct device) as unique_devices from sessions group by customer_id) select c.country, c.segment, C.unique_devices from customers c join CustomerSummary C on c.id = C.customer_id order by 2

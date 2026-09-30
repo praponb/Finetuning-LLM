@@ -1,1 +1,0 @@
-select id, merchant, amount, is_flagged, length(txn_type) as txn_type_length, concat(txn_type, ', ', merchant) as txn_type_merchant from transactions where account_id in (9, 14, 18, 21) and merchant in ('Grab', '7-Eleven', 'Amazon') and amount < 2900;

@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, COUNT(amount) AS amount_count, COUNT(CASE WHEN status = 'FAILED' THEN 1 END) AS failed_count FROM payments GROUP BY order_id) SELECT orders.id, orders.order_date, order_summary.amount_count, order_summary.failed_count FROM orders JOIN order_summary ON orders.id = order_summary.order_id WHERE order_summary.amount_count > 10 ORDER BY id DESC;

@@ -1,1 +1,0 @@
-WITH AccountSummary AS (SELECT account_id, SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END) AS starbucks_count FROM transactions GROUP BY account_id) SELECT a.id, a.account_type, A.starbucks_count FROM accounts a LEFT OUTER JOIN AccountSummary A ON a.id = A.account_id ORDER BY account_type;

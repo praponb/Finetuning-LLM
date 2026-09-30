@@ -1,1 +1,0 @@
-SELECT order_id, product_id, CASE WHEN unit_price >= 400 THEN 'high' WHEN unit_price >= 190 THEN 'mid' ELSE 'low' END AS unit_price_bucket, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items GROUP BY 1, 2, 3

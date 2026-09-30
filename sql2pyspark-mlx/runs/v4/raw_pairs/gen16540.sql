@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY status ORDER BY amount DESC NULLS FIRST) AS latest_rank FROM payments) ranked WHERE latest_rank = 1) SELECT id, order_id, paid_at, latest_rank FROM deduped ORDER BY latest_rank DESC;

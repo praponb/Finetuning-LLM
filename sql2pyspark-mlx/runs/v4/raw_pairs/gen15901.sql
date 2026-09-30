@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count FROM subscriptions WHERE MONTH(end_date) IN (5, 7, 8) GROUP BY customer_id) SELECT c.id, c.country, c.credit_limit, cs.cancelled_count FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.cancelled_count >= 50 ORDER BY c.country

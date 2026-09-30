@@ -1,1 +1,0 @@
-WITH SessionTotals AS (SELECT session_id, SORT_ARRAY(COLLECT_SET(page)) page_list, MIN(duration_sec) min_duration_sec FROM web_events GROUP BY session_id) SELECT s.browser, S.page_list, S.min_duration_sec FROM sessions s LEFT OUTER JOIN SessionTotals S ON s.id = S.session_id;

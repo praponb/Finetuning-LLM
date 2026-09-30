@@ -1,1 +1,0 @@
-WITH filtered_products AS (SELECT *, LENGTH(brand) AS brand_length FROM products WHERE supplier_id IN (4, 18, 27, 36)), agg AS (SELECT supplier_id, brand, AVG(cost) AS avg_cost FROM filtered_products GROUP BY supplier_id, brand) SELECT * FROM agg WHERE avg_cost < 470;

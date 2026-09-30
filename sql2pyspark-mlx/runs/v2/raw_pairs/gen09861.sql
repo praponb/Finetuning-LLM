@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, COUNT(DISTINCT s.cost) AS unique_carriers FROM shipments s LEFT JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id GROUP BY DATE_TRUNC('MONTH', c.signup_date) ORDER BY signup_month ASC, unique_carriers DESC LIMIT 3;

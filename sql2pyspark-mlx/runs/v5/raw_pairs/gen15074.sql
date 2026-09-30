@@ -1,1 +1,0 @@
-SELECT id, status, end_date, monthly_fee, SUM(monthly_fee) OVER (PARTITION BY status ORDER BY end_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_monthly_fee FROM subscriptions WHERE status NOT IN ('EXPIRED', 'CANCELLED');

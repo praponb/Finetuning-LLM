@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CASE WHEN segment IN ('Consumer', 'SMB') THEN 'Priority' ELSE 'Other' END AS segment_group FROM customers WHERE segment IS DISTINCT FROM 'Consumer' AND signup_date >= DATE '2023-03-09') SELECT * FROM (SELECT city, country, credit_limit FROM filtered) src PIVOT (AVG(credit_limit) FOR country IN ('TH' AS th, 'JP' AS jp))

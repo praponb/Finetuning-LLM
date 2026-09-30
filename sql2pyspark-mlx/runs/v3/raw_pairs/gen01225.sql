@@ -1,1 +1,0 @@
-WITH ProductStats AS (SELECT product_id, COUNT(*) AS cnt, MIN(quantity) AS min_quantity FROM inventory WHERE store_id IN (2, 5) GROUP BY product_id) SELECT p.id, p.price, P.cnt, P.min_quantity FROM products p JOIN ProductStats P ON p.id = P.product_id WHERE P.cnt > 7

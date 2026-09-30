@@ -1,1 +1,0 @@
-SELECT status, MIN(opened_date) AS min_opened_date, ROUND(AVG(balance), 2) AS avg_balance FROM accounts WHERE opened_date <= '2023-11-01' AND status = 'CLOSED' GROUP BY status HAVING ROUND(AVG(balance), 2) > 58 ORDER BY avg_balance DESC

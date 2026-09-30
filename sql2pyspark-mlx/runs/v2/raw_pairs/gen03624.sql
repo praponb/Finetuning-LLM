@@ -1,1 +1,0 @@
-WITH department_stats AS (SELECT dept_id, ROUND((100 * SUM(CASE WHEN job_title = 'Designer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_designer, COUNT(*) AS total_count FROM employees GROUP BY dept_id) SELECT d.id, d.location, ds.pct_designer, ds.total_count FROM departments d INNER JOIN department_stats ds ON d.id = ds.dept_id;

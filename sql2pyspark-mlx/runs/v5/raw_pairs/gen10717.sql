@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, created_at, key, attr_value FROM carts LATERAL VIEW EXPLODE(attributes) x AS key, attr_value) SELECT DATE_TRUNC('HOUR', created_at) AS hour_window, SORT_ARRAY(COLLECT_SET(key)) AS key_list, SIZE(COLLECT_SET(key)) AS num_keys FROM lines GROUP BY hour_window HAVING num_keys > 1 ORDER BY hour_window ASC;

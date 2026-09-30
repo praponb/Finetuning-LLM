@@ -1,1 +1,0 @@
-select month(customers.signup_date) as signup_month, sort_array(collect_set(subscriptions.plan)) as plan_list, max(subscriptions.end_date) as last_end_date from subscriptions inner join customers on subscriptions.customer_id = customers.id where subscriptions.plan = 'basic' group by month(customers.signup_date) order by last_end_date, signup_month limit 20;

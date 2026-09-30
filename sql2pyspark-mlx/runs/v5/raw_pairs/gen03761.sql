@@ -1,1 +1,0 @@
-WITH latest AS (SELECT *, RANK() OVER (PARTITION BY region, city ORDER BY opened_date DESC) AS rn FROM stores QUALIFY rn = 1) SELECT id, store_name, region, sqft, rn FROM latest ORDER BY id DESC LIMIT 20;

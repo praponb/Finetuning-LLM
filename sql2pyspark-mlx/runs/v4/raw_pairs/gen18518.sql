@@ -1,1 +1,0 @@
-WITH matched_keys AS (SELECT country, id FROM suppliers INTERSECT SELECT country, id FROM suppliers WHERE LOWER(supplier_name) LIKE '%uro%'), reconciled AS (SELECT s.* FROM suppliers s INNER JOIN matched_keys k ON s.country = k.country AND s.id = k.id) SELECT id, city, rating FROM reconciled ORDER BY id DESC, city DESC;

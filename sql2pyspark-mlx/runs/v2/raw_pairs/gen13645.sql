@@ -1,1 +1,0 @@
-SELECT sessions.browser, sessions.customer_id, MAX(web_events.duration_sec) AS max_duration_sec FROM web_events LEFT OUTER JOIN sessions ON web_events.session_id = sessions.id LEFT OUTER JOIN customers ON sessions.customer_id = customers.id GROUP BY sessions.browser, sessions.customer_id ORDER BY max_duration_sec DESC;

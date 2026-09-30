@@ -1,1 +1,0 @@
-SELECT accounts.account_type, accounts.opened_date, accounts.status, transactions.txn_time, transactions.txn_type FROM accounts LEFT JOIN transactions ON accounts.id = transactions.account_id WHERE transactions.is_flagged = TRUE AND transactions.amount >= 3600

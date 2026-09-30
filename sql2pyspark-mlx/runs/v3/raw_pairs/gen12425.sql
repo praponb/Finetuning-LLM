@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, customer_id, SUM(shipping_fee) AS total_shipping_fee, MIN(discount) AS min_discount FROM orders GROUP BY DATE_FORMAT(order_date, 'yyyy-MM'), customer_id ORDER BY min_discount DESC, order_month, customer_id LIMIT 10

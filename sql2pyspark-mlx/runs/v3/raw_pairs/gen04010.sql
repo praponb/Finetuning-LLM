@@ -1,1 +1,0 @@
-SELECT p.id, p.order_id, p.method, o.status, o.shipping_fee, s.sqft, o.discount - o.shipping_fee AS discount_minus_shipping_fee FROM payments p INNER JOIN orders o ON o.id = p.order_id INNER JOIN stores s ON o.store_id = s.id ORDER BY p.id ASC LIMIT 1;

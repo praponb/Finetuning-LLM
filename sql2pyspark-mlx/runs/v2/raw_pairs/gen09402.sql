@@ -1,1 +1,0 @@
-SELECT payments.amount, orders.order_date, orders.status, customers.city, customers.credit_limit, UPPER(TRIM(customers.email)) AS email_normalized FROM payments FULL OUTER JOIN orders ON payments.order_id = orders.id INNER JOIN customers ON orders.customer_id = customers.id;

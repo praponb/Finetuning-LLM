@@ -1,1 +1,0 @@
-SELECT st.region, SORT_ARRAY(COLLECT_SET(s.status)) AS status_list FROM shipments s INNER JOIN orders o ON o.id = s.order_id INNER JOIN stores st ON st.id = o.store_id GROUP BY st.region ORDER BY st.region LIMIT 50;

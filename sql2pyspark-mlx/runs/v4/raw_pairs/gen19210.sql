@@ -1,1 +1,0 @@
-SELECT sessions.id, sessions.started_at, customers.email, customers.country, customers.is_active FROM sessions INNER JOIN customers ON sessions.customer_id = customers.id WHERE sessions.customer_id IS NULL ORDER BY customers.email DESC, id ASC LIMIT 1;

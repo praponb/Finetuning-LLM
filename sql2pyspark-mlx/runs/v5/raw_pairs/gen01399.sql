@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 241 THEN 'high' WHEN quantity >= 33 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(quantity) AS max_quantity, COUNT(quantity) AS quantity_count FROM inventory GROUP BY CASE WHEN quantity >= 241 THEN 'high' WHEN quantity >= 33 THEN 'mid' ELSE 'low' END ORDER BY quantity_bucket LIMIT 10

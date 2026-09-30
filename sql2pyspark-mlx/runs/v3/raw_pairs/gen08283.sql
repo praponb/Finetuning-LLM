@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, COUNT(DISTINCT quantity) AS unique_products FROM order_items GROUP BY product_id) SELECT p.id, p.product_name, p.price, ps.unique_products FROM products p LEFT OUTER JOIN product_summary ps ON p.id = ps.product_id WHERE ps.unique_products >= 5

@@ -1,4 +1,0 @@
-SELECT *
-FROM payments
-WHERE amount BETWEEN 680 AND 1040 OR method IS NOT NULL
-ORDER BY method DESC

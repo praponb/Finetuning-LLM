@@ -1,1 +1,0 @@
-WITH ranked_sessions AS (SELECT id, customer_id, started_at, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) AS rn FROM sessions) SELECT * FROM ranked_sessions WHERE rn <= 3 ORDER BY rn;

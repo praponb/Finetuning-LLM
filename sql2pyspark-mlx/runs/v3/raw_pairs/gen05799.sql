@@ -1,1 +1,0 @@
-SELECT YEAR(c.signup_date) AS signup_year, MAX(a.opened_date) AS latest_opened_date, COUNT(a.balance) AS balance_count FROM accounts a INNER JOIN customers c ON a.customer_id = c.id GROUP BY YEAR(c.signup_date);

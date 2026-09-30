@@ -1,1 +1,0 @@
-select date_format(start_date, 'yyyy-MM') as start_month, sort_array(collect_set(plan)) as plan_list from subscriptions where customer_id = 23 group by date_format(start_date, 'yyyy-MM') order by start_month asc limit 50

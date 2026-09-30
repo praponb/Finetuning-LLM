@@ -1,1 +1,0 @@
-select *, ntile(5) over w_ordered as quantity_bucket, percent_rank() over w_recent as quantity_percent_rank, ntile(5) over (partition by product_id, order_id order by quantity desc, id) as quantity_bucket_2 from order_items window w_ordered as (order by quantity, id), w_recent as (partition by product_id, order_id order by quantity nulls first);

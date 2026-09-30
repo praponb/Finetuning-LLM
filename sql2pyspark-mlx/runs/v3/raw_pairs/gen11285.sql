@@ -1,1 +1,0 @@
-SELECT is_active, YEAR(signup_date) AS signup_year, MAX(age) AS max_age FROM customers WHERE credit_limit <= 15900 AND credit_limit BETWEEN 4800 AND 9100 GROUP BY ROLLUP(is_active, YEAR(signup_date));

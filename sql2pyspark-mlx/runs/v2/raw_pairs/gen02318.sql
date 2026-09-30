@@ -1,1 +1,0 @@
-with base as (select * from store_sales where product_id in (5, 10)), summary as (select date_format(sale_date, 'yyyy-MM') as sale_month, product_id, avg(revenue) as avg_revenue from base group by date_format(sale_date, 'yyyy-MM'), product_id) select sale_month, product_id, avg_revenue from summary where avg_revenue < 2500 order by sale_month, product_id limit 20

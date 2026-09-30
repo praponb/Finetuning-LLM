@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, order_id, method, amount, paid_at, status, COALESCE(method, 'Unknown') AS method_filled, COALESCE(method, 'N/A') AS method_clean FROM payments WHERE method IS NOT NULL) SELECT order_id, status FROM valid EXCEPT SELECT order_id, status FROM payments WHERE method NOT IN ('cash', 'card');

@@ -1,1 +1,0 @@
-SELECT o.store_id, MAX(p.amount) AS max_amount, ROUND(STDDEV(p.amount), 2) AS stddev_amount FROM payments p RIGHT JOIN orders o ON p.order_id = o.id LEFT JOIN stores s ON o.store_id = s.id GROUP BY o.store_id ORDER BY store_id DESC

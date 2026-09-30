@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, order_id, carrier, cost, status, LENGTH(status) AS status_length FROM shipments WHERE delivered_date > DATE '2023-07-01' AND carrier IS NOT NULL AND MONTH(shipped_date) IN (6, 7, 8)) SELECT a.*, d.channel, d.amount FROM filtered a LEFT JOIN orders d ON a.order_id = d.id;

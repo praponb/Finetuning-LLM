@@ -1,1 +1,0 @@
-WITH ranked_web_events AS (SELECT id, session_id, duration_sec, page, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec DESC, id) AS row_num FROM web_events WHERE duration_sec = 179) SELECT id, session_id, duration_sec, page FROM ranked_web_events WHERE row_num <= 3

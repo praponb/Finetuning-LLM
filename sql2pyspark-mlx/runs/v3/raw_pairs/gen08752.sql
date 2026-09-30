@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date DESC, id) AS row_num FROM accounts WHERE customer_id IN (23, 36, 37, 39)) SELECT id, status, opened_date, account_type FROM numbered WHERE row_num = 1;

@@ -1,1 +1,0 @@
-SELECT customer_id, account_type, status, LAST_DAY(opened_date) opened_date_month_end FROM accounts WHERE balance BETWEEN 26000 AND 50000 AND (customer_id IN (10, 15, 24, 37) OR account_type = 'LOAN')

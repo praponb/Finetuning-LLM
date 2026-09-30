@@ -1,1 +1,0 @@
-SELECT s.country, SUM(CASE WHEN p.brand = 'Initech' THEN 1 ELSE 0 END) initech_count, SORT_ARRAY(COLLECT_SET(p.brand)) brand_list FROM products p LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.country ORDER BY initech_count DESC, s.country;

@@ -1,1 +1,0 @@
-WITH ranked_order_items AS (SELECT id, product_id, quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS rn FROM order_items WHERE order_id IN (9, 12, 30)) SELECT * FROM ranked_order_items WHERE rn <= 3;

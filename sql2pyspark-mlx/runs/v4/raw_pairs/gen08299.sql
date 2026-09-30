@@ -1,1 +1,0 @@
-select * from (select status, plan, monthly_fee from subscriptions where end_date between '2023-03-01' and '2023-09-01') pivot (avg(monthly_fee) for plan in ('basic', 'premium', 'enterprise')) order by status

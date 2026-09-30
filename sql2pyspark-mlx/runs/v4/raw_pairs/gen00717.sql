@@ -1,1 +1,0 @@
-SELECT p.status, p.order_id, o.customer_id, s.opened_date, s.sqft FROM payments p LEFT JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON s.id = o.store_id WHERE p.status != 'FAILED' AND o.status IN ('RETURNED', 'CANCELLED') ORDER BY 5 DESC

@@ -1,1 +1,0 @@
-SELECT account_type, MAX(opened_date) AS last_opened_date, COUNT(DISTINCT balance) AS unique_account_types FROM accounts WHERE customer_id IS NULL OR account_type = 'SAVINGS' GROUP BY account_type ORDER BY account_type DESC

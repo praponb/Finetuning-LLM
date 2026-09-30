@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, SUM(unit_price * quantity) AS revenue FROM order_items WHERE order_id IN (2, 3, 10, 13) GROUP BY product_id) SELECT p.id, p.category, p.launch_date, ps.revenue FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id

@@ -1,1 +1,0 @@
-SELECT job_title, SUM(salary) AS total_salary, RANK() OVER (ORDER BY SUM(salary) DESC) AS salary_rank FROM employees WHERE LOWER(email) LIKE '%ack%' GROUP BY job_title ORDER BY total_salary ASC, salary_rank DESC;

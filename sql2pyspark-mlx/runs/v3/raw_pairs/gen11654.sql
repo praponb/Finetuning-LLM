@@ -1,1 +1,0 @@
-SELECT QUARTER(txn_time) AS txn_quarter, MIN(txn_time) AS first_txn_time, ROUND((100 * SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_amazon, AVG(amount) AS avg_amount FROM transactions WHERE txn_type NOT IN ('FEE', 'DEBIT') GROUP BY 1 ORDER BY 1 DESC, 4 DESC;

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, ROUND(AVG(i.quantity), 2) AS avg_quantity, MAX(i.quantity) AS max_quantity FROM inventory i JOIN products p ON i.product_id = p.id LEFT JOIN stores s ON i.store_id = s.id GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM') HAVING MAX(i.quantity) >= 120 ORDER BY avg_quantity DESC, opened_month ASC LIMIT 5

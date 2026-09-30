@@ -1,1 +1,0 @@
-WITH recent_inventory AS (SELECT * FROM inventory WHERE store_id = 1 AND last_restock >= '2023-10-01'), store_id_summary AS (SELECT store_id, product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM recent_inventory GROUP BY store_id, product_id) SELECT store_id, product_id FROM store_id_summary WHERE quantity_range > 61 ORDER BY product_id, store_id;

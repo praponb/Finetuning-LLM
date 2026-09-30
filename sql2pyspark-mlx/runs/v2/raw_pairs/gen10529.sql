@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3993000 THEN 'high' WHEN budget >= 1045000 THEN 'mid' ELSE 'low' END AS budget_bucket, MIN(budget) AS min_budget, SUM(budget) AS total_budget FROM departments WHERE dept_name IN ('Finance', 'Engineering', 'Sales') AND dept_name NOT IN ('Finance', 'Marketing') GROUP BY 1 HAVING min_budget < 3320000 ORDER BY min_budget DESC;

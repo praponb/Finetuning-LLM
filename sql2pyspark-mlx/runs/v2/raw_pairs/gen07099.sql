@@ -1,1 +1,0 @@
-SELECT id, store_id, last_restock, quantity, LAG(quantity, 1, 0) OVER (PARTITION BY store_id ORDER BY last_restock, id) prev_quantity FROM inventory WHERE last_restock <= '2024-08-01' ORDER BY last_restock DESC, 5 DESC;

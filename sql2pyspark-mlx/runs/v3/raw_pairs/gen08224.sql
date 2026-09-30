@@ -1,1 +1,0 @@
-select city, country, count(case when city = 'London' then 1 end) as london_count from suppliers where upper(trim(supplier_name)) = 'GLOBAL SUPPLY' group by city, country having count(case when city = 'London' then 1 end) >= 3;

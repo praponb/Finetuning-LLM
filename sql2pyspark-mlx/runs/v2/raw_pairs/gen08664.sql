@@ -1,1 +1,0 @@
-SELECT customers.segment, SUM(CASE WHEN accounts.status = 'FROZEN' THEN accounts.balance ELSE 0 END) AS frozen_balance FROM accounts LEFT JOIN customers ON accounts.customer_id = customers.id WHERE customers.city = 'Singapore' GROUP BY customers.segment HAVING SUM(CASE WHEN accounts.status = 'FROZEN' THEN accounts.balance ELSE 0 END) >= 57

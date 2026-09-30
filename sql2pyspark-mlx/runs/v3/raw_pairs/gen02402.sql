@@ -1,1 +1,0 @@
-select date_trunc('MONTH', store_sales.sale_date) as sale_month, min(inventory.last_restock) as first_last_restock from inventory inner join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id where inventory.quantity > 109 group by date_trunc('MONTH', store_sales.sale_date) order by first_last_restock desc

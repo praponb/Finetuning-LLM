@@ -1,1 +1,0 @@
-SELECT oi.id, oi.product_id, oi.quantity, oi.unit_price, p.stock_qty, p.supplier_id, p.price, GREATEST(oi.quantity, oi.unit_price) AS greatest_quantity_unit_price FROM order_items oi INNER JOIN products p ON p.id = oi.product_id WHERE oi.quantity BETWEEN 5 AND 6

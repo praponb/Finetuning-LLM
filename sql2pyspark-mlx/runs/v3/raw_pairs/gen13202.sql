@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, COUNT(*) num_store_sales FROM store_sales WHERE revenue > 1500 GROUP BY product_id) SELECT p.id, p.product_name, p.price, ps.num_store_sales FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id WHERE ps.num_store_sales > 8 ORDER BY ps.num_store_sales DESC

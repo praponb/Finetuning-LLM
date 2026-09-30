@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.is_active, cs.monthly_fee_range, cs.max_monthly_fee FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.max_monthly_fee > 70 ORDER BY cs.max_monthly_fee DESC

@@ -1,1 +1,0 @@
-select a.account_type, count(distinct t.amount) unique_merchants from transactions t inner join accounts a on t.account_id = a.id left join customers c on a.customer_id = c.id where t.is_flagged = true group by a.account_type order by unique_merchants;

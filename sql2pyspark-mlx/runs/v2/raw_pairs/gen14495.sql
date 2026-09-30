@@ -1,1 +1,0 @@
-SELECT page, QUARTER(event_time) AS event_quarter, ROUND((100 * SUM(CASE WHEN page = '/cart' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cart FROM web_events GROUP BY page, QUARTER(event_time) ORDER BY page;

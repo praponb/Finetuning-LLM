@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 3300 THEN 'high' WHEN amount >= 700 THEN 'mid' ELSE 'low' END AS amount_bucket, SUM(amount) AS total_amount, ROUND(SUM(amount) * 100.0 / SUM(SUM(amount)) OVER (), 2) AS pct_of_total FROM transactions WHERE is_flagged = TRUE GROUP BY CASE WHEN amount >= 3300 THEN 'high' WHEN amount >= 700 THEN 'mid' ELSE 'low' END ORDER BY pct_of_total DESC;

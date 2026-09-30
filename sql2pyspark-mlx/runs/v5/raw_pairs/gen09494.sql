@@ -1,1 +1,0 @@
-with product_summary as (select product_id, sum(quantity) as total_quantity from order_items group by product_id) select p.id, p.price, ps.total_quantity from products p join product_summary ps on p.id = ps.product_id where ps.total_quantity > 18 order by id desc limit 5

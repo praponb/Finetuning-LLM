@@ -1,1 +1,0 @@
-SELECT store_id, CASE WHEN quantity >= 247 THEN 'high' WHEN quantity >= 60 THEN 'mid' ELSE 'low' END AS quantity_bucket, MIN(last_restock) AS first_last_restock FROM inventory WHERE store_id IN (5, 6) AND (store_id IN (1, 2, 3, 6) OR store_id IN (1, 4)) GROUP BY store_id, CASE WHEN quantity >= 247 THEN 'high' WHEN quantity >= 60 THEN 'mid' ELSE 'low' END ORDER BY quantity_bucket

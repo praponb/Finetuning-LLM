@@ -1,1 +1,0 @@
-with store_stats as (select store_id, sum(quantity) as total_quantity from inventory group by store_id) select stores.id, stores.store_name, store_stats.total_quantity from stores inner join store_stats on stores.id = store_stats.store_id order by 1 desc, store_stats.total_quantity desc;

@@ -1,1 +1,0 @@
-SELECT status, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee, SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END) AS enterprise_count FROM subscriptions WHERE customer_id IN (20, 26, 35) AND (plan NOT IN ('enterprise', 'premium') OR plan = 'premium') GROUP BY status HAVING enterprise_count > 71

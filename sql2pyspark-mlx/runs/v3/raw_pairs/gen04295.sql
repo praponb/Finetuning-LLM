@@ -1,1 +1,0 @@
-with employees_by_department as (select dept_id, count(case when job_title = 'Designer' then 1 end) as designer_count from employees group by dept_id) select d.id, d.location, d.budget, ebd.designer_count from departments d left join employees_by_department ebd on d.id = ebd.dept_id where ebd.designer_count >= 6 order by 2;

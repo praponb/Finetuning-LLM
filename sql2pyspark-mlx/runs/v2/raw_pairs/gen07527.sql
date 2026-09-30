@@ -1,1 +1,0 @@
-SELECT *, GREATEST(cost, stock_qty) AS greatest_cost_stock_qty, CASE WHEN category IN ('Books', 'Sports') THEN 'Core' ELSE 'Other' END AS category_group FROM products WHERE brand IN ('Acme', 'Initech')

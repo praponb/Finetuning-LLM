@@ -1,1 +1,0 @@
-SELECT id, location, CONCAT_WS(',', dept_name, location) AS dept_name_location_key, CEIL(budget) AS budget_whole FROM departments WHERE location IS NOT NULL AND location IN ('Bangkok', 'Chiang Mai', 'London') ORDER BY id LIMIT 5;

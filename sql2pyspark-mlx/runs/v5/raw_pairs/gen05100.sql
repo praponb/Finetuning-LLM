@@ -1,1 +1,0 @@
-SELECT s.supplier_name, s.rating, s.country, p.stock_qty, p.supplier_id, LOWER(s.supplier_name) AS supplier_name_lower FROM suppliers s INNER JOIN products p ON p.supplier_id = s.id WHERE p.cost >= 230 ORDER BY s.rating DESC;

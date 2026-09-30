@@ -1,1 +1,0 @@
-WITH remaining_keys AS (SELECT product_id, id FROM inventory INTERSECT SELECT product_id, id FROM inventory WHERE last_restock > '2024-09-19'), verified AS (SELECT s.* FROM inventory s JOIN remaining_keys k ON s.product_id = k.product_id AND s.id = k.id) SELECT id, store_id, last_restock FROM verified

@@ -1,1 +1,0 @@
-SELECT p.supplier_id, AVG(i.quantity) AS avg_quantity, SUM(i.quantity) AS total_quantity FROM inventory i JOIN products p ON i.product_id = p.id WHERE i.product_id = 8 GROUP BY p.supplier_id ORDER BY avg_quantity DESC, 1 DESC

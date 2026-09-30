@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT location, COUNT(CASE WHEN dept_name = 'HR' THEN 1 END) AS hr_count, SUM(CASE WHEN location = 'New York' THEN budget ELSE 0 END) AS new_york_budget FROM departments WHERE budget >= 1431000 GROUP BY location) AS agg WHERE new_york_budget > 38 ORDER BY hr_count DESC;

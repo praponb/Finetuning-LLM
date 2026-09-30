@@ -1,1 +1,0 @@
-select channel_group, stddev_discount from (select case when channel in ('mobile', 'store') then 'priority' else 'other' end as channel_group, round(stddev(discount), 2) as stddev_discount from orders where channel <> 'store' group by case when channel in ('mobile', 'store') then 'priority' else 'other' end) as t where stddev_discount < 61;

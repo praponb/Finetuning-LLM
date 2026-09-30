@@ -1,1 +1,0 @@
-select *, ntile(5) over (partition by city order by sqft asc, id asc) as sqft_bucket, row_number() over (partition by city, region order by sqft asc, id asc) as row_seq, percent_rank() over (order by sqft desc) as sqft_percent_rank, lag(sqft, 1) over (order by sqft asc, id asc) as prev_sqft from stores;

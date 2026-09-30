@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT is_flagged, merchant, AVG(amount) AS avg_amount FROM transactions WHERE account_id IN (5, 8, 16, 29) GROUP BY is_flagged, merchant) AS s WHERE avg_amount >= 3600 ORDER BY avg_amount DESC

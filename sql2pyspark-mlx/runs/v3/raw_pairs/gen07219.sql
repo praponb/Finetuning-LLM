@@ -1,1 +1,0 @@
-SELECT store_id, SUM(units) total_units, COUNT(DISTINCT units) unique_products, MAX(sale_date) last_sale_date FROM store_sales WHERE units < 29 AND units <= 19 GROUP BY 1 HAVING COUNT(DISTINCT units) < 1 ORDER BY unique_products;

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT segment, COUNT(CASE WHEN segment = 'Corporate' THEN 1 END) AS corporate_count, COUNT(CASE WHEN country = 'SG' THEN 1 END) AS sg_count FROM customers GROUP BY segment) AS t WHERE corporate_count > 8;

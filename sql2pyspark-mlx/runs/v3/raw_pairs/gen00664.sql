@@ -1,1 +1,0 @@
-SELECT *, LEAST(credit_limit, age) AS least_credit_limit_age, CASE WHEN age >= 58 THEN 'High' WHEN age >= 26 THEN 'Medium' ELSE 'Low' END AS age_tier FROM customers WHERE credit_limit BETWEEN 10400 AND 14900 ORDER BY signup_date, id LIMIT 3

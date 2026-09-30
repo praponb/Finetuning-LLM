@@ -1,1 +1,0 @@
-SELECT stock_qty, supplier_id, DATE_FORMAT(launch_date, 'MMM yyyy') AS launch_date_label, COALESCE(brand, 'N/A') AS brand_filled FROM products WHERE (category IN ('Grocery', 'Books') AND cost BETWEEN 440 AND 690) OR supplier_id IN (36, 38);

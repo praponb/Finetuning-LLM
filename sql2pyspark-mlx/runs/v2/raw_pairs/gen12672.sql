@@ -1,1 +1,0 @@
-SELECT id, manager_id, salary, dept_id, DENSE_RANK() OVER (PARTITION BY manager_id ORDER BY salary) AS salary_dense_rank, DENSE_RANK() OVER (PARTITION BY dept_id ORDER BY salary DESC) AS salary_dense_rank_2 FROM employees;

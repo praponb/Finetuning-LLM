@@ -1,1 +1,0 @@
-select order_id, round(stddev(quantity), 2) as stddev_quantity, max(quantity) - min(quantity) as quantity_range, max(quantity) as max_quantity from order_items group by 1 order by max_quantity desc, order_id limit 50

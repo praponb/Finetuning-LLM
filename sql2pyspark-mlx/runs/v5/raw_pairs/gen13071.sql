@@ -1,1 +1,0 @@
-WITH order_items_by_product AS (SELECT product_id, SUM(quantity * unit_price) AS revenue FROM order_items GROUP BY product_id) SELECT p.id, p.brand, p.stock_qty, oibp.revenue FROM products p INNER JOIN order_items_by_product oibp ON p.id = oibp.product_id ORDER BY stock_qty, id LIMIT 10;

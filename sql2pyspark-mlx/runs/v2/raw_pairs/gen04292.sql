@@ -1,1 +1,0 @@
-with ranked_store_sales as (select *, row_number() over (partition by store_id order by units, id) as rn from store_sales) select id, store_id, units from ranked_store_sales where rn <= 3 order by store_id desc;

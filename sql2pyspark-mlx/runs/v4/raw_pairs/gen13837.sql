@@ -1,1 +1,0 @@
-SELECT id, order_id, method, amount, paid_at, status, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount, id) AS row_seq, ROW_NUMBER() OVER (PARTITION BY method ORDER BY paid_at DESC, id) AS seq_no FROM payments

@@ -1,1 +1,0 @@
-select ss.product_id, max(i.quantity) as max_quantity, round(avg(i.quantity), 2) as avg_quantity from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.sale_date >= '2024-01-28' group by ss.product_id;

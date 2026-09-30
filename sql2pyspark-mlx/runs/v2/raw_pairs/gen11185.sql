@@ -1,1 +1,0 @@
-select session_id, duration_sec_range from (select session_id, max(duration_sec) - min(duration_sec) as duration_sec_range from web_events group by session_id) as t where duration_sec_range >= 47 order by session_id desc;

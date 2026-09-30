@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, YEAR(last_restock) AS last_restock_year, SUM(quantity) AS total_quantity, AVG(quantity) AS avg_quantity FROM inventory WHERE MONTH(last_restock) IN (5, 8, 12) GROUP BY 1, 2;

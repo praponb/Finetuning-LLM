@@ -1,1 +1,0 @@
-SELECT QUARTER(c.signup_date) signup_quarter, DATE_FORMAT(c.signup_date, 'yyyy-MM') signup_month, MAX(s.monthly_fee) - MIN(s.monthly_fee) monthly_fee_range FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY QUARTER(c.signup_date), DATE_FORMAT(c.signup_date, 'yyyy-MM') HAVING MAX(s.monthly_fee) - MIN(s.monthly_fee) > 73

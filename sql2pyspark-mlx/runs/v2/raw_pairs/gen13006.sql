@@ -1,1 +1,0 @@
-select sum(case when merchant = '7-Eleven' then amount else 0 end) as 7_eleven_amount, count(case when txn_type = 'REFUND' then 1 end) as refund_count, sort_array(collect_set(merchant)) as merchant_list from transactions order by 7_eleven_amount desc;

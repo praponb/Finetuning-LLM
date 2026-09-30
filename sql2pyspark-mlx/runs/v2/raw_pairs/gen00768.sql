@@ -1,1 +1,0 @@
-with valid_transactions as (select *, datediff(current_date(), txn_time) as days_since_txn_time from transactions where amount > 1600), agg as (select txn_type, max(amount) - min(amount) as amount_range from valid_transactions group by txn_type) select * from agg where amount_range > 73

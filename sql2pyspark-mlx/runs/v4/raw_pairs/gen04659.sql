@@ -1,1 +1,0 @@
-select products.brand, count(order_items.unit_price) as unit_price_count, max(order_items.unit_price) as max_unit_price from order_items join products on order_items.product_id = products.id full outer join suppliers on products.supplier_id = suppliers.id group by products.brand having max_unit_price >= 230 order by max_unit_price desc;

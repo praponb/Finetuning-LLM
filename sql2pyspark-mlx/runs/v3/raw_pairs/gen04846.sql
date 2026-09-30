@@ -1,1 +1,0 @@
-select case when unit_price >= 360 then 'high' when unit_price >= 190 then 'mid' else 'low' end as unit_price_bucket, avg(unit_price) as avg_unit_price from order_items where unit_price >= 240 and product_id is not null group by case when unit_price >= 360 then 'high' when unit_price >= 190 then 'mid' else 'low' end order by avg_unit_price desc;

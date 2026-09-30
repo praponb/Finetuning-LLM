@@ -1,1 +1,0 @@
-with latest as (select * from order_items qualify row_number() over (partition by order_id order by quantity nulls last, id) = 1) select s.id, s.order_id, s.product_id, s.quantity, (select avg(x.quantity) from order_items x where x.product_id = s.product_id) as avg_order_item_quantity from latest s order by order_id nulls first;

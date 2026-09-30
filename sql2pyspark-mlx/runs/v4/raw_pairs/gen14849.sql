@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, LENGTH(location) AS location_length, ROUND(budget * 1.07, 2) AS adjusted_budget, COALESCE(location, 'N/A') AS location_clean FROM departments WHERE location IS NOT NULL) SELECT * FROM (SELECT id, dept_name, budget, adjusted_budget FROM valid) src UNPIVOT (value FOR kpi IN (budget AS BUDGET, adjusted_budget AS ADJUSTED_BUDGET_VAL));

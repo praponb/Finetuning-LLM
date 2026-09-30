@@ -1,1 +1,0 @@
-select *, sum(balance) over (partition by status order by balance, id rows between unbounded preceding and current row) as running_balance, ntile(5) over (order by balance, id) as balance_bucket, row_number() over (partition by customer_id, account_type order by opened_date, id) as row_seq from accounts

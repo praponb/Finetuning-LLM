@@ -1,1 +1,0 @@
-SELECT product_id, COUNT(*) AS store_sale_count, ROUND(AVG(revenue), 2) AS avg_revenue FROM store_sales WHERE store_id = 3 OR product_id = 8 GROUP BY 1 ORDER BY store_sale_count DESC, avg_revenue DESC, product_id LIMIT 5

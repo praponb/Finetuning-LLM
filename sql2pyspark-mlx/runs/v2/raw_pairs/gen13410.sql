@@ -1,1 +1,0 @@
-SELECT id, status, amount, store_id, shipping_fee, ROUND(amount / SUM(amount) OVER (PARTITION BY status), 3) AS amount_share, SUM(shipping_fee) OVER (PARTITION BY store_id) AS store_id_sum_shipping_fee FROM orders ORDER BY status;

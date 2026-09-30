@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1590 THEN 'high' WHEN amount >= 430 THEN 'mid' ELSE 'low' END AS amount_bucket, MIN(paid_at) AS min_paid_at, MIN(paid_at) AS first_paid_at FROM payments WHERE method NOT IN ('paypal', 'bank_transfer') AND method <> 'bank_transfer' AND status <> 'FAILED' GROUP BY 1 ORDER BY amount_bucket

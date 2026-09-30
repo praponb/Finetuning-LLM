@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM accounts WHERE NOT (account_type = 'SAVINGS' AND balance <= 69000 AND balance <= 48000)), accounts_stats AS (SELECT account_type, ROUND((100 * SUM(CASE WHEN account_type = 'LOAN' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_loan, ROUND(AVG(balance), 2) AS avg_balance FROM base GROUP BY account_type) SELECT * FROM accounts_stats WHERE pct_loan > 33;

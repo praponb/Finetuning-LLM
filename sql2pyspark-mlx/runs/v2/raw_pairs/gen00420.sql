@@ -1,1 +1,0 @@
-select order_items.id, order_items.order_id, order_items.unit_price, products.supplier_id, products.stock_qty, orders.customer_id from order_items full outer join products on order_items.product_id = products.id full outer join orders on order_items.order_id = orders.id where order_items.product_id is null;

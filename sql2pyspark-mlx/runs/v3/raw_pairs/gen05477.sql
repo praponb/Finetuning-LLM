@@ -1,1 +1,0 @@
-SELECT is_active, country, MAX(signup_date) AS last_signup_date FROM customers WHERE credit_limit > 6900 AND NOT is_active AND age < 35 GROUP BY is_active, country ORDER BY last_signup_date, is_active, country LIMIT 1

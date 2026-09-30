@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id, ss.sale_date, ss.product_id, p.category, p.brand, p.product_name FROM store_sales ss LEFT OUTER JOIN products p ON p.id = ss.product_id WHERE p.category IN ('Electronics', 'Grocery');

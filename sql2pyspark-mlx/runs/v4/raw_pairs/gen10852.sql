@@ -1,1 +1,0 @@
-SELECT a.id, a.opened_date, a.status, a.customer_id, c.age, c.credit_limit, QUARTER(a.opened_date) AS opened_date_quarter FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE c.country = 'US'

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN credit_limit >= 13900 THEN 'high' WHEN credit_limit >= 6900 THEN 'mid' ELSE 'low' END AS credit_limit_bucket, segment, age FROM customers) PIVOT (SUM(age) FOR segment IN ('SMB', 'Corporate'));

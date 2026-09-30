@@ -1,1 +1,0 @@
-SELECT YEAR(opened_date) opened_year, SORT_ARRAY(COLLECT_SET(account_type)) account_type_list, ROUND(STDDEV(balance), 2) stddev_balance, AVG(balance) avg_balance FROM accounts WHERE (customer_id IN (22, 32) AND account_type != 'LOAN') OR opened_date >= '2023-06-17' GROUP BY YEAR(opened_date) ORDER BY avg_balance DESC, stddev_balance ASC;

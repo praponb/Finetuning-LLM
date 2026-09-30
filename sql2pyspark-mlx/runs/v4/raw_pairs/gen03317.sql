@@ -1,1 +1,0 @@
-select case when amount >= 4300 then 'high' when amount >= 1700 then 'mid' else 'low' end amount_bucket, sum(amount) total_amount, rank() over (order by sum(amount) desc) as amount_rank from transactions group by case when amount >= 4300 then 'high' when amount >= 1700 then 'mid' else 'low' end order by amount_bucket;

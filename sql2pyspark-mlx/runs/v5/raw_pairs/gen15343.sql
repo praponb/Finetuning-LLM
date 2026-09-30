@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CASE WHEN amount >= 1310 THEN 'High' WHEN amount >= 480 THEN 'Medium' ELSE 'Low' END AS amount_level FROM orders WHERE order_date >= '2024-01-01' AND amount BETWEEN 550 AND 940), channel_summary AS (SELECT channel, MAX(discount) - MIN(discount) AS discount_range FROM base GROUP BY channel) SELECT channel, discount_range FROM channel_summary

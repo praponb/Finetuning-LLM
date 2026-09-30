@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, status, COUNT(DISTINCT balance) AS unique_account_types, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM accounts GROUP BY 1, 2;

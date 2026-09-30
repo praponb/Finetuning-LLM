@@ -1,1 +1,0 @@
-SELECT opened_month, pct_berlin, min_sqft FROM (SELECT MONTH(opened_date) AS opened_month, ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_berlin, MIN(sqft) AS min_sqft FROM stores WHERE opened_date <= '2023-03-01' GROUP BY MONTH(opened_date)) AS sub WHERE min_sqft < 6300 ORDER BY opened_month DESC, min_sqft DESC;

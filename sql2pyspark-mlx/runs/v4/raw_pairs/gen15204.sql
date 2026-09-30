@@ -1,1 +1,0 @@
-with valid as (select id, store_name, city, region, opened_date, sqft, trim(region) as clean_region, initcap(trim(region)) as region_title from stores where opened_date > date '2023-08-09' and region is not null) select * from (select region, city, sqft from valid) src pivot (sum(sqft) for city in ('New York' as new_york, 'Chiang Mai' as chiang_mai));

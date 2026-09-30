@@ -1,1 +1,0 @@
-select method, year(paid_at) paid_year, count(case when method = 'card' then 1 end) card_count, avg(amount) avg_amount from payments where (method = 'paypal' and status not in ('SUCCESS', 'FAILED')) or hour(paid_at) between 12 and 20 group by method, year(paid_at) having avg(amount) < 1300;

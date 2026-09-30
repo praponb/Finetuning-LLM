@@ -1,1 +1,0 @@
-SELECT dept_name, location, COALESCE(budget, 0) AS budget_filled, TRIM(location) AS clean_location FROM departments WHERE location = 'Berlin' AND (dept_name IN ('Engineering', 'Legal', 'Sales') OR location = 'London')

@@ -1,1 +1,0 @@
-select i.product_id, i.last_restock, p.category, s.sqft, s.region from inventory i join products p on p.id = i.product_id join stores s on s.id = i.store_id where i.quantity is null order by p.category, last_restock;

@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, MIN(order_date) AS min_order_date, SUM(amount) AS total_amount FROM orders GROUP BY customer_id) SELECT customers.is_active, customers.email, customer_stats.min_order_date, customer_stats.total_amount FROM customers LEFT JOIN customer_stats ON customers.id = customer_stats.customer_id WHERE customer_stats.total_amount > 6500;

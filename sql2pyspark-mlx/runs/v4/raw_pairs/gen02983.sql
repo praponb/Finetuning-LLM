@@ -1,1 +1,0 @@
-SELECT QUARTER(o.order_date) order_quarter, o.channel, MIN(s.shipped_date) min_shipped_date FROM shipments s JOIN orders o ON s.order_id = o.id FULL OUTER JOIN customers c ON o.customer_id = c.id WHERE s.cost >= 59 GROUP BY QUARTER(o.order_date), o.channel ORDER BY min_shipped_date, order_quarter, channel LIMIT 20;

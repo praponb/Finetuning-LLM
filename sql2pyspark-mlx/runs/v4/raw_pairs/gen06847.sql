@@ -1,1 +1,0 @@
-with ranked as (select * from accounts qualify row_number() over (partition by customer_id order by opened_date asc, id asc) = 1) select id, account_type, opened_date, status from ranked order by opened_date asc nulls first, status asc

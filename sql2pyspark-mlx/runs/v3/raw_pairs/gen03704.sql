@@ -1,1 +1,0 @@
-SELECT p.id, p.product_name, t.avg_quantity FROM products p LEFT JOIN (SELECT product_id, AVG(quantity) AS avg_quantity FROM inventory WHERE product_id IN (3, 4, 5) GROUP BY product_id) t ON p.id = t.product_id WHERE t.avg_quantity > 180;

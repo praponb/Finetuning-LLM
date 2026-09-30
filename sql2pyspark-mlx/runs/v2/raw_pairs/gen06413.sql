@@ -1,1 +1,0 @@
-SELECT o.store_id, MIN(p.amount) AS min_amount, MAX(p.paid_at) AS latest_paid_at FROM payments p JOIN orders o ON p.order_id = o.id FULL OUTER JOIN stores s ON o.store_id = s.id WHERE o.store_id IN (14, 19, 23, 39) GROUP BY o.store_id ORDER BY min_amount DESC, store_id ASC LIMIT 50;

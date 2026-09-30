@@ -1,1 +1,0 @@
-select oi.id, oi.product_id, oi.order_id, p.price, p.brand, o.shipping_fee from order_items oi inner join products p on oi.product_id = p.id left join orders o on oi.order_id = o.id order by shipping_fee, product_id

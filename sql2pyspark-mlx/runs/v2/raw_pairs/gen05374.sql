@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, SUM(unit_price * quantity) AS revenue, MIN(unit_price) AS min_unit_price FROM order_items GROUP BY order_id) SELECT o.customer_id, o.status, os.revenue, os.min_unit_price FROM orders o INNER JOIN order_stats os ON o.id = os.order_id ORDER BY revenue DESC;

@@ -1,1 +1,0 @@
-WITH rollup_totals AS (SELECT p.region, p.city, e.status, COUNT(*) AS rows_total, SUM(e.shipping_fee) AS total_shipping_fee, MIN(e.amount) AS min_amount FROM orders e LEFT JOIN stores p ON e.store_id = p.id GROUP BY p.region, p.city, e.status) SELECT region, city, status, rows_total, total_shipping_fee, min_amount FROM rollup_totals ORDER BY region, status

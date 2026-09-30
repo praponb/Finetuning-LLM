@@ -1,1 +1,0 @@
-select o.status, max(oi.quantity) as max_quantity from order_items oi inner join orders o on oi.order_id = o.id left outer join products p on oi.product_id = p.id where p.price < 400 group by o.status order by status;

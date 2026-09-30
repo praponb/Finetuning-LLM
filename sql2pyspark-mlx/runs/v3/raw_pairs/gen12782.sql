@@ -1,1 +1,0 @@
-select p.order_id, o.status, o.amount, s.store_name, least(o.discount, o.shipping_fee) as least_discount_shipping_fee from payments p inner join orders o on p.order_id = o.id inner join stores s on s.id = o.store_id;

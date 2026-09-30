@@ -1,1 +1,0 @@
-SELECT dept_name, stddev_budget, finance_count FROM (SELECT dept_name, ROUND(STDDEV(budget), 2) stddev_budget, SUM(CASE WHEN dept_name = 'Finance' THEN 1 ELSE 0 END) finance_count FROM departments GROUP BY dept_name) s WHERE stddev_budget < 50

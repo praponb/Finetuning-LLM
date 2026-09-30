@@ -1,1 +1,0 @@
-SELECT a.customer_id, a.status, t.total_amount FROM accounts a JOIN (SELECT account_id, SUM(amount) total_amount FROM transactions WHERE is_flagged GROUP BY account_id) t ON a.id = t.account_id WHERE t.total_amount >= 9000;

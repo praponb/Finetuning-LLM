@@ -1,1 +1,0 @@
-with store_totals as (select store_id, max(quantity) - min(quantity) as quantity_range, round(stddev(quantity), 2) as stddev_quantity from inventory group by store_id) select s.id, s.city, st.quantity_range, st.stddev_quantity from stores s join store_totals st on s.id = st.store_id where st.stddev_quantity >= 21;

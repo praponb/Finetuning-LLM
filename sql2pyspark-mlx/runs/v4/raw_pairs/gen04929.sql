@@ -1,1 +1,0 @@
-SELECT id, order_id, status, shipped_date, CASE WHEN cost >= 86 THEN 'High' WHEN cost >= 39 THEN 'Medium' ELSE 'Low' END AS cost_level FROM shipments WHERE carrier IS NULL ORDER BY shipped_date DESC, id;

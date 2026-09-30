@@ -1,1 +1,0 @@
-select transactions.id, transactions.amount, transactions.txn_type from transactions where transactions.account_id in (select id from accounts where customer_id in (26, 39)) order by transactions.txn_type desc

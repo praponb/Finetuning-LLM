@@ -1,1 +1,0 @@
-with order_totals as (select order_id, min(paid_at) as first_paid_at from payments group by order_id) select o.id, o.order_date, o.customer_id, ot.first_paid_at from orders o join order_totals ot on o.id = ot.order_id order by customer_id desc, id limit 50;

@@ -1,1 +1,0 @@
-SELECT ss.id, ss.revenue, ss.sale_date, p.cost, s.country, s.city FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id WHERE s.city = 'Bangkok' AND p.supplier_id IN (23, 35) ORDER BY ss.sale_date, id LIMIT 5

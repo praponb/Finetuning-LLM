@@ -1,8 +1,0 @@
-SELECT
-    YEAR(opened_date) AS opened_year,
-    SUM(sqft) AS total_sqft,
-    COUNT(*) AS cnt,
-    SUM(SUM(sqft)) OVER (ORDER BY YEAR(opened_date)) AS cumulative_sqft
-FROM stores
-GROUP BY YEAR(opened_date)
-ORDER BY total_sqft DESC;

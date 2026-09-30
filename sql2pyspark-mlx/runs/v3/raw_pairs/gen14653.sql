@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT location, dept_name, budget FROM departments WHERE location IN ('Berlin', 'Singapore')) PIVOT (COUNT(budget) FOR dept_name IN ('Sales', 'Marketing', 'HR', 'Legal')) ORDER BY location;

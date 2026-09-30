@@ -1,1 +1,0 @@
-select id, email, dept_id, manager_id, salary, level, lag(salary, 1) over (partition by job_title order by salary, id) prev_salary, round(salary / sum(salary) over (partition by dept_id), 4) salary_share from employees

@@ -1,1 +1,0 @@
-SELECT stores.id, stores.region, stores.city, t.last_order_date, t.channel_values FROM stores INNER JOIN (SELECT store_id, MAX(order_date) AS last_order_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM orders GROUP BY store_id) t ON stores.id = t.store_id;

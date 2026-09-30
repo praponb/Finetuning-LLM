@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, service, host, level, status_code, key, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) x AS key, attr_value) SELECT service, host, COUNT(DISTINCT level) AS distinct_levels, SORT_ARRAY(COLLECT_SET(host)) AS host_list FROM flattened GROUP BY service, host HAVING distinct_levels < 1 ORDER BY host ASC;

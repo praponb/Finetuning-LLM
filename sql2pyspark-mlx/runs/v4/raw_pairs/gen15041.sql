@@ -1,1 +1,0 @@
-SELECT s.id, s.country, t.home_count FROM sessions s INNER JOIN (SELECT session_id, SUM(CASE WHEN page = '/home' THEN 1 ELSE 0 END) home_count FROM web_events WHERE duration_sec > 160 GROUP BY session_id) t ON s.id = t.session_id ORDER BY s.id;

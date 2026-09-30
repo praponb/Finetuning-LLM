@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, plan, element FROM price_tiers LATERAL VIEW EXPLODE(tier_limits) t AS element) SELECT id, plan, element, CASE WHEN plan RLIKE '^(starter|pro)$' THEN 'GROUP_B' WHEN plan RLIKE '^(basic|enterprise)$' THEN 'PRIORITY' ELSE 'CORE' END AS plan_zone FROM flattened

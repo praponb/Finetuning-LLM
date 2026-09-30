@@ -1,1 +1,0 @@
-SELECT txn_type, COUNT(DISTINCT amount) AS unique_txn_types FROM transactions WHERE txn_type = 'REFUND' OR account_id IN (13, 35) GROUP BY txn_type HAVING COUNT(DISTINCT amount) > 3 ORDER BY txn_type LIMIT 3

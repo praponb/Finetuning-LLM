@@ -1,1 +1,0 @@
-SELECT status FROM orders WHERE discount BETWEEN 0.11 AND 0.37 UNION ALL SELECT status FROM orders WHERE status NOT IN ('SHIPPED', 'RETURNED', 'PENDING') ORDER BY status DESC

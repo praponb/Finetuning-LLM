@@ -1,1 +1,0 @@
-SELECT category, COUNT(DISTINCT price) AS unique_suppliers, SUM(CASE WHEN category = 'Grocery' THEN 1 ELSE 0 END) AS grocery_count, MAX(launch_date) AS latest_launch_date FROM products WHERE brand IS NOT NULL GROUP BY category ORDER BY category;

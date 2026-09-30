@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(quantity) AS max_quantity, COUNT(*) AS row_count FROM inventory WHERE MONTH(last_restock) IN (1, 9, 10) GROUP BY store_id) SELECT s.id, s.city, ss.max_quantity, ss.row_count FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id

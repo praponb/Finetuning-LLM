@@ -1,1 +1,0 @@
-SELECT s.city, COUNT(DISTINCT oi.quantity) AS unique_orders FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN stores s ON o.store_id = s.id GROUP BY s.city ORDER BY unique_orders, city LIMIT 5;

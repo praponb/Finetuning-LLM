@@ -1,1 +1,0 @@
-SELECT id, store_id, quantity, product_id, MIN(quantity) OVER (PARTITION BY store_id) AS store_id_min_quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS rn FROM inventory

@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, order_id, product_id, unit_price, ROUND(quantity, 2) AS quantity_rounded FROM order_items WHERE unit_price < 290) SELECT src.*, p.price, p.product_name FROM base src LEFT JOIN products p ON src.product_id = p.id;

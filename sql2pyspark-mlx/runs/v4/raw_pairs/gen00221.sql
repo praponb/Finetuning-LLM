@@ -1,1 +1,0 @@
-SELECT txn_type, account_id, SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count FROM transactions WHERE merchant = 'Amazon' GROUP BY txn_type, account_id ORDER BY txn_type DESC, account_id DESC;

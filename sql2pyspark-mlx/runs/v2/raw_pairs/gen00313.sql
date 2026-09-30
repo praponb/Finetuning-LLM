@@ -1,1 +1,0 @@
-select store_id, year(last_restock) as last_restock_year, product_id, max(quantity) as max_quantity, max(last_restock) as latest_last_restock from inventory group by store_id, year(last_restock), product_id order by last_restock_year desc

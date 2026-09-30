@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT product_id, store_id FROM inventory EXCEPT ALL SELECT product_id, store_id FROM inventory WHERE product_id IN (2, 5, 6)), reconciled AS (SELECT s.* FROM inventory s INNER JOIN kept_keys k ON s.product_id = k.product_id AND s.store_id = k.store_id) SELECT id, store_id, product_id, quantity, last_restock FROM reconciled ORDER BY id DESC NULLS FIRST;

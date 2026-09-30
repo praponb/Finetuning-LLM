@@ -1,1 +1,0 @@
-SELECT region, COUNT(sqft) AS sqft_count, SUM(CASE WHEN region = 'South' THEN sqft ELSE 0 END) AS south_sqft, COUNT(CASE WHEN region = 'East' THEN 1 END) AS east_count FROM stores WHERE opened_date <= '2023-06-01' GROUP BY 1 ORDER BY region;

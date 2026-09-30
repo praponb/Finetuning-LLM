@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.quantity, i.product_id, s.store_name, s.city, DATE_TRUNC('week', i.last_restock) AS last_restock_period FROM inventory i JOIN stores s ON i.store_id = s.id WHERE NOT (i.store_id IN (3, 5) AND s.region = 'East') ORDER BY product_id DESC, id LIMIT 5;

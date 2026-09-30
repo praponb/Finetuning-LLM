@@ -1,1 +1,0 @@
-select delivered_year, dhl_count, status_list from (select year(delivered_date) as delivered_year, count(case when carrier = 'DHL' then 1 end) as dhl_count, sort_array(collect_set(status)) as status_list from shipments group by year(delivered_date)) as x where dhl_count < 8 order by delivered_year desc;

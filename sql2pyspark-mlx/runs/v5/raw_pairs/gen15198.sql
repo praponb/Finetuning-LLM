@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, store_id, product_id, sale_date, revenue, units - revenue AS revenue_per_unit FROM store_sales WHERE units = 20) SELECT id, store_id FROM filtered INTERSECT ALL SELECT id, store_id FROM store_sales WHERE store_id IN (2, 3, 4, 5);

@@ -1,1 +1,0 @@
-SELECT products.brand, MAX(store_sales.units) AS max_units FROM store_sales INNER JOIN products ON store_sales.product_id = products.id INNER JOIN stores ON store_sales.store_id = stores.id GROUP BY products.brand ORDER BY products.brand

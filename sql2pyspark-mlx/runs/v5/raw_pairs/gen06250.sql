@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, AVG(cost) AS avg_cost, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM shipments WHERE order_id IS NOT NULL GROUP BY order_id) SELECT o.id, o.order_date, os.avg_cost, os.status_list FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id ORDER BY id DESC

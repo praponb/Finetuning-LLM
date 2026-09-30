@@ -1,1 +1,0 @@
-SELECT orders.shipping_fee, t.amount_count FROM orders INNER JOIN (SELECT order_id, COUNT(amount) AS amount_count FROM payments GROUP BY order_id) t ON orders.id = t.order_id WHERE t.amount_count >= 4 ORDER BY t.amount_count;

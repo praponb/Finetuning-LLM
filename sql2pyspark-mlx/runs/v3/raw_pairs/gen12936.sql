@@ -1,1 +1,0 @@
-select oi.unit_price, p.product_name, p.launch_date, o.status, o.shipping_fee from order_items oi inner join products p on p.id = oi.product_id inner join orders o on o.id = oi.order_id order by p.launch_date, shipping_fee;

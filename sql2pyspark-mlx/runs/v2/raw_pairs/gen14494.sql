@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, MIN(t.txn_time) AS first_txn_time FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON c.id = a.customer_id WHERE a.balance BETWEEN 47000 AND 59000 GROUP BY DATE_TRUNC('MONTH', c.signup_date) ORDER BY signup_month

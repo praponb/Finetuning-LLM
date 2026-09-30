@@ -1,1 +1,0 @@
-SELECT sessions.device, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(web_events.event_type))) AS event_type_values FROM web_events INNER JOIN sessions ON web_events.session_id = sessions.id GROUP BY sessions.device ORDER BY device DESC;

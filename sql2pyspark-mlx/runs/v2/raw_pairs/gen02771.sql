@@ -1,1 +1,0 @@
-SELECT budget_bucket, max_budget FROM (SELECT CASE WHEN budget >= 3162000 THEN 'high' WHEN budget >= 860000 THEN 'mid' ELSE 'low' END AS budget_bucket, MAX(budget) AS max_budget FROM departments GROUP BY CASE WHEN budget >= 3162000 THEN 'high' WHEN budget >= 860000 THEN 'mid' ELSE 'low' END) AS x WHERE max_budget >= 2009000 ORDER BY budget_bucket;

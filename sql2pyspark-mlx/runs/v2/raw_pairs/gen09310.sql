@@ -1,1 +1,0 @@
-SELECT p.id, p.paid_at, p.status, o.order_date, c.age, CONCAT_WS('-', o.status, o.channel) AS status_channel_key FROM payments p INNER JOIN orders o ON p.order_id = o.id RIGHT JOIN customers c ON c.id = o.customer_id WHERE LENGTH(c.email) < 13

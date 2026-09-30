@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id, status ORDER BY amount DESC, id) AS rank_in_group FROM payments) x WHERE rank_in_group = 1) SELECT id, method, amount, status, rank_in_group FROM latest ORDER BY id NULLS FIRST

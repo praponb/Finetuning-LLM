@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM transactions WHERE is_flagged), transactions_stats AS (SELECT txn_type, COUNT(CASE WHEN merchant = 'Grab' THEN 1 END) AS grab_count, AVG(amount) AS avg_amount FROM src GROUP BY txn_type) SELECT * FROM transactions_stats WHERE grab_count >= 5

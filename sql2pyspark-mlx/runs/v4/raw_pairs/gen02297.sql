@@ -1,1 +1,0 @@
-with cleaned as (select id, channel, starts_on, add_months(ends_on, 3) as ends_on_plus_months from promotions where starts_on >= date '2023-10-14') select id, channel from cleaned except all select id, channel from promotions where starts_on <= '2024-11-01'

@@ -1,1 +1,0 @@
-select account_type, count(balance) as balance_count from accounts where status <> 'FROZEN' and balance > 41000 and balance >= 22000 group by account_type order by balance_count desc, account_type limit 3

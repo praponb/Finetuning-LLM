@@ -1,1 +1,0 @@
-SELECT category, launch_quarter, pct_umbrella FROM (SELECT category, QUARTER(launch_date) AS launch_quarter, ROUND((100 * SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_umbrella FROM products GROUP BY category, QUARTER(launch_date)) AS agg WHERE pct_umbrella >= 38 ORDER BY category DESC

@@ -1,1 +1,0 @@
-SELECT web_events.id, web_events.duration_sec, web_events.event_type, sessions.country, customers.age, customers.segment FROM web_events RIGHT JOIN sessions ON web_events.session_id = sessions.id INNER JOIN customers ON sessions.customer_id = customers.id WHERE HOUR(web_events.event_time) BETWEEN 11 AND 15 AND customers.country = 'US' ORDER BY customers.age ASC;

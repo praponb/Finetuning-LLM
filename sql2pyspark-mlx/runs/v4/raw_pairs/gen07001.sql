@@ -1,1 +1,0 @@
-SELECT i.product_id, i.store_id, p.launch_date, p.product_name, s.country, s.supplier_name, ROUND(p.price, 0) AS price_rounded FROM inventory i LEFT JOIN products p ON i.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE i.last_restock BETWEEN '2023-10-01' AND '2024-01-01';

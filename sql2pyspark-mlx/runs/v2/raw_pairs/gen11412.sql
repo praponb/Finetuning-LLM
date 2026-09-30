@@ -1,1 +1,0 @@
-SELECT we.id, we.event_time, s.browser, s.device, c.signup_date FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id ORDER BY s.browser, device DESC;

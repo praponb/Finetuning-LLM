@@ -1,1 +1,0 @@
-WITH ranked_orders AS (SELECT id, customer_id, shipping_fee, order_date, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY shipping_fee DESC, id) pos FROM orders WHERE order_date BETWEEN '2024-12-01' AND '2025-08-31') SELECT id, customer_id, shipping_fee, order_date FROM ranked_orders WHERE pos <= 3;

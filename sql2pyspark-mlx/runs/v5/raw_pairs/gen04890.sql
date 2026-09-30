@@ -1,1 +1,0 @@
-with exploded as (select id, service, log_ts, level, latency_ms, key, v from app_logs lateral view explode(context) x as key, v) select date_trunc('day', log_ts) as activity_day, percentile_approx(latency_ms, array(0.25, 0.5, 0.75)) as latency_ms_quartiles, min(log_ts) as first_log_ts from exploded group by date_trunc('day', log_ts) order by activity_day desc nulls first

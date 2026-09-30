@@ -1,1 +1,0 @@
-SELECT i.last_restock, p.supplier_id, p.brand, s.city, ROUND(i.quantity, 2) AS quantity_rounded FROM inventory i INNER JOIN products p ON p.id = i.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.category != 'Home'

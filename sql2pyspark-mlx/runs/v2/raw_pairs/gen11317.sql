@@ -1,1 +1,0 @@
-SELECT orders.id, orders.status, COUNT(payments.id) payment_count, AVG(payments.amount) avg_amount FROM orders LEFT JOIN payments ON payments.order_id = orders.id GROUP BY orders.id, orders.status ORDER BY payment_count DESC, status;

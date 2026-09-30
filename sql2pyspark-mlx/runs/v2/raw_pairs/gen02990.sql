@@ -1,1 +1,0 @@
-select st.region, round(avg(s.cost), 2) as avg_cost from shipments s left join orders o on o.id = s.order_id inner join stores st on o.store_id = st.id where o.amount >= 1110 group by st.region having avg_cost >= 64 order by st.region, avg_cost desc

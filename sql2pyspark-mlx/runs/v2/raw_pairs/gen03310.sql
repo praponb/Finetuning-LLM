@@ -1,1 +1,0 @@
-select date_trunc('MONTH', a.opened_date) as opened_month, round(avg(t.amount), 2) as avg_amount from transactions t right outer join accounts a on t.account_id = a.id where a.status = 'CLOSED' group by date_trunc('MONTH', a.opened_date);

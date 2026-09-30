@@ -1,1 +1,0 @@
-SELECT id, job_title, salary FROM (SELECT id, job_title, salary, ROW_NUMBER() OVER (PARTITION BY job_title ORDER BY salary DESC, id) AS rnk FROM employees) AS t WHERE rnk <= 3 ORDER BY id, job_title DESC

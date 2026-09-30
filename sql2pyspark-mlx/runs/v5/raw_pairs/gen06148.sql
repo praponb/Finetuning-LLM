@@ -1,1 +1,0 @@
-SELECT d.id, d.location, d.budget, t.first_hire_date FROM departments d LEFT JOIN (SELECT dept_id, MIN(hire_date) AS first_hire_date FROM employees WHERE level IN ('L2', 'L1') GROUP BY dept_id) t ON d.id = t.dept_id

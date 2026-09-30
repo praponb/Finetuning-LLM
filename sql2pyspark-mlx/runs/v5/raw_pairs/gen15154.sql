@@ -1,1 +1,0 @@
-SELECT o.id, o.customer_id, t.stddev_cost, t.status_values FROM orders o JOIN (SELECT order_id, ROUND(STDDEV(cost), 2) AS stddev_cost, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM shipments WHERE delivered_date BETWEEN '2023-05-12' AND '2025-03-01' GROUP BY order_id) t ON o.id = t.order_id ORDER BY o.id DESC LIMIT 5;

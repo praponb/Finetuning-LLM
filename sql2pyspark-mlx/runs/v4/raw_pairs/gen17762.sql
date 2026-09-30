@@ -1,1 +1,0 @@
-SELECT method, SUM(CASE WHEN method = 'card' THEN 1 ELSE 0 END) AS card_count, MAX(paid_at) AS latest_paid_at FROM payments GROUP BY method HAVING SUM(CASE WHEN method = 'card' THEN 1 ELSE 0 END) > 72;

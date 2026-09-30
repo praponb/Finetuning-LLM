@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT job_title, MONTH(hire_date) AS hire_month, COUNT(CASE WHEN level = 'L1' THEN 1 END) AS l1_count FROM employees GROUP BY job_title, MONTH(hire_date)) AS x WHERE l1_count < 7 ORDER BY l1_count DESC, job_title, hire_month LIMIT 5

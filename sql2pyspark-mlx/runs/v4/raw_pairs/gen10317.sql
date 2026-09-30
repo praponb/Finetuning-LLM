@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(last_restock) < 2024 THEN 'before_2024' WHEN YEAR(last_restock) = 2024 THEN '2024' ELSE 'after_2024' END AS last_restock_cohort, MIN(quantity) AS min_quantity, MAX(quantity) AS max_quantity FROM inventory WHERE (product_id IN (2, 3, 5, 10) AND YEAR(last_restock) = 2025) OR product_id IN (4, 7) GROUP BY last_restock_cohort

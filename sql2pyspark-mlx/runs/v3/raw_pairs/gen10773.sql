@@ -1,1 +1,0 @@
-SELECT p.brand, COUNT(DISTINCT oi.unit_price) AS unique_products, ROUND(STDDEV(oi.quantity), 2) AS stddev_quantity FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id WHERE p.supplier_id IS NOT NULL GROUP BY p.brand;

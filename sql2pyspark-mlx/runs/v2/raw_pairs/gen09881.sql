@@ -1,1 +1,0 @@
-SELECT suppliers.city, t.avg_cost FROM suppliers INNER JOIN (SELECT supplier_id, ROUND(AVG(cost), 2) avg_cost FROM products WHERE stock_qty > 372 GROUP BY supplier_id) t ON suppliers.id = t.supplier_id WHERE t.avg_cost > 78;

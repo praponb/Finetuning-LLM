@@ -1,1 +1,0 @@
-SELECT o.status, SUM(CASE WHEN p.status = 'FAILED' THEN p.amount ELSE 0 END) AS failed_amount FROM payments p INNER JOIN orders o ON p.order_id = o.id WHERE o.channel IN ('partner', 'store', 'web') GROUP BY o.status HAVING SUM(CASE WHEN p.status = 'FAILED' THEN p.amount ELSE 0 END) > 57

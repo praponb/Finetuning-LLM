@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, COUNT(*) AS total_count FROM orders GROUP BY customer_id) SELECT c.is_active, cs.total_count FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.total_count >= 9;

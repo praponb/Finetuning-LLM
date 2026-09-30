@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, store_id, revenue, units, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY revenue DESC, id) AS row_num FROM store_sales WHERE revenue >= 3800) AS t WHERE row_num <= 3 ORDER BY revenue DESC, units DESC;

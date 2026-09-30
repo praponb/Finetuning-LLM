@@ -1,1 +1,0 @@
-SELECT id, salary, REPLACE(full_name, ' ', '-') AS full_name_slug, CASE WHEN level IN ('L2', 'L1') THEN 'Group A' ELSE 'Other' END AS level_group FROM employees WHERE is_remote AND is_remote ORDER BY id DESC, 2 DESC LIMIT 10

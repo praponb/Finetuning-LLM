@@ -1,1 +1,0 @@
-select c.id, c.segment, count(s.id) as subscription_count, avg(s.monthly_fee) as avg_monthly_fee from customers c left join subscriptions s on c.id = s.customer_id group by c.id, c.segment having count(s.id) >= 5

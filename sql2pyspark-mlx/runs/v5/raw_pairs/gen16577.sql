@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, s.store_name, s.city, p.product_name, ADD_MONTHS(i.last_restock, 12) AS last_restock_plus_months FROM inventory i FULL OUTER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id;

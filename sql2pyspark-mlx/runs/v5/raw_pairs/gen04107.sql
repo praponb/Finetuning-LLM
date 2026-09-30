@@ -1,1 +1,0 @@
-SELECT CASE WHEN p.brand IN ('Globex', 'Stark') THEN 'core' ELSE 'other' END AS brand_group, p.brand, MAX(ss.units) AS max_units FROM store_sales ss LEFT JOIN products p ON p.id = ss.product_id WHERE ss.revenue <= 4000 GROUP BY CASE WHEN p.brand IN ('Globex', 'Stark') THEN 'core' ELSE 'other' END, p.brand HAVING MAX(ss.units) >= 29 ORDER BY 2;

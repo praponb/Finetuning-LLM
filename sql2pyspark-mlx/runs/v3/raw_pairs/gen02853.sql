@@ -1,1 +1,0 @@
-SELECT QUARTER(hire_date) AS hire_quarter, MIN(hire_date) AS first_hire_date, COUNT(CASE WHEN job_title = 'Analyst' THEN 1 END) AS analyst_count FROM employees WHERE salary < 145000 AND (dept_id IN (7, 8, 10, 36) OR dept_id IN (12, 24, 29, 36)) GROUP BY hire_quarter

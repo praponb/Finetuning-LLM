@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, AVG(oi.unit_price) AS avg_unit_price, MIN(oi.unit_price) AS min_unit_price FROM order_items oi RIGHT JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON oi.product_id = p.id GROUP BY p.brand, p.category HAVING avg_unit_price > 190 ORDER BY category DESC, avg_unit_price DESC, brand LIMIT 20

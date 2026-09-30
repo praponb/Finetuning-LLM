@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, host, level, status_code, attr_key, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) e AS attr_key, attr_value) SELECT id, host, status_code, attr_key, attr_value FROM exploded

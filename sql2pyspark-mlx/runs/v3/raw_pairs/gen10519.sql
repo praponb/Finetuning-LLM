@@ -1,1 +1,0 @@
-SELECT ss.id, ss.units, p.stock_qty, p.product_name, s.rating, GREATEST(ss.revenue, ss.units) AS greatest_revenue_units FROM store_sales ss LEFT OUTER JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE ss.product_id IN (1, 4, 6, 8) OR ss.sale_date < '2024-04-26';

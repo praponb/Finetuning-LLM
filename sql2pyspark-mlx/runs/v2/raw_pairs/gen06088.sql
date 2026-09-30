@@ -1,1 +1,0 @@
-SELECT id, carrier, shipped_date, cost, DENSE_RANK() OVER (PARTITION BY carrier ORDER BY shipped_date) AS shipped_date_dense_rank, LAG(cost, 1) OVER (PARTITION BY carrier ORDER BY shipped_date, id) AS prev_cost FROM shipments

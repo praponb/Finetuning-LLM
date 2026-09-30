@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(CASE WHEN channel = 'mobile' THEN 1 END) AS mobile_count FROM orders GROUP BY customer_id) SELECT c.segment, cs.mobile_count FROM customers c LEFT OUTER JOIN customer_stats cs ON c.id = cs.customer_id;

@@ -1,1 +1,0 @@
-SELECT s.id, s.city, t.num_products, t.last_launch_date FROM suppliers s INNER JOIN (SELECT supplier_id, COUNT(*) AS num_products, MAX(launch_date) AS last_launch_date FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.num_products > 4 ORDER BY 1;

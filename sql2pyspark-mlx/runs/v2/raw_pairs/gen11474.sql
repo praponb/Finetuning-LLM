@@ -1,1 +1,0 @@
-WITH top_order_items AS (SELECT id, order_id, quantity, RANK() OVER (PARTITION BY order_id ORDER BY quantity DESC) pos FROM order_items WHERE unit_price IS NOT NULL) SELECT * FROM top_order_items WHERE pos <= 1;

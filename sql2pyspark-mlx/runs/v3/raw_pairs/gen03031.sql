@@ -1,1 +1,0 @@
-with order_stats as (select order_id, count(distinct cost) as unique_orders, sum(case when status = 'LOST' then 1 else 0 end) as lost_count from shipments where status = 'DELIVERED' group by order_id) select o.shipping_fee, os.unique_orders, os.lost_count from orders o left join order_stats os on o.id = os.order_id where os.lost_count >= 63

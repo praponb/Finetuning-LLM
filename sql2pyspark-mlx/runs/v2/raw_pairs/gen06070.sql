@@ -1,1 +1,0 @@
-SELECT e.job_title AS employee_job_title, e.dept_id AS employee_dept_id, m.manager_id AS manager_manager_id, m.job_title AS manager_job_title FROM employees AS e INNER JOIN employees AS m ON e.manager_id = m.id

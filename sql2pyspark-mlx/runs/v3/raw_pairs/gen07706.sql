@@ -1,1 +1,0 @@
-SELECT brand, CASE WHEN stock_qty >= 415 THEN 'high' WHEN stock_qty >= 85 THEN 'mid' ELSE 'low' END stock_qty_bucket, SORT_ARRAY(COLLECT_SET(brand)) brand_list FROM products GROUP BY brand, CASE WHEN stock_qty >= 415 THEN 'high' WHEN stock_qty >= 85 THEN 'mid' ELSE 'low' END ORDER BY stock_qty_bucket DESC;

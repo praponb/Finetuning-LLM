@@ -1,1 +1,0 @@
-select c.is_active, c.segment, max(s.monthly_fee) as max_monthly_fee, sort_array(collect_set(s.status)) as status_list from subscriptions s join customers c on s.customer_id = c.id group by c.is_active, c.segment order by segment asc, max_monthly_fee desc, is_active asc limit 5

@@ -1,1 +1,0 @@
-SELECT id, amount, account_id, merchant, CONCAT_WS('-', txn_type, merchant) AS txn_type_merchant_key FROM transactions WHERE amount BETWEEN 2400 AND 3600 AND account_id = 30 ORDER BY amount, account_id

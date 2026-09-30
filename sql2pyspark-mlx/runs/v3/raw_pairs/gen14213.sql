@@ -1,1 +1,0 @@
-SELECT dept_name, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(dept_name))) AS dept_name_values, MAX(budget) - MIN(budget) AS budget_range FROM departments GROUP BY dept_name HAVING MAX(budget) - MIN(budget) > 43 ORDER BY dept_name_values, dept_name LIMIT 1;

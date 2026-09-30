@@ -1,1 +1,0 @@
-WITH Base AS (SELECT *, CAST(salary AS INT) AS salary_int FROM employees WHERE job_title = 'Analyst' AND is_remote), LevelSummary AS (SELECT level, COUNT(CASE WHEN level = 'L5' THEN 1 END) AS l5_count FROM Base GROUP BY level) SELECT level, l5_count FROM LevelSummary WHERE l5_count < 5 ORDER BY l5_count;

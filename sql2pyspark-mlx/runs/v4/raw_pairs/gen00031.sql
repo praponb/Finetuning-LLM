@@ -1,1 +1,0 @@
-SELECT id, manager_id, hire_date, job_title FROM (SELECT id, manager_id, hire_date, job_title, DENSE_RANK() OVER (PARTITION BY manager_id ORDER BY hire_date DESC) AS rnk FROM employees) AS ranked WHERE rnk = 1

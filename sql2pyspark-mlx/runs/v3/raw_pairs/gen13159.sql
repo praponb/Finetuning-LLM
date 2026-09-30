@@ -1,1 +1,0 @@
-SELECT country, city, SORT_ARRAY(COLLECT_SET(segment)) AS segment_list, SUM(CASE WHEN segment = 'SMB' THEN 1 ELSE 0 END) AS smb_count, SUM(age) AS total_age FROM customers WHERE LOWER(email) LIKE '%ran%' AND segment = 'Corporate' GROUP BY country, city;

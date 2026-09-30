@@ -1,1 +1,0 @@
-SELECT job_title, MAX(hire_date) last_hire_date, MAX(salary) - MIN(salary) salary_range, COUNT(*) num_employees FROM employees WHERE UPPER(TRIM(email)) = 'KANYA@MAIL.CO.TH' GROUP BY job_title HAVING COUNT(*) >= 2

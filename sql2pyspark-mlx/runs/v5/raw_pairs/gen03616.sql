@@ -1,1 +1,0 @@
-SELECT e.id, e.manager_id AS employee_manager_id, e.email AS employee_email, e.hire_date AS employee_hire_date, m.is_remote AS manager_is_remote, CONCAT(m.job_title, ' - ', m.level) AS job_title_level FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE e.salary BETWEEN 63000 AND 81000

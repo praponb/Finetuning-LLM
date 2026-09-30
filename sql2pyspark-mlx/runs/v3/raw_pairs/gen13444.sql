@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(customers.signup_date, 'yyyy-MM') AS signup_month, AVG(orders.discount) AS avg_discount FROM orders FULL OUTER JOIN customers ON orders.customer_id = customers.id GROUP BY DATE_FORMAT(customers.signup_date, 'yyyy-MM') HAVING avg_discount > 0.19 ORDER BY signup_month;

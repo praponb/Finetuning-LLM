@@ -1,1 +1,0 @@
-WITH web_events_by_session AS (SELECT session_id, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY session_id) SELECT s.device, webs.avg_duration_sec FROM sessions s INNER JOIN web_events_by_session webs ON s.id = webs.session_id;

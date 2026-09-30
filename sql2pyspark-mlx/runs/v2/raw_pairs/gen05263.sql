@@ -1,1 +1,0 @@
-SELECT s.id, s.cost, s.order_id, o.order_date, st.store_name, st.sqft FROM shipments s LEFT JOIN orders o ON s.order_id = o.id INNER JOIN stores st ON o.store_id = st.id ORDER BY st.store_name, s.cost;

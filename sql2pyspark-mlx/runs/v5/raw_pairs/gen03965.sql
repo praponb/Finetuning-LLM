@@ -1,1 +1,0 @@
-SELECT c.segment, c.is_active, c.email, a.customer_id, CASE WHEN c.city IN ('New York', 'London') THEN 'Group A' ELSE 'Other' END AS city_group FROM customers c LEFT JOIN accounts a ON c.id = a.customer_id WHERE NOT (c.segment != 'SMB' AND c.signup_date <= '2025-05-01') ORDER BY city_group DESC

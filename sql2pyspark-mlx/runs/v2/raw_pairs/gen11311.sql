@@ -1,1 +1,0 @@
-select product_id, order_id, count(unit_price) as unit_price_count, avg(quantity) as avg_quantity, count(*) as cnt from order_items where quantity < 7 group by product_id, order_id having min(unit_price) >= 370 order by 4;

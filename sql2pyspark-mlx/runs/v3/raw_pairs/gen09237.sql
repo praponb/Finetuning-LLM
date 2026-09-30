@@ -1,1 +1,0 @@
-with Base as (select * from payments where hour(paid_at) between 11 and 19 and status = 'REFUNDED'), agg as (select order_id, concat_ws(', ', sort_array(collect_set(method))) method_values from Base group by order_id) select * from agg

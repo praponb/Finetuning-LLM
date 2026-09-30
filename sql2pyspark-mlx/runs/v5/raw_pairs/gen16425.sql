@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE amount >= 2200 GROUP BY account_id) SELECT a.id, a.account_type, a.opened_date, tba.stddev_amount FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id WHERE tba.stddev_amount > 56;

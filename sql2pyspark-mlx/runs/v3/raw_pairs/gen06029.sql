@@ -1,1 +1,0 @@
-select id, session_id, event_time, duration_sec, lag(duration_sec, 2) over (partition by session_id order by event_time, id) as prev_duration_sec, percent_rank() over (order by duration_sec desc) as duration_sec_pct_rank from web_events

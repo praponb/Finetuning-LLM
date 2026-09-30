@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, MIN(txn_time) AS min_txn_time, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions GROUP BY account_id) SELECT a.status, a.balance, tba.min_txn_time, tba.txn_type_values FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id

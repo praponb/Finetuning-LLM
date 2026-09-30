@@ -1,1 +1,0 @@
-SELECT event_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events GROUP BY event_type HAVING ROUND(STDDEV(duration_sec), 2) < 61

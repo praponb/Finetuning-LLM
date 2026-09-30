@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, COUNT(CASE WHEN job_title = 'Intern' THEN 1 END) AS intern_count FROM employees GROUP BY dept_id) SELECT d.id, d.location, ebd.intern_count FROM departments d JOIN employees_by_department ebd ON d.id = ebd.dept_id;

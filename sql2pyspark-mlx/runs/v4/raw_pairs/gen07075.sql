@@ -1,1 +1,0 @@
-select id, dept_name, location, round(budget * 1.07, 2) as budget_scaled, initcap(trim(dept_name)) as dept_name_title from departments where dept_name in ('Legal', 'Marketing') and location = 'Tokyo' and location not in ('Berlin', 'New York', 'London') order by dept_name

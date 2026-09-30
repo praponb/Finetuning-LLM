@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, carrier, shipped_date, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY shipped_date DESC, id) AS rnk FROM shipments) SELECT * FROM numbered WHERE rnk <= 3 ORDER BY rnk DESC, shipped_date DESC;

@@ -1,1 +1,0 @@
-WITH with_last AS (SELECT s.id, s.customer_id, x.web_event_event_time, x.web_event_event_type FROM sessions s LEFT JOIN LATERAL (SELECT c.event_time AS web_event_event_time, c.event_type AS web_event_event_type FROM web_events c WHERE c.session_id = s.id AND c.event_time <= s.started_at ORDER BY c.event_time DESC, c.id DESC LIMIT 1) x ON TRUE) SELECT id FROM with_last

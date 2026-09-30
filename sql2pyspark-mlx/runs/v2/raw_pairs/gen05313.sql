@@ -1,1 +1,0 @@
-SELECT plan, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values, SUM(CASE WHEN status = 'PAUSED' THEN 1 ELSE 0 END) AS paused_count FROM subscriptions GROUP BY plan ORDER BY paused_count, plan_values DESC;

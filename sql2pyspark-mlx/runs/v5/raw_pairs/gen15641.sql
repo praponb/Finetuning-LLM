@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, MIN(stock_qty) AS min_stock_qty FROM products WHERE category IN ('Books', 'Sports', 'Electronics') GROUP BY DATE_FORMAT(launch_date, 'yyyy-MM') ORDER BY launch_month DESC LIMIT 50;

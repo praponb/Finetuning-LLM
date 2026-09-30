@@ -1,1 +1,0 @@
-select city, min_credit_limit, segment_values from (select city, min(credit_limit) as min_credit_limit, concat_ws(', ', sort_array(collect_set(segment))) as segment_values from customers where lower(email) like '%mma%' group by city) as s where min_credit_limit >= 13400;

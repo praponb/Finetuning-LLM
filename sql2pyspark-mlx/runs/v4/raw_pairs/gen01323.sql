@@ -1,1 +1,0 @@
-with base as (select * from orders where discount between 0.1 and 0.26), orders_stats as (select status, count(*) as cnt from base group by status) select status, cnt from orders_stats where cnt < 10 order by cnt desc, status asc limit 5

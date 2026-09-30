@@ -1,1 +1,0 @@
-SELECT o.id, o.order_date, s.sqft, s.store_name, c.name, c.country, CAST(o.amount AS INT) AS amount_int FROM orders o INNER JOIN stores s ON o.store_id = s.id LEFT OUTER JOIN customers c ON o.customer_id = c.id WHERE o.discount >= 0.16 AND c.email NOT LIKE '%@company.co' ORDER BY store_name DESC, o.id

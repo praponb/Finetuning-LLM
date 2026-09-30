@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT city FROM suppliers INTERSECT SELECT city FROM suppliers WHERE rating < 2.4), verified AS (SELECT s.* FROM suppliers s JOIN kept_keys k ON s.city = k.city) SELECT supplier_name, country, city, rating FROM verified;

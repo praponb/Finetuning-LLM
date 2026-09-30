@@ -1,1 +1,0 @@
-SELECT channel, customer_id, returned_count, unique_stores FROM (SELECT channel, customer_id, COUNT(CASE WHEN status = 'RETURNED' THEN 1 END) AS returned_count, COUNT(DISTINCT discount) AS unique_stores FROM orders WHERE amount > 560 GROUP BY channel, customer_id) AS x WHERE unique_stores >= 8 ORDER BY unique_stores

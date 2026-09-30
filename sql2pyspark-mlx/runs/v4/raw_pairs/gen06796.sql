@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, customer_id, plan, start_date, end_date, monthly_fee, status, LAST_DAY(start_date) AS start_date_month_end, DATE_ADD(end_date, 30) AS end_date_plus_30d FROM subscriptions WHERE start_date >= DATE '2024-04-03') SELECT * FROM filtered QUALIFY ROW_NUMBER() OVER (PARTITION BY plan, customer_id ORDER BY start_date_month_end DESC NULLS FIRST, id) = 1

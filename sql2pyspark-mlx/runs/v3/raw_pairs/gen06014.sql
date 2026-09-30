@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT status, YEAR(start_date) AS start_year, COUNT(*) AS subscription_count, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM subscriptions GROUP BY status, YEAR(start_date)) AS s WHERE avg_monthly_fee > 29 ORDER BY start_year DESC, status LIMIT 10

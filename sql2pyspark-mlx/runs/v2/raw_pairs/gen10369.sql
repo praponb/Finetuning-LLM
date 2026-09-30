@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, i.store_id, s.sqft, p.price, p.brand, CASE WHEN i.quantity >= 181 THEN 'High' WHEN i.quantity >= 110 THEN 'Medium' ELSE 'Low' END AS quantity_tier FROM inventory i INNER JOIN stores s ON s.id = i.store_id LEFT JOIN products p ON i.product_id = p.id WHERE i.store_id IN (1, 3, 5) OR ARRAY_CONTAINS(p.tags, 'clearance');

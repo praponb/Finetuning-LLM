@@ -1,1 +1,0 @@
-WITH ValidCustomers AS (SELECT * FROM customers WHERE country = 'UK'), agg AS (SELECT city, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit FROM ValidCustomers GROUP BY city) SELECT city, stddev_credit_limit FROM agg ORDER BY city LIMIT 10

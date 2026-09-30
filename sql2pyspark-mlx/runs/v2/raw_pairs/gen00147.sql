@@ -1,1 +1,0 @@
-select * from (select id, country, rating, supplier_name, row_number() over (partition by country order by rating desc, id) as rnk from suppliers where country not in ('SG', 'US', 'DE')) as ranked where rnk <= 3 order by rating desc;

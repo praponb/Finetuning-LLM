@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, COUNT(amount) AS amount_count FROM payments WHERE TO_DATE(paid_at) < '2025-04-01' GROUP BY order_id) SELECT o.status, ot.amount_count FROM orders o LEFT OUTER JOIN order_totals ot ON o.id = ot.order_id

@@ -1,1 +1,0 @@
-with top_web_events as (select *, row_number() over (partition by event_type order by event_time desc, id) as rnk from web_events where session_id = 30) select id, event_type, event_time from top_web_events where rnk <= 3;

@@ -1,1 +1,0 @@
-SELECT id, order_id, method, amount, paid_at, status, SUM(amount) OVER (PARTITION BY method ORDER BY paid_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, MIN(amount) OVER w_grp AS status_min_amount, RANK() OVER (PARTITION BY method ORDER BY amount DESC NULLS FIRST) AS amount_rank FROM payments WINDOW w_grp AS (PARTITION BY status)

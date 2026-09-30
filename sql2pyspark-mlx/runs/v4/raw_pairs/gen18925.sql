@@ -1,1 +1,0 @@
-SELECT account_type, status, ROUND(AVG(balance), 2) AS avg_balance FROM accounts WHERE (customer_id IS NOT NULL AND opened_date BETWEEN '2025-08-01' AND '2025-09-01') OR status NOT IN ('CLOSED', 'FROZEN', 'OPEN') GROUP BY account_type, status ORDER BY avg_balance DESC

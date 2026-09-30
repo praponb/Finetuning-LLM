@@ -1,1 +1,0 @@
-SELECT we.id, we.page, we.event_time, s.customer_id, c.email, c.credit_limit FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE c.city = 'Chiang Mai'

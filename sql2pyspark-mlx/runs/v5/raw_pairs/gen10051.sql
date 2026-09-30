@@ -1,1 +1,0 @@
-SELECT id, status, delivered_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY delivered_date, id) AS delivered_date_row FROM shipments WHERE status = 'DELIVERED';

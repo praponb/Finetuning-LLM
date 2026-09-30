@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END AS rating_bucket, country, city, SUM(rating) AS total_rating FROM suppliers GROUP BY CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END, country, city ORDER BY country, rating_bucket, city LIMIT 1;

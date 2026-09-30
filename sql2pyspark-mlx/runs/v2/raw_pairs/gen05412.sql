@@ -1,1 +1,0 @@
-SELECT ss.id, ss.sale_date, ss.revenue, p.cost, p.product_name, s.country, s.supplier_name FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE s.rating > 3.5;

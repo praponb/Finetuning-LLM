@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, MAX(i.last_restock) AS latest_last_restock FROM inventory i LEFT JOIN products p ON i.product_id = p.id JOIN stores s ON i.store_id = s.id GROUP BY DATE_FORMAT(p.launch_date, 'yyyy-MM') ORDER BY launch_month DESC LIMIT 5

@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, AVG(discount) AS avg_discount, COUNT(DISTINCT discount) AS unique_channels FROM orders WHERE amount IS NOT NULL GROUP BY store_id) SELECT s.store_name, ss.avg_discount, ss.unique_channels FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id ORDER BY store_name

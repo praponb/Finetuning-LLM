@@ -1,1 +1,0 @@
-select case when region in ('East', 'North') then 'tier_1' else 'other' end as region_group, min(sqft) as min_sqft from stores where opened_date between '2024-01-01' and '2025-03-11' and (store_name like 'Sia%' or city <> 'Chiang Mai') group by case when region in ('East', 'North') then 'tier_1' else 'other' end

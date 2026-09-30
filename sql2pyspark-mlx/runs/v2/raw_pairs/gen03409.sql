@@ -1,1 +1,0 @@
-SELECT MONTH(a.opened_date) opened_month, a.customer_id, ROUND((100 * SUM(CASE WHEN t.merchant = 'Grab' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_grab, MAX(t.amount) - MIN(t.amount) amount_range FROM transactions t INNER JOIN accounts a ON t.account_id = a.id GROUP BY MONTH(a.opened_date), a.customer_id;

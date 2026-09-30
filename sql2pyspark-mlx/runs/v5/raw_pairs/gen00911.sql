@@ -1,1 +1,0 @@
-SELECT event_day, search_count FROM (SELECT TO_DATE(event_time) AS event_day, SUM(CASE WHEN page = '/search' THEN 1 ELSE 0 END) AS search_count FROM web_events GROUP BY TO_DATE(event_time)) AS sub WHERE search_count < 39;

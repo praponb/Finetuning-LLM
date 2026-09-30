@@ -1,1 +1,0 @@
-SELECT o.channel, AVG(s.cost) AS avg_cost, COUNT(CASE WHEN s.status = 'IN_TRANSIT' THEN 1 END) AS in_transit_count FROM shipments s INNER JOIN orders o ON s.order_id = o.id WHERE o.channel = 'mobile' GROUP BY o.channel;

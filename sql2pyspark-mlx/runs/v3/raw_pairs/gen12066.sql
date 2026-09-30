@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, AVG(duration_sec) AS avg_duration_sec, MAX(event_time) AS latest_event_time FROM web_events GROUP BY session_id) SELECT s.country, st.avg_duration_sec, st.latest_event_time FROM sessions s INNER JOIN session_totals st ON s.id = st.session_id WHERE st.avg_duration_sec >= 420 ORDER BY latest_event_time;

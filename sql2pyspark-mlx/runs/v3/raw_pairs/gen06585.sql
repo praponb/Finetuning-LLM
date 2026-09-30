@@ -1,1 +1,0 @@
-SELECT order_id, AVG(unit_price) AS avg_unit_price, MAX(unit_price) - MIN(unit_price) AS unit_price_range, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items WHERE product_id IS NOT NULL AND (quantity < 5 OR quantity <> 8) GROUP BY order_id;

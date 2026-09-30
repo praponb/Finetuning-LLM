@@ -1,1 +1,0 @@
-SELECT shipments.shipped_date, orders.order_date, stores.city, stores.region FROM shipments INNER JOIN orders ON shipments.order_id = orders.id LEFT OUTER JOIN stores ON stores.id = orders.store_id ORDER BY region DESC;

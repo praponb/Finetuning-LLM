@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END AS is_tokyo, INITCAP(TRIM(city)) AS city_title FROM stores WHERE city IN ('Tokyo', 'Berlin', 'Singapore') OR city IN ('Bangkok', 'Tokyo', 'New York')

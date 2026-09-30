@@ -1,1 +1,0 @@
-SELECT location, CASE WHEN dept_name IN ('Finance', 'Legal') THEN 'group_a' ELSE 'other' END AS dept_name_group, ROUND((100 * SUM(CASE WHEN location = 'Singapore' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_singapore FROM departments WHERE budget > 3604000 AND dept_name IN ('Engineering', 'Sales') GROUP BY 1, 2

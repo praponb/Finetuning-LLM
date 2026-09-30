@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) merchant_values, SORT_ARRAY(COLLECT_SET(merchant)) merchant_list FROM transactions GROUP BY account_id) SELECT a.id, a.customer_id, a.status, at.merchant_values, at.merchant_list FROM accounts a INNER JOIN account_totals at ON a.id = at.account_id;

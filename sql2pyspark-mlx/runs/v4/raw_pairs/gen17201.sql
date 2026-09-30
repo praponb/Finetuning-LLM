@@ -1,1 +1,0 @@
-SELECT CASE WHEN c.country IN ('SG', 'TH') THEN 'priority' ELSE 'other' END country_group, c.segment, SUM(o.discount) total_discount, COUNT(o.shipping_fee) shipping_fee_count FROM orders o LEFT OUTER JOIN customers c ON o.customer_id = c.id GROUP BY CASE WHEN c.country IN ('SG', 'TH') THEN 'priority' ELSE 'other' END, c.segment ORDER BY segment DESC;

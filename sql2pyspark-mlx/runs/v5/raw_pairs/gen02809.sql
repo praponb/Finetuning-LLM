@@ -1,1 +1,0 @@
-SELECT id, location, dept_name, budget, CASE WHEN budget >= 3162000 THEN 'High' WHEN budget >= 664000 THEN 'Medium' ELSE 'Low' END AS budget_level FROM departments WHERE dept_name = 'Sales' AND dept_name IN ('Marketing', 'Engineering', 'Sales');

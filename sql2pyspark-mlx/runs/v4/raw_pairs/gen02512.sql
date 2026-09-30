@@ -1,1 +1,0 @@
-select c.city, year(c.signup_date) as signup_year, avg(o.shipping_fee) as avg_shipping_fee from orders o left join stores s on o.store_id = s.id inner join customers c on o.customer_id = c.id group by c.city, year(c.signup_date) order by signup_year desc

@@ -1,1 +1,0 @@
-SELECT ss.store_id, p.launch_date, p.category, s.supplier_name, s.rating FROM store_sales ss JOIN products p ON ss.product_id = p.id RIGHT JOIN suppliers s ON p.supplier_id = s.id WHERE p.stock_qty = 256 ORDER BY rating DESC

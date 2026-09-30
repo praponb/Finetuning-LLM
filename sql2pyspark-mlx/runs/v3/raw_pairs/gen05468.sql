@@ -1,1 +1,0 @@
-with payments_by_order as (select order_id, concat_ws(', ', sort_array(collect_set(method))) as method_values from payments where method in ('card', 'promptpay', 'paypal') group by order_id) select orders.amount, orders.shipping_fee, payments_by_order.method_values from orders left join payments_by_order on orders.id = payments_by_order.order_id;

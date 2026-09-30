@@ -1,1 +1,0 @@
-SELECT last_restock, ADD_MONTHS(last_restock, 12) AS last_restock_plus_months, CASE WHEN quantity >= 228 THEN 'High' WHEN quantity >= 119 THEN 'Medium' ELSE 'Low' END AS quantity_band FROM inventory ORDER BY quantity_band, last_restock_plus_months

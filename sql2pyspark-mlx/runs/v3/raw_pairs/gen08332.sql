@@ -1,1 +1,0 @@
-SELECT YEAR(p.launch_date) AS launch_year, MIN(i.last_restock) AS first_last_restock FROM inventory i LEFT JOIN products p ON i.product_id = p.id JOIN stores s ON i.store_id = s.id WHERE s.opened_date BETWEEN '2024-05-01' AND '2024-11-01' GROUP BY YEAR(p.launch_date) ORDER BY 2 DESC

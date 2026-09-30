@@ -1,1 +1,0 @@
-SELECT id, customer_id, ship_to, COALESCE(attributes['utm_source'], 'direct') AS utm_source_or_default, ARRAY_MAX(TRANSFORM(items, i -> i.price)) AS max_item_price, attributes['utm_source'] AS utm_source, EXISTS(items, i -> i.price > 100) AS has_premium_item FROM carts WHERE customer_id IN (1, 10, 13, 29)

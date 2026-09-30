@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', order_date) AS order_month, status, MAX(discount) - MIN(discount) AS discount_range FROM orders WHERE discount BETWEEN 0.11 AND 0.13 AND store_id = 13 GROUP BY DATE_TRUNC('MONTH', order_date), status HAVING MAX(discount) - MIN(discount) < 23;

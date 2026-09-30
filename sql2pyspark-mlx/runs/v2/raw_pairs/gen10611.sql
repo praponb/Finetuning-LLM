@@ -1,1 +1,0 @@
-SELECT job_title, DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, COUNT(CASE WHEN job_title = 'Engineer' THEN 1 END) AS engineer_count FROM employees WHERE manager_id = 12 GROUP BY 1, 2 ORDER BY hire_month DESC, job_title;

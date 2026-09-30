@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, ROUND((100 * SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_click FROM web_events WHERE page IS NULL GROUP BY session_id) SELECT s.browser, s.country, ss.pct_click FROM sessions s JOIN session_stats ss ON s.id = ss.session_id ORDER BY country;

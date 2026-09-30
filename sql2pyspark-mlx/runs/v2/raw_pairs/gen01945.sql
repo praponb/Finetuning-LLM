@@ -1,3 +1,0 @@
-SELECT DISTINCT method
-FROM payments
-WHERE amount BETWEEN 510 AND 560

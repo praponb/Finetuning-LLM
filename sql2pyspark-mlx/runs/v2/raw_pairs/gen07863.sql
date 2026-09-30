@@ -1,1 +1,0 @@
-with supplier_totals as (select supplier_id, max(cost) as max_cost from products where brand in ('Umbrella', 'Stark') group by supplier_id) select s.id, s.city, s.supplier_name, st.max_cost from suppliers s inner join supplier_totals st on s.id = st.supplier_id;

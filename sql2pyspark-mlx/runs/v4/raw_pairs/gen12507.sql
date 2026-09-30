@@ -1,1 +1,0 @@
-SELECT order_items.id, order_items.quantity, order_items.product_id, orders.customer_id, orders.discount, products.supplier_id, products.stock_qty FROM order_items INNER JOIN orders ON orders.id = order_items.order_id INNER JOIN products ON order_items.product_id = products.id ORDER BY products.stock_qty DESC, 5 DESC;

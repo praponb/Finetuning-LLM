@@ -1,1 +1,0 @@
-WITH supplier_totals AS (SELECT supplier_id, COUNT(DISTINCT cost) unique_brands FROM products GROUP BY supplier_id) SELECT suppliers.id, suppliers.supplier_name, supplier_totals.unique_brands FROM suppliers LEFT JOIN supplier_totals ON suppliers.id = supplier_totals.supplier_id WHERE supplier_totals.unique_brands > 7 ORDER BY supplier_totals.unique_brands DESC

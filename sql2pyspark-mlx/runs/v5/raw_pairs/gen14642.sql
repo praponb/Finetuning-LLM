@@ -1,1 +1,0 @@
-select *, row_number() over (partition by order_id, status order by cost, id) as seq_no, avg(cost) over (partition by order_id order by cost, id rows between 2 preceding and 1 preceding) as cost_avg_2_prior from shipments where delivered_date > '2023-11-01';

@@ -1,1 +1,0 @@
-SELECT we.event_time, we.duration_sec, we.event_type, s.started_at, s.browser, s.country FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE NOT (we.duration_sec IS NOT NULL OR s.started_at >= '2024-05-01') ORDER BY we.event_type;

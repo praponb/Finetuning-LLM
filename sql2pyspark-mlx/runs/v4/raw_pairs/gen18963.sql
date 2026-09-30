@@ -1,1 +1,0 @@
-SELECT *, RANK() OVER (ORDER BY amount DESC NULLS LAST) AS amount_rank, ROUND(amount / SUM(amount) OVER (PARTITION BY account_id, txn_type), 4) AS amount_share, AVG(amount) OVER (PARTITION BY txn_type) AS txn_type_avg_amount, LAG(amount, 1) OVER (PARTITION BY account_id ORDER BY txn_time, id) AS prev_amount FROM transactions;

@@ -1,1 +1,0 @@
-SELECT dept_name, location, SUM(CASE WHEN location = 'London' THEN budget ELSE 0 END) AS london_budget, SUM(CASE WHEN location = 'London' THEN budget ELSE 0 END) AS london_budget_2 FROM departments GROUP BY dept_name, location;

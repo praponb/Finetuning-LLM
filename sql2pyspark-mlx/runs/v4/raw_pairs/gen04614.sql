@@ -1,1 +1,0 @@
-SELECT city, CASE WHEN rating >= 3.9 THEN 'PREMIUM' ELSE 'STANDARD' END AS rating_tier, STDDEV_SAMP(rating) AS rating_stddev, MAX(rating) FILTER (WHERE city = 'Berlin') AS berlin_max_rating, STDDEV_SAMP(rating) AS rating_stddev_2, GROUPING(city) AS grouping_level FROM suppliers GROUP BY CUBE (city, CASE WHEN rating >= 3.9 THEN 'PREMIUM' ELSE 'STANDARD' END)

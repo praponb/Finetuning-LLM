@@ -1,1 +1,0 @@
-select p.id, p.brand, count(i.id) inventory_count, round(avg(i.quantity), 2) avg_quantity, sum(i.quantity) total_quantity from products p left outer join inventory i on i.product_id = p.id where upper(p.product_name) like '%OIS%' group by p.id, p.brand

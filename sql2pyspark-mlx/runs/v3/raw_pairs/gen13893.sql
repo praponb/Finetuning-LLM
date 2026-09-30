@@ -1,1 +1,0 @@
-WITH ranked_store_sales AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY revenue DESC, id) rn FROM store_sales WHERE revenue BETWEEN 2700 AND 2900) SELECT id, store_id, revenue FROM ranked_store_sales WHERE rn <= 2;

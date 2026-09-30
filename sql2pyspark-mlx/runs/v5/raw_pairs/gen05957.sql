@@ -1,1 +1,0 @@
-SELECT oi.product_id, oi.order_id, p.stock_qty, o.order_date, o.store_id FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE o.customer_id = 22;

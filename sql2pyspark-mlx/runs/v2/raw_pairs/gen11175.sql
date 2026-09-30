@@ -1,1 +1,0 @@
-SELECT event_time, session_id, CASE WHEN event_type IN ('add_to_cart', 'search') THEN 'Priority' ELSE 'Other' END AS event_type_group FROM web_events WHERE duration_sec BETWEEN 344 AND 450 AND event_type != 'purchase';

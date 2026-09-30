@@ -1,1 +1,0 @@
-SELECT p.brand, SUM(i.quantity) AS total_quantity, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i INNER JOIN stores s ON i.store_id = s.id RIGHT JOIN products p ON i.product_id = p.id WHERE s.sqft != 9448 GROUP BY p.brand;

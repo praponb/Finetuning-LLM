@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', paid_at) AS paid_month, COUNT(CASE WHEN method = 'promptpay' THEN 1 END) AS promptpay_count, MIN(paid_at) AS min_paid_at FROM payments WHERE status <> 'SUCCESS' AND method NOT IN ('cash', 'promptpay') AND order_id = 21 GROUP BY paid_month

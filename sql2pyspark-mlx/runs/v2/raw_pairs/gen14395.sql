@@ -1,1 +1,0 @@
-SELECT e.id, e.email AS employee_email, e.full_name AS employee_full_name, m.email AS manager_email, m.job_title AS manager_job_title FROM employees e LEFT JOIN employees m ON e.manager_id = m.id ORDER BY 5 DESC, id LIMIT 20

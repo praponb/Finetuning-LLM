@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, country, started_at, device, DENSE_RANK() OVER (PARTITION BY country ORDER BY started_at DESC) AS rn FROM sessions) SELECT id, country, started_at, device FROM numbered WHERE rn <= 2 ORDER BY device DESC

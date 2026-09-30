@@ -1,1 +1,0 @@
-SELECT order_id, MIN(unit_price) AS min_unit_price, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items WHERE product_id IS NOT NULL GROUP BY order_id ORDER BY order_id DESC LIMIT 5

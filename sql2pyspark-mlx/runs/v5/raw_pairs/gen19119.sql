@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, i.product_id, s.opened_date, s.region, p.product_name FROM inventory i JOIN stores s ON i.store_id = s.id LEFT JOIN products p ON i.product_id = p.id WHERE i.product_id IN (4, 7, 8) OR s.opened_date >= '2024-02-13';

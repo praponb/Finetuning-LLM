@@ -1,1 +1,0 @@
-SELECT CASE WHEN monthly_fee >= 268 THEN 'high' WHEN monthly_fee >= 79 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, plan, COUNT(*) AS cnt FROM subscriptions GROUP BY 1, 2 HAVING MIN(monthly_fee) < 210

@@ -1,1 +1,0 @@
-SELECT *, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY shipping_fee NULLS LAST) AS shipping_fee_dense_rank, CUME_DIST() OVER (PARTITION BY customer_id ORDER BY amount DESC NULLS FIRST) AS amount_cume_dist FROM orders WHERE store_id = 8

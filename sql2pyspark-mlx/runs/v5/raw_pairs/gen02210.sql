@@ -1,1 +1,0 @@
-WITH metrics AS (SELECT *, AVG(sqft) OVER (PARTITION BY city) AS city_avg_sqft, SUM(sqft) OVER (PARTITION BY region ORDER BY sqft, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_sqft, SUM(sqft) OVER (PARTITION BY region) AS region_sum_sqft FROM stores) SELECT id, store_name, region, opened_date FROM metrics ORDER BY opened_date DESC;

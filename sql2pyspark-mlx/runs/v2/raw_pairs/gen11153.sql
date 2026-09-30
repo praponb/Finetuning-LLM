@@ -1,1 +1,0 @@
-select date_format(launch_date, 'yyyy-MM') as launch_month, round(stddev(stock_qty), 2) as stddev_stock_qty, sort_array(collect_set(category)) as category_list from products where product_name like 'Des%' group by 1;

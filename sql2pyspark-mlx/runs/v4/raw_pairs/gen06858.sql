@@ -1,1 +1,0 @@
-with department_summary as (select dept_id, round(avg(salary), 2) as avg_salary, round(stddev(salary), 2) as stddev_salary from employees where dept_id in (4, 8, 20, 28) group by dept_id) select d.dept_name, d.budget, ds.avg_salary, ds.stddev_salary from departments d inner join department_summary ds on d.id = ds.dept_id where ds.stddev_salary > 79;

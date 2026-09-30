@@ -1,1 +1,0 @@
-SELECT YEAR(event_time) AS event_year, session_id, SUM(duration_sec) AS total_duration_sec, AVG(duration_sec) AS avg_duration_sec, SUM(CASE WHEN event_type = 'add_to_cart' THEN duration_sec ELSE 0 END) AS add_to_cart_duration_sec FROM web_events GROUP BY event_year, session_id ORDER BY avg_duration_sec, total_duration_sec;

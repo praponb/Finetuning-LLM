@@ -1,1 +1,0 @@
-SELECT p.id, p.supplier_id, t.last_last_restock FROM products p LEFT OUTER JOIN (SELECT product_id, MAX(last_restock) AS last_last_restock FROM inventory WHERE quantity BETWEEN 138 AND 208 GROUP BY product_id) t ON p.id = t.product_id

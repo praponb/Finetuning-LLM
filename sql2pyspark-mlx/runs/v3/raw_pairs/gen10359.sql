@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, ROUND((100 * SUM(CASE WHEN job_title = 'Manager' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_manager, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees WHERE email IS NOT NULL GROUP BY DATE_FORMAT(hire_date, 'yyyy-MM')) AS s WHERE stddev_salary >= 54

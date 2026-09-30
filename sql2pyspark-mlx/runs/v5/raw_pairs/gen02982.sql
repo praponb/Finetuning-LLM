@@ -1,1 +1,0 @@
-SELECT oi.id, oi.product_id, p.supplier_id, p.brand, p.price, oi.quantity - oi.unit_price AS line_total FROM order_items oi JOIN products p ON p.id = oi.product_id WHERE p.supplier_id IN (1, 4, 6) AND ARRAY_CONTAINS(p.tags, 'bestseller');

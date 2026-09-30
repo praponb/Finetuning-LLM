@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, job_title, salary, is_remote, DENSE_RANK() OVER (PARTITION BY job_title ORDER BY salary DESC) AS rn FROM employees) SELECT * FROM numbered WHERE rn <= 3 ORDER BY id, 3 DESC

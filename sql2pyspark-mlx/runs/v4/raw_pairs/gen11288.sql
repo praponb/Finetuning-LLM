@@ -1,1 +1,0 @@
-SELECT customer_id, monthly_fee_range, first_start_date FROM (SELECT customer_id, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, MIN(start_date) AS first_start_date FROM subscriptions GROUP BY customer_id) AS x WHERE monthly_fee_range >= 43 ORDER BY customer_id DESC;

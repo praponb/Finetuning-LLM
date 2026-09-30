@@ -1,1 +1,0 @@
-SELECT CASE WHEN duration_sec >= 464 THEN 'high' WHEN duration_sec >= 103 THEN 'mid' ELSE 'low' END duration_sec_bucket, ROUND(STDDEV(duration_sec), 2) stddev_duration_sec, SUM(duration_sec) total_duration_sec FROM web_events WHERE page != '/product' GROUP BY duration_sec_bucket HAVING ROUND(STDDEV(duration_sec), 2) < 40 ORDER BY total_duration_sec DESC;

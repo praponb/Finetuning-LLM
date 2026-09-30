@@ -1,1 +1,0 @@
-select product_id, avg(quantity) avg_quantity, round(stddev(quantity), 2) stddev_quantity from inventory where last_restock >= '2024-01-01' group by product_id order by product_id desc, avg_quantity desc;

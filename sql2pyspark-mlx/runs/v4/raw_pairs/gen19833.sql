@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, supplier_id, ROUND(AVG(price), 2) AS avg_price, MAX(stock_qty) AS max_stock_qty FROM products GROUP BY launch_month, supplier_id HAVING max_stock_qty < 230;

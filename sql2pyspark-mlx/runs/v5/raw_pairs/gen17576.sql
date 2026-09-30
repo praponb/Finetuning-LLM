@@ -1,1 +1,0 @@
-select date_trunc('MONTH', c.signup_date) as signup_month, min(oi.unit_price) as min_unit_price, min(oi.quantity) as min_quantity from order_items oi inner join orders o on oi.order_id = o.id inner join customers c on c.id = o.customer_id group by date_trunc('MONTH', c.signup_date);

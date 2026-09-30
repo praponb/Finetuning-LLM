@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, s.device, s.customer_id FROM sessions s WHERE s.country IN ('DE', 'SG', 'UK') AND s.customer_id IN (SELECT id FROM customers WHERE city NOT IN ('Berlin', 'London', 'Bangkok'));

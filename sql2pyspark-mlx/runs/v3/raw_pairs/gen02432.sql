@@ -1,1 +1,0 @@
-SELECT * FROM accounts WHERE balance BETWEEN 46000 AND 59000 ORDER BY opened_date, id LIMIT 10;

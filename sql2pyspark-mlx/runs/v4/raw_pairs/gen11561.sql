@@ -1,1 +1,0 @@
-WITH Src AS (SELECT *, LAST_DAY(shipped_date) AS shipped_date_month_end FROM shipments WHERE status IN ('IN_TRANSIT', 'LOST', 'DELIVERED') AND status IN ('LOST', 'DELIVERED') AND cost < 56), carrier_summary AS (SELECT carrier, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(carrier))) AS carrier_values FROM Src GROUP BY carrier) SELECT * FROM carrier_summary ORDER BY carrier;

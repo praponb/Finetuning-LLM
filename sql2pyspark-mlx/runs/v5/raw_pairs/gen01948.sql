@@ -1,1 +1,0 @@
-SELECT order_month, total_amount FROM (SELECT DATE_TRUNC('MONTH', order_date) AS order_month, SUM(amount) AS total_amount FROM orders WHERE discount IS NOT NULL GROUP BY DATE_TRUNC('MONTH', order_date)) AS t WHERE total_amount >= 6900

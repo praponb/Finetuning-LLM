@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, SORT_ARRAY(tags) AS sorted_tags FROM products WHERE category IN ('Sports', 'Home', 'Fashion')), agg AS (SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, ROUND(AVG(cost), 2) AS avg_cost FROM base GROUP BY DATE_FORMAT(launch_date, 'yyyy-MM')) SELECT launch_month, avg_cost FROM agg WHERE avg_cost > 56 ORDER BY launch_month

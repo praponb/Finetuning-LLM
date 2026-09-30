@@ -1,1 +1,0 @@
-SELECT e.id, e.hire_date, e.level, e.manager_id, d.location, d.dept_name, d.budget FROM employees e RIGHT JOIN departments d ON e.dept_id = d.id WHERE LOWER(TRIM(e.email)) = 'grace.kim@gmail.com' ORDER BY d.budget DESC

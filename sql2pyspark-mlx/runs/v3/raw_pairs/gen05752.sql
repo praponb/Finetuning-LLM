@@ -1,1 +1,0 @@
-SELECT event_type, page, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, SUM(CASE WHEN event_type = 'search' THEN duration_sec ELSE 0 END) AS search_duration_sec, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list FROM web_events GROUP BY event_type, page;

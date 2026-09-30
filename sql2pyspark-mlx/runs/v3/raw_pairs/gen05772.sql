@@ -1,1 +1,0 @@
-SELECT ss.id, ss.product_id, s.sqft, p.category, p.brand FROM store_sales ss RIGHT JOIN stores s ON ss.store_id = s.id FULL OUTER JOIN products p ON ss.product_id = p.id WHERE ss.units IS NOT NULL ORDER BY brand

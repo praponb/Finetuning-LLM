@@ -1,1 +1,0 @@
-select ss.id, ss.sale_date, p.cost, s.city from store_sales ss left join products p on p.id = ss.product_id join stores s on ss.store_id = s.id where ss.product_id in (3, 9, 10) order by s.city, id desc

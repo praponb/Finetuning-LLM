@@ -1,1 +1,0 @@
-select s.region, count(i.quantity) as quantity_count, count(*) as cnt from inventory i left join products p on i.product_id = p.id left join stores s on i.store_id = s.id where i.quantity between 107 and 214 group by s.region order by quantity_count asc, region asc limit 10;

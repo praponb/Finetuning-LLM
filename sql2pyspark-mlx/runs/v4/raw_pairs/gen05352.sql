@@ -1,1 +1,0 @@
-SELECT channel, SORT_ARRAY(COLLECT_SET(status)) AS status_list, ROUND(AVG(shipping_fee), 2) AS avg_shipping_fee, SUM(discount) AS total_discount FROM orders GROUP BY channel HAVING avg_shipping_fee >= 28 ORDER BY channel;

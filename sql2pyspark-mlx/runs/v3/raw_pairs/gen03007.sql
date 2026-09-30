@@ -1,1 +1,0 @@
-SELECT products.cost, inventory.store_id, inventory.product_id, inventory.quantity FROM products INNER JOIN inventory ON inventory.product_id = products.id WHERE NOT (inventory.store_id IN (1, 2, 3, 4) OR inventory.store_id = 4)

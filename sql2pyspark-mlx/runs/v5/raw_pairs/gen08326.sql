@@ -1,1 +1,0 @@
-SELECT emp.is_remote AS employee_is_remote, emp.full_name AS employee_full_name, mgr.full_name AS manager_full_name, mgr.hire_date AS manager_hire_date FROM employees AS emp LEFT JOIN employees AS mgr ON emp.manager_id = mgr.id WHERE mgr.is_remote OR UPPER(mgr.email) LIKE '%ACK%' ORDER BY mgr.hire_date DESC, mgr.full_name ASC

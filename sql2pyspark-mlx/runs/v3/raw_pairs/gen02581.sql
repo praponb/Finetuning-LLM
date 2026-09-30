@@ -1,1 +1,0 @@
-select s.city, max(ss.revenue) - min(ss.revenue) as revenue_range, round(avg(ss.units), 2) as avg_units from store_sales ss join stores s on ss.store_id = s.id where s.store_name is not null group by s.city order by revenue_range;

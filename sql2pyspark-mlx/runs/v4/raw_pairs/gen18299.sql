@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, store_name, region, sqft, LENGTH(region) AS region_length FROM stores WHERE store_name LIKE '%River%') SELECT * FROM filtered QUALIFY ROW_NUMBER() OVER (PARTITION BY region ORDER BY sqft DESC NULLS LAST, id) = 1

@@ -1,1 +1,0 @@
-select s.country, count(distinct i.quantity) as unique_stores, count(distinct i.quantity) as unique_products from inventory i join products p on p.id = i.product_id join suppliers s on p.supplier_id = s.id where s.city in ('Berlin', 'Chiang Mai') group by s.country order by unique_stores desc, country limit 5

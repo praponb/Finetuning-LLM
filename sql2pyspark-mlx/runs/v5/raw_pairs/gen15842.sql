@@ -1,1 +1,0 @@
-SELECT p.category, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM inventory i LEFT JOIN products p ON p.id = i.product_id INNER JOIN stores s ON s.id = i.store_id GROUP BY p.category ORDER BY stddev_quantity;

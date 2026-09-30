@@ -1,1 +1,0 @@
-SELECT id, store_id, amount, customer_id, order_date, shipping_fee, MAX(amount) OVER (PARTITION BY store_id) AS store_id_max_amount, LAG(shipping_fee, 1) OVER (PARTITION BY customer_id ORDER BY order_date, id) AS prev_shipping_fee FROM orders WHERE channel IN ('store', 'mobile');

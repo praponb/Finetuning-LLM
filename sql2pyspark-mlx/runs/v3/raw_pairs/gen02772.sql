@@ -1,1 +1,0 @@
-SELECT id, location, budget, dept_name, CONCAT_WS(',', dept_name, location) AS dept_name_location_key FROM departments WHERE location IN ('London', 'Chiang Mai', 'Singapore') AND (budget <= 2709000 OR budget > 1514000)

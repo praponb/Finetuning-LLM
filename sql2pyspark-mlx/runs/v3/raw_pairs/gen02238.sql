@@ -1,1 +1,0 @@
-SELECT e.id, e.job_title AS employee_job_title, m.email AS manager_email, m.is_remote AS manager_is_remote, m.manager_id AS manager_manager_id FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE YEAR(m.hire_date) = 2025;

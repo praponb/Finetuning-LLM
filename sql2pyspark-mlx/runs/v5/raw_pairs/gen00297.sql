@@ -1,1 +1,0 @@
-WITH ranked_customers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date DESC, id) AS rnk FROM customers WHERE is_active) SELECT id, segment, signup_date, age FROM ranked_customers WHERE rnk <= 1;

@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, MAX(amount) - MIN(amount) amount_range FROM payments GROUP BY order_id) SELECT o.store_id, ot.amount_range FROM orders o LEFT OUTER JOIN order_totals ot ON o.id = ot.order_id;

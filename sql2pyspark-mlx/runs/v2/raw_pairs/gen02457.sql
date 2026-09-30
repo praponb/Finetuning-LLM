@@ -1,1 +1,0 @@
-select s.id, s.country, s.browser, t.duration_sec_range, t.search_count from sessions s inner join (select session_id, max(duration_sec) - min(duration_sec) as duration_sec_range, count(case when page = '/search' then 1 end) as search_count from web_events group by session_id) t on s.id = t.session_id order by s.browser desc;

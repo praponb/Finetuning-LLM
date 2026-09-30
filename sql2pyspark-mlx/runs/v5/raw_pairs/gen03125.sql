@@ -1,1 +1,0 @@
-SELECT stores.region, MAX(store_sales.revenue) - MIN(store_sales.revenue) AS revenue_range, MAX(store_sales.sale_date) AS last_sale_date FROM store_sales JOIN stores ON store_sales.store_id = stores.id GROUP BY stores.region ORDER BY last_sale_date DESC;

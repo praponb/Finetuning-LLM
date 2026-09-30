@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CASE WHEN status IN ('PAUSED', 'EXPIRED') THEN 'Tier 1' ELSE 'Other' END AS status_group FROM subscriptions WHERE monthly_fee BETWEEN 90 AND 150) SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY customer_id ORDER BY monthly_fee DESC NULLS FIRST) AS latest_rank FROM valid) ranked WHERE latest_rank = 1

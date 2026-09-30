@@ -1,1 +1,0 @@
-with supplier_totals as (select supplier_id, count(*) as product_count from products where brand = 'Acme' group by supplier_id) select s.supplier_name, s.country, st.product_count from suppliers s left join supplier_totals st on s.id = st.supplier_id where st.product_count >= 6 order by s.country

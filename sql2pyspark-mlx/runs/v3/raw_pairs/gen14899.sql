@@ -1,1 +1,0 @@
-SELECT CASE WHEN revenue >= 3800 THEN 'high' WHEN revenue >= 1700 THEN 'mid' ELSE 'low' END AS revenue_bucket, product_id, MONTH(sale_date) AS sale_month, MIN(sale_date) AS min_sale_date, AVG(revenue) AS avg_revenue FROM store_sales WHERE units = 21 GROUP BY 1, 2, 3 ORDER BY min_sale_date, revenue_bucket;

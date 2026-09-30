@@ -1,1 +1,0 @@
-SELECT store_id, product_id, BIT_OR(units) AS units_bit_or, APPROX_PERCENTILE(units, 0.9) AS units_p90, APPROX_PERCENTILE(revenue, ARRAY(0.25, 0.5, 0.75)) AS revenue_quartiles, PERCENT_RANK() OVER (PARTITION BY store_id ORDER BY APPROX_PERCENTILE(units, 0.9) DESC) AS units_p90_percent_rank FROM store_sales GROUP BY store_id, product_id;

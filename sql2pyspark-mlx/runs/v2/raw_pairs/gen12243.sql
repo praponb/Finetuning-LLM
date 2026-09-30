@@ -1,1 +1,0 @@
-SELECT oi.quantity, oi.unit_price, p.price, p.brand, o.order_date FROM order_items oi JOIN products p ON oi.product_id = p.id JOIN orders o ON oi.order_id = o.id WHERE o.status IN ('CANCELLED', 'RETURNED') AND p.launch_date < '2024-05-02'

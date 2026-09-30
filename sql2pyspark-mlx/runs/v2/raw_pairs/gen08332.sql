@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.store_id, inventory.product_id, stores.sqft, products.stock_qty FROM inventory JOIN stores ON inventory.store_id = stores.id JOIN products ON products.id = inventory.product_id WHERE products.product_name IS NULL ORDER BY stores.sqft DESC, id DESC

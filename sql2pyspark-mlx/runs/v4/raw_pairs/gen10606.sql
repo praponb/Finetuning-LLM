@@ -1,1 +1,0 @@
-select ss.product_id, sum(i.quantity) as total_quantity from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.product_id having sum(i.quantity) >= 830 order by product_id desc limit 5

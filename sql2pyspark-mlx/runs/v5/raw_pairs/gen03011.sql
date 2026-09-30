@@ -1,1 +1,0 @@
-select c.country, c.segment, max(we.event_time) as latest_event_time, concat_ws(', ', sort_array(collect_set(we.page))) as page_values from web_events we inner join sessions s on we.session_id = s.id inner join customers c on s.customer_id = c.id group by c.country, c.segment order by c.segment, country limit 1

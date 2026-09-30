@@ -1,1 +1,0 @@
-SELECT 'subscription' AS source, monthly_fee FROM subscriptions WHERE status IN ('CANCELLED', 'EXPIRED', 'ACTIVE') UNION ALL SELECT 'store_sale' AS source, revenue FROM store_sales WHERE sale_date BETWEEN '2024-08-01' AND '2025-10-18'

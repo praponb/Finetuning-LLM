@@ -1,1 +1,0 @@
-SELECT ss.units, ss.store_id, p.launch_date, p.brand, s.city, s.sqft FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id LEFT JOIN stores s ON ss.store_id = s.id WHERE ARRAY_CONTAINS(p.tags, 'clearance') AND p.stock_qty BETWEEN 130 AND 178;

@@ -1,1 +1,0 @@
-SELECT id, last_restock, store_id, quantity, ROUND(quantity * 0.85, 2) AS adjusted_quantity, DATE_FORMAT(last_restock, 'yyyy-MM-dd') AS last_restock_label FROM inventory WHERE quantity = 133 AND last_restock <= '2024-09-01'

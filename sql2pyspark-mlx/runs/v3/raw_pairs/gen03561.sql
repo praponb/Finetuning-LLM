@@ -1,1 +1,0 @@
-select c.is_active, c.country, avg(s.monthly_fee) avg_monthly_fee, sort_array(collect_set(s.status)) status_list from subscriptions s full outer join customers c on c.id = s.customer_id group by c.is_active, c.country order by country

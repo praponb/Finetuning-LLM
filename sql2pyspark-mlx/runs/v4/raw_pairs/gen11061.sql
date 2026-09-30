@@ -1,1 +1,0 @@
-with order_summary as (select order_id, count(case when method = 'bank_transfer' then 1 end) bank_transfer_count from payments where amount < 1380 group by order_id) select o.id, o.status, os.bank_transfer_count from orders o join order_summary os on o.id = os.order_id where os.bank_transfer_count >= 7 order by status, id limit 10

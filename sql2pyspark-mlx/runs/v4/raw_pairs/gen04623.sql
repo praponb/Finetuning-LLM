@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM orders WHERE order_date < '2024-03-29' OR shipping_fee BETWEEN 12 AND 19), summary AS (SELECT channel, status, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM src GROUP BY channel, status) SELECT channel, channel_list FROM summary

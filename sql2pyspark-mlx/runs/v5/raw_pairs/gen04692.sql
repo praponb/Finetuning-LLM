@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MIN(units) AS min_units FROM store_sales GROUP BY store_id) SELECT s.id, s.opened_date, s.region, ss.min_units FROM stores s JOIN store_stats ss ON s.id = ss.store_id WHERE ss.min_units >= 25;

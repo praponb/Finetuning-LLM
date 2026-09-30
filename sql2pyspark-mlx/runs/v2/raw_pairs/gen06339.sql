@@ -1,1 +1,0 @@
-SELECT city, COUNT(rating) AS rating_count, ROUND(STDDEV(rating), 2) AS stddev_rating, SUM(CASE WHEN city = 'Singapore' THEN 1 ELSE 0 END) AS singapore_count FROM suppliers WHERE (supplier_name IS NOT NULL AND supplier_name LIKE '%Traders%') OR rating <= 2.6 GROUP BY city ORDER BY stddev_rating;

@@ -1,1 +1,0 @@
-SELECT id, paid_at, amount, LAG(amount, 1, 0) OVER (ORDER BY paid_at, id) AS prev_amount, amount - LAG(amount, 1) OVER (ORDER BY paid_at, id) AS amount_change FROM payments WHERE order_id IN (6, 15, 22);

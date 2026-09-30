@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, RANK() OVER (PARTITION BY supplier_id ORDER BY launch_date) row_num FROM products WHERE product_name NOT LIKE '%Cof%') SELECT * FROM ranked WHERE row_num <= 1 ORDER BY 7 DESC;

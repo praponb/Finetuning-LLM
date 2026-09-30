@@ -1,1 +1,0 @@
-SELECT level, MAX(salary) - MIN(salary) AS salary_range, AVG(salary) AS avg_salary FROM employees WHERE NOT is_remote AND dept_id IN (16, 22, 25) GROUP BY level HAVING COUNT(CASE WHEN job_title = 'Director' THEN 1 END) > 1 ORDER BY avg_salary DESC;

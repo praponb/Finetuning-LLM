@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CAST(credit_limit AS INT) AS credit_limit_int FROM customers WHERE age >= 59) SELECT segment, ROUND(AVG(age), 2) AS avg_age, CORR(age, credit_limit) AS corr_age_credit_limit, AVG(credit_limit_int) AS avg_credit_limit_int, AVG(age) FILTER (WHERE segment = 'SMB') AS smb_avg_age FROM filtered GROUP BY 1 ORDER BY avg_age

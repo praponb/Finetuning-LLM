@@ -1,1 +1,0 @@
-SELECT o.id, o.store_id, s.city, s.opened_date, c.country, WEEKOFYEAR(o.order_date) AS order_date_weekofyear FROM orders o LEFT JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON c.id = o.customer_id WHERE o.channel = 'web';

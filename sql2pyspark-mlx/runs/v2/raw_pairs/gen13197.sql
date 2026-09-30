@@ -1,1 +1,0 @@
-with customer_totals as (select customer_id, round((100 * sum(case when status = 'CLOSED' then 1 else 0 end)) / count(*), 1) as pct_closed from accounts group by customer_id) select c.id, c.country, ct.pct_closed from customers c inner join customer_totals ct on c.id = ct.customer_id where ct.pct_closed >= 45 order by c.country, id limit 10;

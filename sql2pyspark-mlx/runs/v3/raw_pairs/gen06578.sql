@@ -1,1 +1,0 @@
-SELECT store_id, COUNT(DISTINCT quantity) AS unique_stores, MAX(quantity) AS max_quantity, MIN(last_restock) AS min_last_restock FROM inventory WHERE store_id IN (3, 4) GROUP BY store_id HAVING unique_stores > 1

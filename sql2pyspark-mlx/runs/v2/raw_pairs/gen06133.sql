@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM shipments WHERE carrier = 'Flash'), status_summary AS (SELECT status, MIN(shipped_date) AS first_shipped_date, SUM(cost) AS total_cost FROM base GROUP BY status) SELECT status, first_shipped_date, total_cost FROM status_summary ORDER BY total_cost DESC, status LIMIT 3;

@@ -1,1 +1,0 @@
-SELECT s.city, s.country, COUNT(DISTINCT p.price) AS unique_suppliers, MAX(p.launch_date) AS latest_launch_date FROM products p INNER JOIN suppliers s ON s.id = p.supplier_id WHERE p.price <= 360 GROUP BY s.city, s.country;

@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, p.cost, s.city, DATE_TRUNC('week', s.opened_date) AS opened_date_period FROM inventory i INNER JOIN products p ON i.product_id = p.id RIGHT OUTER JOIN stores s ON i.store_id = s.id WHERE p.price >= 1100 AND p.category IN ('Books', 'Grocery', 'Sports') ORDER BY opened_date_period;

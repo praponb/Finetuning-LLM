@@ -1,1 +1,0 @@
-SELECT products.product_name, products.stock_qty, order_items.order_id, order_items.unit_price, order_items.quantity, LOWER(products.category) AS category_lower FROM products LEFT OUTER JOIN order_items ON products.id = order_items.product_id

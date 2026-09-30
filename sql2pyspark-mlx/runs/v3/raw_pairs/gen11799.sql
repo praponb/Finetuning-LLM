@@ -1,1 +1,0 @@
-SELECT is_remote, manager_id, MAX(hire_date) AS last_hire_date FROM employees WHERE (job_title = 'Designer' AND dept_id IN (31, 39)) OR salary >= 119000 GROUP BY is_remote, manager_id ORDER BY last_hire_date DESC, 2 DESC

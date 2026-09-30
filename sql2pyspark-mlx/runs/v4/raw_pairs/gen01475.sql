@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT channel, YEAR(order_date) AS order_year, ROUND(STDDEV(discount), 2) AS stddev_discount, COUNT(CASE WHEN status = 'RETURNED' THEN 1 END) AS returned_count FROM orders WHERE amount < 1480 GROUP BY channel, YEAR(order_date)) AS x WHERE returned_count > 7 ORDER BY 1;

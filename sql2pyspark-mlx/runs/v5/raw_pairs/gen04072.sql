@@ -1,1 +1,0 @@
-with base as (select *, datediff(current_date(), opened_date) as days_since_opened_date, round(balance * 0.85, 2) as balance_adjusted from accounts where opened_date > date '2023-09-12') select a.id, a.customer_id, a.balance, a.status, a.balance_adjusted, p.segment, p.age from base a left join customers p on a.customer_id = p.id where length(p.name) > 13;

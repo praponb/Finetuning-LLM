@@ -1,1 +1,0 @@
-SELECT id, customer_id, shipping_fee, COALESCE(channel, 'unassigned') AS channel_filled, ROUND(amount * 0.85, 2) AS amount_adjusted FROM orders WHERE channel IS NOT NULL AND shipping_fee >= 35 AND discount > 0.14;

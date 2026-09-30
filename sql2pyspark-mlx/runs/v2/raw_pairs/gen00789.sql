@@ -1,1 +1,0 @@
-SELECT p.id, p.launch_date, p.cost, t.min_quantity FROM products p INNER JOIN (SELECT product_id, MIN(quantity) min_quantity FROM inventory GROUP BY product_id) t ON p.id = t.product_id WHERE t.min_quantity > 90

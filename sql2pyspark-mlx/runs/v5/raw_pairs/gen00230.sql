@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count, SUM(CASE WHEN status = 'FAILED' THEN 1 ELSE 0 END) AS failed_count FROM payments GROUP BY order_id) SELECT o.id, o.amount, os.success_count, os.failed_count FROM orders o INNER JOIN order_stats os ON o.id = os.order_id ORDER BY failed_count DESC, os.success_count DESC;

@@ -1,1 +1,0 @@
-SELECT city, AVG(sqft) AS avg_sqft, ROUND(STDDEV(sqft), 2) AS stddev_sqft, SUM(CASE WHEN region = 'East' THEN 1 ELSE 0 END) AS east_count FROM stores WHERE opened_date BETWEEN '2024-04-01' AND '2024-05-01' AND sqft BETWEEN 6508 AND 10235 GROUP BY city ORDER BY east_count DESC, stddev_sqft DESC

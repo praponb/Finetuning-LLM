@@ -1,1 +1,0 @@
-SELECT t.id, t.merchant, a.customer_id, a.opened_date, c.segment, c.is_active, CASE WHEN c.segment IN ('Corporate', 'Consumer') THEN 'Priority' ELSE 'Other' END AS segment_group FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id;

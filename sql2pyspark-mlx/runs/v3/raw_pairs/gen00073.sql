@@ -1,1 +1,0 @@
-select d.location, d.dept_name, t.level_list from departments d join (select dept_id, sort_array(collect_set(level)) as level_list from employees where job_title in ('Engineer', 'Intern') group by dept_id) t on d.id = t.dept_id

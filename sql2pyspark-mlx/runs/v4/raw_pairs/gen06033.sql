@@ -1,1 +1,0 @@
-with inventory_by_product as (select product_id, count(quantity) as quantity_count from inventory where product_id = 2 group by product_id) select products.id, products.category, inventory_by_product.quantity_count from products inner join inventory_by_product on products.id = inventory_by_product.product_id where inventory_by_product.quantity_count >= 4;

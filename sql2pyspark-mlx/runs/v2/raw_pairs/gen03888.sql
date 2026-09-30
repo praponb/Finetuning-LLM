@@ -1,1 +1,0 @@
-SELECT o.id, o.shipping_fee, o.channel, t.status_values, t.unique_statuss FROM orders o INNER JOIN (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values, COUNT(DISTINCT amount) unique_statuss FROM payments WHERE order_id IS NULL GROUP BY order_id) t ON o.id = t.order_id

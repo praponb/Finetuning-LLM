@@ -1,1 +1,0 @@
-SELECT customer_id, status, pct_premium, first_start_date FROM (SELECT customer_id, status, ROUND((100 * SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_premium, MIN(start_date) AS first_start_date FROM subscriptions WHERE customer_id IS NULL GROUP BY customer_id, status) AS x WHERE pct_premium > 70 ORDER BY customer_id DESC

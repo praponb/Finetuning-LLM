@@ -1,1 +1,0 @@
-select case when budget >= 3878000 then 'high' when budget >= 1051000 then 'mid' else 'low' end as budget_bucket, dept_name, count(*) as cnt from departments where location = 'Chiang Mai' group by 1, 2 order by 3, budget_bucket, dept_name limit 5

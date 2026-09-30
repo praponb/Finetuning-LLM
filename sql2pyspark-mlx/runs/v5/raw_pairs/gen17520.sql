@@ -1,1 +1,0 @@
-with top_transactions as (select *, row_number() over (partition by merchant order by txn_time, id) as row_num from transactions where merchant not in ('Grab', 'Lazada', 'Starbucks')) select id, merchant, txn_time, amount from top_transactions where row_num <= 2;

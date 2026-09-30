@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, DATEDIFF(CURRENT_DATE(), sale_date) AS days_since_sale_date FROM store_sales WHERE sale_date > TO_DATE('2023-03-16')) SELECT id, store_id FROM base EXCEPT SELECT id, store_id FROM store_sales WHERE product_id IN (1, 2);

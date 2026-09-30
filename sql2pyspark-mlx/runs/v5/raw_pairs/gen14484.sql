@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, COUNT(t.id) AS transaction_count, ROUND(STDDEV(t.amount), 2) AS stddev_amount, SORT_ARRAY(COLLECT_SET(t.txn_type)) AS txn_type_list FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id GROUP BY a.id, a.account_type;

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM suppliers WHERE rating >= 2.1 AND city NOT IN ('London', 'New York', 'Berlin')), city_summary AS (SELECT city, ROUND(AVG(rating), 2) AS avg_rating FROM base GROUP BY city) SELECT city, avg_rating FROM city_summary ORDER BY avg_rating

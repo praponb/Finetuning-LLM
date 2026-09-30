@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, session_id, event_type, page, event_time, ROUND(duration_sec * 1.15, 2) AS duration_sec_scaled, COALESCE(page, 'DIRECT') AS page_clean FROM web_events WHERE page IS NOT NULL) SELECT s.*, d.country FROM filtered s LEFT JOIN sessions d ON s.session_id = d.id;

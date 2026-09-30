@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.status, orders.channel, stores.region, stores.store_name FROM shipments JOIN orders ON shipments.order_id = orders.id JOIN stores ON orders.store_id = stores.id WHERE stores.region IS NOT NULL;

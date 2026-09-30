@@ -1,1 +1,0 @@
-with recent_orders as (select *, round(discount * 100, 2) as discount_adjusted from orders where amount < 1060 and order_date > '2025-07-04'), summary as (select quarter(order_date) as order_quarter, sort_array(collect_set(status)) as status_list from recent_orders group by quarter(order_date)) select order_quarter, status_list from summary order by order_quarter desc;

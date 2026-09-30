@@ -1,1 +1,0 @@
-SELECT d.dept_name, COUNT(e.id) AS employee_count, SORT_ARRAY(COLLECT_SET(e.level)) AS level_list, MIN(e.hire_date) AS min_hire_date FROM departments d LEFT OUTER JOIN employees e ON d.id = e.dept_id WHERE e.manager_id IN (8, 16, 24, 36) GROUP BY d.dept_name ORDER BY min_hire_date

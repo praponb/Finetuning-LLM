@@ -1,1 +1,0 @@
-select id, status, amount, discount, shipping_fee, ntile(3) over w_grp as discount_bucket, count(shipping_fee) over w_hist as store_id_count_shipping_fee from orders window w_grp as (partition by customer_id order by discount asc, id asc), w_hist as (partition by store_id);

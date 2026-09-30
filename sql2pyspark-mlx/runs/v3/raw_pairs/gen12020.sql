@@ -1,1 +1,0 @@
-WITH ValidDepartments AS (SELECT * FROM departments WHERE budget IS NULL), agg AS (SELECT location, ROUND((100 * SUM(CASE WHEN dept_name = 'Engineering' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_engineering FROM ValidDepartments GROUP BY location) SELECT * FROM agg WHERE pct_engineering >= 49 ORDER BY pct_engineering DESC, location LIMIT 10;

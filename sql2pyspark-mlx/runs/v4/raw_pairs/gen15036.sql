@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(s.id) AS shipment_count, MIN(s.delivered_date) AS min_delivered_date, AVG(s.cost) AS avg_cost FROM orders o LEFT JOIN shipments s ON o.id = s.order_id GROUP BY o.status HAVING AVG(s.cost) >= 37;

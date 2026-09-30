@@ -1,1 +1,0 @@
-SELECT dim.country, s.brand, COUNT(*) AS cnt, MIN(s.stock_qty) AS min_stock_qty FROM products s LEFT JOIN suppliers dim ON s.supplier_id = dim.id GROUP BY GROUPING SETS ((dim.country, s.brand), (dim.country))

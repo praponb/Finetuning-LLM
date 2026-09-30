@@ -1,1 +1,0 @@
-SELECT id, plan, effective_from, tier_limits, SLICE(tier_limits, 1, 2) AS first_two_limits, ELEMENT_AT(tier_prices, 1) AS entry_price, ZIP_WITH(tier_prices, discounts, (p, d) -> ROUND(p * (1 - d), 2)) AS net_prices FROM price_tiers WHERE MONTH(effective_from) IN (2, 8, 10);

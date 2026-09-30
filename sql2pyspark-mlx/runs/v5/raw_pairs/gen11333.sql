@@ -1,1 +1,0 @@
-SELECT order_id, SUM(quantity * unit_price) revenue, COUNT(*) cnt, MAX(unit_price) max_unit_price FROM order_items WHERE quantity >= 7 OR quantity >= 4 GROUP BY order_id HAVING SUM(quantity * unit_price) > 54 ORDER BY cnt DESC, revenue

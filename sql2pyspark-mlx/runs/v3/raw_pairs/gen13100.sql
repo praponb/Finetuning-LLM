@@ -1,1 +1,0 @@
-SELECT p.status, p.amount, o.status AS order_status, o.shipping_fee, SUBSTRING(p.status, 1, 2) AS status_prefix FROM payments p RIGHT JOIN orders o ON p.order_id = o.id WHERE p.paid_at >= '2024-11-12' AND o.shipping_fee > 30 ORDER BY status_prefix DESC;

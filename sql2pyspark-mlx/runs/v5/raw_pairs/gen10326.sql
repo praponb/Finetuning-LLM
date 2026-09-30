@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CAST(temp_c AS INT) temp_c_int FROM device_readings WHERE reading_ts >= DATE '2025-09-01' AND humidity BETWEEN 71 AND 74) SELECT * FROM (SELECT id, device_code, humidity, temp_c, pressure FROM filtered) src UNPIVOT (metric_value FOR metric_name IN (humidity, temp_c, pressure))

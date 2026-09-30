@@ -1,1 +1,0 @@
-SELECT id, level, hire_date, salary, ROUND(AVG(salary) OVER (PARTITION BY level ORDER BY hire_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS salary_moving_avg_4 FROM employees WHERE salary BETWEEN 57000 AND 77000 ORDER BY 4;

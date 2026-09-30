@@ -1,1 +1,0 @@
-WITH valid_inventory AS (SELECT * FROM inventory WHERE quantity BETWEEN 143 AND 188), product_id_summary AS (SELECT product_id, COUNT(DISTINCT quantity) unique_products, MAX(quantity) max_quantity FROM valid_inventory GROUP BY product_id) SELECT product_id, unique_products, max_quantity FROM product_id_summary ORDER BY max_quantity DESC, product_id LIMIT 3

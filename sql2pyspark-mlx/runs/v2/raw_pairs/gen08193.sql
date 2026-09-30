@@ -1,1 +1,0 @@
-SELECT id, method, status, paid_at, order_id, ROW_NUMBER() OVER (PARTITION BY method, status ORDER BY paid_at, id) rn, FIRST_VALUE(method) OVER (PARTITION BY order_id ORDER BY paid_at, id) first_method FROM payments WHERE status IN ('SUCCESS', 'REFUNDED', 'FAILED')

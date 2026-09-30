@@ -1,1 +1,0 @@
-select id, store_id, quantity, product_id, min(quantity) over (partition by store_id) as store_id_min_quantity, percent_rank() over (partition by product_id order by quantity desc) as quantity_pct_rank from inventory;

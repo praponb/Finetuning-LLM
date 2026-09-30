@@ -1,1 +1,0 @@
-SELECT id, account_type, opened_date, balance, LEAD(opened_date, 1) OVER (PARTITION BY account_type ORDER BY opened_date, id) next_opened_date, NTILE(10) OVER (PARTITION BY account_type ORDER BY balance DESC, id) bucket FROM accounts WHERE balance < 17000 ORDER BY account_type

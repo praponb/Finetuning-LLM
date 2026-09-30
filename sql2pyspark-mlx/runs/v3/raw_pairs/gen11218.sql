@@ -1,1 +1,0 @@
-SELECT id, customer_id, started_at, device, LAG(started_at, 1) OVER (PARTITION BY customer_id ORDER BY started_at, id) AS prev_started_at, PERCENT_RANK() OVER (PARTITION BY device ORDER BY started_at DESC) AS started_at_pct_rank FROM sessions ORDER BY started_at DESC, 6;

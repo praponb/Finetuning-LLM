@@ -1,1 +1,0 @@
-SELECT s.id, COUNT(o.id) AS order_count, COUNT(DISTINCT o.discount) AS unique_statuss FROM stores s INNER JOIN orders o ON o.store_id = s.id GROUP BY s.id HAVING order_count >= 1 ORDER BY id DESC LIMIT 20;

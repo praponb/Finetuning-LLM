@@ -1,1 +1,0 @@
-SELECT p.id, p.category, t.revenue FROM products p INNER JOIN (SELECT product_id, SUM(unit_price * quantity) AS revenue FROM order_items WHERE product_id IN (7, 14, 20, 24) GROUP BY product_id) t ON p.id = t.product_id WHERE t.revenue > 78 ORDER BY category ASC, revenue ASC;

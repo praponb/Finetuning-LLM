@@ -1,1 +1,0 @@
-SELECT id, started_at, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at DESC, id) AS row_seq, ROW_NUMBER() OVER w_hist AS seq_no, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at, id) AS row_seq_2 FROM sessions WINDOW w_hist AS (PARTITION BY device ORDER BY started_at, id);

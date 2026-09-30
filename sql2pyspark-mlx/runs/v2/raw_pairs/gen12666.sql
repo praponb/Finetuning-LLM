@@ -1,1 +1,0 @@
-select c.city, t.de_count, t.last_started_at from customers c join (select customer_id, sum(case when country = 'DE' then 1 else 0 end) as de_count, max(started_at) as last_started_at from sessions group by customer_id) t on c.id = t.customer_id order by t.de_count desc;

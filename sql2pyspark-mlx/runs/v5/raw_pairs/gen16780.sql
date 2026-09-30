@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, oi.product_id FROM order_items oi WHERE oi.unit_price BETWEEN 200 AND 280 AND oi.order_id IN (SELECT id FROM orders WHERE customer_id IN (30, 39)) ORDER BY id DESC LIMIT 10

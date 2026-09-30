@@ -1,1 +1,0 @@
-select * from (select event_type, count(duration_sec) as duration_sec_count from web_events group by event_type) as x where duration_sec_count < 4 order by duration_sec_count desc, event_type limit 50;

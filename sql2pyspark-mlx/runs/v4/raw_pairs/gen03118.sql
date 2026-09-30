@@ -1,1 +1,0 @@
-SELECT ss.id, ss.revenue, ss.units, p.brand, p.category, s.opened_date, s.store_name, ss.units + ss.revenue AS revenue_per_unit FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN stores s ON s.id = ss.store_id ORDER BY revenue_per_unit DESC, opened_date DESC

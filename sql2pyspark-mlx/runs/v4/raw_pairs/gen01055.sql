@@ -1,1 +1,0 @@
-select id, store_id, quantity, product_id, last_restock, percent_rank() over (partition by store_id order by quantity desc) as quantity_pct_rank, quantity - lag(quantity, 1) over (partition by product_id order by last_restock, id) as quantity_change from inventory order by product_id

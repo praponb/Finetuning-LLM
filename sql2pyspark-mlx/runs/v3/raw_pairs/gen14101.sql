@@ -1,1 +1,0 @@
-SELECT job_title, level, CASE WHEN level IN ('L3', 'L1') THEN 'Group A' ELSE 'Other' END level_group, LOWER(job_title) job_title_lower FROM employees WHERE dept_id IN (7, 12, 14, 25) ORDER BY job_title DESC;

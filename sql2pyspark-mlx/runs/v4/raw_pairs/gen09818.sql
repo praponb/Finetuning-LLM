@@ -1,1 +1,0 @@
-with enriched as (select src.*, s.rating from products src left join suppliers s on src.supplier_id = s.id) select id, product_name, brand, price, launch_date, supplier_id, rating from enriched order by id desc nulls last, brand;

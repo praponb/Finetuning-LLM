@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1560 THEN 'high' WHEN amount >= 750 THEN 'mid' ELSE 'low' END amount_bucket, customer_id, ROUND(STDDEV(discount), 2) stddev_discount FROM orders GROUP BY CASE WHEN amount >= 1560 THEN 'high' WHEN amount >= 750 THEN 'mid' ELSE 'low' END, customer_id;

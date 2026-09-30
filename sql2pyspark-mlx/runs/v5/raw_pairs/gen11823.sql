@@ -1,1 +1,0 @@
-select stores.id, stores.city, count(inventory.id) as inventory_count, max(inventory.last_restock) as last_last_restock, min(inventory.quantity) as min_quantity from stores left join inventory on inventory.store_id = stores.id where inventory.quantity = 165 group by stores.id, stores.city order by id desc

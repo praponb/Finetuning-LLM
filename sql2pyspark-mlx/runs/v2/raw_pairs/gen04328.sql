@@ -1,1 +1,0 @@
-SELECT MONTH(signup_date) AS signup_month, COUNT(DISTINCT credit_limit) AS unique_countrys FROM customers WHERE is_active GROUP BY MONTH(signup_date) HAVING COUNT(DISTINCT credit_limit) < 1 ORDER BY unique_countrys ASC;

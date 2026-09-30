@@ -1,1 +1,0 @@
-SELECT s.city, YEAR(s.opened_date) AS opened_year, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price FROM order_items oi JOIN orders o ON oi.order_id = o.id JOIN stores s ON o.store_id = s.id GROUP BY s.city, YEAR(s.opened_date)

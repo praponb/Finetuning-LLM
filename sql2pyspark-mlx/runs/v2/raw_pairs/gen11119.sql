@@ -1,1 +1,0 @@
-select date_trunc('MONTH', opened_date) opened_month, sum(sqft) total_sqft, count(*) cnt, rank() over (order by sum(sqft) desc) as rnk from stores where city = 'New York' group by date_trunc('MONTH', opened_date) order by total_sqft, opened_month limit 10;

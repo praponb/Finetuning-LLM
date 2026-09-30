@@ -1,1 +1,0 @@
-select t.id, t.merchant, t.is_flagged, a.balance, c.age from transactions t left join accounts a on t.account_id = a.id join customers c on a.customer_id = c.id where a.account_type <> 'SAVINGS' order by c.age desc, id limit 1;

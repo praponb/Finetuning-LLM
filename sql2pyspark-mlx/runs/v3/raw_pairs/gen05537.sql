@@ -1,1 +1,0 @@
-SELECT QUARTER(p.launch_date) AS launch_quarter, ROUND(STDDEV(ss.units), 2) AS stddev_units FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON p.id = ss.product_id GROUP BY QUARTER(p.launch_date) HAVING ROUND(STDDEV(ss.units), 2) >= 27

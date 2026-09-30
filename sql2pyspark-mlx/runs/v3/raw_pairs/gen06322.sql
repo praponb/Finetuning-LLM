@@ -1,1 +1,0 @@
-SELECT p.category, MAX(ss.sale_date) AS last_sale_date, COUNT(ss.units) AS units_count FROM store_sales ss JOIN products p ON p.id = ss.product_id JOIN suppliers s ON s.id = p.supplier_id WHERE s.city = 'Tokyo' GROUP BY p.category HAVING COUNT(ss.units) >= 5;

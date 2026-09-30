@@ -1,1 +1,0 @@
-with ranked_products as (select *, row_number() over (partition by category order by price desc, id) as rn from products where length(product_name) > 7) select id, category, price, supplier_id from ranked_products where rn = 1

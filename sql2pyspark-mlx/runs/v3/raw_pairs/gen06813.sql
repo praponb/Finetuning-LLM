@@ -1,1 +1,0 @@
-SELECT location, MAX(budget) - MIN(budget) AS budget_range FROM departments WHERE dept_name IN ('Engineering', 'Finance', 'Marketing') AND (budget <= 2051000 OR budget >= 2153000) GROUP BY location ORDER BY location;

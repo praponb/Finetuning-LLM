@@ -1,1 +1,0 @@
-WITH payments_by_order AS (SELECT order_id, SUM(CASE WHEN status = 'FAILED' THEN 1 ELSE 0 END) failed_count FROM payments WHERE method IN ('card', 'bank_transfer') GROUP BY order_id) SELECT o.id, o.discount, o.customer_id, pbo.failed_count FROM orders o LEFT JOIN payments_by_order pbo ON o.id = pbo.order_id;

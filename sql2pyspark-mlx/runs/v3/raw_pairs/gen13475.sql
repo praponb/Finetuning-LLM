@@ -1,1 +1,0 @@
-SELECT status, QUARTER(opened_date) AS opened_quarter, MIN(balance) AS min_balance FROM accounts WHERE balance >= 22000 OR opened_date BETWEEN '2023-09-01' AND '2024-01-01' GROUP BY status, opened_quarter ORDER BY 2 DESC;

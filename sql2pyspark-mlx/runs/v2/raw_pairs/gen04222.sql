@@ -1,1 +1,0 @@
-SELECT merchant, HOUR(txn_time) AS txn_hour, ROUND(AVG(amount), 2) AS avg_amount, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list, ROUND((100 * SUM(CASE WHEN txn_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_credit FROM transactions WHERE txn_time < '2025-10-03' GROUP BY merchant, HOUR(txn_time) HAVING COUNT(*) > 3 ORDER BY 2, merchant LIMIT 50;

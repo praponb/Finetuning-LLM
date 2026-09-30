@@ -1,1 +1,0 @@
-WITH recent_stores AS (SELECT * FROM stores WHERE store_name LIKE '%Downtown%' OR region = 'East'), summary AS (SELECT region, SORT_ARRAY(COLLECT_SET(region)) AS region_list FROM recent_stores GROUP BY region) SELECT region, region_list FROM summary ORDER BY region;

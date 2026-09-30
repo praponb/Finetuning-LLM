@@ -1,1 +1,0 @@
-SELECT country, MAX(rating) AS max_rating, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai FROM suppliers WHERE rating <= 2.1 AND LOWER(supplier_name) LIKE '%uro%' AND city = 'New York' GROUP BY 1 ORDER BY max_rating DESC, pct_chiang_mai DESC

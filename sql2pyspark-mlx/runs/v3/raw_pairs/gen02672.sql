@@ -1,1 +1,0 @@
-SELECT a.id, a.balance, a.customer_id, a.opened_date FROM accounts a WHERE a.customer_id IN (36, 38) AND NOT EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND t.is_flagged = FALSE) ORDER BY customer_id, balance DESC, id LIMIT 1;

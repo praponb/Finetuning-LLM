@@ -1,1 +1,0 @@
-SELECT customers.country, customers.is_active, SORT_ARRAY(COLLECT_SET(orders.status)) AS status_list, SORT_ARRAY(COLLECT_SET(orders.channel)) AS channel_list FROM orders JOIN customers ON customers.id = orders.customer_id GROUP BY customers.country, customers.is_active ORDER BY country;

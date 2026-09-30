@@ -1,1 +1,0 @@
-SELECT o.channel, o.status, SUM(oi.unit_price * oi.quantity) AS revenue FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id INNER JOIN stores s ON s.id = o.store_id WHERE YEAR(o.order_date) = 2024 GROUP BY o.channel, o.status HAVING SUM(oi.unit_price * oi.quantity) > 46;

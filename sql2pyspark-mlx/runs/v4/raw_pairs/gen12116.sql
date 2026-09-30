@@ -1,1 +1,0 @@
-SELECT e.id, e.full_name AS employee_full_name, e.email AS employee_email, m.is_remote AS manager_is_remote, m.job_title AS manager_job_title, m.dept_id AS manager_dept_id FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE e.hire_date BETWEEN '2023-09-18' AND '2025-07-29' ORDER BY id DESC, e.email;

@@ -1,1 +1,0 @@
-SELECT shipping_fee, discount, CASE WHEN discount >= 0.3 THEN 'High' WHEN discount >= 0.08 THEN 'Medium' ELSE 'Low' END discount_tier FROM orders WHERE amount IS NOT NULL AND (discount BETWEEN 0.11 AND 0.39 OR MONTH(order_date) IN (8, 11, 12)) ORDER BY shipping_fee, discount_tier

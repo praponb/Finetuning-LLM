@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY account_id) SELECT a.id, a.status, at.avg_amount FROM accounts a JOIN account_totals at ON a.id = at.account_id WHERE at.avg_amount > 79 ORDER BY a.id LIMIT 3;

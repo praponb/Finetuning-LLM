@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3130000 THEN 'high' WHEN budget >= 684000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(CASE WHEN location = 'Tokyo' THEN budget ELSE 0 END) AS tokyo_budget FROM departments WHERE location NOT IN ('Singapore', 'Chiang Mai', 'Bangkok') GROUP BY 1;

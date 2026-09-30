@@ -1,1 +1,0 @@
-SELECT customers.country, MIN(sessions.started_at) AS first_started_at, MIN(sessions.started_at) AS min_started_at FROM sessions JOIN customers ON customers.id = sessions.customer_id GROUP BY customers.country ORDER BY min_started_at;

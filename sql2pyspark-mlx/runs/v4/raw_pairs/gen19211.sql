@@ -1,1 +1,0 @@
-WITH remaining_keys AS (SELECT job_title, id FROM employees EXCEPT SELECT job_title, id FROM employees WHERE dept_id = 40), kept_rows AS (SELECT s.* FROM employees s INNER JOIN remaining_keys k ON s.job_title = k.job_title AND s.id = k.id) SELECT full_name, email, manager_id, hire_date FROM kept_rows ORDER BY manager_id

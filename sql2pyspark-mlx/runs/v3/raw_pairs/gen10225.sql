@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', a.opened_date) AS opened_month, MAX(t.amount) AS max_amount, ROUND(AVG(t.amount), 2) AS avg_amount FROM transactions t INNER JOIN accounts a ON t.account_id = a.id GROUP BY DATE_TRUNC('MONTH', a.opened_date);

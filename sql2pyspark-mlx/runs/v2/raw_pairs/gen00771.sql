@@ -1,1 +1,0 @@
-select e.is_remote, e.hire_date, e.full_name, d.location, concat_ws('-', d.location, d.dept_name) as location_dept_name_key from employees e left join departments d on e.dept_id = d.id where d.dept_name in ('HR', 'Legal', 'Sales') order by e.full_name;

@@ -1,1 +1,0 @@
-select s.id, s.monthly_fee, s.start_date, s.plan, c.segment, c.name, upper(c.country) as country_upper from subscriptions s left join customers c on s.customer_id = c.id where s.status = 'PAUSED' or not c.is_active

@@ -1,1 +1,0 @@
-select merchant, txn_type, max_amount from (select merchant, txn_type, max(amount) as max_amount from transactions where merchant <> 'Amazon' group by merchant, txn_type) as sub where max_amount > 2300 order by max_amount desc, txn_type, merchant limit 50;

@@ -1,1 +1,0 @@
-SELECT e.id, e.hire_date AS employee_hire_date, e.email AS employee_email, e.manager_id AS employee_manager_id, m.salary AS manager_salary FROM employees AS e JOIN employees AS m ON e.manager_id = m.id ORDER BY employee_email DESC;

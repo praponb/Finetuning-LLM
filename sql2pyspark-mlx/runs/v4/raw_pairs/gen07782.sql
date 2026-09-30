@@ -1,1 +1,0 @@
-select c.segment, sum(case when s.device = 'mobile' then 1 else 0 end) as mobile_count from sessions s inner join customers c on s.customer_id = c.id where c.credit_limit > 11200 group by c.segment order by 1;

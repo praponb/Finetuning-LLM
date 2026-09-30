@@ -1,1 +1,0 @@
-select o.id, o.shipping_fee, s.sqft, s.opened_date, c.email, c.age from orders o inner join stores s on o.store_id = s.id inner join customers c on o.customer_id = c.id where upper(c.email) like '%IAM%';

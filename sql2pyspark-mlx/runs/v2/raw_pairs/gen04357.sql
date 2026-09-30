@@ -1,1 +1,0 @@
-WITH filtered_store_sales AS (SELECT * FROM store_sales WHERE sale_date <= '2024-08-01' AND sale_date BETWEEN '2023-04-01' AND '2024-09-04' AND units BETWEEN 14 AND 16), Agg AS (SELECT product_id, COUNT(units) AS units_count, MAX(sale_date) AS last_sale_date FROM filtered_store_sales GROUP BY product_id) SELECT * FROM Agg WHERE units_count > 4 ORDER BY 3;

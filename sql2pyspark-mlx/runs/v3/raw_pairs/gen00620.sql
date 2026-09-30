@@ -1,1 +1,0 @@
-WITH RecentCustomers AS (SELECT *, LOWER(segment) AS segment_lower FROM customers WHERE NOT (segment IS NOT NULL AND signup_date >= '2024-11-01')), agg AS (SELECT segment, MAX(age) AS max_age, AVG(age) AS avg_age FROM RecentCustomers GROUP BY segment) SELECT segment, avg_age FROM agg WHERE avg_age < 49 ORDER BY 1 LIMIT 10

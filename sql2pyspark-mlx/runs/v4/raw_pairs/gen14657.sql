@@ -1,1 +1,0 @@
-SELECT s.country, SORT_ARRAY(COLLECT_SET(we.page)) AS page_list, SUM(CASE WHEN we.page = '/product' THEN we.duration_sec ELSE 0 END) AS product_duration_sec FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE we.session_id IN (26, 33) GROUP BY s.country;

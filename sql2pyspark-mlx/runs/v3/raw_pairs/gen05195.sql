@@ -1,1 +1,0 @@
-WITH valid_order_items AS (SELECT * FROM order_items WHERE unit_price IS NOT NULL AND unit_price BETWEEN 190 AND 310), agg AS (SELECT order_id, MIN(unit_price) AS min_unit_price FROM valid_order_items GROUP BY order_id) SELECT * FROM agg ORDER BY min_unit_price, order_id LIMIT 50;

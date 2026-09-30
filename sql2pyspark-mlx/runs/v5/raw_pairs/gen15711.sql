@@ -1,1 +1,0 @@
-SELECT id, status, balance, customer_id FROM (SELECT id, status, balance, customer_id, ROW_NUMBER() OVER (PARTITION BY status ORDER BY balance, id) AS row_num FROM accounts) AS r WHERE row_num = 1 ORDER BY balance DESC, 2 DESC;

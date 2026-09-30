@@ -1,1 +1,0 @@
-select case when quantity >= 8 then 'high' when quantity >= 4 then 'mid' else 'low' end as quantity_bucket, count(distinct quantity) as unique_products, count(unit_price) as unit_price_count from order_items group by 1

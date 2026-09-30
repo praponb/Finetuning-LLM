@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, COUNT(we.id) AS web_event_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(we.event_type))) AS event_type_values FROM sessions s INNER JOIN web_events we ON we.session_id = s.id GROUP BY s.id, s.browser;

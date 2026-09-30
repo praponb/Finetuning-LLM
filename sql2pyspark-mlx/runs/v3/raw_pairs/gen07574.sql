@@ -1,1 +1,0 @@
-SELECT we.id, we.event_time, we.session_id, s.device, c.name, CONCAT_WS('-', we.page, we.event_type) AS page_event_type_key FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE we.page = '/home' AND c.is_active = TRUE

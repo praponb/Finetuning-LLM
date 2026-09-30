@@ -1,1 +1,0 @@
-select i.id, i.product_id, i.quantity, p.category, p.stock_qty, s.rating, s.city from inventory i join products p on i.product_id = p.id join suppliers s on p.supplier_id = s.id order by product_id desc;

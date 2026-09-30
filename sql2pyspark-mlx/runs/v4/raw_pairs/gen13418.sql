@@ -1,1 +1,0 @@
-SELECT CASE WHEN balance >= 64000 THEN 'high' WHEN balance >= 10000 THEN 'mid' ELSE 'low' END AS balance_bucket, ROUND((100 * SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_closed FROM accounts GROUP BY balance_bucket HAVING ROUND((100 * SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) < 28 ORDER BY pct_closed, balance_bucket DESC;

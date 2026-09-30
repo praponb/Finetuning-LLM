@@ -1,1 +1,0 @@
-SELECT CASE WHEN status IN ('IN_TRANSIT', 'LOST') THEN 'group_a' ELSE 'other' END AS status_group, carrier, COUNT(cost) AS cost_count, SUM(CASE WHEN status = 'RETURNED' THEN cost ELSE 0 END) AS returned_cost FROM shipments WHERE carrier NOT IN ('UPS', 'FedEx', 'DHL') AND cost BETWEEN 84 AND 85 GROUP BY 1, 2 HAVING cost_count >= 2 ORDER BY returned_cost DESC

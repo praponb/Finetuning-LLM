@@ -1,1 +1,0 @@
-select accounts.account_type, accounts.customer_id, accounts.opened_date, transactions.account_id, transactions.merchant, transactions.txn_type from accounts left join transactions on transactions.account_id = accounts.id where transactions.account_id in (9, 35, 36, 38);

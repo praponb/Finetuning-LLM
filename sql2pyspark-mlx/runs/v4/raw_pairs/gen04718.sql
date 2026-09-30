@@ -1,1 +1,0 @@
-with product_totals as (select product_id, count(*) as total_count from inventory where store_id in (1, 3, 5) group by product_id) select p.supplier_id, p.launch_date, pt.total_count from products p left join product_totals pt on p.id = pt.product_id where pt.total_count > 9 order by pt.total_count desc;

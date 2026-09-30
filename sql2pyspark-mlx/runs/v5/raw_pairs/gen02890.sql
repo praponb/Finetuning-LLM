@@ -1,1 +1,0 @@
-WITH department_stats AS (SELECT dept_id, COUNT(*) AS employee_count, MIN(salary) AS min_salary FROM employees GROUP BY dept_id) SELECT d.id, d.budget, ds.employee_count, ds.min_salary FROM departments d JOIN department_stats ds ON d.id = ds.dept_id WHERE ds.employee_count > 8 ORDER BY d.budget;

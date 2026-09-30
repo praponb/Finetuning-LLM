@@ -1,1 +1,0 @@
-WITH RankedStoreSales AS (SELECT id, product_id, sale_date, units, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY sale_date) AS pos FROM store_sales) SELECT * FROM RankedStoreSales WHERE pos = 1 ORDER BY sale_date DESC

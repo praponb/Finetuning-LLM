@@ -1,1 +1,0 @@
-SELECT sessions.id, sessions.started_at, sessions.browser FROM sessions WHERE EXISTS (SELECT 1 FROM web_events WHERE web_events.session_id = sessions.id AND web_events.event_type = 'add_to_cart') ORDER BY id DESC, started_at ASC LIMIT 1

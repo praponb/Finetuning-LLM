@@ -1,1 +1,0 @@
-SELECT job_title, SUM(salary) total_salary FROM employees WHERE NOT (UPPER(TRIM(full_name)) = 'FRANK MILLER' OR job_title IN ('Director', 'Engineer', 'Manager')) GROUP BY job_title HAVING total_salary >= 683000

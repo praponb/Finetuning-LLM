@@ -1,1 +1,0 @@
-select date_format(event_time, 'yyyy-MM') as event_month, event_type, count(distinct duration_sec) as unique_sessions from web_events where session_id in (14, 28, 33) group by date_format(event_time, 'yyyy-MM'), event_type having count(distinct duration_sec) >= 5 order by event_month asc, event_type desc limit 20

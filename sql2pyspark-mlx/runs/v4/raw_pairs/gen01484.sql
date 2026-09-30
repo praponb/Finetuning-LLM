@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY method ORDER BY paid_at DESC NULLS LAST, id) AS latest_rank FROM payments) x WHERE latest_rank = 1) SELECT id, order_id, method, amount, paid_at, status, latest_rank, CASE WHEN method RLIKE '^(cash|card)$' THEN 'PRIORITY' ELSE 'GROUP_A' END AS method_zone FROM ranked ORDER BY latest_rank;

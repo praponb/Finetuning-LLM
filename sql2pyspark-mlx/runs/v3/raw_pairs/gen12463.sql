@@ -1,1 +1,0 @@
-select location, min(budget) as min_budget, sum(case when location = 'Tokyo' then budget else 0 end) as tokyo_budget, round(avg(budget), 2) as avg_budget from departments where budget <= 2738000 and location = 'Berlin' group by location order by tokyo_budget desc

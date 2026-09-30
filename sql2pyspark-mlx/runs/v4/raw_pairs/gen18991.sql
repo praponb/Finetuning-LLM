@@ -1,1 +1,0 @@
-select s.*, x.cost, x.product_launch_date from suppliers s left join lateral (select c.cost, c.launch_date as product_launch_date from products c where c.supplier_id = s.id order by c.cost desc, c.id desc limit 1) x on true;

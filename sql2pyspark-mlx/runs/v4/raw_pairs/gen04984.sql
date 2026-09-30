@@ -1,1 +1,0 @@
-SELECT p.id, p.paid_at, p.status, o.store_id, c.age, c.email, CONCAT(o.status, ' ', o.channel) AS status_channel FROM payments p JOIN orders o ON o.id = p.order_id JOIN customers c ON o.customer_id = c.id WHERE p.paid_at >= '2023-12-01' AND o.channel = 'partner' ORDER BY o.store_id;

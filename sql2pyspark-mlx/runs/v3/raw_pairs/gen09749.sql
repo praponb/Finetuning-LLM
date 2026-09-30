@@ -1,1 +1,0 @@
-SELECT products.id, products.launch_date, products.supplier_id, t.total_unit_price FROM products LEFT OUTER JOIN (SELECT product_id, SUM(unit_price) AS total_unit_price FROM order_items GROUP BY product_id) t ON products.id = t.product_id;

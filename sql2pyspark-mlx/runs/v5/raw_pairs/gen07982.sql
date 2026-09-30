@@ -1,1 +1,0 @@
-SELECT id, store_id, quantity, last_restock, ROW_NUMBER() OVER (ORDER BY last_restock, id) seq_no, AVG(quantity) OVER (PARTITION BY store_id ORDER BY quantity, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) quantity_avg_2, STDDEV_SAMP(quantity) OVER (PARTITION BY product_id, store_id) product_id_stddev_samp_quantity FROM inventory;

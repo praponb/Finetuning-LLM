@@ -1,1 +1,0 @@
-with src as (select * from customers where age < 55), Summary as (select country, round((100 * sum(case when country = 'UK' then 1 else 0 end)) / count(*), 1) as pct_uk from src group by country) select country, pct_uk from Summary

@@ -1,1 +1,0 @@
-SELECT s.city, MIN(ss.revenue) AS min_revenue FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE p.stock_qty BETWEEN 120 AND 134 GROUP BY s.city

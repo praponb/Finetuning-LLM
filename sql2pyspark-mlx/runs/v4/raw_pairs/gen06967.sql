@@ -1,1 +1,0 @@
-with lines as (select id, customer_id, created_at, explode_outer(coupon_codes) as tag from carts) select tag, customer_id, count(case when tag = 'BUNDLE' then 1 end) as bundle_count, size(collect_set(tag)) as num_tags, size(collect_set(tag)) as num_tags_2 from lines group by tag, customer_id

@@ -1,1 +1,0 @@
-SELECT id, service, level, latency_ms, payload_json, COALESCE(context['version'], 'direct') AS version_or_default, GET_JSON_OBJECT(payload_json, '$.user.id') AS user_id, GET_JSON_OBJECT(payload_json, '$.user.tier') AS user_tier, SHIFTRIGHT(status_code, 2) AS status_code_high FROM app_logs WHERE level IN ('WARN', 'INFO', 'DEBUG');

@@ -1,1 +1,0 @@
-SELECT MONTH(p.launch_date) launch_month, p.supplier_id, SUM(i.quantity) total_quantity, MIN(i.quantity) min_quantity FROM inventory i INNER JOIN products p ON p.id = i.product_id LEFT JOIN stores s ON i.store_id = s.id GROUP BY MONTH(p.launch_date), p.supplier_id HAVING MIN(i.quantity) > 170

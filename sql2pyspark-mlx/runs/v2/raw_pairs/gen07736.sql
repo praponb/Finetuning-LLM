@@ -1,9 +1,0 @@
-SELECT
-    page,
-    SUM(duration_sec) AS total_duration_sec,
-    COUNT(*) AS cnt,
-    ROUND(SUM(duration_sec) * 100.0 / SUM(SUM(duration_sec)) OVER (), 2) AS pct_of_total
-FROM web_events
-WHERE duration_sec != 416
-GROUP BY page
-ORDER BY total_duration_sec

@@ -1,1 +1,0 @@
-WITH ProductsBySupplier AS (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list, COUNT(cost) AS cost_count FROM products GROUP BY supplier_id) SELECT s.id, s.country, s.city, P.brand_list, P.cost_count FROM suppliers s LEFT OUTER JOIN ProductsBySupplier P ON s.id = P.supplier_id ORDER BY country ASC

@@ -1,1 +1,0 @@
-WITH filtered_subscriptions AS (SELECT *, UPPER(status) AS status_upper FROM subscriptions WHERE customer_id = 15 AND MONTH(start_date) IN (5, 7, 11)), Agg AS (SELECT plan, COUNT(monthly_fee) AS monthly_fee_count FROM filtered_subscriptions GROUP BY plan) SELECT * FROM Agg ORDER BY plan LIMIT 10;

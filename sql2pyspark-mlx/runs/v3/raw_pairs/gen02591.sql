@@ -1,1 +1,0 @@
-SELECT id, launch_date, supplier_id, product_name, cost + price AS margin FROM products WHERE (LENGTH(product_name) >= 11 AND UPPER(product_name) LIKE '%UNN%') OR cost < 540 ORDER BY id DESC, product_name

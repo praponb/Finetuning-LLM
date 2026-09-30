@@ -1,1 +1,0 @@
-SELECT status, stddev_cost FROM (SELECT status, ROUND(STDDEV(cost), 2) AS stddev_cost FROM shipments WHERE shipped_date BETWEEN '2023-11-03' AND '2025-08-07' GROUP BY status) AS x WHERE stddev_cost < 44;

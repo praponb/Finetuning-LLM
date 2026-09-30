@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', paid_at) paid_month, MAX(amount) max_amount, ROUND((100 * SUM(CASE WHEN method = 'promptpay' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_promptpay, COUNT(CASE WHEN status = 'SUCCESS' THEN 1 END) success_count FROM payments GROUP BY DATE_TRUNC('MONTH', paid_at) ORDER BY success_count DESC

@@ -1,1 +1,0 @@
-select transactions.id, transactions.merchant, transactions.txn_type from transactions where transactions.txn_time >= '2024-04-01' and transactions.account_id not in (select id from accounts where customer_id in (13, 22)) order by id asc;

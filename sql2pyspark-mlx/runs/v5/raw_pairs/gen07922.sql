@@ -1,1 +1,0 @@
-with kept as (select s.* from orders s where not exists (select 1 from order_items x where x.order_id = s.id and x.product_id is not null)) select date_trunc('quarter', order_date) as quarter_start, count(*) as num_rows, avg(discount) as avg_discount, count(*) as row_count from kept group by date_trunc('quarter', order_date);

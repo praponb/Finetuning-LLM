@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, order_id, product_id, quantity, LEAST(unit_price, quantity) AS least_unit_price_quantity FROM order_items WHERE product_id IS NULL) SELECT id, order_id, product_id FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY product_id, order_id ORDER BY quantity DESC, id) = 1;

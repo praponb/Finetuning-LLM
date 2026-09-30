@@ -1,1 +1,0 @@
-SELECT order_items.id, order_items.order_id, order_items.product_id, order_items.quantity, products.category, products.brand, FLOOR(order_items.quantity) AS quantity_whole FROM order_items INNER JOIN products ON order_items.product_id = products.id WHERE products.supplier_id IS NULL;

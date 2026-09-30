@@ -1,1 +1,0 @@
-WITH account_summary AS (SELECT account_id, COUNT(*) AS num_transactions FROM transactions WHERE is_flagged = FALSE GROUP BY account_id) SELECT a.customer_id, as.num_transactions FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id;

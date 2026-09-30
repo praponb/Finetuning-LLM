@@ -1,1 +1,0 @@
-select e.full_name employee_full_name, e.level employee_level, e.manager_id employee_manager_id, m.is_remote manager_is_remote, m.dept_id manager_dept_id, m.level manager_level, concat_ws('-', m.level, m.full_name) level_full_name_key from employees e left outer join employees m on e.manager_id = m.id where m.hire_date < '2023-03-01' and e.full_name is not null

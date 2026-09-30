@@ -1,1 +1,0 @@
-SELECT event_type, session_id, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, MIN(event_time) AS first_event_time, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list FROM web_events WHERE session_id IN (5, 10, 25, 30) GROUP BY event_type, session_id HAVING SUM(CASE WHEN page = '/product' THEN duration_sec ELSE 0 END) > 54;

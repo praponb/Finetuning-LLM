@@ -1,1 +1,0 @@
-SELECT store_id, DATE_TRUNC('MONTH', last_restock) last_restock_month, COUNT(*) row_count, COUNT(quantity) quantity_count, COUNT(DISTINCT quantity) unique_stores FROM inventory WHERE NOT (quantity IS NULL AND store_id = 1 AND quantity BETWEEN 150 AND 179) GROUP BY 1, 2 HAVING unique_stores >= 4

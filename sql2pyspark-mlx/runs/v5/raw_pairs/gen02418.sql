@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CEIL(unit_price) AS unit_price_whole FROM order_items WHERE order_id IN (6, 15, 33, 39)) SELECT id, order_id, unit_price_whole FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id, product_id ORDER BY quantity DESC, id) AS latest_rank FROM valid) ranked WHERE latest_rank = 1;

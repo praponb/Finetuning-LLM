@@ -1,1 +1,0 @@
-SELECT i.quantity, i.store_id, i.last_restock, s.region, s.store_name FROM inventory i RIGHT JOIN stores s ON i.store_id = s.id WHERE i.store_id IN (1, 3, 4, 6) AND i.last_restock > '2024-04-01' ORDER BY s.region

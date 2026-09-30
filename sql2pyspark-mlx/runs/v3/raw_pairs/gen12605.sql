@@ -1,1 +1,0 @@
-SELECT id, store_id, status, customer_id, ROUND(discount * 0.9, 2) AS adjusted_discount FROM orders WHERE order_date > '2024-06-30' AND status = 'PENDING' AND status IN ('PENDING', 'SHIPPED') ORDER BY id DESC

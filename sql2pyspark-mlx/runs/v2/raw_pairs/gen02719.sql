@@ -1,1 +1,0 @@
-select order_month, channel_values, max_discount from (select date_trunc('MONTH', order_date) as order_month, concat_ws(', ', sort_array(collect_set(channel))) as channel_values, max(discount) as max_discount from orders where customer_id = 20 group by date_trunc('MONTH', order_date)) as agg where max_discount >= 0.12

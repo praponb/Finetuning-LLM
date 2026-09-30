@@ -1,1 +1,0 @@
-WITH matched_keys AS (SELECT segment, id FROM customers EXCEPT ALL SELECT segment, id FROM customers WHERE name IS NOT NULL), verified AS (SELECT s.* FROM customers s INNER JOIN matched_keys k ON s.segment = k.segment AND s.id = k.id) SELECT id, country, city, signup_date FROM verified ORDER BY city DESC NULLS LAST;

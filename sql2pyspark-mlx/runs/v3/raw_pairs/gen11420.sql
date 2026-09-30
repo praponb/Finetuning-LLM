@@ -1,1 +1,0 @@
-select p.supplier_id, max(i.quantity) as max_quantity from inventory i inner join products p on i.product_id = p.id inner join stores s on i.store_id = s.id where p.launch_date between '2024-10-01' and '2025-07-01' group by p.supplier_id

@@ -1,1 +1,0 @@
-SELECT o.status, DATE_TRUNC('MONTH', o.order_date) AS order_month, COUNT(DISTINCT s.cost) AS unique_orders, SORT_ARRAY(COLLECT_SET(s.carrier)) AS carrier_list FROM shipments s JOIN orders o ON o.id = s.order_id WHERE o.channel IS NOT NULL GROUP BY o.status, DATE_TRUNC('MONTH', o.order_date) ORDER BY status;

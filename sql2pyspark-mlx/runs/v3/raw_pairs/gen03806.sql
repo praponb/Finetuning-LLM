@@ -1,1 +1,0 @@
-select case when amount >= 3700 then 'high' when amount >= 1800 then 'mid' else 'low' end amount_bucket, count(case when merchant = 'Starbucks' then 1 end) starbucks_count, min(amount) min_amount from transactions where amount between 2300 and 3000 or account_id = 8 group by 1 order by starbucks_count desc;

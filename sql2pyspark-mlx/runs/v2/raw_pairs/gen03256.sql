@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3910000 THEN 'high' WHEN budget >= 1808000 THEN 'mid' ELSE 'low' END AS budget_bucket, MIN(budget) AS min_budget, SUM(CASE WHEN dept_name = 'Legal' THEN budget ELSE 0 END) AS legal_budget FROM departments GROUP BY CASE WHEN budget >= 3910000 THEN 'high' WHEN budget >= 1808000 THEN 'mid' ELSE 'low' END

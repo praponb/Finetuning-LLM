@@ -1,1 +1,0 @@
-SELECT o.status, SUM(oi.quantity) AS total_quantity, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON oi.product_id = p.id WHERE p.supplier_id IN (9, 30) GROUP BY o.status HAVING ROUND(AVG(oi.unit_price), 2) >= 23

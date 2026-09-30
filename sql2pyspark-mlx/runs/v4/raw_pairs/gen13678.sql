@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM suppliers WHERE rating < 3.3 OR city IN ('Bangkok', 'Singapore')), agg AS (SELECT city, ROUND(AVG(rating), 2) AS avg_rating FROM src GROUP BY city) SELECT * FROM agg WHERE avg_rating < 29

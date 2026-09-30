@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_TRUNC('MONTH', launch_date) AS launch_month, brand, stock_qty FROM products) PIVOT (SUM(stock_qty) FOR brand IN ('Globex', 'Stark', 'Initech', 'Umbrella')) ORDER BY launch_month;

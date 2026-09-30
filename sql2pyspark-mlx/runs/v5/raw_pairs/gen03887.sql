@@ -1,1 +1,0 @@
-select id, budget, location, dept_name, coalesce(budget, 0) budget_filled, case when dept_name = 'Marketing' then 1 else 0 end is_marketing from departments where location = 'Berlin' and budget <= 3417000

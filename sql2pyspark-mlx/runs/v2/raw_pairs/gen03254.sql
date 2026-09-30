@@ -1,1 +1,0 @@
-select e.id, e.full_name employee_full_name, e.email employee_email, e.manager_id employee_manager_id, m.email manager_email, m.hire_date manager_hire_date, m.dept_id manager_dept_id from employees as e left join employees as m on e.manager_id = m.id

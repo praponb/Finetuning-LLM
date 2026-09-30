@@ -1,1 +1,0 @@
-select i.id, i.product_id, s.region, s.opened_date, p.supplier_id, p.product_name from inventory i left join stores s on s.id = i.store_id inner join products p on i.product_id = p.id where p.brand <> 'Stark';

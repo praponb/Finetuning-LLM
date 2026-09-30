@@ -1,1 +1,0 @@
-SELECT txn_type, MAX(txn_time) AS last_txn_time, MAX(amount) AS max_amount, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list, COUNT(CASE WHEN merchant = 'Grab' THEN 1 END) AS grab_count, COUNT(*) AS num_rows, SIZE(COLLECT_SET(txn_type)) AS num_txn_types FROM transactions GROUP BY txn_type ORDER BY grab_count DESC NULLS LAST

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, account_type, COUNT(DISTINCT balance) AS unique_statuss, SUM(CASE WHEN account_type = 'LOAN' THEN balance ELSE 0 END) AS loan_balance FROM accounts GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM'), account_type) AS agg WHERE unique_statuss >= 6;

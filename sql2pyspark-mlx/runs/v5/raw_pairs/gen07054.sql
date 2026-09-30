@@ -1,1 +1,0 @@
-SELECT we.id, we.duration_sec, we.event_time FROM web_events we WHERE we.page IN ('/cart', '/checkout') AND we.session_id NOT IN (SELECT id FROM sessions WHERE device NOT IN ('desktop', 'mobile')) ORDER BY duration_sec, event_time DESC

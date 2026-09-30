@@ -1,1 +1,0 @@
-SELECT id, full_name, email, dept_id, manager_id, job_title, salary, hire_date, is_remote, level, MAX(salary) OVER w_grp dept_id_max_salary, SUM(salary) OVER w_grp dept_id_sum_salary, LEAD(salary, 1) OVER w_running next_salary FROM employees WINDOW w_grp AS (PARTITION BY dept_id), w_running AS (PARTITION BY job_title ORDER BY salary, id);

@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) AS signup_month, COUNT(s.monthly_fee) AS monthly_fee_count, MIN(s.start_date) AS first_start_date FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY MONTH(c.signup_date);

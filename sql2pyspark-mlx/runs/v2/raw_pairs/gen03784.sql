@@ -1,1 +1,0 @@
-WITH ranked_suppliers AS (SELECT *, DENSE_RANK() OVER (PARTITION BY country ORDER BY rating DESC) AS rnk FROM suppliers) SELECT id, country, rating FROM ranked_suppliers WHERE rnk = 1 ORDER BY country;

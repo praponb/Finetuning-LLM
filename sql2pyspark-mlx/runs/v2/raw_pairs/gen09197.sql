@@ -1,1 +1,0 @@
-SELECT a.account_type, a.status, MAX(t.amount) - MIN(t.amount) AS amount_range, SUM(CASE WHEN t.txn_type = 'CREDIT' THEN 1 ELSE 0 END) AS credit_count FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id WHERE t.txn_type = 'REFUND' GROUP BY a.account_type, a.status

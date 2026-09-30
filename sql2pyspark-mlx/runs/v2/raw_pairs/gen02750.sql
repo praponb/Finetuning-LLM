@@ -1,1 +1,0 @@
-select a.account_type, max(t.amount) as max_amount, sum(case when t.txn_type = 'DEBIT' then 1 else 0 end) as debit_count from transactions t left join accounts a on t.account_id = a.id group by a.account_type order by max_amount desc, account_type limit 50

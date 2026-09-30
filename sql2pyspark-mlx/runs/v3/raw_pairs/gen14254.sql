@@ -1,1 +1,0 @@
-SELECT p.supplier_id, p.brand, MIN(i.last_restock) AS min_last_restock FROM inventory i LEFT JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.supplier_id, p.brand ORDER BY min_last_restock;

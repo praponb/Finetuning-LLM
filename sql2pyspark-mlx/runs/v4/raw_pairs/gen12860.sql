@@ -1,1 +1,0 @@
-SELECT dept_name, CASE WHEN budget >= 4107000 THEN 'high' WHEN budget >= 946000 THEN 'mid' ELSE 'low' END AS budget_bucket, ROUND(STDDEV(budget), 2) AS stddev_budget, SUM(CASE WHEN location = 'Singapore' THEN budget ELSE 0 END) AS singapore_budget FROM departments GROUP BY 1, 2 HAVING COUNT(budget) >= 5

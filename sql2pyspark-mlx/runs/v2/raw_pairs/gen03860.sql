@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', delivered_date) AS delivered_month, YEAR(delivered_date) AS delivered_year, MAX(cost) - MIN(cost) AS cost_range, AVG(cost) AS avg_cost FROM shipments WHERE order_id = 19 GROUP BY DATE_TRUNC('MONTH', delivered_date), YEAR(delivered_date);

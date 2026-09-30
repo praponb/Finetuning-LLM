@@ -1,1 +1,0 @@
-with exploded as (select id, host, level, latency_ms, status_code, attr_key, value from app_logs lateral view outer explode(context) li as attr_key, value) select *, max(status_code) over w_part as attr_key_max_status_code, percent_rank() over w_running as status_code_percent_rank from exploded window w_part as (partition by attr_key), w_running as (order by status_code)

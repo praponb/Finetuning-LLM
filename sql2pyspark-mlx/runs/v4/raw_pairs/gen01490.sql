@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, log_ts, level, latency_ms, status_code, k, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) li AS k, value) SELECT id, log_ts, level, CASE WHEN level RLIKE '^(ERROR|INFO)$' THEN 'PRIORITY' ELSE 'EXTENDED' END AS level_zone FROM flattened ORDER BY id NULLS FIRST;

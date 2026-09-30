@@ -1,1 +1,0 @@
-select oi.order_id, o.channel, p.category, p.supplier_id from order_items oi inner join orders o on oi.order_id = o.id left join products p on p.id = oi.product_id where oi.product_id in (5, 13, 30) order by supplier_id desc

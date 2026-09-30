@@ -1,7 +1,0 @@
-from pyspark.sql import functions as F
-
-result = (
-    df_employees
-    .select("full_name", F.initcap(F.trim("level")).alias("level_title"))
-    .orderBy("full_name")
-)

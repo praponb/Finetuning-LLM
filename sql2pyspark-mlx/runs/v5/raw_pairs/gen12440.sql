@@ -1,1 +1,0 @@
-WITH by_dimension AS (SELECT dim.status, COUNT(*) AS num_rows, ROUND(SUM(s.quantity), 2) AS total_quantity FROM order_items s LEFT JOIN orders dim ON s.order_id = dim.id GROUP BY CUBE (dim.status)) SELECT status, total_quantity FROM by_dimension ORDER BY status DESC NULLS LAST, total_quantity;

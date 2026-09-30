@@ -1,1 +1,0 @@
-select date_format(start_date, 'yyyy-MM') as start_month, sum(monthly_fee) as total_monthly_fee, count(*) as cnt, round(sum(monthly_fee) * 100.0 / sum(sum(monthly_fee)) over (), 2) as pct_of_total from subscriptions group by date_format(start_date, 'yyyy-MM') order by start_month limit 10

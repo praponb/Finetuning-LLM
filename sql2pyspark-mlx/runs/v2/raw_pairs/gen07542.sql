@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, ROUND(AVG(discount), 2) AS avg_discount, AVG(amount) AS avg_amount FROM orders WHERE amount BETWEEN 590 AND 910 GROUP BY customer_id) SELECT customers.age, customer_summary.avg_discount, customer_summary.avg_amount FROM customers LEFT OUTER JOIN customer_summary ON customers.id = customer_summary.customer_id

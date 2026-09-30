@@ -1,1 +1,0 @@
-select count(distinct rating) as unique_countrys, sum(rating) as total_rating, count(case when country = 'DE' then 1 end) as de_count from suppliers where rating > 2.0 and (country in ('SG', 'TH', 'DE') or country = 'TH')

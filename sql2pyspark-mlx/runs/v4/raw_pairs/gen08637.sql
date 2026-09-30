@@ -1,1 +1,0 @@
-select date_trunc('year', last_restock) as year_start, product_id, count(distinct id) as distinct_ids, approx_percentile(quantity, 0.9) as quantity_p90, percentile_approx(quantity, array(0.25, 0.5, 0.75)) as quantity_quartiles from inventory group by date_trunc('year', last_restock), product_id order by year_start desc nulls last

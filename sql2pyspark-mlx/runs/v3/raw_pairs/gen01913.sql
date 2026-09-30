@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT status, SUM(CASE WHEN carrier = 'Flash' THEN 1 ELSE 0 END) AS flash_count, ROUND((100 * SUM(CASE WHEN carrier = 'Kerry' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_kerry FROM shipments WHERE status = 'LOST' GROUP BY status) AS sub WHERE pct_kerry > 57 ORDER BY 2

@@ -1,1 +1,0 @@
-select carrier, round((100 * sum(case when carrier = 'DHL' then 1 else 0 end)) / count(*), 1) as pct_dhl, max(cost) - min(cost) as cost_range, round(stddev(cost), 2) as stddev_cost from shipments group by carrier

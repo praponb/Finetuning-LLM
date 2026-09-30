@@ -1,1 +1,0 @@
-SELECT products.product_name, suppliers.city, suppliers.country, suppliers.supplier_name FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE ARRAY_CONTAINS(products.tags, 'bestseller') OR products.brand IN ('Globex', 'Initech') ORDER BY suppliers.country;

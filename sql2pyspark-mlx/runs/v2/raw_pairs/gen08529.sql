@@ -1,1 +1,0 @@
-SELECT job_title, MAX(salary) - MIN(salary) AS salary_range, MAX(hire_date) AS latest_hire_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees WHERE salary BETWEEN 74000 AND 106000 AND hire_date >= '2023-05-01' GROUP BY job_title ORDER BY latest_hire_date, job_title LIMIT 10;

@@ -1,1 +1,0 @@
-SELECT o.id, o.channel, o.status, o.order_date, c.country, c.email FROM orders o LEFT JOIN customers c ON c.id = o.customer_id WHERE o.amount IS NOT NULL AND c.signup_date >= '2025-03-20' ORDER BY c.country ASC

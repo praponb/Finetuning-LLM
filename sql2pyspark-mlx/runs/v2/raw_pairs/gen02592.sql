@@ -1,1 +1,0 @@
-select id, account_type, last_day(opened_date) as opened_date_month_end from accounts where opened_date between '2024-06-01' and '2025-04-01' and balance <= 31000 and customer_id = 34 order by opened_date_month_end desc

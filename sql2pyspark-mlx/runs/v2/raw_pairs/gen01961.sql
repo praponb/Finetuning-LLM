@@ -1,1 +1,0 @@
-with RankedEmployees as (select *, row_number() over (partition by dept_id order by salary desc, id) as row_num from employees where salary > 145000) select id, dept_id, salary, email from RankedEmployees where row_num = 1;

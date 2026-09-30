@@ -1,1 +1,0 @@
-SELECT e.id, e.manager_id AS employee_manager_id, m.dept_id AS manager_dept_id, ROUND(e.salary, 2) AS salary_rounded FROM employees e JOIN employees m ON e.manager_id = m.id ORDER BY manager_dept_id DESC, id ASC LIMIT 20

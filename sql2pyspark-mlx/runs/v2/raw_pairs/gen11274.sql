@@ -1,1 +1,0 @@
-SELECT id, customer_id, account_type, opened_date, balance, LAG(balance, 2) OVER (PARTITION BY customer_id, account_type ORDER BY opened_date, id) AS prev_balance FROM accounts ORDER BY opened_date DESC;

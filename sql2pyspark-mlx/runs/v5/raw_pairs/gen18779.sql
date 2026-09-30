@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, p.launch_date, p.stock_qty, s.city, DAYOFWEEK(i.last_restock) AS last_restock_dayofweek FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE i.quantity = 118 OR p.cost >= 390 ORDER BY city ASC

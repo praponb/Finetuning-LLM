@@ -1,1 +1,0 @@
-SELECT CASE WHEN p.cost >= 640 THEN 'high' WHEN p.cost >= 360 THEN 'mid' ELSE 'low' END AS cost_bucket, AVG(oi.quantity) AS avg_quantity FROM order_items oi LEFT OUTER JOIN products p ON oi.product_id = p.id GROUP BY CASE WHEN p.cost >= 640 THEN 'high' WHEN p.cost >= 360 THEN 'mid' ELSE 'low' END;

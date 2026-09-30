@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3629000 THEN 'high' WHEN budget >= 935000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, SUM(CASE WHEN dept_name = 'Legal' THEN 1 ELSE 0 END) AS legal_count FROM departments GROUP BY 1, 2 ORDER BY legal_count DESC, location DESC, budget_bucket LIMIT 50;

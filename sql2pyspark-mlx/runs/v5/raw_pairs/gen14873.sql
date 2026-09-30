@@ -1,1 +1,0 @@
-SELECT s.id, s.country, s.browser, t.web_event_count FROM sessions s INNER JOIN (SELECT session_id, COUNT(*) AS web_event_count FROM web_events WHERE duration_sec >= 410 GROUP BY session_id) t ON s.id = t.session_id WHERE t.web_event_count >= 9;

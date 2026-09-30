@@ -1,1 +1,0 @@
-with ranked as (select id, location, budget, row_number() over (partition by location order by budget desc, id) as rnk from departments where location = 'Bangkok') select id, location, budget from ranked where rnk = 1 order by budget desc

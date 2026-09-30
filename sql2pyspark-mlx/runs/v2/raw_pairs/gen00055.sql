@@ -1,1 +1,0 @@
-select month(hire_date) as hire_month, sort_array(collect_set(level)) as level_list, avg(salary) as avg_salary from employees where email like '%@outlook.com' group by month(hire_date) order by avg_salary;

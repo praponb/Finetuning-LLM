@@ -1,1 +1,0 @@
-SELECT id, txn_type, amount, merchant, txn_time, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY amount, id) AS row_num, LAG(amount, 1) OVER (PARTITION BY merchant ORDER BY txn_time, id) AS prev_amount FROM transactions ORDER BY txn_type

@@ -1,1 +1,0 @@
-select ss.sale_date, ss.store_id, p.product_name, s.opened_date, s.city from store_sales ss join products p on ss.product_id = p.id full outer join stores s on ss.store_id = s.id where ss.revenue >= 2500 and s.region in ('North', 'East', 'West')

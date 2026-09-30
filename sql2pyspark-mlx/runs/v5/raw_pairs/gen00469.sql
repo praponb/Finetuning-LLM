@@ -1,1 +1,0 @@
-SELECT oi.quantity, oi.product_id, p.cost, o.shipping_fee, WEEKOFYEAR(o.order_date) order_date_weekofyear FROM order_items oi RIGHT JOIN products p ON p.id = oi.product_id RIGHT JOIN orders o ON o.id = oi.order_id;

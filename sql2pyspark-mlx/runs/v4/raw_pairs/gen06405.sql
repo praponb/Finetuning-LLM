@@ -1,1 +1,0 @@
-WITH inventory_by_store AS (SELECT store_id, COUNT(*) AS row_count, MAX(last_restock) AS last_last_restock FROM inventory WHERE store_id = 5 GROUP BY store_id) SELECT s.id, s.opened_date, ibs.row_count, ibs.last_last_restock FROM stores s LEFT JOIN inventory_by_store ibs ON s.id = ibs.store_id WHERE ibs.row_count >= 8;

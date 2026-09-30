@@ -1,1 +1,0 @@
-with ranked as (select *, row_number() over (partition by store_id order by quantity desc, id asc) as dedup_rank from inventory qualify dedup_rank = 1) select s.id, s.store_id, s.product_id, s.quantity, (select max(s2.revenue) from store_sales s2 where s2.store_id = s.store_id) as max_store_sale_revenue from ranked s order by max_store_sale_revenue desc, store_id asc

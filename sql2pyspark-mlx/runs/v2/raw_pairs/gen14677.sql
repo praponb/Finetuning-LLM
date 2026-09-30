@@ -1,1 +1,0 @@
-with ranked_transactions as (select id, merchant, amount, row_number() over (partition by merchant order by amount, id) rn from transactions) select id, merchant, amount from ranked_transactions where rn <= 5

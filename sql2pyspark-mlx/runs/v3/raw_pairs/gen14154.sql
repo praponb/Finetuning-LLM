@@ -1,1 +1,0 @@
-WITH order_items_by_product AS (SELECT product_id, COUNT(*) AS cnt FROM order_items WHERE quantity >= 4 GROUP BY product_id) SELECT p.category, oibp.cnt FROM products p JOIN order_items_by_product oibp ON p.id = oibp.product_id;

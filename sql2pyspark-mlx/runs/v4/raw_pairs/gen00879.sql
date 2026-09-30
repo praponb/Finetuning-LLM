@@ -1,1 +1,0 @@
-SELECT YEAR(opened_date) AS opened_year, account_type, SUM(CASE WHEN status = 'CLOSED' THEN balance ELSE 0 END) AS closed_balance FROM accounts WHERE account_type NOT IN ('LOAN', 'CREDIT') AND account_type IN ('SAVINGS', 'LOAN', 'CHECKING') AND customer_id IS NOT NULL GROUP BY 1, 2 ORDER BY opened_year DESC, closed_balance;

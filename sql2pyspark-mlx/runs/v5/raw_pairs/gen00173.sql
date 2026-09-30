@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, category, brand, price, cost, launch_date, tags, supplier_id, SIZE(tags) AS tags_count, COALESCE(brand, 'DIRECT') AS resolved_brand FROM products WHERE brand IS NULL) SELECT s.* FROM base s WHERE NOT EXISTS (SELECT 1 FROM store_sales c WHERE c.product_id = s.id AND c.sale_date >= '2024-09-01');

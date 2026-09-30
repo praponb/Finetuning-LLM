@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN location IN ('Berlin', 'Tokyo') THEN 'Priority' ELSE 'Other' END AS location_group, SUBSTRING(location, 1, 2) AS location_prefix FROM departments WHERE location = 'Bangkok' AND location = 'Berlin' ORDER BY 5, id LIMIT 5;

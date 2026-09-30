@@ -1,1 +1,0 @@
-select * from (select *, row_number() over (partition by segment order by signup_date desc, id) as row_num from customers where country in ('DE', 'US', 'TH')) as t where row_num <= 2 order by country;

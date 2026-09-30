@@ -1,1 +1,0 @@
-select t.id, t.is_flagged, a.balance, c.segment, c.credit_limit from transactions t join accounts a on t.account_id = a.id left outer join customers c on c.id = a.customer_id where t.merchant = 'Starbucks';

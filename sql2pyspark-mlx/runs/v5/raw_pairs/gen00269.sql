@@ -1,1 +1,0 @@
-WITH kept AS (SELECT s.* FROM stores s WHERE NOT EXISTS (SELECT 1 FROM orders x WHERE x.store_id = s.id AND x.order_date <= s.opened_date)) SELECT id, store_name, city, opened_date, sqft FROM kept ORDER BY city DESC, id;

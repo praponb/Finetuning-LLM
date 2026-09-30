@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, COUNT(amount) AS amount_count FROM transactions WHERE TO_DATE(txn_time) >= '2025-06-20' GROUP BY account_id) SELECT a.opened_date, at.amount_count FROM accounts a JOIN account_totals at ON a.id = at.account_id WHERE at.amount_count > 5 ORDER BY opened_date DESC;

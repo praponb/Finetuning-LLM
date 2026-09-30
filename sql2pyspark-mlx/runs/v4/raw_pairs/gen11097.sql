@@ -1,1 +1,0 @@
-SELECT city, SUM(CASE WHEN city = 'London' THEN rating ELSE 0 END) AS london_rating, COUNT(CASE WHEN country = 'JP' THEN 1 END) AS jp_count FROM suppliers GROUP BY 1 HAVING COUNT(DISTINCT rating) >= 2 ORDER BY city ASC, jp_count DESC;

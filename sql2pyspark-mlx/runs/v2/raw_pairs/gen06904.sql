@@ -1,1 +1,0 @@
-WITH valid_accounts AS (SELECT * FROM accounts WHERE status IN ('OPEN', 'CLOSED') AND account_type IN ('SAVINGS', 'CHECKING')), agg AS (SELECT account_type, MAX(balance) - MIN(balance) balance_range FROM valid_accounts GROUP BY account_type) SELECT account_type, balance_range FROM agg WHERE balance_range > 67;

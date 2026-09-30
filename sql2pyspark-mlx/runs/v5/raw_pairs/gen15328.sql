@@ -1,1 +1,0 @@
-SELECT suppliers.id, suppliers.city, suppliers.supplier_name, suppliers.country FROM suppliers WHERE suppliers.country = 'DE' AND EXISTS (SELECT 1 FROM products WHERE products.supplier_id = suppliers.id AND ARRAY_CONTAINS(products.tags, 'bestseller'))

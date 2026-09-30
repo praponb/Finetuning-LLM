@@ -1,1 +1,0 @@
-select date_format(sale_date, 'yyyy-MM') as sale_month, case when year(sale_date) < 2024 then 'before_2024' when year(sale_date) = 2024 then '2024' else 'after_2024' end as sale_cohort, max(revenue) - min(revenue) as revenue_range, max(sale_date) as latest_sale_date from store_sales where not (year(sale_date) = 2024 and (revenue < 3100 or store_id in (1, 2, 4))) group by 1, 2

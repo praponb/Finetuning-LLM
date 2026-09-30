@@ -1,1 +1,0 @@
-SELECT last_restock, store_id, COALESCE(quantity, 0) AS quantity_filled, ADD_MONTHS(last_restock, 12) AS last_restock_plus_months FROM inventory WHERE product_id IN (1, 4, 8, 9) AND product_id IN (1, 5, 9, 10)

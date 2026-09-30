@@ -1,1 +1,0 @@
-SELECT s.country, SUM(CASE WHEN we.event_type = 'page_view' THEN 1 ELSE 0 END) AS page_view_count FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id WHERE HOUR(s.started_at) BETWEEN 10 AND 13 GROUP BY s.country ORDER BY country

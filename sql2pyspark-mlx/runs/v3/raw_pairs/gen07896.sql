@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(s.id) AS shipment_count FROM orders o LEFT OUTER JOIN shipments s ON o.id = s.order_id WHERE s.shipped_date BETWEEN '2023-06-01' AND '2023-07-11' GROUP BY o.status ORDER BY status DESC;

@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, brand, launch_date, RANK() OVER (PARTITION BY brand ORDER BY launch_date DESC) AS rn FROM products WHERE stock_qty IS NOT NULL) SELECT id, brand, launch_date FROM numbered WHERE rn <= 1

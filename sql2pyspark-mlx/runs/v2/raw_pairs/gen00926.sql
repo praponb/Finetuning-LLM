@@ -1,1 +1,0 @@
-WITH valid_orders AS (SELECT * FROM orders WHERE MONTH(order_date) IN (6, 7, 10) AND customer_id = 15 AND amount BETWEEN 680 AND 730), agg AS (SELECT QUARTER(order_date) AS order_quarter, SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END) AS store_count FROM valid_orders GROUP BY QUARTER(order_date)) SELECT * FROM agg ORDER BY order_quarter LIMIT 10

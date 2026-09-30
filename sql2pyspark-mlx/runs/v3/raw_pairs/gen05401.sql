@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, COUNT(i.quantity) AS quantity_count, MIN(i.last_restock) AS first_last_restock FROM inventory i INNER JOIN stores s ON i.store_id = s.id LEFT JOIN products p ON i.product_id = p.id WHERE p.supplier_id = 12 GROUP BY DATE_FORMAT(p.launch_date, 'yyyy-MM') ORDER BY first_last_restock

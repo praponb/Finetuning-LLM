@@ -1,1 +1,0 @@
-SELECT txn_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY txn_type;

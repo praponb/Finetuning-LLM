@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, SUM(salary) AS total_salary, MIN(salary) AS min_salary, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees GROUP BY 1 ORDER BY hire_month LIMIT 5;

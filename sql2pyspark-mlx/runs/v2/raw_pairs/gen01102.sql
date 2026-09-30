@@ -1,1 +1,0 @@
-SELECT s.id, s.cost, s.delivered_date, o.customer_id, o.shipping_fee, c.name, c.is_active FROM shipments s LEFT JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE c.credit_limit <= 6700 AND c.email LIKE '%@gmail.com' ORDER BY c.name

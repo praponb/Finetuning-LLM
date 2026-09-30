@@ -1,1 +1,0 @@
-SELECT QUARTER(last_restock) last_restock_quarter, CASE WHEN quantity >= 184 THEN 'high' WHEN quantity >= 64 THEN 'mid' ELSE 'low' END quantity_bucket, ROUND(AVG(quantity), 2) avg_quantity, COUNT(*) num_inventory FROM inventory GROUP BY QUARTER(last_restock), CASE WHEN quantity >= 184 THEN 'high' WHEN quantity >= 64 THEN 'mid' ELSE 'low' END;

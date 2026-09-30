@@ -1,1 +1,0 @@
-select a.id, count(t.id) as transaction_count from accounts a left outer join transactions t on t.account_id = a.id where t.merchant in ('Grab', 'Amazon', 'Lazada') group by a.id having count(t.id) > 3 order by transaction_count, a.id desc limit 3

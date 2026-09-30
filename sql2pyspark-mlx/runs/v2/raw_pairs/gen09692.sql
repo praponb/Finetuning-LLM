@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, status, shipped_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date, id) rn FROM shipments) SELECT id, status, shipped_date FROM numbered WHERE rn <= 3 ORDER BY status ASC;

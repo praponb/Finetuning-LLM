@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, COUNT(t.id) AS transaction_count, COUNT(CASE WHEN t.txn_type = 'FEE' THEN 1 END) AS fee_count FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id GROUP BY a.id, a.account_type ORDER BY id DESC;

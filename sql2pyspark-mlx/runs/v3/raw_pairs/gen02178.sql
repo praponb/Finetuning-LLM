@@ -1,1 +1,0 @@
-WITH DepartmentSummary AS (SELECT dept_id, MIN(salary) AS min_salary FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, D.min_salary FROM departments d INNER JOIN DepartmentSummary D ON d.id = D.dept_id WHERE D.min_salary > 103000

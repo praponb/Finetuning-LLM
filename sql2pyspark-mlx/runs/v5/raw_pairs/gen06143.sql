@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, service, log_ts, level, latency_ms, key, v FROM app_logs LATERAL VIEW EXPLODE(context) x AS key, v) SELECT id, service, log_ts, level, latency_ms, key, v, CASE WHEN key RLIKE '^(version|region)$' THEN 'EXTENDED' ELSE 'GROUP_B' END AS key_zone FROM exploded ORDER BY level DESC, log_ts DESC

@@ -1,1 +1,0 @@
-SELECT t.id, t.merchant, t.amount, t.account_id, a.opened_date, a.customer_id, a.balance FROM transactions t RIGHT JOIN accounts a ON t.account_id = a.id WHERE a.account_type = 'CREDIT' ORDER BY t.merchant

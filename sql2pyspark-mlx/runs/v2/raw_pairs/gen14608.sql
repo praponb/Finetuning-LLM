@@ -1,1 +1,0 @@
-select orders.channel, count(shipments.id) as shipment_count, round((100 * sum(case when shipments.carrier = 'Flash' then 1 else 0 end)) / count(*), 1) as pct_flash from orders left join shipments on shipments.order_id = orders.id where shipments.carrier not in ('DHL', 'Flash', 'UPS') group by orders.channel

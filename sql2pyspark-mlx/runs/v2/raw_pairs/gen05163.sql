@@ -1,1 +1,0 @@
-SELECT status, customer_id, COUNT(DISTINCT monthly_fee) unique_plans, MIN(end_date) first_end_date FROM subscriptions WHERE YEAR(end_date) >= 2024 GROUP BY status, customer_id HAVING MAX(monthly_fee) >= 110 ORDER BY status, unique_plans DESC;

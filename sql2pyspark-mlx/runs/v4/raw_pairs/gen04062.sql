@@ -1,1 +1,0 @@
-with ranked as (select id, supplier_id, price, row_number() over (partition by supplier_id order by price desc, id) as rnk from products) select id, supplier_id, price from ranked where rnk <= 5 order by supplier_id desc

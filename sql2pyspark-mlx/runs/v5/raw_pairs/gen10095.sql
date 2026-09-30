@@ -1,1 +1,0 @@
-SELECT id, manager_id, salary, level, hire_date, MIN(salary) OVER (PARTITION BY manager_id) AS manager_id_min_salary, ROUND(AVG(salary) OVER (PARTITION BY level ORDER BY hire_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS salary_moving_avg_7 FROM employees WHERE job_title = 'Analyst'

@@ -1,1 +1,0 @@
-SELECT c.id, c.email, t.active_monthly_fee FROM customers c LEFT JOIN (SELECT customer_id, SUM(CASE WHEN status = 'ACTIVE' THEN monthly_fee ELSE 0 END) AS active_monthly_fee FROM subscriptions GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.active_monthly_fee >= 77;

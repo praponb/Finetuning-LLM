@@ -1,1 +1,0 @@
-WITH top_web_events AS (SELECT id, page, event_time, event_type, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time DESC, id) AS rn FROM web_events WHERE page = '/cart') SELECT id, page, event_time, event_type FROM top_web_events WHERE rn <= 2 ORDER BY event_time;

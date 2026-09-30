@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.merchant, transactions.txn_time, accounts.status, customers.city, customers.is_active FROM transactions RIGHT JOIN accounts ON transactions.account_id = accounts.id JOIN customers ON accounts.customer_id = customers.id ORDER BY 3 ASC, customers.city ASC;

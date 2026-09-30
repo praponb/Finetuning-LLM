@@ -1,1 +1,0 @@
-SELECT ss.id, ss.sale_date, p.supplier_id, ss.revenue * ss.units AS revenue_per_unit FROM store_sales ss LEFT OUTER JOIN products p ON p.id = ss.product_id WHERE MONTH(p.launch_date) IN (8, 11, 12) ORDER BY id;

@@ -1,1 +1,0 @@
-SELECT segment, city, COUNT(DISTINCT credit_limit) AS unique_citys, COUNT(DISTINCT age) AS unique_countrys, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM customers WHERE signup_date BETWEEN '2023-04-01' AND '2024-02-29' AND segment IN ('Consumer', 'SMB', 'Corporate') GROUP BY 1, 2 ORDER BY unique_citys;

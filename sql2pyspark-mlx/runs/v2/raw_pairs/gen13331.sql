@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', shipped_date) shipped_month, status, carrier, ROUND(AVG(cost), 2) avg_cost, SORT_ARRAY(COLLECT_SET(status)) status_list FROM shipments GROUP BY shipped_month, status, carrier

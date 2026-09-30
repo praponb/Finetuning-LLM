@@ -1,1 +1,0 @@
-SELECT s.*, top1.payment_amount FROM orders s LEFT JOIN LATERAL (SELECT c.amount AS payment_amount FROM payments c WHERE c.order_id = s.id AND c.paid_at <= s.order_date ORDER BY c.paid_at DESC, c.id DESC LIMIT 1) top1 ON TRUE

@@ -1,1 +1,0 @@
-with order_items_by_order as (select order_id, max(unit_price) - min(unit_price) as unit_price_range from order_items where unit_price > 110 group by order_id) select o.id, o.customer_id, oibo.unit_price_range from orders o join order_items_by_order oibo on o.id = oibo.order_id

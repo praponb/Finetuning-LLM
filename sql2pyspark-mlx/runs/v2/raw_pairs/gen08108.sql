@@ -1,1 +1,0 @@
-with account_summary as (select account_id, max(amount) as max_amount, round((100 * sum(case when txn_type = 'CREDIT' then 1 else 0 end)) / count(*), 1) as pct_credit from transactions where not is_flagged group by account_id) select a.balance, a.customer_id, as.max_amount, as.pct_credit from accounts a left join account_summary as on a.id = as.account_id

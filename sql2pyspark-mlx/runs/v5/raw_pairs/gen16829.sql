@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.last_restock, i.product_id, ss.product_id store_sale_product_id, ss.revenue, ROUND(ss.units * 100, 2) units_adjusted FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id;

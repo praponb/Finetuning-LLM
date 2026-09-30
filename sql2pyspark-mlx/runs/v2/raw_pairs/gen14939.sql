@@ -1,1 +1,0 @@
-with filtered_products as (select * from products where cost < 400 or size(tags) > 2), summary as (select supplier_id, date_trunc('MONTH', launch_date) as launch_month, avg(stock_qty) as avg_stock_qty from filtered_products group by supplier_id, date_trunc('MONTH', launch_date)) select supplier_id, launch_month, avg_stock_qty from summary where avg_stock_qty > 340

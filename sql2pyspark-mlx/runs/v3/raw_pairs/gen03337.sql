@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, merchant, amount, account_id, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount DESC, id) AS rnk FROM transactions WHERE is_flagged) SELECT id, merchant, amount, account_id FROM numbered WHERE rnk <= 2

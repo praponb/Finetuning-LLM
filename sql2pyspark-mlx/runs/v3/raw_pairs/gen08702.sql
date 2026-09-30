@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, c.segment, COUNT(DISTINCT s.customer_id) AS unique_customers, COUNT(DISTINCT s.browser) AS unique_browsers FROM sessions s INNER JOIN customers c ON c.id = s.customer_id WHERE c.signup_date <= '2024-09-18' GROUP BY DATE_TRUNC('MONTH', c.signup_date), c.segment HAVING COUNT(DISTINCT s.customer_id) >= 4 ORDER BY 3 DESC

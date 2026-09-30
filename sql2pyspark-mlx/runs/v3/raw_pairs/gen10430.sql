@@ -1,1 +1,0 @@
-select case when monthly_fee >= 203 then 'high' when monthly_fee >= 68 then 'mid' else 'low' end as monthly_fee_bucket, min(monthly_fee) as min_monthly_fee, round(stddev(monthly_fee), 2) as stddev_monthly_fee from subscriptions group by monthly_fee_bucket having round(stddev(monthly_fee), 2) > 47 order by stddev_monthly_fee desc, monthly_fee_bucket asc limit 5;

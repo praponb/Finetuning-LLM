@@ -1,1 +1,0 @@
-select ss.id, ss.units, ss.revenue, ss.sale_date, p.brand, p.product_name from store_sales ss join products p on p.id = ss.product_id where size(p.tags) > 1 and ss.units <= 28 order by 1, sale_date desc

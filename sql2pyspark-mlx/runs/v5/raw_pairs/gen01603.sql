@@ -1,1 +1,0 @@
-SELECT orders.status, YEAR(orders.order_date) AS order_year, COUNT(payments.amount) AS amount_count FROM payments INNER JOIN orders ON payments.order_id = orders.id INNER JOIN customers ON orders.customer_id = customers.id WHERE orders.customer_id IN (9, 11, 39) GROUP BY orders.status, YEAR(orders.order_date)

@@ -1,1 +1,0 @@
-with department_totals as (select dept_id, count(case when job_title = 'Analyst' then 1 end) analyst_count, min(salary) min_salary from employees where manager_id = 21 group by dept_id) select d.id, d.budget, dt.analyst_count, dt.min_salary from departments d join department_totals dt on d.id = dt.dept_id where dt.analyst_count >= 5

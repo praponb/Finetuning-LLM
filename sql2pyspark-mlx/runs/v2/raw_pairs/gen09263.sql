@@ -1,1 +1,0 @@
-SELECT s.customer_id, SORT_ARRAY(COLLECT_SET(we.event_type)) AS event_type_list FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id GROUP BY s.customer_id ORDER BY customer_id DESC LIMIT 10;

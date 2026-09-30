@@ -1,1 +1,0 @@
-SELECT sessions.country, MAX(web_events.duration_sec) AS max_duration_sec FROM web_events JOIN sessions ON web_events.session_id = sessions.id JOIN customers ON customers.id = sessions.customer_id GROUP BY sessions.country HAVING MAX(web_events.duration_sec) > 400

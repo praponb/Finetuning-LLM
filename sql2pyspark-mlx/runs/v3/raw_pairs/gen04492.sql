@@ -1,1 +1,0 @@
-with top_sessions as (select id, device, started_at, customer_id, row_number() over (partition by device order by started_at desc, id) as row_num from sessions) select id, device, started_at, customer_id from top_sessions where row_num = 1;

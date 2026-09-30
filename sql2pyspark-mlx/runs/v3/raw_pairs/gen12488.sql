@@ -1,1 +1,0 @@
-SELECT subscriptions.id, subscriptions.start_date, customers.email, COALESCE(subscriptions.monthly_fee, 0) AS monthly_fee_filled FROM subscriptions INNER JOIN customers ON subscriptions.customer_id = customers.id WHERE customers.segment = 'Corporate' ORDER BY monthly_fee_filled;

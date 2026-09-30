@@ -1,1 +1,0 @@
-SELECT txn_type, SUM(CASE WHEN txn_type = 'DEBIT' THEN amount ELSE 0 END) AS debit_amount, ROUND(STDDEV(amount), 2) AS stddev_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions WHERE txn_type = 'CREDIT' AND txn_type = 'CREDIT' AND merchant IN ('Lazada', 'Starbucks') GROUP BY txn_type

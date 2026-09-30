@@ -1,1 +1,0 @@
-SELECT o.channel, AVG(oi.quantity) AS avg_quantity, ROUND(STDDEV(oi.unit_price), 2) AS stddev_unit_price FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON o.id = oi.order_id WHERE p.supplier_id IN (6, 9) GROUP BY o.channel HAVING ROUND(STDDEV(oi.unit_price), 2) >= 73

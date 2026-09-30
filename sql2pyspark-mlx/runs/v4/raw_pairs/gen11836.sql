@@ -1,1 +1,0 @@
-with transactions_by_account as (select account_id, count(*) as cnt, round((100 * sum(case when merchant = 'Starbucks' then 1 else 0 end)) / count(*), 1) as pct_starbucks from transactions group by account_id) select a.id, a.status, a.balance, tba.cnt, tba.pct_starbucks from accounts a left join transactions_by_account tba on a.id = tba.account_id order by status desc;

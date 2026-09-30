@@ -1,1 +1,0 @@
-SELECT sessions.browser, COUNT(*) AS total_count FROM web_events FULL OUTER JOIN sessions ON web_events.session_id = sessions.id WHERE web_events.page IN ('/search', '/home', '/checkout') GROUP BY sessions.browser HAVING total_count >= 3

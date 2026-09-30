@@ -1,1 +1,0 @@
-select c.country, count(a.id) as account_count, max(a.balance) as max_balance from customers c left outer join accounts a on c.id = a.customer_id group by c.country order by max_balance, country limit 20;

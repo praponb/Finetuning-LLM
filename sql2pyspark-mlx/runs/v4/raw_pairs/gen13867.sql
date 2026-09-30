@@ -1,1 +1,0 @@
-select monthly_fee, customer_id, date_format(start_date, 'MMM yyyy') as start_date_label, datediff(current_date(), end_date) as days_since_end_date from subscriptions where monthly_fee > 210 and start_date between '2024-07-12' and '2024-10-01' order by days_since_end_date, monthly_fee desc

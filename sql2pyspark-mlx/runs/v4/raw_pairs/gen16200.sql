@@ -1,1 +1,0 @@
-select customers.segment, count(distinct orders.discount) as unique_channels from orders inner join customers on customers.id = orders.customer_id inner join stores on orders.store_id = stores.id group by customers.segment having unique_channels > 4;

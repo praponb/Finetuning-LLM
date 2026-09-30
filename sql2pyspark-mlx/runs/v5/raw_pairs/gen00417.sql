@@ -1,1 +1,0 @@
-SELECT orders.id, orders.store_id, stores.region, customers.age FROM orders JOIN stores ON orders.store_id = stores.id JOIN customers ON orders.customer_id = customers.id WHERE orders.status IN ('PENDING', 'CANCELLED') AND orders.discount <= 0.16;

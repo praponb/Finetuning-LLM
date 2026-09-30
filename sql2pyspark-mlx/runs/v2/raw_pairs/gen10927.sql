@@ -1,1 +1,0 @@
-SELECT brand, MAX(price) max_price, COUNT(DISTINCT cost) unique_brands, SUM(price) total_price FROM products WHERE cost BETWEEN 420 AND 710 AND launch_date < '2025-01-01' GROUP BY brand ORDER BY max_price DESC;

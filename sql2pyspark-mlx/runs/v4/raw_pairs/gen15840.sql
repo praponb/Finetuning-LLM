@@ -1,1 +1,0 @@
-SELECT s.city, COUNT(p.stock_qty) AS stock_qty_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.brand))) AS brand_values FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.city ORDER BY brand_values DESC;

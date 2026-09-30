@@ -1,1 +1,0 @@
-select ss.store_id, round(avg(i.quantity), 2) as avg_quantity, max(i.quantity) - min(i.quantity) as quantity_range from inventory i inner join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.quantity <= 218 group by ss.store_id order by quantity_range desc;

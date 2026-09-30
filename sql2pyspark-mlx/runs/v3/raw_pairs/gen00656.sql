@@ -1,1 +1,0 @@
-select inventory.quantity, products.stock_qty, products.launch_date, stores.region, stores.city, sort_array(products.tags) as sorted_tags from inventory full outer join products on products.id = inventory.product_id right outer join stores on inventory.store_id = stores.id where products.launch_date >= '2023-10-01' order by products.launch_date desc;

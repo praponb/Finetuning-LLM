@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date, id) AS row_num FROM customers WHERE signup_date < '2025-04-14') SELECT id, country, signup_date FROM numbered WHERE row_num <= 3;

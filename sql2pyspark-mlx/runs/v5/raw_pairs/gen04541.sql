@@ -1,1 +1,0 @@
-SELECT ss.sale_date, ss.store_id, s.city, s.sqft, p.cost, CONCAT(p.product_name, ', ', p.brand) AS product_name_brand FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id

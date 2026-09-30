@@ -1,1 +1,0 @@
-select id, store_id, last_restock, quantity, product_id, lag(quantity, 1) over (partition by store_id order by last_restock, id) as prev_quantity, ntile(2) over (partition by product_id order by last_restock, id) as bucket from inventory order by last_restock desc

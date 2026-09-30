@@ -1,1 +1,0 @@
-SELECT ss.id, ss.sale_date, p.price, s.opened_date FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id RIGHT OUTER JOIN stores s ON ss.store_id = s.id WHERE s.sqft != 9305 AND p.cost BETWEEN 300 AND 410

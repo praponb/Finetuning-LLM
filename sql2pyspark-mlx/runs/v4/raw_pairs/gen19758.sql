@@ -1,1 +1,0 @@
-select id, carrier, shipped_date, cost, round(avg(cost) over (partition by carrier order by shipped_date, id rows between 2 preceding and current row), 2) as cost_moving_avg_3 from shipments where status = 'LOST';

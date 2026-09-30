@@ -1,1 +1,0 @@
-SELECT country, YEAR(signup_date) signup_year, SORT_ARRAY(COLLECT_SET(city)) city_list, MAX(credit_limit) max_credit_limit FROM customers GROUP BY country, YEAR(signup_date) HAVING MAX(credit_limit) < 13000 ORDER BY signup_year;

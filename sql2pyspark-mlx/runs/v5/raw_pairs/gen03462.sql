@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, MIN(quantity) AS min_quantity FROM order_items GROUP BY 1, 2 ORDER BY product_id DESC, quantity_bucket LIMIT 3

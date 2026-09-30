@@ -1,1 +1,0 @@
-SELECT 'subscription' AS record_type, start_date FROM subscriptions WHERE end_date >= '2025-09-01' UNION SELECT 'customer' AS record_type, signup_date AS start_date FROM customers WHERE city IN ('Berlin', 'Tokyo') ORDER BY record_type;

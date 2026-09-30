@@ -1,1 +1,0 @@
-SELECT o.id, o.discount, t.num_payments FROM orders o LEFT JOIN (SELECT order_id, COUNT(*) AS num_payments FROM payments WHERE amount BETWEEN 500 AND 1030 GROUP BY order_id) t ON o.id = t.order_id WHERE t.num_payments > 3

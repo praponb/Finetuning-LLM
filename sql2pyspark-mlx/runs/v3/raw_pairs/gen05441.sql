@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, SUM(units) AS total_units FROM store_sales GROUP BY product_id) SELECT products.price, products.category, product_summary.total_units FROM products INNER JOIN product_summary ON products.id = product_summary.product_id WHERE product_summary.total_units >= 240 ORDER BY 1;

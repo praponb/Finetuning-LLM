@@ -1,1 +1,0 @@
-SELECT id, channel, ADD_MONTHS(order_date, 6) AS order_date_plus_months, discount + shipping_fee AS discount_plus_shipping_fee FROM orders WHERE shipping_fee <= 13 ORDER BY 1 DESC, order_date_plus_months DESC LIMIT 5;

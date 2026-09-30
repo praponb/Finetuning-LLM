@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT YEAR(delivered_date) AS delivered_year, ROUND(AVG(cost), 2) AS avg_cost FROM shipments WHERE YEAR(shipped_date) >= 2025 GROUP BY YEAR(delivered_date)) AS sub WHERE avg_cost < 54 ORDER BY delivered_year DESC;

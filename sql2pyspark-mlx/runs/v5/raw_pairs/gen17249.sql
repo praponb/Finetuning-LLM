@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.product_id, products.cost, products.launch_date, suppliers.supplier_name FROM inventory RIGHT OUTER JOIN products ON inventory.product_id = products.id INNER JOIN suppliers ON suppliers.id = products.supplier_id WHERE inventory.last_restock <= '2023-04-28';

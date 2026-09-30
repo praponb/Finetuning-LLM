@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, SUBSTRING(status, 1, 4) status_prefix FROM shipments WHERE order_id IN (5, 18, 25) OR cost IS NOT NULL), summary AS (SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(carrier))) carrier_values, SORT_ARRAY(COLLECT_SET(carrier)) carrier_list FROM src GROUP BY status) SELECT status, carrier_list FROM summary ORDER BY status DESC LIMIT 50;

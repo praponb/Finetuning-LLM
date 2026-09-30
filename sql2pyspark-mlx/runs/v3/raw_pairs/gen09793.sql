@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM suppliers WHERE LENGTH(supplier_name) >= 8), SuppliersStats AS (SELECT country, SUM(CASE WHEN country = 'UK' THEN rating ELSE 0 END) AS uk_rating, SUM(rating) AS total_rating FROM src GROUP BY country) SELECT * FROM SuppliersStats ORDER BY country DESC

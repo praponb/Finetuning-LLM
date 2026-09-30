@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM stores WHERE region != 'Central' OR city != 'Berlin'), summary AS (SELECT region, COUNT(DISTINCT sqft) AS unique_citys, MIN(sqft) AS min_sqft FROM src GROUP BY region) SELECT region, unique_citys, min_sqft FROM summary WHERE unique_citys < 6 ORDER BY min_sqft DESC

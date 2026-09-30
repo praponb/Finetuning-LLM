@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.txn_type, transactions.is_flagged FROM transactions WHERE transactions.is_flagged = TRUE AND transactions.account_id NOT IN (SELECT id FROM accounts WHERE opened_date >= '2025-01-01') ORDER BY transactions.txn_type

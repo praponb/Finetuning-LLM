@@ -1,1 +1,0 @@
-SELECT customer_id, AVG(monthly_fee) avg_monthly_fee, SUM(CASE WHEN plan = 'basic' THEN monthly_fee ELSE 0 END) basic_monthly_fee FROM subscriptions WHERE end_date BETWEEN '2023-06-01' AND '2024-03-01' AND customer_id IN (13, 31, 37) GROUP BY customer_id ORDER BY basic_monthly_fee DESC

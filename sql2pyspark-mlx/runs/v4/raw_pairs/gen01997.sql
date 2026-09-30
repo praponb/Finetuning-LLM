@@ -1,1 +1,0 @@
-with filtered as (select id, full_name, email, dept_id, manager_id, salary, hire_date, is_remote, level, day(hire_date) as hire_date_day from employees where hire_date > date '2023-10-09' and manager_id is not null) select * from (select manager_id, level, salary from filtered) src pivot (max(salary) as amount, count(1) as item_count for level in ('L1' as l1, 'L5' as l5))

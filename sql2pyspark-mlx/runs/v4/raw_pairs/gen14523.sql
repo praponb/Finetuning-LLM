@@ -1,3 +1,0 @@
-SELECT id, txn_time, IF(is_flagged, 'Yes', 'No') AS is_flagged_label
-FROM transactions
-WHERE merchant = 'Starbucks' AND account_id = 37;

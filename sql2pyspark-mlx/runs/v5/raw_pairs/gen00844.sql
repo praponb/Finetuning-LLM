@@ -1,1 +1,0 @@
-WITH kept AS (SELECT s.* FROM departments s WHERE NOT EXISTS (SELECT 1 FROM employees x WHERE x.dept_id = s.id AND x.hire_date < '2024-09-01')) SELECT dept_name, location, COUNT_IF(location = 'Singapore') AS singapore_events, COUNT(*) AS num_rows FROM kept GROUP BY CUBE (dept_name, location) ORDER BY dept_name NULLS FIRST;

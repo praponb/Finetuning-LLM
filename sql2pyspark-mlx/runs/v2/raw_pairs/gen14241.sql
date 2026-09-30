@@ -1,1 +1,0 @@
-SELECT s.started_at, t.pct_page_view FROM sessions s LEFT JOIN (SELECT session_id, ROUND((100 * SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_page_view FROM web_events GROUP BY session_id) t ON s.id = t.session_id;

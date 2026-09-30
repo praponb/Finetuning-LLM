@@ -1,1 +1,0 @@
-SELECT customers.segment, COUNT(*) AS num_subscriptions, MIN(subscriptions.end_date) AS min_end_date FROM subscriptions INNER JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.plan <> 'premium' GROUP BY customers.segment ORDER BY num_subscriptions, min_end_date;

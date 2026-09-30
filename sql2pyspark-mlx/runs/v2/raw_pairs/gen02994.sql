@@ -1,1 +1,0 @@
-select s.id, s.delivered_date, o.order_date, o.channel, c.email, c.name from shipments s join orders o on s.order_id = o.id left join customers c on o.customer_id = c.id where s.shipped_date >= '2025-09-01';

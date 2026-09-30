@@ -1,1 +1,0 @@
-SELECT id, product_id, unit_price, ROUND(AVG(unit_price) OVER (PARTITION BY product_id ORDER BY unit_price, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS unit_price_moving_avg_7 FROM order_items

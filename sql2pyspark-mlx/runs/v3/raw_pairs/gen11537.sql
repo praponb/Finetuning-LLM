@@ -1,1 +1,0 @@
-SELECT store_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE (last_restock <= '2023-06-11' AND store_id IN (2, 5)) OR quantity >= 70 GROUP BY store_id HAVING AVG(quantity) < 220 ORDER BY quantity_range, store_id LIMIT 10;

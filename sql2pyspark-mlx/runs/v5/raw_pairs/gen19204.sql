@@ -1,1 +1,0 @@
-SELECT id, store_id, last_restock, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock DESC, id) AS row_seq, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock, id) AS event_seq FROM inventory;

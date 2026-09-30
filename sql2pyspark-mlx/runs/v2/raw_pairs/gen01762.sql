@@ -1,1 +1,0 @@
-with store_summary as (select store_id, sum(case when status = 'CANCELLED' then 1 else 0 end) cancelled_count from orders group by store_id) select s.id, s.city, ss.cancelled_count from stores s inner join store_summary ss on s.id = ss.store_id

@@ -1,1 +1,0 @@
-WITH recent_suppliers AS (SELECT * FROM suppliers WHERE country = 'US' OR country IN ('JP', 'TH')), summary AS (SELECT city, country, COUNT(*) AS total_count, MAX(rating) AS max_rating FROM recent_suppliers GROUP BY city, country) SELECT city, country, total_count, max_rating FROM summary WHERE max_rating < 2.8 ORDER BY country, total_count DESC, city LIMIT 1;

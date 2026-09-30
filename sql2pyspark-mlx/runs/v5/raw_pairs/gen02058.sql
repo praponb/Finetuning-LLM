@@ -1,1 +1,0 @@
-SELECT order_id, ROUND((100 * SUM(CASE WHEN carrier = 'FedEx' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fedex, MIN(delivered_date) AS min_delivered_date FROM shipments WHERE carrier IN ('UPS', 'Kerry') AND carrier IS NULL AND carrier IN ('DHL', 'UPS') GROUP BY order_id ORDER BY min_delivered_date ASC;

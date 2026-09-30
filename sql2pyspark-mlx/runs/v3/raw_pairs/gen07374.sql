@@ -1,1 +1,0 @@
-SELECT id, status, order_date, discount, LEAD(discount, 1, 0) OVER (PARTITION BY status ORDER BY order_date, id) AS next_discount, AVG(discount) OVER (PARTITION BY status) AS status_avg_discount FROM orders;

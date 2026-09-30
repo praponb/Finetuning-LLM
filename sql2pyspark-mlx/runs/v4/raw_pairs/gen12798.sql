@@ -1,6 +1,0 @@
-SELECT id
-FROM orders
-EXCEPT ALL
-SELECT id
-FROM orders
-WHERE status = 'RETURNED';

@@ -1,1 +1,0 @@
-SELECT product_id, order_id, quantity_count, avg_unit_price FROM (SELECT product_id, order_id, COUNT(quantity) AS quantity_count, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items GROUP BY product_id, order_id) AS t WHERE avg_unit_price >= 34 ORDER BY order_id DESC

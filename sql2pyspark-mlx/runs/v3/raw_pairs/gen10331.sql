@@ -1,1 +1,0 @@
-SELECT departments.dept_name, departments.budget, t.max_salary, t.min_salary FROM departments LEFT OUTER JOIN (SELECT dept_id, MAX(salary) AS max_salary, MIN(salary) AS min_salary FROM employees WHERE dept_id = 16 GROUP BY dept_id) t ON departments.id = t.dept_id WHERE t.min_salary >= 81000 ORDER BY departments.budget

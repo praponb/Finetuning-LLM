@@ -1,1 +1,0 @@
-select case when rating >= 4.0 then 'high' when rating >= 1.8 then 'mid' else 'low' end as rating_bucket, concat_ws(', ', sort_array(collect_set(country))) as country_values from suppliers group by 1 order by rating_bucket desc;

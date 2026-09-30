@@ -1,1 +1,0 @@
-with customer_summary as (select customer_id, count(*) as session_count from sessions group by customer_id) select c.country, cs.session_count from customers c inner join customer_summary cs on c.id = cs.customer_id order by session_count desc

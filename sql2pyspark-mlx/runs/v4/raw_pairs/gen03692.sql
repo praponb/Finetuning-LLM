@@ -1,1 +1,0 @@
-select c.city, sum(case when we.page = '/cart' then 1 else 0 end) cart_count, sort_array(collect_set(we.page)) page_list from web_events we join sessions s on we.session_id = s.id left join customers c on s.customer_id = c.id group by c.city order by city, 2

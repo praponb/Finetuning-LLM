@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, COUNT(quantity) AS quantity_count FROM order_items GROUP BY product_id) SELECT p.stock_qty, p.category, ps.quantity_count FROM products p LEFT JOIN product_stats ps ON p.id = ps.product_id WHERE ps.quantity_count >= 8 ORDER BY category, stock_qty DESC;

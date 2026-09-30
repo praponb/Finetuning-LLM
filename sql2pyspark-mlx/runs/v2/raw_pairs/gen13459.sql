@@ -1,1 +1,0 @@
-SELECT orders.status, AVG(order_items.unit_price) AS avg_unit_price, MAX(order_items.quantity) - MIN(order_items.quantity) AS quantity_range FROM order_items LEFT JOIN products ON order_items.product_id = products.id INNER JOIN orders ON order_items.order_id = orders.id GROUP BY orders.status;

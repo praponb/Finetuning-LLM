@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, DATE_TRUNC('WEEK', paid_at) paid_at_period FROM payments WHERE method <> 'bank_transfer'), Agg AS (SELECT method, SUM(amount) total_amount FROM src GROUP BY method) SELECT * FROM Agg ORDER BY method, total_amount

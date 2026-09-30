@@ -1,1 +1,0 @@
-SELECT id, account_type, opened_date, customer_id, FIRST_VALUE(customer_id) OVER (PARTITION BY account_type ORDER BY opened_date DESC, id) AS first_customer_id FROM accounts WHERE opened_date > '2024-10-14'

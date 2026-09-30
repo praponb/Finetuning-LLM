@@ -1,7 +1,0 @@
-SELECT
-    CASE WHEN unit_price >= 440 THEN 'high' WHEN unit_price >= 120 THEN 'mid' ELSE 'low' END AS unit_price_bucket,
-    SUM(unit_price) AS total_unit_price,
-    COUNT(*) AS cnt,
-    ROUND(SUM(unit_price) * 100.0 / SUM(SUM(unit_price)) OVER (), 2) AS pct_of_total
-FROM order_items
-GROUP BY CASE WHEN unit_price >= 440 THEN 'high' WHEN unit_price >= 120 THEN 'mid' ELSE 'low' END;

@@ -1,1 +1,0 @@
-with top_sessions as (select id, country, started_at, device, dense_rank() over (partition by country order by started_at) row_num from sessions) select id, country, started_at, device from top_sessions where row_num <= 3 order by device

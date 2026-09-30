@@ -1,1 +1,0 @@
-WITH by_dimension AS (SELECT d.dept_name, src.job_title, COUNT(*) AS cnt, MAX(src.salary) AS max_salary, GROUPING_ID() AS gid FROM employees src INNER JOIN departments d ON src.dept_id = d.id GROUP BY GROUPING SETS ((d.dept_name, src.job_title), (d.dept_name))) SELECT dept_name, job_title, cnt, gid FROM by_dimension

@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(AVG(rating), 2) AS avg_rating, COUNT(DISTINCT rating) AS unique_countrys FROM suppliers GROUP BY CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END;

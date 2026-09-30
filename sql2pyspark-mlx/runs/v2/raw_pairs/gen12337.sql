@@ -1,1 +1,0 @@
-select quarter(launch_date) launch_quarter, sum(price) total_price, count(*) cnt, sum(sum(price)) over (order by quarter(launch_date)) as cumulative_price from products where size(tags) >= 1 group by quarter(launch_date);

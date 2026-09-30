@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(sale_date) AS latest_sale_date FROM store_sales WHERE revenue IS NULL GROUP BY store_id) SELECT s.region, s.sqft, ss.latest_sale_date FROM stores s LEFT OUTER JOIN store_stats ss ON s.id = ss.store_id ORDER BY latest_sale_date;

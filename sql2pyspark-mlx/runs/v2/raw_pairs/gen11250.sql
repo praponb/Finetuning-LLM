@@ -1,1 +1,0 @@
-SELECT city, region, MAX(sqft) - MIN(sqft) AS sqft_range, ROUND(AVG(sqft), 2) AS avg_sqft, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM stores WHERE NOT (city = 'London' OR opened_date <= '2023-12-28') GROUP BY 1, 2

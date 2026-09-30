@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.rating >= 4.5 THEN 'high' WHEN s.rating >= 2.2 THEN 'mid' ELSE 'low' END rating_bucket, MAX(oi.unit_price) max_unit_price FROM order_items oi RIGHT OUTER JOIN products p ON p.id = oi.product_id INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY CASE WHEN s.rating >= 4.5 THEN 'high' WHEN s.rating >= 2.2 THEN 'mid' ELSE 'low' END ORDER BY max_unit_price;

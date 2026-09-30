@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY session_id) SELECT s.id, s.device, s.started_at, ss.duration_sec_range FROM sessions s INNER JOIN session_stats ss ON s.id = ss.session_id;

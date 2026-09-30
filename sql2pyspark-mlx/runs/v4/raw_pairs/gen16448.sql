@@ -1,1 +1,0 @@
-with ranked as (select *, row_number() over (partition by dept_name order by budget desc, id) as row_num from departments where budget between 1867000 and 2644000) select id, dept_name, budget, location from ranked where row_num <= 5 order by dept_name, location desc;

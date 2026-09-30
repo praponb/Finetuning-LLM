@@ -1,1 +1,0 @@
-SELECT id, status, discount, shipping_fee, CASE WHEN discount >= 0.32 THEN 'High' WHEN discount >= 0.14 THEN 'Medium' ELSE 'Low' END AS discount_tier, COALESCE(shipping_fee, 0) AS shipping_fee_filled FROM orders WHERE shipping_fee < 21 ORDER BY status;

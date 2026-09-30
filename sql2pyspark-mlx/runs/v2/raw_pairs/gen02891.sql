@@ -1,1 +1,0 @@
-SELECT i.product_id, i.last_restock, i.store_id, ss.sale_date, CASE WHEN ss.units >= 45 THEN 'High' WHEN ss.units >= 10 THEN 'Medium' ELSE 'Low' END AS units_tier FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.units != 23 AND i.quantity >= 128 ORDER BY last_restock DESC;

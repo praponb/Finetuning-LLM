@@ -1,1 +1,0 @@
-SELECT s.device, MAX(we.event_time) last_event_time FROM web_events we INNER JOIN sessions s ON we.session_id = s.id RIGHT JOIN customers c ON s.customer_id = c.id WHERE s.device IN ('desktop', 'tablet', 'mobile') GROUP BY s.device ORDER BY device

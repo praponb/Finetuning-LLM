@@ -1,1 +1,0 @@
-SELECT store_id, product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, MIN(last_restock) AS first_last_restock FROM inventory WHERE quantity >= 221 AND last_restock BETWEEN '2025-02-01' AND '2025-10-01' AND store_id IN (3, 4) GROUP BY store_id, product_id ORDER BY store_id, first_last_restock

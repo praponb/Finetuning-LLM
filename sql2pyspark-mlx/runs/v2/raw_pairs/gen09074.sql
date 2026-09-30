@@ -1,1 +1,0 @@
-select id, account_id, amount, txn_type from (select id, account_id, amount, txn_type, row_number() over (partition by account_id order by amount desc, id) as pos from transactions) as r where pos <= 1

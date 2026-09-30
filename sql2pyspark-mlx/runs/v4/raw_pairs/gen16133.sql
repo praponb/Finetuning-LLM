@@ -1,1 +1,0 @@
-SELECT *, AVG(duration_sec) OVER w_running AS duration_sec_avg_5, SUM(duration_sec) OVER (PARTITION BY session_id ORDER BY duration_sec, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_duration_sec FROM web_events WINDOW w_running AS (PARTITION BY session_id ORDER BY duration_sec, id ROWS BETWEEN 5 PRECEDING AND CURRENT ROW)

@@ -1,1 +1,0 @@
-with SupplierTotals as (select supplier_id, sum(case when brand = 'Globex' then price else 0 end) as globex_price, min(launch_date) as min_launch_date from products group by supplier_id) select s.id, s.city, s.country, S.globex_price, S.min_launch_date from suppliers s inner join SupplierTotals S on s.id = S.supplier_id order by S.min_launch_date

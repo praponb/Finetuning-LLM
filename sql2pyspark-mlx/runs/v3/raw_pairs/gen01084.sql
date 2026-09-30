@@ -1,1 +1,0 @@
-SELECT store_id, QUARTER(last_restock) AS last_restock_quarter, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE product_id IN (1, 2, 10) AND MONTH(last_restock) IN (6, 8, 9) GROUP BY CUBE(store_id, QUARTER(last_restock));

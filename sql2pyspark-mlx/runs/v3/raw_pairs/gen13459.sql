@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3195000 THEN 'high' WHEN budget >= 640000 THEN 'mid' ELSE 'low' END budget_bucket, COUNT(budget) budget_count, COUNT(DISTINCT budget) unique_locations FROM departments WHERE budget > 1340000 GROUP BY 1;

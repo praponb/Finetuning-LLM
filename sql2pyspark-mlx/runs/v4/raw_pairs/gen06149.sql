@@ -1,1 +1,0 @@
-select *, lead(revenue, 1) over w_part as next_revenue, round(units / sum(units) over (partition by store_id), 4) as units_share, round(revenue / sum(revenue) over (partition by store_id), 4) as revenue_share from store_sales window w_part as (partition by store_id order by sale_date, id);

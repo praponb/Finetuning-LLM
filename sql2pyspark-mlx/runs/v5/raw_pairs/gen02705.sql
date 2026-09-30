@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, ADD_MONTHS(order_date, 6) AS order_date_plus_months, COALESCE(channel, 'NONE') AS channel_clean FROM orders WHERE order_date BETWEEN '2023-05-01' AND '2023-07-03') SELECT channel FROM valid EXCEPT DISTINCT SELECT channel FROM orders WHERE amount BETWEEN 1060 AND 1480;

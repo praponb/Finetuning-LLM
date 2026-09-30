@@ -1,1 +1,0 @@
-select event_hour, event_type, latest_event_time, unique_sessions from (select hour(event_time) as event_hour, event_type, max(event_time) as latest_event_time, count(distinct duration_sec) as unique_sessions from web_events group by hour(event_time), event_type) as sub where unique_sessions > 8 order by latest_event_time desc, event_hour, event_type limit 5

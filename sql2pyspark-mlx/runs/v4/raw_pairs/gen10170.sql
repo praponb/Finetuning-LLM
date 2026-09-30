@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, MAX(launch_date) last_launch_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values FROM products WHERE price BETWEEN 740 AND 920 GROUP BY supplier_id) SELECT s.id, s.rating, s.supplier_name, ss.last_launch_date, ss.brand_values FROM suppliers s INNER JOIN supplier_summary ss ON s.id = ss.supplier_id

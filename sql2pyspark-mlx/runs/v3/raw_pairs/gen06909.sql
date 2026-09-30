@@ -1,1 +1,0 @@
-select customer_id, start_year, num_subscriptions from (select customer_id, year(start_date) as start_year, count(*) as num_subscriptions from subscriptions where status in ('PAUSED', 'ACTIVE', 'EXPIRED') group by customer_id, year(start_date)) as t where num_subscriptions < 4;

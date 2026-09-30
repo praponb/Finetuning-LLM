@@ -1,1 +1,0 @@
-select case when budget >= 4228000 then 'high' when budget >= 732000 then 'mid' else 'low' end as budget_bucket, avg(budget) as avg_budget, sum(budget) as total_budget from departments group by case when budget >= 4228000 then 'high' when budget >= 732000 then 'mid' else 'low' end having avg(budget) > 2184000 order by budget_bucket asc;

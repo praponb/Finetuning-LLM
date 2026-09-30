@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, browser, started_at, device, ROW_NUMBER() OVER (PARTITION BY browser ORDER BY started_at DESC, id) row_num FROM sessions) SELECT id, browser, started_at, device FROM numbered WHERE row_num <= 3

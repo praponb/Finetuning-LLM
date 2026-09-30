@@ -1,1 +1,0 @@
-WITH enriched AS (SELECT *, LEAD(credit_limit, 1) OVER (ORDER BY age, id) AS next_credit_limit, LEAD(age, 1) OVER (PARTITION BY city, country ORDER BY credit_limit, id) AS next_age, NTILE(10) OVER (ORDER BY age DESC, id) AS age_bucket FROM customers) SELECT id, name, country, city, segment, signup_date, credit_limit, age, next_credit_limit FROM enriched ORDER BY id DESC LIMIT 5

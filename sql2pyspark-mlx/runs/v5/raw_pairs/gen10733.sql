@@ -1,1 +1,0 @@
-with joined as (select a.*, s.region, s.opened_date, s.sqft from orders a left join stores s on a.store_id = s.id where s.city = 'New York') select id, status, channel, amount, discount, sqft from joined order by discount nulls first, status;

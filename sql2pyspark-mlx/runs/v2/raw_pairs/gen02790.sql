@@ -1,1 +1,0 @@
-SELECT o.channel, ROUND((100 * SUM(CASE WHEN p.status = 'FAILED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_failed FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id GROUP BY o.channel;

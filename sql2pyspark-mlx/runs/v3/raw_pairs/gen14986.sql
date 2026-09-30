@@ -1,1 +1,0 @@
-SELECT page, SUM(duration_sec) total_duration_sec, ROUND(SUM(duration_sec) * 100.0 / SUM(SUM(duration_sec)) OVER (), 2) AS pct_of_total FROM web_events GROUP BY page ORDER BY 2 DESC;

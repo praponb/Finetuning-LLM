@@ -1,1 +1,0 @@
-with numbered as (select id, store_id, units, dense_rank() over (partition by store_id order by units) as row_num from store_sales) select id, store_id, units from numbered where row_num <= 3 order by id desc

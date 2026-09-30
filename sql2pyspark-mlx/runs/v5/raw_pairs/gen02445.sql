@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, status, opened_date, balance, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date, id) AS rn FROM accounts WHERE balance BETWEEN 31000 AND 57000) SELECT id, status, opened_date, balance FROM numbered WHERE rn <= 3

@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, store_name, city, region, sqft, INITCAP(TRIM(region)) AS region_title FROM stores WHERE opened_date >= TO_DATE('2024-04-04')) SELECT *, RANK() OVER (PARTITION BY city, region ORDER BY sqft DESC NULLS FIRST) AS rn FROM base QUALIFY rn = 1;

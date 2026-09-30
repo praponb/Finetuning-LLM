@@ -1,1 +1,0 @@
-select product_id, last_restock, day(last_restock) as last_restock_day, case when quantity >= 221 then 'High' when quantity >= 110 then 'Medium' else 'Low' end as quantity_tier from inventory order by quantity_tier desc;

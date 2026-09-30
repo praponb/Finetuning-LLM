@@ -1,1 +1,0 @@
-WITH SessionsByCustomer AS (SELECT customer_id, MIN(started_at) AS first_started_at FROM sessions WHERE country = 'TH' GROUP BY customer_id) SELECT c.id, c.name, c.credit_limit, S.first_started_at FROM customers c LEFT OUTER JOIN SessionsByCustomer S ON c.id = S.customer_id ORDER BY first_started_at ASC;

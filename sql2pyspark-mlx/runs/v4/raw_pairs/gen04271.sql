@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, i.store_id, ss.revenue, ss.store_id AS store_sale_store_id FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.units >= 35 AND i.store_id IN (1, 2, 5, 6);

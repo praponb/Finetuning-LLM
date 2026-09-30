@@ -1,1 +1,0 @@
-SELECT p.id, p.paid_at, o.amount, o.status, o.store_id, CONCAT(p.status, '/', p.method) AS status_method FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id WHERE p.amount BETWEEN 650 AND 1180

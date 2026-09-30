@@ -1,1 +1,0 @@
-SELECT * FROM shipments WHERE status IN ('RETURNED', 'IN_TRANSIT')

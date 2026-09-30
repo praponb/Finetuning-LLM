@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(o.order_date, 'yyyy-MM') AS order_month, MAX(oi.unit_price) - MIN(oi.unit_price) AS unit_price_range FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id GROUP BY DATE_FORMAT(o.order_date, 'yyyy-MM') HAVING MAX(oi.unit_price) - MIN(oi.unit_price) > 62

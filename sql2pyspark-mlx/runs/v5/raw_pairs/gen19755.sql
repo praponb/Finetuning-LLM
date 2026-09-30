@@ -1,1 +1,0 @@
-SELECT segment, country, SUM(CASE WHEN city = 'Singapore' THEN credit_limit ELSE 0 END) AS singapore_credit_limit, SUM(age) AS total_age, SUM(CASE WHEN country = 'SG' THEN credit_limit ELSE 0 END) AS sg_credit_limit FROM customers WHERE country = 'SG' GROUP BY segment, country ORDER BY 1 DESC, country

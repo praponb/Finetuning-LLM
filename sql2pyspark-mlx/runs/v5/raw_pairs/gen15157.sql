@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(s.id) AS shipment_count, MIN(s.cost) AS min_cost, MIN(s.delivered_date) AS first_delivered_date FROM orders o LEFT JOIN shipments s ON s.order_id = o.id GROUP BY o.status HAVING COUNT(s.id) > 1 ORDER BY status, shipment_count DESC LIMIT 1

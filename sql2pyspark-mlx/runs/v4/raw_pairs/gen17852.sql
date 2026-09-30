@@ -1,1 +1,0 @@
-SELECT status, min_discount, mobile_count FROM (SELECT status, MIN(discount) min_discount, SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END) mobile_count FROM orders GROUP BY status) agg WHERE min_discount > 0.15 ORDER BY 2 ASC

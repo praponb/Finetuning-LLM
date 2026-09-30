@@ -1,1 +1,0 @@
-SELECT p.brand, COUNT(DISTINCT i.quantity) unique_stores, COUNT(i.quantity) quantity_count FROM inventory i INNER JOIN products p ON i.product_id = p.id WHERE i.product_id IN (2, 6, 9, 10) GROUP BY p.brand ORDER BY 2, brand LIMIT 1;

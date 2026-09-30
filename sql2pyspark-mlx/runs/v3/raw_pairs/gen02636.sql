@@ -1,1 +1,0 @@
-select status, order_id, avg_amount, status_values from (select status, order_id, round(avg(amount), 2) as avg_amount, concat_ws(', ', sort_array(collect_set(status))) as status_values from payments where order_id = 7 group by status, order_id) as s where avg_amount >= 22 order by status, order_id limit 5;

@@ -1,1 +1,0 @@
-SELECT *, ROW_NUMBER() OVER (ORDER BY started_at, id) AS row_seq, LAST_VALUE(browser, TRUE) OVER (PARTITION BY customer_id ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_browser FROM sessions;

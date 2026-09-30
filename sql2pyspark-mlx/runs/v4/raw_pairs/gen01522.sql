@@ -1,1 +1,0 @@
-select city, country, count(distinct age) as unique_citys from customers where credit_limit between 6800 and 11100 and credit_limit >= 7500 and credit_limit between 4500 and 11800 group by city, country having count(distinct age) < 3 order by city asc, country desc limit 5;

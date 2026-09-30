@@ -1,1 +1,0 @@
-select c.segment, concat_ws(', ', sort_array(collect_set(s.device))) as device_values from sessions s left join customers c on s.customer_id = c.id group by c.segment order by device_values, segment limit 1

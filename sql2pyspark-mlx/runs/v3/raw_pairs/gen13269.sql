@@ -1,1 +1,0 @@
-select product_id, case when year(sale_date) < 2024 then 'before_2024' when year(sale_date) = 2024 then '2024' else 'after_2024' end as sale_cohort, round(avg(units), 2) as avg_units, min(revenue) as min_revenue from store_sales where revenue <= 2100 or revenue between 1200 and 2000 group by 1, 2 having max(revenue) < 3500

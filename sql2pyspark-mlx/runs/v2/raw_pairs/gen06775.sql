@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN method IN ('promptpay', 'paypal') THEN 'Group A' ELSE 'Other' END AS method_group, SUBSTRING(status, 1, 3) AS status_prefix FROM payments WHERE amount > 1070 ORDER BY method_group, id;

@@ -1,1 +1,0 @@
-SELECT oi.id, oi.quantity, oi.order_id, p.brand, o.status, o.discount, ROUND(oi.unit_price / oi.quantity, 2) AS line_total FROM order_items oi LEFT OUTER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id;

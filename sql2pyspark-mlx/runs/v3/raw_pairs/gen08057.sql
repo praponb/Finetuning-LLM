@@ -1,1 +1,0 @@
-SELECT store_id, product_id, AVG(revenue) AS avg_revenue, ROUND(AVG(units), 2) AS avg_units, COUNT(DISTINCT units) AS unique_products FROM store_sales WHERE revenue >= 2700 GROUP BY store_id, product_id ORDER BY product_id DESC;

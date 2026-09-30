@@ -1,1 +1,0 @@
-WITH products_by_supplier AS (SELECT supplier_id, MAX(cost) AS max_cost, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products GROUP BY supplier_id) SELECT s.id, s.country, pbs.max_cost, pbs.avg_stock_qty FROM suppliers s LEFT JOIN products_by_supplier pbs ON s.id = pbs.supplier_id WHERE pbs.max_cost > 560;

@@ -1,1 +1,0 @@
-SELECT budget, location, dept_name, UPPER(dept_name) AS dept_name_upper FROM departments WHERE location NOT IN ('London', 'Tokyo') AND location IN ('New York', 'London') AND budget < 2892000 ORDER BY dept_name;

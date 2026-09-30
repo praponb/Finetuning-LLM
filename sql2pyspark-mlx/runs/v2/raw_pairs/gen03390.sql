@@ -1,1 +1,0 @@
-select id, order_id, round(unit_price, 2) as unit_price_rounded from order_items where quantity between 5 and 6 and order_id in (5, 17, 22) and unit_price between 220 and 240 order by order_id desc, id desc

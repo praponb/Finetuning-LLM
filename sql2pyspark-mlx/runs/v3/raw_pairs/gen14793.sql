@@ -1,1 +1,0 @@
-SELECT products.category, AVG(order_items.quantity) avg_quantity, ROUND(STDDEV(order_items.quantity), 2) stddev_quantity FROM order_items INNER JOIN products ON products.id = order_items.product_id WHERE products.price > 800 GROUP BY products.category ORDER BY stddev_quantity DESC, category;

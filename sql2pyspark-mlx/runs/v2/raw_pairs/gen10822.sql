@@ -1,1 +1,0 @@
-WITH Numbered AS (SELECT id, status, amount, paid_at, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount, id) AS row_num FROM payments WHERE status IN ('FAILED', 'REFUNDED', 'SUCCESS')) SELECT * FROM Numbered WHERE row_num <= 5 ORDER BY id DESC

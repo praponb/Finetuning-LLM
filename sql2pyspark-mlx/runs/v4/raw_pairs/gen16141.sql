@@ -1,1 +1,0 @@
-SELECT o.status, ROUND(AVG(s.cost), 2) AS avg_cost, COUNT(s.cost) AS cost_count FROM shipments s LEFT JOIN orders o ON s.order_id = o.id LEFT JOIN customers c ON o.customer_id = c.id GROUP BY o.status HAVING COUNT(s.cost) >= 3 ORDER BY cost_count DESC

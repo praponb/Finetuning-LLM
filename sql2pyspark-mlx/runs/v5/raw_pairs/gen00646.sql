@@ -1,1 +1,0 @@
-with CustomerTotals as (select customer_id, avg(balance) as avg_balance, min(balance) as min_balance from accounts where balance > 61000 group by customer_id) select c.segment, C.avg_balance, C.min_balance from customers c inner join CustomerTotals C on c.id = C.customer_id;

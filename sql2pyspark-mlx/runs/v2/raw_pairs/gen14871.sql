@@ -1,1 +1,0 @@
-SELECT region, MAX(sqft) - MIN(sqft) AS sqft_range, COUNT(CASE WHEN region = 'East' THEN 1 END) AS east_count, COUNT(DISTINCT sqft) AS unique_regions FROM stores GROUP BY region HAVING east_count > 1 ORDER BY east_count DESC

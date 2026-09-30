@@ -1,1 +1,0 @@
-SELECT is_active, MIN(signup_date) AS min_signup_date, MAX(age) - MIN(age) AS age_range, MAX(signup_date) AS last_signup_date FROM customers GROUP BY is_active HAVING SUM(age) < 170 ORDER BY age_range, is_active LIMIT 50;

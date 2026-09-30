@@ -1,1 +1,0 @@
-SELECT s.id, s.opened_date, t.min_quantity, t.quantity_count FROM stores s INNER JOIN (SELECT store_id, MIN(quantity) min_quantity, COUNT(quantity) quantity_count FROM inventory WHERE store_id = 5 GROUP BY store_id) t ON s.id = t.store_id WHERE t.quantity_count > 10;

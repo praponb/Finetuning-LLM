@@ -1,1 +1,0 @@
-SELECT t.amount, a.account_type, a.status, c.age, COALESCE(c.segment, 'N/A') AS segment_filled FROM transactions t INNER JOIN accounts a ON a.id = t.account_id LEFT JOIN customers c ON a.customer_id = c.id ORDER BY status, segment_filled;

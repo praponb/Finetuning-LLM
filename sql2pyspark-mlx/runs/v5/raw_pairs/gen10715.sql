@@ -1,1 +1,0 @@
-WITH Src AS (SELECT * FROM products WHERE launch_date BETWEEN '2025-07-01' AND '2025-10-01' AND launch_date < '2024-12-01' AND price >= 1080), brand_summary AS (SELECT brand, ROUND(AVG(cost), 2) AS avg_cost FROM Src GROUP BY brand) SELECT * FROM brand_summary WHERE avg_cost < 51 ORDER BY 2 DESC;

@@ -1,1 +1,0 @@
-WITH inventory_by_store AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_products FROM inventory WHERE quantity != 205 GROUP BY store_id) SELECT s.id, s.city, ibs.unique_products FROM stores s INNER JOIN inventory_by_store ibs ON s.id = ibs.store_id ORDER BY s.city

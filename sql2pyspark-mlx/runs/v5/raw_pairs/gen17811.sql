@@ -1,1 +1,0 @@
-SELECT products.supplier_id, COUNT(*) AS row_count FROM order_items INNER JOIN products ON order_items.product_id = products.id INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE order_items.order_id IN (21, 22, 23, 35) GROUP BY products.supplier_id ORDER BY 1 DESC

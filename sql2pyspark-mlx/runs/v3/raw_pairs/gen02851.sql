@@ -1,1 +1,0 @@
-SELECT MONTH(txn_time) AS txn_month, MIN(txn_time) AS min_txn_time, COUNT(*) AS transaction_count FROM transactions WHERE amount < 3500 GROUP BY MONTH(txn_time) ORDER BY 3 DESC, txn_month DESC LIMIT 5

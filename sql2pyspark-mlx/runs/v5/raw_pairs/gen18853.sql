@@ -1,1 +1,0 @@
-SELECT s.id, s.status, s.plan, s.start_date FROM subscriptions s WHERE s.customer_id IN (17, 18, 31) AND s.customer_id IN (SELECT id FROM customers WHERE segment NOT IN ('Consumer', 'Corporate')) ORDER BY s.id;

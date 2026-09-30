@@ -1,1 +1,0 @@
-with store_totals as (select store_id, avg(revenue) as avg_revenue, count(units) as units_count from store_sales group by store_id) select s.id, s.sqft, s.region, st.avg_revenue, st.units_count from stores s inner join store_totals st on s.id = st.store_id

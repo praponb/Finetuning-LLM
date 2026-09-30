@@ -1,1 +1,0 @@
-WITH TopCustomers AS (SELECT id, city, credit_limit, country, ROW_NUMBER() OVER (PARTITION BY city ORDER BY credit_limit DESC, id) AS row_num FROM customers) SELECT id, city, credit_limit, country FROM TopCustomers WHERE row_num <= 5 ORDER BY credit_limit DESC

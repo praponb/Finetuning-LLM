@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM accounts WHERE (account_type = 'SAVINGS' AND status IN ('FROZEN', 'CLOSED', 'OPEN')) OR customer_id IN (4, 5, 35)), agg AS (SELECT status, ROUND((100 * SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_closed FROM base GROUP BY status) SELECT status, pct_closed FROM agg WHERE pct_closed < 76 ORDER BY pct_closed DESC;

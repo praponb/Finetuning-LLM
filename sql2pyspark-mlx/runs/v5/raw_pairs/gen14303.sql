@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, full_name, email, manager_id, job_title, salary, level, CASE WHEN job_title IN ('Director', 'Manager') THEN 'Core' ELSE 'Other' END AS job_title_group FROM employees WHERE job_title != 'Manager') SELECT * FROM (SELECT manager_id, job_title, salary FROM valid) src PIVOT (SUM(salary) FOR job_title IN ('Manager', 'Engineer'))

@@ -1,1 +1,0 @@
-SELECT YEAR(event_time) AS event_year, COUNT(*) AS total_count, ROUND((100 * SUM(CASE WHEN page = '/product' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_product FROM web_events GROUP BY YEAR(event_time) HAVING COUNT(*) > 1 ORDER BY event_year DESC LIMIT 5;

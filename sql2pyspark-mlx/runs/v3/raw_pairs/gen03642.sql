@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, a.customer_id, a.balance, c.segment, c.credit_limit, c.name FROM accounts a INNER JOIN customers c ON a.customer_id = c.id WHERE a.balance >= 35000 AND a.status IN ('CLOSED', 'FROZEN') ORDER BY account_type;

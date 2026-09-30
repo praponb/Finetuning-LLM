@@ -1,1 +1,0 @@
-with src as (select * from store_sales where product_id in (3, 4, 6, 9) and (revenue is not null or revenue < 2500)), summary as (select product_id, sum(units) as total_units from src group by product_id) select * from summary where total_units >= 130 order by 1, total_units;

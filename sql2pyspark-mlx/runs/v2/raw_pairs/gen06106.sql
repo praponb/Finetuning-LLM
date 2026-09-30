@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, MIN(sale_date) AS min_sale_date FROM store_sales WHERE sale_date < '2023-08-11' GROUP BY product_id) SELECT p.brand, p.cost, ps.min_sale_date FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id;

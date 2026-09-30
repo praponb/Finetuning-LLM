@@ -1,1 +1,0 @@
-WITH top_web_events AS (SELECT id, event_type, event_time, session_id, DENSE_RANK() OVER (PARTITION BY event_type ORDER BY event_time) rn FROM web_events WHERE page = '/checkout') SELECT * FROM top_web_events WHERE rn <= 3 ORDER BY event_type;

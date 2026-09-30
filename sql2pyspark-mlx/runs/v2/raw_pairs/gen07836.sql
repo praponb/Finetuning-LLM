@@ -1,1 +1,0 @@
-select product_id, order_id, sum(quantity * unit_price) as revenue, min(unit_price) as min_unit_price, max(quantity) - min(quantity) as quantity_range from order_items where quantity <= 8 or order_id in (22, 25, 30, 36) group by product_id, order_id having max(quantity) < 7.3 order by revenue asc;

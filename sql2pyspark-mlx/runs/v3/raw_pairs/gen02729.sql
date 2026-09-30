@@ -1,1 +1,0 @@
-WITH filtered_subscriptions AS (SELECT * FROM subscriptions WHERE customer_id IS NULL AND (YEAR(start_date) >= 2024 OR start_date >= '2023-10-01')), status_summary AS (SELECT status, plan, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list FROM filtered_subscriptions GROUP BY status, plan) SELECT status, plan, plan_list FROM status_summary ORDER BY plan, status LIMIT 20;

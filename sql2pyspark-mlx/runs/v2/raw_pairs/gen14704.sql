@@ -1,1 +1,0 @@
-SELECT id, cost, shipped_date, carrier, DATEDIFF(shipped_date, delivered_date) AS days_delivered_date_to_shipped_date, LENGTH(carrier) AS carrier_length FROM shipments WHERE order_id IS NULL ORDER BY carrier_length;

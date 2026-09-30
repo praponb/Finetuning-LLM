@@ -1,1 +1,0 @@
-SELECT id, plan, end_date, customer_id, start_date, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY end_date, id) AS rn, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY start_date DESC) AS start_date_dense_rank FROM subscriptions WHERE YEAR(end_date) = 2023 ORDER BY id DESC, rn DESC

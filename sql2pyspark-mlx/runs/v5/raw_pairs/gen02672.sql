@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1640 THEN 'LARGE' ELSE 'SMALL' END AS amount_tier, COUNT(*) AS num_rows, COUNT(*) FILTER (WHERE method = 'bank_transfer') AS bank_transfer_rows FROM payments GROUP BY ROLLUP (CASE WHEN amount >= 1640 THEN 'LARGE' ELSE 'SMALL' END) ORDER BY amount_tier DESC NULLS LAST

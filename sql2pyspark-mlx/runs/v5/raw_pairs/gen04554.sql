@@ -1,1 +1,0 @@
-with exploded as (select id, service, log_ts, status_code, key, attr_value from app_logs lateral view outer explode(context) li as key, attr_value) select id, log_ts, status_code, key, attr_value from exploded order by id desc nulls last, log_ts;

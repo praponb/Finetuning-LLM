@@ -1,1 +1,0 @@
-select s.country, min(i.quantity) as min_quantity from inventory i inner join products p on i.product_id = p.id full outer join suppliers s on p.supplier_id = s.id group by s.country order by min_quantity asc

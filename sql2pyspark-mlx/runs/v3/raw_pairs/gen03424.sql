@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, i.store_id, i.quantity, s.store_name, s.sqft FROM inventory i JOIN stores s ON s.id = i.store_id WHERE s.city = 'Chiang Mai' AND UPPER(TRIM(s.store_name)) = 'SIAM FLAGSHIP';

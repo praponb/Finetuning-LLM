@@ -1,1 +1,0 @@
-SELECT store_id, product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, AVG(quantity) AS avg_quantity, COUNT(DISTINCT quantity) AS unique_products FROM inventory GROUP BY store_id, product_id ORDER BY unique_products DESC, store_id, product_id LIMIT 1;

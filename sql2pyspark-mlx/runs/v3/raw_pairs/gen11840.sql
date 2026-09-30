@@ -1,1 +1,0 @@
-SELECT monthly_fee, end_date, CASE WHEN monthly_fee >= 254 THEN 'High' WHEN monthly_fee >= 107 THEN 'Medium' ELSE 'Low' END AS monthly_fee_band, CASE WHEN plan = 'standard' THEN 1 ELSE 0 END AS is_standard FROM subscriptions WHERE customer_id IN (4, 35) AND MONTH(start_date) IN (3, 7, 12) AND end_date BETWEEN '2023-04-01' AND '2023-04-18' ORDER BY monthly_fee_band, end_date

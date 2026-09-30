@@ -1,1 +1,0 @@
-WITH top_transactions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount DESC, id) AS row_num FROM transactions WHERE txn_type != 'CREDIT') SELECT * FROM top_transactions WHERE row_num <= 3 ORDER BY amount DESC, merchant ASC;

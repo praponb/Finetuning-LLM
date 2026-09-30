@@ -1,1 +1,0 @@
-select product_id, sum(quantity) as total_quantity, count(*) as cnt, sum(sum(quantity)) over (order by product_id) as cumulative_quantity from inventory where store_id in (1, 2, 6) group by product_id

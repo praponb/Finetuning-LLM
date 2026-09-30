@@ -1,1 +1,0 @@
-SELECT id, region, opened_date, sqft, RANK() OVER (PARTITION BY region ORDER BY opened_date) AS rnk, ROUND(AVG(sqft) OVER (PARTITION BY region ORDER BY opened_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS sqft_moving_avg_3 FROM stores WHERE opened_date <= '2025-02-16';

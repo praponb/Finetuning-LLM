@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, a.customer_id FROM accounts a WHERE a.account_type <> 'LOAN' AND a.customer_id IN (SELECT id FROM customers WHERE credit_limit BETWEEN 8000 AND 9200) ORDER BY account_type DESC;

@@ -1,1 +1,0 @@
-select quarter(event_time) as event_quarter, count(distinct duration_sec) as unique_sessions, sum(case when event_type = 'page_view' then 1 else 0 end) as page_view_count from web_events group by quarter(event_time) order by 2 desc, page_view_count desc;

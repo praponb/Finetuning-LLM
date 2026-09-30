@@ -1,1 +1,0 @@
-SELECT store_id, PERCENTILE_APPROX(shipping_fee, ARRAY(0.25, 0.5, 0.75)) AS shipping_fee_quartiles, ROUND(SUM(discount) / NULLIF(COUNT(CASE WHEN channel = 'web' THEN 1 END), 0), 2) AS discount_per_web FROM orders GROUP BY store_id;

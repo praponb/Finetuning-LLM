@@ -1,1 +1,0 @@
-SELECT customer_id, MAX(opened_date) AS last_opened_date, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list FROM accounts GROUP BY customer_id HAVING SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) < 57 ORDER BY customer_id DESC, last_opened_date DESC

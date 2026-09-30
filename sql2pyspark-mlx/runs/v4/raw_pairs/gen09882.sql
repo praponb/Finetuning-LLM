@@ -1,1 +1,0 @@
-SELECT id, store_id, revenue, sale_date, units, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY revenue DESC) AS revenue_dense_rank, LAG(units, 1, 0) OVER (PARTITION BY store_id ORDER BY sale_date, id) AS prev_units FROM store_sales ORDER BY revenue_dense_rank DESC, sale_date

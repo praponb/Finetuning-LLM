@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY order_date DESC, id) AS row_num FROM orders) ranked WHERE row_num = 1) SELECT id, order_date, status, amount, row_num FROM latest ORDER BY row_num DESC;

@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, MIN(duration_sec) AS min_duration_sec, COUNT(CASE WHEN page = '/search' THEN 1 END) AS search_count FROM web_events GROUP BY session_id) SELECT s.id, s.device, ss.min_duration_sec, ss.search_count FROM sessions s LEFT OUTER JOIN session_stats ss ON s.id = ss.session_id WHERE ss.search_count >= 8

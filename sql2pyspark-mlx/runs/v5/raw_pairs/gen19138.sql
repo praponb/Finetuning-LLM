@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM customers WHERE segment != 'Corporate'), agg AS (SELECT YEAR(signup_date) AS signup_year, country, AVG(age) AS avg_age FROM base GROUP BY YEAR(signup_date), country) SELECT * FROM agg WHERE avg_age >= 48 ORDER BY avg_age DESC, signup_year DESC

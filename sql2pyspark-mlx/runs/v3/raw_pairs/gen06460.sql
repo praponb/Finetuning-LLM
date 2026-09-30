@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, SUM(unit_price) AS total_unit_price, MIN(quantity) AS min_quantity FROM order_items WHERE unit_price < 300 GROUP BY order_id) SELECT o.shipping_fee, o.store_id, ot.total_unit_price, ot.min_quantity FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.total_unit_price >= 800;

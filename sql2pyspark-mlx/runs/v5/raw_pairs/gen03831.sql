@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, host, log_ts, level, status_code, key, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) x AS key, attr_value) SELECT id, host, level, status_code, key, CASE WHEN level RLIKE '^(INFO|ERROR)$' THEN 'GROUP_A' ELSE 'CORE' END AS level_zone FROM lines ORDER BY host DESC NULLS LAST, status_code

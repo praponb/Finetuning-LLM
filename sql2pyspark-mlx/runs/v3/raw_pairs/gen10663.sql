@@ -1,1 +1,0 @@
-SELECT product_id, quantity_range FROM (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory GROUP BY product_id) AS s WHERE quantity_range > 21 ORDER BY quantity_range ASC;

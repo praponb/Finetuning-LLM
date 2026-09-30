@@ -1,1 +1,0 @@
-SELECT ss.id, ss.units, ss.revenue, p.category, p.launch_date, s.city FROM store_sales ss LEFT OUTER JOIN products p ON p.id = ss.product_id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE NOT (ARRAY_CONTAINS(p.tags, 'bestseller') AND s.rating < 2.4) ORDER BY launch_date

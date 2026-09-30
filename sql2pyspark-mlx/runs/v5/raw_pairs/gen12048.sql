@@ -1,1 +1,0 @@
-WITH filtered_payments AS (SELECT *, YEAR(paid_at) paid_at_year FROM payments WHERE TO_DATE(paid_at) >= '2024-10-01'), status_summary AS (SELECT status, MAX(paid_at_year) max_paid_at_year FROM filtered_payments GROUP BY status) SELECT * FROM status_summary ORDER BY status ASC LIMIT 10;

@@ -1,1 +1,0 @@
-SELECT oi.unit_price, o.channel, o.status, p.product_name, p.cost FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON oi.product_id = p.id ORDER BY 5, unit_price DESC;

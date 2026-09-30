@@ -1,1 +1,0 @@
-select id, store_id, discount, status, customer_id, max(discount) over (partition by store_id) as store_id_max_discount, sum(discount) over (partition by status, customer_id) as status_sum_discount from orders;

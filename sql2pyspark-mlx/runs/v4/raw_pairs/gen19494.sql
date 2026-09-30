@@ -1,1 +1,0 @@
-SELECT s.*, pr.id AS promo_id, pr.promo_code, pr.discount_pct FROM orders s LEFT JOIN promotions pr ON COALESCE(s.channel, 'store') = pr.channel AND s.order_date >= pr.starts_on AND s.order_date < pr.ends_on + INTERVAL '7' DAY;

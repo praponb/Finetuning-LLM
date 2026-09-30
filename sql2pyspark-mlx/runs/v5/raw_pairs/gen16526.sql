@@ -1,1 +1,0 @@
-select plan, month(start_date) as start_month, max(monthly_fee) - min(monthly_fee) as monthly_fee_range, sum(case when status = 'CANCELLED' then monthly_fee else 0 end) as cancelled_monthly_fee from subscriptions where start_date between '2025-03-22' and '2025-06-01' group by plan, start_month having sum(monthly_fee) > 1340

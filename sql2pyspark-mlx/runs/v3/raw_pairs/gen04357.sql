@@ -1,1 +1,0 @@
-WITH ProductsBySupplier AS (SELECT supplier_id, MIN(cost) AS min_cost, MIN(launch_date) AS first_launch_date FROM products GROUP BY supplier_id) SELECT s.id, s.city, s.supplier_name, P.min_cost, P.first_launch_date FROM suppliers s INNER JOIN ProductsBySupplier P ON s.id = P.supplier_id WHERE P.min_cost > 210 ORDER BY first_launch_date, id LIMIT 1;

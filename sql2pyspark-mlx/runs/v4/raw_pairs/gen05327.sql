@@ -1,1 +1,0 @@
-SELECT p.status, p.order_id, o.store_id, o.shipping_fee, o.status AS order_status FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id WHERE p.status IN ('SUCCESS', 'REFUNDED') AND p.status IN ('REFUNDED', 'SUCCESS') ORDER BY status DESC;

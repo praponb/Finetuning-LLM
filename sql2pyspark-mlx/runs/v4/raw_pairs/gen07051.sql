@@ -1,1 +1,0 @@
-SELECT e.id, e.dept_id employee_dept_id, e.full_name employee_full_name, e.hire_date employee_hire_date, m.manager_id manager_manager_id, m.level manager_level, CAST(e.salary AS INT) salary_int FROM employees e JOIN employees m ON e.manager_id = m.id WHERE m.email LIKE '%@outlook.com' ORDER BY e.dept_id, id LIMIT 5

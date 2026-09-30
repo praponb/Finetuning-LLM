@@ -1,1 +1,0 @@
-SELECT id, paid_at, CASE WHEN status = 'REFUNDED' THEN 1 ELSE 0 END is_refunded, CONCAT_WS('/', status, method) status_method_key FROM payments WHERE order_id IS NULL AND amount <= 700 ORDER BY paid_at, is_refunded;

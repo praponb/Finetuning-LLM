@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, SUM(revenue) AS total_revenue, RANK() OVER (ORDER BY SUM(revenue) DESC) AS revenue_rank FROM store_sales GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM') ORDER BY sale_month

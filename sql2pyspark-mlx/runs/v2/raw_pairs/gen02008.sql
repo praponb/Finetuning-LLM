@@ -1,1 +1,0 @@
-WITH product_totals AS (SELECT product_id, MAX(quantity) AS max_quantity FROM inventory WHERE quantity BETWEEN 113 AND 137 GROUP BY product_id) SELECT p.id, p.supplier_id, p.product_name, pt.max_quantity FROM products p LEFT JOIN product_totals pt ON p.id = pt.product_id WHERE pt.max_quantity > 180 ORDER BY id, max_quantity DESC;

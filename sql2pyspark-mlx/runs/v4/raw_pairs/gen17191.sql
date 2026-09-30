@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, COUNT(DISTINCT ss.revenue) AS unique_products FROM store_sales ss LEFT OUTER JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM') ORDER BY opened_month DESC;

@@ -1,1 +1,0 @@
-select id, order_id, carrier, shipped_date, cost, delivered_date, round(avg(cost) over (partition by order_id, carrier order by shipped_date, id rows between 6 preceding and current row), 2) as cost_moving_avg_7, percent_rank() over (partition by order_id order by delivered_date desc) as delivered_date_pct_rank from shipments;

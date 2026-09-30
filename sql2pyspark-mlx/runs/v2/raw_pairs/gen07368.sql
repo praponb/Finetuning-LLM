@@ -1,1 +1,0 @@
-select departments.dept_name, employees.job_title, employees.dept_id, employees.is_remote from departments left join employees on departments.id = employees.dept_id where employees.email like '%@gmail.com';

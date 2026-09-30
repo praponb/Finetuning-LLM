@@ -1,1 +1,0 @@
-WITH shipments_by_order AS (SELECT order_id, AVG(cost) AS avg_cost, MAX(cost) AS max_cost FROM shipments WHERE delivered_date > '2024-01-01' GROUP BY order_id) SELECT o.id, o.discount, o.store_id, sbo.avg_cost, sbo.max_cost FROM orders o LEFT JOIN shipments_by_order sbo ON o.id = sbo.order_id WHERE sbo.avg_cost >= 55 ORDER BY avg_cost, o.discount DESC;

@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM inventory WHERE quantity IS NOT NULL OR store_id IN (3, 6)), agg AS (SELECT store_id, COUNT(quantity) AS quantity_count FROM src GROUP BY store_id) SELECT store_id, quantity_count FROM agg;

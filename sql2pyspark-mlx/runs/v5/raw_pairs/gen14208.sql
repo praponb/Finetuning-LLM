@@ -1,1 +1,0 @@
-SELECT 'order_item' AS record_type, unit_price AS value FROM order_items WHERE unit_price BETWEEN 360 AND 370 UNION SELECT 'subscription' AS record_type, monthly_fee AS value FROM subscriptions WHERE start_date BETWEEN '2023-09-01' AND '2025-08-04';

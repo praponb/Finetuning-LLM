@@ -1,1 +1,0 @@
-SELECT id, method, paid_at, amount, ROW_NUMBER() OVER (PARTITION BY method ORDER BY paid_at, id) AS paid_at_row, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount, id) AS amount_row FROM payments ORDER BY amount

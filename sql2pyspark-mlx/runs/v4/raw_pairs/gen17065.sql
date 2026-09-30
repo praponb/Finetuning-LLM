@@ -1,1 +1,0 @@
-SELECT *, AVG(sqft) OVER (PARTITION BY city ORDER BY opened_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) AS sqft_avg_3, LEAD(sqft, 1) OVER (ORDER BY opened_date, id) AS next_sqft, NTILE(5) OVER (PARTITION BY city ORDER BY sqft DESC, id) AS sqft_bucket FROM stores;

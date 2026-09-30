@@ -1,1 +1,0 @@
-select s.id, s.browser, s.started_at, s.customer_id from sessions s where s.browser not in ('Edge', 'Firefox', 'Safari') and not exists (select 1 from web_events we where we.session_id = s.id) order by s.id desc;

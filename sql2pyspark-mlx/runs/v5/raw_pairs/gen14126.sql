@@ -1,1 +1,0 @@
-WITH recent_customers AS (SELECT * FROM customers WHERE segment NOT IN ('Corporate', 'SMB') AND UPPER(TRIM(email)) = 'EMMA@OUTLOOK.COM'), summary AS (SELECT segment, COUNT(credit_limit) AS credit_limit_count, MIN(age) AS min_age FROM recent_customers GROUP BY segment) SELECT segment, credit_limit_count, min_age FROM summary ORDER BY segment, credit_limit_count DESC

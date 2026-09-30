@@ -1,1 +1,0 @@
-select sessions.customer_id, round(avg(web_events.duration_sec), 2) as avg_duration_sec from web_events left outer join sessions on web_events.session_id = sessions.id where sessions.device = 'desktop' group by sessions.customer_id having avg_duration_sec > 54;

@@ -1,1 +1,0 @@
-SELECT hire_month, job_title, total_salary FROM (SELECT MONTH(hire_date) AS hire_month, job_title, SUM(salary) AS total_salary FROM employees WHERE LENGTH(full_name) >= 10 GROUP BY MONTH(hire_date), job_title) AS s WHERE total_salary > 864000 ORDER BY hire_month DESC, total_salary, job_title LIMIT 5;

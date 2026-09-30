@@ -1,1 +1,0 @@
-select e.id, e.salary as employee_salary, e.is_remote as employee_is_remote, m.manager_id as manager_manager_id, m.is_remote as manager_is_remote, m.hire_date as manager_hire_date from employees e inner join employees m on e.manager_id = m.id where e.salary <= 102000;

@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, COUNT(CASE WHEN account_type = 'CREDIT' THEN 1 END) AS credit_count FROM accounts WHERE account_type != 'CREDIT' GROUP BY 1 HAVING COUNT(CASE WHEN account_type = 'CREDIT' THEN 1 END) > 5 ORDER BY opened_quarter ASC LIMIT 50;

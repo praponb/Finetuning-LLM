@@ -1,1 +1,0 @@
-select oi.id, oi.unit_price, oi.order_id, o.status, c.credit_limit from order_items oi left outer join orders o on oi.order_id = o.id left outer join customers c on c.id = o.customer_id where o.status <> 'PENDING' and c.name like '%FRA%' order by order_id desc;

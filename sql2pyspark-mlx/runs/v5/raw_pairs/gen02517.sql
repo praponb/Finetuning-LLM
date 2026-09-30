@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, host, log_ts, latency_ms, key, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) x AS key, attr_value) SELECT id, log_ts, key, attr_value, CASE WHEN key RLIKE '^(version|region)$' THEN 'GROUP_B' WHEN key RLIKE '^(trace)$' THEN 'GROUP_A' ELSE 'OTHER_ZONE' END AS key_zone FROM exploded

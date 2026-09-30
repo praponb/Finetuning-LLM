@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, name, email, country, city, segment, signup_date, credit_limit, age, INITCAP(TRIM(city)) city_title FROM customers WHERE name LIKE '%smith%') SELECT s.* FROM cleaned s WHERE NOT EXISTS (SELECT 1 FROM sessions c WHERE c.customer_id = s.id AND c.started_at >= s.signup_date);

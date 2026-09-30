@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, channel, order_date, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY order_date DESC, id) AS rnk FROM orders WHERE shipping_fee > 33) SELECT id, channel, order_date FROM ranked WHERE rnk <= 3

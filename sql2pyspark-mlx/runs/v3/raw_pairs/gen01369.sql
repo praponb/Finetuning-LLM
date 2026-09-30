@@ -1,1 +1,0 @@
-select id, merchant, amount, txn_time from (select *, row_number() over (partition by merchant order by amount desc, id) as row_num from transactions where merchant in ('Grab', 'Starbucks')) as r where row_num <= 5 order by merchant, amount;

@@ -1,1 +1,0 @@
-SELECT product_name, GREATEST(cost, stock_qty) AS greatest_cost_stock_qty, CAST(stock_qty AS DOUBLE) AS stock_qty_str FROM products WHERE product_name LIKE 'S%' AND ARRAY_CONTAINS(tags, 'premium') ORDER BY product_name DESC;

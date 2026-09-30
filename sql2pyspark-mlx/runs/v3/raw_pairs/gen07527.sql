@@ -1,1 +1,0 @@
-select o.status, o.channel, sort_array(collect_set(p.status)) as status_list, round((100 * sum(case when p.method = 'paypal' then 1 else 0 end)) / count(*), 1) as pct_paypal from payments p inner join orders o on p.order_id = o.id where o.channel != 'mobile' group by o.status, o.channel order by channel desc

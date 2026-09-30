@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', customers.signup_date) AS signup_month, COUNT(CASE WHEN subscriptions.status = 'ACTIVE' THEN 1 END) AS active_count FROM subscriptions INNER JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.plan = 'enterprise' GROUP BY DATE_TRUNC('MONTH', customers.signup_date)

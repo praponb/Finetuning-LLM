@@ -1,1 +1,0 @@
-with lines as (select id, plan, currency, explode(tier_prices) as val from price_tiers) select *, stddev_samp(val) over (partition by currency) as currency_stddev_samp_val, rank() over (order by val nulls last) as val_rank from lines;

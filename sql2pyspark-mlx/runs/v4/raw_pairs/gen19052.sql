@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, COUNT(CASE WHEN merchant = 'Lazada' THEN 1 END) AS lazada_count, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, a.balance, as.lazada_count, as.avg_amount FROM accounts a INNER JOIN account_stats as ON a.id = as.account_id WHERE as.avg_amount > 45 ORDER BY as.lazada_count, id LIMIT 10

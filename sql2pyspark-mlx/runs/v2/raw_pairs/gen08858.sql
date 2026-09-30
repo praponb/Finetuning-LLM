@@ -1,1 +1,0 @@
-SELECT s.order_id, s.status, o.store_id, o.customer_id, c.segment, c.city FROM shipments s LEFT JOIN orders o ON s.order_id = o.id JOIN customers c ON o.customer_id = c.id WHERE o.channel IN ('partner', 'web', 'store') AND c.age < 65;

@@ -1,1 +1,0 @@
-select *, rank() over (partition by device_code order by status_bits) as status_bits_rank, lag(status_bits, 1) over (partition by device_code order by reading_ts, id) as prev_status_bits, ntile(10) over (partition by device_code order by status_bits, id) as status_bits_bucket from device_readings

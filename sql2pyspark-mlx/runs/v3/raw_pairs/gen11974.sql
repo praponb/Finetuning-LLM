@@ -1,1 +1,0 @@
-select case when budget >= 3452000 then 'high' when budget >= 1254000 then 'mid' else 'low' end as budget_bucket, count(distinct budget) as unique_dept_names from departments where location = 'London' and dept_name is not null group by case when budget >= 3452000 then 'high' when budget >= 1254000 then 'mid' else 'low' end order by unique_dept_names desc;

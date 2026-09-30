@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(device))) AS device_values, SORT_ARRAY(COLLECT_SET(browser)) AS browser_list FROM sessions GROUP BY customer_id) SELECT customers.id, customers.is_active, customer_stats.device_values, customer_stats.browser_list FROM customers JOIN customer_stats ON customers.id = customer_stats.customer_id;

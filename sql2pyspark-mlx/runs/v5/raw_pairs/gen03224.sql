@@ -1,1 +1,0 @@
-with cleaned as (select id, name, email, country, city, segment, signup_date, is_active, age, trim(name) as clean_name from customers where city in ('Bangkok', 'London') and signup_date >= to_date('2023-08-21')) select * from (select city, country, age from cleaned) src pivot (avg(age) as amount for country in ('SG' as sg, 'JP' as jp, 'TH' as th));

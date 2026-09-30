@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CASE WHEN job_title = 'Intern' THEN 1 ELSE 0 END AS is_intern FROM employees WHERE job_title = 'Engineer') SELECT manager_id, job_title FROM valid EXCEPT SELECT manager_id, job_title FROM employees WHERE hire_date > '2023-08-08';

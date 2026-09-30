@@ -1,1 +1,0 @@
-select hire_month, first_hire_date, avg_salary from (select date_trunc('MONTH', hire_date) as hire_month, min(hire_date) as first_hire_date, avg(salary) as avg_salary from employees group by date_trunc('MONTH', hire_date)) as s where avg_salary >= 73000;

@@ -1,1 +1,0 @@
-SELECT p.id, p.method, p.paid_at, o.customer_id, o.discount, o.order_date, CASE WHEN o.status IN ('PENDING', 'SHIPPED') THEN 'Priority' ELSE 'Other' END AS status_group FROM payments p LEFT OUTER JOIN orders o ON o.id = p.order_id WHERE o.store_id = 23 ORDER BY o.order_date;

@@ -1,1 +1,0 @@
-SELECT s.city, ROUND((100 * SUM(CASE WHEN p.method = 'paypal' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_paypal, MAX(p.paid_at) AS last_paid_at FROM payments p RIGHT JOIN orders o ON o.id = p.order_id INNER JOIN stores s ON o.store_id = s.id WHERE s.city = 'Berlin' GROUP BY s.city HAVING ROUND((100 * SUM(CASE WHEN p.method = 'paypal' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 40;

@@ -1,1 +1,0 @@
-WITH filtered_departments AS (SELECT *, UPPER(location) AS location_upper FROM departments WHERE location <> 'Singapore' OR dept_name = 'Marketing'), summary AS (SELECT dept_name, SORT_ARRAY(COLLECT_SET(dept_name)) AS dept_name_list, SUM(CASE WHEN location = 'Berlin' THEN 1 ELSE 0 END) AS berlin_count FROM filtered_departments GROUP BY dept_name) SELECT * FROM summary;

@@ -1,1 +1,0 @@
-select id, order_id, delivered_date, cost, carrier, shipped_date, last_value(cost) over (partition by order_id order by delivered_date, id rows between unbounded preceding and unbounded following) as last_cost, lag(cost, 1) over (partition by carrier order by shipped_date, id) as prev_cost from shipments where order_id = 35;

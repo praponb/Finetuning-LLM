@@ -1,1 +1,0 @@
-SELECT s.id, s.city, t.stddev_price, t.avg_cost FROM suppliers s JOIN (SELECT supplier_id, ROUND(STDDEV(price), 2) AS stddev_price, ROUND(AVG(cost), 2) AS avg_cost FROM products WHERE launch_date BETWEEN '2023-07-01' AND '2024-12-01' GROUP BY supplier_id) t ON s.id = t.supplier_id;

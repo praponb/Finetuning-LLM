@@ -1,1 +1,0 @@
-WITH SupplierStats AS (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values, SORT_ARRAY(COLLECT_SET(category)) AS category_list FROM products WHERE cost >= 620 GROUP BY supplier_id) SELECT s.country, S.brand_values, S.category_list FROM suppliers s LEFT OUTER JOIN SupplierStats S ON s.id = S.supplier_id ORDER BY country, S.brand_values;

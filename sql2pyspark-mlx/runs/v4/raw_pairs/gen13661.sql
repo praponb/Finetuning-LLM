@@ -1,1 +1,0 @@
-SELECT s.id, s.country, s.city, t.total_stock_qty, t.brand_list FROM suppliers s INNER JOIN (SELECT supplier_id, SUM(stock_qty) AS total_stock_qty, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list FROM products WHERE YEAR(launch_date) >= 2024 GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY country DESC, s.city DESC, id LIMIT 1

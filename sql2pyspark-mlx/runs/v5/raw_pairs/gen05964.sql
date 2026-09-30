@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN plan IN ('basic', 'enterprise') THEN 'priority' ELSE 'other' END AS plan_group, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions GROUP BY CASE WHEN plan IN ('basic', 'enterprise') THEN 'priority' ELSE 'other' END) AS sub WHERE max_monthly_fee > 150

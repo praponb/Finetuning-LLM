@@ -1,1 +1,0 @@
-SELECT o.status, o.customer_id, COUNT(*) AS num_order_items, MIN(oi.quantity) AS min_quantity FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id WHERE oi.unit_price > 170 GROUP BY o.status, o.customer_id ORDER BY num_order_items DESC;

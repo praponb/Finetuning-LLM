@@ -1,1 +1,0 @@
-SELECT id, status, monthly_fee, plan, ROUND(monthly_fee * 1.1, 2) AS monthly_fee_adjusted, DATE_SUB(start_date, 8) AS start_date_minus_8d FROM subscriptions WHERE customer_id = 24 OR YEAR(start_date) = 2024;

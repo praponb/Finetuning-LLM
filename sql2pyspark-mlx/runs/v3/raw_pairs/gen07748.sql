@@ -1,1 +1,0 @@
-select case when s.city in ('London', 'Singapore') then 'priority' else 'other' end as city_group, concat_ws(', ', sort_array(collect_set(p.brand))) as brand_values from products p inner join suppliers s on p.supplier_id = s.id group by case when s.city in ('London', 'Singapore') then 'priority' else 'other' end order by brand_values, city_group;

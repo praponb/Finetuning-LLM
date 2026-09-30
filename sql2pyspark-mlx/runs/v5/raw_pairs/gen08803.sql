@@ -1,1 +1,0 @@
-SELECT started_at, LENGTH(country) AS country_length, CASE WHEN device IN ('desktop', 'tablet') THEN 'Group A' ELSE 'Other' END AS device_group FROM sessions WHERE country NOT IN ('TH', 'JP') AND customer_id IS NOT NULL AND customer_id IN (4, 27);

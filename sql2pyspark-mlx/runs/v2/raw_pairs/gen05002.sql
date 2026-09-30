@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, c.is_active, MAX(s.started_at) AS last_started_at FROM sessions s LEFT JOIN customers c ON s.customer_id = c.id WHERE s.browser = 'Safari' GROUP BY DATE_TRUNC('MONTH', c.signup_date), c.is_active ORDER BY last_started_at;

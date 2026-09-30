@@ -1,1 +1,0 @@
-WITH department_totals AS (SELECT dept_id, MIN(salary) AS min_salary FROM employees WHERE email LIKE '%@GMAIL.COM' GROUP BY dept_id) SELECT d.dept_name, d.location, dt.min_salary FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id

@@ -1,1 +1,0 @@
-SELECT p.category, MAX(i.quantity) AS max_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id WHERE i.store_id IN (2, 3) GROUP BY p.category HAVING MAX(i.quantity) >= 80 ORDER BY category ASC

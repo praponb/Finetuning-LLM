@@ -1,1 +1,0 @@
-select id, account_id, is_flagged, txn_type, upper(merchant) as merchant_upper, cast(is_flagged as int) as is_flagged_flag from transactions where txn_type not in ('REFUND', 'FEE') order by is_flagged_flag desc

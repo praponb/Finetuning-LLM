@@ -1,1 +1,0 @@
-select * from (select month(sale_date) as sale_month, round(stddev(units), 2) as stddev_units from store_sales where units between 19 and 31 group by month(sale_date)) as t where stddev_units > 68 order by stddev_units asc

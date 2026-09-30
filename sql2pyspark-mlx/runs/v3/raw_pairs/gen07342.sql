@@ -1,1 +1,0 @@
-with valid_payments as (select *, cast(amount as int) as amount_int from payments where status != 'SUCCESS'), payments_stats as (select month(paid_at) as paid_month, count(case when status = 'SUCCESS' then 1 end) as success_count, avg(amount) as avg_amount from valid_payments group by month(paid_at)) select * from payments_stats where success_count < 9;

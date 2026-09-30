@@ -1,1 +1,0 @@
-SELECT id, created_at, coupon_codes, attributes, attributes['gift'] AS gift, ship_to.city AS ship_city, ship_to.country AS ship_country, COALESCE(attributes['utm_source'], 'unknown') AS utm_source_or_default, EXISTS(coupon_codes, c -> c LIKE 'W%') AS has_welcome_code FROM carts WHERE HOUR(created_at) BETWEEN 10 AND 18;

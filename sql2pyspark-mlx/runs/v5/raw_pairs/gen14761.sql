@@ -1,1 +1,0 @@
-with base as (select * from employees where job_title != 'Director'), Summary as (select level, max(salary) - min(salary) as salary_range, round((100 * sum(case when level = 'L3' then 1 else 0 end)) / count(*), 1) as pct_l3 from base group by level) select level, salary_range, pct_l3 from Summary where pct_l3 < 46 order by salary_range desc;

@@ -1,1 +1,0 @@
-SELECT QUARTER(paid_at) AS paid_quarter, COUNT(*) AS cnt, MAX(amount) AS max_amount FROM payments WHERE method IN ('cash', 'paypal') AND method = 'bank_transfer' GROUP BY QUARTER(paid_at) ORDER BY cnt ASC, paid_quarter ASC;

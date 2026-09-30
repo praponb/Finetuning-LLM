@@ -1,1 +1,0 @@
-SELECT order_id, avg_quantity FROM (SELECT order_id, AVG(quantity) AS avg_quantity FROM order_items WHERE order_id IN (23, 35) GROUP BY order_id) AS t WHERE avg_quantity >= 8.1 ORDER BY order_id DESC LIMIT 1

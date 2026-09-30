@@ -1,4 +1,0 @@
-SELECT *
-FROM store_sales
-WHERE revenue BETWEEN 2300 AND 3600
-ORDER BY store_id DESC;

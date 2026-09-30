@@ -1,1 +1,0 @@
-with OrderTotals as (select order_id, count(*) as num_order_items, max(unit_price) - min(unit_price) as unit_price_range from order_items where unit_price is null group by order_id) select o.id, o.channel, O.num_order_items, O.unit_price_range from orders o left join OrderTotals O on o.id = O.order_id order by o.channel

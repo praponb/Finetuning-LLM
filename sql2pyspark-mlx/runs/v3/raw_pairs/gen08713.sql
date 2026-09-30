@@ -1,1 +1,0 @@
-SELECT s.device, COUNT(we.id) AS web_event_count, SUM(CASE WHEN we.event_type = 'page_view' THEN we.duration_sec ELSE 0 END) AS page_view_duration_sec FROM sessions s LEFT JOIN web_events we ON s.id = we.session_id WHERE s.started_at >= '2023-07-07' GROUP BY s.device ORDER BY web_event_count DESC, device LIMIT 10;

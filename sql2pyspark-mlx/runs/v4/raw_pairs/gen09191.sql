@@ -1,1 +1,0 @@
-SELECT start_year, monthly_fee_count FROM (SELECT YEAR(start_date) AS start_year, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions GROUP BY YEAR(start_date)) AS sub WHERE monthly_fee_count >= 6 ORDER BY monthly_fee_count DESC, start_year LIMIT 5

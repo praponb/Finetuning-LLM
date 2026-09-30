@@ -1,1 +1,0 @@
-SELECT ss.store_id, COUNT(DISTINCT i.quantity) unique_products, SUM(i.quantity) total_quantity FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY ss.store_id

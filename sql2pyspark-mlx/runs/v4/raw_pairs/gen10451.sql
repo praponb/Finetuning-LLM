@@ -1,1 +1,0 @@
-SELECT s.id, s.supplier_name FROM suppliers s WHERE s.city NOT IN ('New York', 'Bangkok', 'Chiang Mai') AND NOT EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND p.supplier_id IN (3, 17))

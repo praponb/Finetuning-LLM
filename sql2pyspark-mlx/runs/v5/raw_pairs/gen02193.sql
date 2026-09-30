@@ -1,1 +1,0 @@
-with OrderTotals as (select order_id, max(delivered_date) last_delivered_date from shipments where cost between 33 and 66 group by order_id) select o.id, o.customer_id, O.last_delivered_date from orders o inner join OrderTotals O on o.id = O.order_id;

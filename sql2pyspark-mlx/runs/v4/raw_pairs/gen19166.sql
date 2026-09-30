@@ -1,1 +1,0 @@
-select o.status, o.channel, round(avg(p.amount), 2) as avg_amount from payments p full outer join orders o on o.id = p.order_id where hour(p.paid_at) between 10 and 17 group by o.status, o.channel having round(avg(p.amount), 2) >= 77 order by o.status desc;

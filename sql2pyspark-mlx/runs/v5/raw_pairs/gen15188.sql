@@ -1,1 +1,0 @@
-SELECT id, carrier, shipped_date, status, LAG(cost) OVER w_hist AS prev_cost, ROW_NUMBER() OVER w_hist AS row_seq, PERCENT_RANK() OVER (ORDER BY cost DESC NULLS LAST) AS cost_percent_rank FROM shipments WHERE order_id IS NOT NULL WINDOW w_hist AS (PARTITION BY order_id ORDER BY delivered_date, id);

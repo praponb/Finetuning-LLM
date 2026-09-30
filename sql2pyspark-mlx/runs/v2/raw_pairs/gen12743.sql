@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, p.product_name, p.supplier_id, s.store_name, CONCAT_WS('-', s.region, s.store_name) AS region_store_name_key FROM inventory i INNER JOIN products p ON i.product_id = p.id RIGHT JOIN stores s ON s.id = i.store_id WHERE p.supplier_id IS NOT NULL AND s.opened_date <= '2025-06-01' ORDER BY region_store_name_key DESC

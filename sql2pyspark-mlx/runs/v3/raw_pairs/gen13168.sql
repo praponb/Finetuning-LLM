@@ -1,1 +1,0 @@
-SELECT id, merchant, amount, is_flagged FROM (SELECT id, merchant, amount, is_flagged, RANK() OVER (PARTITION BY merchant ORDER BY amount DESC) AS rnk FROM transactions WHERE account_id = 37) AS r WHERE rnk = 1

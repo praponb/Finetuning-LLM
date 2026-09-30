@@ -1,1 +1,0 @@
-SELECT id, product_id, CASE WHEN quantity >= 239 THEN 'High' WHEN quantity >= 49 THEN 'Medium' ELSE 'Low' END AS quantity_level FROM inventory WHERE quantity BETWEEN 200 AND 215 AND store_id = 6 AND quantity <= 229;

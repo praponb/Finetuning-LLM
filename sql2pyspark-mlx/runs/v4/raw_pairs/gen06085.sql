@@ -1,1 +1,0 @@
-SELECT id, merchant, amount, txn_time, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount DESC, id) AS rn, PERCENT_RANK() OVER (PARTITION BY merchant ORDER BY txn_time) AS txn_time_pct_rank FROM transactions WHERE is_flagged

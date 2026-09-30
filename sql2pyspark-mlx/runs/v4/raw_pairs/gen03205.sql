@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_accounts FROM transactions WHERE amount BETWEEN 1100 AND 2500 GROUP BY account_id) SELECT a.id, a.balance, as.unique_accounts FROM accounts a INNER JOIN account_stats as ON a.id = as.account_id WHERE as.unique_accounts >= 6;

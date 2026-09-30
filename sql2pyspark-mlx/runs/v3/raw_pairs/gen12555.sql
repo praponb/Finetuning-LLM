@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(DISTINCT unit_price) AS unique_products FROM order_items GROUP BY order_id) SELECT o.id, o.status, o.customer_id, os.stddev_quantity, os.unique_products FROM orders o JOIN order_stats os ON o.id = os.order_id;

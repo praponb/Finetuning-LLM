@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3806000 THEN 'high' WHEN budget >= 1170000 THEN 'mid' ELSE 'low' END budget_bucket, dept_name, COUNT(CASE WHEN location = 'Bangkok' THEN 1 END) bangkok_count, AVG(budget) avg_budget, ROUND(STDDEV(budget), 2) stddev_budget FROM departments WHERE location IN ('Tokyo', 'Chiang Mai', 'Berlin') GROUP BY 1, 2 ORDER BY bangkok_count DESC;

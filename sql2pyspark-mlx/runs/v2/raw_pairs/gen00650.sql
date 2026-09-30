@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM payments WHERE HOUR(paid_at) BETWEEN 10 AND 13 AND method = 'paypal'), status_summary AS (SELECT status, ROUND(AVG(amount), 2) AS avg_amount FROM src GROUP BY status) SELECT status, avg_amount FROM status_summary ORDER BY status, avg_amount DESC

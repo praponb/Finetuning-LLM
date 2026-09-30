@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, MIN(order_date) AS min_order_date FROM orders GROUP BY customer_id) SELECT c.name, c.is_active, ct.min_order_date FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id ORDER BY c.name

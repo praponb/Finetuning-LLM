@@ -1,1 +1,0 @@
-WITH top_departments AS (SELECT id, dept_name, budget, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS row_num FROM departments) SELECT id, dept_name, budget FROM top_departments WHERE row_num = 1;

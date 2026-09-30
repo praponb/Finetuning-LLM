@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, MIN(launch_date) min_launch_date FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, s.city, ss.min_launch_date FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id ORDER BY min_launch_date DESC;

@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, SUM(CASE WHEN txn_type = 'CREDIT' THEN 1 ELSE 0 END) AS credit_count FROM transactions GROUP BY account_id) SELECT a.balance, a.status, at.credit_count FROM accounts a LEFT JOIN account_totals at ON a.id = at.account_id WHERE at.credit_count >= 36 ORDER BY status;

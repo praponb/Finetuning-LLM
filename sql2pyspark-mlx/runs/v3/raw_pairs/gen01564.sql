@@ -1,1 +1,0 @@
-SELECT plan, pct_expired, unique_statuss FROM (SELECT plan, ROUND((100 * SUM(CASE WHEN status = 'EXPIRED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_expired, COUNT(DISTINCT monthly_fee) AS unique_statuss FROM subscriptions GROUP BY plan) AS agg WHERE pct_expired >= 70 ORDER BY unique_statuss DESC;

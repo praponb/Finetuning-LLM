@@ -1,1 +1,0 @@
-select id, paid_at, amount, status, lead(amount, 1, 0) over (order by paid_at, id) as next_amount, lead(amount, 2) over (partition by status order by paid_at, id) as next_amount_2 from payments where hour(paid_at) between 11 and 17

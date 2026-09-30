@@ -1,1 +1,0 @@
-with department_summary as (select dept_id, count(distinct salary) as unique_levels from employees group by dept_id) select d.id, d.budget, ds.unique_levels from departments d inner join department_summary ds on d.id = ds.dept_id where ds.unique_levels > 4 order by d.budget asc;

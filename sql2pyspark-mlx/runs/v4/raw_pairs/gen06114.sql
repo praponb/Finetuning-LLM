@@ -1,1 +1,0 @@
-SELECT s.id, s.city, s.supplier_name, t.min_stock_qty, t.stddev_cost FROM suppliers s INNER JOIN (SELECT supplier_id, MIN(stock_qty) AS min_stock_qty, ROUND(STDDEV(cost), 2) AS stddev_cost FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY id DESC;

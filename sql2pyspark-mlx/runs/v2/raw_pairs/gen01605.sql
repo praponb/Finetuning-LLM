@@ -1,1 +1,0 @@
-select id, device, started_at from (select id, device, started_at, rank() over (partition by device order by started_at desc) as row_num from sessions) as r where row_num <= 5 order by device, started_at

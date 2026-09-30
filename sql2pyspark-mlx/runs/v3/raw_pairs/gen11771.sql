@@ -1,1 +1,0 @@
-SELECT id, method, UPPER(method) AS method_upper, CAST(amount AS INT) AS amount_int FROM payments WHERE status IN ('REFUNDED', 'SUCCESS') AND order_id IS NOT NULL AND method NOT IN ('paypal', 'bank_transfer', 'promptpay')

@@ -1,1 +1,0 @@
-SELECT we.event_time, we.duration_sec, s.country, s.started_at, c.age FROM web_events we INNER JOIN sessions s ON we.session_id = s.id LEFT JOIN customers c ON s.customer_id = c.id ORDER BY c.age DESC

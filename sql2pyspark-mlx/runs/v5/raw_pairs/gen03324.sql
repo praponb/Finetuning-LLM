@@ -1,1 +1,0 @@
-SELECT status, SUM(CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END) AS bank_transfer_count, MAX(paid_at) AS last_paid_at, AVG(amount) AS avg_amount FROM payments GROUP BY status HAVING SUM(CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END) >= 39 ORDER BY status

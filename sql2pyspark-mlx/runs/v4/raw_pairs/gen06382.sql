@@ -1,1 +1,0 @@
-SELECT *, SUM(amount) OVER w_part AS cumulative_amount, LAG(amount, 1) OVER w_part_2 AS prev_amount FROM transactions WINDOW w_part AS (PARTITION BY merchant ORDER BY amount ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW), w_part_2 AS (PARTITION BY merchant ORDER BY txn_time ASC, id ASC);

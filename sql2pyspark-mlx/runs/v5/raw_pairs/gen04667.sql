@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, customer_id, started_at, device, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at, id) AS rn FROM sessions WHERE HOUR(started_at) BETWEEN 10 AND 17) SELECT id, customer_id, started_at, device FROM numbered WHERE rn <= 3 ORDER BY device

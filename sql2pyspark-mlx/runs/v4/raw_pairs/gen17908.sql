@@ -1,1 +1,0 @@
-WITH not_flagged AS (SELECT s.* FROM stores s WHERE NOT EXISTS (SELECT 1 FROM orders x WHERE x.store_id = s.id AND x.channel IN ('store', 'web'))) SELECT id, store_name, city, region, opened_date, sqft FROM not_flagged ORDER BY opened_date NULLS FIRST

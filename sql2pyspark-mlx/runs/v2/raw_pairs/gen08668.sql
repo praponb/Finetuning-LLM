@@ -1,1 +1,0 @@
-SELECT id, event_type, event_time, duration_sec, LAG(duration_sec, 1, 0) OVER (PARTITION BY event_type ORDER BY event_time, id) AS prev_duration_sec FROM web_events ORDER BY event_type DESC, duration_sec DESC;

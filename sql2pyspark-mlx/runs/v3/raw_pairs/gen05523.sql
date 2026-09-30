@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM inventory WHERE quantity BETWEEN 74 AND 191), summary AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) AS max_quantity FROM Base GROUP BY product_id) SELECT * FROM summary WHERE max_quantity < 60;

@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, s.delivered_date, o.discount, o.customer_id, st.opened_date, st.store_name FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN stores st ON o.store_id = st.id WHERE s.carrier != 'Flash' ORDER BY o.customer_id DESC, discount DESC

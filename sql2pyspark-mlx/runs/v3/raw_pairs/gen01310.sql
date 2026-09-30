@@ -1,1 +1,0 @@
-WITH recent_payments AS (SELECT * FROM payments WHERE order_id IS NOT NULL), agg AS (SELECT method, status, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count FROM recent_payments GROUP BY method, status) SELECT * FROM agg WHERE success_count < 67;

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 2.0 THEN 'mid' ELSE 'low' END AS rating_bucket, city, SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END) AS tokyo_count FROM suppliers WHERE country IN ('TH', 'SG') GROUP BY CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 2.0 THEN 'mid' ELSE 'low' END, city) AS agg WHERE tokyo_count > 29 ORDER BY 2 ASC

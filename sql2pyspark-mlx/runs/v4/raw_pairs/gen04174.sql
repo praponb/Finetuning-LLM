@@ -1,1 +1,0 @@
-with department_totals as (select dept_id, max(salary) - min(salary) as salary_range, min(hire_date) as min_hire_date from employees where level = 'L5' group by dept_id) select d.location, d.budget, dt.salary_range, dt.min_hire_date from departments d join department_totals dt on d.id = dt.dept_id order by location desc;

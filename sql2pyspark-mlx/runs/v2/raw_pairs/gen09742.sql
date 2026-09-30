@@ -1,1 +1,0 @@
-SELECT txn_type, HOUR(txn_time) AS txn_hour, SUM(amount) AS total_amount, AVG(amount) AS avg_amount FROM transactions GROUP BY txn_type, HOUR(txn_time) HAVING COUNT(DISTINCT amount) < 1 ORDER BY total_amount DESC;

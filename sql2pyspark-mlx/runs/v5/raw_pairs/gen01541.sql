@@ -1,1 +1,0 @@
-select dept_name, location, concat_ws(', ', sort_array(collect_set(dept_name))) dept_name_values, max(budget) max_budget from departments where budget >= 3786000 and dept_name is null and budget < 2440000 group by dept_name, location order by dept_name_values, dept_name;

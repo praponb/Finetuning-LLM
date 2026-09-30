@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(unit_price) AS total_unit_price, MIN(unit_price) AS min_unit_price FROM order_items GROUP BY CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END ORDER BY total_unit_price DESC, quantity_bucket ASC LIMIT 5

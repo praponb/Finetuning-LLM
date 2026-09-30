@@ -1,1 +1,0 @@
-select payments.id, payments.order_id, payments.amount, orders.amount as order_amount, stores.region, stores.sqft from payments join orders on payments.order_id = orders.id join stores on orders.store_id = stores.id;

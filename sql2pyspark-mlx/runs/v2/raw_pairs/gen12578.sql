@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT method, SUM(amount) AS total_amount, SUM(CASE WHEN method = 'card' THEN 1 ELSE 0 END) AS card_count FROM payments WHERE HOUR(paid_at) BETWEEN 12 AND 19 GROUP BY method) AS t WHERE card_count < 49 ORDER BY total_amount DESC;

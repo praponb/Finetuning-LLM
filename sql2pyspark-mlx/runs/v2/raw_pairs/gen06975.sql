@@ -1,1 +1,0 @@
-select s.id, count(p.id) as product_count, max(p.cost) as max_cost, sum(case when p.category = 'Home' then p.cost else 0 end) as home_cost from suppliers s left outer join products p on p.supplier_id = s.id group by s.id

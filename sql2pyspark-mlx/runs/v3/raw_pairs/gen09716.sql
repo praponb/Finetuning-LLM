@@ -1,1 +1,0 @@
-SELECT id, status, method, order_id, paid_at, amount, COUNT(*) OVER (PARTITION BY status) status_count, SUM(amount) OVER (PARTITION BY method, order_id ORDER BY paid_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_amount FROM payments WHERE TO_DATE(paid_at) < '2023-07-01'

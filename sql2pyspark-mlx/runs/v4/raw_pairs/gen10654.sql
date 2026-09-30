@@ -1,1 +1,0 @@
-SELECT s.customer_id, s.started_at, we.page, we.duration_sec, we.session_id, COALESCE(we.page, 'Unknown') AS page_filled FROM sessions s LEFT OUTER JOIN web_events we ON s.id = we.session_id WHERE we.duration_sec BETWEEN 324 AND 466 AND s.country IS NOT NULL ORDER BY session_id DESC

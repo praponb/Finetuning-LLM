@@ -1,1 +1,0 @@
-with valid_shipments as (select * from shipments where order_id = 26), summary as (select status, carrier, min(shipped_date) first_shipped_date, avg(cost) avg_cost from valid_shipments group by status, carrier) select * from summary where avg_cost >= 94;

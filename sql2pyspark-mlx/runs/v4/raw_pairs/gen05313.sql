@@ -1,1 +1,0 @@
-SELECT CASE WHEN carrier IN ('Kerry', 'DHL') THEN 'core' ELSE 'other' END AS carrier_group, COUNT(CASE WHEN status = 'DELIVERED' THEN 1 END) AS delivered_count FROM shipments GROUP BY carrier_group ORDER BY delivered_count DESC;

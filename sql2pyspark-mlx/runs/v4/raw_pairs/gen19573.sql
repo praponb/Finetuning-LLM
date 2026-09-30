@@ -1,1 +1,0 @@
-select oi.order_id, oi.product_id, p.cost, o.discount, o.channel, weekofyear(o.order_date) as order_date_weekofyear from order_items oi inner join products p on oi.product_id = p.id inner join orders o on oi.order_id = o.id where p.price is null order by 1, product_id

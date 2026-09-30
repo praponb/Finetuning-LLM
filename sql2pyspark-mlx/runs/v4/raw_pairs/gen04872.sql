@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, t.avg_amount FROM accounts a JOIN (SELECT account_id, AVG(amount) AS avg_amount FROM transactions WHERE account_id IN (34, 35, 36) GROUP BY account_id) t ON a.id = t.account_id ORDER BY account_type, id LIMIT 10

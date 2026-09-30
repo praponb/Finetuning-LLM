@@ -1,1 +1,0 @@
-SELECT id, order_id, carrier, shipped_date, delivered_date, cost, status, LAG(cost, 2) OVER (PARTITION BY order_id ORDER BY delivered_date, id) AS prev_cost, ROW_NUMBER() OVER (ORDER BY delivered_date DESC, id) AS row_seq FROM shipments

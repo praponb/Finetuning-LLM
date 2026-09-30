@@ -1,1 +1,0 @@
-with FilteredSubscriptions as (select * from subscriptions where status = 'CANCELLED' and customer_id = 7), SubscriptionsStats as (select plan, round(avg(monthly_fee), 2) as avg_monthly_fee from FilteredSubscriptions group by plan) select plan, avg_monthly_fee from SubscriptionsStats order by plan, avg_monthly_fee desc;

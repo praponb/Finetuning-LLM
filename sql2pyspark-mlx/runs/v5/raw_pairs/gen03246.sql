@@ -1,1 +1,0 @@
-select id, channel, order_date, amount, substring(channel, 1, 4) as channel_prefix, least(amount, shipping_fee) as least_amount_shipping_fee from orders where amount > 830 and customer_id is not null and status = 'RETURNED';

@@ -1,1 +1,0 @@
-with ranked_products as (select *, row_number() over (partition by supplier_id order by price desc, id) as rnk from products) select id, supplier_id, price, launch_date from ranked_products where rnk <= 3 order by id desc

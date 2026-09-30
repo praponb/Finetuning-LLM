@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT channel, promo_code, discount_pct FROM promotions) src PIVOT (MAX(discount_pct) AS total, COUNT(1) AS item_count FOR promo_code IN ('BUNDLE' AS bundle, 'WELCOME5' AS welcome5, 'SPRING10' AS spring10))

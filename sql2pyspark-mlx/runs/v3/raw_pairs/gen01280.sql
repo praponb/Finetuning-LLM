@@ -1,1 +1,0 @@
-select s.region, max(i.quantity) - min(i.quantity) as quantity_range from inventory i inner join products p on i.product_id = p.id inner join stores s on s.id = i.store_id where p.supplier_id in (5, 11) group by s.region order by quantity_range, region desc

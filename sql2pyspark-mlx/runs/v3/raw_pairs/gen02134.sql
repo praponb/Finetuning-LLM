@@ -1,1 +1,0 @@
-SELECT YEAR(launch_date) launch_year, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) category_values, MAX(price) - MIN(price) price_range FROM products GROUP BY 1 HAVING price_range > 72 ORDER BY category_values DESC, price_range, launch_year LIMIT 1

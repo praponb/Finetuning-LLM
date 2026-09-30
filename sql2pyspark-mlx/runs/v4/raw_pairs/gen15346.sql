@@ -1,1 +1,0 @@
-SELECT CASE WHEN shipping_fee >= 38 THEN 'high' WHEN shipping_fee >= 10 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, SUM(amount) AS total_amount, COUNT(*) AS cnt, ROUND(SUM(amount) * 100.0 / SUM(SUM(amount)) OVER (), 2) AS pct_of_total FROM orders GROUP BY CASE WHEN shipping_fee >= 38 THEN 'high' WHEN shipping_fee >= 10 THEN 'mid' ELSE 'low' END ORDER BY pct_of_total DESC

@@ -1,1 +1,0 @@
-SELECT emp.level AS employee_level, emp.full_name AS employee_full_name, emp.salary AS employee_salary, mgr.manager_id AS manager_manager_id, mgr.salary AS manager_salary, LOWER(emp.level) AS level_lower FROM employees emp JOIN employees mgr ON emp.manager_id = mgr.id;

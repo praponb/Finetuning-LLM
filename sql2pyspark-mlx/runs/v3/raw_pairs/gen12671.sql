@@ -1,1 +1,0 @@
-SELECT s.started_at, s.browser, we.duration_sec, we.session_id, CASE WHEN s.country IN ('DE', 'JP') THEN 'Core' ELSE 'Other' END AS country_group FROM sessions s LEFT JOIN web_events we ON s.id = we.session_id WHERE s.country = 'UK';

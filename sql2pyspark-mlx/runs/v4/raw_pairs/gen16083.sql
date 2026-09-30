@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, ROUND(AVG(quantity), 2) avg_quantity, COUNT(DISTINCT quantity) unique_products FROM inventory GROUP BY product_id) SELECT p.id, p.cost, p.launch_date, ps.avg_quantity, ps.unique_products FROM products p LEFT OUTER JOIN product_stats ps ON p.id = ps.product_id ORDER BY p.cost DESC

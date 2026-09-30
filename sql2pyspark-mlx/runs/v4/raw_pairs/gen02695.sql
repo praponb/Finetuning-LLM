@@ -1,1 +1,0 @@
-select emp.manager_id as employee_manager_id, emp.job_title as employee_job_title, emp.dept_id as employee_dept_id, mgr.email as manager_email, mgr.manager_id as manager_manager_id from employees emp left outer join employees mgr on emp.manager_id = mgr.id

@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT id, store_id FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC NULLS LAST, id) AS rn FROM inventory) ranked WHERE rn = 1) SELECT store_id, COUNT(DISTINCT id) AS distinct_ids, COUNT(*) AS cnt, COUNT(DISTINCT store_id) AS distinct_store_ids FROM deduped GROUP BY CUBE (store_id)

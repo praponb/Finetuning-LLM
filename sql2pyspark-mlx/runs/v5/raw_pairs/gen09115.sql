@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM orders WHERE status IN ('SHIPPED', 'CANCELLED', 'RETURNED')), StatusSummary AS (SELECT status, COUNT(DISTINCT shipping_fee) unique_customers, COUNT(shipping_fee) shipping_fee_count FROM base GROUP BY status) SELECT status, unique_customers, shipping_fee_count FROM StatusSummary ORDER BY shipping_fee_count DESC;

@@ -1,1 +1,0 @@
-SELECT o.id, o.discount, s.store_name, s.opened_date, s.sqft FROM orders o INNER JOIN stores s ON o.store_id = s.id WHERE o.discount BETWEEN 0.13 AND 0.37 ORDER BY opened_date, o.discount, id LIMIT 5;

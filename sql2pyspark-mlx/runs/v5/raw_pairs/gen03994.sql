@@ -1,1 +1,0 @@
-SELECT CASE WHEN credit_limit >= 16700 THEN 'high' WHEN credit_limit >= 7300 THEN 'mid' ELSE 'low' END AS credit_limit_bucket, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit, SUM(age) AS total_age FROM customers WHERE credit_limit BETWEEN 14600 AND 15900 AND age BETWEEN 45 AND 57 AND country IN ('SG', 'UK', 'TH') GROUP BY credit_limit_bucket ORDER BY stddev_credit_limit

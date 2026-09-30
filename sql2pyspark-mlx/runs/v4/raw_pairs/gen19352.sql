@@ -1,1 +1,0 @@
-SELECT web_events.id, web_events.event_time, sessions.device, customers.name, customers.age FROM web_events INNER JOIN sessions ON sessions.id = web_events.session_id FULL OUTER JOIN customers ON sessions.customer_id = customers.id;

@@ -1,1 +1,0 @@
-WITH filtered_shipments AS (SELECT * FROM shipments WHERE carrier IN ('DHL', 'FedEx')), shipments_stats AS (SELECT order_id, carrier, COUNT(cost) cost_count, COUNT(DISTINCT cost) unique_orders FROM filtered_shipments GROUP BY order_id, carrier) SELECT * FROM shipments_stats;

@@ -1,1 +1,0 @@
-select store_id, date_trunc('week', last_restock) as week_start, percentile_approx(quantity, array(0.25, 0.5, 0.75)) as quantity_quartiles, stddev_samp(quantity) as quantity_stddev, avg(quantity) as avg_quantity, percentile_approx(quantity, 0.95) as quantity_p95 from inventory group by store_id, week_start order by avg_quantity desc

@@ -1,1 +1,0 @@
-SELECT region, ROUND(AVG(sqft), 2) AS avg_sqft, SORT_ARRAY(COLLECT_SET(city)) AS city_list, COUNT(sqft) AS sqft_count FROM stores WHERE opened_date BETWEEN '2023-10-07' AND '2025-08-01' AND UPPER(store_name) LIKE '%IVE%' AND store_name LIKE 'Riv%' GROUP BY region HAVING avg_sqft >= 52 ORDER BY sqft_count DESC

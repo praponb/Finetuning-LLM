@@ -1,1 +1,0 @@
-SELECT s.region, COUNT(o.id) AS order_count, SORT_ARRAY(COLLECT_SET(o.channel)) AS channel_list FROM stores s LEFT JOIN orders o ON o.store_id = s.id WHERE o.store_id = 37 GROUP BY s.region HAVING COUNT(o.id) > 2 ORDER BY region

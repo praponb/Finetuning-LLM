@@ -1,1 +1,0 @@
-SELECT id, merchant, txn_time, txn_type, amount, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY txn_time, id) row_num, LEAD(amount, 1, 0) OVER (PARTITION BY txn_type ORDER BY txn_time, id) next_amount FROM transactions ORDER BY txn_type DESC;

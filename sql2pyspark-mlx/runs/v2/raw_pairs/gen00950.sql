@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, oi.product_id, p.stock_qty, o.channel, o.customer_id FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id WHERE oi.unit_price < 110 AND o.amount >= 1130;

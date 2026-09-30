@@ -1,1 +1,0 @@
-select city, count(rating) as rating_count, concat_ws(', ', sort_array(collect_set(city))) as city_values from suppliers where rating >= 3.7 group by city having count(rating) < 1 order by city limit 5

@@ -1,1 +1,0 @@
-SELECT plan, status, customer_id, SUM(monthly_fee) AS total_monthly_fee FROM subscriptions WHERE start_date <= '2024-03-20' AND start_date BETWEEN '2024-04-01' AND '2024-08-01' GROUP BY plan, status, customer_id HAVING COUNT(monthly_fee) > 5;

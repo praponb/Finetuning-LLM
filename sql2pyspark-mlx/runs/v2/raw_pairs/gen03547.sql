@@ -1,1 +1,0 @@
-SELECT city, signup_year, credit_limit_range, country_list FROM (SELECT city, YEAR(signup_date) AS signup_year, MAX(credit_limit) - MIN(credit_limit) AS credit_limit_range, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM customers WHERE country = 'US' GROUP BY city, YEAR(signup_date)) AS agg WHERE credit_limit_range >= 53 ORDER BY city ASC, signup_year DESC

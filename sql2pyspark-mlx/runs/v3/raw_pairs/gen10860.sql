@@ -1,1 +1,0 @@
-SELECT id, session_id, event_time, duration_sec, CASE WHEN event_type = 'search' THEN 1 ELSE 0 END AS is_search FROM web_events WHERE HOUR(event_time) BETWEEN 11 AND 19 AND event_time < '2023-08-01' AND duration_sec > 281 ORDER BY is_search DESC, id LIMIT 50

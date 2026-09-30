@@ -1,1 +1,0 @@
-with customer_summary as (select customer_id, count(distinct customer_id) as unique_customers from sessions group by customer_id) select c.credit_limit, cs.unique_customers from customers c inner join customer_summary cs on c.id = cs.customer_id where cs.unique_customers >= 6

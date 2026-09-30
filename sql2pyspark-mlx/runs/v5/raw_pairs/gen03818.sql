@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT QUARTER(paid_at) AS paid_quarter, AVG(amount) AS avg_amount, ROUND((100 * SUM(CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_bank_transfer FROM payments WHERE method NOT IN ('card', 'paypal') GROUP BY QUARTER(paid_at)) AS sub WHERE pct_bank_transfer > 78 ORDER BY paid_quarter ASC;

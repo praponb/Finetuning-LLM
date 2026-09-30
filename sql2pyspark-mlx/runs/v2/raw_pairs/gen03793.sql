@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, SUM(CASE WHEN country = 'JP' THEN 1 ELSE 0 END) AS jp_count FROM sessions GROUP BY customer_id) SELECT c.id, c.age, cs.jp_count FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY c.age DESC, id DESC LIMIT 5;

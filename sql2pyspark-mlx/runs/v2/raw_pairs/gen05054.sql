@@ -1,1 +1,0 @@
-SELECT status, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list FROM subscriptions WHERE NOT (monthly_fee BETWEEN 120 AND 200 AND (status = 'EXPIRED' OR monthly_fee <= 240)) GROUP BY status

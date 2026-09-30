@@ -1,1 +1,0 @@
-select id, city, age, segment, signup_date, credit_limit, round(age / sum(age) over (partition by city), 3) as age_share, round(avg(credit_limit) over (partition by segment order by signup_date, id rows between 3 preceding and current row), 2) as credit_limit_moving_avg_4 from customers where signup_date <= '2024-08-01'

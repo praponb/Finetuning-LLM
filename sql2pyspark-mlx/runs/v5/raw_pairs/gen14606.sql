@@ -1,1 +1,0 @@
-with not_flagged as (select s.* from stores s where not exists (select 1 from orders ch where ch.store_id = s.id and ch.order_date <= s.opened_date)) select date_trunc('month', opened_date) as activity_month, region, sum(sqft) as total_sqft, size(collect_set(region)) as num_regions, bit_and(sqft) as sqft_bit_and from not_flagged group by 1, 2 order by activity_month desc;

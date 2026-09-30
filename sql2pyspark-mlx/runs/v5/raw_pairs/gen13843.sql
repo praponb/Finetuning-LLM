@@ -1,1 +1,0 @@
-SELECT ss.id, ss.sale_date, p.brand, p.launch_date, s.rating, s.supplier_name, INITCAP(TRIM(s.supplier_name)) AS supplier_name_title FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id WHERE ss.revenue > 3300 AND s.country IN ('JP', 'DE')

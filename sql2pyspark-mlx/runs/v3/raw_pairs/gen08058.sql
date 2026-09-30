@@ -1,1 +1,0 @@
-SELECT channel, web_count, channel_list FROM (SELECT channel, COUNT(CASE WHEN channel = 'web' THEN 1 END) AS web_count, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders WHERE discount < 0.15 GROUP BY channel) AS sub WHERE web_count >= 8 ORDER BY web_count DESC

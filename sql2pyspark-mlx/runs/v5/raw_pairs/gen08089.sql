@@ -1,1 +1,0 @@
-select p.id, p.status, p.method, o.discount, o.status order_status, c.name from payments p inner join orders o on p.order_id = o.id inner join customers c on o.customer_id = c.id where p.status = 'SUCCESS' order by p.method desc;

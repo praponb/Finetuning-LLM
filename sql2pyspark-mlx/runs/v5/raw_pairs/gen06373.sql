@@ -1,1 +1,0 @@
-SELECT id, product_id, store_id, DATE_ADD(last_restock, 61) AS last_restock_plus_61d, DAYOFWEEK(last_restock) AS last_restock_dayofweek FROM inventory WHERE product_id = 8 AND product_id IN (4, 9, 10)

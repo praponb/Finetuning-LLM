@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id, ss.product_id, p.supplier_id, p.brand, s.opened_date FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id RIGHT OUTER JOIN stores s ON s.id = ss.store_id WHERE ss.revenue BETWEEN 1700 AND 3000 AND MONTH(s.opened_date) IN (4, 7, 9) ORDER BY brand DESC, supplier_id

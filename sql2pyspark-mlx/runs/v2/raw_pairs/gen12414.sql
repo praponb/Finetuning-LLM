@@ -1,1 +1,0 @@
-SELECT accounts.status, accounts.opened_date, accounts.balance, customers.city, customers.age, customers.credit_limit FROM accounts INNER JOIN customers ON accounts.customer_id = customers.id WHERE customers.credit_limit > 10600 AND customers.credit_limit IS NULL ORDER BY customers.city DESC

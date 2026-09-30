@@ -1,1 +1,0 @@
-SELECT category, brand, SUM(CASE WHEN brand = 'Globex' THEN stock_qty ELSE 0 END) AS globex_stock_qty, MIN(launch_date) AS first_launch_date, COUNT(*) AS cnt FROM products GROUP BY category, brand HAVING globex_stock_qty < 79;

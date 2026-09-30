@@ -1,1 +1,0 @@
-select case when shipping_fee >= 44 then 'high' when shipping_fee >= 11 then 'mid' else 'low' end as shipping_fee_bucket, concat_ws(', ', sort_array(collect_set(status))) as status_values from orders where customer_id is null group by case when shipping_fee >= 44 then 'high' when shipping_fee >= 11 then 'mid' else 'low' end order by shipping_fee_bucket desc;

@@ -1,1 +1,0 @@
-SELECT id, device, customer_id FROM sessions WHERE device IN ('desktop', 'tablet', 'mobile') UNION ALL SELECT id, device, customer_id FROM sessions WHERE HOUR(started_at) BETWEEN 12 AND 20 ORDER BY customer_id

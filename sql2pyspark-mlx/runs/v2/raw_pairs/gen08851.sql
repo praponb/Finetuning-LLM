@@ -1,1 +1,0 @@
-SELECT id, hire_date, job_title, dept_id, FIRST_VALUE(job_title) OVER (ORDER BY hire_date, id) AS first_job_title, FIRST_VALUE(job_title) OVER (PARTITION BY dept_id ORDER BY hire_date, id) AS first_job_title_2 FROM employees

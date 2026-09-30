@@ -1,1 +1,0 @@
-SELECT c.id, c.segment, c.credit_limit, t.monthly_fee_count, t.monthly_fee_range FROM customers c INNER JOIN (SELECT customer_id, COUNT(monthly_fee) AS monthly_fee_count, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE status = 'PAUSED' GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY c.credit_limit;

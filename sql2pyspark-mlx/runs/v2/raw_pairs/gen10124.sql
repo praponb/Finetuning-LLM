@@ -1,1 +1,0 @@
-select c.id, c.segment, c.is_active, t.min_monthly_fee from customers c left join (select customer_id, min(monthly_fee) as min_monthly_fee from subscriptions where plan = 'enterprise' group by customer_id) t on c.id = t.customer_id order by c.id desc

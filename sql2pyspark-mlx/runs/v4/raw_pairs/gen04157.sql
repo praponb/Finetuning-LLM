@@ -1,1 +1,0 @@
-WITH top_sessions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY browser ORDER BY started_at DESC, id) AS rn FROM sessions) SELECT id, browser, started_at, device FROM top_sessions WHERE rn = 1 ORDER BY device, id DESC;

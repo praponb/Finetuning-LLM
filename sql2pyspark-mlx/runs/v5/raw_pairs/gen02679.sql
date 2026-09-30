@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT id, plan, monthly_fee, status FROM subscriptions QUALIFY ROW_NUMBER() OVER (PARTITION BY status, plan ORDER BY start_date DESC NULLS LAST, id) = 1) SELECT id, monthly_fee, status FROM deduped ORDER BY monthly_fee NULLS LAST

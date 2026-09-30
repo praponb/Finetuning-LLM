@@ -1,1 +1,0 @@
-SELECT e.is_remote, e.dept_id, d.dept_name, DATE_FORMAT(e.hire_date, 'yyyy-MM') AS hire_date_label FROM employees e JOIN departments d ON e.dept_id = d.id ORDER BY hire_date_label DESC, e.dept_id DESC;

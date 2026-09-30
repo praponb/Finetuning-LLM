@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.last_restock, products.stock_qty, products.brand, suppliers.supplier_name, suppliers.rating FROM inventory LEFT JOIN products ON products.id = inventory.product_id FULL OUTER JOIN suppliers ON products.supplier_id = suppliers.id WHERE suppliers.supplier_name NOT LIKE '%Trader%' ORDER BY brand DESC

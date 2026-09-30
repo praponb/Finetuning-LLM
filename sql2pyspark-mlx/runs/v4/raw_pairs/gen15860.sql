@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, LOWER(channel) channel_lower FROM promotions WHERE starts_on >= DATE '2024-04-07' AND channel IS NOT NULL) SELECT *, RANK() OVER (PARTITION BY channel ORDER BY discount_pct DESC) AS rn FROM filtered QUALIFY rn = 1

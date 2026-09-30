@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, COUNT(DISTINCT amount) AS unique_methods FROM payments GROUP BY order_id) SELECT o.id, o.channel, o.order_date, os.unique_methods FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.unique_methods > 3 ORDER BY id LIMIT 10;

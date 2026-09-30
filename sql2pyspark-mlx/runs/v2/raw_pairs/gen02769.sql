@@ -1,1 +1,0 @@
-SELECT s.region, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(o.channel))) AS channel_values, MAX(o.order_date) AS latest_order_date FROM orders o LEFT JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id GROUP BY s.region ORDER BY channel_values;

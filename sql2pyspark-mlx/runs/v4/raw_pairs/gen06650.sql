@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(signup_date) < 2024 THEN 'before_2024' WHEN YEAR(signup_date) = 2024 THEN '2024' ELSE 'after_2024' END signup_cohort, segment, COUNT(CASE WHEN segment = 'Corporate' THEN 1 END) corporate_count, MAX(age) max_age, COUNT(credit_limit) credit_limit_count FROM customers WHERE signup_date >= '2025-02-07' GROUP BY signup_cohort, segment;

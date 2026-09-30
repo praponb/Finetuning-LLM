@@ -1,1 +1,0 @@
-WITH FilteredSubscriptions AS (SELECT * FROM subscriptions WHERE NOT (start_date >= '2024-08-01' AND status NOT IN ('PAUSED', 'EXPIRED', 'ACTIVE'))), summary AS (SELECT plan, MONTH(start_date) AS start_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM FilteredSubscriptions GROUP BY plan, MONTH(start_date)) SELECT * FROM summary

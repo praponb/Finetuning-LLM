@@ -1,1 +1,0 @@
-SELECT event_type, SUM(CASE WHEN page = '/checkout' THEN duration_sec ELSE 0 END) AS checkout_duration_sec, COUNT(duration_sec) AS duration_sec_count FROM web_events GROUP BY event_type HAVING duration_sec_count > 3;

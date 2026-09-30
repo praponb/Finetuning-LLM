@@ -1,1 +1,0 @@
-SELECT store_name, CASE WHEN region = 'South' THEN 1 ELSE 0 END AS is_south FROM stores WHERE sqft BETWEEN 7216 AND 8122 AND opened_date >= '2025-03-01' AND LOWER(TRIM(store_name)) = 'mall central' ORDER BY is_south DESC;

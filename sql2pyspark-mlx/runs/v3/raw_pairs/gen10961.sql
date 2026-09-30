@@ -1,1 +1,0 @@
-SELECT event_type, CASE WHEN event_type IN ('add_to_cart', 'purchase') THEN 'core' ELSE 'other' END AS event_type_group, MIN(event_time) AS first_event_time, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events WHERE event_type = 'click' GROUP BY event_type, CASE WHEN event_type IN ('add_to_cart', 'purchase') THEN 'core' ELSE 'other' END ORDER BY event_type_group

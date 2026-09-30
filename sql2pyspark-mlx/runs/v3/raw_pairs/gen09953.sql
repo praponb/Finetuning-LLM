@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT YEAR(signup_date) AS signup_year, is_active, COUNT(DISTINCT age) AS unique_citys, MIN(age) AS min_age FROM customers WHERE segment IN ('Corporate', 'Consumer') GROUP BY YEAR(signup_date), is_active) AS sub WHERE min_age < 61 ORDER BY signup_year DESC, is_active LIMIT 20;

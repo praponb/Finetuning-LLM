@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) closed_count FROM accounts GROUP BY customer_id) SELECT c.id, c.is_active, c.email, cs.closed_count FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id

@@ -1,1 +1,0 @@
-SELECT id, store_id, product_id, quantity, last_restock, STDDEV_SAMP(quantity) OVER (PARTITION BY store_id) AS store_id_stddev_samp_quantity, ROW_NUMBER() OVER w_ordered AS seq_no FROM inventory WINDOW w_ordered AS (PARTITION BY product_id ORDER BY last_restock, id);

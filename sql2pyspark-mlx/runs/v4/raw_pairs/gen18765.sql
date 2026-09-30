@@ -1,1 +1,0 @@
-SELECT is_active, city, avg_credit_limit FROM (SELECT is_active, city, AVG(credit_limit) AS avg_credit_limit FROM customers GROUP BY is_active, city) AS agg WHERE avg_credit_limit >= 15500 ORDER BY city, avg_credit_limit, is_active LIMIT 50;

@@ -1,1 +1,0 @@
-SELECT ss.store_id, ss.sale_date, p.product_name, p.price, s.city FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id ORDER BY price, sale_date DESC;

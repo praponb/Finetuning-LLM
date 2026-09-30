@@ -1,1 +1,0 @@
-with department_summary as (select dept_id, count(*) as employee_count, concat_ws(', ', sort_array(collect_set(job_title))) as job_title_values from employees group by dept_id) select d.dept_name, ds.employee_count, ds.job_title_values from departments d inner join department_summary ds on d.id = ds.dept_id where ds.employee_count > 5 order by ds.employee_count desc

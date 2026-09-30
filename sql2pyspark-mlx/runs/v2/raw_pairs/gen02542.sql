@@ -1,1 +1,0 @@
-SELECT CASE WHEN cost >= 107 THEN 'high' WHEN cost >= 20 THEN 'mid' ELSE 'low' END cost_bucket, MAX(cost) max_cost, COUNT(DISTINCT cost) unique_statuss FROM shipments WHERE delivered_date <= '2023-03-01' AND order_id IN (10, 13, 24, 28) AND carrier IN ('Flash', 'Kerry', 'FedEx') GROUP BY 1 HAVING MIN(cost) > 27 ORDER BY unique_statuss;

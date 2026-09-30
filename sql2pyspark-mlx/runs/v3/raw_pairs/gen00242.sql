@@ -1,1 +1,0 @@
-SELECT paid_month, refunded_amount FROM (SELECT MONTH(paid_at) AS paid_month, SUM(CASE WHEN status = 'REFUNDED' THEN amount ELSE 0 END) AS refunded_amount FROM payments GROUP BY MONTH(paid_at)) AS x WHERE refunded_amount < 43 ORDER BY paid_month ASC

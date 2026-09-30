@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, COUNT(CASE WHEN country = 'US' THEN 1 END) AS us_count FROM sessions GROUP BY customer_id) SELECT c.is_active, ct.us_count FROM customers c LEFT JOIN customer_totals ct ON c.id = ct.customer_id WHERE ct.us_count > 3 ORDER BY ct.us_count DESC

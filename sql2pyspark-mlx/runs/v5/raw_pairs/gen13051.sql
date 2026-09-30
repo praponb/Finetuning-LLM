@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) AS account_type_values FROM accounts WHERE YEAR(opened_date) >= 2024 GROUP BY customer_id) SELECT c.is_active, c.signup_date, cs.account_type_values FROM customers c JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY c.signup_date;

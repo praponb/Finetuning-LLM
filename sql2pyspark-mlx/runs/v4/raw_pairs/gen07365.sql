@@ -1,1 +1,0 @@
-select id, city, rating, sum(rating) over (partition by city order by rating, id rows between unbounded preceding and current row) as running_rating from suppliers where city <> 'Berlin' order by city desc, running_rating desc;

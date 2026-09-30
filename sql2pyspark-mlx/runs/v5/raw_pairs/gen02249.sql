@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, SUM(unit_price) AS total_unit_price FROM order_items GROUP BY order_id) SELECT o.id, o.discount, o.customer_id, ot.total_unit_price FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.total_unit_price > 2000 ORDER BY discount, id LIMIT 5

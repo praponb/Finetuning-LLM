@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, account_id, txn_type, amount, txn_time, SUBSTRING(merchant, 1, 3) merchant_prefix FROM transactions WHERE txn_time >= DATE '2023-10-27' AND merchant IS NOT NULL) SELECT dim.status, dim.account_type, COUNT(*) AS cnt, AVG(a.amount) AS avg_amount FROM base a INNER JOIN accounts dim ON a.account_id = dim.id GROUP BY ROLLUP (dim.status, dim.account_type);

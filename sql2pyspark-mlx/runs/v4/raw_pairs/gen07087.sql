@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, DAYOFWEEK(sale_date) AS sale_date_dayofweek FROM store_sales WHERE revenue < 3800) SELECT CASE WHEN units >= 38 THEN 'HIGH' ELSE 'LOW' END AS units_tier, COUNT(DISTINCT product_id) AS distinct_product_ids, COUNT(*) AS row_count, APPROX_PERCENTILE(units, 0.5) AS units_p50 FROM filtered GROUP BY 1;

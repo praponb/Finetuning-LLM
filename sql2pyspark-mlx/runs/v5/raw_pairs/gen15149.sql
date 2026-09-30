@@ -1,1 +1,0 @@
-SELECT segment, city, MIN(age) AS min_age, ROUND((100 * SUM(CASE WHEN segment = 'Corporate' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_corporate, SUM(CASE WHEN segment = 'Corporate' THEN age ELSE 0 END) AS corporate_age FROM customers GROUP BY segment, city

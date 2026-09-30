@@ -1,1 +1,0 @@
-SELECT c.country, c.city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(a.account_type))) AS account_type_values FROM accounts a LEFT JOIN customers c ON a.customer_id = c.id WHERE a.balance < 37000 GROUP BY c.country, c.city

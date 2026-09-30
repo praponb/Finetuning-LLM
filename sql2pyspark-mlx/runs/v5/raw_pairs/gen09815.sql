@@ -1,1 +1,0 @@
-select ss.store_id, p.supplier_id, p.launch_date, s.city from store_sales ss inner join products p on p.id = ss.product_id right join suppliers s on p.supplier_id = s.id where ss.product_id in (2, 3, 4, 7) and ss.revenue between 1100 and 3900 order by 3;

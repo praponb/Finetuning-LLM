@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT location FROM departments INTERSECT ALL SELECT location FROM departments WHERE dept_name = 'Legal'), kept_rows AS (SELECT s.* FROM departments s JOIN kept_keys k ON s.location = k.location) SELECT id, dept_name, budget FROM kept_rows ORDER BY budget DESC NULLS FIRST

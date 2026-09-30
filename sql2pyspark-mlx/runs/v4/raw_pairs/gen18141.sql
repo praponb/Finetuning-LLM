@@ -1,1 +1,0 @@
-SELECT emp.job_title AS employee_job_title, emp.hire_date AS employee_hire_date, emp.dept_id AS employee_dept_id, mgr.hire_date AS manager_hire_date, mgr.full_name AS manager_full_name FROM employees AS emp LEFT JOIN employees AS mgr ON emp.manager_id = mgr.id

@@ -1,1 +1,0 @@
-select s.id, s.device, count(we.id) as web_event_count, min(we.duration_sec) as min_duration_sec, round((100 * sum(case when we.page = '/home' then 1 else 0 end)) / count(*), 1) as pct_home from sessions s left join web_events we on s.id = we.session_id group by s.id, s.device order by device, id limit 20;

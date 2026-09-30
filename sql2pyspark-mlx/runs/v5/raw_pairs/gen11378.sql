@@ -1,1 +1,0 @@
-with cleaned as (select *, concat_ws('-', event_type, page) as event_type_page_key from web_events where page is not null) select session_id from cleaned intersect all select session_id from web_events where session_id in (6, 13);

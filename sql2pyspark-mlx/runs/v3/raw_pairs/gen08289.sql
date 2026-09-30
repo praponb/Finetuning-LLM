@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, COUNT(*) AS store_sale_count, MAX(revenue) AS max_revenue FROM store_sales GROUP BY product_id) SELECT p.id, p.price, ps.store_sale_count, ps.max_revenue FROM products p LEFT JOIN product_stats ps ON p.id = ps.product_id WHERE ps.max_revenue > 1900 ORDER BY store_sale_count DESC

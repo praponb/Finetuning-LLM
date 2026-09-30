@@ -1,1 +1,0 @@
-select brand, sum(cost) as total_cost, sum(case when category = 'Sports' then cost else 0 end) as sports_cost from products where supplier_id = 35 and stock_qty >= 313 group by 1 having sum(cost) >= 2000 order by brand limit 10;

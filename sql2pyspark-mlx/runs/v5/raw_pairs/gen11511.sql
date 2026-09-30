@@ -1,1 +1,0 @@
-with store_summary as (select store_id, max(discount) max_discount from orders where discount is not null group by store_id) select s.opened_date, ss.max_discount from stores s join store_summary ss on s.id = ss.store_id;

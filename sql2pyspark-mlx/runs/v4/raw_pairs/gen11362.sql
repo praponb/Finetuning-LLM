@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, session_id, duration_sec, page, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec, id) AS rnk FROM web_events) SELECT id, session_id, duration_sec, page FROM numbered WHERE rnk <= 3 ORDER BY session_id ASC;

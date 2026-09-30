@@ -1,1 +1,0 @@
-WITH supplier_stats AS (SELECT supplier_id, ROUND(AVG(stock_qty), 2) AS avg_stock_qty, SUM(stock_qty) AS total_stock_qty FROM products GROUP BY supplier_id) SELECT s.supplier_name, s.city, ss.avg_stock_qty, ss.total_stock_qty FROM suppliers s JOIN supplier_stats ss ON s.id = ss.supplier_id;

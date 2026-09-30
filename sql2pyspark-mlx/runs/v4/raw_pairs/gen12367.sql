@@ -1,1 +1,0 @@
-SELECT page, COUNT(CASE WHEN page = '/search' THEN 1 END) AS search_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, COUNT(CASE WHEN page = '/checkout' THEN 1 END) AS checkout_count FROM web_events GROUP BY 1 HAVING checkout_count > 5;

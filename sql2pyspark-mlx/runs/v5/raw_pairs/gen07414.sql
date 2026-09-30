@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, t.pct_l2, t.job_title_list FROM departments d INNER JOIN (SELECT dept_id, ROUND((100 * SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l2, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.pct_l2 > 47;

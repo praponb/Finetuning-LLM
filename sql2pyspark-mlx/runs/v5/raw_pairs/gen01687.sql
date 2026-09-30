@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity, last_restock, DENSE_RANK() OVER (PARTITION BY product_id, store_id ORDER BY quantity DESC) quantity_dense_rank, MAX(quantity) OVER w_part store_id_max_quantity FROM inventory WINDOW w_part AS (PARTITION BY store_id)

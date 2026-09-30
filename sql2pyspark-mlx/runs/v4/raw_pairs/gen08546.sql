@@ -1,1 +1,0 @@
-select s.id, s.shipped_date, s.carrier, o.discount, o.shipping_fee, st.city, st.store_name from shipments s right join orders o on s.order_id = o.id left join stores st on o.store_id = st.id where s.status = 'LOST'

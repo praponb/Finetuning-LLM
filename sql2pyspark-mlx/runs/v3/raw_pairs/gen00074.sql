@@ -1,1 +1,0 @@
-select o.id, o.status, o.shipping_fee, t.min_paid_at from orders o join (select order_id, min(paid_at) as min_paid_at from payments group by order_id) t on o.id = t.order_id order by min_paid_at desc, id limit 10;

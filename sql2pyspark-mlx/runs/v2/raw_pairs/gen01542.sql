@@ -1,1 +1,0 @@
-SELECT signup_month, is_active, age_range, avg_credit_limit FROM (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, is_active, MAX(age) - MIN(age) AS age_range, AVG(credit_limit) AS avg_credit_limit FROM customers GROUP BY DATE_TRUNC('MONTH', signup_date), is_active) AS t WHERE avg_credit_limit >= 9000;

@@ -1,1 +1,0 @@
-WITH recent_store_sales AS (SELECT * FROM store_sales WHERE product_id = 3), agg AS (SELECT store_id, MIN(units) AS min_units FROM recent_store_sales GROUP BY store_id) SELECT * FROM agg WHERE min_units >= 13 ORDER BY min_units DESC

@@ -1,1 +1,0 @@
-WITH product_totals AS (SELECT product_id, SUM(quantity * unit_price) AS revenue FROM order_items WHERE order_id IN (4, 11, 19, 33) GROUP BY product_id) SELECT p.id, p.category, p.price, pt.revenue FROM products p LEFT JOIN product_totals pt ON p.id = pt.product_id;

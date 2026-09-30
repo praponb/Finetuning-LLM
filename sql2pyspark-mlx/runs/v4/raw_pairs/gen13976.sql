@@ -1,1 +1,0 @@
-SELECT QUARTER(p.launch_date) AS launch_quarter, COUNT(*) AS total_count, COUNT(i.quantity) AS quantity_count FROM inventory i INNER JOIN products p ON p.id = i.product_id LEFT JOIN suppliers s ON p.supplier_id = s.id GROUP BY QUARTER(p.launch_date);

@@ -1,1 +1,0 @@
-select order_id, sum(cost) as total_cost, round(sum(cost) * 100.0 / sum(sum(cost)) over (), 2) as pct_of_total from shipments where shipped_date between '2023-08-01' and '2023-09-01' group by order_id order by total_cost;

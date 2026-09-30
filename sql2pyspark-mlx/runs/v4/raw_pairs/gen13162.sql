@@ -1,1 +1,0 @@
-SELECT o.id, o.status, o.discount, t.status_values, t.avg_amount FROM orders o JOIN (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, AVG(amount) AS avg_amount FROM payments GROUP BY order_id) t ON o.id = t.order_id

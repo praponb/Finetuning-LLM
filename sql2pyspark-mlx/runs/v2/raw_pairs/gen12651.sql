@@ -1,1 +1,0 @@
-select p.price, p.supplier_id, ss.units, cast(p.cost as int) as cost_int from products p join store_sales ss on p.id = ss.product_id where p.price between 580 and 1170 and month(ss.sale_date) in (6, 7, 8) order by units desc, cost_int desc

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT channel, promo_code, discount_pct FROM promotions) src PIVOT (SUM(discount_pct) AS value_sum, COUNT(1) AS cnt FOR promo_code IN ('VIP' AS vip, 'BUNDLE' AS bundle, 'WELCOME5' AS welcome5));

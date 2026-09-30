@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, val FROM price_tiers LATERAL VIEW OUTER EXPLODE(discounts) e AS val) SELECT id, val, RANK() OVER (ORDER BY val DESC NULLS FIRST) AS val_rank, PERCENT_RANK() OVER (ORDER BY val) AS val_percent_rank, RANK() OVER (ORDER BY val NULLS LAST) AS val_rank_2 FROM lines;

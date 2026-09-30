@@ -1,1 +1,0 @@
-SELECT t.id, t.txn_time, a.customer_id, c.name, c.city FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id ORDER BY customer_id ASC, txn_time DESC, id ASC LIMIT 50

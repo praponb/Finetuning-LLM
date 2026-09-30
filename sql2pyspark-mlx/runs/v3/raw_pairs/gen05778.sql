@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CONCAT(txn_type, ', ', merchant) AS txn_type_merchant FROM transactions WHERE txn_time < '2024-11-24'), summary AS (SELECT TO_DATE(txn_time) AS txn_day, COUNT(DISTINCT amount) AS unique_accounts, COUNT(*) AS total_count FROM base GROUP BY TO_DATE(txn_time)) SELECT * FROM summary WHERE total_count >= 5

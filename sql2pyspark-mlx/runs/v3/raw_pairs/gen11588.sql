@@ -1,1 +1,0 @@
-SELECT o.id, o.amount, c.age, c.credit_limit, s.region, s.sqft, LENGTH(o.status) AS status_length FROM orders o INNER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON s.id = o.store_id WHERE LENGTH(s.store_name) >= 14;

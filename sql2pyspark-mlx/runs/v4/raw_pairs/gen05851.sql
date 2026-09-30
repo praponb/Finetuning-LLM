@@ -1,1 +1,0 @@
-SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range, AVG(quantity) AS avg_quantity, MIN(last_restock) AS first_last_restock FROM inventory WHERE NOT ((store_id IN (1, 4, 5) AND quantity < 166) OR store_id = 4) GROUP BY product_id HAVING MAX(quantity) - MIN(quantity) < 53 ORDER BY 1 DESC, quantity_range;

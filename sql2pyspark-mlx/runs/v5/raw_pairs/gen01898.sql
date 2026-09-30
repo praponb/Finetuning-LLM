@@ -1,1 +1,0 @@
-SELECT id, host, log_ts, status_code, payload_json, COALESCE(context['trace'], 'none') AS trace_or_default, GET_JSON_OBJECT(payload_json, '$.user.tier') AS user_tier, context['region'] AS region FROM app_logs

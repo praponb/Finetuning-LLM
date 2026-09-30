@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, customer_id, coupon_codes, key, value FROM carts LATERAL VIEW EXPLODE(attributes) t AS key, value) SELECT customer_id, key, COUNT(*) FILTER (WHERE key = 'utm_source') AS utm_source_rows, COUNT(DISTINCT key) AS distinct_keys FROM lines GROUP BY customer_id, key HAVING COUNT(DISTINCT key) >= 1 ORDER BY key NULLS FIRST;

@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count FROM transactions GROUP BY account_id) SELECT a.id, a.balance, a.customer_id, tba.refund_count FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY 4 DESC, id LIMIT 50;

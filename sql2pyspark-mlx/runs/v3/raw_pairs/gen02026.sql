@@ -1,1 +1,0 @@
-select session_id, sum(case when page = '/home' then duration_sec else 0 end) as home_duration_sec, concat_ws(', ', sort_array(collect_set(page))) as page_values from web_events where page <> '/cart' and hour(event_time) between 10 and 14 group by session_id order by home_duration_sec desc

@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM employees WHERE full_name IS NOT NULL), employees_stats AS (SELECT CASE WHEN salary >= 152000 THEN 'high' WHEN salary >= 49000 THEN 'mid' ELSE 'low' END AS salary_bucket, MIN(salary) AS min_salary FROM src GROUP BY CASE WHEN salary >= 152000 THEN 'high' WHEN salary >= 49000 THEN 'mid' ELSE 'low' END) SELECT salary_bucket, min_salary FROM employees_stats

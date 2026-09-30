@@ -1,1 +1,0 @@
-select city, sort_array(collect_set(city)) as city_list, sum(case when country = 'UK' then 1 else 0 end) as uk_count from customers where lower(trim(name)) = 'mia rossi' and is_active group by city order by 1

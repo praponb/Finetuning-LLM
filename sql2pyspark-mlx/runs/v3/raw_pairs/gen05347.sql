@@ -1,1 +1,0 @@
-WITH recent_products AS (SELECT * FROM products WHERE ARRAY_CONTAINS(tags, 'bestseller')), supplier_id_summary AS (SELECT supplier_id, category, MAX(launch_date) AS last_launch_date FROM recent_products GROUP BY supplier_id, category) SELECT * FROM supplier_id_summary ORDER BY category, supplier_id LIMIT 5;

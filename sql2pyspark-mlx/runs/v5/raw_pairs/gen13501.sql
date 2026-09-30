@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', event_time) AS event_month, session_id, MIN(event_time) AS min_event_time FROM web_events WHERE duration_sec <= 451 OR session_id IN (1, 16, 18) GROUP BY DATE_TRUNC('MONTH', event_time), session_id ORDER BY session_id DESC, 3 DESC;

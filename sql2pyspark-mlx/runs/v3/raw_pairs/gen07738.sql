@@ -1,1 +1,0 @@
-SELECT id, store_id, quantity, product_id FROM (SELECT id, store_id, quantity, product_id, RANK() OVER (PARTITION BY store_id ORDER BY quantity DESC) AS rnk FROM inventory WHERE store_id IN (1, 2, 3, 4)) AS t WHERE rnk <= 5

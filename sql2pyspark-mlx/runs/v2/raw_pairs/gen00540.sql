@@ -1,1 +1,0 @@
-SELECT CASE WHEN d.budget >= 4263000 THEN 'high' WHEN d.budget >= 1299000 THEN 'mid' ELSE 'low' END AS budget_bucket, d.dept_name, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(e.level))) AS level_values FROM employees e INNER JOIN departments d ON d.id = e.dept_id GROUP BY CASE WHEN d.budget >= 4263000 THEN 'high' WHEN d.budget >= 1299000 THEN 'mid' ELSE 'low' END, d.dept_name

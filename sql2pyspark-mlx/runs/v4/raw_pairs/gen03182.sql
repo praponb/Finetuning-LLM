@@ -1,1 +1,0 @@
-select txn_time, case when merchant in ('Amazon', 'Lazada') then 'Tier 1' else 'Other' end as merchant_group, case when merchant = 'Lazada' then 1 else 0 end as is_lazada from transactions where account_id in (10, 16, 17) and account_id in (6, 16, 34, 38);

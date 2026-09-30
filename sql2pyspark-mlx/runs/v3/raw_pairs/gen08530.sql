@@ -1,1 +1,0 @@
-SELECT store_sales.revenue, stores.store_name, stores.opened_date, CASE WHEN stores.region = 'Central' THEN 1 ELSE 0 END AS is_central FROM store_sales LEFT JOIN stores ON store_sales.store_id = stores.id ORDER BY stores.opened_date

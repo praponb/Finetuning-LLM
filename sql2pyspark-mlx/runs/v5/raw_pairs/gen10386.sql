@@ -1,1 +1,0 @@
-WITH FilteredProducts AS (SELECT *, INITCAP(TRIM(brand)) brand_title FROM products WHERE MONTH(launch_date) IN (5, 10, 11) AND cost >= 650), agg AS (SELECT category, MAX(price) max_price, SUM(CASE WHEN brand = 'Stark' THEN price ELSE 0 END) stark_price FROM FilteredProducts GROUP BY category) SELECT category, max_price, stark_price FROM agg;

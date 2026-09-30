@@ -1,1 +1,0 @@
-SELECT last_restock, store_id, LAST_DAY(last_restock) AS last_restock_month_end FROM inventory WHERE store_id IN (1, 3) AND (store_id IN (2, 4, 5) OR quantity = 214) ORDER BY last_restock_month_end ASC

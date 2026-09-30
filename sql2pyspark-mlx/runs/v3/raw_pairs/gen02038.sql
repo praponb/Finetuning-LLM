@@ -1,1 +1,0 @@
-SELECT id, paid_at, order_id, amount, CONCAT_WS('-', status, method) AS status_method_key, SUBSTRING(method, 1, 4) AS method_prefix FROM payments WHERE order_id IS NULL AND status = 'REFUNDED' AND amount IS NOT NULL ORDER BY status_method_key ASC;

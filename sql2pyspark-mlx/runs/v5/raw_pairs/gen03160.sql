@@ -1,1 +1,0 @@
-SELECT a.id, a.balance, a.account_type, t.txn_type_values FROM accounts a JOIN (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY a.account_type DESC, id LIMIT 3;

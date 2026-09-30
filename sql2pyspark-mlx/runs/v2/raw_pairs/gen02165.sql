@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, p.price, s.country, s.supplier_name FROM inventory i LEFT JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE NOT (s.rating BETWEEN 2.6 AND 2.7 AND SIZE(p.tags) > 2);

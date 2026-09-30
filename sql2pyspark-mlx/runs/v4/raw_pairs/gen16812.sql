@@ -1,1 +1,0 @@
-WITH filtered_shipments AS (SELECT * FROM shipments WHERE carrier IN ('Kerry', 'UPS', 'Flash')), agg AS (SELECT status, ROUND(AVG(cost), 2) AS avg_cost, MAX(shipped_date) AS latest_shipped_date FROM filtered_shipments GROUP BY status) SELECT * FROM agg ORDER BY latest_shipped_date DESC, status LIMIT 3

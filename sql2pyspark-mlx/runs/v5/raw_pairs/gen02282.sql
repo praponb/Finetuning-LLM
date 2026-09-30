@@ -1,1 +1,0 @@
-SELECT a.account_type, SUM(CASE WHEN t.txn_type = 'DEBIT' THEN t.amount ELSE 0 END) AS debit_amount, SUM(t.amount) AS total_amount FROM transactions t RIGHT JOIN accounts a ON t.account_id = a.id GROUP BY a.account_type ORDER BY account_type;

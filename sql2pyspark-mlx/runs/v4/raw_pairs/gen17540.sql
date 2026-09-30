@@ -1,1 +1,0 @@
-select dept_name, location, sum(budget) as total_budget from departments where location = 'London' and location = 'Chiang Mai' group by dept_name, location having total_budget > 12499000 order by 3 desc, dept_name asc, location asc limit 20;

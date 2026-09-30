@@ -1,1 +1,0 @@
-SELECT id, country, city, signup_date, is_active, age, CORR(credit_limit, age) OVER (PARTITION BY city) AS corr_credit_limit_age, ROW_NUMBER() OVER (ORDER BY credit_limit, id) AS seq_no FROM customers;

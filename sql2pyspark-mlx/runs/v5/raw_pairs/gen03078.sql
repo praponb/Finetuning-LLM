@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 3.6 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END rating_bucket, COUNT(*) cnt, ROUND((100 * SUM(CASE WHEN country = 'US' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_us, COUNT(CASE WHEN city = 'Bangkok' THEN 1 END) bangkok_count FROM suppliers GROUP BY 1 HAVING pct_us > 67 ORDER BY cnt DESC, rating_bucket DESC;

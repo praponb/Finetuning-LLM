@@ -1,1 +1,0 @@
-SELECT YEAR(opened_date) AS opened_year, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, MAX(sqft) - MIN(sqft) AS sqft_range, COUNT(CASE WHEN city = 'Singapore' THEN 1 END) AS singapore_count FROM stores WHERE sqft >= 4879 GROUP BY 1, 2 HAVING sqft_range >= 33 ORDER BY sqft_range, opened_year, opened_month LIMIT 10

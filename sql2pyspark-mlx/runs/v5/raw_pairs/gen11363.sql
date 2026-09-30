@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, customer_id, coupon_codes, INLINE(items) FROM carts) SELECT product_id, SIZE(COLLECT_SET(promo)) AS num_promos, COUNT(CASE WHEN promo = 'WELCOME5' THEN 1 END) AS welcome5_count, SORT_ARRAY(COLLECT_SET(promo)) AS promo_list, COUNT(*) AS num_rows FROM exploded GROUP BY product_id HAVING COUNT(*) > 1 ORDER BY product_id NULLS LAST;

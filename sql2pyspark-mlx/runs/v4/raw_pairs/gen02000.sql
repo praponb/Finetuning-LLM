@@ -1,1 +1,0 @@
-SELECT products.category, products.stock_qty, t.total_units, t.latest_sale_date FROM products JOIN (SELECT product_id, SUM(units) AS total_units, MAX(sale_date) AS latest_sale_date FROM store_sales GROUP BY product_id) t ON products.id = t.product_id WHERE t.total_units > 220 ORDER BY stock_qty DESC, latest_sale_date;

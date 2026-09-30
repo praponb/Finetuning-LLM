@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, name, city, segment, is_active, credit_limit, DATE_FORMAT(signup_date, 'MMM yyyy') signup_date_label FROM customers WHERE city IS NOT NULL) SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM sessions ch WHERE ch.customer_id = s.id AND ch.browser IS NOT NULL)

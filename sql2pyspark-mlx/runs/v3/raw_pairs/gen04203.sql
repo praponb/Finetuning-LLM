@@ -1,1 +1,0 @@
-SELECT HOUR(txn_time) AS txn_hour, MIN(txn_time) AS first_txn_time, COUNT(amount) AS amount_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE account_id IN (26, 40) GROUP BY 1 HAVING COUNT(amount) > 5

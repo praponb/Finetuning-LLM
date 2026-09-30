@@ -1,1 +1,0 @@
-SELECT QUARTER(orders.order_date) AS order_quarter, SUM(order_items.unit_price) AS total_unit_price FROM order_items INNER JOIN orders ON order_items.order_id = orders.id INNER JOIN stores ON orders.store_id = stores.id GROUP BY QUARTER(orders.order_date) ORDER BY order_quarter ASC LIMIT 50

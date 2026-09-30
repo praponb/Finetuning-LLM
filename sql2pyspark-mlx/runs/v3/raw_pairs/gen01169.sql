@@ -1,1 +1,0 @@
-SELECT p.order_id, o.store_id, o.customer_id, c.segment, c.country FROM payments p LEFT JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id WHERE p.amount BETWEEN 550 AND 1280 AND o.customer_id IS NOT NULL;

@@ -1,1 +1,0 @@
-with valid_order_items as (select * from order_items where (quantity between 3 and 5 and quantity > 6) or order_id in (1, 27)), order_items_stats as (select product_id, sum(quantity) as total_quantity from valid_order_items group by product_id) select product_id, total_quantity from order_items_stats order by product_id desc, total_quantity desc

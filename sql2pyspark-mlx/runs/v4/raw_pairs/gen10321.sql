@@ -1,1 +1,0 @@
-WITH latest AS (SELECT *, RANK() OVER (PARTITION BY order_id ORDER BY unit_price ASC) AS row_num FROM order_items QUALIFY row_num = 1) SELECT id, order_id, product_id, quantity, row_num FROM latest ORDER BY row_num DESC

@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, customer_id, created_at, element FROM carts LATERAL VIEW EXPLODE(coupon_codes) e AS element) SELECT DATE_TRUNC('HOUR', created_at) AS hour_window, SIZE(COLLECT_SET(element)) AS num_elements, COUNT(DISTINCT customer_id) AS distinct_customer_ids FROM lines GROUP BY DATE_TRUNC('HOUR', created_at) ORDER BY hour_window;

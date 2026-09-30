@@ -1,1 +1,0 @@
-SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE quantity BETWEEN 87 AND 234 AND quantity = 196 AND product_id IN (7, 10) GROUP BY product_id HAVING ROUND(STDDEV(quantity), 2) < 29

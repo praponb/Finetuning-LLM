@@ -1,1 +1,0 @@
-SELECT emp.hire_date AS employee_hire_date, emp.full_name AS employee_full_name, emp.job_title AS employee_job_title, mgr.level AS manager_level, DATE_FORMAT(emp.hire_date, 'yyyy-MM-dd') AS hire_date_label FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.job_title IN ('Director', 'Analyst', 'Designer') AND UPPER(mgr.full_name) LIKE '%IA %'

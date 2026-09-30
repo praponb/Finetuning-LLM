@@ -1,1 +1,0 @@
-select channel, max(amount) as max_amount, max(shipping_fee) - min(shipping_fee) as shipping_fee_range from orders group by channel having sum(shipping_fee) >= 120 order by shipping_fee_range desc, max_amount, channel limit 10;

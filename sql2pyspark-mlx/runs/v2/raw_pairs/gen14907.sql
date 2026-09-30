@@ -1,1 +1,0 @@
-SELECT products.category, MONTH(products.launch_date) AS launch_month, COUNT(DISTINCT store_sales.units) AS unique_stores FROM store_sales FULL OUTER JOIN products ON store_sales.product_id = products.id GROUP BY products.category, MONTH(products.launch_date) ORDER BY launch_month, unique_stores, category LIMIT 20;

@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY region, city ORDER BY opened_date DESC, id) AS rank_in_group FROM stores) x WHERE rank_in_group = 1) SELECT id, store_name, city, region, sqft, rank_in_group FROM deduped

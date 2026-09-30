@@ -1,1 +1,0 @@
-select * from (select month(order_date) as order_month, max(amount) - min(amount) as amount_range, round(stddev(discount), 2) as stddev_discount from orders group by month(order_date)) as x where amount_range < 70 order by order_month desc, stddev_discount desc limit 5

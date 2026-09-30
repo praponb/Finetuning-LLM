@@ -1,1 +1,0 @@
-select session_id, date_trunc('MONTH', event_time) as event_month, round(stddev(duration_sec), 2) as stddev_duration_sec from web_events where duration_sec between 218 and 327 group by cube(session_id, date_trunc('MONTH', event_time));

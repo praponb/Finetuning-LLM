@@ -1,3 +1,0 @@
-SELECT *
-FROM orders
-WHERE status IN ('CANCELLED', 'RETURNED')

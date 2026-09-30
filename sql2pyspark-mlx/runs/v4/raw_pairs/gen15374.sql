@@ -1,1 +1,0 @@
-SELECT paid_year, total_count, first_paid_at FROM (SELECT YEAR(paid_at) AS paid_year, COUNT(*) AS total_count, MIN(paid_at) AS first_paid_at FROM payments WHERE method IN ('bank_transfer', 'paypal') GROUP BY YEAR(paid_at)) AS t WHERE total_count < 8

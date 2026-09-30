@@ -1,1 +1,0 @@
-select status, refunded_amount, avg_amount from (select status, sum(case when status = 'REFUNDED' then amount else 0 end) as refunded_amount, avg(amount) as avg_amount from payments group by status) as sub where avg_amount > 580 order by avg_amount desc;

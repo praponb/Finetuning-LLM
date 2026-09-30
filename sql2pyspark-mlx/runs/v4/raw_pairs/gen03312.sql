@@ -1,1 +1,0 @@
-select store_id, date_trunc('year', last_restock) as year_start, case when quantity >= 222 then 'HIGH' else 'LOW' end as quantity_tier, bit_or(quantity) as quantity_bit_or, approx_percentile(quantity, 0.9) as quantity_p90 from inventory group by store_id, date_trunc('year', last_restock), case when quantity >= 222 then 'HIGH' else 'LOW' end order by quantity_p90 asc;

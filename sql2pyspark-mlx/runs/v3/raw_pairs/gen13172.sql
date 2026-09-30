@@ -1,1 +1,0 @@
-SELECT subscriptions.id, subscriptions.monthly_fee, subscriptions.customer_id, subscriptions.plan FROM subscriptions WHERE subscriptions.status = 'PAUSED' AND subscriptions.customer_id NOT IN (SELECT id FROM customers WHERE city = 'London')

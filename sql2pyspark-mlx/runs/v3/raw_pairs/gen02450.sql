@@ -1,1 +1,0 @@
-SELECT p.id, p.amount, p.status, o.status AS order_status, o.store_id, s.sqft FROM payments p LEFT JOIN orders o ON o.id = p.order_id FULL OUTER JOIN stores s ON o.store_id = s.id ORDER BY order_status

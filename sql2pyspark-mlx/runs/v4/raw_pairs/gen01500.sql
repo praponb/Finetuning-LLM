@@ -1,1 +1,0 @@
-select *, avg(age) over (order by age, id rows between 2 preceding and current row) age_avg_2, avg(age) over (partition by segment order by signup_date, id rows between 3 preceding and 1 preceding) age_avg_3_prior, corr(age, credit_limit) over (partition by city) corr_age_credit_limit from customers

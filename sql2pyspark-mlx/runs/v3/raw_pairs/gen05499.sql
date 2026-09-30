@@ -1,1 +1,0 @@
-SELECT employees.id, employees.dept_id, departments.location, departments.budget, CASE WHEN departments.dept_name = 'Engineering' THEN 1 ELSE 0 END AS is_engineering FROM employees LEFT OUTER JOIN departments ON employees.dept_id = departments.id WHERE employees.hire_date <= '2023-06-01' ORDER BY employees.id DESC

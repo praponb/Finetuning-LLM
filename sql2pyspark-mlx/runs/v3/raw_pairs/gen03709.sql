@@ -1,1 +1,0 @@
-select o.status, o.channel, max(p.paid_at) as latest_paid_at, round(stddev(p.amount), 2) as stddev_amount from payments p left outer join orders o on o.id = p.order_id full outer join customers c on o.customer_id = c.id group by o.status, o.channel order by latest_paid_at;

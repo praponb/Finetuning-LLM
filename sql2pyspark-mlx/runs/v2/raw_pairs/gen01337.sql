@@ -1,1 +1,0 @@
-SELECT city, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, MAX(sqft) AS max_sqft, MIN(sqft) AS min_sqft FROM stores WHERE city != 'Tokyo' GROUP BY city, DATE_FORMAT(opened_date, 'yyyy-MM') ORDER BY min_sqft DESC

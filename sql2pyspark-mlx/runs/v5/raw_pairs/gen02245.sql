@@ -1,1 +1,0 @@
-select p.id, p.status, o.order_date, s.sqft from payments p join orders o on p.order_id = o.id join stores s on s.id = o.store_id where o.store_id is null and s.sqft between 6054 and 10801 order by order_date desc

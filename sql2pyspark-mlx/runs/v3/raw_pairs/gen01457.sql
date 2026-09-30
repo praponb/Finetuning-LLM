@@ -1,1 +1,0 @@
-with department_summary as (select dept_id, sort_array(collect_set(job_title)) as job_title_list from employees where is_remote = false group by dept_id) select d.id, d.dept_name, d.budget, ds.job_title_list from departments d inner join department_summary ds on d.id = ds.dept_id;

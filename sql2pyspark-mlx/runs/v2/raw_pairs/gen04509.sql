@@ -1,1 +1,0 @@
-SELECT e.id, e.manager_id AS employee_manager_id, e.job_title AS employee_job_title, m.is_remote AS manager_is_remote FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE e.dept_id = 13 OR e.job_title = 'Analyst' ORDER BY id DESC LIMIT 10

@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, SUBSTRING(supplier_name, 1, 3) supplier_name_prefix, COALESCE(city, 'NONE') resolved_city FROM suppliers WHERE supplier_name IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY country, city ORDER BY rating, id) seq_no, LEAD(rating, 1) OVER (ORDER BY rating, id) next_rating, ROUND(rating / SUM(rating) OVER (PARTITION BY city), 4) rating_share FROM base;

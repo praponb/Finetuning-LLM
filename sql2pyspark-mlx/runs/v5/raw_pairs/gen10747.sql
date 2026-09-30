@@ -1,1 +1,0 @@
-SELECT p.brand, COUNT(*) AS rows_total, MIN(src.revenue) AS min_revenue, MIN(src.units) AS min_units FROM store_sales src INNER JOIN products p ON src.product_id = p.id GROUP BY p.brand ORDER BY rows_total ASC NULLS FIRST;

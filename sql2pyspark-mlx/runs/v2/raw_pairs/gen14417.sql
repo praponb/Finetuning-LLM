@@ -1,1 +1,0 @@
-SELECT s.city, COUNT(*) AS row_count, MIN(o.order_date) AS min_order_date FROM orders o JOIN customers c ON o.customer_id = c.id JOIN stores s ON o.store_id = s.id WHERE c.signup_date >= '2023-08-30' GROUP BY s.city HAVING COUNT(*) > 1 ORDER BY row_count DESC;

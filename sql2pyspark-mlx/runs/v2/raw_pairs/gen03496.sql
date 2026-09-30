@@ -1,1 +1,0 @@
-SELECT c.is_active, COUNT(DISTINCT o.amount) unique_stores, ROUND(AVG(o.discount), 2) avg_discount FROM orders o INNER JOIN customers c ON o.customer_id = c.id FULL OUTER JOIN stores s ON s.id = o.store_id WHERE s.sqft = 6224 GROUP BY c.is_active;

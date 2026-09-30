@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT YEAR(txn_time) AS txn_year, merchant, AVG(amount) AS avg_amount, COUNT(*) AS total_count FROM transactions GROUP BY YEAR(txn_time), merchant) AS s WHERE total_count >= 6 ORDER BY total_count, txn_year, merchant LIMIT 1

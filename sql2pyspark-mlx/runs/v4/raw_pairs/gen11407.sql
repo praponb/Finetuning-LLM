@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM order_items WHERE order_id IN (10, 11, 20, 35)), summary AS (SELECT order_id, AVG(unit_price) AS avg_unit_price, SUM(unit_price) AS total_unit_price FROM src GROUP BY order_id) SELECT * FROM summary WHERE avg_unit_price > 310 ORDER BY order_id;

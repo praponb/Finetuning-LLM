@@ -1,1 +1,0 @@
-SELECT we.session_id, s.customer_id, s.browser, TO_DATE(s.started_at) AS started_at_date FROM web_events we INNER JOIN sessions s ON s.id = we.session_id WHERE we.session_id IN (7, 28, 38, 40) ORDER BY session_id DESC

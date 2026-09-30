@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values, MIN(start_date) min_start_date FROM subscriptions GROUP BY customer_id) SELECT c.country, cs.status_values, cs.min_start_date FROM customers c JOIN customer_summary cs ON c.id = cs.customer_id;

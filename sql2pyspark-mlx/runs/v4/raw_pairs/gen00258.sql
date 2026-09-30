@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, MIN(shipped_date) AS first_shipped_date FROM shipments GROUP BY order_id) SELECT o.id, o.order_date, o.store_id, os.first_shipped_date FROM orders o INNER JOIN order_summary os ON o.id = os.order_id;

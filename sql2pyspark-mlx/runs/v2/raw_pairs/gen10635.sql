@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', order_date) AS order_month, customer_id, ROUND(STDDEV(shipping_fee), 2) AS stddev_shipping_fee, MAX(discount) AS max_discount FROM orders WHERE MONTH(order_date) IN (2, 4, 9) AND store_id IS NULL GROUP BY DATE_TRUNC('MONTH', order_date), customer_id HAVING stddev_shipping_fee < 39;

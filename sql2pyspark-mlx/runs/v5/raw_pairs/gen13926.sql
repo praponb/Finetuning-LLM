@@ -1,1 +1,0 @@
-SELECT id, location, budget, dept_name, LEAD(budget, 2) OVER (PARTITION BY location ORDER BY budget, id) AS next_budget, LEAD(budget, 1) OVER (PARTITION BY dept_name ORDER BY budget, id) AS next_budget_2 FROM departments ORDER BY budget, 6 DESC

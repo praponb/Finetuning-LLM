@@ -1,1 +1,0 @@
-WITH valid_inventory AS (SELECT * FROM inventory WHERE product_id IN (3, 4, 5, 9) AND MONTH(last_restock) IN (7, 8, 10)), summary AS (SELECT product_id, SUM(quantity) AS total_quantity, COUNT(*) AS inventory_count FROM valid_inventory GROUP BY product_id) SELECT product_id, total_quantity FROM summary;

@@ -1,1 +1,0 @@
-WITH matched_keys AS (SELECT firmware, device_code FROM device_readings EXCEPT ALL SELECT firmware, device_code FROM device_readings WHERE temp_c <= 37), verified AS (SELECT s.* FROM device_readings s JOIN matched_keys k ON s.firmware = k.firmware AND s.device_code = k.device_code) SELECT device_code, temp_c FROM verified ORDER BY temp_c;

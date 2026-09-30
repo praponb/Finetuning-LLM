@@ -1,1 +1,0 @@
-SELECT d.dept_name, e.hire_date, e.job_title, e.dept_id FROM departments d LEFT JOIN employees e ON d.id = e.dept_id WHERE d.dept_name IN ('Finance', 'Marketing', 'Sales') AND e.salary < 94000 ORDER BY dept_id DESC;

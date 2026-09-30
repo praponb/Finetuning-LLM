@@ -1,1 +1,0 @@
-SELECT s.id, s.customer_id, s.browser, t.pct_search FROM sessions s INNER JOIN (SELECT session_id, ROUND((100 * SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_search FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.pct_search >= 48 ORDER BY s.browser;

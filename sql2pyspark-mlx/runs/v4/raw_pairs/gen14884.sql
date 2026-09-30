@@ -1,1 +1,0 @@
-SELECT s.order_id, o.shipping_fee, c.signup_date FROM shipments s INNER JOIN orders o ON s.order_id = o.id LEFT JOIN customers c ON o.customer_id = c.id WHERE c.age BETWEEN 36 AND 64 AND o.shipping_fee < 37 ORDER BY s.order_id

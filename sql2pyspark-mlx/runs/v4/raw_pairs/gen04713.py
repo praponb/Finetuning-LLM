@@ -1,6 +1,0 @@
-from pyspark.sql import functions as F
-
-result = (
-    df_stores
-    .filter(F.col("sqft").between(6147, 6566) & (F.year("opened_date") == 2025))
-)

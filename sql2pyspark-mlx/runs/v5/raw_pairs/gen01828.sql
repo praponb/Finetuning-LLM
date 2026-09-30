@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(*) total_count, SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) checking_balance FROM accounts GROUP BY customer_id) SELECT c.city, c.age, cs.total_count, cs.checking_balance FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.checking_balance >= 34 ORDER BY city

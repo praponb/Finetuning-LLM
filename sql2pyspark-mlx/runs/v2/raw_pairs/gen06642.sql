@@ -1,1 +1,0 @@
-select date_trunc('MONTH', hire_date) as hire_month, sum(salary) as total_salary, round(sum(salary) * 100.0 / sum(sum(salary)) over (), 2) as pct_of_total from employees group by date_trunc('MONTH', hire_date);

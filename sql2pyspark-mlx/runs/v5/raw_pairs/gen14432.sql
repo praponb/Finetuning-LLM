@@ -1,1 +1,0 @@
-with recent_accounts as (select * from accounts where account_type != 'CREDIT' and customer_id in (5, 21, 25, 28)), agg as (select status, count(distinct balance) as unique_customers from recent_accounts group by status) select * from agg order by unique_customers desc;

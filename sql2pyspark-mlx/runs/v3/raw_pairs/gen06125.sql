@@ -1,1 +1,0 @@
-SELECT product_id, MAX(sale_date) AS latest_sale_date, COUNT(DISTINCT revenue) AS unique_products, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales WHERE units <= 12 AND product_id = 2 GROUP BY product_id ORDER BY stddev_units DESC;

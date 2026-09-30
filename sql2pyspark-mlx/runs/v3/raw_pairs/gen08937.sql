@@ -1,1 +1,0 @@
-SELECT id, carrier, delivered_date, cost, ROUND(AVG(cost) OVER (PARTITION BY carrier ORDER BY delivered_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_7 FROM shipments ORDER BY delivered_date;

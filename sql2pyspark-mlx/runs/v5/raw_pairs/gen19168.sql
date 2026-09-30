@@ -1,1 +1,0 @@
-WITH rollup_totals AS (SELECT p.dept_name, s.job_title, COUNT(*) AS rows_total, SUM(s.salary) AS total_salary FROM employees s LEFT JOIN departments p ON s.dept_id = p.id GROUP BY p.dept_name, s.job_title) SELECT dept_name, job_title, rows_total FROM rollup_totals ORDER BY dept_name NULLS LAST

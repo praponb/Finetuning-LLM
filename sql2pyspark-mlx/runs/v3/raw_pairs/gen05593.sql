@@ -1,1 +1,0 @@
-SELECT t.id, t.txn_time, t.txn_type, t.amount, a.opened_date, a.balance, a.customer_id, DATE_TRUNC('WEEK', a.opened_date) AS opened_date_period FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id WHERE t.txn_time >= '2025-08-26' AND t.txn_time < '2025-09-01' ORDER BY amount DESC;

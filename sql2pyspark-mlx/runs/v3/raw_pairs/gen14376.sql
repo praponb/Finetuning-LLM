@@ -1,1 +1,0 @@
-SELECT id, plan, end_date, monthly_fee, customer_id, start_date, LAG(monthly_fee, 1) OVER (PARTITION BY plan ORDER BY end_date, id) prev_monthly_fee, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date, id) rn FROM subscriptions ORDER BY customer_id DESC;

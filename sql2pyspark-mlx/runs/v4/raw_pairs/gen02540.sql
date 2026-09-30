@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, LOWER(merchant) AS merchant_lower, COALESCE(merchant, 'NONE') AS merchant_filled FROM transactions WHERE txn_time > TIMESTAMP '2024-04-21 06:00:00' AND merchant IS NOT NULL) SELECT account_id, txn_type FROM valid EXCEPT ALL SELECT account_id, txn_type FROM transactions WHERE amount < 2400;

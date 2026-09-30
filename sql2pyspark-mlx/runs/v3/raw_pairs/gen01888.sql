@@ -1,1 +1,0 @@
-SELECT s.city, s.store_name, ss.sale_date, ss.units FROM stores s LEFT OUTER JOIN store_sales ss ON s.id = ss.store_id WHERE s.opened_date >= '2023-04-01' AND s.store_name IS NOT NULL ORDER BY store_name ASC, 3 ASC;

@@ -1,1 +1,0 @@
-SELECT id, end_date, start_date, monthly_fee, SUBSTRING(plan, 1, 3) AS plan_prefix, ADD_MONTHS(start_date, 12) AS start_date_plus_months FROM subscriptions WHERE start_date BETWEEN '2024-07-27' AND '2025-02-16';

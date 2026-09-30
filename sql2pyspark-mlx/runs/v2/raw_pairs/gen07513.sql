@@ -1,1 +1,0 @@
-select s.city, max(o.shipping_fee) - min(o.shipping_fee) shipping_fee_range from orders o join stores s on s.id = o.store_id join customers c on o.customer_id = c.id group by s.city order by city limit 5;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3095000 THEN 'high' WHEN budget >= 668000 THEN 'mid' ELSE 'low' END budget_bucket, location, ROUND((100 * SUM(CASE WHEN dept_name = 'Legal' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_legal, AVG(budget) avg_budget FROM departments GROUP BY ROLLUP(CASE WHEN budget >= 3095000 THEN 'high' WHEN budget >= 668000 THEN 'mid' ELSE 'low' END, location)

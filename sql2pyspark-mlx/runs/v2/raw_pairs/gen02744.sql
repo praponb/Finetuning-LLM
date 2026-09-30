@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT QUARTER(last_restock) AS last_restock_quarter, COUNT(DISTINCT quantity) AS unique_products FROM inventory WHERE product_id IN (6, 9) GROUP BY QUARTER(last_restock)) AS sub WHERE unique_products < 4 ORDER BY unique_products

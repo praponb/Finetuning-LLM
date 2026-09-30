@@ -1,1 +1,0 @@
-SELECT *, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_date_label, CASE WHEN status = 'OPEN' THEN 1 ELSE 0 END AS is_open FROM accounts WHERE status NOT IN ('FROZEN', 'OPEN') AND account_type = 'CREDIT' ORDER BY status DESC;

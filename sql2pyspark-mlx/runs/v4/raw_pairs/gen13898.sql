@@ -1,1 +1,0 @@
-SELECT id, service, host, log_ts, context, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').user.tier AS tier, SHIFTRIGHT(status_code, 2) AS status_code_high FROM app_logs WHERE log_ts >= '2024-02-01';

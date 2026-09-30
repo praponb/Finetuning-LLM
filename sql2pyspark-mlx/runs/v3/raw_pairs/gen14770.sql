@@ -1,1 +1,0 @@
-select oi.product_id, oi.order_id, p.supplier_id, cast(oi.unit_price as int) as unit_price_int from order_items oi join products p on oi.product_id = p.id where p.stock_qty <= 124 order by supplier_id

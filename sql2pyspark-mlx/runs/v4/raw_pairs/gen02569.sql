@@ -1,1 +1,0 @@
-SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values, SORT_ARRAY(COLLECT_SET(method)) AS method_list, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM payments WHERE order_id = 39 GROUP BY 1 ORDER BY method_values DESC

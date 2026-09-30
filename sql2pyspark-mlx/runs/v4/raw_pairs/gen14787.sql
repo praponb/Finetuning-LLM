@@ -1,1 +1,0 @@
-select rating_bucket, avg_rating, total_rating from (select case when rating >= 4.4 then 'high' when rating >= 2.1 then 'mid' else 'low' end rating_bucket, round(avg(rating), 2) avg_rating, sum(rating) total_rating from suppliers where rating > 1.9 group by case when rating >= 4.4 then 'high' when rating >= 2.1 then 'mid' else 'low' end) sub where avg_rating > 31;

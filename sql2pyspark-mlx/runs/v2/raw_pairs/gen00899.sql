@@ -1,1 +1,0 @@
-SELECT orders.id, orders.shipping_fee, orders.status, t.status_list FROM orders LEFT JOIN (SELECT order_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM shipments WHERE order_id IS NOT NULL GROUP BY order_id) t ON orders.id = t.order_id ORDER BY orders.shipping_fee DESC, orders.status;

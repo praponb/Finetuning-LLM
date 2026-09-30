@@ -1,1 +1,0 @@
-WITH shipments_by_order AS (SELECT order_id, AVG(cost) AS avg_cost, MIN(cost) AS min_cost FROM shipments GROUP BY order_id) SELECT o.id, o.discount, o.shipping_fee, sbo.avg_cost, sbo.min_cost FROM orders o LEFT OUTER JOIN shipments_by_order sbo ON o.id = sbo.order_id ORDER BY shipping_fee;

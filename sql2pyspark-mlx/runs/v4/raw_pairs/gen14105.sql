@@ -1,1 +1,0 @@
-WITH department_summary AS (SELECT dept_id, ROUND((100 * SUM(CASE WHEN level = 'L4' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l4, COUNT(*) AS num_employees FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.budget, ds.pct_l4, ds.num_employees FROM departments d JOIN department_summary ds ON d.id = ds.dept_id ORDER BY pct_l4;

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, ROUND(STDDEV(amount), 2) AS stddev_amount, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range FROM orders GROUP BY DATE_FORMAT(order_date, 'yyyy-MM') ORDER BY 3 DESC

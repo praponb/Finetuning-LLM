@@ -1,1 +1,0 @@
-SELECT id, segment, credit_limit, name FROM (SELECT id, segment, credit_limit, name, RANK() OVER (PARTITION BY segment ORDER BY credit_limit) AS row_num FROM customers WHERE LENGTH(name) >= 12) AS ranked WHERE row_num <= 2 ORDER BY name;

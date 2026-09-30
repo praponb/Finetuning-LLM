@@ -1,1 +1,0 @@
-SELECT s.id, s.country, COUNT(p.id) AS product_count, ROUND(STDDEV(p.cost), 2) AS stddev_cost FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id GROUP BY s.id, s.country HAVING stddev_cost > 52 ORDER BY stddev_cost, id DESC;

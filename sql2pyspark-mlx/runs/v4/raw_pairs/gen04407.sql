@@ -1,1 +1,0 @@
-WITH recent_stores AS (SELECT * FROM stores WHERE sqft <= 6832 AND region IN ('South', 'West', 'East')), stores_stats AS (SELECT region, COUNT(DISTINCT sqft) AS unique_citys, SORT_ARRAY(COLLECT_SET(region)) AS region_list FROM recent_stores GROUP BY region) SELECT region, unique_citys, region_list FROM stores_stats WHERE unique_citys < 6 ORDER BY unique_citys DESC;

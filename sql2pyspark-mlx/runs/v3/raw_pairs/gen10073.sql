@@ -1,1 +1,0 @@
-select id, customer_id, order_date, amount, channel, shipping_fee, lag(amount, 2, 0) over (partition by customer_id order by order_date, id) as prev_amount, shipping_fee - lag(shipping_fee, 2) over (partition by channel, customer_id order by order_date, id) as shipping_fee_change from orders;

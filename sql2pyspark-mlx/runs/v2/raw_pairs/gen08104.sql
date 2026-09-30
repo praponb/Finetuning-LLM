@@ -1,1 +1,0 @@
-SELECT id, quantity, product_id, store_id, DATEDIFF(CURRENT_DATE(), last_restock) AS days_since_last_restock FROM inventory WHERE quantity <> 237 AND (product_id IN (1, 2, 5, 6) OR YEAR(last_restock) = 2025) ORDER BY store_id, id LIMIT 50

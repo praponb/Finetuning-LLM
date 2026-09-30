@@ -1,1 +1,0 @@
-SELECT city, DATE_TRUNC('MONTH', opened_date) AS opened_month, COUNT(*) AS total_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values FROM stores GROUP BY 1, 2 HAVING COUNT(*) < 5 ORDER BY region_values ASC, opened_month ASC;

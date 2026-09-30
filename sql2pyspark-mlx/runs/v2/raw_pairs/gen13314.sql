@@ -1,1 +1,0 @@
-SELECT page, CASE WHEN duration_sec >= 423 THEN 'high' WHEN duration_sec >= 91 THEN 'mid' ELSE 'low' END AS duration_sec_bucket, COUNT(duration_sec) AS duration_sec_count FROM web_events WHERE event_time < '2023-03-01' AND TO_DATE(event_time) >= '2023-12-01' AND event_type IN ('click', 'add_to_cart') GROUP BY 1, 2 HAVING COUNT(duration_sec) >= 3;

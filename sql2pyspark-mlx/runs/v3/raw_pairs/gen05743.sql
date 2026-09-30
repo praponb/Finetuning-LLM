@@ -1,1 +1,0 @@
-select brand_group, brand, fashion_count from (select case when brand in ('Acme', 'Initech') then 'priority' else 'other' end as brand_group, brand, sum(case when category = 'Fashion' then 1 else 0 end) as fashion_count from products group by case when brand in ('Acme', 'Initech') then 'priority' else 'other' end, brand) as agg where fashion_count < 41 order by brand_group desc;

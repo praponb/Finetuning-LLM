@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, attr_key, v FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS attr_key, v) SELECT attr_key, COUNT(CASE WHEN attr_key = 'version' THEN 1 END) AS version_count, COUNT(CASE WHEN attr_key = 'trace' THEN 1 END) AS trace_count, COUNT_IF(attr_key = 'trace') AS trace_events FROM exploded GROUP BY ROLLUP (attr_key) HAVING COUNT_IF(attr_key = 'trace') >= 1

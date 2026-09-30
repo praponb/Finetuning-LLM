@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(order_date) < 2024 THEN 'before_2024' WHEN YEAR(order_date) = 2024 THEN '2024' ELSE 'after_2024' END order_cohort, SUM(amount) total_amount, MAX(discount) max_discount FROM orders GROUP BY 1;

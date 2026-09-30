@@ -1,4 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, SUM(sqft) AS total_sqft, SUM(SUM(sqft)) OVER (ORDER BY QUARTER(opened_date)) AS cumulative_sqft
-FROM stores
-GROUP BY QUARTER(opened_date)
-ORDER BY total_sqft DESC

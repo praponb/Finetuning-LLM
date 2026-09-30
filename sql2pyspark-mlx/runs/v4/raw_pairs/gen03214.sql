@@ -1,1 +1,0 @@
-SELECT customers.id, customers.email, COUNT(sessions.id) session_count FROM customers LEFT OUTER JOIN sessions ON customers.id = sessions.customer_id WHERE sessions.browser IN ('Chrome', 'Edge') GROUP BY customers.id, customers.email HAVING session_count >= 1 ORDER BY session_count DESC;

@@ -1,1 +1,0 @@
-SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory WHERE store_id IN (1, 2, 3) AND (last_restock < '2023-05-10' OR store_id IN (4, 6)) GROUP BY product_id ORDER BY avg_quantity DESC;

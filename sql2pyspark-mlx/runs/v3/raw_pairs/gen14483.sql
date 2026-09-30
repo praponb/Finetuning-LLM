@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 3600 THEN 'high' WHEN amount >= 900 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(amount) AS amount_count FROM transactions WHERE NOT is_flagged OR merchant = 'Shell' GROUP BY CASE WHEN amount >= 3600 THEN 'high' WHEN amount >= 900 THEN 'mid' ELSE 'low' END HAVING COUNT(amount) > 4;

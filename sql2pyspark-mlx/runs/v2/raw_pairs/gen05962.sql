@@ -1,1 +1,0 @@
-SELECT product_id, QUARTER(sale_date) AS sale_quarter, ROUND(STDDEV(units), 2) AS stddev_units, MIN(sale_date) AS min_sale_date, ROUND(AVG(units), 2) AS avg_units FROM store_sales GROUP BY 1, 2 HAVING ROUND(STDDEV(units), 2) < 56 ORDER BY sale_quarter, min_sale_date

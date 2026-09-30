@@ -1,1 +1,0 @@
-SELECT s.browser, we.session_id, we.page, we.event_time, DATEDIFF(CURRENT_DATE(), s.started_at) AS days_since_started_at FROM sessions s LEFT OUTER JOIN web_events we ON s.id = we.session_id WHERE HOUR(we.event_time) BETWEEN 6 AND 13 AND s.country = 'US' ORDER BY browser DESC

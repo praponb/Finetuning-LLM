@@ -1,1 +1,0 @@
-SELECT orders.id, orders.channel, COUNT(order_items.id) AS order_item_count FROM orders INNER JOIN order_items ON order_items.order_id = orders.id WHERE order_items.unit_price > 280 GROUP BY orders.id, orders.channel ORDER BY orders.channel DESC;

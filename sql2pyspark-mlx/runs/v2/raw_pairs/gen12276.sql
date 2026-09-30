@@ -1,1 +1,0 @@
-SELECT p.category, t.quantity_range, t.num_order_items FROM products p INNER JOIN (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range, COUNT(*) AS num_order_items FROM order_items GROUP BY product_id) t ON p.id = t.product_id WHERE t.quantity_range > 60

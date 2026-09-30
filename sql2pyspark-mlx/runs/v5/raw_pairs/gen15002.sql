@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, DATE_FORMAT(opened_date, 'yyyy-MM-dd') opened_date_label, COALESCE(status, 'DIRECT') resolved_status FROM accounts WHERE opened_date > TO_DATE('2023-03-23')) SELECT id, account_type, balance, opened_date_label, resolved_status FROM valid QUALIFY RANK() OVER (PARTITION BY status ORDER BY opened_date NULLS FIRST) = 1;

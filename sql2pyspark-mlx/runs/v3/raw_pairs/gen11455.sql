@@ -1,1 +1,0 @@
-SELECT signup_quarter, unique_countrys FROM (SELECT QUARTER(signup_date) signup_quarter, COUNT(DISTINCT age) unique_countrys FROM customers GROUP BY QUARTER(signup_date)) agg WHERE unique_countrys < 7;

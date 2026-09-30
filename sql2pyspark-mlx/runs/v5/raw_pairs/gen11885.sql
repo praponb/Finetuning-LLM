@@ -1,1 +1,0 @@
-SELECT CASE WHEN orders.channel IN ('mobile', 'store') THEN 'group_a' ELSE 'other' END AS channel_group, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(payments.status))) AS status_values FROM payments JOIN orders ON orders.id = payments.order_id GROUP BY CASE WHEN orders.channel IN ('mobile', 'store') THEN 'group_a' ELSE 'other' END ORDER BY channel_group ASC

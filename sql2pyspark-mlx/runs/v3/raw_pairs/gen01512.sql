@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM employees WHERE NOT is_remote AND level IN ('L2', 'L5', 'L4')), level_summary AS (SELECT level, SORT_ARRAY(COLLECT_SET(level)) AS level_list FROM base GROUP BY level) SELECT level, level_list FROM level_summary;

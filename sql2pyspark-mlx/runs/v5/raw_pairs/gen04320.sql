@@ -1,1 +1,0 @@
-with order_items_by_product as (select product_id, max(quantity) as max_quantity from order_items group by product_id) select p.id, p.cost, oibp.max_quantity from products p join order_items_by_product oibp on p.id = oibp.product_id order by p.id desc;

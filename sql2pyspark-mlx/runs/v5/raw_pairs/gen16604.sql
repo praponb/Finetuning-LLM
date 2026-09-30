@@ -1,1 +1,0 @@
-select a.account_type, count(distinct t.amount) as unique_txn_types, min(t.amount) as min_amount from transactions t inner join accounts a on t.account_id = a.id group by a.account_type having unique_txn_types > 1 order by unique_txn_types;

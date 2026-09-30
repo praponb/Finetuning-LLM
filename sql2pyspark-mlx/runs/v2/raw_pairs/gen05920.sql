@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, LOWER(brand) AS brand_lower FROM products WHERE category IN ('Grocery', 'Sports', 'Home') AND ARRAY_CONTAINS(tags, 'premium')), summary AS (SELECT MONTH(launch_date) AS launch_month, COUNT(DISTINCT price) AS unique_brands, MIN(cost) AS min_cost FROM src GROUP BY MONTH(launch_date)) SELECT launch_month, unique_brands FROM summary ORDER BY unique_brands DESC

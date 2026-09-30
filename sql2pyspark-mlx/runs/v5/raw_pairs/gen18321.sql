@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, RANK() OVER (PARTITION BY status ORDER BY start_date NULLS FIRST) AS rn FROM subscriptions QUALIFY rn = 1) SELECT id, plan, start_date, end_date, monthly_fee, rn, CASE WHEN plan RLIKE '^(premium|basic)$' THEN 'GROUP_A' ELSE 'GROUP_B' END AS plan_zone FROM ranked ORDER BY monthly_fee DESC NULLS FIRST;

@@ -1,1 +1,0 @@
-select case when d.budget >= 3351000 then 'high' when d.budget >= 1050000 then 'mid' else 'low' end as budget_bucket, count(*) as row_count from employees e left join departments d on e.dept_id = d.id where d.budget <= 1551000 group by case when d.budget >= 3351000 then 'high' when d.budget >= 1050000 then 'mid' else 'low' end order by budget_bucket desc;

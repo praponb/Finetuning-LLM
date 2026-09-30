@@ -1,1 +1,0 @@
-with base as (select *, case when plan = 'enterprise' then 1 else 0 end is_enterprise from subscriptions where monthly_fee between 100 and 120), summary as (select year(end_date) end_year, plan, round(avg(monthly_fee), 2) avg_monthly_fee from base group by year(end_date), plan) select end_year, plan, avg_monthly_fee from summary where avg_monthly_fee < 36;

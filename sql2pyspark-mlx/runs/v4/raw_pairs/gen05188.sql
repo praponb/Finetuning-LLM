@@ -1,1 +1,0 @@
-SELECT QUARTER(c.signup_date) AS signup_quarter, c.is_active, ROUND(AVG(o.amount), 2) AS avg_amount FROM orders o JOIN stores s ON o.store_id = s.id JOIN customers c ON o.customer_id = c.id WHERE c.segment IN ('Corporate', 'Consumer') GROUP BY QUARTER(c.signup_date), c.is_active

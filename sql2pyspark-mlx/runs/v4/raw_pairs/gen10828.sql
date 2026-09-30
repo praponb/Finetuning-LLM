@@ -1,1 +1,0 @@
-select c.is_active, max(a.balance) - min(a.balance) as balance_range from accounts a full outer join customers c on a.customer_id = c.id group by c.is_active having max(a.balance) - min(a.balance) > 38;

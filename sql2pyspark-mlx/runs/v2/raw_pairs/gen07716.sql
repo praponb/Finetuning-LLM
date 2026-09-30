@@ -1,1 +1,0 @@
-SELECT o.channel, o.status, COUNT(DISTINCT s.cost) unique_statuss, SUM(s.cost) total_cost FROM shipments s JOIN orders o ON s.order_id = o.id WHERE o.discount BETWEEN 0.16 AND 0.28 GROUP BY o.channel, o.status ORDER BY channel;

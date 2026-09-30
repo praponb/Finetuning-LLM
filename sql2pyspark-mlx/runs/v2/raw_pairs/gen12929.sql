@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.carrier, orders.status, orders.amount, orders.store_id FROM shipments INNER JOIN orders ON orders.id = shipments.order_id WHERE YEAR(shipments.delivered_date) = 2024 AND shipments.status = 'RETURNED' ORDER BY orders.amount DESC, carrier

@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, AVG(quantity) AS avg_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY store_id) SELECT s.id, s.sqft, ss.avg_quantity, ss.stddev_quantity FROM stores s INNER JOIN store_summary ss ON s.id = ss.store_id ORDER BY id;

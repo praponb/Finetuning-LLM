@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, stock_qty + cost stock_qty_plus_cost, cost + stock_qty cost_plus_stock_qty, COALESCE(brand, 'NONE') brand_filled FROM products WHERE supplier_id IS NOT NULL AND stock_qty <= 228) SELECT *, ROW_NUMBER() OVER (PARTITION BY category ORDER BY price DESC NULLS LAST, id) AS latest_rank FROM valid QUALIFY latest_rank = 1;

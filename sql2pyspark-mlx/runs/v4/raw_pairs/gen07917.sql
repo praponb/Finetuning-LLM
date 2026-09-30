@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, category, brand, price, cost, stock_qty, launch_date, tags, supplier_id, CONCAT_WS('/', brand, product_name) AS brand_product_name_key FROM products WHERE launch_date > TO_DATE('2023-08-13')) SELECT s.* FROM base s WHERE NOT EXISTS (SELECT 1 FROM order_items x WHERE x.product_id = s.id AND x.product_id IS NOT NULL);

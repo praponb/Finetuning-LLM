@@ -1,1 +1,0 @@
-SELECT a.customer_id, SORT_ARRAY(COLLECT_SET(t.txn_type)) txn_type_list FROM transactions t INNER JOIN accounts a ON t.account_id = a.id FULL OUTER JOIN customers c ON a.customer_id = c.id WHERE t.is_flagged GROUP BY a.customer_id ORDER BY customer_id DESC LIMIT 50

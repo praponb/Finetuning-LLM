@@ -1,1 +1,0 @@
-SELECT s.region, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i INNER JOIN stores s ON s.id = i.store_id LEFT JOIN products p ON p.id = i.product_id WHERE i.last_restock BETWEEN '2023-12-01' AND '2024-05-01' GROUP BY s.region ORDER BY region DESC

@@ -1,1 +1,0 @@
-SELECT s.country, p.price, p.launch_date, p.supplier_id, COALESCE(p.product_name, 'unassigned') AS product_name_filled FROM suppliers s LEFT OUTER JOIN products p ON s.id = p.supplier_id ORDER BY p.launch_date

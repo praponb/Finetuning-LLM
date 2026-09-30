@@ -1,1 +1,0 @@
-SELECT page, event_type, CASE WHEN event_type IN ('page_view', 'add_to_cart') THEN 'Group A' ELSE 'Other' END AS event_type_group, CASE WHEN duration_sec >= 411 THEN 'High' WHEN duration_sec >= 170 THEN 'Medium' ELSE 'Low' END AS duration_sec_tier FROM web_events WHERE duration_sec <= 259 AND TO_DATE(event_time) < '2024-04-09';

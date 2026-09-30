@@ -1,1 +1,0 @@
-SELECT p.supplier_id, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range FROM store_sales ss LEFT JOIN products p ON p.id = ss.product_id RIGHT JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.supplier_id HAVING MAX(ss.revenue) - MIN(ss.revenue) >= 48 ORDER BY p.supplier_id ASC

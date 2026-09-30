@@ -1,1 +1,0 @@
-select o.store_id, max(oi.unit_price) as max_unit_price, round(stddev(oi.quantity), 2) as stddev_quantity from order_items oi left join orders o on oi.order_id = o.id inner join stores s on o.store_id = s.id where oi.quantity = 8 group by o.store_id

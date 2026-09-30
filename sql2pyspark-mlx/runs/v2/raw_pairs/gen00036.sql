@@ -1,1 +1,0 @@
-select p.brand, p.category, count(oi.quantity) as quantity_count from order_items oi full outer join products p on oi.product_id = p.id where oi.unit_price between 220 and 290 group by p.brand, p.category having count(oi.quantity) >= 2 order by category;

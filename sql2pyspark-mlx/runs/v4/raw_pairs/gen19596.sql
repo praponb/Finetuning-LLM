@@ -1,1 +1,0 @@
-SELECT p.price, t.max_unit_price, t.avg_quantity FROM products p INNER JOIN (SELECT product_id, MAX(unit_price) AS max_unit_price, AVG(quantity) AS avg_quantity FROM order_items GROUP BY product_id) t ON p.id = t.product_id WHERE t.avg_quantity > 3.1 ORDER BY 2 DESC

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN cost >= 108 THEN 'high' WHEN cost >= 30 THEN 'mid' ELSE 'low' END AS cost_bucket, carrier, cost FROM shipments) PIVOT (SUM(cost) FOR carrier IN ('FedEx', 'UPS')) ORDER BY cost_bucket;

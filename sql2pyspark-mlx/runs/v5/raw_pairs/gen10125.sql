@@ -1,1 +1,0 @@
-SELECT t.is_flagged, a.status, a.customer_id, c.email, c.is_active FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON c.id = a.customer_id ORDER BY customer_id DESC

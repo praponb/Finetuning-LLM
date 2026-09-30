@@ -1,1 +1,0 @@
-SELECT c.segment, SORT_ARRAY(COLLECT_SET(s.status)) status_list, ROUND((100 * SUM(CASE WHEN s.status = 'ACTIVE' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_active FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY c.segment

@@ -1,1 +1,0 @@
-SELECT signup_month, avg_credit_limit, segment_list FROM (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, ROUND(AVG(credit_limit), 2) AS avg_credit_limit, SORT_ARRAY(COLLECT_SET(segment)) AS segment_list FROM customers GROUP BY DATE_TRUNC('MONTH', signup_date)) AS s WHERE avg_credit_limit >= 46;

@@ -1,1 +1,0 @@
-select case when amount >= 1350 then 'high' when amount >= 600 then 'mid' else 'low' end as amount_bucket, max(paid_at) as latest_paid_at, sort_array(collect_set(method)) as method_list, avg(amount) as avg_amount from payments group by 1 having avg_amount > 1270;

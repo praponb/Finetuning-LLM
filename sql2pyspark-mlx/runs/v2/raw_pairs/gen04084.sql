@@ -1,1 +1,0 @@
-select we.id, we.event_time, we.page from web_events we where hour(we.event_time) between 11 and 17 and we.session_id in (select id from sessions where browser <> 'Safari') order by we.id desc limit 3

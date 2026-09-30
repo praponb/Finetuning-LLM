@@ -1,1 +1,0 @@
-SELECT id, amount, method, order_id, DATE_TRUNC('month', paid_at) AS paid_at_period, DATE_TRUNC('week', paid_at) AS paid_at_period_2 FROM payments WHERE status IN ('FAILED', 'REFUNDED') AND paid_at >= '2025-02-01' AND status IN ('REFUNDED', 'FAILED') ORDER BY order_id, 2

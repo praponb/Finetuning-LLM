@@ -1,1 +1,0 @@
-SELECT s.cost, o.amount, c.country, c.is_active, UPPER(o.status) AS status_upper FROM shipments s INNER JOIN orders o ON s.order_id = o.id FULL OUTER JOIN customers c ON o.customer_id = c.id WHERE o.store_id = 11 AND s.status = 'IN_TRANSIT' ORDER BY cost, 3;

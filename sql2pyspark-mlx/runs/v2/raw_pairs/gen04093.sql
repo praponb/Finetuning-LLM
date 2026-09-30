@@ -1,1 +1,0 @@
-SELECT MONTH(signup_date) AS signup_month, YEAR(signup_date) AS signup_year, MAX(credit_limit) AS max_credit_limit, AVG(age) AS avg_age, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM customers WHERE segment = 'SMB' AND credit_limit >= 15800 GROUP BY 1, 2 HAVING AVG(age) < 66

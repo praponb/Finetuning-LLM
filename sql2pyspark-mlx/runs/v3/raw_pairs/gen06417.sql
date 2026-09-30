@@ -1,1 +1,0 @@
-SELECT customer_id, credit_balance FROM (SELECT customer_id, SUM(CASE WHEN account_type = 'CREDIT' THEN balance ELSE 0 END) AS credit_balance FROM accounts WHERE opened_date BETWEEN '2025-03-08' AND '2025-06-01' GROUP BY customer_id) AS sub WHERE credit_balance < 33 ORDER BY customer_id DESC;

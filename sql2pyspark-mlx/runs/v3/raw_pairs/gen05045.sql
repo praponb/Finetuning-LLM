@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', launch_date) AS launch_month, SUM(cost) AS total_cost FROM products WHERE brand = 'Stark' AND (product_name LIKE 'Ru%' OR supplier_id IN (10, 38)) GROUP BY DATE_TRUNC('MONTH', launch_date);

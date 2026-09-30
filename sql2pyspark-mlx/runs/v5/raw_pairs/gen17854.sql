@@ -1,1 +1,0 @@
-SELECT CASE WHEN p.brand IN ('Umbrella', 'Acme') THEN 'group_a' ELSE 'other' END brand_group, MAX(ss.units) max_units FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN stores s ON s.id = ss.store_id GROUP BY CASE WHEN p.brand IN ('Umbrella', 'Acme') THEN 'group_a' ELSE 'other' END HAVING max_units >= 29 ORDER BY brand_group DESC;

@@ -1,1 +1,0 @@
-WITH filtered_stores AS (SELECT * FROM stores WHERE sqft <= 9130 AND sqft IS NOT NULL AND store_name LIKE 'Ma%'), stores_stats AS (SELECT region, MAX(sqft) - MIN(sqft) AS sqft_range, ROUND(STDDEV(sqft), 2) AS stddev_sqft FROM filtered_stores GROUP BY region) SELECT region, stddev_sqft FROM stores_stats WHERE sqft_range >= 80 ORDER BY region DESC LIMIT 5;

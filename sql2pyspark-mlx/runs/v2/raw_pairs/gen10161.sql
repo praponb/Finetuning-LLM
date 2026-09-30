@@ -1,1 +1,0 @@
-SELECT ss.product_id, COUNT(DISTINCT i.quantity) unique_stores, COUNT(*) total_count FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id = 2 GROUP BY ss.product_id;

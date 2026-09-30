@@ -1,1 +1,0 @@
-SELECT id, shipped_date, carrier, delivered_date, UPPER(carrier) AS carrier_upper, COALESCE(carrier, 'unassigned') AS carrier_filled FROM shipments WHERE delivered_date >= '2025-02-03' ORDER BY shipped_date, delivered_date

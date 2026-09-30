@@ -1,1 +1,0 @@
-WITH AccountTotals AS (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) txn_type_values FROM transactions GROUP BY account_id) SELECT a.customer_id, a.account_type, A.txn_type_values FROM accounts a LEFT OUTER JOIN AccountTotals A ON a.id = A.account_id;

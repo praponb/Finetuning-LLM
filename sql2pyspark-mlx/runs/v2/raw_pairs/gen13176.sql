@@ -1,1 +1,0 @@
-SELECT c.segment, c.credit_limit, c.signup_date, s.started_at FROM customers c LEFT JOIN sessions s ON s.customer_id = c.id WHERE s.browser NOT IN ('Firefox', 'Edge', 'Chrome') ORDER BY s.started_at, segment;

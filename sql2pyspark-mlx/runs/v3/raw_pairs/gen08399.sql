@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, SUM(CASE WHEN txn_type = 'DEBIT' THEN amount ELSE 0 END) AS debit_amount, SUM(amount) AS total_amount FROM transactions GROUP BY account_id) SELECT a.id, a.status, tba.debit_amount, tba.total_amount FROM accounts a LEFT JOIN transactions_by_account tba ON a.id = tba.account_id;

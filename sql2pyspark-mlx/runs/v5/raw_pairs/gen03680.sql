@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, status, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions GROUP BY DATE_FORMAT(end_date, 'yyyy-MM'), status ORDER BY avg_monthly_fee DESC, 2

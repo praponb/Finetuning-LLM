@@ -1,1 +1,0 @@
-SELECT e.salary AS employee_salary, e.job_title AS employee_job_title, m.salary AS manager_salary, m.hire_date AS manager_hire_date, m.full_name AS manager_full_name FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id WHERE m.hire_date <= '2024-10-01' OR m.salary <= 144000

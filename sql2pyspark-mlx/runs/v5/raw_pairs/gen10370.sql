@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, amount, txn_time, merchant, is_flagged, ROUND(amount, 1) AS amount_rounded, COALESCE(merchant, 'UNKNOWN') AS merchant_filled FROM transactions WHERE account_id IN (37, 38)) SELECT id, merchant, metric_name, val FROM (SELECT id, merchant, amount_rounded, amount FROM cleaned) src UNPIVOT (val FOR metric_name IN (amount_rounded, amount));

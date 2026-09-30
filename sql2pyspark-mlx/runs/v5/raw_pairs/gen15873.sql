@@ -1,1 +1,0 @@
-select p.launch_date, t.min_unit_price from products p left outer join (select product_id, min(unit_price) as min_unit_price from order_items group by product_id) t on p.id = t.product_id order by p.launch_date

@@ -1,1 +1,0 @@
-SELECT product_id, min_quantity, avg_quantity FROM (SELECT product_id, MIN(quantity) min_quantity, ROUND(AVG(quantity), 2) avg_quantity FROM order_items WHERE quantity BETWEEN 4 AND 7 GROUP BY product_id) sub WHERE min_quantity > 6.5 ORDER BY 3 DESC;

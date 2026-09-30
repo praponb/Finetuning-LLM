@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM subscriptions WHERE monthly_fee < 70 AND end_date > '2024-02-12'), subscriptions_stats AS (SELECT plan, SUM(monthly_fee) AS total_monthly_fee FROM src GROUP BY plan) SELECT plan, total_monthly_fee FROM subscriptions_stats ORDER BY plan

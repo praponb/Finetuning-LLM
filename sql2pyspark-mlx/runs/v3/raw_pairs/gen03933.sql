@@ -1,1 +1,0 @@
-select ss.product_id, min(i.quantity) as min_quantity, max(i.quantity) - min(i.quantity) as quantity_range from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.product_id order by ss.product_id desc, min_quantity limit 5

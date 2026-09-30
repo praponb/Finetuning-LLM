@@ -1,1 +1,0 @@
-with base as (select *, age + credit_limit as age_plus_credit_limit from customers where city = 'Singapore'), IsActiveSummary as (select is_active, min(signup_date) as min_signup_date from base group by is_active) select * from IsActiveSummary

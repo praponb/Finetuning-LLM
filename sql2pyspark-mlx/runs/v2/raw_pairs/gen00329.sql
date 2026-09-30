@@ -1,1 +1,0 @@
-select quarter(c.signup_date) signup_quarter, c.is_active, count(distinct t.amount) unique_accounts from transactions t left outer join accounts a on t.account_id = a.id inner join customers c on c.id = a.customer_id where a.account_type != 'CHECKING' group by quarter(c.signup_date), c.is_active order by signup_quarter;

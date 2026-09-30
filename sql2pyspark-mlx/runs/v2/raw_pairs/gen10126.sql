@@ -1,1 +1,0 @@
-select o.channel, round(avg(oi.quantity), 2) as avg_quantity, min(oi.unit_price) as min_unit_price from order_items oi left join orders o on oi.order_id = o.id inner join products p on oi.product_id = p.id group by o.channel

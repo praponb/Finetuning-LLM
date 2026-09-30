@@ -1,1 +1,0 @@
-WITH recent_subscriptions AS (SELECT * FROM subscriptions WHERE start_date >= '2023-11-01' AND status <> 'EXPIRED'), summary AS (SELECT status, plan, MIN(end_date) AS first_end_date FROM recent_subscriptions GROUP BY status, plan) SELECT * FROM summary ORDER BY plan, status LIMIT 3

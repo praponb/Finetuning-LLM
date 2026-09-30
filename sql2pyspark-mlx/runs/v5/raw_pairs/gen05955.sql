@@ -1,1 +1,0 @@
-SELECT start_date, 'subscription' AS origin FROM subscriptions WHERE plan NOT IN ('basic', 'enterprise', 'standard') UNION SELECT last_restock, 'inventory' AS origin FROM inventory ORDER BY origin DESC;

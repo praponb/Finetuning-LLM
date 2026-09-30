@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, service, host, log_ts, level, key, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) x AS key, attr_value) SELECT id, service, log_ts, key, attr_value, CASE WHEN service RLIKE '^(search|auth)$' THEN 'CORE' ELSE 'GROUP_A' END AS service_zone FROM flattened ORDER BY id DESC;

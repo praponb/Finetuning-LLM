@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM store_sales WHERE (sale_date <= '2024-11-20' AND sale_date > '2025-09-04') OR store_id = 5), store_id_summary AS (SELECT store_id, product_id, MIN(revenue) min_revenue FROM src GROUP BY store_id, product_id) SELECT * FROM store_id_summary WHERE min_revenue < 1100

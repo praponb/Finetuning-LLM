@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, ROUND(amount * 1.1, 2) AS adjusted_amount, COALESCE(amount, 0) AS amount_filled, COALESCE(method, 'NONE') AS method_filled FROM payments WHERE paid_at > TO_DATE('2023-05-14')) SELECT e.id, e.order_id, e.amount, e.adjusted_amount, e.method_filled, b.shipping_fee, b.channel, b.order_date FROM filtered e INNER JOIN orders b ON e.order_id <=> b.id;

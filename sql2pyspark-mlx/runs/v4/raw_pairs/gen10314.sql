@@ -1,1 +1,0 @@
-SELECT ss.product_id, ss.store_id, COUNT(i.quantity) AS quantity_count, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.store_id IN (1, 4, 6) GROUP BY ss.product_id, ss.store_id ORDER BY quantity_range DESC, product_id;

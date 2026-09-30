@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM payments WHERE amount <= 1570 AND amount < 1170), agg AS (SELECT HOUR(paid_at) AS paid_hour, method, ROUND(STDDEV(amount), 2) AS stddev_amount FROM src GROUP BY HOUR(paid_at), method) SELECT * FROM agg WHERE stddev_amount >= 24;

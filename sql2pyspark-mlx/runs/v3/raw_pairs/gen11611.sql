@@ -1,1 +1,0 @@
-SELECT status, CASE WHEN monthly_fee >= 244 THEN 'high' WHEN monthly_fee >= 89 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions WHERE end_date >= '2024-06-01' GROUP BY 1, 2 ORDER BY max_monthly_fee DESC, status, monthly_fee_bucket LIMIT 50

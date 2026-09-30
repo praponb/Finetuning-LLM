@@ -1,1 +1,0 @@
-WITH Ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance DESC, id) AS rnk FROM accounts WHERE opened_date >= '2024-12-11') SELECT id, account_type, balance FROM Ranked WHERE rnk <= 2 ORDER BY id DESC

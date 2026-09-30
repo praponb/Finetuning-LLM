@@ -1,1 +1,0 @@
-SELECT o.status, SUM(CASE WHEN s.status = 'DELIVERED' THEN s.cost ELSE 0 END) AS delivered_cost FROM shipments s JOIN orders o ON s.order_id = o.id WHERE s.carrier != 'FedEx' GROUP BY o.status HAVING delivered_cost > 21;

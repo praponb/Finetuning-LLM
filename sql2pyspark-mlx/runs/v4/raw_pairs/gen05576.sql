@@ -1,1 +1,0 @@
-WITH SupplierSummary AS (SELECT supplier_id, COUNT(*) AS cnt, MAX(price) - MIN(price) AS price_range FROM products WHERE category = 'Grocery' GROUP BY supplier_id) SELECT s.id, s.city, s.country, S.cnt, S.price_range FROM suppliers s INNER JOIN SupplierSummary S ON s.id = S.supplier_id ORDER BY S.cnt, id LIMIT 3;

@@ -1,1 +1,0 @@
-WITH SessionStats AS (SELECT session_id, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events GROUP BY session_id) SELECT s.country, S.stddev_duration_sec FROM sessions s LEFT JOIN SessionStats S ON s.id = S.session_id ORDER BY s.country

@@ -1,1 +1,0 @@
-SELECT products.category, ROUND(AVG(order_items.quantity), 2) AS avg_quantity FROM order_items LEFT OUTER JOIN products ON products.id = order_items.product_id JOIN orders ON order_items.order_id = orders.id WHERE orders.customer_id = 18 GROUP BY products.category HAVING ROUND(AVG(order_items.quantity), 2) > 75 ORDER BY 1 DESC

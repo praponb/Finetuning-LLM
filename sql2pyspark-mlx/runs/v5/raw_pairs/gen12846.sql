@@ -1,1 +1,0 @@
-SELECT ROUND(STDDEV(cost), 2) AS stddev_cost, SUM(CASE WHEN status = 'IN_TRANSIT' THEN 1 ELSE 0 END) AS in_transit_count, COUNT(*) AS num_shipments FROM shipments WHERE status <> 'RETURNED' ORDER BY in_transit_count DESC;

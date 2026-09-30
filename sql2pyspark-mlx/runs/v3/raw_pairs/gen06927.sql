@@ -1,1 +1,0 @@
-SELECT id, city, segment, signup_date, credit_limit, country, SUM(credit_limit) OVER (PARTITION BY city, segment ORDER BY signup_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_credit_limit, RANK() OVER (PARTITION BY country ORDER BY signup_date DESC) AS rnk FROM customers WHERE segment NOT IN ('SMB', 'Consumer', 'Corporate') ORDER BY id DESC;

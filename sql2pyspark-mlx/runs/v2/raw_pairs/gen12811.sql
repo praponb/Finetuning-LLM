@@ -1,1 +1,0 @@
-select web_events.duration_sec, web_events.session_id, sessions.device, sessions.started_at from web_events right join sessions on web_events.session_id = sessions.id where web_events.page = '/product' order by session_id desc;

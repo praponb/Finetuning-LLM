@@ -1,1 +1,0 @@
-select account_type, balance_range, closed_count from (select account_type, max(balance) - min(balance) as balance_range, sum(case when status = 'CLOSED' then 1 else 0 end) as closed_count from accounts group by account_type) as x where closed_count > 28 order by balance_range desc, 3 desc, account_type limit 50

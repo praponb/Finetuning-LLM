@@ -1,1 +1,0 @@
-WITH joined AS (SELECT e.*, b.budget FROM employees e LEFT JOIN departments b ON e.dept_id = b.id) SELECT dept_id, SIZE(COLLECT_SET(job_title)) AS num_job_titles, COUNT(*) FILTER (WHERE level = 'L1') AS l1_rows, APPROX_PERCENTILE(salary, 0.5) AS salary_p50 FROM joined GROUP BY 1 HAVING l1_rows > 1;

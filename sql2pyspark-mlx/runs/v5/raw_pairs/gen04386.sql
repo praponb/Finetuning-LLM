@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, UPPER(status) AS status_upper FROM subscriptions WHERE customer_id IS NOT NULL) SELECT customer_id FROM base EXCEPT SELECT customer_id FROM subscriptions WHERE status IN ('EXPIRED', 'ACTIVE', 'CANCELLED');

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT plan, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions WHERE status NOT IN ('PAUSED', 'EXPIRED', 'ACTIVE') GROUP BY plan) AS x WHERE max_monthly_fee >= 70 ORDER BY max_monthly_fee DESC, plan LIMIT 1;

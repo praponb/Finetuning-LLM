@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id, product_id ORDER BY quantity DESC NULLS FIRST, id) AS row_num FROM order_items) x WHERE row_num = 1) SELECT product_id, BIT_OR(quantity) AS quantity_bit_or, MIN(unit_price) AS min_unit_price, CORR(unit_price, quantity) AS corr_unit_price_quantity FROM latest GROUP BY product_id

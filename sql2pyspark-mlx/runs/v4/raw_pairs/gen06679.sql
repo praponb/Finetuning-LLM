@@ -1,1 +1,0 @@
-select txn_type, cast(is_flagged as int) is_flagged_flag, case when merchant in ('7-Eleven', 'Lazada') then 'Tier 1' else 'Other' end merchant_group from transactions where to_date(txn_time) >= '2025-02-01'

@@ -1,1 +1,0 @@
-with order_stats as (select order_id, round(stddev(unit_price), 2) stddev_unit_price, count(*) row_count from order_items where quantity between 4 and 6 group by order_id) select o.id, o.order_date, o.status, os.stddev_unit_price, os.row_count from orders o inner join order_stats os on o.id = os.order_id order by row_count;

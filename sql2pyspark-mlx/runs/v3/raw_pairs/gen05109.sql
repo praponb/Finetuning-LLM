@@ -1,1 +1,0 @@
-select id, launch_date, price, stock_qty, round(avg(price) over (order by launch_date, id rows between 3 preceding and current row), 2) as price_moving_avg_4, round(avg(stock_qty) over (order by launch_date, id rows between 3 preceding and current row), 2) as stock_qty_moving_avg_4 from products where cost <= 220 order by launch_date desc

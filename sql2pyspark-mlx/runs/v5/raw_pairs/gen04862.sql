@@ -1,1 +1,0 @@
-select id, unit_price, order_id, case when unit_price >= 430 then 'High' when unit_price >= 60 then 'Medium' else 'Low' end unit_price_tier, round(quantity * 0.9, 2) quantity_adjusted from order_items where not (order_id in (3, 32, 39) and quantity < 3 and quantity <= 8);

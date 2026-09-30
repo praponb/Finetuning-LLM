@@ -1,1 +1,0 @@
-SELECT order_id, SUM(quantity) AS total_quantity, COUNT(DISTINCT unit_price) AS unique_orders, MAX(quantity) AS max_quantity FROM order_items WHERE NOT (product_id = 26 AND quantity >= 7) GROUP BY order_id HAVING total_quantity > 22;

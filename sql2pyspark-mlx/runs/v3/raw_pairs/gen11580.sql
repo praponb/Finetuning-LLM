@@ -1,1 +1,0 @@
-select case when a.balance >= 87000 then 'high' when a.balance >= 30000 then 'mid' else 'low' end as balance_bucket, avg(t.amount) as avg_amount from transactions t right outer join accounts a on t.account_id = a.id group by case when a.balance >= 87000 then 'high' when a.balance >= 30000 then 'mid' else 'low' end order by avg_amount asc, balance_bucket desc

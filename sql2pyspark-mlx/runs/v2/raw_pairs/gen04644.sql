@@ -1,1 +1,0 @@
-SELECT e.id, e.full_name, e.email, e.level FROM employees e WHERE e.job_title = 'Director' AND e.dept_id IN (SELECT id FROM departments WHERE location IN ('New York', 'Tokyo', 'Singapore')) ORDER BY e.id ASC, e.email DESC;

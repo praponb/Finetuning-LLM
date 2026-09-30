@@ -1,1 +1,0 @@
-SELECT id, plan, status, monthly_fee, CASE WHEN status = 'ACTIVE' THEN 1 ELSE 0 END AS is_active, UPPER(status) AS status_upper FROM subscriptions WHERE end_date >= '2024-08-12' AND (customer_id IS NOT NULL OR end_date < '2024-05-01');

@@ -1,1 +1,0 @@
-select t.id, t.amount, a.balance, c.email, c.signup_date from transactions t inner join accounts a on t.account_id = a.id inner join customers c on a.customer_id = c.id where t.txn_type in ('REFUND', 'FEE', 'CREDIT')

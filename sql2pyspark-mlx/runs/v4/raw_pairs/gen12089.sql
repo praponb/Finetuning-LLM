@@ -1,1 +1,0 @@
-select manager_id, is_remote, count(distinct salary) as unique_levels, max(hire_date) as latest_hire_date, round((100 * sum(case when job_title = 'Designer' then 1 else 0 end)) / count(*), 1) as pct_designer from employees group by 1, 2 order by latest_hire_date

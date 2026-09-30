@@ -1,1 +1,0 @@
-SELECT job_title, QUARTER(hire_date) hire_quarter, level, MAX(salary) - MIN(salary) salary_range, ROUND(STDDEV(salary), 2) stddev_salary FROM employees WHERE is_remote GROUP BY job_title, QUARTER(hire_date), level HAVING MAX(salary) - MIN(salary) < 71

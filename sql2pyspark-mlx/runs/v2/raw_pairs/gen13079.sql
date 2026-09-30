@@ -1,1 +1,0 @@
-select d.budget, t.last_hire_date from departments d left join (select dept_id, max(hire_date) as last_hire_date from employees group by dept_id) t on d.id = t.dept_id order by last_hire_date desc, d.budget

@@ -1,1 +1,0 @@
-with deduped as (select *, row_number() over (partition by city, country order by rating nulls last, id) as rn from suppliers qualify rn = 1) select id, supplier_name, country, city, rn from deduped order by country desc nulls last;

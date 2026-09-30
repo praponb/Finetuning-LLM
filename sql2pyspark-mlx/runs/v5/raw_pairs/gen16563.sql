@@ -1,1 +1,0 @@
-with supplier_totals as (select supplier_id, sum(case when brand = 'Globex' then price else 0 end) globex_price from products where launch_date >= '2024-03-24' group by supplier_id) select s.city, st.globex_price from suppliers s inner join supplier_totals st on s.id = st.supplier_id order by s.city;

@@ -1,1 +1,0 @@
-SELECT id, email, LAST_DAY(signup_date) AS signup_date_month_end, CASE WHEN segment IN ('SMB', 'Consumer') THEN 'Core' ELSE 'Other' END AS segment_group FROM customers WHERE UPPER(TRIM(name)) = 'JACK TAYLOR' ORDER BY id DESC, segment_group DESC;

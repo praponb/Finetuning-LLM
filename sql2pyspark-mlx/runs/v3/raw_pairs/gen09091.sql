@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, COUNT(*) AS total_count, COUNT(CASE WHEN browser = 'Chrome' THEN 1 END) AS chrome_count FROM sessions GROUP BY customer_id) SELECT c.country, c.credit_limit, ct.total_count, ct.chrome_count FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id ORDER BY c.country;

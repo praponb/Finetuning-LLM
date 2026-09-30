@@ -1,1 +1,0 @@
-SELECT MONTH(opened_date) AS opened_month, ROUND((100 * SUM(CASE WHEN account_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_credit, MAX(balance) AS max_balance FROM accounts GROUP BY MONTH(opened_date) HAVING ROUND((100 * SUM(CASE WHEN account_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) < 75 ORDER BY opened_month DESC;

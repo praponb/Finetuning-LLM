@@ -1,1 +1,0 @@
-SELECT CASE WHEN salary >= 153000 THEN 'HIGH' ELSE 'LOW' END AS salary_tier, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, COUNT_IF(level = 'L4') AS l4_events, COUNT(*) FILTER (WHERE level = 'L2') AS l2_rows, PERCENTILE_APPROX(salary, ARRAY(0.25, 0.5, 0.75)) AS salary_quartiles FROM employees GROUP BY 1;

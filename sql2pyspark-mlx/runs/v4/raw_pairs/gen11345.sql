@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, device_code, reading_ts, temp_c, pressure, status_bits, firmware, YEAR(reading_ts) AS reading_ts_year, ROUND(pressure, 2) AS pressure_rounded FROM device_readings WHERE humidity <= 56) SELECT * FROM (SELECT id, device_code, temp_c, pressure_rounded, pressure FROM filtered) src UNPIVOT (value FOR kpi IN (temp_c, pressure_rounded, pressure));

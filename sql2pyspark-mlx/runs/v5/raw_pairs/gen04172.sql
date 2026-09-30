@@ -1,1 +1,0 @@
-SELECT we.event_time, we.page, we.event_type, s.customer_id, s.browser FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id WHERE s.device IN ('desktop', 'tablet', 'mobile') ORDER BY event_type;

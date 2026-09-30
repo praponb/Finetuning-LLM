@@ -1,1 +1,0 @@
-SELECT st.city, QUARTER(st.opened_date) opened_quarter, SUM(CASE WHEN s.carrier = 'Kerry' THEN s.cost ELSE 0 END) kerry_cost, MAX(s.delivered_date) latest_delivered_date FROM shipments s JOIN orders o ON s.order_id = o.id RIGHT OUTER JOIN stores st ON o.store_id = st.id WHERE st.city IN ('New York', 'Singapore') GROUP BY st.city, QUARTER(st.opened_date)

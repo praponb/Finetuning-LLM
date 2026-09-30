@@ -1,1 +1,0 @@
-with ranked_inventory as (select id, product_id, quantity, last_restock, row_number() over (partition by product_id order by quantity, id) as pos from inventory) select * from ranked_inventory where pos = 1 order by quantity desc;

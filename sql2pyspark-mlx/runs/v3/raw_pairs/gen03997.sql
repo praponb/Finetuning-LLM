@@ -1,1 +1,0 @@
-WITH recent_suppliers AS (SELECT * FROM suppliers WHERE LOWER(TRIM(supplier_name)) = 'eurogoods gmbh'), Summary AS (SELECT city, COUNT(DISTINCT rating) AS unique_countrys, SUM(rating) AS total_rating FROM recent_suppliers GROUP BY city) SELECT city, unique_countrys, total_rating FROM Summary ORDER BY total_rating DESC, city LIMIT 20;

@@ -1,1 +1,0 @@
-WITH valid_web_events AS (SELECT * FROM web_events WHERE event_time >= '2025-01-30'), Agg AS (SELECT event_type, session_id, COUNT(DISTINCT duration_sec) AS unique_event_types FROM valid_web_events GROUP BY event_type, session_id) SELECT event_type, session_id, unique_event_types FROM Agg WHERE unique_event_types > 9 ORDER BY event_type ASC, session_id ASC LIMIT 20;

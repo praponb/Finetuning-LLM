@@ -1,1 +1,0 @@
-WITH Numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC, id) pos FROM orders WHERE discount >= 0.39) SELECT id, customer_id, amount, order_date FROM Numbered WHERE pos <= 5;

@@ -1,1 +1,0 @@
-select p.brand, quarter(p.launch_date) as launch_quarter, sum(oi.quantity * oi.unit_price) as revenue, count(*) as order_item_count from order_items oi right join orders o on oi.order_id = o.id join products p on oi.product_id = p.id where p.supplier_id in (4, 23) group by p.brand, quarter(p.launch_date) order by p.brand, launch_quarter limit 5

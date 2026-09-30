@@ -1,1 +1,0 @@
-SELECT city, country, supplier_name, UPPER(supplier_name) AS supplier_name_upper FROM suppliers WHERE NOT (city = 'Berlin' AND (supplier_name LIKE 'Si%' OR country IN ('TH', 'DE', 'UK'))) ORDER BY country ASC;

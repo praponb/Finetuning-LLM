@@ -1,1 +1,0 @@
-SELECT location, dept_name, SUM(CASE WHEN location = 'Berlin' THEN budget ELSE 0 END) AS berlin_budget FROM departments WHERE location IN ('Bangkok', 'Berlin') GROUP BY location, dept_name ORDER BY location DESC, berlin_budget DESC;

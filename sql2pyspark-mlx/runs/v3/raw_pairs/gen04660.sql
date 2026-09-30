@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, COUNT(s.monthly_fee) AS monthly_fee_count, MIN(s.start_date) AS min_start_date FROM subscriptions s FULL OUTER JOIN customers c ON s.customer_id = c.id GROUP BY DATE_TRUNC('MONTH', c.signup_date)

@@ -1,1 +1,0 @@
-SELECT opened_date, CONCAT_WS(',', account_type, status) AS account_type_status_key, DAYOFWEEK(opened_date) AS opened_date_dayofweek FROM accounts WHERE balance BETWEEN 36000 AND 46000 ORDER BY account_type_status_key

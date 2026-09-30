@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(CASE WHEN country = 'US' THEN 1 END) AS us_count FROM sessions GROUP BY customer_id) SELECT c.age, c.is_active, cs.us_count FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.us_count >= 10 ORDER BY us_count DESC;

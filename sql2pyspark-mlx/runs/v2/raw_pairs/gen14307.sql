@@ -1,1 +1,0 @@
-WITH AccountSummary AS (SELECT account_id, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, A.stddev_amount FROM accounts a INNER JOIN AccountSummary A ON a.id = A.account_id

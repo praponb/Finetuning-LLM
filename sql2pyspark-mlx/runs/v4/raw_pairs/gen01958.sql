@@ -1,1 +1,0 @@
-SELECT id, merchant, txn_time FROM (SELECT id, merchant, txn_time, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY txn_time, id) AS pos FROM transactions WHERE account_id IN (6, 35)) AS t WHERE pos <= 3;

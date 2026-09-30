@@ -1,1 +1,0 @@
-select *, first_value(status, true) over (partition by account_type order by opened_date, id rows between unbounded preceding and current row) first_known_status, avg(balance) over (partition by status, account_type order by balance, id rows between 5 preceding and current row) balance_avg_5 from accounts;

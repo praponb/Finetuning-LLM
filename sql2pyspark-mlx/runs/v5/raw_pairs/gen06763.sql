@@ -1,1 +1,0 @@
-SELECT o.customer_id, o.amount, o.order_date, oi.order_id FROM orders o LEFT OUTER JOIN order_items oi ON o.id = oi.order_id WHERE oi.quantity >= 5 OR oi.order_id IN (34, 36) ORDER BY o.customer_id, o.amount

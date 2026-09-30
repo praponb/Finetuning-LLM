@@ -1,1 +1,0 @@
-SELECT region, COUNT(DISTINCT city) AS distinct_cities, SIZE(COLLECT_SET(city)) AS num_cities, COUNT(*) FILTER (WHERE city = 'Tokyo') AS tokyo_rows, COUNT(DISTINCT city) AS distinct_cities_2, APPROX_PERCENTILE(sqft, 0.5) AS sqft_p50 FROM stores GROUP BY 1

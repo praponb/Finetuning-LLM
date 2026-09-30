@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, COUNT(*) AS row_count FROM transactions GROUP BY account_id) SELECT a.id, a.account_type, a.status, as.row_count FROM accounts a JOIN account_stats as ON a.id = as.account_id ORDER BY a.account_type DESC, id LIMIT 3

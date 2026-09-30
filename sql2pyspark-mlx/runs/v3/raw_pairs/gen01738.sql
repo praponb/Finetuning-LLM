@@ -1,1 +1,0 @@
-select plan, count(distinct monthly_fee) unique_customers from subscriptions where start_date <= '2023-11-01' and start_date between '2023-04-01' and '2024-08-14' and monthly_fee is not null group by plan having unique_customers > 5

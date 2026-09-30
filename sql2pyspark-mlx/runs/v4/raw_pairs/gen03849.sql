@@ -1,1 +1,0 @@
-SELECT id, status, order_date, amount, LAG(amount, 1, 0) OVER (PARTITION BY status ORDER BY order_date, id) prev_amount, ROUND(AVG(amount) OVER (ORDER BY order_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) amount_moving_avg_4 FROM orders

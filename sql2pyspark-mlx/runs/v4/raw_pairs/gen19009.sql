@@ -1,1 +1,0 @@
-SELECT ss.revenue, s.opened_date, p.cost, p.launch_date FROM store_sales ss RIGHT OUTER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON p.id = ss.product_id WHERE s.store_name LIKE '%Town%' AND ss.units > 18 ORDER BY revenue DESC

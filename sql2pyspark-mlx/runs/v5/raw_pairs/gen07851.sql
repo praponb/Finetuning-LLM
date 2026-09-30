@@ -1,1 +1,0 @@
-select id, region, sqft, opened_date, round(sqft / sum(sqft) over (partition by region), 3) as sqft_share, lag(sqft, 1, 0) over (partition by region order by opened_date, id) as prev_sqft from stores;

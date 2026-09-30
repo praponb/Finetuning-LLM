@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, s.order_id, s.delivered_date, o.order_date, o.shipping_fee, o.customer_id FROM shipments s LEFT JOIN orders o ON s.order_id = o.id WHERE s.status IN ('RETURNED', 'DELIVERED', 'IN_TRANSIT') ORDER BY delivered_date;

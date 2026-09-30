@@ -1,1 +1,0 @@
-SELECT s.id, s.shipped_date, s.order_id, o.amount, o.store_id, c.is_active, c.age, LAST_DAY(s.shipped_date) AS shipped_date_month_end FROM shipments s JOIN orders o ON o.id = s.order_id FULL OUTER JOIN customers c ON o.customer_id = c.id WHERE o.amount <= 1260

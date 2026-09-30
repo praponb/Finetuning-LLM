@@ -1,1 +1,0 @@
-WITH valid_accounts AS (SELECT * FROM accounts WHERE balance BETWEEN 26000 AND 69000 AND balance >= 71000 AND status = 'OPEN'), agg AS (SELECT DATE_TRUNC('MONTH', opened_date) opened_month, AVG(balance) avg_balance FROM valid_accounts GROUP BY DATE_TRUNC('MONTH', opened_date)) SELECT * FROM agg WHERE avg_balance >= 47000;

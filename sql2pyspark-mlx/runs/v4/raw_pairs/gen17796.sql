@@ -1,1 +1,0 @@
-SELECT p.category, p.supplier_id, ROUND(STDDEV(oi.quantity), 2) AS stddev_quantity, COUNT(*) AS row_count FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id WHERE oi.product_id IN (25, 36) GROUP BY p.category, p.supplier_id;

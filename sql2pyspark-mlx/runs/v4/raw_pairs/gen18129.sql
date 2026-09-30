@@ -1,1 +1,0 @@
-WITH valid_orders AS (SELECT * FROM orders WHERE customer_id IN (9, 13, 21, 24) AND (discount <= 0.15 OR amount BETWEEN 410 AND 1500)), orders_stats AS (SELECT YEAR(order_date) order_year, AVG(discount) avg_discount FROM valid_orders GROUP BY YEAR(order_date)) SELECT order_year, avg_discount FROM orders_stats WHERE avg_discount >= 0.1

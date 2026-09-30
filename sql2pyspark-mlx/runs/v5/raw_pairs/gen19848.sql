@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM subscriptions WHERE plan IN ('enterprise', 'basic')), summary AS (SELECT plan, ROUND((100 * SUM(CASE WHEN status = 'EXPIRED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_expired, MAX(end_date) AS latest_end_date FROM src GROUP BY plan) SELECT * FROM summary ORDER BY latest_end_date, plan DESC

@@ -1,1 +1,0 @@
-WITH kept AS (SELECT s.* FROM orders s WHERE NOT EXISTS (SELECT 1 FROM order_items c WHERE c.order_id = s.id AND c.product_id = 12)) SELECT channel, store_id, COUNT(DISTINCT store_id) AS distinct_store_ids, CORR(shipping_fee, amount) AS corr_shipping_fee_amount, COUNT(DISTINCT channel) AS distinct_channels FROM kept GROUP BY channel, store_id

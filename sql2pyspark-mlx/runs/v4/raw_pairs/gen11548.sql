@@ -1,1 +1,0 @@
-SELECT QUARTER(order_date) AS order_quarter, SUM(shipping_fee) AS total_shipping_fee, COUNT(DISTINCT discount) AS unique_channels FROM orders WHERE YEAR(order_date) = 2025 AND (customer_id IN (7, 29) OR amount IS NOT NULL) GROUP BY QUARTER(order_date)

@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 4300 THEN 'HIGH' ELSE 'LOW' END AS amount_tier, COUNT(CASE WHEN txn_type = 'REFUND' THEN 1 END) AS refund_count, ROUND(AVG(amount), 2) AS avg_amount, STDDEV_SAMP(amount) AS amount_stddev FROM transactions GROUP BY 1;

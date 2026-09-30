@@ -1,1 +1,0 @@
-SELECT QUARTER(c.signup_date) AS signup_quarter, MAX(we.duration_sec) - MIN(we.duration_sec) AS duration_sec_range FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE we.duration_sec < 193 GROUP BY QUARTER(c.signup_date);

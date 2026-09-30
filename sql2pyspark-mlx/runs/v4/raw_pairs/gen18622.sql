@@ -1,1 +1,0 @@
-SELECT p.brand, MAX(ss.sale_date) AS last_sale_date, COUNT(ss.revenue) AS revenue_count FROM store_sales ss FULL OUTER JOIN products p ON ss.product_id = p.id GROUP BY p.brand ORDER BY last_sale_date, p.brand DESC LIMIT 1;

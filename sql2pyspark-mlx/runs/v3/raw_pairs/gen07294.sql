@@ -1,1 +1,0 @@
-select sqft_bucket, stddev_sqft from (select case when sqft >= 15216 then 'high' when sqft >= 4892 then 'mid' else 'low' end as sqft_bucket, round(stddev(sqft), 2) as stddev_sqft from stores group by case when sqft >= 15216 then 'high' when sqft >= 4892 then 'mid' else 'low' end) as s where stddev_sqft >= 34 order by stddev_sqft desc;

@@ -1,1 +1,0 @@
-SELECT s.customer_id, s.browser, we.duration_sec, we.page, we.event_type FROM sessions s LEFT JOIN web_events we ON we.session_id = s.id WHERE s.browser IN ('Firefox', 'Chrome', 'Edge') OR s.browser IN ('Chrome', 'Edge', 'Safari')

@@ -1,1 +1,0 @@
-SELECT we.id, we.event_type, s.device, s.customer_id, s.country FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE we.event_type IN ('page_view', 'click', 'search') AND s.browser IN ('Safari', 'Edge')

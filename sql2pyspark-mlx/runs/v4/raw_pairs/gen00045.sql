@@ -1,1 +1,0 @@
-SELECT COUNT(CASE WHEN status = 'PAUSED' THEN 1 END) paused_count, SUM(CASE WHEN status = 'ACTIVE' THEN monthly_fee ELSE 0 END) active_monthly_fee, ROUND((100 * SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_enterprise FROM subscriptions ORDER BY paused_count DESC;

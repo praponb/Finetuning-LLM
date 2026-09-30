@@ -1,1 +1,0 @@
-SELECT YEAR(a.opened_date) opened_year, AVG(t.amount) avg_amount, COUNT(t.amount) amount_count FROM transactions t RIGHT OUTER JOIN accounts a ON t.account_id = a.id GROUP BY YEAR(a.opened_date) ORDER BY 3 DESC;

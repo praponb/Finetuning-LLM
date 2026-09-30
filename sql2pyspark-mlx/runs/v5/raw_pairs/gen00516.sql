@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT * FROM stores QUALIFY ROW_NUMBER() OVER (PARTITION BY city ORDER BY sqft NULLS FIRST, id) = 1) SELECT city, COUNT(DISTINCT id) AS distinct_ids, SUM(CASE WHEN region = 'East' THEN sqft ELSE 0 END) AS east_sqft, COUNT(CASE WHEN region = 'East' THEN 1 END) AS east_count FROM deduped GROUP BY 1 ORDER BY city DESC NULLS FIRST

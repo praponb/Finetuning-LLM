@@ -1,1 +1,0 @@
-WITH RankedAccounts AS (SELECT id, customer_id, opened_date, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY opened_date, id) row_num FROM accounts) SELECT * FROM RankedAccounts WHERE row_num <= 5 ORDER BY id

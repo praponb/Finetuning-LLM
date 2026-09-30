@@ -1,1 +1,0 @@
-select is_remote, level, round((100 * sum(case when job_title = 'Director' then 1 else 0 end)) / count(*), 1) as pct_director, count(*) as row_count, max(salary) as max_salary from employees where dept_id in (3, 24, 31) and email like '%@gmail.com' group by is_remote, level;

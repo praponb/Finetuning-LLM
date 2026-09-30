@@ -1,1 +1,0 @@
-WITH recent_products AS (SELECT * FROM products WHERE supplier_id IS NOT NULL), agg AS (SELECT supplier_id, MAX(cost) - MIN(cost) AS cost_range FROM recent_products GROUP BY supplier_id) SELECT * FROM agg WHERE cost_range < 34 ORDER BY cost_range DESC, supplier_id LIMIT 5;

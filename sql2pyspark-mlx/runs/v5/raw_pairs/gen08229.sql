@@ -1,1 +1,0 @@
-SELECT a.id, a.customer_id, c.segment, c.email, c.country, IF(c.is_active, 'Yes', 'No') AS is_active_label FROM accounts a INNER JOIN customers c ON a.customer_id = c.id WHERE a.status IN ('FROZEN', 'CLOSED', 'OPEN')

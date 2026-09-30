@@ -1,1 +1,0 @@
-SELECT we.id, we.page, s.started_at, s.device, c.country, c.is_active FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id RIGHT JOIN customers c ON s.customer_id = c.id WHERE we.event_type = 'purchase'

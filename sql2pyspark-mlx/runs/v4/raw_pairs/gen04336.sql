@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, level, hire_date, ROW_NUMBER() OVER (PARTITION BY level ORDER BY hire_date DESC, id) AS rn FROM employees) SELECT id, level, hire_date FROM ranked WHERE rn <= 3 ORDER BY hire_date;

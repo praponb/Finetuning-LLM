@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', order_date) AS order_month, SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) AS returned_count, MAX(order_date) AS latest_order_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM orders GROUP BY DATE_TRUNC('MONTH', order_date) HAVING MAX(amount) >= 650 ORDER BY order_month, latest_order_date DESC LIMIT 5

@@ -1,1 +1,0 @@
-select id, order_id, quantity, product_id from (select *, row_number() over (partition by order_id order by quantity desc, id) as row_num from order_items) as t where row_num <= 3 order by product_id desc;

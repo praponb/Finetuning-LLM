@@ -1,1 +1,0 @@
-SELECT opened_month, avg_sqft FROM (SELECT MONTH(opened_date) AS opened_month, ROUND(AVG(sqft), 2) AS avg_sqft FROM stores WHERE YEAR(opened_date) >= 2024 GROUP BY MONTH(opened_date)) AS sub WHERE avg_sqft >= 25 ORDER BY opened_month DESC;

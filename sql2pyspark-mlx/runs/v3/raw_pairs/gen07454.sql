@@ -1,1 +1,0 @@
-SELECT COUNT(DISTINCT quantity) AS unique_products, MIN(quantity) AS min_quantity, COUNT(quantity) AS quantity_count FROM inventory WHERE quantity = 203 AND store_id = 6 AND last_restock >= '2024-12-14' ORDER BY 3 DESC;

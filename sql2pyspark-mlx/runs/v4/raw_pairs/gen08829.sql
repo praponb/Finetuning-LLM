@@ -1,1 +1,0 @@
-select s.country, min(i.last_restock) as first_last_restock from inventory i inner join products p on i.product_id = p.id inner join suppliers s on p.supplier_id = s.id group by s.country order by country desc

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items WHERE order_id IN (32, 36, 38) GROUP BY CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END) AS x WHERE quantity_range > 45

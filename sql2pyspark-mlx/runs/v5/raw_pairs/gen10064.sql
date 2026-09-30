@@ -1,1 +1,0 @@
-WITH filtered_orders AS (SELECT *, amount - shipping_fee AS amount_with_shipping FROM orders WHERE customer_id IN (2, 15, 16, 19) AND status = 'PENDING' AND status IN ('COMPLETED', 'SHIPPED')), orders_stats AS (SELECT status, COUNT(*) AS order_count FROM filtered_orders GROUP BY status) SELECT status, order_count FROM orders_stats ORDER BY status, order_count DESC LIMIT 50

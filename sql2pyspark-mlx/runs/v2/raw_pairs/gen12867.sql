@@ -1,1 +1,0 @@
-SELECT product_id, store_sale_count, total_revenue FROM (SELECT product_id, COUNT(*) AS store_sale_count, SUM(revenue) AS total_revenue FROM store_sales GROUP BY product_id) AS x WHERE store_sale_count > 5 ORDER BY 1 LIMIT 5;

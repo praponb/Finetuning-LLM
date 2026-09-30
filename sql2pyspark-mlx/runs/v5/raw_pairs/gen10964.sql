@@ -1,1 +1,0 @@
-WITH inventory_by_product AS (SELECT product_id, SUM(quantity) total_quantity FROM inventory GROUP BY product_id) SELECT p.brand, p.stock_qty, ibp.total_quantity FROM products p INNER JOIN inventory_by_product ibp ON p.id = ibp.product_id WHERE ibp.total_quantity > 440 ORDER BY p.stock_qty DESC;

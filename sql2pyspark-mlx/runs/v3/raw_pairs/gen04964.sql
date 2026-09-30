@@ -1,1 +1,0 @@
-select d.location, max(e.salary) - min(e.salary) as salary_range from employees e inner join departments d on e.dept_id = d.id where d.location not in ('Bangkok', 'Tokyo', 'New York') group by d.location;

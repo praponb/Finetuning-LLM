@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, SUM(sqft) AS total_sqft, DENSE_RANK() OVER (ORDER BY SUM(sqft) DESC) AS rnk FROM stores WHERE city = 'Berlin' GROUP BY QUARTER(opened_date) ORDER BY opened_quarter DESC;

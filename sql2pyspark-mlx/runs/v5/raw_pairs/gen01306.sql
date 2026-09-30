@@ -1,1 +1,0 @@
-SELECT category, CASE WHEN price >= 1310 THEN 'LARGE' ELSE 'SMALL' END AS price_tier, COUNT(DISTINCT brand) AS distinct_brands, SIZE(COLLECT_SET(brand)) AS num_brands, APPROX_PERCENTILE(price, ARRAY(0.25, 0.5, 0.75)) AS price_quartiles FROM products GROUP BY category, CASE WHEN price >= 1310 THEN 'LARGE' ELSE 'SMALL' END HAVING SIZE(COLLECT_SET(brand)) < 1000

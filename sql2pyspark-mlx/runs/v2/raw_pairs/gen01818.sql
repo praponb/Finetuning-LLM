@@ -1,1 +1,0 @@
-SELECT inventory.store_id, products.stock_qty, stores.store_name FROM inventory LEFT JOIN products ON inventory.product_id = products.id LEFT JOIN stores ON inventory.store_id = stores.id ORDER BY store_id ASC, store_name DESC;

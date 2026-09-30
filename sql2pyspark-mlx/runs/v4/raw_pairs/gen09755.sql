@@ -1,1 +1,0 @@
-select *, ntile(3) over (order by shipping_fee asc, id asc) shipping_fee_bucket, sum(discount) over (partition by store_id order by discount asc, id asc rows between unbounded preceding and current row) cumulative_discount from orders

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, product_id, ROUND(AVG(units), 2) AS avg_units FROM store_sales WHERE MONTH(sale_date) IN (4, 7, 11) AND units < 25 GROUP BY CUBE(DATE_FORMAT(sale_date, 'yyyy-MM'), product_id) ORDER BY sale_month, product_id

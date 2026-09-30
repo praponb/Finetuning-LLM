@@ -1,1 +1,0 @@
-WITH not_flagged AS (SELECT s.* FROM stores s WHERE EXISTS (SELECT 1 FROM orders c WHERE c.store_id = s.id AND c.order_date >= s.opened_date)) SELECT id, store_name, city, region, opened_date FROM not_flagged ORDER BY id DESC, opened_date

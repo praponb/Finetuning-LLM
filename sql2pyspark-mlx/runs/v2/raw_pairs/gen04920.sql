@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount DESC, id) AS rnk FROM payments) SELECT id, method, amount, order_id FROM numbered WHERE rnk <= 3 ORDER BY amount DESC

@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, currency, EXPLODE(discounts) AS val FROM price_tiers) SELECT CASE WHEN val >= 74 THEN 'LARGE' ELSE 'SMALL' END AS val_tier, SUM(val) AS total_val, MAX(val) FILTER (WHERE currency = 'EUR') AS eur_max_val, COUNT(*) AS row_count FROM flattened GROUP BY 1 HAVING total_val > 0

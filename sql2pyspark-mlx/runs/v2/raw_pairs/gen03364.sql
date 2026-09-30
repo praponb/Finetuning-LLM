@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM departments WHERE budget BETWEEN 2591000 AND 2647000 AND location = 'Bangkok'), location_summary AS (SELECT location, MAX(budget) - MIN(budget) AS budget_range, SUM(CASE WHEN location = 'Chiang Mai' THEN 1 ELSE 0 END) AS chiang_mai_count FROM src GROUP BY location) SELECT location, chiang_mai_count FROM location_summary ORDER BY location LIMIT 50

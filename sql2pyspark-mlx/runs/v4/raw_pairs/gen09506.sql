@@ -1,1 +1,0 @@
-WITH ValidDepartments AS (SELECT *, ROUND(budget * 0.9, 2) AS adjusted_budget FROM departments WHERE (location IN ('Berlin', 'Bangkok', 'Singapore') AND dept_name = 'Finance') OR budget BETWEEN 1614000 AND 1659000), DepartmentsStats AS (SELECT location, SUM(budget) AS total_budget FROM ValidDepartments GROUP BY location) SELECT location, total_budget FROM DepartmentsStats;

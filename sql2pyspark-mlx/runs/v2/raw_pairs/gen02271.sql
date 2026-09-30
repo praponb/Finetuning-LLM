@@ -1,1 +1,0 @@
-select s.country, count(p.id) as product_count, sum(case when p.category = 'Books' then 1 else 0 end) as books_count from suppliers s left join products p on p.supplier_id = s.id where p.category = 'Sports' group by s.country order by books_count, country limit 20

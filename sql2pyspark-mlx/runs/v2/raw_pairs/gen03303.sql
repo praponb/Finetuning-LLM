@@ -1,1 +1,0 @@
-SELECT channel, AVG(amount) avg_amount, SUM(CASE WHEN channel = 'web' THEN discount ELSE 0 END) web_discount, SUM(shipping_fee) total_shipping_fee FROM orders GROUP BY channel HAVING SUM(shipping_fee) >= 140 ORDER BY avg_amount

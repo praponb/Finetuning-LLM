@@ -1,1 +1,0 @@
-SELECT country, city, unique_countrys, city_values FROM (SELECT country, city, COUNT(DISTINCT rating) AS unique_countrys, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM suppliers GROUP BY country, city) AS t WHERE unique_countrys >= 8 ORDER BY country DESC, city_values DESC;

@@ -1,1 +1,0 @@
-SELECT id, status, amount, order_id, paid_at, ROUND(amount / SUM(amount) OVER (PARTITION BY status), 3) AS amount_share, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY paid_at, id) AS rn FROM payments ORDER BY amount DESC;

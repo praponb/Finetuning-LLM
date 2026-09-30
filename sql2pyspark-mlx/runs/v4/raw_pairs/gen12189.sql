@@ -1,1 +1,0 @@
-SELECT accounts.status, ROUND(STDDEV(transactions.amount), 2) AS stddev_amount FROM transactions LEFT OUTER JOIN accounts ON transactions.account_id = accounts.id WHERE accounts.account_type = 'CHECKING' GROUP BY accounts.status ORDER BY stddev_amount;

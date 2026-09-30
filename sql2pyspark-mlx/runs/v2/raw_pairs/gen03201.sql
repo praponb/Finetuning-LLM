@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, COUNT(*) AS total_count, MIN(amount) AS min_amount FROM transactions WHERE TO_DATE(txn_time) >= '2024-05-01' GROUP BY account_id) SELECT a.balance, as.total_count, as.min_amount FROM accounts a LEFT OUTER JOIN account_stats as ON a.id = as.account_id ORDER BY total_count DESC;

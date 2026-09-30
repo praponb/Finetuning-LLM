@@ -1,1 +1,0 @@
-select oi.id, oi.order_id, oi.unit_price, p.price, s.supplier_name, s.city from order_items oi right outer join products p on oi.product_id = p.id right outer join suppliers s on p.supplier_id = s.id order by order_id;

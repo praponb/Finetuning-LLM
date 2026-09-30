@@ -1,1 +1,0 @@
-SELECT quantity_bucket, total_quantity FROM (SELECT CASE WHEN quantity >= 238 THEN 'high' WHEN quantity >= 76 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(quantity) AS total_quantity FROM inventory GROUP BY CASE WHEN quantity >= 238 THEN 'high' WHEN quantity >= 76 THEN 'mid' ELSE 'low' END) AS x WHERE total_quantity < 970 ORDER BY quantity_bucket, total_quantity DESC

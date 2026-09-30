@@ -1,1 +1,0 @@
-select p.cost, p.launch_date, p.stock_qty, oi.product_id, oi.order_id, oi.unit_price, cast(oi.unit_price as int) unit_price_int from products p left join order_items oi on p.id = oi.product_id order by unit_price, unit_price_int desc

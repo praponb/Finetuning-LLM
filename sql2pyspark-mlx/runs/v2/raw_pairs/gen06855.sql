@@ -1,1 +1,0 @@
-select id, status, shipping_fee from (select id, status, shipping_fee, row_number() over (partition by status order by shipping_fee desc, id) as row_num from orders) as ranked where row_num <= 2 order by shipping_fee desc

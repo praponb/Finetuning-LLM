@@ -1,1 +1,0 @@
-SELECT customers.city, SUM(CASE WHEN transactions.merchant = 'Shell' THEN 1 ELSE 0 END) AS shell_count FROM transactions LEFT JOIN accounts ON accounts.id = transactions.account_id INNER JOIN customers ON accounts.customer_id = customers.id GROUP BY customers.city;

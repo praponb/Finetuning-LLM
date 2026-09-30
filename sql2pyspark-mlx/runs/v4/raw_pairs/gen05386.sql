@@ -1,1 +1,0 @@
-SELECT id, service, level, status_code, context, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').duration AS duration_sec, SIZE(context) AS num_context FROM app_logs;

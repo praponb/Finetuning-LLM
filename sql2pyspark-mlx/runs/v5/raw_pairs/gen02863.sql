@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, job_title, hire_date, email, ROW_NUMBER() OVER (PARTITION BY job_title ORDER BY hire_date, id) rn FROM employees) SELECT id, job_title, hire_date, email FROM ranked WHERE rn = 1;

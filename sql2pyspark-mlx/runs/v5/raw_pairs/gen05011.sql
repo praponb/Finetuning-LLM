@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, LEAST(cost, stock_qty) AS least_cost_stock_qty FROM products WHERE launch_date >= DATE '2023-05-05') SELECT category FROM filtered INTERSECT ALL SELECT category FROM products WHERE stock_qty < 334

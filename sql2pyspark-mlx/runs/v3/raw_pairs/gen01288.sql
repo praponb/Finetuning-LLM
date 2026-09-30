@@ -1,1 +1,0 @@
-SELECT dept_name, location, CASE WHEN budget >= 3579000 THEN 'high' WHEN budget >= 1761000 THEN 'mid' ELSE 'low' END budget_bucket, SORT_ARRAY(COLLECT_SET(location)) location_list FROM departments WHERE location IN ('Chiang Mai', 'Berlin') AND (dept_name != 'Legal' OR location != 'Bangkok') GROUP BY 1, 2, 3 ORDER BY budget_bucket DESC, location

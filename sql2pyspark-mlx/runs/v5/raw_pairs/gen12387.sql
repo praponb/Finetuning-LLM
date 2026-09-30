@@ -1,1 +1,0 @@
-select id, coalesce(context['region'], 'unknown') as region_or_default, get_json_object(payload_json, '$.duration') as duration_text, context['version'] as version, array_contains(map_keys(context), 'version') as has_version, get_json_object(payload_json, '$.user.tier') as user_tier from app_logs

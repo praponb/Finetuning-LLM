@@ -1,1 +1,0 @@
-SELECT o.id, o.shipping_fee, s.opened_date, s.store_name, c.credit_limit, c.age FROM orders o INNER JOIN stores s ON o.store_id = s.id LEFT OUTER JOIN customers c ON o.customer_id = c.id ORDER BY shipping_fee DESC, id

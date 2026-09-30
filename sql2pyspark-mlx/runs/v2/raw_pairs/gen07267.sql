@@ -1,1 +1,0 @@
-SELECT MONTH(event_time) AS event_month, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE duration_sec != 398 AND page NOT IN ('/product', '/checkout') GROUP BY MONTH(event_time) ORDER BY min_duration_sec

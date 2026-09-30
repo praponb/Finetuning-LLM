@@ -1,1 +1,0 @@
-WITH RecentOrders AS (SELECT * FROM orders WHERE store_id IN (22, 31, 32) AND (store_id IS NOT NULL OR shipping_fee < 15)), summary AS (SELECT channel, SUM(amount) total_amount FROM RecentOrders GROUP BY channel) SELECT channel, total_amount FROM summary WHERE total_amount >= 2800 ORDER BY channel LIMIT 1

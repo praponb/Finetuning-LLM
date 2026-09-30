@@ -1,1 +1,0 @@
-SELECT departments.location, departments.budget, departments.dept_name, employees.manager_id, employees.hire_date FROM departments LEFT OUTER JOIN employees ON employees.dept_id = departments.id ORDER BY dept_name DESC

@@ -1,1 +1,0 @@
-SELECT id, method, amount, order_id, paid_at, AVG(amount) OVER (PARTITION BY method) AS method_avg_amount, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY paid_at DESC, id) AS paid_at_row FROM payments;

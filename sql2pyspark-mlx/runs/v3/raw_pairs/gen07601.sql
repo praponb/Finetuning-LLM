@@ -1,1 +1,0 @@
-SELECT p.id, p.method, p.paid_at, o.status, s.opened_date, s.store_name FROM payments p JOIN orders o ON p.order_id = o.id JOIN stores s ON o.store_id = s.id WHERE p.method IN ('bank_transfer', 'cash', 'promptpay')

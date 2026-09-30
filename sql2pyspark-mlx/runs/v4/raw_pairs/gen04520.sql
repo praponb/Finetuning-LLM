@@ -1,1 +1,0 @@
-SELECT YEAR(p.launch_date) AS launch_year, COUNT(*) AS total_count FROM order_items oi INNER JOIN products p ON p.id = oi.product_id GROUP BY YEAR(p.launch_date) HAVING COUNT(*) > 4 ORDER BY total_count DESC, launch_year DESC

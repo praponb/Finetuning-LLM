@@ -1,1 +1,0 @@
-with flattened as (select id, plan, effective_from, currency, element from price_tiers lateral view explode(tier_limits) li as element) select case when element >= 77 then 'HIGH' else 'LOW' end as element_tier, count(*) as row_count, sort_array(collect_set(plan)) as plan_list from flattened group by case when element >= 77 then 'HIGH' else 'LOW' end having row_count < 1

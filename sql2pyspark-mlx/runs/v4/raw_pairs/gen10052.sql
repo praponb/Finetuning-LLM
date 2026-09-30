@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN budget >= 4473000 THEN 'high' WHEN budget >= 673000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, budget FROM departments) PIVOT (SUM(budget) FOR location IN ('London', 'Chiang Mai', 'Singapore', 'Berlin')) ORDER BY budget_bucket;

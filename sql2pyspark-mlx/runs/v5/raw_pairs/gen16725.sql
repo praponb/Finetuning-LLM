@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 310 THEN 'LARGE' ELSE 'SMALL' END AS unit_price_tier, PERCENTILE_APPROX(quantity, 0.95) AS quantity_p95, PERCENTILE_APPROX(quantity, ARRAY(0.25, 0.5, 0.75)) AS quantity_quartiles, BIT_AND(quantity) AS quantity_bit_and FROM order_items GROUP BY unit_price_tier

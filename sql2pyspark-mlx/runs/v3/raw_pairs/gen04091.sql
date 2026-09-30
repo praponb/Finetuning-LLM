@@ -1,1 +1,0 @@
-select stock_qty, launch_date, tags, round(stock_qty, 0) as stock_qty_rounded, date_add(launch_date, 86) as launch_date_plus_86d from products where brand not in ('Globex', 'Acme') and cost > 640 and stock_qty between 270 and 332 order by stock_qty_rounded desc

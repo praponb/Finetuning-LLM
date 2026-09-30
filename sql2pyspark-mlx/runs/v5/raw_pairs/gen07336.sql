@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, COUNT(credit_limit) AS credit_limit_count FROM customers GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM')) AS t WHERE credit_limit_count > 4;

@@ -1,1 +1,0 @@
-select s.id, s.device, s.country, s.started_at, c.credit_limit, c.country as customer_country from sessions s left join customers c on s.customer_id = c.id where c.country in ('JP', 'TH') and c.country = 'US'

@@ -1,1 +1,0 @@
-select t.amount, t.txn_time, a.account_type, c.signup_date from transactions t full outer join accounts a on a.id = t.account_id right join customers c on a.customer_id = c.id where t.account_id in (18, 22, 25, 30) and t.amount >= 3700 order by c.signup_date, txn_time;

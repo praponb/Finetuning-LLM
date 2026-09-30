@@ -1,1 +1,0 @@
-with numbered as (select id, status, shipped_date, order_id, row_number() over (partition by status order by shipped_date desc, id) as row_num from shipments where cost between 47 and 62) select id, status, shipped_date, order_id from numbered where row_num <= 3;

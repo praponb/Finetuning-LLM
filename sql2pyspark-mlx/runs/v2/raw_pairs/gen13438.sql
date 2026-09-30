@@ -1,1 +1,0 @@
-select * from (select is_flagged, merchant, sum(case when merchant = '7-Eleven' then 1 else 0 end) as 7_eleven_count, max(amount) - min(amount) as amount_range from transactions where account_id in (22, 24, 26) group by is_flagged, merchant) as sub where amount_range > 30

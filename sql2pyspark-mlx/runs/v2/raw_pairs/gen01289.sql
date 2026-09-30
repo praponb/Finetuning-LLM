@@ -1,1 +1,0 @@
-select event_type, search_count, max_duration_sec from (select event_type, sum(case when page = '/search' then 1 else 0 end) search_count, max(duration_sec) max_duration_sec from web_events group by event_type) x where search_count < 50 order by search_count, event_type limit 5;

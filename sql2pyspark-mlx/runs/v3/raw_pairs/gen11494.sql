@@ -1,1 +1,0 @@
-select page, sum(duration_sec) as total_duration_sec, count(*) as cnt, round(sum(duration_sec) * 100.0 / sum(sum(duration_sec)) over (), 2) as pct_of_total from web_events where page = '/checkout' group by page

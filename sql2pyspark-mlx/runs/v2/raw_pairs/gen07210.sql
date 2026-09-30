@@ -1,1 +1,0 @@
-select order_id, concat_ws(', ', sort_array(collect_set(method))) as method_values, round(stddev(amount), 2) as stddev_amount from payments group by order_id having round(stddev(amount), 2) > 21 order by order_id;

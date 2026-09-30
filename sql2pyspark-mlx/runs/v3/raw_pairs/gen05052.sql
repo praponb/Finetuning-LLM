@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 1.5 THEN 'mid' ELSE 'low' END AS rating_bucket, AVG(rating) AS avg_rating, SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END) AS new_york_count FROM suppliers GROUP BY rating_bucket

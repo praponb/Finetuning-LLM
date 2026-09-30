@@ -1,1 +1,0 @@
-SELECT COUNT(price) AS price_count, SUM(CASE WHEN category = 'Grocery' THEN cost ELSE 0 END) AS grocery_cost FROM products WHERE supplier_id IS NOT NULL AND MONTH(launch_date) IN (1, 2, 5) AND cost >= 290

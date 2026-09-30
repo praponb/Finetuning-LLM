@@ -1,1 +1,0 @@
-SELECT QUARTER(start_date) AS start_quarter, COUNT(monthly_fee) AS monthly_fee_count, SUM(CASE WHEN plan = 'standard' THEN 1 ELSE 0 END) AS standard_count FROM subscriptions WHERE plan = 'premium' AND customer_id IS NULL GROUP BY QUARTER(start_date);

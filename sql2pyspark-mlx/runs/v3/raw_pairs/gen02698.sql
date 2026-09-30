@@ -1,1 +1,0 @@
-SELECT id, shipped_date, carrier, FLOOR(cost) AS cost_whole, SUBSTRING(carrier, 1, 4) AS carrier_prefix FROM shipments WHERE delivered_date > '2023-09-01' AND delivered_date > '2024-06-01' AND delivered_date > '2024-01-01';

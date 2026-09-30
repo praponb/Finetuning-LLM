@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, order_id, method, amount, paid_at, status, ROUND(amount, 2) AS amount_rounded FROM payments WHERE paid_at > DATE '2023-09-15') SELECT * FROM (SELECT order_id, method, amount_rounded FROM cleaned) src PIVOT (MAX(amount_rounded) FOR method IN ('card', 'paypal', 'bank_transfer'));

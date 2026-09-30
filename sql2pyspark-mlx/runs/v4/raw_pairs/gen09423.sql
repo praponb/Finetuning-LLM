@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, MAX(amount) AS max_amount, COUNT(amount) AS amount_count FROM payments GROUP BY order_id) SELECT o.id, o.channel, o.discount, os.max_amount, os.amount_count FROM orders o INNER JOIN order_summary os ON o.id = os.order_id;

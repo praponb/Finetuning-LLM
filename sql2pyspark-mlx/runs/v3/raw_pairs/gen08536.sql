@@ -1,1 +1,0 @@
-SELECT cost_bucket, unique_brands FROM (SELECT CASE WHEN cost >= 610 THEN 'high' WHEN cost >= 160 THEN 'mid' ELSE 'low' END AS cost_bucket, COUNT(DISTINCT cost) AS unique_brands FROM products WHERE product_name LIKE 'L%' GROUP BY CASE WHEN cost >= 610 THEN 'high' WHEN cost >= 160 THEN 'mid' ELSE 'low' END) AS s WHERE unique_brands < 5 ORDER BY 1, unique_brands;

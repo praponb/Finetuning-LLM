@@ -1,1 +1,0 @@
-SELECT product_id, YEAR(sale_date) AS sale_year, DATE_TRUNC('MONTH', sale_date) AS sale_month, SUM(units) AS total_units FROM store_sales WHERE product_id IN (1, 3) AND revenue >= 2000 GROUP BY product_id, sale_year, sale_month HAVING COUNT(DISTINCT units) > 3

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, customer_id, plan, start_date, end_date, monthly_fee, DAYOFWEEK(end_date) end_date_dayofweek FROM subscriptions WHERE customer_id IS NOT NULL) SELECT * FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY customer_id, plan ORDER BY start_date DESC NULLS LAST, id) = 1

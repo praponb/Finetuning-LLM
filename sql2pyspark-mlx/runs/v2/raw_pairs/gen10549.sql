@@ -1,1 +1,0 @@
-SELECT location, SUM(CASE WHEN location = 'Singapore' THEN budget ELSE 0 END) AS singapore_budget, COUNT(CASE WHEN dept_name = 'Marketing' THEN 1 END) AS marketing_count FROM departments WHERE budget <= 3359000 GROUP BY 1

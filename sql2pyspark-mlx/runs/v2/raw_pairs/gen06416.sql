@@ -1,1 +1,0 @@
-SELECT order_id, DATE_TRUNC('MONTH', shipped_date) AS shipped_month, COUNT(DISTINCT cost) AS unique_statuss FROM shipments WHERE carrier NOT IN ('UPS', 'DHL', 'Kerry') AND MONTH(delivered_date) IN (1, 7, 12) AND cost BETWEEN 57 AND 63 GROUP BY order_id, DATE_TRUNC('MONTH', shipped_date) ORDER BY order_id;

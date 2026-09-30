@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(*) AS total_count, AVG(rating) AS avg_rating FROM suppliers WHERE country IN ('UK', 'SG') GROUP BY rating_bucket ORDER BY rating_bucket;

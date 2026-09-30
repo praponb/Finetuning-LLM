@@ -1,1 +1,0 @@
-SELECT store_sales.product_id, store_sales.units, products.price, products.cost, products.stock_qty FROM store_sales FULL OUTER JOIN products ON store_sales.product_id = products.id WHERE products.supplier_id = 10;

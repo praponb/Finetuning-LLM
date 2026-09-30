@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity, store_id, SUM(quantity) OVER (PARTITION BY product_id) AS product_id_sum_quantity, FIRST_VALUE(store_id) OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS first_store_id FROM inventory WHERE MONTH(last_restock) IN (1, 4, 9);

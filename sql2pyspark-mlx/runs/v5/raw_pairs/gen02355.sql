@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(orders.order_date, 'yyyy-MM') AS order_month, SORT_ARRAY(COLLECT_SET(shipments.status)) AS status_list, AVG(shipments.cost) AS avg_cost FROM shipments LEFT JOIN orders ON shipments.order_id = orders.id WHERE orders.customer_id IS NULL GROUP BY DATE_FORMAT(orders.order_date, 'yyyy-MM') ORDER BY order_month DESC

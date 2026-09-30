@@ -1,1 +1,0 @@
-select ss.product_id, date_format(ss.sale_date, 'yyyy-MM') as sale_month, sum(i.quantity) as total_quantity from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.sale_date < '2025-06-01' group by ss.product_id, date_format(ss.sale_date, 'yyyy-MM') having sum(i.quantity) >= 910;

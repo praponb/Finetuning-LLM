@@ -1,1 +1,0 @@
-SELECT id, event_type, page, duration_sec, COALESCE(duration_sec, 0) duration_sec_filled, CASE WHEN duration_sec >= 526 THEN 'High' WHEN duration_sec >= 124 THEN 'Medium' ELSE 'Low' END duration_sec_tier FROM web_events WHERE event_type = 'add_to_cart' AND duration_sec <= 129

@@ -1,1 +1,0 @@
-select plan, quarter(end_date) as end_quarter, count(*) as total_count, count(*) as cnt, concat_ws(', ', sort_array(collect_set(plan))) as plan_values from subscriptions group by plan, quarter(end_date);

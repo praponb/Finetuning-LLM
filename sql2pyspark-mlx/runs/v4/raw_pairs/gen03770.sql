@@ -1,1 +1,0 @@
-select account_type, customer_id, opened_date, concat(status, ' - ', account_type) as status_account_type from accounts where customer_id in (1, 19, 30, 38) and customer_id in (1, 2, 14) and balance <= 39000;

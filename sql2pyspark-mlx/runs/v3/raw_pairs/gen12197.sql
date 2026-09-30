@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(signup_date) < 2024 THEN 'before_2024' WHEN YEAR(signup_date) = 2024 THEN '2024' ELSE 'after_2024' END signup_cohort, COUNT(CASE WHEN segment = 'SMB' THEN 1 END) smb_count FROM customers WHERE segment NOT IN ('Corporate', 'SMB', 'Consumer') GROUP BY signup_cohort HAVING smb_count >= 1 ORDER BY signup_cohort;

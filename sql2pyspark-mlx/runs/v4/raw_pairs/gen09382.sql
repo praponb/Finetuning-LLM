@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', start_date) AS start_month, status, AVG(monthly_fee) AS avg_monthly_fee, SUM(monthly_fee) AS total_monthly_fee, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE start_date > '2025-08-01' GROUP BY DATE_TRUNC('MONTH', start_date), status ORDER BY monthly_fee_range DESC;

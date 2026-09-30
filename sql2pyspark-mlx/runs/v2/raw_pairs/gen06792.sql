@@ -1,1 +1,0 @@
-SELECT c.city, DATE_TRUNC('MONTH', c.signup_date) AS signup_month, COUNT(CASE WHEN s.status = 'PAUSED' THEN 1 END) AS paused_count, COUNT(DISTINCT s.monthly_fee) AS unique_plans FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY c.city, DATE_TRUNC('MONTH', c.signup_date) ORDER BY unique_plans

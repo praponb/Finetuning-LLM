@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.txn_type, transactions.is_flagged, transactions.account_id FROM transactions WHERE transactions.account_id IN (SELECT id FROM accounts WHERE opened_date BETWEEN '2023-08-17' AND '2023-12-01')

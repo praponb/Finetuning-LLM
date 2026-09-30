@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, ROUND(AVG(amount), 2) avg_amount, MIN(order_date) first_order_date FROM orders WHERE shipping_fee BETWEEN 14 AND 30 GROUP BY customer_id) SELECT c.id, c.country, c.name, cs.avg_amount, cs.first_order_date FROM customers c JOIN customer_summary cs ON c.id = cs.customer_id;

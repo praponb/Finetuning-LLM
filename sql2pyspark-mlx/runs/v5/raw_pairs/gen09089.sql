@@ -1,1 +1,0 @@
-SELECT id, category, brand, launch_date, stock_qty, COUNT(*) OVER (PARTITION BY category) category_count, LEAD(stock_qty, 1) OVER (PARTITION BY brand ORDER BY launch_date, id) next_stock_qty FROM products;

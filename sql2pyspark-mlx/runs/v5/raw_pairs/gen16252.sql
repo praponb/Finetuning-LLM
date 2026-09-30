@@ -1,1 +1,0 @@
-WITH valid_web_events AS (SELECT * FROM web_events WHERE session_id IN (3, 36)), summary AS (SELECT page, SUM(CASE WHEN page = '/search' THEN 1 ELSE 0 END) AS search_count, COUNT(*) AS cnt FROM valid_web_events GROUP BY page) SELECT page, search_count, cnt FROM summary ORDER BY search_count DESC, page ASC

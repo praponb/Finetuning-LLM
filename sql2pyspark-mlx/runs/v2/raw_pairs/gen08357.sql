@@ -1,1 +1,0 @@
-SELECT id, method, amount, paid_at FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount, id) AS row_num FROM payments WHERE order_id IS NULL) AS ranked WHERE row_num = 1 ORDER BY paid_at, id DESC

@@ -1,1 +1,0 @@
-select case when sqft >= 12365 then 'PREMIUM' else 'STANDARD' end as sqft_tier, count(*) filter (where region = 'North') as north_rows, count(*) as cnt, sum(case when region = 'Central' then sqft else 0 end) as central_sqft from stores group by sqft_tier order by central_sqft desc;

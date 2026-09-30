@@ -1,1 +1,0 @@
-select case when amount >= 1460 then 'high' when amount >= 420 then 'mid' else 'low' end as amount_bucket, method, round(stddev(amount), 2) as stddev_amount, count(*) as num_payments, sum(amount) as total_amount from payments group by 1, 2 order by num_payments, amount_bucket, method limit 50;

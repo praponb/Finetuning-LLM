@@ -1,1 +1,0 @@
-SELECT browser, COUNT(CASE WHEN country = 'UK' THEN 1 END) AS uk_count, SIZE(COLLECT_SET(device)) AS num_devices, MAX(started_at) AS last_seen, SIZE(COLLECT_SET(browser)) AS num_browsers, GROUPING_ID() AS grouping_id FROM sessions GROUP BY CUBE (browser) HAVING COUNT(CASE WHEN country = 'UK' THEN 1 END) > 1;

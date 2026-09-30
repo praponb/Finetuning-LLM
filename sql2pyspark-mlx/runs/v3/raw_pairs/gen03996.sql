@@ -1,1 +1,0 @@
-with ranked as (select *, row_number() over (partition by order_id order by delivered_date desc, id) as row_num from shipments where delivered_date between '2024-09-01' and '2024-10-13') select id, order_id, delivered_date from ranked where row_num <= 5 order by id desc

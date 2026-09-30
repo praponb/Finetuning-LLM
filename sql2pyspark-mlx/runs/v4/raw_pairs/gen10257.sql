@@ -1,1 +1,0 @@
-SELECT dept_name, location, ROUND(SUM(budget) / NULLIF(COUNT(CASE WHEN location = 'London' THEN 1 END), 0), 2) AS budget_per_london, SUM(budget) AS total_budget, SORT_ARRAY(COLLECT_SET(dept_name)) AS dept_name_list, SORT_ARRAY(COLLECT_SET(dept_name)) AS dept_name_list_2 FROM departments GROUP BY 1, 2

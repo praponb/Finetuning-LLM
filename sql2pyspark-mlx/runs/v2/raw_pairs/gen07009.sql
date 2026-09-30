@@ -1,1 +1,0 @@
-SELECT p.stock_qty, t.first_sale_date FROM products p INNER JOIN (SELECT product_id, MIN(sale_date) AS first_sale_date FROM store_sales WHERE revenue <= 3000 GROUP BY product_id) t ON p.id = t.product_id ORDER BY p.stock_qty DESC;

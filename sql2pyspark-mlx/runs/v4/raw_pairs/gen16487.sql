@@ -1,1 +1,0 @@
-select txn_type, date_format(txn_time, 'yyyy-MM') as txn_month, merchant, max(txn_time) as latest_txn_time from transactions where account_id = 28 group by txn_type, date_format(txn_time, 'yyyy-MM'), merchant;

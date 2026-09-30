@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, MIN(sqft) AS min_sqft, SUM(sqft) AS total_sqft, SUM(CASE WHEN region = 'West' THEN sqft ELSE 0 END) AS west_sqft FROM stores WHERE city IN ('New York', 'Bangkok', 'London') AND city IN ('New York', 'London') GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM') ORDER BY opened_month;

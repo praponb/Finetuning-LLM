@@ -1,1 +1,0 @@
-with order_totals as (select order_id, max(quantity) as max_quantity, round(avg(unit_price), 2) as avg_unit_price from order_items group by order_id) select o.id, o.customer_id, ot.max_quantity, ot.avg_unit_price from orders o join order_totals ot on o.id = ot.order_id where ot.max_quantity > 4.6 order by id desc

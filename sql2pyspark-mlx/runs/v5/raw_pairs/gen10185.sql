@@ -1,1 +1,0 @@
-SELECT id, delivered_date, shipped_date, CASE WHEN carrier IN ('Flash', 'Kerry') THEN 'Group A' ELSE 'Other' END AS carrier_group, DAYOFWEEK(delivered_date) AS delivered_date_dayofweek FROM shipments WHERE shipped_date BETWEEN '2023-05-01' AND '2023-09-01';

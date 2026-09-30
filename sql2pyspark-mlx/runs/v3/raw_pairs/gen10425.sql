@@ -1,1 +1,0 @@
-select c.id, c.age, t.account_type_values from customers c join (select customer_id, concat_ws(', ', sort_array(collect_set(account_type))) as account_type_values from accounts group by customer_id) t on c.id = t.customer_id;

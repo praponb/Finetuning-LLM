@@ -1,1 +1,0 @@
-select id, status, carrier, cost, delivered_date, ntile(10) over (partition by status, carrier order by cost desc, id) quartile, round(avg(cost) over (partition by carrier order by delivered_date, id rows between 2 preceding and current row), 2) cost_moving_avg_3 from shipments where carrier in ('UPS', 'Flash', 'DHL');

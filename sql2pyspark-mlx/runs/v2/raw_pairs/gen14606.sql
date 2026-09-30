@@ -1,1 +1,0 @@
-SELECT c.is_active, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.browser))) AS browser_values FROM sessions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY c.is_active ORDER BY browser_values, is_active LIMIT 3

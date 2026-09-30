@@ -1,1 +1,0 @@
-WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY region ORDER BY sqft DESC NULLS LAST, id) AS latest_rank FROM stores QUALIFY latest_rank = 1) SELECT region, BIT_OR(sqft) AS sqft_bit_or, COUNT(*) AS num_rows, SIZE(COLLECT_SET(city)) AS num_cities, MAX(sqft) FILTER (WHERE region = 'South') AS south_max_sqft FROM latest GROUP BY region ORDER BY num_cities NULLS FIRST

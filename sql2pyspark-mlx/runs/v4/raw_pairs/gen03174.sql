@@ -1,1 +1,0 @@
-WITH supplier_totals AS (SELECT supplier_id, MAX(launch_date) AS latest_launch_date, MAX(cost) AS max_cost FROM products WHERE stock_qty BETWEEN 195 AND 383 GROUP BY supplier_id) SELECT s.rating, st.latest_launch_date, st.max_cost FROM suppliers s LEFT JOIN supplier_totals st ON s.id = st.supplier_id ORDER BY max_cost DESC, s.rating DESC;

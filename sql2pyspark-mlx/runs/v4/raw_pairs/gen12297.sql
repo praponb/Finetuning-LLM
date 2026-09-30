@@ -1,1 +1,0 @@
-SELECT id, log_ts, level, latency_ms, status_code, payload_json, COALESCE(context['version'], 'direct') AS version_or_default, context['version'] AS version, CAST((status_code & 4) != 0 AS INT) AS has_fault, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text FROM app_logs

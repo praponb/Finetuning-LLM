@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT *, DENSE_RANK() OVER (PARTITION BY location ORDER BY budget DESC) AS rn FROM departments WHERE budget BETWEEN 1378000 AND 1474000) AS ranked WHERE rn <= 5 ORDER BY location DESC;

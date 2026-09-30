@@ -1,1 +1,0 @@
-select emp.full_name as employee_full_name, emp.hire_date as employee_hire_date, emp.level as employee_level, mgr.salary as manager_salary, mgr.manager_id as manager_manager_id from employees emp left join employees mgr on emp.manager_id = mgr.id where length(emp.full_name) >= 9

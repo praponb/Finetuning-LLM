@@ -1,1 +1,0 @@
-SELECT location, CASE WHEN budget >= 3549000 THEN 'high' WHEN budget >= 760000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(budget) AS budget_count, ROUND((100 * SUM(CASE WHEN dept_name = 'Finance' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_finance FROM departments GROUP BY location, budget_bucket ORDER BY budget_bucket;

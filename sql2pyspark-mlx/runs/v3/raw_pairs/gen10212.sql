@@ -1,1 +1,0 @@
-SELECT c.is_active, c.segment, MIN(t.amount) AS min_amount FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id JOIN customers c ON c.id = a.customer_id WHERE a.account_type = 'CHECKING' GROUP BY c.is_active, c.segment;

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN quantity >= 190 THEN 'high' WHEN quantity >= 41 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(quantity) AS max_quantity FROM inventory GROUP BY CASE WHEN quantity >= 190 THEN 'high' WHEN quantity >= 41 THEN 'mid' ELSE 'low' END) AS agg WHERE max_quantity > 100

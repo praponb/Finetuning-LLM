@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('WEEK', txn_time) AS week_start, COUNT(DISTINCT id) AS distinct_ids, MAX(amount) FILTER (WHERE merchant = 'Lazada') AS lazada_max_amount, MAX(amount) AS max_amount, SIZE(COLLECT_SET(txn_type)) AS num_txn_types, COUNT_IF(txn_type = 'FEE') AS fee_events FROM transactions GROUP BY DATE_TRUNC('WEEK', txn_time) ORDER BY lazada_max_amount NULLS LAST;

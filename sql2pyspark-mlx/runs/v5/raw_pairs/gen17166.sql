@@ -1,1 +1,0 @@
-WITH ProductStats AS (SELECT product_id, COUNT(DISTINCT quantity) AS unique_products, MIN(last_restock) AS min_last_restock FROM inventory GROUP BY product_id) SELECT p.id, p.price, P.unique_products, P.min_last_restock FROM products p LEFT JOIN ProductStats P ON p.id = P.product_id ORDER BY id

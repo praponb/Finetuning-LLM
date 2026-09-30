@@ -1,1 +1,0 @@
-SELECT a.status, MAX(t.amount) - MIN(t.amount) AS amount_range, ROUND((100 * SUM(CASE WHEN t.txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fee FROM transactions t JOIN accounts a ON t.account_id = a.id GROUP BY a.status

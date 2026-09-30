@@ -1,1 +1,0 @@
-SELECT s.id, s.status, o.order_date, o.amount, c.email, SUBSTRING(o.channel, 1, 4) channel_prefix FROM shipments s LEFT OUTER JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id WHERE s.delivered_date < '2024-11-27' OR c.name LIKE 'Al%' ORDER BY c.email DESC, 3 ASC

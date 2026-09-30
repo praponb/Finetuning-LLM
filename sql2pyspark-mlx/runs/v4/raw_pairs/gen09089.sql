@@ -1,1 +1,0 @@
-SELECT *, ROUND(monthly_fee / SUM(monthly_fee) OVER (PARTITION BY plan, status), 4) AS monthly_fee_share, NTILE(4) OVER (ORDER BY monthly_fee, id) AS monthly_fee_bucket, LEAD(monthly_fee, 1, 0) OVER (ORDER BY end_date, id) AS next_monthly_fee, MIN(monthly_fee) OVER (PARTITION BY plan, status) AS plan_min_monthly_fee FROM subscriptions;

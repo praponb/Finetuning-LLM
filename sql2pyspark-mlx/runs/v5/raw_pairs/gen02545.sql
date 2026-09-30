@@ -1,1 +1,0 @@
-SELECT id, city, ROUND(sqft / SUM(sqft) OVER (PARTITION BY region), 4) AS sqft_share, SUM(sqft) OVER (PARTITION BY city, region ORDER BY sqft, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_sqft FROM stores WHERE MONTH(opened_date) IN (1, 9, 12)

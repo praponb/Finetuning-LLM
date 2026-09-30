@@ -8,7 +8,7 @@ A practical guide for setting up, running, changing, and troubleshooting the SQL
 
 ### System Requirements:
 - **Hardware**: Apple Silicon Mac. Developed and measured on a base **M2 with 16 GB** unified memory; more memory gives more headroom.
-- **Disk space**: the project uses ~14 GB (after `archive/` and `mlx-env/` were deleted on 2026-09-27), of which `sql2pyspark-hf/` (~5.8 GB) can be deleted and is recreated by `make fuse`. Budget ~15 GB for a fresh run: data, adapters, fused models, BF16 export and GGUF; each `runs/vN/` backup adds ~0.3 GB.
+- **Disk space**: after the 2026-09-30 cleanup the project uses ~15 GB (8.1 GB GGUF, 2 GB venv, 0.6 GB `llama.cpp/`, data and adapters) plus ~16 GB in Ollama (`latest`/v8 and v7). A 7B export needs ~30 GB more while it runs (BF16 `sql2pyspark-hf/` ~15 GB, fused MLX model ~4 GB, new GGUF 8 GB, LoRA checkpoints ~3 GB); `make clean` frees it afterwards. Each new Ollama tag adds 8.1 GB (`ollama rm` old ones).
 - **Docker Desktop** (optional): for the containerised app, data pipeline and evaluation; see [Docker](#-docker).
 
 ### Software Dependencies:
@@ -91,6 +91,10 @@ make export TAG=v9
 make fuse           # 4-bit MLX model + dequantized BF16 copy in sql2pyspark-hf/
 make gguf           # llama.cpp convert_hf_to_gguf.py -> sql2pyspark.gguf
 make ollama TAG=v9  # registers the GGUF as sql2pyspark:v9
+
+# Once it is in Ollama: delete sql2pyspark-hf/, the fused MLX model, LoRA checkpoints and caches (~20 GB);
+# keeps sql2pyspark.gguf (Docker app, deploy/update_model.sh) and the final adapters.safetensors
+make clean
 ```
 
 ### Phase 4: Benchmark & Evaluate

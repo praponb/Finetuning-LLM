@@ -1,1 +1,0 @@
-SELECT account_type, customer_id, max_balance, status_list FROM (SELECT account_type, customer_id, MAX(balance) AS max_balance, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM accounts GROUP BY account_type, customer_id) AS s WHERE max_balance < 50000;

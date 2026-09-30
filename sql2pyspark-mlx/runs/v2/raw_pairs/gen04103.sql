@@ -1,1 +1,0 @@
-SELECT country, SUM(rating) AS total_rating, COUNT(*) AS cnt, DENSE_RANK() OVER (ORDER BY SUM(rating) DESC) AS rnk FROM suppliers WHERE rating BETWEEN 2.4 AND 4.1 GROUP BY country ORDER BY country DESC;

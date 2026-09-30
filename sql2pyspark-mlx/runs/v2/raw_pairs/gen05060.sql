@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.last_restock, products.supplier_id, stores.opened_date, stores.store_name, DATEDIFF(CURRENT_DATE(), inventory.last_restock) days_since_last_restock FROM inventory FULL OUTER JOIN products ON products.id = inventory.product_id LEFT OUTER JOIN stores ON inventory.store_id = stores.id WHERE products.category = 'Home'

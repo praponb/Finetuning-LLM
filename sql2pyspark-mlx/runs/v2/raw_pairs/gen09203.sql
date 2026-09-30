@@ -1,1 +1,0 @@
-SELECT brand, CASE WHEN cost >= 800 THEN 'high' WHEN cost >= 210 THEN 'mid' ELSE 'low' END AS cost_bucket, ROUND(AVG(cost), 2) AS avg_cost, AVG(price) AS avg_price, MIN(launch_date) AS min_launch_date FROM products GROUP BY brand, CASE WHEN cost >= 800 THEN 'high' WHEN cost >= 210 THEN 'mid' ELSE 'low' END HAVING ROUND(AVG(cost), 2) >= 76 ORDER BY 3 DESC, avg_price

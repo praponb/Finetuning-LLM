@@ -1,1 +1,0 @@
-with metrics as (select *, ntile(10) over (order by balance, id) as balance_bucket, sum(balance) over (partition by customer_id order by opened_date, id rows between unbounded preceding and current row) as running_balance from accounts) select id, account_type, balance, opened_date, status, balance_bucket, running_balance from metrics order by opened_date desc;

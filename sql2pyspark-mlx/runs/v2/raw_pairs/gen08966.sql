@@ -1,1 +1,0 @@
-SELECT c.id, c.credit_limit, c.email, t.latest_end_date FROM customers c INNER JOIN (SELECT customer_id, MAX(end_date) latest_end_date FROM subscriptions WHERE start_date BETWEEN '2024-07-04' AND '2025-01-01' GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY c.credit_limit, id LIMIT 10;

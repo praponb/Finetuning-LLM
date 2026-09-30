@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, DENSE_RANK() OVER (PARTITION BY carrier ORDER BY cost DESC) AS rnk FROM shipments WHERE status <> 'RETURNED') SELECT id, carrier, cost, delivered_date FROM ranked WHERE rnk <= 2 ORDER BY delivered_date DESC

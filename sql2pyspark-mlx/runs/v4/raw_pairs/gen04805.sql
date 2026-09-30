@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY customer_id ORDER BY started_at NULLS LAST) AS rank_in_group FROM sessions) ranked WHERE rank_in_group = 1) SELECT id, device, browser, started_at, country, rank_in_group FROM latest ORDER BY rank_in_group DESC;

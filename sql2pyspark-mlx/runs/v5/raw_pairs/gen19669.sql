@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, COUNT(*) AS num_inventory, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY store_id) SELECT stores.id, stores.region, store_summary.num_inventory, store_summary.stddev_quantity FROM stores LEFT OUTER JOIN store_summary ON stores.id = store_summary.store_id ORDER BY id, stddev_quantity;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN sqft >= 14826 THEN 'high' WHEN sqft >= 3643 THEN 'mid' ELSE 'low' END AS sqft_bucket, QUARTER(opened_date) AS opened_quarter, AVG(sqft) AS avg_sqft FROM stores WHERE sqft = 5238 AND sqft < 8658 GROUP BY CASE WHEN sqft >= 14826 THEN 'high' WHEN sqft >= 3643 THEN 'mid' ELSE 'low' END, QUARTER(opened_date) ORDER BY 3 DESC;

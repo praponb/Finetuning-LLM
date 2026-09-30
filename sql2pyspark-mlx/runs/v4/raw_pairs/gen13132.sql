@@ -1,1 +1,0 @@
-with filtered as (select *, floor(budget) as budget_whole, concat_ws('-', location, dept_name) as location_dept_name_key from departments where location is not null and location != 'Tokyo') select location, dept_name from filtered except distinct select location, dept_name from departments where budget between 2788000 and 3739000;

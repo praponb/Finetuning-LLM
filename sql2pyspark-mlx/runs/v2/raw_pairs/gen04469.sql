@@ -1,1 +1,0 @@
-SELECT sale_month, first_sale_date, max_units FROM (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') sale_month, MIN(sale_date) first_sale_date, MAX(units) max_units FROM store_sales WHERE units BETWEEN 19 AND 23 GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM')) agg WHERE max_units < 32;

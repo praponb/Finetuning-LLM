@@ -1,1 +1,0 @@
-SELECT id, event_type, session_id, duration_sec, CASE WHEN duration_sec >= 512 THEN 'High' WHEN duration_sec >= 176 THEN 'Medium' ELSE 'Low' END AS duration_sec_tier FROM web_events WHERE page IS NOT NULL OR page IN ('/cart', '/product')

@@ -1,1 +1,0 @@
-SELECT web_events.id, web_events.event_time, sessions.started_at, sessions.browser, customers.name FROM web_events JOIN sessions ON web_events.session_id = sessions.id JOIN customers ON sessions.customer_id = customers.id;

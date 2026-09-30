@@ -1,1 +1,0 @@
-WITH ranked_order_items AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY unit_price, id) AS rn FROM order_items WHERE quantity BETWEEN 7 AND 8) SELECT id, product_id, unit_price, order_id FROM ranked_order_items WHERE rn <= 3;

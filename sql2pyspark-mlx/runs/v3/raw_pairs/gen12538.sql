@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, COUNT(ss.revenue) AS revenue_count FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE ss.store_id = 5 GROUP BY p.brand, p.category ORDER BY category DESC, brand LIMIT 5

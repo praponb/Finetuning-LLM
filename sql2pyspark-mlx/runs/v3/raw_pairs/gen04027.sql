@@ -1,1 +1,0 @@
-SELECT YEAR(last_restock) AS last_restock_year, COUNT(*) AS num_inventory FROM inventory WHERE store_id IN (1, 3, 4, 6) GROUP BY YEAR(last_restock) HAVING COUNT(*) > 4 ORDER BY last_restock_year DESC;

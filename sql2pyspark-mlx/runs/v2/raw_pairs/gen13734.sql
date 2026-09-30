@@ -1,1 +1,0 @@
-SELECT departments.location, departments.dept_name, employees.hire_date, employees.level, employees.full_name FROM departments INNER JOIN employees ON employees.dept_id = departments.id WHERE employees.manager_id IN (4, 40) AND employees.is_remote

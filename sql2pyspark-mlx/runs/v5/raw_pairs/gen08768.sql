@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT category, SUM(CASE WHEN brand = 'Globex' THEN 1 ELSE 0 END) AS globex_count, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range FROM products GROUP BY category) AS x WHERE stock_qty_range < 61 ORDER BY globex_count DESC

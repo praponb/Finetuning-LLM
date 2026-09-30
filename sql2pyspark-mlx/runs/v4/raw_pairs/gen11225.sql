@@ -1,1 +1,0 @@
-SELECT id, start_date, monthly_fee, DATE_SUB(start_date, 81) AS start_date_minus_81d FROM subscriptions WHERE (MONTH(end_date) IN (3, 8, 12) AND customer_id IS NULL) OR status != 'EXPIRED' ORDER BY monthly_fee;

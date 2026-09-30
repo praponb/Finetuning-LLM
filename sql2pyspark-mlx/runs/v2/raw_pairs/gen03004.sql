@@ -1,1 +1,0 @@
-select date_format(customers.signup_date, 'yyyy-MM') as signup_month, count(distinct accounts.balance) as unique_statuss, max(accounts.balance) - min(accounts.balance) as balance_range from accounts right join customers on accounts.customer_id = customers.id group by date_format(customers.signup_date, 'yyyy-MM') order by balance_range, signup_month;

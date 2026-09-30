@@ -1,1 +1,0 @@
-SELECT s.country, COUNT(i.quantity) AS quantity_count, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i LEFT JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.country;

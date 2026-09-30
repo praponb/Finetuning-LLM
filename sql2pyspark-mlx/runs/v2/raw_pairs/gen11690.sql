@@ -1,1 +1,0 @@
-SELECT orders.id, orders.channel, orders.customer_id FROM orders WHERE NOT EXISTS (SELECT 1 FROM shipments WHERE shipments.order_id = orders.id AND shipments.delivered_date BETWEEN '2024-05-01' AND '2025-06-28');

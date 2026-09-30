@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, MAX(amount) - MIN(amount) AS amount_range, COUNT(CASE WHEN txn_type = 'REFUND' THEN 1 END) AS refund_count, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE txn_type IN ('REFUND', 'FEE') GROUP BY DATE_FORMAT(txn_time, 'yyyy-MM') ORDER BY amount_range DESC, stddev_amount DESC, txn_month ASC LIMIT 10;

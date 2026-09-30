@@ -1,1 +1,0 @@
-SELECT status, CASE WHEN YEAR(shipped_date) < 2024 THEN 'before_2024' WHEN YEAR(shipped_date) = 2024 THEN '2024' ELSE 'after_2024' END AS shipped_cohort, ROUND((100 * SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_delivered, COUNT(DISTINCT cost) AS unique_orders FROM shipments WHERE MONTH(delivered_date) IN (2, 3, 9) AND cost IS NULL GROUP BY 1, 2;

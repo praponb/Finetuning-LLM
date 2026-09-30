@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, MIN(order_date) AS first_order_date FROM orders WHERE customer_id IS NULL GROUP BY customer_id) SELECT customers.age, customers.name, customer_totals.first_order_date FROM customers INNER JOIN customer_totals ON customers.id = customer_totals.customer_id ORDER BY name

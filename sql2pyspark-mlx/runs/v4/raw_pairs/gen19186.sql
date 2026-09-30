@@ -1,1 +1,0 @@
-SELECT CASE WHEN revenue >= 4200 THEN 'high' WHEN revenue >= 600 THEN 'mid' ELSE 'low' END AS revenue_bucket, CASE WHEN units >= 33 THEN 'high' WHEN units >= 19 THEN 'mid' ELSE 'low' END AS units_bucket, MAX(revenue) - MIN(revenue) AS revenue_range, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales GROUP BY 1, 2 ORDER BY 2 ASC

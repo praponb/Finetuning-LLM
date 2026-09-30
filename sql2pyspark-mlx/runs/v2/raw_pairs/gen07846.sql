@@ -1,1 +1,0 @@
-WITH supplier_totals AS (SELECT supplier_id, COUNT(price) AS price_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values FROM products WHERE stock_qty = 129 GROUP BY supplier_id) SELECT s.id, s.city, st.price_count, st.brand_values FROM suppliers s INNER JOIN supplier_totals st ON s.id = st.supplier_id WHERE st.price_count >= 4 ORDER BY st.brand_values

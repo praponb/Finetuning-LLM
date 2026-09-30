@@ -1,1 +1,0 @@
-SELECT QUARTER(p.launch_date) AS launch_quarter, p.category, ROUND(STDDEV(ss.units), 2) AS stddev_units, MIN(ss.sale_date) AS min_sale_date FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE p.stock_qty = 400 GROUP BY QUARTER(p.launch_date), p.category ORDER BY min_sale_date DESC;

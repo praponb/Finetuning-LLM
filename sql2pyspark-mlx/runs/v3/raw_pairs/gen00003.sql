@@ -1,1 +1,0 @@
-SELECT city, QUARTER(opened_date) AS opened_quarter, MIN(sqft) AS min_sqft, SUM(CASE WHEN city = 'New York' THEN sqft ELSE 0 END) AS new_york_sqft FROM stores WHERE city = 'Bangkok' GROUP BY city, QUARTER(opened_date) HAVING min_sqft >= 5200 ORDER BY 1, opened_quarter LIMIT 20;

@@ -1,1 +1,0 @@
-SELECT customers.id, customers.segment, customers.signup_date, customers.age FROM customers WHERE customers.city IN ('Berlin', 'New York') AND EXISTS (SELECT 1 FROM accounts WHERE accounts.customer_id = customers.id) ORDER BY signup_date

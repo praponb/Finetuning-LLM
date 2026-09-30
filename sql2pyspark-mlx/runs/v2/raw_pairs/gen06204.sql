@@ -1,1 +1,0 @@
-SELECT e.id, e.manager_id AS employee_manager_id, e.dept_id AS employee_dept_id, m.is_remote AS manager_is_remote, m.dept_id AS manager_dept_id, m.email AS manager_email, LENGTH(m.email) AS email_length FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE m.hire_date > '2024-10-01'

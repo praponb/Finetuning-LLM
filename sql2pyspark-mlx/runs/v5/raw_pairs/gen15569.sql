@@ -1,1 +1,0 @@
-select month(p.launch_date) launch_month, count(oi.unit_price) unit_price_count, round(avg(oi.unit_price), 2) avg_unit_price from order_items oi left outer join products p on oi.product_id = p.id where p.price < 310 group by month(p.launch_date) order by 2 desc, avg_unit_price desc

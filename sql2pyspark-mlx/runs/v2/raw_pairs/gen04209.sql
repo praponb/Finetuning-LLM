@@ -1,1 +1,0 @@
-SELECT id, txn_type, txn_time, amount, merchant, SUM(amount) OVER (PARTITION BY txn_type ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, MIN(amount) OVER (PARTITION BY merchant) AS merchant_min_amount FROM transactions WHERE HOUR(txn_time) BETWEEN 6 AND 9 ORDER BY running_amount DESC;

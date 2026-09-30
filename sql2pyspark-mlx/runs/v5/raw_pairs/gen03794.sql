@@ -1,1 +1,0 @@
-SELECT id, service, log_ts, level, latency_ms, status_code, payload_json, SIZE(context) AS num_context, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').user.tier AS tier FROM app_logs

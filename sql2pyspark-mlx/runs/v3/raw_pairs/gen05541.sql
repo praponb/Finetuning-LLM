@@ -1,1 +1,0 @@
-select customer_id, browser, case when country = 'US' then 1 else 0 end as is_us from sessions where started_at < '2025-08-01' and customer_id in (9, 12, 31) and browser in ('Firefox', 'Chrome', 'Edge') order by browser;

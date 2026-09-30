@@ -1,1 +1,0 @@
-SELECT status, YEAR(opened_date) AS opened_year, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list, MIN(opened_date) AS min_opened_date FROM accounts WHERE customer_id IS NOT NULL GROUP BY status, opened_year ORDER BY 1 DESC;

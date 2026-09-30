@@ -1,1 +1,0 @@
-SELECT DISTINCT carrier FROM shipments WHERE status IN ('LOST', 'RETURNED', 'DELIVERED') ORDER BY carrier DESC;

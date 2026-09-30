@@ -1,1 +1,0 @@
-SELECT QUARTER(last_restock) last_restock_quarter, COUNT(*) cnt, COUNT(*) row_count, MIN(quantity) min_quantity FROM inventory WHERE last_restock > '2025-08-05' AND product_id IN (3, 4, 7, 10) AND quantity >= 113 GROUP BY 1 HAVING MIN(quantity) < 120 ORDER BY min_quantity DESC;

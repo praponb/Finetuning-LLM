@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(CASE WHEN status = 'EXPIRED' THEN 1 END) AS expired_count FROM subscriptions GROUP BY customer_id) SELECT c.id, c.segment, c.email, cs.expired_count FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.expired_count > 4

@@ -1,1 +1,0 @@
-SELECT e.email AS employee_email, m.full_name AS manager_full_name FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.job_title = 'Manager' AND m.full_name NOT LIKE '%Emma%' ORDER BY m.full_name DESC, 1;

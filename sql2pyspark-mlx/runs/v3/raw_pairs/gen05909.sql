@@ -1,1 +1,0 @@
-SELECT id, store_id, last_restock, quantity FROM (SELECT id, store_id, last_restock, quantity, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock DESC, id) AS pos FROM inventory WHERE last_restock >= '2023-08-01') AS ranked WHERE pos <= 5;

@@ -1,1 +1,0 @@
-select category, max(launch_date) as latest_launch_date, sum(case when brand = 'Stark' then 1 else 0 end) as stark_count from products where stock_qty > 315 group by category having sum(case when brand = 'Stark' then 1 else 0 end) > 68 order by category;

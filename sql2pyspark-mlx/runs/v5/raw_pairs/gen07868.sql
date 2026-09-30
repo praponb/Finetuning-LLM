@@ -1,1 +1,0 @@
-SELECT is_flagged, CASE WHEN YEAR(txn_time) < 2024 THEN 'before_2024' WHEN YEAR(txn_time) = 2024 THEN '2024' ELSE 'after_2024' END txn_cohort, QUARTER(txn_time) txn_quarter, ROUND(STDDEV(amount), 2) stddev_amount FROM transactions WHERE amount BETWEEN 1100 AND 2700 GROUP BY is_flagged, txn_cohort, txn_quarter

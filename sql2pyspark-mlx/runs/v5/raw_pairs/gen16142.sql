@@ -1,1 +1,0 @@
-WITH department_summary AS (SELECT dept_id, COUNT(*) AS row_count FROM employees WHERE salary >= 89000 GROUP BY dept_id) SELECT d.id, d.budget, d.location, ds.row_count FROM departments d JOIN department_summary ds ON d.id = ds.dept_id;

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN amount >= 1760 THEN 'high' WHEN amount >= 220 THEN 'mid' ELSE 'low' END AS amount_bucket, method, amount FROM payments) PIVOT (AVG(amount) FOR method IN ('paypal', 'card'))

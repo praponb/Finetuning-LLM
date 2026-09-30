@@ -1,1 +1,0 @@
-WITH top_employees AS (SELECT id, level, salary, ROW_NUMBER() OVER (PARTITION BY level ORDER BY salary DESC, id) AS rnk FROM employees) SELECT id, level, salary FROM top_employees WHERE rnk <= 3 ORDER BY salary DESC

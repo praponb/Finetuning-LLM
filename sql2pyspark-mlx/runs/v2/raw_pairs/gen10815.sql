@@ -1,1 +1,0 @@
-SELECT o.customer_id, s.region, s.city, c.city AS customer_city, c.name FROM orders o RIGHT OUTER JOIN stores s ON o.store_id = s.id RIGHT OUTER JOIN customers c ON o.customer_id = c.id WHERE o.discount >= 0.32

@@ -1,1 +1,0 @@
-SELECT s.id, s.region, s.city, t.total_quantity, t.last_last_restock FROM stores s LEFT JOIN (SELECT store_id, SUM(quantity) AS total_quantity, MAX(last_restock) AS last_last_restock FROM inventory WHERE quantity <= 185 GROUP BY store_id) t ON s.id = t.store_id ORDER BY region;

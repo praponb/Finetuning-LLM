@@ -1,1 +1,0 @@
-SELECT i.quantity, i.product_id, s.city, p.price, p.product_name FROM inventory i INNER JOIN stores s ON s.id = i.store_id FULL OUTER JOIN products p ON p.id = i.product_id WHERE i.product_id IN (1, 7, 8, 9) ORDER BY p.product_name DESC;

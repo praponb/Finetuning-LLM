@@ -1,1 +1,0 @@
-SELECT id, status, paid_at, method, amount, DENSE_RANK() OVER (PARTITION BY status ORDER BY paid_at) AS paid_at_dense_rank, ROUND(amount / SUM(amount) OVER (PARTITION BY method), 3) AS amount_share FROM payments

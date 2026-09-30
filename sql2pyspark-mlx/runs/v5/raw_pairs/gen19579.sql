@@ -1,1 +1,0 @@
-WITH valid_customers AS (SELECT *, CONCAT_WS(',', segment, email) AS segment_email_key FROM customers WHERE segment = 'Consumer'), summary AS (SELECT city, ROUND(AVG(credit_limit), 2) AS avg_credit_limit, COUNT(DISTINCT credit_limit) AS unique_citys FROM valid_customers GROUP BY city) SELECT city, avg_credit_limit, unique_citys FROM summary

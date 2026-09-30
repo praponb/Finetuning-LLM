@@ -1,1 +1,0 @@
-select txn_type, is_flagged, hour(txn_time) as txn_hour, avg(amount) as avg_amount, count(distinct amount) as unique_accounts from transactions where hour(txn_time) between 12 and 17 and txn_type <> 'REFUND' group by txn_type, is_flagged, hour(txn_time) having avg(amount) > 2800 order by unique_accounts desc;

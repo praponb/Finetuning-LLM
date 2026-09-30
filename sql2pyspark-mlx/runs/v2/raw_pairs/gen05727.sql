@@ -1,1 +1,0 @@
-SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, COUNT(*) AS row_count FROM web_events WHERE session_id IN (3, 25, 30, 37) OR page IN ('/home', '/checkout', '/cart') GROUP BY session_id

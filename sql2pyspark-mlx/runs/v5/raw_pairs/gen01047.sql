@@ -1,1 +1,0 @@
-SELECT id, order_id, method, amount, paid_at, status FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY method, order_id ORDER BY paid_at DESC NULLS LAST, id) AS latest_rank FROM payments) t WHERE latest_rank = 1

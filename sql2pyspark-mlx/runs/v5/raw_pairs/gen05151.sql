@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(signup_date) < 2024 THEN 'before_2024' WHEN YEAR(signup_date) = 2024 THEN '2024' ELSE 'after_2024' END signup_cohort, MAX(signup_date) latest_signup_date, AVG(age) avg_age FROM customers WHERE name IS NULL GROUP BY CASE WHEN YEAR(signup_date) < 2024 THEN 'before_2024' WHEN YEAR(signup_date) = 2024 THEN '2024' ELSE 'after_2024' END ORDER BY signup_cohort

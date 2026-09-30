@@ -1,1 +1,0 @@
-SELECT shipments.shipped_date, shipments.carrier, orders.store_id, stores.region, stores.opened_date FROM shipments JOIN orders ON shipments.order_id = orders.id LEFT OUTER JOIN stores ON orders.store_id = stores.id WHERE shipments.cost >= 62;

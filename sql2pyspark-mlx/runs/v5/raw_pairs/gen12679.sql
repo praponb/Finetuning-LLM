@@ -1,1 +1,0 @@
-select id, carrier, delivered_date from (select id, carrier, delivered_date, row_number() over (partition by carrier order by delivered_date desc, id) as rnk from shipments where carrier = 'UPS') as ranked where rnk <= 1 order by id desc;

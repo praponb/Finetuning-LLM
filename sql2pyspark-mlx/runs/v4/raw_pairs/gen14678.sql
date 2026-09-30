@@ -1,1 +1,0 @@
-SELECT MONTH(hire_date) AS hire_month, dept_id, SUM(CASE WHEN job_title = 'Director' THEN 1 ELSE 0 END) AS director_count, MIN(salary) AS min_salary, COUNT(*) AS num_employees FROM employees WHERE job_title <> 'Intern' GROUP BY MONTH(hire_date), dept_id ORDER BY hire_month;

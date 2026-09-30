@@ -1,1 +1,0 @@
-with filtered_departments as (select *, coalesce(location, 'N/A') as location_filled from departments where not (dept_name = 'Engineering' or budget < 2223000)), agg as (select dept_name, sum(case when dept_name = 'Finance' then 1 else 0 end) as finance_count from filtered_departments group by dept_name) select * from agg order by dept_name, finance_count;

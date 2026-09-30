@@ -1,1 +1,0 @@
-select id, segment, country, signup_date, credit_limit, city, age, sum(credit_limit) over (partition by segment, country order by signup_date, id rows between unbounded preceding and current row) running_credit_limit, rank() over (partition by segment, city order by age) rnk from customers order by city, signup_date;

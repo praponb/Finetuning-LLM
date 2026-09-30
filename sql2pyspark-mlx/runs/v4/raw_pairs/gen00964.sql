@@ -1,1 +1,0 @@
-SELECT s.device, we.page, we.duration_sec, we.event_type, CONCAT_WS('-', s.browser, s.country) AS browser_country_key FROM sessions s LEFT JOIN web_events we ON s.id = we.session_id WHERE we.page = '/search' AND s.started_at >= '2024-04-01';

@@ -1,1 +1,0 @@
-WITH ranked_order_items AS (SELECT id, order_id, unit_price, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY unit_price, id) AS rnk FROM order_items) SELECT id, order_id, unit_price FROM ranked_order_items WHERE rnk <= 5 ORDER BY id DESC

@@ -1,1 +1,0 @@
-SELECT s.device, s.country, AVG(we.duration_sec) avg_duration_sec FROM web_events we JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id WHERE s.country != 'US' GROUP BY s.device, s.country ORDER BY avg_duration_sec DESC, country;

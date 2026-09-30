@@ -1,1 +1,0 @@
-with EmployeesByDepartment as (select dept_id, count(distinct salary) as unique_managers from employees group by dept_id) select departments.id, departments.dept_name, departments.budget, EmployeesByDepartment.unique_managers from departments left outer join EmployeesByDepartment on departments.id = EmployeesByDepartment.dept_id where EmployeesByDepartment.unique_managers >= 6;

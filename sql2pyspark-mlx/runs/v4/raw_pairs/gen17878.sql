@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, customer_id, plan, start_date, end_date, status, INITCAP(TRIM(status)) AS status_title FROM subscriptions WHERE status <> 'ACTIVE') SELECT * FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY status, plan ORDER BY end_date DESC, id ASC) = 1;

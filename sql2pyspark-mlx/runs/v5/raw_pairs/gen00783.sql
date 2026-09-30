@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, AVG(salary) AS avg_salary, MAX(salary) - MIN(salary) AS salary_range FROM employees GROUP BY DATE_FORMAT(hire_date, 'yyyy-MM')) AS x WHERE salary_range >= 49 ORDER BY avg_salary DESC;

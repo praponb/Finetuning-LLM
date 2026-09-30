@@ -1,1 +1,0 @@
-with recent_inventory as (select * from inventory where month(last_restock) in (1, 5, 6)), inventory_stats as (select store_id, min(quantity) min_quantity, max(quantity) - min(quantity) quantity_range from recent_inventory group by store_id) select store_id, min_quantity, quantity_range from inventory_stats where quantity_range > 63 order by min_quantity;

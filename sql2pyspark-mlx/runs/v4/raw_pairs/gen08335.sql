@@ -1,1 +1,0 @@
-select d.id, d.location, t.director_count from departments d left join (select dept_id, sum(case when job_title = 'Director' then 1 else 0 end) director_count from employees where full_name like 'Em%' group by dept_id) t on d.id = t.dept_id where t.director_count >= 39 order by id;

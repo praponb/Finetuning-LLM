@@ -1,1 +1,0 @@
-select product_id, case when unit_price >= 340 then 'HIGH' else 'LOW' end as unit_price_tier, count(*) as num_rows, stddev_samp(quantity) as quantity_stddev, count(distinct order_id) as distinct_order_ids from order_items group by product_id, case when unit_price >= 340 then 'HIGH' else 'LOW' end

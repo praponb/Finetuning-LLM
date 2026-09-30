@@ -1,1 +1,0 @@
-SELECT o.id, o.channel, t.cost_range, t.stddev_cost FROM orders o LEFT JOIN (SELECT order_id, MAX(cost) - MIN(cost) AS cost_range, ROUND(STDDEV(cost), 2) AS stddev_cost FROM shipments WHERE order_id IS NULL GROUP BY order_id) t ON o.id = t.order_id WHERE t.stddev_cost >= 33 ORDER BY channel ASC;

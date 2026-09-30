@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, COUNT(DISTINCT monthly_fee) unique_customers, SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END) premium_count FROM subscriptions GROUP BY customer_id) SELECT c.id, c.country, cs.unique_customers, cs.premium_count FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY country, unique_customers, id LIMIT 5

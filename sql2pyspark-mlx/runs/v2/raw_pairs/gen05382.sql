@@ -1,1 +1,0 @@
-WITH valid_employees AS (SELECT * FROM employees WHERE salary BETWEEN 109000 AND 112000), summary AS (SELECT is_remote, ROUND(AVG(salary), 2) AS avg_salary FROM valid_employees GROUP BY is_remote) SELECT * FROM summary ORDER BY avg_salary

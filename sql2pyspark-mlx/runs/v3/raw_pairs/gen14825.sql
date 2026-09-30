@@ -1,1 +1,0 @@
-WITH filtered_stores AS (SELECT *, DATE_TRUNC('month', opened_date) AS opened_date_period FROM stores WHERE region NOT IN ('West', 'North', 'Central')), stores_stats AS (SELECT city, SORT_ARRAY(COLLECT_SET(city)) AS city_list, COUNT(sqft) AS sqft_count FROM filtered_stores GROUP BY city) SELECT city, city_list, sqft_count FROM stores_stats WHERE sqft_count >= 8

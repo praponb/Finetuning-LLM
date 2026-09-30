@@ -1,1 +1,0 @@
-with filtered as (select *, round(discount * 1.15, 2) as adjusted_discount from orders where order_date >= date '2023-05-19' and store_id is not null and discount between 0.24 and 0.37) select src.*, pr.id as promo_id, pr.promo_code, pr.discount_pct from filtered src join promotions pr on src.channel = pr.channel and src.order_date between pr.starts_on and pr.ends_on

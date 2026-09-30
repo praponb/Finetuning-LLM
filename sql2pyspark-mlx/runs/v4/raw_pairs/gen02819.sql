@@ -1,1 +1,0 @@
-with Ranked as (select id, region, opened_date, sqft, row_number() over (partition by region order by opened_date desc, id) as rn from stores) select id, region, opened_date, sqft from Ranked where rn <= 3

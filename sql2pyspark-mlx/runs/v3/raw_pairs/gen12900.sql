@@ -1,1 +1,0 @@
-with order_items_by_product as (select product_id, avg(unit_price) as avg_unit_price, min(unit_price) as min_unit_price from order_items group by product_id) select p.id, p.category, oibp.avg_unit_price, oibp.min_unit_price from products p join order_items_by_product oibp on p.id = oibp.product_id where oibp.avg_unit_price >= 350

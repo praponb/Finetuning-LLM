@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM orders WHERE customer_id IS NULL AND channel = 'mobile'), summary AS (SELECT customer_id, MAX(discount) - MIN(discount) AS discount_range, SUM(shipping_fee) AS total_shipping_fee FROM src GROUP BY customer_id) SELECT customer_id, discount_range FROM summary ORDER BY customer_id DESC;

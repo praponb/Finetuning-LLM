@@ -1,1 +1,0 @@
-SELECT product_id, BIT_OR(quantity) AS quantity_bit_or, PERCENTILE_APPROX(unit_price, ARRAY(0.25, 0.5, 0.75)) AS unit_price_quartiles, STDDEV_SAMP(quantity) AS quantity_stddev, STDDEV_SAMP(unit_price) AS unit_price_stddev FROM order_items GROUP BY product_id ORDER BY product_id DESC NULLS LAST

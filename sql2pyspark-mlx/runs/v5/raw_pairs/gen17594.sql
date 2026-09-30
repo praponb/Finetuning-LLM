@@ -1,1 +1,0 @@
-with supplier_summary as (select supplier_id, sum(case when brand = 'Stark' then stock_qty else 0 end) as stark_stock_qty from products group by supplier_id) select suppliers.id, suppliers.supplier_name, supplier_summary.stark_stock_qty from suppliers inner join supplier_summary on suppliers.id = supplier_summary.supplier_id;

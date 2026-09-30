@@ -1,1 +1,0 @@
-SELECT txn_year, shell_amount FROM (SELECT YEAR(txn_time) AS txn_year, SUM(CASE WHEN merchant = 'Shell' THEN amount ELSE 0 END) AS shell_amount FROM transactions GROUP BY YEAR(txn_time)) AS sub WHERE shell_amount < 29 ORDER BY shell_amount DESC, txn_year;

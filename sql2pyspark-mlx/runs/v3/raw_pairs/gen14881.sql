@@ -1,1 +1,0 @@
-with base as (select * from subscriptions where status in ('ACTIVE', 'PAUSED') and monthly_fee > 230), summary as (select status, count(*) cnt from base group by status) select status, cnt from summary order by cnt desc

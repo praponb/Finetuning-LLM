@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, COUNT(*) num_store_sales, COUNT(*) row_count FROM store_sales GROUP BY product_id) SELECT p.stock_qty, ps.num_store_sales, ps.row_count FROM products p LEFT JOIN product_stats ps ON p.id = ps.product_id

@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, DATEDIFF(CURRENT_DATE(), ends_on) AS days_since_ends_on, CASE WHEN channel IN ('web', 'mobile') THEN 'Core' ELSE 'Other' END AS channel_group FROM promotions WHERE ends_on > DATE '2023-10-02' AND channel = 'store') SELECT promo_code FROM filtered INTERSECT ALL SELECT promo_code FROM promotions WHERE channel = 'web'

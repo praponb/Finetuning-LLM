@@ -1,1 +1,0 @@
-SELECT o.status, AVG(oi.quantity) AS avg_quantity, MAX(oi.unit_price) AS max_unit_price FROM order_items oi LEFT JOIN orders o ON o.id = oi.order_id INNER JOIN stores s ON s.id = o.store_id GROUP BY o.status

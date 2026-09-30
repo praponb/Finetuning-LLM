@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, SUM(amount) AS total_amount FROM transactions GROUP BY account_id) SELECT a.opened_date, tba.total_amount FROM accounts a JOIN transactions_by_account tba ON a.id = tba.account_id WHERE tba.total_amount > 22000;

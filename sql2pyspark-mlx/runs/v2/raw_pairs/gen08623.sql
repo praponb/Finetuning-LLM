@@ -1,1 +1,0 @@
-SELECT o.id, o.channel, c.city, c.email, s.store_name, s.sqft, UPPER(c.segment) AS segment_upper FROM orders o INNER JOIN customers c ON o.customer_id = c.id LEFT OUTER JOIN stores s ON o.store_id = s.id WHERE o.amount > 780;

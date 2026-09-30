@@ -1,1 +1,0 @@
-SELECT customers.city, ROUND(AVG(transactions.amount), 2) AS avg_amount FROM transactions JOIN accounts ON transactions.account_id = accounts.id JOIN customers ON customers.id = accounts.customer_id GROUP BY customers.city HAVING ROUND(AVG(transactions.amount), 2) >= 71

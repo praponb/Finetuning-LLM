@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM inventory WHERE last_restock >= '2024-03-01'), agg AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(*) AS inventory_count FROM src GROUP BY store_id) SELECT * FROM agg ORDER BY store_id DESC, avg_quantity;

@@ -1,1 +1,0 @@
-SELECT ss.units, ss.product_id, ss.sale_date, p.product_name, p.cost, p.price, ADD_MONTHS(p.launch_date, 3) AS launch_date_plus_months FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id;

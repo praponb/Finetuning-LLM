@@ -1,1 +1,0 @@
-select i.id, i.store_id, i.quantity, i.last_restock, ss.product_id, ss.units, ss.revenue from inventory i inner join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where year(ss.sale_date) >= 2025 order by quantity desc;

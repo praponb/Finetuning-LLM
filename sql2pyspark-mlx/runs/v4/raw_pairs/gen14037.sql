@@ -1,1 +1,0 @@
-select s.opened_date, s.store_name, s.city, o.amount, o.status from stores s left join orders o on s.id = o.store_id where o.shipping_fee >= 18 and o.customer_id in (23, 25) order by o.status, store_name;

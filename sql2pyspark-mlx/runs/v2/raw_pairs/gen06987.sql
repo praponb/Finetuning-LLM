@@ -1,7 +1,0 @@
-SELECT
-    p.product_name,
-    i.quantity,
-    i.store_id,
-    i.product_id
-FROM products p
-LEFT JOIN inventory i ON i.product_id = p.id;

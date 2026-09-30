@@ -1,1 +1,0 @@
-select year(c.signup_date) as signup_year, sum(case when o.channel = 'store' then 1 else 0 end) as store_count from orders o inner join stores s on s.id = o.store_id inner join customers c on c.id = o.customer_id group by year(c.signup_date)

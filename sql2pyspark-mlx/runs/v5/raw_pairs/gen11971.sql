@@ -1,1 +1,0 @@
-SELECT segment, city, total_credit_limit FROM (SELECT segment, city, SUM(credit_limit) AS total_credit_limit FROM customers GROUP BY segment, city) AS t WHERE total_credit_limit > 95000 ORDER BY 2, total_credit_limit;

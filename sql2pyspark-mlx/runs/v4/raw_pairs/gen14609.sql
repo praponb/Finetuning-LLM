@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CASE WHEN method = 'card' THEN 1 ELSE 0 END AS is_card, COALESCE(method, 'NONE') AS method_filled FROM payments WHERE paid_at >= DATE '2023-06-29' AND order_id IS NOT NULL) SELECT * FROM (SELECT method, status, is_card FROM base) src PIVOT (AVG(is_card) AS total, COUNT(1) AS n FOR status IN ('FAILED', 'REFUNDED'))

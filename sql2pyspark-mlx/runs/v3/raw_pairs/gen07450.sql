@@ -1,1 +1,0 @@
-SELECT stores.id, stores.sqft, stores.region FROM stores WHERE stores.store_name LIKE '%Flagship%' AND NOT EXISTS (SELECT 1 FROM store_sales WHERE store_sales.store_id = stores.id AND store_sales.units BETWEEN 21 AND 36) ORDER BY stores.id DESC;

@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, AVG(amount) avg_amount, SUM(amount) total_amount FROM payments WHERE order_id IS NULL GROUP BY order_id) SELECT o.channel, os.avg_amount, os.total_amount FROM orders o JOIN order_summary os ON o.id = os.order_id WHERE os.total_amount > 6600 ORDER BY o.channel DESC;

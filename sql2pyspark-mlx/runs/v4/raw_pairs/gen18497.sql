@@ -1,1 +1,0 @@
-SELECT id, customer_id, created_at, coupon_codes, items, ship_to, FORALL(items, item -> item.qty <= 5) AS all_small_qty, SIZE(FILTER(items, item -> item.qty >= 3)) AS bulk_lines, ARRAY_JOIN(ARRAY_SORT(coupon_codes), ',') AS coupons_text, EXISTS(items, item -> item.price > 100) AS has_premium_item, ship_to.zip AS ship_zip FROM carts WHERE customer_id IS NOT NULL

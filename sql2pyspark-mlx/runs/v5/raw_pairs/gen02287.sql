@@ -1,1 +1,0 @@
-SELECT s.browser, COUNT(DISTINCT we.duration_sec) AS unique_pages FROM web_events we LEFT JOIN sessions s ON s.id = we.session_id WHERE we.session_id IN (11, 26, 27, 36) GROUP BY s.browser ORDER BY browser DESC, unique_pages LIMIT 10

@@ -1,1 +1,0 @@
-select id, plan, monthly_fee, end_date, round(monthly_fee / sum(monthly_fee) over (partition by plan), 3) as monthly_fee_share, rank() over (order by end_date) as end_date_rank from subscriptions where plan = 'premium';

@@ -1,1 +1,0 @@
-SELECT id, status, balance, opened_date FROM (SELECT id, status, balance, opened_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY balance DESC, id) AS row_num FROM accounts WHERE opened_date BETWEEN '2025-07-24' AND '2025-08-29') AS r WHERE row_num <= 5 ORDER BY status DESC;

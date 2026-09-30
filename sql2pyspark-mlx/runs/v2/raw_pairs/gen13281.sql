@@ -1,1 +1,0 @@
-SELECT a.id, a.customer_id, a.account_type, a.opened_date FROM accounts a WHERE a.customer_id IN (3, 15, 18, 30) AND NOT EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id) ORDER BY customer_id DESC;

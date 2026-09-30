@@ -1,1 +1,0 @@
-WITH Src AS (SELECT * FROM stores WHERE store_name NOT LIKE 'M%'), stores_stats AS (SELECT region, SORT_ARRAY(COLLECT_SET(city)) AS city_list, ROUND((100 * SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_new_york FROM Src GROUP BY region) SELECT * FROM stores_stats WHERE pct_new_york > 73 ORDER BY pct_new_york DESC;

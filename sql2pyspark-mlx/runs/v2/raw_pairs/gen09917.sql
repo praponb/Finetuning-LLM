@@ -1,1 +1,0 @@
-with top_payments as (select id, status, amount, rank() over (partition by status order by amount desc) as rnk from payments) select id, status, amount from top_payments where rnk = 1 order by id desc, amount desc;

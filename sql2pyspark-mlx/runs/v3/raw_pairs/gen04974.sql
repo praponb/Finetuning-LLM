@@ -1,1 +1,0 @@
-WITH payments_by_order AS (SELECT order_id, MIN(paid_at) AS first_paid_at FROM payments WHERE method IN ('bank_transfer', 'paypal') GROUP BY order_id) SELECT o.id, o.customer_id, o.order_date, pbo.first_paid_at FROM orders o LEFT JOIN payments_by_order pbo ON o.id = pbo.order_id

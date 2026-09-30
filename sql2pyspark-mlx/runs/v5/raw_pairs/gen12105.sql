@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, ADD_MONTHS(start_date, 12) AS start_date_plus_months FROM subscriptions WHERE end_date >= DATE '2023-08-11') SELECT * FROM (SELECT customer_id, plan, monthly_fee FROM base) src PIVOT (SUM(monthly_fee) AS value_sum, COUNT(1) AS n FOR plan IN ('enterprise', 'basic'));

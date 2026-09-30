@@ -1,1 +1,0 @@
-select orders.id, orders.channel, count(payments.id) as payment_count, min(payments.amount) as min_amount, avg(payments.amount) as avg_amount from orders join payments on orders.id = payments.order_id group by orders.id, orders.channel having avg(payments.amount) >= 720;

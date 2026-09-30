@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, INITCAP(TRIM(city)) AS city_title FROM stores WHERE opened_date >= DATE '2023-07-10') SELECT * FROM (SELECT city, region, sqft FROM filtered) src PIVOT (SUM(sqft) AS value_sum FOR region IN ('Central', 'North'))

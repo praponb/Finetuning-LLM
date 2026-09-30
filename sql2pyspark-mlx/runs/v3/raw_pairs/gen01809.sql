@@ -1,1 +1,0 @@
-SELECT MONTH(paid_at) AS paid_month, COUNT(amount) AS amount_count, MIN(paid_at) AS min_paid_at, MAX(amount) AS max_amount FROM payments WHERE method IN ('paypal', 'cash', 'bank_transfer') GROUP BY MONTH(paid_at) ORDER BY amount_count;

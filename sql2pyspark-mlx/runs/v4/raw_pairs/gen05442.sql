@@ -1,1 +1,0 @@
-SELECT id, manager_id, salary, hire_date, AVG(salary) OVER (PARTITION BY manager_id) AS manager_id_avg_salary, DENSE_RANK() OVER (PARTITION BY manager_id ORDER BY hire_date) AS dense_rnk FROM employees ORDER BY manager_id_avg_salary, hire_date;

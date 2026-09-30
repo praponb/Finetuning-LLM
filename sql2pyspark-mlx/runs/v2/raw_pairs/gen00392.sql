@@ -1,1 +1,0 @@
-select category, launch_quarter, num_products from (select category, quarter(launch_date) as launch_quarter, count(*) as num_products from products group by category, quarter(launch_date)) as x where num_products >= 6 order by num_products, category, launch_quarter limit 3;

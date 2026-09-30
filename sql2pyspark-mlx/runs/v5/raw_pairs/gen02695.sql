@@ -1,1 +1,0 @@
-SELECT stores.id, stores.store_name, COUNT(orders.id) AS order_count FROM stores LEFT JOIN orders ON stores.id = orders.store_id WHERE stores.city != 'Chiang Mai' GROUP BY stores.id, stores.store_name ORDER BY order_count DESC, id, store_name LIMIT 5;

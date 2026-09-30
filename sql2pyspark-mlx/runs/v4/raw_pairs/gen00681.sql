@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, MAX(event_time) AS latest_event_time FROM web_events GROUP BY session_id) SELECT s.id, s.browser, ss.latest_event_time FROM sessions s LEFT JOIN session_stats ss ON s.id = ss.session_id;

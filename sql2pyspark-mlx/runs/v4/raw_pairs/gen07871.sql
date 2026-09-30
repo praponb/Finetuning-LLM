@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, MAX(amount) - MIN(amount) AS amount_range FROM payments GROUP BY order_id) SELECT o.discount, o.status, os.amount_range FROM orders o INNER JOIN order_stats os ON o.id = os.order_id WHERE os.amount_range >= 35;

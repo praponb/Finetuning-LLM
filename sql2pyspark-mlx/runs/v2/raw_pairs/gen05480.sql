@@ -1,1 +1,0 @@
-with account_stats as (select account_id, max(txn_time) as latest_txn_time from transactions where hour(txn_time) between 12 and 20 group by account_id) select a.id, a.status, as.latest_txn_time from accounts a join account_stats as on a.id = as.account_id order by status

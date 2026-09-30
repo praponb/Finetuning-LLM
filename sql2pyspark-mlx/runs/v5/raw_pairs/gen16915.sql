@@ -1,1 +1,0 @@
-SELECT i.product_id, i.last_restock, i.store_id, ss.units, ss.sale_date, COALESCE(i.quantity, 0) AS quantity_filled FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.units >= 19 AND ss.revenue < 1600 ORDER BY i.store_id DESC;

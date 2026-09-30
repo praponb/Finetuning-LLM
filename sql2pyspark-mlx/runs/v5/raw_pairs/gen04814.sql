@@ -1,1 +1,0 @@
-SELECT customers.id, customers.segment, customers.age, customers.is_active FROM customers WHERE customers.city = 'Singapore' AND EXISTS (SELECT 1 FROM subscriptions WHERE subscriptions.customer_id = customers.id);

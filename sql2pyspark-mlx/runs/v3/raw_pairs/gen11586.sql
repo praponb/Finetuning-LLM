@@ -1,1 +1,0 @@
-SELECT status, customer_id, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list, SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed_count FROM orders WHERE NOT (order_date BETWEEN '2024-02-01' AND '2024-12-01' AND channel IN ('store', 'mobile') AND status = 'CANCELLED') GROUP BY status, customer_id

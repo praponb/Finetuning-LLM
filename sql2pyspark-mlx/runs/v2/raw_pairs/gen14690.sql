@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM orders WHERE order_date <= '2023-03-22'), status_summary AS (SELECT status, customer_id, ROUND((100 * SUM(CASE WHEN status = 'SHIPPED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_shipped FROM src GROUP BY status, customer_id) SELECT status, customer_id, pct_shipped FROM status_summary

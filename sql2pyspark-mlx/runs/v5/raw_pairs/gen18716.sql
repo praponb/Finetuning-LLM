@@ -1,1 +1,0 @@
-SELECT id, order_id, product_id, quantity, unit_price, ROW_NUMBER() OVER (ORDER BY unit_price, id) AS event_seq, STDDEV_SAMP(quantity) OVER (PARTITION BY order_id) AS order_id_stddev_samp_quantity FROM order_items WHERE order_id = 25;

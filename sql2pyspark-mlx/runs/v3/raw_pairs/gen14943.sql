@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, account_type, ROUND(STDDEV(balance), 2) AS stddev_balance, AVG(balance) AS avg_balance FROM accounts WHERE balance BETWEEN 54000 AND 60000 OR balance >= 44000 GROUP BY QUARTER(opened_date), account_type ORDER BY opened_quarter DESC

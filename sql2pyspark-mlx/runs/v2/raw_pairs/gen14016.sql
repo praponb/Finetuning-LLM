@@ -1,1 +1,0 @@
-SELECT sessions.id, sessions.browser, sessions.customer_id, sessions.country FROM sessions WHERE NOT EXISTS (SELECT 1 FROM web_events WHERE web_events.session_id = sessions.id AND web_events.event_type = 'search') ORDER BY sessions.browser

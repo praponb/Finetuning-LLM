@@ -1,1 +1,0 @@
-SELECT s.id, s.customer_id, s.opened_date, x.transaction_txn_type, x.transaction_merchant FROM accounts s LEFT JOIN LATERAL (SELECT c.txn_type AS transaction_txn_type, c.merchant AS transaction_merchant FROM transactions c WHERE c.account_id = s.id AND c.txn_time <= s.opened_date ORDER BY c.txn_time DESC, c.id DESC LIMIT 1) x ON TRUE

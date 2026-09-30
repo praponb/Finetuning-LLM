@@ -1,1 +1,0 @@
-SELECT s.id, s.delivered_date, s.cost, s.order_id, o.shipping_fee, o.channel, o.discount * o.shipping_fee AS discount_times_shipping_fee FROM shipments s LEFT JOIN orders o ON s.order_id = o.id WHERE s.carrier = 'Kerry' AND o.store_id IN (8, 25, 35);

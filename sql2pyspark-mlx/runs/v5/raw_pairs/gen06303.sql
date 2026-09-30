@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id, ss.sale_date, s.region, s.store_name, s.opened_date FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id WHERE s.sqft < 15668 AND ss.sale_date <= '2023-05-01' ORDER BY id LIMIT 5;

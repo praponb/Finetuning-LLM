@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT merchant, is_flagged, ROUND(AVG(amount), 2) AS avg_amount, MAX(txn_time) AS latest_txn_time FROM transactions GROUP BY merchant, is_flagged) AS t WHERE avg_amount > 23 ORDER BY merchant, is_flagged LIMIT 10

@@ -1,1 +1,0 @@
-select p.product_name, p.stock_qty, t.unique_products from products p join (select product_id, count(distinct quantity) as unique_products from order_items where quantity between 4 and 8 group by product_id) t on p.id = t.product_id where t.unique_products > 4 order by stock_qty desc

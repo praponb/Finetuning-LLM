@@ -1,1 +1,0 @@
-select round((100 * sum(case when brand = 'Globex' then 1 else 0 end)) / count(*), 1) as pct_globex, round(avg(cost), 2) as avg_cost from products where cost < 700 and (cost >= 280 or brand = 'Initech');

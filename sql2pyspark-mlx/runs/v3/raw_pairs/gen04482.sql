@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory WHERE store_id = 4 GROUP BY store_id) SELECT s.id, s.sqft, s.opened_date, ss.avg_quantity FROM stores s LEFT JOIN store_summary ss ON s.id = ss.store_id WHERE ss.avg_quantity > 51

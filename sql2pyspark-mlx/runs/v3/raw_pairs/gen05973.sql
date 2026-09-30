@@ -1,1 +1,0 @@
-SELECT id, status, end_date, monthly_fee FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY end_date DESC, id) AS row_num FROM subscriptions WHERE monthly_fee >= 80) AS r WHERE row_num <= 3 ORDER BY end_date;

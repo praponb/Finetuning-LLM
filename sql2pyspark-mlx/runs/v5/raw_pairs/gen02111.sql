@@ -1,1 +1,0 @@
-select i.id, i.product_id, ss.store_id, ss.product_id as store_sale_product_id, cast(i.quantity as double) as quantity_num from inventory i left outer join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id order by store_sale_product_id

@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, DENSE_RANK() OVER (PARTITION BY country ORDER BY rating DESC) AS rn FROM suppliers WHERE LOWER(TRIM(supplier_name)) = 'lion city imports') SELECT id, country, rating FROM numbered WHERE rn <= 3

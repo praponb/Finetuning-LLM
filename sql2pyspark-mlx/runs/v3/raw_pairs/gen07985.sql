@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, SUM(cost) AS total_cost FROM products GROUP BY supplier_id) SELECT s.id, s.city, s.rating, ss.total_cost FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id;

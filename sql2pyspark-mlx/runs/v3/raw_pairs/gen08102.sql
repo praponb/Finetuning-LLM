@@ -1,1 +1,0 @@
-SELECT brand, AVG(cost) AS avg_cost, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list, SORT_ARRAY(COLLECT_SET(category)) AS category_list FROM products WHERE launch_date >= '2023-03-01' AND SIZE(tags) >= 2 AND stock_qty < 391 GROUP BY brand ORDER BY avg_cost, brand LIMIT 5

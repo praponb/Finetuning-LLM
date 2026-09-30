@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN amount >= 1260 THEN 'high' WHEN amount >= 640 THEN 'mid' ELSE 'low' END AS amount_bucket, SUM(CASE WHEN channel = 'mobile' THEN amount ELSE 0 END) AS mobile_amount FROM orders GROUP BY CASE WHEN amount >= 1260 THEN 'high' WHEN amount >= 640 THEN 'mid' ELSE 'low' END) AS sub WHERE mobile_amount >= 46;

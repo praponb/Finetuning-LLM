@@ -1,1 +1,0 @@
-SELECT method, status, SUBSTRING(status, 1, 2) AS status_prefix, CONCAT_WS('-', method, status) AS method_status_key FROM payments WHERE amount >= 440 AND order_id IN (12, 37) ORDER BY status_prefix ASC, method_status_key DESC

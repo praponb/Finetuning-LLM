@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.units, store_sales.sale_date FROM store_sales WHERE store_sales.product_id IN (SELECT id FROM products WHERE category = 'Sports') ORDER BY id DESC, store_sales.units DESC;

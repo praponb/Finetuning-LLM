@@ -1,1 +1,0 @@
-SELECT id, dept_name, budget, location, RANK() OVER (PARTITION BY dept_name ORDER BY budget DESC) AS budget_rank, LAG(budget, 2, 0) OVER (PARTITION BY location ORDER BY budget, id) AS prev_budget FROM departments;

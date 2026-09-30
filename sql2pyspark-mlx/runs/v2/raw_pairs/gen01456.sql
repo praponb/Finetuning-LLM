@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, CEIL(unit_price) AS unit_price_whole FROM order_items WHERE product_id IN (3, 15, 29)), summary AS (SELECT product_id, COUNT(DISTINCT quantity) AS unique_products, SUM(unit_price_whole) AS total_unit_price_whole FROM src GROUP BY product_id) SELECT product_id, unique_products FROM summary ORDER BY product_id DESC, unique_products;

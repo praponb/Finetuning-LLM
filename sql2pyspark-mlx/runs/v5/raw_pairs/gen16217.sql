@@ -1,1 +1,0 @@
-SELECT a.id, a.manager_id, a.level, d.salary AS employee_salary, d.level AS employee_level, d.email AS employee_email FROM employees a LEFT JOIN employees d ON a.manager_id = d.id WHERE d.job_title = 'Intern'

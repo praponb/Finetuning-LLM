@@ -1,1 +1,0 @@
-SELECT method, DATE_TRUNC('MONTH', paid_at) AS activity_month, COUNT_IF(status = 'FAILED') AS failed_events, COUNT(*) AS cnt, COUNT(CASE WHEN method = 'bank_transfer' THEN 1 END) AS bank_transfer_count FROM payments GROUP BY 1, 2 ORDER BY activity_month DESC NULLS FIRST;

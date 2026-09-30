@@ -1,1 +1,0 @@
-with src as (select *, cast(event_time as date) as event_time_day from web_events where session_id in (28, 29, 38) and hour(event_time) between 12 and 17), event_type_summary as (select event_type, min(duration_sec) as min_duration_sec from src group by event_type) select event_type, min_duration_sec from event_type_summary order by min_duration_sec, event_type desc limit 5

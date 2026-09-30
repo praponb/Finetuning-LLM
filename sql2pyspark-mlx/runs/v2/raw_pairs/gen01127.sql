@@ -1,1 +1,0 @@
-SELECT id, device, started_at, country FROM (SELECT id, device, started_at, country, ROW_NUMBER() OVER (PARTITION BY device ORDER BY started_at DESC, id) AS row_num FROM sessions) AS r WHERE row_num <= 3 ORDER BY country DESC;

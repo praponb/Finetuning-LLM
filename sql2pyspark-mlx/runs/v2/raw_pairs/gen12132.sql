@@ -1,1 +1,0 @@
-SELECT s.country, s.customer_id, we.event_time, we.page, CASE WHEN we.event_type = 'purchase' THEN 1 ELSE 0 END AS is_purchase FROM sessions s LEFT OUTER JOIN web_events we ON s.id = we.session_id WHERE s.device NOT IN ('tablet', 'mobile', 'desktop')

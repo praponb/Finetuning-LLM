@@ -1,1 +1,0 @@
-WITH Src AS (SELECT * FROM subscriptions WHERE plan = 'premium'), subscriptions_stats AS (SELECT DATE_FORMAT(start_date, 'yyyy-MM') AS start_month, status, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM Src GROUP BY DATE_FORMAT(start_date, 'yyyy-MM'), status) SELECT start_month, status, monthly_fee_range FROM subscriptions_stats WHERE monthly_fee_range < 79

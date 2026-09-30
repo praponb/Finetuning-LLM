@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, COALESCE(amount, 0) AS amount_filled FROM transactions WHERE txn_time >= TIMESTAMP '2023-04-20 04:00:00' AND account_id = 24) SELECT *, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount NULLS FIRST, id) AS rn FROM filtered QUALIFY rn = 1;

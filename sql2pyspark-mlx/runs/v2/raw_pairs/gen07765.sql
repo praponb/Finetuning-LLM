@@ -1,1 +1,0 @@
-SELECT product_id, order_id, ROUND(AVG(unit_price), 2) avg_unit_price, SUM(unit_price) total_unit_price FROM order_items WHERE NOT (unit_price < 180 AND product_id IN (7, 32)) GROUP BY product_id, order_id HAVING ROUND(AVG(unit_price), 2) >= 73 ORDER BY avg_unit_price DESC, product_id ASC, order_id ASC LIMIT 3;

@@ -1,1 +1,0 @@
-SELECT id, order_date, amount, customer_id, shipping_fee, LAG(amount, 1) OVER (ORDER BY order_date, id) AS prev_amount, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY shipping_fee DESC, id) AS rn FROM orders WHERE discount <= 0.11;

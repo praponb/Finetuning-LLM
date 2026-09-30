@@ -1,1 +1,0 @@
-SELECT MONTH(hire_date) AS hire_month, SORT_ARRAY(COLLECT_SET(level)) AS level_list, COUNT(DISTINCT salary) AS unique_job_titles, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values FROM employees GROUP BY 1 ORDER BY unique_job_titles DESC;

@@ -1,1 +1,0 @@
-select date_trunc('quarter', opened_date) as quarter_start, stddev_samp(sqft) as sqft_stddev, count(case when region = 'West' then 1 end) as west_count, stddev_samp(sqft) as sqft_stddev_2, count(case when city = 'Chiang Mai' then 1 end) as chiang_mai_count from stores group by date_trunc('quarter', opened_date) order by sqft_stddev_2 desc nulls first

@@ -1,1 +1,0 @@
-WITH matched_keys AS (SELECT id FROM subscriptions EXCEPT SELECT id FROM subscriptions WHERE monthly_fee >= 220), kept_rows AS (SELECT s.* FROM subscriptions s JOIN matched_keys k ON s.id = k.id) SELECT id, customer_id, plan, start_date, end_date, monthly_fee, status FROM kept_rows ORDER BY plan NULLS LAST, end_date DESC;

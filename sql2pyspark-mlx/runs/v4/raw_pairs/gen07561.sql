@@ -1,1 +1,0 @@
-select id, attributes, array_max(transform(items, i -> i.price)) as max_item_price, attributes['utm_source'] as utm_source, array_join(array_sort(coupon_codes), ',') as coupons_text, size(items) as num_items, transform(filter(items, i -> i.promo is not null), i -> struct(i.product_id as pid, round(i.price * 0.9, 2) as discounted_price)) as promo_lines from carts

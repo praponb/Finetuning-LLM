@@ -1,1 +1,0 @@
-SELECT we.id, we.page, we.session_id, s.started_at, s.country, c.age, c.city FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON c.id = s.customer_id WHERE c.segment NOT IN ('Corporate', 'SMB', 'Consumer') AND we.page IN ('/home', '/product', '/search');

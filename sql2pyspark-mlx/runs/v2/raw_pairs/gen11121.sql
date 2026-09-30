@@ -1,1 +1,0 @@
-WITH products_by_supplier AS (SELECT supplier_id, COUNT(*) AS row_count FROM products WHERE brand <> 'Globex' GROUP BY supplier_id) SELECT s.id, s.city, s.rating, pbs.row_count FROM suppliers s JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY s.id DESC

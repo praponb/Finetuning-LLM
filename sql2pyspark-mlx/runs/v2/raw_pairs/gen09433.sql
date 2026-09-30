@@ -1,1 +1,0 @@
-SELECT products.id, products.supplier_id, products.category, products.cost FROM products WHERE EXISTS (SELECT 1 FROM store_sales WHERE store_sales.product_id = products.id AND store_sales.revenue > 2800);

@@ -1,1 +1,0 @@
-SELECT a.balance, a.opened_date, a.account_type, c.age, c.city, c.is_active FROM accounts a INNER JOIN customers c ON a.customer_id = c.id WHERE c.email LIKE '%@GMAIL.COM' AND c.country = 'UK' ORDER BY a.opened_date;

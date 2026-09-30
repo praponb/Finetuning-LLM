@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, s.opened_date, p.stock_qty, p.category, CASE WHEN s.region = 'North' THEN 1 ELSE 0 END AS is_north FROM inventory i LEFT JOIN stores s ON s.id = i.store_id LEFT JOIN products p ON i.product_id = p.id WHERE s.city = 'Tokyo' AND s.opened_date > '2023-08-29' ORDER BY opened_date;

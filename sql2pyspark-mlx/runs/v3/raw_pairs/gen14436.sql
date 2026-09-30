@@ -1,1 +1,0 @@
-SELECT id, status, end_date, monthly_fee, ROW_NUMBER() OVER (PARTITION BY status ORDER BY end_date DESC, id) AS end_date_row, LAG(monthly_fee, 2, 0) OVER (PARTITION BY status ORDER BY end_date, id) AS prev_monthly_fee FROM subscriptions WHERE monthly_fee >= 240;

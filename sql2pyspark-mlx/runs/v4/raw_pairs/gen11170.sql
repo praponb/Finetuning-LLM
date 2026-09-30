@@ -1,1 +1,0 @@
-SELECT id, customer_id, account_type, CASE WHEN balance >= 71000 THEN 'High' WHEN balance >= 27000 THEN 'Medium' ELSE 'Low' END AS balance_level, TRIM(account_type) AS clean_account_type FROM accounts WHERE customer_id IN (22, 36, 39) ORDER BY account_type DESC, clean_account_type DESC, id LIMIT 5;

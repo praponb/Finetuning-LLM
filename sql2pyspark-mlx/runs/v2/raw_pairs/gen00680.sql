@@ -1,1 +1,0 @@
-with customer_totals as (select customer_id, max(discount) as max_discount, count(shipping_fee) as shipping_fee_count from orders group by customer_id) select c.id, c.name, c.email, ct.max_discount, ct.shipping_fee_count from customers c inner join customer_totals ct on c.id = ct.customer_id order by c.name

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END AS is_bank_transfer FROM payments WHERE paid_at >= TO_TIMESTAMP('2023-08-07 21:00:00') AND method IS DISTINCT FROM 'bank_transfer') SELECT id, order_id, amount, status FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at DESC, id) = 1;

@@ -1,1 +1,0 @@
-SELECT QUARTER(c.signup_date) AS signup_quarter, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.country))) AS country_values FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.customer_id IN (1, 4, 9) GROUP BY QUARTER(c.signup_date)

@@ -1,1 +1,0 @@
-select s.status, o.customer_id, st.region, st.opened_date, regexp_replace(st.store_name, ' ', '-') as store_name_slug from shipments s right outer join orders o on s.order_id = o.id left outer join stores st on o.store_id = st.id where o.shipping_fee > 21 or o.customer_id = 1

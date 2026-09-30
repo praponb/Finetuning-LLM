@@ -1,1 +1,0 @@
-select id, carrier, status, cost, shipped_date, round(cost / sum(cost) over (partition by carrier, status), 3) as cost_share, round(avg(cost) over (partition by carrier order by shipped_date, id rows between 2 preceding and current row), 2) as cost_moving_avg_3 from shipments where order_id = 23

@@ -1,1 +1,0 @@
-select id, customer_id, status, opened_date, concat_ws('-', status, account_type) as status_account_type_key from accounts where account_type in ('CREDIT', 'SAVINGS', 'LOAN') and status not in ('CLOSED', 'FROZEN', 'OPEN')

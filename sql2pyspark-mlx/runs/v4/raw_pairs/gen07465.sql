@@ -1,1 +1,0 @@
-WITH FilteredTransactions AS (SELECT * FROM transactions WHERE is_flagged AND txn_type = 'FEE' AND account_id IN (1, 8, 13, 38)), transactions_stats AS (SELECT account_id, is_flagged, MAX(amount) AS max_amount FROM FilteredTransactions GROUP BY account_id, is_flagged) SELECT account_id, max_amount FROM transactions_stats;

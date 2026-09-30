@@ -1,1 +1,0 @@
-SELECT e.id, e.email AS employee_email, e.job_title AS employee_job_title, m.manager_id AS manager_manager_id, m.full_name AS manager_full_name FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE UPPER(m.full_name) LIKE '%ARO%';

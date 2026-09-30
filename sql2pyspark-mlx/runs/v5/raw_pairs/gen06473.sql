@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, CASE WHEN rating >= 3.6 THEN 'High' WHEN rating >= 2.2 THEN 'Medium' ELSE 'Low' END AS rating_band FROM suppliers WHERE city IS NOT NULL) SELECT id, city, rating, rating_band FROM cleaned QUALIFY ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC NULLS LAST, id) = 1

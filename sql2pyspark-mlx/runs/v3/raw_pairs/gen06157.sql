@@ -1,1 +1,0 @@
-select dept_name, case when budget >= 4470000 then 'high' when budget >= 1629000 then 'mid' else 'low' end as budget_bucket, sum(case when dept_name = 'Finance' then budget else 0 end) as finance_budget, round(stddev(budget), 2) as stddev_budget from departments where dept_name = 'Marketing' group by 1, 2 having sum(case when dept_name = 'Finance' then budget else 0 end) < 44;

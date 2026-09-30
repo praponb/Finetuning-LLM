@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, ROUND((100 * SUM(CASE WHEN country = 'DE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_de FROM customers WHERE YEAR(signup_date) = 2025 GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM');

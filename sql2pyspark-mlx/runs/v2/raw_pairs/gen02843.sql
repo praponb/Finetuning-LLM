@@ -1,1 +1,0 @@
-SELECT id, store_id, order_date, amount, RANK() OVER (PARTITION BY store_id ORDER BY order_date) AS order_date_rank, RANK() OVER (ORDER BY amount DESC) AS rnk FROM orders WHERE order_date BETWEEN '2023-10-29' AND '2024-04-01';

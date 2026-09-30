@@ -1,1 +1,0 @@
-SELECT s.browser, s.country, s.customer_id, c.credit_limit, c.segment, COALESCE(s.browser, 'Unknown') AS browser_filled FROM sessions s LEFT JOIN customers c ON s.customer_id = c.id WHERE s.started_at < '2024-12-07'

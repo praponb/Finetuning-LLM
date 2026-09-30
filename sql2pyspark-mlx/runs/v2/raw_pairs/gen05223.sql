@@ -1,1 +1,0 @@
-WITH SupplierSummary AS (SELECT supplier_id, MIN(launch_date) min_launch_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values FROM products GROUP BY supplier_id) SELECT s.id, s.rating, S.min_launch_date, S.brand_values FROM suppliers s JOIN SupplierSummary S ON s.id = S.supplier_id ORDER BY S.brand_values ASC, s.id DESC;

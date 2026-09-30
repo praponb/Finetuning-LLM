@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time DESC, id) AS dedup_rank FROM web_events) ranked WHERE dedup_rank = 1) SELECT id, session_id, event_type, event_time, CASE WHEN event_type RLIKE '^(purchase|add_to_cart)$' THEN 'OTHER_ZONE' ELSE 'EXTENDED' END AS event_type_zone FROM latest ORDER BY session_id DESC NULLS FIRST;

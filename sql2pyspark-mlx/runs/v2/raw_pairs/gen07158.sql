@@ -1,1 +1,0 @@
-SELECT id, cost, supplier_id, LAST_VALUE(supplier_id) OVER (ORDER BY cost, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_supplier_id FROM products ORDER BY last_supplier_id ASC;

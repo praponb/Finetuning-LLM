@@ -1,1 +1,0 @@
-WITH top_shipments AS (SELECT id, carrier, delivered_date, order_id, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY delivered_date DESC, id) AS row_num FROM shipments) SELECT id, carrier, delivered_date, order_id FROM top_shipments WHERE row_num <= 3 ORDER BY delivered_date DESC;

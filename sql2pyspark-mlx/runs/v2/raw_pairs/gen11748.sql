@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, SUM(CASE WHEN page = '/search' THEN 1 ELSE 0 END) AS search_count FROM web_events WHERE session_id IN (14, 38, 40) GROUP BY session_id) SELECT s.browser, s.started_at, ss.search_count FROM sessions s INNER JOIN session_stats ss ON s.id = ss.session_id WHERE ss.search_count > 57 ORDER BY s.browser ASC;

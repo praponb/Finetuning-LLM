@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3902000 THEN 'high' WHEN budget >= 1057000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, MIN(budget) AS min_budget, MAX(budget) AS max_budget, AVG(budget) AS avg_budget FROM departments GROUP BY budget_bucket, location HAVING MAX(budget) >= 1613000

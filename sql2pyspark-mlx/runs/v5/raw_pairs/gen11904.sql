@@ -1,1 +1,0 @@
-SELECT customers.city, SUM(subscriptions.monthly_fee) AS total_monthly_fee, COUNT(subscriptions.monthly_fee) AS monthly_fee_count FROM subscriptions LEFT OUTER JOIN customers ON subscriptions.customer_id = customers.id GROUP BY customers.city ORDER BY total_monthly_fee, city

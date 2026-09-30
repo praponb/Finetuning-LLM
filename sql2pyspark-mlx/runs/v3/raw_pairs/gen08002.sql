@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, COUNT(we.id) AS web_event_count, MAX(we.event_time) AS latest_event_time, MIN(we.event_time) AS first_event_time FROM sessions s INNER JOIN web_events we ON we.session_id = s.id WHERE s.started_at >= '2023-09-01' GROUP BY s.id, s.browser;

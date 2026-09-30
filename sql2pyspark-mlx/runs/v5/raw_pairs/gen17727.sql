@@ -1,1 +1,0 @@
-with filtered as (select *, coalesce(region, 'unassigned') as region_filled, coalesce(region, 'N/A') as region_clean from stores where opened_date >= date '2023-06-30') select s.* from filtered s where not exists (select 1 from store_sales x where x.store_id = s.id and x.product_id in (7, 8));

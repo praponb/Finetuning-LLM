@@ -1,1 +1,0 @@
-select id, dept_name, location, budget, round(budget / sum(budget) over (partition by dept_name, location), 3) as budget_share from departments where location = 'Chiang Mai' order by dept_name desc, id;

@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.merchant, transactions.txn_time, accounts.status, customers.credit_limit, customers.city FROM transactions LEFT JOIN accounts ON accounts.id = transactions.account_id LEFT JOIN customers ON customers.id = accounts.customer_id WHERE LOWER(customers.name) LIKE '%aro%'

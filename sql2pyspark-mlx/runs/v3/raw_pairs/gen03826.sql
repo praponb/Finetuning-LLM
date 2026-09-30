@@ -1,1 +1,0 @@
-SELECT carrier, COUNT(cost) AS cost_count, MAX(cost) - MIN(cost) AS cost_range FROM shipments WHERE order_id IN (9, 18, 32) AND status IN ('IN_TRANSIT', 'DELIVERED', 'RETURNED') GROUP BY carrier ORDER BY carrier ASC LIMIT 50

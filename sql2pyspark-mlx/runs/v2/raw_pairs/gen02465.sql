@@ -1,1 +1,0 @@
-SELECT CASE WHEN shipping_fee >= 36 THEN 'high' WHEN shipping_fee >= 17 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, status, SUM(discount) AS total_discount FROM orders WHERE channel IS NOT NULL OR order_date BETWEEN '2024-06-01' AND '2024-07-01' GROUP BY CASE WHEN shipping_fee >= 36 THEN 'high' WHEN shipping_fee >= 17 THEN 'mid' ELSE 'low' END, status

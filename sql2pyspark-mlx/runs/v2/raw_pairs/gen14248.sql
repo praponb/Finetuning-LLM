@@ -1,1 +1,0 @@
-SELECT id, order_id, quantity, product_id, SUM(quantity) OVER (PARTITION BY order_id ORDER BY quantity, id) AS running_quantity, COUNT(*) OVER (PARTITION BY product_id) AS product_id_count FROM order_items WHERE order_id = 28 ORDER BY product_id DESC;

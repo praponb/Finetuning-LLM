@@ -1,1 +1,0 @@
-select i.quantity, i.store_id, p.price, s.store_name from inventory i left join products p on i.product_id = p.id inner join stores s on s.id = i.store_id where size(p.tags) > 1 or s.store_name like '%Sia%';

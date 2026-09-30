@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, MAX(unit_price) AS max_unit_price FROM order_items WHERE unit_price > 210 GROUP BY order_id) SELECT orders.id, orders.shipping_fee, order_totals.max_unit_price FROM orders LEFT OUTER JOIN order_totals ON orders.id = order_totals.order_id;

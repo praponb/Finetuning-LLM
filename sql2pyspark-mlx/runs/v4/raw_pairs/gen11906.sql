@@ -1,1 +1,0 @@
-SELECT CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) location_values, SUM(CASE WHEN dept_name = 'Engineering' THEN 1 ELSE 0 END) engineering_count, AVG(budget) avg_budget FROM departments WHERE dept_name = 'Marketing' ORDER BY location_values DESC;

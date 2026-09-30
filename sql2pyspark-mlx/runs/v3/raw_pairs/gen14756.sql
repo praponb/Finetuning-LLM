@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, AVG(quantity) AS avg_quantity, MIN(last_restock) AS first_last_restock FROM inventory GROUP BY product_id) SELECT p.id, p.launch_date, p.price, ps.avg_quantity, ps.first_last_restock FROM products p LEFT OUTER JOIN product_stats ps ON p.id = ps.product_id

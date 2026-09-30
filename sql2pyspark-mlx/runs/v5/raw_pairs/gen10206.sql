@@ -1,1 +1,0 @@
-select p.category, count(*) as num_store_sales, round(avg(ss.units), 2) as avg_units from store_sales ss inner join products p on p.id = ss.product_id group by p.category order by avg_units desc, category limit 10;

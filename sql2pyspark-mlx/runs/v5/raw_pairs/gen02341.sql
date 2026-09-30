@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, TRIM(status) AS clean_status, FLOOR(amount) AS amount_whole FROM orders WHERE store_id IS NOT NULL) SELECT d.city, s.channel, COUNT(*) AS rows_total, SUM(s.shipping_fee) AS total_shipping_fee, GROUPING_ID() AS gid FROM base s LEFT JOIN customers d ON s.customer_id = d.id GROUP BY CUBE (d.city, s.channel)

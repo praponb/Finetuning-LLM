@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 3900 THEN 'high' WHEN amount >= 1200 THEN 'mid' ELSE 'low' END AS amount_bucket, DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, MIN(txn_time) AS min_txn_time FROM transactions WHERE HOUR(txn_time) BETWEEN 6 AND 14 GROUP BY 1, 2 ORDER BY min_txn_time ASC, amount_bucket ASC, txn_month ASC LIMIT 10

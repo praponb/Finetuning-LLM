@@ -1,1 +1,0 @@
-SELECT c.is_active, ROUND((100 * SUM(CASE WHEN we.event_type = 'add_to_cart' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_add_to_cart, MIN(we.duration_sec) AS min_duration_sec FROM web_events we INNER JOIN sessions s ON s.id = we.session_id FULL OUTER JOIN customers c ON s.customer_id = c.id GROUP BY c.is_active ORDER BY pct_add_to_cart DESC, min_duration_sec

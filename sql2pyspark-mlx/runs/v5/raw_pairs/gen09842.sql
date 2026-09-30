@@ -1,1 +1,0 @@
-select store_id, product_id, num_inventory, quantity_range from (select store_id, product_id, count(*) num_inventory, max(quantity) - min(quantity) quantity_range from inventory group by store_id, product_id) t where quantity_range > 79;

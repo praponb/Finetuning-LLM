@@ -1,1 +1,0 @@
-with src as (select *, date_add(order_date, 67) as order_date_plus_67d from orders where order_date <= '2024-01-01'), agg as (select status, sum(case when status = 'CANCELLED' then 1 else 0 end) as cancelled_count from src group by status) select status, cancelled_count from agg where cancelled_count < 51;

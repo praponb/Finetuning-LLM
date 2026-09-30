@@ -1,1 +1,0 @@
-with base as (select *, cost / nullif(stock_qty, 0) cost_per_stock_qty, round(stock_qty * 0.85, 2) stock_qty_adjusted from products where launch_date > date '2023-06-08' and brand is not null) select id, brand, price, launch_date, supplier_id from base qualify rank() over (partition by supplier_id order by stock_qty_adjusted nulls last) = 1;

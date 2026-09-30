@@ -1,1 +1,0 @@
-select s.id, s.store_name, s.opened_date, t.avg_discount from stores s left outer join (select store_id, round(avg(discount), 2) as avg_discount from orders where customer_id = 1 group by store_id) t on s.id = t.store_id order by s.opened_date desc, s.store_name

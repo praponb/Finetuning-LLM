@@ -1,1 +1,0 @@
-select store_id, case when quantity >= 260 then 'high' when quantity >= 55 then 'mid' else 'low' end quantity_bucket, round(stddev(quantity), 2) stddev_quantity, sum(quantity) total_quantity, count(quantity) quantity_count from inventory where last_restock <= '2023-11-01' group by store_id, case when quantity >= 260 then 'high' when quantity >= 55 then 'mid' else 'low' end;

@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(oi.id) AS order_item_count FROM orders o LEFT JOIN order_items oi ON o.id = oi.order_id WHERE o.channel IS NOT NULL GROUP BY o.status HAVING COUNT(oi.id) >= 1 ORDER BY status LIMIT 3

@@ -1,1 +1,0 @@
-SELECT country, singapore_count FROM (SELECT country, COUNT(CASE WHEN city = 'Singapore' THEN 1 END) AS singapore_count FROM suppliers GROUP BY country) AS agg WHERE singapore_count < 7 ORDER BY singapore_count DESC, country LIMIT 10

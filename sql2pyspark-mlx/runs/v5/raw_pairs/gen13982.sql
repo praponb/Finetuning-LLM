@@ -1,1 +1,0 @@
-SELECT carrier, CASE WHEN cost >= 107 THEN 'HIGH' ELSE 'LOW' END AS cost_tier, APPROX_PERCENTILE(cost, ARRAY(0.25, 0.5, 0.75)) AS cost_quartiles, SUM(CASE WHEN carrier = 'UPS' THEN cost ELSE 0 END) AS ups_cost FROM shipments GROUP BY carrier, CASE WHEN cost >= 107 THEN 'HIGH' ELSE 'LOW' END ORDER BY ups_cost

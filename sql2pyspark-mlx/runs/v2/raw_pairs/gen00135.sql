@@ -1,1 +1,0 @@
-with employees_by_department as (select dept_id, min(hire_date) as first_hire_date from employees where dept_id in (2, 5) group by dept_id) select departments.id, departments.dept_name, employees_by_department.first_hire_date from departments left join employees_by_department on departments.id = employees_by_department.dept_id

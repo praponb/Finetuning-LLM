@@ -1,1 +1,0 @@
-SELECT MONTH(o.order_date) AS order_month, MAX(s.cost) - MIN(s.cost) AS cost_range FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id GROUP BY MONTH(o.order_date);

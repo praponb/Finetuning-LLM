@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, account_id, MIN(amount) AS min_amount, MAX(amount) AS max_amount FROM transactions WHERE txn_type NOT IN ('REFUND', 'CREDIT') AND amount <= 3500 GROUP BY txn_month, account_id HAVING min_amount > 3700 ORDER BY account_id;

@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, COUNT(*) AS num_sessions, COUNT(CASE WHEN country = 'DE' THEN 1 END) AS de_count FROM sessions GROUP BY customer_id) SELECT c.id, c.country, cs.num_sessions, cs.de_count FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.num_sessions >= 6

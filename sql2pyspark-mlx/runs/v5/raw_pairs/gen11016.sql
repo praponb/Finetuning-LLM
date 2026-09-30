@@ -1,1 +1,0 @@
-SELECT emp.full_name AS employee_full_name, emp.hire_date AS employee_hire_date, mgr.is_remote AS manager_is_remote, mgr.level AS manager_level, LENGTH(emp.full_name) AS full_name_length FROM employees emp LEFT OUTER JOIN employees mgr ON emp.manager_id = mgr.id ORDER BY 2 DESC

@@ -1,1 +1,0 @@
-WITH valid_shipments AS (SELECT *, CASE WHEN carrier = 'DHL' THEN 1 ELSE 0 END AS is_dhl FROM shipments WHERE carrier NOT IN ('Kerry', 'FedEx', 'Flash')), shipments_stats AS (SELECT order_id, COUNT(*) AS num_shipments FROM valid_shipments GROUP BY order_id) SELECT * FROM shipments_stats ORDER BY order_id DESC, num_shipments DESC;

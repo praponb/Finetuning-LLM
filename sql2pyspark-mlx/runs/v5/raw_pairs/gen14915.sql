@@ -1,1 +1,0 @@
-WITH valid_accounts AS (SELECT *, TRIM(account_type) AS clean_account_type FROM accounts WHERE MONTH(opened_date) IN (2, 8, 9)), agg AS (SELECT customer_id, AVG(balance) AS avg_balance, COUNT(CASE WHEN account_type = 'CHECKING' THEN 1 END) AS checking_count FROM valid_accounts GROUP BY customer_id) SELECT * FROM agg WHERE avg_balance >= 69000 ORDER BY customer_id LIMIT 5

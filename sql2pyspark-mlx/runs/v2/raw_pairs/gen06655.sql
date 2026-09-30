@@ -1,1 +1,0 @@
-SELECT id, page, CASE WHEN page IN ('/cart', '/product') THEN 'Tier 1' ELSE 'Other' END AS page_group, CASE WHEN duration_sec >= 527 THEN 'High' WHEN duration_sec >= 84 THEN 'Medium' ELSE 'Low' END AS duration_sec_tier FROM web_events WHERE event_type = 'page_view' AND duration_sec < 314

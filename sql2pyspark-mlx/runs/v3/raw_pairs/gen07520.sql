@@ -1,1 +1,0 @@
-WITH supplier_totals AS (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, COUNT(DISTINCT price) AS unique_brands FROM products GROUP BY supplier_id) SELECT s.id, s.city, s.supplier_name, st.category_values, st.unique_brands FROM suppliers s LEFT JOIN supplier_totals st ON s.id = st.supplier_id;

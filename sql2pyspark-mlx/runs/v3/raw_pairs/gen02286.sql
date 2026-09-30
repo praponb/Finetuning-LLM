@@ -1,1 +1,0 @@
-SELECT id, status, end_date, monthly_fee, LEAD(monthly_fee, 2, 0) OVER (PARTITION BY status ORDER BY end_date, id) AS next_monthly_fee FROM subscriptions WHERE end_date BETWEEN '2024-12-08' AND '2025-03-01';

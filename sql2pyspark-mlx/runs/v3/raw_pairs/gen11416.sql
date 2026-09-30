@@ -1,1 +1,0 @@
-SELECT *, CONCAT_WS('-', city, region) AS city_region_key, CONCAT(city, ', ', store_name) AS city_store_name FROM stores WHERE city IN ('Singapore', 'Bangkok', 'Tokyo') ORDER BY opened_date ASC, store_name ASC

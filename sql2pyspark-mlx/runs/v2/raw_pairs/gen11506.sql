@@ -1,1 +1,0 @@
-SELECT id, customer_id, opened_date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY opened_date DESC, id) AS row_num FROM accounts WHERE status IN ('FROZEN', 'OPEN', 'CLOSED')) AS t WHERE row_num = 1

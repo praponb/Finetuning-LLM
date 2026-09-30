@@ -1,1 +1,0 @@
-SELECT store_sales.revenue, store_sales.sale_date, products.stock_qty, stores.opened_date, FLOOR(products.price) AS price_whole FROM store_sales JOIN products ON store_sales.product_id = products.id JOIN stores ON stores.id = store_sales.store_id ORDER BY opened_date ASC, price_whole DESC

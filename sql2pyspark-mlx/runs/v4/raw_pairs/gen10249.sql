@@ -1,1 +1,0 @@
-SELECT id, log_ts, level, status_code, context, COALESCE(context['trace'], 'direct') AS trace_or_default, SHIFTRIGHT(status_code, 2) AS status_code_high, SIZE(context) AS num_context, COALESCE(context['region'], 'none') AS region_or_default, GET_JSON_OBJECT(payload_json, '$.user.tier') AS user_tier FROM app_logs

@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, customer_id, coupon_codes, INLINE(items) FROM carts) SELECT s.id, s.customer_id, s.qty, s.price, s.promo, (SELECT AVG(o2.discount) FROM orders o2 WHERE o2.customer_id = s.customer_id) AS avg_order_discount FROM flattened s ORDER BY qty DESC;

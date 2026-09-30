@@ -1,1 +1,0 @@
-with recent_employees as (select * from employees where level != 'L1' and job_title is null and full_name like '%Noa%'), job_title_summary as (select job_title, count(distinct salary) as unique_managers from recent_employees group by job_title) select * from job_title_summary where unique_managers > 10;

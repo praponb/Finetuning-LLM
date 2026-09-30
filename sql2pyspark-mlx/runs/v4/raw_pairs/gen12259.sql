@@ -1,1 +1,0 @@
-select p.id, p.category, p.supplier_id, t.stddev_quantity from products p left join (select product_id, round(stddev(quantity), 2) as stddev_quantity from inventory group by product_id) t on p.id = t.product_id where t.stddev_quantity > 45 order by id, category;

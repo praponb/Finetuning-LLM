@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END AS is_success, ROUND(amount, 1) AS amount_rounded FROM payments WHERE method IS NOT NULL) SELECT id, order_id, amount, status, is_success, amount_rounded FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY status ORDER BY is_success, id) = 1;

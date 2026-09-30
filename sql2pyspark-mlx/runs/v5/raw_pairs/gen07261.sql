@@ -1,1 +1,0 @@
-with Ranked as (select id, account_type, balance, opened_date, row_number() over (partition by account_type order by balance desc, id) as rnk from accounts) select id, account_type, balance, opened_date from Ranked where rnk <= 2;

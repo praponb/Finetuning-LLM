@@ -1,1 +1,0 @@
-SELECT order_id, stddev_cost, cnt FROM (SELECT order_id, ROUND(STDDEV(cost), 2) stddev_cost, COUNT(*) cnt FROM shipments WHERE order_id IN (8, 17, 20, 28) GROUP BY order_id) sub WHERE cnt < 8 ORDER BY cnt DESC, order_id DESC

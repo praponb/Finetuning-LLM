@@ -1,1 +1,0 @@
-WITH Numbered AS (SELECT id, city, age, signup_date, ROW_NUMBER() OVER (PARTITION BY city ORDER BY age DESC, id) row_num FROM customers WHERE segment IN ('Consumer', 'SMB', 'Corporate')) SELECT id, city, age, signup_date FROM Numbered WHERE row_num <= 3;

@@ -1,1 +1,0 @@
-SELECT event_type, AVG(duration_sec) AS avg_duration_sec, COUNT(CASE WHEN event_type = 'add_to_cart' THEN 1 END) AS add_to_cart_count, MAX(event_time) AS latest_event_time FROM web_events WHERE event_time >= '2025-07-01' GROUP BY 1 ORDER BY avg_duration_sec DESC;

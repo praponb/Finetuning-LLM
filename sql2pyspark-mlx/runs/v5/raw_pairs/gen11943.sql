@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 340 THEN 'high' WHEN unit_price >= 90 THEN 'mid' ELSE 'low' END AS unit_price_bucket, AVG(unit_price) AS avg_unit_price FROM order_items GROUP BY CASE WHEN unit_price >= 340 THEN 'high' WHEN unit_price >= 90 THEN 'mid' ELSE 'low' END;

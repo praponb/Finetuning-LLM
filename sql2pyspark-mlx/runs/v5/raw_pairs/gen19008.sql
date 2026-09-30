@@ -1,1 +1,0 @@
-with order_stats as (select order_id, count(distinct unit_price) as unique_orders from order_items where quantity > 6 group by order_id) select o.id, o.channel, o.store_id, os.unique_orders from orders o join order_stats os on o.id = os.order_id;

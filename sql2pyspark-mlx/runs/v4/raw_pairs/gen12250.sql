@@ -1,1 +1,0 @@
-WITH top_store_sales AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY revenue DESC, id) pos FROM store_sales) SELECT id, store_id, revenue, product_id FROM top_store_sales WHERE pos <= 5 ORDER BY product_id DESC

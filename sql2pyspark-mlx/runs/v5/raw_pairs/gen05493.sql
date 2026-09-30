@@ -1,1 +1,0 @@
-SELECT id, reading_ts, temp_c, status_bits, firmware, LAG(pressure) OVER w_recent AS prev_pressure, LEAD(pressure) OVER w_recent AS next_pressure, LAG(humidity) OVER w_recent AS prev_humidity, ROW_NUMBER() OVER w_recent AS seq_no FROM device_readings WINDOW w_recent AS (PARTITION BY device_code ORDER BY humidity, id);

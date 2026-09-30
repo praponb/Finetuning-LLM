@@ -1,1 +1,0 @@
-select date_trunc('MONTH', txn_time) as txn_month, to_date(txn_time) as txn_day, avg(amount) as avg_amount from transactions where (is_flagged = true and txn_type in ('FEE', 'CREDIT', 'REFUND')) or account_id in (10, 23, 31) group by date_trunc('MONTH', txn_time), to_date(txn_time) order by txn_day;

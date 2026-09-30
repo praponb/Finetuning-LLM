@@ -1,1 +1,0 @@
-SELECT product_id, SUM(quantity * unit_price) AS revenue, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items WHERE NOT (unit_price BETWEEN 340 AND 390 AND product_id = 16) GROUP BY product_id ORDER BY revenue DESC;

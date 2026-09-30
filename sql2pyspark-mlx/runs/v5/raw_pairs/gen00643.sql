@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, COUNT(*) AS total_count FROM web_events GROUP BY session_id) SELECT s.started_at, s.customer_id, ss.total_count FROM sessions s INNER JOIN session_stats ss ON s.id = ss.session_id ORDER BY started_at DESC

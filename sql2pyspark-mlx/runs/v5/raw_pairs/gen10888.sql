@@ -1,1 +1,0 @@
-SELECT t.id, t.account_id, t.txn_type, t.amount, a.balance, a.customer_id FROM transactions t LEFT OUTER JOIN accounts a ON t.account_id = a.id WHERE a.customer_id IN (8, 40) AND a.account_type IN ('SAVINGS', 'CHECKING', 'CREDIT')

@@ -1,1 +1,0 @@
-SELECT o.status, SUM(oi.quantity * oi.unit_price) AS revenue, COUNT(*) AS cnt FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON oi.product_id = p.id GROUP BY o.status;

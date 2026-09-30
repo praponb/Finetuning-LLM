@@ -1,1 +1,0 @@
-with base as (select *, case when is_flagged then 'Yes' else 'No' end is_flagged_label from transactions where is_flagged = true and amount < 2000), summary as (select merchant, round(stddev(amount), 2) stddev_amount, sum(amount) total_amount from base group by merchant) select merchant, total_amount from summary where total_amount < 9000 order by total_amount;

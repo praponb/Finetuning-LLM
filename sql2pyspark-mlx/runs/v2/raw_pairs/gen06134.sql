@@ -1,1 +1,0 @@
-select o.customer_id, o.store_id, o.amount, c.email, c.signup_date from orders o left outer join customers c on c.id = o.customer_id where c.country in ('DE', 'TH') and c.is_active = true order by amount desc

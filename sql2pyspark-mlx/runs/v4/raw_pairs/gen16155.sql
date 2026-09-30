@@ -1,1 +1,0 @@
-select case when d.location in ('London', 'Tokyo') then 'priority' else 'other' end location_group, avg(e.salary) avg_salary from employees e left join departments d on e.dept_id = d.id group by case when d.location in ('London', 'Tokyo') then 'priority' else 'other' end order by location_group;

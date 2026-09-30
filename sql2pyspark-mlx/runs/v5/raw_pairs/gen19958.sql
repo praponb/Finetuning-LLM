@@ -1,1 +1,0 @@
-SELECT e.is_remote AS employee_is_remote, e.hire_date AS employee_hire_date, e.full_name AS employee_full_name, m.hire_date AS manager_hire_date FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id WHERE NOT (MONTH(m.hire_date) IN (6, 7, 8) AND e.job_title = 'Designer');

@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, service, log_ts, level, latency_ms, key, v FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS key, v) SELECT service, level, latency_ms, key, v FROM flattened ORDER BY latency_ms DESC;

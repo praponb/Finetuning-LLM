@@ -1,1 +1,0 @@
-select id, status, shipping_fee, channel from (select id, status, shipping_fee, channel, row_number() over (partition by status order by shipping_fee, id) as pos from orders) as r where pos <= 1 order by channel desc

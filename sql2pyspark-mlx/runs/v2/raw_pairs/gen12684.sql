@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(oi.unit_price) AS unit_price_count FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id RIGHT OUTER JOIN products p ON oi.product_id = p.id WHERE o.order_date > '2024-07-01' GROUP BY o.status ORDER BY status, unit_price_count DESC;

@@ -1,1 +1,0 @@
-with deduped as (select * from (select *, rank() over (partition by level order by salary asc) as dedup_rank from employees) x where dedup_rank = 1) select id, full_name, email, dept_id, salary, hire_date, is_remote, level, dedup_rank, case when level rlike '^(L3|L5)$' then 'PRIORITY' else 'EXTENDED' end as level_zone from deduped order by level_zone asc

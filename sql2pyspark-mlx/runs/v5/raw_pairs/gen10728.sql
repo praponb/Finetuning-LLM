@@ -1,1 +1,0 @@
-SELECT *, DATEDIFF(CURRENT_DATE(), event_time) days_since_event_time, HOUR(event_time) event_time_hour FROM web_events WHERE event_type NOT IN ('search', 'add_to_cart', 'page_view') OR event_time < '2025-01-01' ORDER BY event_time_hour, id LIMIT 3

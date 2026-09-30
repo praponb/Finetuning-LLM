@@ -1,1 +1,0 @@
-SELECT id, store_id, last_restock, product_id, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_label, CAST(quantity AS STRING) AS quantity_num FROM inventory WHERE product_id = 5 OR store_id IN (1, 2, 3, 5);

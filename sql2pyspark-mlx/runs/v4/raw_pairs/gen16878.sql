@@ -1,1 +1,0 @@
-SELECT order_items.id, order_items.quantity, order_items.order_id, orders.order_date, orders.store_id, stores.city, stores.opened_date FROM order_items INNER JOIN orders ON order_items.order_id = orders.id LEFT OUTER JOIN stores ON orders.store_id = stores.id;

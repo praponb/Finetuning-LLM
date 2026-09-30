@@ -1,1 +1,0 @@
-SELECT id, order_id, amount, method, paid_at, ROUND(amount / SUM(amount) OVER (PARTITION BY order_id), 3) AS amount_share, FIRST_VALUE(order_id) OVER (PARTITION BY method ORDER BY paid_at, id) AS first_order_id FROM payments WHERE status IN ('REFUNDED', 'FAILED', 'SUCCESS');

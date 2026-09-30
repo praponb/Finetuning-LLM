@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, LENGTH(email) AS email_length FROM employees WHERE hire_date > DATE '2023-12-09' AND NOT is_remote) SELECT *, LEAD(email_length, 1) OVER (PARTITION BY manager_id ORDER BY hire_date, id) AS next_email_length, NTILE(5) OVER (PARTITION BY manager_id ORDER BY salary, id) AS salary_bucket FROM cleaned

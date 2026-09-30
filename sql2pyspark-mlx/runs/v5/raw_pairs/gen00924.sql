@@ -1,1 +1,0 @@
-SELECT MONTH(customers.signup_date) AS signup_month, ROUND(AVG(subscriptions.monthly_fee), 2) AS avg_monthly_fee, COUNT(*) AS cnt FROM subscriptions FULL OUTER JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.monthly_fee > 140 GROUP BY MONTH(customers.signup_date) ORDER BY cnt DESC, signup_month ASC LIMIT 20;

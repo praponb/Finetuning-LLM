@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(revenue) - MIN(revenue) revenue_range FROM store_sales WHERE product_id IN (1, 6, 7) GROUP BY store_id) SELECT s.id, s.city, ss.revenue_range FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id ORDER BY city, id LIMIT 3;

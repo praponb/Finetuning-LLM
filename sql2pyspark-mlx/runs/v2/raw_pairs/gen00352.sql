@@ -1,1 +1,0 @@
-SELECT QUARTER(p.launch_date) AS launch_quarter, ROUND(AVG(oi.quantity), 2) AS avg_quantity FROM order_items oi LEFT OUTER JOIN products p ON oi.product_id = p.id GROUP BY QUARTER(p.launch_date) ORDER BY avg_quantity;

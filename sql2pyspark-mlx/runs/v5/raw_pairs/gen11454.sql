@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM transactions WHERE txn_type IN ('REFUND', 'DEBIT') OR TO_DATE(txn_time) >= '2023-10-01'), agg AS (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values, COUNT(CASE WHEN merchant = 'Starbucks' THEN 1 END) AS starbucks_count FROM base GROUP BY account_id) SELECT * FROM agg ORDER BY starbucks_count, account_id LIMIT 20;

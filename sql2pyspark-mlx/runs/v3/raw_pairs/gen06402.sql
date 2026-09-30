@@ -1,1 +1,0 @@
-SELECT store_id, DATE_TRUNC('MONTH', order_date) AS order_month, COUNT(*) AS row_count, COUNT(discount) AS discount_count FROM orders WHERE store_id IN (14, 21, 36) GROUP BY store_id, DATE_TRUNC('MONTH', order_date) ORDER BY order_month, discount_count DESC

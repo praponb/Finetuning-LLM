@@ -1,1 +1,0 @@
-SELECT i.store_id, s.city, DATE_TRUNC('week', s.opened_date) AS opened_date_period FROM inventory i LEFT JOIN stores s ON i.store_id = s.id WHERE i.product_id = 3 AND s.city NOT IN ('London', 'Bangkok') ORDER BY opened_date_period;

@@ -1,1 +1,0 @@
-SELECT id, location, dept_name, budget, DENSE_RANK() OVER (PARTITION BY location, dept_name ORDER BY budget DESC) AS budget_dense_rank, RANK() OVER (PARTITION BY dept_name ORDER BY budget DESC) AS rnk FROM departments;

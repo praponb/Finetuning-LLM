@@ -1,1 +1,0 @@
-with filtered_subscriptions as (select * from subscriptions where status in ('CANCELLED', 'PAUSED')), Summary as (select status, plan, max(monthly_fee) as max_monthly_fee, min(monthly_fee) as min_monthly_fee from filtered_subscriptions group by status, plan) select * from Summary order by min_monthly_fee;

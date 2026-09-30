@@ -1,1 +1,0 @@
-select is_remote, sort_array(collect_set(job_title)) as job_title_list, round(stddev(salary), 2) as stddev_salary from employees where level in ('L2', 'L5', 'L4') group by is_remote having stddev_salary > 55 order by stddev_salary, is_remote limit 1;

@@ -1,1 +1,0 @@
-select id, channel, avg(discount_pct) over w_recent discount_pct_avg_3_prior, percent_rank() over (partition by promo_code order by discount_pct) discount_pct_percent_rank from promotions where discount_pct <= 0.28 window w_recent as (order by starts_on, id rows between 3 preceding and 1 preceding);

@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, MAX(start_date) AS latest_start_date FROM subscriptions GROUP BY customer_id) SELECT customers.is_active, customer_totals.latest_start_date FROM customers LEFT OUTER JOIN customer_totals ON customers.id = customer_totals.customer_id ORDER BY latest_start_date DESC;

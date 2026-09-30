@@ -1,1 +1,0 @@
-select s.store_name, s.opened_date, o.status, o.customer_id, o.store_id, case when o.amount >= 1700 then 'High' when o.amount >= 770 then 'Medium' else 'Low' end as amount_level from stores s left join orders o on o.store_id = s.id where year(o.order_date) = 2024 or o.discount between 0.1 and 0.17 order by s.store_name;

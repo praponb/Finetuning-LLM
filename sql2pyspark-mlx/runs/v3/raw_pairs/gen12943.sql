@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, COUNT(DISTINCT unit_price) AS unique_products, COUNT(unit_price) AS unit_price_count FROM order_items WHERE quantity <= 6 GROUP BY product_id) SELECT p.id, p.launch_date, ps.unique_products, ps.unit_price_count FROM products p LEFT OUTER JOIN product_summary ps ON p.id = ps.product_id WHERE ps.unique_products >= 7

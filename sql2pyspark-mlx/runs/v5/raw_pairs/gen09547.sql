@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CEIL(budget) AS budget_whole, COALESCE(dept_name, 'DIRECT') AS dept_name_clean FROM departments WHERE dept_name IS NOT NULL) SELECT id, dept_name, budget_whole FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget_whole DESC NULLS FIRST, id) = 1;

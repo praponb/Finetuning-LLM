@@ -1,1 +1,0 @@
-select c.city, count(a.id) as account_count, round((100 * sum(case when a.account_type = 'CHECKING' then 1 else 0 end)) / count(*), 1) as pct_checking, count(distinct a.balance) as unique_customers from customers c left join accounts a on a.customer_id = c.id group by c.city having unique_customers > 5;

@@ -1,1 +1,0 @@
-with lines as (select id, service, status_code, attr_key, v from app_logs lateral view explode(context) e as attr_key, v) select id, status_code, attr_key, v, case when attr_key rlike '^(version|trace)$' then 'EXTENDED' when attr_key rlike '^(region)$' then 'PRIORITY' else 'CORE' end as attr_key_zone from lines order by id nulls last, attr_key_zone desc;

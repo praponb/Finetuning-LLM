@@ -1,1 +1,0 @@
-SELECT products.id, products.supplier_id, products.price, suppliers.city, suppliers.rating, suppliers.supplier_name FROM products FULL OUTER JOIN suppliers ON suppliers.id = products.supplier_id ORDER BY products.id DESC;

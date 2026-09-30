@@ -1,1 +1,0 @@
-with flattened as (select id, customer_id, created_at, coupon_codes, inline(items) from carts) select s.id, s.customer_id, s.created_at, s.coupon_codes, s.qty, s.price, (select max(t2.balance) from accounts t2 where t2.customer_id = s.customer_id) as max_account_balance from flattened s order by max_account_balance desc nulls first, created_at desc

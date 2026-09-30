@@ -1,1 +1,0 @@
-SELECT id, store_id, COALESCE(quantity, 0) AS quantity_filled, ROUND(quantity, 2) AS quantity_rounded FROM inventory WHERE store_id IN (5, 6) OR last_restock BETWEEN '2023-08-01' AND '2024-11-17' ORDER BY quantity_rounded DESC, id LIMIT 5;

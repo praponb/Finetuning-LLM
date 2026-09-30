@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM inventory QUALIFY ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock DESC, id) = 1) SELECT id, store_id, quantity, last_restock FROM latest ORDER BY id NULLS LAST LIMIT 20;

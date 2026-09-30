@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, MAX(credit_limit) AS max_credit_limit, COUNT(*) AS total_count FROM customers GROUP BY DATE_TRUNC('MONTH', signup_date) ORDER BY total_count DESC, signup_month

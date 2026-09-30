@@ -1,1 +1,0 @@
-SELECT location, CASE WHEN location IN ('New York', 'Chiang Mai') THEN 'group_a' ELSE 'other' END AS location_group, COUNT(CASE WHEN location = 'Chiang Mai' THEN 1 END) AS chiang_mai_count, AVG(budget) AS avg_budget, SUM(budget) AS total_budget FROM departments GROUP BY location, location_group ORDER BY total_budget;

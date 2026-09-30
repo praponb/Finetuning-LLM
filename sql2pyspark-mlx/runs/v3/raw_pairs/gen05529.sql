@@ -1,1 +1,0 @@
-SELECT segment, YEAR(signup_date) signup_year, COUNT(*) num_customers, SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END) new_york_count, MAX(age) - MIN(age) age_range FROM customers WHERE signup_date <= '2023-04-01' AND LENGTH(email) >= 12 AND LENGTH(email) < 12 GROUP BY 1, 2;

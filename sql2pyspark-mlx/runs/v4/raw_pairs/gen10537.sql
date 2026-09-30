@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CEIL(rating) AS rating_whole, INITCAP(TRIM(supplier_name)) AS supplier_name_title FROM suppliers WHERE supplier_name LIKE '%Glo%') SELECT * FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id) = 1

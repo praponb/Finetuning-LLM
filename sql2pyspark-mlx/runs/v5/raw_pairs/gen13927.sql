@@ -1,1 +1,0 @@
-SELECT ss.sale_date, p.brand, s.opened_date, DATE_TRUNC('year', p.launch_date) AS launch_date_period FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id ORDER BY launch_date_period, p.brand

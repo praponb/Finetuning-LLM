@@ -1,1 +1,0 @@
-select channel_group, channel, avg_amount from (select case when channel in ('mobile', 'web') then 'group_a' else 'other' end as channel_group, channel, avg(amount) as avg_amount from orders group by case when channel in ('mobile', 'web') then 'group_a' else 'other' end, channel) as t where avg_amount > 840 order by channel asc;

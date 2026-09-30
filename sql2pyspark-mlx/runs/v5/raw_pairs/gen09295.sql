@@ -1,1 +1,0 @@
-WITH latest AS (SELECT id, order_id, method, status FROM (SELECT *, RANK() OVER (PARTITION BY status ORDER BY paid_at) AS rn FROM payments) x WHERE rn = 1) SELECT id, status, CASE WHEN status RLIKE '^(REFUNDED|FAILED)$' THEN 'GROUP_A' WHEN status RLIKE '^(SUCCESS)$' THEN 'OTHER_ZONE' ELSE 'GROUP_B' END AS status_zone FROM latest ORDER BY status_zone, id DESC;

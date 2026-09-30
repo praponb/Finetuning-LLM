@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, account_id, amount, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount, id) rnk FROM transactions WHERE account_id IN (10, 20, 32)) SELECT id, account_id, amount FROM ranked WHERE rnk <= 3 ORDER BY amount DESC;

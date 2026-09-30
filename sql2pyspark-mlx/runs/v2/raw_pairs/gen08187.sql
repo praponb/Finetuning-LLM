@@ -1,1 +1,0 @@
-SELECT i.store_id, i.product_id, p.launch_date, s.supplier_name FROM inventory i LEFT JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE LOWER(TRIM(s.supplier_name)) = 'siam parts co';

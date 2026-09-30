@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN unit_price >= 310 THEN 'high' WHEN unit_price >= 160 THEN 'mid' ELSE 'low' END unit_price_bucket, COUNT(DISTINCT unit_price) unique_orders FROM order_items GROUP BY ROLLUP(product_id, CASE WHEN unit_price >= 310 THEN 'high' WHEN unit_price >= 160 THEN 'mid' ELSE 'low' END)

@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, CASE WHEN channel = 'store' THEN 1 ELSE 0 END AS is_store, FLOOR(discount) AS discount_whole, COALESCE(channel, 'DIRECT') AS channel_clean FROM orders WHERE order_date > TO_DATE('2023-11-08')) SELECT store_id, customer_id FROM cleaned INTERSECT SELECT store_id, customer_id FROM orders WHERE shipping_fee < 38

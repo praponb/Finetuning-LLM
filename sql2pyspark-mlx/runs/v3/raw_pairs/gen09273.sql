@@ -1,1 +1,0 @@
-select id, dept_name, budget, location, dense_rank() over (partition by dept_name order by budget) as budget_dense_rank, avg(budget) over (partition by location) as location_avg_budget from departments;

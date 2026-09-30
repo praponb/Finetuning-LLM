@@ -1,1 +1,0 @@
-SELECT country, CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END AS rating_bucket, city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, MAX(rating) - MIN(rating) AS rating_range FROM suppliers WHERE country <> 'SG' GROUP BY country, rating_bucket, city;

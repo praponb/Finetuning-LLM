@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, MIN(unit_price) AS min_unit_price, AVG(quantity) AS avg_quantity FROM order_items GROUP BY order_id) SELECT o.id, o.shipping_fee, ot.min_unit_price, ot.avg_quantity FROM orders o LEFT OUTER JOIN order_totals ot ON o.id = ot.order_id ORDER BY shipping_fee DESC;

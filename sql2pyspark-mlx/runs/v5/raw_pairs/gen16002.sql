@@ -1,1 +1,0 @@
-with numbered as (select *, row_number() over (partition by customer_id order by opened_date desc, id) as row_num from accounts) select id, customer_id, opened_date from numbered where row_num <= 3 order by opened_date desc;

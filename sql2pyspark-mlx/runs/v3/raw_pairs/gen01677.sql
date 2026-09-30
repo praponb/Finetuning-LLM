@@ -1,1 +1,0 @@
-SELECT id, order_id, quantity, unit_price, unit_price - LAG(unit_price, 1) OVER (PARTITION BY order_id ORDER BY quantity, id) AS unit_price_change FROM order_items WHERE unit_price > 260 ORDER BY quantity ASC;

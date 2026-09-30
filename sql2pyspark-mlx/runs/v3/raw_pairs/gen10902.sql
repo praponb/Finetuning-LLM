@@ -1,1 +1,0 @@
-WITH ranked_products AS (SELECT id, category, launch_date, supplier_id, ROW_NUMBER() OVER (PARTITION BY category ORDER BY launch_date DESC, id) AS pos FROM products) SELECT id, category, launch_date, supplier_id FROM ranked_products WHERE pos = 1 ORDER BY supplier_id DESC;

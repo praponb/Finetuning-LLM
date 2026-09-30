@@ -1,1 +1,0 @@
-SELECT country, signup_month, avg_age, row_count FROM (SELECT country, DATE_TRUNC('MONTH', signup_date) AS signup_month, AVG(age) AS avg_age, COUNT(*) AS row_count FROM customers GROUP BY country, DATE_TRUNC('MONTH', signup_date)) AS x WHERE row_count >= 4 ORDER BY row_count

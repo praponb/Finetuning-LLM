@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, AVG(unit_price) AS avg_unit_price FROM order_items WHERE unit_price >= 360 GROUP BY product_id) SELECT p.id, p.price, p.launch_date, ps.avg_unit_price FROM products p LEFT JOIN product_summary ps ON p.id = ps.product_id

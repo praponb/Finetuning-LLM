@@ -1,1 +1,0 @@
-select dept_name, budget, coalesce(dept_name, 'unassigned') as dept_name_filled, round(budget * 0.9, 2) as budget_scaled from departments where location in ('Berlin', 'Singapore', 'Chiang Mai') and dept_name in ('HR', 'Sales') order by dept_name;

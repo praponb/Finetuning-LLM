@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, p.brand, p.product_name, s.city, LENGTH(s.store_name) AS store_name_length FROM inventory i INNER JOIN products p ON p.id = i.product_id LEFT OUTER JOIN stores s ON i.store_id = s.id WHERE s.region NOT IN ('South', 'West', 'East') ORDER BY product_name, store_name_length, id LIMIT 5;

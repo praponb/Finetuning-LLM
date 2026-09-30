@@ -1,1 +1,0 @@
-with cleaned as (select *, case when cost >= 78 then 'High' when cost >= 41 then 'Medium' else 'Low' end as cost_band, date_sub(shipped_date, 67) as shipped_date_minus_67d from shipments where shipped_date >= date '2023-09-13' and order_id is not null) select a.*, p.discount, p.channel, p.shipping_fee from cleaned a join orders p on a.order_id = p.id

@@ -1,1 +1,0 @@
-SELECT i.last_restock, i.product_id, p.price, s.city, s.opened_date, FLOOR(s.sqft) sqft_whole FROM inventory i INNER JOIN products p ON p.id = i.product_id INNER JOIN stores s ON s.id = i.store_id WHERE p.launch_date > '2023-12-01' ORDER BY s.city

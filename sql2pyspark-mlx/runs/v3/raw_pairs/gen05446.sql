@@ -1,1 +1,0 @@
-SELECT d.location, d.dept_name, t.total_count, t.latest_hire_date FROM departments d JOIN (SELECT dept_id, COUNT(*) AS total_count, MAX(hire_date) AS latest_hire_date FROM employees WHERE dept_id IN (14, 18, 24, 30) GROUP BY dept_id) t ON d.id = t.dept_id

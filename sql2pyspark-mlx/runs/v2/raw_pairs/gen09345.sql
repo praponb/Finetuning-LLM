@@ -1,1 +1,0 @@
-WITH department_stats AS (SELECT dept_id, MAX(salary) - MIN(salary) AS salary_range FROM employees GROUP BY dept_id) SELECT departments.id, departments.location, departments.budget, department_stats.salary_range FROM departments JOIN department_stats ON departments.id = department_stats.dept_id WHERE department_stats.salary_range >= 30 ORDER BY 2, id DESC

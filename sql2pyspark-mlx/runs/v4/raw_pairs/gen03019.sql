@@ -1,1 +1,0 @@
-WITH recent_store_sales AS (SELECT * FROM store_sales WHERE (revenue >= 2300 AND product_id IN (1, 4)) OR units < 24), store_sales_stats AS (SELECT product_id, SUM(revenue) AS total_revenue FROM recent_store_sales GROUP BY product_id) SELECT product_id, total_revenue FROM store_sales_stats WHERE total_revenue < 19000;

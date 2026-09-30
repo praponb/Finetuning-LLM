@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.store_id, inventory.product_id, products.cost, products.category, suppliers.city, suppliers.rating FROM inventory LEFT JOIN products ON inventory.product_id = products.id JOIN suppliers ON suppliers.id = products.supplier_id WHERE inventory.quantity = 148 OR inventory.quantity < 239;

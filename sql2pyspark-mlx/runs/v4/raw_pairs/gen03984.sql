@@ -1,1 +1,0 @@
-select id, product_id, unit_price, order_id from (select id, product_id, unit_price, order_id, dense_rank() over (partition by product_id order by unit_price) as rnk from order_items where unit_price <= 150) as r where rnk <= 5 order by product_id, unit_price desc

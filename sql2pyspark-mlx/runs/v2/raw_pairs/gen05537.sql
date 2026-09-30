@@ -1,1 +1,0 @@
-SELECT id, status, order_date, amount, discount, FIRST_VALUE(amount) OVER (PARTITION BY status ORDER BY order_date, id) first_amount, ROW_NUMBER() OVER (PARTITION BY status ORDER BY discount DESC, id) discount_row FROM orders;

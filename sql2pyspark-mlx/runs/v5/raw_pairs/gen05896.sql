@@ -1,1 +1,0 @@
-WITH SessionsByCustomer AS (SELECT customer_id, MIN(started_at) min_started_at FROM sessions WHERE browser IN ('Edge', 'Safari') GROUP BY customer_id) SELECT c.id, c.age, S.min_started_at FROM customers c JOIN SessionsByCustomer S ON c.id = S.customer_id

@@ -1,1 +1,0 @@
-select ss.id, ss.product_id, ss.store_id, p.supplier_id, p.brand, s.supplier_name from store_sales ss left join products p on p.id = ss.product_id join suppliers s on s.id = p.supplier_id where s.rating > 3.2

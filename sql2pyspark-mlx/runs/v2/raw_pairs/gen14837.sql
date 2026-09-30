@@ -1,1 +1,0 @@
-SELECT we.id, we.page, we.session_id, we.duration_sec, s.country, INITCAP(TRIM(s.country)) AS country_title FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id ORDER BY 2, id DESC LIMIT 5;

@@ -1,1 +1,0 @@
-SELECT inventory.store_id, stores.opened_date, products.launch_date FROM inventory LEFT OUTER JOIN stores ON stores.id = inventory.store_id LEFT OUTER JOIN products ON inventory.product_id = products.id WHERE products.category = 'Books' ORDER BY store_id DESC

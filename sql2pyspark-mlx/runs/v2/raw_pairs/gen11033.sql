@@ -1,1 +1,0 @@
-select id, page, event_time, duration_sec, session_id, duration_sec - lag(duration_sec, 1) over (partition by page order by event_time, id) as duration_sec_change, sum(duration_sec) over (partition by session_id) as session_id_sum_duration_sec from web_events

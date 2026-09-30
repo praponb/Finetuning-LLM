@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, s.region, s.city, p.brand, p.stock_qty FROM inventory i LEFT OUTER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id WHERE p.stock_qty = 395 ORDER BY p.stock_qty;

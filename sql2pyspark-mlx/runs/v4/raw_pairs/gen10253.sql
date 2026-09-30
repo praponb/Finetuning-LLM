@@ -1,1 +1,0 @@
-SELECT id, txn_type, amount, merchant, LAST_VALUE(merchant) OVER (PARTITION BY txn_type ORDER BY amount DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_merchant, RANK() OVER (PARTITION BY txn_type ORDER BY amount) AS rnk FROM transactions WHERE merchant = 'Grab';

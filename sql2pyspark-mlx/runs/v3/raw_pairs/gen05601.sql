@@ -1,1 +1,0 @@
-SELECT id, region, sqft, city, SUM(sqft) OVER (PARTITION BY region) AS region_sum_sqft, RANK() OVER (PARTITION BY city ORDER BY sqft) AS sqft_rank FROM stores WHERE sqft > 13744 ORDER BY sqft_rank DESC

@@ -1,1 +1,0 @@
-with filtered_transactions as (select * from transactions where amount >= 3400), TransactionsStats as (select txn_type, to_date(txn_time) as txn_day, max(amount) as max_amount, min(amount) as min_amount from filtered_transactions group by txn_type, to_date(txn_time)) select txn_type, max_amount, min_amount from TransactionsStats order by txn_type, min_amount desc;

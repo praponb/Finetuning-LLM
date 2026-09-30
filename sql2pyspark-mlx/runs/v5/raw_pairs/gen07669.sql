@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, manager_id, salary, full_name, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY salary DESC, id) AS rn FROM employees) SELECT id, manager_id, salary, full_name FROM numbered WHERE rn <= 5

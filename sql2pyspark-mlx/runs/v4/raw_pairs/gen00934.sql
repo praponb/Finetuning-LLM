@@ -1,1 +1,0 @@
-SELECT d.id, d.location, t.l3_salary, t.stddev_salary FROM departments d LEFT JOIN (SELECT dept_id, SUM(CASE WHEN level = 'L3' THEN salary ELSE 0 END) AS l3_salary, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees WHERE hire_date < '2024-11-07' GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY l3_salary ASC;

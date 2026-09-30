@@ -1,1 +1,0 @@
-select c.id, count(a.id) as account_count, count(case when a.account_type = 'CHECKING' then 1 end) as checking_count from customers c inner join accounts a on a.customer_id = c.id where c.email like '%@startup.io' group by c.id;

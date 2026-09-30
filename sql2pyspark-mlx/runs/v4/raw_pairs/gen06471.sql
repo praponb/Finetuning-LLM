@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) AS row_num FROM inventory QUALIFY row_num = 1) SELECT store_id, COUNT(DISTINCT id) AS distinct_ids, COUNT(DISTINCT id) AS distinct_ids_2 FROM ranked GROUP BY CUBE (store_id)

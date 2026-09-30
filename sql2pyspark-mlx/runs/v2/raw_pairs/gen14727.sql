@@ -1,1 +1,0 @@
-select session_id, date_format(event_time, 'yyyy-MM') as event_month, sum(duration_sec) as total_duration_sec, max(event_time) as latest_event_time from web_events where event_type = 'purchase' group by session_id, date_format(event_time, 'yyyy-MM') order by event_month;

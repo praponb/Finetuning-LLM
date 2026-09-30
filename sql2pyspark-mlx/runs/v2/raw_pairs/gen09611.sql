@@ -1,1 +1,0 @@
-select country, country_values, min_rating from (select country, concat_ws(', ', sort_array(collect_set(country))) country_values, min(rating) min_rating from suppliers group by country) sub where min_rating > 4.0 order by country limit 20;

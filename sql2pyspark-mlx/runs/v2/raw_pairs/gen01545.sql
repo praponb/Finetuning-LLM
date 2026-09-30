@@ -1,1 +1,0 @@
-select status, quarter(start_date) start_quarter, count(distinct monthly_fee) unique_statuss, count(*) row_count, round((100 * sum(case when status = 'EXPIRED' then 1 else 0 end)) / count(*), 1) pct_expired from subscriptions where start_date < '2024-04-01' group by status, quarter(start_date) order by 3 desc

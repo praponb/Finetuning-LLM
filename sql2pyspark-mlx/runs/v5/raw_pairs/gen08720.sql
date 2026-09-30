@@ -1,1 +1,0 @@
-SELECT ss.id, ss.product_id, s.sqft, s.store_name, p.price, SUBSTRING(s.city, 1, 4) AS city_prefix FROM store_sales ss FULL OUTER JOIN stores s ON ss.store_id = s.id FULL OUTER JOIN products p ON ss.product_id = p.id WHERE ss.units > 25 AND ss.sale_date > '2023-10-01' ORDER BY price DESC, city_prefix;

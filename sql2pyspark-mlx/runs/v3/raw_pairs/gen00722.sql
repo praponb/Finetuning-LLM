@@ -1,1 +1,0 @@
-SELECT customer_id, amount_range FROM (SELECT customer_id, MAX(amount) - MIN(amount) AS amount_range FROM orders WHERE amount <= 630 GROUP BY customer_id) AS s WHERE amount_range > 28 ORDER BY customer_id DESC

@@ -1,1 +1,0 @@
-select date_format(customers.signup_date, 'yyyy-MM') as signup_month, count(distinct shipments.cost) as unique_carriers, min(shipments.cost) as min_cost from shipments left join orders on shipments.order_id = orders.id inner join customers on orders.customer_id = customers.id where customers.credit_limit < 13400 group by date_format(customers.signup_date, 'yyyy-MM')

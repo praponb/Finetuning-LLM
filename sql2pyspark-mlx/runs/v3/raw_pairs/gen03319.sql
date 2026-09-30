@@ -1,1 +1,0 @@
-SELECT id, product_id, store_id, last_restock, quantity, SUM(quantity) OVER (PARTITION BY product_id, store_id ORDER BY last_restock, id) AS running_quantity FROM inventory ORDER BY running_quantity DESC;

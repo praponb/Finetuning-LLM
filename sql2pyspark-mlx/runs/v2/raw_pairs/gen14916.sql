@@ -1,1 +1,0 @@
-SELECT emp.id, emp.full_name AS employee_full_name, mgr.is_remote AS manager_is_remote, mgr.manager_id AS manager_manager_id FROM employees emp LEFT OUTER JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.level = 'L4';

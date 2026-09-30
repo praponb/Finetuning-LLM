@@ -1,1 +1,0 @@
-SELECT status_group, shipped_count FROM (SELECT CASE WHEN status IN ('SHIPPED', 'PENDING') THEN 'priority' ELSE 'other' END AS status_group, SUM(CASE WHEN status = 'SHIPPED' THEN 1 ELSE 0 END) AS shipped_count FROM orders GROUP BY CASE WHEN status IN ('SHIPPED', 'PENDING') THEN 'priority' ELSE 'other' END) AS t WHERE shipped_count >= 72 ORDER BY 2, status_group

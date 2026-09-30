@@ -1,1 +1,0 @@
-select o.channel, o.status, count(case when s.carrier = 'Kerry' then 1 end) as kerry_count from shipments s inner join orders o on s.order_id = o.id inner join stores st on o.store_id = st.id where st.store_name is not null group by o.channel, o.status;

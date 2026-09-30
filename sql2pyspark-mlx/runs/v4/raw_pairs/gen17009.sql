@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity, MAX(quantity) OVER (PARTITION BY product_id) product_id_max_quantity, COUNT(*) OVER (PARTITION BY product_id) product_id_count FROM inventory WHERE quantity BETWEEN 118 AND 178 ORDER BY product_id DESC, product_id_count DESC;

@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, ROUND(AVG(price), 2) AS avg_price FROM products GROUP BY supplier_id) SELECT s.city, ss.avg_price FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id

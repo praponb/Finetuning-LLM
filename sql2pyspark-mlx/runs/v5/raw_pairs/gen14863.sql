@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1440 THEN 'high' WHEN amount >= 660 THEN 'mid' ELSE 'low' END amount_bucket, SORT_ARRAY(COLLECT_SET(status)) status_list, MIN(amount) min_amount, SUM(amount) total_amount FROM payments GROUP BY 1;

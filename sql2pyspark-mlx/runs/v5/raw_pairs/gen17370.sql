@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, SUM(CASE WHEN txn_type = 'DEBIT' THEN 1 ELSE 0 END) AS debit_count FROM transactions GROUP BY account_id) SELECT a.id, a.customer_id, as.debit_count FROM accounts a LEFT JOIN account_stats as ON a.id = as.account_id

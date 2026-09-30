@@ -1,1 +1,0 @@
-SELECT oi.id, oi.order_id, p.price, s.country, s.supplier_name FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id WHERE oi.product_id IN (1, 23, 25);

@@ -1,1 +1,0 @@
-SELECT id, customer_id, status, end_date, start_date, NTILE(4) OVER (PARTITION BY customer_id, status ORDER BY end_date DESC, id) end_date_ntile, LAST_VALUE(end_date) OVER (PARTITION BY customer_id ORDER BY start_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_end_date FROM subscriptions

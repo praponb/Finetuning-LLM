@@ -1,1 +1,0 @@
-SELECT cost_bucket, avg_cost, cost_count FROM (SELECT CASE WHEN cost >= 86 THEN 'high' WHEN cost >= 28 THEN 'mid' ELSE 'low' END cost_bucket, ROUND(AVG(cost), 2) avg_cost, COUNT(cost) cost_count FROM shipments GROUP BY CASE WHEN cost >= 86 THEN 'high' WHEN cost >= 28 THEN 'mid' ELSE 'low' END) agg WHERE avg_cost < 63;

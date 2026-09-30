@@ -1,1 +1,0 @@
-SELECT accounts.opened_date, accounts.account_type, accounts.balance, transactions.is_flagged FROM accounts LEFT OUTER JOIN transactions ON transactions.account_id = accounts.id WHERE accounts.customer_id = 37 ORDER BY balance;

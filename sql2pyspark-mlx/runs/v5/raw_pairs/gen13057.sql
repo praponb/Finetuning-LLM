@@ -1,1 +1,0 @@
-select id, category, launch_date, cost, brand, lead(cost, 1) over (partition by category order by launch_date, id) as next_cost, rank() over (partition by brand order by launch_date) as rnk from products where price > 870 order by rnk desc, 6 desc;

@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM orders WHERE channel = 'mobile' AND (amount IS NOT NULL OR customer_id IN (2, 16, 40))), orders_stats AS (SELECT status, ROUND((100 * SUM(CASE WHEN channel = 'web' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_web, ROUND(AVG(amount), 2) AS avg_amount FROM src GROUP BY status) SELECT status, pct_web, avg_amount FROM orders_stats ORDER BY status;

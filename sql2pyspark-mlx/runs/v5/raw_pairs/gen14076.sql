@@ -1,1 +1,0 @@
-with filtered as (select *, datediff(current_date(), txn_time) as days_since_txn_time from transactions where txn_time >= timestamp '2023-07-20 21:00:00' and merchant is not null) select * from (select merchant, txn_type, days_since_txn_time from filtered) src pivot (avg(days_since_txn_time) as amount for txn_type in ('REFUND' as refund, 'FEE' as fee))

@@ -1,1 +1,0 @@
-select year(s.opened_date) as opened_year, round(avg(ss.units), 2) as avg_units from store_sales ss inner join products p on p.id = ss.product_id left join stores s on ss.store_id = s.id group by year(s.opened_date) order by avg_units desc

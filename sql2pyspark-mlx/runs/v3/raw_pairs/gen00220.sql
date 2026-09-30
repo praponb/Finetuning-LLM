@@ -1,1 +1,0 @@
-SELECT c.city, QUARTER(c.signup_date) AS signup_quarter, MIN(o.amount) AS min_amount FROM orders o INNER JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON o.customer_id = c.id GROUP BY c.city, QUARTER(c.signup_date) ORDER BY signup_quarter ASC, city ASC LIMIT 20

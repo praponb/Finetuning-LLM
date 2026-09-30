@@ -1,1 +1,0 @@
-SELECT shipped_month, avg_cost, fedex_count FROM (SELECT DATE_FORMAT(shipped_date, 'yyyy-MM') AS shipped_month, AVG(cost) AS avg_cost, COUNT(CASE WHEN carrier = 'FedEx' THEN 1 END) AS fedex_count FROM shipments GROUP BY DATE_FORMAT(shipped_date, 'yyyy-MM')) AS t WHERE fedex_count < 4 ORDER BY fedex_count, shipped_month LIMIT 3;

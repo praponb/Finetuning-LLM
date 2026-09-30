@@ -1,1 +1,0 @@
-WITH top_employees AS (SELECT id, job_title, hire_date, email, ROW_NUMBER() OVER (PARTITION BY job_title ORDER BY hire_date DESC, id) AS rnk FROM employees WHERE manager_id = 23) SELECT id, job_title, hire_date, email FROM top_employees WHERE rnk <= 2;

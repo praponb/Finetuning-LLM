@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, ADD_MONTHS(sale_date, 12) sale_date_plus_months FROM store_sales WHERE store_id IN (2, 3, 4, 6) AND store_id = 2), store_id_summary AS (SELECT store_id, product_id, MAX(sale_date) last_sale_date, MAX(revenue) - MIN(revenue) revenue_range FROM base GROUP BY store_id, product_id) SELECT * FROM store_id_summary ORDER BY store_id DESC;

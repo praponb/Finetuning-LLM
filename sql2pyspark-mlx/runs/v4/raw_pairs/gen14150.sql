@@ -1,1 +1,0 @@
-select s.*, x.store_sale_sale_date, x.store_sale_units from products s left join lateral (select c.sale_date as store_sale_sale_date, c.units as store_sale_units from store_sales c where c.product_id = s.id order by c.revenue desc, c.id desc limit 1) x on true;

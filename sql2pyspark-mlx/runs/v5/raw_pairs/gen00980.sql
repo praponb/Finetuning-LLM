@@ -1,1 +1,0 @@
-WITH valid_accounts AS (SELECT * FROM accounts WHERE customer_id IN (3, 17, 18, 34)), summary AS (SELECT account_type, SUM(CASE WHEN account_type = 'CREDIT' THEN 1 ELSE 0 END) AS credit_count FROM valid_accounts GROUP BY account_type) SELECT * FROM summary WHERE credit_count > 43 ORDER BY credit_count DESC, account_type LIMIT 3;

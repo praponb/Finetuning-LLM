@@ -1,1 +1,0 @@
-SELECT launch_month, min_launch_date, cost_count FROM (SELECT MONTH(launch_date) AS launch_month, MIN(launch_date) AS min_launch_date, COUNT(cost) AS cost_count FROM products GROUP BY MONTH(launch_date)) AS sub WHERE cost_count < 6 ORDER BY cost_count;

@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS dedup_rank FROM departments) t WHERE dedup_rank = 1) SELECT dept_name, ROUND(AVG(budget), 2) AS avg_budget, SUM(budget) AS total_budget, COUNT(DISTINCT location) AS distinct_locations FROM ranked GROUP BY 1 HAVING ROUND(AVG(budget), 2) > 0 ORDER BY distinct_locations;

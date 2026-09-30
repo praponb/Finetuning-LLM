@@ -1,1 +1,0 @@
-WITH enriched AS (SELECT *, LEAD(budget) OVER w_recent AS next_budget, ROW_NUMBER() OVER w_recent AS row_seq FROM departments WINDOW w_recent AS (PARTITION BY location ORDER BY budget, id)) SELECT id, dept_name, location, budget FROM enriched ORDER BY budget, location;

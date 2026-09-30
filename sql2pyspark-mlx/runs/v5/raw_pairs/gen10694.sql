@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY opened_date DESC, id) AS pos FROM accounts) SELECT id, customer_id, opened_date FROM ranked WHERE pos <= 3 ORDER BY 2 DESC

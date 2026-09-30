@@ -1,1 +1,0 @@
-select month(event_time) event_month, event_type, sum(duration_sec) total_duration_sec, sort_array(collect_set(event_type)) event_type_list, sum(case when event_type = 'click' then 1 else 0 end) click_count from web_events group by month(event_time), event_type order by total_duration_sec desc, event_month;

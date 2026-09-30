@@ -1,1 +1,0 @@
-SELECT id, category, cost, brand, stock_qty, PERCENT_RANK() OVER (PARTITION BY category ORDER BY cost) cost_pct_rank, MIN(stock_qty) OVER (PARTITION BY brand) brand_min_stock_qty FROM products ORDER BY brand;

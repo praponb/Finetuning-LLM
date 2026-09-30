@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, AVG(quantity) AS avg_quantity, COUNT(DISTINCT unit_price) AS unique_products, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items WHERE product_id = 27 GROUP BY quantity_bucket;

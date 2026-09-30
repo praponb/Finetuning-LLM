@@ -1,1 +1,0 @@
-SELECT s.*, x.web_event_page, x.web_event_duration_sec FROM sessions s LEFT JOIN LATERAL (SELECT c.page AS web_event_page, c.duration_sec AS web_event_duration_sec FROM web_events c WHERE c.session_id = s.id ORDER BY c.duration_sec DESC, c.id DESC LIMIT 1) x ON TRUE;

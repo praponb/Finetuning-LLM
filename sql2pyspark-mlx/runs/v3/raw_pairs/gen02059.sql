@@ -1,1 +1,0 @@
-select merchant, count(case when txn_type = 'FEE' then 1 end) as fee_count, count(distinct amount) as unique_merchants, round((100 * sum(case when merchant = 'Amazon' then 1 else 0 end)) / count(*), 1) as pct_amazon from transactions where txn_time >= '2023-07-14' group by merchant having pct_amazon < 79 order by unique_merchants;

@@ -1,1 +1,0 @@
-with valid as (select *, round(units / revenue, 2) as revenue_per_unit from store_sales where units > 31) select * from (select *, rank() over (partition by store_id, product_id order by revenue desc nulls last) as rank_in_group from valid) x where rank_in_group = 1;

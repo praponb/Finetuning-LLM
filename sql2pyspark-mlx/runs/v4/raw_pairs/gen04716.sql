@@ -1,1 +1,0 @@
-SELECT TO_DATE(s.started_at) AS started_day, COUNT(DISTINCT we.duration_sec) AS unique_pages FROM web_events we LEFT JOIN sessions s ON s.id = we.session_id GROUP BY TO_DATE(s.started_at) ORDER BY started_day

@@ -1,1 +1,0 @@
-SELECT status, MONTH(start_date) AS start_month, COUNT(monthly_fee) AS monthly_fee_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM subscriptions WHERE customer_id = 3 GROUP BY status, MONTH(start_date) HAVING COUNT(monthly_fee) >= 1;

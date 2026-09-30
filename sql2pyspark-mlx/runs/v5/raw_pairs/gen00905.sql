@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, MIN(launch_date) AS first_launch_date, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty FROM products GROUP BY supplier_id) SELECT s.id, s.country, ss.first_launch_date, ss.stddev_stock_qty FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id ORDER BY ss.stddev_stock_qty;

@@ -1,1 +1,0 @@
-SELECT subscriptions.id, subscriptions.end_date FROM subscriptions WHERE subscriptions.monthly_fee <= 170 AND subscriptions.customer_id IN (SELECT id FROM customers WHERE signup_date BETWEEN '2023-08-03' AND '2023-11-01');

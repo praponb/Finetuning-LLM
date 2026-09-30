@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, TRIM(status) AS clean_status, LOWER(status) AS status_lower FROM accounts WHERE status IS DISTINCT FROM 'OPEN') SELECT id, customer_id, balance, AVG(balance) OVER (PARTITION BY status) AS status_avg_balance, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date, id) AS row_seq FROM base;

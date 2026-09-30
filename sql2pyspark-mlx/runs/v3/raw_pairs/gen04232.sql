@@ -1,1 +1,0 @@
-SELECT opened_month, sqft_count FROM (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, COUNT(sqft) sqft_count FROM stores WHERE city != 'Singapore' GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) t WHERE sqft_count > 6 ORDER BY opened_month;

@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM store_sales WHERE sale_date <= '2025-04-16'), agg AS (SELECT product_id, SUM(units) AS total_units, AVG(revenue) AS avg_revenue FROM src GROUP BY product_id) SELECT * FROM agg WHERE total_units < 130

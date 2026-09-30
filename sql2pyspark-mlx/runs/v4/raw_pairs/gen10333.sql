@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY discount DESC, id) AS row_num FROM orders WHERE order_date >= '2024-02-06') AS t WHERE row_num <= 5 ORDER BY store_id, row_num

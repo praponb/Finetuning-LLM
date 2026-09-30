@@ -1,1 +1,0 @@
-SELECT o.channel, COUNT(p.id) payment_count, SUM(CASE WHEN p.status = 'SUCCESS' THEN 1 ELSE 0 END) success_count, SUM(CASE WHEN p.method = 'paypal' THEN p.amount ELSE 0 END) paypal_amount FROM orders o LEFT OUTER JOIN payments p ON p.order_id = o.id GROUP BY o.channel

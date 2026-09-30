@@ -1,1 +1,0 @@
-select date_format(p.launch_date, 'yyyy-MM') as launch_month, avg(oi.unit_price) as avg_unit_price from order_items oi inner join products p on oi.product_id = p.id group by date_format(p.launch_date, 'yyyy-MM');

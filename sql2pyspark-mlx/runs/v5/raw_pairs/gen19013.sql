@@ -1,1 +1,0 @@
-with base as (select *, initcap(trim(country)) country_title, coalesce(city, 'UNKNOWN') city_clean from customers where segment is not null and segment is not distinct from 'SMB') select * from (select city, segment, country, age from base) src pivot (sum(age) for country in ('JP', 'UK'))

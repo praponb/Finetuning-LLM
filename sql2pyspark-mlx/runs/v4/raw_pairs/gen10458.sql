@@ -1,1 +1,0 @@
-with order_summary as (select order_id, count(*) as row_count, max(paid_at) as last_paid_at from payments group by order_id) select o.shipping_fee, os.row_count, os.last_paid_at from orders o left outer join order_summary os on o.id = os.order_id

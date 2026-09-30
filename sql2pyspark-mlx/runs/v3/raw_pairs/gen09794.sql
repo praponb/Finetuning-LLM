@@ -1,1 +1,0 @@
-SELECT TO_DATE(event_time) AS event_day, SUM(duration_sec) AS total_duration_sec, COUNT(*) AS cnt, ROUND(SUM(duration_sec) * 100.0 / SUM(SUM(duration_sec)) OVER (), 2) AS pct_of_total FROM web_events WHERE HOUR(event_time) BETWEEN 10 AND 15 GROUP BY TO_DATE(event_time)

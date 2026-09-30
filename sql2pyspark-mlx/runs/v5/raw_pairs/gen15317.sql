@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, plan, effective_from, currency, EXPLODE_OUTER(tier_prices) AS val FROM price_tiers) SELECT plan, effective_from, currency, val FROM flattened ORDER BY effective_from DESC, val DESC;

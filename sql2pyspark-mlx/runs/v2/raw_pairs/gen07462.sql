@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, city, rating, supplier_name, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating, id) AS row_num FROM suppliers WHERE city = 'Chiang Mai') AS r WHERE row_num <= 5 ORDER BY row_num

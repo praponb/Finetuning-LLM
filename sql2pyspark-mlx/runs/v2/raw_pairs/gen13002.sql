@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM customers WHERE YEAR(signup_date) = 2025 AND country = 'UK' AND credit_limit >= 6300), agg AS (SELECT segment, COUNT(DISTINCT credit_limit) AS unique_citys, MAX(credit_limit) - MIN(credit_limit) AS credit_limit_range FROM base GROUP BY segment) SELECT * FROM agg WHERE unique_citys > 9 ORDER BY credit_limit_range DESC;

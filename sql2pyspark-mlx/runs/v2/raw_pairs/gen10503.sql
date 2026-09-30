@@ -1,1 +1,0 @@
-WITH ranked_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date, id) AS rn FROM accounts WHERE opened_date BETWEEN '2023-03-01' AND '2023-04-01') SELECT * FROM ranked_accounts WHERE rn = 1 ORDER BY id;

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, store_name, city, region, opened_date, sqft, LAST_DAY(opened_date) AS opened_date_month_end FROM stores WHERE opened_date >= DATE '2023-08-04' AND UPPER(store_name) LIKE '%LD %') SELECT *, ROUND(sqft / SUM(sqft) OVER (PARTITION BY city), 4) AS sqft_share, SUM(sqft) OVER (PARTITION BY city, region) AS city_sum_sqft FROM valid;

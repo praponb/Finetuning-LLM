@@ -1,1 +1,0 @@
-SELECT id, product_id, order_id, unit_price, CASE WHEN quantity >= 6 THEN 'High' WHEN quantity >= 3 THEN 'Medium' ELSE 'Low' END AS quantity_band, unit_price - quantity AS line_total FROM order_items WHERE order_id IN (18, 20, 37) AND unit_price BETWEEN 230 AND 400;

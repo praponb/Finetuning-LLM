@@ -1,1 +1,0 @@
-SELECT status, store_id, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range, SUM(CASE WHEN channel = 'partner' THEN shipping_fee ELSE 0 END) AS partner_shipping_fee FROM orders GROUP BY 1, 2 ORDER BY partner_shipping_fee, 2 DESC;

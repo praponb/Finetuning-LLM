@@ -1,1 +1,0 @@
-SELECT s.id, s.opened_date, t.min_quantity, t.total_quantity FROM stores s LEFT JOIN (SELECT store_id, MIN(quantity) AS min_quantity, SUM(quantity) AS total_quantity FROM inventory GROUP BY store_id) t ON s.id = t.store_id ORDER BY total_quantity

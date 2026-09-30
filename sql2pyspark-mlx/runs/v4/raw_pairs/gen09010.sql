@@ -1,1 +1,0 @@
-SELECT MONTH(o.order_date) AS order_month, COUNT(oi.unit_price) AS unit_price_count FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON p.id = oi.product_id WHERE p.launch_date BETWEEN '2023-09-10' AND '2024-02-04' GROUP BY MONTH(o.order_date) ORDER BY order_month DESC;

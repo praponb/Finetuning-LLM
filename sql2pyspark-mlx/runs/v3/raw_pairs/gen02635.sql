@@ -1,1 +1,0 @@
-select hire_quarter, is_remote, cnt, manager_count from (select quarter(hire_date) hire_quarter, is_remote, count(*) cnt, sum(case when job_title = 'Manager' then 1 else 0 end) manager_count from employees where dept_id in (6, 16, 21) group by quarter(hire_date), is_remote) t where manager_count >= 39 order by cnt;

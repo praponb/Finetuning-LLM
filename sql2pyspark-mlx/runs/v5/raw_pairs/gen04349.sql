@@ -1,1 +1,0 @@
-WITH supplier_stats AS (SELECT supplier_id, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range, MIN(stock_qty) AS min_stock_qty FROM products WHERE price BETWEEN 660 AND 1100 GROUP BY supplier_id) SELECT s.country, ss.stock_qty_range, ss.min_stock_qty FROM suppliers s LEFT JOIN supplier_stats ss ON s.id = ss.supplier_id

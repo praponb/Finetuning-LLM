@@ -1,1 +1,0 @@
-select max(duration_sec) - min(duration_sec) as duration_sec_range, sum(case when page = '/search' then 1 else 0 end) as search_count from web_events where event_time >= '2023-03-01' and duration_sec between 133 and 290 and duration_sec between 138 and 457 order by duration_sec_range desc

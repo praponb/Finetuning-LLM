@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, store_id, product_id, units, revenue, revenue * units AS revenue_per_unit FROM store_sales WHERE store_id IN (2, 3, 4, 6)) SELECT * FROM filtered QUALIFY ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY revenue_per_unit DESC NULLS LAST, id) = 1;

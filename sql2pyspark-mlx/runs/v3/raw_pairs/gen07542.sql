@@ -1,1 +1,0 @@
-SELECT is_remote, SUM(CASE WHEN job_title = 'Director' THEN salary ELSE 0 END) AS director_salary FROM employees WHERE salary > 140000 AND LENGTH(email) > 8 GROUP BY is_remote HAVING SUM(CASE WHEN job_title = 'Director' THEN salary ELSE 0 END) > 29;

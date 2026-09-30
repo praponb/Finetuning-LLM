@@ -1,1 +1,0 @@
-SELECT store_id, avg_quantity, min_quantity FROM (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, MIN(quantity) AS min_quantity FROM inventory WHERE product_id IN (5, 7) GROUP BY store_id) AS t WHERE avg_quantity < 37 ORDER BY min_quantity DESC

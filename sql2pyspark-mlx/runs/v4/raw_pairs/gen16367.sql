@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN amount >= 4400 THEN 'high' WHEN amount >= 900 THEN 'mid' ELSE 'low' END AS amount_bucket, SUM(CASE WHEN merchant = 'Grab' THEN amount ELSE 0 END) AS grab_amount, COUNT(amount) AS amount_count FROM transactions GROUP BY CASE WHEN amount >= 4400 THEN 'high' WHEN amount >= 900 THEN 'mid' ELSE 'low' END) AS t WHERE amount_count > 6

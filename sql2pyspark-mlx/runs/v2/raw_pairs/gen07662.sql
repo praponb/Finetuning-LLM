@@ -1,1 +1,0 @@
-SELECT s.country, p.category, p.price, p.stock_qty, SUBSTRING(s.country, 1, 4) AS country_prefix FROM suppliers s LEFT OUTER JOIN products p ON p.supplier_id = s.id WHERE ARRAY_CONTAINS(p.tags, 'sale') AND p.product_name NOT LIKE '%Wat%';

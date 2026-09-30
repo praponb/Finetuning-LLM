@@ -1,1 +1,0 @@
-with ranked_payments as (select *, row_number() over (partition by method order by paid_at, id) as row_num from payments where amount <= 510) select id, method, paid_at, amount from ranked_payments where row_num = 1 order by method, id desc

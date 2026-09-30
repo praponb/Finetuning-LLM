@@ -1,1 +1,0 @@
-select s.city, s.supplier_name, t.stock_qty_count from suppliers s inner join (select supplier_id, count(stock_qty) as stock_qty_count from products group by supplier_id) t on s.id = t.supplier_id where t.stock_qty_count >= 5

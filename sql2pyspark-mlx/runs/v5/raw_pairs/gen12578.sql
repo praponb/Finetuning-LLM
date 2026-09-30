@@ -1,1 +1,0 @@
-SELECT CASE WHEN salary >= 150000 THEN 'high' WHEN salary >= 57000 THEN 'mid' ELSE 'low' END AS salary_bucket, is_remote, COUNT(DISTINCT salary) AS unique_levels FROM employees WHERE salary > 111000 GROUP BY salary_bucket, is_remote ORDER BY salary_bucket, unique_levels DESC, is_remote LIMIT 10

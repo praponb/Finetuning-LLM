@@ -1,1 +1,0 @@
-SELECT status, plan, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, COUNT(CASE WHEN plan = 'standard' THEN 1 END) AS standard_count, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count FROM subscriptions WHERE customer_id IN (4, 10, 17, 39) GROUP BY status, plan HAVING cancelled_count >= 5 ORDER BY standard_count DESC, status

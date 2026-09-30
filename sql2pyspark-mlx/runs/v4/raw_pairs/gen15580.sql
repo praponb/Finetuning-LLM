@@ -1,1 +1,0 @@
-SELECT we.session_id, we.duration_sec, s.country, s.customer_id, INITCAP(TRIM(we.event_type)) AS event_type_title FROM web_events we RIGHT JOIN sessions s ON s.id = we.session_id WHERE s.device = 'tablet'

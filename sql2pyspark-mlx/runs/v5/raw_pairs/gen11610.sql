@@ -1,1 +1,0 @@
-WITH ValidPayments AS (SELECT *, CASE WHEN status IN ('FAILED', 'SUCCESS') THEN 'Tier 1' ELSE 'Other' END AS status_group FROM payments WHERE order_id = 2), payments_stats AS (SELECT status, AVG(amount) AS avg_amount FROM ValidPayments GROUP BY status) SELECT status, avg_amount FROM payments_stats;

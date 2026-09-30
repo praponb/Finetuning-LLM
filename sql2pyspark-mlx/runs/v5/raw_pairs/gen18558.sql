@@ -1,1 +1,0 @@
-with inventory_by_store as (select store_id, sum(quantity) as total_quantity, count(quantity) as quantity_count from inventory where store_id in (2, 4, 5, 6) group by store_id) select s.id, s.store_name, ibs.total_quantity, ibs.quantity_count from stores s left outer join inventory_by_store ibs on s.id = ibs.store_id order by total_quantity, id

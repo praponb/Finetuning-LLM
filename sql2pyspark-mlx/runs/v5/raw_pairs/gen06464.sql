@@ -1,1 +1,0 @@
-WITH ranked_products AS (SELECT id, brand, launch_date, price, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY launch_date DESC, id) row_num FROM products WHERE SIZE(tags) >= 1) SELECT id, brand, launch_date, price FROM ranked_products WHERE row_num <= 3 ORDER BY id DESC, price;

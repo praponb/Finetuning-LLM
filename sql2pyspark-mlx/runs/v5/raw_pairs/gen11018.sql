@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, SUBSTRING(product_name, 1, 3) AS product_name_prefix, COALESCE(brand, 'NONE') AS brand_filled FROM products WHERE stock_qty <= 109) SELECT id FROM filtered INTERSECT SELECT id FROM products WHERE stock_qty BETWEEN 132 AND 352;

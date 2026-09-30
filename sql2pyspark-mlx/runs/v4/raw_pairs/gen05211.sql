@@ -1,1 +1,0 @@
-SELECT YEAR(paid_at) paid_year, COUNT(CASE WHEN status = 'FAILED' THEN 1 END) failed_count, AVG(amount) avg_amount FROM payments WHERE HOUR(paid_at) BETWEEN 11 AND 15 GROUP BY YEAR(paid_at) HAVING AVG(amount) < 760 ORDER BY failed_count ASC, paid_year DESC;

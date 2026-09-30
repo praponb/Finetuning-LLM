@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN sqft >= 13256 THEN 'high' WHEN sqft >= 4428 THEN 'mid' ELSE 'low' END sqft_bucket, MAX(opened_date) latest_opened_date, ROUND(STDDEV(sqft), 2) stddev_sqft FROM stores GROUP BY CASE WHEN sqft >= 13256 THEN 'high' WHEN sqft >= 4428 THEN 'mid' ELSE 'low' END) t WHERE stddev_sqft >= 77 ORDER BY stddev_sqft, sqft_bucket;

@@ -1,1 +1,0 @@
-SELECT t.id, t.is_flagged, t.amount, a.opened_date, c.is_active FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id WHERE t.merchant IS NOT NULL OR LENGTH(c.name) >= 9

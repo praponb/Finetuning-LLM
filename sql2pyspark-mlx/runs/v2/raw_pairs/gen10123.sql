@@ -1,1 +1,0 @@
-SELECT manager_id, COUNT(CASE WHEN job_title = 'Analyst' THEN 1 END) AS analyst_count, MAX(salary) - MIN(salary) AS salary_range, COUNT(DISTINCT salary) AS unique_managers FROM employees GROUP BY manager_id ORDER BY unique_managers, manager_id LIMIT 5

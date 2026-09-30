@@ -1,1 +1,0 @@
-SELECT id, store_id, units, product_id, sale_date, revenue, MAX(units) OVER (PARTITION BY store_id) AS store_id_max_units, revenue - LAG(revenue, 1) OVER (PARTITION BY product_id ORDER BY sale_date, id) AS revenue_change FROM store_sales;

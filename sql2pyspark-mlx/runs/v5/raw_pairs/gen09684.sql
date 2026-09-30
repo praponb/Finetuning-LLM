@@ -1,1 +1,0 @@
-with not_flagged as (select s.* from stores s where not exists (select 1 from inventory x where x.store_id = s.id and x.last_restock <= s.opened_date)) select date_trunc('year', opened_date) as year_start, count(case when region = 'South' then 1 end) as south_count, count(distinct id) as distinct_ids, count(*) as cnt from not_flagged group by date_trunc('year', opened_date);

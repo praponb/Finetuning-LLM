@@ -1,1 +1,0 @@
-SELECT p.supplier_id, AVG(ss.revenue) AS avg_revenue FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id LEFT OUTER JOIN suppliers s ON s.id = p.supplier_id WHERE s.supplier_name NOT LIKE 'P%' GROUP BY p.supplier_id HAVING AVG(ss.revenue) > 2000 ORDER BY avg_revenue DESC, supplier_id LIMIT 5;

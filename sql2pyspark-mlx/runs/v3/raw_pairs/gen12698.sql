@@ -1,1 +1,0 @@
-SELECT s.device, s.started_at, t.page_list FROM sessions s INNER JOIN (SELECT session_id, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events GROUP BY session_id) t ON s.id = t.session_id ORDER BY device DESC;

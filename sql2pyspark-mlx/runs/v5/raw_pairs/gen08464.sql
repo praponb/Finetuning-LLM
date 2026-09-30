@@ -1,1 +1,0 @@
-SELECT s.id, s.rating, s.city, t.stddev_price FROM suppliers s INNER JOIN (SELECT supplier_id, ROUND(STDDEV(price), 2) AS stddev_price FROM products WHERE supplier_id IN (12, 23) GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.stddev_price >= 54 ORDER BY city DESC, id LIMIT 1;

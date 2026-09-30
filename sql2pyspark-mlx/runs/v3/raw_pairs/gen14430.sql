@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.cost, orders.status, CASE WHEN shipments.cost >= 76 THEN 'High' WHEN shipments.cost >= 23 THEN 'Medium' ELSE 'Low' END AS cost_level FROM shipments INNER JOIN orders ON orders.id = shipments.order_id WHERE orders.status = 'SHIPPED'

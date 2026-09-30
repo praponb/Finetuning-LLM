@@ -1,1 +1,0 @@
-select customers.name, customers.signup_date, customers.credit_limit, accounts.customer_id, accounts.balance, accounts.status from customers left join accounts on accounts.customer_id = customers.id order by signup_date;

@@ -1,1 +1,0 @@
-SELECT id, created_at, coupon_codes, ship_to.zip AS ship_zip, EXISTS(coupon_codes, c -> c LIKE 'W%') AS has_welcome_code, SIZE(attributes) AS num_attributes FROM carts WHERE created_at >= '2024-06-01';

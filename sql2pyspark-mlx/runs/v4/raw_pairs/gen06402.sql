@@ -1,1 +1,0 @@
-SELECT QUARTER(order_date) AS order_quarter, ROUND(STDDEV(shipping_fee), 2) AS stddev_shipping_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM orders WHERE (status = 'RETURNED' AND status = 'RETURNED') OR store_id IS NOT NULL GROUP BY QUARTER(order_date) HAVING ROUND(STDDEV(shipping_fee), 2) >= 72 ORDER BY order_quarter, 3

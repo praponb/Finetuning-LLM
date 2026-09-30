@@ -1,1 +1,0 @@
-SELECT s.region, DATE_TRUNC('MONTH', s.opened_date) AS opened_month, MAX(ss.sale_date) AS latest_sale_date FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN stores s ON ss.store_id = s.id GROUP BY s.region, DATE_TRUNC('MONTH', s.opened_date) ORDER BY region, opened_month;

@@ -1,1 +1,0 @@
-with filtered_shipments as (select * from shipments where year(delivered_date) >= 2024), Summary as (select status, sort_array(collect_set(carrier)) as carrier_list from filtered_shipments group by status) select status, carrier_list from Summary;

@@ -1,1 +1,0 @@
-SELECT order_id, MONTH(delivered_date) AS delivered_month, COUNT(*) AS total_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM shipments GROUP BY 1, 2 ORDER BY status_values;

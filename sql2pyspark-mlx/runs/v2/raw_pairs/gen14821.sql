@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.is_flagged, transactions.amount, transactions.txn_time FROM transactions WHERE transactions.account_id IN (SELECT id FROM accounts WHERE account_type NOT IN ('CHECKING', 'LOAN', 'SAVINGS')) ORDER BY id

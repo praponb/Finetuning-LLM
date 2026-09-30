@@ -1,1 +1,0 @@
-SELECT CASE WHEN units >= 45 THEN 'high' WHEN units >= 7 THEN 'mid' ELSE 'low' END units_bucket, MAX(revenue) - MIN(revenue) revenue_range FROM store_sales GROUP BY 1 HAVING MAX(revenue) - MIN(revenue) >= 62 ORDER BY units_bucket ASC, revenue_range ASC

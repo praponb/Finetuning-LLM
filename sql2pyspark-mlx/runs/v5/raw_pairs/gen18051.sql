@@ -1,1 +1,0 @@
-with account_totals as (select account_id, max(txn_time) as latest_txn_time from transactions where is_flagged group by account_id) select accounts.id, accounts.account_type, account_totals.latest_txn_time from accounts inner join account_totals on accounts.id = account_totals.account_id order by account_totals.latest_txn_time, accounts.account_type;

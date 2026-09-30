@@ -1,1 +1,0 @@
-with lines as (select id, service, host, level, attr_key, v from app_logs lateral view outer explode(context) e as attr_key, v) select id, service, attr_key, case when attr_key rlike '^(version|region)$' then 'EXTENDED' else 'CORE' end as attr_key_zone from lines order by attr_key nulls last;

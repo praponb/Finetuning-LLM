@@ -1,1 +1,0 @@
-select s.id, s.status, s.delivered_date, s.shipped_date, o.status as order_status, o.discount, o.shipping_fee from shipments s left join orders o on s.order_id = o.id where s.status in ('DELIVERED', 'IN_TRANSIT', 'RETURNED');

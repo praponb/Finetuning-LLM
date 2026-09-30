@@ -1,1 +1,0 @@
-with ranked as (select *, row_number() over (partition by status, order_id order by delivered_date desc, id asc) as dedup_rank from shipments qualify dedup_rank = 1) select s.id, s.order_id, s.shipped_date, s.cost, s.dedup_rank, (select sum(t2.unit_price) from order_items t2 where t2.order_id = s.order_id) as sum_order_item_unit_price from ranked s order by cost desc nulls first;

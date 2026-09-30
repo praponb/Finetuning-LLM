@@ -1,1 +1,0 @@
-SELECT MONTH(customers.signup_date) AS signup_month, SUM(CASE WHEN transactions.txn_type = 'FEE' THEN 1 ELSE 0 END) AS fee_count FROM transactions JOIN accounts ON transactions.account_id = accounts.id JOIN customers ON customers.id = accounts.customer_id GROUP BY MONTH(customers.signup_date) ORDER BY signup_month;

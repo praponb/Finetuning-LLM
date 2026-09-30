@@ -1,1 +1,0 @@
-select id, store_id, product_id, sale_date, units, revenue, corr(units, revenue) over (partition by store_id) corr_units_revenue, ntile(4) over (partition by product_id order by revenue desc, id) revenue_bucket, ntile(3) over (partition by store_id order by revenue desc, id) revenue_bucket_2 from store_sales

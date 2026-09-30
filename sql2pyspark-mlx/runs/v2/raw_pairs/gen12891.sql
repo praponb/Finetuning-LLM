@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, ROUND((100 * SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_lost FROM shipments GROUP BY order_id) SELECT o.store_id, o.amount, os.pct_lost FROM orders o JOIN order_stats os ON o.id = os.order_id WHERE os.pct_lost >= 64

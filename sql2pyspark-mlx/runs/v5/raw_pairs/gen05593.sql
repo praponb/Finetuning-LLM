@@ -1,1 +1,0 @@
-SELECT id, channel, order_date, discount, discount - LAG(discount, 1) OVER (PARTITION BY channel ORDER BY order_date, id) AS discount_change, ROW_NUMBER() OVER (ORDER BY discount DESC, id) AS rn FROM orders ORDER BY channel;

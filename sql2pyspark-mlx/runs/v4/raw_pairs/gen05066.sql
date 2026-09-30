@@ -1,1 +1,0 @@
-SELECT product_id, COUNT(units) AS units_count, COUNT(revenue) AS revenue_count, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales WHERE (product_id IN (4, 6, 7) AND product_id IN (9, 10)) OR product_id IN (4, 8) GROUP BY product_id;

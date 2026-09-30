@@ -1,1 +1,0 @@
-WITH Ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY category ORDER BY price DESC, id) pos FROM products) SELECT id, category, price, launch_date FROM Ranked WHERE pos <= 3 ORDER BY id DESC, category DESC;

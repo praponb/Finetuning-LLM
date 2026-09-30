@@ -1,1 +1,0 @@
-SELECT sessions.device, sessions.browser, sessions.started_at, customers.signup_date, customers.city FROM sessions JOIN customers ON sessions.customer_id = customers.id WHERE sessions.browser = 'Edge' AND UPPER(customers.email) LIKE '%OB.%';

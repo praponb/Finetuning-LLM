@@ -1,1 +1,0 @@
-SELECT id, brand, cost, supplier_id, launch_date, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY cost DESC, id) AS cost_row, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY launch_date, id) AS launch_date_row FROM products WHERE brand = 'Globex';

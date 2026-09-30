@@ -1,1 +1,0 @@
-WITH filtered_store_sales AS (SELECT * FROM store_sales WHERE product_id IN (5, 6) AND units IS NULL), store_sales_stats AS (SELECT store_id, COUNT(units) AS units_count FROM filtered_store_sales GROUP BY store_id) SELECT * FROM store_sales_stats WHERE units_count > 8;

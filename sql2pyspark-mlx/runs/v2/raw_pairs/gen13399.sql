@@ -1,1 +1,0 @@
-SELECT d.id, d.budget, d.dept_name, t.l5_count FROM departments d JOIN (SELECT dept_id, COUNT(CASE WHEN level = 'L5' THEN 1 END) AS l5_count FROM employees GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY 4 DESC, d.id DESC LIMIT 10

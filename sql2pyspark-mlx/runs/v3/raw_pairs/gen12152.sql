@@ -1,1 +1,0 @@
-SELECT location, COUNT(CASE WHEN location = 'Singapore' THEN 1 END) AS singapore_count, SUM(CASE WHEN location = 'London' THEN budget ELSE 0 END) AS london_budget, COUNT(*) AS department_count FROM departments WHERE budget >= 3862000 OR location IN ('Chiang Mai', 'Bangkok', 'London') GROUP BY location ORDER BY singapore_count DESC

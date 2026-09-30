@@ -1,1 +1,0 @@
-WITH AccountStats AS (SELECT account_id, MIN(txn_time) AS min_txn_time FROM transactions WHERE HOUR(txn_time) BETWEEN 9 AND 13 GROUP BY account_id) SELECT a.id, a.balance, a.customer_id, A.min_txn_time FROM accounts a INNER JOIN AccountStats A ON a.id = A.account_id ORDER BY customer_id DESC, id LIMIT 5;

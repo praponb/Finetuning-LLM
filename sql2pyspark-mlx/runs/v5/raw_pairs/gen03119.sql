@@ -1,1 +1,0 @@
-SELECT p.paid_at, o.customer_id, o.store_id, s.store_name FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE o.discount <= 0.21 ORDER BY o.store_id DESC

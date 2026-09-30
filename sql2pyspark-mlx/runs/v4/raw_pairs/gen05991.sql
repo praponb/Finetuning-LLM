@@ -1,1 +1,0 @@
-SELECT products.id, products.supplier_id FROM products WHERE products.brand = 'Stark' AND NOT EXISTS (SELECT 1 FROM inventory WHERE inventory.product_id = products.id AND inventory.store_id = 6) ORDER BY products.id DESC, supplier_id ASC;

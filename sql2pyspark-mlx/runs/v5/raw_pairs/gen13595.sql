@@ -1,1 +1,0 @@
-SELECT *, NTILE(10) OVER (PARTITION BY order_id ORDER BY unit_price DESC, id) AS unit_price_bucket, ROUND(unit_price / SUM(unit_price) OVER (PARTITION BY order_id), 4) AS unit_price_share FROM order_items;

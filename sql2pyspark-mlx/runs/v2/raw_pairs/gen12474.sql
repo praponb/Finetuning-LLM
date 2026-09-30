@@ -1,1 +1,0 @@
-SELECT s.id, s.order_id, o.shipping_fee, c.is_active, CASE WHEN c.is_active THEN 'Yes' ELSE 'No' END AS is_active_label FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id ORDER BY is_active_label DESC;

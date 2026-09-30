@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, MIN(amount) AS min_amount FROM transactions WHERE txn_time < '2024-07-03' GROUP BY account_id) SELECT a.id, a.customer_id, a.account_type, tba.min_amount FROM accounts a JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY customer_id DESC, id ASC LIMIT 10

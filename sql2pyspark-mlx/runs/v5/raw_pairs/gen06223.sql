@@ -1,1 +1,0 @@
-SELECT MONTH(launch_date) AS launch_month, MAX(cost) - MIN(cost) AS cost_range FROM products WHERE stock_qty BETWEEN 223 AND 389 AND ARRAY_CONTAINS(tags, 'eco') AND brand IN ('Initech', 'Stark') GROUP BY launch_month ORDER BY launch_month;

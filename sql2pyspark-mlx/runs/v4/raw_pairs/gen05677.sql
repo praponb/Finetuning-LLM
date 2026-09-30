@@ -1,1 +1,0 @@
-SELECT id, channel, promo_code, starts_on, ends_on, discount_pct, LAG(discount_pct, 1) OVER (PARTITION BY promo_code ORDER BY discount_pct, id) AS prev_discount_pct, NTILE(5) OVER (PARTITION BY promo_code ORDER BY discount_pct DESC, id) AS discount_pct_bucket FROM promotions

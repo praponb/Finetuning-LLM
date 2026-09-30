@@ -1,1 +1,0 @@
-SELECT a.balance, a.opened_date, a.account_type, t.is_flagged, t.txn_time, t.merchant FROM accounts a LEFT OUTER JOIN transactions t ON t.account_id = a.id WHERE t.merchant NOT IN ('Lazada', 'Starbucks', 'Amazon');

@@ -1,1 +1,0 @@
-SELECT CASE WHEN plan IN ('premium', 'enterprise') THEN 'group_a' ELSE 'other' END AS plan_group, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, SUM(monthly_fee) AS total_monthly_fee FROM subscriptions GROUP BY CASE WHEN plan IN ('premium', 'enterprise') THEN 'group_a' ELSE 'other' END HAVING avg_monthly_fee >= 30

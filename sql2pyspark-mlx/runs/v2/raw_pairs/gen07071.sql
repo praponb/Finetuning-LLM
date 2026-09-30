@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT MONTH(sale_date) AS sale_month, SUM(revenue) AS total_revenue, MAX(revenue) AS max_revenue FROM store_sales WHERE store_id IN (3, 4, 5) GROUP BY MONTH(sale_date)) AS agg WHERE max_revenue >= 3200 ORDER BY total_revenue ASC, sale_month DESC LIMIT 1

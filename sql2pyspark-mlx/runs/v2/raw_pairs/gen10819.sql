@@ -1,1 +1,0 @@
-SELECT e.full_name employee_full_name, e.job_title employee_job_title, m.is_remote manager_is_remote FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.salary BETWEEN 110000 AND 127000 AND e.hire_date >= '2025-08-01'

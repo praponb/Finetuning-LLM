@@ -1,1 +1,0 @@
-SELECT p.category, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE s.store_name LIKE '%Expr%' GROUP BY p.category ORDER BY 2 DESC, category LIMIT 10;

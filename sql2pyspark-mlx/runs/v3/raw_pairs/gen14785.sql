@@ -1,1 +1,0 @@
-SELECT location, dept_name, COUNT(DISTINCT budget) AS unique_locations, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) AS location_values, MIN(budget) AS min_budget FROM departments GROUP BY ROLLUP(location, dept_name) ORDER BY unique_locations, 4

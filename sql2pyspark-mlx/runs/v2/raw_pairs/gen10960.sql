@@ -1,1 +1,0 @@
-select month(paid_at) as paid_month, sum(amount) as total_amount, count(*) as cnt, rank() over (order by sum(amount) desc) as amount_rank from payments group by month(paid_at) order by total_amount desc, cnt desc

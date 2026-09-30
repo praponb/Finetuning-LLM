@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, COALESCE(budget, 0) AS budget_filled FROM departments WHERE location = 'London'), Summary AS (SELECT dept_name, COUNT(*) AS row_count FROM base GROUP BY dept_name) SELECT * FROM Summary WHERE row_count >= 8 ORDER BY row_count DESC, dept_name LIMIT 10;

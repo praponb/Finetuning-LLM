@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, COALESCE(store_name, 'N/A') AS store_name_filled, INITCAP(TRIM(region)) AS region_title, COALESCE(region, 'DIRECT') AS region_filled FROM stores WHERE opened_date >= DATE '2023-04-16') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY city, region ORDER BY sqft, id) AS row_num FROM filtered) x WHERE row_num = 1;

@@ -1,1 +1,0 @@
-SELECT SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END) AS search_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values FROM web_events WHERE (event_type IN ('page_view', 'click', 'search') AND session_id = 36) OR session_id IN (6, 11, 23);

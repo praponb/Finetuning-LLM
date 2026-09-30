@@ -1,1 +1,0 @@
-select p.id, p.supplier_id, p.stock_qty, s.rating, s.supplier_name from products p left join suppliers s on s.id = p.supplier_id where p.stock_qty is not null and s.rating between 2.1 and 2.2 order by s.rating asc

@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(event_time) < 2024 THEN 'before_2024' WHEN YEAR(event_time) = 2024 THEN '2024' ELSE 'after_2024' END AS event_cohort, MAX(event_time) AS last_event_time FROM web_events WHERE event_time < '2024-06-01' AND HOUR(event_time) BETWEEN 8 AND 16 AND event_time >= '2023-05-01' GROUP BY event_cohort

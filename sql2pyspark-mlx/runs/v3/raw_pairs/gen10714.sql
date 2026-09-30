@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM stores WHERE city = 'Chiang Mai' AND city = 'Bangkok' AND store_name IS NOT NULL), Summary AS (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, MIN(sqft) min_sqft FROM src GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) SELECT opened_month, min_sqft FROM Summary

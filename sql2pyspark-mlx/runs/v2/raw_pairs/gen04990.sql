@@ -1,1 +1,0 @@
-SELECT merchant, CASE WHEN amount >= 3500 THEN 'High' WHEN amount >= 1000 THEN 'Medium' ELSE 'Low' END AS amount_band, CAST(is_flagged AS INT) AS is_flagged_flag FROM transactions WHERE merchant IN ('7-Eleven', 'Shell') AND (txn_type != 'REFUND' OR merchant IN ('Starbucks', 'Amazon', 'Grab')) ORDER BY is_flagged_flag DESC;

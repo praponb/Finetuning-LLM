@@ -1,1 +1,0 @@
-SELECT *, AVG(status_bits) OVER (PARTITION BY device_code ORDER BY CAST(reading_ts AS BIGINT) RANGE BETWEEN 1800 PRECEDING AND CURRENT ROW) AS status_bits_avg_30m, CUME_DIST() OVER (PARTITION BY device_code ORDER BY status_bits DESC) AS status_bits_cume_dist FROM device_readings;

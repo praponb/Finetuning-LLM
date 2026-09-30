@@ -1,1 +1,0 @@
-SELECT p.brand, COUNT(ss.revenue) AS revenue_count, MIN(ss.sale_date) AS first_sale_date FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN stores s ON ss.store_id = s.id GROUP BY p.brand ORDER BY brand LIMIT 3;

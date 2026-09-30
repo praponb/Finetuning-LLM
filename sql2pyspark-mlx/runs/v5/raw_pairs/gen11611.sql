@@ -1,1 +1,0 @@
-SELECT id, carrier, shipped_date, delivered_date, cost, SUM(cost) OVER (PARTITION BY order_id ORDER BY cost, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_cost, RANK() OVER (ORDER BY cost NULLS FIRST) AS cost_rank, MAX(cost) OVER (PARTITION BY status, order_id) AS status_max_cost FROM shipments;

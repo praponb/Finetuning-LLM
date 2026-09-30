@@ -1,1 +1,0 @@
-SELECT subscriptions.id, subscriptions.customer_id, subscriptions.status, subscriptions.start_date, customers.email, customers.city, customers.signup_date FROM subscriptions JOIN customers ON customers.id = subscriptions.customer_id

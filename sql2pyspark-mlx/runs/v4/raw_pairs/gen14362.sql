@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, product_id, units, revenue, CASE WHEN revenue >= 3600 THEN 'High' WHEN revenue >= 900 THEN 'Medium' ELSE 'Low' END revenue_level FROM store_sales WHERE sale_date > TO_DATE('2023-10-09')) SELECT src.*, p.category FROM cleaned src LEFT JOIN products p ON src.product_id = p.id

@@ -1,1 +1,0 @@
-WITH Src AS (SELECT *, ADD_MONTHS(last_restock, 12) AS last_restock_plus_months FROM inventory WHERE quantity >= 192 OR last_restock BETWEEN '2023-03-01' AND '2023-03-25'), summary AS (SELECT store_id, COUNT(*) AS total_count, MAX(last_restock) AS last_last_restock FROM Src GROUP BY store_id) SELECT store_id, total_count, last_last_restock FROM summary ORDER BY total_count DESC;

@@ -1,1 +1,0 @@
-WITH top_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance DESC, id) AS rnk FROM accounts WHERE account_type IN ('CHECKING', 'LOAN', 'SAVINGS')) SELECT * FROM top_accounts WHERE rnk <= 3 ORDER BY opened_date

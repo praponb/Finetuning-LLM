@@ -1,1 +1,0 @@
-select id, age, city, credit_limit, ntile(3) over (order by age, id) as age_ntile, row_number() over (partition by city order by credit_limit, id) as credit_limit_row from customers where age is not null order by id desc, age_ntile desc;

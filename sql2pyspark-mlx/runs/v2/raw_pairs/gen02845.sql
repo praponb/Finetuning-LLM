@@ -1,1 +1,0 @@
-SELECT oi.id, oi.product_id, oi.order_id, p.brand, o.channel, o.shipping_fee FROM order_items oi RIGHT OUTER JOIN products p ON p.id = oi.product_id INNER JOIN orders o ON oi.order_id = o.id ORDER BY order_id ASC

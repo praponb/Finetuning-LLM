@@ -1,1 +1,0 @@
-SELECT CASE WHEN age >= 61 THEN 'high' WHEN age >= 37 THEN 'mid' ELSE 'low' END AS age_bucket, SORT_ARRAY(COLLECT_SET(country)) AS country_list, MAX(age) AS max_age FROM customers GROUP BY CASE WHEN age >= 61 THEN 'high' WHEN age >= 37 THEN 'mid' ELSE 'low' END HAVING MAX(age) >= 47;

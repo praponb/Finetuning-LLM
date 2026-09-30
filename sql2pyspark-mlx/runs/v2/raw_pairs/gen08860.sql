@@ -1,1 +1,0 @@
-SELECT customer_id, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions WHERE plan = 'premium' AND end_date BETWEEN '2023-08-01' AND '2024-06-25' GROUP BY customer_id ORDER BY customer_id DESC, stddev_monthly_fee DESC LIMIT 50;

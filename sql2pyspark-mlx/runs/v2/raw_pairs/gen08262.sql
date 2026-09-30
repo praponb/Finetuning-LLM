@@ -1,1 +1,0 @@
-SELECT YEAR(ss.sale_date) sale_year, QUARTER(ss.sale_date) sale_quarter, COUNT(DISTINCT i.quantity) unique_stores, ROUND(AVG(i.quantity), 2) avg_quantity FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY YEAR(ss.sale_date), QUARTER(ss.sale_date) ORDER BY avg_quantity DESC;

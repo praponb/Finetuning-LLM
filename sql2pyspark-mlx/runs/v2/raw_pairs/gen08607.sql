@@ -1,1 +1,0 @@
-SELECT t.merchant, a.balance, c.country, c.segment FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id WHERE a.account_type = 'SAVINGS' AND t.merchant != 'Shell' ORDER BY c.segment ASC

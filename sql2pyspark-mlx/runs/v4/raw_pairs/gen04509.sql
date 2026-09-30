@@ -1,1 +1,0 @@
-SELECT e.level AS employee_level, m.email AS manager_email, m.full_name AS manager_full_name, m.dept_id AS manager_dept_id, CASE WHEN m.level IN ('L2', 'L4') THEN 'Tier 1' ELSE 'Other' END AS level_group FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.full_name LIKE '%Kany%' AND m.manager_id = 5 ORDER BY level_group;

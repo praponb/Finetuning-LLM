@@ -1,1 +1,0 @@
-select * from (select country, case when country in ('UK', 'SG') then 'priority' else 'other' end as country_group, sum(case when city = 'Tokyo' then 1 else 0 end) as tokyo_count from suppliers group by country, case when country in ('UK', 'SG') then 'priority' else 'other' end) as x where tokyo_count > 69 order by tokyo_count desc, country, country_group limit 10;

@@ -1,1 +1,0 @@
-with ranked_web_events as (select *, row_number() over (partition by page order by event_time, id) as pos from web_events) select id, page, event_time, session_id from ranked_web_events where pos <= 2

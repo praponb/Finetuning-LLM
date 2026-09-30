@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, device_code, pressure, status_bits, firmware, ROUND(status_bits * 1.1, 2) AS adjusted_status_bits FROM device_readings WHERE reading_ts > TO_DATE('2025-09-01') AND pressure >= 1027) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY status_bits, id) AS rn FROM valid) t WHERE rn = 1;

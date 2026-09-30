@@ -1,1 +1,0 @@
-SELECT id, country, rating, LAG(rating) OVER w_running AS prev_rating, LEAD(rating) OVER w_running AS next_rating, ROW_NUMBER() OVER w_running AS event_seq, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id ASC) AS seq_no FROM suppliers WINDOW w_running AS (PARTITION BY city ORDER BY rating ASC, id ASC);

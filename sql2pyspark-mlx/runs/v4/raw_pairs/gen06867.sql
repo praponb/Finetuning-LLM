@@ -1,1 +1,0 @@
-SELECT customer_id, SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END) closed_count, COUNT(balance) balance_count, MAX(balance) max_balance FROM accounts GROUP BY customer_id ORDER BY closed_count DESC;

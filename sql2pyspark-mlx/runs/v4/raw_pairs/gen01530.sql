@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) signup_month, COUNT(DISTINCT o.discount) unique_channels FROM orders o INNER JOIN customers c ON c.id = o.customer_id GROUP BY MONTH(c.signup_date) HAVING COUNT(DISTINCT o.discount) >= 3 ORDER BY signup_month DESC

@@ -1,1 +1,0 @@
-WITH filtered_order_items AS (SELECT * FROM order_items WHERE quantity <= 4), agg AS (SELECT order_id, ROUND(AVG(unit_price), 2) avg_unit_price FROM filtered_order_items GROUP BY order_id) SELECT order_id, avg_unit_price FROM agg ORDER BY avg_unit_price ASC, order_id ASC LIMIT 20;

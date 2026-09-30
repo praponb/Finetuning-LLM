@@ -1,1 +1,0 @@
-SELECT p.category, COUNT(i.quantity) AS quantity_count FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE i.product_id IN (3, 10) GROUP BY p.category ORDER BY 1

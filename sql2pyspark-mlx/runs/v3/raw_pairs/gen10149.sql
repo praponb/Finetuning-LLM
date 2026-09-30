@@ -1,1 +1,0 @@
-WITH filtered_products AS (SELECT * FROM products WHERE launch_date >= '2024-09-01' OR ARRAY_CONTAINS(tags, 'clearance')), products_stats AS (SELECT category, COUNT(cost) AS cost_count, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range FROM filtered_products GROUP BY category) SELECT * FROM products_stats ORDER BY category DESC

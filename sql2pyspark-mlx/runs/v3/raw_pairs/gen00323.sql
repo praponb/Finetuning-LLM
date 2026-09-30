@@ -1,1 +1,0 @@
-SELECT employees.id, employees.full_name, departments.budget, departments.location, IF(employees.is_remote, 'Yes', 'No') AS is_remote_label FROM employees JOIN departments ON departments.id = employees.dept_id;

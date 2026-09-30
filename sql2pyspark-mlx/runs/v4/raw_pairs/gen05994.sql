@@ -1,1 +1,0 @@
-with web_events_by_session as (select session_id, round(stddev(duration_sec), 2) as stddev_duration_sec from web_events where page in ('/product', '/cart') group by session_id) select s.id, s.browser, s.customer_id, webs.stddev_duration_sec from sessions s left join web_events_by_session webs on s.id = webs.session_id where webs.stddev_duration_sec >= 62;

@@ -1,1 +1,0 @@
-SELECT s.city, ROUND(AVG(ss.units), 2) AS avg_units, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.city

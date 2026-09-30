@@ -1,1 +1,0 @@
-WITH StoreStats AS (SELECT store_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, SUM(quantity) AS total_quantity FROM inventory WHERE quantity >= 141 GROUP BY store_id) SELECT s.id, s.opened_date, S.stddev_quantity, S.total_quantity FROM stores s LEFT OUTER JOIN StoreStats S ON s.id = S.store_id;

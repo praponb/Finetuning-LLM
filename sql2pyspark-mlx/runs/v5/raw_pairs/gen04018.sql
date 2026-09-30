@@ -1,1 +1,0 @@
-SELECT customers.id, customers.country, customers.city, t.stddev_monthly_fee FROM customers JOIN (SELECT customer_id, ROUND(STDDEV(monthly_fee), 2) stddev_monthly_fee FROM subscriptions WHERE status != 'ACTIVE' GROUP BY customer_id) t ON customers.id = t.customer_id WHERE t.stddev_monthly_fee > 73 ORDER BY t.stddev_monthly_fee DESC, id LIMIT 50;

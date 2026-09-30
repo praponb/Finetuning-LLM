@@ -1,1 +1,0 @@
-SELECT customer_id, account_type, balance, CONCAT(status, '/', account_type) AS status_account_type, ADD_MONTHS(opened_date, 12) AS opened_date_plus_months FROM accounts WHERE status != 'FROZEN' AND account_type = 'CHECKING' AND opened_date >= '2025-05-12'

@@ -1,1 +1,0 @@
-with base as (select *, case when carrier in ('UPS', 'Kerry') then 'Tier 1' else 'Other' end carrier_group, coalesce(carrier, 'UNKNOWN') carrier_clean from shipments where shipped_date >= date '2023-06-29' and carrier is not null and status in ('RETURNED', 'DELIVERED', 'IN_TRANSIT')) select *, rank() over (partition by carrier order by cost desc) as rn from base qualify rn = 1;

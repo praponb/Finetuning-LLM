@@ -1,1 +1,0 @@
-SELECT CASE WHEN city IN ('Singapore', 'Bangkok') THEN 'group_a' ELSE 'other' END AS city_group, COUNT(*) AS supplier_count, MIN(rating) AS min_rating FROM suppliers WHERE city = 'Singapore' AND UPPER(supplier_name) LIKE '%ACI%' AND country IN ('US', 'JP', 'DE') GROUP BY city_group ORDER BY city_group, min_rating DESC

@@ -1,1 +1,0 @@
-SELECT orders.store_id, customers.segment, customers.signup_date, stores.sqft FROM orders INNER JOIN customers ON customers.id = orders.customer_id LEFT JOIN stores ON orders.store_id = stores.id ORDER BY store_id;

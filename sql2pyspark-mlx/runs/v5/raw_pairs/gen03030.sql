@@ -1,1 +1,0 @@
-select case when quantity >= 9 then 'high' when quantity >= 3 then 'mid' else 'low' end as quantity_bucket, sum(quantity) as total_quantity, count(*) as cnt, rank() over (order by sum(quantity) desc) as rnk from order_items where quantity between 3 and 4 group by case when quantity >= 9 then 'high' when quantity >= 3 then 'mid' else 'low' end;

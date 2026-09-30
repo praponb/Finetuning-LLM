@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(country)) AS country_list, MAX(started_at) AS last_started_at FROM sessions WHERE country NOT IN ('TH', 'US', 'DE') GROUP BY customer_id) SELECT c.id, c.email, ct.country_list, ct.last_started_at FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id ORDER BY ct.last_started_at, id LIMIT 5

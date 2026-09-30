@@ -1,1 +1,0 @@
-SELECT we.id, we.session_id, we.event_time, we.event_type FROM web_events we WHERE we.event_type = 'click' AND we.session_id IN (SELECT id FROM sessions WHERE TO_DATE(started_at) < '2023-08-23') ORDER BY event_time, id LIMIT 10

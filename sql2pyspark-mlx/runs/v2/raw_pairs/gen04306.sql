@@ -1,1 +1,0 @@
-SELECT products.product_name, store_sales.store_id, store_sales.sale_date, store_sales.product_id FROM products LEFT OUTER JOIN store_sales ON products.id = store_sales.product_id WHERE store_sales.units >= 12 AND store_sales.product_id = 5 ORDER BY store_sales.sale_date DESC

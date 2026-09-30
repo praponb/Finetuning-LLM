@@ -1,1 +1,0 @@
-SELECT s.id, COUNT(we.id) AS web_event_count, SORT_ARRAY(COLLECT_SET(we.page)) AS page_list, MIN(we.duration_sec) AS min_duration_sec FROM sessions s LEFT JOIN web_events we ON we.session_id = s.id WHERE we.page <> '/home' GROUP BY s.id ORDER BY min_duration_sec, id LIMIT 50;

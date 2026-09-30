@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, SUM(quantity) AS total_quantity FROM order_items WHERE order_id IN (17, 32, 39) GROUP BY product_id) SELECT p.id, p.cost, ps.total_quantity FROM products p JOIN product_stats ps ON p.id = ps.product_id ORDER BY ps.total_quantity DESC;

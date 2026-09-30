@@ -1,1 +1,0 @@
-SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values, SUM(CASE WHEN channel = 'store' THEN amount ELSE 0 END) AS store_amount FROM orders GROUP BY status HAVING SUM(CASE WHEN channel = 'store' THEN amount ELSE 0 END) >= 20;

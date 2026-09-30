@@ -1,1 +1,0 @@
-SELECT id, host, level, status_code, context['trace'] AS trace, SHIFTRIGHT(status_code, 2) AS status_code_high, COALESCE(context['trace'], 'unknown') AS trace_or_default, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').duration AS duration_sec FROM app_logs WHERE level IN ('DEBUG', 'INFO');

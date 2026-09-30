@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, FLOOR(units) AS units_whole FROM store_sales WHERE revenue IS NULL) SELECT product_id FROM cleaned INTERSECT ALL SELECT product_id FROM store_sales WHERE units BETWEEN 28 AND 34;

@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('WEEK', ends_on) AS week_start, CASE WHEN discount_pct >= 0.3 THEN 'HIGH' ELSE 'LOW' END AS discount_pct_tier, promo_code, SIZE(COLLECT_SET(channel)) AS num_channels, SIZE(COLLECT_SET(promo_code)) AS num_promo_codes FROM promotions GROUP BY CUBE (DATE_TRUNC('WEEK', ends_on), CASE WHEN discount_pct >= 0.3 THEN 'HIGH' ELSE 'LOW' END, promo_code);

@@ -1,1 +1,0 @@
-SELECT launch_month, max_cost, max_price FROM (SELECT MONTH(launch_date) AS launch_month, MAX(cost) AS max_cost, MAX(price) AS max_price FROM products GROUP BY MONTH(launch_date)) AS s WHERE max_price > 470

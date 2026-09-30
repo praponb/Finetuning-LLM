@@ -1,1 +1,0 @@
-select country, stddev_rating from (select country, round(stddev(rating), 2) as stddev_rating from suppliers where city in ('Singapore', 'London') group by country) as agg where stddev_rating > 54 order by stddev_rating asc, country asc

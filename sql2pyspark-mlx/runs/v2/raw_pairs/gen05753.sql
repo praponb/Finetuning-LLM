@@ -1,1 +1,0 @@
-WITH SessionStats AS (SELECT session_id, COUNT(DISTINCT duration_sec) AS unique_sessions FROM web_events WHERE session_id = 40 GROUP BY session_id) SELECT s.id, s.customer_id, s.device, S.unique_sessions FROM sessions s LEFT JOIN SessionStats S ON s.id = S.session_id ORDER BY device;

@@ -1,1 +1,0 @@
-WITH valid_transactions AS (SELECT * FROM transactions WHERE is_flagged), Summary AS (SELECT is_flagged, merchant, MAX(txn_time) AS latest_txn_time, AVG(amount) AS avg_amount FROM valid_transactions GROUP BY is_flagged, merchant) SELECT * FROM Summary WHERE avg_amount < 3700 ORDER BY latest_txn_time;

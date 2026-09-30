@@ -1,1 +1,0 @@
-select o.id, o.customer_id, o.shipping_fee, s.sqft, s.store_name, c.credit_limit, c.email, round(c.credit_limit, 1) as credit_limit_rounded from orders o inner join stores s on o.store_id = s.id inner join customers c on o.customer_id = c.id

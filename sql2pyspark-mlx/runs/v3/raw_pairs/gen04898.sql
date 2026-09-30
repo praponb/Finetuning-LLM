@@ -1,1 +1,0 @@
-WITH filtered_orders AS (SELECT * FROM orders WHERE status = 'COMPLETED'), orders_stats AS (SELECT QUARTER(order_date) AS order_quarter, MIN(discount) AS min_discount, COUNT(amount) AS amount_count FROM filtered_orders GROUP BY QUARTER(order_date)) SELECT * FROM orders_stats ORDER BY min_discount;

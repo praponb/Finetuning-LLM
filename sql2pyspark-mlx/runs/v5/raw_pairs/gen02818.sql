@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 400 THEN 'high' WHEN unit_price >= 70 THEN 'mid' ELSE 'low' END AS unit_price_bucket, order_id, product_id, COUNT(unit_price) AS unit_price_count, COUNT(*) AS cnt FROM order_items WHERE order_id IN (22, 24) GROUP BY 1, 2, 3 HAVING COUNT(*) >= 3 ORDER BY order_id DESC, unit_price_bucket ASC, product_id ASC LIMIT 5

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, ADD_MONTHS(starts_on, 1) AS starts_on_plus_months FROM promotions WHERE starts_on > DATE '2023-05-04') SELECT * FROM (SELECT channel, promo_code, discount_pct FROM valid) src PIVOT (AVG(discount_pct) FOR promo_code IN ('SPRING10', 'VIP'))

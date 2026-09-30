@@ -1,1 +1,0 @@
-with web_events_by_session as (select session_id, sum(duration_sec) as total_duration_sec, min(duration_sec) as min_duration_sec from web_events where event_time >= '2023-10-02' group by session_id) select s.device, webs.total_duration_sec, webs.min_duration_sec from sessions s left join web_events_by_session webs on s.id = webs.session_id order by device, min_duration_sec;

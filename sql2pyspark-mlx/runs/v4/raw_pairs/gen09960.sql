@@ -1,1 +1,0 @@
-SELECT account_type, latest_opened_date, stddev_balance FROM (SELECT account_type, MAX(opened_date) AS latest_opened_date, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts GROUP BY account_type) AS t WHERE stddev_balance > 34 ORDER BY 2 ASC;

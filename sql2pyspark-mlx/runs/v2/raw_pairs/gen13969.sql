@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, city, opened_date, region, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS row_num FROM stores) SELECT id, city, opened_date, region FROM numbered WHERE row_num <= 2 ORDER BY id DESC

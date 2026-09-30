@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT location, MAX(budget) - MIN(budget) AS budget_range, SUM(CASE WHEN location = 'Singapore' THEN 1 ELSE 0 END) AS singapore_count FROM departments WHERE budget <= 2926000 GROUP BY location) AS s WHERE singapore_count >= 49;

@@ -1,1 +1,0 @@
-SELECT id, order_date, customer_id, amount, DENSE_RANK() OVER (ORDER BY order_date DESC) AS order_date_dense_rank, ROUND(AVG(amount) OVER (PARTITION BY customer_id ORDER BY order_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_7 FROM orders WHERE store_id IS NOT NULL ORDER BY id DESC

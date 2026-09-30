@@ -1,1 +1,0 @@
-SELECT s.browser, COUNT(we.id) AS web_event_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(we.event_type))) AS event_type_values, ROUND(STDDEV(we.duration_sec), 2) AS stddev_duration_sec FROM sessions s LEFT OUTER JOIN web_events we ON we.session_id = s.id WHERE we.duration_sec BETWEEN 357 AND 471 GROUP BY s.browser ORDER BY event_type_values

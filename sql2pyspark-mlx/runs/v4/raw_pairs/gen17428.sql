@@ -1,1 +1,0 @@
-SELECT product_id, store_id, MAX(last_restock) AS latest_last_restock, MIN(last_restock) AS first_last_restock FROM inventory WHERE quantity > 106 AND quantity BETWEEN 133 AND 202 AND last_restock BETWEEN '2023-06-22' AND '2024-02-08' GROUP BY product_id, store_id;

@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY balance DESC NULLS LAST, id) AS row_num FROM accounts) x WHERE row_num = 1) SELECT status, COUNT(DISTINCT account_type) AS distinct_account_types, SUM(CASE WHEN status = 'FROZEN' THEN balance ELSE 0 END) AS frozen_balance FROM latest GROUP BY status ORDER BY frozen_balance DESC;

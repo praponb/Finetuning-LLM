@@ -1,1 +1,0 @@
-SELECT city, CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END rating_bucket, SUM(CASE WHEN country = 'UK' THEN 1 ELSE 0 END) uk_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) city_values FROM suppliers GROUP BY CUBE(city, CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END) ORDER BY city_values DESC

@@ -1,1 +1,0 @@
-SELECT CASE WHEN cost >= 89 THEN 'high' WHEN cost >= 41 THEN 'mid' ELSE 'low' END AS cost_bucket, status, ROUND((100 * SUM(CASE WHEN carrier = 'Flash' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_flash, COUNT(cost) AS cost_count FROM shipments GROUP BY 1, 2;

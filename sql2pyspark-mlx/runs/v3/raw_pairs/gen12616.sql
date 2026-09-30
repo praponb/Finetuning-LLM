@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, COUNT(*) AS total_count FROM order_items GROUP BY order_id) SELECT orders.customer_id, orders.store_id, order_summary.total_count FROM orders JOIN order_summary ON orders.id = order_summary.order_id WHERE order_summary.total_count >= 8 ORDER BY order_summary.total_count ASC;

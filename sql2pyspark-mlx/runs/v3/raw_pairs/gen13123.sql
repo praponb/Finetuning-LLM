@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MIN(last_restock) AS first_last_restock FROM inventory WHERE quantity > 158 GROUP BY store_id) SELECT stores.id, stores.city, store_stats.first_last_restock FROM stores INNER JOIN store_stats ON stores.id = store_stats.store_id ORDER BY stores.id DESC;

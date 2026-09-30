@@ -1,1 +1,0 @@
-SELECT id, location, dept_name, budget, LEAD(budget, 2) OVER (PARTITION BY location, dept_name ORDER BY budget, id) next_budget, DENSE_RANK() OVER (PARTITION BY location ORDER BY budget DESC) dense_rnk FROM departments ORDER BY next_budget DESC;

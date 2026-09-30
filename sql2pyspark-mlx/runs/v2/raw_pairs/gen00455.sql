@@ -1,1 +1,0 @@
-SELECT quantity_bucket, revenue FROM (SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(quantity * unit_price) AS revenue FROM order_items WHERE quantity <= 5 GROUP BY CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END) AS t WHERE revenue >= 65 ORDER BY quantity_bucket LIMIT 5;

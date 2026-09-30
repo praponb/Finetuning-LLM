@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', hire_date) AS hire_month, is_remote, AVG(salary) AS avg_salary, COUNT(DISTINCT salary) AS unique_levels FROM employees WHERE job_title IN ('Engineer', 'Designer') GROUP BY 1, 2 HAVING unique_levels > 1 ORDER BY 3 DESC, hire_month;

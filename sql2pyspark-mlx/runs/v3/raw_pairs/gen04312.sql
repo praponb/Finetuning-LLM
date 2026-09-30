@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY order_date, id) AS rn FROM orders WHERE store_id IN (9, 34, 39)) SELECT id, channel, order_date FROM ranked WHERE rn = 1 ORDER BY channel DESC;

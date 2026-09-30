@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM inventory WHERE product_id IN (3, 7) AND store_id IN (1, 3) AND last_restock >= '2025-10-01'), inventory_stats AS (SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM src GROUP BY product_id) SELECT * FROM inventory_stats WHERE stddev_quantity >= 36 ORDER BY stddev_quantity DESC

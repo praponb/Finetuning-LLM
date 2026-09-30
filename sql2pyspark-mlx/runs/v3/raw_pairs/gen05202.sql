@@ -1,1 +1,0 @@
-with Numbered as (select *, row_number() over (partition by merchant order by amount desc, id) as rnk from transactions where account_id = 33) select id, merchant, amount from Numbered where rnk <= 2 order by id;

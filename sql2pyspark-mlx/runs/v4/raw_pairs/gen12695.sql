@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT city FROM stores EXCEPT SELECT city FROM stores WHERE region = 'North'), kept_rows AS (SELECT s.* FROM stores s INNER JOIN kept_keys k ON s.city = k.city) SELECT region, SIZE(COLLECT_SET(city)) AS num_cities, BIT_AND(sqft) AS sqft_bit_and FROM kept_rows GROUP BY 1;

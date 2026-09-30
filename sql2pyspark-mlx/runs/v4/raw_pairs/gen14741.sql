@@ -1,1 +1,0 @@
-SELECT YEAR(ss.sale_date) AS sale_year, MIN(i.last_restock) AS min_last_restock FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id IN (3, 9) GROUP BY YEAR(ss.sale_date)

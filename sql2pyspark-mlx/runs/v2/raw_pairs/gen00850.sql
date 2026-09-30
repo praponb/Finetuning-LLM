@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, status, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count, ROUND(STDDEV(discount), 2) AS stddev_discount, ROUND(AVG(amount), 2) AS avg_amount FROM orders WHERE customer_id IS NULL GROUP BY DATE_FORMAT(order_date, 'yyyy-MM'), status HAVING cancelled_count > 2;

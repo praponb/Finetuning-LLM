@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CONCAT(event_type, '/', page) AS event_type_page FROM web_events WHERE event_time >= TIMESTAMP '2024-04-15 18:00:00' AND event_type = 'click') SELECT * FROM (SELECT event_type, page, duration_sec FROM filtered) src PIVOT (MAX(duration_sec) FOR page IN ('/product' AS product, '/cart' AS cart, '/checkout' AS checkout))

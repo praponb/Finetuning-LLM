@@ -1,1 +1,0 @@
-SELECT product_id, store_id, CASE WHEN units >= 36 THEN 'high' WHEN units >= 8 THEN 'mid' ELSE 'low' END AS units_bucket, MAX(units) - MIN(units) AS units_range FROM store_sales WHERE units < 40 GROUP BY 1, 2, 3 ORDER BY units_bucket;

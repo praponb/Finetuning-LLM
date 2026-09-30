@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, COUNT(e.id) AS employee_count, AVG(e.salary) AS avg_salary, SUM(e.salary) AS total_salary FROM departments d LEFT JOIN employees e ON e.dept_id = d.id GROUP BY d.id, d.dept_name ORDER BY d.id DESC;

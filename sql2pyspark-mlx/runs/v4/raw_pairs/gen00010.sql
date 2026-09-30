@@ -1,1 +1,0 @@
-SELECT store_id, DATE_TRUNC('YEAR', last_restock) AS year_start, COUNT(*) AS event_count, COUNT(*) AS event_count_2, STDDEV_SAMP(quantity) AS quantity_stddev, COUNT(DISTINCT store_id) AS distinct_store_ids, COUNT(*) AS event_count_3 FROM inventory GROUP BY store_id, year_start ORDER BY event_count_3 DESC NULLS FIRST

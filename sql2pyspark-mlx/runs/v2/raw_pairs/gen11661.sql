@@ -1,1 +1,0 @@
-SELECT suppliers.country, MAX(products.launch_date) last_launch_date FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY suppliers.country ORDER BY suppliers.country DESC

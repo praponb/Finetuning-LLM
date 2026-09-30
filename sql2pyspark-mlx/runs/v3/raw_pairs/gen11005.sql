@@ -1,1 +1,0 @@
-SELECT order_id, avg_quantity, quantity_count FROM (SELECT order_id, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(quantity) AS quantity_count FROM order_items WHERE order_id IN (11, 12, 30) GROUP BY order_id) AS t WHERE quantity_count < 5;

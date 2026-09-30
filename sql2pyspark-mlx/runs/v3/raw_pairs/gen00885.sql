@@ -1,1 +1,0 @@
-select * from (select id, customer_id, started_at, device, row_number() over (partition by customer_id order by started_at desc, id) as pos from sessions where browser != 'Edge') as r where pos <= 3 order by device

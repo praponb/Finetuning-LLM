@@ -1,1 +1,0 @@
-select order_items.id, order_items.order_id, products.price, products.category, products.stock_qty from order_items inner join products on order_items.product_id = products.id where upper(products.product_name) like '%ESK%' order by stock_qty desc, price desc;

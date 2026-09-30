@@ -1,1 +1,0 @@
-SELECT id, channel, starts_on, AVG(discount_pct) OVER (PARTITION BY channel ORDER BY starts_on, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) AS discount_pct_avg_3, NTILE(4) OVER (PARTITION BY channel ORDER BY discount_pct, id) AS discount_pct_bucket FROM promotions

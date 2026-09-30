@@ -1,1 +1,0 @@
-SELECT ss.revenue, p.launch_date, p.price, s.supplier_name FROM store_sales ss RIGHT JOIN products p ON ss.product_id = p.id JOIN suppliers s ON s.id = p.supplier_id WHERE s.rating BETWEEN 2.8 AND 3.7 ORDER BY s.supplier_name DESC

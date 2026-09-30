@@ -1,1 +1,0 @@
-with base as (select * from subscriptions where customer_id is null and plan = 'premium'), agg as (select status, count(case when plan = 'basic' then 1 end) as basic_count from base group by status) select status, basic_count from agg where basic_count < 7 order by basic_count

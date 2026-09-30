@@ -1,1 +1,0 @@
-with valid_products as (select * from products where product_name not like 'S%'), launch_month_summary as (select date_trunc('MONTH', launch_date) as launch_month, max(launch_date) as last_launch_date from valid_products group by date_trunc('MONTH', launch_date)) select * from launch_month_summary

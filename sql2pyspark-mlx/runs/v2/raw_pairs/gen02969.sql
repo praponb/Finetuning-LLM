@@ -1,1 +1,0 @@
-select s.id, s.customer_id, t.purchase_count, t.duration_sec_range from sessions s left outer join (select session_id, count(case when event_type = 'purchase' then 1 end) as purchase_count, max(duration_sec) - min(duration_sec) as duration_sec_range from web_events where session_id in (7, 20) group by session_id) t on s.id = t.session_id order by t.purchase_count desc

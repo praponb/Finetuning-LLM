@@ -1,1 +1,0 @@
-select *, case when quantity >= 214 then 'High' when quantity >= 73 then 'Medium' else 'Low' end as quantity_band from inventory where store_id in (3, 4) and product_id = 5 and product_id in (3, 4, 6, 10)

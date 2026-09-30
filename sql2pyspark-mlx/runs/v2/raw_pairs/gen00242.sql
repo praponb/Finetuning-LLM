@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM products WHERE NOT (LENGTH(product_name) < 8 AND category = 'Home')), agg AS (SELECT supplier_id, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values FROM Base GROUP BY supplier_id) SELECT * FROM agg WHERE stock_qty_range >= 66

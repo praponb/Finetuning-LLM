@@ -1,1 +1,0 @@
-WITH recent_payments AS (SELECT * FROM payments WHERE NOT ((method IN ('cash', 'card') AND order_id = 10) OR order_id IS NOT NULL)), status_summary AS (SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values FROM recent_payments GROUP BY status) SELECT * FROM status_summary ORDER BY status DESC LIMIT 10;

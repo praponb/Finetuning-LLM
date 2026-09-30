@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, ROUND(STDDEV(cost), 2) AS stddev_cost, COUNT(*) AS shipment_count FROM shipments GROUP BY order_id) SELECT o.id, o.customer_id, o.shipping_fee, os.stddev_cost, os.shipment_count FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.shipment_count >= 8 ORDER BY shipping_fee DESC, o.customer_id DESC

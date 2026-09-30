@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, DENSE_RANK() OVER (PARTITION BY dept_id ORDER BY hire_date DESC) AS pos FROM employees WHERE salary BETWEEN 81000 AND 140000) SELECT id, dept_id, hire_date FROM numbered WHERE pos <= 2 ORDER BY id

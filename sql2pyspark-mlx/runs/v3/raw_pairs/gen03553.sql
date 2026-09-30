@@ -1,1 +1,0 @@
-SELECT s.id, s.supplier_name, COUNT(p.id) product_count, MIN(p.stock_qty) min_stock_qty FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id GROUP BY s.id, s.supplier_name HAVING product_count >= 5 ORDER BY id ASC, supplier_name ASC LIMIT 5;

@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items WHERE quantity <= 7 GROUP BY order_id) SELECT o.id, o.channel, o.shipping_fee, os.avg_quantity FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.avg_quantity >= 68 ORDER BY shipping_fee;

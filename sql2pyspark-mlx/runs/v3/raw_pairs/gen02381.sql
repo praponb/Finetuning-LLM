@@ -1,1 +1,0 @@
-SELECT d.location, COUNT(*) AS employee_count, ROUND(AVG(e.salary), 2) AS avg_salary FROM employees e INNER JOIN departments d ON d.id = e.dept_id GROUP BY d.location HAVING COUNT(*) > 5 ORDER BY avg_salary DESC;

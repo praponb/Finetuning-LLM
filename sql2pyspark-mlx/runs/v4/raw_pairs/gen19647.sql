@@ -1,1 +1,0 @@
-select orders.id, orders.status, orders.order_date, stores.opened_date, stores.store_name, initcap(trim(stores.region)) region_title from orders inner join stores on orders.store_id = stores.id where orders.customer_id is not null;

@@ -1,1 +1,0 @@
-with matched_keys as (select product_id, id from order_items intersect select product_id, id from order_items where product_id is not null), reconciled as (select s.* from order_items s join matched_keys k on s.product_id = k.product_id and s.id = k.id) select id, order_id, product_id, quantity, unit_price from reconciled order by id

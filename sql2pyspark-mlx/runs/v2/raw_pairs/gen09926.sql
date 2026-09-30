@@ -1,1 +1,0 @@
-SELECT location, unique_dept_names FROM (SELECT location, COUNT(DISTINCT budget) AS unique_dept_names FROM departments WHERE location IS NULL GROUP BY location) AS agg WHERE unique_dept_names < 6 ORDER BY unique_dept_names;

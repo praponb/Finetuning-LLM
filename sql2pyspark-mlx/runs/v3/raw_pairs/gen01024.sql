@@ -1,1 +1,0 @@
-SELECT YEAR(s.started_at) AS started_year, COUNT(CASE WHEN we.event_type = 'click' THEN 1 END) AS click_count FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE we.duration_sec > 158 GROUP BY YEAR(s.started_at) ORDER BY click_count DESC, started_year LIMIT 3;

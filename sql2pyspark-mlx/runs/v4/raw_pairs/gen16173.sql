@@ -1,1 +1,0 @@
-SELECT end_date, start_date, CASE WHEN plan IN ('premium', 'basic') THEN 'Priority' ELSE 'Other' END AS plan_group FROM subscriptions WHERE customer_id IS NOT NULL OR MONTH(end_date) IN (6, 10, 11) ORDER BY end_date

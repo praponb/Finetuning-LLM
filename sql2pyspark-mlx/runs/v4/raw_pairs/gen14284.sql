@@ -1,1 +1,0 @@
-SELECT QUARTER(c.signup_date) AS signup_quarter, YEAR(c.signup_date) AS signup_year, SORT_ARRAY(COLLECT_SET(s.browser)) AS browser_list FROM sessions s FULL OUTER JOIN customers c ON c.id = s.customer_id WHERE s.country = 'UK' GROUP BY QUARTER(c.signup_date), YEAR(c.signup_date) ORDER BY signup_year DESC, signup_quarter LIMIT 50

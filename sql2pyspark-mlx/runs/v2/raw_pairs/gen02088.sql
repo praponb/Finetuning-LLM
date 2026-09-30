@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list, AVG(amount) AS avg_amount FROM transactions WHERE amount IS NOT NULL GROUP BY account_id) SELECT a.id, a.opened_date, tba.txn_type_list, tba.avg_amount FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY avg_amount DESC;

@@ -1,1 +1,0 @@
-SELECT store_sales.sale_date, store_sales.store_id, stores.city, products.brand, products.cost FROM store_sales LEFT JOIN stores ON store_sales.store_id = stores.id FULL OUTER JOIN products ON store_sales.product_id = products.id WHERE store_sales.product_id IN (1, 2, 10) ORDER BY sale_date

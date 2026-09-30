@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, MAX(quantity) AS max_quantity FROM inventory GROUP BY DATE_FORMAT(last_restock, 'yyyy-MM') ORDER BY max_quantity DESC, last_restock_month LIMIT 1

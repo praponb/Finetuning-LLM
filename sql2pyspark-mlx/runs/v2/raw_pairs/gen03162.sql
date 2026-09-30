@@ -1,1 +1,0 @@
-SELECT is_remote, DATE_TRUNC('MONTH', hire_date) AS hire_month, SUM(CASE WHEN level = 'L5' THEN 1 ELSE 0 END) AS l5_count, MIN(salary) AS min_salary, MAX(salary) AS max_salary FROM employees WHERE UPPER(email) LIKE '%ACK%' GROUP BY is_remote, DATE_TRUNC('MONTH', hire_date) HAVING min_salary > 92000 ORDER BY max_salary DESC;

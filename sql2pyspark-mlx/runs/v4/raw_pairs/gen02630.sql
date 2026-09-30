@@ -1,1 +1,0 @@
-SELECT YEAR(last_restock) AS last_restock_year, SUM(quantity) AS total_quantity, COUNT(*) AS cnt, DENSE_RANK() OVER (ORDER BY SUM(quantity) DESC) AS rnk FROM inventory WHERE last_restock < '2025-02-01' GROUP BY YEAR(last_restock)

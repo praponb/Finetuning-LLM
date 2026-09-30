@@ -1,1 +1,0 @@
-SELECT order_items.id, order_items.product_id, order_items.unit_price, order_items.order_id FROM order_items WHERE order_items.unit_price >= 140 AND order_items.order_id NOT IN (SELECT id FROM orders WHERE store_id IS NULL) ORDER BY order_id DESC, id LIMIT 10

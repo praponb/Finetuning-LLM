@@ -1,1 +1,0 @@
-SELECT id, email, job_title, dept_id, REPLACE(email, ' ', '-') AS email_slug, CASE WHEN salary >= 154000 THEN 'High' WHEN salary >= 74000 THEN 'Medium' ELSE 'Low' END AS salary_level FROM employees WHERE level != 'L2' AND hire_date BETWEEN '2023-11-01' AND '2025-08-11'

@@ -1,1 +1,0 @@
-SELECT country, ROUND(STDDEV(rating), 2) AS stddev_rating, SUM(CASE WHEN city = 'Singapore' THEN rating ELSE 0 END) AS singapore_rating FROM suppliers WHERE supplier_name LIKE 'L%' GROUP BY country HAVING singapore_rating > 39

@@ -1,1 +1,0 @@
-SELECT YEAR(products.launch_date) AS launch_year, ROUND(AVG(store_sales.units), 2) AS avg_units FROM store_sales LEFT JOIN stores ON store_sales.store_id = stores.id JOIN products ON products.id = store_sales.product_id WHERE store_sales.units BETWEEN 14 AND 25 GROUP BY YEAR(products.launch_date)

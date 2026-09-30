@@ -1,1 +1,0 @@
-WITH recent_products AS (SELECT * FROM products WHERE stock_qty IS NOT NULL), summary AS (SELECT brand, MAX(price) AS max_price FROM recent_products GROUP BY brand) SELECT * FROM summary WHERE max_price < 890

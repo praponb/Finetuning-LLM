@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values FROM web_events WHERE session_id IN (12, 21) GROUP BY session_id) SELECT s.country, ss.page_values FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id;

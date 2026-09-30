@@ -1,1 +1,0 @@
-SELECT ss.id, ss.sale_date, s.city, CASE WHEN s.sqft >= 13018 THEN 'High' WHEN s.sqft >= 8132 THEN 'Medium' ELSE 'Low' END AS sqft_level FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id ORDER BY id DESC, sqft_level

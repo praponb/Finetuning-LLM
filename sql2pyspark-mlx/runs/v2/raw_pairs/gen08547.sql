@@ -1,1 +1,0 @@
-WITH CustomerStats AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(browser)) AS browser_list FROM sessions WHERE country IN ('US', 'TH', 'DE') GROUP BY customer_id) SELECT c.id, c.is_active, c.credit_limit, C.browser_list FROM customers c LEFT OUTER JOIN CustomerStats C ON c.id = C.customer_id;

@@ -1,1 +1,0 @@
-SELECT s.id, s.region, COUNT(i.id) AS inventory_count, SUM(i.quantity) AS total_quantity, COUNT(DISTINCT i.quantity) AS unique_products FROM stores s LEFT JOIN inventory i ON s.id = i.store_id GROUP BY s.id, s.region HAVING inventory_count >= 2;

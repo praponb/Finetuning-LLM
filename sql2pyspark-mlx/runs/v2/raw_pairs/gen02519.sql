@@ -1,1 +1,0 @@
-SELECT c.segment, SUM(CASE WHEN o.status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed_count, ROUND((100 * SUM(CASE WHEN o.channel = 'web' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_web FROM orders o FULL OUTER JOIN customers c ON o.customer_id = c.id GROUP BY c.segment ORDER BY segment

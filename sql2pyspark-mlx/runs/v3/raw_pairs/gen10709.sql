@@ -1,1 +1,0 @@
-SELECT product_id, store_id, latest_sale_date, stddev_units FROM (SELECT product_id, store_id, MAX(sale_date) AS latest_sale_date, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales WHERE store_id IN (1, 2, 4) GROUP BY product_id, store_id) AS t WHERE stddev_units < 23 ORDER BY store_id, product_id DESC;

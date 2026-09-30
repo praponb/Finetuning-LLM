@@ -1,1 +1,0 @@
-select c.segment, count(o.id) order_count, max(o.discount) - min(o.discount) discount_range, max(o.order_date) latest_order_date from customers c left join orders o on c.id = o.customer_id group by c.segment order by latest_order_date;

@@ -1,1 +1,0 @@
-SELECT e.full_name AS employee_full_name, e.job_title AS employee_job_title, m.dept_id AS manager_dept_id FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id ORDER BY employee_full_name

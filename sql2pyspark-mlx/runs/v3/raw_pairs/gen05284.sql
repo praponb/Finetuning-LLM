@@ -1,1 +1,0 @@
-SELECT t.txn_type, a.customer_id, a.balance, c.age FROM transactions t LEFT OUTER JOIN accounts a ON a.id = t.account_id LEFT OUTER JOIN customers c ON c.id = a.customer_id WHERE c.credit_limit >= 7500

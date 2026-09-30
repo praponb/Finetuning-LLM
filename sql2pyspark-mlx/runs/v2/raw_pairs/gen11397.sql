@@ -1,1 +1,0 @@
-SELECT segment, MONTH(signup_date) AS signup_month, MAX(credit_limit) - MIN(credit_limit) AS credit_limit_range FROM customers WHERE LOWER(TRIM(email)) = 'liam@outlook.com' AND email LIKE '%@gmail.com' GROUP BY segment, MONTH(signup_date);

@@ -1,1 +1,0 @@
-SELECT plan, status, MAX(start_date) AS last_start_date FROM subscriptions WHERE customer_id = 20 AND plan = 'premium' GROUP BY plan, status HAVING SUM(CASE WHEN plan = 'basic' THEN 1 ELSE 0 END) < 33 ORDER BY last_start_date

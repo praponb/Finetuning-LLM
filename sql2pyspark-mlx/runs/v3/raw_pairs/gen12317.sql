@@ -1,1 +1,0 @@
-SELECT product_id, order_id, stddev_quantity, max_quantity FROM (SELECT product_id, order_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, MAX(quantity) AS max_quantity FROM order_items WHERE order_id IN (5, 14, 21) GROUP BY product_id, order_id) AS sub WHERE stddev_quantity >= 65 ORDER BY max_quantity;

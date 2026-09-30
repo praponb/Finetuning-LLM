@@ -1,1 +1,0 @@
-SELECT CASE WHEN channel IN ('store', 'partner') THEN 'group_a' ELSE 'other' END AS channel_group, customer_id, ROUND(STDDEV(discount), 2) AS stddev_discount FROM orders WHERE discount BETWEEN 0.24 AND 0.39 GROUP BY 1, 2 ORDER BY channel_group DESC, stddev_discount DESC, customer_id LIMIT 5;

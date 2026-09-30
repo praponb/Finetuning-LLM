@@ -1,1 +1,0 @@
-select p.id, p.method, p.order_id, o.channel, c.segment, c.name from payments p join orders o on o.id = p.order_id left join customers c on o.customer_id = c.id where not c.is_active or p.status not in ('REFUNDED', 'SUCCESS', 'FAILED')

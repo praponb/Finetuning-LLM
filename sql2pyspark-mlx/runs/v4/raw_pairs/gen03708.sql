@@ -1,1 +1,0 @@
-with lines as (select id, customer_id, created_at, explode(coupon_codes) as tag from carts) select tag, count(distinct id) as distinct_ids, count(*) as num_rows, min(created_at) as first_seen, min(created_at) as first_seen_2 from lines group by tag having distinct_ids > 1

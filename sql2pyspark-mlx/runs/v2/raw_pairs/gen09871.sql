@@ -1,1 +1,0 @@
-select s.id, s.country, count(p.id) as product_count, count(case when p.category = 'Home' then 1 end) as home_count, min(p.launch_date) as first_launch_date from suppliers s left join products p on s.id = p.supplier_id where s.supplier_name like '%Siam%' group by s.id, s.country;

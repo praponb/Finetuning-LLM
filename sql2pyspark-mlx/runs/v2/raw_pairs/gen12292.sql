@@ -1,1 +1,0 @@
-with department_totals as (select dept_id, sum(case when job_title = 'Manager' then salary else 0 end) as manager_salary from employees group by dept_id) select d.id, d.location, dt.manager_salary from departments d left outer join department_totals dt on d.id = dt.dept_id order by location;

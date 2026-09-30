@@ -1,1 +1,0 @@
-select event_type, sum(case when event_type = 'purchase' then duration_sec else 0 end) purchase_duration_sec, concat_ws(', ', sort_array(collect_set(event_type))) event_type_values from web_events where session_id = 2 group by event_type;

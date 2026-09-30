@@ -1,1 +1,0 @@
-SELECT o.id, o.customer_id, c.signup_date, c.name, s.city FROM orders o INNER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id WHERE MONTH(s.opened_date) IN (6, 7, 11)

@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN budget >= 3060000 THEN 'High' WHEN budget >= 1973000 THEN 'Medium' ELSE 'Low' END AS budget_level, CAST(budget AS INT) AS budget_int FROM departments WHERE location IN ('Singapore', 'Tokyo', 'London') AND dept_name IN ('Finance', 'Marketing');

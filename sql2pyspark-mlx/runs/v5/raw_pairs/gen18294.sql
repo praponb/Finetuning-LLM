@@ -1,1 +1,0 @@
-SELECT QUARTER(last_restock) AS last_restock_quarter, MIN(quantity) AS min_quantity, SUM(quantity) AS total_quantity, MAX(last_restock) AS latest_last_restock FROM inventory GROUP BY QUARTER(last_restock) HAVING AVG(quantity) < 220

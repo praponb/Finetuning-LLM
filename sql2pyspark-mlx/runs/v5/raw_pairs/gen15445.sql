@@ -1,1 +1,0 @@
-SELECT e.id, e.manager_id AS employee_manager_id, m.full_name AS manager_full_name, m.salary AS manager_salary, m.is_remote AS manager_is_remote FROM employees e LEFT JOIN employees m ON e.manager_id = m.id ORDER BY m.salary DESC, 2 DESC

@@ -1,1 +1,0 @@
-SELECT departments.dept_name, COUNT(CASE WHEN employees.job_title = 'Designer' THEN 1 END) AS designer_count, ROUND(AVG(employees.salary), 2) AS avg_salary FROM employees LEFT JOIN departments ON employees.dept_id = departments.id WHERE departments.location = 'New York' GROUP BY departments.dept_name ORDER BY dept_name DESC

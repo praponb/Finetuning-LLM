@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT status, plan, COUNT(DISTINCT monthly_fee) AS unique_plans FROM subscriptions WHERE status NOT IN ('PAUSED', 'ACTIVE', 'EXPIRED') GROUP BY status, plan) AS t WHERE unique_plans >= 5

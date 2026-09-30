@@ -1,1 +1,0 @@
-SELECT id, budget, TRIM(location) AS clean_location, CASE WHEN location IN ('Bangkok', 'New York') THEN 'Priority' ELSE 'Other' END AS location_group FROM departments WHERE location = 'Singapore' AND budget <= 3050000 ORDER BY location_group

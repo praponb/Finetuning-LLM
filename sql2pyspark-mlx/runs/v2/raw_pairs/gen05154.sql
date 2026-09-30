@@ -1,1 +1,0 @@
-SELECT COUNT(DISTINCT amount) AS unique_methods, MIN(paid_at) AS min_paid_at FROM payments WHERE (status = 'SUCCESS' AND paid_at >= '2024-04-20') OR status NOT IN ('REFUNDED', 'SUCCESS', 'FAILED') ORDER BY unique_methods;

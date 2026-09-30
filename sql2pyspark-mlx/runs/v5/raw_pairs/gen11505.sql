@@ -1,1 +1,0 @@
-select id, txn_type, txn_time, amount, account_id, lead(amount, 1) over (partition by txn_type order by txn_time, id) next_amount, dense_rank() over (partition by account_id order by txn_time) dense_rnk from transactions where txn_type not in ('CREDIT', 'REFUND') order by dense_rnk desc;

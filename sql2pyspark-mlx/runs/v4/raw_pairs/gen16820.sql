@@ -1,1 +1,0 @@
-SELECT s.city, t.total_price, t.first_launch_date FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, SUM(price) AS total_price, MIN(launch_date) AS first_launch_date FROM products WHERE stock_qty < 271 GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY total_price DESC;

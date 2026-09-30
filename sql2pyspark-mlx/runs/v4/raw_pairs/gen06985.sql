@@ -1,1 +1,0 @@
-select date_format(signup_date, 'yyyy-MM') as signup_month, max(age) as max_age, round(stddev(age), 2) as stddev_age from customers where credit_limit >= 12800 and age between 31 and 65 group by date_format(signup_date, 'yyyy-MM') order by max_age desc;

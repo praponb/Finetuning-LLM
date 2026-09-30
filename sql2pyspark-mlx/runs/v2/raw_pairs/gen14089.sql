@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', paid_at) AS paid_month, ROUND((100 * SUM(CASE WHEN method = 'paypal' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_paypal FROM payments WHERE paid_at >= '2023-12-01' AND order_id = 13 GROUP BY 1

@@ -1,1 +1,0 @@
-SELECT e.email AS employee_email, m.email AS manager_email, DATE_FORMAT(m.hire_date, 'yyyy-MM') AS hire_date_label FROM employees e INNER JOIN employees m ON e.manager_id = m.id ORDER BY employee_email

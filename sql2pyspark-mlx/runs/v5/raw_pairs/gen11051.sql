@@ -1,1 +1,0 @@
-WITH ranked_orders AS (SELECT id, store_id, order_date, RANK() OVER (PARTITION BY store_id ORDER BY order_date DESC) AS rn FROM orders) SELECT id, store_id, order_date FROM ranked_orders WHERE rn <= 3;

@@ -1,1 +1,0 @@
-select date_trunc('MONTH', signup_date) signup_month, max(credit_limit) - min(credit_limit) credit_limit_range from customers where year(signup_date) >= 2025 group by 1 having max(credit_limit) - min(credit_limit) < 55

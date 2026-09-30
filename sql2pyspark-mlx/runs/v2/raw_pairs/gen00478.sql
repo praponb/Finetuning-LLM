@@ -1,1 +1,0 @@
-select inventory.id, inventory.quantity, store_sales.sale_date, store_sales.store_id, store_sales.revenue from inventory inner join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id where inventory.store_id = 6 order by 4 desc

@@ -1,1 +1,0 @@
-SELECT c.is_active, c.city, MAX(s.cost) - MIN(s.cost) AS cost_range FROM shipments s JOIN orders o ON o.id = s.order_id RIGHT JOIN customers c ON o.customer_id = c.id WHERE o.shipping_fee IS NOT NULL GROUP BY c.is_active, c.city ORDER BY c.city

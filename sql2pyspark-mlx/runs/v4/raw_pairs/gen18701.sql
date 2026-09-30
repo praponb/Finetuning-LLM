@@ -1,1 +1,0 @@
-SELECT i.quantity, s.opened_date, s.city, p.brand FROM inventory i INNER JOIN stores s ON s.id = i.store_id LEFT JOIN products p ON i.product_id = p.id WHERE i.product_id = 8 AND MONTH(i.last_restock) IN (3, 4, 11);

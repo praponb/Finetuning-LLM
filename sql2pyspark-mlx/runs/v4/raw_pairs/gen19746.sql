@@ -1,1 +1,0 @@
-select oi.id, oi.product_id, p.product_name, o.store_id, o.amount from order_items oi join products p on p.id = oi.product_id left join orders o on oi.order_id = o.id where p.supplier_id is not null or size(p.tags) > 2

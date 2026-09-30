@@ -1,1 +1,0 @@
-SELECT country, SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) AS sg_count, MAX(rating) AS max_rating FROM suppliers WHERE country IN ('UK', 'SG', 'JP') GROUP BY country HAVING MAX(rating) < 3.7 ORDER BY sg_count DESC, country ASC LIMIT 10

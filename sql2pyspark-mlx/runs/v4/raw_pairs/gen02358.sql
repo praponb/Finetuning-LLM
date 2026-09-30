@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, service, host, level, latency_ms, attr_key, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) x AS attr_key, attr_value) SELECT id, service, level, attr_value, CASE WHEN service RLIKE '^(auth|search)$' THEN 'CORE' ELSE 'OTHER_ZONE' END AS service_zone FROM lines ORDER BY id;

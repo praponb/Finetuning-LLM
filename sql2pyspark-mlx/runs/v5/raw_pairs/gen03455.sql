@@ -1,1 +1,0 @@
-WITH shipments_by_order AS (SELECT order_id, COUNT(*) AS num_shipments FROM shipments GROUP BY order_id) SELECT o.customer_id, sbo.num_shipments FROM orders o INNER JOIN shipments_by_order sbo ON o.id = sbo.order_id WHERE sbo.num_shipments >= 9 ORDER BY num_shipments DESC

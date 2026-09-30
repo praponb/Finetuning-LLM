@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, COALESCE(dept_name, 'Unknown') AS dept_name_filled, TRIM(location) AS clean_location FROM departments WHERE location = 'London') SELECT * FROM (SELECT location, dept_name, budget FROM cleaned) src PIVOT (SUM(budget) AS total FOR dept_name IN ('Sales', 'HR'))

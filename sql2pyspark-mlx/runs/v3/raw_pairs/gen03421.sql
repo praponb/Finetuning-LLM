@@ -1,1 +1,0 @@
-SELECT p.id, p.brand, t.avg_quantity FROM products p LEFT OUTER JOIN (SELECT product_id, AVG(quantity) AS avg_quantity FROM order_items WHERE order_id IN (11, 12, 20) GROUP BY product_id) t ON p.id = t.product_id WHERE t.avg_quantity > 6.8 ORDER BY id DESC, brand DESC;

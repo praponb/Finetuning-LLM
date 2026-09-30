@@ -1,1 +1,0 @@
-SELECT YEAR(opened_date) opened_year, status, COUNT(CASE WHEN status = 'FROZEN' THEN 1 END) frozen_count FROM accounts WHERE account_type <> 'CREDIT' AND account_type = 'SAVINGS' AND opened_date <= '2023-05-22' GROUP BY opened_year, status;

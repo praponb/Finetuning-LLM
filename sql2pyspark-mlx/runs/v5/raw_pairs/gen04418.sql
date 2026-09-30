@@ -1,1 +1,0 @@
-select month(event_time) event_month, min(duration_sec) min_duration_sec, sum(duration_sec) total_duration_sec from web_events where event_type = 'purchase' group by event_month having sum(duration_sec) > 900

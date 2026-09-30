@@ -1,1 +1,0 @@
-SELECT e.is_remote AS employee_is_remote, m.full_name AS manager_full_name, m.hire_date AS manager_hire_date, m.job_title AS manager_job_title FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.manager_id IS NULL AND e.is_remote = TRUE ORDER BY manager_job_title

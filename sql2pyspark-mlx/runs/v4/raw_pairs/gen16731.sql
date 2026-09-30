@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, SUM(quantity) AS total_quantity, COUNT(*) AS row_count FROM order_items WHERE product_id = 1 GROUP BY order_id) SELECT o.customer_id, o.amount, os.total_quantity, os.row_count FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id;

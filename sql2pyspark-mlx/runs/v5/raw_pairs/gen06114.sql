@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, customer_id, coupon_codes, k, attr_value FROM carts LATERAL VIEW OUTER EXPLODE(attributes) t AS k, attr_value) SELECT k, customer_id, COUNT(*) AS event_count, SORT_ARRAY(COLLECT_SET(k)) AS k_list, COUNT(CASE WHEN k = 'utm_source' THEN 1 END) AS utm_source_count, GROUPING_ID() AS grouping_level FROM lines GROUP BY CUBE (k, customer_id);

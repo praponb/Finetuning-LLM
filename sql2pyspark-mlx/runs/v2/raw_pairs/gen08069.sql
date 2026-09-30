@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, t.pct_starbucks, t.pct_fee FROM accounts a INNER JOIN (SELECT account_id, ROUND((100 * SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_starbucks, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_fee FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY account_type;

@@ -1,1 +1,0 @@
-with base as (select *, lower(city) city_lower from stores where opened_date > date '2023-09-01' and region is not null) select id, region from base intersect all select id, region from stores where city in ('New York', 'Bangkok');

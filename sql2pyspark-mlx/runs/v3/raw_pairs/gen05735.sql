@@ -1,1 +1,0 @@
-WITH filtered_payments AS (SELECT *, DAYOFWEEK(paid_at) AS paid_at_dayofweek FROM payments WHERE method = 'paypal'), Agg AS (SELECT HOUR(paid_at) AS paid_hour, order_id, MAX(amount) - MIN(amount) AS amount_range, COUNT(*) AS row_count FROM filtered_payments GROUP BY HOUR(paid_at), order_id) SELECT * FROM Agg ORDER BY paid_hour DESC;

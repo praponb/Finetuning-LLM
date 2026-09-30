@@ -1,1 +1,0 @@
-SELECT p.supplier_id, COUNT(*) AS num_order_items, COUNT(DISTINCT oi.quantity) AS unique_orders FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE oi.quantity < 6 GROUP BY p.supplier_id HAVING COUNT(*) >= 5;

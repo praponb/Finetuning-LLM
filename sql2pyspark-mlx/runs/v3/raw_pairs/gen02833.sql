@@ -1,1 +1,0 @@
-SELECT ss.id, ss.product_id, ss.store_id, s.store_name, s.city, p.brand, p.product_name FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id RIGHT OUTER JOIN products p ON p.id = ss.product_id ORDER BY id DESC;

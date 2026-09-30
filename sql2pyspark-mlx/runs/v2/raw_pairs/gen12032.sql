@@ -1,1 +1,0 @@
-with web_events_by_session as (select session_id, min(duration_sec) as min_duration_sec, max(duration_sec) as max_duration_sec from web_events where session_id in (12, 16, 18, 31) group by session_id) select s.id, s.country, s.browser, webs.min_duration_sec, webs.max_duration_sec from sessions s inner join web_events_by_session webs on s.id = webs.session_id

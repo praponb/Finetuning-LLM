@@ -1,1 +1,0 @@
-SELECT we.event_time, we.page, we.duration_sec, s.customer_id FROM web_events we LEFT OUTER JOIN sessions s ON we.session_id = s.id WHERE we.event_type = 'page_view' OR TO_DATE(s.started_at) >= '2023-03-04' ORDER BY we.event_time DESC, we.duration_sec DESC;

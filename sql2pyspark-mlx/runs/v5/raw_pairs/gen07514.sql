@@ -1,1 +1,0 @@
-select id, customer_id, status from accounts where opened_date between '2024-02-25' and '2024-08-01' and balance between 20000 and 75000 and status in ('CLOSED', 'FROZEN') order by customer_id desc, status;

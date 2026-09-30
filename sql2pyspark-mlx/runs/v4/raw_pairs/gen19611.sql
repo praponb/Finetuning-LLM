@@ -1,1 +1,0 @@
-with filtered as (select id, store_id, product_id, quantity, last_restock, floor(quantity) quantity_whole from inventory where quantity < 176) select a.*, b.sqft from filtered a left join stores b on a.store_id = b.id;

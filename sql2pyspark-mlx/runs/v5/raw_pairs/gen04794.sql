@@ -1,1 +1,0 @@
-WITH not_flagged AS (SELECT s.* FROM accounts s WHERE NOT EXISTS (SELECT 1 FROM transactions ch WHERE ch.account_id = s.id AND ch.txn_type = 'DEBIT')) SELECT id, account_type, opened_date, status, CASE WHEN status RLIKE '^(CLOSED|OPEN)$' THEN 'PRIORITY' ELSE 'GROUP_A' END AS status_zone FROM not_flagged ORDER BY status_zone;

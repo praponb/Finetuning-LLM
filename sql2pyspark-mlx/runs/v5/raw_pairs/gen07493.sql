@@ -1,1 +1,0 @@
-SELECT p.id, p.status, p.method, o.amount, s.region, s.sqft, CASE WHEN p.status IN ('SUCCESS', 'REFUNDED') THEN 'Tier 1' ELSE 'Other' END AS status_group FROM payments p INNER JOIN orders o ON o.id = p.order_id INNER JOIN stores s ON o.store_id = s.id WHERE p.order_id IS NULL AND p.amount BETWEEN 950 AND 1510

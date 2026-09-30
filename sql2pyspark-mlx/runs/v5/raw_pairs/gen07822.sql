@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN amount >= 1210 THEN 'high' WHEN amount >= 390 THEN 'mid' ELSE 'low' END AS amount_bucket, MAX(amount) - MIN(amount) AS amount_range FROM payments GROUP BY CASE WHEN amount >= 1210 THEN 'high' WHEN amount >= 390 THEN 'mid' ELSE 'low' END) AS t WHERE amount_range >= 76;

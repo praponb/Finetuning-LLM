@@ -1,1 +1,0 @@
-SELECT id, merchant, txn_time, amount, account_id, LEAD(amount, 2, 0) OVER (PARTITION BY merchant ORDER BY txn_time, id) AS next_amount, LAG(amount, 1, 0) OVER (PARTITION BY account_id ORDER BY txn_time, id) AS prev_amount FROM transactions;

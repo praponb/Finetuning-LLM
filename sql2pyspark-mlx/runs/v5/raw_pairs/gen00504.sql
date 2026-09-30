@@ -1,1 +1,0 @@
-WITH ranked_customers AS (SELECT id, country, signup_date, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date DESC, id) pos FROM customers) SELECT id, country, signup_date FROM ranked_customers WHERE pos <= 2;

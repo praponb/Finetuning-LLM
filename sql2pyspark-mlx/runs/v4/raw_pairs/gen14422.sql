@@ -1,1 +1,0 @@
-select date_format(opened_date, 'yyyy-MM') as opened_month, city, sum(sqft) as total_sqft, count(case when city = 'Bangkok' then 1 end) as bangkok_count from stores where upper(store_name) like '%OWN%' or opened_date <= '2025-06-01' group by opened_month, city order by city, total_sqft desc;

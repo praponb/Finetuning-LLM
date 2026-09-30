@@ -1,1 +1,0 @@
-WITH department_summary AS (SELECT dept_id, COUNT(CASE WHEN job_title = 'Analyst' THEN 1 END) AS analyst_count, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE salary > 108000 GROUP BY dept_id) SELECT d.id, d.budget, ds.analyst_count, ds.avg_salary FROM departments d INNER JOIN department_summary ds ON d.id = ds.dept_id;

@@ -1,1 +1,0 @@
-WITH top_employees AS (SELECT id, job_title, salary, is_remote, RANK() OVER (PARTITION BY job_title ORDER BY salary) AS row_num FROM employees) SELECT id, job_title, salary, is_remote FROM top_employees WHERE row_num <= 2 ORDER BY salary DESC

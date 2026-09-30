@@ -1,1 +1,0 @@
-WITH valid_customers AS (SELECT *, IF(is_active, 'Yes', 'No') AS is_active_label FROM customers WHERE email LIKE '%@startup.io'), segment_summary AS (SELECT segment, SUM(credit_limit) AS total_credit_limit FROM valid_customers GROUP BY segment) SELECT segment, total_credit_limit FROM segment_summary;

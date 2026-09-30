@@ -1,1 +1,0 @@
-select order_items.id, order_items.order_id, order_items.unit_price, orders.channel, products.category, products.stock_qty from order_items left join orders on order_items.order_id = orders.id join products on products.id = order_items.product_id where order_items.order_id in (33, 36, 37, 40)

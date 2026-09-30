@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM accounts WHERE status != 'OPEN' AND customer_id IN (10, 25)), agg AS (SELECT account_type, ROUND(AVG(balance), 2) avg_balance FROM src GROUP BY account_type) SELECT * FROM agg WHERE avg_balance >= 56

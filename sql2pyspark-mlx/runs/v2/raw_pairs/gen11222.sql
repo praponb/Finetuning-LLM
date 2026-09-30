@@ -1,1 +1,0 @@
-select id, segment, age, signup_date, dense_rank() over (partition by segment order by age desc) as dense_rnk, lead(age, 1) over (order by signup_date, id) as next_age from customers where name like 'b%' order by id desc;

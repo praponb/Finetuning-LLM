@@ -1,1 +1,0 @@
-WITH department_totals AS (SELECT dept_id, COUNT(*) AS total_count FROM employees GROUP BY dept_id) SELECT d.id, d.location, dt.total_count FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.total_count >= 10 ORDER BY total_count DESC, id LIMIT 5

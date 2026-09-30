@@ -1,1 +1,0 @@
-SELECT id, status, paid_at, amount, order_id, LEAD(amount, 1) OVER (PARTITION BY status ORDER BY paid_at, id) AS next_amount, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY amount, id) AS amount_row FROM payments ORDER BY status DESC, next_amount DESC;

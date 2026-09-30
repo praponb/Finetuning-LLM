@@ -1,1 +1,0 @@
-select date_trunc('week', started_at) as week_start, date_trunc('quarter', started_at) as quarter_start, country, count(distinct device) as distinct_devices, count_if(device = 'mobile') as mobile_events, count(*) as num_rows from sessions group by 1, 2, 3;

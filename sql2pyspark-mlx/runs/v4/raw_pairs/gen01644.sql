@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', o.order_date) AS order_month, o.customer_id, SUM(s.cost) AS total_cost FROM shipments s RIGHT JOIN orders o ON s.order_id = o.id JOIN stores st ON o.store_id = st.id GROUP BY DATE_TRUNC('MONTH', o.order_date), o.customer_id HAVING total_cost >= 460 ORDER BY o.customer_id DESC, order_month LIMIT 5;

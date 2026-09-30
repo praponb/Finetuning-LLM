@@ -1,1 +1,0 @@
-SELECT id, country, signup_date, credit_limit, city, ROUND(AVG(credit_limit) OVER (PARTITION BY country ORDER BY signup_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS credit_limit_moving_avg_7, ROW_NUMBER() OVER (PARTITION BY city ORDER BY signup_date, id) AS rn FROM customers WHERE age < 31;

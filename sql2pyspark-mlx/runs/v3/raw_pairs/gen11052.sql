@@ -1,1 +1,0 @@
-SELECT dept_name, SUM(CASE WHEN location = 'London' THEN 1 ELSE 0 END) AS london_count, COUNT(*) AS total_count FROM departments WHERE budget < 2843000 AND budget <= 1836000 GROUP BY dept_name HAVING total_count > 2 ORDER BY dept_name, 3;

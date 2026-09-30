@@ -1,1 +1,0 @@
-SELECT id, location, budget, ROUND(budget / SUM(budget) OVER (PARTITION BY location), 3) AS budget_share, LAST_VALUE(location) OVER (ORDER BY budget DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_location FROM departments WHERE location NOT IN ('Tokyo', 'Chiang Mai')

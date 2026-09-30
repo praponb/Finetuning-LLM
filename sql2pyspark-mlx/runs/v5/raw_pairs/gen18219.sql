@@ -1,1 +1,0 @@
-SELECT supplier_id, brand, MAX(price) AS max_price, SUM(stock_qty) AS total_stock_qty FROM products WHERE stock_qty < 179 AND supplier_id IN (10, 12) AND product_name IS NOT NULL GROUP BY supplier_id, brand;

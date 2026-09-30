@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.is_flagged, transactions.txn_type, accounts.balance, customers.city FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id FULL OUTER JOIN customers ON accounts.customer_id = customers.id;

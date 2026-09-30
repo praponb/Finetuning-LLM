@@ -1,1 +1,0 @@
-SELECT method, status, ROUND(AVG(amount), 2) AS avg_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM payments WHERE order_id = 30 AND TO_DATE(paid_at) < '2025-04-01' GROUP BY CUBE(method, status) ORDER BY method

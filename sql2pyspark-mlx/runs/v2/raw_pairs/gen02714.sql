@@ -1,1 +1,0 @@
-SELECT sessions.started_at, sessions.device, sessions.customer_id, web_events.event_type FROM sessions LEFT JOIN web_events ON sessions.id = web_events.session_id WHERE sessions.country IN ('UK', 'US', 'DE') AND web_events.duration_sec <> 380 ORDER BY started_at DESC, customer_id;

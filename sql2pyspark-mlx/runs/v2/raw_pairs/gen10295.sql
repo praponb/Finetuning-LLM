@@ -1,1 +1,0 @@
-select a.status, a.account_type, round((100 * sum(case when t.txn_type = 'FEE' then 1 else 0 end)) / count(*), 1) as pct_fee, concat_ws(', ', sort_array(collect_set(t.merchant))) as merchant_values from transactions t full outer join accounts a on t.account_id = a.id where hour(t.txn_time) between 11 and 14 group by a.status, a.account_type;

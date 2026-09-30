@@ -1,1 +1,0 @@
-SELECT sessions.country, sessions.browser, sessions.device, web_events.session_id FROM sessions LEFT JOIN web_events ON sessions.id = web_events.session_id WHERE web_events.session_id IN (1, 13, 26, 32)

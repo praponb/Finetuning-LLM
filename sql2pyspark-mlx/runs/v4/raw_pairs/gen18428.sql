@@ -1,1 +1,0 @@
-SELECT *, SUM(discount_pct) OVER (PARTITION BY promo_code ORDER BY ends_on ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) cumulative_discount_pct, MIN(discount_pct) OVER w_recent promo_code_min_discount_pct FROM promotions WINDOW w_recent AS (PARTITION BY promo_code, channel)

@@ -1,1 +1,0 @@
-with recent_accounts as (select * from accounts where account_type != 'LOAN'), agg as (select year(opened_date) as opened_year, count(distinct balance) as unique_statuss from recent_accounts group by year(opened_date)) select * from agg order by opened_year

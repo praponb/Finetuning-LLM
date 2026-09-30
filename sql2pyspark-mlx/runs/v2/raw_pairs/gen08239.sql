@@ -1,1 +1,0 @@
-SELECT id, category, cost, brand, launch_date, ROW_NUMBER() OVER (PARTITION BY category ORDER BY cost, id) AS row_num, RANK() OVER (PARTITION BY brand ORDER BY launch_date) AS launch_date_rank FROM products

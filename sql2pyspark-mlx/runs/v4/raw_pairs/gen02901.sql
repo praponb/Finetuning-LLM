@@ -1,1 +1,0 @@
-WITH ranked_order_items AS (SELECT id, order_id, quantity, unit_price, RANK() OVER (PARTITION BY order_id ORDER BY quantity DESC) rnk FROM order_items) SELECT id, order_id, quantity, unit_price FROM ranked_order_items WHERE rnk <= 3 ORDER BY quantity, unit_price DESC;

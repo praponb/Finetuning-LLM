@@ -1,1 +1,0 @@
-SELECT id, manager_id, is_remote, dept_id, ROUND(salary * 0.9, 2) AS salary_scaled FROM employees WHERE NOT ((full_name IS NOT NULL AND hire_date <= '2024-12-01') OR email LIKE '%@startup.io') ORDER BY salary_scaled DESC

@@ -1,1 +1,0 @@
-SELECT e.id, e.job_title AS employee_job_title, m.manager_id AS manager_manager_id FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE m.salary <= 112000 AND e.email LIKE '%@gmail.com' ORDER BY manager_manager_id DESC;

@@ -1,1 +1,0 @@
-SELECT id, channel, order_date, discount, customer_id, amount, LEAD(discount, 1) OVER (PARTITION BY channel ORDER BY order_date, id) AS next_discount, LAST_VALUE(amount) OVER (PARTITION BY customer_id ORDER BY discount DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_amount FROM orders WHERE shipping_fee <= 27

@@ -1,1 +1,0 @@
-with numbered as (select *, row_number() over (partition by order_id order by quantity desc, id) as row_num from order_items where order_id in (6, 18, 35, 37)) select id, order_id, quantity, unit_price from numbered where row_num <= 3;

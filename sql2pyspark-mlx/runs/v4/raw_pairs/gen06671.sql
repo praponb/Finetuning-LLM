@@ -1,1 +1,0 @@
-WITH ProductStats AS (SELECT product_id, AVG(revenue) avg_revenue, COUNT(*) cnt FROM store_sales GROUP BY product_id) SELECT p.id, p.price, p.stock_qty, P.avg_revenue, P.cnt FROM products p LEFT OUTER JOIN ProductStats P ON p.id = P.product_id ORDER BY P.avg_revenue DESC, price;

@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.order_id, orders.channel, orders.discount, orders.store_id, INITCAP(TRIM(shipments.status)) AS status_title FROM shipments RIGHT JOIN orders ON shipments.order_id = orders.id WHERE orders.shipping_fee BETWEEN 35 AND 37 ORDER BY orders.channel DESC

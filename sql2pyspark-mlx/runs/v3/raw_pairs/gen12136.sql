@@ -1,1 +1,0 @@
-WITH DepartmentSummary AS (SELECT dept_id, COUNT(CASE WHEN level = 'L5' THEN 1 END) AS l5_count FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, D.l5_count FROM departments d INNER JOIN DepartmentSummary D ON d.id = D.dept_id ORDER BY l5_count

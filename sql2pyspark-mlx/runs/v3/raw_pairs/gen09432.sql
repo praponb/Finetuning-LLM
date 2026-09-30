@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', o.order_date) AS order_month, AVG(oi.unit_price) AS avg_unit_price, MIN(oi.unit_price) AS min_unit_price FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE LENGTH(s.store_name) >= 6 GROUP BY DATE_TRUNC('MONTH', o.order_date);

@@ -1,1 +1,0 @@
-SELECT p.category, MAX(ss.sale_date) AS latest_sale_date, ROUND(STDDEV(ss.units), 2) AS stddev_units FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.category ORDER BY stddev_units DESC, category ASC LIMIT 5

@@ -1,1 +1,0 @@
-select case when s.rating >= 4.4 then 'high' when s.rating >= 2.2 then 'mid' else 'low' end as rating_bucket, max(p.stock_qty) as max_stock_qty from products p inner join suppliers s on s.id = p.supplier_id group by case when s.rating >= 4.4 then 'high' when s.rating >= 2.2 then 'mid' else 'low' end

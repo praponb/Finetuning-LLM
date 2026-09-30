@@ -1,1 +1,0 @@
-select * from (select city, sum(case when region = 'North' then 1 else 0 end) as north_count, count(*) as total_count from stores group by city) as t where north_count < 67 order by total_count, city desc;

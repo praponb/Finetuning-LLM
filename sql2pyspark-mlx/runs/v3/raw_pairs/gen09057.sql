@@ -1,1 +1,0 @@
-SELECT products.category, order_items.unit_price, order_items.product_id, order_items.order_id FROM products INNER JOIN order_items ON order_items.product_id = products.id WHERE order_items.unit_price >= 100 ORDER BY product_id DESC, category ASC;

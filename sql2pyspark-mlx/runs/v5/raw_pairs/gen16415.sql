@@ -1,1 +1,0 @@
-SELECT id, host, status_code, context, context['version'] AS version, context['region'] AS region, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').retries AS retry_count, CAST((status_code & 4) != 0 AS INT) AS flag_bit4 FROM app_logs;

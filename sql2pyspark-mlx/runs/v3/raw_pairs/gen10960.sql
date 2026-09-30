@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM web_events WHERE event_time < '2024-03-01'), summary AS (SELECT event_type, MAX(event_time) AS last_event_time, COUNT(duration_sec) AS duration_sec_count FROM base GROUP BY event_type) SELECT event_type, last_event_time, duration_sec_count FROM summary WHERE duration_sec_count < 6 ORDER BY last_event_time, event_type DESC;

@@ -1,1 +1,0 @@
-SELECT id, order_id, unit_price, quantity, GREATEST(unit_price, quantity) AS greatest_unit_price_quantity, CAST(quantity AS STRING) AS quantity_str FROM order_items WHERE order_id = 34 ORDER BY greatest_unit_price_quantity DESC, id DESC

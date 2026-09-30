@@ -1,1 +1,0 @@
-SELECT c.id, c.age, t.pending_count, t.order_count FROM customers c INNER JOIN (SELECT customer_id, COUNT(CASE WHEN status = 'PENDING' THEN 1 END) AS pending_count, COUNT(*) AS order_count FROM orders WHERE status = 'RETURNED' GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY t.pending_count DESC

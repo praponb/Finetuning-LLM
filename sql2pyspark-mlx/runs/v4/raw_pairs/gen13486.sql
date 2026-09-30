@@ -1,1 +1,0 @@
-SELECT o.order_date, o.channel, s.region, s.opened_date, c.credit_limit FROM orders o LEFT JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON c.id = o.customer_id WHERE c.city IN ('Berlin', 'Singapore', 'Tokyo') ORDER BY order_date, region;

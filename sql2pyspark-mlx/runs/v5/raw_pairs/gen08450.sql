@@ -1,1 +1,0 @@
-WITH TopPayments AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount DESC, id) AS row_num FROM payments WHERE method IN ('card', 'bank_transfer')) SELECT * FROM TopPayments WHERE row_num = 1

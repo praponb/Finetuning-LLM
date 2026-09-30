@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) AS signup_month, MIN(a.opened_date) AS min_opened_date, ROUND(STDDEV(a.balance), 2) AS stddev_balance FROM accounts a LEFT OUTER JOIN customers c ON a.customer_id = c.id WHERE a.customer_id IS NULL GROUP BY MONTH(c.signup_date) ORDER BY min_opened_date DESC

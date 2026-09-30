@@ -1,1 +1,0 @@
-WITH SupplierSummary AS (SELECT supplier_id, MAX(launch_date) last_launch_date, COUNT(cost) cost_count FROM products GROUP BY supplier_id) SELECT s.rating, S.last_launch_date, S.cost_count FROM suppliers s INNER JOIN SupplierSummary S ON s.id = S.supplier_id WHERE S.cost_count > 8 ORDER BY rating DESC

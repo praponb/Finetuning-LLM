@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(hire_date) < 2024 THEN 'before_2024' WHEN YEAR(hire_date) = 2024 THEN '2024' ELSE 'after_2024' END AS hire_cohort, level, SORT_ARRAY(COLLECT_SET(level)) AS level_list FROM employees WHERE is_remote = TRUE AND hire_date > '2025-06-28' AND manager_id = 19 GROUP BY hire_cohort, level ORDER BY level DESC, hire_cohort;

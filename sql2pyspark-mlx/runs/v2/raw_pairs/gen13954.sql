@@ -1,1 +1,0 @@
-SELECT id, customer_id, started_at, browser FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) AS row_num FROM sessions WHERE country != 'SG') AS t WHERE row_num <= 3;

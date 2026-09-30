@@ -1,1 +1,0 @@
-select id, service, host, latency_ms, context['region'] as region, get_json_object(payload_json, '$.user.id') as user_id, coalesce(context['version'], 'direct') as version_or_default from app_logs where latency_ms > 645

@@ -1,1 +1,0 @@
-SELECT id, order_id, shipped_date, carrier, LAST_VALUE(carrier) OVER (PARTITION BY order_id ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_carrier FROM shipments;

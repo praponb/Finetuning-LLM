@@ -1,1 +1,0 @@
-SELECT o.id, o.customer_id, o.discount, s.opened_date, c.age, COALESCE(c.email, 'Unknown') AS email_filled FROM orders o RIGHT OUTER JOIN stores s ON o.store_id = s.id LEFT OUTER JOIN customers c ON o.customer_id = c.id ORDER BY age DESC

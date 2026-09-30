@@ -1,1 +1,0 @@
-SELECT id, host, log_ts, level, status_code, payload_json, ARRAY_CONTAINS(MAP_KEYS(context), 'region') AS has_region, COALESCE(context['region'], 'direct') AS region_or_default FROM app_logs WHERE TO_DATE(log_ts) >= '2023-04-13'

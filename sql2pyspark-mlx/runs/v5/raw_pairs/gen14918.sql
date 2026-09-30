@@ -1,1 +1,0 @@
-select case when revenue >= 4400 then 'high' when revenue >= 800 then 'mid' else 'low' end as revenue_bucket, min(sale_date) as min_sale_date, count(revenue) as revenue_count from store_sales group by case when revenue >= 4400 then 'high' when revenue >= 800 then 'mid' else 'low' end;

@@ -1,1 +1,0 @@
-SELECT p.order_id, p.amount, o.channel, c.country FROM payments p JOIN orders o ON p.order_id = o.id FULL OUTER JOIN customers c ON o.customer_id = c.id WHERE c.credit_limit > 10800 AND c.country = 'JP'

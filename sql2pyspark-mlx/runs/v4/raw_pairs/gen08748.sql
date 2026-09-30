@@ -1,1 +1,0 @@
-select d.id, d.dept_name, t.director_count, t.level_values from departments d inner join (select dept_id, sum(case when job_title = 'Director' then 1 else 0 end) as director_count, concat_ws(', ', sort_array(collect_set(level))) as level_values from employees where manager_id is null group by dept_id) t on d.id = t.dept_id;

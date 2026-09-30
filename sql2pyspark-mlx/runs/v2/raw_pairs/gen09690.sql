@@ -1,1 +1,0 @@
-select s.id, s.rating, t.acme_count from suppliers s join (select supplier_id, count(case when brand = 'Acme' then 1 end) as acme_count from products group by supplier_id) t on s.id = t.supplier_id order by id, s.rating;

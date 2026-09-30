@@ -1,1 +1,0 @@
-select case when cost >= 730 then 'high' when cost >= 290 then 'mid' else 'low' end as cost_bucket, sum(price) as total_price, round(sum(price) * 100.0 / sum(sum(price)) over (), 2) as pct_of_total from products group by case when cost >= 730 then 'high' when cost >= 290 then 'mid' else 'low' end order by 1, pct_of_total limit 3

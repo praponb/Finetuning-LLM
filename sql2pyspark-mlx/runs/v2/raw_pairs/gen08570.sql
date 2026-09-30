@@ -1,1 +1,0 @@
-SELECT p.id, p.price, p.brand, t.quantity_count FROM products p LEFT JOIN (SELECT product_id, COUNT(quantity) AS quantity_count FROM order_items WHERE order_id IN (6, 14, 24, 29) GROUP BY product_id) t ON p.id = t.product_id;

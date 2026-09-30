@@ -1,1 +1,0 @@
-SELECT channel, COUNT(discount) AS discount_count, SUM(CASE WHEN status = 'PENDING' THEN amount ELSE 0 END) AS pending_amount, MAX(order_date) AS latest_order_date FROM orders WHERE order_date > '2024-03-24' GROUP BY channel

@@ -1,1 +1,0 @@
-SELECT customer_id, end_month, unique_plans FROM (SELECT customer_id, MONTH(end_date) AS end_month, COUNT(DISTINCT monthly_fee) AS unique_plans FROM subscriptions WHERE end_date > '2024-12-01' GROUP BY customer_id, MONTH(end_date)) AS sub WHERE unique_plans >= 8 ORDER BY 2 DESC

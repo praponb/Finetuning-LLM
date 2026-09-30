@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) page_values FROM web_events WHERE duration_sec > 288 GROUP BY session_id) SELECT s.id, s.browser, s.device, ss.page_values FROM sessions s LEFT OUTER JOIN session_stats ss ON s.id = ss.session_id ORDER BY ss.page_values;

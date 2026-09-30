@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', hire_date) AS hire_month, is_remote, COUNT(CASE WHEN job_title = 'Designer' THEN 1 END) AS designer_count, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees WHERE job_title = 'Intern' GROUP BY hire_month, is_remote HAVING designer_count < 3;

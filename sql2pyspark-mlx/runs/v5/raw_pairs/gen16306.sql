@@ -1,1 +1,0 @@
-WITH subscriptions_by_customer AS (SELECT customer_id, COUNT(*) AS cnt, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM subscriptions GROUP BY customer_id) SELECT c.credit_limit, c.signup_date, sbc.cnt, sbc.plan_values FROM customers c JOIN subscriptions_by_customer sbc ON c.id = sbc.customer_id WHERE sbc.cnt >= 4;

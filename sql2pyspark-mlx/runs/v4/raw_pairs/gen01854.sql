@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', hire_date) AS hire_month, dept_id, SUM(CASE WHEN level = 'L1' THEN salary ELSE 0 END) AS l1_salary, SUM(CASE WHEN job_title = 'Director' THEN salary ELSE 0 END) AS director_salary FROM employees GROUP BY DATE_TRUNC('MONTH', hire_date), dept_id HAVING l1_salary >= 39

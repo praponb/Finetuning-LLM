@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, MIN(started_at) AS min_started_at FROM sessions GROUP BY customer_id) SELECT c.credit_limit, c.age, cs.min_started_at FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id;

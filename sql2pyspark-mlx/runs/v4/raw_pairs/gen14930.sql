@@ -1,1 +1,0 @@
-SELECT method, COUNT(*) AS payment_count, MAX(paid_at) AS last_paid_at FROM payments WHERE order_id IN (11, 22, 24) AND order_id IN (11, 30) AND order_id IS NOT NULL GROUP BY method HAVING payment_count < 1 ORDER BY method ASC

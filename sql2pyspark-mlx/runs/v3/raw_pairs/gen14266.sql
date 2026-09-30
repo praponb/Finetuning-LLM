@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT level, COUNT(CASE WHEN level = 'L3' THEN 1 END) AS l3_count, COUNT(CASE WHEN level = 'L5' THEN 1 END) AS l5_count FROM employees GROUP BY level) AS agg WHERE l3_count >= 3 ORDER BY l3_count DESC;

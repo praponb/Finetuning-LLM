@@ -1,1 +1,0 @@
-WITH product_totals AS (SELECT product_id, ROUND(AVG(revenue), 2) AS avg_revenue, COUNT(revenue) AS revenue_count FROM store_sales GROUP BY product_id) SELECT products.price, products.brand, product_totals.avg_revenue, product_totals.revenue_count FROM products LEFT JOIN product_totals ON products.id = product_totals.product_id ORDER BY brand

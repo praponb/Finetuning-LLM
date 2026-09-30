@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, i.last_restock, p.supplier_id, p.product_name, s.city, s.rating, ROUND(s.rating * 1.15, 2) rating_scaled FROM inventory i JOIN products p ON i.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE MONTH(i.last_restock) IN (4, 7, 8);

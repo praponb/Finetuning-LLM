@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, COUNT(we.id) AS web_event_count, SUM(CASE WHEN we.event_type = 'purchase' THEN we.duration_sec ELSE 0 END) AS purchase_duration_sec, COUNT(DISTINCT we.duration_sec) AS unique_sessions FROM sessions s LEFT OUTER JOIN web_events we ON s.id = we.session_id GROUP BY s.id, s.browser;

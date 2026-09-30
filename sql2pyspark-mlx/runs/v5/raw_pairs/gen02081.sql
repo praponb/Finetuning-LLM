@@ -1,1 +1,0 @@
-WITH recent_customers AS (SELECT * FROM customers WHERE country <> 'JP' AND (is_active OR name IS NULL)), customers_stats AS (SELECT YEAR(signup_date) AS signup_year, MIN(signup_date) AS min_signup_date FROM recent_customers GROUP BY YEAR(signup_date)) SELECT * FROM customers_stats ORDER BY signup_year DESC

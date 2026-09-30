@@ -1,1 +1,0 @@
-SELECT account_type, DATE_TRUNC('MONTH', opened_date) AS opened_month, SUM(CASE WHEN account_type = 'CREDIT' THEN balance ELSE 0 END) AS credit_balance FROM accounts GROUP BY account_type, DATE_TRUNC('MONTH', opened_date) ORDER BY opened_month, account_type LIMIT 50

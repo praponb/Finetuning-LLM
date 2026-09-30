@@ -1,1 +1,0 @@
-SELECT CASE WHEN monthly_fee >= 200 THEN 'LARGE' ELSE 'SMALL' END AS monthly_fee_tier, status, COUNT_IF(plan = 'enterprise') AS enterprise_events, COUNT(DISTINCT status) AS distinct_status FROM subscriptions GROUP BY 1, 2 ORDER BY distinct_status DESC;

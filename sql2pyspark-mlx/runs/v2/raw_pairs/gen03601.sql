@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, SUM(unit_price) AS total_unit_price, COUNT(DISTINCT quantity) AS unique_products FROM order_items GROUP BY order_id) SELECT o.id, o.order_date, os.total_unit_price, os.unique_products FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id ORDER BY id, o.order_date;

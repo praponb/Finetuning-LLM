@@ -1,1 +1,0 @@
-SELECT id, service, latency_ms, status_code, payload_json, context['trace'] AS trace, COALESCE(context['version'], 'direct') AS version_or_default FROM app_logs WHERE service IN ('search', 'checkout', 'auth')

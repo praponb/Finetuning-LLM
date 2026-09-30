@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_merchants, MIN(txn_time) AS first_txn_time FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, tba.unique_merchants, tba.first_txn_time FROM accounts a JOIN transactions_by_account tba ON a.id = tba.account_id;

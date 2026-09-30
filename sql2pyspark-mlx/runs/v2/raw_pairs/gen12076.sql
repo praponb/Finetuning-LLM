@@ -1,1 +1,0 @@
-SELECT country, city, CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END AS rating_bucket, MAX(rating) - MIN(rating) AS rating_range FROM suppliers GROUP BY country, city, rating_bucket HAVING rating_range < 44

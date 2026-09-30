@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, order_id, carrier, delivered_date, cost, status, CONCAT(carrier, '/', status) AS carrier_status FROM shipments WHERE shipped_date >= TO_DATE('2023-10-20') AND order_id IS NOT NULL AND shipped_date < '2023-08-13') SELECT s.*, d.amount FROM filtered s LEFT JOIN orders d ON s.order_id = d.id;

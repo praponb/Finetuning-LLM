@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, plan, effective_from, val FROM price_tiers LATERAL VIEW OUTER EXPLODE(discounts) t AS val) SELECT id, plan, effective_from, val, MAX(val) OVER (PARTITION BY plan) AS plan_max_val, DENSE_RANK() OVER (PARTITION BY plan ORDER BY val) AS val_dense_rank, CUME_DIST() OVER (ORDER BY val DESC) AS val_cume_dist FROM exploded;

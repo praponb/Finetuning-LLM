@@ -1,1 +1,0 @@
-SELECT store_id, stddev_revenue, max_units FROM (SELECT store_id, ROUND(STDDEV(revenue), 2) AS stddev_revenue, MAX(units) AS max_units FROM store_sales WHERE MONTH(sale_date) IN (4, 6, 9) GROUP BY store_id) AS t WHERE max_units < 36 ORDER BY stddev_revenue DESC;

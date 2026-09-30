@@ -1,1 +1,0 @@
-SELECT YEAR(st.opened_date) AS opened_year, MONTH(st.opened_date) AS opened_month, SUM(CASE WHEN s.status = 'LOST' THEN 1 ELSE 0 END) AS lost_count FROM shipments s JOIN orders o ON s.order_id = o.id LEFT JOIN stores st ON st.id = o.store_id GROUP BY YEAR(st.opened_date), MONTH(st.opened_date)

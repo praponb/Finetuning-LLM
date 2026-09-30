@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, DATEDIFF(CURRENT_DATE(), ends_on) AS days_since_ends_on, COALESCE(channel, 'UNKNOWN') AS channel_clean FROM promotions WHERE starts_on > TO_DATE('2023-07-03') AND channel IS NOT NULL) SELECT * FROM (SELECT channel, promo_code, discount_pct FROM base) src PIVOT (AVG(discount_pct) AS amount FOR promo_code IN ('WELCOME5', 'VIP'))

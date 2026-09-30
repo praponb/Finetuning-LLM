@@ -1,1 +1,0 @@
-select id, txn_type, amount, merchant, account_id, txn_time, dense_rank() over (partition by txn_type order by amount desc) as amount_dense_rank, dense_rank() over (partition by merchant, account_id order by txn_time) as txn_time_dense_rank from transactions where amount > 3000;

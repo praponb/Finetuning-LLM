@@ -1,1 +1,0 @@
-SELECT oi.id, oi.quantity, oi.unit_price, o.channel, p.cost, p.price FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id RIGHT OUTER JOIN products p ON oi.product_id = p.id WHERE ARRAY_CONTAINS(p.tags, 'bestseller') ORDER BY p.price DESC

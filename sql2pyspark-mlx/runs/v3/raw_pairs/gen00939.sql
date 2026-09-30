@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, s.country, t.home_duration_sec, t.page_list FROM sessions s LEFT JOIN (SELECT session_id, SUM(CASE WHEN page = '/home' THEN duration_sec ELSE 0 END) home_duration_sec, SORT_ARRAY(COLLECT_SET(page)) page_list FROM web_events GROUP BY session_id) t ON s.id = t.session_id ORDER BY country

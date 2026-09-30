@@ -1,1 +1,0 @@
-select store_sales.id, store_sales.revenue, store_sales.product_id, store_sales.sale_date from store_sales where store_sales.revenue < 1500 and store_sales.store_id in (select id from stores where city = 'Tokyo');

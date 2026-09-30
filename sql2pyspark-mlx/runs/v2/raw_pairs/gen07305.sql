@@ -1,1 +1,0 @@
-select id, country, case when is_active then 'Yes' else 'No' end as is_active_label from customers where country = 'JP' and email is not null and email like '%@mail.co.th' order by id, is_active_label desc

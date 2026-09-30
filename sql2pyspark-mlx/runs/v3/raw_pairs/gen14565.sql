@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, d.location, t.l1_count, t.l4_count FROM departments d LEFT JOIN (SELECT dept_id, COUNT(CASE WHEN level = 'L1' THEN 1 END) AS l1_count, SUM(CASE WHEN level = 'L4' THEN 1 ELSE 0 END) AS l4_count FROM employees WHERE full_name LIKE '%Car%' GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.l1_count > 6;

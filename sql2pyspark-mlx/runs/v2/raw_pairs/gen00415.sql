@@ -1,1 +1,0 @@
-SELECT event_type, SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) search_duration_sec FROM web_events WHERE TO_DATE(event_time) >= '2023-05-01' AND TO_DATE(event_time) >= '2025-03-08' GROUP BY event_type;

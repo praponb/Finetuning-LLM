@@ -1,1 +1,0 @@
-WITH Src AS (SELECT * FROM employees WHERE email LIKE '%@gmail.com'), Summary AS (SELECT is_remote, AVG(salary) avg_salary, MIN(salary) min_salary FROM Src GROUP BY is_remote) SELECT is_remote, avg_salary, min_salary FROM Summary WHERE min_salary < 120000 ORDER BY avg_salary DESC

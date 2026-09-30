@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CASE WHEN device_code IN ('DV-01', 'DV-04') THEN 'Tier 1' ELSE 'Other' END AS device_code_group, ROUND(status_bits * 0.85, 2) AS status_bits_adjusted FROM device_readings WHERE reading_ts > DATE '2025-09-01') SELECT firmware, device_code FROM filtered EXCEPT SELECT firmware, device_code FROM device_readings WHERE firmware = '1.1.0'

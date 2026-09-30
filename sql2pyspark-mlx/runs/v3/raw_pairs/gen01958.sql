@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM store_sales WHERE store_id IN (1, 2, 3, 6) AND revenue BETWEEN 1100 AND 1600), summary AS (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, AVG(units) AS avg_units FROM src GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM')) SELECT * FROM summary WHERE avg_units < 15 ORDER BY avg_units DESC, sale_month LIMIT 10;

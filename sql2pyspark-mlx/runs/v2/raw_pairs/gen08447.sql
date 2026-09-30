@@ -1,1 +1,0 @@
-select page, count(distinct duration_sec) as unique_event_types, min(duration_sec) as min_duration_sec, count(case when event_type = 'purchase' then 1 end) as purchase_count from web_events where duration_sec is null and (hour(event_time) between 10 and 16 or hour(event_time) between 11 and 19) group by page order by purchase_count desc;

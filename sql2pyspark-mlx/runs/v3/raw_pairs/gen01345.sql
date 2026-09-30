@@ -1,1 +1,0 @@
-SELECT id, order_id, quantity, unit_price, MAX(quantity) OVER (PARTITION BY order_id) AS order_id_max_quantity, quantity - LAG(quantity, 1) OVER (ORDER BY unit_price, id) AS quantity_change FROM order_items WHERE order_id IN (2, 5) ORDER BY id DESC;

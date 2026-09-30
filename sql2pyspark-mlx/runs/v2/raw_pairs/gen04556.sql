@@ -1,1 +1,0 @@
-select id, plan, monthly_fee, sum(monthly_fee) over (partition by plan) as plan_sum_monthly_fee, ntile(10) over (partition by plan order by monthly_fee desc, id) as monthly_fee_ntile from subscriptions where status != 'EXPIRED' order by 2 desc, plan_sum_monthly_fee desc

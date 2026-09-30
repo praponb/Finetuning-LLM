@@ -1,1 +1,0 @@
-SELECT s.country, t.click_count, t.avg_duration_sec FROM sessions s JOIN (SELECT session_id, COUNT(CASE WHEN event_type = 'click' THEN 1 END) AS click_count, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id ORDER BY s.country;

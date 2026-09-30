@@ -1,1 +1,0 @@
-SELECT MONTH(o.order_date) AS order_month, SUM(CASE WHEN s.status = 'IN_TRANSIT' THEN 1 ELSE 0 END) AS in_transit_count FROM shipments s INNER JOIN orders o ON o.id = s.order_id LEFT JOIN customers c ON o.customer_id = c.id WHERE s.status != 'DELIVERED' GROUP BY MONTH(o.order_date) HAVING SUM(CASE WHEN s.status = 'IN_TRANSIT' THEN 1 ELSE 0 END) > 61

@@ -1,1 +1,0 @@
-SELECT o.id, o.shipping_fee, s.region, s.city, c.country FROM orders o RIGHT OUTER JOIN stores s ON s.id = o.store_id LEFT OUTER JOIN customers c ON c.id = o.customer_id WHERE o.amount BETWEEN 1020 AND 1080;

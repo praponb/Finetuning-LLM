@@ -1,1 +1,0 @@
-SELECT product_id, store_id, DATE_FORMAT(sale_date, 'yyyy-MM') sale_month, AVG(revenue) avg_revenue FROM store_sales GROUP BY product_id, store_id, sale_month ORDER BY store_id DESC, product_id, sale_month LIMIT 50

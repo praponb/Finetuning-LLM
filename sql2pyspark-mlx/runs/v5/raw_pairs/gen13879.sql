@@ -1,1 +1,0 @@
-select id, location, budget, lag(budget, 1) over (partition by location order by budget, id) prev_budget, ntile(10) over (partition by location order by budget desc, id) bucket from departments order by location desc;

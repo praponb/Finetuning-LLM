@@ -1,1 +1,0 @@
-select date_format(orders.order_date, 'yyyy-MM') as order_month, orders.channel, max(payments.paid_at) as last_paid_at from payments right outer join orders on payments.order_id = orders.id group by date_format(orders.order_date, 'yyyy-MM'), orders.channel order by 2, order_month limit 20;

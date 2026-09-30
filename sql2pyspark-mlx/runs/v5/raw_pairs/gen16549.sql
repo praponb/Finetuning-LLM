@@ -1,1 +1,0 @@
-with transactions_by_account as (select account_id, count(distinct amount) as unique_accounts, round(avg(amount), 2) as avg_amount from transactions where account_id in (2, 34) group by account_id) select a.id, a.account_type, tba.unique_accounts, tba.avg_amount from accounts a join transactions_by_account tba on a.id = tba.account_id where tba.avg_amount >= 37;

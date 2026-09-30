@@ -1,1 +1,0 @@
-SELECT CASE WHEN cost >= 87 THEN 'high' WHEN cost >= 22 THEN 'mid' ELSE 'low' END AS cost_bucket, carrier, MIN(shipped_date) AS min_shipped_date, COUNT(CASE WHEN carrier = 'FedEx' THEN 1 END) AS fedex_count FROM shipments GROUP BY 1, 2 ORDER BY 4 ASC

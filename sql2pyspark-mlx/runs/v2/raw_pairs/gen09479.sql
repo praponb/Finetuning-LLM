@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM customers WHERE age <= 54 AND country = 'US' AND city IS NULL), segment_summary AS (SELECT segment, COUNT(DISTINCT age) AS unique_citys FROM Base GROUP BY segment) SELECT * FROM segment_summary ORDER BY segment

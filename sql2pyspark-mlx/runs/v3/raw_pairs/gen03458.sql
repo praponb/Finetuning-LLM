@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END AS rating_bucket, city, SUM(rating) AS total_rating, COUNT(*) AS row_count FROM suppliers GROUP BY rating_bucket, city HAVING total_rating < 24 ORDER BY city DESC

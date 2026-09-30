@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 410 THEN 'high' WHEN unit_price >= 140 THEN 'mid' ELSE 'low' END AS unit_price_bucket, MIN(quantity) AS min_quantity, COUNT(quantity) AS quantity_count FROM order_items GROUP BY CASE WHEN unit_price >= 410 THEN 'high' WHEN unit_price >= 140 THEN 'mid' ELSE 'low' END HAVING min_quantity >= 3.0

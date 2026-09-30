@@ -1,1 +1,0 @@
-with top_inventory as (select *, dense_rank() over (partition by product_id order by last_restock desc) row_num from inventory where product_id = 5) select * from top_inventory where row_num <= 5 order by row_num asc

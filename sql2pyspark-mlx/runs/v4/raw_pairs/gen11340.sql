@@ -1,1 +1,0 @@
-SELECT p.id, p.order_id, p.amount, o.shipping_fee, o.amount AS order_amount, s.store_name FROM payments p INNER JOIN orders o ON o.id = p.order_id INNER JOIN stores s ON o.store_id = s.id ORDER BY id DESC

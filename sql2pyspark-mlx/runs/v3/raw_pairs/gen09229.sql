@@ -1,1 +1,0 @@
-SELECT s.id, s.country, s.customer_id FROM sessions s WHERE s.browser IN ('Chrome', 'Safari', 'Firefox') AND s.customer_id NOT IN (SELECT id FROM customers WHERE segment IN ('SMB', 'Consumer', 'Corporate'));

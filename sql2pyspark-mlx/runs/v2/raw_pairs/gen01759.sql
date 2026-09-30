@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.product_id, inventory.quantity, products.cost FROM inventory INNER JOIN products ON inventory.product_id = products.id WHERE inventory.store_id = 6 AND products.cost >= 650 ORDER BY quantity;

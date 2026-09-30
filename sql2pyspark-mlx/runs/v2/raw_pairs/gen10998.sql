@@ -1,1 +1,0 @@
-SELECT is_flagged, COUNT(DISTINCT amount) AS unique_merchants FROM transactions WHERE txn_type IN ('REFUND', 'DEBIT', 'CREDIT') AND merchant IS NOT NULL GROUP BY is_flagged HAVING unique_merchants > 2 ORDER BY unique_merchants DESC

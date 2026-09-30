@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MIN(units) AS min_units FROM store_sales GROUP BY store_id) SELECT s.id, s.store_name, s.city, ss.min_units FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id ORDER BY s.id

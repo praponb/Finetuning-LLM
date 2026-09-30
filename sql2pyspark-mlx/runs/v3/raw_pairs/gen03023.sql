@@ -1,3 +1,0 @@
-SELECT COUNT(CASE WHEN region = 'East' THEN 1 END) AS east_count
-FROM stores
-WHERE NOT (sqft BETWEEN 7526 AND 12804 AND store_name IS NOT NULL)

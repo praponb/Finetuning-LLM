@@ -1,1 +1,0 @@
-SELECT status, MONTH(opened_date) AS opened_month, COUNT(*) AS total_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM accounts WHERE customer_id IS NULL AND status IN ('OPEN', 'FROZEN') GROUP BY status, MONTH(opened_date) HAVING COUNT(*) > 3

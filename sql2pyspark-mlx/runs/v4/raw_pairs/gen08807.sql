@@ -1,1 +1,0 @@
-SELECT is_flagged, MONTH(txn_time) txn_month, account_id, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_fee FROM transactions GROUP BY is_flagged, MONTH(txn_time), account_id HAVING pct_fee >= 32 ORDER BY account_id DESC, pct_fee DESC;

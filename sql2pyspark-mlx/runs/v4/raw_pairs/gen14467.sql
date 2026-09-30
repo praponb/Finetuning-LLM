@@ -1,1 +1,0 @@
-with cleaned as (select id, device, datediff(current_date(), started_at) days_since_started_at, coalesce(country, 'N/A') country_filled from sessions where started_at > date '2023-03-14' and browser is not null and started_at < '2024-02-24') select device from cleaned intersect all select device from sessions where to_date(started_at) >= '2023-05-01'

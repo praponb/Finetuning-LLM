@@ -1,1 +1,0 @@
-SELECT id, product_id, unit_price, order_id, unit_price + quantity AS line_total, GREATEST(unit_price, quantity) AS greatest_unit_price_quantity FROM order_items WHERE quantity <> 4 AND product_id = 40 ORDER BY line_total DESC

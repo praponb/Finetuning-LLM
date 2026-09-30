@@ -1,1 +1,0 @@
-SELECT customers.name, customers.country, customers.city, accounts.balance, accounts.customer_id, accounts.account_type FROM customers INNER JOIN accounts ON accounts.customer_id = customers.id WHERE customers.signup_date <= '2023-12-01' ORDER BY country

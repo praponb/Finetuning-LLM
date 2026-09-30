@@ -1,1 +1,0 @@
-WITH valid_shipments AS (SELECT *, COALESCE(cost, 0) AS cost_filled FROM shipments WHERE MONTH(shipped_date) IN (1, 4, 6) AND shipped_date < '2024-05-29'), OrderIdSummary AS (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM valid_shipments GROUP BY order_id) SELECT order_id, status_values FROM OrderIdSummary;

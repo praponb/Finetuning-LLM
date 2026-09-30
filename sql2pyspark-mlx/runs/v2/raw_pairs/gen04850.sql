@@ -1,1 +1,0 @@
-SELECT SORT_ARRAY(COLLECT_SET(country)) AS country_list, ROUND(AVG(rating), 2) AS avg_rating FROM suppliers WHERE country = 'SG' AND supplier_name LIKE '%Pacifi%' AND country <> 'DE' ORDER BY avg_rating DESC;

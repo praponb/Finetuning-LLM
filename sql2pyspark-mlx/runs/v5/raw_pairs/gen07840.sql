@@ -1,1 +1,0 @@
-SELECT CASE WHEN status IN ('COMPLETED', 'SHIPPED') THEN 'core' ELSE 'other' END status_group, channel, COUNT(DISTINCT amount) unique_stores FROM orders GROUP BY 1, 2 ORDER BY status_group DESC, 2 DESC;

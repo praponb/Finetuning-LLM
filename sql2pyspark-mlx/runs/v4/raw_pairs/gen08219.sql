@@ -1,1 +1,0 @@
-select e.id, e.hire_date as employee_hire_date, m.salary as manager_salary, m.email as manager_email, m.level as manager_level, cast(m.is_remote as int) as is_remote_flag from employees e left join employees m on e.manager_id = m.id where e.email like '%@yahoo.com' order by employee_hire_date, manager_level;

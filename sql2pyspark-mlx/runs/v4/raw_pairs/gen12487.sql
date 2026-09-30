@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, t.merchant_values, t.total_amount FROM accounts a LEFT JOIN (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values, SUM(amount) AS total_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY id DESC;

@@ -1,1 +1,0 @@
-SELECT emp.id, emp.full_name AS employee_full_name, emp.manager_id AS employee_manager_id, mgr.salary AS manager_salary FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.salary BETWEEN 66000 AND 72000 ORDER BY employee_full_name;

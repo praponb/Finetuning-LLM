@@ -1,1 +1,0 @@
-SELECT stores.region, stores.store_name, stores.opened_date, inventory.last_restock, inventory.quantity, inventory.store_id FROM stores LEFT JOIN inventory ON stores.id = inventory.store_id ORDER BY inventory.quantity

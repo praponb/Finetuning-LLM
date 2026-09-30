@@ -1,1 +1,0 @@
-SELECT country, age, DATEDIFF(CURRENT_DATE(), signup_date) days_since_signup_date FROM customers WHERE signup_date > '2023-11-01' AND (signup_date BETWEEN '2023-11-01' AND '2024-12-01' OR is_active = FALSE) ORDER BY age DESC;

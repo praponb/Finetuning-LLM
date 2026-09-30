@@ -1,1 +1,0 @@
-SELECT a.account_type, t.amazon_count, t.max_amount FROM accounts a JOIN (SELECT account_id, SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END) AS amazon_count, MAX(amount) AS max_amount FROM transactions WHERE account_id IN (1, 7, 31, 37) GROUP BY account_id) t ON a.id = t.account_id WHERE t.amazon_count > 34;

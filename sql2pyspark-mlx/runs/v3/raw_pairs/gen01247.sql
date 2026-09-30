@@ -1,1 +1,0 @@
-SELECT channel, order_month, avg_amount, channel_values FROM (SELECT channel, MONTH(order_date) order_month, ROUND(AVG(amount), 2) avg_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) channel_values FROM orders WHERE amount < 1520 GROUP BY channel, MONTH(order_date)) agg WHERE avg_amount > 74;

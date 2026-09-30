@@ -1,1 +1,0 @@
-SELECT i.store_id, ss.revenue, DATEDIFF(CURRENT_DATE(), i.last_restock) AS days_since_last_restock FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id ORDER BY i.store_id DESC;

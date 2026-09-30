@@ -1,1 +1,0 @@
-WITH top_shipments AS (SELECT id, status, shipped_date, cost, DENSE_RANK() OVER (PARTITION BY status ORDER BY shipped_date DESC) AS pos FROM shipments WHERE delivered_date >= '2023-06-01') SELECT id, status, shipped_date, cost FROM top_shipments WHERE pos = 1

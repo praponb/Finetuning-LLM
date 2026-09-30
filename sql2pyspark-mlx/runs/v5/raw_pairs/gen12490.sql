@@ -1,1 +1,0 @@
-SELECT id, credit_limit, is_active, city, LEAST(credit_limit, age) AS least_credit_limit_age, CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END AS is_tokyo FROM customers WHERE age < 52 AND MONTH(signup_date) IN (1, 6, 8);

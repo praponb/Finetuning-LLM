@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, service, log_ts, level, status_code, k, value FROM app_logs LATERAL VIEW EXPLODE(context) t AS k, value) SELECT id, service, log_ts, level, status_code, k, value FROM exploded;

@@ -1,1 +1,0 @@
-SELECT id, service, host, level, status_code, payload_json, context, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').user.tier AS tier, context['region'] AS region, SIZE(context) AS num_context FROM app_logs;

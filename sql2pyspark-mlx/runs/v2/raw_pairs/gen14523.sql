@@ -1,1 +1,0 @@
-select case when rating >= 4.0 then 'high' when rating >= 1.5 then 'mid' else 'low' end as rating_bucket, count(distinct rating) as unique_countrys from suppliers where country in ('SG', 'JP') group by rating_bucket;

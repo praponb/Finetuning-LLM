@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 350 THEN 'high' WHEN unit_price >= 80 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(*) AS num_order_items FROM order_items GROUP BY CASE WHEN unit_price >= 350 THEN 'high' WHEN unit_price >= 80 THEN 'mid' ELSE 'low' END;

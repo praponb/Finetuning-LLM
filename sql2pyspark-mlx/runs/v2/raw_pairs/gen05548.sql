@@ -1,1 +1,0 @@
-SELECT MONTH(opened_date) AS opened_month, city, SUM(CASE WHEN region = 'Central' THEN 1 ELSE 0 END) AS central_count FROM stores WHERE YEAR(opened_date) >= 2023 GROUP BY opened_month, city HAVING central_count < 23 ORDER BY opened_month DESC;

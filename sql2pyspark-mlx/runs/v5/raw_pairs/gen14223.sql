@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, p.brand, p.stock_qty, s.city FROM inventory i JOIN products p ON i.product_id = p.id JOIN stores s ON i.store_id = s.id WHERE LOWER(p.product_name) LIKE '%ois%' OR s.sqft BETWEEN 6475 AND 12329 ORDER BY p.stock_qty DESC;

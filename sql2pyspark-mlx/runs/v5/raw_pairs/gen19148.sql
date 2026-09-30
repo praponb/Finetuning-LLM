@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT txn_type, SUM(CASE WHEN txn_type = 'REFUND' THEN amount ELSE 0 END) AS refund_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE is_flagged GROUP BY txn_type) AS sub WHERE refund_amount >= 76 ORDER BY txn_type DESC, 3 DESC

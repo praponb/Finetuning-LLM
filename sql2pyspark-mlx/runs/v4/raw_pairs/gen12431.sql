@@ -1,1 +1,0 @@
-with src as (select * from stores where opened_date between '2023-12-15' and '2024-05-01' and region <> 'West'), Agg as (select date_trunc('MONTH', opened_date) as opened_month, region, max(opened_date) as last_opened_date, max(sqft) as max_sqft from src group by date_trunc('MONTH', opened_date), region) select * from Agg;

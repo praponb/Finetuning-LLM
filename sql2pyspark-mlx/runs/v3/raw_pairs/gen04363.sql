@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items GROUP BY order_id) SELECT o.order_date, os.avg_unit_price FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id

@@ -1,1 +1,0 @@
-WITH sessions_by_customer AS (SELECT customer_id, SUM(CASE WHEN browser = 'Edge' THEN 1 ELSE 0 END) AS edge_count, MIN(started_at) AS min_started_at FROM sessions GROUP BY customer_id) SELECT c.signup_date, c.is_active, sbc.edge_count, sbc.min_started_at FROM customers c LEFT JOIN sessions_by_customer sbc ON c.id = sbc.customer_id ORDER BY signup_date ASC;

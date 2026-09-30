@@ -1,1 +1,0 @@
-SELECT emp.job_title AS employee_job_title, emp.email AS employee_email, emp.level AS employee_level, mgr.is_remote AS manager_is_remote, mgr.salary AS manager_salary, mgr.dept_id AS manager_dept_id, INITCAP(TRIM(emp.email)) AS email_title FROM employees AS emp INNER JOIN employees AS mgr ON emp.manager_id = mgr.id;

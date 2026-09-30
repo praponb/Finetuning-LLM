@@ -1,1 +1,0 @@
-SELECT a.id, a.status, t.total_amount, t.min_amount FROM accounts a JOIN (SELECT account_id, SUM(amount) AS total_amount, MIN(amount) AS min_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY min_amount, total_amount

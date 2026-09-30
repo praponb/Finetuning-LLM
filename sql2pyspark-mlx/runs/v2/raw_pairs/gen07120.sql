@@ -1,1 +1,0 @@
-select suppliers.id, suppliers.country, suppliers.rating, t.min_cost, t.brand_values from suppliers inner join (select supplier_id, min(cost) as min_cost, concat_ws(', ', sort_array(collect_set(brand))) as brand_values from products group by supplier_id) t on suppliers.id = t.supplier_id where t.min_cost >= 660 order by id desc;

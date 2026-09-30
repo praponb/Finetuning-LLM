@@ -1,1 +1,0 @@
-SELECT status, ROUND((100 * SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_completed, MAX(order_date) last_order_date FROM orders WHERE amount IS NULL GROUP BY status HAVING pct_completed < 77 ORDER BY last_order_date;

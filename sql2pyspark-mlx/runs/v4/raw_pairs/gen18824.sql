@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, TRIM(city) AS clean_city, COALESCE(city, 'NONE') AS city_clean FROM suppliers WHERE city IS NOT NULL AND country = 'SG') SELECT country, city FROM base INTERSECT SELECT country, city FROM suppliers WHERE city IN ('Tokyo', 'Berlin');

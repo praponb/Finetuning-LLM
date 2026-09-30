@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, i.last_restock, p.product_name, p.category, s.supplier_name, s.rating, ROUND(s.rating, 2) AS rating_rounded FROM inventory i RIGHT JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id

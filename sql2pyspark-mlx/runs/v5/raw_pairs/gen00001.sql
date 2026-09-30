@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, full_name, email, dept_id, job_title, salary, is_remote, LENGTH(full_name) AS full_name_length FROM employees WHERE job_title IS NOT NULL AND hire_date >= DATE '2023-04-30') SELECT a.*, d.dept_name, d.location FROM valid a INNER JOIN departments d ON a.dept_id = d.id

@@ -1,1 +1,0 @@
-SELECT s.customer_id, s.plan, c.is_active, c.email, c.signup_date, SUBSTRING(s.status, 1, 2) AS status_prefix FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.end_date < '2023-09-01' ORDER BY s.plan;

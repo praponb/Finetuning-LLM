@@ -1,1 +1,0 @@
-with filtered_stores as (select * from stores where region not in ('East', 'West', 'South') and (sqft = 8398 or region = 'West')), summary as (select city, region, max(sqft) - min(sqft) as sqft_range from filtered_stores group by city, region) select city, region from summary;

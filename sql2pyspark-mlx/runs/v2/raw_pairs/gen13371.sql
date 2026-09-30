@@ -1,1 +1,0 @@
-select status, carrier, total_cost from (select status, carrier, sum(cost) as total_cost from shipments where carrier = 'DHL' group by status, carrier) as s where total_cost >= 480 order by total_cost desc, carrier

@@ -1,1 +1,0 @@
-select order_id, avg(quantity) as avg_quantity, max(unit_price) as max_unit_price from order_items where unit_price < 180 and quantity < 7 and unit_price is null group by order_id order by max_unit_price desc, order_id;

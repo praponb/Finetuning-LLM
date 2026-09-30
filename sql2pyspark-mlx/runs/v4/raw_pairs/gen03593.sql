@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CEIL(duration_sec) AS duration_sec_whole FROM web_events WHERE event_time > TO_DATE('2023-12-17') AND page IS NOT NULL) SELECT * FROM filtered QUALIFY RANK() OVER (PARTITION BY session_id ORDER BY duration_sec_whole DESC NULLS FIRST) = 1;

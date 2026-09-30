@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, COUNT(unit_price) AS unit_price_count, SUM(unit_price * quantity) AS revenue FROM order_items WHERE product_id IN (9, 34) GROUP BY order_id) SELECT o.id, o.customer_id, os.unit_price_count, os.revenue FROM orders o INNER JOIN order_stats os ON o.id = os.order_id WHERE os.unit_price_count >= 10 ORDER BY customer_id DESC;

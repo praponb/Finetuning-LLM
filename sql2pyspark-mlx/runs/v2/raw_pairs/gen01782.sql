@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM suppliers WHERE rating > 2.2), suppliers_stats AS (SELECT country, SUM(CASE WHEN city = 'Singapore' THEN rating ELSE 0 END) singapore_rating, ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_berlin FROM base GROUP BY country) SELECT * FROM suppliers_stats WHERE pct_berlin > 45 ORDER BY country;

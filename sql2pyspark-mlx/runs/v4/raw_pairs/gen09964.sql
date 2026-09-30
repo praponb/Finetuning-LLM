@@ -1,1 +1,0 @@
-SELECT id, customer_id, monthly_fee, status, LAST_VALUE(status) OVER (PARTITION BY customer_id ORDER BY monthly_fee, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_status FROM subscriptions ORDER BY customer_id DESC;

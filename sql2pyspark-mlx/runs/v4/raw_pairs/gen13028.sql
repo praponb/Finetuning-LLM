@@ -1,1 +1,0 @@
-select location, dept_name, pct_legal, london_budget from (select location, dept_name, round((100 * sum(case when dept_name = 'Legal' then 1 else 0 end)) / count(*), 1) as pct_legal, sum(case when location = 'London' then budget else 0 end) as london_budget from departments group by location, dept_name) as t where pct_legal >= 51 order by pct_legal desc, dept_name asc

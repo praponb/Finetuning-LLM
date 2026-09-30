@@ -1,1 +1,0 @@
-SELECT MONTH(order_date) AS order_month, ROUND(AVG(shipping_fee), 2) AS avg_shipping_fee, MAX(amount) - MIN(amount) AS amount_range FROM orders WHERE discount >= 0.35 AND channel IS NOT NULL AND store_id IN (1, 23) GROUP BY order_month HAVING ROUND(AVG(shipping_fee), 2) > 38 ORDER BY order_month DESC

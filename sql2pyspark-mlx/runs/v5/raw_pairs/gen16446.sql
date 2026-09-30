@@ -1,1 +1,0 @@
-select case when rating >= 3.5 then 'high' when rating >= 2.2 then 'mid' else 'low' end as rating_bucket, country, max(rating) - min(rating) as rating_range, sum(rating) as total_rating from suppliers where city = 'Berlin' group by case when rating >= 3.5 then 'high' when rating >= 2.2 then 'mid' else 'low' end, country;

@@ -1,1 +1,0 @@
-with order_summary as (select order_id, min(quantity) as min_quantity from order_items group by order_id) select o.id, o.order_date, o.customer_id, os.min_quantity from orders o inner join order_summary os on o.id = os.order_id where os.min_quantity >= 3.9;

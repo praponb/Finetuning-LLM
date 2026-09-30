@@ -1,1 +1,0 @@
-SELECT oi.quantity, oi.product_id, p.supplier_id, o.channel FROM order_items oi JOIN products p ON oi.product_id = p.id JOIN orders o ON oi.order_id = o.id WHERE o.order_date > '2023-12-01' AND o.store_id IN (2, 4, 31) ORDER BY channel

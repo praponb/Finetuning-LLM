@@ -1,1 +1,0 @@
-SELECT dept_name, ROUND((100 * SUM(CASE WHEN dept_name = 'Legal' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_legal, ROUND((100 * SUM(CASE WHEN location = 'New York' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_new_york FROM departments WHERE dept_name NOT IN ('Finance', 'Marketing') AND dept_name = 'Marketing' GROUP BY 1 ORDER BY pct_legal;

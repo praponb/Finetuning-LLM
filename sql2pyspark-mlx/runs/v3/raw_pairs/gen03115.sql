@@ -1,1 +1,0 @@
-select supplier_id, sum(case when category = 'Sports' then cost else 0 end) as sports_cost, max(price) as max_price from products group by supplier_id order by max_price desc, sports_cost desc, supplier_id limit 20;

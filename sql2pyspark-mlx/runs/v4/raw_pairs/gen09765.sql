@@ -1,1 +1,0 @@
-SELECT products.supplier_id, suppliers.country, suppliers.rating, products.stock_qty - products.cost stock_qty_minus_cost FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.launch_date <= '2024-10-01';

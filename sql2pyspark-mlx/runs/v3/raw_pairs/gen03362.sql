@@ -1,1 +1,0 @@
-select s.id, s.supplier_name, t.avg_price, t.min_cost from suppliers s left join (select supplier_id, avg(price) as avg_price, min(cost) as min_cost from products group by supplier_id) t on s.id = t.supplier_id order by s.supplier_name;

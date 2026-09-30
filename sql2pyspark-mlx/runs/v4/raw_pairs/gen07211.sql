@@ -1,1 +1,0 @@
-select *, datediff(end_date, start_date) as days_start_date_to_end_date, case when plan in ('premium', 'basic') then 'Priority' else 'Other' end as plan_group from subscriptions where year(end_date) >= 2024 and status = 'EXPIRED' order by plan, plan_group

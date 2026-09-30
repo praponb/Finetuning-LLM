@@ -1,1 +1,0 @@
-SELECT plan, CASE WHEN plan IN ('enterprise', 'standard') THEN 'priority' ELSE 'other' END AS plan_group, customer_id, SUM(CASE WHEN status = 'ACTIVE' THEN monthly_fee ELSE 0 END) AS active_monthly_fee FROM subscriptions GROUP BY plan, plan_group, customer_id ORDER BY plan, plan_group, customer_id LIMIT 10

@@ -1,1 +1,0 @@
-SELECT s.id, s.cost, s.carrier, s.status, o.shipping_fee, o.amount, ROUND(s.cost * 100, 2) AS cost_adjusted FROM shipments s JOIN orders o ON s.order_id = o.id WHERE YEAR(s.delivered_date) = 2023 AND o.discount > 0.22

@@ -1,1 +1,0 @@
-SELECT MONTH(delivered_date) AS delivered_month, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list FROM shipments WHERE delivered_date >= '2025-04-09' AND shipped_date < '2024-10-01' GROUP BY 1 ORDER BY delivered_month;

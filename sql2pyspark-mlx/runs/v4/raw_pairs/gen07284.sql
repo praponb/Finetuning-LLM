@@ -1,1 +1,0 @@
-WITH CustomerStats AS (SELECT customer_id, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) cancelled_count FROM subscriptions WHERE YEAR(end_date) >= 2023 GROUP BY customer_id) SELECT c.is_active, C.cancelled_count FROM customers c LEFT JOIN CustomerStats C ON c.id = C.customer_id;

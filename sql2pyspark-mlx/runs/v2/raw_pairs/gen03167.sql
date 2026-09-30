@@ -1,1 +1,0 @@
-WITH recent_web_events AS (SELECT * FROM web_events WHERE page IN ('/product', '/cart') OR TO_DATE(event_time) >= '2024-03-02'), summary AS (SELECT page, COUNT(DISTINCT duration_sec) AS unique_event_types FROM recent_web_events GROUP BY page) SELECT page, unique_event_types FROM summary WHERE unique_event_types < 7 ORDER BY 1 DESC LIMIT 5

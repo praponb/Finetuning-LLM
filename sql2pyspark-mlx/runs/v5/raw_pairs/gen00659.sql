@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, COUNT(t.id) AS transaction_count, COUNT(DISTINCT t.amount) AS unique_merchants, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(t.txn_type))) AS txn_type_values FROM accounts a INNER JOIN transactions t ON t.account_id = a.id WHERE t.merchant = '7-Eleven' GROUP BY a.id, a.account_type ORDER BY account_type DESC, id

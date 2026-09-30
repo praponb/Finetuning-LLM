@@ -1,1 +1,0 @@
-SELECT product_id, order_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items WHERE NOT ((product_id = 2 AND order_id IN (6, 22, 32, 35)) OR order_id = 2) GROUP BY product_id, order_id

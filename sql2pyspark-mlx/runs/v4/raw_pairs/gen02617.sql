@@ -1,1 +1,0 @@
-SELECT shipments.shipped_date, shipments.carrier, orders.amount, orders.customer_id, orders.order_date FROM shipments JOIN orders ON shipments.order_id = orders.id WHERE orders.store_id IN (7, 31, 37, 38);

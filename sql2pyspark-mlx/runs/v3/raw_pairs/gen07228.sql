@@ -1,1 +1,0 @@
-SELECT brand, supplier_id, COUNT(CASE WHEN category = 'Home' THEN 1 END) AS home_count, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty FROM products GROUP BY brand, supplier_id HAVING MIN(cost) < 480 ORDER BY brand, home_count DESC

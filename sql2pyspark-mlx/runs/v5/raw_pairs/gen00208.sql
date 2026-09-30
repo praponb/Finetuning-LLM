@@ -1,1 +1,0 @@
-SELECT id, session_id, event_time, duration_sec, page, LAG(duration_sec, 1) OVER (PARTITION BY session_id ORDER BY event_time, id) AS prev_duration_sec, FIRST_VALUE(page) OVER (ORDER BY event_time, id) AS first_page FROM web_events;

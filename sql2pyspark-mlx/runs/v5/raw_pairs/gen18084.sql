@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, customer_id, coupon_codes, key, value FROM carts LATERAL VIEW EXPLODE(attributes) t AS key, value) SELECT key, SIZE(COLLECT_SET(key)) AS num_keys, COUNT(DISTINCT key) AS distinct_keys, COUNT(DISTINCT customer_id) AS distinct_customer_ids FROM flattened GROUP BY key ORDER BY key ASC;

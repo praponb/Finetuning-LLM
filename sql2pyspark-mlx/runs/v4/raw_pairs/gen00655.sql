@@ -1,1 +1,0 @@
-with valid as (select *, cast(started_at as date) as started_at_day from sessions where started_at > date '2024-03-14' and country is not null) select s.*, x.web_event_page from valid s left join lateral (select c.page as web_event_page from web_events c where c.session_id = s.id order by c.event_time desc, c.id desc limit 1) x on true

@@ -1,1 +1,0 @@
-SELECT *, NTILE(10) OVER (PARTITION BY product_id ORDER BY quantity ASC, id ASC) AS quantity_bucket, LAST_VALUE(quantity) IGNORE NULLS OVER (PARTITION BY store_id ORDER BY quantity ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_quantity FROM inventory

@@ -1,1 +1,0 @@
-WITH DepartmentStats AS (SELECT dept_id, SORT_ARRAY(COLLECT_SET(level)) AS level_list, SUM(CASE WHEN job_title = 'Engineer' THEN 1 ELSE 0 END) AS engineer_count FROM employees GROUP BY dept_id) SELECT d.dept_name, D.level_list, D.engineer_count FROM departments d INNER JOIN DepartmentStats D ON d.id = D.dept_id WHERE D.engineer_count > 46 ORDER BY D.engineer_count DESC

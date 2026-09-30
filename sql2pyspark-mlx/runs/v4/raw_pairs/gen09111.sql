@@ -1,1 +1,0 @@
-SELECT orders.id, orders.status, t.quantity_count FROM orders INNER JOIN (SELECT order_id, COUNT(quantity) AS quantity_count FROM order_items GROUP BY order_id) t ON orders.id = t.order_id WHERE t.quantity_count > 7

@@ -1,1 +1,0 @@
-with exploded as (select id, service, host, log_ts, latency_ms, status_code, k, v from app_logs lateral view explode(context) t as k, v) select id, service, log_ts, latency_ms, k, v, case when service rlike '^(search|billing)$' then 'GROUP_A' else 'GROUP_B' end as service_zone from exploded order by k

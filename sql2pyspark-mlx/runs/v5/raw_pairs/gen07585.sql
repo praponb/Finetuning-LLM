@@ -1,1 +1,0 @@
-SELECT c.id, c.is_active, c.credit_limit FROM customers c WHERE c.signup_date < '2023-06-01' AND c.id IN (SELECT customer_id FROM accounts WHERE opened_date >= '2023-12-01') ORDER BY credit_limit DESC, c.id DESC;

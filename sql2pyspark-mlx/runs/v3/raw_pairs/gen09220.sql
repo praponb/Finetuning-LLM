@@ -1,1 +1,0 @@
-SELECT id, duration_sec, event_type, ROW_NUMBER() OVER (ORDER BY duration_sec, id) AS duration_sec_row, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY duration_sec, id) AS duration_sec_row_2 FROM web_events WHERE duration_sec >= 228

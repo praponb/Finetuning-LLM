@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM departments WHERE location = 'Chiang Mai'), dept_name_summary AS (SELECT dept_name, COUNT(budget) AS budget_count, SORT_ARRAY(COLLECT_SET(location)) AS location_list FROM base GROUP BY dept_name) SELECT dept_name, budget_count FROM dept_name_summary WHERE budget_count < 6 ORDER BY 1;

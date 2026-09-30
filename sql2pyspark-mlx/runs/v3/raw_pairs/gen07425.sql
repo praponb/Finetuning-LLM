@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') signup_month, MAX(a.balance) - MIN(a.balance) balance_range FROM accounts a JOIN customers c ON a.customer_id = c.id GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM');

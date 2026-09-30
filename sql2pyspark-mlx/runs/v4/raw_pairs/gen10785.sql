@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, SUM(quantity * unit_price) AS revenue, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items WHERE product_id IS NULL GROUP BY product_id) SELECT products.id, products.product_name, product_summary.revenue, product_summary.avg_quantity FROM products INNER JOIN product_summary ON products.id = product_summary.product_id

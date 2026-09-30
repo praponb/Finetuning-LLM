@@ -1,1 +1,0 @@
-select date_format(p.launch_date, 'yyyy-MM') as launch_month, round(stddev(ss.revenue), 2) as stddev_revenue from store_sales ss join products p on ss.product_id = p.id group by date_format(p.launch_date, 'yyyy-MM') order by stddev_revenue desc, launch_month limit 10

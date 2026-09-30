@@ -1,1 +1,0 @@
-select case when quantity >= 9 then 'high' when quantity >= 4 then 'mid' else 'low' end as quantity_bucket, sum(unit_price) as total_unit_price, sum(quantity) as total_quantity from order_items group by 1 having sum(quantity) > 23 order by total_unit_price desc

@@ -1,1 +1,0 @@
-SELECT orders.id, orders.status, orders.channel FROM orders WHERE NOT EXISTS (SELECT 1 FROM order_items WHERE order_items.order_id = orders.id AND order_items.order_id IN (9, 30)) ORDER BY id LIMIT 50

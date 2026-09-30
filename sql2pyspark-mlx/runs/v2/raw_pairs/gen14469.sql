@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id, ss.revenue, s.city, s.region, p.price, p.stock_qty FROM store_sales ss JOIN stores s ON ss.store_id = s.id FULL OUTER JOIN products p ON ss.product_id = p.id WHERE p.product_name LIKE 'R%' AND s.region = 'South' ORDER BY city DESC

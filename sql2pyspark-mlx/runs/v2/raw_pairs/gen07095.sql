@@ -1,1 +1,0 @@
-with recent_suppliers as (select * from suppliers where rating <= 3.2), Agg as (select city, sum(case when country = 'JP' then rating else 0 end) as jp_rating, sum(case when city = 'Bangkok' then 1 else 0 end) as bangkok_count from recent_suppliers group by city) select * from Agg where bangkok_count >= 25;

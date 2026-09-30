@@ -1,1 +1,0 @@
-WITH RankedWebEvents AS (SELECT id, session_id, event_time, duration_sec, DENSE_RANK() OVER (PARTITION BY session_id ORDER BY event_time DESC) AS rnk FROM web_events) SELECT * FROM RankedWebEvents WHERE rnk = 1 ORDER BY rnk

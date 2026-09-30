@@ -1,1 +1,0 @@
-WITH Src AS (SELECT * FROM inventory WHERE store_id = 5 AND quantity BETWEEN 156 AND 170 AND last_restock > '2025-01-31'), product_id_summary AS (SELECT product_id, MIN(quantity) min_quantity, COUNT(*) inventory_count FROM Src GROUP BY product_id) SELECT product_id, inventory_count FROM product_id_summary WHERE inventory_count < 7 ORDER BY inventory_count DESC

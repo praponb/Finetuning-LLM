@@ -1,1 +1,0 @@
-SELECT s.id, s.country, s.city, s.rating, x.product_category, x.product_stock_qty FROM suppliers s LEFT JOIN LATERAL (SELECT c.category AS product_category, c.stock_qty AS product_stock_qty FROM products c WHERE c.supplier_id = s.id ORDER BY c.stock_qty DESC, c.id DESC LIMIT 1) x ON TRUE

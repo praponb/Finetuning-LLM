@@ -1,1 +1,0 @@
-WITH TopSuppliers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS row_num FROM suppliers WHERE city = 'Chiang Mai') SELECT id, city, rating, country FROM TopSuppliers WHERE row_num = 1;

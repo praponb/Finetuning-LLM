@@ -1,1 +1,0 @@
-SELECT id, account_type, customer_id FROM accounts WHERE account_type = 'CHECKING' INTERSECT SELECT id, account_type, customer_id FROM accounts WHERE account_type = 'SAVINGS' ORDER BY account_type DESC;

@@ -1,1 +1,0 @@
-with employees_by_department as (select dept_id, count(*) as num_employees, count(case when job_title = 'Intern' then 1 end) as intern_count from employees where dept_id in (18, 21, 27, 30) group by dept_id) select d.id, d.dept_name, ebd.num_employees, ebd.intern_count from departments d inner join employees_by_department ebd on d.id = ebd.dept_id where ebd.num_employees >= 4;

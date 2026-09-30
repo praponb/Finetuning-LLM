@@ -1,1 +1,0 @@
-with base as (select * from employees where not is_remote), Agg as (select level, job_title, round((100 * sum(case when level = 'L1' then 1 else 0 end)) / count(*), 1) as pct_l1 from base group by level, job_title) select level, job_title, pct_l1 from Agg where pct_l1 >= 61

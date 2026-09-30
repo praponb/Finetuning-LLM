@@ -1,1 +1,0 @@
-select order_id, carrier, date_format(delivered_date, 'yyyy-MM') as delivered_month, max(cost) - min(cost) as cost_range, avg(cost) as avg_cost, sum(case when status = 'RETURNED' then 1 else 0 end) as returned_count from shipments where cost < 45 group by order_id, carrier, delivered_month order by order_id;

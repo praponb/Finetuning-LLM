@@ -1,6 +1,0 @@
-SELECT
-    CASE WHEN cost >= 770 THEN 'PREMIUM' ELSE 'STANDARD' END AS cost_tier,
-    COUNT(*) AS cnt,
-    PERCENTILE_APPROX(price, ARRAY(0.25, 0.5, 0.75)) AS price_quartiles
-FROM products
-GROUP BY CASE WHEN cost >= 770 THEN 'PREMIUM' ELSE 'STANDARD' END

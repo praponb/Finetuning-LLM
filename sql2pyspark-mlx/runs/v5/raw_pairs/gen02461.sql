@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, LENGTH(location) AS location_length FROM departments WHERE location = 'Bangkok') SELECT s.id, s.location, latest.employee_hire_date, latest.salary FROM base s JOIN LATERAL (SELECT c.hire_date AS employee_hire_date, c.salary FROM employees c WHERE c.dept_id = s.id ORDER BY c.salary DESC, c.id DESC LIMIT 1) latest ON TRUE

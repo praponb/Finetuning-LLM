@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, COUNT(*) AS num_subscriptions, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM subscriptions WHERE plan != 'premium' GROUP BY customer_id) SELECT c.city, c.name, ct.num_subscriptions, ct.avg_monthly_fee FROM customers c JOIN customer_totals ct ON c.id = ct.customer_id WHERE ct.num_subscriptions > 7;

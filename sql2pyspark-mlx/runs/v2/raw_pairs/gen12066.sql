@@ -1,1 +1,0 @@
-SELECT id, store_id, revenue, product_id, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY revenue) AS revenue_dense_rank, ROUND(revenue / SUM(revenue) OVER (PARTITION BY store_id, product_id), 3) AS revenue_share FROM store_sales WHERE store_id IN (1, 4)

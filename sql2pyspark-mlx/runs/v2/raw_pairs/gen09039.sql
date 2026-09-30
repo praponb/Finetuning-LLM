@@ -1,1 +1,0 @@
-select c.country, c.segment, round(stddev(oi.unit_price), 2) as stddev_unit_price, min(oi.unit_price) as min_unit_price from order_items oi left outer join orders o on o.id = oi.order_id inner join customers c on o.customer_id = c.id where c.age <= 58 group by c.country, c.segment order by stddev_unit_price, c.segment, country limit 10;

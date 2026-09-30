@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, ROUND(STDDEV(units), 2) stddev_units, COUNT(units) units_count FROM store_sales GROUP BY store_id) SELECT s.id, s.region, s.sqft, st.stddev_units, st.units_count FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id WHERE st.stddev_units >= 78 ORDER BY s.region

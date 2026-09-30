@@ -1,1 +1,0 @@
-SELECT MONTH(end_date) AS end_month, COUNT(DISTINCT monthly_fee) AS unique_customers, MAX(monthly_fee) AS max_monthly_fee, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions WHERE status NOT IN ('CANCELLED', 'EXPIRED', 'PAUSED') OR status NOT IN ('CANCELLED', 'PAUSED', 'EXPIRED') GROUP BY end_month ORDER BY stddev_monthly_fee DESC, unique_customers DESC;

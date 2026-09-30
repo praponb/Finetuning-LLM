@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT * FROM customers QUALIFY RANK() OVER (PARTITION BY country ORDER BY credit_limit DESC) = 1) SELECT id, email, city, signup_date, is_active, credit_limit, age FROM ranked ORDER BY id;

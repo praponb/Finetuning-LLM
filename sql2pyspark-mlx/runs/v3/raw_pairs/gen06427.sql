@@ -1,1 +1,0 @@
-SELECT ss.id, ss.units, p.price, p.brand, s.city, s.store_name, DATEDIFF(CURRENT_DATE(), s.opened_date) AS days_since_opened_date FROM store_sales ss JOIN products p ON ss.product_id = p.id LEFT OUTER JOIN stores s ON ss.store_id = s.id WHERE ss.sale_date BETWEEN '2025-01-20' AND '2025-04-08' AND p.price > 1180;

@@ -1,1 +1,0 @@
-SELECT location, CASE WHEN dept_name IN ('Legal', 'Marketing') THEN 'Group A' ELSE 'Other' END dept_name_group, CAST(budget AS INT) budget_int FROM departments WHERE NOT (dept_name IN ('Legal', 'Marketing') AND dept_name = 'Engineering');

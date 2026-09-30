@@ -1,1 +1,0 @@
-WITH AccountSummary AS (SELECT account_id, ROUND((100 * SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refund FROM transactions GROUP BY account_id) SELECT a.id, a.balance, a.opened_date, A.pct_refund FROM accounts a INNER JOIN AccountSummary A ON a.id = A.account_id;

@@ -1,1 +1,0 @@
-SELECT id, product_id, revenue, store_id, sale_date, ROUND(revenue / SUM(revenue) OVER (PARTITION BY product_id), 3) AS revenue_share, RANK() OVER (PARTITION BY store_id ORDER BY sale_date DESC) AS rnk FROM store_sales WHERE store_id IN (3, 6)

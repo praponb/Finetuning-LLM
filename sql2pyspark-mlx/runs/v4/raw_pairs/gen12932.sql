@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, name, country, city, segment, signup_date, is_active, credit_limit, age, CONCAT_WS(',', city, country) AS city_country_key, COALESCE(segment, 'NONE') AS segment_filled FROM customers WHERE signup_date >= DATE '2023-08-31') SELECT s.* FROM base s WHERE EXISTS (SELECT 1 FROM orders ch WHERE ch.customer_id = s.id AND ch.discount <= 0.3);

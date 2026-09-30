@@ -1,1 +1,0 @@
-SELECT CASE WHEN revenue >= 3300 THEN 'high' WHEN revenue >= 1600 THEN 'mid' ELSE 'low' END AS revenue_bucket, MAX(revenue) AS max_revenue, ROUND(AVG(units), 2) AS avg_units FROM store_sales WHERE revenue < 1400 AND product_id IN (2, 3, 5, 10) GROUP BY CASE WHEN revenue >= 3300 THEN 'high' WHEN revenue >= 1600 THEN 'mid' ELSE 'low' END HAVING ROUND(AVG(units), 2) > 51

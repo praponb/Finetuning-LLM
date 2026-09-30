@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.is_flagged, transactions.account_id, accounts.customer_id FROM transactions LEFT OUTER JOIN accounts ON transactions.account_id = accounts.id WHERE accounts.customer_id IS NULL ORDER BY account_id

@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, LENGTH(dept_name) dept_name_length, COALESCE(dept_name, 'OTHER') dept_name_filled FROM departments WHERE dept_name IN ('Finance', 'HR')) SELECT * FROM (SELECT location, dept_name, dept_name_length FROM cleaned) src PIVOT (SUM(dept_name_length) FOR dept_name IN ('Legal', 'HR'))

@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, MIN(started_at) AS first_started_at, SUM(CASE WHEN browser = 'Chrome' THEN 1 ELSE 0 END) AS chrome_count FROM sessions GROUP BY customer_id) SELECT c.id, c.email, cs.first_started_at, cs.chrome_count FROM customers c JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY id DESC, cs.first_started_at DESC LIMIT 10;

@@ -1,1 +1,0 @@
-with remaining_keys as (select product_id, store_id from inventory intersect all select product_id, store_id from inventory where store_id in (3, 4, 6)), kept_rows as (select s.* from inventory s inner join remaining_keys k on s.product_id = k.product_id and s.store_id = k.store_id) select id, product_id, last_restock from kept_rows order by id nulls last

@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, COUNT(DISTINCT amount) AS unique_orders, MAX(paid_at) AS latest_paid_at FROM payments WHERE amount < 530 GROUP BY order_id) SELECT o.order_date, ot.unique_orders, ot.latest_paid_at FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.unique_orders > 6;

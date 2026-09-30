@@ -1,1 +1,0 @@
-WITH OrderSummary AS (SELECT order_id, SUM(CASE WHEN carrier = 'Flash' THEN cost ELSE 0 END) AS flash_cost, MAX(cost) AS max_cost FROM shipments GROUP BY order_id) SELECT o.store_id, o.shipping_fee, O.flash_cost, O.max_cost FROM orders o LEFT JOIN OrderSummary O ON o.id = O.order_id WHERE O.max_cost >= 46 ORDER BY max_cost DESC, flash_cost DESC;

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(ss.sale_date, 'yyyy-MM') AS sale_month, MAX(i.quantity) - MIN(i.quantity) AS quantity_range, COUNT(*) AS cnt FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE YEAR(ss.sale_date) = 2024 GROUP BY DATE_FORMAT(ss.sale_date, 'yyyy-MM') HAVING MAX(i.quantity) - MIN(i.quantity) > 32;

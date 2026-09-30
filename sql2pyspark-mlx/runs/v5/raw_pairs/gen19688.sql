@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, IF(is_active, 'Yes', 'No') AS is_active_label FROM customers WHERE signup_date >= DATE '2023-04-08') SELECT id, segment FROM filtered INTERSECT ALL SELECT id, segment FROM customers WHERE email LIKE '%@company.co'

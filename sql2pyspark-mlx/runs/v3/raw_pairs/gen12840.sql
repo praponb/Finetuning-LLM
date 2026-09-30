@@ -1,1 +1,0 @@
-select status, round(stddev(cost), 2) stddev_cost, max(cost) max_cost, count(case when status = 'IN_TRANSIT' then 1 end) in_transit_count from shipments where order_id in (25, 32, 35, 39) group by 1 having max(cost) < 52;

@@ -1,1 +1,0 @@
-SELECT city, region, region_values, total_sqft FROM (SELECT city, region, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) region_values, SUM(sqft) total_sqft FROM stores GROUP BY city, region) agg WHERE total_sqft > 72000;

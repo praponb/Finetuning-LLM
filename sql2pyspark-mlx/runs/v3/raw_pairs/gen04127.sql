@@ -1,1 +1,0 @@
-WITH department_stats AS (SELECT dept_id, SUM(salary) AS total_salary, COUNT(CASE WHEN level = 'L1' THEN 1 END) AS l1_count FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.budget, ds.total_salary, ds.l1_count FROM departments d INNER JOIN department_stats ds ON d.id = ds.dept_id ORDER BY l1_count DESC, id LIMIT 5;

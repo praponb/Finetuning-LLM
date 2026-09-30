@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory WHERE last_restock < '2023-12-12' OR quantity >= 176 GROUP BY 1 ORDER BY avg_quantity DESC, last_restock_month LIMIT 5;

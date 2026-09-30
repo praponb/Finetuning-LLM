@@ -1,1 +1,0 @@
-SELECT order_month, latest_order_date, cancelled_amount FROM (SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, MAX(order_date) AS latest_order_date, SUM(CASE WHEN status = 'CANCELLED' THEN amount ELSE 0 END) AS cancelled_amount FROM orders GROUP BY DATE_FORMAT(order_date, 'yyyy-MM')) AS x WHERE cancelled_amount > 56 ORDER BY latest_order_date DESC, order_month LIMIT 20;

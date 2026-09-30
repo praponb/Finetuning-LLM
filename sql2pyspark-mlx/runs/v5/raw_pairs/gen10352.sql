@@ -1,1 +1,0 @@
-SELECT *, HOUR(txn_time) txn_time_hour, CEIL(amount) amount_whole FROM transactions WHERE merchant IN ('Starbucks', 'Grab', 'Lazada') AND (account_id IN (8, 27, 29, 31) OR txn_time < '2023-08-20') ORDER BY merchant;

@@ -1,1 +1,0 @@
-SELECT o.store_id, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price, SUM(oi.unit_price) AS total_unit_price FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id WHERE oi.quantity = 5 GROUP BY o.store_id HAVING ROUND(AVG(oi.unit_price), 2) >= 23 ORDER BY store_id DESC, total_unit_price DESC;

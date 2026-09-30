@@ -1,1 +1,0 @@
-with ValidStores as (select *, coalesce(sqft, 0) as sqft_filled from stores where sqft > 14586 and year(opened_date) = 2023), agg as (select city, sort_array(collect_set(region)) as region_list, sum(case when region = 'North' then sqft else 0 end) as north_sqft from ValidStores group by city) select city, region_list, north_sqft from agg;

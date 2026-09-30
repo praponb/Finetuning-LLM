@@ -1,1 +1,0 @@
-SELECT id, order_id, paid_at, method, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY paid_at DESC, id) AS rn, ROW_NUMBER() OVER (PARTITION BY method ORDER BY paid_at DESC, id) AS paid_at_row FROM payments;

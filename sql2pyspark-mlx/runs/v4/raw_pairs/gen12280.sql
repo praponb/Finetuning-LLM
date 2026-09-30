@@ -1,1 +1,0 @@
-SELECT accounts.id, accounts.customer_id, accounts.balance, accounts.status FROM accounts WHERE accounts.customer_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM transactions WHERE transactions.account_id = accounts.id) ORDER BY customer_id, id LIMIT 1;

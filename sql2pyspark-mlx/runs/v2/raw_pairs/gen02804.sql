@@ -1,1 +1,0 @@
-select e.is_remote as employee_is_remote, m.hire_date as manager_hire_date from employees e left outer join employees m on e.manager_id = m.id where m.level in ('L5', 'L4', 'L3') order by manager_hire_date

@@ -1,1 +1,0 @@
-SELECT a.id, a.opened_date FROM accounts a WHERE a.balance <= 75000 AND a.id IN (SELECT account_id FROM transactions WHERE txn_type IN ('FEE', 'CREDIT', 'DEBIT')) ORDER BY a.opened_date, a.id DESC LIMIT 10

@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, MIN(event_time) AS first_event_time, COUNT(CASE WHEN event_type = 'purchase' THEN 1 END) AS purchase_count FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, s.device, st.first_event_time, st.purchase_count FROM sessions s JOIN session_totals st ON s.id = st.session_id;

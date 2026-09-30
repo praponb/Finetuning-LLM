@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, plan, currency, element FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_limits) t AS element) SELECT id, plan, currency, MIN(element) OVER w_ordered AS currency_min_element, RANK() OVER (PARTITION BY currency ORDER BY element DESC) AS element_rank FROM exploded WINDOW w_ordered AS (PARTITION BY currency);

@@ -1,1 +1,0 @@
-SELECT id, cost, delivered_date, shipped_date, ROUND(cost, 0) AS cost_rounded, CONCAT_WS('/', status, carrier) AS status_carrier_key FROM shipments WHERE cost <= 95 AND status = 'LOST' ORDER BY cost DESC;

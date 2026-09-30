@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, COUNT(*) AS total_count, SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END) AS chiang_mai_count, SUM(CASE WHEN city = 'Berlin' THEN sqft ELSE 0 END) AS berlin_sqft FROM stores GROUP BY DATE_TRUNC('MONTH', opened_date) ORDER BY opened_month, total_count DESC LIMIT 20

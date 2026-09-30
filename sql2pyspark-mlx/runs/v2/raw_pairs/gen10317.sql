@@ -1,7 +1,0 @@
-SELECT order_id
-FROM payments
-WHERE HOUR(paid_at) BETWEEN 12 AND 16
-UNION ALL
-SELECT order_id
-FROM payments
-WHERE amount BETWEEN 920 AND 1390;

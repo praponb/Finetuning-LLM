@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, SUM(CASE WHEN method = 'bank_transfer' THEN amount ELSE 0 END) AS bank_transfer_amount FROM payments WHERE method <> 'paypal' GROUP BY order_id) SELECT o.store_id, o.customer_id, ot.bank_transfer_amount FROM orders o LEFT JOIN order_totals ot ON o.id = ot.order_id WHERE ot.bank_transfer_amount >= 22 ORDER BY o.customer_id, store_id

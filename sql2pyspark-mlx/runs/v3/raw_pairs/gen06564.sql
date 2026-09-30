@@ -1,1 +1,0 @@
-SELECT product_id, COUNT(*) num_inventory, MIN(quantity) min_quantity, ROUND(STDDEV(quantity), 2) stddev_quantity FROM inventory WHERE quantity IS NOT NULL GROUP BY product_id ORDER BY 3 DESC, num_inventory;

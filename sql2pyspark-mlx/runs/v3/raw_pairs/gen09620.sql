@@ -1,1 +1,0 @@
-SELECT brand, SORT_ARRAY(COLLECT_SET(category)) AS category_list, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty, AVG(stock_qty) AS avg_stock_qty FROM products WHERE cost BETWEEN 200 AND 480 GROUP BY brand

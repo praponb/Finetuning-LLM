@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, LENGTH(location) AS location_length FROM departments WHERE dept_name NOT IN ('Marketing', 'Legal')) SELECT id, dept_name FROM cleaned INTERSECT SELECT id, dept_name FROM departments WHERE dept_name IN ('Legal', 'Marketing');

@@ -1,1 +1,0 @@
-SELECT status, DATE_TRUNC('MONTH', paid_at) AS paid_month, MAX(amount) AS max_amount, SUM(CASE WHEN method = 'card' THEN 1 ELSE 0 END) AS card_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM payments WHERE method NOT IN ('cash', 'paypal', 'bank_transfer') OR status IN ('FAILED', 'SUCCESS', 'REFUNDED') GROUP BY status, DATE_TRUNC('MONTH', paid_at);

@@ -1,1 +1,0 @@
-select year(txn_time) as txn_year, max(amount) as max_amount from transactions where (txn_type <> 'REFUND' and txn_type in ('REFUND', 'DEBIT')) or is_flagged group by year(txn_time) having max(amount) > 1300 order by max_amount desc

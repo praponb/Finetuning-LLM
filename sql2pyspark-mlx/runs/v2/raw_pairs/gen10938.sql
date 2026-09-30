@@ -1,1 +1,0 @@
-select e.id, e.full_name as employee_full_name, e.is_remote as employee_is_remote, m.email as manager_email, last_day(m.hire_date) as hire_date_month_end from employees e left join employees m on e.manager_id = m.id;

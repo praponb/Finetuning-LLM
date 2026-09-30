@@ -1,1 +1,0 @@
-SELECT dept_name, CASE WHEN budget >= 3664000 THEN 'high' WHEN budget >= 1322000 THEN 'mid' ELSE 'low' END AS budget_bucket, ROUND(STDDEV(budget), 2) AS stddev_budget FROM departments GROUP BY dept_name, CASE WHEN budget >= 3664000 THEN 'high' WHEN budget >= 1322000 THEN 'mid' ELSE 'low' END ORDER BY dept_name, budget_bucket;

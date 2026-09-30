@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.store_id, stores.store_name, stores.city, products.category, products.cost FROM inventory INNER JOIN stores ON stores.id = inventory.store_id INNER JOIN products ON inventory.product_id = products.id WHERE stores.region != 'South';

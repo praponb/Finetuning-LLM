@@ -1,1 +1,0 @@
-select job_title, sum(case when job_title = 'Analyst' then salary else 0 end) as analyst_salary from employees where hire_date between '2024-11-15' and '2025-05-16' group by job_title order by analyst_salary desc, job_title desc

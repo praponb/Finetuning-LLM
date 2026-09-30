@@ -1,1 +1,0 @@
-SELECT merchant, txn_day, unique_txn_types FROM (SELECT merchant, TO_DATE(txn_time) AS txn_day, COUNT(DISTINCT amount) AS unique_txn_types FROM transactions WHERE amount < 1800 GROUP BY merchant, TO_DATE(txn_time)) AS x WHERE unique_txn_types < 4 ORDER BY txn_day DESC, merchant LIMIT 50

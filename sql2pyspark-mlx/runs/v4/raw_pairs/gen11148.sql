@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM accounts WHERE account_type = 'CREDIT' AND customer_id IN (1, 9, 37)), agg AS (SELECT MONTH(opened_date) AS opened_month, SUM(balance) AS total_balance FROM src GROUP BY MONTH(opened_date)) SELECT * FROM agg WHERE total_balance > 331000 ORDER BY opened_month LIMIT 5;

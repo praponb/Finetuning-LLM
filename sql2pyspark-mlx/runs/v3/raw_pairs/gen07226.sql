@@ -1,1 +1,0 @@
-SELECT city, CASE WHEN country IN ('SG', 'JP') THEN 'core' ELSE 'other' END AS country_group, ROUND(STDDEV(rating), 2) AS stddev_rating FROM suppliers WHERE city IS NULL AND city = 'Berlin' GROUP BY city, CASE WHEN country IN ('SG', 'JP') THEN 'core' ELSE 'other' END HAVING ROUND(STDDEV(rating), 2) >= 21

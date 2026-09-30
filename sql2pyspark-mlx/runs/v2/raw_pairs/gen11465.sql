@@ -1,1 +1,0 @@
-SELECT p.id, p.category, p.supplier_id, t.quantity_count FROM products p LEFT JOIN (SELECT product_id, COUNT(quantity) AS quantity_count FROM inventory GROUP BY product_id) t ON p.id = t.product_id WHERE t.quantity_count >= 7 ORDER BY id DESC;

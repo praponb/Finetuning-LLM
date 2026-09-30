@@ -1,1 +1,0 @@
-WITH recent_subscriptions AS (SELECT * FROM subscriptions WHERE MONTH(start_date) IN (1, 6, 9)), subscriptions_stats AS (SELECT customer_id, ROUND(STDDEV(monthly_fee), 2) stddev_monthly_fee, MIN(monthly_fee) min_monthly_fee FROM recent_subscriptions GROUP BY customer_id) SELECT * FROM subscriptions_stats ORDER BY 1 DESC;

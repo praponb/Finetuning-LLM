@@ -1,1 +1,0 @@
-SELECT status, ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_returned, MAX(order_date) AS latest_order_date FROM orders WHERE discount < 0.22 GROUP BY status HAVING ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 31 ORDER BY status, latest_order_date DESC;

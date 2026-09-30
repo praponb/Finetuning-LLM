@@ -1,1 +1,0 @@
-SELECT id, product_id, last_restock, quantity, store_id, ROUND(AVG(quantity) OVER (PARTITION BY product_id ORDER BY last_restock, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS quantity_moving_avg_4, RANK() OVER (PARTITION BY store_id ORDER BY last_restock DESC) AS last_restock_rank FROM inventory;

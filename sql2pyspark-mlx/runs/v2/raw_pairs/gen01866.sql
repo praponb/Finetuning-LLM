@@ -1,1 +1,0 @@
-SELECT s.started_at, we.event_type, we.session_id, we.duration_sec FROM sessions s LEFT JOIN web_events we ON we.session_id = s.id WHERE we.duration_sec >= 475 AND HOUR(s.started_at) BETWEEN 7 AND 13 ORDER BY we.event_type

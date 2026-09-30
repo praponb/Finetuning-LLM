@@ -1,1 +1,0 @@
-with Ranked as (select id, status, monthly_fee, dense_rank() over (partition by status order by monthly_fee desc) as row_num from subscriptions) select id, status, monthly_fee from Ranked where row_num <= 3;

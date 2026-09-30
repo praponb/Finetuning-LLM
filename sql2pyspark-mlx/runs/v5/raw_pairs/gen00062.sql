@@ -1,1 +1,0 @@
-select sale_month, stddev_revenue, units_count from (select date_trunc('MONTH', sale_date) as sale_month, round(stddev(revenue), 2) as stddev_revenue, count(units) as units_count from store_sales group by date_trunc('MONTH', sale_date)) as s where stddev_revenue >= 76;

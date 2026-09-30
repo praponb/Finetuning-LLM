@@ -1,1 +1,0 @@
-SELECT c.is_active, COUNT(o.amount) AS amount_count, ROUND(AVG(o.shipping_fee), 2) AS avg_shipping_fee FROM orders o INNER JOIN customers c ON o.customer_id = c.id WHERE c.city NOT IN ('Bangkok', 'New York') GROUP BY c.is_active ORDER BY amount_count;

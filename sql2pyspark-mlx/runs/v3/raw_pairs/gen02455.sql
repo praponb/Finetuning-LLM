@@ -1,1 +1,0 @@
-select * from (select year(opened_date) as opened_year, round(avg(sqft), 2) as avg_sqft, sum(sqft) as total_sqft from stores where opened_date <= '2025-08-03' group by year(opened_date)) as x where total_sqft >= 88000

@@ -1,1 +1,0 @@
-WITH OrdersByStore AS (SELECT store_id, MIN(shipping_fee) AS min_shipping_fee FROM orders GROUP BY store_id) SELECT s.region, s.city, O.min_shipping_fee FROM stores s LEFT JOIN OrdersByStore O ON s.id = O.store_id WHERE O.min_shipping_fee >= 17

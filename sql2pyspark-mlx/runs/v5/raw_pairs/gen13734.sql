@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.product_id, store_sales.revenue, products.brand, products.supplier_id, stores.region, stores.sqft FROM store_sales RIGHT JOIN products ON store_sales.product_id = products.id LEFT JOIN stores ON store_sales.store_id = stores.id ORDER BY region DESC

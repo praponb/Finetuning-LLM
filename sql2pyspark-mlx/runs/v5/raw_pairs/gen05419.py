@@ -1,9 +1,0 @@
-from pyspark.sql import functions as F
-
-result = (
-    df_products
-    .filter(F.col("brand").isNull())
-    .select("category")
-    .distinct()
-    .orderBy(F.col("category").desc())
-)

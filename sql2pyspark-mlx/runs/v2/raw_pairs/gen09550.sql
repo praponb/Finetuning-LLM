@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY order_id) SELECT o.store_id, o.customer_id, ot.unit_price_range FROM orders o LEFT JOIN order_totals ot ON o.id = ot.order_id;

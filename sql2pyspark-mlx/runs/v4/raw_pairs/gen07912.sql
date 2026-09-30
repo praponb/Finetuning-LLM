@@ -1,6 +1,0 @@
-SELECT id
-FROM inventory
-EXCEPT DISTINCT
-SELECT id
-FROM inventory
-WHERE quantity BETWEEN 91 AND 172;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN merchant IN ('Amazon', 'Grab') THEN 'group_a' ELSE 'other' END AS merchant_group, SUM(amount) AS total_amount, RANK() OVER (ORDER BY SUM(amount) DESC) AS amount_rank FROM transactions GROUP BY CASE WHEN merchant IN ('Amazon', 'Grab') THEN 'group_a' ELSE 'other' END ORDER BY merchant_group, total_amount DESC

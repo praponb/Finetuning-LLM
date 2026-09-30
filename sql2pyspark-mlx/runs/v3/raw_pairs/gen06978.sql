@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, MAX(balance) - MIN(balance) balance_range FROM accounts WHERE balance >= 69000 GROUP BY customer_id) SELECT customers.name, customer_summary.balance_range FROM customers LEFT JOIN customer_summary ON customers.id = customer_summary.customer_id;

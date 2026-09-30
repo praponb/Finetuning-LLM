@@ -1,1 +1,0 @@
-SELECT oi.unit_price, oi.quantity, o.amount, p.category, p.stock_qty FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON p.id = oi.product_id WHERE o.store_id IS NOT NULL OR p.launch_date > '2025-06-01' ORDER BY o.amount

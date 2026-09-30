@@ -1,1 +1,0 @@
-WITH OrderSummary AS (SELECT order_id, SUM(CASE WHEN carrier = 'FedEx' THEN 1 ELSE 0 END) AS fedex_count FROM shipments WHERE MONTH(shipped_date) IN (7, 11, 12) GROUP BY order_id) SELECT o.id, o.shipping_fee, o.channel, O.fedex_count FROM orders o INNER JOIN OrderSummary O ON o.id = O.order_id WHERE O.fedex_count > 35;

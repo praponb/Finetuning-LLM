@@ -1,1 +1,0 @@
-SELECT category, SUM(stock_qty) AS total_stock_qty, SUM(SUM(stock_qty)) OVER (ORDER BY category) AS cumulative_stock_qty FROM products WHERE YEAR(launch_date) >= 2024 GROUP BY category ORDER BY cumulative_stock_qty DESC, category DESC

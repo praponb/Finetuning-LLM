@@ -1,1 +1,0 @@
-SELECT c.segment, src.status, COUNT(*) AS rows_total, ROUND(SUM(src.discount), 2) AS total_discount, ROUND(AVG(src.amount), 2) AS avg_amount FROM orders src LEFT JOIN customers c ON src.customer_id = c.id GROUP BY GROUPING SETS ((c.segment, src.status), (c.segment), ())

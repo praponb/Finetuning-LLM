@@ -1,1 +1,0 @@
-SELECT TO_DATE(event_time) AS event_day, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, MAX(event_time) AS latest_event_time FROM web_events WHERE (event_type <> 'click' AND HOUR(event_time) BETWEEN 7 AND 12) OR page IS NOT NULL GROUP BY 1 HAVING ROUND(AVG(duration_sec), 2) >= 73

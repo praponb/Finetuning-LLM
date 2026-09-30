@@ -1,1 +1,0 @@
-WITH store_sales_by_product AS (SELECT product_id, MIN(sale_date) AS min_sale_date, COUNT(*) AS store_sale_count FROM store_sales WHERE sale_date BETWEEN '2023-05-01' AND '2024-05-01' GROUP BY product_id) SELECT p.launch_date, ssbp.min_sale_date, ssbp.store_sale_count FROM products p LEFT JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id ORDER BY ssbp.min_sale_date

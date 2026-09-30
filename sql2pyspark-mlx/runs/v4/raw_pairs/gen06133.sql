@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, MIN(duration_sec) AS min_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, st.min_duration_sec FROM sessions s INNER JOIN session_totals st ON s.id = st.session_id WHERE st.min_duration_sec > 370 ORDER BY 3 DESC, id LIMIT 1;

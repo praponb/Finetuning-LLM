@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CAST(salary AS INT) AS salary_int FROM employees WHERE level = 'L1'), summary AS (SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, AVG(salary_int) AS avg_salary_int FROM base GROUP BY DATE_FORMAT(hire_date, 'yyyy-MM')) SELECT hire_month, avg_salary_int FROM summary;

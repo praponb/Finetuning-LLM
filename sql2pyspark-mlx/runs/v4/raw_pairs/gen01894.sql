@@ -1,1 +1,0 @@
-SELECT id, store_name, city, CAST(sqft AS DOUBLE) AS sqft_num FROM stores WHERE (opened_date BETWEEN '2024-07-01' AND '2024-08-15' AND sqft <= 12870) OR city IN ('Tokyo', 'Berlin', 'New York') ORDER BY sqft_num;

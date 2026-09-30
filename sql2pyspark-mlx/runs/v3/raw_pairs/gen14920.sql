@@ -1,1 +1,0 @@
-SELECT product_id, last_restock_month, total_quantity, first_last_restock FROM (SELECT product_id, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, SUM(quantity) AS total_quantity, MIN(last_restock) AS first_last_restock FROM inventory GROUP BY product_id, DATE_FORMAT(last_restock, 'yyyy-MM')) AS agg WHERE total_quantity >= 1250 ORDER BY first_last_restock DESC;

@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, LOWER(carrier) AS carrier_lower FROM shipments WHERE NOT (shipped_date > '2025-01-08' AND status NOT IN ('IN_TRANSIT', 'RETURNED'))), ShipmentsStats AS (SELECT status, ROUND((100 * SUM(CASE WHEN carrier = 'UPS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_ups FROM src GROUP BY status) SELECT status, pct_ups FROM ShipmentsStats

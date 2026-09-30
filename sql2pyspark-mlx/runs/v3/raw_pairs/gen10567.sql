@@ -1,1 +1,0 @@
-SELECT id, opened_date, CASE WHEN balance >= 82000 THEN 'High' WHEN balance >= 22000 THEN 'Medium' ELSE 'Low' END balance_band FROM accounts WHERE opened_date BETWEEN '2025-04-05' AND '2025-06-01' ORDER BY id DESC LIMIT 10;

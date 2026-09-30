@@ -1,1 +1,0 @@
-select t.id, t.is_flagged, a.account_type, a.status, c.city, cast(c.is_active as int) as is_active_flag from transactions t join accounts a on t.account_id = a.id left join customers c on a.customer_id = c.id order by status asc;

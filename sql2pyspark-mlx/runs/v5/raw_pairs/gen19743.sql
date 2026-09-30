@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('WEEK', txn_time) AS week_start, PERCENTILE_APPROX(amount, 0.9) AS amount_p90, COUNT(*) AS num_rows FROM transactions GROUP BY DATE_TRUNC('WEEK', txn_time) HAVING amount_p90 < 1000000;

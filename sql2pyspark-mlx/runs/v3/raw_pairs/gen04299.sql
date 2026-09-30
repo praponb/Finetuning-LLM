@@ -1,1 +1,0 @@
-select id, country, supplier_name, round(rating, 1) as rating_rounded from suppliers where (rating >= 3.6 and country in ('DE', 'UK', 'US')) or supplier_name like '%Supp%' order by rating_rounded, id limit 10;

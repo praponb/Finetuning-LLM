@@ -1,1 +1,0 @@
-with ranked as (select *, row_number() over (partition by region order by sqft, id) as row_num from stores qualify row_num = 1) select id, store_name, region, opened_date, sqft from ranked order by region desc

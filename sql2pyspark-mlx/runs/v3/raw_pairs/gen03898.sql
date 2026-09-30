@@ -1,1 +1,0 @@
-SELECT e.id, e.email AS employee_email, e.hire_date AS employee_hire_date, m.level AS manager_level FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.salary BETWEEN 106000 AND 127000

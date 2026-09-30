@@ -1,1 +1,0 @@
-SELECT sqft_bucket, sqft_range, avg_sqft FROM (SELECT CASE WHEN sqft >= 14293 THEN 'high' WHEN sqft >= 5773 THEN 'mid' ELSE 'low' END AS sqft_bucket, MAX(sqft) - MIN(sqft) AS sqft_range, AVG(sqft) AS avg_sqft FROM stores WHERE sqft <> 10764 GROUP BY CASE WHEN sqft >= 14293 THEN 'high' WHEN sqft >= 5773 THEN 'mid' ELSE 'low' END) AS x WHERE sqft_range < 46

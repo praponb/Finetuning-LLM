@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, supplier_id, cost, stock_qty, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY cost DESC, id) AS rn FROM products) SELECT id, supplier_id, cost, stock_qty FROM numbered WHERE rn = 1

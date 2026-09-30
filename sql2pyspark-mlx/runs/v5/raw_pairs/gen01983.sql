@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, i.product_id, p.launch_date, p.supplier_id, s.region, s.city FROM inventory i INNER JOIN products p ON p.id = i.product_id INNER JOIN stores s ON i.store_id = s.id WHERE p.price >= 940

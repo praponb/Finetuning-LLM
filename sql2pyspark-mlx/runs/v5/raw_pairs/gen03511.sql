@@ -1,1 +1,0 @@
-SELECT c.city, c.country, SORT_ARRAY(COLLECT_SET(we.page)) AS page_list FROM web_events we FULL OUTER JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id WHERE c.segment = 'Corporate' GROUP BY c.city, c.country

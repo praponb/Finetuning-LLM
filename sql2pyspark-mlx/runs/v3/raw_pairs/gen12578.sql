@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, SUM(quantity) AS total_quantity, COUNT(*) AS cnt, ROUND(SUM(quantity) * 100.0 / SUM(SUM(quantity)) OVER (), 2) AS pct_of_total FROM inventory GROUP BY DATE_FORMAT(last_restock, 'yyyy-MM');

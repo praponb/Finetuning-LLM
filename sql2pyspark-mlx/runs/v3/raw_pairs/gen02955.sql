@@ -1,1 +1,0 @@
-select * from (select case when plan in ('standard', 'enterprise') then 'core' else 'other' end as plan_group, status, monthly_fee from subscriptions) pivot (sum(monthly_fee) for status in ('CANCELLED', 'ACTIVE', 'EXPIRED'));

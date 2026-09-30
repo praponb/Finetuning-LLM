@@ -1,1 +1,0 @@
-select id, event_type, event_time, duration_sec, round(avg(duration_sec) over (partition by event_type order by event_time, id rows between 2 preceding and current row), 2) as duration_sec_moving_avg_3 from web_events order by duration_sec_moving_avg_3 desc;

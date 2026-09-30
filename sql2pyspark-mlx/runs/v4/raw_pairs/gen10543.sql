@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, AVG(duration_sec) AS avg_duration_sec FROM web_events WHERE event_time < '2023-10-03' GROUP BY session_id) SELECT s.id, s.device, s.started_at, st.avg_duration_sec FROM sessions s INNER JOIN session_totals st ON s.id = st.session_id

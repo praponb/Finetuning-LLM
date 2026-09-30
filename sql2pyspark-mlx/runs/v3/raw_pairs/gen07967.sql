@@ -1,1 +1,0 @@
-SELECT dept_id, COUNT(DISTINCT salary) AS unique_levels, MAX(hire_date) AS last_hire_date, COUNT(DISTINCT salary) AS unique_managers FROM employees GROUP BY dept_id HAVING AVG(salary) > 97000 ORDER BY unique_levels DESC;

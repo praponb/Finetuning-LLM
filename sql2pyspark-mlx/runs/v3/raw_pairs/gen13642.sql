@@ -1,1 +1,0 @@
-select ss.store_id, ss.product_id, min(i.quantity) as min_quantity from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.store_id = 5 group by ss.store_id, ss.product_id having min(i.quantity) > 160 order by store_id desc, product_id asc limit 1;

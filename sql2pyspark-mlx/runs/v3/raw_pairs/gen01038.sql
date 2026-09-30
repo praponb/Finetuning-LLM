@@ -1,1 +1,0 @@
-SELECT id, rating, supplier_name, country, ROUND(rating * 1.15, 2) AS rating_adjusted, CONCAT(city, ', ', supplier_name) AS city_supplier_name FROM suppliers WHERE UPPER(supplier_name) LIKE '%URO%' AND rating < 3.5 ORDER BY country, city_supplier_name, id LIMIT 10

@@ -1,1 +1,0 @@
-SELECT i.quantity, i.last_restock, p.price, p.launch_date, s.opened_date FROM inventory i INNER JOIN products p ON p.id = i.product_id INNER JOIN stores s ON i.store_id = s.id WHERE i.store_id = 1 AND i.product_id IN (3, 8);

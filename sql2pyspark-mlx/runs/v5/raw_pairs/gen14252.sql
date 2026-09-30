@@ -1,1 +1,0 @@
-SELECT p.id, p.paid_at, p.order_id, o.shipping_fee, s.region, ROUND(o.discount / o.amount, 2) AS discount_per_amount FROM payments p JOIN orders o ON p.order_id = o.id JOIN stores s ON o.store_id = s.id WHERE s.store_name LIKE '%Kios%';

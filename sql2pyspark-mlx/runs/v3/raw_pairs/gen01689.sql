@@ -1,1 +1,0 @@
-with top_products as (select *, dense_rank() over (partition by category order by cost desc) as row_num from products) select id, category, cost from top_products where row_num <= 3 order by category;

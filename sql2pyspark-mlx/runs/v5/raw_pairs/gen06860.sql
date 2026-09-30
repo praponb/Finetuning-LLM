@@ -1,1 +1,0 @@
-SELECT oi.id, oi.quantity, oi.order_id, oi.product_id FROM order_items oi WHERE oi.product_id IN (SELECT id FROM products WHERE category NOT IN ('Books', 'Grocery', 'Electronics')) ORDER BY oi.quantity

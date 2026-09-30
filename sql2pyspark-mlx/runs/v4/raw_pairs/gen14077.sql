@@ -1,1 +1,0 @@
-SELECT sale_year, store_id, units_count, units_range FROM (SELECT YEAR(sale_date) AS sale_year, store_id, COUNT(units) AS units_count, MAX(units) - MIN(units) AS units_range FROM store_sales GROUP BY YEAR(sale_date), store_id) AS agg WHERE units_count < 9

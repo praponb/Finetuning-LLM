@@ -1,1 +1,0 @@
-WITH InventoryByProduct AS (SELECT product_id, MAX(quantity) max_quantity, MIN(quantity) min_quantity FROM inventory WHERE quantity < 229 GROUP BY product_id) SELECT p.id, p.cost, p.launch_date, I.max_quantity, I.min_quantity FROM products p JOIN InventoryByProduct I ON p.id = I.product_id WHERE I.min_quantity > 120 ORDER BY cost ASC, id ASC LIMIT 10

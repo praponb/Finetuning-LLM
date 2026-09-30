@@ -1,1 +1,0 @@
-select id, order_id, unit_price, product_id, first_value(product_id) over (partition by order_id order by unit_price desc, id) as first_product_id from order_items where unit_price between 100 and 270

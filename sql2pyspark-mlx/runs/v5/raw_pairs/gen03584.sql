@@ -1,1 +1,0 @@
-SELECT store_id, QUARTER(sale_date) AS sale_quarter, AVG(revenue) AS avg_revenue, COUNT(*) AS num_store_sales, COUNT(units) AS units_count FROM store_sales WHERE units BETWEEN 22 AND 40 GROUP BY store_id, QUARTER(sale_date) HAVING COUNT(DISTINCT revenue) > 3 ORDER BY store_id;

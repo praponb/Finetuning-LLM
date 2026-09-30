@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, p.stock_qty, o.customer_id FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id JOIN orders o ON oi.order_id = o.id WHERE o.channel IN ('web', 'store', 'partner') AND oi.order_id IN (6, 31, 35, 40) ORDER BY customer_id DESC, oi.unit_price DESC;

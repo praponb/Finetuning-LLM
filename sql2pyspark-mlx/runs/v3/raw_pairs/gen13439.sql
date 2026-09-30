@@ -1,1 +1,0 @@
-WITH account_summary AS (SELECT account_id, ROUND(STDDEV(amount), 2) stddev_amount, SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END) amazon_count FROM transactions GROUP BY account_id) SELECT accounts.status, accounts.opened_date, account_summary.stddev_amount, account_summary.amazon_count FROM accounts INNER JOIN account_summary ON accounts.id = account_summary.account_id

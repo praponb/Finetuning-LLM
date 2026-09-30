@@ -1,1 +1,0 @@
-SELECT id, dept_name, budget, DENSE_RANK() OVER (PARTITION BY dept_name ORDER BY budget DESC) AS budget_dense_rank FROM departments WHERE budget BETWEEN 2146000 AND 3417000 ORDER BY budget_dense_rank, id DESC;

@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.units, store_sales.store_id, products.brand, products.supplier_id, stores.city, stores.sqft FROM store_sales JOIN products ON store_sales.product_id = products.id JOIN stores ON store_sales.store_id = stores.id

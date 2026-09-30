@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CASE WHEN region IN ('South', 'North') THEN 'Tier 1' ELSE 'Other' END AS region_group FROM stores WHERE region IN ('North', 'Central')), summary AS (SELECT region, ROUND(STDDEV(sqft), 2) AS stddev_sqft, MAX(opened_date) AS last_opened_date FROM base GROUP BY region) SELECT region, last_opened_date FROM summary WHERE stddev_sqft > 75 ORDER BY region;

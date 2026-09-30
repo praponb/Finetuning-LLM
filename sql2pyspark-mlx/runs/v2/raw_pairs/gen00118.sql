@@ -1,1 +1,0 @@
-SELECT s.city, SUM(CASE WHEN p.category = 'Books' THEN p.price ELSE 0 END) AS books_price, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.category))) AS category_values FROM products p JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.city ORDER BY books_price DESC;

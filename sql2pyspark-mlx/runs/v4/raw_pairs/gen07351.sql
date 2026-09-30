@@ -1,1 +1,0 @@
-WITH StoreStats AS (SELECT store_id, MAX(order_date) AS latest_order_date FROM orders WHERE status = 'PENDING' GROUP BY store_id) SELECT s.region, s.store_name, S.latest_order_date FROM stores s INNER JOIN StoreStats S ON s.id = S.store_id;

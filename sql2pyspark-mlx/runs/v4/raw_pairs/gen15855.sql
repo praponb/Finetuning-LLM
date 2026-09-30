@@ -1,1 +1,0 @@
-WITH RecentSuppliers AS (SELECT *, LOWER(city) city_lower FROM suppliers WHERE UPPER(TRIM(supplier_name)) = 'TOKYO TRADERS'), suppliers_stats AS (SELECT country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) city_values, MIN(rating) min_rating FROM RecentSuppliers GROUP BY country) SELECT country, city_values, min_rating FROM suppliers_stats ORDER BY city_values;

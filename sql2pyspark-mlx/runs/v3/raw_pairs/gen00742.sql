@@ -1,1 +1,0 @@
-SELECT id, supplier_id, cost, brand, launch_date, RANK() OVER (PARTITION BY supplier_id ORDER BY cost DESC) AS cost_rank, DENSE_RANK() OVER (PARTITION BY brand ORDER BY launch_date) AS dense_rnk FROM products

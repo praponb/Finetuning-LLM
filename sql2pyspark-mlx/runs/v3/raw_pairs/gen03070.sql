@@ -1,1 +1,0 @@
-SELECT payments.id, payments.order_id, payments.status, orders.order_date, orders.customer_id, orders.shipping_fee FROM payments LEFT JOIN orders ON orders.id = payments.order_id WHERE orders.customer_id IN (1, 21, 34) AND payments.order_id IN (5, 39);

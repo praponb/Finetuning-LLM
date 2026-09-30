@@ -1,1 +1,0 @@
-SELECT employees.manager_id, employees.salary, employees.dept_id, departments.location, departments.budget FROM employees INNER JOIN departments ON departments.id = employees.dept_id WHERE departments.budget BETWEEN 3941000 AND 4016000 ORDER BY budget DESC

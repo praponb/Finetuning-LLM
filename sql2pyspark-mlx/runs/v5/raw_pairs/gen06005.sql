@@ -1,1 +1,0 @@
-SELECT d.id, COUNT(e.id) employee_count, MAX(e.salary) max_salary, COUNT(CASE WHEN e.level = 'L5' THEN 1 END) l5_count FROM departments d INNER JOIN employees e ON e.dept_id = d.id WHERE d.dept_name != 'Engineering' GROUP BY d.id;

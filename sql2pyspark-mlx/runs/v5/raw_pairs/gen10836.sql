@@ -1,1 +1,0 @@
-with enriched as (select id, dept_name, lag(budget, 2) over (order by budget, id) as prev_budget, first_value(location, true) over (partition by dept_name order by budget, id rows between unbounded preceding and current row) as first_known_location from departments) select id, prev_budget from enriched order by id, prev_budget desc;

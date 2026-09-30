@@ -1,1 +1,0 @@
-SELECT accounts.id, accounts.balance, customers.signup_date, customers.name FROM accounts LEFT JOIN customers ON accounts.customer_id = customers.id WHERE accounts.customer_id IN (2, 7, 32) ORDER BY customers.name DESC, id LIMIT 10;

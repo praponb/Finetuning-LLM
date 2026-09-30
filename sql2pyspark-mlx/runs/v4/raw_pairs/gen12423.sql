@@ -1,1 +1,0 @@
-SELECT signup_month, signup_year, us_count, min_signup_date FROM (SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, YEAR(signup_date) AS signup_year, SUM(CASE WHEN country = 'US' THEN 1 ELSE 0 END) AS us_count, MIN(signup_date) AS min_signup_date FROM customers GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM'), YEAR(signup_date)) AS s WHERE us_count < 38

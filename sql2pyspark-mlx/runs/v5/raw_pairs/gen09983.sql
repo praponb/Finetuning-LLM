@@ -1,1 +1,0 @@
-SELECT s.city, t.brand_values, t.avg_cost FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values, AVG(cost) AS avg_cost FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id;

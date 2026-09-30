@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, s.order_id, o.order_date, o.status, c.age, c.email FROM shipments s LEFT OUTER JOIN orders o ON s.order_id = o.id LEFT OUTER JOIN customers c ON o.customer_id = c.id ORDER BY carrier, id LIMIT 3;

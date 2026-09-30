@@ -1,1 +1,0 @@
-select p.id, p.amount, o.channel, o.status, s.opened_date, s.sqft from payments p inner join orders o on p.order_id = o.id inner join stores s on o.store_id = s.id where o.channel = 'store' order by p.amount desc, o.status asc, id asc limit 50

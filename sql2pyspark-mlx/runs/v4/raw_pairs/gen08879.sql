@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, COUNT(*) AS total_count, SUM(CASE WHEN status = 'CLOSED' THEN balance ELSE 0 END) AS closed_balance, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts GROUP BY 1 ORDER BY stddev_balance;

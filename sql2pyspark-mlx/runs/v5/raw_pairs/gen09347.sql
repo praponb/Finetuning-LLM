@@ -1,1 +1,0 @@
-SELECT id, product_id, order_id, quantity, unit_price, FIRST_VALUE(unit_price) OVER (PARTITION BY product_id, order_id ORDER BY quantity DESC, id) AS first_unit_price, ROW_NUMBER() OVER (ORDER BY quantity, id) AS quantity_row FROM order_items

@@ -1,1 +1,0 @@
-SELECT i.last_restock, i.quantity, p.stock_qty, p.launch_date, s.store_name, s.opened_date FROM inventory i INNER JOIN products p ON p.id = i.product_id LEFT OUTER JOIN stores s ON i.store_id = s.id WHERE MONTH(i.last_restock) IN (1, 2, 3) ORDER BY i.quantity DESC

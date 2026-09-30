@@ -1,1 +1,0 @@
-SELECT id, segment, country, age, city, credit_limit, RANK() OVER (PARTITION BY segment, country ORDER BY age DESC) AS rnk, DENSE_RANK() OVER (PARTITION BY city ORDER BY credit_limit DESC) AS credit_limit_dense_rank FROM customers;

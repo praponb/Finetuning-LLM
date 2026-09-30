@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, host, log_ts, status_code, k, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) li AS k, attr_value) SELECT host, APPROX_PERCENTILE(status_code, ARRAY(0.25, 0.5, 0.75)) AS status_code_quartiles, MAX(status_code) AS max_status_code FROM flattened GROUP BY 1 HAVING MAX(status_code) < 0 ORDER BY host DESC

@@ -1,1 +1,0 @@
-SELECT we.id, we.event_type, s.device, s.customer_id, DATE_TRUNC('YEAR', we.event_time) AS event_time_period FROM web_events we LEFT JOIN sessions s ON s.id = we.session_id WHERE we.duration_sec >= 185

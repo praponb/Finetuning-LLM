@@ -1,1 +1,0 @@
-SELECT o.channel, MONTH(o.order_date) AS order_month, COUNT(oi.quantity) AS quantity_count, SUM(oi.unit_price * oi.quantity) AS revenue FROM order_items oi LEFT JOIN orders o ON o.id = oi.order_id INNER JOIN products p ON p.id = oi.product_id GROUP BY o.channel, MONTH(o.order_date)

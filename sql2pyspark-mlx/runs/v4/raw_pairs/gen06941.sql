@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, DATEDIFF(CURRENT_DATE(), started_at) AS days_since_started_at, CONCAT_WS('-', device, browser) AS device_browser_key FROM sessions WHERE country IS NULL) SELECT * FROM (SELECT customer_id, device, country, days_since_started_at FROM valid) src PIVOT (MAX(days_since_started_at) FOR country IN ('TH' AS th, 'JP' AS jp));

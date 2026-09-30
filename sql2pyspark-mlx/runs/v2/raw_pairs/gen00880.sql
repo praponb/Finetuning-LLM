@@ -1,1 +1,0 @@
-select we.id, we.page, s.browser, c.name, c.credit_limit from web_events we full outer join sessions s on we.session_id = s.id left join customers c on s.customer_id = c.id where s.country = 'UK' and s.device not in ('desktop', 'tablet', 'mobile');

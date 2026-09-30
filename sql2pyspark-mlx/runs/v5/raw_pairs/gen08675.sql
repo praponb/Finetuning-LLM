@@ -1,1 +1,0 @@
-WITH TopProducts AS (SELECT id, brand, launch_date, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY launch_date DESC, id) AS row_num FROM products WHERE stock_qty > 353) SELECT id, brand, launch_date FROM TopProducts WHERE row_num = 1

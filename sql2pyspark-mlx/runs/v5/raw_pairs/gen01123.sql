@@ -1,1 +1,0 @@
-with transactions_by_account as (select account_id, count(amount) as amount_count, min(amount) as min_amount from transactions where txn_type = 'FEE' group by account_id) select a.id, a.opened_date, a.account_type, tba.amount_count, tba.min_amount from accounts a join transactions_by_account tba on a.id = tba.account_id where tba.min_amount >= 3800;

@@ -1,1 +1,0 @@
-SELECT e.full_name AS employee_full_name, e.dept_id AS employee_dept_id, m.manager_id AS manager_manager_id, m.hire_date AS manager_hire_date, m.dept_id AS manager_dept_id FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE e.level IN ('L3', 'L5');

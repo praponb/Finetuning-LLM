@@ -1,1 +1,0 @@
-select e.id, e.salary employee_salary, m.job_title manager_job_title, m.manager_id manager_manager_id from employees as e left join employees as m on e.manager_id = m.id where m.dept_id = 40 order by 2

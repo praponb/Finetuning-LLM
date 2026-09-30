@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, COUNT(CASE WHEN page = '/checkout' THEN 1 END) AS checkout_count, MAX(event_time) AS latest_event_time FROM web_events GROUP BY session_id) SELECT s.started_at, s.browser, ss.checkout_count, ss.latest_event_time FROM sessions s LEFT JOIN session_stats ss ON s.id = ss.session_id WHERE ss.checkout_count >= 7 ORDER BY 2;

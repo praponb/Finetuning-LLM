@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM accounts WHERE customer_id IS NOT NULL), agg AS (SELECT status, SUM(balance) AS total_balance, AVG(balance) AS avg_balance FROM src GROUP BY status) SELECT * FROM agg ORDER BY total_balance DESC

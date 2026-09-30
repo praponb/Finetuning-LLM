@@ -1,1 +1,0 @@
-SELECT id, carrier, status, cost, shipped_date, LAST_VALUE(shipped_date) OVER (PARTITION BY carrier, status ORDER BY cost DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_shipped_date FROM shipments WHERE delivered_date BETWEEN '2023-07-15' AND '2023-08-31' ORDER BY status ASC;

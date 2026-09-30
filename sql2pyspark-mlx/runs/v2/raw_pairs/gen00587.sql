@@ -1,1 +1,0 @@
-WITH valid_employees AS (SELECT * FROM employees WHERE dept_id IN (3, 6, 8, 31)), employees_stats AS (SELECT level, is_remote, SORT_ARRAY(COLLECT_SET(level)) AS level_list, COUNT(CASE WHEN level = 'L2' THEN 1 END) AS l2_count FROM valid_employees GROUP BY level, is_remote) SELECT level, is_remote, level_list, l2_count FROM employees_stats WHERE l2_count > 8;

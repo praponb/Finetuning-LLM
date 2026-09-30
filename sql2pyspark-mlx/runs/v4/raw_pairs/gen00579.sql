@@ -1,1 +1,0 @@
-SELECT order_id, SUM(quantity) AS total_quantity, DENSE_RANK() OVER (ORDER BY SUM(quantity) DESC) AS rnk FROM order_items WHERE product_id IN (11, 16, 21, 27) GROUP BY order_id ORDER BY rnk, order_id;

@@ -1,1 +1,0 @@
-SELECT MONTH(shipped_date) AS shipped_month, ROUND((100 * SUM(CASE WHEN carrier = 'Flash' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_flash FROM shipments GROUP BY shipped_month HAVING ROUND((100 * SUM(CASE WHEN carrier = 'Flash' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 55 ORDER BY pct_flash DESC;

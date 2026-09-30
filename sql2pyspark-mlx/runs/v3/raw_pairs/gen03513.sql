@@ -1,1 +1,0 @@
-SELECT id, location, budget, dept_name, ROUND(AVG(budget) OVER (PARTITION BY location ORDER BY budget, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) budget_moving_avg_4, LAG(budget, 1) OVER (PARTITION BY dept_name ORDER BY budget, id) prev_budget FROM departments WHERE location IN ('Berlin', 'Bangkok', 'London') ORDER BY budget DESC;

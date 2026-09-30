@@ -1,1 +1,0 @@
-SELECT id, customer_id, start_date, monthly_fee, CAST(monthly_fee AS INT) AS monthly_fee_int, CASE WHEN plan IN ('enterprise', 'basic') THEN 'Group A' ELSE 'Other' END AS plan_group FROM subscriptions WHERE status = 'EXPIRED';

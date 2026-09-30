@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 3.6 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, city, AVG(rating) AS avg_rating, SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) AS sg_count FROM suppliers WHERE rating < 3.5 AND UPPER(TRIM(supplier_name)) = 'SIAM PARTS CO' GROUP BY 1, 2 ORDER BY avg_rating;

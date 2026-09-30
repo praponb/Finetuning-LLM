@@ -1,1 +1,0 @@
-SELECT id, supplier_name, city, rating, FLOOR(rating) AS rating_whole, ROUND(rating * 100, 2) AS rating_adjusted FROM suppliers WHERE rating BETWEEN 2.6 AND 4.0 ORDER BY rating_whole DESC, id LIMIT 3;

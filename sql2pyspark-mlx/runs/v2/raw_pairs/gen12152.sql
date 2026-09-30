@@ -1,1 +1,0 @@
-WITH ranked_employees AS (SELECT *, DENSE_RANK() OVER (PARTITION BY level ORDER BY salary DESC) pos FROM employees WHERE salary BETWEEN 98000 AND 123000) SELECT id, level, salary, manager_id FROM ranked_employees WHERE pos = 1;

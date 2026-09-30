@@ -1,1 +1,0 @@
-select id, order_id, paid_at, amount, status, sum(amount) over (partition by order_id order by paid_at, id rows between unbounded preceding and current row) as running_amount, round(amount / sum(amount) over (partition by status), 3) as amount_share from payments order by running_amount, id desc

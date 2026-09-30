@@ -1,1 +1,0 @@
-select inventory.id, inventory.quantity, inventory.store_id, products.cost, products.category, stores.city, stores.store_name from inventory right join products on inventory.product_id = products.id inner join stores on inventory.store_id = stores.id where inventory.quantity = 99 order by category;

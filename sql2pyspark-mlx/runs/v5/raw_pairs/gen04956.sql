@@ -1,1 +1,0 @@
-select suppliers.id, suppliers.country, t.latest_launch_date, t.fashion_count from suppliers join (select supplier_id, max(launch_date) as latest_launch_date, count(case when category = 'Fashion' then 1 end) as fashion_count from products group by supplier_id) t on suppliers.id = t.supplier_id where t.fashion_count > 4;

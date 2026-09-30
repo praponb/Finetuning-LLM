@@ -1,1 +1,0 @@
-select brand, date_trunc('MONTH', launch_date) as launch_month, sum(case when category = 'Grocery' then price else 0 end) as grocery_price from products group by brand, date_trunc('MONTH', launch_date) having sum(cost) < 4100

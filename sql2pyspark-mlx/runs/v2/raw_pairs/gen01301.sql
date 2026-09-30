@@ -1,1 +1,0 @@
-WITH ranked_transactions AS (SELECT id, merchant, amount, txn_type, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount DESC, id) AS rnk FROM transactions WHERE account_id IN (5, 6, 26)) SELECT id, merchant, amount, txn_type FROM ranked_transactions WHERE rnk = 1 ORDER BY txn_type ASC, 2 ASC;

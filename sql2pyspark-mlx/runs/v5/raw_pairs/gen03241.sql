@@ -1,1 +1,0 @@
-SELECT o.status, MIN(s.delivered_date) AS first_delivered_date FROM shipments s LEFT JOIN orders o ON s.order_id = o.id WHERE YEAR(s.delivered_date) = 2023 GROUP BY o.status ORDER BY first_delivered_date;

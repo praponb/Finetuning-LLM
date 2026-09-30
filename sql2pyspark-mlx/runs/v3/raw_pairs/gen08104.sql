@@ -1,1 +1,0 @@
-SELECT status, carrier, MAX(shipped_date) AS last_shipped_date, MAX(cost) AS max_cost FROM shipments WHERE carrier IN ('DHL', 'Kerry', 'FedEx') OR shipped_date > '2023-12-01' GROUP BY status, carrier HAVING max_cost < 59

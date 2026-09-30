@@ -1,1 +1,0 @@
-with order_stats as (select order_id, count(unit_price) unit_price_count, count(distinct quantity) unique_products from order_items where unit_price between 350 and 400 group by order_id) select orders.status, order_stats.unit_price_count, order_stats.unique_products from orders inner join order_stats on orders.id = order_stats.order_id order by unique_products asc

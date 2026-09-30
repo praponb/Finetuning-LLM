@@ -1,1 +1,0 @@
-SELECT s.country, s.supplier_name, t.last_launch_date, t.unique_categorys FROM suppliers s LEFT JOIN (SELECT supplier_id, MAX(launch_date) AS last_launch_date, COUNT(DISTINCT price) AS unique_categorys FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id;

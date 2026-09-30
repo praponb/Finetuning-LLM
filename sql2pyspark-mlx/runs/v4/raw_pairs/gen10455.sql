@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, ROUND(balance, 0) AS balance_rounded, COALESCE(status, 'NONE') AS resolved_status FROM accounts WHERE opened_date > TO_DATE('2023-06-13') AND customer_id IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type, customer_id ORDER BY opened_date NULLS LAST, id) AS row_num FROM filtered QUALIFY row_num = 1

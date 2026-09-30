@@ -1,1 +1,0 @@
-SELECT id, status, discount, channel, shipping_fee, store_id, ROW_NUMBER() OVER (PARTITION BY status ORDER BY discount DESC, id) AS rn, LAST_VALUE(store_id) OVER (PARTITION BY channel ORDER BY shipping_fee, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_store_id FROM orders

@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM transactions WHERE account_id IN (16, 33)), agg AS (SELECT merchant, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM src GROUP BY merchant) SELECT merchant, merchant_values FROM agg ORDER BY merchant_values;

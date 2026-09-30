@@ -1,1 +1,0 @@
-select d.id, d.location, d.budget, t.min_salary, t.max_salary from departments d left join (select dept_id, min(salary) as min_salary, max(salary) as max_salary from employees group by dept_id) t on d.id = t.dept_id where t.min_salary > 71000

@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, product_name, category, brand, stock_qty, launch_date, tags, supplier_id, UPPER(brand) AS brand_upper FROM products WHERE launch_date > DATE '2023-05-01' AND stock_qty = 305) SELECT id, category FROM base EXCEPT ALL SELECT id, category FROM products WHERE brand NOT IN ('Stark', 'Acme');

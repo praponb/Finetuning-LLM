@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT * FROM subscriptions QUALIFY ROW_NUMBER() OVER (PARTITION BY plan ORDER BY monthly_fee DESC NULLS LAST, id) = 1) SELECT s.id, s.customer_id, s.plan, s.start_date, s.end_date, (SELECT SUM(s2.monthly_fee) FROM subscriptions s2 WHERE s2.customer_id = s.customer_id) AS sum_subscription_monthly_fee FROM deduped s ORDER BY end_date DESC;

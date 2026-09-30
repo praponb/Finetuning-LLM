@@ -1,1 +1,0 @@
-select session_id, duration_sec_range, event_type_values from (select session_id, max(duration_sec) - min(duration_sec) as duration_sec_range, concat_ws(', ', sort_array(collect_set(event_type))) as event_type_values from web_events where session_id in (20, 28) group by session_id) as x where duration_sec_range > 80 order by duration_sec_range;

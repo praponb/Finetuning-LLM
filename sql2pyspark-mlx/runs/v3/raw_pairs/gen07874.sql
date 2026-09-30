@@ -1,1 +1,0 @@
-SELECT id, supplier_id, stock_qty, launch_date, DENSE_RANK() OVER (PARTITION BY supplier_id ORDER BY stock_qty DESC) AS dense_rnk, DENSE_RANK() OVER (ORDER BY launch_date) AS launch_date_dense_rank FROM products WHERE ARRAY_CONTAINS(tags, 'premium') ORDER BY supplier_id DESC

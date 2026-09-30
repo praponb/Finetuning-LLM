@@ -1,1 +1,0 @@
-SELECT job_title, is_remote, level_values, l2_salary FROM (SELECT job_title, is_remote, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, SUM(CASE WHEN level = 'L2' THEN salary ELSE 0 END) AS l2_salary FROM employees WHERE dept_id IN (19, 20) GROUP BY job_title, is_remote) AS sub WHERE l2_salary < 36 ORDER BY l2_salary, job_title, is_remote LIMIT 10;

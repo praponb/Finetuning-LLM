@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, HOUR(txn_time) AS txn_time_hour, COALESCE(merchant, 'NONE') AS resolved_merchant FROM transactions WHERE txn_time >= DATE '2023-07-23' AND merchant IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY amount DESC NULLS FIRST, id ASC) AS rn FROM valid QUALIFY rn = 1;

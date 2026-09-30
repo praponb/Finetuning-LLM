@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', accounts.opened_date) AS opened_month, MIN(transactions.amount) AS min_amount FROM transactions LEFT OUTER JOIN accounts ON accounts.id = transactions.account_id LEFT OUTER JOIN customers ON customers.id = accounts.customer_id WHERE transactions.account_id IN (2, 23) GROUP BY DATE_TRUNC('MONTH', accounts.opened_date) ORDER BY opened_month LIMIT 3

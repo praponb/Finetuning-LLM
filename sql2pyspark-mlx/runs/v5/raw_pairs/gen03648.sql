@@ -1,1 +1,0 @@
-select * from (select id, status, opened_date, row_number() over (partition by status order by opened_date desc, id) as rnk from accounts where account_type not in ('LOAN', 'CHECKING')) as t where rnk <= 3 order by rnk asc

@@ -1,1 +1,0 @@
-SELECT customer_id, SUM(monthly_fee) AS total_monthly_fee, RANK() OVER (ORDER BY SUM(monthly_fee) DESC) AS rnk FROM subscriptions WHERE end_date BETWEEN '2023-09-01' AND '2024-03-30' GROUP BY customer_id ORDER BY 3 DESC

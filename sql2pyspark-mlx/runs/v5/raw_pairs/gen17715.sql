@@ -1,1 +1,0 @@
-SELECT s.id, s.supplier_name, COUNT(p.id) AS product_count, MIN(p.stock_qty) AS min_stock_qty, MAX(p.stock_qty) - MIN(p.stock_qty) AS stock_qty_range FROM suppliers s LEFT JOIN products p ON p.supplier_id = s.id WHERE s.country NOT IN ('US', 'DE') GROUP BY s.id, s.supplier_name ORDER BY product_count

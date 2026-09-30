@@ -1,1 +1,0 @@
-with store_stats as (select store_id, avg(quantity) as avg_quantity from inventory where last_restock between '2023-04-01' and '2023-09-01' group by store_id) select s.store_name, ss.avg_quantity from stores s join store_stats ss on s.id = ss.store_id order by s.store_name

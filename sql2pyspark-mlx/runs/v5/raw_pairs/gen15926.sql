@@ -1,1 +1,0 @@
-WITH with_dims AS (SELECT e.id, e.dept_id, e.salary, e.hire_date, e.level, b.location, b.budget FROM employees e INNER JOIN departments b ON e.dept_id = b.id) SELECT id, salary, hire_date, level, location, CASE WHEN level RLIKE '^(L3|L5)$' THEN 'GROUP_A' ELSE 'GROUP_B' END AS level_zone FROM with_dims ORDER BY level_zone;

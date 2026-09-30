@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, account_id, txn_type, amount, txn_time, merchant, is_flagged, CASE WHEN merchant = '7-Eleven' THEN 1 ELSE 0 END AS is_7_eleven FROM transactions WHERE txn_time > TO_TIMESTAMP('2024-03-15 00:00:00') AND txn_time >= '2025-07-01') SELECT a.*, b.opened_date, b.balance, b.account_type FROM base a LEFT JOIN accounts b ON a.account_id = b.id;

@@ -1,1 +1,0 @@
-WITH store_sales_by_product AS (SELECT product_id, MAX(units) AS max_units FROM store_sales GROUP BY product_id) SELECT p.supplier_id, ssbp.max_units FROM products p LEFT JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id WHERE ssbp.max_units >= 27;

@@ -1,1 +1,0 @@
-SELECT id, city, signup_date, credit_limit, COUNT(*) OVER (PARTITION BY city) AS city_count, SUM(credit_limit) OVER (PARTITION BY city ORDER BY signup_date, id) AS running_credit_limit FROM customers;

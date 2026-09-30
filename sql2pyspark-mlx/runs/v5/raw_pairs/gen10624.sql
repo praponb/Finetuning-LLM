@@ -1,1 +1,0 @@
-SELECT payments.id, payments.order_id, orders.shipping_fee, customers.credit_limit, customers.signup_date FROM payments JOIN orders ON payments.order_id = orders.id JOIN customers ON orders.customer_id = customers.id WHERE customers.country != 'UK' AND payments.status != 'REFUNDED';

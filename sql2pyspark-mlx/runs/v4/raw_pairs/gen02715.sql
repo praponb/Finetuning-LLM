@@ -1,1 +1,0 @@
-SELECT page, session_id, SUM(CASE WHEN page = '/home' THEN duration_sec ELSE 0 END) AS home_duration_sec, COUNT(CASE WHEN page = '/home' THEN 1 END) AS home_count FROM web_events WHERE page IN ('/home', '/cart') AND page IN ('/cart', '/product', '/search') GROUP BY page, session_id

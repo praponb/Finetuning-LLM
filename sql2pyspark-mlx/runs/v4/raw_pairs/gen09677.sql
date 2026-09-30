@@ -1,1 +1,0 @@
-WITH top_stores AS (SELECT id, region, opened_date, ROW_NUMBER() OVER (PARTITION BY region ORDER BY opened_date DESC, id) AS row_num FROM stores WHERE city IN ('Bangkok', 'Chiang Mai', 'New York')) SELECT * FROM top_stores WHERE row_num <= 2

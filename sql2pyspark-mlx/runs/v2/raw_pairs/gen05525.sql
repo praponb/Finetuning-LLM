@@ -1,1 +1,0 @@
-SELECT id, segment, signup_date, age, city, credit_limit, SUM(age) OVER (PARTITION BY segment ORDER BY signup_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_age, SUM(credit_limit) OVER (PARTITION BY city ORDER BY signup_date, id) AS running_credit_limit FROM customers

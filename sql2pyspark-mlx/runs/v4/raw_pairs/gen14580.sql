@@ -1,1 +1,0 @@
-SELECT status, channel, DATE_TRUNC('MONTH', order_date) AS order_month, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count FROM orders GROUP BY status, channel, DATE_TRUNC('MONTH', order_date) HAVING cancelled_count < 36;

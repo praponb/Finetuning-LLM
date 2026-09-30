@@ -1,1 +1,0 @@
-SELECT we.id, we.event_time, s.started_at, s.device, c.country FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON c.id = s.customer_id WHERE c.city IN ('London', 'Chiang Mai', 'Bangkok') AND s.device NOT IN ('desktop', 'tablet');

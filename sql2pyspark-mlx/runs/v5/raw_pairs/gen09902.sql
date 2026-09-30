@@ -1,1 +1,0 @@
-SELECT supplier_name, CASE WHEN country IN ('TH', 'US') THEN 'Tier 1' ELSE 'Other' END AS country_group FROM suppliers WHERE city IN ('Tokyo', 'New York') AND (city = 'Tokyo' OR city = 'London') ORDER BY supplier_name DESC;

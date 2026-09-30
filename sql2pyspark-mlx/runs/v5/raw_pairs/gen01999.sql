@@ -1,1 +1,0 @@
-SELECT *, CAST(quantity AS DOUBLE) AS quantity_num, CASE WHEN quantity >= 180 THEN 'High' WHEN quantity >= 84 THEN 'Medium' ELSE 'Low' END AS quantity_level FROM inventory WHERE store_id IN (1, 2, 5, 6) AND product_id IN (1, 7) ORDER BY quantity_num ASC;

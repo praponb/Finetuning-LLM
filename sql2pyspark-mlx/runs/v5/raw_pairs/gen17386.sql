@@ -1,1 +1,0 @@
-SELECT id, dept_name, budget, location, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) row_num, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget, id) budget_row FROM departments WHERE location != 'Singapore' ORDER BY row_num DESC;

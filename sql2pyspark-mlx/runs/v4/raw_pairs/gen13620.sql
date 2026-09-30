@@ -1,1 +1,0 @@
-SELECT customer_id, COUNT(*) AS cnt, (UNIX_TIMESTAMP(MAX(started_at)) - UNIX_TIMESTAMP(MIN(started_at))) / 60 AS duration_min, COUNT(CASE WHEN country = 'UK' THEN 1 END) AS uk_count FROM sessions GROUP BY 1 HAVING duration_min > 0;

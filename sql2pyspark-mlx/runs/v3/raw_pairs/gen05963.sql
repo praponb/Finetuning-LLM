@@ -1,1 +1,0 @@
-SELECT s.region, QUARTER(s.opened_date) opened_quarter, ROUND(AVG(i.quantity), 2) avg_quantity, MAX(i.last_restock) latest_last_restock FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id JOIN stores s ON s.id = i.store_id GROUP BY s.region, QUARTER(s.opened_date)

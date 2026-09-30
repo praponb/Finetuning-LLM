@@ -1,1 +1,0 @@
-WITH department_summary AS (SELECT dept_id, MIN(hire_date) AS min_hire_date FROM employees GROUP BY dept_id) SELECT departments.id, departments.location, department_summary.min_hire_date FROM departments LEFT OUTER JOIN department_summary ON departments.id = department_summary.dept_id;

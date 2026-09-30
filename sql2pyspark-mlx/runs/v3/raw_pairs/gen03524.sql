@@ -1,1 +1,0 @@
-SELECT order_id, status, MIN(paid_at) AS min_paid_at, ROUND((100 * SUM(CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_bank_transfer FROM payments WHERE status = 'SUCCESS' AND amount <= 1360 GROUP BY order_id, status HAVING ROUND((100 * SUM(CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END)) / COUNT(*), 1) >= 31 ORDER BY status DESC;

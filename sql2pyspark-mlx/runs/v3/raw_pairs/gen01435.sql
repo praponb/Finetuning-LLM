@@ -1,1 +1,0 @@
-SELECT product_id, row_count, total_unit_price FROM (SELECT product_id, COUNT(*) AS row_count, SUM(unit_price) AS total_unit_price FROM order_items WHERE quantity <= 5 GROUP BY product_id) AS agg WHERE row_count < 8 ORDER BY product_id;

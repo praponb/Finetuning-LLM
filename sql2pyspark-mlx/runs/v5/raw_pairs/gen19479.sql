@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, MAX(i.last_restock) AS latest_last_restock FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE i.quantity IS NOT NULL GROUP BY p.brand, p.category

@@ -1,1 +1,0 @@
-SELECT id, event_time, CASE WHEN event_type IN ('add_to_cart', 'page_view') THEN 'Priority' ELSE 'Other' END AS event_type_group, CAST(duration_sec AS DOUBLE) AS duration_sec_str FROM web_events WHERE session_id = 34 AND session_id = 7 AND session_id IN (4, 7, 21, 25)

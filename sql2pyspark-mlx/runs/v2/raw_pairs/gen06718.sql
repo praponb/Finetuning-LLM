@@ -1,1 +1,0 @@
-SELECT payments.id, payments.order_id, orders.status, orders.shipping_fee FROM payments RIGHT OUTER JOIN orders ON payments.order_id = orders.id WHERE payments.amount >= 600 AND orders.status = 'COMPLETED'

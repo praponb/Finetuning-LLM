@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, supplier_name, country, city, rating, SUBSTRING(supplier_name, 1, 4) AS supplier_name_prefix FROM suppliers WHERE city IS NOT NULL) SELECT * FROM (SELECT city, country, rating FROM cleaned) src PIVOT (SUM(rating) FOR country IN ('SG' AS sg, 'UK' AS uk, 'US' AS us));

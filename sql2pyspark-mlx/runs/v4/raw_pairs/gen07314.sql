@@ -1,1 +1,0 @@
-select suppliers.id, suppliers.rating, suppliers.country, t.stddev_cost from suppliers left join (select supplier_id, round(stddev(cost), 2) as stddev_cost from products where brand in ('Initech', 'Acme') group by supplier_id) t on suppliers.id = t.supplier_id order by suppliers.rating;

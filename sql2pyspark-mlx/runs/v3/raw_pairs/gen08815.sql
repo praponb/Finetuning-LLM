@@ -1,1 +1,0 @@
-SELECT payments.amount, payments.paid_at, orders.status, stores.sqft FROM payments LEFT JOIN orders ON payments.order_id = orders.id LEFT JOIN stores ON stores.id = orders.store_id WHERE stores.city = 'Chiang Mai' AND orders.store_id IS NULL ORDER BY payments.paid_at;

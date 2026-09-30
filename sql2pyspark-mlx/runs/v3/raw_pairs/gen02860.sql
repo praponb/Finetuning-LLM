@@ -1,1 +1,0 @@
-SELECT quantity_bucket, stddev_unit_price FROM (SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END quantity_bucket, ROUND(STDDEV(unit_price), 2) stddev_unit_price FROM order_items GROUP BY CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END) x WHERE stddev_unit_price < 46 ORDER BY quantity_bucket;

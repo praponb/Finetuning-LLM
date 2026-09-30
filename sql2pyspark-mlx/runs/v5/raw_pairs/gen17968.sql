@@ -1,1 +1,0 @@
-with cleaned as (select id, device, browser, started_at, country, initcap(trim(browser)) as browser_title from sessions where started_at > date '2023-06-15') select *, row_number() over (partition by country order by started_at asc, id asc) as seq_no, row_number() over (order by started_at desc, id asc) as seq_no_2 from cleaned where device in ('tablet', 'mobile')

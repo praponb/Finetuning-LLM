@@ -1,1 +1,0 @@
-WITH valid_employees AS (SELECT *, INITCAP(TRIM(job_title)) AS job_title_title FROM employees WHERE salary > 74000), Summary AS (SELECT is_remote, job_title, MAX(salary) AS max_salary FROM valid_employees GROUP BY is_remote, job_title) SELECT is_remote, job_title, max_salary FROM Summary WHERE max_salary > 132000 ORDER BY job_title DESC;

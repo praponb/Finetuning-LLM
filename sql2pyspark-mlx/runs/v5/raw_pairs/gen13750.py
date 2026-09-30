@@ -1,7 +1,0 @@
-from pyspark.sql import functions as F
-
-result = (
-    df_suppliers
-    .filter(F.col("supplier_name").isNotNull())
-    .select("id", "city", F.substring("country", 1, 2).alias("country_prefix"))
-)

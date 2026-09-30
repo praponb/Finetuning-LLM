@@ -1,1 +1,0 @@
-select order_id, product_id, avg(quantity) as avg_quantity, round(stddev(quantity), 2) as stddev_quantity from order_items where quantity between 5 and 8 group by order_id, product_id order by stddev_quantity desc;

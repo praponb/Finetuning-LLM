@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, order_date, status, channel, amount, shipping_fee FROM orders QUALIFY ROW_NUMBER() OVER (PARTITION BY channel, store_id ORDER BY order_date, id) = 1) SELECT id, order_date, status, amount, shipping_fee FROM ranked ORDER BY shipping_fee DESC NULLS LAST;

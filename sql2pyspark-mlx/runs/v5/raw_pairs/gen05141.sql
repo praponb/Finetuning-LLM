@@ -1,1 +1,0 @@
-SELECT carrier, shipped_date, delivered_date, CONCAT_WS('/', status, carrier) AS status_carrier_key FROM shipments WHERE delivered_date BETWEEN '2023-04-01' AND '2025-09-01' AND (status = 'RETURNED' OR carrier IN ('DHL', 'UPS', 'FedEx')) ORDER BY carrier, 3;

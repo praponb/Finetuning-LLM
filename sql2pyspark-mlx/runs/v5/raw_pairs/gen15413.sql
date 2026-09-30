@@ -1,1 +1,0 @@
-SELECT YEAR(a.opened_date) AS opened_year, a.account_type, AVG(t.amount) AS avg_amount FROM transactions t INNER JOIN accounts a ON t.account_id = a.id GROUP BY YEAR(a.opened_date), a.account_type ORDER BY 3 DESC;

@@ -1,1 +1,0 @@
-SELECT id, supplier_id, price, product_name FROM (SELECT id, supplier_id, price, product_name, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY price DESC, id) AS rnk FROM products WHERE supplier_id IS NULL) AS r WHERE rnk <= 1;

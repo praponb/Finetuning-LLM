@@ -1,1 +1,0 @@
-WITH ranked_sessions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY browser ORDER BY started_at DESC, id) AS rn FROM sessions) SELECT id, browser, started_at, customer_id FROM ranked_sessions WHERE rn <= 5 ORDER BY customer_id DESC;

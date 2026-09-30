@@ -1,1 +1,0 @@
-select o.channel, o.status, round(avg(oi.unit_price), 2) as avg_unit_price from order_items oi left join orders o on o.id = oi.order_id right join stores s on o.store_id = s.id where oi.unit_price between 160 and 380 group by o.channel, o.status having round(avg(oi.unit_price), 2) > 31

@@ -1,1 +1,0 @@
-SELECT id, location, budget, dept_name, DENSE_RANK() OVER (PARTITION BY location ORDER BY budget DESC) AS budget_dense_rank, COUNT(*) OVER (PARTITION BY dept_name) AS dept_name_count FROM departments ORDER BY dept_name_count DESC;

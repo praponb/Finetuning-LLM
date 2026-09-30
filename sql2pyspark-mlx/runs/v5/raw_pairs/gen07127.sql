@@ -1,1 +1,0 @@
-select ss.units, ss.revenue, p.product_name, s.supplier_name, s.country from store_sales ss inner join products p on p.id = ss.product_id inner join suppliers s on p.supplier_id = s.id where s.country in ('US', 'DE');

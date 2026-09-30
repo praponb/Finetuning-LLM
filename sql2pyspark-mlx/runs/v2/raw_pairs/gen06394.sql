@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, MAX(amount) - MIN(amount) AS amount_range FROM transactions WHERE NOT is_flagged GROUP BY account_id) SELECT a.status, tba.amount_range FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id WHERE tba.amount_range > 54;

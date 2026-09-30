@@ -1,1 +1,0 @@
-select ss.store_id, avg(i.quantity) as avg_quantity, min(i.quantity) as min_quantity from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.store_id having avg_quantity >= 60;

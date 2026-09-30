@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM products WHERE SIZE(tags) > 2 AND supplier_id IS NULL), summary AS (SELECT QUARTER(launch_date) AS launch_quarter, YEAR(launch_date) AS launch_year, SUM(price) AS total_price FROM base GROUP BY QUARTER(launch_date), YEAR(launch_date)) SELECT launch_quarter, launch_year, total_price FROM summary ORDER BY launch_year DESC, launch_quarter;

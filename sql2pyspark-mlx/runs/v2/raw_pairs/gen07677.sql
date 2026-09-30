@@ -1,1 +1,0 @@
-select date_trunc('MONTH', signup_date) as signup_month, round(avg(age), 2) as avg_age, round(stddev(age), 2) as stddev_age from customers where segment = 'Consumer' and (country = 'SG' or segment = 'SMB') group by 1 order by signup_month desc;

@@ -1,1 +1,0 @@
-SELECT DISTINCT merchant FROM transactions WHERE amount BETWEEN 1300 AND 3200

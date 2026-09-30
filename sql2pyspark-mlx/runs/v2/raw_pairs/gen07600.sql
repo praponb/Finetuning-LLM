@@ -1,1 +1,0 @@
-with CustomerStats as (select customer_id, sum(balance) as total_balance, sum(case when account_type = 'LOAN' then 1 else 0 end) as loan_count from accounts where opened_date > '2025-01-01' group by customer_id) select c.credit_limit, c.is_active, C.total_balance, C.loan_count from customers c inner join CustomerStats C on c.id = C.customer_id;

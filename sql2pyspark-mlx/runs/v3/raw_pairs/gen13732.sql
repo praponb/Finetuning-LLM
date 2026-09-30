@@ -1,1 +1,0 @@
-WITH RecentInventory AS (SELECT * FROM inventory WHERE quantity BETWEEN 82 AND 127), inventory_stats AS (SELECT store_id, MAX(last_restock) AS latest_last_restock FROM RecentInventory GROUP BY store_id) SELECT store_id, latest_last_restock FROM inventory_stats

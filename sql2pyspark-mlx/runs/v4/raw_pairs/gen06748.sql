@@ -1,1 +1,0 @@
-SELECT id, region, opened_date, city, sqft, RANK() OVER (PARTITION BY region ORDER BY opened_date) AS opened_date_rank, LEAD(sqft, 1) OVER (PARTITION BY city ORDER BY opened_date, id) AS next_sqft FROM stores ORDER BY next_sqft ASC, opened_date ASC;

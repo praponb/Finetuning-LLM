@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(CASE WHEN country = 'UK' THEN 1 END) AS uk_count FROM suppliers WHERE LENGTH(supplier_name) > 12 GROUP BY CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END ORDER BY uk_count DESC;

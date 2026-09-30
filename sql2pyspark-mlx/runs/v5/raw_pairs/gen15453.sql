@@ -1,1 +1,0 @@
-with recent_departments as (select * from departments where (dept_name <> 'Engineering' and location not in ('Singapore', 'Berlin', 'Chiang Mai')) or location = 'Singapore'), summary as (select location, count(case when dept_name = 'Sales' then 1 end) as sales_count from recent_departments group by location) select * from summary order by location;

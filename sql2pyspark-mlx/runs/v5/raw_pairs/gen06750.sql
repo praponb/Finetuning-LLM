@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity FROM (SELECT id, product_id, quantity, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) AS rnk FROM inventory WHERE store_id IN (3, 5)) AS ranked WHERE rnk <= 5 ORDER BY quantity DESC, product_id;

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, CASE WHEN revenue >= 4100 THEN 'high' WHEN revenue >= 1300 THEN 'mid' ELSE 'low' END AS revenue_bucket, MAX(sale_date) AS latest_sale_date, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales GROUP BY 1, 2 ORDER BY latest_sale_date

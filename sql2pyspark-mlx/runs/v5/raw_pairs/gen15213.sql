@@ -1,1 +1,0 @@
-SELECT id, customer_id, created_at, items, ship_to, SIZE(items) AS num_items, EXISTS(coupon_codes, c -> c LIKE 'W%') AS has_welcome_code, AGGREGATE(items, CAST(0 AS DOUBLE), (acc, x) -> acc + x.qty * x.price, acc -> ROUND(acc, 2)) AS items_total FROM carts;

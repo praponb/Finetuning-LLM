@@ -1,1 +1,0 @@
-WITH web_events_by_session AS (SELECT session_id, COUNT(duration_sec) AS duration_sec_count, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events GROUP BY session_id) SELECT s.country, s.device, webs.duration_sec_count, webs.unique_event_types FROM sessions s JOIN web_events_by_session webs ON s.id = webs.session_id ORDER BY webs.unique_event_types DESC

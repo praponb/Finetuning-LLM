@@ -1,1 +1,0 @@
-select id, job_title, manager_id, is_remote, concat(full_name, ' ', level) as full_name_level from employees where length(full_name) > 11 and level = 'L5' and year(hire_date) >= 2023 order by full_name_level desc;

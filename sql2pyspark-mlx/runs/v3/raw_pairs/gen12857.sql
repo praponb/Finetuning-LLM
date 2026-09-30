@@ -1,1 +1,0 @@
-SELECT carrier, DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_month, COUNT(*) AS total_count, MIN(cost) AS min_cost FROM shipments WHERE status = 'DELIVERED' GROUP BY carrier, DATE_FORMAT(delivered_date, 'yyyy-MM') ORDER BY delivered_month DESC, carrier LIMIT 50;

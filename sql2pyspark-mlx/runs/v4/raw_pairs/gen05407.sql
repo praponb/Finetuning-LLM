@@ -1,1 +1,0 @@
-SELECT merchant, account_id, DATE_TRUNC('YEAR', txn_time) AS year_start, MIN(txn_time) AS first_seen, STDDEV_SAMP(amount) AS amount_stddev FROM transactions GROUP BY merchant, account_id, DATE_TRUNC('YEAR', txn_time) HAVING STDDEV_SAMP(amount) >= 0 ORDER BY amount_stddev NULLS LAST;

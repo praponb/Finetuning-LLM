@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, UPPER(carrier) carrier_upper, COALESCE(carrier, 'NONE') resolved_carrier FROM shipments WHERE shipped_date BETWEEN '2023-05-01' AND '2025-07-02') SELECT order_id, status FROM filtered INTERSECT SELECT order_id, status FROM shipments WHERE cost <= 84

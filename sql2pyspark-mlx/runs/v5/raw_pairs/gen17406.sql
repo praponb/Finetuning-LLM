@@ -1,1 +1,0 @@
-SELECT is_remote, SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END) AS l2_count, COUNT(DISTINCT salary) AS unique_levels FROM employees WHERE full_name IS NOT NULL OR email LIKE '%@startup.io' GROUP BY is_remote HAVING l2_count > 80 ORDER BY unique_levels DESC

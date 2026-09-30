@@ -1,1 +1,0 @@
-SELECT QUARTER(shipped_date) AS shipped_quarter, MAX(cost) AS max_cost FROM shipments WHERE carrier = 'UPS' AND delivered_date <= '2025-04-01' GROUP BY QUARTER(shipped_date) ORDER BY max_cost DESC, shipped_quarter DESC;

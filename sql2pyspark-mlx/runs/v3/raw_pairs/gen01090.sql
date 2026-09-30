@@ -1,1 +1,0 @@
-SELECT c.id, c.segment, COUNT(s.id) AS subscription_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.plan))) AS plan_values, AVG(s.monthly_fee) AS avg_monthly_fee FROM customers c LEFT JOIN subscriptions s ON s.customer_id = c.id WHERE c.country <> 'JP' GROUP BY c.id, c.segment HAVING AVG(s.monthly_fee) > 100 ORDER BY c.segment ASC;

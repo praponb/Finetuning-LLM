@@ -1,1 +1,0 @@
-SELECT p.brand, YEAR(p.launch_date) AS launch_year, MAX(oi.unit_price) AS max_unit_price FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id RIGHT JOIN orders o ON o.id = oi.order_id GROUP BY p.brand, YEAR(p.launch_date)

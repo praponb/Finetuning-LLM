@@ -1,1 +1,0 @@
-WITH valid_suppliers AS (SELECT * FROM suppliers WHERE supplier_name LIKE '%Toky%' OR supplier_name IS NOT NULL), summary AS (SELECT country, COUNT(rating) AS rating_count, ROUND(AVG(rating), 2) AS avg_rating FROM valid_suppliers GROUP BY country) SELECT country, rating_count, avg_rating FROM summary WHERE rating_count >= 6

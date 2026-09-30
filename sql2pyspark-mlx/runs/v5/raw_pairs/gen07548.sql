@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, TRIM(account_type) AS clean_account_type FROM accounts WHERE opened_date >= DATE '2023-09-03') SELECT account_type, ROUND(AVG(balance), 2) AS avg_balance, SUM(CASE WHEN status = 'FROZEN' THEN balance ELSE 0 END) AS frozen_balance FROM cleaned GROUP BY account_type ORDER BY account_type DESC;

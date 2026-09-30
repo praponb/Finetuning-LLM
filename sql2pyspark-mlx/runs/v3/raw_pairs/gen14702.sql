@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, AVG(t.amount) AS avg_amount FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id FULL OUTER JOIN customers c ON c.id = a.customer_id GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM')

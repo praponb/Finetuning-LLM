@@ -1,1 +1,0 @@
-SELECT s.id, s.opened_date, t.stddev_units, t.revenue_count FROM stores s JOIN (SELECT store_id, ROUND(STDDEV(units), 2) AS stddev_units, COUNT(revenue) AS revenue_count FROM store_sales GROUP BY store_id) t ON s.id = t.store_id WHERE t.stddev_units > 26 ORDER BY t.revenue_count DESC;

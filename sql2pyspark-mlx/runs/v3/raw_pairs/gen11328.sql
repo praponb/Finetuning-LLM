@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY store_id) SELECT stores.id, stores.region, stores.opened_date, store_totals.stddev_quantity FROM stores JOIN store_totals ON stores.id = store_totals.store_id ORDER BY opened_date DESC, store_totals.stddev_quantity DESC, id LIMIT 50

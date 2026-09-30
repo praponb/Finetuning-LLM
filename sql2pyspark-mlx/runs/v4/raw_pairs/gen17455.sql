@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, SUM(age) AS total_age, SUM(CASE WHEN segment = 'Corporate' THEN 1 ELSE 0 END) AS corporate_count FROM customers WHERE signup_date >= '2025-08-01' AND segment = 'SMB' GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM') ORDER BY total_age, 1;

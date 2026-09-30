@@ -1,1 +1,0 @@
-SELECT plan, status, status_list, cancelled_count FROM (SELECT plan, status, SORT_ARRAY(COLLECT_SET(status)) AS status_list, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count FROM subscriptions WHERE end_date < '2025-09-22' GROUP BY plan, status) AS x WHERE cancelled_count >= 7;

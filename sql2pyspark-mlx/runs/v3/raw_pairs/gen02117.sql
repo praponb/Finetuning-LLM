@@ -1,1 +1,0 @@
-SELECT carrier, order_id, cost, DATEDIFF(delivered_date, shipped_date) AS days_shipped_date_to_delivered_date, DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_date_label FROM shipments WHERE (cost <= 84 AND YEAR(shipped_date) = 2023) OR order_id IN (20, 28) ORDER BY delivered_date_label ASC

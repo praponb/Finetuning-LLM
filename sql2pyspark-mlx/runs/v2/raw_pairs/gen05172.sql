@@ -1,1 +1,0 @@
-SELECT plan, status, customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM subscriptions GROUP BY plan, status, customer_id HAVING COUNT(CASE WHEN status = 'EXPIRED' THEN 1 END) >= 5 ORDER BY plan_values

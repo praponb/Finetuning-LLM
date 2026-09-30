@@ -1,1 +1,0 @@
-SELECT c.city, MAX(o.order_date) AS latest_order_date FROM orders o RIGHT JOIN stores s ON o.store_id = s.id FULL OUTER JOIN customers c ON o.customer_id = c.id WHERE c.city = 'New York' GROUP BY c.city ORDER BY latest_order_date DESC, city LIMIT 50;

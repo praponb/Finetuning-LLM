@@ -1,1 +1,0 @@
-select we.id, we.session_id, we.event_type, s.device, s.browser, c.name from web_events we left outer join sessions s on we.session_id = s.id full outer join customers c on s.customer_id = c.id where s.device = 'tablet' and s.browser in ('Firefox', 'Safari', 'Edge') order by c.name, s.device

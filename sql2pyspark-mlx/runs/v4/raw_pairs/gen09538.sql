@@ -1,1 +1,0 @@
-select channel, concat_ws(', ', sort_array(collect_set(status))) as status_values, round((100 * sum(case when status = 'CANCELLED' then 1 else 0 end)) / count(*), 1) as pct_cancelled from orders where channel != 'web' and (shipping_fee < 14 or shipping_fee < 16) group by channel;

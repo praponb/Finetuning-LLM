@@ -1,1 +1,0 @@
-select date_format(hire_date, 'yyyy-MM') as hire_month, sum(salary) as total_salary, dense_rank() over (order by sum(salary) desc) as salary_rank from employees where manager_id = 33 group by date_format(hire_date, 'yyyy-MM') order by total_salary

@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', shipped_date) AS shipped_month, SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END) AS lost_count FROM shipments GROUP BY DATE_TRUNC('MONTH', shipped_date) HAVING SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END) < 26

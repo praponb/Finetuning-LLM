@@ -1,1 +1,0 @@
-SELECT id, location, dept_name, budget, ROW_NUMBER() OVER (PARTITION BY location, dept_name ORDER BY budget DESC, id) AS budget_row FROM departments WHERE dept_name NOT IN ('HR', 'Finance', 'Engineering') ORDER BY budget;

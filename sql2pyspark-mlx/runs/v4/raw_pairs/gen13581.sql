@@ -1,1 +1,0 @@
-WITH recent_payments AS (SELECT * FROM payments WHERE order_id = 16 AND method IN ('cash', 'paypal')), PaymentsStats AS (SELECT status, AVG(amount) AS avg_amount, MAX(paid_at) AS last_paid_at FROM recent_payments GROUP BY status) SELECT status, last_paid_at FROM PaymentsStats WHERE avg_amount > 890 ORDER BY 2 DESC, 1

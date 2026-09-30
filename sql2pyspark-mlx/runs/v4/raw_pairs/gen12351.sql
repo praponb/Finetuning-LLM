@@ -1,1 +1,0 @@
-SELECT s.id, s.supplier_name, t.pct_grocery, t.stock_qty_range FROM suppliers s INNER JOIN (SELECT supplier_id, ROUND((100 * SUM(CASE WHEN category = 'Grocery' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_grocery, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.pct_grocery >= 77;

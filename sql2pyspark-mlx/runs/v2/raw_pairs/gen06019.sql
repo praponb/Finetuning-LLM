@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, MAX(i.quantity) AS max_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE p.stock_qty != 224 GROUP BY p.brand, p.category ORDER BY max_quantity DESC, category

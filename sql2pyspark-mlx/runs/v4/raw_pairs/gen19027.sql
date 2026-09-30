@@ -1,1 +1,0 @@
-SELECT products.supplier_id, AVG(order_items.unit_price) avg_unit_price FROM order_items JOIN products ON order_items.product_id = products.id WHERE order_items.product_id = 12 GROUP BY products.supplier_id

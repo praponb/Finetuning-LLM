@@ -1,1 +1,0 @@
-SELECT a.id, a.balance, a.status, c.is_active, DATEDIFF(CURRENT_DATE(), c.signup_date) days_since_signup_date FROM accounts a INNER JOIN customers c ON c.id = a.customer_id WHERE c.signup_date BETWEEN '2023-11-01' AND '2024-09-01' AND c.email LIKE '%@yahoo.com'

@@ -1,1 +1,0 @@
-SELECT o.status, SUM(CASE WHEN s.carrier = 'UPS' THEN 1 ELSE 0 END) AS ups_count, COUNT(*) AS row_count FROM shipments s JOIN orders o ON o.id = s.order_id LEFT JOIN customers c ON c.id = o.customer_id GROUP BY o.status ORDER BY status ASC;

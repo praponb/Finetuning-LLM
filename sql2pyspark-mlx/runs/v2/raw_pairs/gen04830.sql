@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_products FROM inventory WHERE product_id IN (1, 2, 5) GROUP BY store_id) SELECT s.id, s.sqft, st.unique_products FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id WHERE st.unique_products > 5 ORDER BY sqft DESC

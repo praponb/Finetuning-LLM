@@ -1,1 +1,0 @@
-SELECT c.id, c.name, c.country, t.min_opened_date, t.max_balance FROM customers c LEFT JOIN (SELECT customer_id, MIN(opened_date) AS min_opened_date, MAX(balance) AS max_balance FROM accounts GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.max_balance >= 44000 ORDER BY c.id DESC;

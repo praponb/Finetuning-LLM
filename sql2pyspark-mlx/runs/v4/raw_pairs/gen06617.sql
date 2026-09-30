@@ -1,1 +1,0 @@
-SELECT quantity_bucket, avg_quantity, quantity_count FROM (SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, AVG(quantity) AS avg_quantity, COUNT(quantity) AS quantity_count FROM order_items GROUP BY CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END) AS x WHERE quantity_count > 6;

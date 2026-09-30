@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.quantity, p.brand, p.launch_date FROM inventory i INNER JOIN products p ON i.product_id = p.id WHERE NOT (i.store_id IN (1, 3) AND p.stock_qty BETWEEN 113 AND 331) ORDER BY p.brand

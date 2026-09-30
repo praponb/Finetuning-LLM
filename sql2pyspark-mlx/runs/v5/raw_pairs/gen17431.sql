@@ -1,1 +1,0 @@
-SELECT orders.amount, stores.region, customers.segment, customers.name FROM orders INNER JOIN stores ON orders.store_id = stores.id LEFT JOIN customers ON orders.customer_id = customers.id WHERE orders.channel <> 'mobile' ORDER BY customers.name

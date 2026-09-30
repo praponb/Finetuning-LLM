@@ -1,1 +1,0 @@
-with account_stats as (select account_id, max(txn_time) latest_txn_time from transactions group by account_id) select a.balance, as.latest_txn_time from accounts a join account_stats as on a.id = as.account_id order by balance desc;

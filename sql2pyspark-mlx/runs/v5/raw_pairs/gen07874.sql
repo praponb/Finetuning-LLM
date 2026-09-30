@@ -1,1 +1,0 @@
-with filtered_stores as (select * from stores where sqft between 5337 and 6616), city_summary as (select city, count(*) as num_stores, sum(case when region = 'East' then sqft else 0 end) as east_sqft from filtered_stores group by city) select city, num_stores from city_summary where num_stores < 5 order by num_stores desc, city limit 5

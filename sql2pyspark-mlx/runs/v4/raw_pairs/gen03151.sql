@@ -1,1 +1,0 @@
-SELECT city, COUNT(CASE WHEN city = 'Tokyo' THEN 1 END) AS tokyo_count FROM stores WHERE sqft >= 6990 AND (region IN ('South', 'North', 'Central') OR sqft BETWEEN 13672 AND 14678) GROUP BY city ORDER BY tokyo_count DESC, city DESC;

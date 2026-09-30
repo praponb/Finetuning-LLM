@@ -1,1 +1,0 @@
-select level, job_title, round(stddev(salary), 2) as stddev_salary, min(hire_date) as min_hire_date from employees where is_remote or manager_id in (3, 8, 26) group by 1, 2 order by stddev_salary desc;

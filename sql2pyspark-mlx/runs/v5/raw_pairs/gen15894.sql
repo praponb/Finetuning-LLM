@@ -1,1 +1,0 @@
-SELECT p.category, p.brand, COUNT(ss.units) units_count FROM store_sales ss JOIN stores s ON s.id = ss.store_id JOIN products p ON ss.product_id = p.id WHERE ss.units >= 30 GROUP BY p.category, p.brand ORDER BY brand ASC;

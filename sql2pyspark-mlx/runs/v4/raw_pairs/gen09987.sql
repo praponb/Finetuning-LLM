@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, COALESCE(balance, 0) AS balance_filled, ABS(balance) AS abs_balance, COALESCE(status, 'NONE') AS resolved_status FROM accounts WHERE status IS NOT NULL) SELECT * FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date DESC, id) = 1

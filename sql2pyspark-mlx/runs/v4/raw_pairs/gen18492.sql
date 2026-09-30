@@ -1,1 +1,0 @@
-WITH Base AS (SELECT *, UPPER(status) AS status_upper FROM subscriptions WHERE customer_id = 11 AND MONTH(start_date) IN (3, 4, 10)), summary AS (SELECT plan, SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END) AS enterprise_count FROM Base GROUP BY plan) SELECT * FROM summary ORDER BY plan, enterprise_count LIMIT 3

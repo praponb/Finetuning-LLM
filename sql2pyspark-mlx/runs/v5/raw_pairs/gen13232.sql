@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, order_id, ROUND(AVG(unit_price), 2) AS avg_unit_price, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items GROUP BY CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END, order_id HAVING ROUND(AVG(unit_price), 2) < 69;

@@ -1,1 +1,0 @@
-SELECT oi.product_id, o.amount, o.status, p.launch_date, p.stock_qty FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON oi.product_id = p.id ORDER BY product_id DESC, stock_qty DESC

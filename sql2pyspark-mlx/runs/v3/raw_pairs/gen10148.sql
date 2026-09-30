@@ -1,1 +1,0 @@
-SELECT id, city, sqft FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY sqft DESC, id) AS row_num FROM stores WHERE sqft BETWEEN 5979 AND 12252) AS r WHERE row_num <= 3 ORDER BY city DESC;

@@ -1,1 +1,0 @@
-SELECT plan, max_monthly_fee, min_monthly_fee FROM (SELECT plan, MAX(monthly_fee) AS max_monthly_fee, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions GROUP BY plan) AS s WHERE min_monthly_fee > 220 ORDER BY plan, min_monthly_fee LIMIT 50

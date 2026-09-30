@@ -1,1 +1,0 @@
-with customer_stats as (select customer_id, round(stddev(monthly_fee), 2) as stddev_monthly_fee, count(monthly_fee) as monthly_fee_count from subscriptions where status = 'ACTIVE' group by customer_id) select c.id, c.name, cs.stddev_monthly_fee, cs.monthly_fee_count from customers c inner join customer_stats cs on c.id = cs.customer_id order by monthly_fee_count desc;

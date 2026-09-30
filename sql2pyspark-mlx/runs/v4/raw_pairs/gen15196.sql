@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, COUNT(*) AS account_count, MIN(balance) AS min_balance FROM accounts GROUP BY customer_id) SELECT c.id, c.name, ct.account_count, ct.min_balance FROM customers c LEFT JOIN customer_totals ct ON c.id = ct.customer_id ORDER BY c.id DESC, account_count DESC;

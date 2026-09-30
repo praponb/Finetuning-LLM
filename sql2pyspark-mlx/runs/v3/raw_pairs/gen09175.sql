@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 225 THEN 'high' WHEN quantity >= 32 THEN 'mid' ELSE 'low' END AS quantity_bucket, MIN(quantity) AS min_quantity FROM inventory WHERE store_id IN (3, 4, 6) GROUP BY 1 HAVING COUNT(*) < 5 ORDER BY quantity_bucket DESC;

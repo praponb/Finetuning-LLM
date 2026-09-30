@@ -1,1 +1,0 @@
-select dept_name, sum(case when dept_name = 'Marketing' then budget else 0 end) as marketing_budget from departments where dept_name = 'Sales' and location is not null group by dept_name order by dept_name, marketing_budget limit 3

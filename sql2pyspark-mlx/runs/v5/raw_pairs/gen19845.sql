@@ -1,1 +1,0 @@
-SELECT s.id, s.brand, s.cost, s.stock_qty, s.launch_date, s.supplier_id, latest.order_item_unit_price, latest.quantity FROM products s JOIN LATERAL (SELECT c.unit_price AS order_item_unit_price, c.quantity FROM order_items c WHERE c.product_id = s.id ORDER BY c.quantity DESC, c.id DESC LIMIT 1) latest ON TRUE;

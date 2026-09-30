@@ -1,1 +1,0 @@
-select id, page, event_type, lower(event_type) as event_type_lower, case when duration_sec >= 509 then 'High' when duration_sec >= 168 then 'Medium' else 'Low' end as duration_sec_level from web_events where session_id = 1

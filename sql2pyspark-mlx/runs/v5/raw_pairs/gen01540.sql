@@ -1,1 +1,0 @@
-SELECT e.level AS employee_level, e.job_title AS employee_job_title, COUNT(*) AS num_rows, ROUND(AVG(src.salary), 2) AS avg_salary FROM employees src INNER JOIN employees e ON src.manager_id = e.id GROUP BY GROUPING SETS ((e.level, e.job_title), (e.level))

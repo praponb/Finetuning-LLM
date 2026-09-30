@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) AS sg_count FROM suppliers GROUP BY CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END HAVING sg_count > 54;

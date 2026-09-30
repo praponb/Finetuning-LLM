@@ -1,1 +1,0 @@
-with order_stats as (select order_id, max(paid_at) as latest_paid_at, count(case when status = 'SUCCESS' then 1 end) as success_count from payments where status in ('SUCCESS', 'FAILED') group by order_id) select o.shipping_fee, o.channel, os.latest_paid_at, os.success_count from orders o inner join order_stats os on o.id = os.order_id order by shipping_fee, success_count desc;

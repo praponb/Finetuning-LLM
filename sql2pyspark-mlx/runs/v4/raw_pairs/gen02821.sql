@@ -1,1 +1,0 @@
-WITH products_by_supplier AS (SELECT supplier_id, MIN(stock_qty) min_stock_qty FROM products GROUP BY supplier_id) SELECT suppliers.id, suppliers.country, products_by_supplier.min_stock_qty FROM suppliers JOIN products_by_supplier ON suppliers.id = products_by_supplier.supplier_id ORDER BY suppliers.country DESC

@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM store_sales WHERE revenue BETWEEN 1900 AND 3900 AND units > 38), summary AS (SELECT product_id, store_id, ROUND(AVG(revenue), 2) AS avg_revenue, MAX(sale_date) AS latest_sale_date FROM Base GROUP BY product_id, store_id) SELECT product_id, store_id, avg_revenue, latest_sale_date FROM summary WHERE avg_revenue < 51;

@@ -1,1 +1,0 @@
-SELECT s.id, s.country, t.total_stock_qty FROM suppliers s LEFT JOIN (SELECT supplier_id, SUM(stock_qty) AS total_stock_qty FROM products WHERE price IS NULL GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY country DESC, id;

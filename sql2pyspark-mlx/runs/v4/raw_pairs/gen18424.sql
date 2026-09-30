@@ -1,1 +1,0 @@
-SELECT QUARTER(order_date) AS order_quarter, ROUND((100 * SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_completed FROM orders GROUP BY order_quarter HAVING ROUND((100 * SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END)) / COUNT(*), 1) >= 66;

@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, i.quantity, s.store_name, p.category, p.stock_qty FROM inventory i JOIN stores s ON i.store_id = s.id JOIN products p ON p.id = i.product_id WHERE i.store_id = 6 ORDER BY last_restock

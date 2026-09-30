@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(last_restock) < 2024 THEN 'before_2024' WHEN YEAR(last_restock) = 2024 THEN '2024' ELSE 'after_2024' END AS last_restock_cohort, product_id, SUM(quantity) AS total_quantity, MIN(last_restock) AS min_last_restock FROM inventory WHERE YEAR(last_restock) = 2023 AND quantity <= 198 GROUP BY 1, 2 HAVING total_quantity >= 610 ORDER BY min_last_restock;

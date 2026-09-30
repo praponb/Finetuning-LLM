@@ -1,1 +1,0 @@
-SELECT oi.id, oi.order_id, oi.unit_price, oi.product_id, p.price, p.cost, ROUND(oi.unit_price / oi.quantity, 2) line_total FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id WHERE oi.unit_price BETWEEN 260 AND 380 ORDER BY p.price;

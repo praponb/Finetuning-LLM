@@ -1,1 +1,0 @@
-SELECT CASE WHEN shipping_fee >= 37 THEN 'high' WHEN shipping_fee >= 11 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, SUM(CASE WHEN channel = 'store' THEN amount ELSE 0 END) AS store_amount, SUM(CASE WHEN status = 'CANCELLED' THEN shipping_fee ELSE 0 END) AS cancelled_shipping_fee FROM orders GROUP BY shipping_fee_bucket ORDER BY store_amount DESC

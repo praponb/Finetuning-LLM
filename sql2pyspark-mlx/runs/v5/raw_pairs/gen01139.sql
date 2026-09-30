@@ -1,1 +1,0 @@
-select date_trunc('MONTH', signup_date) as signup_month, avg(credit_limit) as avg_credit_limit, max(age) as max_age, round(stddev(credit_limit), 2) as stddev_credit_limit from customers group by 1 order by max_age asc, stddev_credit_limit desc, signup_month asc limit 10

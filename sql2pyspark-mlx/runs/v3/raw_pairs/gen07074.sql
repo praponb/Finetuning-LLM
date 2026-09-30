@@ -1,1 +1,0 @@
-select i.id, i.last_restock, i.product_id, p.stock_qty, p.product_name, s.opened_date, s.city from inventory i inner join products p on p.id = i.product_id full outer join stores s on i.store_id = s.id order by s.city;

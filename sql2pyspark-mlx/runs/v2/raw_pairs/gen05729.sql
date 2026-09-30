@@ -1,1 +1,0 @@
-SELECT budget_bucket, department_count FROM (SELECT CASE WHEN budget >= 3854000 THEN 'high' WHEN budget >= 1030000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(*) AS department_count FROM departments GROUP BY CASE WHEN budget >= 3854000 THEN 'high' WHEN budget >= 1030000 THEN 'mid' ELSE 'low' END) AS x WHERE department_count > 10 ORDER BY budget_bucket ASC

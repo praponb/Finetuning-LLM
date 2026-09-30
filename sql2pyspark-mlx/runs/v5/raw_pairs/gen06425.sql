@@ -1,1 +1,0 @@
-SELECT dim.status, dim.account_type, src.txn_type, COUNT(*) AS num_rows, MAX(src.amount) AS max_amount, GROUPING_ID() AS gid FROM transactions src LEFT JOIN accounts dim ON src.account_id = dim.id GROUP BY GROUPING SETS ((dim.status, dim.account_type, src.txn_type), (dim.status, dim.account_type), (dim.status))

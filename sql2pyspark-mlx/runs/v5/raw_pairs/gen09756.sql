@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, account_id, txn_type, amount, txn_time, is_flagged, SUBSTRING(txn_type, 1, 2) AS txn_type_prefix, YEAR(txn_time) AS txn_time_year FROM transactions WHERE txn_time > TIMESTAMP '2023-09-29 10:00:00' AND amount <= 1300) SELECT account_id, txn_type FROM cleaned INTERSECT ALL SELECT account_id, txn_type FROM transactions WHERE amount >= 3400;

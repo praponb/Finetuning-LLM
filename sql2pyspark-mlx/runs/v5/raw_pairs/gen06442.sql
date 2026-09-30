@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM products WHERE category <> 'Sports'), summary AS (SELECT brand, SUM(CASE WHEN category = 'Electronics' THEN stock_qty ELSE 0 END) AS electronics_stock_qty FROM Base GROUP BY brand) SELECT brand, electronics_stock_qty FROM summary ORDER BY electronics_stock_qty DESC, brand LIMIT 1

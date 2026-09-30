@@ -1,1 +1,0 @@
-SELECT store_id, ROUND(STDDEV(units), 2) AS stddev_units, ROUND(STDDEV(revenue), 2) AS stddev_revenue, ROUND(AVG(units), 2) AS avg_units FROM store_sales WHERE product_id IN (2, 6) AND sale_date <= '2024-03-07' AND revenue BETWEEN 1400 AND 2900 GROUP BY store_id HAVING ROUND(AVG(units), 2) < 47;

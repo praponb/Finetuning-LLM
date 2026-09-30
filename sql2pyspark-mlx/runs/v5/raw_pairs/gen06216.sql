@@ -1,1 +1,0 @@
-SELECT account_type, customer_id, MIN(balance) AS min_balance, MIN(opened_date) AS first_opened_date, AVG(balance) AS avg_balance FROM accounts GROUP BY account_type, customer_id ORDER BY avg_balance ASC;

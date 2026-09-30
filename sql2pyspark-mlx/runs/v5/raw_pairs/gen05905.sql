@@ -1,1 +1,0 @@
-WITH top_transactions AS (SELECT id, txn_type, txn_time, is_flagged, RANK() OVER (PARTITION BY txn_type ORDER BY txn_time DESC) AS row_num FROM transactions) SELECT id, txn_type, txn_time, is_flagged FROM top_transactions WHERE row_num <= 3 ORDER BY txn_type ASC

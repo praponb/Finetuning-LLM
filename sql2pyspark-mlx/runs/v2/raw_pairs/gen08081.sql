@@ -1,1 +1,0 @@
-select quarter(event_time) as event_quarter, max(event_time) as latest_event_time, max(duration_sec) - min(duration_sec) as duration_sec_range, sum(case when event_type = 'add_to_cart' then duration_sec else 0 end) as add_to_cart_duration_sec from web_events group by quarter(event_time) order by event_quarter desc

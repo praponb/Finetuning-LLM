@@ -1,1 +1,0 @@
-SELECT we.id, we.session_id, we.duration_sec, we.page, s.country FROM web_events we JOIN sessions s ON s.id = we.session_id WHERE we.event_type NOT IN ('search', 'purchase') OR s.browser IN ('Firefox', 'Chrome', 'Edge') ORDER BY we.duration_sec ASC

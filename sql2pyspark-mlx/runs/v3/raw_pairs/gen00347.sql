@@ -1,1 +1,0 @@
-SELECT channel, order_quarter, cnt, total_count FROM (SELECT channel, QUARTER(order_date) AS order_quarter, COUNT(*) AS cnt, COUNT(*) AS total_count FROM orders GROUP BY channel, QUARTER(order_date)) AS x WHERE total_count >= 6;

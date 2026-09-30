@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, ARRAY_CONTAINS(tags, 'clearance') AS is_clearance FROM products WHERE supplier_id IS NOT NULL AND supplier_id IN (2, 21, 28, 39)) SELECT * FROM (SELECT category, brand, price FROM cleaned) src PIVOT (AVG(price) FOR brand IN ('Initech', 'Acme'));

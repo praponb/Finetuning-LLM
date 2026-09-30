@@ -1,1 +1,0 @@
-with store_sales_by_product as (select product_id, count(distinct units) as unique_products from store_sales group by product_id) select products.category, products.cost, store_sales_by_product.unique_products from products join store_sales_by_product on products.id = store_sales_by_product.product_id order by unique_products desc;

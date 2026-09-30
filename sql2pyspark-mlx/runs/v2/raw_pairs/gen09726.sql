@@ -1,1 +1,0 @@
-select id, end_date, case when monthly_fee >= 263 then 'High' when monthly_fee >= 100 then 'Medium' else 'Low' end monthly_fee_tier from subscriptions where status <> 'ACTIVE' and status in ('ACTIVE', 'PAUSED', 'CANCELLED')

@@ -1,1 +1,0 @@
-SELECT id, city, rating, country, RANK() OVER (PARTITION BY city ORDER BY rating DESC) rating_rank, ROUND(rating / SUM(rating) OVER (PARTITION BY country), 3) rating_share FROM suppliers WHERE country = 'DE';

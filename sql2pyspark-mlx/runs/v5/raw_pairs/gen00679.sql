@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, customer_id, status, channel, discount, shipping_fee, DATE_TRUNC('year', order_date) AS order_date_period FROM orders WHERE channel IS NOT NULL) SELECT * FROM (SELECT customer_id, status, shipping_fee FROM valid) src PIVOT (MAX(shipping_fee) FOR status IN ('SHIPPED', 'CANCELLED', 'PENDING'))

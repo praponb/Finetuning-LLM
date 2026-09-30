@@ -1,1 +1,0 @@
-SELECT store_id, SUM(revenue) AS total_revenue, MIN(revenue) AS min_revenue, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales GROUP BY store_id HAVING MAX(revenue) - MIN(revenue) < 25 ORDER BY revenue_range ASC, min_revenue ASC, store_id ASC LIMIT 20

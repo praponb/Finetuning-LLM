@@ -1,1 +1,0 @@
-SELECT full_name, is_remote, COALESCE(full_name, 'unassigned') full_name_filled FROM employees WHERE hire_date < '2025-05-29' AND dept_id IN (7, 33) AND full_name LIKE '%Chen%' ORDER BY full_name_filled;

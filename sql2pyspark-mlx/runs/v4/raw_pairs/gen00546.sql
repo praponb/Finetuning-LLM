@@ -1,1 +1,0 @@
-with valid as (select id, supplier_name, country, city, rating, round(rating, 2) rating_rounded, substring(country, 1, 3) country_prefix from suppliers where city is not null) select *, min(rating) over (partition by city) city_min_rating, percent_rank() over (partition by city order by rating nulls first) rating_percent_rank from valid

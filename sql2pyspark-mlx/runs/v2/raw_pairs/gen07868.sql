@@ -1,1 +1,0 @@
-select ss.store_id, ss.product_id, s.region, p.stock_qty, p.product_name, last_day(ss.sale_date) as sale_date_month_end from store_sales ss inner join stores s on ss.store_id = s.id full outer join products p on ss.product_id = p.id order by p.product_name;

@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.last_restock, p.product_name, p.launch_date, s.opened_date, ARRAY_CONTAINS(p.tags, 'eco') AS is_eco FROM inventory i JOIN products p ON p.id = i.product_id JOIN stores s ON s.id = i.store_id;

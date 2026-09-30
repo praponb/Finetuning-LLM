@@ -1,1 +1,0 @@
-SELECT customers.city, COUNT(CASE WHEN subscriptions.status = 'ACTIVE' THEN 1 END) AS active_count, COUNT(CASE WHEN subscriptions.status = 'PAUSED' THEN 1 END) AS paused_count FROM subscriptions LEFT JOIN customers ON subscriptions.customer_id = customers.id GROUP BY customers.city;

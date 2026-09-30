@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN rating >= 4.5 THEN 'High' WHEN rating >= 1.8 THEN 'Medium' ELSE 'Low' END AS rating_tier, LOWER(city) AS city_lower FROM suppliers WHERE country = 'US' AND supplier_name LIKE '%Import%' AND city IN ('Tokyo', 'Berlin', 'Singapore')

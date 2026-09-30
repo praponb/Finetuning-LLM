@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, SUM(amount) AS total_amount, MAX(amount) AS max_amount FROM transactions WHERE merchant = '7-Eleven' GROUP BY account_id) SELECT accounts.id, accounts.status, account_stats.total_amount, account_stats.max_amount FROM accounts LEFT OUTER JOIN account_stats ON accounts.id = account_stats.account_id ORDER BY account_stats.total_amount;

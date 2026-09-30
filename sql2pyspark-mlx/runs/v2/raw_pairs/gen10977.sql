@@ -1,1 +1,0 @@
-SELECT status, shipped_date, delivered_date, CASE WHEN cost >= 87 THEN 'High' WHEN cost >= 31 THEN 'Medium' ELSE 'Low' END AS cost_band, LAST_DAY(delivered_date) AS delivered_date_month_end FROM shipments WHERE cost >= 88 AND carrier IS NOT NULL ORDER BY shipped_date

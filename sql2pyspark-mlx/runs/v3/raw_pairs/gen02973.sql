@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY order_id) SELECT o.status, o.channel, os.unit_price_count FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.unit_price_count >= 7 ORDER BY status DESC, unit_price_count DESC;

@@ -1,1 +1,0 @@
-SELECT e.id, e.job_title AS employee_job_title, e.is_remote AS employee_is_remote, e.dept_id AS employee_dept_id, m.is_remote AS manager_is_remote FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE LENGTH(e.email) < 13 ORDER BY e.dept_id DESC, id DESC;

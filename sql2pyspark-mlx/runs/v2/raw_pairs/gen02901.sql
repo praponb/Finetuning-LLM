@@ -1,1 +1,0 @@
-select orders.status, orders.customer_id, t.avg_cost from orders inner join (select order_id, avg(cost) as avg_cost from shipments where carrier = 'DHL' group by order_id) t on orders.id = t.order_id where t.avg_cost >= 28 order by avg_cost;

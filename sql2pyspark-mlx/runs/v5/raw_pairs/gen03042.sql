@@ -1,1 +1,0 @@
-with filtered_subscriptions as (select *, concat(status, ' - ', plan) as status_plan from subscriptions where end_date <= '2025-02-20' or status <> 'EXPIRED'), agg as (select status, count(monthly_fee) as monthly_fee_count from filtered_subscriptions group by status) select * from agg

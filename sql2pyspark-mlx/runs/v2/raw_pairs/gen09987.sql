@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, ROUND(AVG(units), 2) AS avg_units FROM store_sales GROUP BY product_id) SELECT products.id, products.brand, products.cost, product_summary.avg_units FROM products JOIN product_summary ON products.id = product_summary.product_id

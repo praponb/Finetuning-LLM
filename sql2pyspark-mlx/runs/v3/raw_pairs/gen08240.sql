@@ -1,1 +1,0 @@
-SELECT oi.product_id, oi.order_id, o.channel, p.product_name, LOWER(o.channel) AS channel_lower FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id RIGHT OUTER JOIN products p ON oi.product_id = p.id ORDER BY product_name DESC;

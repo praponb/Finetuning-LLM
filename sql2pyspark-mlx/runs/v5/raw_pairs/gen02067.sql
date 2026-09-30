@@ -1,1 +1,0 @@
-select i.id, i.store_id, i.last_restock, p.stock_qty, p.brand, s.opened_date from inventory i join products p on i.product_id = p.id right join stores s on i.store_id = s.id order by p.brand desc, store_id desc;

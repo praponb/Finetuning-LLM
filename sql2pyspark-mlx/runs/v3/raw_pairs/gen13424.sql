@@ -1,1 +1,0 @@
-SELECT id, sale_date, product_id, units, CASE WHEN revenue >= 3900 THEN 'High' WHEN revenue >= 1400 THEN 'Medium' ELSE 'Low' END revenue_band, COALESCE(units, 0) units_filled FROM store_sales WHERE MONTH(sale_date) IN (1, 7, 12) AND (revenue >= 3400 OR units >= 21);

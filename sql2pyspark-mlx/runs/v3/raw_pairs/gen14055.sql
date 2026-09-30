@@ -1,1 +1,0 @@
-SELECT session_id FROM web_events WHERE event_type NOT IN ('purchase', 'add_to_cart') UNION ALL SELECT session_id FROM web_events WHERE event_type NOT IN ('search', 'add_to_cart') ORDER BY session_id DESC

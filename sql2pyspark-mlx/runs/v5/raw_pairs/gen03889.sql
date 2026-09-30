@@ -1,1 +1,0 @@
-SELECT suppliers.country, suppliers.supplier_name, products.cost, ARRAY_CONTAINS(products.tags, 'eco') AS is_eco FROM suppliers LEFT OUTER JOIN products ON suppliers.id = products.supplier_id ORDER BY supplier_name DESC;

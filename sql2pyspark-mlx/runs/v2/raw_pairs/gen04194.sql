@@ -1,1 +1,0 @@
-SELECT id, product_id, revenue, store_id, sale_date, MIN(revenue) OVER (PARTITION BY product_id) AS product_id_min_revenue, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY sale_date, id) AS row_num FROM store_sales;

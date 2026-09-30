@@ -1,1 +1,0 @@
-SELECT s.id, s.country, s.started_at, t.web_event_count FROM sessions s INNER JOIN (SELECT session_id, COUNT(*) web_event_count FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.web_event_count > 10 ORDER BY s.started_at

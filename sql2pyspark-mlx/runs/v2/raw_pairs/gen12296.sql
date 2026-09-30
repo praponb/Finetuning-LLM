@@ -1,1 +1,0 @@
-SELECT MAX(sqft) - MIN(sqft) AS sqft_range, MAX(opened_date) AS last_opened_date, SUM(CASE WHEN region = 'East' THEN sqft ELSE 0 END) AS east_sqft FROM stores WHERE LENGTH(store_name) >= 7 AND store_name IS NOT NULL ORDER BY east_sqft;

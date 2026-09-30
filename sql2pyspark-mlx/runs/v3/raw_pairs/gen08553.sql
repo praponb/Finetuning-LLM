@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, INITCAP(TRIM(status)) AS status_title FROM payments WHERE status = 'SUCCESS' AND method NOT IN ('card', 'paypal', 'promptpay')), order_id_summary AS (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values FROM base GROUP BY order_id) SELECT order_id, method_values FROM order_id_summary ORDER BY order_id DESC;

@@ -1,1 +1,0 @@
-select case when location in ('Berlin', 'New York') then 'core' else 'other' end as location_group, sum(budget) as total_budget, round(sum(budget) * 100.0 / sum(sum(budget)) over (), 2) as pct_of_total from departments where location in ('Tokyo', 'London') group by case when location in ('Berlin', 'New York') then 'core' else 'other' end order by total_budget, location_group;

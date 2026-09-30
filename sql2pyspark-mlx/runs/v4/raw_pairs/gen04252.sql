@@ -1,1 +1,0 @@
-SELECT id, customer_id, items, ship_to, attributes, ARRAY_CONTAINS(MAP_KEYS(attributes), 'weight_kg') AS has_weight_kg, EXISTS(coupon_codes, c -> c LIKE 'W%') AS has_welcome_code, ship_to.country AS ship_country FROM carts WHERE customer_id IS NULL

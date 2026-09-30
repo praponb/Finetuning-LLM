@@ -1,1 +1,0 @@
-SELECT job_title, SORT_ARRAY(COLLECT_SET(job_title)) job_title_list, SORT_ARRAY(COLLECT_SET(level)) level_list, COUNT(CASE WHEN level = 'L3' THEN 1 END) l3_count FROM employees GROUP BY job_title ORDER BY l3_count DESC, job_title;

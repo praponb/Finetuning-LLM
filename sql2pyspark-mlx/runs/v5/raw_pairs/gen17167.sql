@@ -1,1 +1,0 @@
-SELECT id, browser, country, device, CONCAT_WS(',', browser, device) AS browser_device_key, CAST(started_at AS DATE) AS started_at_day FROM sessions WHERE device IN ('desktop', 'tablet', 'mobile') ORDER BY started_at_day

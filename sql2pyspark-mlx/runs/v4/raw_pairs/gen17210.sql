@@ -1,1 +1,0 @@
-WITH top_customers AS (SELECT id, country, signup_date, name, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date DESC, id) AS rn FROM customers) SELECT * FROM top_customers WHERE rn <= 3 ORDER BY country DESC;

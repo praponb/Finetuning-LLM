@@ -1,1 +1,0 @@
-SELECT s.region, s.sqft, t.stddev_quantity, t.last_last_restock FROM stores s LEFT JOIN (SELECT store_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY store_id) t ON s.id = t.store_id;

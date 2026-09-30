@@ -1,1 +1,0 @@
-WITH account_summary AS (SELECT account_id, SUM(CASE WHEN txn_type = 'FEE' THEN amount ELSE 0 END) AS fee_amount, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions GROUP BY account_id) SELECT a.id, a.status, a.balance, as.fee_amount, as.stddev_amount FROM accounts a INNER JOIN account_summary as ON a.id = as.account_id WHERE as.stddev_amount > 79 ORDER BY id DESC;

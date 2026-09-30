@@ -1,9 +1,0 @@
-from pyspark.sql import functions as F
-
-result = (
-    df_inventory
-    .groupBy("product_id")
-    .agg(F.sum("quantity").alias("total_quantity"))
-    .filter(F.col("total_quantity") > 840)
-    .select("product_id", "total_quantity")
-)

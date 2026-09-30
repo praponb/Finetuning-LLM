@@ -1,1 +1,0 @@
-select device, count(distinct browser) as distinct_browsers, (unix_timestamp(max(started_at)) - unix_timestamp(min(started_at))) / 60 as span_minutes, count(*) filter (where country = 'US') as us_rows, size(collect_set(country)) as num_countries, count(*) filter (where browser = 'Edge') as edge_rows from sessions group by device;

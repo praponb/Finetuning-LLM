@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) AS signup_month, SUM(CASE WHEN s.browser = 'Firefox' THEN 1 ELSE 0 END) AS firefox_count, SORT_ARRAY(COLLECT_SET(s.browser)) AS browser_list FROM sessions s FULL OUTER JOIN customers c ON s.customer_id = c.id GROUP BY MONTH(c.signup_date) ORDER BY signup_month ASC, firefox_count DESC LIMIT 10;

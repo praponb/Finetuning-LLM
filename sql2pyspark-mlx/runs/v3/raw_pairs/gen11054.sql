@@ -1,1 +1,0 @@
-WITH valid_subscriptions AS (SELECT * FROM subscriptions WHERE monthly_fee < 100 AND plan IN ('enterprise', 'basic', 'standard')), agg AS (SELECT MONTH(start_date) AS start_month, AVG(monthly_fee) AS avg_monthly_fee FROM valid_subscriptions GROUP BY MONTH(start_date)) SELECT start_month, avg_monthly_fee FROM agg WHERE avg_monthly_fee >= 180 ORDER BY start_month DESC LIMIT 1;

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, COALESCE(sqft, 0) AS sqft_filled, COALESCE(region, 'OTHER') AS resolved_region FROM stores WHERE opened_date >= TO_DATE('2023-03-12') AND region IS NOT NULL) SELECT id, store_name, sqft, sqft_filled, resolved_region FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY city, region ORDER BY opened_date DESC NULLS FIRST, id) = 1

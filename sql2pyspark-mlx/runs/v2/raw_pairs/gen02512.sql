@@ -1,1 +1,0 @@
-select id, city, sqft, opened_date, dense_rank() over (partition by city order by sqft) as dense_rnk, dense_rank() over (partition by city order by opened_date) as dense_rnk_2 from stores order by id desc

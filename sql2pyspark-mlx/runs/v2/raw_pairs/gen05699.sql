@@ -1,1 +1,0 @@
-select o.customer_id, count(case when p.method = 'paypal' then 1 end) as paypal_count, max(p.amount) as max_amount from payments p right join orders o on p.order_id = o.id group by o.customer_id order by paypal_count;

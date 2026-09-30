@@ -1,1 +1,0 @@
-SELECT suppliers.city, COUNT(products.id) AS product_count, SUM(CASE WHEN products.category = 'Fashion' THEN products.stock_qty ELSE 0 END) AS fashion_stock_qty, MIN(products.launch_date) AS min_launch_date FROM suppliers INNER JOIN products ON products.supplier_id = suppliers.id GROUP BY suppliers.city ORDER BY 1 DESC;

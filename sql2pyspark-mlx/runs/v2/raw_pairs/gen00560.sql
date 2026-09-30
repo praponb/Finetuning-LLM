@@ -1,1 +1,0 @@
-SELECT QUARTER(signup_date) AS signup_quarter, DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, MAX(age) - MIN(age) AS age_range, COUNT(credit_limit) AS credit_limit_count FROM customers GROUP BY 1, 2 HAVING credit_limit_count > 5

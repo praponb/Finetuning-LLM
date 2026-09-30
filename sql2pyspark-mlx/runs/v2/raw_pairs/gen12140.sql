@@ -1,1 +1,0 @@
-with supplier_summary as (select supplier_id, min(stock_qty) as min_stock_qty from products group by supplier_id) select s.city, s.supplier_name, ss.min_stock_qty from suppliers s inner join supplier_summary ss on s.id = ss.supplier_id where ss.min_stock_qty > 200 order by supplier_name;

@@ -1,1 +1,0 @@
-WITH SupplierStats AS (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list FROM products GROUP BY supplier_id) SELECT suppliers.city, suppliers.country, SupplierStats.brand_list FROM suppliers LEFT JOIN SupplierStats ON suppliers.id = SupplierStats.supplier_id;

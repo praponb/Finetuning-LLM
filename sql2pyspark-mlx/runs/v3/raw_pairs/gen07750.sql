@@ -1,1 +1,0 @@
-SELECT s.id, s.region, t.total_revenue FROM stores s INNER JOIN (SELECT store_id, SUM(revenue) AS total_revenue FROM store_sales GROUP BY store_id) t ON s.id = t.store_id WHERE t.total_revenue > 10000

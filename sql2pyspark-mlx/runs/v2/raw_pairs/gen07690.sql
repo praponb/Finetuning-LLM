@@ -1,1 +1,0 @@
-select o.customer_id, count(oi.quantity) quantity_count from order_items oi join products p on p.id = oi.product_id join orders o on oi.order_id = o.id group by o.customer_id having quantity_count > 3 order by quantity_count

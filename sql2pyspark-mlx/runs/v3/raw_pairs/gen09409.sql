@@ -1,1 +1,0 @@
-SELECT payments.id, payments.paid_at, payments.status, orders.store_id, orders.shipping_fee, INITCAP(TRIM(payments.status)) AS status_title FROM payments LEFT JOIN orders ON payments.order_id = orders.id WHERE payments.order_id IN (2, 8, 30, 36) OR orders.channel IS NULL ORDER BY orders.store_id DESC;

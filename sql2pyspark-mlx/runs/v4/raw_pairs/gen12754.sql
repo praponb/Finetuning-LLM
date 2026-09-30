@@ -1,1 +1,0 @@
-with TopShipments as (select id, status, shipped_date, row_number() over (partition by status order by shipped_date, id) as rn from shipments where carrier = 'Kerry') select * from TopShipments where rn = 1 order by shipped_date desc

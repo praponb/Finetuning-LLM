@@ -1,1 +1,0 @@
-WITH order_items_by_product AS (SELECT product_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price, MIN(unit_price) AS min_unit_price FROM order_items WHERE unit_price BETWEEN 190 AND 340 GROUP BY product_id) SELECT p.id, p.price, oibp.stddev_unit_price, oibp.min_unit_price FROM products p LEFT JOIN order_items_by_product oibp ON p.id = oibp.product_id

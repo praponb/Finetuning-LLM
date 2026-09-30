@@ -1,1 +1,0 @@
-select quarter(paid_at) as paid_quarter, method, count(amount) as amount_count, count(case when status = 'REFUNDED' then 1 end) as refunded_count from payments where order_id in (8, 9, 14, 32) and amount is not null and status in ('FAILED', 'SUCCESS', 'REFUNDED') group by quarter(paid_at), method order by amount_count;

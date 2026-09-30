@@ -1,1 +1,0 @@
-WITH OrderStats AS (SELECT order_id, ROUND(AVG(cost), 2) avg_cost, COUNT(DISTINCT cost) unique_carriers FROM shipments GROUP BY order_id) SELECT orders.id, orders.status, orders.order_date, OrderStats.avg_cost, OrderStats.unique_carriers FROM orders JOIN OrderStats ON orders.id = OrderStats.order_id WHERE OrderStats.avg_cost > 50

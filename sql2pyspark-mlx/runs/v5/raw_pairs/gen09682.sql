@@ -1,1 +1,0 @@
-SELECT event_type, duration_sec, page, SUBSTRING(event_type, 1, 4) AS event_type_prefix, DATE_TRUNC('month', event_time) AS event_time_period FROM web_events WHERE event_type IN ('page_view', 'purchase', 'add_to_cart') AND event_time >= '2024-03-30' ORDER BY duration_sec;

@@ -1,1 +1,0 @@
-SELECT i.last_restock, i.product_id, s.opened_date, s.region, p.category, p.supplier_id FROM inventory i INNER JOIN stores s ON i.store_id = s.id LEFT JOIN products p ON i.product_id = p.id WHERE s.city IN ('New York', 'Chiang Mai', 'Bangkok') AND p.category IN ('Sports', 'Books', 'Home');

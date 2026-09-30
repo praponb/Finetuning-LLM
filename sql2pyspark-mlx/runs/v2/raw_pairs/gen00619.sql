@@ -1,1 +1,0 @@
-select * from (select id, account_type, balance, row_number() over (partition by account_type order by balance desc, id) as row_num from accounts where account_type in ('SAVINGS', 'CREDIT', 'CHECKING')) as ranked where row_num <= 3 order by id desc;

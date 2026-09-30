@@ -1,1 +1,0 @@
-select s.supplier_name, s.rating, p.product_name, p.stock_qty, p.brand, case when s.city = 'Singapore' then 1 else 0 end as is_singapore from suppliers s inner join products p on s.id = p.supplier_id where s.country in ('JP', 'UK') or p.product_name like '%Sma%' order by stock_qty desc

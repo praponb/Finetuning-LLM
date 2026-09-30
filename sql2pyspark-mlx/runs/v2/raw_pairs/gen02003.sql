@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, COUNT(duration_sec) AS duration_sec_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values FROM web_events GROUP BY session_id) SELECT s.id, s.country, ss.duration_sec_count, ss.page_values FROM sessions s LEFT JOIN session_summary ss ON s.id = ss.session_id WHERE ss.duration_sec_count >= 3;

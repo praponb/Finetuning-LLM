@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, name, email, country, city, segment, signup_date, is_active, credit_limit, CONCAT_WS(',', city, name) AS city_name_key, SUBSTRING(name, 1, 3) AS name_prefix FROM customers WHERE segment = 'SMB') SELECT * FROM (SELECT segment, country, credit_limit FROM base) src PIVOT (SUM(credit_limit) AS total, COUNT(1) AS cnt FOR country IN ('UK' AS uk, 'US' AS us));

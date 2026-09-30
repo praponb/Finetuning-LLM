@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, store_id, sale_date, units, revenue, ROUND(revenue, 2) AS revenue_rounded FROM store_sales WHERE sale_date >= DATE '2023-08-02') SELECT store_id, id FROM filtered INTERSECT ALL SELECT store_id, id FROM store_sales WHERE product_id = 3

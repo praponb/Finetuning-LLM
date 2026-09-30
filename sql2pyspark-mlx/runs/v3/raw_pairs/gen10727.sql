@@ -1,1 +1,0 @@
-select month(hire_date) as hire_month, is_remote, sort_array(collect_set(job_title)) as job_title_list, max(hire_date) as last_hire_date from employees group by hire_month, is_remote order by last_hire_date desc;

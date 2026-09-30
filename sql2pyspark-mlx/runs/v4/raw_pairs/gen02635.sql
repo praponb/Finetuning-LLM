@@ -1,1 +1,0 @@
-SELECT country, city, MAX(rating) - MIN(rating) AS rating_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM suppliers WHERE LOWER(supplier_name) LIKE '%uro%' AND country <> 'DE' GROUP BY 1, 2 ORDER BY country DESC

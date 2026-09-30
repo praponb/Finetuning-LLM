@@ -1,1 +1,0 @@
-select * from (select carrier, round(stddev(cost), 2) as stddev_cost, min(cost) as min_cost from shipments where year(delivered_date) >= 2025 group by carrier) as sub where stddev_cost < 47 order by min_cost;

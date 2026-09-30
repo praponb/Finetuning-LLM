@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN revenue >= 3300 THEN 'high' WHEN revenue >= 1700 THEN 'mid' ELSE 'low' END AS revenue_bucket, COUNT(DISTINCT units) AS unique_products, COUNT(DISTINCT units) AS unique_stores FROM store_sales WHERE revenue IS NOT NULL GROUP BY product_id, revenue_bucket

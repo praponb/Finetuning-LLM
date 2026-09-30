@@ -1,1 +1,0 @@
-select emp.id, emp.full_name as employee_full_name, emp.salary as employee_salary, mgr.dept_id as manager_dept_id, mgr.email as manager_email from employees emp join employees mgr on emp.manager_id = mgr.id where mgr.job_title <> 'Designer' or emp.is_remote order by id desc

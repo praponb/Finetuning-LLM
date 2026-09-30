@@ -1,1 +1,0 @@
-with supplier_summary as (select supplier_id, concat_ws(', ', sort_array(collect_set(brand))) as brand_values, count(case when brand = 'Initech' then 1 end) as initech_count from products group by supplier_id) select s.id, s.country, ss.brand_values, ss.initech_count from suppliers s left join supplier_summary ss on s.id = ss.supplier_id where ss.initech_count > 5;

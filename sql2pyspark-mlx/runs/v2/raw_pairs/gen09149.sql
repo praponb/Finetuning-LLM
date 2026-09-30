@@ -1,1 +1,0 @@
-WITH inventory_by_product AS (SELECT product_id, MIN(last_restock) AS first_last_restock FROM inventory WHERE store_id = 3 GROUP BY product_id) SELECT products.id, products.category, products.stock_qty, inventory_by_product.first_last_restock FROM products LEFT JOIN inventory_by_product ON products.id = inventory_by_product.product_id

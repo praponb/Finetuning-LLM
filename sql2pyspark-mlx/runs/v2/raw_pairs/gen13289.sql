@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE product_id IN (2, 5, 8) GROUP BY store_id) SELECT s.id, s.opened_date, st.stddev_quantity FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id WHERE st.stddev_quantity >= 35;

@@ -1,1 +1,0 @@
-select id, tier_limits, tier_prices, array_min(tier_prices) as lowest_price, element_at(tier_prices, 1) as entry_price, aggregate(tier_prices, 0.0D, (acc, p) -> acc + p, acc -> round(acc / size(tier_prices), 2)) as avg_tier_price, transform(tier_prices, (p, i) -> round(p * tier_limits[i], 2)) as tier_revenue_caps from price_tiers;

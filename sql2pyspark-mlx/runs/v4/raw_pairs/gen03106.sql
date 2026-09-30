@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(unit_price) AS total_unit_price FROM order_items WHERE order_id = 22 AND unit_price >= 230 GROUP BY quantity_bucket HAVING SUM(unit_price) >= 1500;

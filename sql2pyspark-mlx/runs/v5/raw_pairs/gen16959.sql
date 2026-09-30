@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT store_id, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales WHERE units BETWEEN 28 AND 32 GROUP BY store_id) AS x WHERE revenue_range > 65 ORDER BY revenue_range DESC

@@ -1,1 +1,0 @@
-SELECT a.id, a.opened_date, a.status FROM accounts a WHERE a.opened_date BETWEEN '2023-04-01' AND '2024-10-01' AND NOT EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND NOT t.is_flagged)

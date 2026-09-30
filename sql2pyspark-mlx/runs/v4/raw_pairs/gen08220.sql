@@ -1,1 +1,0 @@
-SELECT status, order_id, SUBSTRING(carrier, 1, 2) AS carrier_prefix FROM shipments WHERE (YEAR(delivered_date) = 2024 AND cost BETWEEN 57 AND 83) OR shipped_date >= '2024-12-31' ORDER BY carrier_prefix;

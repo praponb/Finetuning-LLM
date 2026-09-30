@@ -1,1 +1,0 @@
-select we.event_type, we.duration_sec, s.customer_id, s.started_at, c.email, c.age from web_events we join sessions s on we.session_id = s.id right join customers c on s.customer_id = c.id where we.page is not null or s.country in ('UK', 'US') order by we.event_type

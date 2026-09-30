@@ -1,1 +1,0 @@
-SELECT c.id, c.email, COUNT(s.id) AS subscription_count, SUM(s.monthly_fee) AS total_monthly_fee FROM customers c INNER JOIN subscriptions s ON s.customer_id = c.id WHERE NOT c.is_active GROUP BY c.id, c.email ORDER BY email

@@ -1,1 +1,0 @@
-SELECT id, country, credit_limit FROM (SELECT id, country, credit_limit, ROW_NUMBER() OVER (PARTITION BY country ORDER BY credit_limit, id) AS rn FROM customers) AS t WHERE rn = 1 ORDER BY country DESC

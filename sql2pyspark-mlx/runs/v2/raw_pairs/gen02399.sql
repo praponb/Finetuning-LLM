@@ -1,1 +1,0 @@
-SELECT id, customer_id, monthly_fee, end_date, NTILE(3) OVER (PARTITION BY customer_id ORDER BY monthly_fee, id) AS bucket, DENSE_RANK() OVER (ORDER BY end_date DESC) AS dense_rnk FROM subscriptions WHERE monthly_fee <= 200 ORDER BY id

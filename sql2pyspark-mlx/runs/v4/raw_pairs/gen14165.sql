@@ -1,1 +1,0 @@
-SELECT s.customer_id, s.country, c.country AS customer_country, CASE WHEN s.device IN ('tablet', 'mobile') THEN 'Tier 1' ELSE 'Other' END AS device_group FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE c.name LIKE 'Oli%' AND c.age <= 39

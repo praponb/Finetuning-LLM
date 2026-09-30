@@ -1,1 +1,0 @@
-WITH department_stats AS (SELECT dept_id, MAX(salary) AS max_salary FROM employees GROUP BY dept_id) SELECT d.id, d.location, d.budget, ds.max_salary FROM departments d LEFT JOIN department_stats ds ON d.id = ds.dept_id WHERE ds.max_salary >= 93000 ORDER BY ds.max_salary DESC;

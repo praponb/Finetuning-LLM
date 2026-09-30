@@ -1,1 +1,0 @@
-SELECT i.product_id, i.last_restock, i.store_id, ss.revenue, ss.product_id store_sale_product_id FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id IN (4, 6, 8);

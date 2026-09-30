@@ -1,1 +1,0 @@
-SELECT d.location, MIN(e.salary) min_salary, COUNT(*) employee_count FROM employees e RIGHT JOIN departments d ON e.dept_id = d.id WHERE e.is_remote = TRUE GROUP BY d.location ORDER BY min_salary DESC;

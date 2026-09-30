@@ -1,1 +1,0 @@
-with order_items_by_product as (select product_id, avg(quantity) as avg_quantity from order_items group by product_id) select products.brand, order_items_by_product.avg_quantity from products inner join order_items_by_product on products.id = order_items_by_product.product_id order by order_items_by_product.avg_quantity;

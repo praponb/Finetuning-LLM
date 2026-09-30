@@ -1,1 +1,0 @@
-SELECT d.budget, d.dept_name, t.avg_salary FROM departments d LEFT JOIN (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE email NOT LIKE '%@gmail.com' GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY t.avg_salary ASC, d.budget DESC

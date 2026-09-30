@@ -1,1 +1,0 @@
-SELECT id, status, opened_date, balance, DENSE_RANK() OVER (PARTITION BY status ORDER BY opened_date) AS opened_date_dense_rank, LEAD(balance, 1) OVER (PARTITION BY status ORDER BY opened_date, id) AS next_balance FROM accounts

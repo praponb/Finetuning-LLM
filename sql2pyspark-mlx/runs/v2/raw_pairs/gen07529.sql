@@ -1,1 +1,0 @@
-SELECT browser FROM sessions

@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, SUM(salary) AS total_salary FROM employees GROUP BY dept_id) SELECT departments.id, departments.location, departments.dept_name, employees_by_department.total_salary FROM departments LEFT JOIN employees_by_department ON departments.id = employees_by_department.dept_id

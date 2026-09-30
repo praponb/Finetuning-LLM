@@ -1,1 +1,0 @@
-SELECT product_id, APPROX_PERCENTILE(quantity, ARRAY(0.25, 0.5, 0.75)) AS quantity_quartiles, APPROX_PERCENTILE(quantity, ARRAY(0.25, 0.5, 0.75)) AS quantity_quartiles_2, COUNT(DISTINCT id) AS distinct_ids FROM inventory GROUP BY 1 ORDER BY distinct_ids

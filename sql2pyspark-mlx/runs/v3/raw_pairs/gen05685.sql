@@ -1,1 +1,0 @@
-SELECT id, store_id, units, revenue, FIRST_VALUE(revenue) OVER (PARTITION BY store_id ORDER BY units, id) first_revenue, SUM(units) OVER (PARTITION BY store_id) store_id_sum_units FROM store_sales ORDER BY 1 ASC

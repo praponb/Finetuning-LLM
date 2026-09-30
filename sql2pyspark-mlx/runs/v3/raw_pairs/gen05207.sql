@@ -1,1 +1,0 @@
-WITH product_totals AS (SELECT product_id, COUNT(*) AS store_sale_count FROM store_sales GROUP BY product_id) SELECT p.id, p.supplier_id, p.cost, pt.store_sale_count FROM products p LEFT JOIN product_totals pt ON p.id = pt.product_id WHERE pt.store_sale_count >= 5;

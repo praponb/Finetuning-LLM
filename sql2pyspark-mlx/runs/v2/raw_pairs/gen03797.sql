@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY quantity DESC, id) AS pos FROM inventory WHERE product_id = 8) SELECT id, store_id, quantity, product_id FROM numbered WHERE pos = 1;

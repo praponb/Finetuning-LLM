@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, AVG(quantity) AS avg_quantity, COUNT(*) AS row_count FROM inventory GROUP BY product_id) SELECT p.id, p.price, ps.avg_quantity, ps.row_count FROM products p JOIN product_summary ps ON p.id = ps.product_id WHERE ps.avg_quantity > 170 ORDER BY id DESC, ps.avg_quantity DESC;

@@ -1,1 +1,0 @@
-SELECT account_id, txn_type, ROUND(AVG(amount), 2) AS avg_amount, SUM(CASE WHEN merchant = 'Lazada' THEN amount ELSE 0 END) AS lazada_amount FROM transactions GROUP BY account_id, txn_type HAVING ROUND(AVG(amount), 2) > 67 ORDER BY account_id, txn_type LIMIT 10

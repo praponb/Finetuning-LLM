@@ -1,1 +1,0 @@
-with department_summary as (select dept_id, round(avg(salary), 2) as avg_salary, max(salary) - min(salary) as salary_range from employees where hire_date < '2024-01-01' group by dept_id) select d.id, d.location, ds.avg_salary, ds.salary_range from departments d join department_summary ds on d.id = ds.dept_id

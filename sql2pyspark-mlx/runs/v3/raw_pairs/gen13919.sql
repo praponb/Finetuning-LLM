@@ -1,1 +1,0 @@
-SELECT id, store_id, last_restock, product_id FROM (SELECT id, store_id, last_restock, product_id, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY last_restock DESC) AS pos FROM inventory WHERE MONTH(last_restock) IN (4, 5, 7)) AS t WHERE pos <= 5 ORDER BY last_restock ASC;

@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, channel, discount, order_date, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY discount, id) row_num FROM orders) SELECT id, channel, discount, order_date FROM ranked WHERE row_num = 1 ORDER BY channel;

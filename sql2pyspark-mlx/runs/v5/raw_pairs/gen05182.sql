@@ -1,1 +1,0 @@
-SELECT plan, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, MAX(start_date) AS last_start_date, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list FROM subscriptions GROUP BY plan ORDER BY avg_monthly_fee DESC, plan ASC LIMIT 5

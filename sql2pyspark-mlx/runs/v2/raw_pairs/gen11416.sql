@@ -1,1 +1,0 @@
-with transactions_by_account as (select account_id, min(txn_time) as first_txn_time, round(avg(amount), 2) as avg_amount from transactions where is_flagged group by account_id) select a.id, a.status, tba.first_txn_time, tba.avg_amount from accounts a join transactions_by_account tba on a.id = tba.account_id order by tba.first_txn_time, a.status, id limit 10

@@ -1,1 +1,0 @@
-SELECT opened_month, stddev_sqft FROM (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, ROUND(STDDEV(sqft), 2) AS stddev_sqft FROM stores WHERE region IN ('South', 'North', 'East') GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) AS x WHERE stddev_sqft > 60 ORDER BY opened_month, stddev_sqft DESC;

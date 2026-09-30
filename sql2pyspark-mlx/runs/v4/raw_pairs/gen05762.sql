@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, SUM(quantity) AS total_quantity, COUNT(DISTINCT quantity) AS unique_products FROM inventory GROUP BY product_id) SELECT p.id, p.cost, p.price, ps.total_quantity, ps.unique_products FROM products p LEFT JOIN product_stats ps ON p.id = ps.product_id WHERE ps.total_quantity >= 390

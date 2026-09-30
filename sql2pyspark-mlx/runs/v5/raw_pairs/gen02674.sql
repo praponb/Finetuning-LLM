@@ -1,1 +1,0 @@
-SELECT id, product_id, units, GREATEST(units, revenue) AS greatest_units_revenue, COALESCE(units, 0) AS units_filled FROM store_sales WHERE product_id IN (2, 4, 7, 10) AND units <= 11 AND product_id IN (5, 8, 9, 10) ORDER BY units_filled DESC

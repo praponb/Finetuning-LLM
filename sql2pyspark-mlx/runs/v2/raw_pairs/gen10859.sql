@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT account_type, SUM(balance) AS total_balance, ROUND((100 * SUM(CASE WHEN status = 'OPEN' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_open FROM accounts GROUP BY account_type) AS s WHERE pct_open >= 24

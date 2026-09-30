@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM payments WHERE order_id IN (1, 3, 19) AND method IN ('promptpay', 'card', 'bank_transfer')), PaymentsStats AS (SELECT order_id, TO_DATE(paid_at) AS paid_day, ROUND(STDDEV(amount), 2) AS stddev_amount FROM Base GROUP BY order_id, TO_DATE(paid_at)) SELECT order_id, paid_day FROM PaymentsStats ORDER BY order_id, paid_day DESC;

@@ -1,1 +1,0 @@
-SELECT product_id, order_id, SUM(quantity) AS total_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items WHERE order_id IN (3, 11, 36) GROUP BY product_id, order_id ORDER BY order_id

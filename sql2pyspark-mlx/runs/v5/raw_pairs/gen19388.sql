@@ -1,1 +1,0 @@
-select t.id, t.amount, a.customer_id, a.account_type, c.age, c.segment from transactions t join accounts a on t.account_id = a.id left join customers c on a.customer_id = c.id where length(c.email) >= 7 and c.email like '%@gmail.com' order by t.amount, account_type;

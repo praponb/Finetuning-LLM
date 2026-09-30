@@ -1,1 +1,0 @@
-SELECT id, created_at, TRANSFORM(FILTER(items, item -> item.promo IS NOT NULL), item -> STRUCT(item.product_id AS pid, ROUND(item.price * 0.9, 2) AS discounted_price)) AS promo_lines, ARRAY_CONTAINS(coupon_codes, 'VIP') AS used_vip, SIZE(attributes) AS num_attributes, COALESCE(attributes['device'], 'none') AS device_or_default FROM carts WHERE created_at >= '2024-01-01'

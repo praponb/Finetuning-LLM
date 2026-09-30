@@ -1,1 +1,0 @@
-select oi.id, oi.product_id, p.supplier_id, p.launch_date, o.store_id, o.channel from order_items oi inner join products p on p.id = oi.product_id left join orders o on oi.order_id = o.id order by oi.product_id;

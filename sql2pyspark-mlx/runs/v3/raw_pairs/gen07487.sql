@@ -1,1 +1,0 @@
-SELECT a.id, a.balance, a.account_type, t.amount_range FROM accounts a JOIN (SELECT account_id, MAX(amount) - MIN(amount) amount_range FROM transactions WHERE merchant = 'Amazon' GROUP BY account_id) t ON a.id = t.account_id;

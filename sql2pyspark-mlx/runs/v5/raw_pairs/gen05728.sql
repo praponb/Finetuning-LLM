@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, customer_id, started_at, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) row_num FROM sessions) SELECT id, customer_id, started_at FROM numbered WHERE row_num <= 3

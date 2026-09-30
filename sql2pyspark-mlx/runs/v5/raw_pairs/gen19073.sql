@@ -1,1 +1,0 @@
-SELECT c.country, MAX(o.order_date) AS latest_order_date, MAX(o.order_date) AS last_order_date FROM orders o RIGHT OUTER JOIN customers c ON o.customer_id = c.id LEFT OUTER JOIN stores s ON o.store_id = s.id GROUP BY c.country ORDER BY c.country, last_order_date LIMIT 10

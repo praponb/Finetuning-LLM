@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM employees WHERE manager_id IS NULL AND salary > 118000), summary AS (SELECT is_remote, YEAR(hire_date) AS hire_year, ROUND(STDDEV(salary), 2) AS stddev_salary FROM src GROUP BY is_remote, YEAR(hire_date)) SELECT * FROM summary WHERE stddev_salary > 36 ORDER BY stddev_salary DESC, 2 DESC;

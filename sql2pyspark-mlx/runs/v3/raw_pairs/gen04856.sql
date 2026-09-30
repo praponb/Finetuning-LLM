@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, SUM(CASE WHEN job_title = 'Intern' THEN 1 ELSE 0 END) intern_count, COUNT(*) cnt FROM employees WHERE level IN ('L2', 'L5', 'L4') GROUP BY dept_id) SELECT d.id, d.location, ebd.intern_count, ebd.cnt FROM departments d LEFT JOIN employees_by_department ebd ON d.id = ebd.dept_id;

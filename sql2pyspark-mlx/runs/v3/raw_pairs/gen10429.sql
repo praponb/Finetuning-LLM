@@ -1,1 +1,0 @@
-select id, product_id, last_restock, quantity from (select *, dense_rank() over (partition by product_id order by last_restock desc) row_num from inventory where store_id in (1, 3, 5, 6)) ranked where row_num <= 2;

@@ -1,1 +1,0 @@
-SELECT id, txn_type, txn_time, amount, SUM(amount) OVER (PARTITION BY txn_type ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount FROM transactions ORDER BY running_amount;

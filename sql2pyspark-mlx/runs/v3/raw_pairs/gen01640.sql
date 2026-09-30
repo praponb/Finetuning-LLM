@@ -1,1 +1,0 @@
-select txn_type, date_trunc('MONTH', txn_time) as txn_month, sum(case when txn_type = 'CREDIT' then 1 else 0 end) as credit_count, min(txn_time) as min_txn_time from transactions group by txn_type, date_trunc('MONTH', txn_time) having max(amount) < 2400

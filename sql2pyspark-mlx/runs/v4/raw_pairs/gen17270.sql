@@ -1,1 +1,0 @@
-SELECT ss.sale_date, ss.revenue, p.supplier_id, p.product_name, s.rating, s.country FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id LEFT JOIN suppliers s ON s.id = p.supplier_id WHERE s.rating <= 3.0;

@@ -1,1 +1,0 @@
-SELECT brand, category, ROUND(STDDEV(cost), 2) AS stddev_cost, MAX(cost) AS max_cost FROM products WHERE ARRAY_CONTAINS(tags, 'new') GROUP BY brand, category ORDER BY stddev_cost DESC, brand, category LIMIT 50;

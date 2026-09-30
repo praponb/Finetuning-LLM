@@ -1,1 +1,0 @@
-SELECT c.id, c.credit_limit, t.unique_statuss, t.order_count FROM customers c JOIN (SELECT customer_id, COUNT(DISTINCT amount) AS unique_statuss, COUNT(*) AS order_count FROM orders GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.unique_statuss > 5 ORDER BY unique_statuss;

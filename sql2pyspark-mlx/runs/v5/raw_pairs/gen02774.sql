@@ -1,1 +1,0 @@
-SELECT last_restock, quantity, CASE WHEN quantity >= 192 THEN 'High' WHEN quantity >= 74 THEN 'Medium' ELSE 'Low' END AS quantity_band FROM inventory WHERE NOT (quantity < 126 AND MONTH(last_restock) IN (3, 6, 10))

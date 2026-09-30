@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CASE WHEN status IN ('RETURNED', 'DELIVERED') THEN 'Group A' ELSE 'Other' END AS status_group FROM shipments WHERE shipped_date >= TO_DATE('2023-04-05')) SELECT * FROM (SELECT order_id, carrier, cost FROM base) src PIVOT (MAX(cost) AS amount, COUNT(1) AS n FOR carrier IN ('Kerry' AS kerry, 'UPS' AS ups, 'DHL' AS dhl));

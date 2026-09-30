@@ -1,1 +1,0 @@
-SELECT method, DATE_TRUNC('MONTH', paid_at) AS paid_month, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM payments GROUP BY method, DATE_TRUNC('MONTH', paid_at) ORDER BY method DESC, paid_month LIMIT 20

@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, COUNT(CASE WHEN region = 'East' THEN 1 END) AS east_count FROM stores GROUP BY QUARTER(opened_date), DATE_FORMAT(opened_date, 'yyyy-MM');

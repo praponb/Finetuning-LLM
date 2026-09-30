@@ -1,1 +1,0 @@
-with ranked_shipments as (select *, rank() over (partition by order_id order by delivered_date desc) as pos from shipments) select id, order_id, delivered_date from ranked_shipments where pos <= 3 order by delivered_date desc;

@@ -1,1 +1,0 @@
-with filtered as (select id, customer_id, device, browser, started_at, country, upper(device) as device_upper from sessions where started_at >= date '2023-05-27' and browser is not null and device not in ('desktop', 'tablet', 'mobile')) select device, country from filtered except all select device, country from sessions where customer_id is not null

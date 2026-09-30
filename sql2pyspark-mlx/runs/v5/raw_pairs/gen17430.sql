@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, store_id, quantity, ROUND(quantity, 2) AS quantity_rounded FROM inventory WHERE last_restock > TO_DATE('2023-07-09') AND store_id IN (3, 4)) SELECT * FROM filtered QUALIFY ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY quantity, id) = 1;

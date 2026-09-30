@@ -1,1 +1,0 @@
-SELECT a.id, a.account_type, COUNT(t.id) transaction_count, SORT_ARRAY(COLLECT_SET(t.txn_type)) txn_type_list, MIN(t.txn_time) min_txn_time FROM accounts a LEFT OUTER JOIN transactions t ON a.id = t.account_id WHERE a.status IS NOT NULL GROUP BY a.id, a.account_type ORDER BY transaction_count DESC;

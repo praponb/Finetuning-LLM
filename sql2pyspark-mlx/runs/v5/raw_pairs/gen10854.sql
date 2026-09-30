@@ -1,1 +1,0 @@
-SELECT channel, MIN(order_date) AS first_order_date, AVG(discount) AS avg_discount FROM orders WHERE NOT (discount < 0.19 AND shipping_fee > 34) GROUP BY 1 HAVING AVG(discount) >= 0.36 ORDER BY avg_discount, channel LIMIT 50;

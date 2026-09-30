@@ -1,1 +1,0 @@
-SELECT id, city, sqft FROM stores WHERE opened_date BETWEEN '2023-08-01' AND '2024-05-01' AND sqft BETWEEN 5792 AND 6880;

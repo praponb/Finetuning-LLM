@@ -1,1 +1,0 @@
-WITH latest_match AS (SELECT s.id, s.product_name, s.brand, s.price, s.stock_qty, s.tags, x.units FROM products s LEFT JOIN LATERAL (SELECT c.units FROM store_sales c WHERE c.product_id = s.id ORDER BY c.units DESC, c.id DESC LIMIT 1) x ON TRUE) SELECT id, product_name, brand, units FROM latest_match ORDER BY id DESC, brand DESC LIMIT 20;

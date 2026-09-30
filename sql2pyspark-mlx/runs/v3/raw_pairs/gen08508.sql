@@ -1,1 +1,0 @@
-select category, case when price >= 1080 then 'high' when price >= 170 then 'mid' else 'low' end as price_bucket, round((100 * sum(case when category = 'Home' then 1 else 0 end)) / count(*), 1) as pct_home from products where month(launch_date) in (1, 4, 10) and supplier_id is null and length(product_name) < 11 group by category, price_bucket;

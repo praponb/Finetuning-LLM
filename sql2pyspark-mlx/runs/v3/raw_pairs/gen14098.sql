@@ -1,1 +1,0 @@
-SELECT city, QUARTER(opened_date) AS opened_quarter, SUM(CASE WHEN city = 'Berlin' THEN sqft ELSE 0 END) AS berlin_sqft, MIN(sqft) AS min_sqft FROM stores WHERE UPPER(TRIM(store_name)) = 'MALL CENTRAL' OR sqft > 10771 GROUP BY 1, 2

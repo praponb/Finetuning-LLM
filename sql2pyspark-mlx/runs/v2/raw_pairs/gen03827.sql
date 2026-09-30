@@ -1,1 +1,0 @@
-SELECT id, dept_name, CASE WHEN budget >= 3581000 THEN 'High' WHEN budget >= 643000 THEN 'Medium' ELSE 'Low' END budget_tier, CONCAT(dept_name, ' ', location) dept_name_location FROM departments WHERE location IN ('New York', 'Berlin') AND location = 'London';

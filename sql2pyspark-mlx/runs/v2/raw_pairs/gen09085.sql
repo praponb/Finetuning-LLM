@@ -1,1 +1,0 @@
-select i.id, i.store_id, i.last_restock, i.quantity, ss.product_id from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.store_id = 1 and ss.sale_date between '2023-06-25' and '2025-01-06' order by quantity desc;

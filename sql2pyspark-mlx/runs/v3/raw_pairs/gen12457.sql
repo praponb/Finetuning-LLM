@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id) AS rnk FROM suppliers WHERE country NOT IN ('SG', 'UK', 'DE')) SELECT id, country, rating, supplier_name FROM ranked WHERE rnk <= 3 ORDER BY id DESC, country ASC;

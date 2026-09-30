@@ -1,1 +1,0 @@
-SELECT carrier, SUM(CASE WHEN status = 'IN_TRANSIT' THEN 1 ELSE 0 END) AS in_transit_count, ROUND(AVG(cost), 2) AS avg_cost, ROUND(STDDEV(cost), 2) AS stddev_cost FROM shipments WHERE shipped_date >= '2025-01-01' AND order_id IN (4, 25, 28, 32) AND cost >= 33 GROUP BY 1 HAVING stddev_cost < 37 ORDER BY 1 DESC, avg_cost DESC

@@ -1,7 +1,0 @@
-WITH numbered AS (
-    SELECT *, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) AS rn
-    FROM departments
-)
-SELECT *
-FROM numbered
-WHERE rn <= 5

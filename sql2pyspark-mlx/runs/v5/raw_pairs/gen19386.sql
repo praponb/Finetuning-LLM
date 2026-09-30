@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT id FROM suppliers EXCEPT SELECT id FROM suppliers WHERE supplier_name LIKE 'G%'), verified AS (SELECT s.* FROM suppliers s INNER JOIN kept_keys k ON s.id = k.id) SELECT id, country FROM verified ORDER BY country DESC, id;

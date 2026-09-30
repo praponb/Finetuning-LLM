@@ -1,2 +1,0 @@
-SELECT budget
-FROM departments;

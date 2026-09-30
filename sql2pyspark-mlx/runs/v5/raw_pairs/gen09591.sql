@@ -1,1 +1,0 @@
-with Numbered as (select *, row_number() over (partition by location order by budget desc, id) as rn from departments where dept_name in ('Finance', 'Sales', 'HR')) select * from Numbered where rn <= 1 order by dept_name asc

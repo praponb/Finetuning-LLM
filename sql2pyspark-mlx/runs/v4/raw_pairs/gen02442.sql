@@ -1,1 +1,0 @@
-SELECT employees.manager_id, employees.is_remote, departments.location, departments.dept_name FROM employees FULL OUTER JOIN departments ON employees.dept_id = departments.id WHERE employees.salary >= 125000 AND employees.level = 'L5'

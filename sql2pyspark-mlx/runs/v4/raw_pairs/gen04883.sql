@@ -1,1 +1,0 @@
-SELECT id, rating, PERCENT_RANK() OVER (ORDER BY rating DESC) AS rating_pct_rank, ROUND(AVG(rating) OVER (ORDER BY rating, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS rating_moving_avg_7 FROM suppliers WHERE rating BETWEEN 2.3 AND 3.1;

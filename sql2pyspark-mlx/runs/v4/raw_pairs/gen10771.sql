@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.city IN ('Chiang Mai', 'Tokyo') THEN 'group_a' ELSE 'other' END AS city_group, s.city, AVG(i.quantity) AS avg_quantity, MAX(i.quantity) AS max_quantity FROM inventory i JOIN products p ON i.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE s.rating <= 3.2 GROUP BY CASE WHEN s.city IN ('Chiang Mai', 'Tokyo') THEN 'group_a' ELSE 'other' END, s.city

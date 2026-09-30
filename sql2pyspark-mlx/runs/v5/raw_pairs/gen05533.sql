@@ -1,1 +1,0 @@
-SELECT st.city, SUM(CASE WHEN s.status = 'RETURNED' THEN s.cost ELSE 0 END) AS returned_cost, SORT_ARRAY(COLLECT_SET(s.carrier)) AS carrier_list FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN stores st ON o.store_id = st.id WHERE YEAR(s.shipped_date) = 2025 GROUP BY st.city ORDER BY returned_cost

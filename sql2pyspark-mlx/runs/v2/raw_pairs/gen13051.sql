@@ -1,1 +1,0 @@
-with WebEventsBySession as (select session_id, avg(duration_sec) as avg_duration_sec from web_events group by session_id) select s.country, s.customer_id, W.avg_duration_sec from sessions s inner join WebEventsBySession W on s.id = W.session_id where W.avg_duration_sec >= 150

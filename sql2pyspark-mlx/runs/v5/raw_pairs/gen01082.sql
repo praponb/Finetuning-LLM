@@ -1,1 +1,0 @@
-with shipments_by_order as (select order_id, min(delivered_date) as min_delivered_date, round(avg(cost), 2) as avg_cost from shipments group by order_id) select o.discount, sbo.min_delivered_date, sbo.avg_cost from orders o left join shipments_by_order sbo on o.id = sbo.order_id where sbo.avg_cost > 52;

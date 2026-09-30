@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, MIN(quantity) AS min_quantity FROM inventory GROUP BY store_id) SELECT s.store_name, st.min_quantity FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id ORDER BY store_name DESC

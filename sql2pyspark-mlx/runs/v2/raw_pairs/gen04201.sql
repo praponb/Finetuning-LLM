@@ -1,1 +1,0 @@
-SELECT id, location, budget, LOWER(dept_name) dept_name_lower, COALESCE(dept_name, 'N/A') dept_name_filled FROM departments WHERE NOT (dept_name IN ('Legal', 'Marketing') AND budget IS NULL) ORDER BY 1 DESC

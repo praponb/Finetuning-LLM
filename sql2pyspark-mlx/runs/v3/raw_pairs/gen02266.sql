@@ -1,1 +1,0 @@
-SELECT suppliers.id, suppliers.rating, t.pct_electronics FROM suppliers INNER JOIN (SELECT supplier_id, ROUND((100 * SUM(CASE WHEN category = 'Electronics' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_electronics FROM products GROUP BY supplier_id) t ON suppliers.id = t.supplier_id ORDER BY pct_electronics DESC, rating DESC, id ASC LIMIT 10;

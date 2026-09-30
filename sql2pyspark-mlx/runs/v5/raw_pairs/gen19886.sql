@@ -1,1 +1,0 @@
-select product_id, round(stddev(quantity), 2) as stddev_quantity, count(distinct quantity) as unique_products from inventory where store_id = 2 and (store_id in (2, 3, 4, 6) or quantity = 114) group by product_id

@@ -1,1 +1,0 @@
-select subscriptions.id, subscriptions.end_date from subscriptions where subscriptions.end_date > '2024-01-23' and subscriptions.customer_id in (select id from customers where signup_date between '2024-09-16' and '2025-03-25');

@@ -1,1 +1,0 @@
-WITH valid_customers AS (SELECT * FROM customers WHERE age = 51), CustomersStats AS (SELECT segment, YEAR(signup_date) AS signup_year, ROUND(STDDEV(age), 2) AS stddev_age FROM valid_customers GROUP BY segment, YEAR(signup_date)) SELECT * FROM CustomersStats WHERE stddev_age >= 63 ORDER BY stddev_age DESC;

@@ -1,1 +1,0 @@
-SELECT id, level, salary, hire_date, MIN(salary) OVER (PARTITION BY level) AS level_min_salary, salary - LAG(salary, 1) OVER (PARTITION BY level ORDER BY hire_date, id) AS salary_change FROM employees WHERE full_name NOT LIKE '%Mia%' ORDER BY level ASC, level_min_salary DESC

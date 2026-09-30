@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(CASE WHEN city = 'Berlin' THEN 1 END) AS berlin_count FROM suppliers GROUP BY CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END) AS x WHERE berlin_count >= 7

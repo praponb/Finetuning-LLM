@@ -1,1 +1,0 @@
-SELECT last_restock_month, store_id, min_quantity FROM (SELECT DATE_TRUNC('MONTH', last_restock) AS last_restock_month, store_id, MIN(quantity) AS min_quantity FROM inventory GROUP BY DATE_TRUNC('MONTH', last_restock), store_id) AS agg WHERE min_quantity > 160 ORDER BY 1;

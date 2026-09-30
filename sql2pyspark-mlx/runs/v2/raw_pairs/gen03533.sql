@@ -1,1 +1,0 @@
-select a.status, count(t.id) transaction_count, concat_ws(', ', sort_array(collect_set(t.merchant))) merchant_values from accounts a left join transactions t on a.id = t.account_id group by a.status order by transaction_count;

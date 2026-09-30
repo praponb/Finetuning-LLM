@@ -1,1 +1,0 @@
-SELECT status, MAX(amount) - MIN(amount) AS amount_range, SUM(CASE WHEN status = 'COMPLETED' THEN discount ELSE 0 END) AS completed_discount FROM orders GROUP BY status ORDER BY completed_discount DESC;

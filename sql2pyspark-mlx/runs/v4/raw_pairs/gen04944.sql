@@ -1,1 +1,0 @@
-SELECT o.status, o.channel, COUNT(oi.unit_price) AS unit_price_count, SUM(oi.unit_price * oi.quantity) AS revenue FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE o.status NOT IN ('PENDING', 'RETURNED') GROUP BY o.status, o.channel ORDER BY o.channel ASC, unit_price_count DESC;

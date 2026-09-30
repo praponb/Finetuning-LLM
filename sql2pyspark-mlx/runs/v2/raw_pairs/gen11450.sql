@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT QUARTER(shipped_date) AS shipped_quarter, SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END) AS lost_count FROM shipments GROUP BY QUARTER(shipped_date)) AS sub WHERE lost_count < 24

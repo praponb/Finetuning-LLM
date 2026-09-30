@@ -1,1 +1,0 @@
-select status, case when shipping_fee >= 40 then 'high' when shipping_fee >= 9 then 'mid' else 'low' end as shipping_fee_bucket, case when status in ('SHIPPED', 'COMPLETED') then 'group_a' else 'other' end as status_group, sum(case when status = 'RETURNED' then 1 else 0 end) as returned_count from orders group by status, shipping_fee_bucket, status_group;

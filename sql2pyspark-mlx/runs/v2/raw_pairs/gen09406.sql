@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, COUNT(we.id) AS web_event_count FROM sessions s LEFT OUTER JOIN web_events we ON we.session_id = s.id WHERE s.country IN ('TH', 'SG', 'JP') GROUP BY s.id, s.browser ORDER BY s.browser, id LIMIT 20

@@ -1,1 +1,0 @@
-WITH SessionTotals AS (SELECT session_id, SUM(CASE WHEN page = '/home' THEN 1 ELSE 0 END) AS home_count FROM web_events WHERE session_id IN (7, 26, 40) GROUP BY session_id) SELECT s.id, s.country, s.started_at, S.home_count FROM sessions s INNER JOIN SessionTotals S ON s.id = S.session_id ORDER BY s.started_at;

@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(order_date) AS latest_order_date, ROUND(AVG(amount), 2) AS avg_amount FROM orders GROUP BY store_id) SELECT s.id, s.city, s.region, ss.latest_order_date, ss.avg_amount FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id WHERE ss.avg_amount >= 22 ORDER BY city, s.id DESC;

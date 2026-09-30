@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, TRIM(supplier_name) AS clean_supplier_name, COALESCE(city, 'UNKNOWN') AS resolved_city FROM suppliers WHERE city IS NOT DISTINCT FROM 'Chiang Mai') SELECT s.* FROM cleaned s WHERE NOT EXISTS (SELECT 1 FROM products c WHERE c.supplier_id = s.id AND c.cost > 300);

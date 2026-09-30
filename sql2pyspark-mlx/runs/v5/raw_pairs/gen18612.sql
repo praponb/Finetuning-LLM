@@ -1,1 +1,0 @@
-SELECT QUARTER(event_time) AS event_quarter, COUNT(CASE WHEN page = '/cart' THEN 1 END) AS cart_count, COUNT(DISTINCT duration_sec) AS unique_sessions FROM web_events WHERE session_id IN (20, 39) GROUP BY event_quarter HAVING COUNT(DISTINCT duration_sec) >= 2 ORDER BY unique_sessions DESC, cart_count DESC, event_quarter ASC LIMIT 5

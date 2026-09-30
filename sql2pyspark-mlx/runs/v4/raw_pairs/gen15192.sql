@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, plan, effective_from, currency, val FROM price_tiers LATERAL VIEW EXPLODE(tier_prices) e AS val) SELECT *, AVG(val) OVER w_ordered AS currency_avg_val, RANK() OVER (ORDER BY val DESC NULLS FIRST) AS val_rank, PERCENT_RANK() OVER (ORDER BY val DESC NULLS LAST) AS val_percent_rank FROM exploded WINDOW w_ordered AS (PARTITION BY currency);

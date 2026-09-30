@@ -1,1 +1,0 @@
-SELECT p.category, MIN(ss.revenue) AS min_revenue, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id GROUP BY p.category ORDER BY min_revenue, category LIMIT 1

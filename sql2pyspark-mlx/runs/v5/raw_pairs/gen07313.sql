@@ -1,1 +1,0 @@
-SELECT account_type, avg_balance, total_balance FROM (SELECT account_type, AVG(balance) AS avg_balance, SUM(balance) AS total_balance FROM accounts WHERE customer_id IN (2, 8, 28, 37) GROUP BY account_type) AS x WHERE total_balance < 207000;

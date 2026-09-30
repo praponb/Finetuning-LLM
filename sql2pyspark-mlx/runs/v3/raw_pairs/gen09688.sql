@@ -1,1 +1,0 @@
-SELECT t.id, t.account_id, t.txn_type, t.merchant, a.opened_date, a.customer_id, CASE WHEN t.is_flagged THEN 'Yes' ELSE 'No' END AS is_flagged_label FROM transactions t JOIN accounts a ON a.id = t.account_id WHERE t.is_flagged = FALSE;

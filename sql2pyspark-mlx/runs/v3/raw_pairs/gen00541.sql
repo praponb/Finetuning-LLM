@@ -1,1 +1,0 @@
-SELECT id, order_id, paid_at, amount, LAG(amount, 2, 0) OVER (PARTITION BY order_id ORDER BY paid_at, id) AS prev_amount, LAG(amount, 1, 0) OVER (PARTITION BY order_id ORDER BY paid_at, id) AS prev_amount_2 FROM payments WHERE status IN ('FAILED', 'SUCCESS', 'REFUNDED') ORDER BY amount DESC;

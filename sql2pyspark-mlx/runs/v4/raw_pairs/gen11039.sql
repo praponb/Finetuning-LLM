@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY store_id) SELECT stores.id, stores.opened_date, stores.city, store_totals.avg_quantity, store_totals.stddev_quantity FROM stores INNER JOIN store_totals ON stores.id = store_totals.store_id ORDER BY id DESC, opened_date DESC

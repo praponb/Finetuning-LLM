@@ -1,1 +1,0 @@
-SELECT product_id, COUNT(revenue) AS revenue_count, AVG(revenue) AS avg_revenue, MIN(units) AS min_units FROM store_sales WHERE (product_id = 10 AND store_id IN (3, 5)) OR MONTH(sale_date) IN (5, 6, 8) GROUP BY product_id;

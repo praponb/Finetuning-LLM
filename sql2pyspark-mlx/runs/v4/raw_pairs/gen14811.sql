@@ -1,1 +1,0 @@
-SELECT id, job_title, dept_id, hire_date, salary, manager_id, level, salary - LAG(salary, 1) OVER (PARTITION BY job_title, dept_id ORDER BY hire_date, id) AS salary_change, ROW_NUMBER() OVER (PARTITION BY manager_id, level ORDER BY salary DESC, id) AS rn FROM employees WHERE salary > 114000 ORDER BY manager_id;

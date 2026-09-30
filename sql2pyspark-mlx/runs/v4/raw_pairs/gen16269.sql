@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, amount - shipping_fee AS amount_with_shipping FROM orders WHERE order_date > DATE '2023-07-06' AND channel IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY status, store_id ORDER BY shipping_fee DESC, id) AS rn FROM valid QUALIFY rn = 1;

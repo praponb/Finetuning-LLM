@@ -1,1 +1,0 @@
-select year(shipped_date) as shipped_year, status, count(distinct cost) as unique_statuss, count(cost) as cost_count, count(case when carrier = 'Kerry' then 1 end) as kerry_count from shipments where status in ('IN_TRANSIT', 'LOST') and (status != 'LOST' or shipped_date <= '2024-02-11') group by 1, 2 having unique_statuss < 1

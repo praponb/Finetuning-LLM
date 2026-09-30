@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, customer_id, code FROM carts LATERAL VIEW OUTER EXPLODE(coupon_codes) t AS code) SELECT code, COUNT(CASE WHEN code = 'SPRING10' THEN 1 END) AS spring10_count, SIZE(COLLECT_SET(code)) AS num_codes, COUNT(*) AS cnt FROM flattened GROUP BY CUBE (code) ORDER BY spring10_count DESC NULLS FIRST

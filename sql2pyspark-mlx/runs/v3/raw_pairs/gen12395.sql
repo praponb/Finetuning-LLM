@@ -1,1 +1,0 @@
-SELECT o.id, COUNT(s.id) AS shipment_count, SUM(s.cost) AS total_cost FROM orders o INNER JOIN shipments s ON s.order_id = o.id WHERE o.order_date >= '2025-06-01' GROUP BY o.id HAVING SUM(s.cost) >= 410;

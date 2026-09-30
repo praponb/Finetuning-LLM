@@ -1,1 +1,0 @@
-SELECT id, status, discount, order_date, store_id, LAST_VALUE(order_date) OVER (PARTITION BY status ORDER BY discount, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_order_date, PERCENT_RANK() OVER (PARTITION BY store_id ORDER BY discount) AS discount_pct_rank FROM orders WHERE shipping_fee >= 23;

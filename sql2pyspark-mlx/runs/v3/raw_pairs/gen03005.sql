@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM employees WHERE dept_id IN (8, 18, 21, 35)), hire_quarter_summary AS (SELECT QUARTER(hire_date) AS hire_quarter, ROUND(AVG(salary), 2) AS avg_salary, MAX(salary) AS max_salary FROM base GROUP BY QUARTER(hire_date)) SELECT * FROM hire_quarter_summary ORDER BY avg_salary DESC

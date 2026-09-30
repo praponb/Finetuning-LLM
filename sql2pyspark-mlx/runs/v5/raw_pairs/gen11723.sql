@@ -1,1 +1,0 @@
-SELECT payments.order_id, payments.method, orders.store_id, orders.shipping_fee, customers.age FROM payments FULL OUTER JOIN orders ON payments.order_id = orders.id LEFT JOIN customers ON orders.customer_id = customers.id WHERE payments.status NOT IN ('REFUNDED', 'SUCCESS') ORDER BY store_id DESC, method

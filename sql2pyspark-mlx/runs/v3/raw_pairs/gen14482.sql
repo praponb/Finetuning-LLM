@@ -1,1 +1,0 @@
-WITH ranked_products AS (SELECT id, brand, price, supplier_id, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY price DESC, id) pos FROM products WHERE launch_date >= '2024-03-01') SELECT * FROM ranked_products WHERE pos = 1 ORDER BY price DESC, supplier_id DESC;

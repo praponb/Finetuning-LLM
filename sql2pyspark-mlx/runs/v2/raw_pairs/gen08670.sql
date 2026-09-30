@@ -1,1 +1,0 @@
-SELECT CASE WHEN balance >= 65000 THEN 'high' WHEN balance >= 35000 THEN 'mid' ELSE 'low' END AS balance_bucket, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list, SUM(CASE WHEN account_type = 'CREDIT' THEN balance ELSE 0 END) AS credit_balance FROM accounts GROUP BY balance_bucket ORDER BY balance_bucket ASC;

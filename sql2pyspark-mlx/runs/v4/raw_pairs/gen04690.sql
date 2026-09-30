@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM payments WHERE HOUR(paid_at) BETWEEN 7 AND 10 OR order_id = 38), payments_stats AS (SELECT method, SORT_ARRAY(COLLECT_SET(method)) AS method_list, MAX(amount) - MIN(amount) AS amount_range FROM src GROUP BY method) SELECT * FROM payments_stats ORDER BY method, amount_range DESC LIMIT 10;

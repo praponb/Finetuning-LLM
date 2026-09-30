@@ -1,1 +1,0 @@
-SELECT p.category, ROUND(STDDEV(ss.revenue), 2) stddev_revenue FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id GROUP BY p.category ORDER BY 2

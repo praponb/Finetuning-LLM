@@ -1,1 +1,0 @@
-WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status, plan ORDER BY monthly_fee, id) AS latest_rank FROM subscriptions QUALIFY latest_rank = 1) SELECT id, customer_id, start_date, status, latest_rank, CASE WHEN status RLIKE '^(CANCELLED|ACTIVE)$' THEN 'GROUP_A' ELSE 'OTHER_ZONE' END AS status_zone FROM latest ORDER BY status DESC;

@@ -1,1 +1,0 @@
-SELECT page, event_type, SUM(CASE WHEN page = '/product' THEN duration_sec ELSE 0 END) product_duration_sec, SORT_ARRAY(COLLECT_SET(page)) page_list FROM web_events WHERE session_id IN (12, 16, 30) GROUP BY 1, 2 HAVING SUM(CASE WHEN page = '/product' THEN duration_sec ELSE 0 END) < 69 ORDER BY event_type

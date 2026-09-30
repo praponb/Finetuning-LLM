@@ -1,1 +1,0 @@
-WITH ProductSummary AS (SELECT product_id, MIN(sale_date) AS min_sale_date FROM store_sales WHERE MONTH(sale_date) IN (1, 6, 12) GROUP BY product_id) SELECT p.id, p.product_name, P.min_sale_date FROM products p LEFT OUTER JOIN ProductSummary P ON p.id = P.product_id;

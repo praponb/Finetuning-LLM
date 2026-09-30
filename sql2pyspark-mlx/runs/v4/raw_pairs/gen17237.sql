@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, store_id, product_id, sale_date, units, revenue, ADD_MONTHS(sale_date, 1) AS sale_date_plus_months FROM store_sales WHERE sale_date >= TO_DATE('2023-11-18') AND store_id IN (1, 4)) SELECT *, RANK() OVER (PARTITION BY store_id, product_id ORDER BY sale_date_plus_months NULLS FIRST) AS dedup_rank FROM filtered QUALIFY dedup_rank = 1;

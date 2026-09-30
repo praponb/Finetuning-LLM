@@ -1,1 +1,0 @@
-SELECT s.city, SUM(CASE WHEN o.channel = 'partner' THEN 1 ELSE 0 END) AS partner_count FROM orders o LEFT OUTER JOIN stores s ON o.store_id = s.id GROUP BY s.city ORDER BY s.city, partner_count DESC LIMIT 50;

@@ -1,1 +1,0 @@
-SELECT dim.dept_name, dim.location, COUNT(*) AS rows_total, ROUND(AVG(s.salary), 2) AS avg_salary, GROUPING_ID() AS grouping_level FROM employees s LEFT JOIN departments dim ON s.dept_id = dim.id GROUP BY GROUPING SETS ((dim.dept_name, dim.location), (dim.dept_name)) ORDER BY dept_name NULLS FIRST;

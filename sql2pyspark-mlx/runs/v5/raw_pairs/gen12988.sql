@@ -1,1 +1,0 @@
-SELECT p.id, p.brand, COUNT(ss.id) AS store_sale_count, ROUND(AVG(ss.units), 2) AS avg_units FROM products p LEFT OUTER JOIN store_sales ss ON ss.product_id = p.id GROUP BY p.id, p.brand ORDER BY p.id DESC, brand LIMIT 5;

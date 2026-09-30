@@ -1,1 +1,0 @@
-with ranked_sessions as (select id, device, started_at, browser, row_number() over (partition by device order by started_at, id) as row_num from sessions) select * from ranked_sessions where row_num = 1 order by started_at desc, row_num desc;

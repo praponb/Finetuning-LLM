@@ -1,1 +1,0 @@
-SELECT *, NTILE(5) OVER (ORDER BY discount_pct DESC, id) AS discount_pct_bucket, SUM(discount_pct) OVER (PARTITION BY channel, promo_code ORDER BY ends_on, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_discount_pct, ROW_NUMBER() OVER (ORDER BY starts_on DESC, id) AS row_seq FROM promotions

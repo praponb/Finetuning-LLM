@@ -1,1 +1,0 @@
-SELECT s.city, SUM(o.amount) AS total_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(o.status))) AS status_values FROM orders o JOIN customers c ON o.customer_id = c.id JOIN stores s ON o.store_id = s.id WHERE o.status = 'PENDING' GROUP BY s.city ORDER BY city

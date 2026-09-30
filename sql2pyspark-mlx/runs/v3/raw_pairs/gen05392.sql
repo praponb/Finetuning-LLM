@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 5 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(quantity) AS max_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items GROUP BY 1 HAVING AVG(unit_price) < 170 ORDER BY quantity_range ASC

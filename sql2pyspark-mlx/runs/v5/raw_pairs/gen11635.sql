@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS pos FROM departments WHERE location = 'Tokyo') SELECT id, dept_name, budget, location FROM numbered WHERE pos <= 5

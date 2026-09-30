@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, level, latency_ms, status_code, key, value FROM app_logs LATERAL VIEW EXPLODE(context) t AS key, value) SELECT level, ROUND(AVG(latency_ms), 2) AS avg_latency_ms, ROUND(AVG(status_code), 2) AS avg_status_code FROM flattened GROUP BY level ORDER BY level DESC NULLS FIRST;

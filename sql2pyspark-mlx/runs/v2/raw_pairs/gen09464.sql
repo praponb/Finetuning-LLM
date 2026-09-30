@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, MAX(amount) - MIN(amount) AS amount_range, COUNT(CASE WHEN txn_type = 'DEBIT' THEN 1 END) AS debit_count FROM transactions WHERE is_flagged GROUP BY account_id) SELECT a.id, a.customer_id, a.account_type, at.amount_range, at.debit_count FROM accounts a INNER JOIN account_totals at ON a.id = at.account_id

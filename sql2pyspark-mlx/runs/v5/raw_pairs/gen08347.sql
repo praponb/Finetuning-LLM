@@ -1,1 +1,0 @@
-SELECT s.id, s.sqft, t.min_last_restock FROM stores s INNER JOIN (SELECT store_id, MIN(last_restock) AS min_last_restock FROM inventory WHERE last_restock < '2024-08-01' GROUP BY store_id) t ON s.id = t.store_id;

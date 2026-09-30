@@ -1,1 +1,0 @@
-select * from (select case when age >= 63 then 'high' when age >= 30 then 'mid' else 'low' end as age_bucket, country, credit_limit from customers) pivot (avg(credit_limit) for country in ('UK', 'DE'));

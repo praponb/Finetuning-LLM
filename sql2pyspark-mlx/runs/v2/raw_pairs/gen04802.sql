@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 300 THEN 'high' WHEN unit_price >= 160 THEN 'mid' ELSE 'low' END unit_price_bucket, product_id, MIN(unit_price) min_unit_price, MIN(quantity) min_quantity FROM order_items WHERE order_id = 30 GROUP BY CASE WHEN unit_price >= 300 THEN 'high' WHEN unit_price >= 160 THEN 'mid' ELSE 'low' END, product_id ORDER BY min_quantity DESC

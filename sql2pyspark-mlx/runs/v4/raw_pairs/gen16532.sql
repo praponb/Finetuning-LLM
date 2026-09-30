@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, p.product_name, s.supplier_name, s.rating FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE oi.order_id IN (5, 12, 20) AND s.city NOT IN ('Chiang Mai', 'Singapore') ORDER BY supplier_name;

@@ -1,1 +1,0 @@
-WITH valid_employees AS (SELECT * FROM employees WHERE job_title IS NOT NULL), agg AS (SELECT is_remote, SUM(salary) AS total_salary FROM valid_employees GROUP BY is_remote) SELECT * FROM agg ORDER BY total_salary DESC;

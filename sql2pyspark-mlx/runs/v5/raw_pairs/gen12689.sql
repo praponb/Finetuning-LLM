@@ -1,1 +1,0 @@
-SELECT store_id, MAX(quantity) AS max_quantity, COUNT(quantity) AS quantity_count FROM inventory WHERE (last_restock < '2024-08-01' AND store_id IN (2, 3, 4, 5)) OR store_id = 3 GROUP BY store_id ORDER BY quantity_count;

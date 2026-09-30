@@ -1,1 +1,0 @@
-SELECT id, carrier, order_id, delivered_date, cost, ROUND(AVG(cost) OVER (PARTITION BY carrier, order_id ORDER BY delivered_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_3, NTILE(10) OVER (PARTITION BY carrier, order_id ORDER BY cost DESC, id) AS bucket FROM shipments WHERE order_id = 7;

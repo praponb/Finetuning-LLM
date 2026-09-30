@@ -1,1 +1,0 @@
-SELECT city, total_rating, rating_count FROM (SELECT city, SUM(rating) AS total_rating, COUNT(rating) AS rating_count FROM suppliers GROUP BY city) AS s WHERE total_rating >= 12 ORDER BY total_rating, rating_count DESC;

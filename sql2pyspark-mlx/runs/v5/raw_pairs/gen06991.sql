@@ -1,1 +1,0 @@
-SELECT id, last_restock, quantity, store_id, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_label, DATE_FORMAT(last_restock, 'MMM yyyy') AS last_restock_label_2 FROM inventory WHERE product_id = 4;

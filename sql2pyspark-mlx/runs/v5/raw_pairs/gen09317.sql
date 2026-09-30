@@ -1,1 +1,0 @@
-SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM order_items WHERE order_id IN (4, 10, 15, 26) AND product_id IS NOT NULL AND unit_price BETWEEN 110 AND 180 GROUP BY product_id HAVING ROUND(STDDEV(quantity), 2) < 43 ORDER BY stddev_quantity DESC

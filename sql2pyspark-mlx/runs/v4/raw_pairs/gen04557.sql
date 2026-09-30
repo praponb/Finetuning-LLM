@@ -1,1 +1,0 @@
-SELECT orders.order_date, orders.channel, customers.name, stores.opened_date FROM orders LEFT OUTER JOIN customers ON orders.customer_id = customers.id LEFT OUTER JOIN stores ON stores.id = orders.store_id WHERE stores.opened_date < '2023-07-12' ORDER BY channel ASC;

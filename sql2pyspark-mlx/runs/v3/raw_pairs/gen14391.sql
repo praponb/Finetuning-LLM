@@ -1,1 +1,0 @@
-select case when rating >= 3.6 then 'high' when rating >= 1.8 then 'mid' else 'low' end as rating_bucket, count(distinct rating) as unique_citys, max(rating) as max_rating from suppliers group by case when rating >= 3.6 then 'high' when rating >= 1.8 then 'mid' else 'low' end having max_rating < 1.9 order by 1;

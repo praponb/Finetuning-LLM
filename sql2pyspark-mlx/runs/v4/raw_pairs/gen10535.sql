@@ -1,1 +1,0 @@
-select status, method, concat_ws(', ', sort_array(collect_set(status))) as status_values from payments where status in ('REFUNDED', 'SUCCESS', 'FAILED') and amount >= 1040 group by status, method order by status, 3, method limit 20;

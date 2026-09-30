@@ -1,1 +1,0 @@
-select date_format(ss.sale_date, 'yyyy-MM') as sale_month, count(*) as cnt from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by date_format(ss.sale_date, 'yyyy-MM') order by cnt, sale_month desc;

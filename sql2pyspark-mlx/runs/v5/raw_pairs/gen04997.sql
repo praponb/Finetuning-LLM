@@ -1,1 +1,0 @@
-select * from (select quarter(sale_date) as sale_quarter, count(revenue) as revenue_count, round(stddev(revenue), 2) as stddev_revenue from store_sales group by quarter(sale_date)) as x where stddev_revenue < 54 order by sale_quarter;

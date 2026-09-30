@@ -1,1 +1,0 @@
-SELECT oi.order_id, oi.quantity, p.stock_qty, o.discount, o.store_id FROM order_items oi INNER JOIN products p ON p.id = oi.product_id LEFT JOIN orders o ON oi.order_id = o.id WHERE p.product_name IS NULL AND p.cost < 550;

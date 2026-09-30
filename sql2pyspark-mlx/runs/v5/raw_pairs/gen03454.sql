@@ -1,1 +1,0 @@
-SELECT QUARTER(end_date) AS end_quarter, SUM(monthly_fee) AS total_monthly_fee, SUM(SUM(monthly_fee)) OVER (ORDER BY QUARTER(end_date)) AS cumulative_monthly_fee FROM subscriptions GROUP BY QUARTER(end_date);

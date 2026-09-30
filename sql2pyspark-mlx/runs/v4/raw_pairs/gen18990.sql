@@ -1,1 +1,0 @@
-WITH TransactionsByAccount AS (SELECT account_id, MIN(amount) AS min_amount FROM transactions GROUP BY account_id) SELECT a.customer_id, a.opened_date, T.min_amount FROM accounts a INNER JOIN TransactionsByAccount T ON a.id = T.account_id

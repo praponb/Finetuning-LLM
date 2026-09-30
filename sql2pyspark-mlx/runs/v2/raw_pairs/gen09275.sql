@@ -1,1 +1,0 @@
-SELECT method, CASE WHEN method = 'paypal' THEN 1 ELSE 0 END is_paypal FROM payments WHERE (order_id IS NOT NULL AND method IS NOT NULL) OR method IN ('bank_transfer', 'cash', 'card') ORDER BY method ASC;

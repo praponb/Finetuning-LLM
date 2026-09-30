@@ -1,1 +1,0 @@
-select *, min(cost) over (partition by status) as status_min_cost, lag(cost, 2) over (partition by carrier order by delivered_date, id) as prev_cost, lag(cost, 1) over (partition by order_id order by shipped_date, id) as prev_cost_2, round(cost / sum(cost) over (partition by carrier, order_id), 4) as cost_share from shipments;

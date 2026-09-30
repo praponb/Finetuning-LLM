@@ -1,1 +1,0 @@
-select customers.id, customers.country, customers.name from customers where not exists (select 1 from subscriptions where subscriptions.customer_id = customers.id and subscriptions.start_date between '2023-07-20' and '2024-12-26');

@@ -1,1 +1,0 @@
-SELECT id, merchant, txn_time, amount, LAG(amount, 2) OVER (PARTITION BY merchant ORDER BY txn_time, id) AS prev_amount, ROW_NUMBER() OVER (ORDER BY amount DESC, id) AS amount_row FROM transactions WHERE HOUR(txn_time) BETWEEN 8 AND 12 ORDER BY txn_time DESC, amount DESC;

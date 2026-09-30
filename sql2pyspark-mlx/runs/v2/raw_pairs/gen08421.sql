@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT status, SUM(CASE WHEN method = 'bank_transfer' THEN 1 ELSE 0 END) AS bank_transfer_count, SUM(amount) AS total_amount FROM payments GROUP BY status) AS sub WHERE total_amount < 8600;

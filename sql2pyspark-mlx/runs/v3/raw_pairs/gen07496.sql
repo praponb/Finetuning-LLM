@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM store_sales WHERE store_id IN (1, 2, 3, 4)), sale_month_summary AS (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, ROUND(AVG(units), 2) AS avg_units, MIN(units) AS min_units FROM base GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM')) SELECT sale_month, avg_units, min_units FROM sale_month_summary WHERE avg_units > 49 ORDER BY sale_month;

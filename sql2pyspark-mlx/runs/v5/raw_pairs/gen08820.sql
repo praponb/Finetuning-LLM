@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(quantity) AS max_quantity FROM order_items WHERE order_id IN (23, 38) AND (product_id IN (20, 30, 40) OR unit_price < 390) GROUP BY CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END

@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN salary >= 149000 THEN 'High' WHEN salary >= 86000 THEN 'Medium' ELSE 'Low' END AS salary_tier FROM employees WHERE dept_id IN (1, 2, 23, 34) AND (salary <= 127000 OR full_name IS NULL);

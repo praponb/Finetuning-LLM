@@ -1,1 +1,0 @@
-SELECT emp.id, emp.level employee_level, emp.is_remote employee_is_remote, emp.job_title employee_job_title, mgr.level manager_level, mgr.full_name manager_full_name, mgr.manager_id manager_manager_id FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.is_remote AND emp.full_name IS NULL

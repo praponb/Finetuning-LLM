@@ -1,1 +1,0 @@
-SELECT a.*, sub.id AS subscription_id, sub.plan AS subscription_plan, sub.monthly_fee AS subscription_monthly_fee FROM subscriptions a LEFT JOIN subscriptions sub ON a.customer_id = sub.customer_id AND a.end_date BETWEEN sub.start_date AND sub.end_date;

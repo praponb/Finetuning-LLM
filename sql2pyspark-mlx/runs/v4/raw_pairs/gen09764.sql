@@ -1,1 +1,0 @@
-SELECT s.country, t.stddev_stock_qty, t.max_price FROM suppliers s INNER JOIN (SELECT supplier_id, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty, MAX(price) AS max_price FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY s.country

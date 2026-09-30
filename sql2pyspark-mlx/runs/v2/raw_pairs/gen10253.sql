@@ -1,1 +1,0 @@
-select to_date(txn_time) as txn_day, is_flagged, max(amount) as max_amount, count(case when merchant = 'Amazon' then 1 end) as amazon_count, max(txn_time) as latest_txn_time from transactions group by to_date(txn_time), is_flagged order by max_amount desc;

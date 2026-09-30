@@ -1,1 +1,0 @@
-SELECT s.country, s.device, MIN(we.duration_sec) AS min_duration_sec FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id GROUP BY s.country, s.device HAVING MIN(we.duration_sec) > 370 ORDER BY 1 DESC, device DESC;

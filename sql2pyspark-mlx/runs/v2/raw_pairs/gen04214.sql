@@ -1,1 +1,0 @@
-SELECT plan, customer_id, LAST_DAY(end_date) AS end_date_month_end FROM subscriptions WHERE plan = 'premium' AND status = 'EXPIRED' AND status IN ('EXPIRED', 'CANCELLED', 'PAUSED') ORDER BY customer_id

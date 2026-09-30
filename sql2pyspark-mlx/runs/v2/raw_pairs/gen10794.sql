@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, COUNT(amount) AS amount_count, SUM(amount) AS total_amount FROM transactions GROUP BY account_id) SELECT a.customer_id, a.opened_date, at.amount_count, at.total_amount FROM accounts a JOIN account_totals at ON a.id = at.account_id WHERE at.amount_count >= 10 ORDER BY total_amount DESC;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.4 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(CASE WHEN city = 'Chiang Mai' THEN 1 END) AS chiang_mai_count FROM suppliers WHERE city IN ('Bangkok', 'Berlin', 'Chiang Mai') GROUP BY CASE WHEN rating >= 4.4 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END ORDER BY chiang_mai_count DESC;

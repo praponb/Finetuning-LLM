@@ -1,1 +1,0 @@
-select case when units >= 39 then 'high' when units >= 6 then 'mid' else 'low' end as units_bucket, store_id, max(revenue) - min(revenue) as revenue_range from store_sales group by 1, 2 having max(revenue) - min(revenue) > 78;

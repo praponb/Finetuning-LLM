@@ -1,1 +1,0 @@
-SELECT page, AVG(duration_sec) avg_duration_sec, MAX(event_time) last_event_time, MAX(event_time) latest_event_time FROM web_events WHERE duration_sec IS NOT NULL AND TO_DATE(event_time) >= '2023-08-01' AND session_id IN (2, 9, 21) GROUP BY page ORDER BY latest_event_time;

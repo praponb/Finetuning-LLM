@@ -1,1 +1,0 @@
-WITH ranked_sessions AS (SELECT id, browser, started_at, ROW_NUMBER() OVER (PARTITION BY browser ORDER BY started_at, id) AS rn FROM sessions WHERE device IN ('mobile', 'desktop', 'tablet')) SELECT * FROM ranked_sessions WHERE rn <= 2

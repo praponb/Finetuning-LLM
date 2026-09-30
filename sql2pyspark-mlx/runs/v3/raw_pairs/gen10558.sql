@@ -1,1 +1,0 @@
-SELECT s.id, s.store_name, t.avg_quantity FROM stores s INNER JOIN (SELECT store_id, AVG(quantity) AS avg_quantity FROM inventory WHERE quantity <> 109 GROUP BY store_id) t ON s.id = t.store_id WHERE t.avg_quantity > 180;

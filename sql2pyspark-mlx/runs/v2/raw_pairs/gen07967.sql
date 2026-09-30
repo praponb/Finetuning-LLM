@@ -1,1 +1,0 @@
-SELECT method, MONTH(paid_at) paid_month, order_id, COUNT(amount) amount_count, SUM(CASE WHEN method = 'card' THEN amount ELSE 0 END) card_amount, MAX(paid_at) last_paid_at FROM payments WHERE paid_at < '2025-01-01' GROUP BY method, MONTH(paid_at), order_id ORDER BY amount_count;

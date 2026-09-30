@@ -1,1 +1,0 @@
-SELECT inventory.product_id, inventory.quantity, products.product_name, products.category, suppliers.supplier_name FROM inventory LEFT OUTER JOIN products ON products.id = inventory.product_id INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE suppliers.rating BETWEEN 2.2 AND 3.4 ORDER BY quantity DESC

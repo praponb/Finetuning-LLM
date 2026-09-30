@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM inventory WHERE store_id IN (1, 2)), store_id_summary AS (SELECT store_id, COUNT(quantity) AS quantity_count, MIN(quantity) AS min_quantity FROM base GROUP BY store_id) SELECT store_id, quantity_count, min_quantity FROM store_id_summary WHERE quantity_count > 6;

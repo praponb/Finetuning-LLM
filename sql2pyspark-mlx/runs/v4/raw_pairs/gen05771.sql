@@ -1,1 +1,0 @@
-SELECT event_type, COUNT(DISTINCT duration_sec) AS unique_sessions, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, MIN(event_time) AS first_event_time FROM web_events WHERE event_time < '2025-10-01' GROUP BY event_type

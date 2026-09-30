@@ -1,1 +1,0 @@
-with store_totals as (select store_id, min(sale_date) as min_sale_date from store_sales group by store_id) select s.id, s.store_name, s.region, st.min_sale_date from stores s inner join store_totals st on s.id = st.store_id

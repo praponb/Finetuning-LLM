@@ -1,1 +1,0 @@
-select we.event_time, we.duration_sec, s.customer_id, s.device, c.credit_limit, c.country from web_events we left join sessions s on we.session_id = s.id left join customers c on c.id = s.customer_id where we.page in ('/checkout', '/home', '/cart') order by s.device, event_time

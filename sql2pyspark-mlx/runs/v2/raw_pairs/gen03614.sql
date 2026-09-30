@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(amount) - MIN(amount) AS amount_range FROM orders GROUP BY store_id) SELECT s.city, s.sqft, ss.amount_range FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id WHERE ss.amount_range >= 60 ORDER BY city DESC;

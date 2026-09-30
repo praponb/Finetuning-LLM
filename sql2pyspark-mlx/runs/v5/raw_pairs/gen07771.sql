@@ -1,1 +1,0 @@
-SELECT we.session_id, s.browser, s.customer_id, c.city, c.age, REGEXP_EXTRACT(c.email, '@(.+)$', 1) AS email_domain FROM web_events we JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id WHERE we.event_type = 'search';

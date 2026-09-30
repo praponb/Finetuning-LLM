@@ -1,1 +1,0 @@
-with base as (select *, round(price * 0.85, 2) as adjusted_price from products where price between 510 and 960), agg as (select category, avg(stock_qty) as avg_stock_qty from base group by category) select * from agg order by avg_stock_qty, category limit 10;

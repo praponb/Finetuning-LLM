@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN unit_price >= 430 THEN 'high' WHEN unit_price >= 120 THEN 'mid' ELSE 'low' END AS unit_price_bucket, MIN(quantity) AS min_quantity, COUNT(*) AS order_item_count FROM order_items GROUP BY product_id, CASE WHEN unit_price >= 430 THEN 'high' WHEN unit_price >= 120 THEN 'mid' ELSE 'low' END;

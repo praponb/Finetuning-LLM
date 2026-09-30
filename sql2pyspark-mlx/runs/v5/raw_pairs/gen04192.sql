@@ -1,1 +1,0 @@
-select i.quantity, i.store_id, ss.sale_date, ss.store_id as store_sale_store_id from inventory i inner join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.store_id = 6 and ss.product_id in (1, 2, 3, 4);

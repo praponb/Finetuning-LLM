@@ -1,1 +1,0 @@
-SELECT c.id, c.name FROM customers c WHERE c.country IN ('TH', 'US', 'JP') AND NOT EXISTS (SELECT 1 FROM subscriptions s WHERE s.customer_id = c.id AND s.end_date BETWEEN '2023-09-01' AND '2025-06-01');

@@ -1,1 +1,0 @@
-SELECT sessions.customer_id, t.first_event_time FROM sessions INNER JOIN (SELECT session_id, MIN(event_time) AS first_event_time FROM web_events GROUP BY session_id) t ON sessions.id = t.session_id ORDER BY sessions.customer_id;

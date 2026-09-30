@@ -1,1 +1,0 @@
-WITH valid_stores AS (SELECT *, LOWER(city) AS city_lower FROM stores WHERE opened_date <= '2023-12-01' OR opened_date <= '2024-10-13'), agg AS (SELECT city, SUM(CASE WHEN region = 'North' THEN 1 ELSE 0 END) AS north_count FROM valid_stores GROUP BY city) SELECT city, north_count FROM agg WHERE north_count < 72;

@@ -1,1 +1,0 @@
-with top_transactions as (select id, account_id, txn_time, txn_type, rank() over (partition by account_id order by txn_time desc) as pos from transactions) select id, account_id, txn_time, txn_type from top_transactions where pos <= 5;

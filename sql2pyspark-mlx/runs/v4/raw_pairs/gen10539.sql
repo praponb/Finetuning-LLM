@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, created_at, coupon_codes, k, attr_value FROM carts LATERAL VIEW EXPLODE(attributes) x AS k, attr_value) SELECT k, COUNT(*) AS cnt, SIZE(COLLECT_SET(k)) AS num_ks FROM flattened GROUP BY k ORDER BY k

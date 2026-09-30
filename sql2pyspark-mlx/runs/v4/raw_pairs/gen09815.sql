@@ -1,1 +1,0 @@
-SELECT segment, MIN(age) AS min_age, MAX(age) AS max_age, ROUND(AVG(credit_limit), 2) AS avg_credit_limit FROM customers WHERE LENGTH(name) > 13 OR country != 'JP' GROUP BY segment HAVING MAX(age) > 47;

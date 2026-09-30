@@ -1,1 +1,0 @@
-SELECT city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, MIN(rating) AS min_rating FROM suppliers WHERE rating > 3.4 OR country != 'SG' GROUP BY city HAVING min_rating >= 3.8 ORDER BY city LIMIT 10

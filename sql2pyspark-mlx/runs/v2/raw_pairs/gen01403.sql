@@ -1,1 +1,0 @@
-SELECT id, sale_date, revenue, store_id, units, LAG(revenue, 2) OVER (ORDER BY sale_date, id) AS prev_revenue, ROUND(units / SUM(units) OVER (PARTITION BY store_id), 3) AS units_share FROM store_sales ORDER BY units_share DESC

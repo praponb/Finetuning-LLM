@@ -1,1 +1,0 @@
-SELECT customer_id, COUNT(CASE WHEN status = 'ACTIVE' THEN 1 END) AS active_count, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions GROUP BY customer_id HAVING monthly_fee_range >= 77

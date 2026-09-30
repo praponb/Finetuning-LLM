@@ -1,1 +1,0 @@
-WITH department_totals AS (SELECT dept_id, COUNT(*) AS row_count, MIN(salary) AS min_salary FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.location, dt.row_count, dt.min_salary FROM departments d JOIN department_totals dt ON d.id = dt.dept_id ORDER BY dept_name DESC;

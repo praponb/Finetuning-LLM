@@ -1,1 +1,0 @@
-with flagged as (select *, case when event_time - lag(event_time) over (partition by event_type order by event_time, id) > interval '14' day then 1 else 0 end as session_start_flag from web_events) select *, sum(session_start_flag) over (partition by event_type order by event_time, id rows between unbounded preceding and current row) as session_id_2 from flagged;

@@ -1,1 +1,0 @@
-SELECT s.city, s.sqft, t.avg_quantity, t.inventory_count FROM stores s JOIN (SELECT store_id, AVG(quantity) AS avg_quantity, COUNT(*) AS inventory_count FROM inventory WHERE product_id IN (2, 6, 10) GROUP BY store_id) t ON s.id = t.store_id;

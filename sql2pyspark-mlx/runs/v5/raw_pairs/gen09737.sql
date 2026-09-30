@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, country, city, rating, LOWER(country) AS country_lower FROM suppliers WHERE city IS NOT NULL) SELECT *, RANK() OVER (PARTITION BY city, country ORDER BY rating DESC NULLS LAST) AS dedup_rank FROM filtered QUALIFY dedup_rank = 1

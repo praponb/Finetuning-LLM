@@ -1,1 +1,0 @@
-SELECT CASE WHEN age >= 61 THEN 'high' WHEN age >= 32 THEN 'mid' ELSE 'low' END AS age_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, AVG(credit_limit) AS avg_credit_limit FROM customers WHERE is_active AND (country IN ('US', 'SG') OR segment = 'SMB') GROUP BY 1 ORDER BY avg_credit_limit DESC, age_bucket LIMIT 50

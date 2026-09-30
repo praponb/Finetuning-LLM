@@ -1,1 +1,0 @@
-SELECT o.id, o.discount, o.customer_id, s.city, s.sqft, DAYOFWEEK(o.order_date) AS order_date_dayofweek FROM orders o INNER JOIN stores s ON o.store_id = s.id WHERE s.region IN ('West', 'North') AND LOWER(s.store_name) LIKE '%ive%' ORDER BY sqft DESC;

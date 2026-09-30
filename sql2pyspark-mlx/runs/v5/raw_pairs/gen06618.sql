@@ -1,1 +1,0 @@
-SELECT ss.sale_date, ss.product_id, p.stock_qty, s.city, s.store_name FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE s.city NOT IN ('New York', 'Bangkok') OR p.stock_qty < 396 ORDER BY city DESC, 3;

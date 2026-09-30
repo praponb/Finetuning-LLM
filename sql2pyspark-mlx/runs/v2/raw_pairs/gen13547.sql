@@ -1,1 +1,0 @@
-SELECT id, budget, CONCAT_WS('/', dept_name, location) AS dept_name_location_key, CASE WHEN location IN ('New York', 'Berlin') THEN 'Core' ELSE 'Other' END AS location_group FROM departments WHERE dept_name = 'Sales' AND dept_name IN ('Sales', 'Finance') AND location IS NOT NULL ORDER BY location_group DESC

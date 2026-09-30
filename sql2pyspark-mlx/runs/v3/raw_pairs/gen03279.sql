@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT country, AVG(age) AS avg_age, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM customers GROUP BY country) AS agg WHERE avg_age >= 43 ORDER BY avg_age DESC, country LIMIT 50

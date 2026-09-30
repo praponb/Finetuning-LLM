@@ -1,1 +1,0 @@
-SELECT we.id, we.event_type, we.session_id, s.device, c.is_active, c.email FROM web_events we FULL OUTER JOIN sessions s ON s.id = we.session_id INNER JOIN customers c ON s.customer_id = c.id WHERE HOUR(we.event_time) BETWEEN 10 AND 18 ORDER BY s.device DESC, 2 ASC

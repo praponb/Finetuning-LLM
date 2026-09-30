@@ -1,1 +1,0 @@
-SELECT id, rating, CASE WHEN rating >= 3.5 THEN 'High' WHEN rating >= 2.5 THEN 'Medium' ELSE 'Low' END AS rating_level FROM suppliers WHERE supplier_name LIKE '%Siam%' AND rating <= 2.1 ORDER BY rating DESC

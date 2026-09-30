@@ -1,1 +1,0 @@
-SELECT id, session_id, page, SUBSTRING(event_type, 1, 2) AS event_type_prefix, WEEKOFYEAR(event_time) AS event_time_weekofyear FROM web_events WHERE session_id IN (2, 8, 10, 26) ORDER BY event_time_weekofyear DESC

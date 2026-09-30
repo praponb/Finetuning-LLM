@@ -1,1 +1,0 @@
-WITH Ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY amount, id) AS pos FROM payments WHERE order_id IN (6, 21, 25, 28)) SELECT * FROM Ranked WHERE pos <= 2 ORDER BY method, pos;

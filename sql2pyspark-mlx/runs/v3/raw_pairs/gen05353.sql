@@ -1,1 +1,0 @@
-select id, status, cost, shipped_date, avg(cost) over (partition by status) as status_avg_cost, round(avg(cost) over (order by shipped_date, id rows between 3 preceding and current row), 2) as cost_moving_avg_4 from shipments;

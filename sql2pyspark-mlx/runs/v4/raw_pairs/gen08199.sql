@@ -1,1 +1,0 @@
-select status, month(order_date) as order_month, sort_array(collect_set(status)) as status_list, sum(case when channel = 'store' then 1 else 0 end) as store_count from orders group by status, month(order_date) having sum(case when channel = 'store' then 1 else 0 end) < 26;

@@ -1,1 +1,0 @@
-SELECT txn_year, merchant, amount_count FROM (SELECT YEAR(txn_time) txn_year, merchant, COUNT(amount) amount_count FROM transactions GROUP BY YEAR(txn_time), merchant) agg WHERE amount_count < 8 ORDER BY txn_year

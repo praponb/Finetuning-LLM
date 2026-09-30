@@ -1,1 +1,0 @@
-select id, status, cost, round(cost / sum(cost) over (partition by status), 3) as cost_share, last_value(status) over (order by cost, id rows between unbounded preceding and unbounded following) as last_status from shipments;

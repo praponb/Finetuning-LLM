@@ -1,1 +1,0 @@
-SELECT id, customer_id, started_at, device, CASE WHEN browser = 'Edge' THEN 1 ELSE 0 END AS is_edge FROM sessions WHERE device != 'desktop' AND (country = 'DE' OR started_at >= '2023-05-01') ORDER BY id DESC, device ASC

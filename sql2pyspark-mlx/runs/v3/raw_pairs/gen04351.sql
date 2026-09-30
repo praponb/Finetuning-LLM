@@ -1,1 +1,0 @@
-select c.is_active, sum(case when s.status = 'CANCELLED' then 1 else 0 end) as cancelled_count from subscriptions s left join customers c on c.id = s.customer_id where s.customer_id is null group by c.is_active order by cancelled_count;

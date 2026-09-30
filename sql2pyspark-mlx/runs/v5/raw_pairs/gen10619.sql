@@ -1,1 +1,0 @@
-SELECT CASE WHEN p.brand IN ('Acme', 'Stark') THEN 'tier_1' ELSE 'other' END AS brand_group, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price FROM order_items oi INNER JOIN products p ON oi.product_id = p.id WHERE p.brand IN ('Globex', 'Acme') GROUP BY CASE WHEN p.brand IN ('Acme', 'Stark') THEN 'tier_1' ELSE 'other' END ORDER BY avg_unit_price, brand_group LIMIT 1;

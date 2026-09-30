@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.sqft >= 13463 THEN 'high' WHEN s.sqft >= 6366 THEN 'mid' ELSE 'low' END AS sqft_bucket, ROUND(AVG(o.amount), 2) AS avg_amount FROM orders o LEFT OUTER JOIN stores s ON o.store_id = s.id RIGHT OUTER JOIN customers c ON o.customer_id = c.id GROUP BY CASE WHEN s.sqft >= 13463 THEN 'high' WHEN s.sqft >= 6366 THEN 'mid' ELSE 'low' END ORDER BY sqft_bucket;

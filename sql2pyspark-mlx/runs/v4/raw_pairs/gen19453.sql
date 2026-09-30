@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT status, SUM(CASE WHEN status = 'RETURNED' THEN discount ELSE 0 END) AS returned_discount, SUM(CASE WHEN channel = 'partner' THEN 1 ELSE 0 END) AS partner_count FROM orders WHERE customer_id IS NOT NULL GROUP BY status) AS x WHERE partner_count >= 56 ORDER BY status;

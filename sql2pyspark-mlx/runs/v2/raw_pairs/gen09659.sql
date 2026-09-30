@@ -1,1 +1,0 @@
-SELECT id, account_id, CEIL(amount) AS amount_whole, CASE WHEN merchant IN ('Amazon', 'Grab') THEN 'Tier 1' ELSE 'Other' END AS merchant_group FROM transactions WHERE TO_DATE(txn_time) < '2023-09-01' AND amount IS NULL ORDER BY 1 DESC, account_id LIMIT 5

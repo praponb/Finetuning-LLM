@@ -1,1 +1,0 @@
-SELECT CASE WHEN c.age >= 56 THEN 'high' WHEN c.age >= 32 THEN 'mid' ELSE 'low' END age_bucket, SUM(a.balance) total_balance FROM accounts a JOIN customers c ON a.customer_id = c.id GROUP BY CASE WHEN c.age >= 56 THEN 'high' WHEN c.age >= 32 THEN 'mid' ELSE 'low' END ORDER BY total_balance DESC

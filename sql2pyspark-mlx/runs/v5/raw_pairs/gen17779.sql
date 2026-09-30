@@ -1,1 +1,0 @@
-SELECT s.city, s.region, SUM(CASE WHEN o.status = 'PENDING' THEN 1 ELSE 0 END) AS pending_count, COUNT(*) AS row_count FROM orders o INNER JOIN stores s ON s.id = o.store_id LEFT JOIN customers c ON c.id = o.customer_id GROUP BY s.city, s.region ORDER BY row_count, pending_count DESC;

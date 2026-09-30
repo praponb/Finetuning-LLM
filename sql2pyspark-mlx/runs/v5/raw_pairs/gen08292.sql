@@ -1,1 +1,0 @@
-WITH with_windows AS (SELECT *, LAG(units) OVER w_hist prev_units, LEAD(units) OVER w_hist next_units, LEAD(revenue) OVER w_hist next_revenue, ROW_NUMBER() OVER w_hist row_seq FROM store_sales WINDOW w_hist AS (PARTITION BY store_id ORDER BY sale_date, id)) SELECT id, store_id, sale_date, revenue, next_units, next_revenue, row_seq FROM with_windows;

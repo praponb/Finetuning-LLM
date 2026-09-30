@@ -1,1 +1,0 @@
-with session_stats as (select session_id, count(case when event_type = 'page_view' then 1 end) as page_view_count from web_events where session_id in (17, 30) group by session_id) select s.country, s.customer_id, ss.page_view_count from sessions s left join session_stats ss on s.id = ss.session_id

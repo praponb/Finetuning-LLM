@@ -1,1 +1,0 @@
-SELECT CASE WHEN p.stock_qty >= 398 THEN 'high' WHEN p.stock_qty >= 87 THEN 'mid' ELSE 'low' END AS stock_qty_bucket, SUM(oi.unit_price) AS total_unit_price, COUNT(*) AS total_count FROM order_items oi INNER JOIN products p ON oi.product_id = p.id GROUP BY CASE WHEN p.stock_qty >= 398 THEN 'high' WHEN p.stock_qty >= 87 THEN 'mid' ELSE 'low' END;

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, COUNT(stock_qty) AS stock_qty_count, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range, AVG(cost) AS avg_cost FROM products GROUP BY DATE_FORMAT(launch_date, 'yyyy-MM') HAVING avg_cost > 390

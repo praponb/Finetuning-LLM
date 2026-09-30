@@ -1,1 +1,0 @@
-with src as (select * from customers where country = 'US' and (credit_limit between 6200 and 11100 or name like '%Alic%')), city_summary as (select city, round((100 * sum(case when city = 'Singapore' then 1 else 0 end)) / count(*), 1) pct_singapore from src group by city) select city, pct_singapore from city_summary

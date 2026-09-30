@@ -1,1 +1,0 @@
-SELECT s.id, s.started_at, t.min_duration_sec FROM sessions s INNER JOIN (SELECT session_id, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE event_time >= '2024-12-01' GROUP BY session_id) t ON s.id = t.session_id WHERE t.min_duration_sec >= 260 ORDER BY started_at DESC

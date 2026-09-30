@@ -1,1 +1,0 @@
-SELECT CASE WHEN price >= 980 THEN 'high' WHEN price >= 550 THEN 'mid' ELSE 'low' END AS price_bucket, SUM(price) AS total_price, ROUND(SUM(price) * 100.0 / SUM(SUM(price)) OVER (), 2) AS pct_of_total FROM products GROUP BY CASE WHEN price >= 980 THEN 'high' WHEN price >= 550 THEN 'mid' ELSE 'low' END ORDER BY price_bucket, total_price DESC

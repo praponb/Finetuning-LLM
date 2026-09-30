@@ -1,1 +1,0 @@
-SELECT product_id, ROUND(AVG(quantity), 2) avg_quantity, MAX(quantity) - MIN(quantity) quantity_range, COUNT(*) inventory_count FROM inventory WHERE product_id IN (3, 5, 7, 8) GROUP BY product_id HAVING inventory_count < 5

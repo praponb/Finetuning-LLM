@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, SUM(amount) AS total_amount, ROUND(AVG(amount), 2) AS avg_amount FROM transactions WHERE TO_DATE(txn_time) >= '2024-11-15' GROUP BY account_id) SELECT a.id, a.opened_date, tba.total_amount, tba.avg_amount FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY a.id DESC

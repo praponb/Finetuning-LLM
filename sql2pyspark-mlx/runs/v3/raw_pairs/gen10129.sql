@@ -1,1 +1,0 @@
-WITH payments_by_order AS (SELECT order_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM payments WHERE order_id = 16 GROUP BY order_id) SELECT o.store_id, o.discount, pbo.status_list FROM orders o LEFT JOIN payments_by_order pbo ON o.id = pbo.order_id

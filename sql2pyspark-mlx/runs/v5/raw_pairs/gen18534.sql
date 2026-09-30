@@ -1,1 +1,0 @@
-with base as (select *, greatest(shipping_fee, amount) as greatest_shipping_fee_amount from orders where store_id = 3), orders_stats as (select channel, count(shipping_fee) as shipping_fee_count from base group by channel) select channel, shipping_fee_count from orders_stats order by channel asc;

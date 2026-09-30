@@ -1,1 +1,0 @@
-SELECT id, product_id, order_id, LEAST(unit_price, quantity) AS least_unit_price_quantity, ROUND(quantity / unit_price, 2) AS line_total FROM order_items WHERE quantity BETWEEN 3 AND 4 OR unit_price BETWEEN 170 AND 180 ORDER BY 1 DESC;

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, LENGTH(location) AS location_length, COALESCE(dept_name, 'OTHER') AS dept_name_filled FROM departments WHERE location IN ('Singapore', 'London')) SELECT location, dept_name FROM valid INTERSECT SELECT location, dept_name FROM departments WHERE location = 'New York';

@@ -1,1 +1,0 @@
-SELECT id, country, customer_id, device, CASE WHEN browser IN ('Chrome', 'Safari') THEN 'Priority' ELSE 'Other' END AS browser_group FROM sessions WHERE country NOT IN ('DE', 'JP') ORDER BY id DESC LIMIT 5;

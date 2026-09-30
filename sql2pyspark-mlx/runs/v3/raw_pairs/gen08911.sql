@@ -1,1 +1,0 @@
-select order_id, max_unit_price, unique_products from (select order_id, max(unit_price) as max_unit_price, count(distinct unit_price) as unique_products from order_items group by order_id) as t where unique_products >= 4;

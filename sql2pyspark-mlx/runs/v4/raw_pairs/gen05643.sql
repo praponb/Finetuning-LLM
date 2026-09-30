@@ -1,1 +1,0 @@
-SELECT c.id, c.is_active, c.country, t.min_started_at FROM customers c INNER JOIN (SELECT customer_id, MIN(started_at) AS min_started_at FROM sessions GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY c.country;

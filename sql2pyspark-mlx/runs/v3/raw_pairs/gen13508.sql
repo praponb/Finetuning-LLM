@@ -1,1 +1,0 @@
-select date_trunc('MONTH', order_date) as order_month, count(case when channel = 'store' then 1 end) as store_count, count(*) as cnt from orders where customer_id = 17 and shipping_fee between 24 and 26 group by date_trunc('MONTH', order_date) having count(*) >= 3

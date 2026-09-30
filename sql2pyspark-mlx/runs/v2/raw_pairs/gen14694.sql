@@ -1,1 +1,0 @@
-select status, order_id, method, sum(amount) as total_amount, count(*) as num_payments from payments where hour(paid_at) between 12 and 19 and method in ('paypal', 'card', 'promptpay') group by status, order_id, method order by status

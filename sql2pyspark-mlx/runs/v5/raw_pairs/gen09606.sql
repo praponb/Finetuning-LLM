@@ -1,1 +1,0 @@
-select store_id, sum(quantity) as total_quantity, count(*) as cnt, sum(sum(quantity)) over (order by store_id) as cumulative_quantity from inventory where store_id = 3 group by store_id order by store_id desc;

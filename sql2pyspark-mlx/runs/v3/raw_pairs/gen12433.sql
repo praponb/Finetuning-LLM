@@ -1,1 +1,0 @@
-SELECT order_id, CASE WHEN status IN ('REFUNDED', 'SUCCESS') THEN 'tier_1' ELSE 'other' END AS status_group, ROUND(STDDEV(amount), 2) AS stddev_amount, COUNT(CASE WHEN method = 'bank_transfer' THEN 1 END) AS bank_transfer_count FROM payments GROUP BY order_id, status_group;

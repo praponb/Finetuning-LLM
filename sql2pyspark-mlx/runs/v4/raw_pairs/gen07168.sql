@@ -1,1 +1,0 @@
-SELECT id, method, amount, status, paid_at, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount, id) AS row_num, ROUND(AVG(amount) OVER (PARTITION BY status ORDER BY paid_at, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_4 FROM payments WHERE HOUR(paid_at) BETWEEN 12 AND 15 ORDER BY id DESC;

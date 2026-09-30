@@ -1,1 +1,0 @@
-SELECT oi.product_id, oi.quantity, p.supplier_id, s.rating, s.supplier_name FROM order_items oi LEFT OUTER JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id WHERE s.city = 'New York' ORDER BY quantity DESC

@@ -1,1 +1,0 @@
-SELECT CASE WHEN job_title IN ('Engineer', 'Analyst') THEN 'group_a' ELSE 'other' END AS job_title_group, level, COUNT(CASE WHEN job_title = 'Designer' THEN 1 END) AS designer_count FROM employees GROUP BY 1, 2

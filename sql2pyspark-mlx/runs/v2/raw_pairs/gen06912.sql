@@ -1,1 +1,0 @@
-select budget_bucket, total_budget from (select case when budget >= 3602000 then 'high' when budget >= 1546000 then 'mid' else 'low' end as budget_bucket, sum(budget) as total_budget from departments group by case when budget >= 3602000 then 'high' when budget >= 1546000 then 'mid' else 'low' end) as x where total_budget > 22536000;

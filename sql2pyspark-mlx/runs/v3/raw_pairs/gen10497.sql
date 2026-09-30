@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.store_id, products.product_name, suppliers.city FROM store_sales JOIN products ON store_sales.product_id = products.id JOIN suppliers ON suppliers.id = products.supplier_id WHERE suppliers.rating >= 3.5 ORDER BY city, store_id DESC

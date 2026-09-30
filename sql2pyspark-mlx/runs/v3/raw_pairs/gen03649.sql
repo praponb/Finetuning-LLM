@@ -1,1 +1,0 @@
-SELECT o.id, o.amount, o.shipping_fee, o.order_date, s.store_name, s.sqft, INITCAP(TRIM(s.store_name)) store_name_title FROM orders o INNER JOIN stores s ON o.store_id = s.id WHERE o.customer_id = 10 AND s.opened_date BETWEEN '2023-06-01' AND '2025-08-11' ORDER BY store_name;

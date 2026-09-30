@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(category)) AS category_list, MAX(launch_date) AS latest_launch_date FROM products WHERE launch_date BETWEEN '2023-05-01' AND '2025-07-30' GROUP BY supplier_id) SELECT s.country, s.city, ss.category_list, ss.latest_launch_date FROM suppliers s LEFT OUTER JOIN supplier_summary ss ON s.id = ss.supplier_id

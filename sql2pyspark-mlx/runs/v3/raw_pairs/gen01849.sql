@@ -1,1 +1,0 @@
-SELECT is_flagged, account_id, ROUND((100 * SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_starbucks FROM transactions WHERE is_flagged = FALSE GROUP BY 1, 2 HAVING MAX(amount) > 3100;

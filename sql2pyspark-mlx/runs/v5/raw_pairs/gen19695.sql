@@ -1,1 +1,0 @@
-SELECT s.region, MAX(o.order_date) AS latest_order_date, MIN(o.order_date) AS first_order_date FROM orders o LEFT JOIN stores s ON o.store_id = s.id JOIN customers c ON o.customer_id = c.id WHERE s.store_name LIKE 'M%' GROUP BY s.region;

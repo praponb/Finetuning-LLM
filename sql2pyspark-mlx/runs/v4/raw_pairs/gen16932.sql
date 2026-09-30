@@ -1,1 +1,0 @@
-SELECT *, COUNT(quantity) OVER (PARTITION BY product_id, order_id) product_id_count_quantity, SUM(unit_price) OVER (PARTITION BY order_id ORDER BY unit_price, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) cumulative_unit_price, AVG(unit_price) OVER (ORDER BY quantity, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) unit_price_avg_2 FROM order_items;

@@ -1,1 +1,0 @@
-WITH ranked_accounts AS (SELECT id, status, balance, customer_id, RANK() OVER (PARTITION BY status ORDER BY balance) AS pos FROM accounts WHERE status IN ('CLOSED', 'FROZEN', 'OPEN')) SELECT id, status, balance, customer_id FROM ranked_accounts WHERE pos <= 2 ORDER BY id;

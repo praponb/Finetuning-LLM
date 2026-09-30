@@ -1,1 +1,0 @@
-with customer_stats as (select customer_id, sum(case when status = 'PAUSED' then monthly_fee else 0 end) paused_monthly_fee from subscriptions group by customer_id) select customers.email, customer_stats.paused_monthly_fee from customers inner join customer_stats on customers.id = customer_stats.customer_id order by paused_monthly_fee desc, customers.email desc;

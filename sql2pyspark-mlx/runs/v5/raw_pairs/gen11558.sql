@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CONCAT(dept_name, ', ', location) AS dept_name_location FROM departments WHERE dept_name IS NOT NULL) SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM employees ch WHERE ch.dept_id = s.id AND ch.email LIKE '%@yahoo.com');

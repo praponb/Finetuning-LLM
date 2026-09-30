@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 430 THEN 'high' WHEN unit_price >= 190 THEN 'mid' ELSE 'low' END AS unit_price_bucket, product_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items WHERE order_id IN (4, 32) GROUP BY CASE WHEN unit_price >= 430 THEN 'high' WHEN unit_price >= 190 THEN 'mid' ELSE 'low' END, product_id;

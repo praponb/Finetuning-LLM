@@ -1,1 +1,0 @@
-SELECT p.id, p.category, COUNT(ss.id) AS store_sale_count, COUNT(ss.units) AS units_count FROM products p LEFT JOIN store_sales ss ON ss.product_id = p.id WHERE ss.units >= 14 GROUP BY p.id, p.category HAVING COUNT(ss.id) > 4 ORDER BY p.category

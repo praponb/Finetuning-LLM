@@ -1,1 +1,0 @@
-select date_format(launch_date, 'yyyy-MM') as launch_month, sum(cost) as total_cost, rank() over (order by sum(cost) desc) as cost_rank from products where price > 720 group by date_format(launch_date, 'yyyy-MM');

@@ -1,1 +1,0 @@
-WITH TopSuppliers AS (SELECT id, city, rating, country, DENSE_RANK() OVER (PARTITION BY city ORDER BY rating) AS rnk FROM suppliers WHERE country IN ('DE', 'UK', 'JP')) SELECT * FROM TopSuppliers WHERE rnk <= 5

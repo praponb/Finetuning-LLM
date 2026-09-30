@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT HOUR(event_time) AS event_hour, ROUND((100 * SUM(CASE WHEN page = '/checkout' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_checkout FROM web_events GROUP BY HOUR(event_time)) AS t WHERE pct_checkout < 44 ORDER BY event_hour DESC;

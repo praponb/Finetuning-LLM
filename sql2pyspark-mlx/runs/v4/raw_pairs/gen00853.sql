@@ -1,1 +1,0 @@
-SELECT store_id, units_range FROM (SELECT store_id, MAX(units) - MIN(units) AS units_range FROM store_sales WHERE sale_date <= '2023-07-01' GROUP BY store_id) AS x WHERE units_range < 63 ORDER BY store_id;

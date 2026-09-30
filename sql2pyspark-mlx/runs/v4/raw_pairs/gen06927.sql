@@ -1,1 +1,0 @@
-with valid as (select id, customer_id, balance, opened_date, status, round(balance * 1.07, 2) as balance_adjusted from accounts where status in ('CLOSED', 'FROZEN')) select customer_id, status from valid intersect select customer_id, status from accounts where status = 'FROZEN'

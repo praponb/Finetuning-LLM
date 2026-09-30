@@ -1,1 +1,0 @@
-select e.dept_id, e.level, e.full_name, d.dept_name, d.location, d.budget, trim(e.email) clean_email from employees e inner join departments d on e.dept_id = d.id where d.budget >= 2444000 order by dept_id

@@ -1,1 +1,0 @@
-WITH filtered_order_items AS (SELECT * FROM order_items WHERE unit_price >= 310 OR unit_price > 200), order_items_stats AS (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM filtered_order_items GROUP BY product_id) SELECT * FROM order_items_stats ORDER BY quantity_range ASC, product_id ASC LIMIT 10

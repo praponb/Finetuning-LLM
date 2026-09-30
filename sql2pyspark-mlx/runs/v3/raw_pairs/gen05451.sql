@@ -1,1 +1,0 @@
-WITH TopEmployees AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date, id) AS rn FROM employees WHERE dept_id IN (10, 23, 36)) SELECT id, manager_id, hire_date, full_name FROM TopEmployees WHERE rn <= 5;

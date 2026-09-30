@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT QUARTER(hire_date) AS hire_quarter, SUM(CASE WHEN level = 'L4' THEN salary ELSE 0 END) AS l4_salary, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees WHERE dept_id IN (4, 10, 20, 35) GROUP BY QUARTER(hire_date)) AS agg WHERE l4_salary >= 64 ORDER BY l4_salary DESC

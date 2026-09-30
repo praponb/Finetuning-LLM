@@ -1,1 +1,0 @@
-SELECT category, category_values, total_cost FROM (SELECT category, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, SUM(cost) AS total_cost FROM products WHERE product_name LIKE '%Coffe%' GROUP BY category) AS x WHERE total_cost > 2700 ORDER BY total_cost, category LIMIT 3;

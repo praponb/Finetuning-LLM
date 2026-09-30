@@ -1,1 +1,0 @@
-SELECT s.region, MAX(o.shipping_fee) - MIN(o.shipping_fee) AS shipping_fee_range, ROUND((100 * SUM(CASE WHEN o.status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_returned FROM orders o INNER JOIN stores s ON s.id = o.store_id WHERE o.store_id = 34 GROUP BY s.region ORDER BY region;

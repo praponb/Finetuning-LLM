@@ -1,1 +1,0 @@
-with lines as (select id, customer_id, created_at, explode_outer(coupon_codes) as element from carts) select s.id, s.customer_id, s.created_at, s.element, (select avg(s2.monthly_fee) from subscriptions s2 where s2.customer_id = s.customer_id) as avg_subscription_monthly_fee from lines s order by id desc nulls last, customer_id;

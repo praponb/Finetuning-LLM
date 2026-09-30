@@ -1,1 +1,0 @@
-select * from (select date_format(opened_date, 'yyyy-MM') opened_month, sum(case when city = 'Chiang Mai' then 1 else 0 end) chiang_mai_count, max(sqft) - min(sqft) sqft_range from stores where sqft = 7856 group by date_format(opened_date, 'yyyy-MM')) agg where sqft_range > 67 order by sqft_range, opened_month limit 50;

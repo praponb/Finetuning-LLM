@@ -1,1 +1,0 @@
-SELECT s.country, COUNT(we.id) web_event_count, SUM(CASE WHEN we.page = '/cart' THEN we.duration_sec ELSE 0 END) cart_duration_sec, SUM(CASE WHEN we.event_type = 'add_to_cart' THEN 1 ELSE 0 END) add_to_cart_count FROM sessions s LEFT JOIN web_events we ON we.session_id = s.id GROUP BY s.country HAVING cart_duration_sec >= 66;

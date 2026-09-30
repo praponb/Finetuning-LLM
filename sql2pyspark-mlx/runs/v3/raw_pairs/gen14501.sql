@@ -1,1 +1,0 @@
-select customer_id, concat_ws(', ', sort_array(collect_set(status))) as status_values, sum(case when account_type = 'LOAN' then balance else 0 end) as loan_balance from accounts where status is null and customer_id = 30 group by customer_id having sum(case when account_type = 'LOAN' then balance else 0 end) < 74 order by loan_balance;

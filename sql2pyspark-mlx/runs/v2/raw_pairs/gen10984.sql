@@ -1,1 +1,0 @@
-SELECT id, carrier, delivered_date, cost, LAST_VALUE(cost) OVER (PARTITION BY carrier ORDER BY delivered_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_cost FROM shipments ORDER BY delivered_date DESC

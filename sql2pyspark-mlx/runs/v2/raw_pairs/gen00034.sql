@@ -1,1 +1,0 @@
-select date_format(store_sales.sale_date, 'yyyy-MM') as sale_month, max(inventory.quantity) - min(inventory.quantity) as quantity_range from inventory inner join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id where inventory.store_id in (3, 4, 5) group by date_format(store_sales.sale_date, 'yyyy-MM') order by 1, 2;

@@ -1,1 +1,0 @@
-SELECT o.discount, c.is_active, s.region, o.discount * o.shipping_fee discount_times_shipping_fee FROM orders o LEFT JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id WHERE o.discount >= 0.13 AND s.city != 'Tokyo' ORDER BY 4

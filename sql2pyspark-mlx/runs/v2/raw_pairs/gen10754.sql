@@ -1,1 +1,0 @@
-select status, success_count, pct_bank_transfer from (select status, count(case when status = 'SUCCESS' then 1 end) success_count, round((100 * sum(case when method = 'bank_transfer' then 1 else 0 end)) / count(*), 1) pct_bank_transfer from payments group by status) x where pct_bank_transfer < 53 order by status;

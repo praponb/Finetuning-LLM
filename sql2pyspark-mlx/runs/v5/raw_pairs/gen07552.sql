@@ -1,1 +1,0 @@
-SELECT id, store_name, city, region, opened_date, sqft, CUME_DIST() OVER (PARTITION BY region ORDER BY sqft DESC NULLS LAST) AS sqft_cume_dist, SUM(sqft) OVER (PARTITION BY city ORDER BY opened_date ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_sqft FROM stores;

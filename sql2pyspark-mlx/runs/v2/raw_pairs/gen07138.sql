@@ -1,1 +1,0 @@
-SELECT id, event_type, duration_sec FROM web_events WHERE session_id IN (18, 31, 34, 40) UNION SELECT id, event_type, duration_sec FROM web_events WHERE event_time < '2023-06-01' ORDER BY duration_sec

@@ -1,1 +1,0 @@
-SELECT QUARTER(signup_date) signup_quarter, MAX(credit_limit) max_credit_limit, SUM(CASE WHEN city = 'Berlin' THEN credit_limit ELSE 0 END) berlin_credit_limit FROM customers WHERE NOT is_active GROUP BY QUARTER(signup_date) ORDER BY max_credit_limit DESC, signup_quarter LIMIT 3;

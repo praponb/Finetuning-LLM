@@ -1,1 +1,0 @@
-select id, host, level, payload_json, context, get_json_object(payload_json, '$.user.id') as user_id, coalesce(context['region'], 'unknown') as region_or_default, array_contains(map_keys(context), 'region') as has_region, context['version'] as version from app_logs where host = 'h4'

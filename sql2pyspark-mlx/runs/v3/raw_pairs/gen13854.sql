@@ -1,1 +1,0 @@
-SELECT d.dept_name, t.stddev_salary, t.director_salary FROM departments d INNER JOIN (SELECT dept_id, ROUND(STDDEV(salary), 2) stddev_salary, SUM(CASE WHEN job_title = 'Director' THEN salary ELSE 0 END) director_salary FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.director_salary >= 41 ORDER BY d.dept_name;

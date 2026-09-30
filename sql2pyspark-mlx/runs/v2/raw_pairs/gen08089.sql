@@ -1,1 +1,0 @@
-SELECT a.customer_id, a.status, a.opened_date, c.signup_date, c.is_active, c.city, UPPER(c.email) AS email_upper FROM accounts a LEFT JOIN customers c ON a.customer_id = c.id WHERE c.credit_limit <= 10500 OR MONTH(c.signup_date) IN (1, 9, 12) ORDER BY c.signup_date ASC, email_upper ASC

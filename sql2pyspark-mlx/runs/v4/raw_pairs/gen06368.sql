@@ -1,1 +1,0 @@
-SELECT p.supplier_id, p.product_name, ss.store_id FROM products p LEFT OUTER JOIN store_sales ss ON p.id = ss.product_id WHERE ARRAY_CONTAINS(p.tags, 'eco') AND p.price >= 1140 ORDER BY product_name ASC, ss.store_id DESC

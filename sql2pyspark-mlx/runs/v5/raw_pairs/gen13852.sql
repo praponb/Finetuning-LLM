@@ -1,1 +1,0 @@
-SELECT p.account_type, p.status, s.txn_type, COUNT(*) AS cnt, ROUND(SUM(s.amount), 2) AS total_amount FROM transactions s LEFT JOIN accounts p ON s.account_id = p.id GROUP BY GROUPING SETS ((p.account_type, p.status, s.txn_type), (p.account_type), ()) ORDER BY cnt DESC NULLS FIRST;

@@ -1,1 +1,0 @@
-SELECT p.brand, QUARTER(p.launch_date) AS launch_quarter, COUNT(i.quantity) AS quantity_count FROM inventory i RIGHT OUTER JOIN products p ON i.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.brand, QUARTER(p.launch_date) HAVING COUNT(i.quantity) >= 5

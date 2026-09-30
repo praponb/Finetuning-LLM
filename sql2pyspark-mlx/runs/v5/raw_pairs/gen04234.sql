@@ -1,1 +1,0 @@
-select orders.id, orders.order_date, orders.store_id, customers.signup_date, stores.city, cast(customers.is_active as int) as is_active_flag from orders inner join customers on customers.id = orders.customer_id inner join stores on orders.store_id = stores.id where customers.credit_limit <= 6100;

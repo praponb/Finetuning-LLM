@@ -1,1 +1,0 @@
-select suppliers.city, suppliers.supplier_name, products.product_name, add_months(products.launch_date, 12) as launch_date_plus_months from suppliers join products on suppliers.id = products.supplier_id;

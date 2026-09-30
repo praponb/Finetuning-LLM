@@ -1,1 +1,0 @@
-select date_format(o.order_date, 'yyyy-MM') as order_month, sum(s.cost) as total_cost, sum(case when s.status = 'DELIVERED' then 1 else 0 end) as delivered_count from shipments s left outer join orders o on s.order_id = o.id group by date_format(o.order_date, 'yyyy-MM');

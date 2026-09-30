@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, c.segment, SUM(s.monthly_fee) AS total_monthly_fee, MAX(s.monthly_fee) - MIN(s.monthly_fee) AS monthly_fee_range FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.monthly_fee < 70 GROUP BY DATE_TRUNC('MONTH', c.signup_date), c.segment

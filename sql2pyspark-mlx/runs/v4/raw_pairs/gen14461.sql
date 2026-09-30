@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, effective_from, currency, EXPLODE(tier_prices) AS val FROM price_tiers) SELECT CASE WHEN val >= 77 THEN 'HIGH' ELSE 'LOW' END AS val_tier, SUM(val) FILTER (WHERE currency = 'THB') AS thb_total_val, ROUND(AVG(val), 2) AS avg_val, COUNT(DISTINCT currency) AS distinct_currencies FROM lines GROUP BY CASE WHEN val >= 77 THEN 'HIGH' ELSE 'LOW' END;

@@ -1,1 +1,0 @@
-WITH with_dims AS (SELECT src.*, s.country FROM products src LEFT JOIN suppliers s ON src.supplier_id = s.id) SELECT id, product_name, category, brand, price, cost, stock_qty, launch_date, tags FROM with_dims ORDER BY price DESC

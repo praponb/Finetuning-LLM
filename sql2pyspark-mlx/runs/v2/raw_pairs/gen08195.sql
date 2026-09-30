@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, product_id, units, sale_date, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY units DESC, id) AS row_num FROM store_sales) SELECT id, product_id, units, sale_date FROM ranked WHERE row_num = 1 ORDER BY product_id DESC

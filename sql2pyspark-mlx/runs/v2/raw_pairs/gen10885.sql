@@ -1,1 +1,0 @@
-SELECT id, order_id, unit_price, quantity, product_id, LAST_VALUE(quantity) OVER (PARTITION BY order_id ORDER BY unit_price DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_quantity, ROUND(unit_price / SUM(unit_price) OVER (PARTITION BY order_id, product_id), 3) AS unit_price_share FROM order_items ORDER BY unit_price

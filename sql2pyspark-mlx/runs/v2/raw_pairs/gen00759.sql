@@ -1,1 +1,0 @@
-SELECT dept_name, ROUND((100 * SUM(CASE WHEN location = 'Singapore' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_singapore FROM departments WHERE location NOT IN ('New York', 'Singapore') AND (budget <= 2845000 OR location IN ('Bangkok', 'New York')) GROUP BY dept_name;

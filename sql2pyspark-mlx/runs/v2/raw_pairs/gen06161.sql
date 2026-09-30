@@ -1,1 +1,0 @@
-select suppliers.id, suppliers.rating, suppliers.supplier_name, suppliers.city from suppliers where suppliers.id in (select supplier_id from products where price > 770) order by suppliers.id desc, supplier_name desc

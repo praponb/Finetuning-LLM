@@ -1,1 +1,0 @@
-SELECT CASE WHEN merchant IN ('7-Eleven', 'Amazon') THEN 'group_a' ELSE 'other' END AS merchant_group, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions GROUP BY CASE WHEN merchant IN ('7-Eleven', 'Amazon') THEN 'group_a' ELSE 'other' END;

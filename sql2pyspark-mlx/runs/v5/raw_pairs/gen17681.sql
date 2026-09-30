@@ -1,1 +1,0 @@
-WITH ranked_subscriptions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY start_date DESC, id) AS rn FROM subscriptions) SELECT id, plan, start_date, monthly_fee FROM ranked_subscriptions WHERE rn = 1 ORDER BY monthly_fee DESC;

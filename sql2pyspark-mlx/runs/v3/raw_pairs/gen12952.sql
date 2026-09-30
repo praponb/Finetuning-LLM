@@ -1,1 +1,0 @@
-select a.id, a.account_type, a.balance, t.stddev_amount from accounts a left join (select account_id, round(stddev(amount), 2) as stddev_amount from transactions group by account_id) t on a.id = t.account_id;

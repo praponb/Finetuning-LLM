@@ -1,1 +1,0 @@
-SELECT p.category, p.brand, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id WHERE p.category IN ('Grocery', 'Books', 'Home') GROUP BY p.category, p.brand HAVING MAX(ss.revenue) - MIN(ss.revenue) > 64

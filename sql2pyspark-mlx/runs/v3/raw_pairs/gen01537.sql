@@ -1,1 +1,0 @@
-WITH ranked_shipments AS (SELECT id, order_id, shipped_date, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY shipped_date DESC, id) AS row_num FROM shipments WHERE shipped_date < '2023-07-21') SELECT id, order_id, shipped_date FROM ranked_shipments WHERE row_num <= 5;

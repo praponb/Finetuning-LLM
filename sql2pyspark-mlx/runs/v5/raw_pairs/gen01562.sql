@@ -1,1 +1,0 @@
-with valid_shipments as (select * from shipments where status = 'DELIVERED'), shipments_stats as (select carrier, count(*) as row_count, max(cost) - min(cost) as cost_range from valid_shipments group by carrier) select * from shipments_stats order by carrier desc, cost_range desc limit 10;

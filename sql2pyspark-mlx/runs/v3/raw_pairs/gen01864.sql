@@ -1,1 +1,0 @@
-select quarter(shipped_date) as shipped_quarter, sum(cost) as total_cost, sum(sum(cost)) over (order by quarter(shipped_date)) as cumulative_cost from shipments where order_id is not null group by quarter(shipped_date) order by shipped_quarter desc limit 50;

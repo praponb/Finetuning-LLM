@@ -1,1 +1,0 @@
-SELECT inventory.last_restock, inventory.store_id, stores.region, stores.opened_date, products.cost, products.category FROM inventory INNER JOIN stores ON stores.id = inventory.store_id LEFT JOIN products ON inventory.product_id = products.id WHERE stores.store_name LIKE 'Ol%' AND stores.region = 'North';

@@ -1,1 +1,0 @@
-select customers.id, customers.country, count(sessions.id) as session_count from customers join sessions on sessions.customer_id = customers.id where customers.segment = 'SMB' group by customers.id, customers.country having count(sessions.id) > 1;

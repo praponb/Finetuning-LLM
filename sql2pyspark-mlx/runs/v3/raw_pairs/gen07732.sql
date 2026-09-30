@@ -1,1 +1,0 @@
-WITH FilteredTransactions AS (SELECT * FROM transactions WHERE merchant = 'Starbucks'), summary AS (SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, QUARTER(txn_time) AS txn_quarter, ROUND(STDDEV(amount), 2) AS stddev_amount FROM FilteredTransactions GROUP BY DATE_TRUNC('MONTH', txn_time), QUARTER(txn_time)) SELECT * FROM summary ORDER BY stddev_amount

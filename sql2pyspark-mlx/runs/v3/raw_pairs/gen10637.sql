@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, SUBSTRING(city, 1, 2) AS city_prefix FROM stores WHERE region <> 'North'), summary AS (SELECT city, AVG(sqft) AS avg_sqft FROM src GROUP BY city) SELECT city, avg_sqft FROM summary ORDER BY avg_sqft DESC

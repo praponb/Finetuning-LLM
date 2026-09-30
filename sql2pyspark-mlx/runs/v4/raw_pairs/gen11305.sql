@@ -1,1 +1,0 @@
-SELECT status, unique_channels, channel_list FROM (SELECT status, COUNT(DISTINCT discount) AS unique_channels, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders GROUP BY status) AS sub WHERE unique_channels > 7

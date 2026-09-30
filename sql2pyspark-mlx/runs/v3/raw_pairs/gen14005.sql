@@ -1,1 +1,0 @@
-select p.supplier_id, count(oi.unit_price) as unit_price_count, avg(oi.quantity) as avg_quantity from order_items oi inner join products p on oi.product_id = p.id left join orders o on oi.order_id = o.id group by p.supplier_id order by avg_quantity asc;

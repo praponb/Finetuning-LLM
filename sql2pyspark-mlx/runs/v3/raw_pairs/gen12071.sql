@@ -1,1 +1,0 @@
-SELECT p.brand, ROUND(STDDEV(i.quantity), 2) stddev_quantity, COUNT(i.quantity) quantity_count FROM inventory i INNER JOIN products p ON i.product_id = p.id GROUP BY p.brand HAVING COUNT(i.quantity) >= 4;

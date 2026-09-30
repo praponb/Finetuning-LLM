@@ -1,1 +1,0 @@
-SELECT product_id, DATE_TRUNC('QUARTER', sale_date) AS quarter_start, BIT_AND(units) AS units_bit_and, BIT_OR(units) AS units_bit_or, COUNT(*) AS event_count, COUNT(DISTINCT id) AS distinct_ids, BIT_AND(units) AS units_bit_and_2 FROM store_sales GROUP BY product_id, DATE_TRUNC('QUARTER', sale_date)

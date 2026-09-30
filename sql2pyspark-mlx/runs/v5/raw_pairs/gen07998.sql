@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM products WHERE supplier_id IN (9, 12, 22)), Agg AS (SELECT category, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range FROM src GROUP BY category) SELECT category, stock_qty_range FROM Agg WHERE stock_qty_range > 70 ORDER BY category ASC;
