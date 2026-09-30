@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT supplier_id, COUNT(price) AS price_count, SUM(CASE WHEN category = 'Fashion' THEN cost ELSE 0 END) AS fashion_cost FROM products WHERE product_name LIKE 'wi%' GROUP BY supplier_id) AS x WHERE fashion_cost > 28 ORDER BY supplier_id DESC

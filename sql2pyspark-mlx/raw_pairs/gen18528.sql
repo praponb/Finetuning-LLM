@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, MAX(quantity) - MIN(quantity) AS quantity_range, MIN(last_restock) AS first_last_restock FROM inventory GROUP BY store_id) SELECT s.id, s.region, ss.quantity_range, ss.first_last_restock FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id WHERE ss.quantity_range > 50 ORDER BY s.id DESC;

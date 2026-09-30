@@ -1,0 +1,1 @@
+SELECT CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values, COUNT(*) AS total_count, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions WHERE start_date BETWEEN '2025-03-08' AND '2025-07-01' AND start_date <= '2025-08-06' AND plan = 'premium';

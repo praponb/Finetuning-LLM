@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS pos FROM departments) SELECT id, dept_name, budget, location FROM ranked WHERE pos <= 3 ORDER BY id, dept_name DESC

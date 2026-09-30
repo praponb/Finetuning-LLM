@@ -1,0 +1,1 @@
+SELECT c.country, MIN(s.started_at) AS first_started_at, SUM(CASE WHEN s.device = 'tablet' THEN 1 ELSE 0 END) AS tablet_count FROM sessions s LEFT JOIN customers c ON s.customer_id = c.id WHERE c.country = 'TH' GROUP BY c.country;

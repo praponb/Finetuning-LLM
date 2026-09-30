@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, i.last_restock, p.cost, s.city, SUBSTRING(s.city, 1, 2) city_prefix FROM inventory i INNER JOIN products p ON i.product_id = p.id RIGHT OUTER JOIN stores s ON s.id = i.store_id WHERE s.city IN ('Chiang Mai', 'London') AND s.store_name LIKE '%Town%' ORDER BY p.cost

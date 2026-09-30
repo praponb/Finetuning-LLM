@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT t.id, t.customer_id, t.created_at, t.coupon_codes, pos + 1 AS line_no, line.product_id, line.qty, line.promo FROM carts t LATERAL VIEW POSEXPLODE(t.items) x AS pos, line) SELECT id, customer_id, line_no, product_id, qty, promo FROM flattened;

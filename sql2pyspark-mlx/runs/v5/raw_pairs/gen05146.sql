@@ -1,0 +1,1 @@
+select ss.sale_date, s.opened_date, p.stock_qty, p.brand from store_sales ss inner join stores s on ss.store_id = s.id inner join products p on ss.product_id = p.id where upper(trim(s.store_name)) = 'MALL CENTRAL' order by 4 asc

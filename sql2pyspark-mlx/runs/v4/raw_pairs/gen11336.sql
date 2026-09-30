@@ -1,0 +1,1 @@
+SELECT is_remote, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END) AS l2_count FROM employees WHERE manager_id IN (5, 10, 17, 34) AND salary > 62000 AND manager_id = 30 GROUP BY is_remote;

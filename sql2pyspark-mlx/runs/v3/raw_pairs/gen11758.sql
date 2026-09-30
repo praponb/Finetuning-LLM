@@ -1,0 +1,1 @@
+SELECT status, end_quarter, status_list, monthly_fee_count FROM (SELECT status, QUARTER(end_date) AS end_quarter, SORT_ARRAY(COLLECT_SET(status)) AS status_list, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions GROUP BY status, QUARTER(end_date)) AS t WHERE monthly_fee_count < 6;

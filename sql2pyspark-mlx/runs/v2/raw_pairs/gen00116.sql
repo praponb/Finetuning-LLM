@@ -1,0 +1,1 @@
+SELECT s.order_id, o.channel, o.shipping_fee, c.is_active, COALESCE(c.city, 'N/A') AS city_filled FROM shipments s JOIN orders o ON s.order_id = o.id JOIN customers c ON c.id = o.customer_id WHERE o.store_id IN (11, 25, 37) ORDER BY order_id;

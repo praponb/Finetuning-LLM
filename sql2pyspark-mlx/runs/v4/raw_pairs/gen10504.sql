@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, stock_qty * cost stock_qty_times_cost, INITCAP(TRIM(brand)) brand_title FROM products WHERE brand = 'Umbrella') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY category ORDER BY stock_qty_times_cost DESC NULLS LAST, id) AS dedup_rank FROM valid) t WHERE dedup_rank = 1

@@ -1,0 +1,1 @@
+SELECT o.customer_id, s.region, DATE_ADD(o.order_date, 89) AS order_date_plus_89d FROM orders o INNER JOIN stores s ON o.store_id = s.id WHERE o.customer_id = 30 ORDER BY customer_id ASC, s.region ASC

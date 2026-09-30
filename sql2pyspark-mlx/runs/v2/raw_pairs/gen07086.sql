@@ -1,0 +1,1 @@
+select quarter(c.signup_date) signup_quarter, c.country, round(stddev(we.duration_sec), 2) stddev_duration_sec, count(distinct we.duration_sec) unique_pages from web_events we left outer join sessions s on we.session_id = s.id inner join customers c on c.id = s.customer_id where c.name like 'O%' group by quarter(c.signup_date), c.country;

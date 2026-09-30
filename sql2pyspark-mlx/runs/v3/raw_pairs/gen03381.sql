@@ -1,0 +1,4 @@
+SELECT event_type, SUM(duration_sec) AS total_duration_sec, ROUND(SUM(duration_sec) * 100.0 / SUM(SUM(duration_sec)) OVER (), 2) AS pct_of_total
+FROM web_events
+WHERE page IN ('/cart', '/checkout')
+GROUP BY event_type

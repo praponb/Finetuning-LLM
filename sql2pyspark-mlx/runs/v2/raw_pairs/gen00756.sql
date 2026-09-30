@@ -1,0 +1,1 @@
+SELECT e.id, e.salary AS employee_salary, m.email AS manager_email, m.level AS manager_level FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id WHERE NOT (e.email LIKE '%@GMAIL.COM' AND e.level = 'L1');

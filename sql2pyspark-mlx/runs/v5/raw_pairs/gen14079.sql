@@ -1,0 +1,1 @@
+SELECT id, effective_from, currency, tier_limits, discounts, SLICE(tier_limits, 1, 2) AS first_two_limits, ELEMENT_AT(tier_prices, 1) AS entry_price, ZIP_WITH(tier_prices, discounts, (p, d) -> ROUND(p * (1 - d), 2)) AS net_prices FROM price_tiers

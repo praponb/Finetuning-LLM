@@ -1,0 +1,1 @@
+WITH sessions_by_customer AS (SELECT customer_id, COUNT(CASE WHEN device = 'tablet' THEN 1 END) AS tablet_count FROM sessions GROUP BY customer_id) SELECT c.id, c.name, sbc.tablet_count FROM customers c INNER JOIN sessions_by_customer sbc ON c.id = sbc.customer_id WHERE sbc.tablet_count >= 9;

@@ -1,0 +1,1 @@
+WITH OrdersByStore AS (SELECT store_id, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list, COUNT(*) AS num_orders FROM orders WHERE store_id IS NOT NULL GROUP BY store_id) SELECT s.id, s.store_name, O.channel_list, O.num_orders FROM stores s INNER JOIN OrdersByStore O ON s.id = O.store_id ORDER BY store_name, s.id;

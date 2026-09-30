@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, pos, line.product_id, line.qty, line.promo FROM carts LATERAL VIEW OUTER POSEXPLODE(items) li AS pos, line) SELECT promo, PERCENTILE_APPROX(qty, ARRAY(0.25, 0.5, 0.75)) AS qty_quartiles, COUNT(*) AS cnt, APPROX_PERCENTILE(pos, 0.5) AS pos_p50 FROM lines GROUP BY CUBE (promo) HAVING pos_p50 < 0 ORDER BY promo DESC NULLS FIRST;

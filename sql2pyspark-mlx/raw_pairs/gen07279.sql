@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, plan, monthly_fee, start_date, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY monthly_fee DESC, id) AS row_num FROM subscriptions) SELECT id, plan, monthly_fee, start_date FROM ranked WHERE row_num <= 3;

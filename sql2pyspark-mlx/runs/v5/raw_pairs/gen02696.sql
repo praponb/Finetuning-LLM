@@ -1,0 +1,1 @@
+SELECT status, AVG(balance) AS avg_balance, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM accounts WHERE status = 'FROZEN' AND opened_date >= '2024-06-02' GROUP BY status ORDER BY status_values;

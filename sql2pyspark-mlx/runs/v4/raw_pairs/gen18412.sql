@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE account_id IN (9, 36) GROUP BY account_id) SELECT a.account_type, a.status, tba.stddev_amount FROM accounts a LEFT JOIN transactions_by_account tba ON a.id = tba.account_id WHERE tba.stddev_amount > 73 ORDER BY a.status DESC;

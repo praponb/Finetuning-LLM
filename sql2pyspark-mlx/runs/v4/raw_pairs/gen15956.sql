@@ -1,0 +1,1 @@
+SELECT id, account_id, amount, txn_type FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount DESC, id) AS pos FROM transactions WHERE merchant = 'Lazada') AS ranked WHERE pos <= 2;

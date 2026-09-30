@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, EXPLODE_OUTER(coupon_codes) AS tag FROM carts) SELECT customer_id, tag, CASE WHEN tag RLIKE '^(SPRING10|BUNDLE)$' THEN 'EXTENDED' WHEN tag RLIKE '^(VIP|WELCOME5)$' THEN 'CORE' ELSE 'PRIORITY' END AS tag_zone FROM exploded;

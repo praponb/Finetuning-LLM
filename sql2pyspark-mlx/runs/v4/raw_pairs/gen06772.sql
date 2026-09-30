@@ -1,0 +1,1 @@
+SELECT id, status, store_id, order_date, amount, channel, SUM(amount) OVER (PARTITION BY status, store_id ORDER BY order_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, ROUND(amount / SUM(amount) OVER (PARTITION BY channel), 3) AS amount_share FROM orders

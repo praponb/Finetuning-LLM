@@ -1,0 +1,1 @@
+SELECT o.status, o.order_date, c.segment, s.sqft, s.store_name FROM orders o FULL OUTER JOIN customers c ON c.id = o.customer_id JOIN stores s ON o.store_id = s.id WHERE s.city = 'Tokyo' ORDER BY o.status

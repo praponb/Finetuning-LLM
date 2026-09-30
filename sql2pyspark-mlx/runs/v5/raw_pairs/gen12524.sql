@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, plan, effective_from, EXPLODE_OUTER(tier_limits) AS element FROM price_tiers) SELECT plan, PERCENTILE_APPROX(element, ARRAY(0.25, 0.5, 0.75)) AS element_quartiles, COUNT(*) FILTER (WHERE plan = 'basic') AS basic_rows, MIN(element) AS min_element, COUNT(*) AS num_rows, GROUPING(plan) AS grouping_level FROM exploded GROUP BY CUBE (plan);

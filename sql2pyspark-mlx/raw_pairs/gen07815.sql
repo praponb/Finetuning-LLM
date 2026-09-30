@@ -1,0 +1,1 @@
+select store_id, product_id, max(quantity) as max_quantity, avg(quantity) as avg_quantity, count(*) as row_count from inventory where (store_id in (2, 3, 5) and store_id in (2, 6)) or store_id in (2, 4, 5, 6) group by store_id, product_id order by product_id desc

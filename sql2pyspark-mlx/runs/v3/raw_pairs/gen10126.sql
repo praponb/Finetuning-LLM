@@ -1,0 +1,1 @@
+SELECT p.supplier_id, ROUND(STDDEV(oi.quantity), 2) AS stddev_quantity, COUNT(DISTINCT oi.unit_price) AS unique_products FROM order_items oi JOIN products p ON oi.product_id = p.id GROUP BY p.supplier_id ORDER BY supplier_id DESC, unique_products LIMIT 5;

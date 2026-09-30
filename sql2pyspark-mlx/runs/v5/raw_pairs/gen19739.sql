@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY reading_ts, id) AS latest_rank FROM device_readings) t WHERE latest_rank = 1) SELECT id, reading_ts, temp_c, humidity, pressure, status_bits, firmware, latest_rank FROM deduped ORDER BY humidity NULLS FIRST, temp_c;

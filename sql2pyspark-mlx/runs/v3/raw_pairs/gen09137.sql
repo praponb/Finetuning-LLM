@@ -1,0 +1,1 @@
+SELECT departments.dept_name, departments.location, t.analyst_salary, t.l4_count FROM departments LEFT OUTER JOIN (SELECT dept_id, SUM(CASE WHEN job_title = 'Analyst' THEN salary ELSE 0 END) analyst_salary, COUNT(CASE WHEN level = 'L4' THEN 1 END) l4_count FROM employees GROUP BY dept_id) t ON departments.id = t.dept_id WHERE t.l4_count > 8 ORDER BY departments.location;

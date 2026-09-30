@@ -1,0 +1,1 @@
+SELECT o.channel, ROUND((100 * SUM(CASE WHEN s.carrier = 'Kerry' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_kerry FROM shipments s LEFT JOIN orders o ON s.order_id = o.id WHERE s.delivered_date > '2025-09-01' GROUP BY o.channel ORDER BY pct_kerry DESC

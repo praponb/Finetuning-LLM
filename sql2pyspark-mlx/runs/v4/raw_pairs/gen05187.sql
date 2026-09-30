@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.channel IN ('web', 'partner') THEN 'core' ELSE 'other' END AS channel_group, o.store_id, COUNT(DISTINCT oi.unit_price) AS unique_products FROM order_items oi JOIN orders o ON oi.order_id = o.id JOIN products p ON oi.product_id = p.id GROUP BY CASE WHEN o.channel IN ('web', 'partner') THEN 'core' ELSE 'other' END, o.store_id ORDER BY unique_products, store_id;

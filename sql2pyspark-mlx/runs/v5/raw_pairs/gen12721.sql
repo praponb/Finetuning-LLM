@@ -1,0 +1,1 @@
+select city, case when sqft >= 13953 then 'high' when sqft >= 8203 then 'mid' else 'low' end as sqft_bucket, sort_array(collect_set(region)) as region_list, max(opened_date) as latest_opened_date from stores group by city, case when sqft >= 13953 then 'high' when sqft >= 8203 then 'mid' else 'low' end order by latest_opened_date, city, sqft_bucket limit 5;

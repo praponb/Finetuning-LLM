@@ -1,0 +1,1 @@
+select i.id, i.product_id, i.quantity, p.brand, s.city from inventory i right join products p on i.product_id = p.id full outer join stores s on i.store_id = s.id where i.quantity >= 110 and i.quantity < 108

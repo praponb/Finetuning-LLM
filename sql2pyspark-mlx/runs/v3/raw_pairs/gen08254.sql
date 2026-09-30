@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, MAX(balance) - MIN(balance) balance_range, SORT_ARRAY(COLLECT_SET(account_type)) account_type_list FROM accounts WHERE customer_id = 6 GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM') HAVING balance_range > 38 ORDER BY opened_month DESC;

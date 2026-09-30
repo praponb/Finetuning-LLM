@@ -1,0 +1,1 @@
+SELECT CASE WHEN salary >= 149000 THEN 'high' WHEN salary >= 61000 THEN 'mid' ELSE 'low' END AS salary_bucket, SUM(salary) AS total_salary, COUNT(*) AS cnt, ROUND(SUM(salary) * 100.0 / SUM(SUM(salary)) OVER (), 2) AS pct_of_total FROM employees GROUP BY CASE WHEN salary >= 149000 THEN 'high' WHEN salary >= 61000 THEN 'mid' ELSE 'low' END ORDER BY salary_bucket;

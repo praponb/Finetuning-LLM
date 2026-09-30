@@ -1,0 +1,1 @@
+with ranked_employees as (select *, row_number() over (partition by job_title order by salary desc, id) row_num from employees where full_name like '%bob%') select * from ranked_employees where row_num <= 1 order by full_name;

@@ -1,0 +1,1 @@
+WITH orders_by_store AS (SELECT store_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values FROM orders GROUP BY store_id) SELECT s.id, s.sqft, obs.status_values FROM stores s INNER JOIN orders_by_store obs ON s.id = obs.store_id;

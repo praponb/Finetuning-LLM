@@ -1,0 +1,1 @@
+with base as (select * from web_events where to_date(event_time) >= '2025-10-01'), page_summary as (select page, sum(case when page = '/cart' then 1 else 0 end) as cart_count, count(*) as web_event_count from base group by page) select page, cart_count, web_event_count from page_summary order by page desc;

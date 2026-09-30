@@ -1,0 +1,1 @@
+SELECT *, DATEDIFF(CURRENT_DATE(), order_date) AS days_since_order_date, CASE WHEN discount >= 0.44 THEN 'High' WHEN discount >= 0.05 THEN 'Medium' ELSE 'Low' END AS discount_tier FROM orders WHERE NOT ((status = 'PENDING' AND shipping_fee <= 25) OR amount > 1360) ORDER BY discount_tier DESC, id LIMIT 10;

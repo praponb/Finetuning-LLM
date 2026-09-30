@@ -1,0 +1,1 @@
+select o.status, max(oi.quantity) - min(oi.quantity) as quantity_range from order_items oi inner join products p on oi.product_id = p.id full outer join orders o on o.id = oi.order_id group by o.status;

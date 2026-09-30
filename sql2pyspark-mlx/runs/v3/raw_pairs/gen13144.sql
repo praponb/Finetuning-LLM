@@ -1,0 +1,1 @@
+select case when p.cost >= 670 then 'high' when p.cost >= 150 then 'mid' else 'low' end as cost_bucket, avg(ss.revenue) as avg_revenue from store_sales ss left join products p on p.id = ss.product_id left join stores s on s.id = ss.store_id where s.sqft > 15560 group by case when p.cost >= 670 then 'high' when p.cost >= 150 then 'mid' else 'low' end order by 1

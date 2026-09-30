@@ -1,0 +1,1 @@
+SELECT s.device, COUNT(we.id) AS web_event_count, SUM(CASE WHEN we.event_type = 'search' THEN 1 ELSE 0 END) AS search_count, AVG(we.duration_sec) AS avg_duration_sec FROM sessions s LEFT JOIN web_events we ON s.id = we.session_id GROUP BY s.device ORDER BY avg_duration_sec DESC;

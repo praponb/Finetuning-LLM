@@ -1,0 +1,1 @@
+SELECT location, CASE WHEN budget >= 3649000 THEN 'high' WHEN budget >= 963000 THEN 'mid' ELSE 'low' END budget_bucket, MIN(budget) min_budget FROM departments WHERE budget > 3510000 OR budget <= 3716000 GROUP BY 1, 2

@@ -1,0 +1,1 @@
+SELECT status, avg_monthly_fee, unique_customers FROM (SELECT status, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, COUNT(DISTINCT monthly_fee) AS unique_customers FROM subscriptions WHERE end_date >= '2023-05-01' GROUP BY status) AS agg WHERE unique_customers > 6 ORDER BY status

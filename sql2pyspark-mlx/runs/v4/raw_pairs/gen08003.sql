@@ -1,0 +1,1 @@
+select case when salary >= 153000 then 'HIGH' else 'LOW' end as salary_tier, count_if(job_title = 'Manager') as manager_events, count(case when level = 'L1' then 1 end) as l1_count from employees group by case when salary >= 153000 then 'HIGH' else 'LOW' end order by manager_events desc nulls first;

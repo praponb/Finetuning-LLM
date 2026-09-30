@@ -1,0 +1,1 @@
+SELECT order_id, ROUND((100 * SUM(CASE WHEN status = 'REFUNDED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refunded, MAX(amount) - MIN(amount) AS amount_range FROM payments WHERE amount BETWEEN 850 AND 1210 GROUP BY order_id ORDER BY amount_range DESC, order_id LIMIT 5;

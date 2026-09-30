@@ -1,0 +1,1 @@
+SELECT we.id, we.page, we.event_type, s.started_at, s.country FROM web_events we LEFT OUTER JOIN sessions s ON s.id = we.session_id WHERE we.duration_sec > 157 AND we.session_id IN (4, 12) ORDER BY we.page DESC, event_type;

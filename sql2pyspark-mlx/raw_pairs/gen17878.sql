@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, a.status, a.opened_date FROM accounts a WHERE a.status IN ('CLOSED', 'OPEN', 'FROZEN') AND a.customer_id NOT IN (SELECT id FROM customers WHERE is_active = FALSE) ORDER BY a.opened_date

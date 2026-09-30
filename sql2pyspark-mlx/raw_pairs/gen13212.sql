@@ -1,0 +1,1 @@
+SELECT orders.id, orders.channel, orders.order_date, stores.opened_date, stores.city, customers.signup_date, customers.age FROM orders FULL OUTER JOIN stores ON orders.store_id = stores.id INNER JOIN customers ON orders.customer_id = customers.id

@@ -1,0 +1,1 @@
+select d.id, d.dept_name, d.location, t.l2_salary from departments d inner join (select dept_id, sum(case when level = 'L2' then salary else 0 end) as l2_salary from employees group by dept_id) t on d.id = t.dept_id where t.l2_salary > 38;

@@ -1,0 +1,1 @@
+select id, order_id, paid_at, amount, sum(amount) over (partition by order_id order by paid_at, id) as running_amount, round(avg(amount) over (partition by order_id order by paid_at, id rows between 6 preceding and current row), 2) as amount_moving_avg_7 from payments;

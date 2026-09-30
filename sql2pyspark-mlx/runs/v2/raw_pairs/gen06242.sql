@@ -1,0 +1,1 @@
+SELECT id, store_id, last_restock, product_id, quantity, RANK() OVER (PARTITION BY store_id ORDER BY last_restock) AS last_restock_rank, DENSE_RANK() OVER (PARTITION BY store_id, product_id ORDER BY quantity DESC) AS dense_rnk FROM inventory WHERE product_id IN (4, 5, 7, 8)

@@ -1,0 +1,1 @@
+SELECT id, duration_sec, event_time, event_type, CASE WHEN page = '/search' THEN 1 ELSE 0 END AS is_search, CASE WHEN event_type = 'purchase' THEN 1 ELSE 0 END AS is_purchase FROM web_events ORDER BY is_purchase DESC, id DESC;

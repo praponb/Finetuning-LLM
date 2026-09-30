@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM orders WHERE discount IS NOT NULL AND (store_id IN (13, 39, 40) OR store_id IN (1, 10, 30, 34))), OrdersStats AS (SELECT status, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM src GROUP BY status) SELECT status, shipping_fee_range, channel_values FROM OrdersStats;

@@ -1,0 +1,1 @@
+select case when duration_sec >= 482 then 'high' when duration_sec >= 138 then 'mid' else 'low' end as duration_sec_bucket, max(event_time) as last_event_time from web_events where hour(event_time) between 9 and 17 group by duration_sec_bucket

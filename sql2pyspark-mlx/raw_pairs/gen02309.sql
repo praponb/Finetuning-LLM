@@ -1,0 +1,1 @@
+SELECT channel, CASE WHEN discount >= 0.41 THEN 'PREMIUM' ELSE 'STANDARD' END AS discount_tier, customer_id, COUNT(*) FILTER (WHERE status = 'COMPLETED') AS completed_rows, COUNT_IF(channel = 'web') AS web_events FROM orders GROUP BY channel, CASE WHEN discount >= 0.41 THEN 'PREMIUM' ELSE 'STANDARD' END, customer_id ORDER BY completed_rows ASC

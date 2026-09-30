@@ -1,0 +1,1 @@
+with numbered as (select *, row_number() over (partition by supplier_id order by cost desc, id) as rnk from products where stock_qty = 357) select id, supplier_id, cost from numbered where rnk <= 3 order by id desc;

@@ -1,0 +1,1 @@
+select o.channel, count(oi.id) as order_item_count, sum(oi.unit_price * oi.quantity) as revenue, sum(oi.unit_price) as total_unit_price from orders o left join order_items oi on oi.order_id = o.id group by o.channel order by order_item_count;

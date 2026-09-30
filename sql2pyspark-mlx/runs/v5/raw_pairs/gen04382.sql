@@ -1,0 +1,1 @@
+SELECT id, country, city, rating, SUBSTRING(country, 1, 4) AS country_prefix, CASE WHEN city IN ('Bangkok', 'Singapore') THEN 'Group A' ELSE 'Other' END AS city_group FROM suppliers ORDER BY city, country_prefix, id LIMIT 5;

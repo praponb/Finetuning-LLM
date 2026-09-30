@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.txn_type, transactions.amount, transactions.txn_time FROM transactions WHERE transactions.account_id NOT IN (SELECT id FROM accounts WHERE status IN ('CLOSED', 'FROZEN', 'OPEN')) ORDER BY txn_time ASC, txn_type DESC, id ASC LIMIT 50

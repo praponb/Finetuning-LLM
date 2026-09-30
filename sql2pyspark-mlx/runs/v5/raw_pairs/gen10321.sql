@@ -1,0 +1,1 @@
+select order_items.order_id, orders.amount, orders.customer_id, products.product_name, products.launch_date from order_items left outer join orders on order_items.order_id = orders.id left outer join products on order_items.product_id = products.id where products.launch_date between '2023-12-24' and '2024-12-01'

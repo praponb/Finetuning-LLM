@@ -1,0 +1,1 @@
+WITH ProductTotals AS (SELECT product_id, SUM(quantity * unit_price) revenue, MAX(quantity) max_quantity FROM order_items GROUP BY product_id) SELECT p.launch_date, P.revenue, P.max_quantity FROM products p INNER JOIN ProductTotals P ON p.id = P.product_id WHERE P.max_quantity > 4.8 ORDER BY launch_date ASC, revenue DESC

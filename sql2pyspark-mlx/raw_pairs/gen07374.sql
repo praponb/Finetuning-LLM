@@ -1,0 +1,1 @@
+SELECT last_restock_quarter, row_count FROM (SELECT QUARTER(last_restock) AS last_restock_quarter, COUNT(*) AS row_count FROM inventory WHERE product_id = 5 GROUP BY QUARTER(last_restock)) AS x WHERE row_count >= 3

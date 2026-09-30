@@ -1,0 +1,1 @@
+WITH session_totals AS (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values FROM web_events GROUP BY session_id) SELECT sessions.id, sessions.customer_id, sessions.device, session_totals.event_type_values FROM sessions JOIN session_totals ON sessions.id = session_totals.session_id ORDER BY customer_id DESC, id LIMIT 5

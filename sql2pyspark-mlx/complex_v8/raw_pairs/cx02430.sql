@@ -1,0 +1,7 @@
+SELECT id
+FROM students
+EXCEPT ALL
+SELECT id
+FROM students
+WHERE student_name IS NOT NULL
+ORDER BY id DESC

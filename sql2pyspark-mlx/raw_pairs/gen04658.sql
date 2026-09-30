@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, COUNT(e.id) employee_count, SUM(CASE WHEN e.job_title = 'Manager' THEN 1 ELSE 0 END) manager_count FROM departments d LEFT OUTER JOIN employees e ON e.dept_id = d.id WHERE e.is_remote GROUP BY d.id, d.dept_name

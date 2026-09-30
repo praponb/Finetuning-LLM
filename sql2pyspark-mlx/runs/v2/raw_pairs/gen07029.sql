@@ -1,0 +1,1 @@
+with top_departments as (select *, row_number() over (partition by location order by budget desc, id) as pos from departments where dept_name in ('Finance', 'Engineering')) select id, location, budget from top_departments where pos <= 3

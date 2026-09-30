@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM suppliers s WHERE NOT EXISTS (SELECT 1 FROM products x WHERE x.supplier_id = s.id AND x.stock_qty >= 363)) SELECT id, supplier_name, country, city, rating FROM not_flagged

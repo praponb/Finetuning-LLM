@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT is_flagged, YEAR(txn_time) AS txn_year, ROUND(STDDEV(amount), 2) AS stddev_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE amount <= 1500 GROUP BY is_flagged, YEAR(txn_time)) AS x WHERE stddev_amount > 65

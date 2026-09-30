@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', start_date) start_month, COUNT(DISTINCT monthly_fee) unique_plans, COUNT(*) cnt FROM subscriptions WHERE monthly_fee < 90 GROUP BY DATE_TRUNC('MONTH', start_date) ORDER BY cnt DESC, start_month LIMIT 1

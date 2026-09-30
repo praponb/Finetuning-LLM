@@ -1,0 +1,1 @@
+with valid as (select *, last_day(opened_date) as opened_date_month_end, coalesce(region, 'NONE') as region_clean from stores where region is not null and city = 'Tokyo') select * from (select city, region, sqft from valid) src pivot (sum(sqft) for region in ('West', 'Central'));

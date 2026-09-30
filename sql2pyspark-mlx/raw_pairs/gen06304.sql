@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.store_id, i.product_id FROM inventory i WHERE MONTH(i.last_restock) IN (4, 7, 12) AND i.product_id NOT IN (SELECT id FROM products WHERE cost BETWEEN 440 AND 610) ORDER BY store_id DESC, i.id LIMIT 3

@@ -1,0 +1,1 @@
+SELECT page, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list, MIN(event_time) AS min_event_time, MAX(duration_sec) AS max_duration_sec FROM web_events WHERE session_id IN (3, 7, 19, 28) GROUP BY page ORDER BY max_duration_sec, min_event_time

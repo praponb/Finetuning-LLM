@@ -1,0 +1,1 @@
+select s.id, s.store_name, count(i.id) as inventory_count, min(i.last_restock) as first_last_restock from stores s inner join inventory i on s.id = i.store_id where i.last_restock < '2025-09-01' group by s.id, s.store_name;

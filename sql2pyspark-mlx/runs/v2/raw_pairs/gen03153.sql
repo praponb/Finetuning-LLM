@@ -1,0 +1,1 @@
+SELECT id, manager_id, salary, dept_id FROM (SELECT id, manager_id, salary, dept_id, RANK() OVER (PARTITION BY manager_id ORDER BY salary) AS row_num FROM employees) AS ranked WHERE row_num <= 3 ORDER BY manager_id

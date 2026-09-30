@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN units >= 42 THEN 'high' WHEN units >= 17 THEN 'mid' ELSE 'low' END AS units_bucket, MAX(units) - MIN(units) AS units_range FROM store_sales GROUP BY CASE WHEN units >= 42 THEN 'high' WHEN units >= 17 THEN 'mid' ELSE 'low' END) AS x WHERE units_range < 40 ORDER BY units_bucket LIMIT 10

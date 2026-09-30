@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, COUNT(DISTINCT amount) AS unique_orders, AVG(amount) AS avg_amount FROM payments GROUP BY order_id) SELECT o.id, o.customer_id, os.unique_orders, os.avg_amount FROM orders o LEFT OUTER JOIN order_summary os ON o.id = os.order_id ORDER BY customer_id;

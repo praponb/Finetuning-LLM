@@ -1,0 +1,1 @@
+select city, case when region in ('East', 'South') then 'tier_1' else 'other' end as region_group, sum(case when city = 'New York' then sqft else 0 end) as new_york_sqft from stores where region in ('West', 'South', 'East') group by city, case when region in ('East', 'South') then 'tier_1' else 'other' end

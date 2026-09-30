@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.end_date FROM subscriptions WHERE subscriptions.customer_id IS NOT NULL AND subscriptions.customer_id NOT IN (SELECT id FROM customers WHERE city = 'Berlin') ORDER BY id DESC

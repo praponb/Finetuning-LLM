@@ -1,0 +1,1 @@
+SELECT dept_name, SORT_ARRAY(COLLECT_SET(location)) AS location_list, SIZE(COLLECT_SET(location)) AS num_locations, ROUND(SUM(budget) / NULLIF(COUNT(CASE WHEN dept_name = 'Finance' THEN 1 END), 0), 2) AS budget_per_finance, AVG(budget) FILTER (WHERE location = 'Tokyo') AS tokyo_avg_budget FROM departments GROUP BY 1 ORDER BY tokyo_avg_budget NULLS LAST

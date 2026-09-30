@@ -1,0 +1,1 @@
+SELECT we.id, we.page, s.started_at, c.credit_limit, c.country FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id JOIN customers c ON c.id = s.customer_id WHERE we.page IS NULL ORDER BY page;

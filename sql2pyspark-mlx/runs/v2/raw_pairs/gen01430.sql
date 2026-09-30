@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, p.supplier_id, p.launch_date, o.shipping_fee FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id RIGHT JOIN orders o ON oi.order_id = o.id WHERE o.amount < 920 ORDER BY launch_date;

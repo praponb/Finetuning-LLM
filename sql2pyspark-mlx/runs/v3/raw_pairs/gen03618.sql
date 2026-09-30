@@ -1,0 +1,1 @@
+SELECT method, status, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count, ROUND((100 * SUM(CASE WHEN method = 'card' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_card FROM payments WHERE order_id = 27 GROUP BY method, status ORDER BY success_count DESC, method ASC, status ASC LIMIT 20;

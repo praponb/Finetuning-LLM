@@ -1,0 +1,1 @@
+SELECT customers.city, COUNT(subscriptions.id) AS subscription_count, COUNT(DISTINCT subscriptions.monthly_fee) AS unique_customers FROM customers INNER JOIN subscriptions ON customers.id = subscriptions.customer_id WHERE customers.country IN ('UK', 'DE', 'TH') GROUP BY customers.city HAVING COUNT(subscriptions.id) > 4;

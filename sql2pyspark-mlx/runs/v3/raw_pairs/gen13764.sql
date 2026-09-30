@@ -1,0 +1,1 @@
+SELECT is_flagged, pct_fee, merchant_list FROM (SELECT is_flagged, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fee, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions GROUP BY is_flagged) AS x WHERE pct_fee >= 30 ORDER BY pct_fee DESC

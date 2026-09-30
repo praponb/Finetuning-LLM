@@ -1,0 +1,1 @@
+SELECT device, customer_id, country, LENGTH(browser) AS browser_length, INITCAP(TRIM(device)) AS device_title FROM sessions WHERE (device <> 'tablet' AND HOUR(started_at) BETWEEN 6 AND 9) OR browser IN ('Firefox', 'Chrome') ORDER BY browser_length DESC, country;

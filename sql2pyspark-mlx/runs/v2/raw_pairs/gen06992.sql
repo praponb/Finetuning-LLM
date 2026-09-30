@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_txn_types FROM transactions WHERE account_id IN (22, 28, 31, 32) GROUP BY account_id) SELECT a.id, a.balance, a.status, as.unique_txn_types FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id WHERE as.unique_txn_types >= 5 ORDER BY unique_txn_types DESC;

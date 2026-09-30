@@ -1,0 +1,1 @@
+WITH recent_orders AS (SELECT * FROM orders WHERE shipping_fee < 12 AND amount BETWEEN 990 AND 1000), orders_stats AS (SELECT status, ROUND(AVG(discount), 2) AS avg_discount, SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) AS returned_count FROM recent_orders GROUP BY status) SELECT * FROM orders_stats ORDER BY 1 DESC LIMIT 3;

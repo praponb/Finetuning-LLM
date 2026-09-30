@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, created_at, EXPLODE_OUTER(coupon_codes) AS tag FROM carts) SELECT DATE_TRUNC('DAY', created_at) AS activity_day, MAX(created_at) AS last_seen, MAX(created_at) AS last_created_at FROM lines GROUP BY DATE_TRUNC('DAY', created_at);

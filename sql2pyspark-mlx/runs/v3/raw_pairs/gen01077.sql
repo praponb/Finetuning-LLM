@@ -1,0 +1,1 @@
+WITH ranked_transactions AS (SELECT id, account_id, amount, DENSE_RANK() OVER (PARTITION BY account_id ORDER BY amount DESC) AS rn FROM transactions) SELECT id, account_id, amount FROM ranked_transactions WHERE rn <= 5 ORDER BY amount DESC, account_id DESC;

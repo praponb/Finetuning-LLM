@@ -1,0 +1,1 @@
+select quarter(launch_date) as launch_quarter, brand, sum(cost) as total_cost, max(launch_date) as latest_launch_date from products where launch_date between '2023-06-01' and '2025-07-01' group by quarter(launch_date), brand order by total_cost, launch_quarter, brand limit 50;

@@ -1,0 +1,1 @@
+SELECT id, discount, customer_id, channel, shipping_fee * discount AS shipping_fee_times_discount, DATE_TRUNC('week', order_date) AS order_date_period FROM orders WHERE MONTH(order_date) IN (2, 5, 8);

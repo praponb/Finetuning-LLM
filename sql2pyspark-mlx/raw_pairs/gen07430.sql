@@ -1,0 +1,1 @@
+SELECT id, host, level, latency_ms, payload_json, context, SHIFTRIGHT(status_code, 2) AS status_code_high, CAST((status_code & 8) != 0 AS INT) AS is_flagged, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').user.tier AS tier FROM app_logs WHERE level IN ('INFO', 'WARN', 'DEBUG');

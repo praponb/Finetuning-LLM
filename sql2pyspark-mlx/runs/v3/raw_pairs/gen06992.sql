@@ -1,0 +1,1 @@
+SELECT p.status, p.paid_at, o.customer_id, o.status AS order_status, c.age, c.country FROM payments p FULL OUTER JOIN orders o ON p.order_id = o.id LEFT JOIN customers c ON o.customer_id = c.id WHERE o.channel = 'web';

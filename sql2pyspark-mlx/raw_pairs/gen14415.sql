@@ -1,0 +1,1 @@
+with cleaned as (select *, coalesce(amount, 0) as amount_filled, trim(status) as clean_status, coalesce(method, 'OTHER') as method_clean from payments where method is not null) select id, status, metric_name, val from (select id, status, amount, amount_filled from cleaned) src unpivot include nulls (val for metric_name in (amount, amount_filled as AMOUNT_FILLED)) long_rows

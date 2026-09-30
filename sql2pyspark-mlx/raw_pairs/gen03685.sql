@@ -1,0 +1,1 @@
+WITH recent_orders AS (SELECT * FROM orders WHERE status != 'CANCELLED' AND amount BETWEEN 780 AND 860), order_quarter_summary AS (SELECT QUARTER(order_date) order_quarter, MIN(discount) min_discount FROM recent_orders GROUP BY QUARTER(order_date)) SELECT order_quarter, min_discount FROM order_quarter_summary;

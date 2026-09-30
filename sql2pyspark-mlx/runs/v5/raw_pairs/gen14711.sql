@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, host, log_ts, latency_ms, status_code, k, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS k, value) SELECT id, service, log_ts, status_code, k FROM flattened

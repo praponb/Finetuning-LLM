@@ -1,0 +1,1 @@
+SELECT carrier, CASE WHEN status IN ('RETURNED', 'LOST') THEN 'priority' ELSE 'other' END AS status_group, SUM(CASE WHEN status = 'IN_TRANSIT' THEN cost ELSE 0 END) AS in_transit_cost, MAX(cost) - MIN(cost) AS cost_range FROM shipments WHERE status = 'RETURNED' AND order_id IS NOT NULL GROUP BY 1, 2 ORDER BY in_transit_cost DESC;

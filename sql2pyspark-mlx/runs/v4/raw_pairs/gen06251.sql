@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM stores WHERE region = 'South' AND opened_date < '2025-01-01'), city_summary AS (SELECT city, YEAR(opened_date) AS opened_year, SUM(CASE WHEN city = 'London' THEN sqft ELSE 0 END) AS london_sqft FROM base GROUP BY city, YEAR(opened_date)) SELECT * FROM city_summary WHERE london_sqft >= 73 ORDER BY opened_year ASC

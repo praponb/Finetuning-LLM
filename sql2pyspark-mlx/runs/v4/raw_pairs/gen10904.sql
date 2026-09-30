@@ -1,0 +1,1 @@
+SELECT plan, SORT_ARRAY(COLLECT_SET(status)) AS status_list, SUM(CASE WHEN status = 'ACTIVE' THEN monthly_fee ELSE 0 END) AS active_monthly_fee FROM subscriptions GROUP BY plan HAVING SUM(CASE WHEN status = 'ACTIVE' THEN monthly_fee ELSE 0 END) > 32 ORDER BY plan LIMIT 5;

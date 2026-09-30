@@ -1,0 +1,1 @@
+select suppliers.city, count(products.id) as product_count, sum(case when products.category = 'Sports' then 1 else 0 end) as sports_count, round(stddev(products.stock_qty), 2) as stddev_stock_qty from suppliers left join products on suppliers.id = products.supplier_id group by suppliers.city order by 4 desc, product_count desc, city asc limit 10;

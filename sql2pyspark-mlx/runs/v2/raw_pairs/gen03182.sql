@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, COUNT(CASE WHEN brand = 'Globex' THEN 1 END) AS globex_count FROM products WHERE UPPER(product_name) LIKE '%MAR%' GROUP BY supplier_id) SELECT s.country, ss.globex_count FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id ORDER BY ss.globex_count DESC;

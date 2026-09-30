@@ -1,0 +1,1 @@
+SELECT id, store_id, sale_date, product_id FROM (SELECT *, RANK() OVER (PARTITION BY store_id ORDER BY sale_date) AS pos FROM store_sales WHERE store_id IN (1, 3)) AS ranked WHERE pos <= 5 ORDER BY id DESC, store_id DESC

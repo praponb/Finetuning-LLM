@@ -1,0 +1,1 @@
+WITH SupplierTotals AS (SELECT supplier_id, ROUND(AVG(cost), 2) AS avg_cost FROM products GROUP BY supplier_id) SELECT s.id, s.country, s.city, S.avg_cost FROM suppliers s LEFT JOIN SupplierTotals S ON s.id = S.supplier_id ORDER BY s.id DESC;

@@ -1,0 +1,1 @@
+SELECT s.supplier_name, t.stddev_price, t.unique_categorys FROM suppliers s LEFT JOIN (SELECT supplier_id, ROUND(STDDEV(price), 2) AS stddev_price, COUNT(DISTINCT stock_qty) AS unique_categorys FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.unique_categorys > 6 ORDER BY stddev_price;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('OPEN', 'CLOSED') THEN 'core' ELSE 'other' END AS status_group, customer_id, COUNT(*) AS total_count, ROUND((100 * SUM(CASE WHEN status = 'FROZEN' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_frozen FROM accounts WHERE customer_id IN (8, 9, 23) AND (account_type = 'LOAN' OR account_type IN ('SAVINGS', 'LOAN', 'CHECKING')) GROUP BY 1, 2

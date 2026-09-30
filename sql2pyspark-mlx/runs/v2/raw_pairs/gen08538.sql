@@ -1,0 +1,1 @@
+SELECT product_id, store_id, CASE WHEN quantity >= 190 THEN 'high' WHEN quantity >= 61 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(DISTINCT quantity) AS unique_stores, MIN(quantity) AS min_quantity FROM inventory GROUP BY product_id, store_id, CASE WHEN quantity >= 190 THEN 'high' WHEN quantity >= 61 THEN 'mid' ELSE 'low' END ORDER BY 3

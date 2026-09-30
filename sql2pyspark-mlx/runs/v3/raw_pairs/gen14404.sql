@@ -1,0 +1,3 @@
+SELECT id, hire_date, salary
+FROM employees
+WHERE hire_date = (SELECT MIN(hire_date) FROM employees);

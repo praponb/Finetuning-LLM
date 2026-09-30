@@ -1,0 +1,1 @@
+SELECT status, ROUND(SUM(monthly_fee) / NULLIF(COUNT(CASE WHEN status = 'PAUSED' THEN 1 END), 0), 2) AS monthly_fee_per_paused, SUM(CASE WHEN status = 'EXPIRED' THEN monthly_fee ELSE 0 END) AS expired_monthly_fee, COUNT(DISTINCT id) AS distinct_ids, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions GROUP BY 1 HAVING COUNT(DISTINCT id) > 1 ORDER BY expired_monthly_fee DESC

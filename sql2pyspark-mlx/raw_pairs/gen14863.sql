@@ -1,0 +1,1 @@
+WITH joined AS (SELECT src.*, d.channel FROM shipments src LEFT JOIN orders d ON src.order_id = d.id) SELECT s.id, s.order_id, s.carrier, s.shipped_date, s.cost, s.status, s.channel, (SELECT MAX(x.quantity) FROM order_items x WHERE x.order_id = s.order_id) AS max_order_item_quantity FROM joined s

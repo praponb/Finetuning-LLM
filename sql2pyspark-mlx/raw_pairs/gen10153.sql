@@ -1,0 +1,1 @@
+SELECT o.discount, o.shipping_fee, c.credit_limit, c.age, s.region, s.city FROM orders o FULL OUTER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id WHERE s.store_name LIKE '%Cent%' AND s.sqft != 12316

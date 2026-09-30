@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, a.status, t.total_amount, t.fee_count FROM accounts a LEFT JOIN (SELECT account_id, SUM(amount) total_amount, COUNT(CASE WHEN txn_type = 'FEE' THEN 1 END) fee_count FROM transactions WHERE is_flagged = FALSE GROUP BY account_id) t ON a.id = t.account_id ORDER BY a.status

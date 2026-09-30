@@ -1,0 +1,1 @@
+select p.id, p.cost, p.stock_qty, s.city, case when p.cost >= 780 then 'High' when p.cost >= 310 then 'Medium' else 'Low' end as cost_level from products p inner join suppliers s on s.id = p.supplier_id where p.price is not null and p.cost is null order by p.stock_qty desc

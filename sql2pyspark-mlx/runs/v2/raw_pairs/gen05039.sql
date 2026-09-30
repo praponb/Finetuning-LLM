@@ -1,0 +1,1 @@
+select id, store_id, product_id, last_restock, quantity, round(avg(quantity) over (partition by store_id, product_id order by last_restock, id rows between 6 preceding and current row), 2) as quantity_moving_avg_7, dense_rank() over (partition by store_id order by last_restock desc) as dense_rnk from inventory where last_restock between '2023-04-01' and '2023-08-08';

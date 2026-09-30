@@ -1,0 +1,1 @@
+SELECT id, full_name, email, dept_id, manager_id, job_title, salary, hire_date, is_remote, level, ROW_NUMBER() OVER (PARTITION BY level, dept_id ORDER BY hire_date DESC, id ASC) row_seq, ROUND(salary / SUM(salary) OVER (PARTITION BY manager_id, level), 4) salary_share FROM employees

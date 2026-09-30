@@ -1,0 +1,1 @@
+SELECT s.device, s.browser, AVG(we.duration_sec) avg_duration_sec, MAX(we.duration_sec) max_duration_sec FROM web_events we RIGHT OUTER JOIN sessions s ON we.session_id = s.id GROUP BY s.device, s.browser HAVING MAX(we.duration_sec) >= 320 ORDER BY avg_duration_sec

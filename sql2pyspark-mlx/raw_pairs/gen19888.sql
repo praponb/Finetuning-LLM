@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT src.id, src.order_id, src.product_id, src.quantity, b.price FROM order_items src LEFT JOIN products b ON src.product_id = b.id) SELECT s.id, s.order_id, s.quantity, s.price, (SELECT MAX(o2.unit_price) FROM order_items o2 WHERE o2.order_id = s.order_id) AS max_order_item_unit_price FROM enriched s ORDER BY max_order_item_unit_price DESC, price DESC;

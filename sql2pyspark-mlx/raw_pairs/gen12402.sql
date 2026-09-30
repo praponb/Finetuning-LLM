@@ -1,0 +1,1 @@
+SELECT products.category, ROUND(STDDEV(order_items.unit_price), 2) AS stddev_unit_price FROM order_items LEFT JOIN orders ON order_items.order_id = orders.id LEFT JOIN products ON products.id = order_items.product_id WHERE orders.status IN ('PENDING', 'RETURNED') GROUP BY products.category

@@ -1,0 +1,1 @@
+select month(last_restock) as last_restock_month, store_id, quarter(last_restock) as last_restock_quarter, min(quantity) as min_quantity, sum(quantity) as total_quantity from inventory where store_id in (1, 4, 5, 6) group by last_restock_month, store_id, last_restock_quarter

@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, log_ts, level, latency_ms, k, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) li AS k, value) SELECT id, service, log_ts, latency_ms, value, CASE WHEN service RLIKE '^(checkout|auth)$' THEN 'GROUP_B' WHEN service RLIKE '^(billing|search)$' THEN 'EXTENDED' ELSE 'OTHER_ZONE' END AS service_zone FROM lines ORDER BY id DESC

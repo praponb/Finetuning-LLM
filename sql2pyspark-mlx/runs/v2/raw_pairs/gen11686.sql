@@ -1,0 +1,1 @@
+with product_summary as (select product_id, max(unit_price) - min(unit_price) as unit_price_range, count(*) as order_item_count from order_items where quantity <> 6 group by product_id) select p.product_name, ps.unit_price_range, ps.order_item_count from products p left outer join product_summary ps on p.id = ps.product_id order by product_name asc, unit_price_range desc

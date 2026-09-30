@@ -1,0 +1,1 @@
+select status, sort_array(collect_set(carrier)) as carrier_list, round(avg(cost), 2) as avg_cost, sum(cost) as total_cost from shipments where status in ('IN_TRANSIT', 'LOST') and carrier is null group by status;

@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, oi.order_id, o.status, p.cost, p.price FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON p.id = oi.product_id WHERE o.status IN ('CANCELLED', 'SHIPPED')

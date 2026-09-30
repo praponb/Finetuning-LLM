@@ -1,0 +1,1 @@
+SELECT id, city, opened_date, region, sqft, LAST_VALUE(region) OVER (PARTITION BY city ORDER BY opened_date DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_region, SUM(sqft) OVER (PARTITION BY region ORDER BY opened_date, id) AS running_sqft FROM stores ORDER BY opened_date ASC

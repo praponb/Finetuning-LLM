@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, ROUND(budget * 1.07, 2) AS budget_scaled, COALESCE(dept_name, 'NONE') AS resolved_dept_name FROM departments WHERE location IS NOT NULL AND location IS NOT NULL) SELECT s.* FROM base s WHERE NOT EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND c.salary >= 87000);

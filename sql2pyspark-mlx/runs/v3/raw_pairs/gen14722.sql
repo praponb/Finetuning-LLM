@@ -1,0 +1,1 @@
+select carrier, round(stddev(cost), 2) as stddev_cost, count(distinct cost) as unique_carriers from shipments where (order_id is null and carrier in ('FedEx', 'UPS', 'Kerry')) or carrier = 'DHL' group by carrier

@@ -1,0 +1,1 @@
+SELECT QUARTER(signup_date) AS signup_quarter, MIN(signup_date) AS first_signup_date, SORT_ARRAY(COLLECT_SET(segment)) AS segment_list FROM customers WHERE signup_date <= '2025-08-01' AND age < 66 GROUP BY signup_quarter ORDER BY signup_quarter DESC

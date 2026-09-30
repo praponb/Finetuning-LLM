@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, p.product_name, p.brand, o.discount, o.amount FROM order_items oi JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON o.id = oi.order_id WHERE NOT (o.shipping_fee > 34 AND o.shipping_fee < 39)

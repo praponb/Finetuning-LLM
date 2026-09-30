@@ -1,0 +1,1 @@
+select id, product_name, brand, cost, stock_qty, launch_date, supplier_id from (select *, rank() over (partition by supplier_id, category order by launch_date desc nulls first) as rn from products) ranked where rn = 1;

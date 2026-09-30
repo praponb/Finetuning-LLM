@@ -1,0 +1,1 @@
+SELECT id, amount, CASE WHEN discount >= 0.38 THEN 'High' WHEN discount >= 0.05 THEN 'Medium' ELSE 'Low' END AS discount_level, shipping_fee * amount AS amount_with_shipping FROM orders ORDER BY amount_with_shipping DESC, 1 DESC LIMIT 1;

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, store_name, city, region, opened_date, sqft, TRIM(city) clean_city, REPLACE(store_name, ' ', '_') store_name_slug FROM stores WHERE region IS NOT NULL AND sqft BETWEEN 4471 AND 7314) SELECT *, ROW_NUMBER() OVER (PARTITION BY city, region ORDER BY opened_date NULLS LAST, id) AS rank_in_group FROM cleaned QUALIFY rank_in_group = 1;

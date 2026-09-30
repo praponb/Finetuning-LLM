@@ -1,0 +1,1 @@
+SELECT store_id, min_sale_date, revenue_count FROM (SELECT store_id, MIN(sale_date) AS min_sale_date, COUNT(revenue) AS revenue_count FROM store_sales WHERE store_id IN (1, 3, 4, 6) GROUP BY store_id) AS sub WHERE revenue_count >= 5;

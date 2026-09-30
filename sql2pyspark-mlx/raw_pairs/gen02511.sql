@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4342000 THEN 'high' WHEN budget >= 973000 THEN 'mid' ELSE 'low' END AS budget_bucket, MIN(budget) AS min_budget FROM departments WHERE budget <= 2534000 GROUP BY 1 ORDER BY min_budget ASC, budget_bucket ASC LIMIT 5;

@@ -1,0 +1,1 @@
+select supplier_id, avg_price, category_values from (select supplier_id, round(avg(price), 2) avg_price, concat_ws(', ', sort_array(collect_set(category))) category_values from products where brand in ('Globex', 'Umbrella', 'Acme') group by supplier_id) sub where avg_price >= 39 order by category_values desc, avg_price desc

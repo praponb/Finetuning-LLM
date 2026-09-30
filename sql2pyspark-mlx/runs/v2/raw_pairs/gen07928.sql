@@ -1,0 +1,1 @@
+WITH valid_web_events AS (SELECT * FROM web_events WHERE event_time < '2025-01-18'), WebEventsStats AS (SELECT page, COUNT(CASE WHEN page = '/product' THEN 1 END) AS product_count, MIN(duration_sec) AS min_duration_sec FROM valid_web_events GROUP BY page) SELECT * FROM WebEventsStats ORDER BY product_count DESC, page;

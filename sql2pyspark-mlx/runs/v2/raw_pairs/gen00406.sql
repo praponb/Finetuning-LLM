@@ -1,0 +1,1 @@
+with filtered_suppliers as (select * from suppliers where country in ('TH', 'SG', 'JP') and rating between 2.6 and 3.6), agg as (select city, sum(case when country = 'DE' then 1 else 0 end) as de_count from filtered_suppliers group by city) select * from agg where de_count < 43 order by de_count desc, city;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 4500 THEN 'high' WHEN amount >= 500 THEN 'mid' ELSE 'low' END AS amount_bucket, txn_type, SUM(amount) AS total_amount, AVG(amount) AS avg_amount FROM transactions GROUP BY 1, 2

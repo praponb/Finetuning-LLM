@@ -1,0 +1,1 @@
+SELECT suppliers.rating, suppliers.city, products.category, products.brand, products.price FROM suppliers LEFT JOIN products ON products.supplier_id = suppliers.id WHERE LENGTH(suppliers.supplier_name) > 5 ORDER BY products.category, rating DESC

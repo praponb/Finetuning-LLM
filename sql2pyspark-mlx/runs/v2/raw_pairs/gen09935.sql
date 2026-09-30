@@ -1,0 +1,1 @@
+select case when rating >= 4.2 then 'high' when rating >= 2.4 then 'mid' else 'low' end as rating_bucket, count(case when city = 'Tokyo' then 1 end) as tokyo_count, sum(case when country = 'UK' then rating else 0 end) as uk_rating from suppliers group by 1 order by uk_rating, tokyo_count

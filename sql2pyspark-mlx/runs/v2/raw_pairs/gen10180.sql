@@ -1,0 +1,1 @@
+SELECT ss.sale_date, p.supplier_id, p.category, s.store_name FROM store_sales ss FULL OUTER JOIN products p ON p.id = ss.product_id LEFT JOIN stores s ON ss.store_id = s.id ORDER BY category DESC, store_name DESC;

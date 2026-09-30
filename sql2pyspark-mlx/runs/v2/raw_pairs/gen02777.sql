@@ -1,0 +1,1 @@
+SELECT plan, SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END) AS premium_count, ROUND((100 * SUM(CASE WHEN status = 'ACTIVE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_active FROM subscriptions GROUP BY plan

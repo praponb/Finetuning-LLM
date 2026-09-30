@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name AS employee_full_name, e.is_remote AS employee_is_remote, e.salary AS employee_salary, m.full_name AS manager_full_name FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.is_remote = TRUE;

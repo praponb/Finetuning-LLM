@@ -1,0 +1,1 @@
+select i.id, i.last_restock, i.product_id, p.launch_date, s.opened_date from inventory i left join products p on p.id = i.product_id join stores s on i.store_id = s.id where s.store_name like '%Air%';

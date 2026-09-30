@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, attr_key, value FROM carts LATERAL VIEW EXPLODE(attributes) e AS attr_key, value) SELECT attr_key, COUNT(DISTINCT id) AS distinct_ids, COUNT(CASE WHEN attr_key = 'utm_source' THEN 1 END) AS utm_source_count FROM lines GROUP BY 1 ORDER BY attr_key

@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, ss.sale_date, ss.store_id, ss.units FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.store_id IN (1, 3, 5) AND MONTH(ss.sale_date) IN (4, 7, 10)

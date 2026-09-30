@@ -1,0 +1,1 @@
+SELECT id, customer_id, balance, opened_date, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY balance DESC, id) AS rn, LAG(balance, 1) OVER (PARTITION BY customer_id ORDER BY opened_date, id) AS prev_balance FROM accounts

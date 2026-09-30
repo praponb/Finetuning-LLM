@@ -1,0 +1,1 @@
+SELECT ss.units, ss.revenue, p.category, s.supplier_name FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE s.country <> 'TH' ORDER BY ss.revenue DESC

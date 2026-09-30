@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM stores WHERE region NOT IN ('South', 'Central') AND LENGTH(store_name) >= 7 AND region = 'East'), city_summary AS (SELECT city, COUNT(CASE WHEN city = 'New York' THEN 1 END) AS new_york_count FROM base GROUP BY city) SELECT city, new_york_count FROM city_summary WHERE new_york_count > 9 ORDER BY new_york_count DESC;

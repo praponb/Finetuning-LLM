@@ -1,0 +1,1 @@
+select method, count(case when status = 'SUCCESS' then 1 end) as success_count, sum(case when status = 'SUCCESS' then amount else 0 end) as success_amount, sum(case when method = 'bank_transfer' then amount else 0 end) as bank_transfer_amount from payments group by 1 order by method desc limit 50;

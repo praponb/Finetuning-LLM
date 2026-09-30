@@ -1,0 +1,1 @@
+SELECT id, sale_date, product_id, revenue, CAST(units AS DOUBLE) AS units_str, ROUND(revenue / units, 2) AS revenue_per_unit FROM store_sales WHERE store_id IN (2, 3, 4) AND (store_id IN (2, 3) OR units BETWEEN 17 AND 32);

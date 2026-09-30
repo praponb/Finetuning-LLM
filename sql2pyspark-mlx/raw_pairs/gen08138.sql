@@ -1,0 +1,1 @@
+SELECT id, unit_price, quantity, product_id, ROUND(quantity, 2) AS quantity_rounded, quantity + unit_price AS line_total FROM order_items WHERE order_id IN (8, 34, 40) AND unit_price BETWEEN 150 AND 400 AND unit_price <= 220;

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', hire_date) AS hire_month, MAX(salary) - MIN(salary) AS salary_range FROM employees WHERE NOT (hire_date <= '2024-03-01' AND (salary >= 125000 OR email IS NOT NULL)) GROUP BY DATE_TRUNC('MONTH', hire_date);

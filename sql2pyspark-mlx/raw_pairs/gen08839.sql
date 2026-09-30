@@ -1,0 +1,1 @@
+SELECT MONTH(event_time) AS event_month, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, COUNT(duration_sec) AS duration_sec_count FROM web_events WHERE page NOT IN ('/cart', '/home') AND page IS NULL AND page = '/product' GROUP BY MONTH(event_time)

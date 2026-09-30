@@ -1,0 +1,1 @@
+SELECT region, CASE WHEN region IN ('Central', 'West') THEN 'tier_1' ELSE 'other' END AS region_group, YEAR(opened_date) AS opened_year, MAX(sqft) - MIN(sqft) AS sqft_range FROM stores GROUP BY region, region_group, opened_year HAVING MAX(sqft) - MIN(sqft) >= 63

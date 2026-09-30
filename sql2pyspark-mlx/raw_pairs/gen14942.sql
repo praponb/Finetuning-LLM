@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4483000 THEN 'HIGH' ELSE 'LOW' END AS budget_tier, MAX(budget) AS max_budget, SIZE(COLLECT_SET(location)) AS num_locations, COUNT(*) AS row_count, GROUPING_ID() AS grouping_id FROM departments GROUP BY ROLLUP (CASE WHEN budget >= 4483000 THEN 'HIGH' ELSE 'LOW' END);

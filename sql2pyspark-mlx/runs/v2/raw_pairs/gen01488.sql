@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, status, MIN(opened_date) AS min_opened_date, MAX(balance) - MIN(balance) AS balance_range, COUNT(*) AS cnt FROM accounts GROUP BY DATE_TRUNC('MONTH', opened_date), status HAVING COUNT(*) >= 1;

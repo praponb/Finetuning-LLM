@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, store_id, product_id, LAST_DAY(sale_date) AS sale_date_month_end, FLOOR(units) AS units_whole FROM store_sales WHERE product_id = 4) SELECT d.region, COUNT(*) AS cnt, SUM(a.units_whole) AS total_units_whole FROM cleaned a INNER JOIN stores d ON a.store_id = d.id GROUP BY d.region ORDER BY total_units_whole NULLS LAST

@@ -1,0 +1,1 @@
+SELECT shipments.status, orders.status AS order_status, orders.store_id, customers.email FROM shipments RIGHT JOIN orders ON shipments.order_id = orders.id JOIN customers ON orders.customer_id = customers.id WHERE LENGTH(customers.name) > 10;

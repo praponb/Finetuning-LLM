@@ -1,0 +1,1 @@
+select store_sales.id, store_sales.store_id, store_sales.sale_date, products.category, stores.sqft from store_sales inner join products on products.id = store_sales.product_id inner join stores on store_sales.store_id = stores.id where store_sales.revenue > 3400;

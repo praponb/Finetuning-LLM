@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, UPPER(location) AS location_upper, COALESCE(dept_name, 'OTHER') AS dept_name_filled FROM departments WHERE location IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name, location ORDER BY budget DESC, id) AS latest_rank FROM filtered QUALIFY latest_rank = 1

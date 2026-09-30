@@ -1,0 +1,1 @@
+SELECT id, store_id, last_restock, product_id, CASE WHEN quantity >= 210 THEN 'High' WHEN quantity >= 44 THEN 'Medium' ELSE 'Low' END AS quantity_tier FROM inventory WHERE quantity BETWEEN 174 AND 196

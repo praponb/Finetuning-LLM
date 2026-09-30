@@ -1,0 +1,1 @@
+SELECT YEAR(start_date) start_year, SUM(monthly_fee) total_monthly_fee, SUM(SUM(monthly_fee)) OVER (ORDER BY YEAR(start_date)) AS cumulative_monthly_fee FROM subscriptions WHERE monthly_fee > 170 GROUP BY YEAR(start_date);

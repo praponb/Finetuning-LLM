@@ -1,0 +1,1 @@
+with latest as (select *, rank() over (partition by status, customer_id order by start_date desc nulls first) as rank_in_group from subscriptions qualify rank_in_group = 1) select id, plan, start_date, end_date, monthly_fee, status, rank_in_group, case when status rlike '^(ACTIVE|PAUSED)$' then 'OTHER_ZONE' else 'EXTENDED' end as status_zone from latest

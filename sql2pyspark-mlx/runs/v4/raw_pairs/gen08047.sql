@@ -1,0 +1,1 @@
+SELECT SUM(CASE WHEN status = 'OPEN' THEN balance ELSE 0 END) AS open_balance FROM accounts WHERE account_type IN ('LOAN', 'CHECKING') AND status <> 'FROZEN' AND opened_date <= '2025-05-06' ORDER BY open_balance DESC;

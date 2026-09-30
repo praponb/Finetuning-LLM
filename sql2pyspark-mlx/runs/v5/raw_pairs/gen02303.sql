@@ -1,0 +1,1 @@
+SELECT emp.id, emp.full_name AS employee_full_name, mgr.is_remote AS manager_is_remote, mgr.salary AS manager_salary, mgr.dept_id AS manager_dept_id FROM employees emp INNER JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.manager_id IN (3, 7, 32)

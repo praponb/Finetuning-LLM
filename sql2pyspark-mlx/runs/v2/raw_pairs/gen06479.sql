@@ -1,0 +1,1 @@
+SELECT launch_month, category, unique_categorys, latest_launch_date FROM (SELECT DATE_TRUNC('MONTH', launch_date) AS launch_month, category, COUNT(DISTINCT stock_qty) AS unique_categorys, MAX(launch_date) AS latest_launch_date FROM products WHERE ARRAY_CONTAINS(tags, 'premium') GROUP BY DATE_TRUNC('MONTH', launch_date), category) AS s WHERE unique_categorys > 10;

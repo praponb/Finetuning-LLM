@@ -1,0 +1,1 @@
+SELECT s.id, s.started_at, s.browser, t.checkout_count, t.event_type_list FROM sessions s LEFT JOIN (SELECT session_id, SUM(CASE WHEN page = '/checkout' THEN 1 ELSE 0 END) AS checkout_count, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.checkout_count > 36 ORDER BY started_at

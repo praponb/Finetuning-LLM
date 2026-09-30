@@ -1,0 +1,1 @@
+select ss.id, ss.product_id, s.opened_date, s.region, p.stock_qty from store_sales ss join stores s on ss.store_id = s.id right join products p on p.id = ss.product_id where ss.store_id in (2, 3, 5, 6)

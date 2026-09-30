@@ -1,0 +1,1 @@
+with base as (select *, round(quantity, 2) as quantity_rounded, round(unit_price * 1.07, 2) as adjusted_unit_price from order_items where product_id is not null and unit_price between 150 and 180) select * from (select *, row_number() over (partition by order_id order by quantity desc nulls first, id) as latest_rank from base) ranked where latest_rank = 1

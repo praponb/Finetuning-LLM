@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, COUNT(DISTINCT amount) AS unique_accounts, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions GROUP BY DATE_TRUNC('MONTH', txn_time);

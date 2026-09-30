@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN quantity >= 242 THEN 'high' WHEN quantity >= 90 THEN 'mid' ELSE 'low' END AS quantity_bucket, MIN(quantity) AS min_quantity, COUNT(quantity) AS quantity_count FROM inventory GROUP BY CASE WHEN quantity >= 242 THEN 'high' WHEN quantity >= 90 THEN 'mid' ELSE 'low' END) AS x WHERE quantity_count >= 7

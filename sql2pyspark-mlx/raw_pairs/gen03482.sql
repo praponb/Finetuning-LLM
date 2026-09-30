@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, MAX(salary) AS max_salary FROM employees GROUP BY dept_id) SELECT d.id, d.budget, d.dept_name, ds.max_salary FROM departments d LEFT JOIN department_summary ds ON d.id = ds.dept_id ORDER BY id DESC;

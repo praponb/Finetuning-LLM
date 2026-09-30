@@ -1,0 +1,11 @@
+with top_stores as (
+    select
+        id,
+        region,
+        sqft,
+        row_number() over (partition by region order by sqft desc, id) rn
+    from stores
+)
+select id, region, sqft
+from top_stores
+where rn <= 5;

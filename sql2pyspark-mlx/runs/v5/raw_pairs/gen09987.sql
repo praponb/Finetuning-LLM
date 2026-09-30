@@ -1,0 +1,1 @@
+SELECT txn_year, max_amount, avg_amount FROM (SELECT YEAR(txn_time) AS txn_year, MAX(amount) AS max_amount, AVG(amount) AS avg_amount FROM transactions GROUP BY YEAR(txn_time)) AS x WHERE max_amount < 1500;

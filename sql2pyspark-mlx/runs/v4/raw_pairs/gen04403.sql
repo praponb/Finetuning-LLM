@@ -1,0 +1,1 @@
+SELECT id, email, country, CASE WHEN credit_limit >= 16600 THEN 'High' WHEN credit_limit >= 2500 THEN 'Medium' ELSE 'Low' END AS credit_limit_tier FROM customers WHERE is_active AND YEAR(signup_date) >= 2025 ORDER BY email DESC;

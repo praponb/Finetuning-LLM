@@ -1,0 +1,1 @@
+WITH RankedSubscriptions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY end_date, id) AS rnk FROM subscriptions) SELECT id, plan, end_date, status FROM RankedSubscriptions WHERE rnk = 1 ORDER BY id DESC;

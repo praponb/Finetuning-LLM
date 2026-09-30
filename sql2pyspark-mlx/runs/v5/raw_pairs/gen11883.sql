@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory WHERE MONTH(last_restock) IN (3, 7, 9) GROUP BY product_id) SELECT p.id, p.cost, pt.avg_quantity FROM products p INNER JOIN product_totals pt ON p.id = pt.product_id WHERE pt.avg_quantity > 75

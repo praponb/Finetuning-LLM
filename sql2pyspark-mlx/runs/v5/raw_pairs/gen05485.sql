@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT product_id, MAX(revenue) max_revenue, MAX(units) - MIN(units) units_range FROM store_sales WHERE units BETWEEN 14 AND 36 GROUP BY product_id) t WHERE max_revenue < 3400 ORDER BY max_revenue DESC, product_id LIMIT 5;

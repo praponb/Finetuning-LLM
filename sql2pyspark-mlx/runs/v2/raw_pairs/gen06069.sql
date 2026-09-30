@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, t.avg_amount FROM accounts a JOIN (SELECT account_id, ROUND(AVG(amount), 2) AS avg_amount FROM transactions WHERE txn_time >= '2025-08-01' GROUP BY account_id) t ON a.id = t.account_id

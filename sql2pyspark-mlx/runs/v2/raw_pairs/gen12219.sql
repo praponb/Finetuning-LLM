@@ -1,0 +1,1 @@
+WITH ValidTransactions AS (SELECT * FROM transactions WHERE NOT is_flagged), transactions_stats AS (SELECT merchant, txn_type, MIN(txn_time) min_txn_time FROM ValidTransactions GROUP BY merchant, txn_type) SELECT * FROM transactions_stats ORDER BY min_txn_time DESC;

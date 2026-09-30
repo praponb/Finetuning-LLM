@@ -1,0 +1,1 @@
+select year(sale_date) as sale_year, sum(units) as total_units, round(sum(units) * 100.0 / sum(sum(units)) over (), 2) as pct_of_total from store_sales where sale_date between '2023-07-11' and '2024-10-24' group by year(sale_date) order by pct_of_total, sale_year desc limit 3

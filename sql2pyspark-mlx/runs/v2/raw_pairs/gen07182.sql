@@ -1,0 +1,1 @@
+SELECT merchant, COUNT(DISTINCT amount) AS unique_merchants, SUM(CASE WHEN merchant = '7-Eleven' THEN amount ELSE 0 END) AS 7_eleven_amount FROM transactions WHERE account_id IN (21, 35) GROUP BY merchant ORDER BY unique_merchants DESC;

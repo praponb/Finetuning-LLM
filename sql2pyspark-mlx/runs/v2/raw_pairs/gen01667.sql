@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, account_type, COUNT(balance) AS balance_count, MIN(balance) AS min_balance FROM accounts WHERE opened_date < '2024-06-15' GROUP BY QUARTER(opened_date), account_type HAVING min_balance >= 40000 ORDER BY balance_count DESC

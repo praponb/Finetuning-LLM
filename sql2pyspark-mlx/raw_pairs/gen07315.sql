@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, product_id, last_restock, quantity, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY last_restock) AS pos FROM inventory WHERE quantity <= 97) SELECT * FROM ranked WHERE pos <= 5 ORDER BY id, last_restock DESC

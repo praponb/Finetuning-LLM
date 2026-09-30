@@ -1,0 +1,1 @@
+select p.brand, p.supplier_id, max(oi.unit_price) as max_unit_price, count(oi.unit_price) as unit_price_count from order_items oi inner join products p on oi.product_id = p.id where oi.order_id in (4, 14, 22, 38) group by p.brand, p.supplier_id order by supplier_id desc, brand asc limit 20;

@@ -1,0 +1,1 @@
+SELECT p.brand, COUNT(*) AS total_count, MAX(ss.units) AS max_units FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id LEFT OUTER JOIN stores s ON ss.store_id = s.id WHERE p.category IN ('Grocery', 'Sports', 'Fashion') GROUP BY p.brand;

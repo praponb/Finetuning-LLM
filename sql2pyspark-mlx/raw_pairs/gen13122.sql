@@ -1,0 +1,1 @@
+select * from (select date_format(order_date, 'yyyy-MM') as order_month, sum(case when channel = 'web' then discount else 0 end) as web_discount, concat_ws(', ', sort_array(collect_set(status))) as status_values from orders where shipping_fee <= 39 group by date_format(order_date, 'yyyy-MM')) as s where web_discount > 71 order by web_discount asc

@@ -1,0 +1,1 @@
+select case when year(txn_time) < 2024 then 'before_2024' when year(txn_time) = 2024 then '2024' else 'after_2024' end as txn_cohort, round(avg(amount), 2) as avg_amount from transactions group by case when year(txn_time) < 2024 then 'before_2024' when year(txn_time) = 2024 then '2024' else 'after_2024' end having round(avg(amount), 2) < 78

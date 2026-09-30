@@ -1,0 +1,1 @@
+select quarter(signup_date) signup_quarter, case when age >= 68 then 'high' when age >= 40 then 'mid' else 'low' end age_bucket, max(signup_date) last_signup_date, avg(age) avg_age from customers where segment is not null group by 1, 2;

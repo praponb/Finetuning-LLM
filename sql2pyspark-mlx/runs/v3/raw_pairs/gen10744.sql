@@ -1,0 +1,1 @@
+select event_type, sum(duration_sec) as total_duration_sec, rank() over (order by sum(duration_sec) desc) as duration_sec_rank from web_events where event_type = 'purchase' group by event_type order by duration_sec_rank desc, event_type limit 50

@@ -1,0 +1,1 @@
+SELECT id, launch_date, cost, brand, stock_qty, LEAD(cost, 1) OVER (ORDER BY launch_date, id) AS next_cost, FIRST_VALUE(stock_qty) OVER (PARTITION BY brand ORDER BY launch_date, id) AS first_stock_qty FROM products WHERE product_name LIKE 'Wa%';

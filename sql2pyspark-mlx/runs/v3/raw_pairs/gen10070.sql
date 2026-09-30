@@ -1,0 +1,1 @@
+SELECT id, order_id, carrier, status, CONCAT_WS(',', carrier, status) AS carrier_status_key FROM shipments WHERE shipped_date BETWEEN '2024-04-01' AND '2024-05-18' AND (status <> 'IN_TRANSIT' OR shipped_date <= '2023-06-01') ORDER BY status DESC, id DESC LIMIT 20

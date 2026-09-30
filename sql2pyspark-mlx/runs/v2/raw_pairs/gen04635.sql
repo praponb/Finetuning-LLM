@@ -1,0 +1,1 @@
+SELECT id, order_id, method, paid_at, amount, ROW_NUMBER() OVER (PARTITION BY order_id, method ORDER BY paid_at, id) AS rn, MIN(amount) OVER (PARTITION BY order_id, method) AS order_id_min_amount FROM payments WHERE order_id IS NOT NULL;

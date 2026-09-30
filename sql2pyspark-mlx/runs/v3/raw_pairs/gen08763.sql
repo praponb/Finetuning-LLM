@@ -1,0 +1,1 @@
+SELECT e.id, e.dept_id AS employee_dept_id, e.job_title AS employee_job_title, e.full_name AS employee_full_name, m.level AS manager_level FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE NOT (m.salary > 59000 AND e.salary < 100000) ORDER BY e.full_name

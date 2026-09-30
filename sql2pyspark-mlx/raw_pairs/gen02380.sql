@@ -1,0 +1,1 @@
+WITH joined AS (SELECT s.*, d.rating FROM products s LEFT JOIN suppliers d ON s.supplier_id <=> d.id) SELECT s.id, s.product_name, s.category, s.brand, s.price, s.stock_qty, s.launch_date, s.supplier_id, s.rating, (SELECT MIN(x.price) FROM products x WHERE x.supplier_id = s.supplier_id) AS min_product_price FROM joined s ORDER BY supplier_id ASC NULLS LAST;

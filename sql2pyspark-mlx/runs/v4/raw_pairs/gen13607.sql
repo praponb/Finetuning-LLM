@@ -1,0 +1,1 @@
+SELECT id, plan, monthly_fee, end_date, DENSE_RANK() OVER (PARTITION BY plan ORDER BY monthly_fee DESC) AS monthly_fee_dense_rank, LAG(monthly_fee, 1) OVER (PARTITION BY plan ORDER BY end_date, id) AS prev_monthly_fee FROM subscriptions WHERE MONTH(start_date) IN (6, 9, 12)

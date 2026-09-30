@@ -1,0 +1,1 @@
+SELECT orders.status, SUM(CASE WHEN shipments.carrier = 'UPS' THEN 1 ELSE 0 END) AS ups_count FROM shipments INNER JOIN orders ON orders.id = shipments.order_id GROUP BY orders.status ORDER BY ups_count DESC, orders.status DESC;

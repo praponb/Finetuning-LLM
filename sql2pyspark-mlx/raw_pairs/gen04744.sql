@@ -1,0 +1,1 @@
+select *, ceil(balance) as balance_whole, length(account_type) as account_type_length from accounts where account_type = 'CREDIT' and (balance > 22000 or account_type != 'CHECKING') order by balance desc

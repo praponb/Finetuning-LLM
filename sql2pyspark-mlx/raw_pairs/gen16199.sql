@@ -1,0 +1,1 @@
+select a.account_type, a.status, src.txn_type, count(*) as cnt, avg(src.amount) as avg_amount, grouping_id() as gid from transactions src left join accounts a on src.account_id = a.id group by grouping sets ((a.account_type, a.status, src.txn_type), (a.account_type, a.status), (a.account_type))

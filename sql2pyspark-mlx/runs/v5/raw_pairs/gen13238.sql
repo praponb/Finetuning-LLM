@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, items, ship_to, attributes, TRANSFORM(items, li -> li.product_id) AS product_ids, SIZE(FILTER(items, li -> li.qty >= 3)) AS bulk_lines, COALESCE(ship_to.country, 'UNKNOWN') AS country_or_unknown FROM carts WHERE created_at < '2024-10-01'

@@ -1,0 +1,1 @@
+WITH ranked_products AS (SELECT id, brand, stock_qty, product_name, RANK() OVER (PARTITION BY brand ORDER BY stock_qty DESC) AS rnk FROM products) SELECT id, brand, stock_qty, product_name FROM ranked_products WHERE rnk = 1 ORDER BY product_name;

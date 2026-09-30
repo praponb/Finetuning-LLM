@@ -1,0 +1,1 @@
+select case when amount >= 1450 then 'high' when amount >= 590 then 'mid' else 'low' end as amount_bucket, sum(shipping_fee) as total_shipping_fee, dense_rank() over (order by sum(shipping_fee) desc) as shipping_fee_rank from orders group by case when amount >= 1450 then 'high' when amount >= 590 then 'mid' else 'low' end order by amount_bucket desc;

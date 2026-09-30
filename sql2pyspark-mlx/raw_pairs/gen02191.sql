@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, created_at, INLINE(items) FROM carts) SELECT id, qty, price, promo, CASE WHEN promo RLIKE '^(WELCOME5|VIP)$' THEN 'OTHER_ZONE' ELSE 'GROUP_A' END AS promo_zone FROM exploded ORDER BY promo_zone DESC;

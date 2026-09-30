@@ -1,0 +1,1 @@
+with base as (select * from store_sales where product_id = 5), store_id_summary as (select store_id, min(sale_date) as first_sale_date, round(avg(units), 2) as avg_units from base group by store_id) select store_id, first_sale_date, avg_units from store_id_summary where avg_units >= 58;

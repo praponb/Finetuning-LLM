@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, COUNT(e.id) AS employee_count FROM departments d LEFT JOIN employees e ON e.dept_id = d.id WHERE e.manager_id IN (8, 11) GROUP BY d.id, d.dept_name ORDER BY d.dept_name, id LIMIT 50;

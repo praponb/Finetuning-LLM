@@ -1,0 +1,1 @@
+SELECT id, dept_name, budget, location, ROUND(budget / SUM(budget) OVER (PARTITION BY dept_name), 3) AS budget_share, LEAD(budget, 1, 0) OVER (PARTITION BY location ORDER BY budget, id) AS next_budget FROM departments

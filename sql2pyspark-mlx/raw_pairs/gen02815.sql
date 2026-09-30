@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, starts_on, ROUND(DATEDIFF(starts_on, ends_on) / 30, 1) AS months_ends_on_to_starts_on FROM promotions WHERE ends_on > DATE '2023-07-02' AND channel IS NOT NULL) SELECT id FROM cleaned EXCEPT SELECT id FROM promotions WHERE MONTH(starts_on) IN (2, 5, 7)

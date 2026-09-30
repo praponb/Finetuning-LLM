@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, SUM(salary) total_salary, MIN(hire_date) min_hire_date FROM employees GROUP BY dept_id) SELECT d.id, d.location, ds.total_salary, ds.min_hire_date FROM departments d JOIN department_summary ds ON d.id = ds.dept_id ORDER BY id DESC, ds.total_salary DESC;

@@ -1,0 +1,1 @@
+select account_id, txn_type from transactions where merchant not in ('Lazada', 'Starbucks', 'Grab') except select account_id, txn_type from transactions where hour(txn_time) between 12 and 15 order by account_id

@@ -1,0 +1,1 @@
+SELECT e.id, e.manager_id AS employee_manager_id, e.dept_id AS employee_dept_id, m.dept_id AS manager_dept_id, m.manager_id AS manager_manager_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.manager_id IS NULL

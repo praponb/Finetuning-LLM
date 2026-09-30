@@ -1,0 +1,1 @@
+SELECT carrier, CASE WHEN cost >= 105 THEN 'high' WHEN cost >= 39 THEN 'mid' ELSE 'low' END cost_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values FROM shipments GROUP BY CUBE(carrier, CASE WHEN cost >= 105 THEN 'high' WHEN cost >= 39 THEN 'mid' ELSE 'low' END) ORDER BY cost_bucket

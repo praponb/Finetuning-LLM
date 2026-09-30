@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, ARRAY_CONTAINS(coupon_codes, 'SPRING10') AS used_spring10, ARRAY_CONTAINS(MAP_KEYS(attributes), 'gift') AS has_gift, TRY_CAST(attributes['weight_kg'] AS DOUBLE) AS weight_kg, SIZE(attributes) AS num_attributes, ARRAY_MAX(TRANSFORM(items, item -> item.price)) AS max_item_price FROM carts;

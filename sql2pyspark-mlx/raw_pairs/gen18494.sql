@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 13371 THEN 'LARGE' ELSE 'SMALL' END AS sqft_tier, region, ROUND(AVG(sqft), 2) AS avg_sqft, COUNT(DISTINCT region) AS distinct_regions, SORT_ARRAY(COLLECT_SET(region)) AS region_list, AVG(sqft) FILTER (WHERE region = 'South') AS south_avg_sqft, APPROX_PERCENTILE(sqft, ARRAY(0.25, 0.5, 0.75)) AS sqft_quartiles FROM stores GROUP BY sqft_tier, region

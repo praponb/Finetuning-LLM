@@ -1,0 +1,1 @@
+select p.brand, max(i.quantity) max_quantity from inventory i inner join products p on i.product_id = p.id inner join stores s on i.store_id = s.id where s.store_name is null group by p.brand order by max_quantity desc;

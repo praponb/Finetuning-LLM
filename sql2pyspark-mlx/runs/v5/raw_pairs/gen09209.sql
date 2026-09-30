@@ -1,0 +1,1 @@
+with matched_keys as (select dept_id from employees intersect all select dept_id from employees where not is_remote), reconciled as (select s.* from employees s join matched_keys k on s.dept_id = k.dept_id) select full_name, job_title, salary, hire_date, is_remote from reconciled order by salary desc;

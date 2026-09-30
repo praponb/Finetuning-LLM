@@ -1,0 +1,1 @@
+select date_trunc('MONTH', shipped_date) shipped_month, max(cost) - min(cost) cost_range, avg(cost) avg_cost from shipments where delivered_date between '2023-07-01' and '2025-03-01' and delivered_date > '2023-10-01' group by shipped_month order by shipped_month asc, avg_cost desc limit 5;

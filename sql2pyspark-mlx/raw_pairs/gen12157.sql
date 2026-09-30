@@ -1,0 +1,1 @@
+with cleaned as (select *, cast(salary as int) as salary_int, cast(is_remote as int) as is_remote_flag from employees where hire_date > date '2023-08-10' and job_title is not null) select * from (select *, row_number() over (partition by level, dept_id order by hire_date desc nulls last, id asc) as rank_in_group from cleaned) t where rank_in_group = 1;

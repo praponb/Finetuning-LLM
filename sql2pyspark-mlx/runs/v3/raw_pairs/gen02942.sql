@@ -1,0 +1,1 @@
+select round((100 * sum(case when region = 'North' then 1 else 0 end)) / count(*), 1) as pct_north, sum(case when region = 'West' then 1 else 0 end) as west_count from stores where opened_date < '2025-01-01' order by 2 desc

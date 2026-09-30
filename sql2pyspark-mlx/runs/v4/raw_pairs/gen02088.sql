@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.status, accounts.balance, accounts.customer_id, customers.is_active, customers.segment, customers.signup_date FROM accounts LEFT OUTER JOIN customers ON customers.id = accounts.customer_id ORDER BY accounts.balance DESC;

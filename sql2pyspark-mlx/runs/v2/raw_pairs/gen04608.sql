@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN city = 'Bangkok' THEN rating ELSE 0 END) AS bangkok_rating FROM suppliers WHERE supplier_name IS NOT NULL GROUP BY CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END) AS t WHERE bangkok_rating > 21

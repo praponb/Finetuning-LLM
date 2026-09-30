@@ -1,0 +1,1 @@
+SELECT level, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE job_title = 'Analyst' GROUP BY level ORDER BY level DESC

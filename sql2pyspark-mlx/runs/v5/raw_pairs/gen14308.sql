@@ -1,0 +1,1 @@
+SELECT id, status, shipped_date, cost, carrier, SUM(cost) OVER (PARTITION BY status ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_cost, NTILE(3) OVER (PARTITION BY carrier ORDER BY shipped_date DESC, id) AS quartile FROM shipments ORDER BY cost

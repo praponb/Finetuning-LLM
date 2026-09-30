@@ -1,0 +1,1 @@
+select brand, launch_date, product_name, array_contains(tags, 'clearance') as is_clearance, day(launch_date) as launch_date_day from products where category = 'Books' and size(tags) >= 1 and stock_qty between 159 and 176;

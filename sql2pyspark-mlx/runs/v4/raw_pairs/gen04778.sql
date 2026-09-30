@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, order_id, product_id, unit_price, CASE WHEN quantity >= 8 THEN 'High' WHEN quantity >= 3 THEN 'Medium' ELSE 'Low' END AS quantity_band FROM order_items WHERE product_id IS NOT NULL) SELECT id FROM valid INTERSECT ALL SELECT id FROM order_items WHERE product_id = 1;

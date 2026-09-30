@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, items, ship_to, attributes, TRY_CAST(attributes['weight_kg'] AS DOUBLE) AS weight_kg, SIZE(FILTER(items, item -> item.qty >= 3)) AS bulk_lines, attributes['gift'] AS gift, ARRAY_MAX(TRANSFORM(items, item -> item.price)) AS max_item_price, ARRAY_CONTAINS(MAP_KEYS(attributes), 'weight_kg') AS has_weight_kg FROM carts

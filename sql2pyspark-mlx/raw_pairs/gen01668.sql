@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', start_date) AS start_month, status, MAX(start_date) AS last_start_date, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE MONTH(start_date) IN (5, 6, 8) GROUP BY DATE_TRUNC('MONTH', start_date), status) AS sub WHERE monthly_fee_range > 62 ORDER BY monthly_fee_range

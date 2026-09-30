@@ -1,0 +1,1 @@
+WITH RankedCustomers AS (SELECT id, segment, signup_date, age, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date DESC, id) AS row_num FROM customers) SELECT * FROM RankedCustomers WHERE row_num <= 2;

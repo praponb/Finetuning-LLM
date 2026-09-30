@@ -1,0 +1,1 @@
+select s.region, year(s.opened_date) as opened_year, max(i.last_restock) as latest_last_restock from inventory i full outer join stores s on i.store_id = s.id group by s.region, year(s.opened_date) order by s.region asc, opened_year asc limit 5

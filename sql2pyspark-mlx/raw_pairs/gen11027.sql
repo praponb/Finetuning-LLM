@@ -1,0 +1,7 @@
+select
+    id,
+    opened_date,
+    city,
+    store_name
+from stores
+where opened_date = (select min(opened_date) from stores)

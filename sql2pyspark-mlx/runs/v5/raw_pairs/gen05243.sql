@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.product_id, stores.opened_date, stores.region, products.product_name FROM store_sales INNER JOIN stores ON stores.id = store_sales.store_id LEFT JOIN products ON store_sales.product_id = products.id WHERE store_sales.product_id IN (2, 8);

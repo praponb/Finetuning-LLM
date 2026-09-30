@@ -1,0 +1,1 @@
+SELECT customers.city, customers.name, accounts.balance, accounts.customer_id FROM customers LEFT JOIN accounts ON accounts.customer_id = customers.id WHERE customers.segment IN ('Corporate', 'Consumer') ORDER BY accounts.balance

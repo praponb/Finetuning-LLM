@@ -1,0 +1,1 @@
+select customers.id, customers.email, count(accounts.id) as account_count, avg(accounts.balance) as avg_balance, count(case when accounts.status = 'FROZEN' then 1 end) as frozen_count from customers left join accounts on accounts.customer_id = customers.id group by customers.id, customers.email having frozen_count > 4

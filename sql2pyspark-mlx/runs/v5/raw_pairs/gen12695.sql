@@ -1,0 +1,1 @@
+SELECT emp.salary AS employee_salary, emp.manager_id AS employee_manager_id, mgr.dept_id AS manager_dept_id, mgr.salary AS manager_salary, COALESCE(mgr.full_name, 'Unknown') AS full_name_filled FROM employees emp INNER JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.manager_id = 18

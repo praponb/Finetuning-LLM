@@ -1,0 +1,1 @@
+SELECT id, country, supplier_name, CASE WHEN rating >= 3.7 THEN 'High' WHEN rating >= 2.0 THEN 'Medium' ELSE 'Low' END AS rating_band, CAST(rating AS INT) AS rating_int FROM suppliers ORDER BY rating_int DESC;

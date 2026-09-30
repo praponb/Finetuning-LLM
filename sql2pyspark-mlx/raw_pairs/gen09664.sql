@@ -1,0 +1,1 @@
+SELECT id, order_id, product_id, quantity, LAG(unit_price, 1) OVER (PARTITION BY order_id ORDER BY quantity, id) AS prev_unit_price, CORR(quantity, unit_price) OVER (PARTITION BY product_id, order_id) AS corr_quantity_unit_price FROM order_items WHERE order_id = 20;

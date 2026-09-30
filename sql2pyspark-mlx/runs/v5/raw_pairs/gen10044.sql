@@ -1,0 +1,1 @@
+SELECT id, shipped_date, delivered_date, LAST_DAY(shipped_date) AS shipped_date_month_end, LENGTH(carrier) AS carrier_length FROM shipments WHERE order_id IN (14, 19, 24, 29) AND status = 'IN_TRANSIT'

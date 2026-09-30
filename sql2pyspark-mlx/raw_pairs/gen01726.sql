@@ -1,0 +1,1 @@
+SELECT i.last_restock, p.brand, p.launch_date, s.supplier_name FROM inventory i INNER JOIN products p ON i.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE i.store_id IN (2, 3, 5, 6)

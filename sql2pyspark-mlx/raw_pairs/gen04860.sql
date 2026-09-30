@@ -1,0 +1,1 @@
+SELECT order_id, ROUND((100 * SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_delivered FROM shipments WHERE (order_id = 22 AND order_id = 32) OR order_id IN (6, 21, 22, 31) GROUP BY order_id HAVING ROUND((100 * SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 74

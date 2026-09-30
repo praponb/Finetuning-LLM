@@ -1,0 +1,1 @@
+select s.country, avg(p.cost) avg_cost, round(stddev(p.cost), 2) stddev_cost from products p inner join suppliers s on p.supplier_id = s.id where upper(p.product_name) like '%APT%' group by s.country having round(stddev(p.cost), 2) > 43 order by country

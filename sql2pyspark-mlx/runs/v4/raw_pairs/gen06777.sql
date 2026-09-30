@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.status IN ('PENDING', 'RETURNED') THEN 'group_a' ELSE 'other' END status_group, ROUND(STDDEV(p.amount), 2) stddev_amount, SUM(CASE WHEN p.status = 'REFUNDED' THEN 1 ELSE 0 END) refunded_count FROM payments p LEFT JOIN orders o ON p.order_id = o.id GROUP BY CASE WHEN o.status IN ('PENDING', 'RETURNED') THEN 'group_a' ELSE 'other' END

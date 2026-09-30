@@ -1,0 +1,1 @@
+WITH RecentTransactions AS (SELECT * FROM transactions WHERE txn_type = 'DEBIT'), transactions_stats AS (SELECT is_flagged, AVG(amount) AS avg_amount, MAX(amount) AS max_amount FROM RecentTransactions GROUP BY is_flagged) SELECT is_flagged, max_amount FROM transactions_stats WHERE max_amount >= 2100 ORDER BY max_amount DESC;

@@ -1,0 +1,1 @@
+WITH RecentProducts AS (SELECT * FROM products WHERE category = 'Grocery' AND category IN ('Electronics', 'Books') AND stock_qty >= 138), agg AS (SELECT brand, MAX(launch_date) AS latest_launch_date FROM RecentProducts GROUP BY brand) SELECT * FROM agg ORDER BY brand, latest_launch_date

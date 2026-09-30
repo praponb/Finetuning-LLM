@@ -1,0 +1,1 @@
+SELECT id, country, city, rating, supplier_name, FIRST_VALUE(supplier_name) OVER (PARTITION BY country, city ORDER BY rating DESC, id) AS first_supplier_name FROM suppliers WHERE city = 'New York' ORDER BY id

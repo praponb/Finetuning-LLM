@@ -1,0 +1,1 @@
+with src as (select * from transactions where not is_flagged and (not is_flagged or account_id in (21, 25, 31, 36))), agg as (select merchant, count(distinct amount) as unique_accounts, count(*) as cnt from src group by merchant) select merchant, cnt from agg where cnt >= 6 order by merchant, cnt desc;

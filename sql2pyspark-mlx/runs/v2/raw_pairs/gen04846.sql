@@ -1,0 +1,1 @@
+select id, sqft, opened_date, region, last_value(opened_date) over (order by sqft desc, id rows between unbounded preceding and unbounded following) as last_opened_date, sum(sqft) over (partition by region order by opened_date, id rows between unbounded preceding and current row) as running_sqft from stores

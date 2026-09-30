@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, COUNT(CASE WHEN job_title = 'Manager' THEN 1 END) AS manager_count, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees GROUP BY hire_month;

@@ -1,0 +1,1 @@
+SELECT store_id, SUM(quantity) AS total_quantity, COUNT(*) AS cnt, ROUND(SUM(quantity) * 100.0 / SUM(SUM(quantity)) OVER (), 2) AS pct_of_total FROM inventory WHERE product_id IN (4, 5, 10) GROUP BY store_id ORDER BY pct_of_total DESC, 1 DESC

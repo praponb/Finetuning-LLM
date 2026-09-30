@@ -1,0 +1,1 @@
+select case when year(signup_date) < 2024 then 'before_2024' when year(signup_date) = 2024 then '2024' else 'after_2024' end as signup_cohort, year(signup_date) as signup_year, round(avg(age), 2) as avg_age, avg(credit_limit) as avg_credit_limit from customers where name is not null group by signup_cohort, signup_year

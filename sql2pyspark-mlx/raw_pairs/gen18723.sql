@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, MAX(amount) AS max_amount FROM transactions GROUP BY account_id) SELECT a.id, a.balance, a.account_type, tba.max_amount FROM accounts a LEFT OUTER JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY a.balance DESC, id DESC;

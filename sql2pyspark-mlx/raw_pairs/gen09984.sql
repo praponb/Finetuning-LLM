@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, MAX(signup_date) AS latest_signup_date, SUM(credit_limit) AS total_credit_limit FROM customers GROUP BY 1 ORDER BY signup_month, latest_signup_date DESC;

@@ -1,0 +1,1 @@
+SELECT s.id, s.started_at, t.duration_sec_count FROM sessions s INNER JOIN (SELECT session_id, COUNT(duration_sec) AS duration_sec_count FROM web_events WHERE event_type = 'click' GROUP BY session_id) t ON s.id = t.session_id

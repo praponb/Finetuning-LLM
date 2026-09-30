@@ -1,0 +1,1 @@
+SELECT id, latency_ms, status_code, context['version'] AS version, COALESCE(context['region'], 'direct') AS region_or_default, SIZE(context) AS num_context, COALESCE(context['trace'], 'unknown') AS trace_or_default FROM app_logs;

@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, LAST_DAY(sale_date) sale_date_month_end FROM store_sales WHERE product_id IN (2, 4, 8)), Agg AS (SELECT product_id, SUM(revenue) total_revenue FROM src GROUP BY product_id) SELECT product_id, total_revenue FROM Agg WHERE total_revenue >= 19000 ORDER BY total_revenue DESC

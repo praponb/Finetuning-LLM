@@ -1,0 +1,1 @@
+select channel, total_count, unique_customers from (select channel, count(*) total_count, count(distinct amount) unique_customers from orders group by channel) s where total_count >= 10 order by 2 desc

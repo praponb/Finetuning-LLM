@@ -1,0 +1,1 @@
+SELECT *, CORR(unit_price, quantity) OVER (PARTITION BY order_id) AS corr_unit_price_quantity, NTILE(3) OVER (PARTITION BY product_id, order_id ORDER BY unit_price DESC, id) AS unit_price_bucket, ROUND(unit_price / SUM(unit_price) OVER (PARTITION BY order_id, product_id), 4) AS unit_price_share FROM order_items

@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY launch_date NULLS LAST, id) AS rank_in_group FROM products QUALIFY rank_in_group = 1) SELECT id, product_name, category, cost, stock_qty, tags, supplier_id FROM ranked ORDER BY category DESC

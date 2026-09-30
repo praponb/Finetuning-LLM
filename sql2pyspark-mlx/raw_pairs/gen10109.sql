@@ -1,0 +1,1 @@
+with transactions_by_account as (select account_id, max(amount) as max_amount from transactions group by account_id) select a.status, a.customer_id, tba.max_amount from accounts a left join transactions_by_account tba on a.id = tba.account_id

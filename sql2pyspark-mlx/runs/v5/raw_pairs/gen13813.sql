@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY product_id) SELECT p.supplier_id, ps.last_last_restock FROM products p LEFT OUTER JOIN product_summary ps ON p.id = ps.product_id ORDER BY p.supplier_id DESC;

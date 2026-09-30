@@ -1,0 +1,1 @@
+WITH CustomerTotals AS (SELECT customer_id, MIN(started_at) AS first_started_at FROM sessions GROUP BY customer_id) SELECT customers.id, customers.signup_date, CustomerTotals.first_started_at FROM customers INNER JOIN CustomerTotals ON customers.id = CustomerTotals.customer_id ORDER BY customers.signup_date ASC, id ASC LIMIT 3;

@@ -1,0 +1,1 @@
+SELECT s.start_date, s.end_date, s.customer_id, c.is_active, c.age, c.country FROM subscriptions s FULL OUTER JOIN customers c ON s.customer_id = c.id WHERE s.end_date BETWEEN '2023-10-01' AND '2024-06-01' ORDER BY customer_id DESC;

@@ -1,0 +1,1 @@
+SELECT COUNT(CASE WHEN status = 'EXPIRED' THEN 1 END) AS expired_count, SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END) AS enterprise_count, COUNT(DISTINCT monthly_fee) AS unique_plans FROM subscriptions WHERE monthly_fee BETWEEN 120 AND 210

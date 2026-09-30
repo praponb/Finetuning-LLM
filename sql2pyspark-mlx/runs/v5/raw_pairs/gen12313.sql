@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, tier_value FROM price_tiers LATERAL VIEW OUTER EXPLODE(discounts) t AS tier_value) SELECT id, plan, effective_from, tier_value FROM lines ORDER BY effective_from DESC NULLS FIRST, tier_value DESC;

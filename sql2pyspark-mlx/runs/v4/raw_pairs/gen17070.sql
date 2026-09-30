@@ -1,0 +1,1 @@
+WITH Src AS (SELECT *, LOWER(status) AS status_lower FROM payments WHERE amount <= 1380), payments_stats AS (SELECT method, SUM(CASE WHEN status = 'SUCCESS' THEN amount ELSE 0 END) AS success_amount FROM Src GROUP BY method) SELECT * FROM payments_stats ORDER BY success_amount

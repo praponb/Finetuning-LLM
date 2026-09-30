@@ -1,0 +1,1 @@
+SELECT YEAR(start_date) AS start_year, MIN(start_date) AS min_start_date, MAX(start_date) AS latest_start_date FROM subscriptions WHERE NOT (plan IN ('enterprise', 'basic') AND end_date BETWEEN '2023-10-16' AND '2025-10-01' AND start_date > '2023-08-01') GROUP BY YEAR(start_date);

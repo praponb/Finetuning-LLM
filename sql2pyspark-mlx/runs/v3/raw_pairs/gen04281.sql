@@ -1,0 +1,1 @@
+select status, plan, customer_id, count(monthly_fee) monthly_fee_count, concat_ws(', ', sort_array(collect_set(status))) status_values from subscriptions group by status, plan, customer_id order by customer_id desc, status, plan limit 5;

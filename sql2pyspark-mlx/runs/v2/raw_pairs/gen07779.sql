@@ -1,0 +1,1 @@
+with order_totals as (select order_id, round(stddev(cost), 2) as stddev_cost, max(cost) - min(cost) as cost_range from shipments group by order_id) select o.id, o.channel, ot.stddev_cost, ot.cost_range from orders o inner join order_totals ot on o.id = ot.order_id;

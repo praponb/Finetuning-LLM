@@ -1,0 +1,1 @@
+SELECT id, quantity, unit_price, unit_price - quantity AS line_total, COALESCE(unit_price, 0) AS unit_price_filled FROM order_items WHERE (product_id = 40 AND quantity BETWEEN 4 AND 7) OR unit_price BETWEEN 120 AND 240;

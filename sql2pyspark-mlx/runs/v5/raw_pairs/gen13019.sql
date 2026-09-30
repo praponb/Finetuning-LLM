@@ -1,0 +1,1 @@
+SELECT QUARTER(signup_date) AS signup_quarter, MIN(signup_date) AS min_signup_date, MAX(age) - MIN(age) AS age_range FROM customers GROUP BY QUARTER(signup_date) HAVING age_range < 21 ORDER BY signup_quarter DESC

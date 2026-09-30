@@ -1,0 +1,1 @@
+SELECT signup_month, bangkok_count FROM (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END) AS bangkok_count FROM customers WHERE city = 'Berlin' GROUP BY DATE_TRUNC('MONTH', signup_date)) AS agg WHERE bangkok_count < 63;

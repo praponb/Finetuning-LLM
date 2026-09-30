@@ -1,0 +1,1 @@
+SELECT product_id, DATE_TRUNC('MONTH', last_restock) AS last_restock_month, COUNT(DISTINCT quantity) AS unique_stores FROM inventory WHERE quantity BETWEEN 62 AND 90 AND (product_id = 2 OR MONTH(last_restock) IN (1, 3, 8)) GROUP BY product_id, DATE_TRUNC('MONTH', last_restock) HAVING SUM(quantity) > 680;

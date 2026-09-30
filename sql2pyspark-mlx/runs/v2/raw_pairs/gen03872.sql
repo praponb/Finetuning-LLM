@@ -1,0 +1,1 @@
+SELECT country, CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END AS rating_bucket, MIN(rating) AS min_rating FROM suppliers WHERE city != 'Berlin' GROUP BY country, CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END ORDER BY country

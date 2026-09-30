@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.last_restock, s.store_name, s.sqft, LAST_DAY(i.last_restock) AS last_restock_month_end FROM inventory i INNER JOIN stores s ON i.store_id = s.id WHERE i.product_id IN (3, 8) ORDER BY i.last_restock ASC, id ASC LIMIT 1

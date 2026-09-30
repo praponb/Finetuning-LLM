@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, price + stock_qty AS price_plus_stock_qty FROM products WHERE launch_date >= TO_DATE('2023-05-14') AND supplier_id IS NOT NULL) SELECT a.id, a.product_name, a.category, a.brand, a.price, a.cost, a.stock_qty, a.supplier_id, b.supplier_name FROM base a LEFT JOIN suppliers b ON a.supplier_id = b.id

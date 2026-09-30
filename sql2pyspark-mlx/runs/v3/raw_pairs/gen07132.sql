@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 4000 THEN 'high' WHEN amount >= 1400 THEN 'mid' ELSE 'low' END AS amount_bucket, txn_type, MAX(amount) - MIN(amount) AS amount_range, MIN(amount) AS min_amount FROM transactions WHERE txn_type <> 'DEBIT' GROUP BY CASE WHEN amount >= 4000 THEN 'high' WHEN amount >= 1400 THEN 'mid' ELSE 'low' END, txn_type ORDER BY amount_range DESC;

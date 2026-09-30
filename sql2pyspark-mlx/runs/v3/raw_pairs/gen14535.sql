@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, SUM(discount) AS total_discount FROM orders WHERE discount < 0.33 GROUP BY customer_id) SELECT c.id, c.credit_limit, c.is_active, cs.total_discount FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id

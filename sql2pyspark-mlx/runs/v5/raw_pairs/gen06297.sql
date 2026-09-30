@@ -1,0 +1,1 @@
+select a.status, round((100 * sum(case when t.merchant = 'Amazon' then 1 else 0 end)) / count(*), 1) as pct_amazon from transactions t inner join accounts a on a.id = t.account_id group by a.status having round((100 * sum(case when t.merchant = 'Amazon' then 1 else 0 end)) / count(*), 1) > 67

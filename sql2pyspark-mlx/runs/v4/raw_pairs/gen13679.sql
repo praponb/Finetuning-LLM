@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, AVG(revenue) AS avg_revenue, MAX(units) - MIN(units) AS units_range FROM store_sales WHERE store_id IN (1, 2, 4, 5) AND (sale_date <= '2025-08-01' OR units BETWEEN 11 AND 13) GROUP BY 1 ORDER BY sale_cohort;

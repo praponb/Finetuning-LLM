@@ -1,0 +1,1 @@
+SELECT city, region, avg_sqft, north_count FROM (SELECT city, region, ROUND(AVG(sqft), 2) AS avg_sqft, COUNT(CASE WHEN region = 'North' THEN 1 END) AS north_count FROM stores WHERE LENGTH(store_name) >= 14 GROUP BY city, region) AS sub WHERE north_count > 6

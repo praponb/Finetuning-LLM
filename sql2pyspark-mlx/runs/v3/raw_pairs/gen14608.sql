@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, dept_name, budget, DENSE_RANK() OVER (PARTITION BY dept_name ORDER BY budget) rnk FROM departments) SELECT id, dept_name, budget FROM numbered WHERE rnk <= 1 ORDER BY dept_name DESC

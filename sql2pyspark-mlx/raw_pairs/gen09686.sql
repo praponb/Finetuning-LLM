@@ -1,0 +1,1 @@
+SELECT s.country, COUNT(p.id) AS product_count FROM suppliers s LEFT OUTER JOIN products p ON p.supplier_id = s.id GROUP BY s.country HAVING COUNT(p.id) > 3 ORDER BY country, product_count DESC LIMIT 5;

@@ -1,0 +1,1 @@
+SELECT p.method, o.order_date, s.region, s.store_name, TO_DATE(p.paid_at) AS paid_at_date FROM payments p FULL OUTER JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE o.order_date <= '2024-10-01' ORDER BY paid_at_date;

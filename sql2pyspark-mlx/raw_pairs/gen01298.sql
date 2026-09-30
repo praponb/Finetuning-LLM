@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM subscriptions WHERE start_date < '2023-06-01' AND YEAR(start_date) = 2025), status_summary AS (SELECT status, ROUND((100 * SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_enterprise FROM base GROUP BY status) SELECT status, pct_enterprise FROM status_summary ORDER BY status, pct_enterprise DESC

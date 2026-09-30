@@ -1,0 +1,1 @@
+SELECT c.is_active, SUM(o.amount) AS total_amount, COUNT(DISTINCT o.shipping_fee) AS unique_customers FROM orders o JOIN stores s ON s.id = o.store_id RIGHT JOIN customers c ON o.customer_id = c.id GROUP BY c.is_active;

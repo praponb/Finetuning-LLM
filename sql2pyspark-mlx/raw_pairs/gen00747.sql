@@ -1,0 +1,1 @@
+SELECT accounts.id, COUNT(transactions.id) AS transaction_count, SUM(transactions.amount) AS total_amount FROM accounts INNER JOIN transactions ON transactions.account_id = accounts.id WHERE transactions.merchant IN ('Lazada', 'Amazon', 'Shell') GROUP BY accounts.id ORDER BY transaction_count DESC

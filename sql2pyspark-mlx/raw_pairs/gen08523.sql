@@ -1,0 +1,1 @@
+SELECT id, brand, cost, stock_qty, launch_date, supplier_id, SUM(stock_qty) OVER (PARTITION BY brand ORDER BY launch_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) cumulative_stock_qty, CORR(price, cost) OVER w_hist corr_price_cost FROM products WINDOW w_hist AS (PARTITION BY category, supplier_id);

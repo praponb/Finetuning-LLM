@@ -1,0 +1,1 @@
+SELECT region, SUM(CASE WHEN city = 'Tokyo' THEN sqft ELSE 0 END) tokyo_sqft, ROUND(AVG(sqft), 2) avg_sqft FROM stores WHERE (region IN ('East', 'North') AND sqft <= 5946) OR sqft BETWEEN 7682 AND 12694 GROUP BY region ORDER BY region DESC LIMIT 10;

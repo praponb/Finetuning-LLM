@@ -1,0 +1,1 @@
+SELECT s.region, ROUND(AVG(i.quantity), 2) AS avg_quantity, SUM(i.quantity) AS total_quantity FROM inventory i JOIN stores s ON i.store_id = s.id JOIN products p ON i.product_id = p.id WHERE p.cost > 550 GROUP BY s.region ORDER BY avg_quantity DESC;

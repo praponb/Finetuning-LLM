@@ -1,0 +1,1 @@
+select id, customer_id, round(shipping_fee * 1.15, 2) as adjusted_shipping_fee, date_format(order_date, 'MMM yyyy') as order_date_label from orders where shipping_fee >= 17 and channel = 'partner' and shipping_fee < 30 order by customer_id, id limit 3

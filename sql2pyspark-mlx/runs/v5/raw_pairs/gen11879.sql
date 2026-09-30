@@ -1,0 +1,1 @@
+SELECT DISTINCT account_type FROM accounts WHERE balance BETWEEN 51000 AND 77000;

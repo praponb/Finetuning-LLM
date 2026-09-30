@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, ss.product_id, p.brand, p.product_name, s.city, s.rating FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON s.id = p.supplier_id WHERE ss.revenue BETWEEN 1300 AND 1400 ORDER BY ss.product_id DESC

@@ -1,0 +1,1 @@
+SELECT c.segment, c.is_active, c.email, s.status, s.customer_id, s.plan, c.age * c.credit_limit AS age_times_credit_limit FROM customers c LEFT JOIN subscriptions s ON c.id = s.customer_id WHERE c.city IN ('London', 'New York') ORDER BY customer_id;

@@ -1,0 +1,1 @@
+SELECT id, country, credit_limit, signup_date, ROW_NUMBER() OVER (PARTITION BY country ORDER BY credit_limit, id) AS credit_limit_row, SUM(credit_limit) OVER (PARTITION BY country ORDER BY signup_date, id) AS running_credit_limit FROM customers WHERE credit_limit BETWEEN 11900 AND 13600;

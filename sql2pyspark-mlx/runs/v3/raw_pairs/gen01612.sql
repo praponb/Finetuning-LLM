@@ -1,0 +1,1 @@
+SELECT method, MAX(amount) AS max_amount, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments WHERE status <> 'SUCCESS' GROUP BY method HAVING COUNT(CASE WHEN method = 'promptpay' THEN 1 END) >= 4

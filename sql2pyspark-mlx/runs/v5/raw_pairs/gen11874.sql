@@ -1,0 +1,1 @@
+SELECT s.city, s.country, p.launch_date, p.stock_qty, p.category FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE p.brand NOT IN ('Stark', 'Acme', 'Umbrella') OR s.supplier_name LIKE '%Siam%';

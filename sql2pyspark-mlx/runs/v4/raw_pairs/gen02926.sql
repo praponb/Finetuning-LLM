@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, MAX(sale_date) AS last_sale_date FROM store_sales GROUP BY store_id) SELECT s.id, s.opened_date, s.sqft, ss.last_sale_date FROM stores s JOIN store_summary ss ON s.id = ss.store_id ORDER BY s.sqft DESC, id LIMIT 20;

@@ -1,0 +1,1 @@
+WITH valid_products AS (SELECT *, MONTH(launch_date) launch_date_month FROM products WHERE cost BETWEEN 340 AND 400), products_stats AS (SELECT category, AVG(stock_qty) avg_stock_qty FROM valid_products GROUP BY category) SELECT category, avg_stock_qty FROM products_stats ORDER BY avg_stock_qty;

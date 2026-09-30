@@ -1,0 +1,1 @@
+select job_title, level, salary_range from (select job_title, level, max(salary) - min(salary) as salary_range from employees where manager_id = 38 group by job_title, level) as x where salary_range >= 70 order by level desc, job_title

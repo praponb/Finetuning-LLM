@@ -1,0 +1,1 @@
+SELECT status, SUM(CASE WHEN status = 'FAILED' THEN amount ELSE 0 END) AS failed_amount, AVG(amount) AS avg_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values FROM payments WHERE order_id = 7 GROUP BY status HAVING avg_amount < 990 ORDER BY method_values DESC

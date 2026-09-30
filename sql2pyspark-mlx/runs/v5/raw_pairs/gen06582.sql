@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATE_SUB(starts_on, 68) AS starts_on_minus_68d, LENGTH(channel) AS channel_length, COALESCE(channel, 'UNKNOWN') AS resolved_channel FROM promotions WHERE channel IS NOT NULL) SELECT id FROM filtered EXCEPT SELECT id FROM promotions WHERE channel <> 'store';

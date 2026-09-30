@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, ROUND(AVG(amount), 2) AS avg_amount, SUM(amount) AS total_amount FROM transactions GROUP BY account_id) SELECT a.id, a.balance, a.account_type, as.avg_amount, as.total_amount FROM accounts a LEFT OUTER JOIN account_summary as ON a.id = as.account_id WHERE as.avg_amount >= 23 ORDER BY a.account_type DESC;

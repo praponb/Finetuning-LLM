@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, TRIM(location) AS clean_location, COALESCE(location, 'N/A') AS location_clean FROM departments WHERE location IS DISTINCT FROM 'Berlin') SELECT *, AVG(budget) OVER (PARTITION BY location ORDER BY budget, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS budget_avg_6, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget, id) AS row_seq FROM base

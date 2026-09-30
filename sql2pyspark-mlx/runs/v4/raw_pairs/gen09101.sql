@@ -1,0 +1,1 @@
+with store_stats as (select store_id, max(units) - min(units) as units_range from store_sales group by store_id) select s.sqft, s.store_name, ss.units_range from stores s inner join store_stats ss on s.id = ss.store_id;

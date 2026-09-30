@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM customers WHERE age = 61), customers_stats AS (SELECT QUARTER(signup_date) AS signup_quarter, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit, COUNT(age) AS age_count FROM src GROUP BY QUARTER(signup_date)) SELECT signup_quarter, stddev_credit_limit, age_count FROM customers_stats;

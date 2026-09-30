@@ -1,0 +1,1 @@
+with cleaned as (select id, store_id, product_id, quantity, last_restock, coalesce(quantity, 0) as quantity_filled from inventory where product_id in (2, 3, 9)) select * from cleaned qualify row_number() over (partition by product_id, store_id order by quantity desc nulls last, id) = 1

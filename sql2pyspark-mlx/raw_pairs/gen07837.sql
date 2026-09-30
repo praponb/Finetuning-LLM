@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, effective_from, currency, element FROM price_tiers LATERAL VIEW OUTER EXPLODE(discounts) t AS element) SELECT id, effective_from, element FROM flattened ORDER BY effective_from DESC NULLS FIRST;

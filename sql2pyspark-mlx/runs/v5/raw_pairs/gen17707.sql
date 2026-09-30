@@ -1,0 +1,1 @@
+WITH lines AS (SELECT src.id, src.created_at, src.coupon_codes, pos, line.product_id, line.qty, line.price, line.promo FROM carts src LATERAL VIEW POSEXPLODE(src.items) li AS pos, line) SELECT id, pos, ROW_NUMBER() OVER (PARTITION BY promo ORDER BY price, id, pos) AS event_seq, ROW_NUMBER() OVER (PARTITION BY promo ORDER BY qty DESC, id, pos) AS row_seq FROM lines;

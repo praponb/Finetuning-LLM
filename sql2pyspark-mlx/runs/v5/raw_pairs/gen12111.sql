@@ -1,0 +1,1 @@
+select month(launch_date) as launch_month, max(cost) - min(cost) as cost_range, sum(case when brand = 'Globex' then 1 else 0 end) as globex_count from products group by launch_month having max(cost) - min(cost) >= 58 order by globex_count desc;

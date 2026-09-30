@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.monthly_fee FROM subscriptions WHERE subscriptions.monthly_fee <= 220 AND subscriptions.customer_id NOT IN (SELECT id FROM customers WHERE LOWER(TRIM(email)) = 'henry@startup.io')

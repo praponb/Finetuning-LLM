@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', start_date) AS start_month, customer_id, MIN(start_date) AS first_start_date, AVG(monthly_fee) AS avg_monthly_fee FROM subscriptions WHERE plan = 'basic' GROUP BY DATE_TRUNC('MONTH', start_date), customer_id HAVING AVG(monthly_fee) < 90 ORDER BY avg_monthly_fee

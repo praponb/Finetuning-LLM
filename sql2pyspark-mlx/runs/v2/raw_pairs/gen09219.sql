@@ -1,0 +1,1 @@
+SELECT a.status, DATE_TRUNC('MONTH', a.opened_date) AS opened_month, COUNT(*) AS num_transactions, ROUND(STDDEV(t.amount), 2) AS stddev_amount FROM transactions t JOIN accounts a ON a.id = t.account_id JOIN customers c ON c.id = a.customer_id GROUP BY a.status, DATE_TRUNC('MONTH', a.opened_date) ORDER BY num_transactions DESC, status, opened_month LIMIT 10

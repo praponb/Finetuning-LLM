@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, MAX(amount) - MIN(amount) AS amount_range FROM payments WHERE status IN ('FAILED', 'SUCCESS', 'REFUNDED') GROUP BY order_id) SELECT orders.customer_id, orders.discount, order_stats.amount_range FROM orders INNER JOIN order_stats ON orders.id = order_stats.order_id WHERE order_stats.amount_range >= 49 ORDER BY customer_id DESC;

@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT id, customer_id, end_date, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY end_date DESC, id) AS row_num FROM subscriptions WHERE YEAR(start_date) >= 2023) SELECT * FROM Ranked WHERE row_num <= 1 ORDER BY customer_id DESC, id;

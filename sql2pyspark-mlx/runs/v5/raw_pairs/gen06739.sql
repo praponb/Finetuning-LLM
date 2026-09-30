@@ -1,0 +1,1 @@
+select order_items.id, order_items.quantity, order_items.product_id, products.category, products.price, orders.customer_id, case when products.price >= 980 then 'High' when products.price >= 410 then 'Medium' else 'Low' end as price_level from order_items inner join products on products.id = order_items.product_id left join orders on order_items.order_id = orders.id

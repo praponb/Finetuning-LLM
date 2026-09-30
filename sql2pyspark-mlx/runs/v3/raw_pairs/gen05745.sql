@@ -1,0 +1,1 @@
+SELECT suppliers.city, MIN(products.stock_qty) AS min_stock_qty FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY suppliers.city HAVING MIN(products.stock_qty) >= 390 ORDER BY min_stock_qty;

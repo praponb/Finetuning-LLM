@@ -1,0 +1,1 @@
+with transactions_by_account as (select account_id, max(amount) as max_amount from transactions group by account_id) select a.id, a.status, a.opened_date, tba.max_amount from accounts a left outer join transactions_by_account tba on a.id = tba.account_id where tba.max_amount >= 1400 order by status desc, id desc

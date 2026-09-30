@@ -1,0 +1,1 @@
+SELECT txn_type, MONTH(txn_time) AS txn_month, SUM(CASE WHEN merchant = '7-Eleven' THEN amount ELSE 0 END) AS 7_eleven_amount, MAX(amount) - MIN(amount) AS amount_range, SUM(amount) AS total_amount FROM transactions WHERE txn_time >= '2024-07-20' AND merchant IN ('Starbucks', 'Shell') AND account_id IN (1, 8, 29, 39) GROUP BY txn_type, MONTH(txn_time) HAVING total_amount > 14000;

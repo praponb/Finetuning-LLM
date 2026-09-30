@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT d.browser, a.page, COUNT(*) AS rows_total, AVG(a.duration_sec) AS avg_duration_sec, GROUPING_ID() AS grouping_level FROM web_events a INNER JOIN sessions d ON a.session_id = d.id GROUP BY GROUPING SETS ((d.browser, a.page), (d.browser), ())) SELECT browser, page, rows_total, grouping_level FROM by_dimension ORDER BY rows_total DESC NULLS LAST

@@ -1,0 +1,1 @@
+WITH recent_order_items AS (SELECT * FROM order_items WHERE order_id = 1 OR product_id IS NULL), order_id_summary AS (SELECT order_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(unit_price) AS unit_price_count FROM recent_order_items GROUP BY order_id) SELECT * FROM order_id_summary WHERE unit_price_count < 7 ORDER BY unit_price_count DESC;

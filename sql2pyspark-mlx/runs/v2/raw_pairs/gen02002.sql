@@ -1,0 +1,1 @@
+SELECT launch_quarter, avg_price FROM (SELECT QUARTER(launch_date) AS launch_quarter, AVG(price) AS avg_price FROM products GROUP BY QUARTER(launch_date)) AS agg WHERE avg_price < 790 ORDER BY avg_price, launch_quarter LIMIT 5

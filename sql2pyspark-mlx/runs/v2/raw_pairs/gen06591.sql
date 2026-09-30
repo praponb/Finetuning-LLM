@@ -1,0 +1,1 @@
+SELECT e.email AS employee_email, m.is_remote AS manager_is_remote, LAST_DAY(m.hire_date) AS hire_date_month_end FROM employees e JOIN employees m ON e.manager_id = m.id WHERE m.is_remote ORDER BY e.email

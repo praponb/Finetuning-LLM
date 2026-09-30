@@ -1,0 +1,1 @@
+SELECT c.city, a.channel, COUNT(*) AS rows_total, AVG(a.discount) AS avg_discount, MAX(a.amount) AS max_amount FROM orders a INNER JOIN customers c ON a.customer_id = c.id GROUP BY GROUPING SETS ((c.city, a.channel), (c.city), ());

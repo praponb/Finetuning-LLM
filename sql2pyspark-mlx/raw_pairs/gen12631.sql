@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, FLOOR(cost) AS cost_whole, COALESCE(carrier, 'DIRECT') AS carrier_filled FROM shipments WHERE delivered_date <= '2023-05-01') SELECT id, cost FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY cost DESC NULLS LAST, id ASC) AS rn FROM filtered) t WHERE rn = 1;

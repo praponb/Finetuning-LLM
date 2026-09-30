@@ -1,0 +1,1 @@
+SELECT is_active, COUNT(credit_limit) AS credit_limit_count, ROUND((100 * SUM(CASE WHEN country = 'UK' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_uk, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit FROM customers GROUP BY is_active ORDER BY pct_uk DESC, is_active LIMIT 50

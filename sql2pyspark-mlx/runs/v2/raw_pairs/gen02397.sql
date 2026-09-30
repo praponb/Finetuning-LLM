@@ -1,0 +1,1 @@
+SELECT product_id, MONTH(sale_date) sale_month, CASE WHEN units >= 42 THEN 'high' WHEN units >= 10 THEN 'mid' ELSE 'low' END units_bucket, MAX(units) - MIN(units) units_range FROM store_sales GROUP BY product_id, sale_month, units_bucket ORDER BY sale_month DESC

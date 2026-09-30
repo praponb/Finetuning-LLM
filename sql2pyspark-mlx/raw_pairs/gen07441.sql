@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, COUNT(*) AS cnt FROM order_items GROUP BY order_id) SELECT o.amount, os.cnt FROM orders o LEFT OUTER JOIN order_summary os ON o.id = os.order_id WHERE os.cnt > 9 ORDER BY cnt

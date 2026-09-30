@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT p.brand, COUNT(*) AS num_rows, AVG(e.unit_price) AS avg_unit_price, MIN(e.quantity) AS min_quantity, GROUPING_ID() AS gid FROM order_items e LEFT JOIN products p ON e.product_id = p.id GROUP BY ROLLUP (p.brand)) SELECT num_rows, min_quantity, gid FROM by_dimension ORDER BY num_rows ASC NULLS LAST, min_quantity ASC

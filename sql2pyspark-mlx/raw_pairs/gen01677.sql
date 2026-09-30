@@ -1,0 +1,1 @@
+select quarter(last_restock) as last_restock_quarter, case when quantity >= 260 then 'high' when quantity >= 78 then 'mid' else 'low' end as quantity_bucket, min(quantity) as min_quantity, max(quantity) as max_quantity from inventory group by quarter(last_restock), case when quantity >= 260 then 'high' when quantity >= 78 then 'mid' else 'low' end order by max_quantity desc

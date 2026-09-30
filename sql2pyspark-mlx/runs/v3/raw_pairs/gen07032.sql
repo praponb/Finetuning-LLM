@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1270 THEN 'high' WHEN amount >= 670 THEN 'mid' ELSE 'low' END AS amount_bucket, MAX(amount) AS max_amount FROM payments WHERE order_id = 27 GROUP BY 1 ORDER BY amount_bucket;

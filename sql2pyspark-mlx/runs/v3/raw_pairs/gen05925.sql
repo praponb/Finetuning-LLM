@@ -1,0 +1,1 @@
+select customers.is_active, orders.order_date, orders.status, orders.discount from customers inner join orders on orders.customer_id = customers.id where orders.order_date between '2024-05-14' and '2025-03-01' order by orders.discount desc;

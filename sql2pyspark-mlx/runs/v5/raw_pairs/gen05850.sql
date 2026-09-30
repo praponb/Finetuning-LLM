@@ -1,0 +1,1 @@
+with top_accounts as (select id, status, balance, customer_id, row_number() over (partition by status order by balance desc, id) as row_num from accounts where customer_id is not null) select * from top_accounts where row_num <= 3

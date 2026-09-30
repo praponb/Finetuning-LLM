@@ -1,0 +1,1 @@
+SELECT city, SORT_ARRAY(COLLECT_SET(city)) AS city_list, MAX(opened_date) AS latest_opened_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM stores GROUP BY city HAVING SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END) >= 73 ORDER BY 4, city DESC LIMIT 10

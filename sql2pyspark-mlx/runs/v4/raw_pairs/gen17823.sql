@@ -1,0 +1,1 @@
+SELECT region, CASE WHEN sqft >= 12700 THEN 'high' WHEN sqft >= 3525 THEN 'mid' ELSE 'low' END AS sqft_bucket, ROUND(AVG(sqft), 2) AS avg_sqft, MAX(opened_date) AS latest_opened_date, COUNT(sqft) AS sqft_count FROM stores WHERE store_name LIKE '%Rivers%' AND region <> 'North' AND sqft IS NOT NULL GROUP BY region, sqft_bucket;

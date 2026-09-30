@@ -1,0 +1,1 @@
+select case when status in ('DELIVERED', 'LOST') then 'group_a' else 'other' end as status_group, concat_ws(', ', sort_array(collect_set(carrier))) as carrier_values from shipments group by case when status in ('DELIVERED', 'LOST') then 'group_a' else 'other' end

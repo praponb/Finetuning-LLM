@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions WHERE end_date <= '2023-12-01' GROUP BY customer_id) SELECT c.id, c.email, cs.monthly_fee_count FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY monthly_fee_count DESC

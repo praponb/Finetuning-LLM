@@ -1,0 +1,1 @@
+select case when s.region in ('South', 'North') then 'priority' else 'other' end as region_group, round(stddev(i.quantity), 2) as stddev_quantity from inventory i join stores s on i.store_id = s.id left outer join products p on i.product_id = p.id group by case when s.region in ('South', 'North') then 'priority' else 'other' end order by region_group desc, stddev_quantity asc;

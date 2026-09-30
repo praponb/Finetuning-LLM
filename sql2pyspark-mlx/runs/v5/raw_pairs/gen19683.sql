@@ -1,0 +1,1 @@
+SELECT o.status, ROUND(AVG(p.amount), 2) AS avg_amount, SORT_ARRAY(COLLECT_SET(p.method)) AS method_list FROM payments p INNER JOIN orders o ON o.id = p.order_id GROUP BY o.status ORDER BY status, avg_amount DESC;

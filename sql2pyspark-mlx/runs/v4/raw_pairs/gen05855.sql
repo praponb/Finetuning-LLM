@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM employees WHERE email IS NOT NULL AND email IS NOT NULL), agg AS (SELECT dept_id, MAX(hire_date) AS latest_hire_date FROM src GROUP BY dept_id) SELECT dept_id, latest_hire_date FROM agg ORDER BY latest_hire_date, dept_id DESC;

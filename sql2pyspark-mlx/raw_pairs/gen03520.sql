@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.store_id, stores.region, products.cost, products.stock_qty FROM store_sales LEFT JOIN stores ON store_sales.store_id = stores.id JOIN products ON store_sales.product_id = products.id ORDER BY stock_qty ASC

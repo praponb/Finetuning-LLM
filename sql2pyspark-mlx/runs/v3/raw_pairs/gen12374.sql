@@ -1,0 +1,1 @@
+with store_stats as (select store_id, min(quantity) as min_quantity, count(*) as inventory_count from inventory group by store_id) select s.id, s.sqft, ss.min_quantity, ss.inventory_count from stores s inner join store_stats ss on s.id = ss.store_id

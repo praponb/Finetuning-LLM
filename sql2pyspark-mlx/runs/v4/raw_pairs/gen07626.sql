@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, country, rating, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id) rn FROM suppliers) SELECT id, country, rating FROM numbered WHERE rn <= 2 ORDER BY 1 DESC

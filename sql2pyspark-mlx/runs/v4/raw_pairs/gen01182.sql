@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN revenue >= 3400 THEN 'high' WHEN revenue >= 2000 THEN 'mid' ELSE 'low' END AS revenue_bucket, AVG(revenue) AS avg_revenue, SUM(units) AS total_units FROM store_sales GROUP BY CASE WHEN revenue >= 3400 THEN 'high' WHEN revenue >= 2000 THEN 'mid' ELSE 'low' END) AS s WHERE total_units < 220 ORDER BY total_units DESC;

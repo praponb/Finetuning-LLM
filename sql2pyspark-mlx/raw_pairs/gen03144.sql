@@ -1,0 +1,1 @@
+select case when category in ('Sports', 'Fashion') then 'priority' else 'other' end as category_group, sum(case when category = 'Grocery' then 1 else 0 end) as grocery_count from products group by category_group having sum(cost) > 2400

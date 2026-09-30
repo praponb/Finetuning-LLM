@@ -1,0 +1,1 @@
+SELECT id, dept_name, budget, location, LAST_VALUE(location) OVER (PARTITION BY dept_name ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_location FROM departments WHERE budget >= 2784000 ORDER BY location DESC;

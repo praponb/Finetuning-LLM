@@ -1,0 +1,1 @@
+SELECT id, status, cost, delivered_date, shipped_date, ROUND(cost / SUM(cost) OVER (PARTITION BY status), 3) AS cost_share, ROUND(AVG(cost) OVER (PARTITION BY MONTH(delivered_date) ORDER BY shipped_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_7 FROM shipments WHERE carrier IN ('UPS', 'FedEx') ORDER BY cost_share

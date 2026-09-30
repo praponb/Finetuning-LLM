@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, INITCAP(TRIM(event_type)) AS event_type_title FROM web_events WHERE NOT (session_id = 7 AND session_id IN (6, 8, 9, 15) AND page = '/search')), agg AS (SELECT page, SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END) AS click_count FROM base GROUP BY page) SELECT * FROM agg WHERE click_count < 28

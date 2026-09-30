@@ -1,0 +1,1 @@
+select round(avg(quantity), 2) as avg_quantity from inventory where (store_id in (1, 3, 4, 5) and last_restock between '2023-08-01' and '2024-04-14') or store_id in (1, 2, 3, 4) order by avg_quantity desc;

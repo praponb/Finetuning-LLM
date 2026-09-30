@@ -1,0 +1,1 @@
+SELECT product_id, min_quantity, stddev_quantity FROM (SELECT product_id, MIN(quantity) AS min_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE product_id IN (1, 3, 6, 9) GROUP BY product_id) AS agg WHERE stddev_quantity > 57

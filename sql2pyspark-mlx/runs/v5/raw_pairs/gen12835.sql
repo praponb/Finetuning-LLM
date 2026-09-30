@@ -1,0 +1,1 @@
+SELECT t.id, t.amount, a.status, a.account_type, a.opened_date, COALESCE(t.amount, 0) AS amount_filled FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id WHERE t.amount < 1400 AND t.account_id IN (7, 29, 40);

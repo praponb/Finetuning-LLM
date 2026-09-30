@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, ROUND(STDDEV(cost), 2) AS stddev_cost FROM products WHERE category IN ('Electronics', 'Sports', 'Books') GROUP BY supplier_id) SELECT s.id, s.city, s.rating, ss.stddev_cost FROM suppliers s JOIN supplier_summary ss ON s.id = ss.supplier_id WHERE ss.stddev_cost >= 60;

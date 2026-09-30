@@ -1,0 +1,1 @@
+select case when budget >= 3973000 then 'LARGE' else 'SMALL' end as budget_tier, count(*) as row_count, round(avg(budget), 2) as avg_budget, count(case when location = 'Singapore' then 1 end) as singapore_count from departments group by case when budget >= 3973000 then 'LARGE' else 'SMALL' end order by row_count desc nulls last

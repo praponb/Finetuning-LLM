@@ -1,0 +1,1 @@
+SELECT order_id, status, CASE WHEN amount >= 1540 THEN 'high' WHEN amount >= 400 THEN 'mid' ELSE 'low' END AS amount_bucket, SORT_ARRAY(COLLECT_SET(status)) AS status_list, ROUND(AVG(amount), 2) AS avg_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM payments GROUP BY 1, 2, 3;

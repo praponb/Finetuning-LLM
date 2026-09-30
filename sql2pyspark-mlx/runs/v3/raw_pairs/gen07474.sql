@@ -1,0 +1,1 @@
+SELECT s.region, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE s.city = 'London' GROUP BY s.region

@@ -1,0 +1,1 @@
+select ss.id, ss.product_id, p.stock_qty, s.store_name, s.opened_date, floor(p.price) price_whole from store_sales ss inner join products p on p.id = ss.product_id inner join stores s on ss.store_id = s.id where p.product_name not like 'Yog%' and s.region in ('South', 'Central', 'North') order by price_whole desc, id limit 10

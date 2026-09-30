@@ -1,0 +1,1 @@
+SELECT ss.id, ss.units, ss.product_id, p.brand, p.price, p.product_name FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id WHERE ss.sale_date BETWEEN '2023-11-01' AND '2023-12-04' ORDER BY p.price ASC;

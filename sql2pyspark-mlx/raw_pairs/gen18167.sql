@@ -1,0 +1,1 @@
+SELECT event_type, page, SORT_ARRAY(COLLECT_SET(page)) AS page_list, MAX(event_time) AS latest_event_time FROM web_events WHERE duration_sec IS NULL AND event_type NOT IN ('purchase', 'click') GROUP BY 1, 2 ORDER BY page, event_type LIMIT 3;

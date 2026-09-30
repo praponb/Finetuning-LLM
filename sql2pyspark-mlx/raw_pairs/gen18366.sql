@@ -1,0 +1,1 @@
+SELECT plan, unique_plans, monthly_fee_range FROM (SELECT plan, COUNT(DISTINCT monthly_fee) AS unique_plans, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE plan = 'basic' GROUP BY plan) AS sub WHERE monthly_fee_range >= 23 ORDER BY unique_plans;

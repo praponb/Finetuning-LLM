@@ -1,0 +1,1 @@
+SELECT we.id, we.page, we.duration_sec, s.browser, s.device, c.signup_date, c.country FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE TO_DATE(s.started_at) >= '2024-03-01' AND we.duration_sec > 157 ORDER BY we.id DESC

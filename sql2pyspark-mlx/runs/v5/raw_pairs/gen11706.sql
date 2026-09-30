@@ -1,0 +1,1 @@
+SELECT QUARTER(signup_date) AS signup_quarter, segment, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM customers GROUP BY QUARTER(signup_date), segment

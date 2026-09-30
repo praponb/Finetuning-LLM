@@ -1,0 +1,1 @@
+WITH valid_products AS (SELECT * FROM products WHERE SIZE(tags) >= 1 AND category != 'Home'), products_stats AS (SELECT supplier_id, AVG(cost) AS avg_cost FROM valid_products GROUP BY supplier_id) SELECT supplier_id, avg_cost FROM products_stats WHERE avg_cost > 490;

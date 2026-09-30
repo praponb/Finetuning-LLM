@@ -1,0 +1,1 @@
+SELECT id, duration_sec, page, session_id, LOWER(event_type) AS event_type_lower, FLOOR(duration_sec) AS duration_sec_whole FROM web_events WHERE TO_DATE(event_time) < '2024-06-24' AND duration_sec BETWEEN 225 AND 461 ORDER BY event_type_lower DESC, session_id DESC;

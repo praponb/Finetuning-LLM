@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(oi.unit_price) AS unit_price_count, COUNT(DISTINCT oi.quantity) AS unique_orders FROM order_items oi RIGHT OUTER JOIN orders o ON o.id = oi.order_id GROUP BY o.channel ORDER BY unique_orders DESC, channel LIMIT 50

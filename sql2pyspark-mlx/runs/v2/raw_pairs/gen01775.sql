@@ -1,0 +1,1 @@
+select session_id, duration_sec_count, event_type_values from (select session_id, count(duration_sec) duration_sec_count, concat_ws(', ', sort_array(collect_set(event_type))) event_type_values from web_events group by session_id) x where duration_sec_count >= 4;

@@ -1,0 +1,1 @@
+select id, channel, discount, status, order_date, sum(discount) over (partition by channel) as channel_sum_discount, sum(discount) over (partition by status order by order_date, id) as running_discount from orders where amount <= 1170

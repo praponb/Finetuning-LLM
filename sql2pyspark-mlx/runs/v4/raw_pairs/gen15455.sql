@@ -1,0 +1,1 @@
+SELECT s.id, s.city, t.avg_cost FROM suppliers s LEFT JOIN (SELECT supplier_id, AVG(cost) AS avg_cost FROM products WHERE stock_qty = 228 GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY city DESC;

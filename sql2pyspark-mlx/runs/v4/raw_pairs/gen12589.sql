@@ -1,0 +1,1 @@
+SELECT txn_month, is_flagged, stddev_amount, min_amount FROM (SELECT DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, is_flagged, ROUND(STDDEV(amount), 2) AS stddev_amount, MIN(amount) AS min_amount FROM transactions WHERE merchant = 'Starbucks' GROUP BY DATE_FORMAT(txn_time, 'yyyy-MM'), is_flagged) AS t WHERE stddev_amount > 26;

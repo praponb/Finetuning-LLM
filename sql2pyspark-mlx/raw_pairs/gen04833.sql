@@ -1,0 +1,1 @@
+with product_summary as (select product_id, max(revenue) as max_revenue from store_sales where units < 24 group by product_id) select p.price, ps.max_revenue from products p inner join product_summary ps on p.id = ps.product_id;

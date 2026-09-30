@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, s.region, MAX(i.quantity) AS max_quantity, COUNT(*) AS row_count FROM inventory i LEFT JOIN stores s ON i.store_id = s.id WHERE s.opened_date BETWEEN '2023-12-01' AND '2024-08-01' GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM'), s.region HAVING max_quantity > 60 ORDER BY region ASC;

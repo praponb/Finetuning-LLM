@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN rating >= 4.3 THEN 'high' WHEN rating >= 1.9 THEN 'mid' ELSE 'low' END AS rating_bucket, city, rating FROM suppliers) PIVOT (SUM(rating) FOR city IN ('Singapore', 'Berlin', 'London')) ORDER BY rating_bucket

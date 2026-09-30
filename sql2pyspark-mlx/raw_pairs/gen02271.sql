@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CONCAT(channel, ' ', promo_code) AS channel_promo_code, COALESCE(channel, 'N/A') AS channel_clean FROM promotions WHERE promo_code = 'VIP') SELECT * FROM (SELECT channel, promo_code, discount_pct FROM cleaned) src PIVOT (MAX(discount_pct) AS total, COUNT(1) AS n FOR promo_code IN ('VIP', 'WELCOME5', 'SPRING10'));

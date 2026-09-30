@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, MIN(i.quantity) AS min_quantity FROM inventory i RIGHT JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id GROUP BY DATE_TRUNC('MONTH', s.opened_date) ORDER BY opened_month, min_quantity DESC LIMIT 5;

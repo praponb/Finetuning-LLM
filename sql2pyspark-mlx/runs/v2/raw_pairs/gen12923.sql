@@ -1,0 +1,1 @@
+SELECT p.cost, p.stock_qty, t.unit_price_count, t.total_quantity FROM products p JOIN (SELECT product_id, COUNT(unit_price) AS unit_price_count, SUM(quantity) AS total_quantity FROM order_items GROUP BY product_id) t ON p.id = t.product_id ORDER BY stock_qty, total_quantity DESC;

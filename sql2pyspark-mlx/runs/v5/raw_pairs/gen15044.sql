@@ -1,0 +1,1 @@
+with products_by_supplier as (select supplier_id, avg(price) avg_price from products where brand = 'Globex' group by supplier_id) select s.city, pbs.avg_price from suppliers s join products_by_supplier pbs on s.id = pbs.supplier_id;

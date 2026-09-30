@@ -1,0 +1,1 @@
+SELECT c.city, c.name, s.country, s.device FROM customers c INNER JOIN sessions s ON s.customer_id = c.id WHERE c.segment NOT IN ('Consumer', 'SMB', 'Corporate') AND c.country = 'SG' ORDER BY country DESC;

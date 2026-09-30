@@ -1,0 +1,1 @@
+select * from (select year(event_time) as event_year, sum(duration_sec) as total_duration_sec, count(case when page = '/checkout' then 1 end) as checkout_count from web_events group by year(event_time)) as s where total_duration_sec > 2900

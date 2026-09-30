@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items WHERE quantity BETWEEN 5 AND 8 GROUP BY CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END, product_id ORDER BY product_id DESC;

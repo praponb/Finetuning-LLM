@@ -1,0 +1,1 @@
+SELECT id, method, paid_at, amount, order_id, ROUND(AVG(amount) OVER (PARTITION BY method ORDER BY paid_at, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_3, NTILE(3) OVER (PARTITION BY method, order_id ORDER BY paid_at, id) AS quartile FROM payments ORDER BY paid_at

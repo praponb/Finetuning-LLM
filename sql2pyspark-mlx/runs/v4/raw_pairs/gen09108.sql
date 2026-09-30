@@ -1,0 +1,1 @@
+SELECT we.page, we.event_type, s.browser, s.started_at, c.name FROM web_events we LEFT JOIN sessions s ON s.id = we.session_id INNER JOIN customers c ON c.id = s.customer_id WHERE s.country NOT IN ('JP', 'DE', 'US') OR we.event_type = 'purchase';

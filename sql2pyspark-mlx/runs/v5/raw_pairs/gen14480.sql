@@ -1,0 +1,1 @@
+WITH web_events_by_session AS (SELECT session_id, MAX(duration_sec) AS max_duration_sec, MIN(event_time) AS first_event_time FROM web_events GROUP BY session_id) SELECT s.browser, webs.max_duration_sec, webs.first_event_time FROM sessions s LEFT JOIN web_events_by_session webs ON s.id = webs.session_id;

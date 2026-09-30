@@ -1,0 +1,1 @@
+with lines as (select id, created_at, k, v from carts lateral view explode(attributes) t as k, v) select *, last_value(k, true) over w_running as last_known_k, first_value(k) ignore nulls over w_running as first_known_k from lines window w_running as (partition by k order by created_at asc, id asc, k asc rows between unbounded preceding and current row);

@@ -1,0 +1,1 @@
+WITH StoreStats AS (SELECT store_id, ROUND(STDDEV(quantity), 2) stddev_quantity FROM inventory WHERE store_id IN (2, 3) GROUP BY store_id) SELECT stores.sqft, stores.region, StoreStats.stddev_quantity FROM stores LEFT OUTER JOIN StoreStats ON stores.id = StoreStats.store_id WHERE StoreStats.stddev_quantity >= 76;

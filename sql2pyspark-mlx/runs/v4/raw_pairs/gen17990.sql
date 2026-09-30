@@ -1,0 +1,1 @@
+SELECT id, service, host, payload_json, context, COALESCE(context['version'], 'direct') AS version_or_default, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').duration AS duration_sec, context['version'] AS version, ARRAY_CONTAINS(MAP_KEYS(context), 'version') AS has_version FROM app_logs;

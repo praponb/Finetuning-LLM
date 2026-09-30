@@ -1,0 +1,1 @@
+SELECT id, supplier_name, city, CONCAT_WS('-', city, supplier_name) AS city_supplier_name_key FROM suppliers WHERE country NOT IN ('DE', 'JP') ORDER BY id DESC;

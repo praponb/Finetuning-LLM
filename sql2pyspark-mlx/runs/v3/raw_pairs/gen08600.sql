@@ -1,0 +1,1 @@
+SELECT product_id, last_restock_month, quantity_range FROM (SELECT product_id, DATE_TRUNC('MONTH', last_restock) AS last_restock_month, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE product_id = 7 GROUP BY product_id, DATE_TRUNC('MONTH', last_restock)) AS t WHERE quantity_range >= 31 ORDER BY last_restock_month

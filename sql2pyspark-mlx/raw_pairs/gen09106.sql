@@ -1,0 +1,1 @@
+select id, account_id, txn_type, amount, lead(amount) over w_ordered as next_amount, row_number() over w_ordered as row_seq, lead(amount, 1) over (partition by txn_type, merchant order by txn_time, id) as next_amount_2 from transactions where account_id = 17 window w_ordered as (partition by account_id order by amount, id)

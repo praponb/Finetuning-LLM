@@ -1,0 +1,1 @@
+SELECT s.cost, o.order_date, o.discount, c.signup_date, c.credit_limit FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id JOIN customers c ON o.customer_id = c.id ORDER BY cost DESC, signup_date

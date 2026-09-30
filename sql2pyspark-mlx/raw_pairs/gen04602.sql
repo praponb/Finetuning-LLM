@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, ROUND(AVG(cost), 2) AS avg_cost FROM products GROUP BY supplier_id) SELECT s.city, ss.avg_cost FROM suppliers s INNER JOIN supplier_summary ss ON s.id = ss.supplier_id ORDER BY ss.avg_cost DESC, city;

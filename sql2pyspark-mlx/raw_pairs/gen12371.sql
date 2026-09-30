@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('RETURNED', 'LOST') THEN 'group_a' ELSE 'other' END AS status_group, MAX(cost) AS max_cost, ROUND((100 * SUM(CASE WHEN status = 'IN_TRANSIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_in_transit FROM shipments WHERE status NOT IN ('LOST', 'RETURNED', 'IN_TRANSIT') GROUP BY 1;

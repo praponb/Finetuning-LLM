@@ -1,0 +1,1 @@
+select method, sort_array(collect_set(status)) as status_list, sum(case when method = 'promptpay' then amount else 0 end) as promptpay_amount from payments where order_id in (10, 25, 40) group by method

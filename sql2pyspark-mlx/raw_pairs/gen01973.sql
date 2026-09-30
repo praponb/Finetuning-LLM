@@ -1,0 +1,1 @@
+SELECT paid_month, method, success_count, amount_range FROM (SELECT DATE_FORMAT(paid_at, 'yyyy-MM') AS paid_month, method, COUNT(CASE WHEN status = 'SUCCESS' THEN 1 END) AS success_count, MAX(amount) - MIN(amount) AS amount_range FROM payments WHERE method <> 'paypal' GROUP BY DATE_FORMAT(paid_at, 'yyyy-MM'), method) AS agg WHERE success_count < 5 ORDER BY success_count;

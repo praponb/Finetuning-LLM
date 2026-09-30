@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, MAX(balance) - MIN(balance) AS balance_range FROM accounts WHERE balance BETWEEN 66000 AND 67000 AND account_type = 'CHECKING' AND status IN ('OPEN', 'CLOSED') GROUP BY DATE_TRUNC('MONTH', opened_date) HAVING balance_range < 52 ORDER BY balance_range DESC

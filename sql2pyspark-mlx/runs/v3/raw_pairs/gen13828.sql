@@ -1,0 +1,1 @@
+SELECT job_title, MIN(hire_date) AS min_hire_date, ROUND((100 * SUM(CASE WHEN level = 'L1' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l1, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values FROM employees WHERE MONTH(hire_date) IN (7, 11, 12) GROUP BY job_title

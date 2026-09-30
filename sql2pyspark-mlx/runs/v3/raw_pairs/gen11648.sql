@@ -1,0 +1,1 @@
+SELECT c.country, MAX(o.order_date) AS latest_order_date, SUM(CASE WHEN o.channel = 'mobile' THEN 1 ELSE 0 END) AS mobile_count FROM orders o LEFT JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id WHERE o.discount >= 0.26 GROUP BY c.country ORDER BY c.country;

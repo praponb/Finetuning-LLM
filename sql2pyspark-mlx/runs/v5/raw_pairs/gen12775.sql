@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', order_date) order_month, CASE WHEN shipping_fee >= 30 THEN 'high' WHEN shipping_fee >= 11 THEN 'mid' ELSE 'low' END shipping_fee_bucket, SUM(CASE WHEN channel = 'web' THEN discount ELSE 0 END) web_discount, COUNT(DISTINCT amount) unique_stores FROM orders GROUP BY order_month, shipping_fee_bucket;

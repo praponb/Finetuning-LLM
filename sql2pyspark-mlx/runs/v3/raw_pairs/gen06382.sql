@@ -1,0 +1,1 @@
+with supplier_stats as (select supplier_id, count(*) as total_count, count(case when category = 'Sports' then 1 end) as sports_count from products where cost >= 590 group by supplier_id) select s.country, ss.total_count, ss.sports_count from suppliers s inner join supplier_stats ss on s.id = ss.supplier_id;

@@ -1,0 +1,1 @@
+with top_inventory as (select id, store_id, quantity, row_number() over (partition by store_id order by quantity desc, id) as rnk from inventory where store_id in (2, 4, 5)) select id, store_id, quantity from top_inventory where rnk <= 5 order by quantity desc

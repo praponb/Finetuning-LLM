@@ -1,0 +1,1 @@
+SELECT location, budget_count, max_budget FROM (SELECT location, COUNT(budget) AS budget_count, MAX(budget) AS max_budget FROM departments GROUP BY location) AS sub WHERE budget_count > 4 ORDER BY 2, max_budget DESC;

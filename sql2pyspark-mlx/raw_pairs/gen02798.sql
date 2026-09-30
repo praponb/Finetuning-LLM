@@ -1,0 +1,1 @@
+SELECT emp.id, emp.is_remote AS employee_is_remote, emp.salary AS employee_salary, emp.full_name AS employee_full_name, mgr.email AS manager_email, mgr.full_name AS manager_full_name, mgr.job_title AS manager_job_title FROM employees emp JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.job_title = 'Designer' ORDER BY mgr.email, id LIMIT 10;

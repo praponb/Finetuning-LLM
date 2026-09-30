@@ -1,0 +1,1 @@
+SELECT status, SUM(CASE WHEN plan = 'basic' THEN monthly_fee ELSE 0 END) AS basic_monthly_fee, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list FROM subscriptions GROUP BY 1 ORDER BY 2 DESC, status LIMIT 50

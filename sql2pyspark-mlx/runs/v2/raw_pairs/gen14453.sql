@@ -1,0 +1,1 @@
+select we.id, we.event_time, we.duration_sec, we.page, s.customer_id, s.started_at, s.country from web_events we inner join sessions s on we.session_id = s.id where s.customer_id is null and s.browser in ('Safari', 'Firefox')

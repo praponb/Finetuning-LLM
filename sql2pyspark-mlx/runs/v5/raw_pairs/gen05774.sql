@@ -1,0 +1,1 @@
+SELECT id, customer_id, plan, start_date, LEAD(monthly_fee) OVER w_running AS next_monthly_fee, ROW_NUMBER() OVER w_running AS row_seq FROM subscriptions WINDOW w_running AS (PARTITION BY customer_id ORDER BY end_date ASC, id ASC);

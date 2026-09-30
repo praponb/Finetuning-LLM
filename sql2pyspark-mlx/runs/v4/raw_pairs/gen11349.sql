@@ -1,0 +1,1 @@
+SELECT p.category, p.brand, COUNT(oi.unit_price) AS unit_price_count, MIN(oi.quantity) AS min_quantity FROM order_items oi JOIN orders o ON oi.order_id = o.id LEFT JOIN products p ON p.id = oi.product_id GROUP BY p.category, p.brand HAVING COUNT(oi.unit_price) >= 4 ORDER BY unit_price_count, category, brand LIMIT 50;

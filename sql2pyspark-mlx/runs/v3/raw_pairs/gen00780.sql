@@ -1,0 +1,1 @@
+SELECT id, duration_sec, event_time, session_id, CASE WHEN event_type IN ('click', 'add_to_cart') THEN 'Core' ELSE 'Other' END event_type_group, LENGTH(page) page_length FROM web_events WHERE session_id = 37;

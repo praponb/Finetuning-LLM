@@ -1,0 +1,1 @@
+SELECT status, balance, opened_date, CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END is_checking, CASE WHEN account_type = 'LOAN' THEN 1 ELSE 0 END is_loan FROM accounts WHERE customer_id IN (10, 23)

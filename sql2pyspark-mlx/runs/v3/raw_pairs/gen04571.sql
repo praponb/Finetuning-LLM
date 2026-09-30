@@ -1,0 +1,1 @@
+select hour(txn_time) as txn_hour, max(amount) as max_amount, concat_ws(', ', sort_array(collect_set(txn_type))) as txn_type_values from transactions group by hour(txn_time) order by txn_type_values, txn_hour limit 1

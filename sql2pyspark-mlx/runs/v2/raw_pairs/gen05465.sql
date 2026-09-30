@@ -1,0 +1,1 @@
+SELECT products.id, products.launch_date, products.product_name, t.stddev_quantity FROM products LEFT JOIN (SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY product_id) t ON products.id = t.product_id WHERE t.stddev_quantity >= 32 ORDER BY products.product_name ASC

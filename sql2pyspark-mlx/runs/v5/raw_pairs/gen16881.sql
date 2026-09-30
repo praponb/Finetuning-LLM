@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, p.category, p.stock_qty, s.region FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN stores s ON s.id = ss.store_id WHERE ARRAY_CONTAINS(p.tags, 'clearance') AND ss.store_id IN (1, 4, 6) ORDER BY 1 LIMIT 5;

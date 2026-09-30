@@ -1,0 +1,1 @@
+select p.category, quarter(p.launch_date) launch_quarter, count(ss.revenue) revenue_count, min(ss.sale_date) min_sale_date from store_sales ss join products p on p.id = ss.product_id join suppliers s on p.supplier_id = s.id where ss.store_id = 4 group by p.category, quarter(p.launch_date);

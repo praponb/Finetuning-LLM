@@ -1,0 +1,1 @@
+with remaining_keys as (select city from customers except distinct select city from customers where credit_limit between 7100 and 9700), reconciled as (select s.* from customers s inner join remaining_keys k on s.city = k.city) select id, name, country, city, segment, signup_date, is_active, credit_limit, age from reconciled order by country desc, segment desc

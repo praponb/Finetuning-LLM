@@ -1,0 +1,1 @@
+SELECT id, order_id, cost, status FROM (SELECT *, RANK() OVER (PARTITION BY order_id ORDER BY cost DESC) AS row_num FROM shipments WHERE delivered_date < '2025-02-01') AS r WHERE row_num <= 2 ORDER BY order_id DESC;

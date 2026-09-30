@@ -1,0 +1,1 @@
+select p.id, p.supplier_id, p.category, p.price, s.supplier_name, concat(s.supplier_name, ' - ', s.city) as supplier_name_city from products p inner join suppliers s on p.supplier_id = s.id where p.category in ('Grocery', 'Sports', 'Books') order by category

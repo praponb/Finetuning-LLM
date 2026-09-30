@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM transactions WHERE is_flagged AND account_id IN (8, 28) AND merchant IN ('Starbucks', 'Grab')), is_flagged_summary AS (SELECT is_flagged, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values, COUNT(*) AS cnt FROM base GROUP BY is_flagged) SELECT * FROM is_flagged_summary WHERE cnt > 4 ORDER BY cnt, txn_type_values;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, temp_c - humidity AS temp_c_minus_humidity FROM device_readings WHERE status_bits >= 4) SELECT * FROM (SELECT firmware, device_code, pressure FROM filtered) src PIVOT (AVG(pressure) FOR device_code IN ('DV-01' AS dv_01, 'DV-04' AS dv_04));

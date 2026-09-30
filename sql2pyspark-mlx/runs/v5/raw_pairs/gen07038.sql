@@ -1,0 +1,1 @@
+SELECT s.country, s.city, s.rating, p.launch_date, p.category, ROUND(s.rating * 1.07, 2) AS rating_scaled FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE p.supplier_id IS NULL AND LENGTH(s.supplier_name) >= 12 ORDER BY category, country;

@@ -1,0 +1,9 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_employees.alias("e")
+    .join(df_departments.filter(F.col("dept_name").isin(["Sales", "Legal", "Marketing"])).alias("d"), F.col("e.dept_id") == F.col("d.id"), "left_anti")
+    .filter(F.col("e.dept_id").isin([11, 13, 20]))
+    .select(F.col("e.id"), F.col("e.manager_id"))
+    .orderBy(F.col("id").desc(), "manager_id")
+)

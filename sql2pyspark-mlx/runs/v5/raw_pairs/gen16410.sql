@@ -1,0 +1,1 @@
+SELECT id, status, monthly_fee, end_date FROM (SELECT id, status, monthly_fee, end_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY monthly_fee DESC, id) AS rnk FROM subscriptions WHERE plan = 'enterprise') AS t WHERE rnk = 1 ORDER BY monthly_fee DESC, end_date

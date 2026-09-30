@@ -1,0 +1,1 @@
+select emp.id, emp.full_name as employee_full_name, emp.dept_id as employee_dept_id, mgr.job_title as manager_job_title, mgr.level as manager_level from employees emp inner join employees mgr on emp.manager_id = mgr.id where mgr.email like '%@company.co';

@@ -1,0 +1,1 @@
+SELECT CASE WHEN salary >= 152000 THEN 'high' WHEN salary >= 72000 THEN 'mid' ELSE 'low' END AS salary_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, MAX(salary) AS max_salary FROM employees GROUP BY CASE WHEN salary >= 152000 THEN 'high' WHEN salary >= 72000 THEN 'mid' ELSE 'low' END ORDER BY level_values

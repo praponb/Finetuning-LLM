@@ -1,0 +1,1 @@
+SELECT last_restock, store_id, quantity, DATE_TRUNC('WEEK', last_restock) AS last_restock_period, DATE_TRUNC('MONTH', last_restock) AS last_restock_period_2 FROM inventory ORDER BY last_restock_period_2 DESC

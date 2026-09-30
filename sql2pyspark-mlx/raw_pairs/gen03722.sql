@@ -1,0 +1,1 @@
+WITH ValidTransactions AS (SELECT *, CONCAT(txn_type, '/', merchant) AS txn_type_merchant FROM transactions WHERE amount <= 2300), transactions_stats AS (SELECT DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM ValidTransactions GROUP BY DATE_FORMAT(txn_time, 'yyyy-MM')) SELECT * FROM transactions_stats ORDER BY txn_month

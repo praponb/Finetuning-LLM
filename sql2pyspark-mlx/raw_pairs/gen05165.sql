@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.quantity, products.cost, products.launch_date, suppliers.country, suppliers.rating FROM inventory INNER JOIN products ON products.id = inventory.product_id INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.supplier_id = 7 AND suppliers.country IN ('SG', 'US', 'DE') ORDER BY quantity;

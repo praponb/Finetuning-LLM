@@ -1,0 +1,1 @@
+SELECT store_id, revenue_count, min_revenue FROM (SELECT store_id, COUNT(revenue) AS revenue_count, MIN(revenue) AS min_revenue FROM store_sales GROUP BY store_id) AS t WHERE revenue_count >= 9 ORDER BY min_revenue DESC

@@ -1,0 +1,1 @@
+select p.id, p.order_id, p.status, o.channel, c.country, initcap(trim(p.method)) method_title from payments p left outer join orders o on p.order_id = o.id inner join customers c on o.customer_id = c.id where c.age >= 32 order by 2, id limit 1;

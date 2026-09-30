@@ -1,0 +1,1 @@
+WITH valid_stores AS (SELECT * FROM stores WHERE city = 'Chiang Mai' AND opened_date <= '2024-12-03'), summary AS (SELECT city, COUNT(sqft) AS sqft_count, AVG(sqft) AS avg_sqft FROM valid_stores GROUP BY city) SELECT * FROM summary WHERE avg_sqft < 11600 ORDER BY city DESC

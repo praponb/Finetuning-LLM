@@ -1,0 +1,1 @@
+with store_totals as (select store_id, min(quantity) min_quantity from inventory where last_restock between '2023-04-01' and '2023-08-20' group by store_id) select s.id, s.region, s.city, st.min_quantity from stores s inner join store_totals st on s.id = st.store_id order by s.id desc

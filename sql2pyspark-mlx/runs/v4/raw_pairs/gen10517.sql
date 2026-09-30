@@ -1,0 +1,1 @@
+SELECT status, DATE_TRUNC('MONTH', start_date) AS start_month, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, COUNT(*) AS row_count, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count FROM subscriptions GROUP BY ROLLUP(status, DATE_TRUNC('MONTH', start_date));

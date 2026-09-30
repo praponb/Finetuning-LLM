@@ -1,0 +1,1 @@
+SELECT account_type, customer_id, ROUND(AVG(balance), 2) avg_balance, ROUND((100 * SUM(CASE WHEN status = 'FROZEN' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_frozen, COUNT(balance) balance_count FROM accounts GROUP BY account_type, customer_id ORDER BY customer_id DESC

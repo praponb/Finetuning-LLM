@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales GROUP BY store_id) SELECT s.city, s.opened_date, ss.stddev_revenue FROM stores s LEFT JOIN store_summary ss ON s.id = ss.store_id

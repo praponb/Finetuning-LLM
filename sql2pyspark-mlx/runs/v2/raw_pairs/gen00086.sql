@@ -1,0 +1,1 @@
+SELECT CASE WHEN revenue >= 3600 THEN 'high' WHEN revenue >= 1700 THEN 'mid' ELSE 'low' END revenue_bucket, MIN(sale_date) first_sale_date FROM store_sales GROUP BY CASE WHEN revenue >= 3600 THEN 'high' WHEN revenue >= 1700 THEN 'mid' ELSE 'low' END

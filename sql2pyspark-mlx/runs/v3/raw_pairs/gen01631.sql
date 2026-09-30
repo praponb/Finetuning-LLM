@@ -1,0 +1,1 @@
+select city, count(sqft) as sqft_count, count(*) as total_count, count(case when region = 'Central' then 1 end) as central_count from stores where region in ('Central', 'North', 'East') or opened_date <= '2024-12-01' group by 1 having count(*) >= 2;

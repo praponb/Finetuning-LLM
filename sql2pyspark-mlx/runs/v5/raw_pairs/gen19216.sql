@@ -1,0 +1,1 @@
+SELECT id, event_type, event_time, CASE WHEN duration_sec >= 424 THEN 'High' WHEN duration_sec >= 78 THEN 'Medium' ELSE 'Low' END AS duration_sec_level FROM web_events WHERE session_id IN (8, 14, 18, 26)

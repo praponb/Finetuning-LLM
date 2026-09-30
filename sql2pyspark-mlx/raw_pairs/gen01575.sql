@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, EXPLODE(coupon_codes) AS tag FROM carts) SELECT customer_id, COUNT(*) AS cnt, COUNT(*) FILTER (WHERE tag = 'SPRING10') AS spring10_rows, COUNT(CASE WHEN tag = 'WELCOME5' THEN 1 END) AS welcome5_count, SIZE(COLLECT_SET(tag)) AS num_tags FROM lines GROUP BY 1 HAVING welcome5_count > 1 ORDER BY spring10_rows;

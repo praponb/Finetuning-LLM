@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, plan, effective_from, EXPLODE_OUTER(tier_limits) AS element FROM price_tiers) SELECT CASE WHEN element >= 70 THEN 'PREMIUM' ELSE 'STANDARD' END AS element_tier, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list, ROUND(AVG(element), 2) AS avg_element FROM exploded GROUP BY 1

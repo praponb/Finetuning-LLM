@@ -1,0 +1,1 @@
+SELECT id, unit_price, order_id, quantity, quantity - unit_price AS line_total, LEAST(quantity, unit_price) AS least_quantity_unit_price FROM order_items WHERE quantity >= 6 AND product_id IN (26, 37, 40) ORDER BY quantity DESC

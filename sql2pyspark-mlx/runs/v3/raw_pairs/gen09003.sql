@@ -1,0 +1,1 @@
+SELECT c.city, COUNT(a.id) AS account_count, ROUND((100 * SUM(CASE WHEN a.account_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_credit, ROUND(AVG(a.balance), 2) AS avg_balance FROM customers c LEFT JOIN accounts a ON c.id = a.customer_id GROUP BY c.city HAVING pct_credit > 52;

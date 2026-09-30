@@ -1,0 +1,1 @@
+SELECT channel, mobile_count FROM (SELECT channel, SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END) AS mobile_count FROM orders GROUP BY channel) AS x WHERE mobile_count >= 38 ORDER BY mobile_count DESC, channel;

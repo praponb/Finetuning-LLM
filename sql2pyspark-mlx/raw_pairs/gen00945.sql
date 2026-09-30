@@ -1,0 +1,1 @@
+SELECT dim.device, dim.country, a.event_type, COUNT(*) AS cnt, MIN(a.duration_sec) AS min_duration_sec, GROUPING_ID() AS gid FROM web_events a LEFT JOIN sessions dim ON a.session_id = dim.id GROUP BY ROLLUP (dim.device, dim.country, a.event_type)

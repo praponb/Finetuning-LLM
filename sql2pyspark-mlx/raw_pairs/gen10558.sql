@@ -1,0 +1,1 @@
+SELECT *, LAG(sqft, 1) OVER w_hist prev_sqft, NTILE(5) OVER (PARTITION BY region, city ORDER BY sqft, id) sqft_bucket, NTILE(4) OVER (PARTITION BY region ORDER BY sqft DESC, id) sqft_bucket_2, COUNT(sqft) OVER (PARTITION BY city, region) city_count_sqft FROM stores WINDOW w_hist AS (ORDER BY sqft, id)

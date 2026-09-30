@@ -1,0 +1,1 @@
+SELECT CASE WHEN credit_limit >= 17400 THEN 'high' WHEN credit_limit >= 2700 THEN 'mid' ELSE 'low' END AS credit_limit_bucket, MONTH(signup_date) AS signup_month, segment, SORT_ARRAY(COLLECT_SET(country)) AS country_list, SUM(credit_limit) AS total_credit_limit FROM customers WHERE is_active AND NOT is_active GROUP BY credit_limit_bucket, signup_month, segment;

@@ -1,0 +1,1 @@
+SELECT transactions.merchant, accounts.opened_date, customers.segment FROM transactions FULL OUTER JOIN accounts ON accounts.id = transactions.account_id INNER JOIN customers ON accounts.customer_id = customers.id WHERE transactions.amount > 1800 AND customers.city = 'Singapore' ORDER BY transactions.merchant, accounts.opened_date

@@ -1,0 +1,1 @@
+SELECT id, brand, launch_date, stock_qty, price, stock_qty - LAG(stock_qty, 2) OVER (PARTITION BY brand ORDER BY launch_date, id) AS stock_qty_change, ROUND(price / SUM(price) OVER (PARTITION BY brand), 3) AS price_share FROM products

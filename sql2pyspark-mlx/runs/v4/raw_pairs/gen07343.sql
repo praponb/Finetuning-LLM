@@ -1,0 +1,1 @@
+SELECT * FROM sessions QUALIFY ROW_NUMBER() OVER (PARTITION BY device ORDER BY started_at DESC, id) = 1;

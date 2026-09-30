@@ -1,0 +1,1 @@
+SELECT sessions.id, sessions.country, sessions.device, customers.age, customers.credit_limit FROM sessions LEFT OUTER JOIN customers ON sessions.customer_id = customers.id WHERE customers.segment IS NULL AND sessions.customer_id IS NULL;

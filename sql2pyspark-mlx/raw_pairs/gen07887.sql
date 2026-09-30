@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATE_TRUNC('week', hire_date) AS hire_date_period FROM employees WHERE hire_date > TO_DATE('2023-03-13') AND level IS NOT NULL) SELECT id, full_name, email, dept_id, manager_id, job_title, hire_date, is_remote FROM filtered QUALIFY ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY hire_date_period DESC NULLS FIRST, id) = 1;

@@ -1,0 +1,1 @@
+SELECT id, supplier_id, launch_date FROM (SELECT id, supplier_id, launch_date, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY launch_date DESC, id) AS rn FROM products) AS ranked WHERE rn <= 2 ORDER BY supplier_id DESC

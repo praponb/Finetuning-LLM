@@ -1,0 +1,1 @@
+SELECT cost, status, COALESCE(carrier, 'Unknown') AS carrier_filled, DATE_TRUNC('week', shipped_date) AS shipped_date_period FROM shipments WHERE carrier IN ('DHL', 'Kerry', 'Flash') OR delivered_date > '2025-03-01' ORDER BY status

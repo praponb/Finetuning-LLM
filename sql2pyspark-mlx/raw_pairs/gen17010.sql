@@ -1,0 +1,1 @@
+select order_items.product_id, order_items.quantity, order_items.unit_price, orders.amount, orders.shipping_fee from order_items left join orders on orders.id = order_items.order_id where orders.discount >= 0.22 order by order_items.product_id desc, quantity desc

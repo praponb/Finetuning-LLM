@@ -1,0 +1,1 @@
+WITH recent_subscriptions AS (SELECT * FROM subscriptions WHERE customer_id IN (1, 10, 39)), summary AS (SELECT status, plan, MIN(monthly_fee) AS min_monthly_fee FROM recent_subscriptions GROUP BY status, plan) SELECT status, plan, min_monthly_fee FROM summary WHERE min_monthly_fee < 210 ORDER BY plan, status DESC

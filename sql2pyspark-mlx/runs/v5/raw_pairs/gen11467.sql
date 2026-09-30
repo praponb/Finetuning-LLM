@@ -1,0 +1,1 @@
+SELECT s.device, COUNT(we.id) AS web_event_count, ROUND((100 * SUM(CASE WHEN we.event_type = 'page_view' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_page_view, COUNT(we.duration_sec) AS duration_sec_count FROM sessions s LEFT OUTER JOIN web_events we ON we.session_id = s.id WHERE we.session_id IN (8, 10, 18) GROUP BY s.device HAVING duration_sec_count > 5;

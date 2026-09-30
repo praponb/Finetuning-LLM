@@ -1,0 +1,1 @@
+select date_trunc('quarter', started_at) as quarter_start, max(started_at) as last_started_at, (unix_timestamp(max(started_at)) - unix_timestamp(min(started_at))) / 60 as duration_min, grouping(date_trunc('quarter', started_at)) as gid from sessions group by cube (date_trunc('quarter', started_at)) order by quarter_start desc;

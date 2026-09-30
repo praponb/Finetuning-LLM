@@ -1,0 +1,1 @@
+with valid as (select *, case when status = 'CANCELLED' then 1 else 0 end as is_cancelled from subscriptions where customer_id is not null) select s.id, s.customer_id, s.plan, s.start_date, s.is_cancelled, c.name from valid s left join customers c on s.customer_id = c.id

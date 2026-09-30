@@ -1,0 +1,1 @@
+SELECT o.status, COUNT(p.amount) AS amount_count, ROUND((100 * SUM(CASE WHEN p.status = 'SUCCESS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_success FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id GROUP BY o.status HAVING COUNT(p.amount) >= 1 ORDER BY amount_count DESC;

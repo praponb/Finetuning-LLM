@@ -1,0 +1,1 @@
+SELECT i.quantity, ss.store_id, ss.units FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE MONTH(ss.sale_date) IN (4, 10, 12) ORDER BY units DESC;

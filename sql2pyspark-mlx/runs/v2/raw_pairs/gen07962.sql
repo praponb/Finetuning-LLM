@@ -1,0 +1,1 @@
+select ss.store_id, ss.product_id, count(*) total_count, count(i.quantity) quantity_count from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.store_id, ss.product_id;

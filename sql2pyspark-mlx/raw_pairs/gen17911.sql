@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, region, opened_date, sqft, CONCAT_WS(',', city, store_name) AS city_store_name_key, SUBSTRING(city, 1, 4) AS city_prefix FROM stores WHERE region IS NOT NULL AND region NOT IN ('South', 'Central')) SELECT *, RANK() OVER (PARTITION BY region ORDER BY sqft DESC NULLS FIRST) AS rn FROM cleaned QUALIFY rn = 1

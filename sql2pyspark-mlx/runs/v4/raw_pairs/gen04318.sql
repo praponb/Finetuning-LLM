@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, ROUND(STDDEV(cost), 2) AS stddev_cost, MAX(delivered_date) AS latest_delivered_date FROM shipments GROUP BY order_id) SELECT o.id, o.store_id, o.shipping_fee, os.stddev_cost, os.latest_delivered_date FROM orders o LEFT OUTER JOIN order_summary os ON o.id = os.order_id WHERE os.stddev_cost > 33 ORDER BY o.store_id DESC

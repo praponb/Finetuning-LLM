@@ -1,0 +1,1 @@
+select year(opened_date) as opened_year, date_trunc('MONTH', opened_date) as opened_month, sum(case when region = 'South' then 1 else 0 end) as south_count from stores group by year(opened_date), date_trunc('MONTH', opened_date) order by opened_year desc, opened_month

@@ -1,0 +1,1 @@
+with session_totals as (select session_id, sort_array(collect_set(event_type)) as event_type_list from web_events where duration_sec <= 402 group by session_id) select s.country, st.event_type_list from sessions s left join session_totals st on s.id = st.session_id

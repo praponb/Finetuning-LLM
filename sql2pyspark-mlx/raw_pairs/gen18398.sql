@@ -1,0 +1,1 @@
+SELECT id, customer_id, status, store_id, order_date, COUNT(*) OVER (PARTITION BY customer_id) customer_id_count, ROW_NUMBER() OVER (PARTITION BY status, store_id ORDER BY order_date DESC, id) row_num FROM orders;

@@ -1,0 +1,1 @@
+select s.rating, s.supplier_name, p.supplier_id, substring(p.product_name, 1, 3) as product_name_prefix from suppliers s left join products p on s.id = p.supplier_id where s.rating >= 2.4 order by product_name_prefix

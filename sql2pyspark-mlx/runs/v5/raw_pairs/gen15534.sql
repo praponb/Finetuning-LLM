@@ -1,0 +1,1 @@
+with src as (select * from employees where job_title in ('Director', 'Intern', 'Analyst')), summary as (select is_remote, month(hire_date) as hire_month, max(hire_date) as latest_hire_date from src group by is_remote, month(hire_date)) select is_remote, latest_hire_date from summary

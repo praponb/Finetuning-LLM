@@ -1,0 +1,1 @@
+SELECT dept_name, COUNT(CASE WHEN dept_name = 'Sales' THEN 1 END) AS sales_count, MAX(budget) - MIN(budget) AS budget_range FROM departments WHERE dept_name = 'Finance' AND dept_name = 'Marketing' AND location = 'New York' GROUP BY 1;

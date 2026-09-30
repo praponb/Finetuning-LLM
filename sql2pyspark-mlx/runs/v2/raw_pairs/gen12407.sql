@@ -1,0 +1,1 @@
+SELECT id, customer_id, started_at, country, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at, id) AS rn, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at, id) AS rn_2 FROM sessions WHERE browser != 'Safari' ORDER BY country

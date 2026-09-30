@@ -1,0 +1,1 @@
+SELECT id, created_at, coupon_codes, items, attributes['device'] AS device, ship_to.country AS ship_country, attributes['utm_source'] AS utm_source, TRY_CAST(attributes['weight_kg'] AS DOUBLE) AS weight_kg FROM carts;

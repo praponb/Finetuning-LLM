@@ -1,0 +1,1 @@
+select order_items.quantity, order_items.order_id, orders.channel, stores.city, stores.opened_date, trim(orders.status) as clean_status from order_items right join orders on order_items.order_id = orders.id join stores on orders.store_id = stores.id;

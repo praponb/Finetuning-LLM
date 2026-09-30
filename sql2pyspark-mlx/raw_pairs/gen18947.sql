@@ -1,0 +1,1 @@
+WITH ranked_suppliers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS rn FROM suppliers WHERE country IN ('JP', 'TH', 'SG')) SELECT * FROM ranked_suppliers WHERE rn <= 2

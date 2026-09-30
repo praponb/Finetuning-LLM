@@ -1,0 +1,1 @@
+SELECT status, customer_id, COUNT(*) row_count, MAX(monthly_fee) - MIN(monthly_fee) monthly_fee_range FROM subscriptions WHERE start_date >= '2024-05-23' AND end_date > '2023-10-01' GROUP BY status, customer_id ORDER BY row_count;

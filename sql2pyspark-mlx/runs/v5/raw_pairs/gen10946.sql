@@ -1,0 +1,1 @@
+SELECT web_events.duration_sec, sessions.customer_id, sessions.started_at, LENGTH(web_events.event_type) AS event_type_length FROM web_events FULL OUTER JOIN sessions ON web_events.session_id = sessions.id WHERE web_events.page IN ('/cart', '/product', '/checkout') AND web_events.event_time >= '2024-12-01' ORDER BY customer_id DESC;

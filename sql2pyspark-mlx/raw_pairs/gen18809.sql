@@ -1,0 +1,1 @@
+SELECT s.country, COUNT(i.quantity) quantity_count FROM inventory i FULL OUTER JOIN products p ON p.id = i.product_id JOIN suppliers s ON s.id = p.supplier_id WHERE s.supplier_name IS NOT NULL GROUP BY s.country ORDER BY s.country

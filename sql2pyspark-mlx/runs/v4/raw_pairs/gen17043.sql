@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CAST(age AS DOUBLE) AS age_num FROM customers WHERE segment = 'SMB') SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY age_num DESC NULLS LAST, id) AS latest_rank FROM base QUALIFY latest_rank = 1;

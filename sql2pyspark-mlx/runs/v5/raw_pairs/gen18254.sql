@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, items, ship_to, attributes, ship_to.city AS ship_city, attributes['utm_source'] AS utm_source, SIZE(items) AS num_items, EXISTS(items, li -> li.price > 100) AS has_premium_item, COALESCE(attributes['utm_source'], 'unknown') AS utm_source_or_default FROM carts;

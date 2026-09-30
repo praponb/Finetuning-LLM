@@ -1,0 +1,1 @@
+SELECT HOUR(event_time) AS event_hour, MAX(duration_sec) AS max_duration_sec, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events WHERE page IN ('/search', '/cart') GROUP BY HOUR(event_time);

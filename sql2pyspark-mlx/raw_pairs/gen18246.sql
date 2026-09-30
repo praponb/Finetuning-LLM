@@ -1,0 +1,1 @@
+SELECT s.city, a.brand, COUNT(*) AS cnt, MIN(a.cost) AS min_cost, ROUND(AVG(a.price), 2) AS avg_price, GROUPING_ID() AS level_id FROM products a INNER JOIN suppliers s ON a.supplier_id = s.id GROUP BY GROUPING SETS ((s.city, a.brand), (s.city));

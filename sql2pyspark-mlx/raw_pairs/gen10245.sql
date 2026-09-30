@@ -1,0 +1,1 @@
+WITH valid_departments AS (SELECT * FROM departments WHERE budget BETWEEN 3139000 AND 3638000 AND location IS NOT NULL), agg AS (SELECT dept_name, location, SUM(CASE WHEN dept_name = 'Engineering' THEN budget ELSE 0 END) AS engineering_budget FROM valid_departments GROUP BY dept_name, location) SELECT dept_name, location, engineering_budget FROM agg ORDER BY location DESC

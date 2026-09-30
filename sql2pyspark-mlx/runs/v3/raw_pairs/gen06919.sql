@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, city, rating, supplier_name, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS rn FROM suppliers WHERE city NOT IN ('Bangkok', 'New York', 'Singapore')) SELECT id, city, rating, supplier_name FROM numbered WHERE rn <= 1;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, store_id, product_id, last_restock, LAST_DAY(last_restock) AS last_restock_month_end FROM inventory WHERE last_restock >= TO_DATE('2023-05-10') AND store_id IN (2, 5, 6)) SELECT store_id, id FROM filtered INTERSECT SELECT store_id, id FROM inventory WHERE store_id IN (2, 3);

@@ -1,0 +1,1 @@
+select id, dept_name, budget, lead(budget) over w_running as next_budget, lag(budget) over w_running as prev_budget, row_number() over w_running as seq_no, lag(budget, 2) over w_ordered as prev_budget_2 from departments window w_running as (partition by location order by budget, id), w_ordered as (partition by dept_name, location order by budget, id);

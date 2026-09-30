@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT status FROM orders INTERSECT SELECT status FROM orders WHERE customer_id = 31), reconciled AS (SELECT s.* FROM orders s INNER JOIN kept_keys k ON s.status = k.status) SELECT customer_id, store_id, order_date, status, channel, discount, shipping_fee FROM reconciled ORDER BY discount DESC NULLS FIRST

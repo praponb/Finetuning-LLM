@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, ROUND(quantity * 0.9, 2) AS quantity_scaled FROM inventory WHERE last_restock >= DATE '2023-03-05' AND last_restock >= '2023-10-14') SELECT id FROM base INTERSECT ALL SELECT id FROM inventory WHERE store_id IN (1, 5);

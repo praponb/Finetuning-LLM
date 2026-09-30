@@ -1,0 +1,1 @@
+WITH recent_payments AS (SELECT * FROM payments WHERE paid_at >= '2023-06-01'), StatusSummary AS (SELECT status, method, ROUND((100 * SUM(CASE WHEN status = 'REFUNDED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_refunded, COUNT(*) payment_count FROM recent_payments GROUP BY status, method) SELECT * FROM StatusSummary WHERE pct_refunded >= 31 ORDER BY status, method LIMIT 5

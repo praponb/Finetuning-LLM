@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3841000 THEN 'high' WHEN budget >= 1803000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(DISTINCT budget) AS unique_locations, COUNT(budget) AS budget_count, ROUND(AVG(budget), 2) AS avg_budget FROM departments WHERE location <> 'Chiang Mai' GROUP BY 1 ORDER BY budget_bucket

@@ -1,0 +1,1 @@
+SELECT city FROM stores WHERE sqft BETWEEN 10006 AND 11061 UNION ALL SELECT city FROM stores WHERE city = 'New York' ORDER BY city;

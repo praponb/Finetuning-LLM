@@ -1,0 +1,1 @@
+with valid_accounts as (select * from accounts where (status in ('OPEN', 'FROZEN', 'CLOSED') and opened_date >= '2024-12-15') or customer_id is null), accounts_stats as (select account_type, status, max(balance) as max_balance from valid_accounts group by account_type, status) select account_type, status from accounts_stats order by status, account_type limit 50

@@ -1,0 +1,1 @@
+with recent_transactions as (select * from transactions where is_flagged and amount >= 1500), agg as (select merchant, is_flagged, sum(case when txn_type = 'DEBIT' then 1 else 0 end) as debit_count, round(avg(amount), 2) as avg_amount from recent_transactions group by merchant, is_flagged) select merchant, debit_count, avg_amount from agg;

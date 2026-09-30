@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CONCAT(device, ', ', browser) device_browser FROM sessions WHERE started_at > TO_DATE('2023-10-08') AND country IS NOT NULL AND customer_id IS NOT NULL) SELECT * FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY customer_id, browser ORDER BY started_at, id) = 1;

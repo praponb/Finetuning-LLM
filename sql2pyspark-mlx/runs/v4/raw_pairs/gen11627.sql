@@ -1,0 +1,1 @@
+select d.dept_name, count(distinct e.salary) as unique_levels, max(e.hire_date) as last_hire_date from employees e left join departments d on d.id = e.dept_id group by d.dept_name having unique_levels > 1 order by unique_levels;

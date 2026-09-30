@@ -1,0 +1,1 @@
+select id, product_name, last_day(launch_date) as launch_date_month_end, round(price * 1.07, 2) as adjusted_price from products where category != 'Books' and lower(trim(product_name)) = 'backpack xl' order by launch_date_month_end desc

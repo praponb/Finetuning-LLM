@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, a.balance, t.first_txn_time FROM accounts a INNER JOIN (SELECT account_id, MIN(txn_time) AS first_txn_time FROM transactions WHERE account_id IN (24, 32) GROUP BY account_id) t ON a.id = t.account_id ORDER BY account_type DESC, id LIMIT 50;

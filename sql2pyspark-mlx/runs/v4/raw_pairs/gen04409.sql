@@ -1,0 +1,1 @@
+select *, percent_rank() over w_hist as cost_percent_rank, rank() over (partition by carrier, order_id order by cost nulls first) as cost_rank from shipments window w_hist as (partition by status order by cost);

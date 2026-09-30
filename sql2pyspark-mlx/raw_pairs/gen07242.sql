@@ -1,0 +1,1 @@
+SELECT e.id, e.dept_id AS employee_dept_id, e.hire_date AS employee_hire_date, m.full_name AS manager_full_name, DATE_SUB(e.hire_date, 15) AS hire_date_minus_15d FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE m.job_title != 'Analyst'

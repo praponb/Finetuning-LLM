@@ -1,0 +1,1 @@
+SELECT emp.id, emp.email AS employee_email, emp.level AS employee_level, emp.is_remote AS employee_is_remote, mgr.salary AS manager_salary, mgr.full_name AS manager_full_name, mgr.job_title AS manager_job_title FROM employees emp JOIN employees mgr ON emp.manager_id = mgr.id;

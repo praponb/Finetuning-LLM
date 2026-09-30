@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(browser)) AS browser_list FROM sessions GROUP BY customer_id) SELECT c.id, c.email, c.age, cs.browser_list FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id

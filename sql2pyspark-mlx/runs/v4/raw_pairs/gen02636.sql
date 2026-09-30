@@ -1,0 +1,1 @@
+SELECT *, DENSE_RANK() OVER (PARTITION BY brand ORDER BY cost NULLS FIRST) AS cost_dense_rank, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY launch_date DESC, id) AS row_seq, LEAD(cost, 1) OVER (ORDER BY stock_qty, id) AS next_cost FROM products;

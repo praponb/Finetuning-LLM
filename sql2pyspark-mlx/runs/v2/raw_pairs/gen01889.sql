@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END) AS l2_count, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees WHERE full_name NOT LIKE '%Chaiyapor%' GROUP BY dept_id) SELECT d.id, d.dept_name, ds.l2_count, ds.job_title_list FROM departments d LEFT JOIN department_summary ds ON d.id = ds.dept_id

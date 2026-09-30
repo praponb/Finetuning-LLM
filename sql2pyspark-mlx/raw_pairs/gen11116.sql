@@ -1,0 +1,1 @@
+SELECT CASE WHEN carrier IN ('DHL', 'Kerry') THEN 'core' ELSE 'other' END AS carrier_group, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list, COUNT(CASE WHEN carrier = 'UPS' THEN 1 END) AS ups_count FROM shipments WHERE delivered_date < '2024-12-01' AND order_id IN (3, 9, 23, 40) GROUP BY CASE WHEN carrier IN ('DHL', 'Kerry') THEN 'core' ELSE 'other' END

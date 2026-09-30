@@ -1,0 +1,1 @@
+SELECT id, duration_sec, page, CASE WHEN duration_sec >= 471 THEN 'High' WHEN duration_sec >= 169 THEN 'Medium' ELSE 'Low' END AS duration_sec_band FROM web_events WHERE duration_sec BETWEEN 167 AND 201 AND page IN ('/search', '/product', '/cart') AND session_id = 26

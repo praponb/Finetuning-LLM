@@ -1,0 +1,1 @@
+SELECT s.id, s.delivered_date, s.carrier, o.shipping_fee, st.city, INITCAP(TRIM(o.channel)) AS channel_title FROM shipments s INNER JOIN orders o ON s.order_id = o.id RIGHT OUTER JOIN stores st ON st.id = o.store_id

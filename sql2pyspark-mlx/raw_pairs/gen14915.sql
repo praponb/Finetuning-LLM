@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT *, CONCAT_WS('-', merchant, txn_type) AS merchant_txn_type_key FROM transactions WHERE account_id IN (1, 3, 29)), transactions_stats AS (SELECT txn_type, MAX(amount) AS max_amount FROM valid_transactions GROUP BY txn_type) SELECT * FROM transactions_stats WHERE max_amount < 3700 ORDER BY max_amount

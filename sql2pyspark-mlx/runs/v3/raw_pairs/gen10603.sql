@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY amount DESC) row_num FROM payments WHERE amount <= 1420) SELECT * FROM ranked WHERE row_num <= 2 ORDER BY amount DESC, paid_at;

@@ -1,0 +1,1 @@
+SELECT YEAR(s.opened_date) AS opened_year, s.region, COUNT(*) AS store_sale_count, COUNT(*) AS total_count FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id WHERE ss.revenue BETWEEN 1900 AND 2100 GROUP BY YEAR(s.opened_date), s.region ORDER BY 4 ASC;

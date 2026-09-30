@@ -1,0 +1,1 @@
+SELECT s.device, MAX(we.duration_sec) - MIN(we.duration_sec) AS duration_sec_range FROM web_events we RIGHT JOIN sessions s ON we.session_id = s.id WHERE s.country IN ('JP', 'TH') GROUP BY s.device ORDER BY device;

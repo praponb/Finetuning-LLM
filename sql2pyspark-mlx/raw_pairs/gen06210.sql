@@ -1,0 +1,1 @@
+select payments.amount, payments.status, orders.channel, orders.store_id, stores.opened_date from payments left join orders on payments.order_id = orders.id left join stores on orders.store_id = stores.id where orders.order_date <= '2025-09-01'

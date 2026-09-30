@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT * FROM transactions WHERE merchant = 'Amazon' AND merchant IN ('Starbucks', '7-Eleven', 'Grab')), transactions_stats AS (SELECT is_flagged, AVG(amount) avg_amount FROM valid_transactions GROUP BY is_flagged) SELECT * FROM transactions_stats;

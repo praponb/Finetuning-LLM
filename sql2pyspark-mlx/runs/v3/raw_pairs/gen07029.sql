@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, GREATEST(credit_limit, age) AS greatest_credit_limit_age FROM customers WHERE city IN ('Chiang Mai', 'Singapore') AND LOWER(TRIM(name)) = 'kanya srisuk'), agg AS (SELECT city, COUNT(age) AS age_count, MAX(credit_limit) - MIN(credit_limit) AS credit_limit_range FROM base GROUP BY city) SELECT city, credit_limit_range FROM agg ORDER BY city DESC

@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM stores s WHERE NOT EXISTS (SELECT 1 FROM inventory ch WHERE ch.store_id = s.id AND ch.last_restock >= s.opened_date)) SELECT id, store_name, city, region, opened_date, CASE WHEN store_name RLIKE '^(Riverside|Mall Central)$' THEN 'CORE' ELSE 'OTHER_ZONE' END AS store_name_zone FROM not_flagged ORDER BY city ASC NULLS FIRST, opened_date ASC;

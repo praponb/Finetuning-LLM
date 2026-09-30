@@ -1,0 +1,1 @@
+WITH recent_accounts AS (SELECT * FROM accounts WHERE account_type = 'SAVINGS' AND opened_date < '2023-04-21'), summary AS (SELECT account_type, customer_id, MAX(opened_date) AS last_opened_date, COUNT(CASE WHEN account_type = 'SAVINGS' THEN 1 END) AS savings_count FROM recent_accounts GROUP BY account_type, customer_id) SELECT * FROM summary

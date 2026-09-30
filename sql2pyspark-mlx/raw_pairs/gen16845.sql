@@ -1,0 +1,8 @@
+SELECT unit_price_bucket, unique_orders
+FROM (
+    SELECT CASE WHEN unit_price >= 320 THEN 'high' WHEN unit_price >= 200 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(DISTINCT unit_price) AS unique_orders
+    FROM order_items
+    GROUP BY CASE WHEN unit_price >= 320 THEN 'high' WHEN unit_price >= 200 THEN 'mid' ELSE 'low' END
+) AS t
+WHERE unique_orders > 8
+ORDER BY unit_price_bucket DESC

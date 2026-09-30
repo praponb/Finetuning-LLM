@@ -1,0 +1,1 @@
+SELECT merchant, MAX(amount) AS max_amount, ROUND((100 * SUM(CASE WHEN txn_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_credit FROM transactions WHERE HOUR(txn_time) BETWEEN 11 AND 16 GROUP BY merchant HAVING ROUND((100 * SUM(CASE WHEN txn_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 62 ORDER BY 2 DESC;

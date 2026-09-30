@@ -1,0 +1,1 @@
+with top_products as (select id, supplier_id, launch_date, rank() over (partition by supplier_id order by launch_date) pos from products) select id, supplier_id, launch_date from top_products where pos <= 3 order by launch_date;

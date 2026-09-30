@@ -1,0 +1,1 @@
+select * from (select country, avg(rating) as avg_rating, sum(case when country = 'JP' then rating else 0 end) as jp_rating from suppliers where country in ('UK', 'SG') group by country) as x where avg_rating < 3.3 order by avg_rating desc, country

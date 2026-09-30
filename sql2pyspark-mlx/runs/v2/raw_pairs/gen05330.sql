@@ -1,0 +1,1 @@
+SELECT id, carrier, delivered_date, TRIM(carrier) AS clean_carrier, CONCAT(status, ', ', carrier) AS status_carrier FROM shipments WHERE delivered_date BETWEEN '2023-11-01' AND '2025-05-01' AND (YEAR(delivered_date) = 2023 OR shipped_date > '2025-09-13');

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, account_id, txn_type, txn_time, merchant, is_flagged, UPPER(txn_type) AS txn_type_upper FROM transactions WHERE txn_time >= DATE '2023-10-09' AND merchant IS NOT NULL) SELECT txn_type, id FROM valid EXCEPT DISTINCT SELECT txn_type, id FROM transactions WHERE txn_type = 'DEBIT';

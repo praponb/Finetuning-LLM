@@ -1,0 +1,1 @@
+SELECT a.status, t.is_flagged, t.account_id, t.merchant FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id WHERE t.txn_type IN ('FEE', 'DEBIT', 'CREDIT') AND t.txn_type = 'CREDIT' ORDER BY status;

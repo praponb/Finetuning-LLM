@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.last_restock, p.cost, s.country, s.rating, ADD_MONTHS(i.last_restock, 1) AS last_restock_plus_months FROM inventory i JOIN products p ON i.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE i.last_restock > '2024-12-24';

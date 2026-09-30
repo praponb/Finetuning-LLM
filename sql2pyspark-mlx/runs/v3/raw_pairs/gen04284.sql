@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4134000 THEN 'high' WHEN budget >= 1505000 THEN 'mid' ELSE 'low' END AS budget_bucket, dept_name, SUM(budget) AS total_budget FROM departments WHERE dept_name = 'Engineering' AND location = 'Berlin' GROUP BY 1, 2 HAVING SUM(budget) < 17440000 ORDER BY dept_name DESC, total_budget ASC

@@ -1,0 +1,1 @@
+SELECT s.country, COUNT(p.id) AS product_count, COUNT(DISTINCT p.cost) AS unique_categorys FROM suppliers s INNER JOIN products p ON s.id = p.supplier_id WHERE p.product_name LIKE '%wir%' GROUP BY s.country ORDER BY product_count DESC, country

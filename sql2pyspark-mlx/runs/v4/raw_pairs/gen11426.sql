@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, p.product_name, s.supplier_name, s.city FROM inventory i LEFT JOIN products p ON p.id = i.product_id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE i.store_id IN (1, 5, 6);

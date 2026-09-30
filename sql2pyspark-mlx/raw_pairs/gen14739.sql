@@ -1,0 +1,1 @@
+SELECT c.country, SUM(CASE WHEN a.status = 'CLOSED' THEN 1 ELSE 0 END) AS closed_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(a.account_type))) AS account_type_values FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE c.age < 66 GROUP BY c.country;

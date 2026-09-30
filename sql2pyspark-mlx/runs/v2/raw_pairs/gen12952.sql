@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(CASE WHEN country = 'US' THEN 1 END) AS us_count FROM suppliers WHERE city = 'New York' GROUP BY CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END) AS s WHERE us_count >= 8 ORDER BY rating_bucket, us_count DESC

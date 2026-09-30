@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CASE WHEN temp_c >= 35.4 THEN 'High' WHEN temp_c >= 24.1 THEN 'Medium' ELSE 'Low' END AS temp_c_level FROM device_readings WHERE reading_ts >= DATE '2025-09-01' AND TO_DATE(reading_ts) < '2024-04-01') SELECT id, device_code FROM valid EXCEPT DISTINCT SELECT id, device_code FROM device_readings WHERE humidity BETWEEN 64 AND 69;

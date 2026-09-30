@@ -1,0 +1,1 @@
+SELECT we.id, we.session_id, s.country, s.device, c.country AS customer_country, c.credit_limit FROM web_events we JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id WHERE s.started_at >= '2023-06-25';

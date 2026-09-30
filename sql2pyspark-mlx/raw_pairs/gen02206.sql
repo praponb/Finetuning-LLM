@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, order_id, method, amount, paid_at, TRIM(method) AS clean_method FROM payments WHERE paid_at > DATE '2023-05-03' AND method IS NOT NULL) SELECT method, ROUND(SUM(amount) / NULLIF(COUNT(CASE WHEN method = 'bank_transfer' THEN 1 END), 0), 2) AS amount_per_bank_transfer, COUNT(*) AS cnt FROM cleaned GROUP BY method

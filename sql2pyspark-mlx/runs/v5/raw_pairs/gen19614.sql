@@ -1,0 +1,1 @@
+SELECT 'shipment' AS record_type, shipped_date AS event_date FROM shipments WHERE delivered_date BETWEEN '2024-09-01' AND '2025-05-01' UNION SELECT 'customer' AS record_type, signup_date AS event_date FROM customers WHERE age <= 31;

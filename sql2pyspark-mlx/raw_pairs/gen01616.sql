@@ -1,0 +1,1 @@
+SELECT id, status, cost, shipped_date, ROUND(DATEDIFF(shipped_date, delivered_date) / 30, 1) AS months_delivered_date_to_shipped_date, DATEDIFF(CURRENT_DATE(), delivered_date) AS days_since_delivered_date FROM shipments WHERE delivered_date >= '2024-09-01' ORDER BY days_since_delivered_date DESC;

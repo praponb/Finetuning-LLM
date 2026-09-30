@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, method, amount, order_id, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount, id) AS pos FROM payments) SELECT id, method, amount, order_id FROM numbered WHERE pos = 1 ORDER BY order_id DESC;

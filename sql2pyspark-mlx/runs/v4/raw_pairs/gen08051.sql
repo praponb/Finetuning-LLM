@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC, id) rn FROM orders WHERE shipping_fee > 11) SELECT id, customer_id, order_date, channel FROM numbered WHERE rn <= 1;

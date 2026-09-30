@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 610 THEN 'high' WHEN cost >= 130 THEN 'mid' ELSE 'low' END AS cost_bucket, AVG(price) AS avg_price, COUNT(*) AS product_count FROM products GROUP BY cost_bucket HAVING SUM(CASE WHEN brand = 'Umbrella' THEN cost ELSE 0 END) < 20 ORDER BY cost_bucket DESC;

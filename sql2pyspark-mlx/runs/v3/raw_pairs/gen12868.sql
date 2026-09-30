@@ -1,0 +1,1 @@
+SELECT id, customer_id, start_date, end_date, DATE_SUB(start_date, 65) AS start_date_minus_65d, DATEDIFF(end_date, start_date) AS days_start_date_to_end_date FROM subscriptions WHERE monthly_fee <= 200 OR status IN ('EXPIRED', 'CANCELLED')

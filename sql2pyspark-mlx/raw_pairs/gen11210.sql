@@ -1,0 +1,1 @@
+SELECT a.status, DATE_TRUNC('MONTH', a.opened_date) AS opened_month, COUNT(t.amount) AS amount_count FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id GROUP BY a.status, DATE_TRUNC('MONTH', a.opened_date)

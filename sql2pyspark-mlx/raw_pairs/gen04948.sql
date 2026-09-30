@@ -1,0 +1,1 @@
+SELECT id, city, rating, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) row_num, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) row_num_2 FROM suppliers WHERE rating BETWEEN 3.3 AND 3.7;

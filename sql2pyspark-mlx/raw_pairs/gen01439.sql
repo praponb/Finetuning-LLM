@@ -1,0 +1,1 @@
+select brand, unique_categorys, min_launch_date from (select brand, count(distinct stock_qty) as unique_categorys, min(launch_date) as min_launch_date from products group by brand) as x where unique_categorys > 7;

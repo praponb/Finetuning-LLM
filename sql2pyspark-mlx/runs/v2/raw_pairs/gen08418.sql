@@ -1,0 +1,1 @@
+WITH valid_orders AS (SELECT *, CAST(shipping_fee AS INT) AS shipping_fee_int FROM orders WHERE status = 'COMPLETED'), status_summary AS (SELECT status, MAX(order_date) AS latest_order_date, ROUND(STDDEV(shipping_fee), 2) AS stddev_shipping_fee FROM valid_orders GROUP BY status) SELECT status, latest_order_date, stddev_shipping_fee FROM status_summary;

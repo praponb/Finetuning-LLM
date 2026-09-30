@@ -1,0 +1,1 @@
+with top_orders as (select id, customer_id, shipping_fee, amount, row_number() over (partition by customer_id order by shipping_fee desc, id) as rn from orders where amount is null) select * from top_orders where rn <= 3

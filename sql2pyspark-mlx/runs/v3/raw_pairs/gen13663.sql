@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, MIN(quantity) AS min_quantity FROM order_items GROUP BY product_id) SELECT p.product_name, ps.min_quantity FROM products p JOIN product_summary ps ON p.id = ps.product_id WHERE ps.min_quantity > 6.7 ORDER BY min_quantity DESC;

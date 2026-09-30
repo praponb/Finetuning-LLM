@@ -1,0 +1,1 @@
+SELECT o.id, o.store_id, o.channel, c.email, s.store_name, s.sqft FROM orders o FULL OUTER JOIN customers c ON o.customer_id = c.id LEFT OUTER JOIN stores s ON s.id = o.store_id WHERE s.store_name IS NOT NULL ORDER BY store_id, c.email;

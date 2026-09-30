@@ -1,0 +1,1 @@
+SELECT c.segment, ROUND((100 * SUM(CASE WHEN s.status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cancelled, MAX(s.monthly_fee) - MIN(s.monthly_fee) AS monthly_fee_range FROM subscriptions s INNER JOIN customers c ON c.id = s.customer_id GROUP BY c.segment ORDER BY monthly_fee_range DESC

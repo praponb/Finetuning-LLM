@@ -1,0 +1,1 @@
+SELECT city, west_count, sqft_range FROM (SELECT city, SUM(CASE WHEN region = 'West' THEN 1 ELSE 0 END) AS west_count, MAX(sqft) - MIN(sqft) AS sqft_range FROM stores WHERE region = 'North' GROUP BY city) AS t WHERE sqft_range >= 50 ORDER BY city, sqft_range DESC;

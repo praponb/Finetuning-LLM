@@ -1,0 +1,1 @@
+select orders.status, orders.amount, t.carrier_values, t.carrier_list from orders inner join (select order_id, concat_ws(', ', sort_array(collect_set(carrier))) as carrier_values, sort_array(collect_set(carrier)) as carrier_list from shipments group by order_id) t on orders.id = t.order_id;

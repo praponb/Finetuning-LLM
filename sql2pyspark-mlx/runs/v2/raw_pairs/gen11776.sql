@@ -1,0 +1,1 @@
+WITH ranked_products AS (SELECT id, brand, cost, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY cost DESC, id) AS rn FROM products WHERE LOWER(product_name) LIKE '%esk%') SELECT id, brand, cost FROM ranked_products WHERE rn <= 1 ORDER BY cost ASC;

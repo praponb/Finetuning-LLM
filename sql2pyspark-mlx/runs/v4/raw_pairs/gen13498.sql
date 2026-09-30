@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, order_id, quantity, unit_price, RANK() OVER (PARTITION BY order_id ORDER BY quantity DESC) AS row_num FROM order_items) SELECT * FROM ranked WHERE row_num <= 5 ORDER BY 5 ASC

@@ -1,0 +1,1 @@
+SELECT p.brand, MONTH(p.launch_date) launch_month, COUNT(DISTINCT ss.units) unique_products FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN stores s ON ss.store_id = s.id WHERE s.region IN ('South', 'West', 'Central') GROUP BY p.brand, MONTH(p.launch_date) ORDER BY p.brand ASC;

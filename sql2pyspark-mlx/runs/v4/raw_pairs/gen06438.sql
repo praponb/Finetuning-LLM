@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, attributes, COALESCE(attributes['gift'], 'direct') AS gift_or_default, attributes['gift'] AS gift, ship_to.zip AS ship_zip, SIZE(FILTER(items, x -> x.qty >= 3)) AS bulk_lines FROM carts

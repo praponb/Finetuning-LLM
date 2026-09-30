@@ -1,0 +1,1 @@
+with cleaned as (select *, date_format(shipped_date, 'yyyy-MM-dd') as shipped_date_label from shipments where order_id is not null) select *, avg(cost) over (order by delivered_date, id rows between 2 preceding and current row) as cost_avg_2, ntile(4) over w_grp as cost_bucket from cleaned window w_grp as (order by cost, id)

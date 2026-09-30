@@ -1,0 +1,1 @@
+SELECT c.segment, s.status, COUNT(*) AS rows_total, MIN(s.balance) AS min_balance, GROUPING_ID() AS grouping_level FROM accounts s INNER JOIN customers c ON s.customer_id = c.id GROUP BY CUBE (c.segment, s.status);

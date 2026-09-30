@@ -1,0 +1,1 @@
+SELECT id, category, brand, cost, supplier_id, LAST_VALUE(supplier_id) OVER (PARTITION BY category, brand ORDER BY cost DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_supplier_id FROM products;

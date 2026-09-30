@@ -1,0 +1,1 @@
+SELECT id, account_type, balance, status, CUME_DIST() OVER (PARTITION BY status, customer_id ORDER BY balance DESC NULLS LAST) AS balance_cume_dist, DENSE_RANK() OVER (PARTITION BY status ORDER BY balance NULLS LAST) AS balance_dense_rank FROM accounts

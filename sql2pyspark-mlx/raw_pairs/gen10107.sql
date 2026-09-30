@@ -1,0 +1,1 @@
+SELECT e.level AS employee_level, e.is_remote AS employee_is_remote, m.manager_id AS manager_manager_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.hire_date BETWEEN '2024-12-01' AND '2025-06-09' ORDER BY manager_manager_id DESC;

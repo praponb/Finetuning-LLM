@@ -1,0 +1,1 @@
+select shipped_date, 'shipment' as source from shipments where delivered_date between '2024-05-01' and '2025-07-01' union select last_restock, 'inventory' as source from inventory where product_id = 9 order by source;

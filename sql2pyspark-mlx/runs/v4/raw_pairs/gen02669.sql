@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, customer_id, device, country, SUBSTRING(device, 1, 2) AS device_prefix FROM sessions WHERE browser IS NOT NULL) SELECT s.* FROM base s WHERE NOT EXISTS (SELECT 1 FROM web_events c WHERE c.session_id = s.id AND HOUR(c.event_time) BETWEEN 8 AND 16);

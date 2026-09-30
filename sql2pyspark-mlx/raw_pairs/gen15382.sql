@@ -1,0 +1,1 @@
+SELECT s.country, s.browser, COUNT(we.duration_sec) AS duration_sec_count, COUNT(DISTINCT we.duration_sec) AS unique_event_types FROM web_events we JOIN sessions s ON we.session_id = s.id WHERE s.browser = 'Safari' GROUP BY s.country, s.browser ORDER BY duration_sec_count, country, browser LIMIT 10;

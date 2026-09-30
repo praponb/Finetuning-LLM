@@ -1,0 +1,1 @@
+SELECT products.supplier_id, products.brand, MAX(order_items.quantity) AS max_quantity FROM order_items FULL OUTER JOIN orders ON order_items.order_id = orders.id INNER JOIN products ON order_items.product_id = products.id GROUP BY products.supplier_id, products.brand HAVING max_quantity > 8.1 ORDER BY max_quantity DESC, supplier_id ASC

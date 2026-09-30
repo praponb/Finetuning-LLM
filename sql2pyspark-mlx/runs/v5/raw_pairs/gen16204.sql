@@ -1,0 +1,1 @@
+SELECT id, order_id, quantity, product_id, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity, id) AS rn, NTILE(10) OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS quantity_ntile FROM order_items

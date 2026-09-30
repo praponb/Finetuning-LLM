@@ -1,0 +1,1 @@
+SELECT id, city, opened_date, sqft, region, SUM(sqft) OVER (PARTITION BY city ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_sqft, SUM(sqft) OVER (PARTITION BY region, city ORDER BY opened_date, id) AS running_sqft_2 FROM stores WHERE opened_date >= '2023-06-01' ORDER BY sqft DESC

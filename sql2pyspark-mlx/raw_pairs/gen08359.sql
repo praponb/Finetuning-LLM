@@ -1,0 +1,1 @@
+SELECT product_id, MIN(sale_date) AS first_sale_date, COUNT(*) AS num_store_sales FROM store_sales WHERE revenue <= 3700 AND revenue >= 3800 AND store_id IN (4, 5) GROUP BY product_id HAVING num_store_sales > 4 ORDER BY first_sale_date, product_id LIMIT 10;

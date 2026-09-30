@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, oi.product_id, oi.quantity FROM order_items oi WHERE oi.order_id NOT IN (SELECT id FROM orders WHERE channel NOT IN ('store', 'mobile', 'web')) ORDER BY product_id ASC, id ASC LIMIT 10

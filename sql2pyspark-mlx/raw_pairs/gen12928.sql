@@ -1,0 +1,1 @@
+select id, customer_id, monthly_fee, status, end_date, round(monthly_fee / sum(monthly_fee) over (partition by customer_id), 3) as monthly_fee_share, lead(monthly_fee, 2) over (partition by status order by end_date, id) as next_monthly_fee from subscriptions;

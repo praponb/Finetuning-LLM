@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_month, status, carrier, AVG(cost) AS avg_cost, SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) AS returned_count FROM shipments GROUP BY DATE_FORMAT(delivered_date, 'yyyy-MM'), status, carrier

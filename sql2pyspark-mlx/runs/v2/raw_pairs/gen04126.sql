@@ -1,0 +1,1 @@
+SELECT id, session_id, duration_sec, page, INITCAP(TRIM(event_type)) AS event_type_title FROM web_events WHERE TO_DATE(event_time) < '2023-05-01' AND event_type NOT IN ('search', 'page_view', 'click') ORDER BY session_id DESC, id LIMIT 3;

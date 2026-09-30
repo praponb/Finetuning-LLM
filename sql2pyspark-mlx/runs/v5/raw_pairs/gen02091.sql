@@ -1,0 +1,1 @@
+with latest as (select *, row_number() over (partition by city order by opened_date nulls first, id) as dedup_rank from stores qualify dedup_rank = 1) select id, store_name, region, opened_date, sqft, dedup_rank from latest order by sqft nulls last, opened_date;

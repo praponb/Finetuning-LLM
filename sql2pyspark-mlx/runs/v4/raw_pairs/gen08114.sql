@@ -1,0 +1,1 @@
+SELECT QUARTER(delivered_date) AS delivered_quarter, status, MIN(delivered_date) AS first_delivered_date, SUM(CASE WHEN status = 'LOST' THEN cost ELSE 0 END) AS lost_cost FROM shipments GROUP BY QUARTER(delivered_date), status HAVING SUM(CASE WHEN status = 'LOST' THEN cost ELSE 0 END) >= 49 ORDER BY first_delivered_date, delivered_quarter, status LIMIT 10;

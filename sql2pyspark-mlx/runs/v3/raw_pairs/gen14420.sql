@@ -1,0 +1,1 @@
+WITH valid_store_sales AS (SELECT *, ADD_MONTHS(sale_date, 3) AS sale_date_plus_months FROM store_sales WHERE revenue BETWEEN 1200 AND 3000 AND sale_date BETWEEN '2024-02-04' AND '2024-10-15'), summary AS (SELECT store_id, COUNT(revenue) AS revenue_count FROM valid_store_sales GROUP BY store_id) SELECT * FROM summary WHERE revenue_count > 6;

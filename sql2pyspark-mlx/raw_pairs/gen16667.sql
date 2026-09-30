@@ -1,0 +1,1 @@
+with ranked_web_events as (select id, session_id, duration_sec, page, row_number() over (partition by session_id order by duration_sec desc, id) as rnk from web_events where hour(event_time) between 11 and 15) select id, session_id, duration_sec, page from ranked_web_events where rnk <= 3 order by page, duration_sec

@@ -1,0 +1,1 @@
+SELECT id, is_flagged, AVG(amount) OVER w_recent last3_avg_amount, MIN(amount) OVER w_recent last3_min_amount, COUNT(amount) OVER w_recent last3_count_amount, LEAD(amount, 2) OVER (PARTITION BY merchant ORDER BY amount, id) next_amount FROM transactions WINDOW w_recent AS (PARTITION BY account_id, merchant ORDER BY amount, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW);

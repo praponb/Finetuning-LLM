@@ -1,0 +1,1 @@
+SELECT departments.dept_name, t.job_title_list, t.director_count FROM departments LEFT OUTER JOIN (SELECT dept_id, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, COUNT(CASE WHEN job_title = 'Director' THEN 1 END) AS director_count FROM employees GROUP BY dept_id) t ON departments.id = t.dept_id ORDER BY t.director_count, departments.dept_name

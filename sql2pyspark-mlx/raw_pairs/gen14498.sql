@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', signup_date) AS activity_month, AVG(credit_limit) AS avg_credit_limit, APPROX_PERCENTILE(credit_limit, 0.95) AS credit_limit_p95, COUNT(CASE WHEN segment = 'Corporate' THEN 1 END) AS corporate_count, COUNT(*) AS cnt FROM customers GROUP BY activity_month ORDER BY activity_month DESC;

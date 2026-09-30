@@ -1,0 +1,1 @@
+SELECT QUARTER(p.launch_date) launch_quarter, ROUND(AVG(i.quantity), 2) avg_quantity, MIN(i.quantity) min_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE SIZE(p.tags) >= 1 GROUP BY QUARTER(p.launch_date) ORDER BY avg_quantity

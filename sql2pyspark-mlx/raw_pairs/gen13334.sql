@@ -1,0 +1,1 @@
+SELECT id, paid_at, method, amount, status, ROW_NUMBER() OVER (PARTITION BY TO_DATE(paid_at), method ORDER BY amount DESC, id) AS rn, NTILE(2) OVER (PARTITION BY status ORDER BY amount, id) AS quartile FROM payments

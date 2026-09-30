@@ -1,0 +1,1 @@
+SELECT id, customer_id, end_date, monthly_fee, plan, SUM(monthly_fee) OVER (PARTITION BY customer_id ORDER BY end_date, id) AS running_monthly_fee, LEAD(monthly_fee, 1) OVER (PARTITION BY plan ORDER BY end_date, id) AS next_monthly_fee FROM subscriptions WHERE end_date <= '2025-05-01' ORDER BY end_date ASC;

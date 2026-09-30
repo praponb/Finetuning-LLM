@@ -1,0 +1,1 @@
+SELECT we.id, we.event_type, we.duration_sec, we.event_time FROM web_events we WHERE we.session_id IN (SELECT id FROM sessions WHERE TO_DATE(started_at) >= '2024-06-22') ORDER BY id, duration_sec LIMIT 5

@@ -1,0 +1,1 @@
+SELECT p.account_type, p.status, a.merchant, COUNT(*) AS cnt, MIN(a.amount) AS min_amount FROM transactions a INNER JOIN accounts p ON a.account_id = p.id GROUP BY p.account_type, p.status, a.merchant

@@ -1,0 +1,1 @@
+SELECT s.id, s.opened_date, t.avg_amount, t.channel_values FROM stores s LEFT JOIN (SELECT store_id, AVG(amount) AS avg_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM orders GROUP BY store_id) t ON s.id = t.store_id WHERE t.avg_amount > 1180

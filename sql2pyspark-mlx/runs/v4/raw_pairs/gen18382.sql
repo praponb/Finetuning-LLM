@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY account_id) SELECT a.id, a.balance, tba.avg_amount FROM accounts a JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY a.id

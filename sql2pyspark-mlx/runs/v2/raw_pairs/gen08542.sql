@@ -1,0 +1,1 @@
+SELECT location, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) AS location_values, SUM(CASE WHEN location = 'Singapore' THEN budget ELSE 0 END) AS singapore_budget, MAX(budget) AS max_budget FROM departments WHERE dept_name = 'Engineering' AND budget <= 1514000 GROUP BY location HAVING max_budget > 3732000 ORDER BY location_values DESC;

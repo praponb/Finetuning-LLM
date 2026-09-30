@@ -1,0 +1,1 @@
+with ProductSummary as (select product_id, sum(quantity * unit_price) as revenue from order_items group by product_id) select p.launch_date, P.revenue from products p left join ProductSummary P on p.id = P.product_id where P.revenue > 39 order by launch_date, revenue desc;

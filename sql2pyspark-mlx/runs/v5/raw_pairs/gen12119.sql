@@ -1,0 +1,1 @@
+with valid as (select *, length(brand) as brand_length from products where brand is distinct from 'Stark') select id, supplier_id, measure, reading from (select id, supplier_id, price, cost from valid) src unpivot (reading for measure in (price, cost))

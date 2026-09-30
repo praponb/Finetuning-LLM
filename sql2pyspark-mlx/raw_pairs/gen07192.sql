@@ -1,0 +1,1 @@
+select month(start_date) as start_month, status, count(case when status = 'ACTIVE' then 1 end) as active_count, max(monthly_fee) as max_monthly_fee, count(*) as row_count from subscriptions where monthly_fee < 160 group by month(start_date), status having count(case when status = 'ACTIVE' then 1 end) > 5 order by max_monthly_fee desc, start_month, status limit 5;

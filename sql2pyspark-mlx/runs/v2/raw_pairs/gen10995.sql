@@ -1,0 +1,1 @@
+select case when budget >= 3053000 then 'high' when budget >= 791000 then 'mid' else 'low' end as budget_bucket, count(distinct budget) as unique_dept_names, sum(budget) as total_budget from departments group by case when budget >= 3053000 then 'high' when budget >= 791000 then 'mid' else 'low' end

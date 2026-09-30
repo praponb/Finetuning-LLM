@@ -1,0 +1,1 @@
+select i.quantity, i.last_restock, p.launch_date, s.sqft, s.store_name from inventory i full outer join products p on p.id = i.product_id full outer join stores s on i.store_id = s.id where i.store_id in (2, 5, 6) and p.supplier_id in (11, 25)

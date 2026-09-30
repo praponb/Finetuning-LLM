@@ -1,0 +1,1 @@
+SELECT CASE WHEN monthly_fee >= 217 THEN 'high' WHEN monthly_fee >= 58 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, SUM(monthly_fee) AS total_monthly_fee, SUM(CASE WHEN plan = 'basic' THEN monthly_fee ELSE 0 END) AS basic_monthly_fee FROM subscriptions WHERE monthly_fee <= 100 GROUP BY monthly_fee_bucket

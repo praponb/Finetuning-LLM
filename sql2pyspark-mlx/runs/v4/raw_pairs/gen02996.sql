@@ -1,0 +1,1 @@
+WITH kept AS (SELECT s.* FROM orders s WHERE NOT EXISTS (SELECT 1 FROM shipments c WHERE c.order_id = s.id AND c.cost IS NOT NULL)) SELECT id, customer_id, store_id, amount, discount FROM kept ORDER BY customer_id NULLS LAST

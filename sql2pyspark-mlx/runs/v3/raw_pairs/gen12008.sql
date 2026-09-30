@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, YEAR(c.signup_date) AS signup_year, SUM(CASE WHEN a.account_type = 'SAVINGS' THEN 1 ELSE 0 END) AS savings_count FROM accounts a LEFT JOIN customers c ON a.customer_id = c.id GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM'), YEAR(c.signup_date) ORDER BY signup_month, signup_year LIMIT 5;

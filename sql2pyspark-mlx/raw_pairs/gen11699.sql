@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, order_date, status, channel, discount, shipping_fee, ADD_MONTHS(order_date, 1) AS order_date_plus_months FROM orders WHERE order_date > DATE '2023-04-30') SELECT channel, id FROM filtered EXCEPT ALL SELECT channel, id FROM orders WHERE amount BETWEEN 1090 AND 1430

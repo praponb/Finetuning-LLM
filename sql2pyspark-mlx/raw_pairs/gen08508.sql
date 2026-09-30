@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, product_id, COUNT(units) AS units_count, MIN(sale_date) AS first_sale_date FROM store_sales WHERE units >= 27 AND units <= 12 GROUP BY sale_cohort, product_id ORDER BY units_count DESC;

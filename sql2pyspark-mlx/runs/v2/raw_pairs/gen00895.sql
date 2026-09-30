@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(p.id) AS product_count FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE p.stock_qty IS NOT NULL GROUP BY s.id, s.country ORDER BY s.id DESC, country LIMIT 3;

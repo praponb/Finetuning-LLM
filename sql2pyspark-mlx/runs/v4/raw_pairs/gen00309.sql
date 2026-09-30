@@ -1,0 +1,1 @@
+SELECT region, MONTH(opened_date) AS opened_month, ROUND(AVG(sqft), 2) AS avg_sqft, SORT_ARRAY(COLLECT_SET(region)) AS region_list, COUNT(CASE WHEN region = 'North' THEN 1 END) AS north_count FROM stores GROUP BY region, MONTH(opened_date) ORDER BY region

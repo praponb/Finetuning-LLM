@@ -1,0 +1,1 @@
+SELECT t.id, t.account_id, t.amount, a.balance, c.age FROM transactions t LEFT OUTER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id WHERE t.merchant IN ('Amazon', 'Grab')

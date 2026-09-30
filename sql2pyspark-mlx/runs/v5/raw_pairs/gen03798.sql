@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, host, log_ts, latency_ms, status_code, k, v FROM app_logs LATERAL VIEW EXPLODE(context) li AS k, v) SELECT id, service, log_ts, latency_ms, k, v, CASE WHEN service RLIKE '^(checkout|auth)$' THEN 'GROUP_A' WHEN service RLIKE '^(billing|search)$' THEN 'EXTENDED' ELSE 'PRIORITY' END AS service_zone FROM flattened ORDER BY service, service_zone

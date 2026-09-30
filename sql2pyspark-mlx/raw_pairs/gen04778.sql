@@ -1,0 +1,1 @@
+SELECT id, sale_date, revenue, LEAD(units) OVER (PARTITION BY store_id ORDER BY units, id) AS next_units, LEAD(revenue) OVER (PARTITION BY store_id ORDER BY units, id) AS next_revenue, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY units, id) AS row_seq FROM store_sales;

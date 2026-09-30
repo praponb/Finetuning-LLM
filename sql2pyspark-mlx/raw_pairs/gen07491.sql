@@ -1,0 +1,1 @@
+SELECT stores.region, ROUND(STDDEV(orders.shipping_fee), 2) AS stddev_shipping_fee FROM orders RIGHT JOIN stores ON orders.store_id = stores.id LEFT JOIN customers ON customers.id = orders.customer_id WHERE stores.city IN ('Chiang Mai', 'Tokyo') GROUP BY stores.region ORDER BY stores.region DESC

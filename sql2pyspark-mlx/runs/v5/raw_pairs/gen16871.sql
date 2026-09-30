@@ -1,0 +1,3 @@
+SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating ASC, id ASC) AS rn
+FROM suppliers
+QUALIFY rn = 1;

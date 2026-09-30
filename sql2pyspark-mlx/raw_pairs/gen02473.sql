@@ -1,0 +1,1 @@
+select is_flagged, case when amount >= 3800 then 'high' when amount >= 1500 then 'mid' else 'low' end as amount_bucket, count(case when txn_type = 'REFUND' then 1 end) as refund_count, sum(amount) as total_amount from transactions where merchant in ('7-Eleven', 'Amazon', 'Shell') and is_flagged = true and account_id in (13, 14, 31) group by is_flagged, amount_bucket;

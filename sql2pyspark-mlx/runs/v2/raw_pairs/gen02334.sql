@@ -1,0 +1,1 @@
+select e.id, e.job_title employee_job_title, e.manager_id employee_manager_id, e.full_name employee_full_name, m.email manager_email, m.level manager_level, m.hire_date manager_hire_date from employees e left outer join employees m on e.manager_id = m.id order by employee_job_title desc

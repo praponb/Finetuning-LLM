@@ -1,0 +1,1 @@
+select status, method, case when status in ('FAILED', 'REFUNDED') then 'core' else 'other' end status_group, round(stddev(amount), 2) stddev_amount, max(amount) - min(amount) amount_range, sum(case when status = 'FAILED' then amount else 0 end) failed_amount from payments where order_id = 19 and to_date(paid_at) < '2023-09-01' group by 1, 2, 3;

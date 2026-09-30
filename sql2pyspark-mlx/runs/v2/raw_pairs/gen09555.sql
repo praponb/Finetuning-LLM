@@ -1,0 +1,1 @@
+WITH TransactionsByAccount AS (SELECT account_id, COUNT(*) AS row_count FROM transactions GROUP BY account_id) SELECT a.id, a.account_type, a.status, T.row_count FROM accounts a JOIN TransactionsByAccount T ON a.id = T.account_id WHERE T.row_count >= 4 ORDER BY row_count DESC, id LIMIT 10;

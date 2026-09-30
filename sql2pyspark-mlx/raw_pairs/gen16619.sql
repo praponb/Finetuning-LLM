@@ -1,0 +1,1 @@
+WITH filtered_products AS (SELECT * FROM products WHERE price > 710), agg AS (SELECT brand, MAX(launch_date) AS latest_launch_date, SORT_ARRAY(COLLECT_SET(category)) AS category_list FROM filtered_products GROUP BY brand) SELECT * FROM agg;

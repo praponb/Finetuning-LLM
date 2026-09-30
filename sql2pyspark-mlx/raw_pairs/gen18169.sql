@@ -1,0 +1,1 @@
+SELECT id, store_name, region, COALESCE(store_name, 'Unknown') AS store_name_filled, CASE WHEN city IN ('Bangkok', 'New York') THEN 'Priority' ELSE 'Other' END AS city_group FROM stores WHERE opened_date >= '2025-06-19' AND city NOT IN ('Bangkok', 'Singapore') ORDER BY 3 ASC;

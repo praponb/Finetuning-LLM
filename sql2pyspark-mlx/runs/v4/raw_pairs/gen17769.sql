@@ -1,0 +1,1 @@
+SELECT dept_name, SORT_ARRAY(COLLECT_SET(location)) AS location_list, MAX(budget) - MIN(budget) AS budget_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(dept_name))) AS dept_name_values FROM departments WHERE location NOT IN ('New York', 'Bangkok', 'Singapore') GROUP BY dept_name;

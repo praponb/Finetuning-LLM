@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM stores s WHERE NOT EXISTS (SELECT 1 FROM orders c WHERE c.store_id = s.id AND c.order_date < s.opened_date)) SELECT id, city, region, opened_date, sqft, CASE WHEN region RLIKE '^(East|Central)$' THEN 'GROUP_A' ELSE 'EXTENDED' END AS region_zone FROM not_flagged ORDER BY region DESC

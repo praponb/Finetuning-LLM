@@ -1,0 +1,1 @@
+select case when s.country in ('JP', 'UK') then 'core' else 'other' end as country_group, max(we.duration_sec) as max_duration_sec from web_events we right outer join sessions s on s.id = we.session_id full outer join customers c on s.customer_id = c.id where c.segment = 'Consumer' group by case when s.country in ('JP', 'UK') then 'core' else 'other' end order by country_group;

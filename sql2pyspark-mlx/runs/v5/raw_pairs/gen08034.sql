@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.sqft >= 13881 THEN 'high' WHEN s.sqft >= 4424 THEN 'mid' ELSE 'low' END AS sqft_bucket, MAX(ss.sale_date) AS latest_sale_date FROM store_sales ss RIGHT JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON ss.product_id = p.id GROUP BY CASE WHEN s.sqft >= 13881 THEN 'high' WHEN s.sqft >= 4424 THEN 'mid' ELSE 'low' END;

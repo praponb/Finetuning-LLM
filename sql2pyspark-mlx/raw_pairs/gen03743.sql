@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.store_id, store_sales.units, stores.region, stores.store_name, products.price FROM store_sales INNER JOIN stores ON store_sales.store_id = stores.id LEFT OUTER JOIN products ON store_sales.product_id = products.id WHERE store_sales.product_id IN (1, 2, 8) OR YEAR(stores.opened_date) >= 2024;

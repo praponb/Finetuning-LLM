@@ -1,0 +1,10 @@
+from pyspark.sql import functions as F
+
+max_duration_sec = df_web_events.agg(F.max("duration_sec")).first()[0]
+
+result = (
+    df_web_events
+    .filter(F.col("duration_sec") > max_duration_sec)
+    .select("id", "duration_sec", "page")
+    .orderBy("page")
+)

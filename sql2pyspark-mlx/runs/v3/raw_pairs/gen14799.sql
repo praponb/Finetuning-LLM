@@ -1,0 +1,1 @@
+SELECT hire_month, stddev_salary, avg_salary FROM (SELECT DATE_TRUNC('MONTH', hire_date) AS hire_month, ROUND(STDDEV(salary), 2) AS stddev_salary, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE is_remote GROUP BY DATE_TRUNC('MONTH', hire_date)) AS x WHERE avg_salary < 42

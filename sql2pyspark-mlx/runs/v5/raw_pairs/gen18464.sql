@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(opened_date) < 2024 THEN 'before_2024' WHEN YEAR(opened_date) = 2024 THEN '2024' ELSE 'after_2024' END opened_cohort, region, ROUND((100 * SUM(CASE WHEN region = 'West' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_west, COUNT(CASE WHEN region = 'North' THEN 1 END) north_count FROM stores GROUP BY 1, 2 ORDER BY north_count

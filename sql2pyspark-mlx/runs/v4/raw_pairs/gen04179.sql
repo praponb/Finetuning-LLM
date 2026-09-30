@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, COUNT(*) AS cnt, COUNT(*) AS total_count FROM accounts GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM') ORDER BY total_count DESC, cnt

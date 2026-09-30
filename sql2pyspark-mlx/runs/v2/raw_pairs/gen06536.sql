@@ -1,0 +1,1 @@
+SELECT MONTH(event_time) event_month, SUM(duration_sec) total_duration_sec, SUM(SUM(duration_sec)) OVER (ORDER BY MONTH(event_time)) AS cumulative_duration_sec FROM web_events WHERE event_type = 'search' GROUP BY MONTH(event_time);

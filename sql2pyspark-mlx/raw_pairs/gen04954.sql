@@ -1,0 +1,1 @@
+SELECT QUARTER(hire_date) hire_quarter, SUM(salary) total_salary, COUNT(*) cnt, SUM(SUM(salary)) OVER (ORDER BY QUARTER(hire_date)) AS cumulative_salary FROM employees WHERE manager_id IN (29, 30) GROUP BY QUARTER(hire_date)

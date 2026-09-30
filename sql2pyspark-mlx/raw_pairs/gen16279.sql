@@ -1,0 +1,1 @@
+select s.id, s.monthly_fee, s.plan, s.start_date, c.email, c.name from subscriptions s inner join customers c on c.id = s.customer_id where c.credit_limit < 6300 and c.segment in ('SMB', 'Consumer') order by id desc;

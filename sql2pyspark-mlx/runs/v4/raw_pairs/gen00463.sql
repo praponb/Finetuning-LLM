@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM orders WHERE channel = 'partner' AND amount < 1450), orders_stats AS (SELECT status, COUNT(*) order_count FROM src GROUP BY status) SELECT status, order_count FROM orders_stats ORDER BY status

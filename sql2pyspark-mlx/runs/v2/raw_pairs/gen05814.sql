@@ -1,0 +1,1 @@
+SELECT page, MONTH(event_time) AS event_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, SUM(CASE WHEN page = '/cart' THEN 1 ELSE 0 END) AS cart_count, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list FROM web_events GROUP BY page, MONTH(event_time);

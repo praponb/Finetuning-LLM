@@ -1,0 +1,1 @@
+WITH latest_match AS (SELECT s.id, s.dept_name, latest.employee_job_title FROM departments s LEFT JOIN LATERAL (SELECT c.job_title AS employee_job_title FROM employees c WHERE c.dept_id = s.id ORDER BY c.hire_date DESC, c.id DESC LIMIT 1) latest ON TRUE) SELECT id, dept_name FROM latest_match ORDER BY dept_name DESC NULLS FIRST;

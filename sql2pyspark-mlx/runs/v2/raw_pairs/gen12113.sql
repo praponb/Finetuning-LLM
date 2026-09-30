@@ -1,0 +1,1 @@
+SELECT plan, customer_id, SUM(CASE WHEN plan = 'basic' THEN monthly_fee ELSE 0 END) AS basic_monthly_fee, MIN(start_date) AS first_start_date FROM subscriptions GROUP BY plan, customer_id ORDER BY customer_id DESC, 3 DESC, plan LIMIT 5

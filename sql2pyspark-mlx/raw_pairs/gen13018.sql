@@ -1,0 +1,1 @@
+WITH with_windows AS (SELECT id, device, started_at, ROW_NUMBER() OVER (PARTITION BY MONTH(started_at), device ORDER BY started_at, id) AS row_seq, ROW_NUMBER() OVER (PARTITION BY device ORDER BY started_at, id) AS seq_no FROM sessions WHERE device = 'desktop') SELECT id, device, started_at, seq_no FROM with_windows ORDER BY seq_no DESC;

@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM payments WHERE amount BETWEEN 580 AND 620), summary AS (SELECT method, MAX(amount) AS max_amount, ROUND((100 * SUM(CASE WHEN status = 'REFUNDED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refunded FROM src GROUP BY method) SELECT * FROM summary WHERE max_amount < 1410;

@@ -1,0 +1,1 @@
+select page, month(event_time) as event_month, count(*) as row_count, round(stddev(duration_sec), 2) as stddev_duration_sec, max(duration_sec) - min(duration_sec) as duration_sec_range from web_events where event_type in ('add_to_cart', 'click', 'purchase') group by page, month(event_time) order by row_count desc, page, event_month limit 20;

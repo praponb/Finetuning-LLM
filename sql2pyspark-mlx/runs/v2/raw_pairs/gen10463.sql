@@ -1,0 +1,1 @@
+SELECT is_remote, job_title_list, cnt FROM (SELECT is_remote, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, COUNT(*) AS cnt FROM employees WHERE manager_id IS NOT NULL GROUP BY is_remote) AS sub WHERE cnt > 10

@@ -1,0 +1,1 @@
+SELECT MONTH(hire_date) AS hire_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees WHERE level = 'L3' AND is_remote AND is_remote GROUP BY 1 ORDER BY hire_month, job_title_values DESC LIMIT 10;

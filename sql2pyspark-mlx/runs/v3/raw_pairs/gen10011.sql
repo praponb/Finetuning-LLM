@@ -1,0 +1,1 @@
+SELECT account_type, MAX(balance) - MIN(balance) AS balance_range FROM accounts WHERE account_type IN ('CHECKING', 'LOAN') AND (account_type NOT IN ('CREDIT', 'LOAN') OR status = 'FROZEN') GROUP BY account_type;

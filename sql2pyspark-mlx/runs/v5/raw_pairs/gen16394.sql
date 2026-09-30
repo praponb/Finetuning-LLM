@@ -1,0 +1,1 @@
+select dim.status as order_status, dim.channel, count(*) as rows_total, min(s.cost) as min_cost, grouping_id() as gid from shipments s join orders dim on s.order_id = dim.id group by grouping sets ((dim.status, dim.channel), (dim.status), ()) order by order_status nulls first;

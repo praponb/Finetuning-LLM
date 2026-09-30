@@ -1,0 +1,1 @@
+select id, category, launch_date, product_name from (select *, row_number() over (partition by category order by launch_date desc, id) as row_num from products where launch_date > '2023-08-01') as ranked where row_num = 1 order by product_name, launch_date desc

@@ -1,0 +1,1 @@
+SELECT signup_month, min_age FROM (SELECT MONTH(signup_date) AS signup_month, MIN(age) AS min_age FROM customers WHERE signup_date BETWEEN '2023-05-27' AND '2025-03-01' GROUP BY MONTH(signup_date)) AS sub WHERE min_age >= 48 ORDER BY signup_month DESC

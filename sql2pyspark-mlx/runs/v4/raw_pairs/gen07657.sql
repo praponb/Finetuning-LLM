@@ -1,0 +1,1 @@
+select product_id, min_last_restock, quantity_count from (select product_id, min(last_restock) as min_last_restock, count(quantity) as quantity_count from inventory where quantity = 191 group by product_id) as s where quantity_count > 8 order by min_last_restock desc, product_id desc

@@ -1,0 +1,1 @@
+WITH top_stores AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date, id) AS rn FROM stores WHERE store_name LIKE '%Express%') SELECT id, city, opened_date FROM top_stores WHERE rn <= 2

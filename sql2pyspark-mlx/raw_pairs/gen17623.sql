@@ -1,0 +1,1 @@
+select status, count(case when status = 'CLOSED' then 1 end) as closed_count from accounts where account_type = 'CREDIT' group by status having count(case when status = 'CLOSED' then 1 end) > 1 order by status desc;

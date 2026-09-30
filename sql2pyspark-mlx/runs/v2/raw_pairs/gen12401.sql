@@ -1,0 +1,1 @@
+SELECT txn_type, CASE WHEN amount >= 3400 THEN 'high' WHEN amount >= 1900 THEN 'mid' ELSE 'low' END AS amount_bucket, MIN(txn_time) AS first_txn_time, MAX(amount) - MIN(amount) AS amount_range FROM transactions WHERE amount BETWEEN 2400 AND 3900 GROUP BY CUBE(txn_type, CASE WHEN amount >= 3400 THEN 'high' WHEN amount >= 1900 THEN 'mid' ELSE 'low' END);

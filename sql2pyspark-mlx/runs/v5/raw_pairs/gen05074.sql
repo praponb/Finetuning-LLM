@@ -1,0 +1,1 @@
+SELECT subscriptions.customer_id, subscriptions.monthly_fee, subscriptions.status, customers.age FROM subscriptions LEFT JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.plan = 'standard' ORDER BY customer_id DESC

@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, COUNT(DISTINCT salary) AS unique_managers FROM employees GROUP BY dept_id) SELECT d.budget, ds.unique_managers FROM departments d JOIN department_summary ds ON d.id = ds.dept_id WHERE ds.unique_managers >= 5 ORDER BY ds.unique_managers DESC

@@ -1,0 +1,6 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_orders
+    .select("id", "status", "shipping_fee", F.ceil("discount").alias("discount_whole"))
+)

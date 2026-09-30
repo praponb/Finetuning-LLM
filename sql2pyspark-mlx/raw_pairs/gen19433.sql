@@ -1,0 +1,1 @@
+SELECT id, price, cost, category, DATE_FORMAT(launch_date, 'yyyy-MM-dd') AS launch_date_label, DATEDIFF(CURRENT_DATE(), launch_date) / 365 AS years_since_launch_date FROM products WHERE ARRAY_CONTAINS(tags, 'new') AND launch_date < '2023-07-24' ORDER BY launch_date_label ASC;

@@ -1,0 +1,1 @@
+SELECT status, stddev_balance, closed_balance FROM (SELECT status, ROUND(STDDEV(balance), 2) AS stddev_balance, SUM(CASE WHEN status = 'CLOSED' THEN balance ELSE 0 END) AS closed_balance FROM accounts WHERE status != 'FROZEN' GROUP BY status) AS x WHERE stddev_balance >= 72 ORDER BY status DESC;

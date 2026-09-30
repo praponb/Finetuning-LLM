@@ -1,0 +1,1 @@
+SELECT MONTH(a.opened_date) opened_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(t.merchant))) merchant_values, ROUND(AVG(t.amount), 2) avg_amount FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id GROUP BY MONTH(a.opened_date) HAVING avg_amount >= 40

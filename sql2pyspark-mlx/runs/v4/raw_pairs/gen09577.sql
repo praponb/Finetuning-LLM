@@ -1,0 +1,4 @@
+SELECT DISTINCT method
+FROM payments
+ORDER BY method
+LIMIT 20;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 15106 THEN 'high' WHEN sqft >= 2653 THEN 'mid' ELSE 'low' END AS sqft_bucket, SUM(sqft) AS total_sqft, RANK() OVER (ORDER BY SUM(sqft) DESC) AS sqft_rank FROM stores GROUP BY CASE WHEN sqft >= 15106 THEN 'high' WHEN sqft >= 2653 THEN 'mid' ELSE 'low' END ORDER BY sqft_bucket DESC;

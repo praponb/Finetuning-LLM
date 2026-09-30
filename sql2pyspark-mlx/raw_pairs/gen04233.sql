@@ -1,0 +1,1 @@
+WITH recent_order_items AS (SELECT *, unit_price - quantity AS line_total FROM order_items WHERE quantity BETWEEN 4 AND 6 AND product_id IS NULL), order_items_stats AS (SELECT product_id, COUNT(*) AS row_count FROM recent_order_items GROUP BY product_id) SELECT product_id, row_count FROM order_items_stats WHERE row_count > 8;

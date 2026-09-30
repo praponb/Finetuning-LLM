@@ -1,0 +1,1 @@
+WITH valid_store_sales AS (SELECT *, CAST(revenue AS INT) AS revenue_int FROM store_sales WHERE product_id = 3), sale_month_summary AS (SELECT MONTH(sale_date) AS sale_month, store_id, MAX(sale_date) AS latest_sale_date FROM valid_store_sales GROUP BY MONTH(sale_date), store_id) SELECT * FROM sale_month_summary;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 3900 THEN 'high' WHEN amount >= 600 THEN 'mid' ELSE 'low' END AS amount_bucket, AVG(amount) AS avg_amount, SUM(amount) AS total_amount FROM transactions WHERE TO_DATE(txn_time) >= '2024-11-01' OR HOUR(txn_time) BETWEEN 7 AND 11 GROUP BY CASE WHEN amount >= 3900 THEN 'high' WHEN amount >= 600 THEN 'mid' ELSE 'low' END ORDER BY avg_amount DESC;

@@ -1,0 +1,1 @@
+WITH FilteredCustomers AS (SELECT * FROM customers WHERE age BETWEEN 61 AND 64 OR LENGTH(email) >= 12), segment_summary AS (SELECT segment, ROUND(AVG(age), 2) AS avg_age FROM FilteredCustomers GROUP BY segment) SELECT * FROM segment_summary ORDER BY segment;

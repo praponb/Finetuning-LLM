@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM shipments WHERE order_id IN (23, 24)), Agg AS (SELECT carrier, MAX(cost) AS max_cost, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list FROM src GROUP BY carrier) SELECT carrier, max_cost, carrier_list FROM Agg WHERE max_cost < 51 ORDER BY 2 DESC, carrier DESC;

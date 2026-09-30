@@ -1,0 +1,1 @@
+SELECT s.region, SORT_ARRAY(COLLECT_SET(o.status)) AS status_list FROM orders o INNER JOIN customers c ON c.id = o.customer_id INNER JOIN stores s ON o.store_id = s.id GROUP BY s.region ORDER BY s.region;

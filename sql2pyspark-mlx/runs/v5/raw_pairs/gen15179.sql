@@ -1,0 +1,1 @@
+with base as (select * from stores where city = 'London' and sqft = 5037), StoresStats as (select city, min(opened_date) as min_opened_date, count(sqft) as sqft_count from base group by city) select * from StoresStats order by city asc;

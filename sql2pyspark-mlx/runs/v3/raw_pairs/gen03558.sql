@@ -1,0 +1,1 @@
+select id, dept_name, budget, location, lead(budget, 1) over (partition by dept_name order by budget, id) next_budget, rank() over (partition by location order by budget desc) rnk from departments where dept_name in ('Legal', 'Engineering', 'Sales')

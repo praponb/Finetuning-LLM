@@ -1,0 +1,1 @@
+with Base as (select * from store_sales where product_id in (4, 5)), product_id_summary as (select product_id, store_id, round(avg(revenue), 2) as avg_revenue, min(sale_date) as min_sale_date from Base group by product_id, store_id) select * from product_id_summary order by product_id desc

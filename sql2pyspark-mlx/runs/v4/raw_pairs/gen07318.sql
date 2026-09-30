@@ -1,0 +1,1 @@
+SELECT is_active, SUM(CASE WHEN segment = 'Consumer' THEN age ELSE 0 END) AS consumer_age, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(segment))) AS segment_values FROM customers WHERE credit_limit <= 15400 GROUP BY is_active HAVING SUM(CASE WHEN segment = 'Consumer' THEN age ELSE 0 END) > 22;

@@ -1,0 +1,1 @@
+WITH ranked_inventory AS (SELECT id, product_id, quantity, store_id, RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) AS pos FROM inventory) SELECT id, product_id, quantity, store_id FROM ranked_inventory WHERE pos <= 3 ORDER BY id;

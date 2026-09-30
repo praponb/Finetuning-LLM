@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, COUNT(*) AS num_employees FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.location, ebd.num_employees FROM departments d LEFT JOIN employees_by_department ebd ON d.id = ebd.dept_id;

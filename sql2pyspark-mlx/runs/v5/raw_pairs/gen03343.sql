@@ -1,0 +1,1 @@
+select case when rating >= 3.5 then 'high' when rating >= 1.9 then 'mid' else 'low' end as rating_bucket, sum(rating) as total_rating from suppliers where length(supplier_name) >= 6 and city is null and country not in ('DE', 'JP', 'TH') group by rating_bucket order by 1 limit 20

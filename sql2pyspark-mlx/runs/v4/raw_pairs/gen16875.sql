@@ -1,0 +1,1 @@
+select s.*, latest.product_cost, latest.product_price from suppliers s left join lateral (select c.cost as product_cost, c.price as product_price from products c where c.supplier_id = s.id order by c.price desc, c.id desc limit 1) latest on true;

@@ -1,0 +1,1 @@
+SELECT QUARTER(event_time) AS event_quarter, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events WHERE session_id = 36 AND event_type IN ('click', 'search', 'purchase') GROUP BY event_quarter ORDER BY event_quarter DESC;

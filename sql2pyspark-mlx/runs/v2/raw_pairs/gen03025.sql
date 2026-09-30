@@ -1,0 +1,1 @@
+SELECT *, CASE WHEN browser IN ('Safari', 'Edge') THEN 'Priority' ELSE 'Other' END AS browser_group, DATE_FORMAT(started_at, 'yyyy-MM-dd') AS started_at_label FROM sessions ORDER BY started_at_label, id LIMIT 20

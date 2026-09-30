@@ -1,0 +1,1 @@
+SELECT MIN(credit_limit) AS min_credit_limit, SUM(CASE WHEN country = 'US' THEN 1 ELSE 0 END) AS us_count, COUNT(DISTINCT credit_limit) AS unique_countrys FROM customers WHERE credit_limit BETWEEN 5900 AND 9400 AND (country IN ('US', 'UK', 'DE') OR name LIKE '%Taylor%');

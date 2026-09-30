@@ -1,0 +1,1 @@
+SELECT id, launch_date, price, brand, SUM(price) OVER (ORDER BY launch_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_price, LEAD(price, 1) OVER (PARTITION BY brand ORDER BY launch_date, id) AS next_price FROM products;

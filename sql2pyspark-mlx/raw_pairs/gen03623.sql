@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, i.last_restock, p.stock_qty, s.region, s.store_name, p.stock_qty * p.price AS stock_qty_times_price FROM inventory i LEFT JOIN products p ON i.product_id = p.id JOIN stores s ON i.store_id = s.id WHERE UPPER(TRIM(s.store_name)) = 'SIAM FLAGSHIP' AND s.store_name LIKE 'Sia%' ORDER BY region

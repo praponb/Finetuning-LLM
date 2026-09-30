@@ -1,0 +1,1 @@
+SELECT store_id, stddev_units, unique_products FROM (SELECT store_id, ROUND(STDDEV(units), 2) AS stddev_units, COUNT(DISTINCT units) AS unique_products FROM store_sales GROUP BY store_id) AS s WHERE stddev_units >= 67;

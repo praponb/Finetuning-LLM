@@ -1,0 +1,1 @@
+select a.balance, t.amount_range, t.avg_amount from accounts a left join (select account_id, max(amount) - min(amount) as amount_range, round(avg(amount), 2) as avg_amount from transactions where merchant in ('Grab', 'Starbucks', 'Lazada') group by account_id) t on a.id = t.account_id order by balance desc

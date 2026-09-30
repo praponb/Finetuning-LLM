@@ -1,0 +1,1 @@
+SELECT ss.id, ss.revenue, s.region, p.price FROM store_sales ss JOIN stores s ON ss.store_id = s.id FULL OUTER JOIN products p ON p.id = ss.product_id WHERE YEAR(ss.sale_date) = 2023 ORDER BY p.price DESC;

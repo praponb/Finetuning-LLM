@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, status, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions GROUP BY DATE_FORMAT(end_date, 'yyyy-MM'), status HAVING SUM(CASE WHEN plan = 'standard' THEN monthly_fee ELSE 0 END) < 27 ORDER BY 3

@@ -1,0 +1,1 @@
+with web_events_by_session as (select session_id, sum(duration_sec) as total_duration_sec from web_events where session_id in (5, 21, 22, 38) group by session_id) select s.id, s.device, s.started_at, webs.total_duration_sec from sessions s join web_events_by_session webs on s.id = webs.session_id where webs.total_duration_sec > 1600

@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, SUM(CASE WHEN merchant = 'Lazada' THEN 1 ELSE 0 END) AS lazada_count, COUNT(*) AS cnt FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, a.customer_id, as.lazada_count, as.cnt FROM accounts a LEFT OUTER JOIN account_summary as ON a.id = as.account_id ORDER BY as.cnt DESC;

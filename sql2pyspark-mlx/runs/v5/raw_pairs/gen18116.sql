@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount DESC, id) AS rn FROM transactions) SELECT id, account_id, amount, txn_type FROM ranked WHERE rn <= 1 ORDER BY 3 DESC

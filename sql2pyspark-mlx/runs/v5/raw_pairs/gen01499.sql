@@ -1,0 +1,1 @@
+SELECT id, quantity, NTILE(3) OVER (PARTITION BY order_id ORDER BY unit_price, id) AS unit_price_bucket, RANK() OVER w_grp AS unit_price_rank FROM order_items WINDOW w_grp AS (PARTITION BY product_id ORDER BY unit_price DESC NULLS FIRST);

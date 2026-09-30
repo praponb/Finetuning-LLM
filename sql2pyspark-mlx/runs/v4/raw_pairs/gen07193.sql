@@ -1,0 +1,1 @@
+select id, currency, tier_prices, slice(tier_limits, 1, 2) as first_two_limits, aggregate(tier_prices, cast(0 as double), (acc, p) -> acc + p, acc -> round(acc / size(tier_prices), 2)) as avg_tier_price, array_min(tier_prices) as lowest_price from price_tiers;

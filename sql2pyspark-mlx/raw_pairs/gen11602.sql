@@ -1,0 +1,1 @@
+SELECT QUARTER(last_restock) AS last_restock_quarter, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, SUM(quantity) AS total_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE (store_id = 6 AND store_id = 2) OR product_id IN (2, 4, 6, 8) GROUP BY QUARTER(last_restock), DATE_FORMAT(last_restock, 'yyyy-MM') ORDER BY last_restock_quarter;

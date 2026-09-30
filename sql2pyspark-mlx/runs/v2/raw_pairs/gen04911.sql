@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit, MAX(age) - MIN(age) AS age_range FROM customers WHERE country IN ('JP', 'UK') GROUP BY DATE_TRUNC('MONTH', signup_date)) AS t WHERE age_range < 39 ORDER BY age_range, signup_month;

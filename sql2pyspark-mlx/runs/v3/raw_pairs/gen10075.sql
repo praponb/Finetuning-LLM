@@ -1,0 +1,1 @@
+SELECT status, DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, COUNT(DISTINCT discount) AS unique_statuss FROM orders WHERE status IN ('PENDING', 'COMPLETED') AND (discount IS NOT NULL OR status = 'PENDING') GROUP BY status, DATE_FORMAT(order_date, 'yyyy-MM') ORDER BY status DESC;

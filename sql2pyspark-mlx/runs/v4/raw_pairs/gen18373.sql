@@ -1,0 +1,1 @@
+WITH filtered_web_events AS (SELECT * FROM web_events WHERE session_id IN (17, 23, 29, 33)), web_events_stats AS (SELECT HOUR(event_time) AS event_hour, SUM(duration_sec) AS total_duration_sec FROM filtered_web_events GROUP BY HOUR(event_time)) SELECT * FROM web_events_stats WHERE total_duration_sec > 1100 ORDER BY event_hour LIMIT 10;

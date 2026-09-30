@@ -1,0 +1,1 @@
+SELECT s.id, s.carrier, s.shipped_date, o.channel, DATEDIFF(CURRENT_DATE(), s.shipped_date) AS days_since_shipped_date FROM shipments s JOIN orders o ON s.order_id = o.id WHERE o.customer_id = 11 AND s.carrier = 'DHL' ORDER BY s.shipped_date ASC, carrier DESC

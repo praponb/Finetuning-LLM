@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN amount >= 1660 THEN 'high' WHEN amount >= 570 THEN 'mid' ELSE 'low' END AS amount_bucket, status, amount FROM payments) PIVOT (AVG(amount) FOR status IN ('SUCCESS', 'REFUNDED'))

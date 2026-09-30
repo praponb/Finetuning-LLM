@@ -1,0 +1,1 @@
+SELECT a.account_type, SORT_ARRAY(COLLECT_SET(t.merchant)) AS merchant_list, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(t.merchant))) AS merchant_values FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id FULL OUTER JOIN customers c ON c.id = a.customer_id WHERE t.txn_type IN ('REFUND', 'FEE') GROUP BY a.account_type

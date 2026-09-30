@@ -1,0 +1,1 @@
+SELECT MONTH(paid_at) AS paid_month, ROUND(STDDEV(amount), 2) AS stddev_amount, SUM(CASE WHEN method = 'cash' THEN amount ELSE 0 END) AS cash_amount, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count FROM payments GROUP BY 1 HAVING SUM(CASE WHEN method = 'cash' THEN amount ELSE 0 END) >= 36 ORDER BY success_count DESC, paid_month LIMIT 10

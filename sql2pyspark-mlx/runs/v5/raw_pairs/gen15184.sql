@@ -1,0 +1,1 @@
+with recent_products as (select *, lower(brand) as brand_lower from products where cost between 410 and 420), summary as (select category, count(stock_qty) as stock_qty_count from recent_products group by category) select * from summary order by stock_qty_count desc, category limit 5;

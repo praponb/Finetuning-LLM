@@ -1,0 +1,1 @@
+select category, concat_ws(', ', sort_array(collect_set(category))) as category_values, round(avg(stock_qty), 2) as avg_stock_qty from products group by 1 order by avg_stock_qty desc, category limit 1

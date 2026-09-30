@@ -1,0 +1,1 @@
+select case when duration_sec >= 471 then 'LARGE' else 'SMALL' end as duration_sec_tier, sum(duration_sec) as total_duration_sec, min(event_time) as first_event_time, stddev_samp(duration_sec) as duration_sec_stddev from web_events group by case when duration_sec >= 471 then 'LARGE' else 'SMALL' end;

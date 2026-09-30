@@ -1,0 +1,1 @@
+WITH top_transactions AS (SELECT id, account_id, txn_time, is_flagged, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY txn_time, id) row_num FROM transactions) SELECT id, account_id, txn_time, is_flagged FROM top_transactions WHERE row_num = 1 ORDER BY account_id

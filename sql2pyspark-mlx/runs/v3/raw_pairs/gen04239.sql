@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, country, signup_date, credit_limit, DENSE_RANK() OVER (PARTITION BY country ORDER BY signup_date DESC) AS rnk FROM customers WHERE name LIKE '%Chen%') SELECT id, country, signup_date, credit_limit FROM ranked WHERE rnk = 1

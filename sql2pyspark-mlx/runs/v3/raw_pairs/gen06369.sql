@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, s.country, s.city FROM suppliers s WHERE s.supplier_name IS NOT NULL AND EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND ARRAY_CONTAINS(p.tags, 'bestseller')) ORDER BY s.country

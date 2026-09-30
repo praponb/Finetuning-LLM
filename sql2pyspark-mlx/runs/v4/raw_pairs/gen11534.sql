@@ -1,0 +1,1 @@
+WITH filtered_web_events AS (SELECT * FROM web_events WHERE event_time >= '2025-08-25'), Agg AS (SELECT event_type, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM filtered_web_events GROUP BY event_type) SELECT event_type, stddev_duration_sec FROM Agg ORDER BY event_type;

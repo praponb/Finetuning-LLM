@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.quantity, orders.discount, orders.store_id, stores.city, stores.opened_date FROM order_items RIGHT JOIN orders ON order_items.order_id = orders.id FULL OUTER JOIN stores ON stores.id = orders.store_id WHERE order_items.quantity BETWEEN 5 AND 7 ORDER BY city DESC;

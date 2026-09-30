@@ -1,0 +1,1 @@
+with product_stats as (select product_id, max(quantity) - min(quantity) as quantity_range, min(unit_price) as min_unit_price from order_items where product_id in (22, 25, 30) group by product_id) select p.stock_qty, ps.quantity_range, ps.min_unit_price from products p left join product_stats ps on p.id = ps.product_id where ps.quantity_range >= 45

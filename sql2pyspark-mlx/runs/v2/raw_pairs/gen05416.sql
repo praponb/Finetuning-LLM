@@ -1,0 +1,1 @@
+select s.id, s.shipped_date, o.store_id, o.order_date, c.age, c.city from shipments s join orders o on o.id = s.order_id join customers c on o.customer_id = c.id where c.is_active = true or s.cost >= 30;

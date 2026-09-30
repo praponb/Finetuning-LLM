@@ -1,0 +1,1 @@
+SELECT s.id, s.country, t.stddev_duration_sec FROM sessions s JOIN (SELECT session_id, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id

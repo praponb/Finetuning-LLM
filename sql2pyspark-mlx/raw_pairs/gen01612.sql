@@ -1,0 +1,1 @@
+SELECT id, city, signup_date, credit_limit, NTILE(2) OVER (PARTITION BY city ORDER BY signup_date, id) AS quartile, RANK() OVER (PARTITION BY city ORDER BY credit_limit DESC) AS credit_limit_rank FROM customers;

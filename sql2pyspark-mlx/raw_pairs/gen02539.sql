@@ -1,0 +1,1 @@
+select 'shipment' as record_type, delivered_date from shipments where delivered_date is not null union all select 'store' as record_type, opened_date from stores where opened_date is not null order by record_type;

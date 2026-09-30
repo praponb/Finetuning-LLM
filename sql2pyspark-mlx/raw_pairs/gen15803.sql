@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, created_at, EXPLODE(coupon_codes) AS code FROM carts) SELECT id, created_at, code, CASE WHEN code RLIKE '^(SPRING10|BUNDLE)$' THEN 'GROUP_A' ELSE 'OTHER_ZONE' END AS code_zone FROM lines ORDER BY id

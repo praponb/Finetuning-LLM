@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, SUM(salary) AS total_salary FROM employees WHERE is_remote GROUP BY dept_id) SELECT departments.id, departments.budget, department_totals.total_salary FROM departments INNER JOIN department_totals ON departments.id = department_totals.dept_id ORDER BY id, total_salary DESC;

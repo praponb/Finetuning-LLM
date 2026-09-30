@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('SUCCESS', 'REFUNDED') THEN 'group_a' ELSE 'other' END AS status_group, method, ROUND(STDDEV(amount), 2) AS stddev_amount, SUM(amount) AS total_amount FROM payments WHERE method = 'bank_transfer' GROUP BY status_group, method

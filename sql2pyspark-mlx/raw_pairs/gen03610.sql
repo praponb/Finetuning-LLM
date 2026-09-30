@@ -1,0 +1,1 @@
+select case when cost >= 95 then 'high' when cost >= 38 then 'mid' else 'low' end cost_bucket, order_id, min(cost) min_cost, round(avg(cost), 2) avg_cost from shipments group by case when cost >= 95 then 'high' when cost >= 38 then 'mid' else 'low' end, order_id order by cost_bucket asc, order_id asc;

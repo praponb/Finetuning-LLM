@@ -1,0 +1,1 @@
+SELECT id, channel, amount, status FROM (SELECT id, channel, amount, status, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY amount DESC, id) AS row_num FROM orders) AS r WHERE row_num = 1 ORDER BY status

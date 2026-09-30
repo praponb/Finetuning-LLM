@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', opened_date) opened_month, SUM(CASE WHEN account_type = 'LOAN' THEN balance ELSE 0 END) loan_balance, MAX(opened_date) latest_opened_date FROM accounts GROUP BY DATE_TRUNC('MONTH', opened_date)) s WHERE loan_balance < 80 ORDER BY opened_month DESC;

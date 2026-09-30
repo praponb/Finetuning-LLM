@@ -1,0 +1,1 @@
+with DepartmentTotals as (select dept_id, count(*) as total_count, count(*) as cnt from employees where level = 'L2' group by dept_id) select departments.id, departments.dept_name, departments.budget, DepartmentTotals.total_count, DepartmentTotals.cnt from departments join DepartmentTotals on departments.id = DepartmentTotals.dept_id order by DepartmentTotals.cnt desc;

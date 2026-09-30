@@ -1,0 +1,1 @@
+select merchant, count(case when merchant = 'Starbucks' then 1 end) starbucks_count, max(amount) max_amount from transactions where account_id in (4, 16, 31, 39) group by 1 order by starbucks_count desc;

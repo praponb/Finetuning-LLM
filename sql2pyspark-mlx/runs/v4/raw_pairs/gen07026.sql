@@ -1,0 +1,1 @@
+select o.store_id, o.customer_id, p.status, p.method, p.paid_at, least(o.amount, o.shipping_fee) as least_amount_shipping_fee from orders o left join payments p on o.id = p.order_id where o.shipping_fee >= 29 and p.order_id is null;

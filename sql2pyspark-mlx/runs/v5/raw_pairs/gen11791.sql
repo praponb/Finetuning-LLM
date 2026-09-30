@@ -1,0 +1,1 @@
+SELECT opened_date, CONCAT_WS('/', city, store_name) AS city_store_name_key FROM stores WHERE (sqft BETWEEN 7355 AND 8261 AND sqft BETWEEN 10022 AND 10577) OR store_name LIKE 'Ol%' ORDER BY city_store_name_key DESC;

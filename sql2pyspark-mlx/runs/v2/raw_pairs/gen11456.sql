@@ -1,0 +1,1 @@
+WITH ValidPayments AS (SELECT * FROM payments WHERE HOUR(paid_at) BETWEEN 12 AND 17 AND status IN ('SUCCESS', 'FAILED', 'REFUNDED') AND paid_at >= '2023-04-01'), PaymentsStats AS (SELECT method, MAX(paid_at) AS last_paid_at FROM ValidPayments GROUP BY method) SELECT method, last_paid_at FROM PaymentsStats ORDER BY last_paid_at DESC;

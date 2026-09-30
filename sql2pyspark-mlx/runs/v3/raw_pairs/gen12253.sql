@@ -1,0 +1,1 @@
+WITH StoreSalesByStore AS (SELECT store_id, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales WHERE store_id IN (3, 6) GROUP BY store_id) SELECT s.city, S.stddev_units FROM stores s LEFT OUTER JOIN StoreSalesByStore S ON s.id = S.store_id ORDER BY city

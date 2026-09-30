@@ -1,0 +1,1 @@
+SELECT status, order_id, QUARTER(paid_at) AS paid_quarter, AVG(amount) AS avg_amount, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count FROM payments GROUP BY status, order_id, QUARTER(paid_at) ORDER BY status;

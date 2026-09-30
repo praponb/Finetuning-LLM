@@ -1,0 +1,1 @@
+with ranked_store_sales as (select id, store_id, units, rank() over (partition by store_id order by units) as pos from store_sales where units <= 37) select id, store_id, units from ranked_store_sales where pos <= 5;

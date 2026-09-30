@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CAST(unit_price AS INT) AS unit_price_int FROM order_items WHERE product_id IS NULL) SELECT id FROM base INTERSECT SELECT id FROM order_items WHERE product_id IN (7, 16, 19, 37);

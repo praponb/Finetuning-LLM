@@ -1,0 +1,1 @@
+WITH DepartmentStats AS (SELECT dept_id, SORT_ARRAY(COLLECT_SET(level)) AS level_list, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, D.level_list, D.stddev_salary FROM departments d LEFT JOIN DepartmentStats D ON d.id = D.dept_id ORDER BY dept_name ASC

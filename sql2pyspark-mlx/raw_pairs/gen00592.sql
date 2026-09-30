@@ -1,0 +1,1 @@
+select id, product_id, quantity, unit_price, lead(unit_price) over (partition by product_id, order_id order by quantity, id) next_unit_price, lag(quantity) over (partition by product_id, order_id order by quantity, id) prev_quantity, row_number() over (partition by product_id, order_id order by quantity, id) row_seq from order_items where order_id in (3, 13, 20, 22)

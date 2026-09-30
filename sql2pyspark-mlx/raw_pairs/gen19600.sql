@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.duration_sec FROM web_events WHERE web_events.session_id NOT IN (SELECT id FROM sessions WHERE browser IN ('Edge', 'Chrome', 'Safari'));

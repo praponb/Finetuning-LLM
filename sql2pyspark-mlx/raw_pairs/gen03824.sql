@@ -1,0 +1,1 @@
+WITH valid_departments AS (SELECT * FROM departments WHERE location <> 'Tokyo' AND location <> 'New York'), departments_stats AS (SELECT dept_name, COUNT(DISTINCT budget) unique_dept_names, SUM(CASE WHEN dept_name = 'Legal' THEN 1 ELSE 0 END) legal_count FROM valid_departments GROUP BY dept_name) SELECT dept_name, unique_dept_names, legal_count FROM departments_stats

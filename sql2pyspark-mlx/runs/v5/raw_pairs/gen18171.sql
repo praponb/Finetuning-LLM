@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(p.id) AS product_count, ROUND(STDDEV(p.cost), 2) AS stddev_cost, MAX(p.stock_qty) - MIN(p.stock_qty) AS stock_qty_range FROM suppliers s INNER JOIN products p ON p.supplier_id = s.id GROUP BY s.id, s.country;

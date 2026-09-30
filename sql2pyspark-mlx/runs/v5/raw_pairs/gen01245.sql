@@ -1,0 +1,1 @@
+WITH top_web_events AS (SELECT id, session_id, event_time, page, RANK() OVER (PARTITION BY session_id ORDER BY event_time) AS rn FROM web_events) SELECT id, session_id, event_time, page FROM top_web_events WHERE rn <= 3 ORDER BY session_id

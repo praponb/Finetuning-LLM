@@ -1,0 +1,1 @@
+select p.launch_date, t.avg_revenue from products p join (select product_id, round(avg(revenue), 2) as avg_revenue from store_sales where store_id in (1, 5) group by product_id) t on p.id = t.product_id where t.avg_revenue >= 62

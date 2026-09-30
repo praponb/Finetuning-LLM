@@ -1,0 +1,1 @@
+with lines as (select id, service, level, k, v from app_logs lateral view outer explode(context) t as k, v) select k, count(case when k = 'trace' then 1 end) as trace_count, size(collect_set(level)) as num_levels, count(case when level = 'ERROR' then 1 end) as error_count from lines group by k order by num_levels desc

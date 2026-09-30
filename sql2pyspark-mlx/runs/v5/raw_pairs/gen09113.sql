@@ -1,0 +1,1 @@
+select we.id, we.event_type, s.country, s.device, c.signup_date, date_trunc('week', c.signup_date) as signup_date_period from web_events we left join sessions s on we.session_id = s.id full outer join customers c on c.id = s.customer_id where we.duration_sec <= 315 order by signup_date_period;

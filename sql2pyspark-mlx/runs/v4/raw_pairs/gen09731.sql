@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT id, status FROM payments EXCEPT DISTINCT SELECT id, status FROM payments WHERE HOUR(paid_at) BETWEEN 9 AND 17), verified AS (SELECT s.* FROM payments s JOIN kept_keys k ON s.id = k.id AND s.status = k.status) SELECT id, order_id FROM verified

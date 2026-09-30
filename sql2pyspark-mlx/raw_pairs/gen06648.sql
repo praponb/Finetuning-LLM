@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, p.supplier_id, p.launch_date, s.country, s.city FROM inventory i LEFT JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE i.quantity BETWEEN 146 AND 168 OR i.last_restock >= '2024-02-01'

@@ -1,0 +1,1 @@
+WITH top_transactions AS (SELECT id, account_id, txn_time, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY txn_time DESC, id) AS rnk FROM transactions WHERE account_id IN (5, 11)) SELECT id, account_id, txn_time FROM top_transactions WHERE rnk = 1;

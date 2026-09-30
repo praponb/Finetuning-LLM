@@ -1,0 +1,1 @@
+WITH with_windows AS (SELECT *, LEAD(budget, 1) OVER (PARTITION BY location, dept_name ORDER BY budget, id) AS next_budget, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget, id) AS event_seq FROM departments WHERE dept_name IN ('Sales', 'Finance', 'HR')) SELECT id, dept_name, budget, next_budget FROM with_windows

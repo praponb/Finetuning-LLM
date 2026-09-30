@@ -1,0 +1,1 @@
+select * from (select date_trunc('MONTH', hire_date) as hire_month, round((100 * sum(case when level = 'L3' then 1 else 0 end)) / count(*), 1) as pct_l3 from employees group by date_trunc('MONTH', hire_date)) as s where pct_l3 < 41

@@ -1,0 +1,1 @@
+SELECT t.txn_time, t.merchant, a.account_type, c.signup_date, c.is_active FROM transactions t INNER JOIN accounts a ON a.id = t.account_id INNER JOIN customers c ON a.customer_id = c.id WHERE YEAR(a.opened_date) >= 2024 AND c.credit_limit <= 7400;

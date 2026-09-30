@@ -1,0 +1,1 @@
+select case when sqft >= 14580 then 'high' when sqft >= 7197 then 'mid' else 'low' end as sqft_bucket, sum(case when region = 'North' then 1 else 0 end) as north_count, round(avg(sqft), 2) as avg_sqft from stores where opened_date >= '2024-03-01' group by 1 having avg_sqft < 65;

@@ -1,0 +1,1 @@
+WITH ranked_accounts AS (SELECT id, customer_id, balance, opened_date, RANK() OVER (PARTITION BY customer_id ORDER BY balance DESC) AS pos FROM accounts) SELECT id, customer_id, balance, opened_date FROM ranked_accounts WHERE pos = 1;

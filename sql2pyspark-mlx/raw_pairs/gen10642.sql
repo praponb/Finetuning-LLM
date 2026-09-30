@@ -1,0 +1,1 @@
+WITH store_sales_by_store AS (SELECT store_id, MIN(sale_date) AS first_sale_date FROM store_sales GROUP BY store_id) SELECT stores.id, stores.region, stores.opened_date, store_sales_by_store.first_sale_date FROM stores JOIN store_sales_by_store ON stores.id = store_sales_by_store.store_id;

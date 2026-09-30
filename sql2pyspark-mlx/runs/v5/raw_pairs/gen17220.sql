@@ -1,0 +1,1 @@
+SELECT id, unit_price, quantity, order_id, GREATEST(unit_price, quantity) AS greatest_unit_price_quantity, quantity * unit_price AS line_total FROM order_items WHERE order_id IN (5, 26, 39) AND unit_price BETWEEN 230 AND 290

@@ -1,0 +1,1 @@
+select s.country, s.city, p.brand, p.supplier_id, length(s.city) as city_length from suppliers s left join products p on p.supplier_id = s.id where length(s.supplier_name) > 5 and s.city = 'New York' order by city_length desc;

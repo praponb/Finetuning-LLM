@@ -1,0 +1,1 @@
+SELECT status, balance_count, avg_balance FROM (SELECT status, COUNT(balance) balance_count, AVG(balance) avg_balance FROM accounts GROUP BY status) s WHERE balance_count >= 10 ORDER BY avg_balance DESC;

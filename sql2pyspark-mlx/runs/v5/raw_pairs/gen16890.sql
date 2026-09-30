@@ -1,0 +1,1 @@
+SELECT CASE WHEN carrier IN ('UPS', 'DHL') THEN 'tier_1' ELSE 'other' END AS carrier_group, SUM(CASE WHEN status = 'IN_TRANSIT' THEN cost ELSE 0 END) AS in_transit_cost, MIN(delivered_date) AS min_delivered_date FROM shipments WHERE carrier = 'Flash' AND (status = 'IN_TRANSIT' OR YEAR(delivered_date) = 2024) GROUP BY carrier_group

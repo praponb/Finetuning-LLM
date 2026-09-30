@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, customer_id, start_date, monthly_fee, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date, id) rn FROM subscriptions WHERE plan NOT IN ('premium', 'enterprise')) ranked WHERE rn <= 3 ORDER BY start_date;

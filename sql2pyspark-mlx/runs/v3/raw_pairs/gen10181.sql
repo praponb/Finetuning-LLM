@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM web_events WHERE event_type = 'add_to_cart'), summary AS (SELECT page, COUNT(*) web_event_count FROM Base GROUP BY page) SELECT page, web_event_count FROM summary ORDER BY page DESC;

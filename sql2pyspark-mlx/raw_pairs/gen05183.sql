@@ -1,0 +1,1 @@
+SELECT id, service, host, level, latency_ms, payload_json, context, context['trace'] AS trace, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text, context['region'] AS region, CAST((status_code & 4) != 0 AS INT) AS has_fault FROM app_logs;

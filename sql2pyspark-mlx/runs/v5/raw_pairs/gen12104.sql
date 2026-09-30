@@ -1,0 +1,1 @@
+select case when sqft >= 17507 then 'HIGH' else 'LOW' end as sqft_tier, count(*) as cnt, approx_percentile(sqft, array(0.25, 0.5, 0.75)) as sqft_quartiles, percentile_approx(sqft, array(0.25, 0.5, 0.75)) as sqft_quartiles_2 from stores group by case when sqft >= 17507 then 'HIGH' else 'LOW' end having count(*) > 1 order by sqft_tier desc nulls first

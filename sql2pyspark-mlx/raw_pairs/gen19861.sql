@@ -1,0 +1,1 @@
+select inventory.store_id, inventory.product_id, products.supplier_id, products.cost, suppliers.rating, suppliers.supplier_name from inventory inner join products on products.id = inventory.product_id left join suppliers on products.supplier_id = suppliers.id;

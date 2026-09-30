@@ -1,0 +1,1 @@
+SELECT CASE WHEN c.credit_limit >= 16900 THEN 'high' WHEN c.credit_limit >= 6000 THEN 'mid' ELSE 'low' END AS credit_limit_bucket, ROUND(STDDEV(s.monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY CASE WHEN c.credit_limit >= 16900 THEN 'high' WHEN c.credit_limit >= 6000 THEN 'mid' ELSE 'low' END

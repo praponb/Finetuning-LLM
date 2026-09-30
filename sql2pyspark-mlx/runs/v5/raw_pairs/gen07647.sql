@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, revenue * units AS revenue_per_unit FROM store_sales WHERE sale_date >= DATE '2023-02-18' AND units IS NOT NULL) SELECT id, store_id, product_id, sale_date, units, revenue, LEAD(revenue, 2) OVER (PARTITION BY product_id ORDER BY revenue_per_unit, id) AS next_revenue, ROUND(units / SUM(units) OVER (PARTITION BY product_id), 4) AS units_share FROM base;

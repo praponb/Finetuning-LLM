@@ -1,0 +1,1 @@
+SELECT event_type, SORT_ARRAY(COLLECT_SET(page)) AS page_list, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events WHERE (TO_DATE(event_time) >= '2025-02-01' AND event_type IN ('click', 'purchase', 'page_view')) OR TO_DATE(event_time) >= '2024-05-11' GROUP BY event_type ORDER BY 1;

@@ -1,0 +1,1 @@
+select we.id, we.event_type, s.country, s.device, c.credit_limit from web_events we left outer join sessions s on s.id = we.session_id left outer join customers c on s.customer_id = c.id order by s.device, s.country;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN duration_sec >= 406 THEN 'high' WHEN duration_sec >= 211 THEN 'mid' ELSE 'low' END AS duration_sec_bucket, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE session_id = 35 GROUP BY duration_sec_bucket HAVING MIN(duration_sec) > 440 ORDER BY min_duration_sec;

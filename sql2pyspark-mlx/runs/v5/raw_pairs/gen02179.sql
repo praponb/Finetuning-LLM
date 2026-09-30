@@ -1,0 +1,1 @@
+SELECT id, status, paid_at, amount, RANK() OVER (PARTITION BY status ORDER BY paid_at DESC) AS paid_at_rank, LEAD(amount, 1) OVER (PARTITION BY status ORDER BY paid_at, id) AS next_amount FROM payments

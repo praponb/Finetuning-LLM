@@ -1,0 +1,1 @@
+SELECT status, carrier, ROUND((100 * SUM(CASE WHEN carrier = 'DHL' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_dhl FROM shipments WHERE (shipped_date <= '2025-03-01' AND MONTH(delivered_date) IN (7, 10, 12)) OR order_id = 16 GROUP BY status, carrier ORDER BY pct_dhl DESC, status DESC

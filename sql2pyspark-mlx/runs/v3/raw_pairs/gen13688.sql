@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END quantity_bucket, COUNT(DISTINCT unit_price) unique_orders FROM order_items GROUP BY CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END) s WHERE unique_orders > 9;

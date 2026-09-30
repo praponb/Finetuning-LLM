@@ -1,0 +1,1 @@
+SELECT order_id, status, MIN(cost) AS min_cost, SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered_count FROM shipments WHERE shipped_date BETWEEN '2023-03-05' AND '2025-06-01' GROUP BY order_id, status

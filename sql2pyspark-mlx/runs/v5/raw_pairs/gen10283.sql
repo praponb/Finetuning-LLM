@@ -1,0 +1,1 @@
+with by_dimension as (select a.account_type, src.merchant, count(*) as cnt, round(avg(src.amount), 2) as avg_amount from transactions src join accounts a on src.account_id = a.id group by grouping sets ((a.account_type, src.merchant), (a.account_type), ())) select merchant, cnt from by_dimension order by merchant desc nulls last

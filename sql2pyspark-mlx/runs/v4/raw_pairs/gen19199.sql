@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM products WHERE YEAR(launch_date) >= 2025), products_stats AS (SELECT YEAR(launch_date) AS launch_year, brand, AVG(stock_qty) AS avg_stock_qty FROM src GROUP BY YEAR(launch_date), brand) SELECT launch_year, brand, avg_stock_qty FROM products_stats ORDER BY brand;

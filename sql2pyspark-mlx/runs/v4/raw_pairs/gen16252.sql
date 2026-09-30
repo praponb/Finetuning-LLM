@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(quantity * unit_price) AS revenue FROM order_items WHERE product_id IN (9, 22, 38) GROUP BY 1 HAVING SUM(quantity * unit_price) >= 47 ORDER BY quantity_bucket DESC;

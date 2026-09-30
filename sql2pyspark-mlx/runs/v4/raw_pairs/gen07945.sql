@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, YEAR(sale_date) AS sale_year, COUNT(DISTINCT revenue) AS unique_products, MIN(sale_date) AS min_sale_date FROM store_sales WHERE store_id IN (1, 2, 4, 5) GROUP BY 1, 2 ORDER BY min_sale_date DESC

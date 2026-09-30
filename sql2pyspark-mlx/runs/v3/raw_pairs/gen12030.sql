@@ -1,0 +1,1 @@
+SELECT c.id, c.name, c.age, t.unique_devices FROM customers c INNER JOIN (SELECT customer_id, COUNT(DISTINCT device) AS unique_devices FROM sessions GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.unique_devices >= 6 ORDER BY age DESC;

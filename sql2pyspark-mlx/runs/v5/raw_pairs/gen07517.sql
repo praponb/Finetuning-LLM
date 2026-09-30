@@ -1,0 +1,1 @@
+with valid as (select *, cast(price as int) as price_int from products where brand is not null and launch_date > date '2023-05-18') select id, supplier_id, measure, metric_value from (select id, supplier_id, cost, price from valid) src unpivot include nulls (metric_value for measure in (cost, price));

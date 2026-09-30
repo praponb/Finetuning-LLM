@@ -1,0 +1,57 @@
+{
+  "pairs": 15104,
+  "train": 12743,
+  "valid": 1574,
+  "test": 787,
+  "signatures": {
+    "train": 3299,
+    "valid": 386,
+    "test": 216
+  },
+  "signature_overlap_train_valid": 0,
+  "signature_overlap_train_test": 0,
+  "features_missing_from_train": [],
+  "family_counts": {
+    "train": {
+      "agg": 1872,
+      "select": 1899,
+      "join_agg": 991,
+      "cte_agg_join": 901,
+      "join": 1602,
+      "topn": 767,
+      "window": 882,
+      "setop": 694,
+      "derived": 336,
+      "cte_chain": 667,
+      "subquery": 1294,
+      "handwritten": 105,
+      "special": 733
+    },
+    "valid": {
+      "select": 229,
+      "join": 204,
+      "derived": 82,
+      "join_agg": 84,
+      "agg": 305,
+      "cte_agg_join": 172,
+      "cte_chain": 70,
+      "topn": 182,
+      "window": 111,
+      "special": 24,
+      "subquery": 111
+    },
+    "test": {
+      "window": 235,
+      "select": 144,
+      "join": 45,
+      "cte_agg_join": 26,
+      "derived": 88,
+      "join_agg": 56,
+      "cte_chain": 32,
+      "subquery": 30,
+      "agg": 52,
+      "special": 50,
+      "setop": 29
+    }
+  }
+}

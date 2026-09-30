@@ -1,0 +1,1 @@
+WITH top_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance, id) AS pos FROM accounts) SELECT id, account_type, balance FROM top_accounts WHERE pos <= 3 ORDER BY account_type DESC

@@ -1,0 +1,1 @@
+select year(last_restock) as last_restock_year, sum(quantity) as total_quantity, count(*) as cnt, sum(sum(quantity)) over (order by year(last_restock)) as cumulative_quantity from inventory where quantity = 152 group by year(last_restock);

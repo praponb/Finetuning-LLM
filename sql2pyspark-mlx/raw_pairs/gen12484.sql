@@ -1,0 +1,1 @@
+SELECT category, MIN(launch_date) AS min_launch_date, COUNT(*) AS cnt, COUNT(CASE WHEN category = 'Sports' THEN 1 END) AS sports_count FROM products WHERE launch_date < '2025-04-01' AND product_name LIKE '%Lapt%' GROUP BY category;

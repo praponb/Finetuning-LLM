@@ -1,0 +1,1 @@
+SELECT channel, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list, COUNT(*) AS row_count, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count FROM orders WHERE shipping_fee < 30 AND status = 'SHIPPED' GROUP BY channel HAVING SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) >= 30 ORDER BY cancelled_count, channel LIMIT 20

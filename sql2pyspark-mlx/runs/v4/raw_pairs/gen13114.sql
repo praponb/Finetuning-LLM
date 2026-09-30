@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', event_time) AS activity_month, page, COUNT(*) AS row_count, (UNIX_TIMESTAMP(MAX(event_time)) - UNIX_TIMESTAMP(MIN(event_time))) / 60 AS duration_min, BIT_OR(duration_sec) AS duration_sec_bit_or FROM web_events GROUP BY CUBE (DATE_TRUNC('MONTH', event_time), page) HAVING COUNT(*) >= 1;

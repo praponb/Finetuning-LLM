@@ -1,0 +1,1 @@
+SELECT carrier, MAX(cost) - MIN(cost) AS cost_range, MAX(delivered_date) AS last_delivered_date, AVG(cost) AS avg_cost FROM shipments WHERE carrier IN ('DHL', 'FedEx') GROUP BY carrier HAVING AVG(cost) < 60

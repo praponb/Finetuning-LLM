@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(ss.id) AS store_sale_count, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range FROM products p LEFT OUTER JOIN store_sales ss ON p.id = ss.product_id GROUP BY p.category HAVING COUNT(ss.id) >= 5

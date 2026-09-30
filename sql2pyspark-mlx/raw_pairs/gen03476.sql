@@ -1,0 +1,1 @@
+with base as (select * from payments where status in ('REFUNDED', 'FAILED') and amount between 430 and 500), agg as (select method, count(amount) as amount_count from base group by method) select method, amount_count from agg where amount_count >= 9 order by amount_count desc, method;

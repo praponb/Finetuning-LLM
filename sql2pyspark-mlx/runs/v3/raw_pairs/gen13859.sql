@@ -1,0 +1,1 @@
+SELECT id, dept_id, hire_date, manager_id, level, job_title, salary, LAST_VALUE(manager_id) OVER (PARTITION BY dept_id ORDER BY hire_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_manager_id, LEAD(salary, 1) OVER (PARTITION BY level, job_title ORDER BY hire_date, id) next_salary FROM employees ORDER BY last_manager_id DESC, dept_id DESC;

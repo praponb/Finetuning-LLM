@@ -1,0 +1,29 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy(F.col("s.id")).orderBy(F.col("c.event_time").desc(), F.col("c.id").desc())
+
+cleaned = (
+    df_sessions
+    .filter(F.col("browser").isNotNull() & (F.col("started_at") >= F.lit("2023-02-16").cast("date")))
+    .withColumn("country_filled", F.coalesce("country", F.lit("N/A")))
+    .withColumn("resolved_country", F.coalesce("country", F.lit("UNKNOWN")))
+)
+
+result = (
+    cleaned
+    .alias("s")
+    .join(df_web_events.alias("c"), (F.col("c.session_id") == F.col("s.id")) & (F.col("c.event_time") <= F.col("s.started_at")), "left")
+    .withColumn("rn", F.row_number().over(w))
+    .filter(F.col("rn") == 1)
+    .select(
+        "s.id",
+        "s.customer_id",
+        "s.browser",
+        "s.started_at",
+        "s.country",
+        "s.resolved_country",
+        F.col("c.page").alias("web_event_page"),
+        F.col("c.event_time").alias("web_event_event_time"),
+    )
+)

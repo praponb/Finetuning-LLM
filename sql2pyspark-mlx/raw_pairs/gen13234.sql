@@ -1,0 +1,1 @@
+select plan, status, min(start_date) as min_start_date, sum(monthly_fee) as total_monthly_fee, max(monthly_fee) as max_monthly_fee from subscriptions where status != 'PAUSED' group by plan, status having count(*) > 5 order by plan asc;

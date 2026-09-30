@@ -1,0 +1,1 @@
+with lines as (select id, customer_id, created_at, element from carts lateral view explode(coupon_codes) e as element) select id, customer_id, created_at, element, case when element rlike '^(BUNDLE|WELCOME5)$' then 'GROUP_A' when element rlike '^(SPRING10|VIP)$' then 'OTHER_ZONE' else 'EXTENDED' end as element_zone from lines

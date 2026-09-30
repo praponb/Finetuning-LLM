@@ -1,0 +1,1 @@
+SELECT products.category, MAX(inventory.quantity) AS max_quantity, COUNT(inventory.quantity) AS quantity_count FROM inventory JOIN products ON products.id = inventory.product_id JOIN suppliers ON products.supplier_id = suppliers.id WHERE inventory.quantity BETWEEN 184 AND 231 GROUP BY products.category ORDER BY category

@@ -1,0 +1,1 @@
+with filtered_customers as (select * from customers where country not in ('JP', 'UK', 'TH')), country_summary as (select country, max(credit_limit) - min(credit_limit) credit_limit_range from filtered_customers group by country) select country, credit_limit_range from country_summary order by country desc

@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, COUNT(DISTINCT price) AS unique_suppliers FROM products GROUP BY supplier_id) SELECT s.id, s.rating, s.supplier_name, st.unique_suppliers FROM suppliers s JOIN supplier_totals st ON s.id = st.supplier_id ORDER BY id DESC LIMIT 3;

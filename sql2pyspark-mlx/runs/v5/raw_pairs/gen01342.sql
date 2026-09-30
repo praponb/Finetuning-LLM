@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, store_id, order_date, discount, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY order_date DESC, id) AS rn FROM orders WHERE amount IS NOT NULL) SELECT * FROM numbered WHERE rn <= 3

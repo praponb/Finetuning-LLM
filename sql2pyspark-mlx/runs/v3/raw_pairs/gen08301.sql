@@ -1,0 +1,1 @@
+SELECT carrier, ROUND(AVG(cost), 2) avg_cost, COUNT(CASE WHEN carrier = 'Kerry' THEN 1 END) kerry_count FROM shipments WHERE shipped_date >= '2024-10-30' AND carrier = 'DHL' AND delivered_date <= '2025-10-11' GROUP BY carrier ORDER BY kerry_count DESC, avg_cost DESC;

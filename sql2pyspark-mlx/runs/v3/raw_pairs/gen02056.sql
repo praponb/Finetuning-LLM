@@ -1,0 +1,1 @@
+SELECT product_id, quantity_range, min_last_restock FROM (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range, MIN(last_restock) AS min_last_restock FROM inventory GROUP BY product_id) AS s WHERE quantity_range < 33 ORDER BY min_last_restock DESC, product_id LIMIT 20

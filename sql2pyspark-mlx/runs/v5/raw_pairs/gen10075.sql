@@ -1,0 +1,1 @@
+SELECT status, ROUND((100 * SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_savings, MAX(opened_date) AS latest_opened_date FROM accounts WHERE opened_date < '2023-05-01' AND balance < 59000 AND opened_date <= '2023-07-01' GROUP BY status ORDER BY pct_savings DESC

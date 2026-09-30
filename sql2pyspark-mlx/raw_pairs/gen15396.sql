@@ -1,0 +1,1 @@
+SELECT merchant, ROUND((100 * SUM(CASE WHEN txn_type = 'DEBIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_debit, ROUND(AVG(amount), 2) AS avg_amount FROM transactions WHERE txn_time >= '2024-06-04' AND amount < 2000 GROUP BY merchant

@@ -1,0 +1,1 @@
+SELECT customers.id, customers.is_active, customers.signup_date, customers.country FROM customers WHERE NOT EXISTS (SELECT 1 FROM sessions WHERE sessions.customer_id = customers.id AND sessions.browser IN ('Chrome', 'Firefox', 'Edge'));

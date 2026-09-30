@@ -1,0 +1,1 @@
+SELECT suppliers.rating, suppliers.supplier_name, t.price_count, t.electronics_price FROM suppliers LEFT JOIN (SELECT supplier_id, COUNT(price) AS price_count, SUM(CASE WHEN category = 'Electronics' THEN price ELSE 0 END) AS electronics_price FROM products GROUP BY supplier_id) t ON suppliers.id = t.supplier_id ORDER BY 2;

@@ -1,0 +1,1 @@
+SELECT MONTH(last_restock) last_restock_month, product_id, store_id, MIN(quantity) min_quantity, COUNT(*) inventory_count, MAX(last_restock) last_last_restock FROM inventory WHERE quantity != 238 AND MONTH(last_restock) IN (5, 6, 10) GROUP BY 1, 2, 3 ORDER BY product_id DESC, last_restock_month, store_id LIMIT 5;

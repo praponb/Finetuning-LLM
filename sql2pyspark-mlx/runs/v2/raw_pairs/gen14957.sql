@@ -1,0 +1,1 @@
+SELECT a.customer_id, t.amount_count, t.total_amount FROM accounts a LEFT JOIN (SELECT account_id, COUNT(amount) AS amount_count, SUM(amount) AS total_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.total_amount >= 16000 ORDER BY t.amount_count DESC

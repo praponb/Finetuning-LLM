@@ -1,0 +1,1 @@
+select event_type, sum(case when page = '/checkout' then duration_sec else 0 end) as checkout_duration_sec from web_events group by 1 having sum(case when page = '/checkout' then duration_sec else 0 end) < 27

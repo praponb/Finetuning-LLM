@@ -1,0 +1,1 @@
+SELECT id, order_id, unit_price, RANK() OVER (PARTITION BY order_id ORDER BY unit_price DESC) AS unit_price_rank, LAG(unit_price, 2) OVER (ORDER BY unit_price, id) AS prev_unit_price FROM order_items WHERE order_id IN (5, 15, 25, 32) ORDER BY prev_unit_price;

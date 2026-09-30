@@ -1,0 +1,1 @@
+SELECT CASE WHEN monthly_fee >= 184 THEN 'high' WHEN monthly_fee >= 73 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, SUM(monthly_fee) AS total_monthly_fee, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM subscriptions GROUP BY CASE WHEN monthly_fee >= 184 THEN 'high' WHEN monthly_fee >= 73 THEN 'mid' ELSE 'low' END

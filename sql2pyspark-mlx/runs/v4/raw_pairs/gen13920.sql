@@ -1,0 +1,1 @@
+SELECT * FROM suppliers QUALIFY RANK() OVER (PARTITION BY city ORDER BY rating) = 1

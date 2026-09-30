@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END rating_bucket, city, SORT_ARRAY(COLLECT_SET(city)) city_list, ROUND(AVG(rating), 2) avg_rating FROM suppliers WHERE (city IN ('Chiang Mai', 'Berlin', 'Tokyo') AND city IN ('Berlin', 'New York', 'London')) OR country <> 'UK' GROUP BY rating_bucket, city ORDER BY 2 ASC

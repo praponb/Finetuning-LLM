@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', customers.signup_date) AS signup_month, MAX(sessions.started_at) AS latest_started_at FROM sessions LEFT JOIN customers ON sessions.customer_id = customers.id WHERE UPPER(customers.name) LIKE '%IM %' GROUP BY DATE_TRUNC('MONTH', customers.signup_date)

@@ -1,0 +1,1 @@
+select i.id, i.last_restock, i.quantity, p.category, p.stock_qty, s.rating, round(s.rating * 0.85, 2) as adjusted_rating from inventory i left join products p on i.product_id = p.id inner join suppliers s on s.id = p.supplier_id where p.supplier_id = 21 order by s.rating desc

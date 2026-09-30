@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT supplier_id, MAX(stock_qty) - MIN(stock_qty) stock_qty_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values FROM products WHERE supplier_id = 12 GROUP BY supplier_id) sub WHERE stock_qty_range < 68 ORDER BY stock_qty_range ASC, supplier_id ASC;

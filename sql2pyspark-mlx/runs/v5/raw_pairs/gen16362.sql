@@ -1,0 +1,1 @@
+SELECT YEAR(signup_date) AS signup_year, country, SUM(credit_limit) AS total_credit_limit, AVG(credit_limit) AS avg_credit_limit, MIN(credit_limit) AS min_credit_limit FROM customers WHERE credit_limit <= 12800 AND email IS NULL GROUP BY YEAR(signup_date), country ORDER BY min_credit_limit, signup_year, country LIMIT 5;

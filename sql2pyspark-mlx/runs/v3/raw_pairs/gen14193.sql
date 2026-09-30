@@ -1,0 +1,1 @@
+SELECT id, customer_id, channel, ROUND(shipping_fee * 1.07, 2) AS shipping_fee_adjusted FROM orders WHERE discount IS NULL AND (order_date < '2023-06-01' OR MONTH(order_date) IN (3, 5, 6)) ORDER BY id;

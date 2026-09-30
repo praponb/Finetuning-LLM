@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT id, location FROM departments INTERSECT ALL SELECT id, location FROM departments WHERE budget BETWEEN 1218000 AND 3011000), kept_rows AS (SELECT s.* FROM departments s INNER JOIN kept_keys k ON s.id = k.id AND s.location = k.location) SELECT id, location FROM kept_rows ORDER BY location DESC NULLS FIRST

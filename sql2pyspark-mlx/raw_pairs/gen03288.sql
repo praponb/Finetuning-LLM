@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, ss.store_id, p.brand, s.city, s.country FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.cost > 660 AND p.supplier_id IN (9, 16, 37, 39) ORDER BY 6, sale_date, id LIMIT 5

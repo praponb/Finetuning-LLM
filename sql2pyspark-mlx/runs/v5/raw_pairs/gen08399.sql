@@ -1,0 +1,1 @@
+SELECT c.city, COUNT(o.discount) AS discount_count, ROUND(STDDEV(o.shipping_fee), 2) AS stddev_shipping_fee FROM orders o INNER JOIN customers c ON c.id = o.customer_id GROUP BY c.city ORDER BY stddev_shipping_fee DESC, c.city

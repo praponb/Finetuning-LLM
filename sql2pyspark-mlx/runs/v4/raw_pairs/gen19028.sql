@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM sessions QUALIFY ROW_NUMBER() OVER (PARTITION BY country, browser ORDER BY started_at NULLS FIRST, id) = 1) SELECT customer_id, MAX(started_at) AS last_seen, SIZE(COLLECT_SET(browser)) AS num_browsers, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM latest GROUP BY customer_id ORDER BY num_browsers DESC NULLS FIRST;

@@ -1,0 +1,1 @@
+select e.id, e.hire_date as employee_hire_date, m.salary as manager_salary, m.dept_id as manager_dept_id, m.full_name as manager_full_name from employees e join employees m on e.manager_id = m.id where e.hire_date < '2025-10-01' order by manager_salary asc;

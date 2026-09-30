@@ -1,0 +1,1 @@
+SELECT is_active, YEAR(signup_date) AS signup_year, ROUND((100 * SUM(CASE WHEN segment = 'Consumer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_consumer, COUNT(CASE WHEN country = 'SG' THEN 1 END) AS sg_count FROM customers GROUP BY is_active, signup_year HAVING AVG(credit_limit) >= 14400 ORDER BY pct_consumer DESC, is_active, signup_year LIMIT 20;

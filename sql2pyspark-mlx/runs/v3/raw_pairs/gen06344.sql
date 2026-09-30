@@ -1,0 +1,1 @@
+select stores.id, stores.store_name, stores.sqft from stores where stores.opened_date >= '2025-10-01' and stores.id in (select store_id from store_sales where units < 28) order by store_name desc, id asc;

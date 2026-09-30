@@ -1,0 +1,1 @@
+SELECT merchant_group, total_amount FROM (SELECT CASE WHEN merchant IN ('Amazon', '7-Eleven') THEN 'group_a' ELSE 'other' END AS merchant_group, SUM(amount) AS total_amount FROM transactions GROUP BY CASE WHEN merchant IN ('Amazon', '7-Eleven') THEN 'group_a' ELSE 'other' END) AS agg WHERE total_amount < 20000;

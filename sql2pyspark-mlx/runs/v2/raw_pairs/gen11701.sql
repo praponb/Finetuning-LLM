@@ -1,0 +1,1 @@
+SELECT store_id, product_id, YEAR(last_restock) AS last_restock_year, AVG(quantity) AS avg_quantity FROM inventory WHERE store_id IN (1, 4) AND quantity IS NOT NULL GROUP BY store_id, product_id, YEAR(last_restock) ORDER BY last_restock_year DESC

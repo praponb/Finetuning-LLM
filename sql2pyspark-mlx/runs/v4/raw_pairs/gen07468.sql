@@ -1,0 +1,1 @@
+SELECT store_id, APPROX_PERCENTILE(quantity, 0.5) AS quantity_p50, COUNT(DISTINCT id) AS distinct_ids, STDDEV_SAMP(quantity) AS quantity_stddev, PERCENTILE_APPROX(quantity, ARRAY(0.25, 0.5, 0.75)) AS quantity_quartiles FROM inventory GROUP BY store_id HAVING quantity_p50 >= 0 ORDER BY quantity_stddev;

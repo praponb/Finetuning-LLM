@@ -1,0 +1,1 @@
+select count(distinct cost) as unique_orders, count(cost) as cost_count, sum(case when carrier = 'Flash' then cost else 0 end) as flash_cost from shipments where status = 'LOST' and shipped_date > '2025-09-29' order by cost_count asc;

@@ -1,0 +1,1 @@
+SELECT o.id, o.channel, COUNT(s.id) shipment_count, COUNT(DISTINCT s.cost) unique_statuss FROM orders o LEFT OUTER JOIN shipments s ON o.id = s.order_id GROUP BY o.id, o.channel ORDER BY shipment_count DESC

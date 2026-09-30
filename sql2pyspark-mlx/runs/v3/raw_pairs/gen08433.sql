@@ -1,0 +1,1 @@
+SELECT o.status, MAX(oi.unit_price) AS max_unit_price FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id WHERE o.shipping_fee IS NOT NULL GROUP BY o.status ORDER BY o.status, max_unit_price LIMIT 20

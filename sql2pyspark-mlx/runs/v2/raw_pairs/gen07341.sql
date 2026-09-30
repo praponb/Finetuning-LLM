@@ -1,0 +1,1 @@
+with src as (select * from departments where dept_name in ('Legal', 'Sales', 'Finance')), summary as (select location, concat_ws(', ', sort_array(collect_set(location))) as location_values, round(avg(budget), 2) as avg_budget from src group by location) select * from summary order by location limit 50;

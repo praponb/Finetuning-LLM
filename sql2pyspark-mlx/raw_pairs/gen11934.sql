@@ -1,0 +1,1 @@
+SELECT merchant, CASE WHEN amount >= 3700 THEN 'high' WHEN amount >= 1400 THEN 'mid' ELSE 'low' END amount_bucket, HOUR(txn_time) txn_hour, MAX(amount) - MIN(amount) amount_range, ROUND(STDDEV(amount), 2) stddev_amount, MIN(amount) min_amount FROM transactions GROUP BY merchant, amount_bucket, txn_hour ORDER BY min_amount DESC

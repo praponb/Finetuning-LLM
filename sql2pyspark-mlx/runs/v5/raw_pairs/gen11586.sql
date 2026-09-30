@@ -1,0 +1,1 @@
+SELECT p.brand, COUNT(oi.unit_price) AS unit_price_count, COUNT(*) AS row_count FROM order_items oi JOIN products p ON p.id = oi.product_id JOIN orders o ON oi.order_id = o.id WHERE o.discount > 0.27 GROUP BY p.brand ORDER BY unit_price_count DESC, row_count DESC, brand LIMIT 1

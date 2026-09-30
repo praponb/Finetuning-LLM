@@ -1,0 +1,1 @@
+WITH session_totals AS (SELECT session_id, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list, MIN(duration_sec) AS min_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, st.event_type_list, st.min_duration_sec FROM sessions s LEFT OUTER JOIN session_totals st ON s.id = st.session_id

@@ -1,0 +1,1 @@
+select quarter(c.signup_date) as signup_quarter, min(s.monthly_fee) as min_monthly_fee from subscriptions s inner join customers c on s.customer_id = c.id group by quarter(c.signup_date) having min(s.monthly_fee) > 120 order by 1 desc;

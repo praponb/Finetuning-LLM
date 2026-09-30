@@ -1,0 +1,1 @@
+SELECT store_id, product_id, last_restock, ROUND(quantity * 0.9, 2) AS adjusted_quantity FROM inventory WHERE (last_restock BETWEEN '2024-01-28' AND '2025-01-01' AND quantity IS NOT NULL) OR quantity >= 83

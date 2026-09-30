@@ -1,0 +1,1 @@
+select s.id, s.started_at, s.customer_id, t.page_view_count from sessions s left join (select session_id, sum(case when event_type = 'page_view' then 1 else 0 end) as page_view_count from web_events group by session_id) t on s.id = t.session_id where t.page_view_count >= 38 order by customer_id desc;

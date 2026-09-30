@@ -1,0 +1,1 @@
+select id, shipped_date, delivered_date, status, lead(cost, 1) over (partition by status, order_id order by cost, id) as next_cost, sum(cost) over (partition by date_trunc('week', shipped_date), status order by shipped_date, id rows between unbounded preceding and current row) as running_cost from shipments;

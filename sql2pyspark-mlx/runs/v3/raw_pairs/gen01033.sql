@@ -1,0 +1,1 @@
+SELECT c.segment, QUARTER(c.signup_date) AS signup_quarter, AVG(a.balance) AS avg_balance, COUNT(CASE WHEN a.account_type = 'LOAN' THEN 1 END) AS loan_count FROM accounts a LEFT JOIN customers c ON a.customer_id = c.id WHERE c.city = 'Bangkok' GROUP BY c.segment, QUARTER(c.signup_date) ORDER BY segment DESC, signup_quarter LIMIT 50

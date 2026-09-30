@@ -1,0 +1,1 @@
+with base as (select * from web_events where event_time >= '2023-03-05' and page = '/checkout'), agg as (select page, round((100 * sum(case when event_type = 'search' then 1 else 0 end)) / count(*), 1) as pct_search from base group by page) select page, pct_search from agg where pct_search < 51 order by page;

@@ -1,0 +1,1 @@
+SELECT id, merchant, txn_time, amount, RANK() OVER (PARTITION BY merchant ORDER BY txn_time) AS rnk, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount, id) AS rn FROM transactions WHERE account_id = 10 ORDER BY rn

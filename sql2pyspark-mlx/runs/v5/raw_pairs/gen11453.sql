@@ -1,0 +1,1 @@
+SELECT QUARTER(order_date) AS order_quarter, MAX(shipping_fee) AS max_shipping_fee, SORT_ARRAY(COLLECT_SET(status)) AS status_list, MIN(shipping_fee) AS min_shipping_fee FROM orders WHERE discount BETWEEN 0.25 AND 0.39 AND channel = 'mobile' GROUP BY 1 HAVING MIN(shipping_fee) < 19 ORDER BY 1;

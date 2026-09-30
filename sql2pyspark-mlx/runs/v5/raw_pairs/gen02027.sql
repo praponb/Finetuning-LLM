@@ -1,0 +1,1 @@
+SELECT channel_group, order_quarter, min_amount FROM (SELECT CASE WHEN channel IN ('web', 'store') THEN 'core' ELSE 'other' END channel_group, QUARTER(order_date) order_quarter, MIN(amount) min_amount FROM orders GROUP BY CASE WHEN channel IN ('web', 'store') THEN 'core' ELSE 'other' END, QUARTER(order_date)) sub WHERE min_amount >= 450;

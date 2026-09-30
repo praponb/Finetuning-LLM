@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, category, stock_qty, cost, DENSE_RANK() OVER (PARTITION BY category ORDER BY stock_qty DESC) AS row_num FROM products) SELECT id, category, stock_qty, cost FROM numbered WHERE row_num <= 3 ORDER BY 3 DESC, id DESC

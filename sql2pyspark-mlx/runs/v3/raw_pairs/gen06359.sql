@@ -1,0 +1,1 @@
+WITH sessions_by_customer AS (SELECT customer_id, COUNT(CASE WHEN country = 'TH' THEN 1 END) AS th_count, MIN(started_at) AS first_started_at FROM sessions GROUP BY customer_id) SELECT c.country, c.is_active, sbc.th_count, sbc.first_started_at FROM customers c LEFT JOIN sessions_by_customer sbc ON c.id = sbc.customer_id WHERE sbc.th_count > 7 ORDER BY 4;

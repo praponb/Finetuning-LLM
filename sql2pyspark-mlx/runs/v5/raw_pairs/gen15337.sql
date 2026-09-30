@@ -1,0 +1,1 @@
+SELECT location, dept_name, SUM(CASE WHEN location = 'London' THEN 1 ELSE 0 END) AS london_count, MIN(budget) AS min_budget, MAX(budget) AS max_budget FROM departments WHERE location = 'Chiang Mai' AND budget <= 1891000 GROUP BY 1, 2 ORDER BY dept_name, min_budget, location LIMIT 50;

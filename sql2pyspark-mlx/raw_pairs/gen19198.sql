@@ -1,0 +1,1 @@
+select last_restock_month, quantity_range, total_count from (select date_format(last_restock, 'yyyy-MM') as last_restock_month, max(quantity) - min(quantity) as quantity_range, count(*) as total_count from inventory group by date_format(last_restock, 'yyyy-MM')) as t where quantity_range > 68 order by last_restock_month;

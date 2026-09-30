@@ -1,0 +1,1 @@
+WITH ProductTotals AS (SELECT product_id, COUNT(quantity) AS quantity_count, MAX(last_restock) AS latest_last_restock FROM inventory GROUP BY product_id) SELECT p.id, p.launch_date, p.stock_qty, P.quantity_count, P.latest_last_restock FROM products p LEFT OUTER JOIN ProductTotals P ON p.id = P.product_id ORDER BY P.latest_last_restock ASC

@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, MAX(amount) AS max_amount FROM orders WHERE amount > 560 GROUP BY customer_id) SELECT c.age, c.email, ct.max_amount FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id

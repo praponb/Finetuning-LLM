@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(hire_date) < 2024 THEN 'before_2024' WHEN YEAR(hire_date) = 2024 THEN '2024' ELSE 'after_2024' END AS hire_cohort, SUM(salary) AS total_salary, RANK() OVER (ORDER BY SUM(salary) DESC) AS rnk FROM employees WHERE job_title <> 'Manager' GROUP BY CASE WHEN YEAR(hire_date) < 2024 THEN 'before_2024' WHEN YEAR(hire_date) = 2024 THEN '2024' ELSE 'after_2024' END

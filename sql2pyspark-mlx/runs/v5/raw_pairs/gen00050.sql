@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_accounts, SUM(amount) AS total_amount FROM transactions WHERE is_flagged = FALSE GROUP BY account_id) SELECT a.status, as.unique_accounts, as.total_amount FROM accounts a INNER JOIN account_summary as ON a.id = as.account_id WHERE as.total_amount > 20000 ORDER BY as.unique_accounts DESC;

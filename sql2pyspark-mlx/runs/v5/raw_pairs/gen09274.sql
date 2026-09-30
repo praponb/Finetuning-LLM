@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('WEEK', end_date) AS week_start, COUNT(DISTINCT customer_id) AS distinct_customer_ids, SORT_ARRAY(COLLECT_SET(status)) AS status_list, STDDEV_SAMP(monthly_fee) AS monthly_fee_stddev, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list FROM subscriptions GROUP BY DATE_TRUNC('WEEK', end_date) ORDER BY week_start DESC NULLS LAST

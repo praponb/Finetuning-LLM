@@ -1,0 +1,1 @@
+SELECT t.merchant, t.txn_time, a.balance, c.credit_limit, c.email FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id RIGHT JOIN customers c ON c.id = a.customer_id WHERE t.txn_type NOT IN ('FEE', 'CREDIT', 'REFUND') AND c.is_active ORDER BY txn_time DESC;

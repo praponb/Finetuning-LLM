@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE last_restock < '2024-02-07' GROUP BY store_id) SELECT s.id, s.sqft, s.store_name, ss.avg_quantity, ss.quantity_range FROM stores s LEFT OUTER JOIN store_summary ss ON s.id = ss.store_id WHERE ss.quantity_range >= 36;

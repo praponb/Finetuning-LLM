@@ -1,0 +1,1 @@
+WITH valid_employees AS (SELECT *, LOWER(full_name) AS full_name_lower FROM employees WHERE dept_id IN (18, 20, 38, 39)), employees_stats AS (SELECT job_title, is_remote, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM valid_employees GROUP BY job_title, is_remote) SELECT * FROM employees_stats;

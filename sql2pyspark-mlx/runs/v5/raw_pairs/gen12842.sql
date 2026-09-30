@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CONCAT(location, '/', dept_name) location_dept_name FROM departments WHERE dept_name IS NOT NULL AND dept_name IN ('Finance', 'HR', 'Marketing')) SELECT * FROM (SELECT dept_name, location, budget FROM cleaned) src PIVOT (AVG(budget) FOR location IN ('Tokyo' AS tokyo, 'Chiang Mai' AS chiang_mai));

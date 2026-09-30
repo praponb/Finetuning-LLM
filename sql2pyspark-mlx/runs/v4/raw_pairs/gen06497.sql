@@ -1,0 +1,1 @@
+select status, round((100 * sum(case when account_type = 'LOAN' then 1 else 0 end)) / count(*), 1) as pct_loan, sort_array(collect_set(account_type)) as account_type_list, max(opened_date) as latest_opened_date from accounts where status <> 'FROZEN' and account_type in ('LOAN', 'CREDIT') and balance between 38000 and 55000 group by status order by pct_loan desc, status desc

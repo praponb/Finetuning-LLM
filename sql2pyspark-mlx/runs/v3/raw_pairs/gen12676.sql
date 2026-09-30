@@ -1,0 +1,1 @@
+select i.id, i.product_id, i.store_id, i.quantity from inventory i where i.quantity = 115 and i.product_id in (select id from products where cost between 220 and 230) order by store_id, quantity desc, id limit 50

@@ -1,0 +1,1 @@
+SELECT id, store_name, city, region, opened_date, STDDEV_SAMP(sqft) OVER (PARTITION BY city) AS city_stddev_samp_sqft, NTILE(4) OVER (PARTITION BY region ORDER BY sqft, id) AS sqft_bucket, FIRST_VALUE(region) IGNORE NULLS OVER (PARTITION BY city ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_region FROM stores WHERE region != 'East';

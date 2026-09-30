@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales GROUP BY store_id) SELECT s.id, s.city, ss.revenue_range FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id ORDER BY ss.revenue_range

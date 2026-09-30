@@ -1,0 +1,1 @@
+SELECT s.order_id, s.delivered_date, s.status, o.shipping_fee, o.status AS order_status, o.discount, INITCAP(TRIM(o.channel)) AS channel_title FROM shipments s INNER JOIN orders o ON s.order_id = o.id

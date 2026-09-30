@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, MIN(launch_date) AS first_launch_date, SUM(stock_qty) AS total_stock_qty FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, pbs.first_launch_date, pbs.total_stock_qty FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id WHERE pbs.total_stock_qty > 700

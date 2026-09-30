@@ -1,0 +1,7 @@
+SELECT email
+FROM employees
+WHERE salary BETWEEN 121000 AND 146000
+INTERSECT
+SELECT status
+FROM payments
+ORDER BY email;

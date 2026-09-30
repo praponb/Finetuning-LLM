@@ -1,0 +1,1 @@
+with store_stats as (select store_id, concat_ws(', ', sort_array(collect_set(status))) as status_values, min(amount) as min_amount from orders where order_date >= '2025-07-30' group by store_id) select s.id, s.region, s.opened_date, ss.status_values, ss.min_amount from stores s inner join store_stats ss on s.id = ss.store_id order by opened_date desc, id limit 1

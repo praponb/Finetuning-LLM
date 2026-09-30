@@ -1,0 +1,1 @@
+with valid_transactions as (select * from transactions where account_id in (9, 24, 38)), txn_month_summary as (select month(txn_time) as txn_month, concat_ws(', ', sort_array(collect_set(merchant))) as merchant_values from valid_transactions group by month(txn_time)) select * from txn_month_summary order by merchant_values

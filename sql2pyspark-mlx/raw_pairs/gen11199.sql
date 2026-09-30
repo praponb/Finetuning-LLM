@@ -1,0 +1,1 @@
+WITH valid_accounts AS (SELECT *, CAST(balance AS INT) AS balance_int FROM accounts WHERE account_type = 'SAVINGS'), summary AS (SELECT account_type, SUM(CASE WHEN account_type = 'CHECKING' THEN balance_int ELSE 0 END) AS checking_balance_int FROM valid_accounts GROUP BY account_type) SELECT account_type, checking_balance_int FROM summary ORDER BY checking_balance_int

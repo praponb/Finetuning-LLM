@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.account_type, COUNT(transactions.id) AS transaction_count FROM accounts LEFT JOIN transactions ON accounts.id = transactions.account_id WHERE transactions.merchant = '7-Eleven' GROUP BY accounts.id, accounts.account_type;

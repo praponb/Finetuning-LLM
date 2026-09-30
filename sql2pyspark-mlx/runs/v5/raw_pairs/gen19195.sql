@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, is_active, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, MIN(signup_date) AS first_signup_date FROM customers WHERE is_active GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM'), is_active

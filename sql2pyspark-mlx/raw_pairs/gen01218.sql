@@ -1,0 +1,1 @@
+with latest as (select *, row_number() over (partition by manager_id order by salary, id) as latest_rank from employees qualify latest_rank = 1) select id, full_name, email, dept_id, manager_id, job_title, salary, hire_date, is_remote from latest order by id nulls last

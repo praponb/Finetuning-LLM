@@ -1,0 +1,1 @@
+SELECT product_id, MAX(sale_date) AS latest_sale_date FROM store_sales WHERE units BETWEEN 11 AND 15 AND units >= 33 AND revenue >= 3300 GROUP BY product_id HAVING COUNT(revenue) > 3 ORDER BY latest_sale_date DESC, product_id DESC

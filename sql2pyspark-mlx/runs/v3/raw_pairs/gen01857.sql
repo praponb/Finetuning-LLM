@@ -1,0 +1,1 @@
+select we.id, we.page, s.customer_id, c.country, c.credit_limit from web_events we inner join sessions s on we.session_id = s.id inner join customers c on s.customer_id = c.id order by customer_id desc, id limit 10;

@@ -1,0 +1,1 @@
+SELECT customer_id, COUNT(DISTINCT monthly_fee) AS unique_customers FROM subscriptions WHERE start_date BETWEEN '2024-03-11' AND '2025-03-24' GROUP BY customer_id ORDER BY unique_customers DESC, customer_id LIMIT 1;

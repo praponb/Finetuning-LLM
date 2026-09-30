@@ -1,0 +1,1 @@
+select event_type, round(avg(duration_sec), 2) as avg_duration_sec, round(stddev(duration_sec), 2) as stddev_duration_sec, count(case when page = '/home' then 1 end) as home_count from web_events where hour(event_time) between 10 and 15 group by 1 having count(case when page = '/home' then 1 end) >= 2 order by event_type asc;

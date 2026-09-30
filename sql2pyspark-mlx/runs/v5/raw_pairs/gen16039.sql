@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, txn_type, amount, txn_time, RANK() OVER (PARTITION BY txn_type ORDER BY amount DESC) AS pos FROM transactions WHERE merchant IS NULL) SELECT id, txn_type, amount, txn_time FROM ranked WHERE pos <= 5;

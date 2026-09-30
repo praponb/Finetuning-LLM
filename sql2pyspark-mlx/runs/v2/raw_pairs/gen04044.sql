@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, COUNT(*) AS cnt FROM transactions WHERE NOT is_flagged GROUP BY account_id) SELECT accounts.id, accounts.balance, account_stats.cnt FROM accounts LEFT JOIN account_stats ON accounts.id = account_stats.account_id WHERE account_stats.cnt > 9 ORDER BY id;

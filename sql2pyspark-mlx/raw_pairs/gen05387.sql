@@ -1,0 +1,1 @@
+SELECT id, device_code, reading_ts, temp_c, humidity, firmware, NTILE(10) OVER (PARTITION BY YEAR(reading_ts), device_code ORDER BY humidity, id) humidity_bucket, NTILE(4) OVER (PARTITION BY device_code ORDER BY temp_c DESC, id) temp_c_bucket FROM device_readings WHERE device_code IN ('DV-01', 'DV-02');

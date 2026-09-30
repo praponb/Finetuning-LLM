@@ -1,0 +1,1 @@
+select date_trunc('MONTH', ss.sale_date) as sale_month, min(i.quantity) as min_quantity, count(i.quantity) as quantity_count from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by date_trunc('MONTH', ss.sale_date) order by min_quantity asc, sale_month asc limit 5;

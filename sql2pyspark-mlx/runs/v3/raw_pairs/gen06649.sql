@@ -1,0 +1,1 @@
+SELECT e.id, e.is_remote AS employee_is_remote, e.job_title AS employee_job_title, m.email AS manager_email, m.dept_id AS manager_dept_id, CONCAT(m.job_title, ' - ', m.email) AS job_title_email FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE m.manager_id = 21 AND e.is_remote;

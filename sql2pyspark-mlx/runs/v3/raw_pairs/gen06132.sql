@@ -1,0 +1,1 @@
+WITH filtered_orders AS (SELECT * FROM orders WHERE discount <= 0.3), orders_stats AS (SELECT store_id, channel, MIN(order_date) AS min_order_date FROM filtered_orders GROUP BY store_id, channel) SELECT * FROM orders_stats ORDER BY store_id DESC;

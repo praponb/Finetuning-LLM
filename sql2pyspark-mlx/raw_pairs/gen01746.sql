@@ -1,0 +1,1 @@
+SELECT p.job_title AS employee_job_title, a.job_title AS employee_job_title, COUNT(*) AS num_rows, SUM(a.salary) AS total_salary FROM employees a LEFT JOIN employees p ON a.manager_id = p.id GROUP BY GROUPING SETS ((p.job_title, a.job_title), (p.job_title), ());

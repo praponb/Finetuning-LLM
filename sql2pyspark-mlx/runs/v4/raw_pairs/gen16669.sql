@@ -1,0 +1,1 @@
+WITH ranked_employees AS (SELECT id, manager_id, hire_date, salary, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date DESC, id) AS pos FROM employees) SELECT * FROM ranked_employees WHERE pos = 1 ORDER BY manager_id DESC

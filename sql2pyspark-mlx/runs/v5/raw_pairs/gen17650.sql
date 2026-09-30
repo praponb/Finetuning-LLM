@@ -1,0 +1,1 @@
+WITH inventory_by_store AS (SELECT store_id, COUNT(*) row_count, COUNT(quantity) quantity_count FROM inventory GROUP BY store_id) SELECT s.region, ibs.row_count, ibs.quantity_count FROM stores s LEFT JOIN inventory_by_store ibs ON s.id = ibs.store_id WHERE ibs.row_count >= 3 ORDER BY region ASC, 2 DESC;

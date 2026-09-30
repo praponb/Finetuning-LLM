@@ -1,0 +1,1 @@
+with Ranked as (select id, country, started_at, browser, row_number() over (partition by country order by started_at, id) as row_num from sessions where customer_id is null) select id, country, started_at, browser from Ranked where row_num <= 5 order by country;

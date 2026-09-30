@@ -1,0 +1,1 @@
+with customer_totals as (select customer_id, count(distinct device) as unique_devices, min(started_at) as min_started_at from sessions group by customer_id) select c.id, c.segment, ct.unique_devices, ct.min_started_at from customers c inner join customer_totals ct on c.id = ct.customer_id where ct.unique_devices >= 3;

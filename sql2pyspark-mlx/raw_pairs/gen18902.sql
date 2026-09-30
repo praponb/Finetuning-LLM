@@ -1,0 +1,1 @@
+select id, order_id, delivered_date, date_format(shipped_date, 'yyyy-MM-dd') as shipped_date_label from shipments where delivered_date >= '2024-12-01' order by delivered_date desc, shipped_date_label asc, id asc limit 5

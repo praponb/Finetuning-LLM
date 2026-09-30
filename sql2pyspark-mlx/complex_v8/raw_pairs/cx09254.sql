@@ -1,0 +1,6 @@
+SELECT id
+FROM tickets
+EXCEPT ALL
+SELECT id
+FROM tickets
+ORDER BY id DESC

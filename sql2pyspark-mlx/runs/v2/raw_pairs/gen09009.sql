@@ -1,0 +1,1 @@
+SELECT CASE WHEN ss.revenue >= 4100 THEN 'high' WHEN ss.revenue >= 800 THEN 'mid' ELSE 'low' END AS revenue_bucket, MIN(i.last_restock) AS min_last_restock FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.quantity = 137 GROUP BY CASE WHEN ss.revenue >= 4100 THEN 'high' WHEN ss.revenue >= 800 THEN 'mid' ELSE 'low' END

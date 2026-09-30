@@ -1,0 +1,1 @@
+SELECT product_id, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, MAX(quantity) - MIN(quantity) AS quantity_range, COUNT(*) AS cnt FROM inventory GROUP BY product_id, DATE_FORMAT(last_restock, 'yyyy-MM');

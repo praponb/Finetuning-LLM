@@ -1,0 +1,1 @@
+select s.id, s.customer_id, t.max_duration_sec from sessions s left join (select session_id, max(duration_sec) max_duration_sec from web_events group by session_id) t on s.id = t.session_id where t.max_duration_sec >= 290;

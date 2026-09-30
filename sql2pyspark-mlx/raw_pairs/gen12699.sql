@@ -1,0 +1,1 @@
+SELECT id, product_id, units, revenue FROM (SELECT id, product_id, units, revenue, RANK() OVER (PARTITION BY product_id ORDER BY units DESC) AS row_num FROM store_sales WHERE store_id IN (3, 5, 6)) AS r WHERE row_num <= 1 ORDER BY product_id ASC, id DESC

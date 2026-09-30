@@ -1,0 +1,1 @@
+select quarter(opened_date) as opened_quarter, month(opened_date) as opened_month, city, sum(case when region = 'North' then sqft else 0 end) as north_sqft, round(stddev(sqft), 2) as stddev_sqft, min(opened_date) as min_opened_date from stores group by opened_quarter, opened_month, city having north_sqft > 38 order by stddev_sqft desc;

@@ -1,0 +1,1 @@
+SELECT status, ROUND(AVG(amount), 2) avg_amount, ROUND(STDDEV(shipping_fee), 2) stddev_shipping_fee FROM orders GROUP BY status HAVING ROUND(AVG(amount), 2) >= 60 ORDER BY avg_amount, stddev_shipping_fee;

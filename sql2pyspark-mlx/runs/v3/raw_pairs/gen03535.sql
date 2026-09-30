@@ -1,0 +1,1 @@
+SELECT i.quantity, i.last_restock, s.city, p.stock_qty, p.supplier_id FROM inventory i FULL OUTER JOIN stores s ON s.id = i.store_id LEFT OUTER JOIN products p ON p.id = i.product_id WHERE i.store_id IN (2, 5) AND p.supplier_id IS NULL

@@ -1,0 +1,1 @@
+select oi.id, oi.product_id, p.product_name, o.customer_id, o.shipping_fee from order_items oi inner join products p on oi.product_id = p.id inner join orders o on oi.order_id = o.id where oi.quantity <> 5 and p.category = 'Fashion' order by product_id, id limit 10;

@@ -1,0 +1,1 @@
+WITH recent_transactions AS (SELECT *, COALESCE(merchant, 'N/A') AS merchant_filled FROM transactions WHERE amount <= 3700), transactions_stats AS (SELECT merchant, MIN(amount) AS min_amount, ROUND(AVG(amount), 2) AS avg_amount FROM recent_transactions GROUP BY merchant) SELECT merchant, min_amount, avg_amount FROM transactions_stats WHERE min_amount > 2900 ORDER BY merchant

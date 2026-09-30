@@ -1,0 +1,1 @@
+with valid as (select id, reading_ts, humidity, pressure, status_bits, firmware, floor(humidity) as humidity_whole from device_readings where reading_ts >= timestamp '2025-09-01 05:00:00') select * from (select id, pressure, humidity from valid) src unpivot (reading for kpi in (pressure as PRESSURE, humidity as HUMIDITY_VAL))

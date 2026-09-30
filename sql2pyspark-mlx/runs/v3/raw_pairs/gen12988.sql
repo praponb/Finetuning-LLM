@@ -1,0 +1,1 @@
+SELECT MONTH(opened_date) AS opened_month, MIN(sqft) AS min_sqft FROM stores WHERE opened_date BETWEEN '2023-04-01' AND '2025-02-01' GROUP BY MONTH(opened_date) HAVING MIN(sqft) >= 15400 ORDER BY min_sqft DESC, opened_month DESC;

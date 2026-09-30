@@ -1,0 +1,1 @@
+select txn_type, sum(case when txn_type = 'FEE' then 1 else 0 end) as fee_count, sum(case when txn_type = 'FEE' then amount else 0 end) as fee_amount from transactions where account_id = 7 or txn_type in ('REFUND', 'CREDIT', 'FEE') group by txn_type

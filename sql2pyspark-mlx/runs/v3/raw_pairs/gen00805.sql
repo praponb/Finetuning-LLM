@@ -1,0 +1,1 @@
+select is_remote, case when salary >= 145000 then 'high' when salary >= 70000 then 'mid' else 'low' end as salary_bucket, max(hire_date) as latest_hire_date from employees group by rollup(is_remote, case when salary >= 145000 then 'high' when salary >= 70000 then 'mid' else 'low' end)

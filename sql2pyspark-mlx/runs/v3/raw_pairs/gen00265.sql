@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM employees WHERE LENGTH(email) > 13 AND job_title IS NULL), level_summary AS (SELECT level, SUM(CASE WHEN job_title = 'Director' THEN 1 ELSE 0 END) AS director_count, COUNT(CASE WHEN level = 'L3' THEN 1 END) AS l3_count FROM src GROUP BY level) SELECT level, director_count FROM level_summary ORDER BY level LIMIT 5;

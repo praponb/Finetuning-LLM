@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values, MIN(salary) AS min_salary FROM employees GROUP BY dept_id) SELECT d.budget, dt.job_title_values, dt.min_salary FROM departments d LEFT JOIN department_totals dt ON d.id = dt.dept_id ORDER BY budget ASC;

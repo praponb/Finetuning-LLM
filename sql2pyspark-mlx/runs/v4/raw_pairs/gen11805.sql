@@ -1,0 +1,1 @@
+SELECT ss.store_id, AVG(i.quantity) AS avg_quantity, SUM(i.quantity) AS total_quantity FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY ss.store_id ORDER BY total_quantity DESC, ss.store_id DESC LIMIT 1

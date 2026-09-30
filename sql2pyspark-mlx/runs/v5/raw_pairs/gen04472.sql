@@ -1,0 +1,1 @@
+SELECT s.id, s.region, COUNT(i.id) AS inventory_count, MIN(i.last_restock) AS min_last_restock FROM stores s LEFT OUTER JOIN inventory i ON s.id = i.store_id GROUP BY s.id, s.region ORDER BY min_last_restock;

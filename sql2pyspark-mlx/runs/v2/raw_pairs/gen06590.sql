@@ -1,0 +1,1 @@
+SELECT e.id, e.email AS employee_email, e.is_remote AS employee_is_remote, e.dept_id AS employee_dept_id, m.job_title AS manager_job_title, m.email AS manager_email, IF(e.is_remote, 'Yes', 'No') AS is_remote_label FROM employees AS e LEFT JOIN employees AS m ON e.manager_id = m.id;

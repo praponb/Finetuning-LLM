@@ -1,0 +1,1 @@
+SELECT CASE WHEN city IN ('Berlin', 'London') THEN 'tier_1' ELSE 'other' END AS city_group, SUM(credit_limit) AS total_credit_limit, DENSE_RANK() OVER (ORDER BY SUM(credit_limit) DESC) AS credit_limit_rank FROM customers GROUP BY CASE WHEN city IN ('Berlin', 'London') THEN 'tier_1' ELSE 'other' END ORDER BY total_credit_limit DESC;

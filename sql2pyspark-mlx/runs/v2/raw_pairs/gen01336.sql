@@ -1,0 +1,1 @@
+SELECT plan, COUNT(DISTINCT monthly_fee) AS unique_plans, MIN(end_date) AS first_end_date FROM subscriptions WHERE status IN ('ACTIVE', 'EXPIRED', 'PAUSED') AND status = 'CANCELLED' GROUP BY plan HAVING unique_plans > 2 ORDER BY plan DESC LIMIT 5

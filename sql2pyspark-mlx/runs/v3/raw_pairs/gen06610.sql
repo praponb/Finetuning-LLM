@@ -1,0 +1,1 @@
+select s.city, count(case when p.status = 'REFUNDED' then 1 end) as refunded_count from payments p full outer join orders o on p.order_id = o.id right join stores s on s.id = o.store_id group by s.city;

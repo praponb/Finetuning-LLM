@@ -1,0 +1,1 @@
+with base as (select *, cast(is_remote as int) as is_remote_flag, coalesce(job_title, 'OTHER') as resolved_job_title from employees where hire_date > date '2023-11-25' and salary between 131000 and 145000) select * from (select *, row_number() over (partition by level order by salary desc, id) as rn from base) x where rn = 1;

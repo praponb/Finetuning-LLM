@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, p.supplier_id, p.brand, s.opened_date, s.region FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN stores s ON i.store_id = s.id WHERE p.supplier_id IS NOT NULL ORDER BY brand;

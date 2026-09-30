@@ -1,0 +1,1 @@
+with metrics_long as (select * from (select id, brand, cost, price from products) src unpivot (val for kpi in (cost, price))) select case when val >= 73 then 'HIGH' else 'LOW' end as val_tier, sort_array(collect_set(kpi)) as kpi_list, approx_percentile(val, 0.9) as val_p90, sort_array(collect_set(kpi)) as kpi_list_2 from metrics_long group by 1;

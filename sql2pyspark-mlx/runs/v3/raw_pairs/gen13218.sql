@@ -1,0 +1,1 @@
+select case when amount >= 3200 then 'high' when amount >= 1200 then 'mid' else 'low' end as amount_bucket, account_id, merchant, count(distinct amount) as unique_accounts from transactions group by case when amount >= 3200 then 'high' when amount >= 1200 then 'mid' else 'low' end, account_id, merchant order by merchant desc

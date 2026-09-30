@@ -1,0 +1,1 @@
+SELECT is_active, COUNT(CASE WHEN country = 'JP' THEN 1 END) jp_count, SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END) new_york_count, COUNT(DISTINCT credit_limit) unique_segments FROM customers WHERE city = 'Tokyo' AND segment = 'Corporate' AND segment IN ('SMB', 'Corporate', 'Consumer') GROUP BY 1

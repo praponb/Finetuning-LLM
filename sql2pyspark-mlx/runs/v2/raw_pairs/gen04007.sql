@@ -1,0 +1,1 @@
+with src as (select * from web_events where duration_sec between 400 and 448 and duration_sec is null and event_type = 'page_view'), Summary as (select event_type, max(event_time) last_event_time, count(case when page = '/search' then 1 end) search_count from src group by event_type) select * from Summary order by last_event_time desc

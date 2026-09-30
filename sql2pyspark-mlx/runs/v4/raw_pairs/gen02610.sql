@@ -1,0 +1,1 @@
+select * from (select date_trunc('MONTH', hire_date) as hire_month, round(avg(salary), 2) as avg_salary from employees group by date_trunc('MONTH', hire_date)) as s where avg_salary >= 48 order by avg_salary desc

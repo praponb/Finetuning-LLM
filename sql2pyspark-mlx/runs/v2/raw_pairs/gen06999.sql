@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT status, plan, MIN(monthly_fee) AS min_monthly_fee, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions WHERE status = 'EXPIRED' GROUP BY status, plan) AS s WHERE min_monthly_fee < 100 ORDER BY status, plan LIMIT 10;

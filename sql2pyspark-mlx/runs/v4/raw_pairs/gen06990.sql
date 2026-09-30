@@ -1,0 +1,1 @@
+SELECT store_id, product_id, DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, AVG(units) AS avg_units FROM store_sales GROUP BY store_id, product_id, DATE_FORMAT(sale_date, 'yyyy-MM') ORDER BY avg_units;

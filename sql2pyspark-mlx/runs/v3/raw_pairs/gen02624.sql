@@ -1,0 +1,1 @@
+with store_summary as (select store_id, min(sale_date) as min_sale_date, avg(revenue) as avg_revenue from store_sales group by store_id) select s.id, s.store_name, ss.min_sale_date, ss.avg_revenue from stores s join store_summary ss on s.id = ss.store_id where ss.avg_revenue >= 2600 order by id asc limit 5

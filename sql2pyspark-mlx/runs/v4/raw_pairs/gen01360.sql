@@ -1,0 +1,1 @@
+select id, city, region, opened_date, sqft, sum(sqft) over (partition by city, region order by opened_date, id rows between unbounded preceding and current row) as running_sqft, lead(sqft, 2) over (order by opened_date, id) as next_sqft from stores;

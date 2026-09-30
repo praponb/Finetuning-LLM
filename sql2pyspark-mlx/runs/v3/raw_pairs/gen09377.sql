@@ -1,0 +1,1 @@
+select c.city, max(o.order_date) as last_order_date, round((100 * sum(case when o.status = 'PENDING' then 1 else 0 end)) / count(*), 1) as pct_pending from orders o inner join customers c on c.id = o.customer_id group by c.city order by 2, city limit 20;

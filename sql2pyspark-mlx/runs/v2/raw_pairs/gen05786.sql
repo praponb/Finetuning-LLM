@@ -1,0 +1,1 @@
+SELECT p.cost, p.supplier_id, p.category, i.last_restock, i.quantity, i.store_id FROM products p INNER JOIN inventory i ON i.product_id = p.id WHERE p.brand IN ('Stark', 'Globex') AND i.product_id IN (4, 6) ORDER BY p.supplier_id, store_id DESC

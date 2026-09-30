@@ -1,0 +1,1 @@
+SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items WHERE order_id IN (1, 2, 4) AND product_id IS NULL GROUP BY product_id HAVING ROUND(STDDEV(quantity), 2) > 69 ORDER BY avg_quantity, product_id DESC;

@@ -1,0 +1,1 @@
+select s.sqft, s.opened_date, t.row_count, t.total_quantity from stores s inner join (select store_id, count(*) as row_count, sum(quantity) as total_quantity from inventory group by store_id) t on s.id = t.store_id where t.row_count >= 8 order by opened_date desc

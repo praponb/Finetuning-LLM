@@ -1,0 +1,1 @@
+select id, account_id, txn_type, txn_time, amount, merchant, amount - lag(amount, 1, 0) over (partition by account_id, txn_type order by txn_time, id) as amount_change, dense_rank() over (partition by merchant order by amount desc) as amount_dense_rank from transactions

@@ -1,0 +1,1 @@
+SELECT id, delivered_date, cost, DATEDIFF(shipped_date, delivered_date) AS days_delivered_date_to_shipped_date, UPPER(carrier) AS carrier_upper FROM shipments WHERE MONTH(delivered_date) IN (7, 8, 11) AND order_id IS NULL ORDER BY delivered_date DESC, id DESC

@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, store_id, revenue, units, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY revenue) AS row_num FROM store_sales) SELECT * FROM numbered WHERE row_num = 1 ORDER BY store_id DESC, revenue DESC;

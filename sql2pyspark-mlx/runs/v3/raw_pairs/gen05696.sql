@@ -1,0 +1,1 @@
+SELECT *, INITCAP(TRIM(account_type)) AS account_type_title FROM accounts WHERE account_type = 'CHECKING' AND status IN ('CLOSED', 'FROZEN') AND MONTH(opened_date) IN (2, 6, 9) ORDER BY opened_date DESC;

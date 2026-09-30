@@ -1,0 +1,1 @@
+SELECT id, carrier, shipped_date, cost, LAST_VALUE(cost) OVER (PARTITION BY carrier ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_cost FROM shipments ORDER BY last_cost ASC, cost DESC

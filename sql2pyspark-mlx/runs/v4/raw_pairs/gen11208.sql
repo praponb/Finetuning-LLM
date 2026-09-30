@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('DAY', reading_ts) AS activity_day, CASE WHEN temp_c >= 36.3 THEN 'LARGE' ELSE 'SMALL' END AS temp_c_tier, MAX(reading_ts) AS ended_at, COUNT(*) AS num_rows FROM device_readings GROUP BY activity_day, temp_c_tier

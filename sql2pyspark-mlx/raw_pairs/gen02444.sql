@@ -1,0 +1,1 @@
+SELECT p.supplier_id, ROUND(STDDEV(ss.units), 2) AS stddev_units, COUNT(DISTINCT ss.units) AS unique_stores FROM store_sales ss JOIN stores s ON ss.store_id = s.id JOIN products p ON ss.product_id = p.id GROUP BY p.supplier_id ORDER BY 1 DESC, stddev_units DESC;

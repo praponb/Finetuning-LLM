@@ -1,0 +1,1 @@
+WITH top_products AS (SELECT id, category, launch_date, ROW_NUMBER() OVER (PARTITION BY category ORDER BY launch_date DESC, id) AS rn FROM products WHERE SIZE(tags) >= 1) SELECT id, category, launch_date FROM top_products WHERE rn = 1;

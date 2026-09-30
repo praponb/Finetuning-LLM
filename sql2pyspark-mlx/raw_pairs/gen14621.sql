@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('YEAR', delivered_date) AS year_start, COUNT(CASE WHEN carrier = 'DHL' THEN 1 END) AS dhl_count, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list FROM shipments GROUP BY 1 HAVING dhl_count >= 1 ORDER BY year_start DESC NULLS FIRST

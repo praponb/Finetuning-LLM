@@ -1,0 +1,1 @@
+SELECT d.dept_name, COUNT(e.id) AS employee_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(e.job_title))) AS job_title_values, COUNT(CASE WHEN e.level = 'L2' THEN 1 END) AS l2_count FROM departments d LEFT OUTER JOIN employees e ON d.id = e.dept_id WHERE e.level = 'L4' GROUP BY d.dept_name

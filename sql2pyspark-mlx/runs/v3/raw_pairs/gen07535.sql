@@ -1,0 +1,1 @@
+select quarter(order_date) as order_quarter, count(shipping_fee) as shipping_fee_count from orders where discount >= 0.31 or amount between 900 and 1500 group by quarter(order_date) order by order_quarter desc;

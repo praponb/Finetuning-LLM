@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.store_id, inventory.quantity, products.price FROM inventory JOIN products ON inventory.product_id = products.id WHERE inventory.last_restock BETWEEN '2025-04-01' AND '2025-09-01' AND inventory.store_id IN (2, 3, 4, 6);

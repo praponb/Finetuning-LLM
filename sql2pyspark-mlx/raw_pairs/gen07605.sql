@@ -1,0 +1,1 @@
+SELECT p.channel, p.status, COUNT(*) AS num_rows, MIN(src.unit_price) AS min_unit_price, GROUPING_ID() AS gid FROM order_items src INNER JOIN orders p ON src.order_id = p.id GROUP BY GROUPING SETS ((p.channel, p.status), (p.channel), ()) ORDER BY min_unit_price DESC NULLS LAST

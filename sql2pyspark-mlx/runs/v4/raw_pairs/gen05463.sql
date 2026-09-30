@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(shipped_date, 'yyyy-MM') AS shipped_month, SUM(cost) AS total_cost, COUNT(*) AS cnt, SUM(SUM(cost)) OVER (ORDER BY DATE_FORMAT(shipped_date, 'yyyy-MM')) AS cumulative_cost FROM shipments GROUP BY DATE_FORMAT(shipped_date, 'yyyy-MM') ORDER BY total_cost

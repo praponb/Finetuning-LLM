@@ -1,0 +1,1 @@
+SELECT status, opened_month, total_balance FROM (SELECT status, MONTH(opened_date) opened_month, SUM(balance) total_balance FROM accounts WHERE opened_date >= '2023-07-30' GROUP BY status, MONTH(opened_date)) t WHERE total_balance < 324000 ORDER BY opened_month

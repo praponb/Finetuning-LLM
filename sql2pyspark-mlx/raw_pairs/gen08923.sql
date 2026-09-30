@@ -1,0 +1,1 @@
+SELECT e.id, e.job_title AS employee_job_title, m.full_name AS manager_full_name, m.job_title AS manager_job_title FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.job_title = 'Director' OR e.manager_id IS NOT NULL;

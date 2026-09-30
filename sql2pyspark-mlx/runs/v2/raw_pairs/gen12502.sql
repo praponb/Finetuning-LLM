@@ -1,0 +1,1 @@
+select p.brand, count(oi.id) as order_item_count, sum(oi.quantity * oi.unit_price) as revenue, round(stddev(oi.unit_price), 2) as stddev_unit_price from products p left join order_items oi on oi.product_id = p.id group by p.brand having revenue >= 78 order by stddev_unit_price;

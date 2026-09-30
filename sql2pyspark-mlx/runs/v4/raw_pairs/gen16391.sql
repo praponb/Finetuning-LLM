@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, p.launch_date, s.store_name, s.opened_date, p.cost / NULLIF(p.stock_qty, 0) AS cost_per_stock_qty FROM inventory i LEFT JOIN products p ON p.id = i.product_id INNER JOIN stores s ON i.store_id = s.id WHERE p.launch_date > '2025-11-01'

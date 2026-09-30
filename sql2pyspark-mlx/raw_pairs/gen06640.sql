@@ -1,0 +1,1 @@
+SELECT id, end_date, monthly_fee, status, ROUND(monthly_fee / SUM(monthly_fee) OVER (PARTITION BY status), 4) AS monthly_fee_share, LAG(monthly_fee, 1) OVER (PARTITION BY status ORDER BY monthly_fee, id) AS prev_monthly_fee FROM subscriptions;

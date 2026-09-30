@@ -1,0 +1,1 @@
+select id, customer_id, discount, channel, store_id, rank() over (partition by customer_id order by discount) as discount_rank, avg(discount) over (partition by channel, store_id) as channel_avg_discount from orders order by channel asc

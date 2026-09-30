@@ -1,0 +1,1 @@
+SELECT segment, MONTH(signup_date) AS signup_month, SUM(CASE WHEN segment = 'Consumer' THEN credit_limit ELSE 0 END) AS consumer_credit_limit FROM customers WHERE credit_limit < 7100 GROUP BY segment, MONTH(signup_date) HAVING COUNT(CASE WHEN segment = 'SMB' THEN 1 END) < 2

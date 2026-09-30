@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, items, ship_to, COALESCE(ship_to.city, 'UNKNOWN') AS city_or_unknown, COALESCE(attributes['device'], 'none') AS device_or_default, EXISTS(items, li -> li.price > 100) AS has_premium_item, ARRAY_MAX(TRANSFORM(items, li -> li.price)) AS max_item_price, attributes['utm_source'] AS utm_source FROM carts WHERE SIZE(coupon_codes) > 1;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, order_id, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(DISTINCT quantity) AS unique_products FROM order_items WHERE order_id IN (1, 16, 22, 32) GROUP BY quantity_bucket, order_id HAVING MAX(unit_price) > 110 ORDER BY quantity_bucket;

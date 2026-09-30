@@ -1,0 +1,1 @@
+SELECT CASE WHEN brand IN ('Stark', 'Initech') THEN 'tier_1' ELSE 'other' END AS brand_group, ROUND(STDDEV(cost), 2) AS stddev_cost, MIN(stock_qty) AS min_stock_qty FROM products WHERE supplier_id = 37 GROUP BY brand_group ORDER BY min_stock_qty DESC, brand_group LIMIT 10

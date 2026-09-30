@@ -1,0 +1,1 @@
+SELECT account_type, opened_date, customer_id, CONCAT(status, ' - ', account_type) AS status_account_type, FLOOR(balance) AS balance_whole FROM accounts WHERE account_type = 'SAVINGS' AND customer_id IN (1, 23, 26) AND opened_date <= '2024-12-13' ORDER BY balance_whole

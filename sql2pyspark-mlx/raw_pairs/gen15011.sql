@@ -1,0 +1,1 @@
+SELECT sqft_bucket, total_sqft FROM (SELECT CASE WHEN sqft >= 13040 THEN 'high' WHEN sqft >= 4149 THEN 'mid' ELSE 'low' END AS sqft_bucket, SUM(sqft) AS total_sqft FROM stores GROUP BY CASE WHEN sqft >= 13040 THEN 'high' WHEN sqft >= 4149 THEN 'mid' ELSE 'low' END) AS x WHERE total_sqft < 84000;

@@ -1,0 +1,1 @@
+with order_stats as (select order_id, count(case when method = 'card' then 1 end) as card_count from payments where order_id = 34 group by order_id) select orders.amount, orders.channel, order_stats.card_count from orders left join order_stats on orders.id = order_stats.order_id where order_stats.card_count > 6 order by channel desc;

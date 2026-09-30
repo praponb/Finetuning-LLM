@@ -1,0 +1,1 @@
+SELECT status FROM orders UNION ALL SELECT status FROM accounts WHERE balance BETWEEN 66000 AND 70000

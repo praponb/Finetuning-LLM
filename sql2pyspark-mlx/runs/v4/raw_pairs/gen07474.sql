@@ -1,0 +1,1 @@
+select case when amount >= 3900 then 'high' when amount >= 1500 then 'mid' else 'low' end as amount_bucket, date_format(txn_time, 'yyyy-MM') as txn_month, sort_array(collect_set(merchant)) as merchant_list, count(case when txn_type = 'FEE' then 1 end) as fee_count from transactions group by 1, 2 having max(amount) >= 3800 order by fee_count desc, 1

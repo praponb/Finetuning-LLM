@@ -1,0 +1,1 @@
+select c.city, count(*) as cnt, avg(oi.unit_price) as avg_unit_price from order_items oi right join orders o on oi.order_id = o.id inner join customers c on c.id = o.customer_id where c.segment = 'SMB' group by c.city order by cnt desc, city limit 10;

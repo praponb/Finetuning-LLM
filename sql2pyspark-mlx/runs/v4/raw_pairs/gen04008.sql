@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY method ORDER BY amount DESC NULLS LAST, id) AS dedup_rank FROM payments) ranked WHERE dedup_rank = 1) SELECT s.id, s.order_id, s.amount, s.paid_at, (SELECT SUM(o2.quantity) FROM order_items o2 WHERE o2.order_id = s.order_id) AS sum_order_item_quantity FROM deduped s ORDER BY sum_order_item_quantity DESC

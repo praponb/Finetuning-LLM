@@ -1,0 +1,1 @@
+select *, datediff(current_date(), opened_date) days_since_opened_date from accounts where (account_type in ('SAVINGS', 'CREDIT') and opened_date > '2024-07-01') or customer_id is null order by days_since_opened_date desc, account_type desc;

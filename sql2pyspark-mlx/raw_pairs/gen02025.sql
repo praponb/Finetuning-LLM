@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, duration_sec, event_type, SUM(duration_sec) OVER (PARTITION BY session_id ORDER BY event_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_duration_sec, AVG(duration_sec) OVER (PARTITION BY event_type) AS event_type_avg_duration_sec FROM web_events WHERE event_type = 'add_to_cart' ORDER BY event_type_avg_duration_sec DESC

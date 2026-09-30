@@ -1,0 +1,1 @@
+SELECT c.name, c.city, t.sg_count, t.min_started_at FROM customers c JOIN (SELECT customer_id, SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) AS sg_count, MIN(started_at) AS min_started_at FROM sessions GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.sg_count >= 48 ORDER BY min_started_at ASC

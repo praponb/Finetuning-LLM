@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, p.brand, p.category, p.price, DATEDIFF(CURRENT_DATE(), i.last_restock) / 30 AS months_since_last_restock FROM inventory i INNER JOIN products p ON i.product_id = p.id WHERE p.supplier_id IS NOT NULL OR i.store_id = 5

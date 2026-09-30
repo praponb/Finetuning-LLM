@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 3800 THEN 'high' WHEN amount >= 1800 THEN 'mid' ELSE 'low' END AS amount_bucket, MAX(amount) AS max_amount, COUNT(amount) AS amount_count FROM transactions WHERE amount < 2100 GROUP BY amount_bucket

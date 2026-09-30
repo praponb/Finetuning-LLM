@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT p.country, a.status, COUNT(*) AS num_rows, MAX(a.balance) AS max_balance, GROUPING_ID() AS gid FROM accounts a JOIN customers p ON a.customer_id = p.id GROUP BY GROUPING SETS ((p.country, a.status), (p.country), ())) SELECT country, status, num_rows, gid FROM dim_totals ORDER BY num_rows NULLS FIRST, country

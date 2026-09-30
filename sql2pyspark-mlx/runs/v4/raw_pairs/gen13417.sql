@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT account_type, SUM(CASE WHEN account_type = 'LOAN' THEN balance ELSE 0 END) AS loan_balance FROM accounts WHERE account_type IN ('CHECKING', 'SAVINGS', 'CREDIT') GROUP BY account_type) AS agg WHERE loan_balance >= 34;

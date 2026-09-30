@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.quantity, inventory.store_id, stores.opened_date, products.launch_date, DATE_FORMAT(inventory.last_restock, 'yyyy-MM') AS last_restock_label FROM inventory RIGHT JOIN stores ON inventory.store_id = stores.id INNER JOIN products ON inventory.product_id = products.id WHERE stores.opened_date <= '2025-07-01'

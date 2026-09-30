@@ -1,0 +1,1 @@
+SELECT merchant, merchant_values, num_transactions FROM (SELECT merchant, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) merchant_values, COUNT(*) num_transactions FROM transactions WHERE is_flagged = TRUE GROUP BY merchant) sub WHERE num_transactions < 8 ORDER BY merchant DESC LIMIT 1;

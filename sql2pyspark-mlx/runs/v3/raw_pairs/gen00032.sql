@@ -1,0 +1,1 @@
+WITH FilteredStoreSales AS (SELECT * FROM store_sales WHERE units BETWEEN 16 AND 22), agg AS (SELECT store_id, COUNT(*) AS row_count, COUNT(DISTINCT revenue) AS unique_products FROM FilteredStoreSales GROUP BY store_id) SELECT * FROM agg ORDER BY 2;

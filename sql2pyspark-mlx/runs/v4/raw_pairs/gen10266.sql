@@ -1,0 +1,1 @@
+select case when rating >= 3.6 then 'high' when rating >= 2.0 then 'mid' else 'low' end as rating_bucket, min(rating) as min_rating from suppliers where rating > 3.0 and country in ('US', 'TH') group by 1 order by rating_bucket;

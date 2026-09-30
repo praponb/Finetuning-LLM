@@ -1,0 +1,1 @@
+select event_type, page, session_id, min(duration_sec) as min_duration_sec, concat_ws(', ', sort_array(collect_set(page))) as page_values, sum(case when page = '/cart' then duration_sec else 0 end) as cart_duration_sec from web_events group by event_type, page, session_id having min(duration_sec) < 210 order by page_values desc;

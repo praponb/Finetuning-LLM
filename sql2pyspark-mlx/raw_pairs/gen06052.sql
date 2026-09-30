@@ -1,0 +1,1 @@
+SELECT customer_id, ROUND(STDDEV(balance), 2) AS stddev_balance, MIN(balance) AS min_balance, MIN(opened_date) AS min_opened_date FROM accounts WHERE account_type IN ('CREDIT', 'SAVINGS', 'CHECKING') GROUP BY 1 ORDER BY stddev_balance, customer_id LIMIT 1;

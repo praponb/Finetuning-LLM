@@ -1,0 +1,1 @@
+with supplier_stats as (select supplier_id, count(*) num_products from products where price >= 1040 group by supplier_id) select s.id, s.supplier_name, ss.num_products from suppliers s inner join supplier_stats ss on s.id = ss.supplier_id

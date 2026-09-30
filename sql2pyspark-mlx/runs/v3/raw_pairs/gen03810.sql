@@ -1,0 +1,1 @@
+SELECT c.id, c.name, COUNT(o.id) AS order_count, MAX(o.order_date) AS last_order_date, MAX(o.order_date) AS latest_order_date FROM customers c LEFT JOIN orders o ON c.id = o.customer_id GROUP BY c.id, c.name ORDER BY name;

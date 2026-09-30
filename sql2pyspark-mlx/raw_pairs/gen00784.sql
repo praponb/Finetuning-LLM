@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, SORT_ARRAY(COLLECT_SET(region)) AS region_list, SUM(CASE WHEN city = 'Singapore' THEN 1 ELSE 0 END) AS singapore_count FROM stores GROUP BY opened_quarter HAVING SUM(CASE WHEN city = 'Singapore' THEN 1 ELSE 0 END) >= 58 ORDER BY singapore_count DESC, opened_quarter LIMIT 20

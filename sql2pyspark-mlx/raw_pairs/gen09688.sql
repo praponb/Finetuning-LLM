@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, MIN(revenue) AS min_revenue FROM store_sales GROUP BY product_id) SELECT p.brand, ps.min_revenue FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id WHERE ps.min_revenue > 1600 ORDER BY ps.min_revenue DESC

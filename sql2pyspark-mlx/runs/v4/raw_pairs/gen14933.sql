@@ -1,0 +1,1 @@
+with ranked as (select id, brand, cost, product_name, rank() over (partition by brand order by cost desc) as rn from products) select id, brand, cost, product_name from ranked where rn <= 2 order by brand

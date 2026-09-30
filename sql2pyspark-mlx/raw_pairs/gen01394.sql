@@ -1,0 +1,1 @@
+SELECT a.customer_id, t.txn_type, t.amount, t.merchant, INITCAP(TRIM(a.status)) AS status_title FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id WHERE a.account_type = 'CREDIT' AND a.customer_id IS NOT NULL

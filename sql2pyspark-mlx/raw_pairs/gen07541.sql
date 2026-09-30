@@ -1,0 +1,1 @@
+select e.id, e.email as employee_email, e.dept_id as employee_dept_id, e.level as employee_level, m.salary as manager_salary, m.full_name as manager_full_name, m.is_remote as manager_is_remote from employees e join employees m on e.manager_id = m.id;

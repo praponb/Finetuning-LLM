@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, product_id, quantity, DATE_TRUNC('week', last_restock) AS last_restock_period FROM inventory WHERE store_id IN (1, 3, 4, 6)) SELECT s.*, p.product_name, p.launch_date, p.category FROM valid s LEFT JOIN products p ON s.product_id = p.id

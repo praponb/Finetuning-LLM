@@ -1,0 +1,1 @@
+SELECT plan, status, ROUND((100 * SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_enterprise, ROUND((100 * SUM(CASE WHEN status = 'ACTIVE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_active, COUNT(DISTINCT monthly_fee) AS unique_statuss FROM subscriptions GROUP BY plan, status ORDER BY status, plan LIMIT 5

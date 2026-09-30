@@ -1,0 +1,1 @@
+SELECT s.region, ROUND(AVG(o.discount), 2) AS avg_discount, SUM(CASE WHEN o.channel = 'partner' THEN o.amount ELSE 0 END) AS partner_amount FROM orders o INNER JOIN stores s ON o.store_id = s.id GROUP BY s.region HAVING SUM(CASE WHEN o.channel = 'partner' THEN o.amount ELSE 0 END) >= 52 ORDER BY partner_amount, region LIMIT 10

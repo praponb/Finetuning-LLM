@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, customer_id, order_date, status, channel, amount, shipping_fee, FLOOR(shipping_fee) AS shipping_fee_whole FROM orders WHERE amount >= 1500) SELECT src.id, src.customer_id, src.status, src.amount, src.shipping_fee, src.shipping_fee_whole, c.signup_date, c.city FROM filtered src JOIN customers c ON src.customer_id = c.id;

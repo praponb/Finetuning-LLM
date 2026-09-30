@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, YEAR(opened_date) AS opened_year, customer_id, COUNT(*) AS row_count, ROUND(AVG(balance), 2) AS avg_balance FROM accounts GROUP BY DATE_TRUNC('MONTH', opened_date), YEAR(opened_date), customer_id;

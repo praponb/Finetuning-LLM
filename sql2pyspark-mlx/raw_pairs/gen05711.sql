@@ -1,0 +1,1 @@
+select e.*, pr.id as promo_id, pr.promo_code as promotion_promo_code, pr.discount_pct as promotion_discount_pct from promotions e inner join promotions pr on coalesce(e.channel, 'store') = pr.channel and e.ends_on >= pr.starts_on and e.ends_on < pr.ends_on + interval '30' day

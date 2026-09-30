@@ -1,0 +1,1 @@
+SELECT region, MONTH(opened_date) AS opened_month, MIN(opened_date) AS min_opened_date FROM stores WHERE LOWER(TRIM(store_name)) = 'airport kiosk' AND YEAR(opened_date) >= 2024 AND store_name IS NOT NULL GROUP BY ROLLUP(region, MONTH(opened_date)) ORDER BY region DESC;

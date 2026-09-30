@@ -1,0 +1,1 @@
+with OrdersByStore as (select store_id, round(stddev(discount), 2) as stddev_discount, count(amount) as amount_count from orders group by store_id) select s.store_name, O.stddev_discount, O.amount_count from stores s left outer join OrdersByStore O on s.id = O.store_id where O.amount_count >= 4 order by amount_count, stddev_discount;

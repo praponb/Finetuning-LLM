@@ -1,0 +1,1 @@
+SELECT event_type, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, ROUND((100 * SUM(CASE WHEN page = '/search' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_search FROM web_events GROUP BY 1 HAVING ROUND(STDDEV(duration_sec), 2) > 62;

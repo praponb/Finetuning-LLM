@@ -1,0 +1,1 @@
+SELECT id, is_flagged, COALESCE(merchant, 'Unknown') merchant_filled, CASE WHEN is_flagged THEN 'Yes' ELSE 'No' END is_flagged_label FROM transactions WHERE amount IS NULL ORDER BY is_flagged_label ASC;

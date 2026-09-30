@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT dim.device, e.event_type, COUNT(*) AS rows_total, SUM(e.duration_sec) AS total_duration_sec, GROUPING_ID() AS level_id FROM web_events e INNER JOIN sessions dim ON e.session_id = dim.id GROUP BY ROLLUP (dim.device, e.event_type)) SELECT event_type, rows_total, total_duration_sec FROM by_dimension ORDER BY total_duration_sec DESC, event_type DESC

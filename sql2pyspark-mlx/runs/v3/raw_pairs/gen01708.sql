@@ -1,0 +1,1 @@
+SELECT ss.product_id, ss.units, p.product_name, p.stock_qty, s.supplier_name, s.country, DATE_ADD(ss.sale_date, 83) AS sale_date_plus_83d FROM store_sales ss FULL OUTER JOIN products p ON ss.product_id = p.id RIGHT OUTER JOIN suppliers s ON s.id = p.supplier_id

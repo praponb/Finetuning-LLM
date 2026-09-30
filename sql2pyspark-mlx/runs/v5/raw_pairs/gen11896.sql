@@ -1,0 +1,1 @@
+SELECT MONTH(shipped_date) AS shipped_month, status, COUNT(*) AS cnt, ROUND(AVG(cost), 2) AS avg_cost FROM shipments WHERE status IN ('RETURNED', 'DELIVERED', 'IN_TRANSIT') AND cost >= 61 GROUP BY MONTH(shipped_date), status HAVING avg_cost >= 78 ORDER BY status DESC;

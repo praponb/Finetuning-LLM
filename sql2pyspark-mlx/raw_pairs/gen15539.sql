@@ -1,0 +1,1 @@
+select p.paid_at, p.status, p.order_id, o.status as order_status, o.order_date, o.shipping_fee from payments p left join orders o on p.order_id = o.id where p.status = 'REFUNDED' order by o.order_date asc

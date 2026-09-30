@@ -1,0 +1,1 @@
+SELECT id, effective_from, currency, tier_limits, discounts, ZIP_WITH(tier_prices, discounts, (p, d) -> ROUND(p * (1 - d), 2)) AS net_prices, TRANSFORM(tier_prices, (p, i) -> ROUND(p * tier_limits[i], 2)) AS tier_revenue_caps, ARRAY_MIN(tier_prices) AS lowest_price FROM price_tiers WHERE effective_from BETWEEN '2025-07-19' AND '2025-10-01';

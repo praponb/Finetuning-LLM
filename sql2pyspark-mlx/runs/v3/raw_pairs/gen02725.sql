@@ -1,0 +1,1 @@
+SELECT store_id, QUARTER(sale_date) AS sale_quarter, MAX(sale_date) AS latest_sale_date, SUM(revenue) AS total_revenue, MIN(revenue) AS min_revenue FROM store_sales WHERE product_id IN (2, 3, 7, 8) GROUP BY store_id, QUARTER(sale_date) HAVING COUNT(DISTINCT revenue) > 5 ORDER BY total_revenue, store_id, sale_quarter LIMIT 50;

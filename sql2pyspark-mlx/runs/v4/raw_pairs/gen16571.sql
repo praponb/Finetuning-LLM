@@ -1,0 +1,1 @@
+WITH metrics AS (SELECT *, NTILE(3) OVER (PARTITION BY brand, supplier_id ORDER BY cost, id) AS cost_bucket, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY stock_qty, id) AS seq_no FROM products) SELECT id, price, cost, stock_qty, launch_date, tags, supplier_id, cost_bucket, seq_no FROM metrics ORDER BY supplier_id DESC;

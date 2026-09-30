@@ -1,0 +1,1 @@
+select month(sale_date) as sale_month, sum(units) as total_units, round(sum(units) * 100.0 / sum(sum(units)) over (), 2) as pct_of_total from store_sales group by month(sale_date) order by pct_of_total asc

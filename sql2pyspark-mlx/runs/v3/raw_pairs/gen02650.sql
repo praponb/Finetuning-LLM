@@ -1,0 +1,1 @@
+SELECT status, COUNT(CASE WHEN account_type = 'CHECKING' THEN 1 END) checking_count, SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) checking_balance, COUNT(balance) balance_count FROM accounts WHERE balance < 53000 GROUP BY status ORDER BY status

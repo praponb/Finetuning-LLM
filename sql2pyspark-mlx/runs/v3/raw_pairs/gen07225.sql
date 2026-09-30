@@ -1,0 +1,1 @@
+SELECT is_remote, manager_id, DATE_ADD(hire_date, 41) AS hire_date_plus_41d, IF(is_remote, 'Yes', 'No') AS is_remote_label FROM employees WHERE job_title IN ('Intern', 'Manager') AND (manager_id IN (9, 34) OR is_remote)

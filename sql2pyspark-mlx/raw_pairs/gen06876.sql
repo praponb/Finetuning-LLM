@@ -1,0 +1,1 @@
+SELECT o.id, o.customer_id, s.sqft, s.region, c.signup_date, c.segment FROM orders o JOIN stores s ON o.store_id = s.id RIGHT JOIN customers c ON o.customer_id = c.id WHERE UPPER(TRIM(s.store_name)) = 'OLD TOWN';

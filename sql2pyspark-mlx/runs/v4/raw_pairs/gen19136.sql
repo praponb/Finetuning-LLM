@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, s.sqft, s.store_name, s.region, FLOOR(s.sqft) AS sqft_whole FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id WHERE ss.product_id IN (2, 4, 9, 10) ORDER BY store_name DESC

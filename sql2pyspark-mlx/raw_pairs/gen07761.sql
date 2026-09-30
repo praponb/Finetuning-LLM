@@ -1,0 +1,1 @@
+with filtered_suppliers as (select * from suppliers where rating >= 3.4), agg as (select city, round((100 * sum(case when country = 'TH' then 1 else 0 end)) / count(*), 1) as pct_th, max(rating) - min(rating) as rating_range from filtered_suppliers group by city) select city, pct_th, rating_range from agg where rating_range > 50 order by rating_range;

@@ -1,0 +1,1 @@
+select merchant, case when year(txn_time) < 2024 then 'before_2024' when year(txn_time) = 2024 then '2024' else 'after_2024' end as txn_cohort, count(case when merchant = 'Lazada' then 1 end) as lazada_count from transactions group by 1, 2 order by lazada_count

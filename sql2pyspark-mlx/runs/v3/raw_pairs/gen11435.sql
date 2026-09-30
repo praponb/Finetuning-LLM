@@ -1,0 +1,1 @@
+select s.device, s.browser, sum(we.duration_sec) as total_duration_sec, sum(case when we.event_type = 'add_to_cart' then 1 else 0 end) as add_to_cart_count from web_events we inner join sessions s on we.session_id = s.id where to_date(we.event_time) >= '2025-10-01' group by s.device, s.browser order by device, browser limit 5

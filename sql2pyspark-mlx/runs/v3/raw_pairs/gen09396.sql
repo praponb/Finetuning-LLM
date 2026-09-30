@@ -1,0 +1,1 @@
+WITH valid_accounts AS (SELECT * FROM accounts WHERE NOT (customer_id IN (18, 20, 23, 30) OR account_type IN ('LOAN', 'CREDIT'))), agg AS (SELECT account_type, SUM(balance) AS total_balance, SUM(CASE WHEN account_type = 'LOAN' THEN 1 ELSE 0 END) AS loan_count FROM valid_accounts GROUP BY account_type) SELECT account_type, total_balance, loan_count FROM agg;

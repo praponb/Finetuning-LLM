@@ -1,0 +1,1 @@
+WITH StoreSummary AS (SELECT store_id, MIN(order_date) min_order_date, COUNT(*) num_orders FROM orders GROUP BY store_id) SELECT stores.id, stores.region, StoreSummary.min_order_date, StoreSummary.num_orders FROM stores JOIN StoreSummary ON stores.id = StoreSummary.store_id

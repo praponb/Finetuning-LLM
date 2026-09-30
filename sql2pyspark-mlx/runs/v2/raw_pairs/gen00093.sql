@@ -1,0 +1,1 @@
+SELECT o.id, o.discount, o.shipping_fee, o.status FROM orders o WHERE o.status IN ('PENDING', 'COMPLETED', 'CANCELLED') AND EXISTS (SELECT 1 FROM payments p WHERE p.order_id = o.id AND HOUR(p.paid_at) BETWEEN 10 AND 17) ORDER BY id;

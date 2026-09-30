@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.customer_id, subscriptions.plan, subscriptions.start_date FROM subscriptions WHERE subscriptions.customer_id IN (SELECT id FROM customers WHERE LOWER(TRIM(email)) = 'carol@company.co')

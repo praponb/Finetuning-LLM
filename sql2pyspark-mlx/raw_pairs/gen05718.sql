@@ -1,0 +1,1 @@
+SELECT dim.country, a.status, COUNT(*) AS cnt, MAX(a.monthly_fee) AS max_monthly_fee FROM subscriptions a JOIN customers dim ON a.customer_id = dim.id GROUP BY CUBE (dim.country, a.status) ORDER BY cnt DESC NULLS LAST

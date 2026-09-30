@@ -1,0 +1,1 @@
+select dept_name, concat_ws(', ', sort_array(collect_set(location))) as location_values, min(budget) as min_budget, round(avg(budget), 2) as avg_budget from departments group by dept_name order by dept_name desc

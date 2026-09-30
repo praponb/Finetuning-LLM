@@ -1,0 +1,1 @@
+select id, status, paid_at, amount, method, lag(amount, 1) over (partition by status order by paid_at, id) as prev_amount, row_number() over (partition by month(paid_at), method order by paid_at, id) as row_num from payments;

@@ -1,0 +1,1 @@
+SELECT stores.opened_date, t.unique_stores FROM stores INNER JOIN (SELECT store_id, COUNT(DISTINCT units) AS unique_stores FROM store_sales WHERE store_id IN (1, 2, 3, 4) GROUP BY store_id) t ON stores.id = t.store_id

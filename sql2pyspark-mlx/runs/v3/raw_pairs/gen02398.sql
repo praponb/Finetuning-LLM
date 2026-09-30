@@ -1,0 +1,1 @@
+SELECT id, country, credit_limit FROM (SELECT id, country, credit_limit, DENSE_RANK() OVER (PARTITION BY country ORDER BY credit_limit DESC) AS row_num FROM customers) AS r WHERE row_num = 1 ORDER BY credit_limit DESC

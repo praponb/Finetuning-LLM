@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT product_id, id FROM order_items INTERSECT ALL SELECT product_id, id FROM order_items WHERE quantity <> 7), reconciled AS (SELECT s.* FROM order_items s INNER JOIN matched_keys k ON s.product_id = k.product_id AND s.id = k.id) SELECT id, order_id, product_id, quantity FROM reconciled ORDER BY order_id NULLS LAST;

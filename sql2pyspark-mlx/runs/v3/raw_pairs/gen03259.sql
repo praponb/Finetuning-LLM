@@ -1,0 +1,1 @@
+SELECT a.status, ROUND((100 * SUM(CASE WHEN t.merchant = 'Shell' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_shell, COUNT(CASE WHEN t.txn_type = 'DEBIT' THEN 1 END) AS debit_count FROM transactions t JOIN accounts a ON t.account_id = a.id WHERE a.account_type IN ('LOAN', 'SAVINGS') GROUP BY a.status ORDER BY status DESC, pct_shell LIMIT 20;

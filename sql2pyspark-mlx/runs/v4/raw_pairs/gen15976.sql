@@ -1,0 +1,1 @@
+SELECT event_type, COUNT(CASE WHEN page = '/search' THEN 1 END) AS search_count, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE page = '/home' AND TO_DATE(event_time) >= '2024-10-01' GROUP BY event_type HAVING search_count >= 3 ORDER BY event_type DESC

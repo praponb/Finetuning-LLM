@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, order_id, method, amount, paid_at, status, UPPER(method) AS method_upper, COALESCE(method, 'N/A') AS method_filled FROM payments WHERE paid_at >= TO_DATE('2023-06-30') AND method = 'paypal') SELECT * FROM (SELECT method, status, amount FROM base) src PIVOT (SUM(amount) AS value_sum FOR status IN ('FAILED', 'SUCCESS'))

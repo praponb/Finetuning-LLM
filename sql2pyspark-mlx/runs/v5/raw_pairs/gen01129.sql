@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, customer_id, account_type, status FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date DESC, id) AS dedup_rank FROM accounts) x WHERE dedup_rank = 1) SELECT id, customer_id, account_type FROM ranked ORDER BY customer_id DESC;

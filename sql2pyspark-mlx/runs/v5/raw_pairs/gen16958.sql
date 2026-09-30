@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CASE WHEN quantity >= 8 THEN 'High' WHEN quantity >= 4 THEN 'Medium' ELSE 'Low' END quantity_band FROM order_items WHERE product_id IS NOT NULL) SELECT id, product_id, quantity, unit_price, quantity_band FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY order_id, product_id ORDER BY unit_price DESC NULLS LAST, id) = 1;

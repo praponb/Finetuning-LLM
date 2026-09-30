@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, region, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values, MAX(sqft) - MIN(sqft) AS sqft_range, SUM(CASE WHEN city = 'London' THEN sqft ELSE 0 END) AS london_sqft FROM stores GROUP BY DATE_TRUNC('MONTH', opened_date), region ORDER BY region_values, opened_month, region LIMIT 5

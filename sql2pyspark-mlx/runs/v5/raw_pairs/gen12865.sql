@@ -1,0 +1,1 @@
+WITH RecentStoreSales AS (SELECT * FROM store_sales WHERE store_id IN (1, 3, 4)), agg AS (SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, store_id, MAX(revenue) - MIN(revenue) AS revenue_range FROM RecentStoreSales GROUP BY DATE_TRUNC('MONTH', sale_date), store_id) SELECT sale_month, store_id, revenue_range FROM agg ORDER BY sale_month DESC, store_id LIMIT 5;

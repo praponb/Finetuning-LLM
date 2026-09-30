@@ -1,0 +1,1 @@
+SELECT HOUR(txn_time) AS txn_hour, merchant, SUM(CASE WHEN txn_type = 'FEE' THEN amount ELSE 0 END) AS fee_amount, COUNT(*) AS num_transactions FROM transactions GROUP BY HOUR(txn_time), merchant HAVING SUM(CASE WHEN txn_type = 'FEE' THEN amount ELSE 0 END) >= 23 ORDER BY num_transactions;

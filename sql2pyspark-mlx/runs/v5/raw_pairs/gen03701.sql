@@ -1,0 +1,1 @@
+WITH top_stores AS (SELECT id, city, opened_date, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS rnk FROM stores WHERE sqft BETWEEN 5532 AND 5948) SELECT id, city, opened_date FROM top_stores WHERE rnk <= 5

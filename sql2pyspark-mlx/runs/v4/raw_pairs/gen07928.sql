@@ -1,0 +1,1 @@
+SELECT *, FIRST_VALUE(browser) IGNORE NULLS OVER (PARTITION BY country ORDER BY started_at ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) first_known_browser, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at ASC, id ASC) event_seq FROM sessions

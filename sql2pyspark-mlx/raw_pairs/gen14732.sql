@@ -1,0 +1,1 @@
+select * from (select case when shipping_fee >= 39 then 'high' when shipping_fee >= 5 then 'mid' else 'low' end as shipping_fee_bucket, count(*) as cnt, min(amount) as min_amount from orders group by case when shipping_fee >= 39 then 'high' when shipping_fee >= 5 then 'mid' else 'low' end) as x where min_amount < 1390 order by min_amount desc, shipping_fee_bucket limit 3;

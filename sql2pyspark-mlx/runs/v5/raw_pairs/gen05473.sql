@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, country, city, SUM(age) AS total_age, MIN(credit_limit) AS min_credit_limit FROM customers GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM'), country, city

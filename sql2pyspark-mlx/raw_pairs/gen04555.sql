@@ -1,0 +1,1 @@
+SELECT e.job_title AS employee_job_title, e.level AS employee_level, COUNT(*) AS num_rows, SUM(src.salary) AS total_salary FROM employees src INNER JOIN employees e ON src.manager_id = e.id GROUP BY CUBE (e.job_title, e.level) ORDER BY total_salary NULLS FIRST;

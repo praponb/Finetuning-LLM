@@ -1,0 +1,1 @@
+SELECT s.country, COUNT(we.id) AS web_event_count, MIN(we.duration_sec) AS min_duration_sec, MAX(we.event_time) AS last_event_time FROM sessions s INNER JOIN web_events we ON we.session_id = s.id WHERE we.event_type = 'add_to_cart' GROUP BY s.country;

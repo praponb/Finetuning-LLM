@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CASE WHEN status IN ('PAUSED', 'EXPIRED') THEN 'Core' ELSE 'Other' END AS status_group FROM subscriptions WHERE start_date >= DATE '2023-10-26' AND customer_id IS NOT NULL) SELECT * FROM (SELECT status, customer_id, plan, monthly_fee FROM cleaned) src PIVOT (SUM(monthly_fee) FOR plan IN ('enterprise' AS enterprise, 'premium' AS premium));

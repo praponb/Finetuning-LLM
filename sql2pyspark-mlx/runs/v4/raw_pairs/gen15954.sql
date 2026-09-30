@@ -1,0 +1,1 @@
+SELECT brand, MAX(stock_qty) AS max_stock_qty, COUNT(DISTINCT cost) AS unique_categorys FROM products WHERE price BETWEEN 830 AND 1050 AND UPPER(product_name) LIKE '%IRE%' GROUP BY brand ORDER BY unique_categorys DESC, brand DESC

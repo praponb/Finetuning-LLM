@@ -1,0 +1,1 @@
+SELECT products.id, products.brand, products.product_name, products.cost FROM products WHERE NOT EXISTS (SELECT 1 FROM store_sales WHERE store_sales.product_id = products.id AND store_sales.sale_date BETWEEN '2025-03-01' AND '2025-06-01');

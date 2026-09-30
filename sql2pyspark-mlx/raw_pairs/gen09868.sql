@@ -1,0 +1,1 @@
+SELECT o.id, o.channel, COUNT(s.id) AS shipment_count, SUM(CASE WHEN s.carrier = 'UPS' THEN 1 ELSE 0 END) AS ups_count FROM orders o JOIN shipments s ON o.id = s.order_id WHERE o.amount >= 1410 GROUP BY o.id, o.channel

@@ -1,0 +1,1 @@
+SELECT ss.id, ss.revenue, s.sqft, p.category, p.supplier_id, TRIM(s.region) AS clean_region FROM store_sales ss JOIN stores s ON s.id = ss.store_id RIGHT OUTER JOIN products p ON p.id = ss.product_id ORDER BY p.category;

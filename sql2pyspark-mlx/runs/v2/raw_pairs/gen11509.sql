@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, order_id, quantity, unit_price, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity DESC, id) AS pos FROM order_items) SELECT id, order_id, quantity, unit_price FROM numbered WHERE pos <= 3 ORDER BY order_id DESC;

@@ -1,0 +1,1 @@
+SELECT QUARTER(p.launch_date) launch_quarter, COUNT(*) cnt, SUM(ss.revenue) total_revenue FROM store_sales ss JOIN products p ON ss.product_id = p.id WHERE p.supplier_id IS NULL GROUP BY QUARTER(p.launch_date) ORDER BY total_revenue DESC, cnt DESC;

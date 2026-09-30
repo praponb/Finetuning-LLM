@@ -1,0 +1,1 @@
+with OrderItemsByOrder as (select order_id, max(quantity) as max_quantity from order_items group by order_id) select o.id, o.discount, o.customer_id, O.max_quantity from orders o inner join OrderItemsByOrder O on o.id = O.order_id where O.max_quantity >= 3.3 order by o.discount;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 340 THEN 'high' WHEN unit_price >= 110 THEN 'mid' ELSE 'low' END AS unit_price_bucket, product_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price, AVG(quantity) AS avg_quantity FROM order_items GROUP BY 1, 2 ORDER BY stddev_unit_price DESC, unit_price_bucket, product_id LIMIT 3;

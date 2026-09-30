@@ -1,0 +1,1 @@
+select a.id, a.account_type, count(t.id) as transaction_count, round(avg(t.amount), 2) as avg_amount, sum(t.amount) as total_amount from accounts a left join transactions t on a.id = t.account_id where t.merchant in ('Lazada', 'Shell', '7-Eleven') group by a.id, a.account_type order by transaction_count desc;

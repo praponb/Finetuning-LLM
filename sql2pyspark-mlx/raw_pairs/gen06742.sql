@@ -1,0 +1,1 @@
+SELECT opened_month, min_sqft FROM (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, MIN(sqft) AS min_sqft FROM stores WHERE city = 'Singapore' GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) AS t WHERE min_sqft > 14600 ORDER BY opened_month DESC, min_sqft LIMIT 5

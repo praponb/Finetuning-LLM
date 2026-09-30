@@ -1,0 +1,1 @@
+SELECT id, service, log_ts, latency_ms, status_code, payload_json, GET_JSON_OBJECT(payload_json, '$.user.tier') AS user_tier, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text, context['trace'] AS trace, context['version'] AS version, COALESCE(context['version'], 'direct') AS version_or_default FROM app_logs;

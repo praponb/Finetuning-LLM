@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, MONTH(start_date) AS start_month, SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END) AS enterprise_count, AVG(monthly_fee) AS avg_monthly_fee, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions WHERE customer_id IS NOT NULL AND status = 'ACTIVE' GROUP BY DATE_FORMAT(end_date, 'yyyy-MM'), MONTH(start_date);

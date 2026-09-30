@@ -1,0 +1,1 @@
+SELECT p.brand, p.category, COUNT(DISTINCT oi.unit_price) AS unique_products FROM order_items oi JOIN products p ON oi.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.brand, p.category HAVING COUNT(DISTINCT oi.unit_price) > 2;

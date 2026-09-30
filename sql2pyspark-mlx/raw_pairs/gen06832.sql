@@ -1,0 +1,1 @@
+SELECT channel, YEAR(order_date) order_year, ROUND((100 * SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_mobile, ROUND(AVG(shipping_fee), 2) avg_shipping_fee FROM orders GROUP BY channel, YEAR(order_date);

@@ -1,0 +1,1 @@
+select id, category, brand, price, cost, launch_date, corr(stock_qty, price) over w_running as corr_stock_qty_price, round(cost / sum(cost) over (partition by date_trunc('MONTH', launch_date)), 4) as cost_share from products window w_running as (partition by year(launch_date), supplier_id);

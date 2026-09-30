@@ -1,0 +1,1 @@
+SELECT customers.segment, COUNT(*) AS account_count, MAX(accounts.balance) - MIN(accounts.balance) AS balance_range FROM accounts JOIN customers ON accounts.customer_id = customers.id WHERE accounts.balance BETWEEN 52000 AND 78000 GROUP BY customers.segment ORDER BY customers.segment DESC, balance_range;

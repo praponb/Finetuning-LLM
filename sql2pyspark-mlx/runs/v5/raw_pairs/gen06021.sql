@@ -1,0 +1,1 @@
+SELECT t.account_id, t.merchant, a.status, c.age, CAST(t.amount AS INT) AS amount_int FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id WHERE t.merchant NOT IN ('Lazada', 'Amazon') AND t.merchant = 'Lazada'

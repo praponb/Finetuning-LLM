@@ -1,0 +1,1 @@
+WITH recent_employees AS (SELECT * FROM employees WHERE LENGTH(email) > 7 AND level = 'L5'), EmployeesStats AS (SELECT is_remote, ROUND(AVG(salary), 2) AS avg_salary, ROUND(STDDEV(salary), 2) AS stddev_salary FROM recent_employees GROUP BY is_remote) SELECT is_remote, stddev_salary FROM EmployeesStats WHERE stddev_salary < 45;

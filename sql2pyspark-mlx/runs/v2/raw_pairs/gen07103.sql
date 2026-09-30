@@ -1,0 +1,1 @@
+SELECT region, QUARTER(opened_date) AS opened_quarter, COUNT(*) AS num_stores, MAX(opened_date) AS latest_opened_date FROM stores WHERE store_name LIKE '%Central%' AND sqft IS NOT NULL GROUP BY region, QUARTER(opened_date) HAVING num_stores > 4;

@@ -1,0 +1,1 @@
+SELECT p.category, DATE_TRUNC('MONTH', p.launch_date) AS launch_month, MIN(ss.revenue) AS min_revenue, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range FROM store_sales ss JOIN products p ON p.id = ss.product_id GROUP BY p.category, DATE_TRUNC('MONTH', p.launch_date) ORDER BY min_revenue;

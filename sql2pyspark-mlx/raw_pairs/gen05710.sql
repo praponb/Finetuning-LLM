@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, COUNT(quantity) AS quantity_count FROM inventory GROUP BY DATE_FORMAT(last_restock, 'yyyy-MM')) AS x WHERE quantity_count >= 4

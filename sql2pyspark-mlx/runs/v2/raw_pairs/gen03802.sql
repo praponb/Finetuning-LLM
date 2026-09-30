@@ -1,0 +1,1 @@
+SELECT MONTH(p.launch_date) launch_month, MAX(i.last_restock) latest_last_restock FROM inventory i RIGHT JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE p.cost > 580 GROUP BY MONTH(p.launch_date) ORDER BY latest_last_restock, launch_month DESC;

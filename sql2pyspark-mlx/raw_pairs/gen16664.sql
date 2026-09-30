@@ -1,0 +1,1 @@
+SELECT MONTH(last_restock) AS last_restock_month, QUARTER(last_restock) AS last_restock_quarter, ROUND(STDDEV(quantity), 2) AS stddev_quantity, MAX(last_restock) AS latest_last_restock FROM inventory GROUP BY MONTH(last_restock), QUARTER(last_restock) HAVING ROUND(STDDEV(quantity), 2) < 65 ORDER BY 2, last_restock_month LIMIT 20;

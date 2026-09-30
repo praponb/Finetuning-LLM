@@ -1,0 +1,1 @@
+SELECT location, ROUND((100 * SUM(CASE WHEN dept_name = 'Engineering' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_engineering, SUM(budget) AS total_budget, SUM(CASE WHEN location = 'Chiang Mai' THEN 1 ELSE 0 END) AS chiang_mai_count FROM departments GROUP BY location ORDER BY chiang_mai_count DESC

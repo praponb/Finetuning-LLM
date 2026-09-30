@@ -1,0 +1,1 @@
+SELECT QUARTER(hire_date) AS hire_quarter, is_remote, manager_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, ROUND(AVG(salary), 2) AS avg_salary, MIN(hire_date) AS first_hire_date FROM employees GROUP BY 1, 2, 3 HAVING ROUND(AVG(salary), 2) > 53

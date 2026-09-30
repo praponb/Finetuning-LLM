@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('WEEK', last_restock) AS week_start, DATE_TRUNC('MONTH', last_restock) AS activity_month, STDDEV_SAMP(quantity) AS quantity_stddev, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY week_start, activity_month HAVING ROUND(AVG(quantity), 2) > 0 ORDER BY activity_month DESC NULLS LAST

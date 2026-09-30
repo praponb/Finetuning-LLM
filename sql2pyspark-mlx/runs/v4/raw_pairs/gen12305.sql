@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.last_restock, inventory.store_id, store_sales.product_id, DATE_SUB(inventory.last_restock, 90) AS last_restock_minus_90d FROM inventory LEFT JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id ORDER BY product_id DESC

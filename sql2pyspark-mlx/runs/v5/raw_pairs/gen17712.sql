@@ -1,0 +1,1 @@
+SELECT job_title, ROUND(STDDEV(salary), 2) stddev_salary, SUM(CASE WHEN job_title = 'Analyst' THEN 1 ELSE 0 END) analyst_count FROM employees GROUP BY job_title HAVING COUNT(CASE WHEN job_title = 'Manager' THEN 1 END) < 1;

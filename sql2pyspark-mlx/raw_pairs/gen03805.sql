@@ -1,0 +1,1 @@
+SELECT o.customer_id, MAX(p.amount) - MIN(p.amount) AS amount_range FROM payments p INNER JOIN orders o ON p.order_id = o.id FULL OUTER JOIN customers c ON o.customer_id = c.id GROUP BY o.customer_id;

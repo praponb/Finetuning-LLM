@@ -1,0 +1,1 @@
+WITH ranked_orders AS (SELECT *, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY shipping_fee DESC) AS rn FROM orders) SELECT id, store_id, shipping_fee FROM ranked_orders WHERE rn <= 2 ORDER BY store_id DESC

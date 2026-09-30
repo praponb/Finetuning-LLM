@@ -1,0 +1,1 @@
+SELECT QUARTER(order_date) AS order_quarter, SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) AS returned_count, SUM(CASE WHEN status = 'SHIPPED' THEN shipping_fee ELSE 0 END) AS shipped_shipping_fee FROM orders GROUP BY 1 HAVING SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) > 58 ORDER BY shipped_shipping_fee DESC;

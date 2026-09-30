@@ -1,0 +1,1 @@
+SELECT CASE WHEN city IN ('Tokyo', 'Berlin') THEN 'priority' ELSE 'other' END AS city_group, country, MAX(rating) AS max_rating FROM suppliers GROUP BY CASE WHEN city IN ('Tokyo', 'Berlin') THEN 'priority' ELSE 'other' END, country HAVING MAX(rating) > 4.1 ORDER BY max_rating;

@@ -1,0 +1,1 @@
+SELECT products.cost, products.stock_qty, products.category, inventory.store_id, CAST(inventory.quantity AS STRING) AS quantity_str FROM products LEFT JOIN inventory ON products.id = inventory.product_id WHERE products.product_name LIKE '%Pro%' AND products.cost <= 620

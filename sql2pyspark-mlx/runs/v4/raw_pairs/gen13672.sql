@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM transactions WHERE account_id IN (5, 9, 38) OR is_flagged), txn_month_summary AS (SELECT MONTH(txn_time) AS txn_month, COUNT(*) AS num_transactions, COUNT(*) AS cnt FROM base GROUP BY MONTH(txn_time)) SELECT txn_month, num_transactions, cnt FROM txn_month_summary WHERE cnt > 6;

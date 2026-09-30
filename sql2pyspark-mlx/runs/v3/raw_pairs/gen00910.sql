@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(paid_at, 'yyyy-MM') AS paid_month, COUNT(CASE WHEN status = 'SUCCESS' THEN 1 END) AS success_count, MAX(amount) - MIN(amount) AS amount_range FROM payments WHERE paid_at < '2024-03-01' GROUP BY 1;

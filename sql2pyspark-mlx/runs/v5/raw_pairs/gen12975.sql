@@ -1,0 +1,1 @@
+SELECT id, email, city, segment, is_active, COUNT(age) OVER (PARTITION BY segment) AS segment_count_age, CUME_DIST() OVER (PARTITION BY city ORDER BY age NULLS LAST) AS age_cume_dist, LAG(credit_limit, 2, 0) OVER (PARTITION BY segment, country ORDER BY age, id) AS prev_credit_limit FROM customers WHERE name IS NOT NULL

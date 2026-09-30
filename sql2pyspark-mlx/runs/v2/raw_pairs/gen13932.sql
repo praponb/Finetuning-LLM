@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory GROUP BY store_id) SELECT s.city, st.quantity_range FROM stores s INNER JOIN store_totals st ON s.id = st.store_id WHERE st.quantity_range > 42 ORDER BY city;

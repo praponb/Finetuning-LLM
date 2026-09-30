@@ -1,0 +1,1 @@
+select id, session_id, event_time, event_type from (select *, row_number() over (partition by session_id order by event_time, id) as pos from web_events where event_type = 'purchase') as t where pos <= 5 order by id desc;

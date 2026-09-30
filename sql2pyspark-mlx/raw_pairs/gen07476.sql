@@ -1,0 +1,1 @@
+with SessionSummary as (select session_id, round((100 * sum(case when page = '/cart' then 1 else 0 end)) / count(*), 1) as pct_cart from web_events where event_time < '2024-02-01' group by session_id) select s.started_at, s.customer_id, S.pct_cart from sessions s join SessionSummary S on s.id = S.session_id order by s.customer_id desc, S.pct_cart desc;

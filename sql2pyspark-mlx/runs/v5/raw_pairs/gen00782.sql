@@ -1,0 +1,1 @@
+WITH valid_store_sales AS (SELECT * FROM store_sales WHERE sale_date > '2024-09-01' AND product_id IN (7, 8) AND product_id IN (1, 5, 6, 10)), summary AS (SELECT store_id, ROUND(STDDEV(units), 2) stddev_units FROM valid_store_sales GROUP BY store_id) SELECT * FROM summary;

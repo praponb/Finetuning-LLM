@@ -1,0 +1,1 @@
+select accounts.id, accounts.balance, accounts.opened_date, t.txn_type_list from accounts join (select account_id, sort_array(collect_set(txn_type)) as txn_type_list from transactions group by account_id) t on accounts.id = t.account_id;

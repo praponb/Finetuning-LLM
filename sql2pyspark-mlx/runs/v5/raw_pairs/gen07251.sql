@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, account_id, amount, txn_time, is_flagged, CONCAT_WS('-', merchant, txn_type) merchant_txn_type_key, CONCAT(merchant, ', ', txn_type) merchant_txn_type FROM transactions WHERE merchant IS DISTINCT FROM 'Shell' AND merchant IS NOT NULL) SELECT account_id, id FROM base EXCEPT SELECT account_id, id FROM transactions WHERE account_id = 10;

@@ -1,0 +1,1 @@
+select oi.id, oi.product_id, p.stock_qty, o.channel, o.customer_id, length(p.category) as category_length from order_items oi join products p on p.id = oi.product_id join orders o on o.id = oi.order_id where oi.order_id in (23, 24, 26, 33) order by 1

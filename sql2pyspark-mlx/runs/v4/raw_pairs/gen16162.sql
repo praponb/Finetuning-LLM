@@ -1,0 +1,1 @@
+SELECT id, last_restock, store_id, MONTH(last_restock) AS last_restock_month FROM inventory WHERE (quantity BETWEEN 62 AND 177 AND YEAR(last_restock) = 2024) OR store_id IN (3, 4) ORDER BY last_restock_month

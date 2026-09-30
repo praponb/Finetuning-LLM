@@ -1,0 +1,1 @@
+SELECT YEAR(accounts.opened_date) AS opened_year, SORT_ARRAY(COLLECT_SET(transactions.merchant)) AS merchant_list FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id GROUP BY YEAR(accounts.opened_date);

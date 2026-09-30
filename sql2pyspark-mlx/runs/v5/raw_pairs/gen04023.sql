@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, oi.order_id, p.supplier_id, p.cost, o.status, o.customer_id FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id JOIN orders o ON o.id = oi.order_id WHERE MONTH(p.launch_date) IN (2, 6, 8) OR oi.quantity = 6

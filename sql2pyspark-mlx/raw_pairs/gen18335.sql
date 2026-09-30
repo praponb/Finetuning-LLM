@@ -1,0 +1,1 @@
+with flattened as (select id, effective_from, currency, tier_value from price_tiers lateral view outer explode(tier_prices) t as tier_value) select id, effective_from, currency from flattened order by effective_from desc nulls first;

@@ -1,0 +1,1 @@
+SELECT products.category, ROUND(STDDEV(order_items.unit_price), 2) AS stddev_unit_price, MIN(order_items.unit_price) AS min_unit_price FROM order_items LEFT JOIN products ON order_items.product_id = products.id LEFT JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY products.category ORDER BY min_unit_price DESC;

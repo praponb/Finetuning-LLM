@@ -1,0 +1,1 @@
+with supplier_totals as (select supplier_id, count(cost) as cost_count from products group by supplier_id) select s.id, s.supplier_name, st.cost_count from suppliers s join supplier_totals st on s.id = st.supplier_id where st.cost_count >= 8 order by id asc

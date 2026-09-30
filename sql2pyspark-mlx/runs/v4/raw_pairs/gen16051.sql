@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, created_at, k, v FROM carts LATERAL VIEW EXPLODE(attributes) e AS k, v) SELECT id, customer_id, created_at, k, v, ROW_NUMBER() OVER w_running AS event_seq, FIRST_VALUE(k, TRUE) OVER (ORDER BY created_at, id, k ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_k FROM lines WINDOW w_running AS (ORDER BY created_at DESC, id, k);

@@ -1,0 +1,1 @@
+SELECT MONTH(o.order_date) order_month, o.status, ROUND(STDDEV(oi.quantity), 2) stddev_quantity, MAX(oi.quantity) max_quantity FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id GROUP BY MONTH(o.order_date), o.status;

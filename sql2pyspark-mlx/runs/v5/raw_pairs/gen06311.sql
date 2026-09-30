@@ -1,0 +1,1 @@
+WITH top_web_events AS (SELECT *, RANK() OVER (PARTITION BY session_id ORDER BY duration_sec) AS rn FROM web_events WHERE event_type = 'search') SELECT id, session_id, duration_sec, page FROM top_web_events WHERE rn <= 5 ORDER BY id DESC;

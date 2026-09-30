@@ -1,0 +1,1 @@
+SELECT s.id, s.region, COUNT(o.id) AS order_count, MIN(o.shipping_fee) AS min_shipping_fee FROM stores s LEFT JOIN orders o ON s.id = o.store_id WHERE o.channel IS NULL GROUP BY s.id, s.region ORDER BY s.region;

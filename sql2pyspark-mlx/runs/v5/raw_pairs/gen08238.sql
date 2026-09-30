@@ -1,0 +1,1 @@
+select dim.category, dim.brand, count(*) as cnt, max(src.quantity) as max_quantity, sum(src.unit_price) as total_unit_price from order_items src inner join products dim on src.product_id = dim.id group by grouping sets ((dim.category, dim.brand), (dim.category), ())

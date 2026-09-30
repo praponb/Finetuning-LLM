@@ -1,0 +1,1 @@
+SELECT id, shipped_date, order_id, delivered_date, cost, DENSE_RANK() OVER (ORDER BY shipped_date DESC) AS dense_rnk, FIRST_VALUE(cost) OVER (PARTITION BY order_id ORDER BY delivered_date, id) AS first_cost FROM shipments WHERE carrier IN ('UPS', 'Kerry') ORDER BY shipped_date

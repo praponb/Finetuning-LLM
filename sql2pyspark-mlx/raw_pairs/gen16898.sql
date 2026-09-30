@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN salary >= 148000 THEN 'high' WHEN salary >= 73000 THEN 'mid' ELSE 'low' END AS salary_bucket, is_remote, SUM(CASE WHEN level = 'L5' THEN salary ELSE 0 END) AS l5_salary, MIN(salary) AS min_salary FROM employees GROUP BY CASE WHEN salary >= 148000 THEN 'high' WHEN salary >= 73000 THEN 'mid' ELSE 'low' END, is_remote) AS agg WHERE l5_salary > 33;

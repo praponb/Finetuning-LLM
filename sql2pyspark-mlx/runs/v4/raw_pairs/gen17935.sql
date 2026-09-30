@@ -1,0 +1,1 @@
+with src as (select *, add_months(delivered_date, 6) as delivered_date_plus_months from shipments where carrier in ('DHL', 'Flash', 'Kerry') and status <> 'DELIVERED'), delivered_quarter_summary as (select quarter(delivered_date) as delivered_quarter, max(shipped_date) as last_shipped_date from src group by quarter(delivered_date)) select * from delivered_quarter_summary;

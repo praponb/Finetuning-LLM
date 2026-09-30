@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, SUM(CASE WHEN merchant = '7-Eleven' THEN amount ELSE 0 END) AS 7_eleven_amount, MAX(amount) - MIN(amount) AS amount_range FROM transactions WHERE account_id IN (8, 11, 26, 31) GROUP BY txn_month ORDER BY 1 ASC, 7_eleven_amount DESC LIMIT 50;

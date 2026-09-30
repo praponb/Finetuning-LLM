@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM order_items WHERE product_id IS NULL AND (quantity > 7 OR quantity = 5)), product_id_summary AS (SELECT product_id, SUM(unit_price * quantity) AS revenue FROM base GROUP BY product_id) SELECT product_id, revenue FROM product_id_summary WHERE revenue > 52 ORDER BY revenue

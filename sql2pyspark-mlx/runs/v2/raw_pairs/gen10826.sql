@@ -1,0 +1,1 @@
+SELECT order_date, customer_id FROM orders WHERE channel IN ('mobile', 'partner') UNION SELECT order_date, customer_id FROM orders WHERE status IN ('SHIPPED', 'CANCELLED', 'COMPLETED') ORDER BY order_date;

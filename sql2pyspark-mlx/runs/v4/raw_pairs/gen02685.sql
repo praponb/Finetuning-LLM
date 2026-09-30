@@ -1,0 +1,1 @@
+SELECT account_type, YEAR(opened_date) AS opened_year, customer_id, SUM(CASE WHEN status = 'FROZEN' THEN 1 ELSE 0 END) AS frozen_count FROM accounts WHERE balance >= 77000 GROUP BY account_type, YEAR(opened_date), customer_id HAVING SUM(CASE WHEN status = 'FROZEN' THEN 1 ELSE 0 END) < 31 ORDER BY opened_year ASC;

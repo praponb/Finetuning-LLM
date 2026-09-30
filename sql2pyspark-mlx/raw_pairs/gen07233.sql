@@ -1,0 +1,1 @@
+select d.device, e.page, count(*) as cnt, min(e.duration_sec) as min_duration_sec from web_events e join sessions d on e.session_id = d.id group by grouping sets ((d.device, e.page), (d.device)) order by cnt;

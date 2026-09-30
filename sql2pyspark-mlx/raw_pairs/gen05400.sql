@@ -1,0 +1,1 @@
+SELECT id, city, rating FROM (SELECT id, city, rating, RANK() OVER (PARTITION BY city ORDER BY rating DESC) rn FROM suppliers WHERE city NOT IN ('Singapore', 'Berlin', 'Chiang Mai')) r WHERE rn = 1 ORDER BY rating ASC, city ASC;

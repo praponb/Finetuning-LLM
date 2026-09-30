@@ -1,0 +1,1 @@
+SELECT p.category, MIN(ss.revenue) AS min_revenue FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id WHERE ss.revenue > 2700 GROUP BY p.category;

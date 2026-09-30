@@ -1,0 +1,1 @@
+WITH WebEventsBySession AS (SELECT session_id, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events GROUP BY session_id) SELECT s.country, s.started_at, W.unique_event_types FROM sessions s LEFT JOIN WebEventsBySession W ON s.id = W.session_id;

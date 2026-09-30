@@ -1,0 +1,1 @@
+SELECT store_id, CASE WHEN quantity >= 257 THEN 'high' WHEN quantity >= 49 THEN 'mid' ELSE 'low' END quantity_bucket, MAX(quantity) - MIN(quantity) quantity_range FROM inventory WHERE product_id = 3 GROUP BY store_id, CASE WHEN quantity >= 257 THEN 'high' WHEN quantity >= 49 THEN 'mid' ELSE 'low' END HAVING MAX(quantity) - MIN(quantity) >= 61 ORDER BY 2 DESC;

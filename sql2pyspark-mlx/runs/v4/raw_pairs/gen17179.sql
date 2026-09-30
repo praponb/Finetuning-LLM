@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', customers.signup_date) AS signup_month, COUNT(CASE WHEN sessions.country = 'DE' THEN 1 END) AS de_count, COUNT(*) AS session_count FROM sessions LEFT OUTER JOIN customers ON sessions.customer_id = customers.id WHERE sessions.device IN ('mobile', 'tablet') GROUP BY DATE_TRUNC('MONTH', customers.signup_date) HAVING de_count > 4 ORDER BY de_count DESC;

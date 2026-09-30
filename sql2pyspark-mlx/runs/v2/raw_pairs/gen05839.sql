@@ -1,0 +1,1 @@
+SELECT c.country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.status))) AS status_values, SUM(CASE WHEN s.status = 'LOST' THEN s.cost ELSE 0 END) AS lost_cost FROM shipments s LEFT JOIN orders o ON o.id = s.order_id INNER JOIN customers c ON o.customer_id = c.id GROUP BY c.country HAVING SUM(CASE WHEN s.status = 'LOST' THEN s.cost ELSE 0 END) > 28 ORDER BY lost_cost DESC

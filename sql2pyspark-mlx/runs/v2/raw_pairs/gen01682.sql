@@ -1,0 +1,1 @@
+select t.id, t.amount, t.txn_time, a.opened_date, a.customer_id, c.name from transactions t left join accounts a on t.account_id = a.id join customers c on a.customer_id = c.id where a.status in ('FROZEN', 'OPEN', 'CLOSED');

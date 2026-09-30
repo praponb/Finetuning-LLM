@@ -1,0 +1,1 @@
+WITH recent_products AS (SELECT * FROM products WHERE cost BETWEEN 310 AND 620), ProductsStats AS (SELECT category, MAX(stock_qty) AS max_stock_qty FROM recent_products GROUP BY category) SELECT category, max_stock_qty FROM ProductsStats WHERE max_stock_qty < 220 ORDER BY category DESC LIMIT 20;

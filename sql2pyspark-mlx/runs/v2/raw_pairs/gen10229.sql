@@ -1,0 +1,1 @@
+SELECT SUM(CASE WHEN merchant = 'Lazada' THEN 1 ELSE 0 END) AS lazada_count, COUNT(DISTINCT amount) AS unique_merchants, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE merchant IN ('Lazada', 'Starbucks', 'Grab') ORDER BY unique_merchants DESC, lazada_count

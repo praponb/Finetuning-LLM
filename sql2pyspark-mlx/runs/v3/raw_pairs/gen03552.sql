@@ -1,0 +1,1 @@
+select carrier, sum(cost) as total_cost, concat_ws(', ', sort_array(collect_set(status))) as status_values, count(distinct cost) as unique_statuss from shipments group by 1 order by total_cost desc, unique_statuss, carrier limit 5;

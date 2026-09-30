@@ -1,0 +1,1 @@
+select date_trunc('MONTH', opened_date) as opened_month, sum(sqft) as total_sqft, round(sum(sqft) * 100.0 / sum(sum(sqft)) over (), 2) as pct_of_total from stores where city = 'Bangkok' group by date_trunc('MONTH', opened_date) order by total_sqft desc, opened_month desc

@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.opened_date FROM accounts WHERE YEAR(accounts.opened_date) >= 2025 AND EXISTS (SELECT 1 FROM transactions WHERE transactions.account_id = accounts.id) ORDER BY opened_date DESC, id ASC LIMIT 3

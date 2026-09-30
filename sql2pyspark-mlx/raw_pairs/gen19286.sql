@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, segment, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai, MAX(signup_date) AS last_signup_date FROM customers WHERE age <= 31 GROUP BY DATE_TRUNC('MONTH', signup_date), segment ORDER BY segment DESC, last_signup_date DESC;

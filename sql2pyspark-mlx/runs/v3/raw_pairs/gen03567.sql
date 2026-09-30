@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, is_active, AVG(credit_limit) AS avg_credit_limit, ROUND((100 * SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_new_york FROM customers GROUP BY DATE_TRUNC('MONTH', signup_date), is_active) AS agg WHERE avg_credit_limit >= 12900

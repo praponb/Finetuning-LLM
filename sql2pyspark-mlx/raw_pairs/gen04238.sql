@@ -1,0 +1,1 @@
+SELECT id, budget, CASE WHEN budget >= 4287000 THEN 'High' WHEN budget >= 1136000 THEN 'Medium' ELSE 'Low' END AS budget_level FROM departments WHERE budget IS NOT NULL AND dept_name IN ('Marketing', 'Engineering') AND location IS NOT NULL ORDER BY budget_level, id LIMIT 5;

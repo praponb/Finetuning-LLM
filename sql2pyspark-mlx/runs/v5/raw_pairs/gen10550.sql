@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, store_id, product_id, quantity, last_restock, CEIL(quantity) AS quantity_whole FROM inventory WHERE product_id IN (1, 3, 6, 7)) SELECT id, store_id, product_id, quantity, last_restock FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY quantity_whole DESC, id) AS latest_rank FROM valid) x WHERE latest_rank = 1;

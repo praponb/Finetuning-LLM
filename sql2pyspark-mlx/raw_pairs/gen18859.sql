@@ -1,0 +1,1 @@
+SELECT CASE WHEN c.age >= 57 THEN 'high' WHEN c.age >= 40 THEN 'mid' ELSE 'low' END age_bucket, AVG(o.shipping_fee) avg_shipping_fee FROM orders o FULL OUTER JOIN customers c ON o.customer_id = c.id GROUP BY CASE WHEN c.age >= 57 THEN 'high' WHEN c.age >= 40 THEN 'mid' ELSE 'low' END HAVING AVG(o.shipping_fee) > 12 ORDER BY age_bucket;

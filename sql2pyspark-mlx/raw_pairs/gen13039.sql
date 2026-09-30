@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, store_id, product_id, sale_date, revenue, FLOOR(units) units_whole FROM store_sales WHERE sale_date > DATE '2023-07-26' AND product_id IN (4, 9)) SELECT store_id, id FROM filtered EXCEPT ALL SELECT store_id, id FROM store_sales WHERE YEAR(sale_date) >= 2023

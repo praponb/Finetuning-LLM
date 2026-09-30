@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(budget, 2) AS budget_rounded, UPPER(dept_name) AS dept_name_upper FROM departments WHERE location IS NOT NULL) SELECT * FROM (SELECT dept_name, location, budget FROM cleaned) src PIVOT (MAX(budget) AS amount, COUNT(1) AS item_count FOR location IN ('Chiang Mai' AS chiang_mai, 'Berlin' AS berlin));

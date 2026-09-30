@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, a.status, t.min_txn_time, t.amount_range FROM accounts a LEFT JOIN (SELECT account_id, MIN(txn_time) AS min_txn_time, MAX(amount) - MIN(amount) AS amount_range FROM transactions WHERE amount > 3600 GROUP BY account_id) t ON a.id = t.account_id WHERE t.amount_range >= 34;

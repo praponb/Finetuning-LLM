@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.txn_type, transactions.account_id, accounts.account_type, accounts.balance, accounts.customer_id FROM transactions LEFT OUTER JOIN accounts ON accounts.id = transactions.account_id WHERE accounts.balance < 74000 ORDER BY account_id DESC;

@@ -1,0 +1,1 @@
+SELECT shipments.id, shipments.cost, orders.order_date, stores.region FROM shipments JOIN orders ON shipments.order_id = orders.id LEFT JOIN stores ON orders.store_id = stores.id WHERE shipments.delivered_date < '2023-10-01' ORDER BY 2 DESC;

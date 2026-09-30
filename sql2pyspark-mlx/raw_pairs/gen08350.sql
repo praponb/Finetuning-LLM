@@ -1,0 +1,1 @@
+WITH recent_stores AS (SELECT * FROM stores WHERE opened_date BETWEEN '2023-07-01' AND '2024-08-01'), agg AS (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, COUNT(DISTINCT sqft) AS unique_citys FROM recent_stores GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) SELECT * FROM agg

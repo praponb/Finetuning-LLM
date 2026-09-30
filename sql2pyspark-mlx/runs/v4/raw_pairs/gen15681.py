@@ -1,0 +1,3 @@
+from pyspark.sql import functions as F
+
+result = df_customers.select("id", "credit_limit", F.lower("city").alias("city_lower"))

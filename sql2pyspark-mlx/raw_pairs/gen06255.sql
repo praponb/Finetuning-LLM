@@ -1,0 +1,1 @@
+select o.status, o.channel, avg(oi.unit_price) as avg_unit_price from order_items oi left join orders o on oi.order_id = o.id where o.channel not in ('store', 'web', 'partner') group by o.status, o.channel order by status;

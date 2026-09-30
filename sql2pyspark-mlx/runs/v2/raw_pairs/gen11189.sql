@@ -1,0 +1,1 @@
+WITH recent_products AS (SELECT * FROM products WHERE supplier_id IN (10, 11, 17, 36) AND launch_date <= '2024-04-10'), products_stats AS (SELECT MONTH(launch_date) launch_month, MAX(price) - MIN(price) price_range FROM recent_products GROUP BY MONTH(launch_date)) SELECT * FROM products_stats WHERE price_range < 53 ORDER BY price_range DESC, launch_month ASC LIMIT 50

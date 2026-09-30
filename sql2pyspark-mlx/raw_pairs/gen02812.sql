@@ -1,0 +1,1 @@
+SELECT order_id, ROUND(STDDEV(quantity), 2) stddev_quantity, ROUND(AVG(unit_price), 2) avg_unit_price FROM order_items WHERE order_id IN (3, 20, 25, 27) AND quantity BETWEEN 3 AND 4 AND quantity BETWEEN 3 AND 4 GROUP BY order_id HAVING COUNT(unit_price) < 2 ORDER BY stddev_quantity DESC, order_id LIMIT 5;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, channel, amount, store_id, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY amount DESC, id) row_num FROM orders WHERE status NOT IN ('RETURNED', 'COMPLETED', 'PENDING')) t WHERE row_num <= 3 ORDER BY store_id;

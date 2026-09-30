@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, LAST_DAY(opened_date) AS opened_date_month_end, COALESCE(region, 'OTHER') AS region_filled FROM stores WHERE opened_date > DATE '2023-05-30' AND region IS NOT NULL) SELECT * FROM (SELECT city, region, sqft FROM filtered) src PIVOT (SUM(sqft) AS total, COUNT(1) AS item_count FOR region IN ('Central', 'West'))

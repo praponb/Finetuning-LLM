@@ -1,0 +1,1 @@
+SELECT s.*, latest.discount, latest.status FROM customers s LEFT JOIN LATERAL (SELECT c.discount, c.status FROM orders c WHERE c.customer_id = s.id ORDER BY c.order_date DESC, c.id DESC LIMIT 1) latest ON TRUE;

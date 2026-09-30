@@ -1,0 +1,1 @@
+SELECT orders.id, orders.shipping_fee, t.total_cost FROM orders LEFT JOIN (SELECT order_id, SUM(cost) AS total_cost FROM shipments WHERE order_id IN (34, 36) GROUP BY order_id) t ON orders.id = t.order_id WHERE t.total_cost >= 480;

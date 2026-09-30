@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('IN_TRANSIT', 'DELIVERED') THEN 'priority' ELSE 'other' END AS status_group, carrier, MAX(cost) - MIN(cost) AS cost_range FROM shipments WHERE delivered_date <= '2024-08-01' GROUP BY 1, 2 ORDER BY carrier;

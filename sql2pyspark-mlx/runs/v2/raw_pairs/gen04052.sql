@@ -1,0 +1,1 @@
+select case when budget >= 3766000 then 'high' when budget >= 683000 then 'mid' else 'low' end as budget_bucket, location, avg(budget) as avg_budget from departments where dept_name not in ('HR', 'Finance') group by case when budget >= 3766000 then 'high' when budget >= 683000 then 'mid' else 'low' end, location

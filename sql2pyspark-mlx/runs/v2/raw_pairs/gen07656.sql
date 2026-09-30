@@ -1,0 +1,1 @@
+select quarter(last_restock) as last_restock_quarter, year(last_restock) as last_restock_year, max(quantity) as max_quantity from inventory where product_id in (1, 3, 5) and last_restock > '2024-01-01' group by quarter(last_restock), year(last_restock) having max_quantity >= 60 order by last_restock_quarter, last_restock_year limit 50;

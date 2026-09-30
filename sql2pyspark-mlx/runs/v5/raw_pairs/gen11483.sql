@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, i.last_restock, i.store_id, ss.product_id, ss.units, ADD_MONTHS(ss.sale_date, 12) AS sale_date_plus_months FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id ORDER BY quantity DESC

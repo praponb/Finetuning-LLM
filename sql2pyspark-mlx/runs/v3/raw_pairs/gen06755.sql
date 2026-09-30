@@ -1,0 +1,1 @@
+WITH recent_payments AS (SELECT * FROM payments WHERE method IS NOT NULL AND amount BETWEEN 870 AND 1500 AND method != 'bank_transfer'), PaymentsStats AS (SELECT status, ROUND(AVG(amount), 2) AS avg_amount FROM recent_payments GROUP BY status) SELECT status, avg_amount FROM PaymentsStats WHERE avg_amount > 66 ORDER BY status DESC LIMIT 10;

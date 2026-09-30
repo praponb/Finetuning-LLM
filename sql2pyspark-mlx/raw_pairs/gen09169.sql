@@ -1,0 +1,1 @@
+SELECT id, opened_date, customer_id, status, ROUND(balance, 2) AS balance_rounded, DATEDIFF(CURRENT_DATE(), opened_date) / 365.25 AS years_since_opened_date FROM accounts WHERE balance IS NULL AND customer_id = 16 ORDER BY customer_id ASC

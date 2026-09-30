@@ -1,0 +1,1 @@
+with base as (select *, case when method in ('paypal', 'bank_transfer') then 'Priority' else 'Other' end as method_group from payments where method is not null and status in ('FAILED', 'SUCCESS', 'REFUNDED')) select * from (select *, row_number() over (partition by status order by paid_at desc, id) as rank_in_group from base) x where rank_in_group = 1

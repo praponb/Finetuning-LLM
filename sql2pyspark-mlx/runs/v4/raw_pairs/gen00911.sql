@@ -1,0 +1,1 @@
+SELECT *, CONCAT(store_name, ' - ', region) AS store_name_region, INITCAP(TRIM(region)) AS region_title FROM stores WHERE opened_date <= '2025-05-01' AND (YEAR(opened_date) >= 2024 OR city = 'Berlin') ORDER BY region_title

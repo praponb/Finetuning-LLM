@@ -1,0 +1,1 @@
+SELECT t.account_id, a.balance, c.age, c.name FROM transactions t LEFT OUTER JOIN accounts a ON t.account_id = a.id FULL OUTER JOIN customers c ON c.id = a.customer_id WHERE c.country IN ('UK', 'US') OR c.credit_limit >= 8300 ORDER BY t.account_id DESC

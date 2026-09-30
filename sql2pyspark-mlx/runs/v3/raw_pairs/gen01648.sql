@@ -1,0 +1,1 @@
+SELECT stores.opened_date, stores.region, t.unique_stores, t.max_units FROM stores INNER JOIN (SELECT store_id, COUNT(DISTINCT revenue) AS unique_stores, MAX(units) AS max_units FROM store_sales GROUP BY store_id) t ON stores.id = t.store_id WHERE t.max_units > 24 ORDER BY stores.region DESC

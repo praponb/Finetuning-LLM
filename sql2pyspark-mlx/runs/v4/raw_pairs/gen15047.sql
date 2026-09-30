@@ -1,0 +1,1 @@
+SELECT segment, SUM(CASE WHEN country = 'DE' THEN 1 ELSE 0 END) AS de_count FROM customers WHERE LENGTH(email) >= 8 AND segment = 'SMB' GROUP BY segment HAVING SUM(CASE WHEN country = 'DE' THEN 1 ELSE 0 END) > 60;

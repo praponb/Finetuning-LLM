@@ -1,0 +1,1 @@
+select case when revenue >= 4100 then 'high' when revenue >= 1000 then 'mid' else 'low' end as revenue_bucket, date_format(sale_date, 'yyyy-MM') as sale_month, max(sale_date) as last_sale_date, min(sale_date) as min_sale_date from store_sales group by 1, 2 having count(distinct units) >= 5 order by revenue_bucket, min_sale_date

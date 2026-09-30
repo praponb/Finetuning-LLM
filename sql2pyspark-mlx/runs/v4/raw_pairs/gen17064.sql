@@ -1,0 +1,1 @@
+SELECT stores.city, stores.region, stores.opened_date, orders.store_id, orders.amount, orders.customer_id, DATE_SUB(stores.opened_date, 64) AS opened_date_minus_64d FROM stores LEFT JOIN orders ON orders.store_id = stores.id

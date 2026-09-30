@@ -1,0 +1,1 @@
+SELECT *, CONCAT_WS('-', supplier_name, country) AS supplier_name_country_key, CAST(rating AS INT) AS rating_int FROM suppliers WHERE country IN ('JP', 'TH', 'SG') AND (rating > 3.8 OR rating BETWEEN 3.3 AND 3.7);

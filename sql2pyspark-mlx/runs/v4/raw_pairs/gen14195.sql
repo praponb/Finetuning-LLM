@@ -1,0 +1,1 @@
+with ranked_shipments as (select id, carrier, delivered_date, shipped_date, row_number() over (partition by carrier order by delivered_date, id) as rnk from shipments) select id, carrier, delivered_date, shipped_date from ranked_shipments where rnk <= 2;

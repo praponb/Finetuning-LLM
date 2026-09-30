@@ -1,0 +1,1 @@
+SELECT id, event_type, duration_sec, RANK() OVER (PARTITION BY event_type ORDER BY duration_sec DESC) AS duration_sec_rank FROM web_events WHERE session_id IN (15, 24, 33) ORDER BY duration_sec_rank DESC;

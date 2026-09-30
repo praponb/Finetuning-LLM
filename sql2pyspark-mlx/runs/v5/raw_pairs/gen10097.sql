@@ -1,0 +1,1 @@
+SELECT d.account_type, d.status, s.merchant, COUNT(*) AS rows_total, AVG(s.amount) AS avg_amount FROM transactions s INNER JOIN accounts d ON s.account_id = d.id GROUP BY ROLLUP (d.account_type, d.status, s.merchant)

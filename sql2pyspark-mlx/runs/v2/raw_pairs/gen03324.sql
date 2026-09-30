@@ -1,0 +1,1 @@
+SELECT id, location, budget, dept_name, COALESCE(budget, 0) AS budget_filled FROM departments WHERE NOT (location IN ('Berlin', 'New York') AND location = 'Chiang Mai' AND location NOT IN ('Berlin', 'London', 'Chiang Mai'))

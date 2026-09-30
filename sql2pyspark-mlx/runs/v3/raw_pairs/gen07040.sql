@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.account_type, accounts.customer_id, customers.is_active, customers.name, customers.country FROM accounts JOIN customers ON accounts.customer_id = customers.id WHERE accounts.balance < 77000 ORDER BY name ASC

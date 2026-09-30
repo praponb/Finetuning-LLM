@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, s.sqft, p.product_name, p.price FROM inventory i LEFT OUTER JOIN stores s ON i.store_id = s.id LEFT OUTER JOIN products p ON p.id = i.product_id WHERE i.last_restock >= '2024-11-01';

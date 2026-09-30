@@ -1,0 +1,1 @@
+SELECT id, carrier, shipped_date, status, DATEDIFF(shipped_date, delivered_date) / 7 AS weeks_delivered_date_to_shipped_date FROM shipments WHERE carrier NOT IN ('DHL', 'UPS', 'Kerry') AND carrier = 'DHL'

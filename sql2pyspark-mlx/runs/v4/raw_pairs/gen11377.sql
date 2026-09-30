@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, AVG(amount) AS avg_amount FROM transactions WHERE amount BETWEEN 1800 AND 2100 GROUP BY account_id) SELECT a.id, a.balance, a.status, as.avg_amount FROM accounts a INNER JOIN account_summary as ON a.id = as.account_id ORDER BY avg_amount

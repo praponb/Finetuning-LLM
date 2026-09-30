@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM suppliers WHERE rating BETWEEN 3.6 AND 4.2 OR country = 'DE'), suppliers_stats AS (SELECT city, SUM(rating) AS total_rating, MIN(rating) AS min_rating FROM src GROUP BY city) SELECT city, total_rating, min_rating FROM suppliers_stats

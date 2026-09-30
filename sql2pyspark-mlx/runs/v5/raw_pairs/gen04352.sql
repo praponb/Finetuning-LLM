@@ -1,0 +1,1 @@
+SELECT id, host, latency_ms, status_code, COALESCE(context['trace'], 'none') AS trace_or_default, CAST((status_code & 8) != 0 AS INT) AS flag_bit8, COALESCE(context['version'], 'unknown') AS version_or_default, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').retries AS retry_count FROM app_logs;

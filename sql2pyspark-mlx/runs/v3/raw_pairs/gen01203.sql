@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, AVG(sqft) avg_sqft, COUNT(sqft) sqft_count, COUNT(*) row_count FROM stores GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM') ORDER BY row_count, opened_month LIMIT 10;

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, SUM(quantity) AS total_quantity FROM order_items WHERE product_id = 20 GROUP BY order_id) SELECT o.discount, os.total_quantity FROM orders o LEFT JOIN order_summary os ON o.id = os.order_id WHERE os.total_quantity > 28

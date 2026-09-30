@@ -1,0 +1,1 @@
+SELECT id, store_id, product_id, units, sale_date, revenue, LAST_VALUE(sale_date) OVER (PARTITION BY store_id, product_id ORDER BY units, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_sale_date, SUM(revenue) OVER (PARTITION BY store_id) AS store_id_sum_revenue FROM store_sales

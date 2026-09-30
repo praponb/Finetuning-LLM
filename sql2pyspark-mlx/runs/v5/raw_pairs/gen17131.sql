@@ -1,0 +1,1 @@
+SELECT a.balance, a.customer_id, a.status, t.is_flagged, DATE_TRUNC('MONTH', a.opened_date) AS opened_date_period FROM accounts a JOIN transactions t ON t.account_id = a.id WHERE t.is_flagged OR a.customer_id IS NULL ORDER BY customer_id DESC

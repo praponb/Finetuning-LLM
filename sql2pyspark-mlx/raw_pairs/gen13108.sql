@@ -1,0 +1,1 @@
+SELECT *, CONCAT_WS('/', browser, device) AS browser_device_key, TO_DATE(started_at) AS started_at_date FROM sessions WHERE (browser IN ('Safari', 'Firefox', 'Chrome') AND device IN ('tablet', 'mobile')) OR customer_id = 10;

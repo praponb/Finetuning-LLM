@@ -1,0 +1,1 @@
+SELECT MONTH(p.launch_date) AS launch_month, p.brand, MAX(oi.unit_price) AS max_unit_price FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id WHERE p.cost > 520 GROUP BY MONTH(p.launch_date), p.brand HAVING MAX(oi.unit_price) >= 310 ORDER BY max_unit_price, launch_month, brand LIMIT 1;

@@ -1,0 +1,1 @@
+with account_summary as (select account_id, max(amount) - min(amount) as amount_range from transactions group by account_id) select a.id, a.account_type, a.balance, as.amount_range from accounts a left outer join account_summary as on a.id = as.account_id where as.amount_range >= 28 order by 4, account_type;

@@ -1,0 +1,1 @@
+with base as (select * from customers where country in ('JP', 'UK') and age between 34 and 58 and length(email) >= 10), agg as (select country, sort_array(collect_set(city)) as city_list, sum(credit_limit) as total_credit_limit from base group by country) select country, city_list, total_credit_limit from agg order by country desc;

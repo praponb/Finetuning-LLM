@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.product_id, inventory.quantity, inventory.last_restock, store_sales.store_id FROM inventory INNER JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id;

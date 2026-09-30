@@ -1,0 +1,1 @@
+SELECT event_type, add_to_cart_count, pct_search FROM (SELECT event_type, COUNT(CASE WHEN event_type = 'add_to_cart' THEN 1 END) add_to_cart_count, ROUND((100 * SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_search FROM web_events GROUP BY event_type) t WHERE pct_search > 30 ORDER BY event_type, add_to_cart_count DESC LIMIT 3;

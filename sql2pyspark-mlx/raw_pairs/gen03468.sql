@@ -1,0 +1,1 @@
+select id, merchant, amount, is_flagged from (select id, merchant, amount, is_flagged, row_number() over (partition by merchant order by amount desc, id) as row_num from transactions) as ranked where row_num <= 5;

@@ -1,0 +1,1 @@
+SELECT product_id, avg_revenue, revenue_count FROM (SELECT product_id, ROUND(AVG(revenue), 2) AS avg_revenue, COUNT(revenue) AS revenue_count FROM store_sales GROUP BY product_id) AS x WHERE avg_revenue < 51

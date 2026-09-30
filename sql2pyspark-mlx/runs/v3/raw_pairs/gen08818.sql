@@ -1,0 +1,1 @@
+SELECT id, product_id, sale_date, store_id, revenue, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY sale_date DESC, id) AS sale_date_row, LEAD(revenue, 1) OVER (PARTITION BY store_id ORDER BY sale_date, id) AS next_revenue FROM store_sales WHERE units BETWEEN 32 AND 34 ORDER BY 7 DESC

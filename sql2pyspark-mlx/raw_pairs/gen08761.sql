@@ -1,0 +1,1 @@
+SELECT id, supplier_name, country, city, LEAD(rating) OVER (PARTITION BY country ORDER BY rating ASC, id ASC) AS next_rating, LAG(rating) OVER (PARTITION BY country ORDER BY rating ASC, id ASC) AS prev_rating, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating ASC, id ASC) AS row_seq FROM suppliers;

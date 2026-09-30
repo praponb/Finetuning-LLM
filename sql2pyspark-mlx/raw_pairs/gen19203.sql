@@ -1,0 +1,1 @@
+SELECT o.status AS order_status, a.status AS payment_status, COUNT(*) AS rows_total, MAX(a.amount) AS max_amount FROM payments a INNER JOIN orders o ON a.order_id = o.id GROUP BY o.status, a.status ORDER BY order_status NULLS LAST;

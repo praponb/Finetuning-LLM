@@ -1,0 +1,1 @@
+select id, units, product_id, store_id, coalesce(revenue, 0) as revenue_filled from store_sales where revenue >= 2600 and store_id in (2, 3, 4, 5) and store_id in (1, 2, 3, 5) order by product_id desc, id limit 20

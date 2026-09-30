@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, duration_sec, LAG(duration_sec, 2, 0) OVER (PARTITION BY session_id ORDER BY event_time, id) AS prev_duration_sec FROM web_events WHERE event_time >= '2025-03-01' ORDER BY duration_sec DESC;

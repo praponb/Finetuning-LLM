@@ -1,0 +1,1 @@
+WITH RecentProducts AS (SELECT * FROM products WHERE (stock_qty < 106 AND cost IS NOT NULL) OR supplier_id = 23), ProductsStats AS (SELECT brand, DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, MAX(stock_qty) AS max_stock_qty FROM RecentProducts GROUP BY brand, DATE_FORMAT(launch_date, 'yyyy-MM')) SELECT brand, launch_month, max_stock_qty FROM ProductsStats

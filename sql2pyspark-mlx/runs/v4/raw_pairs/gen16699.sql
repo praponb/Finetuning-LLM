@@ -1,0 +1,1 @@
+WITH top_products AS (SELECT id, category, launch_date, ROW_NUMBER() OVER (PARTITION BY category ORDER BY launch_date, id) AS rn FROM products WHERE product_name IS NOT NULL) SELECT id, category, launch_date FROM top_products WHERE rn <= 2 ORDER BY id, category

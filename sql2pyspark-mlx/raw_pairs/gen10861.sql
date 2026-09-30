@@ -1,0 +1,1 @@
+SELECT s.browser, t.unique_sessions, t.max_duration_sec FROM sessions s INNER JOIN (SELECT session_id, COUNT(DISTINCT duration_sec) AS unique_sessions, MAX(duration_sec) AS max_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.max_duration_sec >= 380;

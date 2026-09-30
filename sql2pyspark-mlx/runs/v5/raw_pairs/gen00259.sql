@@ -1,0 +1,1 @@
+SELECT country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, MAX(rating) AS max_rating FROM suppliers WHERE NOT (city = 'Tokyo' AND city IN ('Bangkok', 'Berlin', 'Tokyo')) GROUP BY country;

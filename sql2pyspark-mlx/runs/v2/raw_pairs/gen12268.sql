@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(country)) AS country_list, MIN(started_at) AS min_started_at FROM sessions GROUP BY customer_id) SELECT c.segment, cs.country_list, cs.min_started_at FROM customers c LEFT OUTER JOIN customer_summary cs ON c.id = cs.customer_id;

@@ -1,0 +1,1 @@
+with numbered as (select id, country, rating, supplier_name, row_number() over (partition by country order by rating desc, id) as row_num from suppliers) select id, country, rating, supplier_name from numbered where row_num <= 5 order by supplier_name desc

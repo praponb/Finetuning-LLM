@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, COALESCE(status, 'unassigned') AS status_filled, ROUND(balance, 1) AS balance_rounded, COALESCE(status, 'NONE') AS resolved_status FROM accounts WHERE opened_date > DATE '2023-06-01') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id, status ORDER BY opened_date DESC, id) AS latest_rank FROM base) x WHERE latest_rank = 1;

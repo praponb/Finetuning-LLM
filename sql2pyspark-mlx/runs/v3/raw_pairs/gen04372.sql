@@ -1,0 +1,1 @@
+WITH ranked_customers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY credit_limit, id) row_num FROM customers) SELECT id, segment, credit_limit FROM ranked_customers WHERE row_num <= 5

@@ -1,0 +1,1 @@
+SELECT location, SUM(budget) AS total_budget, SUM(SUM(budget)) OVER (ORDER BY location) AS cumulative_budget FROM departments WHERE location = 'Chiang Mai' GROUP BY location ORDER BY cumulative_budget DESC, location DESC;

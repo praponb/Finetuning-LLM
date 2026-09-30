@@ -1,0 +1,1 @@
+select year(p.launch_date) as launch_year, round(stddev(oi.quantity), 2) as stddev_quantity from order_items oi left join products p on p.id = oi.product_id left join orders o on oi.order_id = o.id where p.cost > 540 group by year(p.launch_date) having round(stddev(oi.quantity), 2) > 55

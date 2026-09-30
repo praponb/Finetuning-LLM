@@ -1,0 +1,1 @@
+select month(hire_date) as hire_month, count(case when level = 'L3' then 1 end) as l3_count, sum(salary) as total_salary from employees where is_remote = true and (full_name like 'Kan%' or level != 'L1') group by 1;

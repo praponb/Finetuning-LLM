@@ -1,0 +1,1 @@
+SELECT d.budget, d.dept_name, t.min_salary FROM departments d LEFT JOIN (SELECT dept_id, MIN(salary) min_salary FROM employees GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY dept_name, min_salary DESC;

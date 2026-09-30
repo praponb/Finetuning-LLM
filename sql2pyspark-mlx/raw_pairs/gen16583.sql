@@ -1,0 +1,1 @@
+WITH FilteredInventory AS (SELECT * FROM inventory WHERE quantity < 87 AND last_restock < '2025-01-05' AND store_id IN (1, 4, 5)), InventoryStats AS (SELECT store_id, MAX(quantity) max_quantity FROM FilteredInventory GROUP BY store_id) SELECT * FROM InventoryStats WHERE max_quantity < 130 ORDER BY store_id;

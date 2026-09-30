@@ -1,0 +1,1 @@
+SELECT s.rating, s.country, t.unique_suppliers, t.max_stock_qty FROM suppliers s INNER JOIN (SELECT supplier_id, COUNT(DISTINCT price) AS unique_suppliers, MAX(stock_qty) AS max_stock_qty FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY rating, unique_suppliers;

@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, DAYOFWEEK(opened_date) opened_date_dayofweek FROM stores WHERE region IS NOT NULL), agg AS (SELECT city, MIN(sqft) min_sqft FROM src GROUP BY city) SELECT city, min_sqft FROM agg

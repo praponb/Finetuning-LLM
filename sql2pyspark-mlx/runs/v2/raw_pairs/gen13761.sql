@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, ROUND(STDDEV(quantity), 2) stddev_quantity FROM order_items GROUP BY order_id) SELECT o.id, o.channel, o.order_date, os.stddev_quantity FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id WHERE os.stddev_quantity >= 31 ORDER BY order_date DESC;

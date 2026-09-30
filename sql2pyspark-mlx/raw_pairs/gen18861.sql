@@ -1,0 +1,1 @@
+WITH filtered_store_sales AS (SELECT * FROM store_sales WHERE NOT (revenue >= 2800 AND product_id IN (2, 6))), Agg AS (SELECT product_id, ROUND(AVG(units), 2) AS avg_units, COUNT(revenue) AS revenue_count FROM filtered_store_sales GROUP BY product_id) SELECT product_id, avg_units, revenue_count FROM Agg WHERE revenue_count >= 6;

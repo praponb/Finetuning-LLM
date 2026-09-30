@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, SUM(quantity) AS total_quantity, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items GROUP BY order_id) SELECT orders.id, orders.shipping_fee, orders.customer_id, order_totals.total_quantity, order_totals.stddev_unit_price FROM orders LEFT JOIN order_totals ON orders.id = order_totals.order_id ORDER BY id DESC

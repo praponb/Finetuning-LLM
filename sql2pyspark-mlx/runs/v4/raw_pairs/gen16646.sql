@@ -1,0 +1,1 @@
+with department_stats as (select dept_id, count(case when job_title = 'Engineer' then 1 end) as engineer_count from employees where manager_id = 18 group by dept_id) select d.id, d.budget, d.location, ds.engineer_count from departments d left join department_stats ds on d.id = ds.dept_id

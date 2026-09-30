@@ -1,0 +1,1 @@
+select p.id, p.category, count(i.id) as inventory_count, max(i.last_restock) as latest_last_restock, sum(i.quantity) as total_quantity from products p left join inventory i on p.id = i.product_id where p.brand = 'Stark' group by p.id, p.category order by latest_last_restock, id, category limit 50;

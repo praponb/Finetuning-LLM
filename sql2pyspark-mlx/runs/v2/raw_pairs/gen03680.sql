@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM web_events WHERE event_time < '2023-09-17'), summary AS (SELECT session_id, MAX(event_time) AS latest_event_time, MAX(event_time) AS last_event_time FROM base GROUP BY session_id) SELECT * FROM summary

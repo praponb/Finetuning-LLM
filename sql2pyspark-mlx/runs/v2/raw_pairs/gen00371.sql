@@ -1,0 +1,1 @@
+SELECT p.category, ROUND(AVG(oi.unit_price), 2) avg_unit_price FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id LEFT JOIN products p ON oi.product_id = p.id WHERE oi.quantity <> 7 GROUP BY p.category ORDER BY category DESC;

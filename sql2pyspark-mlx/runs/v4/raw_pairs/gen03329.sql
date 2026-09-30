@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN event_type IN ('add_to_cart', 'click') THEN 'priority' ELSE 'other' END AS event_type_group, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY CASE WHEN event_type IN ('add_to_cart', 'click') THEN 'priority' ELSE 'other' END) AS agg WHERE stddev_duration_sec < 40

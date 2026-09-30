@@ -1,0 +1,1 @@
+WITH ranked_customers AS (SELECT *, DENSE_RANK() OVER (PARTITION BY country ORDER BY credit_limit) AS rnk FROM customers) SELECT id, country, credit_limit, is_active FROM ranked_customers WHERE rnk = 1;

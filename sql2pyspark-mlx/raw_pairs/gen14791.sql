@@ -1,0 +1,1 @@
+SELECT id, amount, status, paid_at, RANK() OVER (ORDER BY amount) AS amount_rank, SUM(amount) OVER (PARTITION BY status ORDER BY paid_at, id) AS running_amount FROM payments ORDER BY running_amount DESC;

@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, SUM(CASE WHEN merchant = 'Shell' THEN 1 ELSE 0 END) AS shell_count FROM transactions GROUP BY account_id) SELECT a.status, as.shell_count FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id ORDER BY shell_count, status DESC

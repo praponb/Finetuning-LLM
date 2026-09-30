@@ -1,0 +1,1 @@
+select case when balance >= 83000 then 'high' when balance >= 25000 then 'mid' else 'low' end as balance_bucket, date_format(opened_date, 'yyyy-MM') as opened_month, sort_array(collect_set(account_type)) as account_type_list, count(*) as total_count, round(avg(balance), 2) as avg_balance from accounts where opened_date >= '2023-07-24' group by 1, 2 order by balance_bucket;

@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, MAX(units) - MIN(units) units_range, SUM(units) total_units FROM store_sales GROUP BY store_id) SELECT s.opened_date, s.sqft, ss.units_range, ss.total_units FROM stores s JOIN store_stats ss ON s.id = ss.store_id WHERE ss.units_range >= 50

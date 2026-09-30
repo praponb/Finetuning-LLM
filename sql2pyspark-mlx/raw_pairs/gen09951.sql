@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY device_code ORDER BY status_bits) AS rn FROM device_readings) ranked WHERE rn = 1) SELECT id, device_code, humidity, pressure, status_bits, rn FROM deduped;

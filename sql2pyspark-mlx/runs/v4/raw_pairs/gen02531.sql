@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM departments s WHERE EXISTS (SELECT 1 FROM employees ch WHERE ch.dept_id = s.id AND ch.job_title != 'Manager')) SELECT dept_name, MIN(budget) AS min_budget, SORT_ARRAY(COLLECT_SET(location)) AS location_list, SUM(CASE WHEN dept_name = 'Sales' THEN budget ELSE 0 END) AS sales_budget FROM not_flagged GROUP BY dept_name ORDER BY min_budget DESC

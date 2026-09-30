@@ -1,0 +1,1 @@
+SELECT account_id, merchant, shell_amount, max_amount FROM (SELECT account_id, merchant, SUM(CASE WHEN merchant = 'Shell' THEN amount ELSE 0 END) AS shell_amount, MAX(amount) AS max_amount FROM transactions WHERE txn_type != 'DEBIT' GROUP BY account_id, merchant) AS x WHERE max_amount < 4000;

@@ -1,0 +1,1 @@
+SELECT p.brand, COUNT(oi.quantity) AS quantity_count, SUM(oi.quantity * oi.unit_price) AS revenue FROM order_items oi INNER JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE oi.quantity >= 7 GROUP BY p.brand ORDER BY revenue;

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, COUNT(DISTINCT balance) AS unique_statuss, COUNT(DISTINCT balance) AS unique_account_types FROM accounts GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM');

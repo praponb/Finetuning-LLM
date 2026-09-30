@@ -1,0 +1,1 @@
+SELECT orders.customer_id, orders.channel, AVG(shipments.cost) AS avg_cost, MAX(shipments.cost) - MIN(shipments.cost) AS cost_range FROM shipments INNER JOIN orders ON shipments.order_id = orders.id WHERE orders.discount >= 0.28 GROUP BY orders.customer_id, orders.channel ORDER BY 3 DESC

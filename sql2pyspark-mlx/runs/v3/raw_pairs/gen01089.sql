@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(hire_date) AS hire_month, level, MAX(salary) AS max_salary, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees GROUP BY MONTH(hire_date), level) AS sub WHERE max_salary >= 148000;

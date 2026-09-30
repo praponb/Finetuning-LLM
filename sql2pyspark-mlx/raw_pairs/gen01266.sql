@@ -1,0 +1,1 @@
+select date_format(launch_date, 'yyyy-MM') as launch_month, category, brand, round(stddev(stock_qty), 2) as stddev_stock_qty, min(cost) as min_cost from products where stock_qty > 126 and price <= 540 group by 1, 2, 3 having stddev_stock_qty < 59 order by stddev_stock_qty desc

@@ -1,0 +1,1 @@
+with Base as (select *, lower(status) as status_lower from subscriptions where customer_id = 28), agg as (select plan, min(end_date) as first_end_date from Base group by plan) select plan, first_end_date from agg order by first_end_date asc

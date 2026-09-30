@@ -1,0 +1,1 @@
+with recent_transactions as (select * from transactions where is_flagged = true and txn_time < '2023-12-01'), summary as (select txn_type, avg(amount) as avg_amount from recent_transactions group by txn_type) select txn_type, avg_amount from summary order by avg_amount, txn_type;

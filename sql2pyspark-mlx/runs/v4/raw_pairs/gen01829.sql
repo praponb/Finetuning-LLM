@@ -1,0 +1,1 @@
+SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS seq_no, AVG(sqft) OVER w_grp AS sqft_avg_6_prior FROM stores WINDOW w_grp AS (PARTITION BY region ORDER BY sqft, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING)

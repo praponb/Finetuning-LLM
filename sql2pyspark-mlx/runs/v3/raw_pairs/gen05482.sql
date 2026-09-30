@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(quantity * unit_price) AS revenue, MIN(quantity) AS min_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items GROUP BY 1 ORDER BY min_quantity DESC

@@ -1,0 +1,1 @@
+SELECT browser, started_at, device, CASE WHEN device IN ('tablet', 'mobile') THEN 'Core' ELSE 'Other' END AS device_group FROM sessions WHERE HOUR(started_at) BETWEEN 7 AND 13 AND (device IN ('mobile', 'tablet', 'desktop') OR browser IN ('Firefox', 'Chrome')) ORDER BY browser;

@@ -1,0 +1,1 @@
+SELECT inventory.store_id, inventory.product_id, products.launch_date, suppliers.supplier_name FROM inventory FULL OUTER JOIN products ON inventory.product_id = products.id RIGHT OUTER JOIN suppliers ON products.supplier_id = suppliers.id ORDER BY suppliers.supplier_name DESC, products.launch_date

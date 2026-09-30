@@ -1,0 +1,1 @@
+SELECT TO_DATE(paid_at) AS paid_day, method, SORT_ARRAY(COLLECT_SET(method)) AS method_list, COUNT(amount) AS amount_count FROM payments WHERE order_id IN (12, 22, 34, 36) GROUP BY paid_day, method HAVING COUNT(amount) >= 4;

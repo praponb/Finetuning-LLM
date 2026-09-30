@@ -1,0 +1,1 @@
+SELECT id, job_title, hire_date, salary, SUM(salary) OVER (PARTITION BY job_title ORDER BY hire_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_salary FROM employees WHERE LENGTH(full_name) < 8 ORDER BY job_title DESC, id DESC;

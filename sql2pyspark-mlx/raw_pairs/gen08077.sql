@@ -1,0 +1,1 @@
+SELECT id, txn_type, txn_time, MAX(amount) OVER w_recent AS running_max_amount, SUM(amount) OVER w_recent AS running_sum_amount, MIN(amount) OVER w_recent AS running_min_amount, AVG(amount) OVER w_recent AS running_avg_amount FROM transactions WINDOW w_recent AS (PARTITION BY txn_type, account_id ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)

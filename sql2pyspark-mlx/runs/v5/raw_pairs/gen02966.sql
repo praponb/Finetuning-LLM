@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, account_id, txn_type, txn_time, merchant, is_flagged, LOWER(merchant) AS merchant_lower FROM transactions WHERE txn_time > TIMESTAMP '2023-04-28 09:00:00') SELECT id, merchant FROM base EXCEPT ALL SELECT id, merchant FROM transactions WHERE account_id IN (21, 26)

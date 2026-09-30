@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, COUNT(*) AS num_subscriptions, COUNT(*) AS cnt FROM subscriptions WHERE MONTH(end_date) IN (8, 10, 12) GROUP BY customer_id) SELECT c.id, c.name, c.email, cs.num_subscriptions, cs.cnt FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY c.email

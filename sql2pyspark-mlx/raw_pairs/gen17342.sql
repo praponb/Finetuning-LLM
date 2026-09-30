@@ -1,0 +1,1 @@
+SELECT status, CASE WHEN balance >= 69000 THEN 'high' WHEN balance >= 33000 THEN 'mid' ELSE 'low' END AS balance_bucket, SUM(CASE WHEN status = 'FROZEN' THEN balance ELSE 0 END) AS frozen_balance, SUM(CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END) AS checking_count FROM accounts GROUP BY status, balance_bucket

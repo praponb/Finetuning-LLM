@@ -1,0 +1,1 @@
+SELECT merchant, txn_type, MIN(txn_time) AS first_txn_time FROM transactions WHERE amount BETWEEN 1700 AND 2100 AND txn_time < '2024-03-03' AND HOUR(txn_time) BETWEEN 6 AND 13 GROUP BY merchant, txn_type HAVING SUM(CASE WHEN merchant = 'Shell' THEN amount ELSE 0 END) < 70

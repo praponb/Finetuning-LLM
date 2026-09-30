@@ -1,0 +1,1 @@
+SELECT store_id, ROUND(AVG(discount), 2) avg_discount, ROUND((100 * SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_completed FROM orders WHERE status = 'SHIPPED' GROUP BY 1 HAVING MIN(shipping_fee) >= 22 ORDER BY store_id DESC;

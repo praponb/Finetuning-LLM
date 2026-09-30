@@ -1,0 +1,1 @@
+with recent_transactions as (select * from transactions where is_flagged = true and txn_time < '2023-12-01'), merchant_summary as (select merchant, max(amount) as max_amount from recent_transactions group by merchant) select * from merchant_summary order by max_amount;

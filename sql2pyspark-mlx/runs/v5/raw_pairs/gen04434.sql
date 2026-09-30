@@ -1,0 +1,1 @@
+select ss.id, ss.revenue, s.region, s.sqft, p.brand from store_sales ss join stores s on ss.store_id = s.id join products p on p.id = ss.product_id where month(s.opened_date) in (5, 10, 12) and ss.sale_date > '2025-08-11'

@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, customer_id, store_id, order_date, status, discount, shipping_fee, UPPER(channel) AS channel_upper, COALESCE(channel, 'UNKNOWN') AS channel_filled FROM orders WHERE store_id IS NOT NULL) SELECT * FROM (SELECT customer_id, status, shipping_fee FROM base) src PIVOT (MAX(shipping_fee) FOR status IN ('PENDING', 'COMPLETED'));

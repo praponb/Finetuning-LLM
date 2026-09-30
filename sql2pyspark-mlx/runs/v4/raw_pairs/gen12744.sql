@@ -1,0 +1,1 @@
+select status, in_transit_count, pct_returned from (select status, sum(case when status = 'IN_TRANSIT' then 1 else 0 end) as in_transit_count, round((100 * sum(case when status = 'RETURNED' then 1 else 0 end)) / count(*), 1) as pct_returned from shipments group by status) as sub where in_transit_count < 28

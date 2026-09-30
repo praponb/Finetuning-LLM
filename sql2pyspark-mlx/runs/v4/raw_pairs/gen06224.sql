@@ -1,0 +1,1 @@
+SELECT id, rating, country, LEAD(rating, 1) OVER (ORDER BY rating, id) AS next_rating, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating, id) AS rating_row FROM suppliers WHERE LENGTH(supplier_name) > 13

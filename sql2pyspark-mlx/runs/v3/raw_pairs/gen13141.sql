@@ -1,0 +1,1 @@
+SELECT we.id, we.event_time, we.page, s.started_at, s.customer_id, c.email, c.city FROM web_events we INNER JOIN sessions s ON we.session_id = s.id RIGHT OUTER JOIN customers c ON s.customer_id = c.id ORDER BY s.customer_id, 6

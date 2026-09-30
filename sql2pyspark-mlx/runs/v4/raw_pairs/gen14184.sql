@@ -1,0 +1,1 @@
+SELECT o.status, YEAR(o.order_date) AS order_year, SUM(CASE WHEN p.status = 'FAILED' THEN p.amount ELSE 0 END) AS failed_amount FROM payments p INNER JOIN orders o ON p.order_id = o.id WHERE p.order_id IS NULL GROUP BY o.status, YEAR(o.order_date)

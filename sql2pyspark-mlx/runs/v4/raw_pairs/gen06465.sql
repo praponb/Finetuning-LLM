@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country, city ORDER BY signup_date DESC NULLS FIRST, id ASC) AS row_num FROM customers QUALIFY row_num = 1) SELECT id, email, country, signup_date, is_active, credit_limit, age, row_num, CASE WHEN country RLIKE '^(TH|DE)$' THEN 'PRIORITY' ELSE 'CORE' END AS country_zone FROM ranked ORDER BY country DESC NULLS FIRST;

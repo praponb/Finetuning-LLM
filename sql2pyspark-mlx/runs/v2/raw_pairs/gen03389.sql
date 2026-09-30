@@ -1,0 +1,1 @@
+select id, order_id, quantity, sum(quantity) over (partition by order_id order by quantity, id) as running_quantity, round(quantity / sum(quantity) over (partition by order_id), 3) as quantity_share from order_items;

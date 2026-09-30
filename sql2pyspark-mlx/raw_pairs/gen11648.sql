@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, SUM(CASE WHEN brand = 'Initech' THEN cost ELSE 0 END) AS initech_cost FROM products GROUP BY supplier_id) SELECT s.supplier_name, s.rating, pbs.initech_cost FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY rating DESC, pbs.initech_cost DESC

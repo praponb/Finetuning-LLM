@@ -1,0 +1,1 @@
+WITH ValidStores AS (SELECT * FROM stores WHERE opened_date >= '2024-03-01'), opened_year_summary AS (SELECT YEAR(opened_date) AS opened_year, SUM(CASE WHEN city = 'Bangkok' THEN sqft ELSE 0 END) AS bangkok_sqft FROM ValidStores GROUP BY YEAR(opened_date)) SELECT opened_year, bangkok_sqft FROM opened_year_summary ORDER BY opened_year ASC

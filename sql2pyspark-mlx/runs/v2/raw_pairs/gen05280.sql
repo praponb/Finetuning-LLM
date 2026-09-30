@@ -1,0 +1,1 @@
+SELECT event_type, page, SUM(CASE WHEN event_type = 'add_to_cart' THEN duration_sec ELSE 0 END) AS add_to_cart_duration_sec, COUNT(duration_sec) AS duration_sec_count FROM web_events GROUP BY event_type, page HAVING SUM(CASE WHEN event_type = 'add_to_cart' THEN duration_sec ELSE 0 END) > 56 ORDER BY 2;

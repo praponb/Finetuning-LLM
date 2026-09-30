@@ -1,0 +1,1 @@
+SELECT s.id, s.region, t.web_count FROM stores s JOIN (SELECT store_id, COUNT(CASE WHEN channel = 'web' THEN 1 END) web_count FROM orders GROUP BY store_id) t ON s.id = t.store_id WHERE t.web_count > 6;

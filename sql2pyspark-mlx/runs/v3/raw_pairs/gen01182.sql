@@ -1,0 +1,1 @@
+SELECT c.city, ROUND((100 * SUM(CASE WHEN o.status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cancelled FROM orders o INNER JOIN stores s ON o.store_id = s.id LEFT JOIN customers c ON o.customer_id = c.id GROUP BY c.city ORDER BY c.city, pct_cancelled LIMIT 1

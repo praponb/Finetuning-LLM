@@ -1,0 +1,1 @@
+select orders.id, orders.customer_id, stores.region, customers.email, customers.segment, initcap(trim(customers.segment)) as segment_title from orders join stores on orders.store_id = stores.id join customers on orders.customer_id = customers.id where customers.city <> 'Berlin'

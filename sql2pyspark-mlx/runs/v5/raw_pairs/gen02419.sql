@@ -1,0 +1,1 @@
+SELECT id, last_restock, DATEDIFF(CURRENT_DATE(), last_restock) AS days_since_last_restock, COALESCE(quantity, 0) AS quantity_filled FROM inventory WHERE store_id IN (3, 5) AND (store_id IN (2, 5) OR last_restock BETWEEN '2023-03-16' AND '2024-12-01');

@@ -1,0 +1,1 @@
+select s.id, s.browser, count(we.id) as web_event_count, min(we.duration_sec) as min_duration_sec from sessions s left join web_events we on we.session_id = s.id where to_date(s.started_at) < '2023-09-01' group by s.id, s.browser

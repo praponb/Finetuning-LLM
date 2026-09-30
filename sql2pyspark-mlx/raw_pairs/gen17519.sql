@@ -1,0 +1,1 @@
+SELECT s.id, s.device, s.country, s.browser FROM sessions s WHERE s.country IN ('US', 'TH', 'JP') AND EXISTS (SELECT 1 FROM web_events we WHERE we.session_id = s.id AND we.session_id IN (23, 40)) ORDER BY s.device DESC;

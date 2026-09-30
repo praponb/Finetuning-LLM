@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.sale_date, store_sales.store_id, products.stock_qty, products.price, suppliers.country FROM store_sales JOIN products ON products.id = store_sales.product_id RIGHT JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.supplier_id = 22;

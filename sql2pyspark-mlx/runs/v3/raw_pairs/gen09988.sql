@@ -1,0 +1,1 @@
+select o.id, o.shipping_fee, o.customer_id, s.store_name, s.opened_date, s.city from orders o left outer join stores s on o.store_id = s.id where s.region not in ('Central', 'West', 'East') order by shipping_fee

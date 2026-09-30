@@ -1,0 +1,1 @@
+select departments.id, departments.dept_name, departments.location, departments.budget from departments where exists (select 1 from employees where employees.dept_id = departments.id and employees.hire_date <= '2024-06-01');

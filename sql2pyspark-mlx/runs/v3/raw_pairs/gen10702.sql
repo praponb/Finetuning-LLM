@@ -1,0 +1,5 @@
+SELECT id, age
+FROM customers
+WHERE country = 'TH' OR UPPER(TRIM(email)) = 'EMMA@OUTLOOK.COM'
+ORDER BY 1 DESC
+LIMIT 5;

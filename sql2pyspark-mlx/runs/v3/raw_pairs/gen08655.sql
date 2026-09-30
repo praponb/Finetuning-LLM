@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, account_type, ROUND(AVG(balance), 2) AS avg_balance FROM accounts GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM'), account_type HAVING avg_balance < 20

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('YEAR', started_at) AS year_start, DATE_TRUNC('WEEK', started_at) AS week_start, SORT_ARRAY(COLLECT_SET(country)) AS country_list, COUNT(*) FILTER (WHERE browser = 'Firefox') AS firefox_rows, MIN(started_at) AS first_started_at, COUNT_IF(device = 'desktop') AS desktop_events FROM sessions GROUP BY DATE_TRUNC('YEAR', started_at), DATE_TRUNC('WEEK', started_at)

@@ -1,0 +1,1 @@
+SELECT QUARTER(c.signup_date) AS signup_quarter, SORT_ARRAY(COLLECT_SET(s.device)) AS device_list FROM sessions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY QUARTER(c.signup_date) ORDER BY signup_quarter

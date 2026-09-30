@@ -1,0 +1,1 @@
+with cleaned as (select *, concat_ws('/', status, plan) as status_plan_key from subscriptions where plan != 'enterprise' and customer_id is not null) select id from cleaned except select id from subscriptions where end_date < '2024-03-01'

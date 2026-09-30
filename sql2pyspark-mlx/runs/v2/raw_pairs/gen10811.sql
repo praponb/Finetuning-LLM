@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, COUNT(units) AS units_count FROM store_sales WHERE product_id IN (2, 3, 4, 7) GROUP BY product_id) SELECT p.id, p.supplier_id, ps.units_count FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id WHERE ps.units_count > 4;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, store_id, quantity, last_restock, CASE WHEN quantity >= 240 THEN 'High' WHEN quantity >= 50 THEN 'Medium' ELSE 'Low' END AS quantity_tier, CAST(quantity AS DOUBLE) AS quantity_num FROM inventory WHERE last_restock >= DATE '2023-05-20') SELECT id, store_id FROM filtered EXCEPT SELECT id, store_id FROM inventory WHERE YEAR(last_restock) >= 2023

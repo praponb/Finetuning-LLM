@@ -1,0 +1,1 @@
+select order_id, min(cost) as min_cost from shipments where not (shipped_date <= '2024-10-01' and delivered_date between '2023-03-01' and '2024-02-16' and carrier in ('Kerry', 'FedEx', 'Flash')) group by 1 order by min_cost desc

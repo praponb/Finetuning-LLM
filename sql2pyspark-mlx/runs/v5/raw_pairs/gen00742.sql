@@ -1,0 +1,1 @@
+SELECT order_id, unit_price, product_id, CASE WHEN unit_price >= 390 THEN 'High' WHEN unit_price >= 70 THEN 'Medium' ELSE 'Low' END unit_price_level FROM order_items WHERE quantity IS NULL AND product_id IS NOT NULL

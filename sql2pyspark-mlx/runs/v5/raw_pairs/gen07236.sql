@@ -1,0 +1,1 @@
+select case when budget >= 3180000 then 'high' when budget >= 1648000 then 'mid' else 'low' end as budget_bucket, location, concat_ws(', ', sort_array(collect_set(dept_name))) as dept_name_values, max(budget) - min(budget) as budget_range, count(*) as row_count from departments group by budget_bucket, location having max(budget) - min(budget) >= 73;

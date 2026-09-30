@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, s.country, s.rating, latest.stock_qty FROM suppliers s LEFT JOIN LATERAL (SELECT c.stock_qty FROM products c WHERE c.supplier_id = s.id ORDER BY c.price DESC, c.id DESC LIMIT 1) latest ON TRUE;

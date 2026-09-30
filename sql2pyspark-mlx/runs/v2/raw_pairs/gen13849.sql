@@ -1,0 +1,1 @@
+WITH ranked_shipments AS (SELECT id, carrier, cost, order_id, RANK() OVER (PARTITION BY carrier ORDER BY cost DESC) AS rnk FROM shipments) SELECT id, carrier, cost, order_id FROM ranked_shipments WHERE rnk <= 3 ORDER BY id DESC;

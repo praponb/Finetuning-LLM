@@ -1,0 +1,1 @@
+SELECT dept_name, SUM(CASE WHEN dept_name = 'Finance' THEN 1 ELSE 0 END) AS finance_count, ROUND((100 * SUM(CASE WHEN dept_name = 'Marketing' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_marketing FROM departments GROUP BY dept_name ORDER BY pct_marketing DESC, finance_count DESC, dept_name LIMIT 5;

@@ -1,0 +1,1 @@
+with filtered as (select *, month(ends_on) as ends_on_month, coalesce(channel, 'UNKNOWN') as channel_clean from promotions where starts_on >= date '2024-02-05') select *, max(ends_on_month) over (partition by promo_code) as promo_code_max_ends_on_month, lead(discount_pct, 1, 0) over (order by discount_pct, id) as next_discount_pct from filtered;

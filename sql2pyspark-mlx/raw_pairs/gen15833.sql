@@ -1,0 +1,1 @@
+WITH recent_stores AS (SELECT * FROM stores WHERE sqft <= 9498 AND (sqft BETWEEN 12121 AND 15737 OR sqft < 5054)), StoresStats AS (SELECT region, SUM(sqft) AS total_sqft FROM recent_stores GROUP BY region) SELECT region, total_sqft FROM StoresStats WHERE total_sqft >= 51000;

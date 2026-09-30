@@ -1,0 +1,1 @@
+select *, row_number() over (partition by browser order by started_at, id) as seq_no, first_value(country, true) over (partition by country order by started_at, id rows between unbounded preceding and current row) as first_known_country, row_number() over (partition by device, customer_id order by started_at, id) as event_seq from sessions where started_at < '2025-07-01'

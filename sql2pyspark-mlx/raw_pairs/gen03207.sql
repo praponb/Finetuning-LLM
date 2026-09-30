@@ -1,0 +1,1 @@
+SELECT started_at, customer_id, TRIM(country) AS clean_country FROM sessions WHERE NOT (device IN ('tablet', 'mobile') AND device NOT IN ('tablet', 'desktop') AND customer_id IN (2, 14)) ORDER BY started_at;

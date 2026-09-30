@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, COUNT(*) AS num_products, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values, SUM(cost) AS total_cost FROM products WHERE cost > 330 AND category = 'Sports' GROUP BY DATE_FORMAT(launch_date, 'yyyy-MM')

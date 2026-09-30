@@ -1,0 +1,1 @@
+SELECT o.id, o.shipping_fee, c.country, s.city FROM orders o LEFT JOIN customers c ON o.customer_id = c.id LEFT JOIN stores s ON o.store_id = s.id WHERE MONTH(o.order_date) IN (5, 7, 12) OR c.city IN ('Tokyo', 'Chiang Mai') ORDER BY id LIMIT 50

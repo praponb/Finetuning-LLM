@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, LAST_DAY(order_date) AS order_date_month_end FROM orders WHERE store_id = 2), orders_stats AS (SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM src GROUP BY status) SELECT status, channel_values, status_list FROM orders_stats ORDER BY channel_values;

@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY amount DESC NULLS LAST, id) AS row_num FROM payments) ranked WHERE row_num = 1) SELECT id, method, paid_at FROM deduped ORDER BY id DESC NULLS FIRST

@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, COUNT(*) AS employee_count, MAX(salary) - MIN(salary) AS salary_range FROM employees GROUP BY dept_id) SELECT departments.id, departments.location, department_totals.employee_count, department_totals.salary_range FROM departments INNER JOIN department_totals ON departments.id = department_totals.dept_id

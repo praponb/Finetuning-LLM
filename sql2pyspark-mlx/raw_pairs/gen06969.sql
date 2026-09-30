@@ -1,0 +1,1 @@
+SELECT CASE WHEN d.location IN ('Tokyo', 'London') THEN 'tier_1' ELSE 'other' END AS location_group, COUNT(CASE WHEN e.level = 'L2' THEN 1 END) AS l2_count FROM employees e JOIN departments d ON e.dept_id = d.id WHERE UPPER(TRIM(e.full_name)) = 'OLIVIA GARCIA' GROUP BY CASE WHEN d.location IN ('Tokyo', 'London') THEN 'tier_1' ELSE 'other' END;

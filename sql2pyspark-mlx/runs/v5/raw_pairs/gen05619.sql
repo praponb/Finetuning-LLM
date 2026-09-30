@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(launch_date) launch_month, MAX(launch_date) latest_launch_date, SUM(CASE WHEN brand = 'Globex' THEN cost ELSE 0 END) globex_cost FROM products GROUP BY MONTH(launch_date)) s WHERE globex_cost > 70 ORDER BY globex_cost DESC, launch_month LIMIT 1;

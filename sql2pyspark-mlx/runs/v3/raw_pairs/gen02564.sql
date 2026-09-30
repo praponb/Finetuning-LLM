@@ -1,0 +1,1 @@
+WITH StoreStats AS (SELECT store_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values, MAX(order_date) AS last_order_date FROM orders WHERE shipping_fee >= 38 GROUP BY store_id) SELECT stores.id, stores.opened_date, stores.sqft, StoreStats.channel_values, StoreStats.last_order_date FROM stores JOIN StoreStats ON stores.id = StoreStats.store_id

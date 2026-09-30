@@ -1,0 +1,1 @@
+SELECT customer_id, plan, COUNT(monthly_fee) AS monthly_fee_count, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE (start_date <= '2025-07-03' AND monthly_fee > 160) OR monthly_fee <= 90 GROUP BY customer_id, plan;

@@ -1,0 +1,1 @@
+SELECT o.status, SUM(oi.unit_price * oi.quantity) AS revenue, MAX(oi.quantity) AS max_quantity FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id INNER JOIN products p ON p.id = oi.product_id GROUP BY o.status ORDER BY max_quantity;

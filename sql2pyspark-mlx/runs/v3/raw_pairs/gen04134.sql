@@ -1,0 +1,1 @@
+SELECT we.id, we.duration_sec, we.event_time, s.customer_id, c.age FROM web_events we RIGHT JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id WHERE we.duration_sec < 256 AND c.email IS NOT NULL ORDER BY we.id DESC;

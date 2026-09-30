@@ -1,0 +1,1 @@
+SELECT CASE WHEN discount_pct >= 0.35 THEN 'PREMIUM' ELSE 'STANDARD' END AS discount_pct_tier, DATE_TRUNC('YEAR', ends_on) AS year_start, SIZE(COLLECT_SET(channel)) AS num_channels, MAX(discount_pct) FILTER (WHERE promo_code = 'VIP') AS vip_max_discount_pct, COUNT(*) FILTER (WHERE promo_code = 'BUNDLE') AS bundle_rows FROM promotions GROUP BY 1, 2

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, ADD_MONTHS(last_restock, 12) AS last_restock_plus_months FROM inventory WHERE store_id IN (2, 3, 4)) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock DESC, id) AS dedup_rank FROM valid) ranked WHERE dedup_rank = 1;

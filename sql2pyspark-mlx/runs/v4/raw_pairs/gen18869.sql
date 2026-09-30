@@ -1,0 +1,1 @@
+select case when amount >= 4300 then 'high' when amount >= 1000 then 'mid' else 'low' end as amount_bucket, sum(amount) as total_amount, round(sum(amount) * 100.0 / sum(sum(amount)) over (), 2) as pct_of_total from transactions where is_flagged group by case when amount >= 4300 then 'high' when amount >= 1000 then 'mid' else 'low' end;

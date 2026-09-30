@@ -1,0 +1,1 @@
+select id, location, budget, dept_name from (select id, location, budget, dept_name, row_number() over (partition by location order by budget desc, id) as rnk from departments) as ranked where rnk <= 2 order by budget desc, dept_name

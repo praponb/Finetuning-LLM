@@ -1,0 +1,1 @@
+SELECT id, event_time, duration_sec, ROUND(AVG(duration_sec) OVER (ORDER BY event_time, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) duration_sec_moving_avg_7 FROM web_events ORDER BY duration_sec, event_time DESC

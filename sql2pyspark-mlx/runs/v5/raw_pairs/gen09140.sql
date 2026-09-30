@@ -1,0 +1,1 @@
+SELECT order_items.quantity, order_items.unit_price, products.cost, products.category, orders.order_date FROM order_items LEFT JOIN products ON order_items.product_id = products.id INNER JOIN orders ON order_items.order_id = orders.id

@@ -1,0 +1,1 @@
+SELECT d.channel, src.method, COUNT(*) AS num_rows, MAX(src.amount) AS max_amount, GROUPING_ID() AS gid FROM payments src JOIN orders d ON src.order_id = d.id GROUP BY ROLLUP (d.channel, src.method) ORDER BY channel NULLS FIRST

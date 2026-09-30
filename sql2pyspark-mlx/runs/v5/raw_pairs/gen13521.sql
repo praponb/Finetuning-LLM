@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, INITCAP(TRIM(country)) AS country_title FROM suppliers WHERE city IN ('Bangkok', 'Tokyo', 'New York')) SELECT *, RANK() OVER (PARTITION BY city ORDER BY rating) AS dedup_rank FROM valid QUALIFY dedup_rank = 1;

@@ -1,0 +1,1 @@
+select id, account_id, merchant, sum(amount) over (partition by txn_type order by amount, id rows between unbounded preceding and current row) as running_amount, sum(amount) over w_recent as amount_sum_30d from transactions window w_recent as (partition by merchant order by cast(txn_time as bigint) range between 2592000 preceding and current row);

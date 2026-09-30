@@ -1,0 +1,1 @@
+SELECT i.last_restock, i.product_id, s.store_name, s.opened_date, p.stock_qty, p.product_name, DATEDIFF(CURRENT_DATE(), s.opened_date) AS days_since_opened_date FROM inventory i INNER JOIN stores s ON i.store_id = s.id LEFT JOIN products p ON i.product_id = p.id WHERE p.price >= 430;

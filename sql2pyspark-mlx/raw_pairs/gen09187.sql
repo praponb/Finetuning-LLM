@@ -1,0 +1,1 @@
+SELECT id, event_time, event_type, duration_sec, ROUND(AVG(duration_sec) OVER (PARTITION BY TO_DATE(event_time), event_type ORDER BY event_time, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS duration_sec_moving_avg_7 FROM web_events

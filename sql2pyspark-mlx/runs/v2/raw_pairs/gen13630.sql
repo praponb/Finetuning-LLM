@@ -1,0 +1,1 @@
+SELECT store_sales.store_id, store_sales.product_id, products.stock_qty, products.category, stores.store_name, stores.region FROM store_sales JOIN products ON products.id = store_sales.product_id JOIN stores ON store_sales.store_id = stores.id WHERE store_sales.store_id = 4;

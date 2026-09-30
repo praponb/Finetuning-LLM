@@ -1,0 +1,1 @@
+SELECT e.id, e.hire_date AS employee_hire_date, e.job_title AS employee_job_title, m.hire_date AS manager_hire_date, m.job_title AS manager_job_title, CASE WHEN e.job_title = 'Analyst' THEN 1 ELSE 0 END AS is_analyst FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.manager_id = 22 ORDER BY id DESC

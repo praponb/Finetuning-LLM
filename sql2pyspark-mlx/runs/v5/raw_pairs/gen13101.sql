@@ -1,0 +1,1 @@
+WITH top_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY balance, id) AS row_num FROM accounts) SELECT id, status, balance FROM top_accounts WHERE row_num = 1 ORDER BY status, id;

@@ -1,0 +1,1 @@
+SELECT id, carrier, delivered_date, DATEDIFF(CURRENT_DATE(), delivered_date) / 30 AS months_since_delivered_date FROM shipments WHERE MONTH(shipped_date) IN (3, 5, 9) AND order_id = 7 ORDER BY delivered_date DESC;

@@ -1,0 +1,1 @@
+SELECT id, unit_price, quantity, CASE WHEN quantity >= 8 THEN 'High' WHEN quantity >= 2 THEN 'Medium' ELSE 'Low' END AS quantity_level, ROUND(unit_price * 1.1, 2) AS unit_price_adjusted FROM order_items WHERE unit_price < 230 AND product_id IS NOT NULL;

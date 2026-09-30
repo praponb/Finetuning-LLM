@@ -1,0 +1,1 @@
+SELECT CASE WHEN carrier IN ('UPS', 'Kerry') THEN 'tier_1' ELSE 'other' END AS carrier_group, DATE_FORMAT(shipped_date, 'yyyy-MM') AS shipped_month, ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_returned FROM shipments WHERE cost IS NOT NULL AND order_id IS NOT NULL AND cost BETWEEN 36 AND 82 GROUP BY 1, 2 ORDER BY pct_returned DESC;

@@ -1,0 +1,1 @@
+SELECT customer_id, account_type, stddev_balance FROM (SELECT customer_id, account_type, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts WHERE customer_id = 32 GROUP BY customer_id, account_type) AS s WHERE stddev_balance < 70

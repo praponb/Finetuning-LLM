@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM subscriptions WHERE NOT (YEAR(end_date) >= 2025 AND (customer_id IN (1, 12) OR YEAR(start_date) = 2025))), summary AS (SELECT customer_id, COUNT(*) AS cnt, ROUND((100 * SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_premium FROM src GROUP BY customer_id) SELECT customer_id, cnt, pct_premium FROM summary;

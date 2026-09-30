@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, SUM(CASE WHEN merchant = 'Lazada' THEN 1 ELSE 0 END) AS lazada_count, MIN(txn_time) AS first_txn_time FROM transactions GROUP BY account_id) SELECT a.status, at.lazada_count, at.first_txn_time FROM accounts a LEFT OUTER JOIN account_totals at ON a.id = at.account_id ORDER BY first_txn_time, status;

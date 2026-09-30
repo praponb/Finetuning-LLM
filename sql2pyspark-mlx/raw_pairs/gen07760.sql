@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, order_id, quantity, unit_price, COALESCE(quantity, 0) AS quantity_filled FROM order_items WHERE unit_price > 130) SELECT * FROM cleaned QUALIFY RANK() OVER (PARTITION BY order_id ORDER BY quantity_filled DESC) = 1

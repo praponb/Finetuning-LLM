@@ -1,0 +1,1 @@
+WITH top_subscriptions AS (SELECT id, status, end_date, start_date, DENSE_RANK() OVER (PARTITION BY status ORDER BY end_date) AS row_num FROM subscriptions WHERE status IN ('CANCELLED', 'PAUSED')) SELECT id, status, end_date, start_date FROM top_subscriptions WHERE row_num <= 2 ORDER BY end_date

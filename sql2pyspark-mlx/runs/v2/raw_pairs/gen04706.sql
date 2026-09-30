@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 390 THEN 'high' WHEN unit_price >= 180 THEN 'mid' ELSE 'low' END AS unit_price_bucket, SUM(unit_price * quantity) AS revenue FROM order_items GROUP BY CASE WHEN unit_price >= 390 THEN 'high' WHEN unit_price >= 180 THEN 'mid' ELSE 'low' END

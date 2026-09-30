@@ -1,0 +1,1 @@
+SELECT city, CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values FROM suppliers GROUP BY 1, 2 ORDER BY rating_bucket, country_values DESC;

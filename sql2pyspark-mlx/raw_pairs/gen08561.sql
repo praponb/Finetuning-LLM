@@ -1,0 +1,1 @@
+SELECT suppliers.supplier_name, suppliers.city, suppliers.country, products.stock_qty FROM suppliers LEFT JOIN products ON suppliers.id = products.supplier_id WHERE suppliers.city IN ('New York', 'Bangkok', 'London') ORDER BY suppliers.city DESC

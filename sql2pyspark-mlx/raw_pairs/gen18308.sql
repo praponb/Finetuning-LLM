@@ -1,0 +1,1 @@
+WITH valid_customers AS (SELECT *, DATE_SUB(signup_date, 75) AS signup_date_minus_75d FROM customers WHERE signup_date < '2023-06-27' AND signup_date < '2023-08-01'), summary AS (SELECT country, COUNT(DISTINCT age) AS unique_countrys FROM valid_customers GROUP BY country) SELECT * FROM summary ORDER BY country DESC

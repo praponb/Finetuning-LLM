@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_month, carrier, SUM(CASE WHEN carrier = 'UPS' THEN 1 ELSE 0 END) AS ups_count FROM shipments GROUP BY DATE_FORMAT(delivered_date, 'yyyy-MM'), carrier ORDER BY delivered_month, carrier LIMIT 5

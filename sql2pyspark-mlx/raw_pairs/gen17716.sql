@@ -1,0 +1,1 @@
+with ranked_accounts as (select *, rank() over (partition by account_type order by opened_date desc) rnk from accounts) select id, account_type, opened_date from ranked_accounts where rnk = 1 order by id;

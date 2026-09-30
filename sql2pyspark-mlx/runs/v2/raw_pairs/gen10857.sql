@@ -1,0 +1,1 @@
+select a.id, a.account_type, t.starbucks_count from accounts a inner join (select account_id, sum(case when merchant = 'Starbucks' then 1 else 0 end) starbucks_count from transactions where amount is not null group by account_id) t on a.id = t.account_id where t.starbucks_count >= 52 order by t.starbucks_count, id limit 5;

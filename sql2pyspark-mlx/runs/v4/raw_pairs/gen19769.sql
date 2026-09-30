@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.started_at, 'yyyy-MM') AS started_month, COUNT(CASE WHEN we.event_type = 'purchase' THEN 1 END) AS purchase_count FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id JOIN customers c ON c.id = s.customer_id GROUP BY DATE_FORMAT(s.started_at, 'yyyy-MM')

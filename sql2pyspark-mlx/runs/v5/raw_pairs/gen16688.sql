@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, COUNT(DISTINCT units) AS unique_products FROM store_sales WHERE revenue > 1800 GROUP BY product_id) SELECT p.id, p.category, ps.unique_products FROM products p LEFT OUTER JOIN product_stats ps ON p.id = ps.product_id WHERE ps.unique_products >= 9 ORDER BY id DESC;

@@ -1,0 +1,1 @@
+SELECT event_type, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE event_type NOT IN ('page_view', 'add_to_cart') GROUP BY event_type HAVING MIN(duration_sec) >= 270 ORDER BY min_duration_sec DESC, event_type

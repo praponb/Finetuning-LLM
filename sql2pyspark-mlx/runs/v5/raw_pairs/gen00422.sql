@@ -1,0 +1,1 @@
+SELECT id, product_id, units, store_id, sale_date, revenue, SUM(units) OVER (PARTITION BY product_id) AS product_id_sum_units, LAG(revenue, 1, 0) OVER (PARTITION BY store_id, product_id ORDER BY sale_date, id) AS prev_revenue FROM store_sales ORDER BY sale_date;

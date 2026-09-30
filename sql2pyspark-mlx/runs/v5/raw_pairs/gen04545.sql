@@ -1,0 +1,1 @@
+SELECT i.quantity, ss.sale_date, ss.units, ss.revenue FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.sale_date <= '2023-06-16' OR i.product_id IN (2, 4, 9, 10)

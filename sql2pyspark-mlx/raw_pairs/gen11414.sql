@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, REGEXP_REPLACE(full_name, ' ', '-') AS full_name_slug, UPPER(full_name) AS full_name_upper, COALESCE(level, 'UNKNOWN') AS resolved_level FROM employees WHERE is_remote = TRUE) SELECT job_title, id FROM base INTERSECT SELECT job_title, id FROM employees WHERE level IN ('L4', 'L3', 'L2');

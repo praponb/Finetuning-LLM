@@ -1,0 +1,1 @@
+SELECT p.stock_qty, t.unique_orders FROM products p INNER JOIN (SELECT product_id, COUNT(DISTINCT quantity) AS unique_orders FROM order_items WHERE product_id = 16 GROUP BY product_id) t ON p.id = t.product_id WHERE t.unique_orders >= 8

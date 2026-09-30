@@ -1,0 +1,1 @@
+SELECT id, order_id, status, TRIM(method) AS clean_method, CASE WHEN amount >= 1460 THEN 'High' WHEN amount >= 450 THEN 'Medium' ELSE 'Low' END AS amount_tier FROM payments WHERE status NOT IN ('REFUNDED', 'SUCCESS', 'FAILED') AND order_id IS NOT NULL ORDER BY order_id DESC;

@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, SUM(CASE WHEN category = 'Home' THEN 1 ELSE 0 END) AS home_count FROM products WHERE LOWER(TRIM(product_name)) = 'yoga mat' GROUP BY supplier_id) SELECT s.supplier_name, s.rating, ss.home_count FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id WHERE ss.home_count > 78

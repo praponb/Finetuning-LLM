@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.units, store_sales.revenue, products.supplier_id, products.category, suppliers.country FROM store_sales INNER JOIN products ON store_sales.product_id = products.id INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE store_sales.sale_date > '2024-03-16'

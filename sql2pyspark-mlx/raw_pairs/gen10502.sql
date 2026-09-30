@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, SUM(CASE WHEN category = 'Books' THEN cost ELSE 0 END) AS books_cost FROM products WHERE cost BETWEEN 330 AND 630 GROUP BY supplier_id) SELECT s.id, s.country, pbs.books_cost FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id WHERE pbs.books_cost > 75 ORDER BY id DESC;

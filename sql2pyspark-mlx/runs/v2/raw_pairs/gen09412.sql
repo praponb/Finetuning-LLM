@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, MAX(txn_time) AS last_txn_time, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions GROUP BY account_id) SELECT a.account_type, at.last_txn_time, at.txn_type_list FROM accounts a JOIN account_totals at ON a.id = at.account_id ORDER BY last_txn_time;

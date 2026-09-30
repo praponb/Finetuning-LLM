@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, MAX(quantity) - MIN(quantity) AS quantity_range, SUM(quantity) AS total_quantity FROM inventory GROUP BY 1 HAVING total_quantity > 910 ORDER BY last_restock_month LIMIT 1

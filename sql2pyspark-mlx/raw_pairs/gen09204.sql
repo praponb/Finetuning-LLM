@@ -1,0 +1,1 @@
+SELECT segment, city_values, avg_age FROM (SELECT segment, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) city_values, ROUND(AVG(age), 2) avg_age FROM customers GROUP BY segment) s WHERE avg_age > 57 ORDER BY avg_age DESC, segment;

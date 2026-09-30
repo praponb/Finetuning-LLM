@@ -1,0 +1,1 @@
+SELECT orders.id, orders.shipping_fee, customers.age, stores.sqft, stores.store_name FROM orders INNER JOIN customers ON customers.id = orders.customer_id LEFT JOIN stores ON orders.store_id = stores.id WHERE customers.email LIKE '%@startup.io' AND customers.name LIKE '%Chen%';

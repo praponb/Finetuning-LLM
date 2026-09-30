@@ -1,0 +1,1 @@
+WITH Src AS (SELECT * FROM employees WHERE email LIKE '%@yahoo.com' AND salary BETWEEN 62000 AND 100000), summary AS (SELECT level, MAX(salary) AS max_salary FROM Src GROUP BY level) SELECT * FROM summary WHERE max_salary > 99000 ORDER BY max_salary DESC, level LIMIT 50

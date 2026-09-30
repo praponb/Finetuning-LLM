@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(txn_time, 'yyyy-MM') txn_month, merchant, SUM(CASE WHEN merchant = 'Grab' THEN amount ELSE 0 END) grab_amount, COUNT(DISTINCT amount) unique_txn_types FROM transactions GROUP BY DATE_FORMAT(txn_time, 'yyyy-MM'), merchant) agg WHERE unique_txn_types > 8 ORDER BY txn_month DESC

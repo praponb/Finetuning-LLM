@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, currency, EXPLODE(tier_prices) AS tier_value FROM price_tiers) SELECT id, tier_value, STDDEV_SAMP(tier_value) OVER (PARTITION BY currency, plan) AS currency_stddev_samp_tier_value, SUM(tier_value) OVER (PARTITION BY currency) AS currency_sum_tier_value FROM lines WHERE tier_value IS NOT NULL;

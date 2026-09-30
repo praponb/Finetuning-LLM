@@ -1,0 +1,1 @@
+WITH top_customers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY credit_limit DESC, id) AS row_num FROM customers WHERE credit_limit BETWEEN 4800 AND 9200) SELECT * FROM top_customers WHERE row_num <= 3 ORDER BY 3

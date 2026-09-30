@@ -1,0 +1,1 @@
+SELECT id, account_id, amount, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount, id) AS amount_row, RANK() OVER (ORDER BY amount DESC) AS amount_rank FROM transactions WHERE merchant != 'Amazon';

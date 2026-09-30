@@ -1,0 +1,1 @@
+SELECT plan, SUM(monthly_fee) AS total_monthly_fee, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions WHERE end_date < '2025-04-01' AND customer_id IS NULL GROUP BY plan HAVING MAX(monthly_fee) - MIN(monthly_fee) >= 23

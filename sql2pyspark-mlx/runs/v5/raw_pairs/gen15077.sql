@@ -1,0 +1,1 @@
+with ranked as (select * from store_sales qualify rank() over (partition by store_id order by units nulls first) = 1) select s.id, s.store_id, s.product_id, s.sale_date, s.revenue, (select sum(o2.quantity) from order_items o2 where o2.product_id = s.product_id) as sum_order_item_quantity from ranked s order by product_id desc nulls last;

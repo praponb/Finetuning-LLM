@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.opened_date, accounts.status, customers.city, customers.age, CONCAT_WS(',', customers.city, customers.name) city_name_key FROM accounts LEFT OUTER JOIN customers ON accounts.customer_id = customers.id WHERE LOWER(TRIM(customers.name)) = 'henry ford';

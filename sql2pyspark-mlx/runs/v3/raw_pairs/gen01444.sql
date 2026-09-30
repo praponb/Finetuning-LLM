@@ -1,0 +1,1 @@
+SELECT status, CASE WHEN cost >= 86 THEN 'high' WHEN cost >= 32 THEN 'mid' ELSE 'low' END AS cost_bucket, MAX(cost) AS max_cost, MAX(shipped_date) AS latest_shipped_date FROM shipments GROUP BY status, cost_bucket HAVING max_cost >= 36

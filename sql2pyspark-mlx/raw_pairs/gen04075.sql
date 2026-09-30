@@ -1,0 +1,1 @@
+SELECT departments.id, departments.dept_name, departments.location FROM departments WHERE departments.dept_name IN ('Sales', 'Engineering') AND NOT EXISTS (SELECT 1 FROM employees WHERE employees.dept_id = departments.id) ORDER BY id ASC LIMIT 10;

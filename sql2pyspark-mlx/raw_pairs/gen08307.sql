@@ -1,0 +1,1 @@
+WITH StoreSummary AS (SELECT store_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM orders GROUP BY store_id) SELECT s.id, s.store_name, S.channel_values FROM stores s INNER JOIN StoreSummary S ON s.id = S.store_id ORDER BY s.store_name DESC

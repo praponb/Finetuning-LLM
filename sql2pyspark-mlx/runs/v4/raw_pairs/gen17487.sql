@@ -1,0 +1,1 @@
+SELECT sqft FROM stores;

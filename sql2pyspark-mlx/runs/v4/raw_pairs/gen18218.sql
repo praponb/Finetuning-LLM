@@ -1,0 +1,1 @@
+SELECT page, duration_sec_bucket, cnt FROM (SELECT page, CASE WHEN duration_sec >= 380 THEN 'high' WHEN duration_sec >= 113 THEN 'mid' ELSE 'low' END duration_sec_bucket, COUNT(*) cnt FROM web_events WHERE TO_DATE(event_time) >= '2024-11-01' GROUP BY page, CASE WHEN duration_sec >= 380 THEN 'high' WHEN duration_sec >= 113 THEN 'mid' ELSE 'low' END) x WHERE cnt < 9

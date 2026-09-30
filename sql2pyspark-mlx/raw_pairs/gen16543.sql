@@ -1,0 +1,1 @@
+WITH ranked_order_items AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity, id) rn FROM order_items WHERE quantity >= 7) SELECT id, product_id, quantity FROM ranked_order_items WHERE rn <= 5 ORDER BY id DESC;

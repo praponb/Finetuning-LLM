@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.4 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END rating_bucket, COUNT(rating) rating_count, SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) sg_count, SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END) bangkok_count FROM suppliers WHERE city IN ('Chiang Mai', 'New York') GROUP BY 1 HAVING rating_count > 5

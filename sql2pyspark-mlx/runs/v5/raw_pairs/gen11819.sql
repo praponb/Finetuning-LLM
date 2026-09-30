@@ -1,0 +1,1 @@
+select s.id, s.delivered_date, o.customer_id, o.channel, o.store_id, initcap(trim(s.status)) as status_title from shipments s join orders o on s.order_id = o.id where s.delivered_date between '2024-12-01' and '2025-10-27' and o.amount is not null

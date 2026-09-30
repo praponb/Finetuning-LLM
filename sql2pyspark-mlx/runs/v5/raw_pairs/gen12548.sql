@@ -1,0 +1,1 @@
+WITH OrderItemsByOrder AS (SELECT order_id, COUNT(quantity) quantity_count, AVG(unit_price) avg_unit_price FROM order_items WHERE product_id IN (8, 32) GROUP BY order_id) SELECT o.id, o.store_id, O.quantity_count, O.avg_unit_price FROM orders o LEFT OUTER JOIN OrderItemsByOrder O ON o.id = O.order_id WHERE O.avg_unit_price >= 270 ORDER BY store_id DESC;

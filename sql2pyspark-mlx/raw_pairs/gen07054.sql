@@ -1,0 +1,1 @@
+select txn_type, case when merchant in ('Grab', '7-Eleven') then 'priority' else 'other' end as merchant_group, count(distinct amount) as unique_accounts from transactions group by 1, 2 having count(distinct amount) > 4 order by txn_type desc, unique_accounts, merchant_group limit 3;

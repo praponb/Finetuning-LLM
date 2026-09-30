@@ -1,0 +1,1 @@
+select emp.id, emp.hire_date employee_hire_date, mgr.is_remote manager_is_remote, mgr.level manager_level, mgr.full_name manager_full_name from employees emp left join employees mgr on emp.manager_id = mgr.id where emp.salary > 80000 order by id desc

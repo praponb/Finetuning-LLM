@@ -1,0 +1,1 @@
+SELECT d.location, AVG(e.salary) AS avg_salary, SUM(CASE WHEN e.level = 'L3' THEN 1 ELSE 0 END) AS l3_count FROM employees e JOIN departments d ON e.dept_id = d.id WHERE e.hire_date > '2023-05-01' GROUP BY d.location ORDER BY l3_count DESC

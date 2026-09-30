@@ -1,0 +1,1 @@
+select sessions.browser, concat_ws(', ', sort_array(collect_set(web_events.event_type))) as event_type_values from web_events left join sessions on web_events.session_id = sessions.id where sessions.customer_id in (9, 12, 27) group by sessions.browser order by 1 desc limit 10

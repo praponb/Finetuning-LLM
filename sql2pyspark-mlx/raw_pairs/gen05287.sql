@@ -1,0 +1,1 @@
+SELECT customer_id, COUNT(balance) AS balance_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM accounts WHERE status IN ('OPEN', 'CLOSED') GROUP BY customer_id HAVING AVG(balance) < 69000;

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') opened_month, MAX(o.discount) - MIN(o.discount) discount_range FROM orders o RIGHT OUTER JOIN stores s ON o.store_id = s.id WHERE s.sqft = 4760 GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM') HAVING discount_range > 44

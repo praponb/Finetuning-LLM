@@ -1,0 +1,1 @@
+SELECT *, SUBSTRING(location, 1, 3) AS location_prefix, CASE WHEN budget >= 3386000 THEN 'High' WHEN budget >= 1018000 THEN 'Medium' ELSE 'Low' END AS budget_level FROM departments WHERE location <> 'New York' OR budget > 4011000;

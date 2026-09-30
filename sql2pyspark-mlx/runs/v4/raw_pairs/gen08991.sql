@@ -1,0 +1,1 @@
+select case when quantity >= 188 then 'HIGH' else 'LOW' end as quantity_tier, count(distinct id) as distinct_ids, stddev_samp(quantity) as quantity_stddev, count(*) as event_count from inventory group by case when quantity >= 188 then 'HIGH' else 'LOW' end order by event_count desc nulls first;

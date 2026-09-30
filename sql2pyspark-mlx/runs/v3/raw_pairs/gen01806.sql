@@ -1,0 +1,1 @@
+SELECT start_month, status, total_monthly_fee FROM (SELECT MONTH(start_date) AS start_month, status, SUM(monthly_fee) AS total_monthly_fee FROM subscriptions WHERE start_date BETWEEN '2024-10-01' AND '2025-07-01' GROUP BY MONTH(start_date), status) AS t WHERE total_monthly_fee > 1000 ORDER BY start_month;

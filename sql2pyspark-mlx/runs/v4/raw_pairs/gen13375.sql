@@ -1,0 +1,1 @@
+select case when budget >= 3788000 then 'high' when budget >= 2027000 then 'mid' else 'low' end as budget_bucket, count(distinct budget) as unique_dept_names, sort_array(collect_set(location)) as location_list from departments where dept_name in ('Marketing', 'HR') group by 1;

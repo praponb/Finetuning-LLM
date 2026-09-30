@@ -1,0 +1,1 @@
+WITH valid_stores AS (SELECT * FROM stores WHERE city <> 'Tokyo' AND sqft <= 5436), region_summary AS (SELECT region, SUM(CASE WHEN city = 'Berlin' THEN sqft ELSE 0 END) AS berlin_sqft, SORT_ARRAY(COLLECT_SET(region)) AS region_list FROM valid_stores GROUP BY region) SELECT region, berlin_sqft, region_list FROM region_summary WHERE berlin_sqft < 57;

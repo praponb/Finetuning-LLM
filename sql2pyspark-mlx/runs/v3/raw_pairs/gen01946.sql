@@ -1,0 +1,1 @@
+SELECT id, account_type, opened_date, status, balance, customer_id, LAG(opened_date, 1) OVER (PARTITION BY account_type ORDER BY opened_date, id) prev_opened_date, FIRST_VALUE(customer_id) OVER (PARTITION BY status ORDER BY balance DESC, id) first_customer_id FROM accounts ORDER BY 2

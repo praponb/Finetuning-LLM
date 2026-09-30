@@ -1,0 +1,1 @@
+SELECT oi.product_id, o.discount, p.cost, p.brand FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON oi.product_id = p.id WHERE o.discount >= 0.26 ORDER BY discount

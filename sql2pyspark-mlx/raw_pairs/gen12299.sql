@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, INITCAP(TRIM(city)) AS city_title FROM suppliers WHERE city IS DISTINCT FROM 'Bangkok') SELECT s.*, latest.product_launch_date, latest.product_brand FROM base s LEFT JOIN LATERAL (SELECT c.launch_date AS product_launch_date, c.brand AS product_brand FROM products c WHERE c.supplier_id = s.id ORDER BY c.launch_date DESC, c.id DESC LIMIT 1) latest ON TRUE;

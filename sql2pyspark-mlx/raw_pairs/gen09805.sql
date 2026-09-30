@@ -1,0 +1,1 @@
+SELECT budget_bucket, avg_budget FROM (SELECT CASE WHEN budget >= 3429000 THEN 'high' WHEN budget >= 1885000 THEN 'mid' ELSE 'low' END AS budget_bucket, AVG(budget) AS avg_budget FROM departments GROUP BY CASE WHEN budget >= 3429000 THEN 'high' WHEN budget >= 1885000 THEN 'mid' ELSE 'low' END) AS sub WHERE avg_budget < 3421000 ORDER BY avg_budget, budget_bucket;

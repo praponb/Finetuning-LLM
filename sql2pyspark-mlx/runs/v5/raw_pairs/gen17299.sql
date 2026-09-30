@@ -1,0 +1,1 @@
+SELECT id, status, cost, carrier, shipped_date, DENSE_RANK() OVER (PARTITION BY status ORDER BY cost DESC) dense_rnk, LAG(cost, 1) OVER (PARTITION BY carrier ORDER BY shipped_date, id) prev_cost FROM shipments WHERE carrier IN ('Kerry', 'Flash');

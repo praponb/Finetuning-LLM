@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, COUNT(e.id) employee_count, SUM(CASE WHEN e.job_title = 'Analyst' THEN e.salary ELSE 0 END) analyst_salary, MIN(e.salary) min_salary FROM departments d LEFT JOIN employees e ON d.id = e.dept_id WHERE d.budget < 2259000 GROUP BY d.id, d.dept_name ORDER BY d.dept_name

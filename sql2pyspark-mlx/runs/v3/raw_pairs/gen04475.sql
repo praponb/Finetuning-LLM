@@ -1,0 +1,1 @@
+SELECT id, txn_time, amount, account_id, ROUND(AVG(amount) OVER (ORDER BY txn_time, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_4, LEAD(amount, 1) OVER (PARTITION BY account_id ORDER BY txn_time, id) AS next_amount FROM transactions WHERE is_flagged ORDER BY account_id;

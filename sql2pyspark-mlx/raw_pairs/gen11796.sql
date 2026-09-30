@@ -1,0 +1,1 @@
+select stores.city, orders.channel, orders.order_date, orders.amount from stores left join orders on stores.id = orders.store_id where orders.order_date between '2023-11-07' and '2024-10-01' or orders.discount between 0.13 and 0.27;

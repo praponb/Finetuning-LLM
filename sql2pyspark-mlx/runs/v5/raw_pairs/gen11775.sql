@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.quantity, i.store_id, ss.sale_date, ADD_MONTHS(i.last_restock, 6) AS last_restock_plus_months FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id IN (1, 7, 9) OR ss.product_id = 3 ORDER BY id DESC;

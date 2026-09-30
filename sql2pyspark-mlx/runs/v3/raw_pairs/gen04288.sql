@@ -1,0 +1,1 @@
+SELECT product_id, last_restock_month, quantity_count FROM (SELECT product_id, MONTH(last_restock) AS last_restock_month, COUNT(quantity) AS quantity_count FROM inventory GROUP BY product_id, MONTH(last_restock)) AS x WHERE quantity_count >= 4 ORDER BY quantity_count DESC, product_id, last_restock_month LIMIT 1;

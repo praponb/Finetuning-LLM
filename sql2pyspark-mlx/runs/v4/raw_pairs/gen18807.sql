@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.5 THEN 'PREMIUM' ELSE 'STANDARD' END AS rating_tier, city, COUNT_IF(city = 'London') AS london_events, APPROX_PERCENTILE(rating, ARRAY(0.25, 0.5, 0.75)) AS rating_quartiles, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM suppliers GROUP BY CUBE (CASE WHEN rating >= 3.5 THEN 'PREMIUM' ELSE 'STANDARD' END, city) HAVING london_events > 1;

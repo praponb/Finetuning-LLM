@@ -1,0 +1,1 @@
+with store_stats as (select store_id, sum(units) as total_units, round(stddev(units), 2) as stddev_units from store_sales group by store_id) select s.id, s.store_name, s.region, ss.total_units, ss.stddev_units from stores s join store_stats ss on s.id = ss.store_id where ss.stddev_units > 70 order by ss.total_units desc, s.id;

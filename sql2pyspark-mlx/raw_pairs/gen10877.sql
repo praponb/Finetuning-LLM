@@ -1,0 +1,1 @@
+SELECT id, name, email, country, segment, is_active, AVG(credit_limit) OVER (ORDER BY signup_date, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS credit_limit_avg_6_prior, RANK() OVER (ORDER BY age DESC NULLS FIRST) AS age_rank FROM customers

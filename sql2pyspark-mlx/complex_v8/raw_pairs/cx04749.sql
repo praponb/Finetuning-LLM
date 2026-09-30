@@ -1,0 +1,25 @@
+WITH outbound_monthly AS (
+    -- OUTBOUND rows per moved_at_month
+    SELECT DATE_TRUNC('MONTH', moved_at) AS moved_at_month, COUNT(*) AS outbound_count, SUM(qty) AS outbound_total_qty
+    FROM stock_moves
+    WHERE move_type = 'OUTBOUND'
+    GROUP BY DATE_TRUNC('MONTH', moved_at)
+),
+inbound_monthly AS (
+    -- INBOUND rows per moved_at_month
+    SELECT DATE_TRUNC('MONTH', moved_at) AS moved_at_month, COUNT(*) AS inbound_count, SUM(qty) AS inbound_total_qty
+    FROM stock_moves
+    WHERE move_type = 'INBOUND'
+    GROUP BY DATE_TRUNC('MONTH', moved_at)
+)
+SELECT
+    COALESCE(a.moved_at_month, b.moved_at_month) AS moved_at_month,
+    COALESCE(a.outbound_count, 0) AS outbound_count,
+    COALESCE(a.outbound_total_qty, 0) AS outbound_total_qty,
+    COALESCE(b.inbound_count, 0) AS inbound_count,
+    COALESCE(b.inbound_total_qty, 0) AS inbound_total_qty,
+    COALESCE(a.outbound_count, 0) - COALESCE(b.inbound_count, 0) AS net_count
+FROM outbound_monthly a
+FULL OUTER JOIN inbound_monthly b
+  ON a.moved_at_month = b.moved_at_month
+ORDER BY moved_at_month

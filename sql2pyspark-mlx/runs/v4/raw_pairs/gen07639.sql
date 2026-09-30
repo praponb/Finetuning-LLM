@@ -1,0 +1,1 @@
+select e.id, e.hire_date as employee_hire_date, e.manager_id as employee_manager_id, m.manager_id as manager_manager_id, m.salary as manager_salary, m.dept_id as manager_dept_id from employees e left outer join employees m on e.manager_id = m.id where m.manager_id = 15 or upper(trim(e.full_name)) = 'IVY CHEN';

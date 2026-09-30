@@ -1,0 +1,1 @@
+WITH valid_accounts AS (SELECT * FROM accounts WHERE customer_id IS NULL OR balance > 22000), AccountsStats AS (SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, MAX(opened_date) AS last_opened_date FROM valid_accounts GROUP BY status) SELECT status, status_values, last_opened_date FROM AccountsStats ORDER BY status_values, status LIMIT 10

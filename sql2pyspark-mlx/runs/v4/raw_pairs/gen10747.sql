@@ -1,0 +1,1 @@
+select case when budget >= 4154000 then 'high' when budget >= 694000 then 'mid' else 'low' end as budget_bucket, sum(budget) as total_budget, round(sum(budget) * 100.0 / sum(sum(budget)) over (), 2) as pct_of_total from departments where budget >= 1683000 group by case when budget >= 4154000 then 'high' when budget >= 694000 then 'mid' else 'low' end

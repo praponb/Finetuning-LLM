@@ -1,0 +1,1 @@
+WITH top_shipments AS (SELECT id, carrier, cost, shipped_date, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY cost DESC, id) AS row_num FROM shipments WHERE shipped_date <= '2024-09-01') SELECT * FROM top_shipments WHERE row_num <= 1 ORDER BY id ASC;

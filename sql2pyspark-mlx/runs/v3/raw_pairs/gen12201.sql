@@ -1,0 +1,1 @@
+select customers.id, customers.age, t.min_balance from customers inner join (select customer_id, min(balance) as min_balance from accounts where account_type in ('LOAN', 'SAVINGS') group by customer_id) t on customers.id = t.customer_id

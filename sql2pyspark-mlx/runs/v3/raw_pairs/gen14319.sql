@@ -1,0 +1,1 @@
+select c.city, count(case when a.status = 'OPEN' then 1 end) as open_count, count(*) as num_accounts from accounts a right join customers c on a.customer_id = c.id where c.is_active = true group by c.city;

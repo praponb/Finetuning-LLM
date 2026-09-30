@@ -1,0 +1,1 @@
+with filtered as (select *, substring(region, 1, 4) as region_prefix, trim(store_name) as clean_store_name, coalesce(region, 'OTHER') as region_filled from stores where opened_date >= date '2023-09-08' and region is not null) select region from filtered except select region from stores where city <> 'New York'

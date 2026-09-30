@@ -1,0 +1,1 @@
+SELECT o.id, o.status, o.customer_id, s.sqft, c.signup_date, c.country FROM orders o INNER JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON c.id = o.customer_id WHERE c.segment = 'SMB' AND s.store_name LIKE 'Ri%' ORDER BY 4, c.country;

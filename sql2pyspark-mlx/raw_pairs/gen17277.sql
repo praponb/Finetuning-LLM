@@ -1,0 +1,1 @@
+select a.id, a.customer_id, a.account_type, a.status, c.segment, c.age, c.signup_date from accounts a inner join customers c on a.customer_id = c.id where a.account_type = 'CHECKING' and a.status = 'CLOSED' order by segment

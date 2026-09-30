@@ -1,0 +1,1 @@
+WITH recent_products AS (SELECT * FROM products WHERE brand = 'Acme' AND supplier_id IS NOT NULL), category_summary AS (SELECT category, AVG(price) AS avg_price FROM recent_products GROUP BY category) SELECT * FROM category_summary ORDER BY avg_price DESC, category ASC LIMIT 5

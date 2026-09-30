@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, COUNT(DISTINCT cost) unique_suppliers FROM products GROUP BY supplier_id) SELECT s.supplier_name, s.country, ss.unique_suppliers FROM suppliers s INNER JOIN supplier_stats ss ON s.id = ss.supplier_id ORDER BY supplier_name ASC

@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('COMPLETED', 'RETURNED') THEN 'group_a' ELSE 'other' END AS status_group, ROUND((100 * SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_mobile, SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END) AS store_count, SUM(discount) AS total_discount FROM orders GROUP BY status_group ORDER BY status_group DESC LIMIT 5;

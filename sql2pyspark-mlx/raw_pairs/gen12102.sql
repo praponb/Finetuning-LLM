@@ -1,0 +1,1 @@
+SELECT CASE WHEN units >= 33 THEN 'high' WHEN units >= 16 THEN 'mid' ELSE 'low' END AS units_bucket, COUNT(*) AS store_sale_count, COUNT(*) AS row_count FROM store_sales WHERE MONTH(sale_date) IN (2, 4, 5) GROUP BY 1 ORDER BY store_sale_count, units_bucket LIMIT 3

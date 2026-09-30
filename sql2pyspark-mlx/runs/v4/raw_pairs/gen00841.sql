@@ -1,0 +1,1 @@
+WITH ProductTotals AS (SELECT product_id, MIN(sale_date) AS first_sale_date, MIN(sale_date) AS min_sale_date FROM store_sales GROUP BY product_id) SELECT p.brand, P.first_sale_date, P.min_sale_date FROM products p LEFT JOIN ProductTotals P ON p.id = P.product_id;

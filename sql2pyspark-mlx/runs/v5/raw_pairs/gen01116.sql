@@ -1,0 +1,1 @@
+SELECT shipments.id, shipments.shipped_date, shipments.carrier, shipments.delivered_date FROM shipments WHERE shipments.cost <= 54 AND shipments.order_id NOT IN (SELECT id FROM orders WHERE order_date < '2025-07-01') ORDER BY id DESC LIMIT 3;

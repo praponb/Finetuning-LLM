@@ -1,0 +1,1 @@
+WITH valid_subscriptions AS (SELECT * FROM subscriptions WHERE start_date > '2024-06-11'), summary AS (SELECT status, COUNT(CASE WHEN status = 'ACTIVE' THEN 1 END) AS active_count FROM valid_subscriptions GROUP BY status) SELECT status, active_count FROM summary ORDER BY status DESC, active_count

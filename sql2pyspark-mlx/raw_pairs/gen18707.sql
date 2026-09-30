@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(paid_at) < 2024 THEN 'before_2024' WHEN YEAR(paid_at) = 2024 THEN '2024' ELSE 'after_2024' END AS paid_cohort, MAX(paid_at) AS last_paid_at FROM payments WHERE status = 'SUCCESS' AND (order_id IS NULL OR amount > 1090) GROUP BY CASE WHEN YEAR(paid_at) < 2024 THEN 'before_2024' WHEN YEAR(paid_at) = 2024 THEN '2024' ELSE 'after_2024' END

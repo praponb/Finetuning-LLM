@@ -1,0 +1,1 @@
+SELECT products.id, products.category, products.launch_date, t.total_quantity, t.num_inventory FROM products LEFT JOIN (SELECT product_id, SUM(quantity) AS total_quantity, COUNT(*) AS num_inventory FROM inventory GROUP BY product_id) t ON products.id = t.product_id WHERE t.num_inventory >= 6 ORDER BY num_inventory DESC

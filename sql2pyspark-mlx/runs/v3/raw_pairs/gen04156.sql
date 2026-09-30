@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN status IN ('ACTIVE', 'PAUSED') THEN 'group_a' ELSE 'other' END AS status_group, plan, monthly_fee FROM subscriptions) PIVOT (SUM(monthly_fee) FOR plan IN ('enterprise', 'basic', 'premium', 'standard'));

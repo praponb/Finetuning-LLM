@@ -1,0 +1,1 @@
+select c.country, sum(a.balance) total_balance, min(a.opened_date) first_opened_date from accounts a left join customers c on c.id = a.customer_id group by c.country order by total_balance desc, country asc limit 50;

@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, session_id, event_time, event_type, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY event_time, id) AS rnk FROM web_events WHERE page IN ('/cart', '/home')) SELECT id, session_id, event_time, event_type FROM ranked WHERE rnk <= 1 ORDER BY event_type DESC;

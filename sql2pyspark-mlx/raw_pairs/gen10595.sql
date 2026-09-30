@@ -1,0 +1,1 @@
+select date_trunc('MONTH', c.signup_date) as signup_month, c.is_active, sort_array(collect_set(o.status)) as status_list, count(distinct o.discount) as unique_channels from orders o left join customers c on c.id = o.customer_id where o.shipping_fee > 35 group by date_trunc('MONTH', c.signup_date), c.is_active order by unique_channels

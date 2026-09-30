@@ -1,0 +1,1 @@
+SELECT *, HOUR(txn_time) AS txn_time_hour, DATEDIFF(CURRENT_DATE(), txn_time) / 7 AS weeks_since_txn_time FROM transactions WHERE txn_type IN ('CREDIT', 'REFUND', 'FEE') ORDER BY weeks_since_txn_time;

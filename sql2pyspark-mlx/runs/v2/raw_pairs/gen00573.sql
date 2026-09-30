@@ -1,0 +1,1 @@
+SELECT o.id, o.store_id, o.customer_id, o.order_date, c.age, c.is_active, c.segment, TRIM(c.name) clean_name FROM orders o FULL OUTER JOIN customers c ON o.customer_id = c.id WHERE UPPER(TRIM(c.email)) = 'ALICE@GMAIL.COM' ORDER BY age DESC

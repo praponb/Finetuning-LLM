@@ -1,0 +1,1 @@
+with valid_subscriptions as (select * from subscriptions where customer_id in (7, 16) and customer_id is not null), subscriptions_stats as (select date_format(end_date, 'yyyy-MM') as end_month, sort_array(collect_set(status)) as status_list from valid_subscriptions group by date_format(end_date, 'yyyy-MM')) select * from subscriptions_stats

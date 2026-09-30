@@ -1,0 +1,1 @@
+WITH ranked_suppliers AS (SELECT id, country, rating, city, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC, id) rn FROM suppliers WHERE UPPER(TRIM(supplier_name)) = 'PACIFIC WHOLESALE') SELECT * FROM ranked_suppliers WHERE rn <= 3

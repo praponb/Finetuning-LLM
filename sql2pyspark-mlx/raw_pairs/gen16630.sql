@@ -1,0 +1,1 @@
+select case when shipping_fee >= 44 then 'high' when shipping_fee >= 15 then 'mid' else 'low' end as shipping_fee_bucket, channel, min(order_date) as min_order_date from orders group by rollup(case when shipping_fee >= 44 then 'high' when shipping_fee >= 15 then 'mid' else 'low' end, channel);

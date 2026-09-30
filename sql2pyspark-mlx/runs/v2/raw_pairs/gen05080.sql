@@ -1,0 +1,1 @@
+SELECT id, region, sqft FROM (SELECT id, region, sqft, ROW_NUMBER() OVER (PARTITION BY region ORDER BY sqft DESC, id) AS rnk FROM stores WHERE city <> 'London') AS ranked WHERE rnk = 1 ORDER BY id ASC;

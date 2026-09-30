@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.browser))) AS browser_values FROM sessions s LEFT OUTER JOIN customers c ON c.id = s.customer_id GROUP BY YEAR(c.signup_date)

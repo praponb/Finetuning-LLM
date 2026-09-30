@@ -1,0 +1,1 @@
+SELECT order_items.product_id, products.product_name, suppliers.country FROM order_items LEFT JOIN products ON order_items.product_id = products.id INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE suppliers.country IN ('US', 'SG') AND suppliers.city IN ('London', 'Chiang Mai', 'Bangkok');

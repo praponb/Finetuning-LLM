@@ -1,0 +1,1 @@
+select case when cost >= 105 then 'high' when cost >= 49 then 'mid' else 'low' end as cost_bucket, order_id, case when carrier in ('DHL', 'FedEx') then 'group_a' else 'other' end as carrier_group, round(stddev(cost), 2) as stddev_cost from shipments group by cost_bucket, order_id, carrier_group having round(stddev(cost), 2) > 53 order by order_id desc

@@ -1,0 +1,1 @@
+SELECT id, event_type, duration_sec, event_time, CEIL(duration_sec) AS duration_sec_whole, HOUR(event_time) AS event_time_hour FROM web_events WHERE page = '/search' AND (duration_sec BETWEEN 311 AND 423 OR event_time >= '2025-01-01')

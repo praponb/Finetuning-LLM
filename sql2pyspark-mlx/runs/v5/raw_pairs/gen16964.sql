@@ -1,0 +1,1 @@
+SELECT c.id, c.age, c.is_active, t.session_count FROM customers c JOIN (SELECT customer_id, COUNT(*) AS session_count FROM sessions GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY t.session_count DESC;

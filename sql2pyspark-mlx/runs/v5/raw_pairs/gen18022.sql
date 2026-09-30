@@ -1,0 +1,1 @@
+SELECT departments.id, departments.budget, t.engineer_count FROM departments INNER JOIN (SELECT dept_id, COUNT(CASE WHEN job_title = 'Engineer' THEN 1 END) AS engineer_count FROM employees GROUP BY dept_id) t ON departments.id = t.dept_id ORDER BY t.engineer_count, id LIMIT 20;

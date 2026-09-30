@@ -1,0 +1,1 @@
+with order_items_by_product as (select product_id, count(unit_price) as unit_price_count from order_items group by product_id) select p.id, p.launch_date, p.stock_qty, oibp.unit_price_count from products p join order_items_by_product oibp on p.id = oibp.product_id where oibp.unit_price_count > 4 order by stock_qty asc

@@ -1,0 +1,1 @@
+SELECT store_id, CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, COUNT(units) AS units_count FROM store_sales WHERE sale_date < '2025-04-01' GROUP BY 1, 2 HAVING units_count > 5 ORDER BY sale_cohort;

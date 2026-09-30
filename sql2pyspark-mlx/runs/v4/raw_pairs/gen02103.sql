@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM customers WHERE country IN ('TH', 'US', 'JP') AND age BETWEEN 41 AND 56), summary AS (SELECT MONTH(signup_date) AS signup_month, ROUND(AVG(age), 2) AS avg_age FROM base GROUP BY MONTH(signup_date)) SELECT signup_month, avg_age FROM summary WHERE avg_age >= 55 ORDER BY signup_month;

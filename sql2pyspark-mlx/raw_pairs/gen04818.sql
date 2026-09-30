@@ -1,0 +1,1 @@
+SELECT COUNT(balance) AS balance_count FROM accounts WHERE opened_date BETWEEN '2024-06-24' AND '2025-04-01' AND opened_date BETWEEN '2023-08-25' AND '2024-04-03' AND balance > 46000 ORDER BY balance_count DESC

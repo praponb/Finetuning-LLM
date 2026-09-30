@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT status, method, COUNT(amount) AS amount_count, SORT_ARRAY(COLLECT_SET(method)) AS method_list FROM payments WHERE order_id IN (5, 13, 15, 36) GROUP BY status, method) AS x WHERE amount_count > 9 ORDER BY status ASC

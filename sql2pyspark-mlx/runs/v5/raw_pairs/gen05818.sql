@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3473000 THEN 'high' WHEN budget >= 1327000 THEN 'mid' ELSE 'low' END AS budget_bucket, ROUND((100 * SUM(CASE WHEN location = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai, COUNT(DISTINCT budget) AS unique_locations, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(dept_name))) AS dept_name_values FROM departments GROUP BY budget_bucket;

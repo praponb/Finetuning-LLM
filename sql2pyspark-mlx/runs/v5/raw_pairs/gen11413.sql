@@ -1,0 +1,1 @@
+SELECT shipped_month, max_cost FROM (SELECT DATE_TRUNC('MONTH', shipped_date) AS shipped_month, MAX(cost) AS max_cost FROM shipments WHERE shipped_date <= '2024-10-01' GROUP BY DATE_TRUNC('MONTH', shipped_date)) AS x WHERE max_cost > 49

@@ -1,0 +1,1 @@
+WITH ranked_orders AS (SELECT id, store_id, shipping_fee, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY shipping_fee DESC, id) AS rn FROM orders WHERE store_id IS NULL) SELECT id, store_id, shipping_fee FROM ranked_orders WHERE rn <= 3

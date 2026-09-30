@@ -1,0 +1,1 @@
+SELECT we.id, we.session_id, we.duration_sec, we.page, s.browser, s.country, s.started_at FROM web_events we INNER JOIN sessions s ON s.id = we.session_id WHERE s.device = 'desktop' OR s.browser IS NOT NULL

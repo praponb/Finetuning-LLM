@@ -1,0 +1,1 @@
+SELECT product_id, store_id, COUNT(DISTINCT revenue) AS unique_stores, SUM(revenue) AS total_revenue FROM store_sales WHERE units <= 31 GROUP BY CUBE(product_id, store_id) ORDER BY unique_stores DESC;

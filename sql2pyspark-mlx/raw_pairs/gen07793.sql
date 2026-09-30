@@ -1,0 +1,1 @@
+SELECT products.brand, AVG(inventory.quantity) AS avg_quantity, MAX(inventory.quantity) - MIN(inventory.quantity) AS quantity_range FROM inventory JOIN stores ON inventory.store_id = stores.id LEFT JOIN products ON inventory.product_id = products.id WHERE stores.opened_date > '2024-05-26' GROUP BY products.brand ORDER BY avg_quantity DESC

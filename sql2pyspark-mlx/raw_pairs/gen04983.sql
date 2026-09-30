@@ -1,0 +1,1 @@
+select case when country in ('TH', 'DE') then 'priority' else 'other' end as country_group, round(avg(rating), 2) as avg_rating, max(rating) - min(rating) as rating_range from suppliers group by case when country in ('TH', 'DE') then 'priority' else 'other' end order by rating_range desc

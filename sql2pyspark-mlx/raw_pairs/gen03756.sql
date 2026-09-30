@@ -1,0 +1,1 @@
+with Src as (select *, month(last_restock) as last_restock_month from inventory where quantity = 226 and quantity < 107), agg as (select product_id, max(quantity) as max_quantity from Src group by product_id) select product_id, max_quantity from agg where max_quantity >= 220 order by max_quantity desc;

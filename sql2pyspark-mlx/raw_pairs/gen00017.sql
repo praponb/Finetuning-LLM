@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CONCAT(channel, ' ', status) AS channel_status FROM orders WHERE channel IS DISTINCT FROM 'store' AND order_date > DATE '2023-09-14') SELECT s.*, pr.id AS promo_id, pr.promo_code, pr.discount_pct FROM cleaned s LEFT JOIN promotions pr ON COALESCE(s.channel, 'web') = pr.channel AND s.order_date BETWEEN pr.starts_on AND pr.ends_on

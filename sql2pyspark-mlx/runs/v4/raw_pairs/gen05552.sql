@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, created_at, item.product_id, item.qty, item.price, item.promo FROM (SELECT id, customer_id, created_at, EXPLODE_OUTER(items) AS item FROM carts) e) SELECT id, customer_id, created_at, price, promo, CASE WHEN promo RLIKE '^(VIP|WELCOME5)$' THEN 'PRIORITY' ELSE 'OTHER_ZONE' END AS promo_zone FROM lines ORDER BY id DESC;

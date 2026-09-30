@@ -1,0 +1,1 @@
+SELECT page, MIN(duration_sec) AS min_duration_sec, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY page HAVING min_duration_sec > 330 ORDER BY 2, duration_sec_range DESC;

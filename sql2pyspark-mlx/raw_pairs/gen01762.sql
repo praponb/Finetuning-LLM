@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM suppliers s WHERE EXISTS (SELECT 1 FROM products ch WHERE ch.supplier_id = s.id AND ch.category != 'Sports')) SELECT id, supplier_name, country, city, rating, CASE WHEN country RLIKE '^(DE|JP)$' THEN 'EXTENDED' WHEN country RLIKE '^(TH|US)$' THEN 'GROUP_A' ELSE 'CORE' END AS country_zone FROM not_flagged ORDER BY country_zone DESC, id

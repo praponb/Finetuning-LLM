@@ -1,0 +1,1 @@
+WITH top_departments AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget, id) AS rn FROM departments WHERE budget BETWEEN 1086000 AND 1744000) SELECT * FROM top_departments WHERE rn = 1 ORDER BY id DESC

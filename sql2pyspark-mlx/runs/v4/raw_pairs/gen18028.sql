@@ -1,0 +1,1 @@
+select quarter(hire_date) as hire_quarter, year(hire_date) as hire_year, avg(salary) as avg_salary, min(salary) as min_salary from employees where job_title in ('Designer', 'Engineer') group by quarter(hire_date), year(hire_date)

@@ -1,0 +1,1 @@
+select id, product_id, last_restock from (select id, product_id, last_restock, rank() over (partition by product_id order by last_restock desc) as rn from inventory where product_id in (4, 5, 6, 9)) as t where rn <= 3

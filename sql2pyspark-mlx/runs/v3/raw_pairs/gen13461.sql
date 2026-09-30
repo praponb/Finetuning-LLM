@@ -1,0 +1,1 @@
+WITH top_accounts AS (SELECT *, DENSE_RANK() OVER (PARTITION BY account_type ORDER BY balance DESC) AS rnk FROM accounts WHERE customer_id = 31) SELECT id, account_type, balance, customer_id FROM top_accounts WHERE rnk = 1

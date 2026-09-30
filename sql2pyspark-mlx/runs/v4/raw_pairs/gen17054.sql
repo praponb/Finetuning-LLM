@@ -1,0 +1,1 @@
+select s.device, sort_array(collect_set(we.page)) as page_list from web_events we inner join sessions s on we.session_id = s.id left join customers c on s.customer_id = c.id where s.started_at < '2025-06-14' group by s.device order by device;

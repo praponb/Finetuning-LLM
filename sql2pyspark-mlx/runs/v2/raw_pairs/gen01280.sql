@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, COUNT(rating) AS rating_count FROM suppliers GROUP BY 1 HAVING SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END) < 39 ORDER BY city_values, rating_bucket LIMIT 10;

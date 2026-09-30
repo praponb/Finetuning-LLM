@@ -1,0 +1,1 @@
+SELECT QUARTER(products.launch_date) AS launch_quarter, products.brand, ROUND(AVG(store_sales.revenue), 2) AS avg_revenue FROM store_sales LEFT OUTER JOIN products ON store_sales.product_id = products.id GROUP BY QUARTER(products.launch_date), products.brand ORDER BY avg_revenue DESC, launch_quarter DESC

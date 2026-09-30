@@ -1,0 +1,1 @@
+with department_summary as (select dept_id, sum(salary) as total_salary from employees group by dept_id) select d.location, d.dept_name, ds.total_salary from departments d left join department_summary ds on d.id = ds.dept_id where ds.total_salary > 598000 order by total_salary, location;

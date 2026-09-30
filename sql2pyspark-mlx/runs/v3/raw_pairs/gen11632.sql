@@ -1,0 +1,1 @@
+SELECT customers.name, customers.country, customers.city, subscriptions.status, subscriptions.monthly_fee, subscriptions.customer_id FROM customers JOIN subscriptions ON subscriptions.customer_id = customers.id ORDER BY status DESC;

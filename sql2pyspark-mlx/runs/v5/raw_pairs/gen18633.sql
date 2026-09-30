@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, txn_type, txn_time, amount, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY txn_time, id) AS pos FROM transactions) SELECT id, txn_type, txn_time, amount FROM numbered WHERE pos <= 2

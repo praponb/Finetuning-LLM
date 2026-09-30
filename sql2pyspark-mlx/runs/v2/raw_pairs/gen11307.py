@@ -1,0 +1,14 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_departments.alias("d")
+    .join(df_employees.alias("e"), F.col("d.id") == F.col("e.dept_id"), "left")
+    .filter(F.col("e.manager_id").isin([8, 16, 24, 36]))
+    .groupBy(F.col("d.dept_name"))
+    .agg(
+        F.count(F.col("e.id")).alias("employee_count"),
+        F.sort_array(F.collect_set(F.col("e.level"))).alias("level_list"),
+        F.min(F.col("e.hire_date")).alias("min_hire_date"),
+    )
+    .orderBy("min_hire_date")
+)

@@ -1,0 +1,1 @@
+select c.signup_date, t.pct_mobile from customers c join (select customer_id, round((100 * sum(case when channel = 'mobile' then 1 else 0 end)) / count(*), 1) pct_mobile from orders where customer_id = 18 group by customer_id) t on c.id = t.customer_id order by pct_mobile desc;

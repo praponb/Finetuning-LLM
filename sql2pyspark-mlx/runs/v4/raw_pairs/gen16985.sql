@@ -1,0 +1,3 @@
+SELECT *
+FROM suppliers
+QUALIFY ROW_NUMBER() OVER (PARTITION BY country, city ORDER BY rating DESC NULLS LAST, id) = 1

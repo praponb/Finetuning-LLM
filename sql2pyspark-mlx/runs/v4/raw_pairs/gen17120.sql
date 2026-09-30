@@ -1,0 +1,1 @@
+SELECT status, ROUND((100 * SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_premium, COUNT(DISTINCT monthly_fee) AS unique_customers FROM subscriptions WHERE plan IN ('enterprise', 'basic') AND monthly_fee BETWEEN 70 AND 90 GROUP BY status HAVING pct_premium >= 25 ORDER BY status ASC

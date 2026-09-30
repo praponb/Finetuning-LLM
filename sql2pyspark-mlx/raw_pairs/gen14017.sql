@@ -1,0 +1,1 @@
+SELECT s.city, s.supplier_name, p.brand, p.price, p.stock_qty FROM suppliers s JOIN products p ON p.supplier_id = s.id WHERE LENGTH(p.product_name) > 11 AND p.cost <= 300 ORDER BY p.price ASC, p.brand DESC

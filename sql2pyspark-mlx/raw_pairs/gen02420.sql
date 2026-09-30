@@ -1,0 +1,1 @@
+SELECT we.session_id, s.customer_id, s.country, CASE WHEN s.country IN ('UK', 'TH') THEN 'Group A' ELSE 'Other' END AS country_group FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE we.session_id = 2 OR s.device != 'mobile'

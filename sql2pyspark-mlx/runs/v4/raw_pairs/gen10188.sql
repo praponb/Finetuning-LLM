@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, customer_id, plan, monthly_fee, status, DATEDIFF(end_date, start_date) AS days_start_date_to_end_date FROM subscriptions WHERE end_date > DATE '2023-05-28' AND customer_id IS NOT NULL) SELECT customer_id FROM cleaned INTERSECT SELECT customer_id FROM subscriptions WHERE customer_id IS NOT NULL

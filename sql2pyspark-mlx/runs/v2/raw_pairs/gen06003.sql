@@ -1,0 +1,1 @@
+WITH AccountStats AS (SELECT account_id, SUM(amount) AS total_amount FROM transactions GROUP BY account_id) SELECT a.account_type, A.total_amount FROM accounts a LEFT JOIN AccountStats A ON a.id = A.account_id;

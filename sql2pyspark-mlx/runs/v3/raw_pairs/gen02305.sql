@@ -1,0 +1,1 @@
+select case when year(launch_date) < 2024 then 'before_2024' when year(launch_date) = 2024 then '2024' else 'after_2024' end launch_cohort, min(launch_date) min_launch_date, max(launch_date) latest_launch_date, max(price) - min(price) price_range from products where price >= 660 and stock_qty != 242 group by launch_cohort having price_range > 55

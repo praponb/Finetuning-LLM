@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, created_at, coupon_codes, k, v FROM carts LATERAL VIEW EXPLODE(attributes) e AS k, v) SELECT id, k, CASE WHEN k RLIKE '^(utm_source|gift)$' THEN 'EXTENDED' WHEN k RLIKE '^(device|weight_kg)$' THEN 'GROUP_A' ELSE 'GROUP_B' END AS k_zone FROM flattened ORDER BY k DESC NULLS FIRST

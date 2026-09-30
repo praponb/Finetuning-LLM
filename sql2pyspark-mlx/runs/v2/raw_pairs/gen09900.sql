@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_stores FROM inventory WHERE quantity < 171 GROUP BY store_id) SELECT s.id, s.city, st.unique_stores FROM stores s JOIN store_totals st ON s.id = st.store_id WHERE st.unique_stores > 7 ORDER BY s.id DESC LIMIT 3;

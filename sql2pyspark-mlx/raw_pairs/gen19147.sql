@@ -1,0 +1,1 @@
+SELECT supplier_id, unique_brands FROM (SELECT supplier_id, COUNT(DISTINCT price) AS unique_brands FROM products WHERE price <= 1180 GROUP BY supplier_id) AS sub WHERE unique_brands >= 8 ORDER BY supplier_id LIMIT 50;

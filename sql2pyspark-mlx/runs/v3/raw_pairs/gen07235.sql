@@ -1,0 +1,1 @@
+WITH valid_employees AS (SELECT * FROM employees WHERE hire_date < '2025-09-06'), LevelGroupSummary AS (SELECT CASE WHEN level IN ('L4', 'L2') THEN 'core' ELSE 'other' END level_group, SORT_ARRAY(COLLECT_SET(level)) level_list FROM valid_employees GROUP BY CASE WHEN level IN ('L4', 'L2') THEN 'core' ELSE 'other' END) SELECT * FROM LevelGroupSummary ORDER BY level_group;

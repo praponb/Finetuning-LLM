@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, humidity - status_bits AS humidity_minus_status_bits FROM device_readings WHERE reading_ts >= TO_DATE('2025-09-01')) SELECT * FROM valid QUALIFY ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY temp_c DESC, id) = 1

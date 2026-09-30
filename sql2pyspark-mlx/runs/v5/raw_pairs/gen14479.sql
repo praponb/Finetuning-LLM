@@ -1,0 +1,1 @@
+SELECT s.country, CASE WHEN s.country IN ('SG', 'US') THEN 'priority' ELSE 'other' END AS country_group, COUNT(*) AS cnt, ROUND(STDDEV(p.cost), 2) AS stddev_cost FROM products p FULL OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.rating > 3.1 GROUP BY s.country, CASE WHEN s.country IN ('SG', 'US') THEN 'priority' ELSE 'other' END

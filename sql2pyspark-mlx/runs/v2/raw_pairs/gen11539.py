@@ -1,0 +1,20 @@
+from pyspark.sql import functions as F
+
+product_totals = (
+    df_store_sales
+    .filter(F.col("sale_date").between("2024-09-17", "2024-11-05"))
+    .groupBy("product_id")
+    .agg(F.round(F.avg("units"), 2).alias("avg_units"))
+)
+
+result = (
+    df_products.alias("p")
+    .join(product_totals.alias("pt"), F.col("p.id") == F.col("pt.product_id"), "inner")
+    .filter(F.col("pt.avg_units") >= 35)
+    .select(
+        F.col("p.id"),
+        F.col("p.category"),
+        F.col("p.launch_date"),
+        F.col("pt.avg_units"),
+    )
+)

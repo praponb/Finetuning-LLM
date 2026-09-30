@@ -1,0 +1,1 @@
+select id, device, browser, started_at, row_number() over w_grp seq_no, first_value(country) ignore nulls over (order by started_at, id rows between unbounded preceding and current row) first_known_country from sessions window w_grp as (partition by country order by started_at, id)

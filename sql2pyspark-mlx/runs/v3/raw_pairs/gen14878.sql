@@ -1,0 +1,1 @@
+SELECT s.started_at, s.browser, s.country, c.signup_date, c.is_active, c.country AS customer_country FROM sessions s LEFT JOIN customers c ON c.id = s.customer_id WHERE s.browser IN ('Edge', 'Chrome', 'Firefox') ORDER BY s.country DESC, s.started_at;

@@ -1,0 +1,1 @@
+WITH orders_by_store AS (SELECT store_id, ROUND(AVG(discount), 2) AS avg_discount, SUM(discount) AS total_discount FROM orders WHERE status IN ('CANCELLED', 'COMPLETED', 'SHIPPED') GROUP BY store_id) SELECT s.id, s.city, obs.avg_discount, obs.total_discount FROM stores s LEFT JOIN orders_by_store obs ON s.id = obs.store_id ORDER BY city, id;

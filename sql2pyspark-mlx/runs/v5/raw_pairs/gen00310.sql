@@ -1,0 +1,1 @@
+SELECT orders.id, orders.status, customers.city, stores.opened_date, stores.city AS store_city FROM orders JOIN customers ON customers.id = orders.customer_id JOIN stores ON orders.store_id = stores.id WHERE customers.is_active AND customers.age <= 64 ORDER BY orders.status

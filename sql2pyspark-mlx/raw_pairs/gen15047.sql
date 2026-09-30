@@ -1,0 +1,1 @@
+WITH lines AS (SELECT src.id, src.customer_id, entry.product_id, entry.qty, entry.price, entry.promo FROM carts src LATERAL VIEW OUTER EXPLODE(src.items) e AS entry) SELECT id, product_id, qty, price, promo, CASE WHEN promo RLIKE '^(WELCOME5|VIP)$' THEN 'GROUP_A' ELSE 'GROUP_B' END AS promo_zone FROM lines

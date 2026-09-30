@@ -1,0 +1,1 @@
+SELECT CASE WHEN balance >= 84000 THEN 'high' WHEN balance >= 28000 THEN 'mid' ELSE 'low' END AS balance_bucket, SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) AS checking_balance, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM accounts WHERE customer_id = 20 AND opened_date < '2023-11-01' GROUP BY 1 HAVING checking_balance < 51;

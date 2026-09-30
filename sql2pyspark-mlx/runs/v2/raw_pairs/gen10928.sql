@@ -1,0 +1,1 @@
+SELECT city, ROUND(STDDEV(sqft), 2) AS stddev_sqft, SUM(CASE WHEN region = 'Central' THEN 1 ELSE 0 END) AS central_count, COUNT(sqft) AS sqft_count FROM stores WHERE city = 'London' AND YEAR(opened_date) >= 2024 GROUP BY city;

@@ -1,0 +1,1 @@
+SELECT s.city, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i LEFT JOIN products p ON i.product_id = p.id JOIN stores s ON i.store_id = s.id GROUP BY s.city HAVING MAX(i.quantity) - MIN(i.quantity) > 56;

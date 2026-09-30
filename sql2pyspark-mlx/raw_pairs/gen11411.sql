@@ -1,0 +1,1 @@
+WITH DepartmentTotals AS (SELECT dept_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values, COUNT(DISTINCT salary) AS unique_managers FROM employees GROUP BY dept_id) SELECT d.dept_name, D.job_title_values, D.unique_managers FROM departments d INNER JOIN DepartmentTotals D ON d.id = D.dept_id WHERE D.unique_managers >= 6;

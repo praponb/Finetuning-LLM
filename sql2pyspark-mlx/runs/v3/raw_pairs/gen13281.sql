@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, carrier, shipped_date, cost, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY shipped_date, id) AS rn FROM shipments) SELECT id, carrier, shipped_date, cost FROM numbered WHERE rn <= 2

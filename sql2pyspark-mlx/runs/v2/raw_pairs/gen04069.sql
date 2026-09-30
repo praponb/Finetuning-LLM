@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM employees WHERE salary < 117000 OR salary > 107000), agg AS (SELECT dept_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values, SUM(CASE WHEN level = 'L3' THEN salary ELSE 0 END) AS l3_salary FROM base GROUP BY dept_id) SELECT * FROM agg ORDER BY job_title_values;

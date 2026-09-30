@@ -1,0 +1,1 @@
+WITH RankedStores AS (SELECT id, city, opened_date, region, DENSE_RANK() OVER (PARTITION BY city ORDER BY opened_date DESC) AS rnk FROM stores) SELECT id, city, opened_date, region FROM RankedStores WHERE rnk = 1

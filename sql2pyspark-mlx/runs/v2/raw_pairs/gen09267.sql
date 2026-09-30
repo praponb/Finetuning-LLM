@@ -1,0 +1,1 @@
+select c.segment, count(we.duration_sec) as duration_sec_count from web_events we full outer join sessions s on we.session_id = s.id inner join customers c on s.customer_id = c.id group by c.segment having count(we.duration_sec) >= 5 order by duration_sec_count desc;

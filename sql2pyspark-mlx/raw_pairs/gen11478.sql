@@ -1,0 +1,1 @@
+SELECT i.quantity, ss.store_id, ss.revenue FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.units = 32 AND ss.store_id IN (1, 3) ORDER BY i.quantity ASC

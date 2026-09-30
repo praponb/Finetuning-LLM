@@ -1,0 +1,1 @@
+SELECT id, customer_id, opened_date, account_type, LEAD(opened_date, 1) OVER (PARTITION BY customer_id ORDER BY opened_date, id) AS next_opened_date, DENSE_RANK() OVER (PARTITION BY account_type ORDER BY opened_date) AS opened_date_dense_rank FROM accounts;

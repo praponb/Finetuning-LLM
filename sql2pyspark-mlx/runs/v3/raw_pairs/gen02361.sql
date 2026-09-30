@@ -1,0 +1,1 @@
+SELECT s.id, s.store_name, COUNT(o.id) AS order_count, MIN(o.shipping_fee) AS min_shipping_fee, MAX(o.discount) AS max_discount FROM stores s LEFT JOIN orders o ON s.id = o.store_id WHERE s.opened_date BETWEEN '2023-10-16' AND '2024-07-01' GROUP BY s.id, s.store_name

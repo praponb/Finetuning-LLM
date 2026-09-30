@@ -1,0 +1,1 @@
+SELECT id, budget, location, CASE WHEN budget >= 4221000 THEN 'High' WHEN budget >= 778000 THEN 'Medium' ELSE 'Low' END AS budget_level FROM departments WHERE location = 'Tokyo' ORDER BY location DESC, id LIMIT 10;

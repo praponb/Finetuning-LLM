@@ -1,0 +1,1 @@
+SELECT s.id, s.browser FROM sessions s WHERE HOUR(s.started_at) BETWEEN 7 AND 12 AND NOT EXISTS (SELECT 1 FROM web_events we WHERE we.session_id = s.id AND TO_DATE(we.event_time) < '2025-09-01') ORDER BY id, browser LIMIT 5

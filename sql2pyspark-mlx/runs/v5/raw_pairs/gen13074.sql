@@ -1,0 +1,1 @@
+with src as (select * from shipments where carrier in ('UPS', 'Flash')), agg as (select order_id, min(delivered_date) as min_delivered_date, count(cost) as cost_count from src group by order_id) select order_id, cost_count from agg where cost_count < 5 order by cost_count;

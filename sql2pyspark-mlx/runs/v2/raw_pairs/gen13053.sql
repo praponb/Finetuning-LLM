@@ -1,0 +1,1 @@
+with src as (select * from employees where not (is_remote or dept_id in (13, 39, 40))), summary as (select job_title, year(hire_date) as hire_year, sort_array(collect_set(job_title)) as job_title_list from src group by job_title, year(hire_date)) select job_title, job_title_list from summary order by job_title asc

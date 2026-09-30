@@ -1,0 +1,1 @@
+select i.id, i.store_id, i.product_id, s.city, date_sub(i.last_restock, 42) as last_restock_minus_42d from inventory i right join stores s on i.store_id = s.id where i.store_id in (1, 3, 4, 5) or i.quantity >= 114

@@ -1,0 +1,1 @@
+SELECT id, page, duration_sec, event_time, RANK() OVER (PARTITION BY page ORDER BY duration_sec DESC) AS duration_sec_rank, LEAD(duration_sec, 1) OVER (PARTITION BY page ORDER BY event_time, id) AS next_duration_sec FROM web_events WHERE session_id IN (16, 20, 30);

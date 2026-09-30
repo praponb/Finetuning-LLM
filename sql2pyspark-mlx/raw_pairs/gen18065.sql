@@ -1,0 +1,1 @@
+select case when budget >= 4257000 then 'high' when budget >= 795000 then 'mid' else 'low' end as budget_bucket, sum(budget) as total_budget, count(*) as cnt, dense_rank() over (order by sum(budget) desc) as rnk from departments group by case when budget >= 4257000 then 'high' when budget >= 795000 then 'mid' else 'low' end

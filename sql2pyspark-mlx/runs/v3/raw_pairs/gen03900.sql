@@ -1,0 +1,1 @@
+SELECT c.city, COUNT(a.id) AS account_count, MIN(a.balance) AS min_balance, ROUND((100 * SUM(CASE WHEN a.status = 'FROZEN' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_frozen FROM customers c JOIN accounts a ON c.id = a.customer_id GROUP BY c.city

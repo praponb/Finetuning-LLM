@@ -1,0 +1,1 @@
+select location, avg_budget, budget_count from (select location, avg(budget) as avg_budget, count(budget) as budget_count from departments where dept_name in ('Marketing', 'Finance', 'Engineering') group by location) as t where avg_budget >= 3211000 order by 2 desc, location limit 10;

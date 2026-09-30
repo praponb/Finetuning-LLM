@@ -1,0 +1,1 @@
+SELECT id, account_id, txn_time, txn_type, amount, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY txn_time DESC, id) AS rn, NTILE(2) OVER (PARTITION BY txn_type ORDER BY amount DESC, id) AS quartile FROM transactions WHERE HOUR(txn_time) BETWEEN 9 AND 17 ORDER BY 7 DESC, rn DESC;

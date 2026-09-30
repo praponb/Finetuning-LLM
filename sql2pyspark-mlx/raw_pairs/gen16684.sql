@@ -1,0 +1,1 @@
+SELECT o.status AS order_status, s.status AS payment_status, COUNT(*) AS rows_total, AVG(s.amount) AS avg_amount FROM payments s LEFT JOIN orders o ON s.order_id = o.id GROUP BY ROLLUP (o.status, s.status);

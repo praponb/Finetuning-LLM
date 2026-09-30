@@ -1,0 +1,1 @@
+SELECT emp.salary AS employee_salary, emp.is_remote AS employee_is_remote, mgr.dept_id AS manager_dept_id FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.email LIKE '%@yahoo.com' AND emp.full_name IS NOT NULL ORDER BY manager_dept_id DESC, emp.salary DESC;

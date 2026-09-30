@@ -1,0 +1,1 @@
+SELECT inventory.last_restock, products.brand, stores.region, stores.store_name FROM inventory FULL OUTER JOIN products ON inventory.product_id = products.id JOIN stores ON inventory.store_id = stores.id WHERE products.cost > 650

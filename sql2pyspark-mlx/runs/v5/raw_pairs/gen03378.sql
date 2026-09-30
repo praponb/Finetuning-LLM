@@ -1,0 +1,1 @@
+SELECT p.country, s.status, COUNT(*) AS num_rows, ROUND(SUM(s.balance), 2) AS total_balance, GROUPING_ID() AS gid FROM accounts s INNER JOIN customers p ON s.customer_id = p.id GROUP BY ROLLUP (p.country, s.status) ORDER BY status DESC NULLS FIRST;

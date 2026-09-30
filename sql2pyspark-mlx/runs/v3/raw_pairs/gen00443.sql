@@ -1,0 +1,1 @@
+WITH inventory_by_product AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(*) AS num_inventory FROM inventory GROUP BY product_id) SELECT p.stock_qty, ibp.avg_quantity, ibp.num_inventory FROM products p LEFT JOIN inventory_by_product ibp ON p.id = ibp.product_id WHERE ibp.avg_quantity > 25;

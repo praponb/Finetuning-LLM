@@ -1,0 +1,1 @@
+SELECT store_id, QUARTER(last_restock) AS last_restock_quarter, MAX(quantity) - MIN(quantity) AS quantity_range, MAX(last_restock) AS latest_last_restock FROM inventory WHERE store_id IN (5, 6) GROUP BY store_id, QUARTER(last_restock) ORDER BY latest_last_restock, store_id, last_restock_quarter LIMIT 5;

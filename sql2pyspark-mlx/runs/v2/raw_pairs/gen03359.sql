@@ -1,0 +1,1 @@
+SELECT p.brand, p.supplier_id, AVG(i.quantity) AS avg_quantity, COUNT(i.quantity) AS quantity_count FROM inventory i JOIN stores s ON i.store_id = s.id JOIN products p ON i.product_id = p.id WHERE i.quantity BETWEEN 95 AND 217 GROUP BY p.brand, p.supplier_id;

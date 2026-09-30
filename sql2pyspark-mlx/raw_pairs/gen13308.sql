@@ -1,0 +1,1 @@
+SELECT id, dept_name, location, DENSE_RANK() OVER (PARTITION BY dept_name ORDER BY budget DESC NULLS FIRST) AS budget_dense_rank, CUME_DIST() OVER (ORDER BY budget DESC) AS budget_cume_dist FROM departments WHERE budget BETWEEN 1142000 AND 1681000

@@ -1,0 +1,1 @@
+select category, case when price >= 1010 then 'high' when price >= 220 then 'mid' else 'low' end price_bucket, date_format(launch_date, 'yyyy-MM') launch_month, round(stddev(stock_qty), 2) stddev_stock_qty, count(*) cnt, count(distinct price) unique_brands from products group by category, price_bucket, launch_month order by category;

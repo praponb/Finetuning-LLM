@@ -1,0 +1,1 @@
+select id, amount, is_flagged, ntile(4) over (partition by account_id order by amount desc, id) as amount_bucket, count(amount) over w_ordered as txn_type_count_amount, count(amount) over (order by cast(txn_time as bigint) range between 7776000 preceding and current row) as amount_count_90d from transactions window w_ordered as (partition by txn_type, merchant)

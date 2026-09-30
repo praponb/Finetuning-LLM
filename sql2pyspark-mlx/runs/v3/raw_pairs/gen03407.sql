@@ -1,0 +1,1 @@
+select date_trunc('MONTH', launch_date) launch_month, sum(cost) total_cost, count(*) cnt, round(sum(cost) * 100.0 / sum(sum(cost)) over (), 2) as pct_of_total from products group by date_trunc('MONTH', launch_date) order by launch_month desc limit 1

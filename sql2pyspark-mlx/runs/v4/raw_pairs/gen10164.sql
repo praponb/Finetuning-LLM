@@ -1,0 +1,1 @@
+SELECT s.customer_id, t.min_event_time FROM sessions s LEFT JOIN (SELECT session_id, MIN(event_time) AS min_event_time FROM web_events WHERE HOUR(event_time) BETWEEN 12 AND 17 GROUP BY session_id) t ON s.id = t.session_id ORDER BY min_event_time

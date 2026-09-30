@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.country, ss.total_duration_sec FROM sessions s JOIN session_stats ss ON s.id = ss.session_id ORDER BY s.id DESC

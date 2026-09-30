@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM transactions QUALIFY RANK() OVER (PARTITION BY account_id ORDER BY txn_time DESC NULLS FIRST) = 1) SELECT id, txn_type, amount, txn_time, merchant, is_flagged, CASE WHEN txn_type RLIKE '^(DEBIT|CREDIT)$' THEN 'CORE' ELSE 'PRIORITY' END AS txn_type_zone FROM latest ORDER BY txn_type, merchant;

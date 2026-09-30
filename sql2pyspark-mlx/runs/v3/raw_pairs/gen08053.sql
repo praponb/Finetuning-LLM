@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, MIN(launch_date) AS first_launch_date, COUNT(*) AS total_count FROM products WHERE brand NOT IN ('Acme', 'Stark', 'Initech') GROUP BY supplier_id) SELECT s.supplier_name, ss.first_launch_date, ss.total_count FROM suppliers s JOIN supplier_summary ss ON s.id = ss.supplier_id WHERE ss.total_count >= 7 ORDER BY total_count DESC;

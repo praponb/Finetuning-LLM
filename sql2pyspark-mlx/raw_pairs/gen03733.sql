@@ -1,0 +1,1 @@
+SELECT id, name, email, country, segment, credit_limit, LEAD(age) OVER w_hist AS next_age, LAG(age) OVER w_hist AS prev_age, LEAD(credit_limit) OVER w_hist AS next_credit_limit, ROW_NUMBER() OVER w_hist AS event_seq FROM customers WINDOW w_hist AS (PARTITION BY segment ORDER BY age, id)

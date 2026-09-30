@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, MIN(balance) AS min_balance FROM accounts WHERE account_type IN ('CREDIT', 'CHECKING') GROUP BY customer_id) SELECT c.id, c.signup_date, cs.min_balance FROM customers c LEFT OUTER JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.min_balance >= 57000;

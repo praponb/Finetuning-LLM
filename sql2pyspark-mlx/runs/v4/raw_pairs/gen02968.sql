@@ -1,0 +1,1 @@
+SELECT oi.product_id, oi.quantity, o.amount, o.status, c.segment, c.credit_limit FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id LEFT OUTER JOIN customers c ON o.customer_id = c.id WHERE oi.product_id IN (5, 6, 10, 40) ORDER BY credit_limit, c.segment DESC;

@@ -1,0 +1,1 @@
+with cleaned as (select *, date_add(sale_date, 20) as sale_date_plus_20d, last_day(sale_date) as sale_date_month_end from store_sales where sale_date between '2024-04-01' and '2025-06-01') select store_id, product_id from cleaned intersect all select store_id, product_id from store_sales where units is not null;

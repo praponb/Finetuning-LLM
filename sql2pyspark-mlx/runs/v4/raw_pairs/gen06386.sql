@@ -1,0 +1,1 @@
+WITH joined AS (SELECT e.*, d.opened_date FROM orders e INNER JOIN stores d ON e.store_id = d.id) SELECT CASE WHEN discount >= 0.34 THEN 'LARGE' ELSE 'SMALL' END AS discount_tier, COUNT_IF(channel = 'mobile') AS mobile_events, COUNT(*) AS num_rows, GROUPING_ID() AS gid FROM joined GROUP BY ROLLUP (CASE WHEN discount >= 0.34 THEN 'LARGE' ELSE 'SMALL' END) ORDER BY num_rows DESC

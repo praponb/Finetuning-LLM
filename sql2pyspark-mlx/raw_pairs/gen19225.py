@@ -1,0 +1,22 @@
+from pyspark.sql import functions as F
+
+account_stats = (
+    df_transactions
+    .groupBy("account_id")
+    .agg(
+        F.sum(F.when(F.col("merchant") == "Starbucks", 1).otherwise(0)).alias("starbucks_count"),
+    )
+)
+
+result = (
+    df_accounts.alias("a")
+    .join(account_stats.alias("as"), F.col("a.id") == F.col("as.account_id"), "inner")
+    .select(
+        F.col("a.id"),
+        F.col("a.opened_date"),
+        F.col("a.balance"),
+        F.col("as.starbucks_count"),
+    )
+    .orderBy("starbucks_count", "id")
+    .limit(5)
+)

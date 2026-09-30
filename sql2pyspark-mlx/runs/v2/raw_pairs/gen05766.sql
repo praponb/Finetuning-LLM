@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range, AVG(quantity) AS avg_quantity FROM inventory WHERE quantity <= 182 GROUP BY product_id) SELECT p.brand, ps.quantity_range, ps.avg_quantity FROM products p JOIN product_summary ps ON p.id = ps.product_id ORDER BY p.brand;

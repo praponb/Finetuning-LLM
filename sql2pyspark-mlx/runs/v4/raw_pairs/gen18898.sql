@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, supplier_id, stock_qty, category, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY stock_qty DESC, id) AS pos FROM products) SELECT * FROM ranked WHERE pos <= 3 ORDER BY id ASC

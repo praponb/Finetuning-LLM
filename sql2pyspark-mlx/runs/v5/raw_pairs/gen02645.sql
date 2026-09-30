@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT p.category, p.brand, COUNT(*) AS num_rows, MIN(src.revenue) AS min_revenue, MIN(src.units) AS min_units, GROUPING_ID() AS level_id FROM store_sales src INNER JOIN products p ON src.product_id = p.id GROUP BY GROUPING SETS ((p.category, p.brand), (p.category))) SELECT category, brand, num_rows, min_units, level_id FROM dim_totals

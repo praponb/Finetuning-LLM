@@ -1,0 +1,1 @@
+SELECT QUARTER(s.opened_date) AS opened_quarter, s.region, SUM(i.quantity) AS total_quantity FROM inventory i INNER JOIN stores s ON s.id = i.store_id GROUP BY QUARTER(s.opened_date), s.region HAVING SUM(i.quantity) >= 870

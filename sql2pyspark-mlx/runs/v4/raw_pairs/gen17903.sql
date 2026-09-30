@@ -1,0 +1,1 @@
+SELECT CASE WHEN age >= 68 THEN 'high' WHEN age >= 34 THEN 'mid' ELSE 'low' END AS age_bucket, DATE_TRUNC('MONTH', signup_date) AS signup_month, segment, COUNT(DISTINCT credit_limit) AS unique_citys FROM customers WHERE credit_limit < 12800 GROUP BY 1, 2, 3 HAVING COUNT(DISTINCT credit_limit) > 2 ORDER BY signup_month DESC, age_bucket, segment LIMIT 10;

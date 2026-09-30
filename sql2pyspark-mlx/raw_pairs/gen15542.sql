@@ -1,0 +1,1 @@
+SELECT id, browser, country, FIRST_VALUE(browser) IGNORE NULLS OVER (PARTITION BY country, browser ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) first_known_browser FROM sessions WHERE device = 'desktop';

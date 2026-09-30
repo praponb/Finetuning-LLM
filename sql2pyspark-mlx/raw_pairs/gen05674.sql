@@ -1,0 +1,1 @@
+with cleaned as (select id, store_id, product_id, sale_date, cast(units as string) as units_str from store_sales where sale_date > date '2023-07-12') select src.id, src.store_id, src.product_id, p.sqft from cleaned src inner join stores p on src.store_id = p.id;

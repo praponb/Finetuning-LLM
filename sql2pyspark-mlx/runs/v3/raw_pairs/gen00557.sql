@@ -1,0 +1,1 @@
+SELECT product_id, unit_price_count FROM (SELECT product_id, COUNT(unit_price) AS unit_price_count FROM order_items WHERE product_id IN (6, 14, 17) GROUP BY product_id) AS agg WHERE unit_price_count >= 9 ORDER BY product_id LIMIT 3;

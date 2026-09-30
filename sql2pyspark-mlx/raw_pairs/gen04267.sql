@@ -1,0 +1,1 @@
+SELECT MONTH(start_date) AS start_month, status, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions WHERE monthly_fee BETWEEN 140 AND 210 GROUP BY 1, 2 ORDER BY max_monthly_fee DESC, start_month DESC, status ASC LIMIT 1

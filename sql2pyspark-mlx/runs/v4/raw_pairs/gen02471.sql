@@ -1,0 +1,1 @@
+select s.id, s.store_name, count(i.id) as inventory_count, max(i.quantity) - min(i.quantity) as quantity_range, count(distinct i.quantity) as unique_products from stores s left join inventory i on s.id = i.store_id where s.opened_date < '2025-03-16' group by s.id, s.store_name order by unique_products desc;

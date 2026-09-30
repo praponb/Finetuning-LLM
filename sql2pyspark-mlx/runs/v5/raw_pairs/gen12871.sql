@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATE_FORMAT(event_time, 'yyyy-MM') AS event_time_label, DATE_TRUNC('YEAR', event_time) AS event_time_period FROM web_events WHERE page = '/checkout') SELECT a.*, p.country, p.browser, p.device FROM filtered a INNER JOIN sessions p ON a.session_id = p.id WHERE p.started_at >= '2024-12-01';

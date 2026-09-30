@@ -1,0 +1,1 @@
+with department_summary as (select dept_id, count(*) as cnt from employees group by dept_id) select d.id, d.location, d.dept_name, ds.cnt from departments d join department_summary ds on d.id = ds.dept_id

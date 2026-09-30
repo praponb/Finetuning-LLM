@@ -1,0 +1,1 @@
+with with_dims as (select src.id, src.order_id, src.carrier, src.shipped_date, src.status, b.status as order_status from shipments src left join orders b on src.order_id = b.id) select s.id, s.order_id, s.shipped_date, s.status, s.order_status, (select max(t2.cost) from shipments t2 where t2.order_id = s.order_id) as max_shipment_cost from with_dims s;

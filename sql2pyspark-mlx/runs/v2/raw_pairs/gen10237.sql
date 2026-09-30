@@ -1,0 +1,1 @@
+SELECT id, store_id, units, product_id, revenue, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY units DESC, id) AS row_num, SUM(revenue) OVER (PARTITION BY product_id) AS product_id_sum_revenue FROM store_sales;

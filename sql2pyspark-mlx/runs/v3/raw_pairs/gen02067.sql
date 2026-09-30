@@ -1,0 +1,1 @@
+select date_trunc('MONTH', start_date) as start_month, sum(monthly_fee) as total_monthly_fee from subscriptions where (status != 'EXPIRED' and status = 'ACTIVE') or plan = 'enterprise' group by 1 having sum(monthly_fee) > 1060 order by total_monthly_fee desc

@@ -1,0 +1,1 @@
+SELECT p.id, p.product_name, p.price, p.launch_date FROM products p WHERE EXISTS (SELECT 1 FROM store_sales ss WHERE ss.product_id = p.id AND MONTH(ss.sale_date) IN (3, 7, 9)) ORDER BY id DESC, p.price LIMIT 50

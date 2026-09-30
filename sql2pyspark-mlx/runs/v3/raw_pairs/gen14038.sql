@@ -1,0 +1,1 @@
+WITH filtered_inventory AS (SELECT * FROM inventory WHERE last_restock < '2023-04-01' AND store_id IN (1, 2, 4)), inventory_stats AS (SELECT product_id, COUNT(*) AS inventory_count, MAX(last_restock) AS latest_last_restock FROM filtered_inventory GROUP BY product_id) SELECT product_id, inventory_count, latest_last_restock FROM inventory_stats WHERE inventory_count > 5;

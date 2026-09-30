@@ -1,0 +1,1 @@
+SELECT t.account_id, a.status, a.opened_date, c.name, c.is_active, INITCAP(TRIM(a.account_type)) AS account_type_title FROM transactions t INNER JOIN accounts a ON t.account_id = a.id LEFT OUTER JOIN customers c ON a.customer_id = c.id;

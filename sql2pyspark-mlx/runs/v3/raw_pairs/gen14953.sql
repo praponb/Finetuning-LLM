@@ -1,0 +1,1 @@
+SELECT d.location, d.dept_name, t.max_salary, t.first_hire_date FROM departments d LEFT OUTER JOIN (SELECT dept_id, MAX(salary) AS max_salary, MIN(hire_date) AS first_hire_date FROM employees GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY d.dept_name DESC, t.first_hire_date ASC;

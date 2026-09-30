@@ -1,0 +1,1 @@
+SELECT id, reading_ts, temp_c, status_bits, firmware, RANK() OVER (PARTITION BY device_code ORDER BY pressure NULLS LAST) AS pressure_rank, SUM(pressure) OVER (PARTITION BY device_code ORDER BY reading_ts, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_pressure FROM device_readings

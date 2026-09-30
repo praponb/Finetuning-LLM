@@ -1,0 +1,1 @@
+WITH FilteredEmployees AS (SELECT * FROM employees WHERE hire_date < '2025-08-02' AND full_name LIKE '%MILLER%' AND job_title IN ('Director', 'Analyst')), EmployeesStats AS (SELECT is_remote, level, MIN(hire_date) AS first_hire_date FROM FilteredEmployees GROUP BY is_remote, level) SELECT is_remote, level FROM EmployeesStats ORDER BY level

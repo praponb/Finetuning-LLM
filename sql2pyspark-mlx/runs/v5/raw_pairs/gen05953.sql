@@ -1,0 +1,1 @@
+SELECT ss.revenue, s.sqft, s.store_name, p.supplier_id FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id WHERE s.city IN ('London', 'Singapore', 'Tokyo') AND ss.units BETWEEN 11 AND 33 ORDER BY revenue;

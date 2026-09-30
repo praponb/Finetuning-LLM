@@ -1,0 +1,1 @@
+with filtered as (select *, round(discount_pct, 2) as discount_pct_rounded from promotions where starts_on > date '2023-09-15' and ends_on < '2024-12-01') select promo_code, id from filtered except all select promo_code, id from promotions where discount_pct < 0.14;

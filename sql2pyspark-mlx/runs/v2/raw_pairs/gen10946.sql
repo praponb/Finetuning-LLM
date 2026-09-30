@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, COUNT(sqft) AS sqft_count, COUNT(DISTINCT sqft) AS unique_regions FROM stores WHERE city = 'New York' GROUP BY QUARTER(opened_date) HAVING COUNT(DISTINCT sqft) < 4

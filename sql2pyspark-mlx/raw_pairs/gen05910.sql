@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, plan, start_date, status, DATE_ADD(start_date, 58) AS start_date_plus_58d FROM subscriptions WHERE end_date > DATE '2023-07-19' AND customer_id IS NOT NULL) SELECT status, id FROM cleaned EXCEPT SELECT status, id FROM subscriptions WHERE monthly_fee BETWEEN 80 AND 180;

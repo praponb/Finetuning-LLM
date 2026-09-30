@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.product_id, ss.units, ss.product_id AS store_sale_product_id, ss.revenue, ROUND(ss.units / ss.revenue, 2) AS revenue_per_unit FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE NOT (i.product_id IN (1, 3, 9, 10) OR i.last_restock >= '2025-10-14');

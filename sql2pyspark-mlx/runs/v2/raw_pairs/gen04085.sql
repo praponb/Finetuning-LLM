@@ -1,0 +1,1 @@
+SELECT id, page, event_time, session_id FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time DESC, id) AS row_num FROM web_events WHERE HOUR(event_time) BETWEEN 7 AND 12) AS t WHERE row_num <= 3;

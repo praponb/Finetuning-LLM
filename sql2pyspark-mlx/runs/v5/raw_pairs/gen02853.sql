@@ -1,0 +1,1 @@
+SELECT transactions.amount, transactions.account_id, accounts.balance, customers.segment FROM transactions FULL OUTER JOIN accounts ON transactions.account_id = accounts.id INNER JOIN customers ON accounts.customer_id = customers.id WHERE accounts.customer_id IN (11, 23, 30) ORDER BY account_id DESC

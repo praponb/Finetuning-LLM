@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, SUM(CASE WHEN page = '/product' THEN duration_sec ELSE 0 END) AS product_duration_sec, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY 1 HAVING total_duration_sec < 2600

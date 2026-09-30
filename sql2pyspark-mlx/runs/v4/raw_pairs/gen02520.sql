@@ -1,0 +1,1 @@
+select customer_id, max(shipping_fee) as max_shipping_fee, sum(shipping_fee) as total_shipping_fee, min(amount) as min_amount from orders where channel in ('web', 'partner', 'store') group by customer_id having min_amount > 1090;

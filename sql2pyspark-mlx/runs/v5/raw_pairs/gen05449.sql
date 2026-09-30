@@ -1,0 +1,1 @@
+SELECT id, order_id, carrier, delivered_date, status, DENSE_RANK() OVER (ORDER BY cost DESC NULLS LAST) AS cost_dense_rank, LAST_VALUE(cost) IGNORE NULLS OVER (ORDER BY cost, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_cost FROM shipments;

@@ -1,0 +1,1 @@
+select city, case when rating >= 3.8 then 'high' when rating >= 2.0 then 'mid' else 'low' end as rating_bucket, avg(rating) as avg_rating, count(rating) as rating_count from suppliers group by city, rating_bucket order by avg_rating;

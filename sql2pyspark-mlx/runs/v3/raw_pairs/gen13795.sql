@@ -1,0 +1,1 @@
+with numbered as (select id, product_id, sale_date, units, row_number() over (partition by product_id order by sale_date desc, id) rnk from store_sales) select id, product_id, sale_date, units from numbered where rnk <= 2 order by 1 desc

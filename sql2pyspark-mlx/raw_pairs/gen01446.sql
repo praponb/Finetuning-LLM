@@ -1,0 +1,1 @@
+select dept_name, case when budget >= 3755000 then 'high' when budget >= 1461000 then 'mid' else 'low' end as budget_bucket, count(distinct budget) as unique_locations from departments group by dept_name, budget_bucket order by dept_name, unique_locations;

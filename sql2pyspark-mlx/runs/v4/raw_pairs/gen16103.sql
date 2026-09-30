@@ -1,0 +1,1 @@
+WITH subscriptions_by_customer AS (SELECT customer_id, MIN(end_date) AS min_end_date FROM subscriptions WHERE start_date <= '2025-08-01' GROUP BY customer_id) SELECT c.city, sbc.min_end_date FROM customers c INNER JOIN subscriptions_by_customer sbc ON c.id = sbc.customer_id ORDER BY min_end_date DESC;

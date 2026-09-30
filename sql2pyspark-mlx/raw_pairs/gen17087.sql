@@ -1,0 +1,1 @@
+SELECT p.cost, p.category, p.supplier_id, oi.order_id, oi.product_id, oi.quantity FROM products p LEFT JOIN order_items oi ON oi.product_id = p.id WHERE SIZE(p.tags) > 1 OR oi.product_id = 20 ORDER BY category, p.cost;

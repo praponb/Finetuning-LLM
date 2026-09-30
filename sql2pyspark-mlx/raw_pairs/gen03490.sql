@@ -1,0 +1,1 @@
+select ss.id, ss.revenue, p.cost, p.category, s.city, s.country from store_sales ss full outer join products p on ss.product_id = p.id left outer join suppliers s on p.supplier_id = s.id where ss.revenue between 2300 and 3800 order by p.category

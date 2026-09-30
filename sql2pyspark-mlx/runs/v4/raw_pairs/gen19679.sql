@@ -1,0 +1,1 @@
+WITH RecentEmployees AS (SELECT * FROM employees WHERE level = 'L4'), summary AS (SELECT dept_id, COUNT(*) total_count, MAX(hire_date) last_hire_date FROM RecentEmployees GROUP BY dept_id) SELECT * FROM summary WHERE total_count < 6 ORDER BY dept_id DESC LIMIT 10;

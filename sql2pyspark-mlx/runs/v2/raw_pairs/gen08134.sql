@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM employees WHERE manager_id IS NULL), agg AS (SELECT job_title, DATE_TRUNC('MONTH', hire_date) AS hire_month, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM src GROUP BY job_title, DATE_TRUNC('MONTH', hire_date)) SELECT * FROM agg ORDER BY hire_month, job_title LIMIT 5

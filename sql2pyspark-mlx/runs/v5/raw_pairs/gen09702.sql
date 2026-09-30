@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory WHERE quantity BETWEEN 163 AND 179 GROUP BY store_id) SELECT s.id, s.store_name, st.avg_quantity FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id ORDER BY avg_quantity DESC

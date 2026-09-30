@@ -1,0 +1,1 @@
+SELECT id, opened_date, status, ROW_NUMBER() OVER (ORDER BY opened_date DESC, id) AS row_num, LAG(opened_date, 1) OVER (PARTITION BY status ORDER BY opened_date, id) AS prev_opened_date FROM accounts ORDER BY prev_opened_date DESC

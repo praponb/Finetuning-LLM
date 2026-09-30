@@ -1,0 +1,1 @@
+SELECT method, MIN(amount) AS min_amount, MAX(amount) - MIN(amount) AS amount_range, MAX(paid_at) AS last_paid_at FROM payments WHERE order_id IS NULL AND method IN ('bank_transfer', 'cash') GROUP BY method HAVING min_amount < 640 ORDER BY 3 DESC;

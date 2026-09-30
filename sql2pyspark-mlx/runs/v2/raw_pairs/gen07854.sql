@@ -1,0 +1,1 @@
+WITH shipments_by_order AS (SELECT order_id, SUM(cost) AS total_cost, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM shipments WHERE delivered_date < '2023-11-04' GROUP BY order_id) SELECT o.id, o.channel, sbo.total_cost, sbo.status_values FROM orders o INNER JOIN shipments_by_order sbo ON o.id = sbo.order_id ORDER BY o.channel DESC, id LIMIT 3;

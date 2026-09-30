@@ -1,0 +1,1 @@
+WITH valid_products AS (SELECT * FROM products WHERE ARRAY_CONTAINS(tags, 'eco') OR supplier_id IS NULL), products_stats AS (SELECT category, brand, SUM(CASE WHEN brand = 'Initech' THEN price ELSE 0 END) AS initech_price FROM valid_products GROUP BY category, brand) SELECT category, brand, initech_price FROM products_stats WHERE initech_price >= 55 ORDER BY category ASC

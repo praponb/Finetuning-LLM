@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, session_id, page, event_time, CAST(duration_sec AS STRING) AS duration_sec_num FROM web_events WHERE event_time > TIMESTAMP '2023-07-01 12:00:00') SELECT id, event_time, duration_sec_num FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id, page ORDER BY event_time DESC NULLS FIRST, id ASC) AS dedup_rank FROM valid) t WHERE dedup_rank = 1

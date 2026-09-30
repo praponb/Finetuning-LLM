@@ -1,0 +1,1 @@
+SELECT id, account_id, txn_type, is_flagged, NTILE(4) OVER (ORDER BY amount DESC, id) AS amount_bucket, SUM(amount) OVER (PARTITION BY YEAR(txn_time) ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_amount, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount DESC, id) AS row_seq FROM transactions;

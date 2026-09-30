@@ -1,0 +1,1 @@
+SELECT page, total_duration_sec FROM (SELECT page, SUM(duration_sec) total_duration_sec FROM web_events WHERE HOUR(event_time) BETWEEN 6 AND 10 GROUP BY page) t WHERE total_duration_sec >= 800 ORDER BY total_duration_sec DESC, page;

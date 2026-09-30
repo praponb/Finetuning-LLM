@@ -1,0 +1,1 @@
+with store_totals as (select store_id, avg(revenue) as avg_revenue from store_sales group by store_id) select s.region, st.avg_revenue from stores s join store_totals st on s.id = st.store_id where st.avg_revenue > 1500 order by avg_revenue desc;

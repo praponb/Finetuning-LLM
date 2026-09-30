@@ -1,0 +1,1 @@
+select product_id, count(unit_price) unit_price_count, min(quantity) min_quantity, count(distinct unit_price) unique_orders from order_items where order_id in (9, 30) or quantity >= 3 group by product_id order by min_quantity desc;

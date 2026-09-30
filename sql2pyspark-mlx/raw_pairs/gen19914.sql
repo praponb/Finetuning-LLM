@@ -1,0 +1,1 @@
+select dim.status, dim.channel, count(*) as cnt, sum(a.quantity) as total_quantity, grouping_id() as level_id from order_items a inner join orders dim on a.order_id = dim.id group by rollup (dim.status, dim.channel) order by total_quantity desc;

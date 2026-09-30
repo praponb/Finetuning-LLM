@@ -1,0 +1,1 @@
+SELECT status, CASE WHEN balance >= 85000 THEN 'high' WHEN balance >= 17000 THEN 'mid' ELSE 'low' END AS balance_bucket, MAX(balance) AS max_balance FROM accounts WHERE opened_date BETWEEN '2024-06-01' AND '2024-11-01' GROUP BY status, CASE WHEN balance >= 85000 THEN 'high' WHEN balance >= 17000 THEN 'mid' ELSE 'low' END HAVING max_balance < 28000

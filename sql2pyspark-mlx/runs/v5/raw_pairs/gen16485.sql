@@ -1,0 +1,1 @@
+SELECT c.city, MAX(we.duration_sec) max_duration_sec, MIN(we.event_time) min_event_time FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id GROUP BY c.city ORDER BY max_duration_sec DESC

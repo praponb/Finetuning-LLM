@@ -1,0 +1,1 @@
+WITH recent_customers AS (SELECT * FROM customers WHERE is_active), CustomersStats AS (SELECT country, segment, AVG(age) AS avg_age, SUM(CASE WHEN country = 'JP' THEN 1 ELSE 0 END) AS jp_count FROM recent_customers GROUP BY country, segment) SELECT country, segment, jp_count FROM CustomersStats WHERE avg_age > 47;

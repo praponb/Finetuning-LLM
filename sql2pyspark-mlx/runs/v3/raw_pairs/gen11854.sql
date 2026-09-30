@@ -1,0 +1,1 @@
+SELECT id, account_type, opened_date, customer_id, balance, NTILE(3) OVER (PARTITION BY account_type ORDER BY opened_date, id) AS quartile, LEAD(balance, 1) OVER (PARTITION BY customer_id ORDER BY opened_date, id) AS next_balance FROM accounts WHERE customer_id IN (6, 19) ORDER BY customer_id DESC;

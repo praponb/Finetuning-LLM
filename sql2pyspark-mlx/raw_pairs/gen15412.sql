@@ -1,0 +1,1 @@
+SELECT p.category, MAX(i.last_restock) AS latest_last_restock, COUNT(DISTINCT i.quantity) AS unique_products FROM inventory i JOIN products p ON i.product_id = p.id RIGHT JOIN stores s ON i.store_id = s.id GROUP BY p.category ORDER BY unique_products DESC;

@@ -1,0 +1,1 @@
+SELECT stores.region, MIN(store_sales.sale_date) AS first_sale_date, COUNT(store_sales.revenue) AS revenue_count FROM store_sales RIGHT JOIN stores ON stores.id = store_sales.store_id JOIN products ON store_sales.product_id = products.id GROUP BY stores.region ORDER BY first_sale_date, region LIMIT 1;

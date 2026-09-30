@@ -1,0 +1,1 @@
+SELECT c.id, c.age, t.unique_countrys FROM customers c JOIN (SELECT customer_id, COUNT(DISTINCT country) AS unique_countrys FROM sessions WHERE device IN ('tablet', 'mobile', 'desktop') GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY age

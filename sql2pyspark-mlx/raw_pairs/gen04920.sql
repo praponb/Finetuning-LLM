@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT c.country, a.status, COUNT(*) AS num_rows, ROUND(SUM(a.monthly_fee), 2) AS total_monthly_fee FROM subscriptions a INNER JOIN customers c ON a.customer_id = c.id GROUP BY ROLLUP (c.country, a.status)) SELECT country, num_rows, CASE WHEN country RLIKE '^(US|DE)$' THEN 'GROUP_A' ELSE 'PRIORITY' END AS country_zone FROM rollup_totals ORDER BY num_rows

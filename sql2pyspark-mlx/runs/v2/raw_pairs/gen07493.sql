@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, COUNT(*) AS cnt FROM store_sales GROUP BY product_id) SELECT p.id, p.launch_date, ps.cnt FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id WHERE ps.cnt >= 4

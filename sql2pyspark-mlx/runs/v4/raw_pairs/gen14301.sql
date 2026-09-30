@@ -1,0 +1,1 @@
+SELECT id, channel, promo_code, starts_on, ends_on, discount_pct, RANK() OVER (PARTITION BY channel, promo_code ORDER BY discount_pct) AS discount_pct_rank, RANK() OVER (PARTITION BY channel ORDER BY discount_pct) AS discount_pct_rank_2 FROM promotions

@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, SUM(quantity) total_quantity, ROUND(STDDEV(quantity), 2) stddev_quantity FROM inventory GROUP BY product_id) SELECT p.id, p.stock_qty, ps.total_quantity, ps.stddev_quantity FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id;

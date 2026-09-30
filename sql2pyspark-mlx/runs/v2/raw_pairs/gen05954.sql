@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', orders.order_date) AS order_month, orders.status, COUNT(DISTINCT shipments.cost) AS unique_orders FROM shipments INNER JOIN orders ON orders.id = shipments.order_id RIGHT JOIN customers ON orders.customer_id = customers.id GROUP BY DATE_TRUNC('MONTH', orders.order_date), orders.status ORDER BY status;

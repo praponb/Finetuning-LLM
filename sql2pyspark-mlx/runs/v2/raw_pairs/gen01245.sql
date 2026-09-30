@@ -1,0 +1,1 @@
+SELECT o.status, AVG(oi.quantity) AS avg_quantity FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id INNER JOIN products p ON oi.product_id = p.id GROUP BY o.status HAVING AVG(oi.quantity) > 4.1;

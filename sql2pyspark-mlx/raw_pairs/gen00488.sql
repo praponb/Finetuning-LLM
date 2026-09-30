@@ -1,0 +1,1 @@
+SELECT CASE WHEN salary >= 121000 THEN 'high' WHEN salary >= 58000 THEN 'mid' ELSE 'low' END AS salary_bucket, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE NOT is_remote AND dept_id IN (14, 18) GROUP BY salary_bucket

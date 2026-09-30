@@ -1,0 +1,1 @@
+SELECT s.id, s.status, s.end_date, c.segment, c.country, c.credit_limit FROM subscriptions s RIGHT JOIN customers c ON c.id = s.customer_id WHERE s.plan <> 'premium' AND MONTH(s.start_date) IN (1, 2, 9);

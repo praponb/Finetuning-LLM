@@ -1,0 +1,1 @@
+select e.id, e.dept_id as employee_dept_id, e.salary as employee_salary, e.level as employee_level, m.full_name as manager_full_name, m.level as manager_level, m.hire_date as manager_hire_date from employees e left join employees m on e.manager_id = m.id

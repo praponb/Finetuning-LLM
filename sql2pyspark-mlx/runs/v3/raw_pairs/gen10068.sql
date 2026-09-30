@@ -1,0 +1,1 @@
+select id, channel, customer_id, shipping_fee * discount as shipping_fee_times_discount, initcap(trim(status)) as status_title from orders where channel in ('store', 'partner', 'mobile') and store_id in (7, 17, 26) order by status_title, id limit 10;

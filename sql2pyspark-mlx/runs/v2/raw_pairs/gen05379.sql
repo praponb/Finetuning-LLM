@@ -1,0 +1,1 @@
+WITH inventory_by_store AS (SELECT store_id, MAX(quantity) AS max_quantity, MIN(last_restock) AS min_last_restock FROM inventory GROUP BY store_id) SELECT s.id, s.store_name, s.opened_date, ibs.max_quantity, ibs.min_last_restock FROM stores s JOIN inventory_by_store ibs ON s.id = ibs.store_id ORDER BY max_quantity DESC, store_name

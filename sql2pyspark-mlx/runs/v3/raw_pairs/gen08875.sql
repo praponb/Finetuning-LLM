@@ -1,0 +1,1 @@
+SELECT e.id, e.email AS employee_email, e.manager_id AS employee_manager_id, m.email AS manager_email, m.salary AS manager_salary, INITCAP(TRIM(e.level)) AS level_title FROM employees e INNER JOIN employees m ON e.manager_id = m.id

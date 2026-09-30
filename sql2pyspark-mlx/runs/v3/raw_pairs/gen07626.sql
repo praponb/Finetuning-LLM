@@ -1,0 +1,1 @@
+select case when dept_name in ('Engineering', 'Legal') then 'core' else 'other' end as dept_name_group, case when budget >= 3956000 then 'high' when budget >= 1231000 then 'mid' else 'low' end as budget_bucket, count(*) as total_count from departments group by 1, 2 having count(*) >= 2 order by dept_name_group asc;

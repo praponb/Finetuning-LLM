@@ -1,0 +1,1 @@
+select id, created_at, coupon_codes, ship_to, attributes, attributes['device'] as device, exists(coupon_codes, c -> c like 'W%') as has_welcome_code, array_join(array_sort(coupon_codes), ',') as coupons_text, transform(filter(items, item -> item.promo is not null), item -> struct(item.product_id as pid, round(item.price * 0.9, 2) as discounted_price)) as promo_lines from carts;

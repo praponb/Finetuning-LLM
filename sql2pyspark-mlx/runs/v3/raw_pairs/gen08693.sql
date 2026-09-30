@@ -1,0 +1,1 @@
+SELECT p.supplier_id, COUNT(DISTINCT oi.quantity) AS unique_products, COUNT(oi.unit_price) AS unit_price_count FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id IN (4, 21) GROUP BY p.supplier_id

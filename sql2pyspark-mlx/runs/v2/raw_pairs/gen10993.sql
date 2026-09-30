@@ -1,0 +1,1 @@
+SELECT method, MONTH(paid_at) AS paid_month, MAX(paid_at) AS latest_paid_at, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments WHERE TO_DATE(paid_at) >= '2024-06-01' OR paid_at >= '2023-05-13' GROUP BY method, MONTH(paid_at) ORDER BY paid_month, stddev_amount

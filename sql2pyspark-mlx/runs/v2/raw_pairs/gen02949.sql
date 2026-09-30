@@ -1,0 +1,1 @@
+with ProductTotals as (select product_id, min(revenue) as min_revenue, avg(units) as avg_units from store_sales where store_id in (1, 6) group by product_id) select p.id, p.category, P.min_revenue, P.avg_units from products p left join ProductTotals P on p.id = P.product_id where P.min_revenue >= 3800;

@@ -1,0 +1,1 @@
+WITH ranked_suppliers AS (SELECT id, city, rating, DENSE_RANK() OVER (PARTITION BY city ORDER BY rating) pos FROM suppliers WHERE city IN ('Bangkok', 'London', 'Tokyo')) SELECT id, city, rating FROM ranked_suppliers WHERE pos <= 5

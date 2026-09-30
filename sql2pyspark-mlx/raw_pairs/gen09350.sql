@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, unit_price, LAG(unit_price, 1) OVER (PARTITION BY product_id ORDER BY quantity, id) AS prev_unit_price, SUM(quantity) OVER (PARTITION BY product_id ORDER BY unit_price, id) AS running_quantity FROM order_items;

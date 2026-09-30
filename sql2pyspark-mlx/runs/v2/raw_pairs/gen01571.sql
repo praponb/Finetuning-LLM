@@ -1,0 +1,1 @@
+WITH ranked_products AS (SELECT id, category, stock_qty, brand, ROW_NUMBER() OVER (PARTITION BY category ORDER BY stock_qty DESC, id) AS pos FROM products) SELECT id, category, stock_qty, brand FROM ranked_products WHERE pos <= 1

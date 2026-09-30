@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('IN_TRANSIT', 'DELIVERED') THEN 'core' ELSE 'other' END AS status_group, COUNT(CASE WHEN carrier = 'Flash' THEN 1 END) AS flash_count, MAX(cost) AS max_cost FROM shipments GROUP BY 1 ORDER BY flash_count DESC, status_group LIMIT 3;

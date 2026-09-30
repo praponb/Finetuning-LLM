@@ -1,0 +1,1 @@
+SELECT status, YEAR(order_date) AS order_year, COUNT(CASE WHEN channel = 'mobile' THEN 1 END) AS mobile_count FROM orders WHERE customer_id IN (1, 30, 39) AND store_id IS NOT NULL AND discount BETWEEN 0.17 AND 0.38 GROUP BY status, YEAR(order_date) ORDER BY mobile_count;

@@ -1,0 +1,1 @@
+select date_trunc('quarter', hire_date) as quarter_start, count(distinct level) as distinct_levels, round(avg(salary), 2) as avg_salary from employees group by 1 having count(distinct level) >= 1 order by distinct_levels desc nulls last;

@@ -1,0 +1,1 @@
+select s.city, min(ss.revenue) as min_revenue from store_sales ss left outer join products p on ss.product_id = p.id join stores s on ss.store_id = s.id where lower(s.store_name) like '%irp%' group by s.city having min(ss.revenue) >= 2500 order by min_revenue;

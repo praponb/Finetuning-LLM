@@ -1,0 +1,1 @@
+WITH TransactionsByAccount AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_merchants FROM transactions WHERE txn_type = 'REFUND' GROUP BY account_id) SELECT a.id, a.customer_id, T.unique_merchants FROM accounts a LEFT JOIN TransactionsByAccount T ON a.id = T.account_id

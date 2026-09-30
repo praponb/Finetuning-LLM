@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT id FROM accounts EXCEPT DISTINCT SELECT id FROM accounts WHERE balance < 67000), verified AS (SELECT s.* FROM accounts s INNER JOIN matched_keys k ON s.id = k.id) SELECT id, account_type, status FROM verified ORDER BY id DESC NULLS FIRST

@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(opened_date) < 2024 THEN 'before_2024' WHEN YEAR(opened_date) = 2024 THEN '2024' ELSE 'after_2024' END AS opened_cohort, COUNT(*) AS account_count, MIN(balance) AS min_balance, COUNT(DISTINCT balance) AS unique_customers FROM accounts GROUP BY opened_cohort

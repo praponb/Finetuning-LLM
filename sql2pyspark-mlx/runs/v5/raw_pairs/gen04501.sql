@@ -1,0 +1,1 @@
+SELECT location, legal_count, stddev_budget FROM (SELECT location, COUNT(CASE WHEN dept_name = 'Legal' THEN 1 END) AS legal_count, ROUND(STDDEV(budget), 2) AS stddev_budget FROM departments WHERE budget <= 3944000 GROUP BY location) AS x WHERE legal_count > 7 ORDER BY legal_count DESC;

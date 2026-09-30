@@ -1,0 +1,1 @@
+SELECT e.id, e.email AS employee_email, e.manager_id AS employee_manager_id, m.manager_id AS manager_manager_id, m.job_title AS manager_job_title FROM employees e JOIN employees m ON e.manager_id = m.id WHERE m.dept_id IN (19, 39) AND e.manager_id IS NULL;

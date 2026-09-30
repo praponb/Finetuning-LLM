@@ -1,0 +1,1 @@
+WITH StoreSummary AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_products, SUM(quantity) AS total_quantity FROM inventory WHERE last_restock >= '2023-04-17' GROUP BY store_id) SELECT s.city, s.region, S.unique_products, S.total_quantity FROM stores s INNER JOIN StoreSummary S ON s.id = S.store_id ORDER BY region ASC, S.unique_products ASC

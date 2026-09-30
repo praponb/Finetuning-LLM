@@ -1,0 +1,1 @@
+SELECT MAX(salary) - MIN(salary) AS salary_range, SUM(CASE WHEN job_title = 'Manager' THEN salary ELSE 0 END) AS manager_salary FROM employees WHERE is_remote AND (UPPER(full_name) LIKE '%OAH%' OR LENGTH(email) >= 14);

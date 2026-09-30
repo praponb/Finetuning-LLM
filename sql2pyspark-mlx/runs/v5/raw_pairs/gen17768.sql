@@ -1,0 +1,1 @@
+SELECT e.id, e.hire_date AS employee_hire_date, e.is_remote AS employee_is_remote, m.level AS manager_level, m.salary AS manager_salary FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE e.dept_id IN (4, 8, 10, 15) AND m.is_remote ORDER BY manager_salary DESC, id LIMIT 1;

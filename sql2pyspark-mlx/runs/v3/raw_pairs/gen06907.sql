@@ -1,0 +1,1 @@
+SELECT event_type, add_to_cart_count, latest_event_time FROM (SELECT event_type, SUM(CASE WHEN event_type = 'add_to_cart' THEN 1 ELSE 0 END) add_to_cart_count, MAX(event_time) latest_event_time FROM web_events GROUP BY event_type) sub WHERE add_to_cart_count < 79 ORDER BY add_to_cart_count DESC, event_type ASC LIMIT 10;

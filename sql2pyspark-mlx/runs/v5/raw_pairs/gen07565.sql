@@ -1,0 +1,1 @@
+with deduped as (select *, row_number() over (partition by device_code order by pressure desc, id) as row_num from device_readings qualify row_num = 1) select id, device_code, reading_ts, status_bits, row_num from deduped order by device_code desc, status_bits

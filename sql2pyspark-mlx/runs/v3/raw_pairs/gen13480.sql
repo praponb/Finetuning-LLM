@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.balance, accounts.customer_id FROM accounts WHERE accounts.account_type IN ('SAVINGS', 'CREDIT', 'LOAN') AND NOT EXISTS (SELECT 1 FROM transactions WHERE transactions.account_id = accounts.id AND transactions.txn_type IN ('REFUND', 'FEE', 'CREDIT'));

@@ -1,0 +1,1 @@
+WITH gaps AS (SELECT *, CASE WHEN paid_at - LAG(paid_at) OVER (PARTITION BY method ORDER BY paid_at ASC, id ASC) > INTERVAL '60' DAY THEN 1 ELSE 0 END AS new_group_flag FROM payments) SELECT id, order_id, method, paid_at, SUM(new_group_flag) OVER (PARTITION BY method ORDER BY paid_at ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS session_no FROM gaps

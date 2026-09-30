@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, o.amount, c.name, c.age FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE o.store_id IS NULL AND oi.quantity = 6

@@ -1,0 +1,1 @@
+select products.category, count(inventory.quantity) quantity_count from inventory join products on inventory.product_id = products.id full outer join suppliers on products.supplier_id = suppliers.id group by products.category

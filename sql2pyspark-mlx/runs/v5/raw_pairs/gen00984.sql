@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, region, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, MAX(sqft) - MIN(sqft) AS sqft_range FROM stores WHERE sqft >= 12548 GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM'), region) AS sub WHERE sqft_range >= 29;

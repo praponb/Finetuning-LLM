@@ -1,0 +1,1 @@
+SELECT id, promo_code, ends_on, LEAD(discount_pct) OVER (PARTITION BY channel, promo_code ORDER BY discount_pct, id) next_discount_pct, ROW_NUMBER() OVER (PARTITION BY channel, promo_code ORDER BY discount_pct, id) seq_no FROM promotions

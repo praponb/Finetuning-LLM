@@ -1,0 +1,1 @@
+SELECT id, created_at, items, ship_to, AGGREGATE(items, CAST(0 AS DOUBLE), (acc, item) -> acc + item.qty * item.price, acc -> ROUND(acc, 2)) AS cart_value, EXISTS(coupon_codes, c -> c LIKE 'W%') AS has_welcome_code FROM carts;

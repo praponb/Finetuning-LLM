@@ -1,0 +1,1 @@
+with cleaned as (select id, customer_id, balance, opened_date, status, length(account_type) as account_type_length from accounts where opened_date > date '2023-06-17' and status is not null and customer_id in (5, 32, 34)) select status, customer_id from cleaned except select status, customer_id from accounts where account_type = 'CREDIT';

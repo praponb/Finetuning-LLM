@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, GREATEST(unit_price, quantity) AS greatest_unit_price_quantity FROM order_items WHERE order_id IN (5, 23)) SELECT id, order_id, quantity, unit_price, greatest_unit_price_quantity FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY greatest_unit_price_quantity DESC NULLS FIRST, id) AS row_num FROM cleaned) x WHERE row_num = 1;

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', paid_at) AS paid_month, COUNT(*) AS cnt, MAX(amount) - MIN(amount) AS amount_range, MIN(paid_at) AS first_paid_at FROM payments WHERE status = 'REFUNDED' OR amount < 910 GROUP BY DATE_TRUNC('MONTH', paid_at);

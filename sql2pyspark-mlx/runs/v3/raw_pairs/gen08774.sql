@@ -1,0 +1,1 @@
+SELECT city, region, sqft_count, west_count FROM (SELECT city, region, COUNT(sqft) AS sqft_count, COUNT(CASE WHEN region = 'West' THEN 1 END) AS west_count FROM stores GROUP BY city, region) AS agg WHERE west_count > 9 ORDER BY sqft_count, west_count DESC;

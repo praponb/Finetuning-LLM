@@ -1,0 +1,1 @@
+with session_summary as (select session_id, round(avg(duration_sec), 2) avg_duration_sec from web_events group by session_id) select s.id, s.country, s.browser, ss.avg_duration_sec from sessions s inner join session_summary ss on s.id = ss.session_id order by country;

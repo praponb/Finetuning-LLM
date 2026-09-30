@@ -1,0 +1,1 @@
+SELECT ss.sale_date, p.product_name, p.stock_qty, s.region, s.city FROM store_sales ss FULL OUTER JOIN products p ON ss.product_id = p.id LEFT JOIN stores s ON ss.store_id = s.id WHERE LENGTH(s.store_name) >= 10 AND p.cost < 340;

@@ -1,0 +1,1 @@
+SELECT delivered_date FROM shipments WHERE delivered_date <= '2023-05-01' INTERSECT SELECT end_date AS delivered_date FROM subscriptions WHERE plan NOT IN ('standard', 'enterprise', 'basic') ORDER BY delivered_date DESC;

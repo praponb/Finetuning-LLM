@@ -1,0 +1,1 @@
+SELECT city, ROUND(STDDEV(sqft), 2) AS stddev_sqft, ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_berlin FROM stores WHERE region NOT IN ('West', 'South') OR city = 'New York' GROUP BY city ORDER BY stddev_sqft;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, product_name, category, brand, price, cost, stock_qty, tags, LAST_DAY(launch_date) AS launch_date_month_end FROM products WHERE supplier_id IS NOT NULL) SELECT category, id FROM base INTERSECT ALL SELECT category, id FROM products WHERE cost <= 450;

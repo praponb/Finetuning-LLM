@@ -1,0 +1,1 @@
+SELECT MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values FROM web_events WHERE (TO_DATE(event_time) >= '2024-04-01' AND duration_sec BETWEEN 175 AND 177) OR event_type IN ('click', 'add_to_cart', 'search')

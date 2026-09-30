@@ -1,0 +1,1 @@
+select session_id, round((100 * sum(case when event_type = 'page_view' then 1 else 0 end)) / count(*), 1) as pct_page_view from web_events where session_id = 9 and (page = '/product' or event_type in ('purchase', 'search', 'add_to_cart')) group by session_id having pct_page_view < 57 order by pct_page_view desc;

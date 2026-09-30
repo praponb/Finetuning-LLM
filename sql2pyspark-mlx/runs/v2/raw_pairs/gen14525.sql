@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT QUARTER(end_date) AS end_quarter, plan, ROUND((100 * SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_enterprise FROM subscriptions GROUP BY QUARTER(end_date), plan) AS s WHERE pct_enterprise < 57;

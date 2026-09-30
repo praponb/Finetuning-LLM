@@ -1,0 +1,1 @@
+select p.category, p.brand, min(ss.units) as min_units, max(ss.revenue) as max_revenue from store_sales ss left join stores s on ss.store_id = s.id inner join products p on ss.product_id = p.id where ss.revenue <= 1000 group by p.category, p.brand order by brand, max_revenue desc;

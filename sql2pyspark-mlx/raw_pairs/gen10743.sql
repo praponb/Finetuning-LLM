@@ -1,0 +1,1 @@
+SELECT ss.product_id, p.category, p.product_name, s.supplier_name FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id ORDER BY 3, product_id DESC

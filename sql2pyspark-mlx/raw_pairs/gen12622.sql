@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, currency, EXPLODE(tier_prices) AS val FROM price_tiers) SELECT currency, COUNT(CASE WHEN currency = 'EUR' THEN 1 END) AS eur_count, APPROX_PERCENTILE(val, ARRAY(0.25, 0.5, 0.75)) AS val_quartiles FROM exploded GROUP BY currency;

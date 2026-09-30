@@ -1,0 +1,1 @@
+with ranked as (select id, product_id, quantity, last_restock, row_number() over (partition by product_id order by quantity desc, id) as row_num from inventory) select * from ranked where row_num <= 3 order by product_id;

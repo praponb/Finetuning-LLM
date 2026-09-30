@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, oi.product_id, oi.order_id, p.cost FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE LOWER(p.product_name) LIKE '%ois%' AND oi.order_id IN (2, 14, 15, 20) ORDER BY p.cost DESC, product_id;

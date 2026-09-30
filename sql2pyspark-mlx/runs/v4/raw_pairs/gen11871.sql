@@ -1,0 +1,1 @@
+WITH valid_products AS (SELECT * FROM products WHERE stock_qty >= 238), Agg AS (SELECT QUARTER(launch_date) AS launch_quarter, ROUND(STDDEV(cost), 2) AS stddev_cost FROM valid_products GROUP BY QUARTER(launch_date)) SELECT launch_quarter, stddev_cost FROM Agg WHERE stddev_cost < 20 ORDER BY launch_quarter;

@@ -1,0 +1,1 @@
+with sessions_by_customer as (select customer_id, count(case when device = 'mobile' then 1 end) as mobile_count from sessions group by customer_id) select c.country, sbc.mobile_count from customers c left join sessions_by_customer sbc on c.id = sbc.customer_id;

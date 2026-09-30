@@ -1,0 +1,1 @@
+WITH SessionTotals AS (SELECT session_id, MIN(event_time) AS min_event_time, MAX(event_time) AS latest_event_time FROM web_events GROUP BY session_id) SELECT sessions.id, sessions.device, sessions.country, SessionTotals.min_event_time, SessionTotals.latest_event_time FROM sessions LEFT JOIN SessionTotals ON sessions.id = SessionTotals.session_id;

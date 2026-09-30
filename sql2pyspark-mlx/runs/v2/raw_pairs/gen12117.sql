@@ -1,0 +1,1 @@
+select * from (select order_id, carrier, round((100 * sum(case when carrier = 'FedEx' then 1 else 0 end)) / count(*), 1) as pct_fedex from shipments group by order_id, carrier) as t where pct_fedex >= 72

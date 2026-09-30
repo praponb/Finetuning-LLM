@@ -1,0 +1,1 @@
+SELECT s.id, s.store_name, t.total_quantity FROM stores s INNER JOIN (SELECT store_id, SUM(quantity) total_quantity FROM inventory GROUP BY store_id) t ON s.id = t.store_id WHERE t.total_quantity > 1020 ORDER BY id DESC;

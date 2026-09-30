@@ -1,0 +1,1 @@
+SELECT MONTH(opened_date) AS opened_month, MAX(opened_date) AS latest_opened_date, ROUND((100 * SUM(CASE WHEN city = 'Singapore' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_singapore FROM stores GROUP BY MONTH(opened_date) HAVING COUNT(DISTINCT sqft) >= 1;

@@ -1,0 +1,1 @@
+SELECT s.id, s.browser, latest.event_time FROM sessions s JOIN LATERAL (SELECT c.event_time FROM web_events c WHERE c.session_id = s.id AND c.event_time <= s.started_at ORDER BY c.event_time DESC, c.id DESC LIMIT 1) latest ON TRUE;

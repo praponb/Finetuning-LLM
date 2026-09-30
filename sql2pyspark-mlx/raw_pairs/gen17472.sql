@@ -1,0 +1,1 @@
+SELECT QUARTER(launch_date) AS launch_quarter, SUM(stock_qty) AS total_stock_qty, SUM(CASE WHEN brand = 'Initech' THEN cost ELSE 0 END) AS initech_cost, COUNT(CASE WHEN category = 'Home' THEN 1 END) AS home_count FROM products WHERE brand = 'Globex' AND category IN ('Books', 'Home', 'Sports') GROUP BY launch_quarter ORDER BY launch_quarter DESC;

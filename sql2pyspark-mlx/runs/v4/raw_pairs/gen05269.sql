@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.account_id, transactions.txn_time, accounts.customer_id FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id WHERE transactions.txn_type = 'FEE' AND TO_DATE(transactions.txn_time) < '2025-07-21';

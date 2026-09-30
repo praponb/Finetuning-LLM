@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 252 THEN 'high' WHEN quantity >= 101 THEN 'mid' ELSE 'low' END AS quantity_bucket, SUM(quantity) AS total_quantity, COUNT(*) AS cnt, DENSE_RANK() OVER (ORDER BY SUM(quantity) DESC) AS rnk FROM inventory WHERE store_id = 6 GROUP BY CASE WHEN quantity >= 252 THEN 'high' WHEN quantity >= 101 THEN 'mid' ELSE 'low' END;

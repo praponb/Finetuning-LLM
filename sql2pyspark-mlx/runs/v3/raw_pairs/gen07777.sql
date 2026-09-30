@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, AVG(sqft) AS avg_sqft, SORT_ARRAY(COLLECT_SET(region)) AS region_list FROM stores GROUP BY DATE_TRUNC('MONTH', opened_date) ORDER BY opened_month DESC, avg_sqft;

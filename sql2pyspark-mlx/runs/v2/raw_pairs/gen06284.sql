@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN unit_price >= 370 THEN 'high' WHEN unit_price >= 60 THEN 'mid' ELSE 'low' END AS unit_price_bucket, AVG(unit_price) AS avg_unit_price FROM order_items WHERE order_id IN (15, 35) GROUP BY product_id, CASE WHEN unit_price >= 370 THEN 'high' WHEN unit_price >= 60 THEN 'mid' ELSE 'low' END HAVING AVG(unit_price) < 120 ORDER BY 2 ASC;

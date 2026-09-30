@@ -1,0 +1,1 @@
+SELECT status, plan, CASE WHEN monthly_fee >= 192 THEN 'High' WHEN monthly_fee >= 111 THEN 'Medium' ELSE 'Low' END AS monthly_fee_tier FROM subscriptions WHERE customer_id IS NOT NULL AND plan <> 'enterprise' AND status = 'ACTIVE' ORDER BY monthly_fee_tier DESC, status DESC;

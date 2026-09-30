@@ -1,0 +1,1 @@
+SELECT id, status, channel, shipping_fee, CASE WHEN discount >= 0.36 THEN 'High' WHEN discount >= 0.14 THEN 'Medium' ELSE 'Low' END AS discount_level, amount - shipping_fee AS amount_with_shipping FROM orders WHERE shipping_fee > 34 ORDER BY status

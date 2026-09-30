@@ -1,0 +1,1 @@
+SELECT job_title, YEAR(hire_date) AS hire_year, SUM(CASE WHEN job_title = 'Engineer' THEN salary ELSE 0 END) AS engineer_salary, MAX(salary) - MIN(salary) AS salary_range FROM employees GROUP BY job_title, YEAR(hire_date) HAVING engineer_salary > 49

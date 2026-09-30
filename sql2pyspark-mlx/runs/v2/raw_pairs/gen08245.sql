@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', p.launch_date) AS launch_month, p.supplier_id, COUNT(*) AS row_count, COUNT(DISTINCT i.quantity) AS unique_products FROM inventory i INNER JOIN stores s ON i.store_id = s.id LEFT OUTER JOIN products p ON i.product_id = p.id GROUP BY DATE_TRUNC('MONTH', p.launch_date), p.supplier_id;

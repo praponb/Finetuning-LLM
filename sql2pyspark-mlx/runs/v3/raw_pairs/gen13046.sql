@@ -1,0 +1,1 @@
+select id, event_type, event_time, duration_sec, lead(duration_sec, 1) over (partition by event_type order by event_time, id) next_duration_sec, sum(duration_sec) over (partition by event_type order by event_time, id) running_duration_sec from web_events;

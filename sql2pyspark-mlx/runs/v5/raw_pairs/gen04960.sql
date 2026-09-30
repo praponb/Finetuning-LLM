@@ -1,0 +1,1 @@
+SELECT o.id, o.status, s.store_name, c.age, c.is_active FROM orders o JOIN stores s ON o.store_id = s.id JOIN customers c ON o.customer_id = c.id WHERE c.email LIKE '%@gmail.com' AND o.order_date < '2025-07-24'

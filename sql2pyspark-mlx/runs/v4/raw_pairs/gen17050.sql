@@ -1,0 +1,1 @@
+SELECT sessions.device, sessions.started_at, t.event_type_list FROM sessions JOIN (SELECT session_id, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list FROM web_events WHERE duration_sec BETWEEN 435 AND 443 GROUP BY session_id) t ON sessions.id = t.session_id ORDER BY sessions.device DESC;

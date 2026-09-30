@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('DAY', reading_ts) AS activity_day, device_code, MAX(reading_ts) AS ended_at, BIT_AND(status_bits) AS status_bits_bit_and, MIN(reading_ts) AS first_seen, GROUPING_ID() AS grouping_level FROM device_readings GROUP BY ROLLUP (DATE_TRUNC('DAY', reading_ts), device_code);

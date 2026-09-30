@@ -1,0 +1,1 @@
+SELECT id, channel, discount, CEIL(discount) AS discount_whole, CASE WHEN amount >= 1310 THEN 'High' WHEN amount >= 640 THEN 'Medium' ELSE 'Low' END AS amount_tier FROM orders WHERE customer_id = 38 ORDER BY discount DESC, amount_tier DESC;

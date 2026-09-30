@@ -1,0 +1,1 @@
+select p.brand, count(ss.units) as units_count from store_sales ss join stores s on ss.store_id = s.id full outer join products p on ss.product_id = p.id group by p.brand having count(ss.units) >= 1 order by brand limit 10

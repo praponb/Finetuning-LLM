@@ -1,0 +1,1 @@
+SELECT id, product_id, last_restock, store_id FROM (SELECT id, product_id, last_restock, store_id, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY last_restock DESC) AS row_num FROM inventory WHERE product_id IN (5, 7)) AS t WHERE row_num = 1

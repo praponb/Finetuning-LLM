@@ -1,0 +1,1 @@
+SELECT s.id, s.brand, s.stock_qty, s.launch_date, s.tags, s.supplier_id, top1.store_sale_units, top1.sale_date FROM products s JOIN LATERAL (SELECT c.units AS store_sale_units, c.sale_date FROM store_sales c WHERE c.product_id = s.id ORDER BY c.revenue DESC, c.id DESC LIMIT 1) top1 ON TRUE;

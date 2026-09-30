@@ -1,0 +1,1 @@
+SELECT id, supplier_id, launch_date, product_name FROM (SELECT id, supplier_id, launch_date, product_name, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY launch_date, id) AS row_num FROM products WHERE brand NOT IN ('Initech', 'Globex', 'Acme')) AS r WHERE row_num <= 3 ORDER BY supplier_id DESC;

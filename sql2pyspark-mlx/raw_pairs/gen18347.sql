@@ -1,0 +1,1 @@
+with joined as (select e.*, o.order_date from shipments e inner join orders o on e.order_id = o.id) select s.id, s.order_id, s.carrier, s.cost, s.status, s.order_date, (select min(s2.cost) from shipments s2 where s2.order_id = s.order_id) as min_shipment_cost from joined s;

@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.product_id, inventory.quantity, products.launch_date, products.cost, stores.region, stores.opened_date FROM inventory LEFT JOIN products ON inventory.product_id = products.id INNER JOIN stores ON inventory.store_id = stores.id;

@@ -1,0 +1,1 @@
+SELECT p.brand, p.category, COUNT(*) AS num_rows, SUM(e.unit_price) AS total_unit_price, AVG(e.quantity) AS avg_quantity FROM order_items e INNER JOIN products p ON e.product_id = p.id GROUP BY p.brand, p.category ORDER BY total_unit_price ASC NULLS LAST

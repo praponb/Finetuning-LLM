@@ -1,0 +1,1 @@
+WITH filtered_departments AS (SELECT * FROM departments WHERE dept_name = 'Sales'), summary AS (SELECT dept_name, ROUND(AVG(budget), 2) AS avg_budget FROM filtered_departments GROUP BY dept_name) SELECT dept_name, avg_budget FROM summary ORDER BY avg_budget DESC, dept_name LIMIT 5

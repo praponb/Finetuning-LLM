@@ -1,0 +1,1 @@
+SELECT opened_date event_date, 'account' source FROM accounts WHERE balance BETWEEN 27000 AND 71000 UNION ALL SELECT shipped_date event_date, 'shipment' source FROM shipments ORDER BY event_date DESC;

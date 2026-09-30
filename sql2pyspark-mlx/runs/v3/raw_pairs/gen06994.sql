@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.opened_date, t.max_units, t.stddev_units FROM stores s LEFT JOIN (SELECT store_id, MAX(units) AS max_units, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales GROUP BY store_id) t ON s.id = t.store_id ORDER BY opened_date ASC;

@@ -1,0 +1,1 @@
+SELECT event_type, MAX(duration_sec) AS max_duration_sec, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events WHERE NOT (page = '/product' AND (session_id IN (18, 26, 27, 35) OR session_id IN (10, 37))) GROUP BY 1;

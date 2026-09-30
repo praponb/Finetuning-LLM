@@ -1,0 +1,1 @@
+SELECT CASE WHEN shipping_fee >= 37 THEN 'high' WHEN shipping_fee >= 10 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, channel, ROUND(AVG(amount), 2) AS avg_amount FROM orders WHERE customer_id = 39 AND customer_id IS NULL AND channel IN ('store', 'mobile') GROUP BY 1, 2 HAVING ROUND(AVG(amount), 2) < 31

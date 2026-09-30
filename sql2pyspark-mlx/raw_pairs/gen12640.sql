@@ -1,0 +1,1 @@
+with customer_stats as (select customer_id, max(monthly_fee) - min(monthly_fee) monthly_fee_range from subscriptions group by customer_id) select c.credit_limit, cs.monthly_fee_range from customers c inner join customer_stats cs on c.id = cs.customer_id order by cs.monthly_fee_range desc

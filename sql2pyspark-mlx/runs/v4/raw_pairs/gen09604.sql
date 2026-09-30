@@ -1,0 +1,1 @@
+SELECT i.quantity, i.store_id, s.sqft, s.city, p.category, p.cost FROM inventory i RIGHT JOIN stores s ON i.store_id = s.id RIGHT JOIN products p ON p.id = i.product_id WHERE s.sqft >= 6197 ORDER BY p.category, sqft

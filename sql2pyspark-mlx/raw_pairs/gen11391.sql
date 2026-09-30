@@ -1,0 +1,1 @@
+select id, customer_id, device, row_number() over (partition by date_trunc('WEEK', started_at), device order by started_at desc, id) as event_seq, row_number() over (partition by browser order by started_at desc, id) as event_seq_2, row_number() over (partition by device, country order by started_at desc, id) as event_seq_3 from sessions where browser in ('Chrome', 'Firefox')

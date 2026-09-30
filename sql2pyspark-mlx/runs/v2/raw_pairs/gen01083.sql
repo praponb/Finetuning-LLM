@@ -1,0 +1,1 @@
+select id, device, started_at, country, rank() over (partition by device order by started_at) as started_at_rank, lead(started_at, 2) over (partition by country order by started_at, id) as next_started_at from sessions;

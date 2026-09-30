@@ -1,0 +1,1 @@
+SELECT p.stock_qty, p.cost, t.unit_price_count, t.avg_quantity FROM products p INNER JOIN (SELECT product_id, COUNT(unit_price) AS unit_price_count, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items GROUP BY product_id) t ON p.id = t.product_id WHERE t.avg_quantity >= 80

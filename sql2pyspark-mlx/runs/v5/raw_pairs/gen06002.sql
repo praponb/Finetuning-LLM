@@ -1,0 +1,1 @@
+select case when cost >= 680 then 'high' when cost >= 180 then 'mid' else 'low' end as cost_bucket, sum(stock_qty) as total_stock_qty, round(avg(stock_qty), 2) as avg_stock_qty, count(*) as row_count from products where cost > 500 group by case when cost >= 680 then 'high' when cost >= 180 then 'mid' else 'low' end;

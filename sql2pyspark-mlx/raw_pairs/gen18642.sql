@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DAY(opened_date) AS opened_date_day, LOWER(status) AS status_lower FROM accounts WHERE opened_date >= DATE '2023-03-24' AND status IS NOT NULL) SELECT id, account_type FROM cleaned INTERSECT SELECT id, account_type FROM accounts WHERE balance >= 72000

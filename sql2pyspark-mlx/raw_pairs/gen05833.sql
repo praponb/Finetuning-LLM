@@ -1,0 +1,1 @@
+SELECT level, COUNT(DISTINCT salary) AS unique_managers, ROUND(AVG(salary), 2) AS avg_salary FROM employees GROUP BY level HAVING SUM(CASE WHEN job_title = 'Intern' THEN salary ELSE 0 END) < 64 ORDER BY unique_managers DESC;

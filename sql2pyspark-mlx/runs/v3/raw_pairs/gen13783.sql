@@ -1,0 +1,1 @@
+WITH valid_payments AS (SELECT * FROM payments WHERE status IN ('REFUNDED', 'FAILED', 'SUCCESS')), paid_month_summary AS (SELECT MONTH(paid_at) AS paid_month, ROUND(STDDEV(amount), 2) AS stddev_amount, COUNT(CASE WHEN status = 'FAILED' THEN 1 END) AS failed_count FROM valid_payments GROUP BY MONTH(paid_at)) SELECT * FROM paid_month_summary ORDER BY paid_month;

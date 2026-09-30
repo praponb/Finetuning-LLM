@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, store_id, last_restock, quantity, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock DESC, id) AS pos FROM inventory WHERE quantity != 218) AS t WHERE pos <= 2 ORDER BY pos

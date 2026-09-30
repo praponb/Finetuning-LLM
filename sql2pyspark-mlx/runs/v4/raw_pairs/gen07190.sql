@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, item.product_id, item.qty, item.price, item.promo FROM carts LATERAL VIEW EXPLODE(items) x AS item) SELECT qty, price, promo FROM flattened ORDER BY promo DESC NULLS FIRST;

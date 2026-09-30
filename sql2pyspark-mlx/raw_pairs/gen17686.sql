@@ -1,0 +1,1 @@
+SELECT store_id, BIT_AND(quantity) AS quantity_bit_and, BIT_AND(quantity) AS quantity_bit_and_2, BIT_AND(quantity) AS quantity_bit_and_3 FROM inventory GROUP BY store_id ORDER BY quantity_bit_and_3 DESC;

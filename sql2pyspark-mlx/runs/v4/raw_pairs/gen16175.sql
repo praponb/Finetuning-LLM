@@ -1,0 +1,1 @@
+select id, customer_id, store_id, channel, case when amount >= 1370 then 'High' when amount >= 360 then 'Medium' else 'Low' end as amount_tier, discount - amount as discount_minus_amount from orders order by channel

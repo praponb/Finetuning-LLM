@@ -1,0 +1,1 @@
+SELECT id, customer_id, order_date, discount, status, amount, SUM(discount) OVER (PARTITION BY customer_id ORDER BY order_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_discount, RANK() OVER (PARTITION BY status ORDER BY amount DESC) AS rnk FROM orders;

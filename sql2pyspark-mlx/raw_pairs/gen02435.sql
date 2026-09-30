@@ -1,0 +1,1 @@
+SELECT p.category, MAX(i.quantity) - MIN(i.quantity) quantity_range FROM inventory i INNER JOIN products p ON p.id = i.product_id WHERE p.supplier_id IS NOT NULL GROUP BY p.category ORDER BY quantity_range;

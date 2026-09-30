@@ -1,0 +1,1 @@
+select id, status, delivered_date, cost, sum(cost) over (partition by status order by delivered_date, id rows between unbounded preceding and current row) as running_cost from shipments where carrier = 'DHL' order by status desc, id desc;

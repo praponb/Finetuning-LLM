@@ -1,0 +1,1 @@
+SELECT id, unit_price, order_id, ROW_NUMBER() OVER (ORDER BY unit_price, id) AS unit_price_row, unit_price - LAG(unit_price, 1) OVER (PARTITION BY order_id ORDER BY unit_price, id) AS unit_price_change FROM order_items WHERE quantity BETWEEN 5 AND 8 ORDER BY id ASC, unit_price_change DESC;

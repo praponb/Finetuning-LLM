@@ -1,0 +1,1 @@
+select s.id, s.category, s.brand, s.price, s.stock_qty, s.tags, s.supplier_id, x.store_sale_units from products s join lateral (select c.units as store_sale_units from store_sales c where c.product_id = s.id order by c.revenue desc, c.id desc limit 1) x on true

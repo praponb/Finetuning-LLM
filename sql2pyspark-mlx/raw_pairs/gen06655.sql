@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN revenue >= 3500 THEN 'high' WHEN revenue >= 1100 THEN 'mid' ELSE 'low' END revenue_bucket, ROUND(AVG(units), 2) avg_units FROM store_sales WHERE store_id IN (1, 2, 4, 6) GROUP BY CASE WHEN revenue >= 3500 THEN 'high' WHEN revenue >= 1100 THEN 'mid' ELSE 'low' END) sub WHERE avg_units > 44 ORDER BY avg_units;

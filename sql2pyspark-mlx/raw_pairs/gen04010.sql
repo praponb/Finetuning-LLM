@@ -1,0 +1,1 @@
+select case when quantity >= 8 then 'high' when quantity >= 2 then 'mid' else 'low' end as quantity_bucket, product_id, min(unit_price) as min_unit_price, sum(quantity) as total_quantity from order_items group by case when quantity >= 8 then 'high' when quantity >= 2 then 'mid' else 'low' end, product_id order by min_unit_price, quantity_bucket, product_id limit 1

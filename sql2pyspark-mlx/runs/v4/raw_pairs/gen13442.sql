@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name AS employee_full_name, m.email AS manager_email, m.is_remote AS manager_is_remote FROM employees e LEFT JOIN employees m ON e.manager_id = m.id ORDER BY employee_full_name ASC, e.id ASC

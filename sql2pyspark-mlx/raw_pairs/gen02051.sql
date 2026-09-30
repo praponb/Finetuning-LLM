@@ -1,0 +1,1 @@
+SELECT id, store_name, sqft, CASE WHEN region = 'East' THEN 1 ELSE 0 END AS is_east, QUARTER(opened_date) AS opened_date_quarter FROM stores WHERE opened_date BETWEEN '2023-07-18' AND '2025-06-01' AND region IS NOT NULL

@@ -1,0 +1,1 @@
+SELECT ss.id, ss.store_id, s.region, p.price, p.cost, SUBSTRING(p.product_name, 1, 2) AS product_name_prefix FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON p.id = ss.product_id WHERE s.sqft > 9267 AND s.store_name LIKE 'Ol%'

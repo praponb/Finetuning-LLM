@@ -1,0 +1,1 @@
+select s.id, s.customer_id, t.event_type_values, t.total_count from sessions s left join (select session_id, concat_ws(', ', sort_array(collect_set(event_type))) as event_type_values, count(*) as total_count from web_events where duration_sec = 413 group by session_id) t on s.id = t.session_id order by t.event_type_values desc

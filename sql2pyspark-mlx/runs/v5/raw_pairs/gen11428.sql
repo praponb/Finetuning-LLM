@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, HOUR(started_at) AS started_at_hour FROM sessions WHERE started_at > TO_DATE('2023-09-05') AND country IS NOT NULL) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at_hour DESC, id ASC) AS latest_rank FROM base) ranked WHERE latest_rank = 1;

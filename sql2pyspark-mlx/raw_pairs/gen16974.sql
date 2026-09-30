@@ -1,0 +1,1 @@
+SELECT order_id, MAX(quantity) AS max_quantity, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items GROUP BY order_id ORDER BY avg_unit_price DESC;

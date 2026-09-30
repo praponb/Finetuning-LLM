@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CASE WHEN dept_name = 'Marketing' THEN 1 ELSE 0 END AS is_marketing FROM departments WHERE location IS NOT NULL), departments_stats AS (SELECT dept_name, SUM(CASE WHEN dept_name = 'Marketing' THEN 1 ELSE 0 END) AS marketing_count FROM base GROUP BY dept_name) SELECT dept_name, marketing_count FROM departments_stats ORDER BY dept_name

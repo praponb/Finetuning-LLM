@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM stores WHERE LENGTH(store_name) >= 12), stores_stats AS (SELECT city, COUNT(*) AS total_count, MAX(sqft) - MIN(sqft) AS sqft_range FROM Base GROUP BY city) SELECT * FROM stores_stats ORDER BY city DESC

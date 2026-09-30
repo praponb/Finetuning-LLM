@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date DESC, id) AS dedup_rank FROM subscriptions) x WHERE dedup_rank = 1) SELECT id, plan, start_date, end_date, monthly_fee, status, dedup_rank FROM deduped ORDER BY id NULLS LAST

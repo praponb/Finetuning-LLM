@@ -1,0 +1,1 @@
+SELECT city, country_values, tokyo_count FROM (SELECT city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END) AS tokyo_count FROM suppliers WHERE rating <= 3.1 GROUP BY city) AS s WHERE tokyo_count < 62

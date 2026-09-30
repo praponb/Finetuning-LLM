@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(event_time) < 2024 THEN 'before_2024' WHEN YEAR(event_time) = 2024 THEN '2024' ELSE 'after_2024' END AS event_cohort, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY 1 ORDER BY event_cohort DESC LIMIT 3;

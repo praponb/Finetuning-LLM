@@ -1,0 +1,1 @@
+WITH valid_products AS (SELECT * FROM products WHERE cost > 710), summary AS (SELECT supplier_id, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty FROM valid_products GROUP BY supplier_id) SELECT supplier_id, stddev_stock_qty FROM summary WHERE stddev_stock_qty < 25 ORDER BY supplier_id LIMIT 3

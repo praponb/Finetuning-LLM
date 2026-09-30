@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, ss.store_id, ss.revenue, s.city, s.store_name, s.region FROM store_sales ss JOIN stores s ON ss.store_id = s.id WHERE ss.units BETWEEN 13 AND 40 ORDER BY city, sale_date DESC

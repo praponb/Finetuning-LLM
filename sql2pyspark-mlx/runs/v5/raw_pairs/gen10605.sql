@@ -1,0 +1,1 @@
+SELECT o.id, o.discount, c.age, c.credit_limit, s.sqft, s.region FROM orders o LEFT OUTER JOIN customers c ON o.customer_id = c.id LEFT OUTER JOIN stores s ON s.id = o.store_id WHERE o.shipping_fee <= 23;

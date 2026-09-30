@@ -1,0 +1,1 @@
+select e.id, e.dept_id employee_dept_id, e.email employee_email, e.full_name employee_full_name, m.hire_date manager_hire_date, trim(m.email) clean_email from employees as e left join employees as m on e.manager_id = m.id order by employee_dept_id desc, id limit 3;

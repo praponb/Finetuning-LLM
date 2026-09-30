@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MIN(opened_date) AS min_opened_date, MAX(balance) - MIN(balance) AS balance_range FROM accounts GROUP BY customer_id) SELECT c.id, c.country, cs.min_opened_date, cs.balance_range FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.balance_range >= 55;

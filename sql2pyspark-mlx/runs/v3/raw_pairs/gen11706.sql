@@ -1,0 +1,1 @@
+select date_format(opened_date, 'yyyy-MM') opened_month, max(balance) - min(balance) balance_range from accounts group by date_format(opened_date, 'yyyy-MM') order by balance_range, opened_month limit 10

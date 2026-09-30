@@ -1,0 +1,1 @@
+SELECT s.sqft, t.min_units, t.store_sale_count FROM stores s LEFT JOIN (SELECT store_id, MIN(units) AS min_units, COUNT(*) AS store_sale_count FROM store_sales GROUP BY store_id) t ON s.id = t.store_id;

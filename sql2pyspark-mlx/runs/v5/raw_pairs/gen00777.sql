@@ -1,0 +1,1 @@
+SELECT device, DATE_TRUNC('YEAR', started_at) AS year_start, MAX(started_at) AS ended_at, MIN(started_at) AS started_at, COUNT(CASE WHEN device = 'desktop' THEN 1 END) AS desktop_count FROM sessions GROUP BY ROLLUP (device, DATE_TRUNC('YEAR', started_at)) ORDER BY year_start

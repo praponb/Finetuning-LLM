@@ -1,0 +1,1 @@
+SELECT order_id, CASE WHEN unit_price >= 410 THEN 'high' WHEN unit_price >= 130 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(*) AS order_item_count, SUM(quantity) AS total_quantity, COUNT(quantity) AS quantity_count FROM order_items GROUP BY 1, 2 HAVING SUM(quantity) < 28 ORDER BY total_quantity, order_id, unit_price_bucket LIMIT 50;

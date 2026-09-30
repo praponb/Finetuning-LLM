@@ -1,0 +1,1 @@
+SELECT stores.id, stores.sqft, t.latest_last_restock, t.unique_stores FROM stores LEFT OUTER JOIN (SELECT store_id, MAX(last_restock) AS latest_last_restock, COUNT(DISTINCT quantity) AS unique_stores FROM inventory GROUP BY store_id) t ON stores.id = t.store_id

@@ -1,0 +1,1 @@
+SELECT o.id, o.order_date, o.customer_id FROM orders o WHERE o.status = 'RETURNED' AND NOT EXISTS (SELECT 1 FROM payments p WHERE p.order_id = o.id) ORDER BY customer_id DESC, order_date ASC, id ASC LIMIT 3

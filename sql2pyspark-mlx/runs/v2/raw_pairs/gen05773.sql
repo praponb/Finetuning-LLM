@@ -1,0 +1,1 @@
+SELECT order_id, DATE_TRUNC('MONTH', paid_at) AS paid_month, MAX(paid_at) AS latest_paid_at, COUNT(CASE WHEN status = 'REFUNDED' THEN 1 END) AS refunded_count FROM payments WHERE amount <= 750 AND method = 'paypal' GROUP BY order_id, DATE_TRUNC('MONTH', paid_at) ORDER BY refunded_count DESC

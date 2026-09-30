@@ -1,0 +1,1 @@
+SELECT i.last_restock, i.product_id, s.opened_date, p.product_name, p.stock_qty FROM inventory i JOIN stores s ON i.store_id = s.id LEFT OUTER JOIN products p ON p.id = i.product_id WHERE s.city IN ('London', 'Tokyo', 'Berlin') AND s.city = 'London';

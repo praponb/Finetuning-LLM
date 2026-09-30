@@ -1,0 +1,1 @@
+SELECT SUM(CASE WHEN brand = 'Umbrella' THEN price ELSE 0 END) AS umbrella_price FROM products WHERE supplier_id IN (7, 28, 31) AND category != 'Books' AND stock_qty = 143 ORDER BY umbrella_price DESC;

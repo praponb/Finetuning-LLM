@@ -1,0 +1,1 @@
+with filtered as (select *, coalesce(stock_qty, 0) stock_qty_filled, last_day(launch_date) launch_date_month_end from products where launch_date > date '2023-04-15' and brand is not null) select supplier_id, id from filtered except select supplier_id, id from products where category in ('Grocery', 'Home', 'Books');

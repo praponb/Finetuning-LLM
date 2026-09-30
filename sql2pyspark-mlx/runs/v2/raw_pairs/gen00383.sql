@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(signup_date) AS signup_month, MAX(credit_limit) - MIN(credit_limit) AS credit_limit_range FROM customers WHERE credit_limit <= 14500 GROUP BY MONTH(signup_date)) AS sub WHERE credit_limit_range < 33 ORDER BY credit_limit_range DESC;

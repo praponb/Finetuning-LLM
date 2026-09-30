@@ -1,0 +1,1 @@
+select brand, date_format(launch_date, 'yyyy-MM') as launch_month, round((100 * sum(case when brand = 'Acme' then 1 else 0 end)) / count(*), 1) as pct_acme, min(price) as min_price from products where launch_date > '2024-01-01' or stock_qty between 126 and 331 group by brand, date_format(launch_date, 'yyyy-MM') order by min_price desc;

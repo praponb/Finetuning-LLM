@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, MIN(hire_date) min_hire_date FROM employees WHERE dept_id = 37 GROUP BY dept_id) SELECT d.budget, ebd.min_hire_date FROM departments d LEFT OUTER JOIN employees_by_department ebd ON d.id = ebd.dept_id ORDER BY d.budget;

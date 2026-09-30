@@ -1,0 +1,1 @@
+SELECT order_id, unique_products FROM (SELECT order_id, COUNT(DISTINCT quantity) AS unique_products FROM order_items WHERE unit_price <= 300 GROUP BY order_id) AS t WHERE unique_products < 8 ORDER BY 2 DESC

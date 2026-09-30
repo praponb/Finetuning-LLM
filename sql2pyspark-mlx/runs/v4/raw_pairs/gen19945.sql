@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT QUARTER(txn_time) AS txn_quarter, ROUND(AVG(amount), 2) AS avg_amount, COUNT(amount) AS amount_count FROM transactions WHERE merchant = 'Grab' GROUP BY QUARTER(txn_time)) AS sub WHERE avg_amount > 60;

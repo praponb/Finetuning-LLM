@@ -1,0 +1,1 @@
+with base as (select *, concat(page, ' - ', event_type) as page_event_type from web_events where session_id = 35), web_events_stats as (select month(event_time) as event_month, sum(case when page = '/home' then duration_sec else 0 end) as home_duration_sec from base group by month(event_time)) select * from web_events_stats where home_duration_sec >= 40;

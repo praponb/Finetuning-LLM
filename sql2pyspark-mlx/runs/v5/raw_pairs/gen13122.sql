@@ -1,0 +1,1 @@
+with filtered_inventory as (select * from inventory where quantity > 78 and store_id = 5), agg as (select store_id, min(last_restock) as min_last_restock from filtered_inventory group by store_id) select store_id, min_last_restock from agg

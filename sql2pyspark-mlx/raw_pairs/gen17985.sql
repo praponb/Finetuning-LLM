@@ -1,0 +1,1 @@
+SELECT MONTH(txn_time) AS txn_month, ROUND(AVG(amount), 2) AS avg_amount, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list, COUNT(*) AS row_count FROM transactions WHERE TO_DATE(txn_time) < '2024-09-06' AND TO_DATE(txn_time) >= '2023-10-06' AND merchant IN ('Shell', 'Lazada', 'Starbucks') GROUP BY 1 ORDER BY 1 ASC;

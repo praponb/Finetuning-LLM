@@ -1,0 +1,1 @@
+WITH valid_orders AS (SELECT * FROM orders WHERE order_date >= '2025-02-01' AND order_date >= '2024-01-10' AND status = 'RETURNED'), Agg AS (SELECT channel, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM valid_orders GROUP BY channel) SELECT * FROM Agg;

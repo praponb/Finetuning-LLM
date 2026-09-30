@@ -1,0 +1,1 @@
+SELECT location, pct_new_york FROM (SELECT location, ROUND((100 * SUM(CASE WHEN location = 'New York' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_new_york FROM departments GROUP BY location) t WHERE pct_new_york >= 31 ORDER BY 1 LIMIT 1

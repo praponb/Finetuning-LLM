@@ -1,0 +1,1 @@
+select c.city, c.credit_limit, t.th_count from customers c join (select customer_id, count(case when country = 'TH' then 1 end) as th_count from sessions group by customer_id) t on c.id = t.customer_id order by credit_limit desc

@@ -1,0 +1,1 @@
+select end_date, start_date, case when status in ('CANCELLED', 'EXPIRED') then 'Core' else 'Other' end as status_group, lower(plan) as plan_lower from subscriptions where customer_id in (4, 18) order by status_group

@@ -1,0 +1,1 @@
+WITH TopDepartments AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget, id) AS pos FROM departments) SELECT id, dept_name, budget FROM TopDepartments WHERE pos = 1 ORDER BY budget DESC, dept_name;

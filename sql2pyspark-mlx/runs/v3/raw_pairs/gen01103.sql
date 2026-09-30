@@ -1,0 +1,1 @@
+SELECT status, pct_credit FROM (SELECT status, ROUND((100 * SUM(CASE WHEN account_type = 'CREDIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_credit FROM accounts GROUP BY status) agg WHERE pct_credit < 72 ORDER BY pct_credit DESC;

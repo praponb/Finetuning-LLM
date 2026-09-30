@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1260 THEN 'high' WHEN amount >= 460 THEN 'mid' ELSE 'low' END AS amount_bucket, MIN(amount) AS min_amount FROM orders WHERE NOT (customer_id = 37 AND status = 'CANCELLED') GROUP BY amount_bucket

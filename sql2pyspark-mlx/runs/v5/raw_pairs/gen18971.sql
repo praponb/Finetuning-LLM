@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, SUM(stock_qty) AS total_stock_qty, MIN(cost) AS min_cost FROM products GROUP BY supplier_id) SELECT s.country, s.city, pbs.total_stock_qty, pbs.min_cost FROM suppliers s JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY min_cost DESC, city

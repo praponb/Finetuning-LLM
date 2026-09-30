@@ -1,0 +1,1 @@
+select c.is_active, date_format(c.signup_date, 'yyyy-MM') as signup_month, min(o.order_date) as min_order_date, count(distinct o.amount) as unique_customers from orders o left outer join customers c on o.customer_id = c.id group by c.is_active, date_format(c.signup_date, 'yyyy-MM');

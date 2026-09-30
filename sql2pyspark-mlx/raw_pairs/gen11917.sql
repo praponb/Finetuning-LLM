@@ -1,0 +1,1 @@
+SELECT session_id, MIN(duration_sec) AS min_duration_sec, ROUND((100 * SUM(CASE WHEN page = '/home' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_home FROM web_events WHERE page = '/home' GROUP BY session_id;

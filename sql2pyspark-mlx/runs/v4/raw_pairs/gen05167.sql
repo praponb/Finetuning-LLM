@@ -1,0 +1,1 @@
+SELECT id, plan, monthly_fee, customer_id, end_date, ROUND(monthly_fee / SUM(monthly_fee) OVER (PARTITION BY plan), 3) AS monthly_fee_share, LEAD(monthly_fee, 1) OVER (PARTITION BY customer_id ORDER BY end_date, id) AS next_monthly_fee FROM subscriptions ORDER BY id DESC;

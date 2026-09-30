@@ -1,0 +1,1 @@
+WITH ranked_store_sales AS (SELECT *, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY sale_date) AS row_num FROM store_sales) SELECT id, product_id, sale_date FROM ranked_store_sales WHERE row_num <= 3;

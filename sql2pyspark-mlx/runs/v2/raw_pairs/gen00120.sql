@@ -1,0 +1,1 @@
+SELECT MONTH(opened_date) AS opened_month, account_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, COUNT(DISTINCT balance) AS unique_statuss FROM accounts WHERE customer_id IS NULL GROUP BY CUBE(MONTH(opened_date), account_type) ORDER BY 2 DESC, opened_month DESC;

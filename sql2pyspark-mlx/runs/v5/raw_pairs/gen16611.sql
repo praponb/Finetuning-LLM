@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN sqft >= 12926 THEN 'high' WHEN sqft >= 6353 THEN 'mid' ELSE 'low' END AS sqft_bucket, SUM(CASE WHEN region = 'West' THEN 1 ELSE 0 END) AS west_count FROM stores GROUP BY CASE WHEN sqft >= 12926 THEN 'high' WHEN sqft >= 6353 THEN 'mid' ELSE 'low' END) AS s WHERE west_count < 58 ORDER BY sqft_bucket, west_count DESC;

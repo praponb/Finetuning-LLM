@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM web_events WHERE event_time >= '2023-12-04'), session_id_summary AS (SELECT session_id, event_type, COUNT(duration_sec) duration_sec_count, ROUND((100 * SUM(CASE WHEN page = '/cart' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_cart FROM base GROUP BY session_id, event_type) SELECT session_id, event_type, duration_sec_count FROM session_id_summary

@@ -1,0 +1,1 @@
+select product_id, store_id, round(avg(units), 2) as avg_units, min(sale_date) as first_sale_date from store_sales where product_id = 7 and units between 28 and 35 group by product_id, store_id order by store_id desc

@@ -1,0 +1,1 @@
+SELECT p.supplier_id, ROUND(AVG(ss.units), 2) AS avg_units FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.price >= 1140 GROUP BY p.supplier_id ORDER BY avg_units DESC, supplier_id LIMIT 3;

@@ -1,0 +1,1 @@
+SELECT id, product_id, unit_price, order_id FROM (SELECT id, product_id, unit_price, order_id, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY unit_price DESC, id) AS rnk FROM order_items) AS t WHERE rnk <= 3;

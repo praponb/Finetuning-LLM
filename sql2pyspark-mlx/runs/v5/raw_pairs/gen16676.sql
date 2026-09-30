@@ -1,0 +1,1 @@
+select c.city, count(*) as cnt, sum(case when a.account_type = 'SAVINGS' then 1 else 0 end) as savings_count from accounts a inner join customers c on a.customer_id = c.id where month(c.signup_date) in (6, 7, 11) group by c.city

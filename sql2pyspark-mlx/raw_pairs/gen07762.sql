@@ -1,0 +1,1 @@
+SELECT id, service, log_ts, latency_ms, status_code, payload_json, context, SHIFTRIGHT(status_code, 2) AS status_code_high, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text, context['version'] AS version FROM app_logs WHERE HOUR(log_ts) BETWEEN 12 AND 17

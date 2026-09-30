@@ -1,0 +1,1 @@
+SELECT p.supplier_id, MIN(i.last_restock) AS min_last_restock, COUNT(*) AS inventory_count FROM inventory i INNER JOIN products p ON i.product_id = p.id GROUP BY p.supplier_id ORDER BY min_last_restock DESC, inventory_count;

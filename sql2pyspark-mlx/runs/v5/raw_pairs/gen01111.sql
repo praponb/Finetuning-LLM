@@ -1,0 +1,1 @@
+SELECT *, TRIM(plan) AS clean_plan, SUBSTRING(plan, 1, 2) AS plan_prefix FROM subscriptions WHERE (customer_id = 16 AND customer_id IN (12, 18)) OR plan = 'standard' ORDER BY status DESC, id LIMIT 10;

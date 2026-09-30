@@ -1,0 +1,1 @@
+SELECT product_id, order_id, CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END quantity_bucket, MIN(quantity) min_quantity, SUM(quantity) total_quantity FROM order_items WHERE product_id IN (3, 19, 29) GROUP BY 1, 2, 3 HAVING min_quantity < 6.4;

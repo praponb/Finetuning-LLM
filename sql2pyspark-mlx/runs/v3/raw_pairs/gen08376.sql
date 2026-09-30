@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(order_date) < 2024 THEN 'before_2024' WHEN YEAR(order_date) = 2024 THEN '2024' ELSE 'after_2024' END AS order_cohort, ROUND((100 * SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_store FROM orders WHERE status = 'CANCELLED' GROUP BY 1 ORDER BY order_cohort;

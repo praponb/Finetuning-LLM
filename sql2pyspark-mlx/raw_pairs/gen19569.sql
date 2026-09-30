@@ -1,0 +1,1 @@
+WITH RecentSuppliers AS (SELECT * FROM suppliers WHERE city = 'Bangkok'), suppliers_stats AS (SELECT city, SUM(rating) AS total_rating, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values FROM RecentSuppliers GROUP BY city) SELECT * FROM suppliers_stats ORDER BY city;

@@ -1,0 +1,1 @@
+SELECT customers.country, SUM(CASE WHEN sessions.country = 'US' THEN 1 ELSE 0 END) AS us_count, COUNT(DISTINCT sessions.device) AS unique_devices FROM sessions LEFT JOIN customers ON sessions.customer_id = customers.id WHERE sessions.country = 'SG' GROUP BY customers.country HAVING COUNT(DISTINCT sessions.device) > 4 ORDER BY 2 DESC;

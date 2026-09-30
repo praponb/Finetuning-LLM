@@ -1,0 +1,1 @@
+select count(cost) as cost_count, min(price) as min_price, count(*) as num_products from products where stock_qty is null and (upper(trim(product_name)) = 'COFFEE MAKER' or launch_date > '2023-06-01') order by min_price;

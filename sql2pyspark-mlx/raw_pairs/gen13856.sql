@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, EXPLODE_OUTER(coupon_codes) AS value FROM carts) SELECT value, SIZE(COLLECT_SET(value)) AS num_values, COUNT_IF(value = 'VIP') AS vip_events, GROUPING_ID() AS gid FROM flattened GROUP BY ROLLUP (value) ORDER BY value DESC

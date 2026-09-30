@@ -1,0 +1,1 @@
+select store_sales.store_id, store_sales.units, stores.opened_date, stores.sqft from store_sales left join stores on store_sales.store_id = stores.id where year(store_sales.sale_date) >= 2023 order by store_id desc, opened_date;

@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(country)) country_list, COUNT(CASE WHEN browser = 'Chrome' THEN 1 END) chrome_count FROM sessions GROUP BY customer_id) SELECT c.id, c.email, cs.country_list, cs.chrome_count FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.chrome_count > 9 ORDER BY id DESC

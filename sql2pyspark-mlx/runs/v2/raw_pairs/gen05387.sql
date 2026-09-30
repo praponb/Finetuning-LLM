@@ -1,0 +1,1 @@
+WITH ranked_sessions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) AS row_num FROM sessions) SELECT * FROM ranked_sessions WHERE row_num = 1 ORDER BY started_at, browser

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CAST(quantity AS DOUBLE) AS quantity_num, ROUND(unit_price / quantity, 2) AS line_total FROM order_items WHERE product_id IN (16, 26)) SELECT id, product_id FROM filtered INTERSECT ALL SELECT id, product_id FROM order_items WHERE order_id IN (21, 24, 35, 36)

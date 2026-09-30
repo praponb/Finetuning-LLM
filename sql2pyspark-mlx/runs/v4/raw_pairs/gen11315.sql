@@ -1,0 +1,1 @@
+select order_id, avg(amount) as avg_amount, min(paid_at) as first_paid_at from payments where method in ('promptpay', 'cash', 'bank_transfer') group by order_id order by first_paid_at, order_id limit 5;

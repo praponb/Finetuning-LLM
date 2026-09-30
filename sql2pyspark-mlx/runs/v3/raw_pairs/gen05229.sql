@@ -1,0 +1,1 @@
+WITH OrdersByStore AS (SELECT store_id, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders GROUP BY store_id) SELECT s.region, O.channel_list FROM stores s LEFT JOIN OrdersByStore O ON s.id = O.store_id ORDER BY s.region

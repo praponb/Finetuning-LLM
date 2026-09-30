@@ -1,0 +1,1 @@
+select s.id, s.start_date, s.end_date from subscriptions s where s.status in ('ACTIVE', 'CANCELLED', 'EXPIRED') and s.customer_id not in (select id from customers where month(signup_date) in (7, 8, 12));

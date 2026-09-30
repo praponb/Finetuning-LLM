@@ -1,0 +1,1 @@
+select city, count(case when city = 'Singapore' then 1 end) singapore_count from suppliers where lower(trim(supplier_name)) = 'siam parts co' and country != 'JP' group by city order by singapore_count, city limit 5

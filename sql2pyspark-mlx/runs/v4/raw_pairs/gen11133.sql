@@ -1,0 +1,1 @@
+SELECT id, start_date, monthly_fee, plan, end_date, LEAD(monthly_fee, 1) OVER (ORDER BY start_date, id) AS next_monthly_fee, LEAD(monthly_fee, 1) OVER (PARTITION BY plan ORDER BY end_date, id) AS next_monthly_fee_2 FROM subscriptions WHERE monthly_fee >= 200

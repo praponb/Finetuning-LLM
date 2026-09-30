@@ -1,0 +1,1 @@
+SELECT departments.id, departments.dept_name, COUNT(employees.id) AS employee_count, ROUND(AVG(employees.salary), 2) AS avg_salary FROM departments LEFT JOIN employees ON departments.id = employees.dept_id GROUP BY departments.id, departments.dept_name HAVING ROUND(AVG(employees.salary), 2) > 66;

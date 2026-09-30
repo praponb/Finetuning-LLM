@@ -1,0 +1,1 @@
+SELECT e.id, e.is_remote AS employee_is_remote, e.manager_id AS employee_manager_id, e.dept_id AS employee_dept_id, m.dept_id AS manager_dept_id, m.full_name AS manager_full_name FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE e.job_title IN ('Manager', 'Intern') ORDER BY employee_manager_id DESC, id ASC LIMIT 20

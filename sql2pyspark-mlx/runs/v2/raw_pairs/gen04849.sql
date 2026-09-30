@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM products WHERE YEAR(launch_date) >= 2023 AND ARRAY_CONTAINS(tags, 'bestseller')), agg AS (SELECT brand, AVG(stock_qty) AS avg_stock_qty, MIN(stock_qty) AS min_stock_qty FROM base GROUP BY brand) SELECT brand, avg_stock_qty, min_stock_qty FROM agg

@@ -1,0 +1,1 @@
+SELECT city, MONTH(opened_date) AS opened_month, region, MAX(sqft) AS max_sqft, COUNT(sqft) AS sqft_count FROM stores GROUP BY city, MONTH(opened_date), region HAVING COUNT(CASE WHEN city = 'Singapore' THEN 1 END) > 4 ORDER BY city DESC, region, opened_month LIMIT 3

@@ -1,0 +1,1 @@
+select id, store_id, discount, lag(amount) over (partition by store_id, customer_id order by shipping_fee asc, id asc) prev_amount, lead(shipping_fee) over (partition by store_id, customer_id order by shipping_fee asc, id asc) next_shipping_fee, row_number() over (partition by store_id, customer_id order by shipping_fee asc, id asc) row_seq from orders where shipping_fee > 18

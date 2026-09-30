@@ -1,0 +1,1 @@
+select we.id, we.page, we.event_type from web_events we where to_date(we.event_time) >= '2025-01-01' and we.session_id in (select id from sessions where hour(started_at) between 12 and 19) order by page desc, we.event_type;

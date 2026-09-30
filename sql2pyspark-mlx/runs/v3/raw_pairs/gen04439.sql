@@ -1,0 +1,1 @@
+SELECT page, MIN(event_time) AS first_event_time, COUNT(*) AS row_count FROM web_events WHERE TO_DATE(event_time) >= '2025-09-01' OR HOUR(event_time) BETWEEN 11 AND 18 GROUP BY page HAVING row_count < 4 ORDER BY first_event_time

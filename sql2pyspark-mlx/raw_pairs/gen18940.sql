@@ -1,0 +1,1 @@
+SELECT id, store_id, discount, customer_id, channel, order_date, shipping_fee, LAST_VALUE(customer_id) OVER (PARTITION BY store_id ORDER BY discount DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_customer_id, LAG(shipping_fee, 2) OVER (PARTITION BY store_id, channel ORDER BY order_date, id) AS prev_shipping_fee FROM orders WHERE shipping_fee < 32

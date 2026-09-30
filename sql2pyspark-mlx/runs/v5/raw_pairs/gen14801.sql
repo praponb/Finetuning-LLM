@@ -1,0 +1,1 @@
+SELECT store_id, product_id, DATE_TRUNC('MONTH', last_restock) AS last_restock_month, ROUND(STDDEV(quantity), 2) AS stddev_quantity, MAX(quantity) AS max_quantity, MIN(quantity) AS min_quantity FROM inventory WHERE YEAR(last_restock) = 2024 GROUP BY store_id, product_id, DATE_TRUNC('MONTH', last_restock);

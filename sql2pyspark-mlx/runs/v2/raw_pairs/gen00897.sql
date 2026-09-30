@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, s.country, s.rating FROM suppliers s WHERE s.supplier_name LIKE 'P%' AND NOT EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND MONTH(p.launch_date) IN (3, 10, 12)) ORDER BY s.id, country LIMIT 10;

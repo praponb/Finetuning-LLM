@@ -1,0 +1,1 @@
+SELECT payments.id, payments.paid_at, payments.status, orders.amount, orders.discount, customers.city, customers.segment FROM payments INNER JOIN orders ON payments.order_id = orders.id LEFT OUTER JOIN customers ON orders.customer_id = customers.id

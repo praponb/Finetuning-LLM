@@ -1,0 +1,1 @@
+SELECT p.supplier_id, p.brand, COUNT(ss.revenue) AS revenue_count FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id WHERE ss.revenue IS NOT NULL GROUP BY p.supplier_id, p.brand ORDER BY revenue_count DESC;

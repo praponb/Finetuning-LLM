@@ -1,0 +1,1 @@
+with store_sales_by_product as (select product_id, count(revenue) as revenue_count from store_sales where month(sale_date) in (7, 9, 10) group by product_id) select p.cost, p.launch_date, ssbp.revenue_count from products p left outer join store_sales_by_product ssbp on p.id = ssbp.product_id order by p.launch_date desc

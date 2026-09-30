@@ -1,0 +1,1 @@
+SELECT c.is_active, COUNT(DISTINCT s.device) AS unique_devices FROM sessions s INNER JOIN customers c ON c.id = s.customer_id WHERE c.city <> 'Bangkok' GROUP BY c.is_active ORDER BY unique_devices DESC

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('WEEK', order_date) AS week_start, DATE_TRUNC('YEAR', order_date) AS year_start, COUNT(CASE WHEN status = 'COMPLETED' THEN 1 END) AS completed_count, SIZE(COLLECT_SET(status)) AS num_status, COUNT(*) AS row_count FROM orders GROUP BY ROLLUP (DATE_TRUNC('WEEK', order_date), DATE_TRUNC('YEAR', order_date));

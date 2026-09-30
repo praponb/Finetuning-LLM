@@ -1,0 +1,1 @@
+WITH FilteredEmployees AS (SELECT *, SUBSTRING(job_title, 1, 2) AS job_title_prefix FROM employees WHERE NOT is_remote AND salary > 136000), agg AS (SELECT job_title, MIN(salary) AS min_salary FROM FilteredEmployees GROUP BY job_title) SELECT * FROM agg WHERE min_salary < 123000 ORDER BY 2 DESC;

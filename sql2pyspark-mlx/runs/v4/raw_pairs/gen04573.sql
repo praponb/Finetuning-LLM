@@ -1,0 +1,1 @@
+with src as (select * from shipments where status != 'DELIVERED'), Agg as (select status, month(delivered_date) as delivered_month, count(case when status = 'LOST' then 1 end) as lost_count from src group by status, month(delivered_date)) select * from Agg;

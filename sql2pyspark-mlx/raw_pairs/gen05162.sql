@@ -1,0 +1,1 @@
+SELECT p.category, ROUND(AVG(i.quantity), 2) AS avg_quantity, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM inventory i LEFT OUTER JOIN stores s ON s.id = i.store_id INNER JOIN products p ON i.product_id = p.id GROUP BY p.category;

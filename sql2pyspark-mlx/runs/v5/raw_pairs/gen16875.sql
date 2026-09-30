@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DATE_TRUNC('month', start_date) AS start_date_period, ROUND(monthly_fee * 1.15, 2) AS monthly_fee_scaled FROM subscriptions WHERE customer_id IS NOT NULL AND plan IN ('enterprise', 'basic')) SELECT * FROM (SELECT id, customer_id, monthly_fee_scaled, monthly_fee FROM cleaned) src UNPIVOT (val FOR metric_name IN (monthly_fee_scaled, monthly_fee))

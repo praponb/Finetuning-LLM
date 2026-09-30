@@ -1,0 +1,1 @@
+SELECT id, country, rating, supplier_name, RANK() OVER (PARTITION BY country ORDER BY rating) AS rating_rank, LAST_VALUE(supplier_name) OVER (ORDER BY rating DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_supplier_name FROM suppliers ORDER BY supplier_name

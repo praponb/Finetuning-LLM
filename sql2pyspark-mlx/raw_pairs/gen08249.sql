@@ -1,0 +1,1 @@
+SELECT p.brand, p.category, COUNT(*) AS cnt, SUM(e.revenue) AS total_revenue, MIN(e.units) AS min_units FROM store_sales e LEFT JOIN products p ON e.product_id = p.id GROUP BY CUBE (p.brand, p.category) ORDER BY total_revenue ASC NULLS FIRST

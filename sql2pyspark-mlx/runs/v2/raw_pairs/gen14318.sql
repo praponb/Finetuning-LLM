@@ -1,0 +1,1 @@
+SELECT order_id, carrier, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(carrier))) AS carrier_values, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM shipments GROUP BY 1, 2 ORDER BY carrier;

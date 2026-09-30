@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY region ORDER BY opened_date, id) pos FROM stores WHERE sqft BETWEEN 5356 AND 6349) SELECT id, region, opened_date FROM numbered WHERE pos <= 3;

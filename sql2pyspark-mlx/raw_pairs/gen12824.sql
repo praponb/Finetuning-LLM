@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name, e.hire_date, e.job_title, d.budget, d.location, INITCAP(TRIM(e.job_title)) AS job_title_title FROM employees e JOIN departments d ON e.dept_id = d.id WHERE d.dept_name IN ('Sales', 'Legal', 'Marketing') AND UPPER(TRIM(e.email)) = 'BOB.SMITH@YAHOO.COM' ORDER BY e.id DESC;

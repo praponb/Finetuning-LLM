@@ -1,0 +1,1 @@
+SELECT SUM(rating) AS total_rating, COUNT(*) AS supplier_count, ROUND(STDDEV(rating), 2) AS stddev_rating FROM suppliers WHERE city = 'Chiang Mai' OR supplier_name LIKE '%Tok%' ORDER BY total_rating DESC, stddev_rating

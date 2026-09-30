@@ -1,0 +1,1 @@
+SELECT orders.id, orders.status, stores.region, stores.opened_date, stores.sqft FROM orders INNER JOIN stores ON orders.store_id = stores.id WHERE orders.customer_id IS NOT NULL AND stores.region IN ('West', 'Central') ORDER BY sqft DESC, orders.status DESC

@@ -1,0 +1,1 @@
+select oi.id, oi.product_id, oi.order_id, p.supplier_id, p.launch_date, s.rating, oi.unit_price - oi.quantity as line_total from order_items oi inner join products p on p.id = oi.product_id inner join suppliers s on p.supplier_id = s.id;

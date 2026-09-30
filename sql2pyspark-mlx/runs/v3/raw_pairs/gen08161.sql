@@ -1,0 +1,1 @@
+select id, cost, status, shipped_date, ceil(cost) as cost_whole from shipments where shipped_date between '2024-04-01' and '2024-12-11' and (delivered_date > '2024-12-01' or status in ('IN_TRANSIT', 'LOST', 'RETURNED')) order by status;

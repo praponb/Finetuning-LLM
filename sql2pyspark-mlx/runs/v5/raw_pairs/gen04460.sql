@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, s.country FROM suppliers s WHERE s.supplier_name NOT LIKE 'Sia%' AND EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND p.product_name IS NOT NULL) ORDER BY country DESC;

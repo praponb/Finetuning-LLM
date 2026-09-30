@@ -1,0 +1,1 @@
+SELECT o.id, o.amount, o.shipping_fee, c.country, s.store_name, s.city FROM orders o JOIN customers c ON c.id = o.customer_id LEFT JOIN stores s ON o.store_id = s.id WHERE c.city NOT IN ('New York', 'Chiang Mai') ORDER BY id DESC

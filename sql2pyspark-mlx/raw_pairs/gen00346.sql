@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN status IN ('COMPLETED', 'PENDING') THEN 'core' ELSE 'other' END AS status_group, SUM(shipping_fee) AS total_shipping_fee FROM orders GROUP BY CASE WHEN status IN ('COMPLETED', 'PENDING') THEN 'core' ELSE 'other' END) AS t WHERE total_shipping_fee >= 90

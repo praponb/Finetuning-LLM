@@ -1,0 +1,1 @@
+SELECT ss.id, ss.store_id, ss.units, s.opened_date, s.region, p.launch_date, p.product_name, CASE WHEN s.region IN ('West', 'East') THEN 'Tier 1' ELSE 'Other' END AS region_group FROM store_sales ss LEFT JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id WHERE ss.store_id IN (1, 2, 3, 5) AND s.store_name LIKE 'Dow%'

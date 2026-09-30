@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, SUM(amount) AS total_amount FROM transactions WHERE account_id = 28 GROUP BY account_id) SELECT accounts.id, accounts.balance, account_totals.total_amount FROM accounts INNER JOIN account_totals ON accounts.id = account_totals.account_id WHERE account_totals.total_amount >= 7000;

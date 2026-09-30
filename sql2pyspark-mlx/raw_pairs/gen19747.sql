@@ -1,0 +1,1 @@
+SELECT *, ROUND(quantity, 0) AS quantity_rounded, DATEDIFF(CURRENT_DATE(), last_restock) / 7 AS weeks_since_last_restock FROM inventory WHERE (last_restock BETWEEN '2024-03-01' AND '2024-07-01' AND quantity <= 200) OR quantity >= 220 ORDER BY 3;

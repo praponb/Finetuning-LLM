@@ -1,0 +1,1 @@
+select case when region in ('South', 'North') then 'group_a' else 'other' end region_group, region, sum(case when region = 'South' then sqft else 0 end) south_sqft from stores group by 1, 2 having south_sqft < 62 order by region asc

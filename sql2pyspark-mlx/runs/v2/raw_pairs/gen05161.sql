@@ -1,0 +1,1 @@
+with product_totals as (select product_id, count(*) as total_count from store_sales group by product_id) select p.id, p.cost, pt.total_count from products p join product_totals pt on p.id = pt.product_id where pt.total_count >= 4

@@ -1,0 +1,1 @@
+select id, city, sqft, region, opened_date, round(sqft / sum(sqft) over (partition by city), 3) as sqft_share, sqft - lag(sqft, 2) over (partition by region order by opened_date, id) as sqft_change from stores

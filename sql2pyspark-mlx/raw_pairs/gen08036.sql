@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, log_ts, level, k, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) li AS k, attr_value) SELECT id, level, k, attr_value FROM flattened ORDER BY level DESC, id;

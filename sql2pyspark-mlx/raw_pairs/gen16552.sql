@@ -1,0 +1,1 @@
+SELECT country, QUARTER(signup_date) AS signup_quarter, COUNT(credit_limit) AS credit_limit_count, SUM(CASE WHEN segment = 'Consumer' THEN credit_limit ELSE 0 END) AS consumer_credit_limit FROM customers WHERE segment IS NULL AND segment IN ('Consumer', 'SMB') AND name LIKE 'Oli%' GROUP BY country, signup_quarter

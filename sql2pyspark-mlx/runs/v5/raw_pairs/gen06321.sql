@@ -1,0 +1,1 @@
+SELECT category, brand, ROUND((100 * SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_umbrella, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range, MIN(cost) AS min_cost FROM products WHERE ARRAY_CONTAINS(tags, 'bestseller') AND supplier_id IS NOT NULL GROUP BY CUBE(category, brand) ORDER BY brand DESC;

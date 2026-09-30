@@ -1,0 +1,1 @@
+SELECT o.status, SORT_ARRAY(COLLECT_SET(s.status)) AS status_list, MIN(s.delivered_date) AS min_delivered_date FROM shipments s LEFT JOIN orders o ON o.id = s.order_id LEFT JOIN stores st ON o.store_id = st.id WHERE o.channel = 'partner' GROUP BY o.status ORDER BY min_delivered_date, status LIMIT 10;

@@ -1,0 +1,1 @@
+SELECT MONTH(shipped_date) AS shipped_month, status, carrier, SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered_count, COUNT(CASE WHEN status = 'RETURNED' THEN 1 END) AS returned_count FROM shipments WHERE (delivered_date < '2025-08-01' AND shipped_date < '2024-09-01') OR order_id = 37 GROUP BY MONTH(shipped_date), status, carrier ORDER BY 4 DESC

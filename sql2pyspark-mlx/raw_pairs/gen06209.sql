@@ -1,0 +1,1 @@
+SELECT t.id, t.amount, t.txn_time, a.opened_date, c.is_active, SUBSTRING(t.merchant, 1, 2) AS merchant_prefix FROM transactions t INNER JOIN accounts a ON t.account_id = a.id LEFT OUTER JOIN customers c ON a.customer_id = c.id ORDER BY opened_date;

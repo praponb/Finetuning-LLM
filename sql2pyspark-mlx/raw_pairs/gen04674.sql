@@ -1,0 +1,1 @@
+select orders.discount, orders.amount, orders.store_id, payments.status, payments.paid_at, datediff(current_date(), orders.order_date) / 7 as weeks_since_order_date from orders inner join payments on orders.id = payments.order_id;

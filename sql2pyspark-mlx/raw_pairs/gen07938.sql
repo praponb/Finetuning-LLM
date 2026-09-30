@@ -1,0 +1,1 @@
+select o.status as order_status, a.carrier, count(*) as rows_total, avg(a.cost) as avg_cost, grouping_id() as grouping_level from shipments a left join orders o on a.order_id = o.id group by grouping sets ((o.status, a.carrier), (o.status), ());

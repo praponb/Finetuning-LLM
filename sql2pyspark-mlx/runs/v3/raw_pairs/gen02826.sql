@@ -1,0 +1,1 @@
+SELECT payments.id, payments.method, payments.amount, orders.amount AS order_amount, stores.opened_date, stores.region FROM payments FULL OUTER JOIN orders ON orders.id = payments.order_id JOIN stores ON orders.store_id = stores.id WHERE stores.region IN ('North', 'South') ORDER BY orders.amount DESC;

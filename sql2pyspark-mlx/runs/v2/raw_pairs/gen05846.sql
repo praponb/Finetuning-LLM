@@ -1,0 +1,1 @@
+SELECT o.id, o.channel, COUNT(p.id) AS payment_count, COUNT(DISTINCT p.amount) AS unique_orders FROM orders o LEFT JOIN payments p ON p.order_id = o.id WHERE o.shipping_fee <= 36 GROUP BY o.id, o.channel ORDER BY payment_count, channel

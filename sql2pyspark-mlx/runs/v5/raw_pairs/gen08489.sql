@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, p.launch_date, p.cost, s.city, DATEDIFF(CURRENT_DATE(), p.launch_date) AS days_since_launch_date FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE i.store_id IN (1, 2, 5, 6)

@@ -1,0 +1,1 @@
+WITH filtered_subscriptions AS (SELECT * FROM subscriptions WHERE monthly_fee >= 190 AND status IN ('CANCELLED', 'EXPIRED') AND start_date >= '2023-06-30'), agg AS (SELECT YEAR(end_date) AS end_year, MAX(monthly_fee) AS max_monthly_fee, AVG(monthly_fee) AS avg_monthly_fee FROM filtered_subscriptions GROUP BY YEAR(end_date)) SELECT * FROM agg WHERE avg_monthly_fee >= 180;

@@ -1,0 +1,1 @@
+WITH shipments_by_order AS (SELECT order_id, COUNT(cost) AS cost_count FROM shipments WHERE shipped_date < '2025-02-27' GROUP BY order_id) SELECT o.discount, o.shipping_fee, sbo.cost_count FROM orders o INNER JOIN shipments_by_order sbo ON o.id = sbo.order_id ORDER BY discount DESC

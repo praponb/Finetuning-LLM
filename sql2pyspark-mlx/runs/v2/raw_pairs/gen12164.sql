@@ -1,0 +1,1 @@
+select s.id, s.supplier_name, count(p.id) as product_count from suppliers s inner join products p on s.id = p.supplier_id where s.country = 'US' group by s.id, s.supplier_name order by id, supplier_name;

@@ -1,0 +1,1 @@
+SELECT id, store_id, product_id, revenue, COUNT(*) OVER (PARTITION BY store_id) AS store_id_count, RANK() OVER (PARTITION BY product_id ORDER BY revenue) AS revenue_rank FROM store_sales WHERE units >= 15 ORDER BY revenue_rank DESC, product_id DESC;

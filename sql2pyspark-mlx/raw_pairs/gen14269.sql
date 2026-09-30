@@ -1,0 +1,1 @@
+SELECT o.channel, src.carrier, COUNT(*) AS num_rows, AVG(src.cost) AS avg_cost, GROUPING_ID() AS level_id FROM shipments src INNER JOIN orders o ON src.order_id = o.id GROUP BY GROUPING SETS ((o.channel, src.carrier), (o.channel), ())

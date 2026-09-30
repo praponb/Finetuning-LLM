@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, ROUND(rating * 1.07, 2) AS rating_scaled, COALESCE(city, 'UNKNOWN') AS city_filled FROM suppliers WHERE city IS NOT NULL) SELECT id, country, metric_name, metric_value FROM (SELECT id, country, rating_scaled, rating FROM filtered) src UNPIVOT (metric_value FOR metric_name IN (rating_scaled, rating AS RATING_VAL));

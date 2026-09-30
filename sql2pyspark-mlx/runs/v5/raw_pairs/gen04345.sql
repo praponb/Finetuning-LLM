@@ -1,0 +1,1 @@
+SELECT oi.quantity, oi.order_id, o.status, c.age, c.credit_limit FROM order_items oi FULL OUTER JOIN orders o ON o.id = oi.order_id RIGHT JOIN customers c ON o.customer_id = c.id WHERE o.shipping_fee <= 18 AND UPPER(c.email) LIKE '%LIC%';

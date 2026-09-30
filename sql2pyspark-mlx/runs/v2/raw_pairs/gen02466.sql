@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, SUM(CASE WHEN brand = 'Acme' THEN price ELSE 0 END) AS acme_price, MAX(launch_date) AS last_launch_date FROM products GROUP BY 1 ORDER BY last_launch_date DESC;

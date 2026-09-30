@@ -1,0 +1,1 @@
+SELECT order_id, status, MAX(cost) - MIN(cost) cost_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values, SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END) delivered_count FROM shipments WHERE cost < 95 AND carrier IN ('DHL', 'FedEx') AND order_id IN (28, 31) GROUP BY order_id, status ORDER BY 1;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN dept_name IN ('Engineering', 'Finance') THEN 'priority' ELSE 'other' END dept_name_group, AVG(budget) avg_budget, COUNT(*) row_count FROM departments WHERE dept_name IN ('Engineering', 'Legal') GROUP BY 1

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM subscriptions WHERE monthly_fee > 200 AND plan IN ('enterprise', 'standard')), status_summary AS (SELECT status, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM base GROUP BY status) SELECT * FROM status_summary;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM payments WHERE order_id IN (3, 8, 36, 39) OR HOUR(paid_at) BETWEEN 11 AND 16), summary AS (SELECT status, COUNT(*) AS num_payments, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM base GROUP BY status) SELECT status, num_payments, status_values FROM summary WHERE num_payments > 4 ORDER BY status_values ASC, status DESC

@@ -1,0 +1,1 @@
+select id, city, rating, round(avg(rating) over (partition by city order by rating, id rows between 6 preceding and current row), 2) as rating_moving_avg_7, sum(rating) over (order by rating, id) as running_rating from suppliers;

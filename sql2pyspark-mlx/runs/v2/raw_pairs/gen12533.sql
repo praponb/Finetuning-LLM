@@ -1,0 +1,1 @@
+SELECT full_name, CASE WHEN job_title = 'Analyst' THEN 1 ELSE 0 END AS is_analyst, ROUND(salary, 2) AS salary_rounded FROM employees WHERE hire_date > '2024-01-13' AND is_remote ORDER BY is_analyst DESC, salary_rounded DESC;

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, s.city, ROUND(AVG(ss.units), 2) AS avg_units FROM store_sales ss LEFT JOIN stores s ON s.id = ss.store_id JOIN products p ON ss.product_id = p.id WHERE ARRAY_CONTAINS(p.tags, 'bestseller') GROUP BY DATE_TRUNC('MONTH', s.opened_date), s.city ORDER BY avg_units DESC, s.city

@@ -1,0 +1,1 @@
+SELECT s.id, s.sqft, s.opened_date, t.channel_values, t.total_amount FROM stores s JOIN (SELECT store_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values, SUM(amount) AS total_amount FROM orders WHERE customer_id IS NOT NULL GROUP BY store_id) t ON s.id = t.store_id

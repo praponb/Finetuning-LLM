@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LENGTH(country) country_length, COALESCE(city, 'UNKNOWN') city_filled FROM suppliers WHERE city NOT IN ('New York', 'Bangkok', 'Berlin')) SELECT * FROM (SELECT country, city, country_length FROM valid) src PIVOT (AVG(country_length) FOR city IN ('New York' AS new_york, 'Bangkok' AS bangkok));

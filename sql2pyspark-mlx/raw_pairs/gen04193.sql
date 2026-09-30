@@ -1,0 +1,1 @@
+SELECT id, customer_id, channel, amount, discount, LEAD(amount) OVER (PARTITION BY status ORDER BY order_date, id) AS next_amount, LAG(amount) OVER (PARTITION BY status ORDER BY order_date, id) AS prev_amount, LEAD(discount) OVER (PARTITION BY status ORDER BY order_date, id) AS next_discount, ROW_NUMBER() OVER (PARTITION BY status ORDER BY order_date, id) AS row_seq FROM orders;

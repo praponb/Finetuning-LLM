@@ -1,0 +1,1 @@
+WITH TopAccounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date, id) AS row_num FROM accounts) SELECT id, status, opened_date FROM TopAccounts WHERE row_num = 1 ORDER BY status;

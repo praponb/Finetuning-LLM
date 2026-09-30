@@ -1,0 +1,1 @@
+select id, plan, end_date, monthly_fee, row_number() over (partition by plan order by end_date desc, id) rn, round(monthly_fee / sum(monthly_fee) over (partition by plan), 3) monthly_fee_share from subscriptions order by id desc, rn desc

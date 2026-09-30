@@ -1,0 +1,1 @@
+WITH ProductsBySupplier AS (SELECT supplier_id, MAX(launch_date) last_launch_date, SUM(CASE WHEN brand = 'Initech' THEN stock_qty ELSE 0 END) initech_stock_qty FROM products GROUP BY supplier_id) SELECT s.country, P.last_launch_date, P.initech_stock_qty FROM suppliers s LEFT OUTER JOIN ProductsBySupplier P ON s.id = P.supplier_id WHERE P.initech_stock_qty >= 41

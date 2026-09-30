@@ -1,0 +1,1 @@
+SELECT CASE WHEN age >= 69 THEN 'high' WHEN age >= 36 THEN 'mid' ELSE 'low' END AS age_bucket, DATE_TRUNC('MONTH', signup_date) AS signup_month, MAX(signup_date) AS latest_signup_date FROM customers GROUP BY CASE WHEN age >= 69 THEN 'high' WHEN age >= 36 THEN 'mid' ELSE 'low' END, DATE_TRUNC('MONTH', signup_date) ORDER BY age_bucket ASC

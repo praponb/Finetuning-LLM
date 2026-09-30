@@ -1,0 +1,1 @@
+WITH valid_payments AS (SELECT * FROM payments WHERE amount > 540), agg AS (SELECT method, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values, MIN(amount) AS min_amount FROM valid_payments GROUP BY method) SELECT method, method_values FROM agg ORDER BY method

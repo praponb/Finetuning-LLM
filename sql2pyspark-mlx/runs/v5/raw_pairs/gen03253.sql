@@ -1,0 +1,1 @@
+SELECT orders.id, orders.discount, customers.signup_date, stores.opened_date, stores.sqft FROM orders LEFT JOIN customers ON customers.id = orders.customer_id FULL OUTER JOIN stores ON orders.store_id = stores.id WHERE customers.city = 'Singapore';

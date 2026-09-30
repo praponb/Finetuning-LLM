@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, device, started_at, ROW_NUMBER() OVER (PARTITION BY device ORDER BY started_at, id) AS pos FROM sessions WHERE browser IN ('Chrome', 'Edge', 'Safari')) SELECT * FROM numbered WHERE pos <= 2 ORDER BY 3

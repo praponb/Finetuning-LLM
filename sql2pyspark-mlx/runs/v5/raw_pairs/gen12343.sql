@@ -1,0 +1,1 @@
+SELECT store_id, min_units, units_count FROM (SELECT store_id, MIN(units) AS min_units, COUNT(units) AS units_count FROM store_sales WHERE revenue > 1600 GROUP BY store_id) AS s WHERE units_count >= 5

@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range FROM products WHERE brand IN ('Initech', 'Globex', 'Umbrella') GROUP BY supplier_id) SELECT s.id, s.rating, s.country, st.stock_qty_range FROM suppliers s INNER JOIN supplier_totals st ON s.id = st.supplier_id WHERE st.stock_qty_range >= 52 ORDER BY rating DESC, country;

@@ -1,0 +1,1 @@
+select sqft, store_name, round(sqft, 2) as sqft_rounded, last_day(opened_date) as opened_date_month_end from stores where city in ('Chiang Mai', 'London') and length(store_name) < 10 order by sqft_rounded;

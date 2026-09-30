@@ -1,0 +1,1 @@
+SELECT id, store_id, quantity, product_id, DATE_FORMAT(last_restock, 'yyyy-MM-dd') AS last_restock_label, FLOOR(quantity) AS quantity_whole FROM inventory WHERE product_id IN (2, 3, 6, 10) AND quantity <= 184 AND store_id IN (3, 4, 5, 6);

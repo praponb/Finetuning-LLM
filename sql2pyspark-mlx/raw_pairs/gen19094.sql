@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM products WHERE stock_qty < 110), summary AS (SELECT supplier_id, SUM(CASE WHEN brand = 'Initech' THEN 1 ELSE 0 END) AS initech_count, MAX(price) AS max_price FROM src GROUP BY supplier_id) SELECT * FROM summary WHERE max_price > 700 ORDER BY supplier_id DESC, max_price DESC

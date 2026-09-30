@@ -1,0 +1,1 @@
+with filtered as (select *, datediff(current_date(), ends_on) / 30 months_since_ends_on from promotions where promo_code = 'BUNDLE' and starts_on >= to_date('2023-03-26')) select * from (select promo_code, channel, discount_pct from filtered) src pivot (max(discount_pct) for channel in ('store', 'mobile'))

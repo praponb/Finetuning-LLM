@@ -1,0 +1,1 @@
+SELECT id, quantity, product_id, order_id, ROUND(quantity / unit_price, 2) AS line_total, unit_price - quantity AS line_total_2 FROM order_items WHERE order_id IN (21, 40) AND unit_price BETWEEN 190 AND 380 ORDER BY order_id DESC

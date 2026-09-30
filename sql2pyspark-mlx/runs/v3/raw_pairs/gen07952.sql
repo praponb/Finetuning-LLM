@@ -1,0 +1,1 @@
+select stores.opened_date, stores.store_name, stores.region, orders.amount from stores left join orders on orders.store_id = stores.id where stores.city not in ('Singapore', 'New York', 'Tokyo') and orders.channel != 'store' order by opened_date;

@@ -1,0 +1,1 @@
+WITH shipments_by_order AS (SELECT order_id, ROUND(AVG(cost), 2) AS avg_cost, MAX(cost) - MIN(cost) AS cost_range FROM shipments GROUP BY order_id) SELECT o.status, o.channel, sbo.avg_cost, sbo.cost_range FROM orders o LEFT OUTER JOIN shipments_by_order sbo ON o.id = sbo.order_id ORDER BY sbo.avg_cost DESC

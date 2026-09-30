@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, UPPER(country) AS country_upper FROM suppliers WHERE rating IS NULL), summary AS (SELECT city, country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai FROM src GROUP BY city, country) SELECT * FROM summary ORDER BY pct_chiang_mai DESC;

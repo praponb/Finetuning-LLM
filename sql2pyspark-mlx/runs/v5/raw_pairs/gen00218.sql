@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, reading_ts, temp_c, humidity, pressure, status_bits, CASE WHEN firmware IN ('1.0.3', '1.1.0') THEN 'Group A' ELSE 'Other' END AS firmware_group, INITCAP(TRIM(device_code)) AS device_code_title FROM device_readings WHERE reading_ts > TIMESTAMP '2025-09-01 01:00:00') SELECT id FROM valid INTERSECT ALL SELECT id FROM device_readings WHERE status_bits > 9

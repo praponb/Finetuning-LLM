@@ -1,0 +1,1 @@
+SELECT city, CASE WHEN rating >= 3.4 THEN 'high' WHEN rating >= 2.0 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(*) AS row_count, AVG(rating) AS avg_rating FROM suppliers WHERE country != 'US' AND (country != 'US' OR LENGTH(supplier_name) < 9) GROUP BY city, rating_bucket;

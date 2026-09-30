@@ -1,0 +1,1 @@
+SELECT country, ROUND(STDDEV(credit_limit), 2) stddev_credit_limit, ROUND(AVG(credit_limit), 2) avg_credit_limit FROM customers GROUP BY country HAVING stddev_credit_limit >= 51 ORDER BY stddev_credit_limit DESC;

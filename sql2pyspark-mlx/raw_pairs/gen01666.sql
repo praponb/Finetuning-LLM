@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, order_id, shipped_date, cost, status, TRIM(carrier) AS clean_carrier, COALESCE(carrier, 'UNKNOWN') AS carrier_filled FROM shipments WHERE carrier IN ('Flash', 'FedEx', 'Kerry')) SELECT * FROM (SELECT order_id, status, cost FROM base) src PIVOT (SUM(cost) AS total, COUNT(1) AS cnt FOR status IN ('LOST', 'IN_TRANSIT'))

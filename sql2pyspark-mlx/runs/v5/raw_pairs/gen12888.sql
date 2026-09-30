@@ -1,0 +1,1 @@
+WITH FilteredInventory AS (SELECT * FROM inventory WHERE product_id IN (3, 4, 8)), agg AS (SELECT product_id, store_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM FilteredInventory GROUP BY product_id, store_id) SELECT * FROM agg WHERE avg_quantity > 55 ORDER BY product_id DESC, avg_quantity DESC;

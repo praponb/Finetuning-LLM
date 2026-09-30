@@ -1,0 +1,1 @@
+WITH OrderSummary AS (SELECT order_id, COUNT(amount) AS amount_count FROM payments GROUP BY order_id) SELECT o.id, o.status, o.order_date, O.amount_count FROM orders o INNER JOIN OrderSummary O ON o.id = O.order_id WHERE O.amount_count > 7 ORDER BY O.amount_count DESC, id ASC LIMIT 1

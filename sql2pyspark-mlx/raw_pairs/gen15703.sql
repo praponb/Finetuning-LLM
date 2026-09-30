@@ -1,0 +1,1 @@
+WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC NULLS FIRST, id) AS row_num FROM sessions QUALIFY row_num = 1) SELECT DATE_TRUNC('WEEK', started_at) AS week_start, MIN(started_at) AS first_started_at, MIN(started_at) AS first_seen, SIZE(COLLECT_SET(browser)) AS num_browsers FROM latest GROUP BY DATE_TRUNC('WEEK', started_at)

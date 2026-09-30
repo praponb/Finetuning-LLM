@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, MAX(amount) - MIN(amount) AS amount_range FROM transactions GROUP BY account_id) SELECT accounts.id, accounts.opened_date, accounts.account_type, account_totals.amount_range FROM accounts INNER JOIN account_totals ON accounts.id = account_totals.account_id ORDER BY account_totals.amount_range DESC

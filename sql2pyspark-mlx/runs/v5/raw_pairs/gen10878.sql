@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM web_events WHERE session_id IN (19, 26, 30, 36) AND session_id IN (20, 30, 35)), web_events_stats AS (SELECT page, HOUR(event_time) AS event_hour, COUNT(*) AS row_count FROM Base GROUP BY page, HOUR(event_time)) SELECT page, event_hour, row_count FROM web_events_stats WHERE row_count >= 9

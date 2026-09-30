@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT MONTH(event_time) AS event_month, CASE WHEN page IN ('/search', '/home') THEN 'tier_1' ELSE 'other' END AS page_group, AVG(duration_sec) AS avg_duration_sec FROM web_events GROUP BY MONTH(event_time), CASE WHEN page IN ('/search', '/home') THEN 'tier_1' ELSE 'other' END) AS agg WHERE avg_duration_sec < 350 ORDER BY event_month DESC, avg_duration_sec DESC;

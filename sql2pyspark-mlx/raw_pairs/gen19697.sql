@@ -1,0 +1,1 @@
+SELECT end_month, pct_cancelled, min_start_date FROM (SELECT MONTH(end_date) AS end_month, ROUND((100 * SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cancelled, MIN(start_date) AS min_start_date FROM subscriptions GROUP BY MONTH(end_date)) AS t WHERE pct_cancelled >= 63 ORDER BY min_start_date DESC, end_month DESC;

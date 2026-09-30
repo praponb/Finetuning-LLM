@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, created_at, attr_key, attr_value FROM carts LATERAL VIEW EXPLODE(attributes) e AS attr_key, attr_value) SELECT id, customer_id, created_at, attr_key FROM exploded;

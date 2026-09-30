@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, COUNT(unit_price) AS unit_price_count, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items GROUP BY product_id) SELECT p.id, p.category, ps.unit_price_count, ps.avg_quantity FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id ORDER BY ps.avg_quantity DESC;

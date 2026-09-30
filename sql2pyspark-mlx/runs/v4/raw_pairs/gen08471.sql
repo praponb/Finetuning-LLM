@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 350 THEN 'LARGE' ELSE 'SMALL' END AS unit_price_tier, STDDEV_SAMP(unit_price) AS unit_price_stddev, BIT_OR(quantity) AS quantity_bit_or FROM order_items GROUP BY CASE WHEN unit_price >= 350 THEN 'LARGE' ELSE 'SMALL' END HAVING BIT_OR(quantity) > 1;

@@ -1,0 +1,1 @@
+WITH OrderTotals AS (SELECT order_id, SUM(cost) AS total_cost FROM shipments GROUP BY order_id) SELECT o.discount, o.channel, O.total_cost FROM orders o JOIN OrderTotals O ON o.id = O.order_id WHERE O.total_cost >= 530;

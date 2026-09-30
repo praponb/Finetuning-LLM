@@ -1,0 +1,1 @@
+select quarter(s.opened_date) as opened_quarter, s.region, round((100 * sum(case when o.channel = 'web' then 1 else 0 end)) / count(*), 1) as pct_web from orders o join stores s on o.store_id = s.id where s.sqft = 13931 group by quarter(s.opened_date), s.region;

@@ -1,0 +1,1 @@
+SELECT order_id, shipped_date, status, CASE WHEN status IN ('LOST', 'RETURNED') THEN 'Core' ELSE 'Other' END AS status_group, DATE_ADD(shipped_date, 18) AS shipped_date_plus_18d FROM shipments WHERE status != 'IN_TRANSIT';

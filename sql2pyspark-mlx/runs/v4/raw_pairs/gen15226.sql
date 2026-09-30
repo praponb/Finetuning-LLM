@@ -1,0 +1,1 @@
+with filtered_employees as (select *, case when job_title = 'Designer' then 1 else 0 end as is_designer from employees where is_remote and is_remote), agg as (select level, max(hire_date) as last_hire_date, min(hire_date) as min_hire_date from filtered_employees group by level) select level, last_hire_date, min_hire_date from agg order by level desc limit 10

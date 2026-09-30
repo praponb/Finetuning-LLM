@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM accounts WHERE opened_date <= '2024-11-01'), customer_id_summary AS (SELECT customer_id, status, SORT_ARRAY(COLLECT_SET(status)) status_list FROM base GROUP BY customer_id, status) SELECT customer_id, status, status_list FROM customer_id_summary ORDER BY customer_id DESC, status ASC;

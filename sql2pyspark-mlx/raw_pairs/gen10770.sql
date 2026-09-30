@@ -1,0 +1,1 @@
+SELECT id, account_type, DATEDIFF(CURRENT_DATE(), opened_date) AS days_since_opened_date FROM accounts WHERE account_type = 'CHECKING' AND status IN ('FROZEN', 'CLOSED', 'OPEN') ORDER BY days_since_opened_date DESC;

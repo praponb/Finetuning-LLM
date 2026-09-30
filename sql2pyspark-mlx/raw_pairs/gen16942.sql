@@ -1,0 +1,1 @@
+SELECT id, order_id, shipped_date, cost, ROUND(AVG(cost) OVER (PARTITION BY order_id ORDER BY shipped_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) cost_moving_avg_3 FROM shipments

@@ -1,0 +1,1 @@
+with base as (select *, substring(brand, 1, 4) as brand_prefix from products where supplier_id is not null and launch_date >= date '2023-02-27') select id, cost, stock_qty, launch_date, supplier_id, brand_prefix from base qualify row_number() over (partition by brand, supplier_id order by price nulls first, id) = 1

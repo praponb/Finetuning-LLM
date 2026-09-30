@@ -1,0 +1,1 @@
+select case when unit_price >= 330 then 'high' when unit_price >= 50 then 'mid' else 'low' end as unit_price_bucket, count(distinct unit_price) as unique_products from order_items group by unit_price_bucket

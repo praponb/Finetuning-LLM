@@ -1,0 +1,1 @@
+SELECT o.id, o.status, o.amount, c.email, c.credit_limit, s.region, s.store_name FROM orders o FULL OUTER JOIN customers c ON o.customer_id = c.id RIGHT JOIN stores s ON o.store_id = s.id WHERE s.region = 'Central' ORDER BY s.region, email DESC;

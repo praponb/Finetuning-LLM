@@ -1,0 +1,1 @@
+SELECT CASE WHEN monthly_fee >= 239 THEN 'high' WHEN monthly_fee >= 103 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, COUNT(*) AS cnt, ROUND((100 * SUM(CASE WHEN status = 'EXPIRED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_expired, COUNT(DISTINCT monthly_fee) AS unique_plans FROM subscriptions WHERE customer_id IN (19, 31, 38) GROUP BY 1

@@ -1,0 +1,1 @@
+SELECT id, store_id, quantity FROM (SELECT id, store_id, quantity, RANK() OVER (PARTITION BY store_id ORDER BY quantity DESC) pos FROM inventory WHERE MONTH(last_restock) IN (4, 9, 12)) t WHERE pos = 1;

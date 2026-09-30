@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, COUNT(cost) AS cost_count FROM products GROUP BY supplier_id) SELECT s.id, s.city, s.country, ss.cost_count FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id ORDER BY city;

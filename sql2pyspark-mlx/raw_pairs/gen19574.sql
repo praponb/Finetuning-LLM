@@ -1,0 +1,1 @@
+select date_trunc('MONTH', hire_date) as hire_month, job_title, avg(salary) as avg_salary, round((100 * sum(case when level = 'L1' then 1 else 0 end)) / count(*), 1) as pct_l1 from employees where length(full_name) >= 13 and hire_date >= '2025-09-01' group by date_trunc('MONTH', hire_date), job_title;

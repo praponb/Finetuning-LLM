@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.quantity, products.brand, products.launch_date, suppliers.rating, suppliers.city, CASE WHEN suppliers.city IN ('Singapore', 'Tokyo') THEN 'Group A' ELSE 'Other' END city_group FROM inventory LEFT JOIN products ON inventory.product_id = products.id FULL OUTER JOIN suppliers ON products.supplier_id = suppliers.id;

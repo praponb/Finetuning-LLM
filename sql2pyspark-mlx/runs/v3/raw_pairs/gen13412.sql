@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, s.city, t.max_cost, t.min_launch_date FROM suppliers s INNER JOIN (SELECT supplier_id, MAX(cost) AS max_cost, MIN(launch_date) AS min_launch_date FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY t.max_cost DESC, id LIMIT 10

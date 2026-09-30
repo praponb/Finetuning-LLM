@@ -1,0 +1,1 @@
+with CustomerSummary as (select customer_id, min(monthly_fee) as min_monthly_fee, count(distinct monthly_fee) as unique_statuss from subscriptions group by customer_id) select c.email, c.segment, C.min_monthly_fee, C.unique_statuss from customers c inner join CustomerSummary C on c.id = C.customer_id where C.min_monthly_fee > 120;

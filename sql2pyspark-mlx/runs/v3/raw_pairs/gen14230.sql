@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.4 THEN 'high' WHEN rating >= 1.9 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN country = 'DE' THEN 1 ELSE 0 END) AS de_count FROM suppliers GROUP BY rating_bucket HAVING de_count > 40

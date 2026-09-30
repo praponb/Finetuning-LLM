@@ -1,0 +1,1 @@
+SELECT id, customer_id, coupon_codes, items, attributes['utm_source'] AS utm_source, ARRAY_CONTAINS(MAP_KEYS(attributes), 'device') AS has_device, ARRAY_JOIN(ARRAY_SORT(coupon_codes), ',') AS coupons_text FROM carts

@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.rating >= 4.4 THEN 'high' WHEN s.rating >= 1.5 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN p.brand = 'Globex' THEN p.price ELSE 0 END) AS globex_price FROM products p LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id GROUP BY CASE WHEN s.rating >= 4.4 THEN 'high' WHEN s.rating >= 1.5 THEN 'mid' ELSE 'low' END ORDER BY 1, globex_price;

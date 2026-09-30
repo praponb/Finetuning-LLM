@@ -1,0 +1,1 @@
+SELECT id, txn_time, account_id, amount, LAG(amount, 2) OVER (PARTITION BY YEAR(txn_time), account_id ORDER BY txn_time, id) AS prev_amount, ROUND(AVG(amount) OVER (PARTITION BY account_id ORDER BY txn_time, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_7 FROM transactions;

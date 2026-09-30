@@ -1,0 +1,1 @@
+SELECT id, city, rating, country, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) rating_row, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating, id) rn FROM suppliers ORDER BY rating DESC

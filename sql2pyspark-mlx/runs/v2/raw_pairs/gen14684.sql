@@ -1,0 +1,1 @@
+SELECT brand, min_stock_qty, num_products FROM (SELECT brand, MIN(stock_qty) AS min_stock_qty, COUNT(*) AS num_products FROM products WHERE launch_date <= '2024-07-16' GROUP BY brand) AS s WHERE min_stock_qty > 290 ORDER BY num_products, brand LIMIT 5

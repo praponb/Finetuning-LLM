@@ -1,0 +1,1 @@
+SELECT product_id, order_id, quantity_count, unique_products FROM (SELECT product_id, order_id, COUNT(quantity) AS quantity_count, COUNT(DISTINCT quantity) AS unique_products FROM order_items GROUP BY product_id, order_id) AS x WHERE quantity_count > 3 ORDER BY quantity_count ASC, product_id DESC, order_id ASC LIMIT 5

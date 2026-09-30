@@ -1,0 +1,1 @@
+SELECT p.brand, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON s.id = p.supplier_id WHERE s.supplier_name LIKE 'Tok%' GROUP BY p.brand HAVING quantity_range >= 59 ORDER BY quantity_range;

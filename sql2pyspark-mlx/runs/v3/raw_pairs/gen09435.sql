@@ -1,0 +1,1 @@
+select o.channel, date_trunc('MONTH', o.order_date) as order_month, max(p.amount) as max_amount from payments p inner join orders o on p.order_id = o.id group by o.channel, date_trunc('MONTH', o.order_date) order by max_amount desc;

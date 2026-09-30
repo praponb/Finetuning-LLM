@@ -1,0 +1,1 @@
+with valid_order_items as (select * from order_items where unit_price < 120), summary as (select product_id, avg(quantity) as avg_quantity, max(unit_price) - min(unit_price) as unit_price_range from valid_order_items group by product_id) select * from summary

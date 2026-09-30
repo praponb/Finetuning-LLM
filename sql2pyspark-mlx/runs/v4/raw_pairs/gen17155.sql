@@ -1,0 +1,1 @@
+SELECT id, country, city, rating, supplier_name, COUNT(*) OVER (PARTITION BY country) AS country_count, FIRST_VALUE(supplier_name) OVER (PARTITION BY city ORDER BY rating, id) AS first_supplier_name FROM suppliers ORDER BY supplier_name DESC;

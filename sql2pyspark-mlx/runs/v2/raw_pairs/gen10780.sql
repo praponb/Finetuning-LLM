@@ -1,0 +1,1 @@
+SELECT id, category, supplier_id, cost, RANK() OVER (PARTITION BY category, supplier_id ORDER BY cost DESC) AS rnk FROM products;

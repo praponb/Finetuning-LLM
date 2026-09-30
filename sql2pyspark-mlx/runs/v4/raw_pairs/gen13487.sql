@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT account_id, merchant, amount FROM transactions) src PIVOT (SUM(amount) AS amount, COUNT(1) AS item_count FOR merchant IN ('Lazada' AS lazada, '7-Eleven' AS v_7_eleven, 'Grab' AS grab));

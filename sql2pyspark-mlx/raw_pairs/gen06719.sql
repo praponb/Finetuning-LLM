@@ -1,0 +1,1 @@
+SELECT id, name, email, signup_date, is_active, credit_limit, age, NTILE(5) OVER w_grp AS age_bucket, CORR(credit_limit, age) OVER w_recent AS corr_credit_limit_age, AVG(age) OVER (PARTITION BY country) AS country_avg_age FROM customers WHERE NOT is_active WINDOW w_grp AS (PARTITION BY city, country ORDER BY age, id), w_recent AS (PARTITION BY country, city)

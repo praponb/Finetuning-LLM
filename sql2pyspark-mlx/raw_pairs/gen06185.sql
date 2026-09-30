@@ -1,0 +1,1 @@
+WITH ValidOrders AS (SELECT * FROM orders WHERE customer_id IN (18, 37, 38, 40) AND channel != 'partner'), Summary AS (SELECT DATE_TRUNC('MONTH', order_date) AS order_month, COUNT(DISTINCT discount) AS unique_customers FROM ValidOrders GROUP BY DATE_TRUNC('MONTH', order_date)) SELECT order_month, unique_customers FROM Summary;

@@ -1,0 +1,1 @@
+SELECT id, city, signup_date, age, country, credit_limit, ROUND(AVG(age) OVER (PARTITION BY city ORDER BY signup_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) age_moving_avg_4, DENSE_RANK() OVER (PARTITION BY country ORDER BY credit_limit) credit_limit_dense_rank FROM customers ORDER BY signup_date

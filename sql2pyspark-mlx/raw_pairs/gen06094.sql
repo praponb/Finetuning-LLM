@@ -1,0 +1,1 @@
+SELECT id, manager_id, salary, level FROM (SELECT id, manager_id, salary, level, RANK() OVER (PARTITION BY manager_id ORDER BY salary DESC) AS row_num FROM employees WHERE salary < 94000) AS r WHERE row_num <= 5 ORDER BY salary

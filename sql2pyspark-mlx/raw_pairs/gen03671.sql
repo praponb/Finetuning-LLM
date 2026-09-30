@@ -1,0 +1,1 @@
+WITH ValidWebEvents AS (SELECT * FROM web_events WHERE session_id = 35), EventTypeSummary AS (SELECT event_type, MONTH(event_time) AS event_month, MAX(duration_sec) AS max_duration_sec, SUM(duration_sec) AS total_duration_sec FROM ValidWebEvents GROUP BY event_type, MONTH(event_time)) SELECT * FROM EventTypeSummary WHERE max_duration_sec < 440;

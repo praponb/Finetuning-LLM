@@ -1,0 +1,1 @@
+select case when cost >= 80 then 'high' when cost >= 40 then 'mid' else 'low' end as cost_bucket, sum(cost) as total_cost, dense_rank() over (order by sum(cost) desc) as cost_rank from shipments where status = 'IN_TRANSIT' group by case when cost >= 80 then 'high' when cost >= 40 then 'mid' else 'low' end order by cost_bucket limit 5;

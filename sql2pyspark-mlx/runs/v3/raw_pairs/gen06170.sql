@@ -1,0 +1,1 @@
+select case when sqft >= 12964 then 'high' when sqft >= 7018 then 'mid' else 'low' end as sqft_bucket, date_trunc('MONTH', opened_date) as opened_month, min(sqft) as min_sqft, sum(case when city = 'Chiang Mai' then sqft else 0 end) as chiang_mai_sqft from stores group by 1, 2 order by chiang_mai_sqft

@@ -1,0 +1,1 @@
+WITH SessionStats AS (SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, MAX(duration_sec) AS max_duration_sec FROM web_events WHERE event_time < '2025-01-01' GROUP BY session_id) SELECT s.customer_id, S.duration_sec_range, S.max_duration_sec FROM sessions s INNER JOIN SessionStats S ON s.id = S.session_id ORDER BY S.max_duration_sec

@@ -1,0 +1,1 @@
+select id, page, duration_sec from (select id, page, duration_sec, row_number() over (partition by page order by duration_sec desc, id) as row_num from web_events where event_type = 'search') as r where row_num <= 5 order by id desc

@@ -1,0 +1,1 @@
+SELECT d.location, e.salary, e.hire_date, e.full_name, CASE WHEN d.budget >= 4308000 THEN 'High' WHEN d.budget >= 896000 THEN 'Medium' ELSE 'Low' END AS budget_tier FROM departments d INNER JOIN employees e ON d.id = e.dept_id WHERE e.manager_id IS NULL;

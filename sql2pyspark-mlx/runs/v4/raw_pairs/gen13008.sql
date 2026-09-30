@@ -1,0 +1,1 @@
+SELECT *, COUNT(rating) OVER (PARTITION BY country) AS country_count_rating, SUM(rating) OVER w_ordered AS cumulative_rating FROM suppliers WINDOW w_ordered AS (PARTITION BY country ORDER BY rating ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW);

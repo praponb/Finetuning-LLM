@@ -1,0 +1,1 @@
+SELECT id, dept_name, location, TRIM(location) AS clean_location, CASE WHEN location = 'Tokyo' THEN 1 ELSE 0 END AS is_tokyo FROM departments WHERE location IN ('Chiang Mai', 'Berlin') OR dept_name IN ('Sales', 'Marketing') ORDER BY id DESC, 3 ASC;

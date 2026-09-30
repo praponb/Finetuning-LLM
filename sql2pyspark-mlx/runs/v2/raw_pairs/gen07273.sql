@@ -1,0 +1,1 @@
+SELECT d.dept_name, d.location, SUM(CASE WHEN e.level = 'L1' THEN 1 ELSE 0 END) AS l1_count, MAX(e.hire_date) AS last_hire_date FROM employees e FULL OUTER JOIN departments d ON e.dept_id = d.id WHERE e.salary <= 130000 GROUP BY d.dept_name, d.location ORDER BY d.location DESC;

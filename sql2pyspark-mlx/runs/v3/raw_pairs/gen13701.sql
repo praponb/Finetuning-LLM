@@ -1,0 +1,1 @@
+select s.region, s.city, count(ss.revenue) as revenue_count from store_sales ss left outer join stores s on ss.store_id = s.id where s.opened_date > '2023-12-06' group by s.region, s.city order by s.city, region limit 5

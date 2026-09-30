@@ -1,0 +1,1 @@
+select order_id, round(avg(unit_price), 2) as avg_unit_price, sum(unit_price) as total_unit_price, round(stddev(unit_price), 2) as stddev_unit_price from order_items group by order_id order by stddev_unit_price desc, 1

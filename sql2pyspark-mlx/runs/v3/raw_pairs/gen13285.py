@@ -1,0 +1,7 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_transactions
+    .filter(F.to_date("txn_time") < "2023-06-10")
+    .select("id", "txn_type")
+)

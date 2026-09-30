@@ -1,0 +1,1 @@
+SELECT status, ROUND(AVG(amount), 2) AS avg_amount, SUM(CASE WHEN status = 'SUCCESS' THEN amount ELSE 0 END) AS success_amount, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments WHERE order_id IS NOT NULL AND (paid_at >= '2025-08-01' OR status = 'REFUNDED') GROUP BY 1;

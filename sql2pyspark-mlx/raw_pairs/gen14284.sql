@@ -1,0 +1,1 @@
+SELECT p.job_title AS employee_job_title, a.level AS employee_level, COUNT(*) AS num_rows, MAX(a.salary) AS max_salary FROM employees a INNER JOIN employees p ON a.manager_id = p.id GROUP BY CUBE (p.job_title, a.level) ORDER BY employee_job_title DESC NULLS FIRST;

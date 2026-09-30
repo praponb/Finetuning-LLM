@@ -1,0 +1,1 @@
+SELECT CASE WHEN salary >= 157000 THEN 'high' WHEN salary >= 57000 THEN 'mid' ELSE 'low' END AS salary_bucket, COUNT(*) AS num_employees, MIN(salary) AS min_salary, COUNT(CASE WHEN job_title = 'Intern' THEN 1 END) AS intern_count FROM employees GROUP BY 1 HAVING COUNT(*) < 5 ORDER BY 3 DESC;

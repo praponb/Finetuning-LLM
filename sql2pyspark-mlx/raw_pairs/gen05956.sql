@@ -1,0 +1,1 @@
+with top_orders as (select id, store_id, order_date, customer_id, row_number() over (partition by store_id order by order_date desc, id) as pos from orders) select id, store_id, order_date, customer_id from top_orders where pos <= 5 order by order_date

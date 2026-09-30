@@ -1,0 +1,1 @@
+SELECT QUARTER(store_sales.sale_date) AS sale_quarter, MIN(inventory.quantity) AS min_quantity FROM inventory LEFT JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE store_sales.product_id = 6 GROUP BY QUARTER(store_sales.sale_date);

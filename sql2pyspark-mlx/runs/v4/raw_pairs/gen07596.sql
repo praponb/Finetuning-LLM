@@ -1,0 +1,1 @@
+SELECT p.category, DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i INNER JOIN products p ON p.id = i.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE i.last_restock > '2023-07-01' GROUP BY p.category, DATE_FORMAT(p.launch_date, 'yyyy-MM') HAVING quantity_range >= 63;

@@ -1,0 +1,8 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_store_sales
+    .filter(F.col("product_id") == 3)
+    .select("id", "product_id")
+    .intersect(df_store_sales.filter(F.col("units") > 31).select("id", "product_id"))
+)

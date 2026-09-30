@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, INITCAP(TRIM(carrier)) AS carrier_title FROM shipments WHERE order_id IN (16, 34) AND status = 'RETURNED'), summary AS (SELECT DATE_TRUNC('MONTH', shipped_date) AS shipped_month, AVG(cost) AS avg_cost, MAX(shipped_date) AS latest_shipped_date FROM src GROUP BY DATE_TRUNC('MONTH', shipped_date)) SELECT shipped_month, avg_cost FROM summary;

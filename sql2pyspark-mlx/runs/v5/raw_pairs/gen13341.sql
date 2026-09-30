@@ -1,0 +1,1 @@
+SELECT city, COUNT(*) AS cnt, SORT_ARRAY(COLLECT_SET(region)) AS region_list FROM stores WHERE opened_date > '2025-04-06' AND city = 'Chiang Mai' GROUP BY city HAVING COUNT(*) > 2 ORDER BY city, cnt DESC

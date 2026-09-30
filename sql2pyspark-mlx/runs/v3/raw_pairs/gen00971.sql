@@ -1,0 +1,1 @@
+select s.city, sum(i.quantity) as total_quantity, avg(i.quantity) as avg_quantity from inventory i left outer join products p on i.product_id = p.id join suppliers s on p.supplier_id = s.id where s.country = 'TH' group by s.city order by city, avg_quantity limit 5

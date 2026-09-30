@@ -1,0 +1,1 @@
+WITH TopEmployees AS (SELECT id, manager_id, hire_date, dept_id, DENSE_RANK() OVER (PARTITION BY manager_id ORDER BY hire_date) AS rnk FROM employees) SELECT id, manager_id, hire_date, dept_id FROM TopEmployees WHERE rnk <= 2;

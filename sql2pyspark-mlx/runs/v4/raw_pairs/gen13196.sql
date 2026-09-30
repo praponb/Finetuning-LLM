@@ -1,0 +1,1 @@
+WITH top_sessions AS (SELECT id, browser, started_at, DENSE_RANK() OVER (PARTITION BY browser ORDER BY started_at) AS rnk FROM sessions) SELECT id, browser, started_at FROM top_sessions WHERE rnk <= 5 ORDER BY browser DESC, id DESC

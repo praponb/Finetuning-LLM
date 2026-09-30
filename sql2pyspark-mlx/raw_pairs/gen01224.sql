@@ -1,0 +1,1 @@
+SELECT merchant, ROUND(AVG(amount), 2) AS avg_amount, COUNT(amount) AS amount_count FROM transactions WHERE TO_DATE(txn_time) < '2024-11-05' AND NOT is_flagged GROUP BY merchant HAVING MIN(amount) < 1800 ORDER BY merchant ASC, amount_count DESC LIMIT 20

@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, QUARTER(ends_on) ends_on_quarter, DATEDIFF(CURRENT_DATE(), ends_on) / 365 years_since_ends_on, COALESCE(channel, 'UNKNOWN') channel_filled FROM promotions WHERE channel IS NOT NULL AND channel IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY ends_on DESC, id) AS rn FROM base QUALIFY rn = 1

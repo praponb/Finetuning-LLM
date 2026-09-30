@@ -1,0 +1,1 @@
+WITH DepartmentStats AS (SELECT dept_id, ROUND((100 * SUM(CASE WHEN job_title = 'Director' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_director FROM employees GROUP BY dept_id) SELECT d.location, D.pct_director FROM departments d LEFT JOIN DepartmentStats D ON d.id = D.dept_id WHERE D.pct_director > 53 ORDER BY D.pct_director DESC;

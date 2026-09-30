@@ -1,0 +1,1 @@
+SELECT is_active, CASE WHEN age >= 65 THEN 'high' WHEN age >= 31 THEN 'mid' ELSE 'low' END AS age_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(segment))) AS segment_values, SORT_ARRAY(COLLECT_SET(segment)) AS segment_list FROM customers GROUP BY is_active, CASE WHEN age >= 65 THEN 'high' WHEN age >= 31 THEN 'mid' ELSE 'low' END;

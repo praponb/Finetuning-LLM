@@ -1,0 +1,1 @@
+select ss.id, ss.product_id, ss.store_id, p.cost, s.country, datediff(current_date(), ss.sale_date) / 30 as months_since_sale_date from store_sales ss inner join products p on p.id = ss.product_id left join suppliers s on p.supplier_id = s.id order by country desc, id limit 1;

@@ -1,0 +1,1 @@
+select id, txn_type, amount, txn_time, last_value(txn_time) over (partition by txn_type order by amount desc, id rows between unbounded preceding and unbounded following) as last_txn_time from transactions order by txn_time, last_txn_time;

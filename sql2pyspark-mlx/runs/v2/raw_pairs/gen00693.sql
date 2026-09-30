@@ -1,0 +1,15 @@
+SELECT
+    id,
+    browser,
+    started_at,
+    customer_id
+FROM (
+    SELECT
+        id,
+        browser,
+        started_at,
+        customer_id,
+        ROW_NUMBER() OVER (PARTITION BY browser ORDER BY started_at DESC, id) AS pos
+    FROM sessions
+) AS t
+WHERE pos <= 3;

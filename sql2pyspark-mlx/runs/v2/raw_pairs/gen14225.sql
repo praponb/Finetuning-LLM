@@ -1,0 +1,1 @@
+SELECT departments.location, departments.budget, t.l2_count, t.cnt FROM departments LEFT JOIN (SELECT dept_id, COUNT(CASE WHEN level = 'L2' THEN 1 END) AS l2_count, COUNT(*) AS cnt FROM employees GROUP BY dept_id) t ON departments.id = t.dept_id WHERE t.cnt > 4;

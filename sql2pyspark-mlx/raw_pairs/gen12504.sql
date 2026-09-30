@@ -1,0 +1,1 @@
+select p.supplier_id, case when p.category in ('Fashion', 'Grocery') then 'core' else 'other' end as category_group, min(ss.sale_date) as min_sale_date from store_sales ss left join products p on ss.product_id = p.id group by p.supplier_id, case when p.category in ('Fashion', 'Grocery') then 'core' else 'other' end order by min_sale_date desc, category_group;

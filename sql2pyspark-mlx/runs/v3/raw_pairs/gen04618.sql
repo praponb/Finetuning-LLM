@@ -1,0 +1,1 @@
+select date_trunc('MONTH', s.opened_date) as opened_month, min(i.quantity) as min_quantity from inventory i join stores s on i.store_id = s.id where s.city in ('Tokyo', 'Singapore', 'Bangkok') group by date_trunc('MONTH', s.opened_date) order by min_quantity desc

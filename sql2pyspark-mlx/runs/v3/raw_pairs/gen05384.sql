@@ -1,0 +1,1 @@
+select ss.store_id, quarter(ss.sale_date) sale_quarter, count(*) inventory_count from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.store_id, quarter(ss.sale_date) order by sale_quarter;

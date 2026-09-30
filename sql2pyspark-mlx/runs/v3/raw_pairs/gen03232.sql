@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, t.grab_count, t.pct_amazon FROM accounts a LEFT JOIN (SELECT account_id, SUM(CASE WHEN merchant = 'Grab' THEN 1 ELSE 0 END) AS grab_count, ROUND((100 * SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_amazon FROM transactions GROUP BY account_id) t ON a.id = t.account_id;

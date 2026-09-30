@@ -1,0 +1,1 @@
+select s.device, sum(case when we.page = '/checkout' then 1 else 0 end) as checkout_count from web_events we left outer join sessions s on we.session_id = s.id group by s.device having checkout_count > 43

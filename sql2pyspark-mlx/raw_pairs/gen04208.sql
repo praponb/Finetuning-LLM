@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, SUBSTRING(category, 1, 4) AS category_prefix, COALESCE(brand, 'NONE') AS brand_filled FROM products WHERE brand IS DISTINCT FROM 'Stark' AND price < 360) SELECT * FROM (SELECT id, brand, price, cost FROM filtered) src UNPIVOT INCLUDE NULLS (val FOR metric IN (price, cost AS COST_VAL))

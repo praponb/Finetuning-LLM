@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list FROM accounts WHERE status = 'CLOSED' GROUP BY customer_id) SELECT c.country, cs.account_type_list FROM customers c JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY c.country DESC;

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, COUNT(CASE WHEN we.event_type = 'click' THEN 1 END) AS click_count, MIN(we.duration_sec) AS min_duration_sec FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE s.browser IN ('Safari', 'Edge') GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM');

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, MAX(unit_price) AS max_unit_price FROM order_items GROUP BY order_id) SELECT o.customer_id, os.max_unit_price FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.max_unit_price > 270 ORDER BY customer_id DESC

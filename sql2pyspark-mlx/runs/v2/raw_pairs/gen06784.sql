@@ -1,0 +1,1 @@
+with employees_by_department as (select dept_id, min(salary) as min_salary, max(salary) as max_salary from employees where manager_id = 26 group by dept_id) select d.id, d.dept_name, d.budget, ebd.min_salary, ebd.max_salary from departments d inner join employees_by_department ebd on d.id = ebd.dept_id order by d.budget desc

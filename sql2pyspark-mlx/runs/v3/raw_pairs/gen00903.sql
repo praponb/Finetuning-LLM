@@ -1,0 +1,1 @@
+select id, customer_id, amount, store_id, rank() over (partition by customer_id order by amount desc) amount_rank, max(amount) over (partition by store_id) store_id_max_amount from orders order by amount_rank desc

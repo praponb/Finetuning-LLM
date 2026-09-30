@@ -1,0 +1,1 @@
+select country, city, max(rating) as max_rating, round((100 * sum(case when country = 'JP' then 1 else 0 end)) / count(*), 1) as pct_jp from suppliers group by country, city having count(rating) >= 4 order by country asc;

@@ -1,0 +1,1 @@
+with customer_stats as (select customer_id, min(order_date) as min_order_date from orders group by customer_id) select c.id, c.signup_date, c.age, cs.min_order_date from customers c join customer_stats cs on c.id = cs.customer_id order by min_order_date desc, id asc limit 10;

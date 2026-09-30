@@ -1,0 +1,1 @@
+SELECT id, country, credit_limit, segment, signup_date, age, DENSE_RANK() OVER (PARTITION BY country ORDER BY credit_limit) AS dense_rnk, LEAD(age, 1, 0) OVER (PARTITION BY segment ORDER BY signup_date, id) AS next_age FROM customers ORDER BY id DESC, credit_limit DESC

@@ -1,0 +1,1 @@
+SELECT id, order_id, carrier, shipped_date, delivered_date, cost, status FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY delivered_date NULLS FIRST, id) AS dedup_rank FROM shipments) ranked WHERE dedup_rank = 1;

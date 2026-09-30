@@ -1,0 +1,1 @@
+WITH with_windows AS (SELECT *, AVG(quantity) OVER (PARTITION BY store_id ORDER BY quantity, id ROWS BETWEEN 5 PRECEDING AND 1 PRECEDING) AS quantity_avg_5_prior, AVG(quantity) OVER (ORDER BY quantity, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS quantity_avg_6_prior FROM inventory) SELECT id, quantity, last_restock, quantity_avg_6_prior FROM with_windows ORDER BY quantity

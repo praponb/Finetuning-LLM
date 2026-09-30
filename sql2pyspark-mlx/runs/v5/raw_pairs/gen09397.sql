@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY promo_code ORDER BY ends_on ASC, id ASC) AS rn FROM promotions) x WHERE rn = 1) SELECT id, ends_on, discount_pct FROM deduped ORDER BY id ASC LIMIT 5

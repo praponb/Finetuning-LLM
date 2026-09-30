@@ -1,0 +1,1 @@
+SELECT MONTH(s.opened_date) AS opened_month, MAX(ss.sale_date) AS latest_sale_date, COUNT(ss.revenue) AS revenue_count FROM store_sales ss JOIN products p ON ss.product_id = p.id RIGHT JOIN stores s ON s.id = ss.store_id WHERE ss.sale_date <= '2024-11-29' GROUP BY MONTH(s.opened_date) ORDER BY opened_month DESC

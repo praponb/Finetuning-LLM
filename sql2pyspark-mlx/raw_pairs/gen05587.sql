@@ -1,0 +1,1 @@
+select month(ss.sale_date) as sale_month, round(avg(i.quantity), 2) as avg_quantity, min(i.last_restock) as first_last_restock from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by month(ss.sale_date) having avg_quantity > 20 order by sale_month desc limit 3;

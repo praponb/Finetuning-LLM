@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY sale_date DESC, id) AS rn FROM store_sales WHERE product_id IN (1, 6, 7, 9)) SELECT * FROM ranked WHERE rn <= 3 ORDER BY store_id DESC;

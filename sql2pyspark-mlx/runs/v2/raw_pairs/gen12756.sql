@@ -1,0 +1,1 @@
+select id, dept_id, hire_date, salary, sum(salary) over (partition by dept_id order by hire_date, id rows between unbounded preceding and current row) as running_salary from employees where email like '%@company.co'

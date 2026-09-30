@@ -1,0 +1,1 @@
+select id, carrier, shipped_date, delivered_date, status, lag(cost) over (partition by order_id, status order by delivered_date, id) as prev_cost, row_number() over (partition by order_id, status order by delivered_date, id) as seq_no, ntile(10) over (order by cost, id) as cost_bucket from shipments;

@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM orders WHERE amount > 1460 AND amount < 600), summary AS (SELECT store_id, MIN(shipping_fee) AS min_shipping_fee, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM src GROUP BY store_id) SELECT store_id, min_shipping_fee, channel_list FROM summary WHERE min_shipping_fee > 11;

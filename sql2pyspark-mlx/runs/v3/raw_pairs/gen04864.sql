@@ -1,0 +1,1 @@
+select id, status, balance, account_type from (select id, status, balance, account_type, row_number() over (partition by status order by balance desc, id) as rnk from accounts) as ranked where rnk <= 3 order by status, account_type;

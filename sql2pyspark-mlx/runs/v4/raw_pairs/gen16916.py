@@ -1,0 +1,7 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_accounts
+    .filter(F.col("customer_id").isin([33, 34]) & ((F.col("opened_date") >= "2024-05-01") | (F.col("status") == "CLOSED")))
+    .select("id", "account_type")
+)

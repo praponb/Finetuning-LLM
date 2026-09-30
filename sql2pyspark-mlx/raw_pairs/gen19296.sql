@@ -1,0 +1,1 @@
+SELECT CASE WHEN country IN ('UK', 'DE') THEN 'priority' ELSE 'other' END country_group, country, ROUND(STDDEV(rating), 2) stddev_rating FROM suppliers WHERE country IN ('JP', 'SG', 'TH') GROUP BY 1, 2 HAVING ROUND(STDDEV(rating), 2) > 65 ORDER BY stddev_rating DESC;

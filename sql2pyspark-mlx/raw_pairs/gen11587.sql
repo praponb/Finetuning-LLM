@@ -1,0 +1,1 @@
+SELECT s.id, s.country, s.device, s.browser, c.segment, c.city FROM sessions s LEFT JOIN customers c ON s.customer_id = c.id WHERE NOT (s.browser NOT IN ('Chrome', 'Firefox', 'Edge') AND s.country IS NOT NULL) ORDER BY s.id DESC;

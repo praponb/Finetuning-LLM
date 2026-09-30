@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(we.id) AS web_event_count, SUM(CASE WHEN we.event_type = 'search' THEN 1 ELSE 0 END) AS search_count FROM sessions s LEFT OUTER JOIN web_events we ON we.session_id = s.id WHERE TO_DATE(s.started_at) >= '2024-07-01' GROUP BY s.id, s.country

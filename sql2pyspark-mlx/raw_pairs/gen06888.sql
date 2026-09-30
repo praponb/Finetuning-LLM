@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, plan, currency, EXPLODE_OUTER(discounts) AS val FROM price_tiers) SELECT id, plan, val, CASE WHEN plan RLIKE '^(basic|pro)$' THEN 'GROUP_A' WHEN plan RLIKE '^(starter|enterprise)$' THEN 'EXTENDED' ELSE 'CORE' END AS plan_zone FROM exploded

@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, SUM(amount) AS total_amount FROM transactions WHERE TO_DATE(txn_time) < '2024-06-01' GROUP BY account_id) SELECT a.status, a.customer_id, at.total_amount FROM accounts a INNER JOIN account_totals at ON a.id = at.account_id WHERE at.total_amount >= 24000

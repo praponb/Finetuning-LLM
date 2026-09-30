@@ -1,0 +1,1 @@
+SELECT CASE WHEN stock_qty >= 393 THEN 'high' WHEN stock_qty >= 173 THEN 'mid' ELSE 'low' END AS stock_qty_bucket, brand, category, MIN(launch_date) AS min_launch_date, COUNT(DISTINCT price) AS unique_suppliers FROM products WHERE price BETWEEN 500 AND 580 GROUP BY CASE WHEN stock_qty >= 393 THEN 'high' WHEN stock_qty >= 173 THEN 'mid' ELSE 'low' END, brand, category

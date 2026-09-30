@@ -1,0 +1,1 @@
+SELECT id, product_name, brand, price, cost, stock_qty, tags, supplier_id FROM (SELECT *, RANK() OVER (PARTITION BY supplier_id, category ORDER BY launch_date NULLS LAST) AS rank_in_group FROM products) ranked WHERE rank_in_group = 1

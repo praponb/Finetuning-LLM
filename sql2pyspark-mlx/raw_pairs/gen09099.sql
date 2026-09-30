@@ -1,0 +1,1 @@
+SELECT products.id, products.category, products.product_name, products.launch_date FROM products WHERE products.supplier_id NOT IN (SELECT id FROM suppliers WHERE country != 'DE') ORDER BY products.launch_date;

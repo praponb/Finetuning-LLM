@@ -1,0 +1,1 @@
+select case when c.credit_limit >= 15300 then 'high' when c.credit_limit >= 4900 then 'mid' else 'low' end as credit_limit_bucket, max(a.opened_date) as last_opened_date, avg(a.balance) as avg_balance from accounts a full outer join customers c on c.id = a.customer_id group by case when c.credit_limit >= 15300 then 'high' when c.credit_limit >= 4900 then 'mid' else 'low' end;

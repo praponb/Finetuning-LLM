@@ -1,0 +1,1 @@
+WITH SupplierTotals AS (SELECT supplier_id, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products GROUP BY supplier_id) SELECT suppliers.country, SupplierTotals.avg_stock_qty FROM suppliers LEFT JOIN SupplierTotals ON suppliers.id = SupplierTotals.supplier_id WHERE SupplierTotals.avg_stock_qty > 24;

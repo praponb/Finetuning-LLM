@@ -1,0 +1,1 @@
+select month(delivered_date) as delivered_month, order_id, sum(cost) as total_cost, avg(cost) as avg_cost from shipments group by month(delivered_date), order_id order by delivered_month desc, order_id;

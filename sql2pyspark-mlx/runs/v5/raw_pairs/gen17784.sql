@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DATEDIFF(CURRENT_DATE(), ends_on) AS days_since_ends_on, COALESCE(channel, 'UNKNOWN') AS channel_clean FROM promotions WHERE ends_on > DATE '2023-08-08' AND ends_on > '2024-06-01') SELECT * FROM cleaned QUALIFY RANK() OVER (PARTITION BY channel ORDER BY discount_pct) = 1;

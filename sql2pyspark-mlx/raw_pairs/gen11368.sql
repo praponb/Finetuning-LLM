@@ -1,0 +1,1 @@
+WITH recent_departments AS (SELECT * FROM departments WHERE location IN ('London', 'New York', 'Tokyo')), dept_name_summary AS (SELECT dept_name, SUM(CASE WHEN dept_name = 'Legal' THEN 1 ELSE 0 END) AS legal_count FROM recent_departments GROUP BY dept_name) SELECT dept_name, legal_count FROM dept_name_summary ORDER BY dept_name

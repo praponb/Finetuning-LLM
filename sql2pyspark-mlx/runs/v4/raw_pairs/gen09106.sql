@@ -1,0 +1,1 @@
+SELECT ss.units, s.region, p.cost, p.product_name FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id WHERE s.store_name NOT LIKE 'S%' AND ss.store_id IN (2, 4, 5, 6) ORDER BY 4 DESC;

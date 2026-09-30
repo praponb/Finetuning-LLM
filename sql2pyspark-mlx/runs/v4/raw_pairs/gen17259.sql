@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATE_FORMAT(sale_date, 'MMM yyyy') AS sale_date_label FROM store_sales WHERE sale_date >= TO_DATE('2023-04-28')) SELECT *, ROW_NUMBER() OVER (ORDER BY units DESC, id) AS event_seq, ROW_NUMBER() OVER (ORDER BY sale_date DESC, id) AS row_seq FROM filtered

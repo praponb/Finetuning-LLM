@@ -1,0 +1,1 @@
+SELECT a.id, a.opened_date, a.account_type, a.balance FROM accounts a WHERE a.opened_date BETWEEN '2024-01-01' AND '2025-07-14' AND NOT EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND t.txn_time < '2024-05-14')

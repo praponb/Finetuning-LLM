@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(quantity) AS quantity_count FROM inventory WHERE product_id IN (3, 9) GROUP BY store_id) SELECT s.id, s.city, st.quantity_count FROM stores s INNER JOIN store_totals st ON s.id = st.store_id;

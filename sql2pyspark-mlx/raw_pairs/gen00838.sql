@@ -1,0 +1,1 @@
+select *, substring(status, 1, 3) status_prefix, initcap(trim(carrier)) carrier_title from shipments where shipped_date < '2024-07-02' and cost > 40 order by status_prefix desc, shipped_date, id limit 20

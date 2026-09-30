@@ -1,0 +1,1 @@
+select s.city, quarter(s.opened_date) as opened_quarter, sum(i.quantity) as total_quantity from inventory i inner join stores s on i.store_id = s.id group by s.city, quarter(s.opened_date) having sum(i.quantity) > 1090;

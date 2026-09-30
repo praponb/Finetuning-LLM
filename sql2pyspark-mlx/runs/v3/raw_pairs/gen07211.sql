@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.status, subscriptions.monthly_fee, customers.is_active, customers.age, customers.city, UPPER(customers.segment) AS segment_upper FROM subscriptions INNER JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.end_date < '2024-11-26' AND subscriptions.end_date <= '2023-08-01' ORDER BY city, id LIMIT 1;

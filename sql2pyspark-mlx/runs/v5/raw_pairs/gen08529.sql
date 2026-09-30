@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LENGTH(name) AS name_length FROM customers WHERE UPPER(TRIM(email)) = 'IVY@GMAIL.COM') SELECT s.* FROM base s WHERE NOT EXISTS (SELECT 1 FROM orders x WHERE x.customer_id = s.id AND x.order_date < s.signup_date)

@@ -1,0 +1,1 @@
+SELECT id, channel, customer_id, order_date, status, discount, ROW_NUMBER() OVER (PARTITION BY channel, customer_id ORDER BY order_date, id) AS row_num, SUM(discount) OVER (PARTITION BY status ORDER BY order_date, id) AS running_discount FROM orders ORDER BY order_date ASC;

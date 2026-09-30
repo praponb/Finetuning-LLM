@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, COUNT(*) AS num_sessions FROM sessions s RIGHT JOIN customers c ON s.customer_id = c.id WHERE c.country = 'UK' GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM') ORDER BY signup_month DESC, num_sessions

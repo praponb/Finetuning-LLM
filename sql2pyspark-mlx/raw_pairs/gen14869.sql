@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, order_id, carrier, shipped_date, delivered_date, cost, ADD_MONTHS(shipped_date, 12) shipped_date_plus_months, COALESCE(carrier, 'NONE') carrier_clean FROM shipments WHERE carrier IS NOT NULL AND carrier IS DISTINCT FROM 'UPS') SELECT * FROM (SELECT order_id, carrier, cost FROM base) src PIVOT (AVG(cost) AS value_sum FOR carrier IN ('FedEx', 'Kerry'));

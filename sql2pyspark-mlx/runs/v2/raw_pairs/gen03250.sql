@@ -1,0 +1,1 @@
+select quantity, case when quantity >= 265 then 'High' when quantity >= 51 then 'Medium' else 'Low' end as quantity_level from inventory where quantity between 188 and 238 and year(last_restock) >= 2024 and quantity between 69 and 218

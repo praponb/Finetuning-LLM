@@ -1,0 +1,1 @@
+SELECT id, account_id, MAX(amount) OVER w_hist AS last7_max_amount, MIN(amount) OVER w_hist AS last7_min_amount, SUM(amount) OVER w_hist AS last7_sum_amount, AVG(amount) OVER w_hist AS last7_avg_amount FROM transactions WINDOW w_hist AS (PARTITION BY merchant ORDER BY amount, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW);

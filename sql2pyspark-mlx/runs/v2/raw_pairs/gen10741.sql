@@ -1,0 +1,1 @@
+SELECT s.city, s.region, SUM(ss.revenue) AS total_revenue, COUNT(*) AS num_store_sales FROM store_sales ss LEFT JOIN products p ON p.id = ss.product_id RIGHT JOIN stores s ON s.id = ss.store_id GROUP BY s.city, s.region ORDER BY num_store_sales, city, region LIMIT 5

@@ -1,0 +1,1 @@
+SELECT id, order_id, unit_price, quantity, product_id, ROUND(AVG(quantity) OVER (PARTITION BY order_id ORDER BY unit_price, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS quantity_moving_avg_7, SUM(quantity) OVER (PARTITION BY product_id) AS product_id_sum_quantity FROM order_items;

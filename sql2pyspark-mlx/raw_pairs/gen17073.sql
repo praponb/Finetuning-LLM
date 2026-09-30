@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CAST(budget AS INT) AS budget_int, FLOOR(budget) AS budget_whole, COALESCE(location, 'DIRECT') AS location_clean FROM departments WHERE dept_name IS NOT NULL AND location IS DISTINCT FROM 'Tokyo') SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY dept_name ORDER BY budget_whole DESC) AS dedup_rank FROM base) ranked WHERE dedup_rank = 1;

@@ -1,0 +1,1 @@
+with with_dims as (select e.*, p.supplier_name from products e left join suppliers p on e.supplier_id = p.id) select s.id, s.product_name, s.category, s.brand, s.price, s.cost, s.launch_date, s.tags, s.supplier_id, (select avg(p2.cost) from products p2 where p2.supplier_id = s.supplier_id) as avg_product_cost from with_dims s

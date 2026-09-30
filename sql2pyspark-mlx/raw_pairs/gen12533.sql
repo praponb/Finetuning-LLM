@@ -1,0 +1,1 @@
+with lines as (select id, inline(items) from carts) select id, product_id, qty, price, promo, rank() over (order by qty desc nulls first) as qty_rank, dense_rank() over (order by product_id nulls first) as product_id_dense_rank from lines where promo <> 'BUNDLE'

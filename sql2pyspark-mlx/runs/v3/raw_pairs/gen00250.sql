@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, MAX(p.amount) - MIN(p.amount) AS amount_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.status))) AS status_values FROM payments p JOIN orders o ON p.order_id = o.id JOIN stores s ON o.store_id = s.id GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM');

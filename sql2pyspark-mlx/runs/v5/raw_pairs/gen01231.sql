@@ -1,0 +1,1 @@
+with base as (select *, round(budget, 0) as budget_rounded, coalesce(location, 'NONE') as location_clean from departments where dept_name is not null) select * from (select *, row_number() over (partition by dept_name, location order by budget_rounded desc nulls first, id) as dedup_rank from base) ranked where dedup_rank = 1

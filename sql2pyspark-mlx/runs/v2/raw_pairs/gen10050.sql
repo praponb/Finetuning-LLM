@@ -1,0 +1,1 @@
+with account_totals as (select account_id, sum(case when txn_type = 'FEE' then 1 else 0 end) as fee_count from transactions group by account_id) select a.balance, a.customer_id, at.fee_count from accounts a join account_totals at on a.id = at.account_id

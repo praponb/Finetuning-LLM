@@ -1,0 +1,1 @@
+SELECT MONTH(signup_date) AS signup_month, ROUND(AVG(credit_limit), 2) AS avg_credit_limit FROM customers WHERE segment = 'Corporate' AND (country = 'TH' OR signup_date >= '2023-07-01') GROUP BY signup_month HAVING ROUND(AVG(credit_limit), 2) >= 76 ORDER BY avg_credit_limit DESC

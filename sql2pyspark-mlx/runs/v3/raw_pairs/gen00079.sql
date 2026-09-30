@@ -1,0 +1,1 @@
+select p.brand, year(p.launch_date) launch_year, count(*) row_count from store_sales ss inner join products p on ss.product_id = p.id inner join suppliers s on p.supplier_id = s.id group by p.brand, year(p.launch_date) order by launch_year desc

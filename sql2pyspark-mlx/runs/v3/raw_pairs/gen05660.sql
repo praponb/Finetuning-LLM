@@ -1,0 +1,1 @@
+SELECT e.salary AS employee_salary, e.hire_date AS employee_hire_date, e.manager_id AS employee_manager_id, m.manager_id AS manager_manager_id FROM employees e INNER JOIN employees m ON e.manager_id = m.id

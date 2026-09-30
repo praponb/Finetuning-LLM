@@ -1,0 +1,1 @@
+SELECT id, manager_id, salary, CONCAT(level, '/', job_title) AS level_job_title, CASE WHEN job_title IN ('Engineer', 'Manager') THEN 'Tier 1' ELSE 'Other' END AS job_title_group FROM employees WHERE hire_date < '2024-01-01' AND is_remote = TRUE;

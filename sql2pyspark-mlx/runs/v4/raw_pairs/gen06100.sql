@@ -1,0 +1,1 @@
+select o.customer_id, min(oi.unit_price) as min_unit_price from order_items oi inner join orders o on oi.order_id = o.id inner join products p on p.id = oi.product_id group by o.customer_id order by min_unit_price desc;

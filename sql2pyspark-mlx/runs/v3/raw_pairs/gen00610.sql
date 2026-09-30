@@ -1,0 +1,1 @@
+select * from (select status, customer_id, sum(case when status = 'FROZEN' then balance else 0 end) frozen_balance, count(balance) balance_count from accounts group by status, customer_id) sub where frozen_balance < 74 order by customer_id desc

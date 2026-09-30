@@ -1,0 +1,1 @@
+select case when p.brand in ('Globex', 'Stark') then 'core' else 'other' end as brand_group, max(ss.sale_date) as latest_sale_date from store_sales ss full outer join products p on ss.product_id = p.id where p.price between 650 and 1060 group by case when p.brand in ('Globex', 'Stark') then 'core' else 'other' end order by brand_group;

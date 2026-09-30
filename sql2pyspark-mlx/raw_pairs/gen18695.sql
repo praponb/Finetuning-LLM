@@ -1,0 +1,1 @@
+with base as (select id, account_id, txn_type, txn_time, is_flagged, coalesce(amount, 0) as amount_filled, upper(txn_type) as txn_type_upper from transactions where txn_time >= timestamp '2023-10-13 16:00:00') select * from (select account_id, txn_type, amount_filled from base) src pivot (avg(amount_filled) as value_sum, count(1) as n for txn_type in ('REFUND', 'DEBIT'))

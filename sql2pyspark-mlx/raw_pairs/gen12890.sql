@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, log_ts, level, attr_key, v FROM app_logs LATERAL VIEW OUTER EXPLODE(context) li AS attr_key, v) SELECT id, log_ts, level, attr_key, v, CASE WHEN attr_key RLIKE '^(region|version)$' THEN 'GROUP_A' ELSE 'PRIORITY' END AS attr_key_zone FROM lines ORDER BY level;

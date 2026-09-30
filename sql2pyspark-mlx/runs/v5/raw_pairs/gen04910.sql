@@ -1,0 +1,1 @@
+SELECT id, product_id, AVG(revenue) OVER w_recent AS revenue_avg_2, ROUND(units / SUM(units) OVER (PARTITION BY store_id), 4) AS units_share, NTILE(5) OVER (PARTITION BY product_id, store_id ORDER BY revenue, id) AS revenue_bucket FROM store_sales WINDOW w_recent AS (PARTITION BY product_id ORDER BY units, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW);

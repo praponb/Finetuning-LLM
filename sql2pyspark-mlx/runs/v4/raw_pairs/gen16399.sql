@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, SUM(sqft) AS total_sqft, SUM(CASE WHEN city = 'Tokyo' THEN sqft ELSE 0 END) AS tokyo_sqft FROM stores WHERE (sqft BETWEEN 4470 AND 9196 AND region IN ('East', 'North')) OR sqft >= 9662 GROUP BY opened_month ORDER BY opened_month

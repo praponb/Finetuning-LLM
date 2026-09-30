@@ -1,0 +1,7 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_inventory
+    .filter((F.year("last_restock") == 2025) & (F.col("quantity") != 168))
+    .select("last_restock")
+)

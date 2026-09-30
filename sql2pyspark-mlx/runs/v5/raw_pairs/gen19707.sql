@@ -1,0 +1,1 @@
+SELECT e.is_remote AS employee_is_remote, e.job_title AS employee_job_title, e.hire_date AS employee_hire_date, m.job_title AS manager_job_title, m.is_remote AS manager_is_remote, m.manager_id AS manager_manager_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id

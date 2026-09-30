@@ -1,0 +1,1 @@
+SELECT status, credit_balance FROM (SELECT status, SUM(CASE WHEN account_type = 'CREDIT' THEN balance ELSE 0 END) AS credit_balance FROM accounts GROUP BY status) AS s WHERE credit_balance < 60 ORDER BY credit_balance, status DESC;

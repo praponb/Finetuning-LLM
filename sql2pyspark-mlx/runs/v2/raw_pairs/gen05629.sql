@@ -1,0 +1,1 @@
+SELECT o.id, o.customer_id, o.status, s.opened_date, s.store_name, s.sqft FROM orders o JOIN stores s ON o.store_id = s.id WHERE s.region <> 'West' AND o.channel <> 'partner' ORDER BY s.store_name ASC, id ASC LIMIT 1;

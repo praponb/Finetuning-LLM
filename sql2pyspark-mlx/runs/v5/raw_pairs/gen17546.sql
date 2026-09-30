@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, country, age, name, DENSE_RANK() OVER (PARTITION BY country ORDER BY age DESC) AS row_num FROM customers) SELECT id, country, age, name FROM numbered WHERE row_num <= 2 ORDER BY country

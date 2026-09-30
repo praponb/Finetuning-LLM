@@ -1,0 +1,1 @@
+select case when budget >= 4191000 then 'high' when budget >= 1317000 then 'mid' else 'low' end as budget_bucket, count(distinct budget) as unique_locations from departments where dept_name != 'Sales' group by case when budget >= 4191000 then 'high' when budget >= 1317000 then 'mid' else 'low' end having count(distinct budget) < 4 order by budget_bucket desc limit 10;

@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, LAST_DAY(last_restock) AS last_restock_month_end, ADD_MONTHS(last_restock, 12) AS last_restock_plus_months FROM inventory WHERE last_restock > '2025-07-10' AND (quantity >= 172 OR store_id = 2)

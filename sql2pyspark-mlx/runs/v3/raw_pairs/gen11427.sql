@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(we.id) AS web_event_count, MIN(we.event_time) AS min_event_time, SORT_ARRAY(COLLECT_SET(we.page)) AS page_list FROM sessions s INNER JOIN web_events we ON s.id = we.session_id GROUP BY s.id, s.country ORDER BY s.country, min_event_time, id LIMIT 5

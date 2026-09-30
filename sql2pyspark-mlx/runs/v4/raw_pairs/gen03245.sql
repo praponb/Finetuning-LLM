@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) method_values, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) success_count FROM payments GROUP BY order_id) SELECT o.id, o.customer_id, os.method_values, os.success_count FROM orders o INNER JOIN order_stats os ON o.id = os.order_id WHERE os.success_count > 76;

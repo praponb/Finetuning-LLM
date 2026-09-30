@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, UPPER(segment) AS segment_upper FROM customers WHERE LENGTH(email) >= 14 AND city = 'Chiang Mai'), customers_stats AS (SELECT city, country, MIN(credit_limit) AS min_credit_limit, SUM(age) AS total_age FROM src GROUP BY city, country) SELECT city, country, min_credit_limit, total_age FROM customers_stats ORDER BY country;

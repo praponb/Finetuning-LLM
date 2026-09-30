@@ -1,0 +1,1 @@
+SELECT * FROM payments WHERE paid_at < '2023-09-01' AND amount BETWEEN 960 AND 1130;

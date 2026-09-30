@@ -1,0 +1,1 @@
+select *, cast(txn_time as date) as txn_time_day, cast(amount as int) as amount_int from transactions where merchant = 'Lazada' and (is_flagged or account_id in (8, 20, 30)) order by txn_time desc, id limit 10

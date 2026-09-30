@@ -1,0 +1,1 @@
+SELECT c.is_active, c.name, c.credit_limit, a.balance FROM customers c LEFT OUTER JOIN accounts a ON a.customer_id = c.id WHERE LOWER(TRIM(c.email)) = 'david.lee@gmail.com' AND c.name IS NOT NULL ORDER BY balance;

@@ -1,0 +1,1 @@
+SELECT oi.unit_price, p.supplier_id, p.stock_qty, o.customer_id, o.amount FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id WHERE o.customer_id = 18 AND o.customer_id IS NOT NULL ORDER BY o.amount DESC, o.customer_id DESC

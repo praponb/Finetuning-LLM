@@ -1,0 +1,1 @@
+SELECT shipments.id, shipments.shipped_date, orders.channel, orders.order_date, customers.credit_limit FROM shipments RIGHT JOIN orders ON shipments.order_id = orders.id INNER JOIN customers ON orders.customer_id = customers.id WHERE orders.customer_id IS NOT NULL;

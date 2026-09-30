@@ -1,0 +1,1 @@
+with SupplierStats as (select supplier_id, round((100 * sum(case when category = 'Sports' then 1 else 0 end)) / count(*), 1) as pct_sports from products group by supplier_id) select s.id, s.supplier_name, S.pct_sports from suppliers s inner join SupplierStats S on s.id = S.supplier_id where S.pct_sports >= 55 order by pct_sports, id limit 10;

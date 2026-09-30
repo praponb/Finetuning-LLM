@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT product_id, id FROM order_items EXCEPT ALL SELECT product_id, id FROM order_items WHERE quantity < 5), kept_rows AS (SELECT s.* FROM order_items s INNER JOIN remaining_keys k ON s.product_id = k.product_id AND s.id = k.id) SELECT product_id, quantity FROM kept_rows ORDER BY quantity;

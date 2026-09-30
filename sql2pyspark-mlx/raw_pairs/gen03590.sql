@@ -1,0 +1,1 @@
+SELECT country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, COUNT(CASE WHEN country = 'US' THEN 1 END) AS us_count FROM suppliers WHERE UPPER(supplier_name) LIKE '%OKY%' GROUP BY country HAVING COUNT(CASE WHEN country = 'US' THEN 1 END) > 3

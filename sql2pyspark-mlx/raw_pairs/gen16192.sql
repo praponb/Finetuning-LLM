@@ -1,0 +1,1 @@
+select * from (select case when merchant in ('Grab', 'Shell') then 'group_a' else 'other' end as merchant_group, merchant, amount from transactions) pivot (avg(amount) for merchant in ('Grab', 'Starbucks', 'Shell'))

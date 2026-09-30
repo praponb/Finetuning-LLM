@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT job_title FROM employees EXCEPT DISTINCT SELECT job_title FROM employees WHERE dept_id IN (14, 19, 20, 25)), kept_rows AS (SELECT s.* FROM employees s INNER JOIN kept_keys k ON s.job_title = k.job_title) SELECT full_name, email, dept_id, manager_id, salary, level FROM kept_rows ORDER BY level DESC, manager_id;

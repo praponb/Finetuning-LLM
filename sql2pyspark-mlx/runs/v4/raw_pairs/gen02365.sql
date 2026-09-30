@@ -1,0 +1,1 @@
+select *, rank() over (partition by account_type order by balance) as balance_rank, ntile(5) over (partition by status order by balance desc, id) as balance_bucket, lag(balance, 1) over (partition by customer_id, status order by balance, id) as prev_balance, lag(balance, 1) over (partition by account_type, status order by opened_date, id) as prev_balance_2 from accounts

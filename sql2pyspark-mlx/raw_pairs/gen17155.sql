@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, account_type, balance, opened_date, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance DESC, id) rnk FROM accounts) r WHERE rnk <= 3 ORDER BY account_type ASC, balance DESC

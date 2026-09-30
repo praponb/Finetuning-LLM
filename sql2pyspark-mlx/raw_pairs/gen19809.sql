@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, COUNT(unit_price) AS unit_price_count, AVG(unit_price) AS avg_unit_price FROM order_items WHERE quantity != 5 GROUP BY product_id) SELECT products.id, products.price, product_stats.unit_price_count, product_stats.avg_unit_price FROM products INNER JOIN product_stats ON products.id = product_stats.product_id;

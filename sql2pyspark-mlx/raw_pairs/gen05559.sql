@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, COALESCE(amount, 0) AS amount_filled, COALESCE(merchant, 'DIRECT') AS resolved_merchant FROM transactions WHERE merchant IS NOT NULL) SELECT a.id, a.account_id, a.txn_time, a.is_flagged, a.amount_filled, p2.account_type, p2.status FROM valid a LEFT JOIN accounts p2 ON a.account_id = p2.id WHERE p2.account_type <> 'SAVINGS';

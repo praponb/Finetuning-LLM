@@ -1,0 +1,1 @@
+SELECT products.id, products.brand, COUNT(store_sales.id) AS store_sale_count FROM products LEFT JOIN store_sales ON store_sales.product_id = products.id GROUP BY products.id, products.brand ORDER BY 3 DESC;

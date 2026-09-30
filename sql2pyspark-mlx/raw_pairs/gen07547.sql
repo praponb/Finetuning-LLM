@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.city IN ('London', 'Chiang Mai') THEN 'priority' ELSE 'other' END AS city_group, MAX(ss.sale_date) AS last_sale_date FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id WHERE ss.product_id IN (3, 5, 10) GROUP BY CASE WHEN s.city IN ('London', 'Chiang Mai') THEN 'priority' ELSE 'other' END ORDER BY last_sale_date

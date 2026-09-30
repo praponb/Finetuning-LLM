@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 410 THEN 'LARGE' ELSE 'SMALL' END AS unit_price_tier, CASE WHEN quantity >= 8 THEN 'PREMIUM' ELSE 'STANDARD' END AS quantity_tier, COUNT(DISTINCT product_id) AS distinct_product_ids, ROUND(AVG(quantity), 2) AS avg_quantity, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items GROUP BY 1, 2 ORDER BY distinct_product_ids;

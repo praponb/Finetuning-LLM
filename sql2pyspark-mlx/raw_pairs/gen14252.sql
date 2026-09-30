@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_type, t.is_flagged, a.balance, a.status, a.opened_date FROM transactions t RIGHT OUTER JOIN accounts a ON t.account_id = a.id WHERE t.account_id IN (4, 5, 7, 12) AND a.status != 'FROZEN'

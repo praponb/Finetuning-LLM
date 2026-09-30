@@ -1,0 +1,1 @@
+SELECT o.status, o.store_id, s.city, s.opened_date, c.country FROM orders o INNER JOIN stores s ON o.store_id = s.id LEFT JOIN customers c ON o.customer_id = c.id WHERE o.customer_id = 21 ORDER BY status ASC

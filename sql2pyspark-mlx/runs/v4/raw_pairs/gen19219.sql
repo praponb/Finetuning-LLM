@@ -1,0 +1,1 @@
+SELECT customers.city, customers.age, customers.is_active, accounts.opened_date, accounts.status, accounts.customer_id FROM customers LEFT JOIN accounts ON accounts.customer_id = customers.id WHERE accounts.balance < 67000;

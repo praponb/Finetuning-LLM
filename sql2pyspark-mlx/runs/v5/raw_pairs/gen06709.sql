@@ -1,0 +1,1 @@
+select id, merchant, amount, txn_time, ntile(2) over (partition by merchant order by amount desc, id) as amount_ntile, sum(amount) over (partition by merchant order by txn_time, id) as running_amount from transactions;

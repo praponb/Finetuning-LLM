@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM store_sales WHERE revenue BETWEEN 1300 AND 2500 AND product_id IN (1, 3, 5, 7)), summary AS (SELECT QUARTER(sale_date) AS sale_quarter, SUM(units) AS total_units, ROUND(AVG(revenue), 2) AS avg_revenue FROM src GROUP BY QUARTER(sale_date)) SELECT sale_quarter, total_units, avg_revenue FROM summary ORDER BY avg_revenue, total_units DESC

@@ -1,0 +1,1 @@
+SELECT s.customer_id, SORT_ARRAY(COLLECT_SET(we.page)) AS page_list, COUNT(DISTINCT we.duration_sec) AS unique_sessions FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE s.country IS NOT NULL GROUP BY s.customer_id HAVING unique_sessions > 3 ORDER BY customer_id DESC;

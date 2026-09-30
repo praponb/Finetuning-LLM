@@ -1,0 +1,1 @@
+with product_stats as (select product_id, max(unit_price) as max_unit_price, count(quantity) as quantity_count from order_items group by product_id) select p.stock_qty, p.supplier_id, ps.max_unit_price, ps.quantity_count from products p join product_stats ps on p.id = ps.product_id where ps.max_unit_price > 130 order by max_unit_price desc;

@@ -1,0 +1,1 @@
+SELECT ss.id, ss.revenue, s.sqft, s.city, p.supplier_id FROM store_sales ss RIGHT JOIN stores s ON ss.store_id = s.id JOIN products p ON ss.product_id = p.id WHERE ss.units >= 14 ORDER BY p.supplier_id DESC

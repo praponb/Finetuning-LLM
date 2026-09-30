@@ -1,0 +1,1 @@
+select c.city, round(avg(p.amount), 2) as avg_amount from payments p left join orders o on p.order_id = o.id inner join customers c on o.customer_id = c.id where o.discount < 0.19 group by c.city order by avg_amount desc

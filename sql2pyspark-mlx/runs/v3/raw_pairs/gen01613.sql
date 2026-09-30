@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3171000 THEN 'high' WHEN budget >= 1711000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, MAX(budget) AS max_budget, COUNT(*) AS row_count FROM departments WHERE location = 'London' GROUP BY 1, 2 ORDER BY budget_bucket DESC, max_budget DESC;

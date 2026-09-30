@@ -1,0 +1,15 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("product_id")
+
+result = (
+    df_inventory
+    .select(
+        "id",
+        "product_id",
+        "quantity",
+        F.max("quantity").over(w).alias("product_id_max_quantity"),
+    )
+    .orderBy(F.col("quantity").desc(), F.col("id").desc())
+)

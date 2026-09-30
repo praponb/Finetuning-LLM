@@ -1,0 +1,1 @@
+SELECT CASE WHEN country IN ('UK', 'US') THEN 'tier_1' ELSE 'other' END country_group, AVG(rating) avg_rating FROM suppliers WHERE city IS NULL AND (supplier_name LIKE 'Sia%' OR city IS NOT NULL) GROUP BY 1 ORDER BY country_group DESC;

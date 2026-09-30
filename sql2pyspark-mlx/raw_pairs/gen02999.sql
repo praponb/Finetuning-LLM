@@ -1,0 +1,1 @@
+WITH filtered_store_sales AS (SELECT * FROM store_sales WHERE units BETWEEN 25 AND 36), summary AS (SELECT store_id, MAX(sale_date) AS last_sale_date, MAX(units) - MIN(units) AS units_range FROM filtered_store_sales GROUP BY store_id) SELECT store_id, last_sale_date, units_range FROM summary;

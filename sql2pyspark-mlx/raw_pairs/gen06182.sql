@@ -1,0 +1,1 @@
+SELECT id, attributes['device'] AS device, COALESCE(attributes['gift'], 'direct') AS gift_or_default, ARRAY_JOIN(ARRAY_SORT(coupon_codes), ',') AS coupons_text, EXISTS(items, x -> x.price > 100) AS has_premium_item FROM carts

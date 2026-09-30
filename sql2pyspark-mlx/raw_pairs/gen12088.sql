@@ -1,0 +1,1 @@
+SELECT store_id, ROUND(AVG(revenue), 2) AS avg_revenue, BIT_AND(units) AS units_bit_and, COUNT(DISTINCT store_id) AS distinct_store_ids, MIN(revenue) AS min_revenue, APPROX_PERCENTILE(units, 0.95) AS units_p95, CORR(revenue, units) AS corr_revenue_units FROM store_sales GROUP BY store_id

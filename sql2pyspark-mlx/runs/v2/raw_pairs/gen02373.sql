@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(*) AS total_count FROM inventory WHERE product_id = 2 GROUP BY product_id) SELECT p.cost, p.price, ps.stddev_quantity, ps.total_count FROM products p JOIN product_stats ps ON p.id = ps.product_id ORDER BY stddev_quantity;

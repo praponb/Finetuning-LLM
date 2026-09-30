@@ -1,0 +1,1 @@
+SELECT o.channel, o.status, MAX(oi.unit_price) - MIN(oi.unit_price) AS unit_price_range, AVG(oi.quantity) AS avg_quantity FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON p.id = oi.product_id GROUP BY o.channel, o.status ORDER BY avg_quantity DESC, unit_price_range DESC;

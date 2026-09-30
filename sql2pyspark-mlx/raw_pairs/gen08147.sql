@@ -1,0 +1,1 @@
+WITH SessionTotals AS (SELECT session_id, ROUND((100 * SUM(CASE WHEN page = '/checkout' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_checkout FROM web_events WHERE event_type IN ('click', 'add_to_cart') GROUP BY session_id) SELECT s.id, s.browser, s.customer_id, S.pct_checkout FROM sessions s INNER JOIN SessionTotals S ON s.id = S.session_id ORDER BY customer_id DESC, pct_checkout

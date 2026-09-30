@@ -1,0 +1,1 @@
+SELECT c.id, c.credit_limit, c.country, c.signup_date FROM customers c WHERE c.city IN ('Bangkok', 'London', 'Chiang Mai') AND EXISTS (SELECT 1 FROM subscriptions s WHERE s.customer_id = c.id) ORDER BY c.signup_date DESC

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, customer_id, order_date, status, discount, shipping_fee, LENGTH(channel) AS channel_length, COALESCE(channel, 'NONE') AS channel_filled FROM orders WHERE order_date >= DATE '2023-02-25') SELECT * FROM (SELECT id, customer_id, shipping_fee, discount FROM cleaned) src UNPIVOT (value FOR metric IN (shipping_fee, discount AS DISCOUNT_VAL));

@@ -1,0 +1,1 @@
+SELECT product_id, COUNT(DISTINCT unit_price) AS unique_products, MAX(unit_price) AS max_unit_price FROM order_items WHERE quantity <= 3 AND product_id = 35 GROUP BY 1 ORDER BY unique_products DESC, max_unit_price DESC;

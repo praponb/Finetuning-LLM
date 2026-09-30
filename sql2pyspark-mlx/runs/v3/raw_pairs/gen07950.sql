@@ -1,0 +1,1 @@
+SELECT city, region, SUM(sqft) AS total_sqft, ROUND((100 * SUM(CASE WHEN region = 'Central' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_central FROM stores WHERE region = 'North' OR opened_date >= '2023-10-01' GROUP BY city, region ORDER BY city ASC, pct_central ASC

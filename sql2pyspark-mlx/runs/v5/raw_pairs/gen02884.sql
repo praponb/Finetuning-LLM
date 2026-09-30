@@ -1,0 +1,1 @@
+with valid_shipments as (select * from shipments where order_id is not null), shipments_stats as (select carrier, avg(cost) as avg_cost from valid_shipments group by carrier) select carrier, avg_cost from shipments_stats where avg_cost > 65 order by carrier asc

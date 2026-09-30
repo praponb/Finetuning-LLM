@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, ss.store_id FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.last_restock BETWEEN '2023-11-01' AND '2025-07-01' AND i.last_restock <= '2023-07-01' ORDER BY ss.store_id

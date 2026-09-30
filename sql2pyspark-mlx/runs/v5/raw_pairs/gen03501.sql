@@ -1,0 +1,1 @@
+select count(case when job_title = 'Director' then 1 end) as director_count, concat_ws(', ', sort_array(collect_set(job_title))) as job_title_values from employees where full_name like 'Jac%' and dept_id in (4, 10, 11, 15)

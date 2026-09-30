@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY country, segment ORDER BY age DESC, id) AS rn FROM customers) x WHERE rn = 1) SELECT id, email, country, city, segment, signup_date, is_active, age, rn FROM latest ORDER BY city DESC;

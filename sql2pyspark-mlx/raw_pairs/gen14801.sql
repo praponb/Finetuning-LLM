@@ -1,0 +1,1 @@
+SELECT d.id, d.location, d.dept_name, t.avg_salary, t.max_salary FROM departments d LEFT OUTER JOIN (SELECT dept_id, AVG(salary) AS avg_salary, MAX(salary) AS max_salary FROM employees WHERE LENGTH(email) > 12 GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.max_salary > 86000 ORDER BY location ASC;

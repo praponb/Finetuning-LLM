@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 1.9 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(AVG(rating), 2) AS avg_rating, COUNT(DISTINCT rating) AS unique_countrys, SUM(rating) AS total_rating FROM suppliers GROUP BY 1 ORDER BY unique_countrys, rating_bucket LIMIT 5;

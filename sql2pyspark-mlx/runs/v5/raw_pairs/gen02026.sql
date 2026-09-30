@@ -1,0 +1,1 @@
+select id, event_type, event_time, page from (select id, event_type, event_time, page, row_number() over (partition by event_type order by event_time desc, id) as row_num from web_events) as r where row_num <= 3;

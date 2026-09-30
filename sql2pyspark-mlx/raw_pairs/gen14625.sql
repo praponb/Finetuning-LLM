@@ -1,0 +1,1 @@
+SELECT id, country, signup_date, credit_limit, city, LEAD(credit_limit, 1) OVER (PARTITION BY country ORDER BY signup_date, id) next_credit_limit, DENSE_RANK() OVER (PARTITION BY YEAR(signup_date), city ORDER BY signup_date) signup_date_dense_rank FROM customers WHERE signup_date BETWEEN '2024-10-01' AND '2025-09-08';

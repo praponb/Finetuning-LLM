@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, ROUND(quantity * 0.85, 2) AS adjusted_quantity FROM inventory WHERE last_restock > TO_DATE('2023-07-31') AND product_id = 7) SELECT *, NTILE(5) OVER w_part AS quantity_bucket, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY adjusted_quantity, id) AS row_seq FROM filtered WINDOW w_part AS (PARTITION BY product_id ORDER BY quantity DESC, id);

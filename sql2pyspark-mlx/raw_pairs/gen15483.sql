@@ -1,0 +1,1 @@
+with numbered as (select id, dept_name, budget, location, rank() over (partition by dept_name order by budget desc) as rnk from departments where location <> 'Berlin') select * from numbered where rnk <= 1 order by dept_name asc, location asc;

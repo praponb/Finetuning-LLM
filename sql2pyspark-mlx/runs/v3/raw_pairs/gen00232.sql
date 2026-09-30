@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE product_id IN (1, 2, 3, 8)), sale_month_summary AS (SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, MAX(sale_date) AS latest_sale_date, MAX(revenue) AS max_revenue FROM base GROUP BY DATE_TRUNC('MONTH', sale_date)) SELECT * FROM sale_month_summary ORDER BY 3 DESC, sale_month DESC LIMIT 20;

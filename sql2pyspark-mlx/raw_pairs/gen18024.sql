@@ -1,0 +1,1 @@
+SELECT s.country, ROUND(STDDEV(p.stock_qty), 2) AS stddev_stock_qty FROM products p LEFT JOIN suppliers s ON s.id = p.supplier_id WHERE s.rating < 4.0 GROUP BY s.country ORDER BY stddev_stock_qty ASC, country ASC LIMIT 10;

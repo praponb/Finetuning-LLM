@@ -1,0 +1,1 @@
+WITH RecentShipments AS (SELECT * FROM shipments WHERE order_id IS NOT NULL), ShipmentsStats AS (SELECT status, MAX(shipped_date) AS latest_shipped_date FROM RecentShipments GROUP BY status) SELECT status, latest_shipped_date FROM ShipmentsStats ORDER BY latest_shipped_date

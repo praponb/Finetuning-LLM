@@ -1,0 +1,1 @@
+SELECT i.store_id, i.last_restock, ss.store_id AS store_sale_store_id, ss.revenue, DATE_TRUNC('YEAR', i.last_restock) AS last_restock_period FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.store_id IN (2, 3, 4, 6) ORDER BY i.store_id DESC, i.last_restock ASC

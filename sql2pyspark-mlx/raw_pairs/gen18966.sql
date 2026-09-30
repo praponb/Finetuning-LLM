@@ -1,0 +1,1 @@
+SELECT store_sales.store_id, AVG(inventory.quantity) AS avg_quantity FROM inventory LEFT JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE inventory.quantity <= 233 GROUP BY store_sales.store_id

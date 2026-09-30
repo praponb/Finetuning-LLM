@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM employees WHERE full_name LIKE 'Ivy%' AND (level = 'L1' OR salary BETWEEN 101000 AND 129000)), summary AS (SELECT is_remote, MAX(salary) AS max_salary FROM src GROUP BY is_remote) SELECT is_remote, max_salary FROM summary WHERE max_salary > 66000 ORDER BY max_salary DESC

@@ -1,0 +1,1 @@
+WITH recent_inventory AS (SELECT * FROM inventory WHERE product_id IN (2, 4)), InventoryStats AS (SELECT MONTH(last_restock) last_restock_month, COUNT(*) cnt FROM recent_inventory GROUP BY MONTH(last_restock)) SELECT last_restock_month, cnt FROM InventoryStats WHERE cnt > 9 ORDER BY cnt DESC, last_restock_month LIMIT 10;

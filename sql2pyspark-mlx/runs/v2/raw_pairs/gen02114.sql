@@ -1,0 +1,1 @@
+SELECT ROUND((100 * SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_savings, SUM(CASE WHEN account_type = 'CREDIT' THEN 1 ELSE 0 END) credit_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) account_type_values FROM accounts;

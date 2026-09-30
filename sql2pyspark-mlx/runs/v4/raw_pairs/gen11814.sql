@@ -1,0 +1,1 @@
+SELECT suppliers.country, COUNT(products.id) AS product_count, SUM(CASE WHEN products.category = 'Books' THEN products.stock_qty ELSE 0 END) AS books_stock_qty FROM suppliers LEFT JOIN products ON products.supplier_id = suppliers.id WHERE suppliers.country = 'SG' GROUP BY suppliers.country ORDER BY books_stock_qty DESC, country LIMIT 5;

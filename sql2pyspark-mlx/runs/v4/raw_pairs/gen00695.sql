@@ -1,0 +1,1 @@
+select date_trunc('quarter', started_at) as quarter_start, count_if(device = 'desktop') as desktop_events, count(*) as cnt from sessions group by date_trunc('quarter', started_at) order by desktop_events desc nulls last;

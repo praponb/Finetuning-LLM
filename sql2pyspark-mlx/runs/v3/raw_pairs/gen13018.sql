@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.quantity, products.launch_date, products.category, suppliers.rating, LENGTH(products.category) AS category_length FROM order_items INNER JOIN products ON order_items.product_id = products.id INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE order_items.order_id IN (10, 20, 32, 35) AND suppliers.rating <= 3.1;

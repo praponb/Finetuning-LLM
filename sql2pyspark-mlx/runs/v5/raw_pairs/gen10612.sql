@@ -1,0 +1,1 @@
+SELECT id, product_name, brand, cost, stock_qty, SUM(cost) OVER (PARTITION BY category ORDER BY stock_qty, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) cumulative_cost, LAST_VALUE(cost, TRUE) OVER (ORDER BY cost, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) last_known_cost FROM products

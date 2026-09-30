@@ -1,0 +1,1 @@
+with ranked as (select *, row_number() over (partition by store_id order by discount desc, id) as rank_in_group from orders qualify rank_in_group = 1) select id, customer_id, store_id, order_date, status, amount, discount, rank_in_group from ranked order by rank_in_group nulls last

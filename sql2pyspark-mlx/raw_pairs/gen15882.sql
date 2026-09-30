@@ -1,0 +1,1 @@
+SELECT id, order_id, unit_price, quantity, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY unit_price DESC) AS dense_rnk, SUM(quantity) OVER (PARTITION BY order_id ORDER BY unit_price, id) AS running_quantity FROM order_items

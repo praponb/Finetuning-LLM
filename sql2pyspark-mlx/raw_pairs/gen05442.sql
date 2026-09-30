@@ -1,0 +1,1 @@
+select * from (select year(order_date) as order_year, count(case when channel = 'store' then 1 end) as store_count from orders where shipping_fee between 24 and 31 group by year(order_date)) as agg where store_count < 4

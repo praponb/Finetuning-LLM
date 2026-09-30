@@ -1,0 +1,1 @@
+SELECT QUARTER(ss.sale_date) AS sale_quarter, COUNT(i.quantity) AS quantity_count FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.units < 24 GROUP BY QUARTER(ss.sale_date) HAVING COUNT(i.quantity) > 3 ORDER BY sale_quarter DESC

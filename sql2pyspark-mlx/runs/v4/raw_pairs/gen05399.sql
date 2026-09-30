@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, COUNT(*) AS cnt, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price FROM order_items oi JOIN products p ON oi.product_id = p.id GROUP BY DATE_FORMAT(p.launch_date, 'yyyy-MM')

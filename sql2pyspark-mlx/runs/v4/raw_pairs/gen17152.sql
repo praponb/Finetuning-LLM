@@ -1,0 +1,1 @@
+SELECT c.is_active, COUNT(CASE WHEN a.account_type = 'LOAN' THEN 1 END) AS loan_count, MAX(a.opened_date) AS latest_opened_date FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE a.account_type IN ('SAVINGS', 'CREDIT') GROUP BY c.is_active HAVING COUNT(CASE WHEN a.account_type = 'LOAN' THEN 1 END) > 3 ORDER BY latest_opened_date, loan_count DESC

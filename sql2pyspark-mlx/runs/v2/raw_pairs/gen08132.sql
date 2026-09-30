@@ -1,0 +1,1 @@
+SELECT MONTH(hire_date) AS hire_month, job_title, COUNT(DISTINCT salary) AS unique_job_titles, SUM(salary) AS total_salary, MAX(hire_date) AS last_hire_date FROM employees WHERE job_title IN ('Intern', 'Analyst', 'Director') AND manager_id IN (37, 39) AND UPPER(TRIM(email)) = 'IVY@GMAIL.COM' GROUP BY MONTH(hire_date), job_title

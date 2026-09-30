@@ -1,0 +1,1 @@
+SELECT id, merchant, amount, txn_type, txn_time, ROUND(amount / SUM(amount) OVER (PARTITION BY merchant), 3) AS amount_share, LAST_VALUE(amount) OVER (PARTITION BY txn_type ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_amount FROM transactions

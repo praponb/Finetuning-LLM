@@ -1,0 +1,1 @@
+SELECT QUARTER(sale_date) AS sale_quarter, MAX(sale_date) AS last_sale_date FROM store_sales WHERE revenue >= 3400 AND sale_date < '2024-10-01' GROUP BY QUARTER(sale_date) ORDER BY sale_quarter DESC LIMIT 1;

@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, ROUND(AVG(cost), 2) AS avg_cost FROM shipments WHERE status IN ('DELIVERED', 'RETURNED') GROUP BY order_id) SELECT o.id, o.store_id, o.channel, ot.avg_cost FROM orders o LEFT OUTER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.avg_cost >= 55 ORDER BY 4 DESC

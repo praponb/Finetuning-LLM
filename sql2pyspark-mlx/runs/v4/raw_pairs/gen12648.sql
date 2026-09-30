@@ -1,0 +1,1 @@
+with ranked as (select * from (select *, row_number() over (partition by customer_id, country order by started_at desc nulls last, id asc) as row_num from sessions) ranked where row_num = 1) select customer_id, count(*) filter (where browser = 'Firefox') as firefox_rows, max(started_at) as ended_at from ranked group by customer_id

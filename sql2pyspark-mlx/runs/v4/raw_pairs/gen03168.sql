@@ -1,0 +1,1 @@
+SELECT id, plan, end_date, monthly_fee, customer_id, LAG(monthly_fee, 1, 0) OVER (PARTITION BY plan ORDER BY end_date, id) AS prev_monthly_fee, MAX(monthly_fee) OVER (PARTITION BY customer_id) AS customer_id_max_monthly_fee FROM subscriptions ORDER BY id;

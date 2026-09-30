@@ -1,0 +1,1 @@
+SELECT d.location, ROUND((100 * SUM(CASE WHEN e.level = 'L4' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l4 FROM employees e INNER JOIN departments d ON e.dept_id = d.id WHERE d.dept_name <> 'Engineering' GROUP BY d.location ORDER BY pct_l4;

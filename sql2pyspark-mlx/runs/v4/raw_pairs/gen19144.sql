@@ -1,0 +1,1 @@
+SELECT *, LAST_DAY(opened_date) AS opened_date_month_end, CASE WHEN region = 'West' THEN 1 ELSE 0 END AS is_west FROM stores WHERE sqft BETWEEN 9463 AND 12860 AND region = 'West' AND YEAR(opened_date) = 2025 ORDER BY store_name, id LIMIT 10;

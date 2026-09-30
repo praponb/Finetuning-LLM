@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, COUNT(*) total_count, COUNT(*) store_sale_count FROM store_sales GROUP BY product_id) SELECT p.id, p.product_name, ps.total_count, ps.store_sale_count FROM products p JOIN product_summary ps ON p.id = ps.product_id ORDER BY p.id ASC;

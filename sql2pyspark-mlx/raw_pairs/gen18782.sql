@@ -1,0 +1,1 @@
+SELECT id, city, region, CUME_DIST() OVER (PARTITION BY city ORDER BY sqft NULLS FIRST) sqft_cume_dist, RANK() OVER (PARTITION BY region ORDER BY sqft NULLS FIRST) sqft_rank, AVG(sqft) OVER (PARTITION BY city ORDER BY sqft, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) sqft_avg_6 FROM stores WHERE LOWER(TRIM(store_name)) = 'old town'

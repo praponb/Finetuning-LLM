@@ -1,0 +1,1 @@
+WITH valid_departments AS (SELECT * FROM departments WHERE location IN ('Bangkok', 'London')), location_summary AS (SELECT location, MAX(budget) - MIN(budget) AS budget_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(dept_name))) AS dept_name_values FROM valid_departments GROUP BY location) SELECT location, dept_name_values FROM location_summary;

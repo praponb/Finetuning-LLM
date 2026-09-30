@@ -1,0 +1,1 @@
+select case when orders.channel in ('mobile', 'web') then 'group_a' else 'other' end as channel_group, avg(payments.amount) as avg_amount, max(payments.paid_at) as last_paid_at from payments left outer join orders on payments.order_id = orders.id where orders.order_date < '2025-09-26' group by case when orders.channel in ('mobile', 'web') then 'group_a' else 'other' end

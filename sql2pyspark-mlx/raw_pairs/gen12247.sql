@@ -1,0 +1,1 @@
+SELECT orders.id, orders.customer_id, orders.store_id, orders.channel FROM orders WHERE orders.store_id IN (SELECT id FROM stores WHERE city IN ('Singapore', 'Bangkok', 'Chiang Mai')) ORDER BY store_id DESC, id LIMIT 3

@@ -1,0 +1,1 @@
+SELECT c.is_active, c.country, MAX(s.monthly_fee) AS max_monthly_fee, MAX(s.monthly_fee) - MIN(s.monthly_fee) AS monthly_fee_range FROM subscriptions s JOIN customers c ON s.customer_id = c.id GROUP BY c.is_active, c.country ORDER BY country DESC

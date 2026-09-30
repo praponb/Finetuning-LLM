@@ -1,0 +1,1 @@
+WITH valid_employees AS (SELECT * FROM employees WHERE salary BETWEEN 95000 AND 122000 AND LOWER(email) LIKE '%iam%'), Summary AS (SELECT dept_id, ROUND((100 * SUM(CASE WHEN level = 'L5' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l5 FROM valid_employees GROUP BY dept_id) SELECT * FROM Summary WHERE pct_l5 >= 75

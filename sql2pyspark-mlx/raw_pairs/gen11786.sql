@@ -1,0 +1,1 @@
+WITH SupplierStats AS (SELECT supplier_id, SUM(cost) AS total_cost, COUNT(cost) AS cost_count FROM products GROUP BY supplier_id) SELECT s.city, S.total_cost, S.cost_count FROM suppliers s JOIN SupplierStats S ON s.id = S.supplier_id WHERE S.total_cost > 1300 ORDER BY S.cost_count;

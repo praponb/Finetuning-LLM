@@ -1,0 +1,1 @@
+WITH kept AS (SELECT s.* FROM suppliers s WHERE NOT EXISTS (SELECT 1 FROM products x WHERE x.supplier_id = s.id AND SIZE(x.tags) > 1)) SELECT id, city, rating, CASE WHEN city RLIKE '^(New York|Chiang Mai)$' THEN 'GROUP_B' WHEN city RLIKE '^(Bangkok|Singapore)$' THEN 'EXTENDED' ELSE 'GROUP_A' END AS city_zone FROM kept;

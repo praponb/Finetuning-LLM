@@ -1,0 +1,1 @@
+select sale_quarter, unique_products from (select quarter(sale_date) as sale_quarter, count(distinct units) as unique_products from store_sales group by quarter(sale_date)) as s where unique_products < 5 order by 2 desc;

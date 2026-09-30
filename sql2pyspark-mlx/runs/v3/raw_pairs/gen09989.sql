@@ -1,0 +1,1 @@
+SELECT id, product_id, unit_price, AVG(unit_price) OVER (PARTITION BY product_id) AS product_id_avg_unit_price, RANK() OVER (PARTITION BY product_id ORDER BY unit_price DESC) AS rnk FROM order_items ORDER BY unit_price DESC;

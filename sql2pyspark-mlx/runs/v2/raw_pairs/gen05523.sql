@@ -1,0 +1,1 @@
+SELECT id, hire_date, job_title, salary, NTILE(4) OVER (ORDER BY hire_date, id) AS quartile, PERCENT_RANK() OVER (PARTITION BY job_title ORDER BY salary DESC) AS salary_pct_rank FROM employees WHERE salary <= 60000

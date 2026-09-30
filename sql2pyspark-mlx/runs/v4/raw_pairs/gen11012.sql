@@ -1,0 +1,1 @@
+SELECT t.id, t.amount, t.merchant, a.balance, a.status, c.city FROM transactions t INNER JOIN accounts a ON t.account_id = a.id LEFT OUTER JOIN customers c ON a.customer_id = c.id ORDER BY a.balance, amount DESC

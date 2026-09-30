@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN credit_limit >= 13900 THEN 'high' WHEN credit_limit >= 4500 THEN 'mid' ELSE 'low' END AS credit_limit_bucket, COUNT(age) AS age_count FROM customers GROUP BY CASE WHEN credit_limit >= 13900 THEN 'high' WHEN credit_limit >= 4500 THEN 'mid' ELSE 'low' END) AS x WHERE age_count < 9 ORDER BY age_count;

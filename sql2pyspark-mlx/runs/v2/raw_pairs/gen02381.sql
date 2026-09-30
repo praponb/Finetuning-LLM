@@ -1,0 +1,1 @@
+SELECT id, last_restock, quantity, store_id, LAG(quantity, 1) OVER (ORDER BY last_restock, id) AS prev_quantity, MAX(quantity) OVER (PARTITION BY store_id) AS store_id_max_quantity FROM inventory WHERE store_id IN (3, 4) ORDER BY store_id DESC

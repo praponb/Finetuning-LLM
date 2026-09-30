@@ -1,0 +1,1 @@
+SELECT channel, status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM orders WHERE store_id IS NULL AND discount > 0.36 AND amount BETWEEN 1000 AND 1540 GROUP BY channel, status

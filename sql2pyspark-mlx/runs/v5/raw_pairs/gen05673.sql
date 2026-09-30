@@ -1,0 +1,1 @@
+SELECT CASE WHEN revenue >= 3400 THEN 'LARGE' ELSE 'SMALL' END AS revenue_tier, store_id, ROUND(AVG(units), 2) AS avg_units, PERCENTILE_APPROX(units, 0.95) AS units_p95, COUNT(*) AS event_count, SUM(revenue) AS total_revenue FROM store_sales GROUP BY revenue_tier, store_id ORDER BY total_revenue DESC NULLS FIRST

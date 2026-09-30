@@ -1,0 +1,1 @@
+WITH Src AS (SELECT * FROM subscriptions WHERE MONTH(end_date) IN (1, 3, 8) AND status = 'EXPIRED' AND monthly_fee <= 130), summary AS (SELECT status, MAX(monthly_fee) AS max_monthly_fee, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count FROM Src GROUP BY status) SELECT status, max_monthly_fee, cancelled_count FROM summary WHERE max_monthly_fee >= 120;

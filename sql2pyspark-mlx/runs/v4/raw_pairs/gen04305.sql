@@ -1,0 +1,1 @@
+with valid as (select *, add_months(end_date, 6) as end_date_plus_months from subscriptions where start_date > date '2023-10-02' and status != 'CANCELLED') select a.*, c.age, c.segment, c.email from valid a inner join customers c on a.customer_id = c.id

@@ -1,0 +1,1 @@
+WITH top_web_events AS (SELECT id, event_type, duration_sec, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY duration_sec, id) AS rnk FROM web_events WHERE event_time >= '2024-11-01') SELECT * FROM top_web_events WHERE rnk = 1;

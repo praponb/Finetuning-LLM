@@ -1,0 +1,1 @@
+with accounts_by_customer as (select customer_id, min(balance) as min_balance from accounts group by customer_id) select c.id, c.city, abc.min_balance from customers c join accounts_by_customer abc on c.id = abc.customer_id order by abc.min_balance, city, id limit 20;

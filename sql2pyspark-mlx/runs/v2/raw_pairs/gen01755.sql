@@ -1,0 +1,1 @@
+SELECT employees.id, employees.is_remote, employees.level FROM employees WHERE employees.email LIKE '%@outlook.com' AND employees.dept_id NOT IN (SELECT id FROM departments WHERE location = 'London') ORDER BY employees.level, id DESC;

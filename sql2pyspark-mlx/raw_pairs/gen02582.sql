@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, FLOOR(price) price_whole FROM products WHERE launch_date > TO_DATE('2023-03-02') AND category IN ('Sports', 'Books', 'Grocery')) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY category, brand ORDER BY price_whole DESC, id) AS row_num FROM base) x WHERE row_num = 1;

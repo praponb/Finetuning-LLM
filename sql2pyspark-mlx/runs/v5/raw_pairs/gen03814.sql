@@ -1,0 +1,1 @@
+SELECT id, account_id, amount, merchant, LEAD(amount) OVER (PARTITION BY merchant, account_id ORDER BY txn_time, id) AS next_amount, ROW_NUMBER() OVER (PARTITION BY merchant, account_id ORDER BY txn_time, id) AS event_seq, SUM(amount) OVER (ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_amount FROM transactions

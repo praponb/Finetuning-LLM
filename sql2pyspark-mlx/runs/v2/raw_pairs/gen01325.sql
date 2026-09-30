@@ -1,0 +1,1 @@
+with filtered_departments as (select * from departments where budget <= 2531000 and dept_name = 'Engineering' and dept_name is null), agg as (select dept_name, round((100 * sum(case when location = 'Bangkok' then 1 else 0 end)) / count(*), 1) pct_bangkok from filtered_departments group by dept_name) select * from agg order by dept_name desc;

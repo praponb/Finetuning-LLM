@@ -1,0 +1,1 @@
+SELECT job_title, SUM(CASE WHEN job_title = 'Intern' THEN 1 ELSE 0 END) AS intern_count FROM employees WHERE level = 'L2' AND manager_id IS NULL GROUP BY job_title HAVING COUNT(DISTINCT salary) < 3 ORDER BY intern_count DESC

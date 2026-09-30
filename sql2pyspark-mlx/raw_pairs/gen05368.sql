@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name employee_full_name, e.hire_date employee_hire_date, m.job_title manager_job_title FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE m.job_title IS NULL ORDER BY e.hire_date, manager_job_title;

@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY session_id ORDER BY duration_sec DESC) AS rank_in_group FROM web_events) x WHERE rank_in_group = 1) SELECT id, event_type, page, event_time, duration_sec, rank_in_group FROM deduped

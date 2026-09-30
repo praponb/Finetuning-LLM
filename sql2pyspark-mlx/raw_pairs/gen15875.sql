@@ -1,0 +1,1 @@
+WITH ranked_order_items AS (SELECT id, order_id, unit_price, quantity, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY unit_price, id) row_num FROM order_items) SELECT id, order_id, unit_price, quantity FROM ranked_order_items WHERE row_num = 1;

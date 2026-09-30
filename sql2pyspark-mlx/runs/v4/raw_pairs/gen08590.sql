@@ -1,0 +1,1 @@
+with base as (select id, device, browser, started_at, country, concat_ws('/', browser, device) as browser_device_key, lower(device) as device_lower, coalesce(country, 'UNKNOWN') as resolved_country from sessions where country is not null) select country, browser from base except select country, browser from sessions where country = 'JP';

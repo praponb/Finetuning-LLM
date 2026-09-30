@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, effective_from, currency, tier_value FROM price_tiers LATERAL VIEW EXPLODE(discounts) x AS tier_value) SELECT id, effective_from, currency, RANK() OVER (PARTITION BY YEAR(effective_from), currency ORDER BY tier_value DESC NULLS LAST) AS tier_value_rank FROM lines WHERE tier_value < 80

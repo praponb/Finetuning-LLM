@@ -1,0 +1,1 @@
+select order_items.id, order_items.unit_price, products.cost, products.stock_qty, suppliers.country, suppliers.city from order_items left outer join products on order_items.product_id = products.id join suppliers on suppliers.id = products.supplier_id order by city

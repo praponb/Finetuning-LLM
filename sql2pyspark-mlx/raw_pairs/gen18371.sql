@@ -1,0 +1,1 @@
+SELECT accounts.account_type, accounts.opened_date, transactions.account_id, transactions.is_flagged FROM accounts INNER JOIN transactions ON transactions.account_id = accounts.id WHERE accounts.account_type <> 'CREDIT' AND accounts.balance <= 51000 ORDER BY accounts.opened_date DESC

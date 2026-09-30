@@ -1,0 +1,1 @@
+SELECT YEAR(order_date) AS order_year, SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END) AS store_count, MAX(shipping_fee) AS max_shipping_fee FROM orders WHERE (shipping_fee >= 22 AND channel IN ('mobile', 'web')) OR status = 'SHIPPED' GROUP BY 1

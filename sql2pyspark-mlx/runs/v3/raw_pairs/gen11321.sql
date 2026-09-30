@@ -1,0 +1,1 @@
+select count(distinct salary) as unique_depts, sum(case when level = 'L4' then salary else 0 end) as l4_salary, sort_array(collect_set(level)) as level_list from employees where hire_date > '2024-12-01' and dept_id = 29

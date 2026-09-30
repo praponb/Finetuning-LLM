@@ -1,0 +1,1 @@
+SELECT emp.id, emp.dept_id AS employee_dept_id, emp.manager_id AS employee_manager_id, emp.level AS employee_level, mgr.manager_id AS manager_manager_id, mgr.job_title AS manager_job_title FROM employees emp LEFT OUTER JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.manager_id = 7 ORDER BY mgr.job_title;

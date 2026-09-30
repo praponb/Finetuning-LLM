@@ -1,0 +1,1 @@
+SELECT orders.channel, orders.status, SORT_ARRAY(COLLECT_SET(payments.method)) AS method_list, COUNT(payments.amount) AS amount_count FROM payments INNER JOIN orders ON payments.order_id = orders.id WHERE payments.order_id IS NULL GROUP BY orders.channel, orders.status ORDER BY 4 DESC;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM payments WHERE order_id IN (11, 24, 29, 35) AND status NOT IN ('FAILED', 'SUCCESS')), agg AS (SELECT status, SORT_ARRAY(COLLECT_SET(method)) AS method_list FROM base GROUP BY status) SELECT status, method_list FROM agg;

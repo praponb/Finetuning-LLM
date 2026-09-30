@@ -1,0 +1,1 @@
+WITH store_sales_by_store AS (SELECT store_id, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales WHERE YEAR(sale_date) = 2025 GROUP BY store_id) SELECT s.id, s.city, ssbs.stddev_revenue FROM stores s INNER JOIN store_sales_by_store ssbs ON s.id = ssbs.store_id WHERE ssbs.stddev_revenue > 73

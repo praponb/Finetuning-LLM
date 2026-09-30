@@ -1,0 +1,1 @@
+select id, account_id, txn_time, merchant, is_flagged, max(amount) over w_recent running_max_amount, count(amount) over w_recent running_count_amount, min(amount) over w_recent running_min_amount from transactions window w_recent as (partition by merchant order by txn_time, id rows between unbounded preceding and current row);

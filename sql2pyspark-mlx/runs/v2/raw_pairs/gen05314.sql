@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, SUM(cost) AS total_cost, ROUND(AVG(cost), 2) AS avg_cost FROM shipments GROUP BY order_id) SELECT o.id, o.channel, o.shipping_fee, os.total_cost, os.avg_cost FROM orders o JOIN order_stats os ON o.id = os.order_id ORDER BY 4 DESC;

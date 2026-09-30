@@ -1,0 +1,1 @@
+SELECT country, MIN(rating) AS min_rating, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai FROM suppliers WHERE rating > 2.6 AND city = 'London' GROUP BY country

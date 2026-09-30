@@ -1,0 +1,1 @@
+SELECT CASE WHEN c.city IN ('Bangkok', 'Chiang Mai') THEN 'core' ELSE 'other' END AS city_group, AVG(a.balance) AS avg_balance, ROUND(STDDEV(a.balance), 2) AS stddev_balance FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE a.customer_id IS NULL GROUP BY CASE WHEN c.city IN ('Bangkok', 'Chiang Mai') THEN 'core' ELSE 'other' END ORDER BY avg_balance DESC;

@@ -1,0 +1,1 @@
+SELECT emp.id, emp.dept_id AS employee_dept_id, mgr.manager_id AS manager_manager_id, mgr.job_title AS manager_job_title, mgr.full_name AS manager_full_name FROM employees emp INNER JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.salary < 78000 OR emp.salary < 117000

@@ -1,0 +1,1 @@
+WITH valid_store_sales AS (SELECT * FROM store_sales WHERE product_id IN (1, 5) AND product_id IN (4, 6, 7, 8)), summary AS (SELECT store_id, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM valid_store_sales GROUP BY store_id) SELECT * FROM summary WHERE stddev_revenue > 77;

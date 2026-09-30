@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, SUM(quantity * unit_price) AS revenue FROM order_items GROUP BY product_id) SELECT p.id, p.category, ps.revenue FROM products p LEFT OUTER JOIN product_stats ps ON p.id = ps.product_id WHERE ps.revenue >= 69 ORDER BY p.id;

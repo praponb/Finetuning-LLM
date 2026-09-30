@@ -1,0 +1,1 @@
+WITH AccountStats AS (SELECT account_id, SUM(amount) AS total_amount, SUM(CASE WHEN txn_type = 'REFUND' THEN amount ELSE 0 END) AS refund_amount FROM transactions WHERE amount >= 3000 GROUP BY account_id) SELECT a.balance, a.status, A.total_amount, A.refund_amount FROM accounts a LEFT OUTER JOIN AccountStats A ON a.id = A.account_id ORDER BY total_amount

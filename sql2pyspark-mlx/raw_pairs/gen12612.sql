@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, i.last_restock, s.store_name, p.product_name, p.supplier_id FROM inventory i LEFT OUTER JOIN stores s ON s.id = i.store_id INNER JOIN products p ON i.product_id = p.id WHERE YEAR(p.launch_date) = 2024

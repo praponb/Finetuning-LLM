@@ -1,0 +1,1 @@
+SELECT p.category, QUARTER(p.launch_date) AS launch_quarter, MAX(i.last_restock) AS latest_last_restock, SUM(i.quantity) AS total_quantity FROM inventory i RIGHT OUTER JOIN products p ON p.id = i.product_id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.rating BETWEEN 2.3 AND 2.6 GROUP BY p.category, QUARTER(p.launch_date) ORDER BY p.category DESC, total_quantity

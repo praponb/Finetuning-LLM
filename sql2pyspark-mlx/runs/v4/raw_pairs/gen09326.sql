@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT order_id, AVG(unit_price) AS avg_unit_price FROM order_items WHERE product_id IN (5, 10, 12, 34) GROUP BY order_id) AS agg WHERE avg_unit_price >= 260 ORDER BY order_id, avg_unit_price DESC;

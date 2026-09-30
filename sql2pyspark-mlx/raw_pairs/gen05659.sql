@@ -1,0 +1,1 @@
+WITH filtered_departments AS (SELECT *, CEIL(budget) AS budget_whole FROM departments WHERE dept_name IN ('Engineering', 'Finance') OR dept_name IN ('Finance', 'Sales')), agg AS (SELECT location, ROUND(AVG(budget_whole), 2) AS avg_budget_whole, MAX(budget) - MIN(budget) AS budget_range FROM filtered_departments GROUP BY location) SELECT * FROM agg;

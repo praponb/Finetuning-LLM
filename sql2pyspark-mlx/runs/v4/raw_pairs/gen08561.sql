@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, FLOOR(discount_pct) AS discount_pct_whole FROM promotions WHERE channel IS NOT NULL) SELECT * FROM (SELECT promo_code, channel, discount_pct_whole FROM cleaned) src PIVOT (AVG(discount_pct_whole) AS value_sum FOR channel IN ('web', 'partner'));

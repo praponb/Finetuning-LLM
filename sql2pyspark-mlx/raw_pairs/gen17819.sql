@@ -1,0 +1,1 @@
+select dim.location, src.job_title, count(*) as num_rows, max(src.salary) as max_salary from employees src left join departments dim on src.dept_id = dim.id group by grouping sets ((dim.location, src.job_title), (dim.location), ())

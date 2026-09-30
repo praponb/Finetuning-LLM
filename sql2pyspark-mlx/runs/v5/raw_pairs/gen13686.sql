@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_type, t.txn_time, t.is_flagged FROM transactions t WHERE t.account_id IN (SELECT id FROM accounts WHERE balance BETWEEN 28000 AND 29000) ORDER BY t.txn_time DESC, t.txn_type, id LIMIT 1;

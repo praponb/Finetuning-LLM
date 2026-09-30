@@ -1,0 +1,1 @@
+SELECT id, job_title, hire_date, salary, dept_id, LEAD(salary, 1) OVER (PARTITION BY job_title ORDER BY hire_date, id) AS next_salary, RANK() OVER (PARTITION BY dept_id ORDER BY hire_date DESC) AS hire_date_rank FROM employees WHERE job_title <> 'Director'

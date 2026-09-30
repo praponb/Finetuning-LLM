@@ -1,0 +1,1 @@
+select suppliers.city, suppliers.country, sum(case when products.brand = 'Stark' then 1 else 0 end) stark_count from products inner join suppliers on products.supplier_id = suppliers.id group by suppliers.city, suppliers.country having stark_count >= 32;

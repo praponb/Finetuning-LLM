@@ -1,0 +1,1 @@
+WITH SupplierStats AS (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values FROM products GROUP BY supplier_id) SELECT s.country, S.brand_values FROM suppliers s INNER JOIN SupplierStats S ON s.id = S.supplier_id ORDER BY brand_values

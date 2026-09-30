@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, SUM(unit_price) AS total_unit_price, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items WHERE order_id IN (15, 20, 31, 38) GROUP BY order_id) SELECT o.shipping_fee, o.amount, os.total_unit_price, os.avg_quantity FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id

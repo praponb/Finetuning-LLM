@@ -1,0 +1,1 @@
+select year(c.signup_date) as signup_year, sum(case when s.device = 'tablet' then 1 else 0 end) as tablet_count from sessions s left join customers c on s.customer_id = c.id where c.signup_date < '2025-01-25' group by year(c.signup_date);

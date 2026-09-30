@@ -1,0 +1,1 @@
+SELECT country, city, COUNT(DISTINCT rating) AS unique_countrys, AVG(rating) AS avg_rating FROM suppliers WHERE (city IN ('Bangkok', 'Tokyo', 'London') AND rating >= 1.9) OR country = 'TH' GROUP BY country, city ORDER BY city;

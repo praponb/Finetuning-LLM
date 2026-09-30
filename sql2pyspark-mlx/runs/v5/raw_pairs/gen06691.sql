@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(hire_date) < 2024 THEN 'before_2024' WHEN YEAR(hire_date) = 2024 THEN '2024' ELSE 'after_2024' END AS hire_cohort, SUM(salary) AS total_salary FROM employees WHERE LENGTH(email) < 7 GROUP BY 1 HAVING AVG(salary) >= 143000 ORDER BY hire_cohort DESC

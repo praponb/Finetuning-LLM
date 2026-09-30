@@ -1,0 +1,1 @@
+SELECT a.account_type, COUNT(t.id) transaction_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(t.txn_type))) txn_type_values FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id GROUP BY a.account_type ORDER BY transaction_count DESC, account_type LIMIT 1

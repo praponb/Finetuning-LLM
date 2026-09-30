@@ -1,0 +1,1 @@
+SELECT s.rating, s.supplier_name, s.city, p.launch_date, p.supplier_id, p.stock_qty, ARRAY_CONTAINS(p.tags, 'bestseller') is_bestseller FROM suppliers s LEFT JOIN products p ON p.supplier_id = s.id WHERE s.supplier_name IS NULL

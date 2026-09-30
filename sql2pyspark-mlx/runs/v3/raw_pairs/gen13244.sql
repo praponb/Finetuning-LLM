@@ -1,0 +1,1 @@
+SELECT id, quantity, product_id, last_restock, DATE_FORMAT(last_restock, 'yyyy-MM-dd') AS last_restock_label FROM inventory WHERE store_id IN (5, 6) AND quantity = 238 AND YEAR(last_restock) >= 2023 ORDER BY product_id DESC;

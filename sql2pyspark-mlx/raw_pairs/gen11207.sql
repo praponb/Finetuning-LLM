@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, items, SIZE(items) AS num_items, attributes['gift'] AS gift, COALESCE(attributes['device'], 'none') AS device_or_default, SIZE(attributes) AS num_attributes FROM carts;

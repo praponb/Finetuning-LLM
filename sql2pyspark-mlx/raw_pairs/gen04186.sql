@@ -1,0 +1,1 @@
+SELECT store_sales.store_id, stores.region, products.product_name FROM store_sales LEFT OUTER JOIN stores ON stores.id = store_sales.store_id LEFT OUTER JOIN products ON store_sales.product_id = products.id WHERE stores.city NOT IN ('Tokyo', 'Berlin') AND stores.opened_date >= '2023-07-01';

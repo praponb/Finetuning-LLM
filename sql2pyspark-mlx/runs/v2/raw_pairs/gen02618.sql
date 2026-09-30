@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.revenue, p.cost, s.store_name FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id LEFT JOIN stores s ON ss.store_id = s.id WHERE p.cost BETWEEN 220 AND 720 AND s.city = 'London'

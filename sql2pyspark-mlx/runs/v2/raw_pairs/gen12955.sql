@@ -1,0 +1,1 @@
+SELECT p.cost, i.quantity, i.product_id, DATE_TRUNC('MONTH', i.last_restock) AS last_restock_period FROM products p LEFT JOIN inventory i ON p.id = i.product_id WHERE p.cost < 660 ORDER BY p.cost DESC

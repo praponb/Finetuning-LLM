@@ -1,0 +1,1 @@
+SELECT store_id, status, MAX(discount) - MIN(discount) AS discount_range, COUNT(CASE WHEN status = 'RETURNED' THEN 1 END) AS returned_count, MAX(shipping_fee) AS max_shipping_fee FROM orders WHERE NOT (shipping_fee BETWEEN 27 AND 40 AND (shipping_fee < 14 OR channel IN ('mobile', 'web'))) GROUP BY 1, 2 ORDER BY max_shipping_fee DESC, 4 DESC

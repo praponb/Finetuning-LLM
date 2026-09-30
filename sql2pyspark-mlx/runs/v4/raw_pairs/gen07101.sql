@@ -1,0 +1,1 @@
+WITH AccountSummary AS (SELECT account_id, COUNT(*) AS row_count FROM transactions GROUP BY account_id) SELECT accounts.id, accounts.opened_date, accounts.status, AccountSummary.row_count FROM accounts INNER JOIN AccountSummary ON accounts.id = AccountSummary.account_id ORDER BY accounts.opened_date DESC

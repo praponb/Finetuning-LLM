@@ -1,0 +1,1 @@
+with session_totals as (select session_id, sum(duration_sec) total_duration_sec from web_events group by session_id) select s.id, s.started_at, s.device, st.total_duration_sec from sessions s left join session_totals st on s.id = st.session_id order by 4;

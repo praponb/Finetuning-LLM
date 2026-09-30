@@ -1,0 +1,1 @@
+with account_stats as (select account_id, min(txn_time) as first_txn_time from transactions group by account_id) select a.opened_date, as.first_txn_time from accounts a inner join account_stats as on a.id = as.account_id

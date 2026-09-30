@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE account_id = 11 GROUP BY account_id) SELECT a.balance, a.opened_date, at.stddev_amount FROM accounts a INNER JOIN account_totals at ON a.id = at.account_id WHERE at.stddev_amount > 21

@@ -1,0 +1,1 @@
+SELECT id, supplier_name, city, rating, LEAD(rating) OVER (PARTITION BY city ORDER BY rating, id) AS next_rating, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating, id) AS row_seq, ROUND(rating / SUM(rating) OVER (PARTITION BY city), 4) AS rating_share FROM suppliers;

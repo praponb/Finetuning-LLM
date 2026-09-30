@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT *, NTILE(3) OVER (PARTITION BY order_id ORDER BY unit_price, id) AS unit_price_bucket, NTILE(5) OVER w_grp AS quantity_bucket FROM order_items WINDOW w_grp AS (ORDER BY quantity DESC, id)) SELECT id, product_id, quantity, unit_price, unit_price_bucket FROM enriched ORDER BY quantity DESC, unit_price_bucket DESC

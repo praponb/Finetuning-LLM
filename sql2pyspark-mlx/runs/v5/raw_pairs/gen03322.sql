@@ -1,0 +1,1 @@
+select * from (select region, sum(case when region = 'North' then sqft else 0 end) as north_sqft, count(distinct sqft) as unique_regions from stores group by region) as x where north_sqft >= 40 order by unique_regions desc;

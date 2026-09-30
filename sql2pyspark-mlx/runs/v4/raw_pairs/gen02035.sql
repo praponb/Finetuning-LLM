@@ -1,0 +1,1 @@
+SELECT a.status, ROUND(AVG(t.amount), 2) AS avg_amount FROM transactions t JOIN accounts a ON t.account_id = a.id JOIN customers c ON a.customer_id = c.id GROUP BY a.status HAVING ROUND(AVG(t.amount), 2) > 65

@@ -1,0 +1,1 @@
+select is_flagged, max(amount) as max_amount, sum(case when merchant = 'Amazon' then amount else 0 end) as amazon_amount from transactions where txn_time >= '2025-04-01' and txn_type = 'CREDIT' group by 1;

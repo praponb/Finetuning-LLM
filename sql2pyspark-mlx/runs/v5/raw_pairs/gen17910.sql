@@ -1,0 +1,1 @@
+WITH store_sales_by_product AS (SELECT product_id, COUNT(DISTINCT revenue) AS unique_products, MAX(sale_date) AS last_sale_date FROM store_sales WHERE store_id IN (1, 5, 6) GROUP BY product_id) SELECT p.cost, ssbp.unique_products, ssbp.last_sale_date FROM products p INNER JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id ORDER BY p.cost DESC

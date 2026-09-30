@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY level ORDER BY hire_date DESC, id) AS pos FROM employees) SELECT id, level, hire_date FROM ranked WHERE pos = 1 ORDER BY hire_date ASC, id ASC;

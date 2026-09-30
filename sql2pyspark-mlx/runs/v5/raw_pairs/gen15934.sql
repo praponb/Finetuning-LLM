@@ -1,0 +1,1 @@
+SELECT id, store_id, quantity, last_restock, NTILE(4) OVER (ORDER BY quantity DESC, id) AS quantity_bucket, LAG(quantity, 1) OVER (PARTITION BY store_id ORDER BY quantity, id) AS prev_quantity, NTILE(5) OVER (PARTITION BY store_id ORDER BY quantity, id) AS quantity_bucket_2 FROM inventory;

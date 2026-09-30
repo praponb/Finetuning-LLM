@@ -1,0 +1,1 @@
+SELECT customers.id, customers.credit_limit, customers.segment, t.account_type_list, t.row_count FROM customers JOIN (SELECT customer_id, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list, COUNT(*) AS row_count FROM accounts GROUP BY customer_id) t ON customers.id = t.customer_id ORDER BY segment, customers.credit_limit DESC;

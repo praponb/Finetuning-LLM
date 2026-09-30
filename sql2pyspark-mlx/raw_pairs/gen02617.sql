@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM transactions QUALIFY ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount DESC, id) = 1) SELECT id, txn_type, amount, txn_time, is_flagged, CASE WHEN txn_type RLIKE '^(CREDIT|DEBIT)$' THEN 'EXTENDED' WHEN txn_type RLIKE '^(REFUND|FEE)$' THEN 'OTHER_ZONE' ELSE 'GROUP_A' END AS txn_type_zone FROM deduped ORDER BY amount, txn_type;

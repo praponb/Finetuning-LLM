@@ -1,0 +1,1 @@
+select id, merchant, txn_time, amount, date_format(txn_time, 'MMM yyyy') as txn_time_label, date_format(txn_time, 'yyyy-MM-dd') as txn_time_label_2 from transactions where is_flagged and merchant = 'Starbucks' order by amount desc;

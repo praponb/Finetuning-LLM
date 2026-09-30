@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, COUNT(DISTINCT quantity) AS unique_orders, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY order_id) SELECT o.id, o.channel, ot.unique_orders, ot.unit_price_range FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.unique_orders > 7;

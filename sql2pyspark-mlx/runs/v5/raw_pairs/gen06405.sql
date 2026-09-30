@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, created_at, k, value FROM carts LATERAL VIEW OUTER EXPLODE(attributes) x AS k, value) SELECT DATE_TRUNC('HOUR', created_at) AS hour_window, COUNT(*) AS cnt, (UNIX_TIMESTAMP(MAX(created_at)) - UNIX_TIMESTAMP(MIN(created_at))) / 60 AS span_minutes FROM exploded GROUP BY 1 ORDER BY cnt DESC NULLS LAST;

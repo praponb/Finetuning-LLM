@@ -1,0 +1,1 @@
+SELECT c.name, t.status_list, t.basic_count FROM customers c INNER JOIN (SELECT customer_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list, SUM(CASE WHEN plan = 'basic' THEN 1 ELSE 0 END) AS basic_count FROM subscriptions WHERE customer_id IS NOT NULL GROUP BY customer_id) t ON c.id = t.customer_id

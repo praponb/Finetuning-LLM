@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, SUM(cost) AS total_cost, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list FROM products WHERE price >= 950 GROUP BY supplier_id) SELECT s.id, s.country, s.supplier_name, ss.total_cost, ss.brand_list FROM suppliers s INNER JOIN supplier_summary ss ON s.id = ss.supplier_id;

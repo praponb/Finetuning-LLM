@@ -1,0 +1,1 @@
+SELECT p.id, p.launch_date, p.category, t.row_count FROM products p LEFT JOIN (SELECT product_id, COUNT(*) row_count FROM order_items GROUP BY product_id) t ON p.id = t.product_id WHERE t.row_count > 6 ORDER BY p.category, p.id DESC

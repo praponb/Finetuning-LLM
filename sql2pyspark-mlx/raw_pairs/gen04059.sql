@@ -1,0 +1,1 @@
+select units_bucket, max_revenue from (select case when units >= 35 then 'high' when units >= 15 then 'mid' else 'low' end as units_bucket, max(revenue) as max_revenue from store_sales group by case when units >= 35 then 'high' when units >= 15 then 'mid' else 'low' end) as s where max_revenue > 2600 order by units_bucket limit 50

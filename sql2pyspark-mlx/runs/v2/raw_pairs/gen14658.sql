@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(*) AS cnt, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items WHERE unit_price IS NOT NULL AND order_id IN (15, 32, 33, 37) GROUP BY CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END

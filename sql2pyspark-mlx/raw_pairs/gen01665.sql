@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY quantity) AS rn FROM order_items WHERE quantity BETWEEN 3 AND 6) SELECT id, product_id, quantity FROM numbered WHERE rn = 1;

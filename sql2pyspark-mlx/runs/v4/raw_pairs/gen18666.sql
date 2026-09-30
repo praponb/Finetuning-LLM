@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, SUM(CASE WHEN plan = 'basic' THEN monthly_fee ELSE 0 END) AS basic_monthly_fee, MAX(start_date) AS latest_start_date FROM subscriptions GROUP BY customer_id) SELECT c.id, c.age, c.is_active, cs.basic_monthly_fee, cs.latest_start_date FROM customers c JOIN customer_summary cs ON c.id = cs.customer_id

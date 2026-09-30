@@ -1,0 +1,1 @@
+select id, brand, supplier_id, stock_qty, date_trunc('week', launch_date) launch_date_period from products where product_name like '%USB%' and product_name like 'Sm%' and array_contains(tags, 'premium') order by supplier_id desc;

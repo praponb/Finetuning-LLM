@@ -1,0 +1,1 @@
+SELECT id, segment, credit_limit, country, LAST_VALUE(country) OVER (PARTITION BY segment ORDER BY credit_limit DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_country FROM customers WHERE country = 'UK'

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, ROUND((100 * SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_tokyo, MIN(signup_date) AS first_signup_date FROM customers GROUP BY DATE_TRUNC('MONTH', signup_date);

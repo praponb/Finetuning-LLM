@@ -1,0 +1,1 @@
+SELECT id, service, host, SIZE(context) AS num_context, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text, COALESCE(context['version'], 'direct') AS version_or_default, ARRAY_CONTAINS(MAP_KEYS(context), 'region') AS has_region, COALESCE(context['region'], 'none') AS region_or_default FROM app_logs

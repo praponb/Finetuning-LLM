@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, ROUND(AVG(quantity), 2) AS avg_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE store_id IN (3, 5) GROUP BY DATE_FORMAT(last_restock, 'yyyy-MM')) AS x WHERE stddev_quantity > 27 ORDER BY stddev_quantity DESC, last_restock_month

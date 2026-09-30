@@ -1,0 +1,1 @@
+select store_id, product_id, max(sale_date) as latest_sale_date, round(avg(units), 2) as avg_units, min(sale_date) as min_sale_date from store_sales group by store_id, product_id having avg_units < 75 order by min_sale_date, store_id desc

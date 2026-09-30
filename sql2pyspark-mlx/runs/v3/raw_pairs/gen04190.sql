@@ -1,0 +1,1 @@
+WITH top_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY balance DESC, id) AS row_num FROM accounts) SELECT id, status, balance FROM top_accounts WHERE row_num <= 3 ORDER BY 3 DESC, status DESC;

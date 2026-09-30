@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM store_sales WHERE NOT (revenue > 1700 AND store_id = 6)), product_id_summary AS (SELECT product_id, AVG(revenue) AS avg_revenue, MAX(sale_date) AS latest_sale_date FROM src GROUP BY product_id) SELECT product_id, avg_revenue, latest_sale_date FROM product_id_summary ORDER BY product_id;

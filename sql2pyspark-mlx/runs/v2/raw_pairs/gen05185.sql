@@ -1,0 +1,1 @@
+SELECT c.country, c.is_active, SORT_ARRAY(COLLECT_SET(s.plan)) AS plan_list, SUM(s.monthly_fee) AS total_monthly_fee FROM subscriptions s JOIN customers c ON s.customer_id = c.id WHERE c.email LIKE '%@company.co' GROUP BY c.country, c.is_active ORDER BY 4 DESC, country, is_active LIMIT 20;

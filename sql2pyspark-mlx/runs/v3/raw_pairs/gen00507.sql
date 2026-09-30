@@ -1,0 +1,1 @@
+SELECT opened_date, 'account' AS source FROM accounts UNION SELECT delivered_date AS opened_date, 'shipment' AS source FROM shipments WHERE shipped_date BETWEEN '2024-01-01' AND '2024-07-01' ORDER BY source;

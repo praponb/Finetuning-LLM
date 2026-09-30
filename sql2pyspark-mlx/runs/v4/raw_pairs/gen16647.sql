@@ -1,0 +1,1 @@
+select signup_year, first_signup_date, age_count from (select year(signup_date) as signup_year, min(signup_date) as first_signup_date, count(age) as age_count from customers where country != 'JP' group by year(signup_date)) as x where age_count < 10 order by signup_year desc

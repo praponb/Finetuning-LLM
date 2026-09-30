@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM web_events WHERE page != '/checkout' AND event_time >= '2023-03-30'), web_events_stats AS (SELECT event_type, MIN(event_time) AS first_event_time, COUNT(*) AS num_web_events FROM base GROUP BY event_type) SELECT * FROM web_events_stats WHERE num_web_events > 9 ORDER BY first_event_time ASC;

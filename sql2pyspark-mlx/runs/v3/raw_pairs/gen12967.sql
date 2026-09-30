@@ -1,0 +1,1 @@
+select ss.revenue, s.region, p.supplier_id, p.stock_qty from store_sales ss inner join stores s on s.id = ss.store_id inner join products p on ss.product_id = p.id order by revenue desc, p.stock_qty desc;

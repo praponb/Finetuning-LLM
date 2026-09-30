@@ -1,0 +1,1 @@
+SELECT product_id, SUM(quantity) total_quantity, ROUND(STDDEV(quantity), 2) stddev_quantity FROM inventory WHERE product_id = 6 GROUP BY product_id HAVING SUM(quantity) >= 460 ORDER BY total_quantity DESC

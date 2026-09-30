@@ -1,0 +1,1 @@
+WITH valid_employees AS (SELECT * FROM employees WHERE NOT (full_name IS NOT NULL AND is_remote AND email IS NOT NULL)), employees_stats AS (SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, ROUND(AVG(salary), 2) AS avg_salary FROM valid_employees GROUP BY DATE_FORMAT(hire_date, 'yyyy-MM')) SELECT * FROM employees_stats WHERE avg_salary < 34

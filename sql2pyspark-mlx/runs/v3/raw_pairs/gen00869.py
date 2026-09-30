@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_suppliers.alias("s")
+    .join(df_products.alias("p"), F.col("p.supplier_id") == F.col("s.id"), "left")
+    .groupBy(F.col("s.id"), F.col("s.supplier_name"))
+    .agg(
+        F.count(F.col("p.id")).alias("product_count"),
+        F.count(F.when(F.col("p.brand") == "Globex", 1)).alias("globex_count"),
+        F.sum(F.col("p.cost")).alias("total_cost"),
+    )
+)

@@ -1,0 +1,1 @@
+select status, max(amount) as max_amount, round((100 * sum(case when status = 'FAILED' then 1 else 0 end)) / count(*), 1) as pct_failed from payments where amount < 1320 or order_id in (6, 15, 19) group by status order by 3, status limit 1;

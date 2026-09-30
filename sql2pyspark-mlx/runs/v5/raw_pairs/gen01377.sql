@@ -1,0 +1,1 @@
+SELECT s.device, SUM(CASE WHEN we.page = '/checkout' THEN 1 ELSE 0 END) AS checkout_count FROM web_events we JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id GROUP BY s.device ORDER BY checkout_count, device LIMIT 1;

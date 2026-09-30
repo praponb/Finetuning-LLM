@@ -1,0 +1,1 @@
+SELECT id, txn_type, amount, merchant FROM (SELECT id, txn_type, amount, merchant, DENSE_RANK() OVER (PARTITION BY txn_type ORDER BY amount DESC) AS row_num FROM transactions WHERE TO_DATE(txn_time) < '2024-08-01') AS ranked WHERE row_num <= 3 ORDER BY merchant DESC;

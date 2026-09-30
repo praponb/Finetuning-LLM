@@ -1,0 +1,1 @@
+select id, account_type, balance, opened_date from (select *, dense_rank() over (partition by account_type order by balance desc) as pos from accounts where opened_date between '2024-10-12' and '2024-12-01') as r where pos <= 1;

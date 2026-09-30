@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(DISTINCT rating) AS unique_countrys, COUNT(CASE WHEN city = 'Tokyo' THEN 1 END) AS tokyo_count FROM suppliers GROUP BY rating_bucket HAVING COUNT(DISTINCT rating) < 1 ORDER BY unique_countrys DESC

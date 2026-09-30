@@ -1,0 +1,1 @@
+SELECT store_id, product_id, MAX(units) AS max_units, MIN(sale_date) AS min_sale_date, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales WHERE sale_date > '2025-04-01' AND revenue > 2800 AND units < 23 GROUP BY store_id, product_id;

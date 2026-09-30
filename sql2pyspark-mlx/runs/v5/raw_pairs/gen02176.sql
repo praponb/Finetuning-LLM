@@ -1,0 +1,1 @@
+SELECT order_id, ROUND(AVG(unit_price), 2) AS avg_unit_price, COUNT(unit_price) AS unit_price_count, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM order_items WHERE quantity BETWEEN 4 AND 5 AND quantity BETWEEN 4 AND 6 GROUP BY order_id

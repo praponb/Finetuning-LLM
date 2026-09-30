@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY order_date, id) AS row_num FROM orders QUALIFY row_num = 1) SELECT id, store_id, order_date, amount, discount, shipping_fee, row_num FROM deduped ORDER BY shipping_fee;

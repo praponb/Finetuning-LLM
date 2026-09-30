@@ -1,0 +1,1 @@
+select product_id, count(revenue) as revenue_count, max(sale_date) as latest_sale_date, min(sale_date) as min_sale_date from store_sales group by 1 having count(revenue) > 5 order by product_id, latest_sale_date;

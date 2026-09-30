@@ -1,0 +1,1 @@
+select merchant, to_date(txn_time) as txn_time_date, concat_ws('-', merchant, txn_type) as merchant_txn_type_key from transactions where txn_type not in ('REFUND', 'FEE') order by txn_time_date, merchant_txn_type_key;

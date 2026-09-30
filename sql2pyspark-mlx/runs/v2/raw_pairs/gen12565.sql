@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM inventory WHERE store_id IN (1, 3, 4, 6)), summary AS (SELECT QUARTER(last_restock) AS last_restock_quarter, store_id, AVG(quantity) AS avg_quantity, SUM(quantity) AS total_quantity FROM Base GROUP BY QUARTER(last_restock), store_id) SELECT * FROM summary ORDER BY store_id DESC, last_restock_quarter LIMIT 3;

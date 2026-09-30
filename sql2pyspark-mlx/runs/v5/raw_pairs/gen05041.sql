@@ -1,0 +1,1 @@
+WITH CustomerTotals AS (SELECT customer_id, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.id, c.city, c.country, C.stddev_monthly_fee FROM customers c INNER JOIN CustomerTotals C ON c.id = C.customer_id WHERE C.stddev_monthly_fee >= 57

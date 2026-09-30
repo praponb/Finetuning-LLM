@@ -1,0 +1,1 @@
+SELECT a.balance, a.customer_id, c.name, c.country FROM accounts a LEFT OUTER JOIN customers c ON a.customer_id = c.id WHERE c.country IN ('US', 'DE', 'UK') AND a.customer_id IS NOT NULL ORDER BY customer_id DESC

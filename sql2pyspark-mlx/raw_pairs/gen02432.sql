@@ -1,0 +1,1 @@
+SELECT id, txn_time, account_id, RANK() OVER (ORDER BY txn_time) AS txn_time_rank, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY txn_time, id) AS row_num FROM transactions WHERE is_flagged = FALSE ORDER BY id, row_num DESC;

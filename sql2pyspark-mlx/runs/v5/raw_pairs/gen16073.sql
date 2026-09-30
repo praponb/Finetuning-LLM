@@ -1,0 +1,1 @@
+WITH ranked_employees AS (SELECT id, manager_id, salary, hire_date, RANK() OVER (PARTITION BY manager_id ORDER BY salary DESC) AS rn FROM employees) SELECT * FROM ranked_employees WHERE rn <= 5 ORDER BY id DESC;

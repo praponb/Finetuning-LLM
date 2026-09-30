@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, o.channel FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id WHERE o.amount BETWEEN 1060 AND 1080 AND o.status NOT IN ('CANCELLED', 'COMPLETED', 'PENDING') ORDER BY channel

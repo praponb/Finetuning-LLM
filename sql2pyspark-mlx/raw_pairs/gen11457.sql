@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, segment, SUM(CASE WHEN city = 'New York' THEN credit_limit ELSE 0 END) AS new_york_credit_limit, SUM(CASE WHEN segment = 'SMB' THEN credit_limit ELSE 0 END) AS smb_credit_limit, MAX(signup_date) AS last_signup_date FROM customers GROUP BY 1, 2 ORDER BY signup_month;

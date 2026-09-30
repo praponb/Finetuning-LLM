@@ -1,0 +1,1 @@
+SELECT id, store_id, product_id, quantity, last_restock, NTILE(5) OVER (PARTITION BY store_id ORDER BY quantity DESC, id) quantity_bucket, SUM(quantity) OVER (PARTITION BY product_id ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) cumulative_quantity FROM inventory;

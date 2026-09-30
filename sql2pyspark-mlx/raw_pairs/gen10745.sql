@@ -1,0 +1,1 @@
+SELECT p.country, a.event_type, COUNT(*) AS rows_total, ROUND(SUM(a.duration_sec), 2) AS total_duration_sec FROM web_events a LEFT JOIN sessions p ON a.session_id = p.id GROUP BY p.country, a.event_type ORDER BY country DESC NULLS LAST;

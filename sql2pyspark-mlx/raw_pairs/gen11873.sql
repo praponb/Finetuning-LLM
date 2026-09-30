@@ -1,0 +1,1 @@
+SELECT o.id, o.amount, t.amount_count, t.stddev_amount FROM orders o LEFT JOIN (SELECT order_id, COUNT(amount) AS amount_count, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments GROUP BY order_id) t ON o.id = t.order_id WHERE t.stddev_amount > 27 ORDER BY stddev_amount, amount_count DESC;

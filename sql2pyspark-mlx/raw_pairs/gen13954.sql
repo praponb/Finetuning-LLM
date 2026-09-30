@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, oi.order_id, o.amount, o.order_date, s.sqft, LEAST(o.shipping_fee, o.discount) AS least_shipping_fee_discount FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN stores s ON s.id = o.store_id;

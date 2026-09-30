@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, MAX(amount) AS max_amount FROM payments GROUP BY order_id) SELECT orders.store_id, order_summary.max_amount FROM orders LEFT OUTER JOIN order_summary ON orders.id = order_summary.order_id WHERE order_summary.max_amount > 1080 ORDER BY max_amount;

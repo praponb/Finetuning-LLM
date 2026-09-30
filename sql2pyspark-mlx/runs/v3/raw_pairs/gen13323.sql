@@ -1,0 +1,1 @@
+SELECT txn_type, merchant, CASE WHEN amount >= 3900 THEN 'high' WHEN amount >= 1800 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(amount) AS amount_count FROM transactions GROUP BY 1, 2, 3 ORDER BY txn_type, amount_bucket;

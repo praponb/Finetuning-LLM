@@ -1,0 +1,1 @@
+SELECT session_id, SUM(duration_sec) AS total_duration_sec, ROUND(SUM(duration_sec) * 100.0 / SUM(SUM(duration_sec)) OVER (), 2) AS pct_of_total FROM web_events GROUP BY session_id ORDER BY total_duration_sec

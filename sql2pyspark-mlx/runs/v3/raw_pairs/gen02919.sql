@@ -1,0 +1,1 @@
+SELECT o.status, o.channel, ROUND(AVG(oi.quantity), 2) avg_quantity FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id GROUP BY o.status, o.channel

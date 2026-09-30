@@ -1,0 +1,1 @@
+with base as (select *, round(unit_price * 1.1, 2) as unit_price_scaled from order_items where product_id is not null) select id, order_id from base except select id, order_id from order_items where product_id in (10, 19, 33)

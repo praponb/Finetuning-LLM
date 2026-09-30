@@ -1,0 +1,1 @@
+SELECT orders.id, orders.status, COUNT(order_items.id) AS order_item_count, ROUND(AVG(order_items.quantity), 2) AS avg_quantity, ROUND(AVG(order_items.unit_price), 2) AS avg_unit_price FROM orders LEFT JOIN order_items ON orders.id = order_items.order_id WHERE orders.shipping_fee <= 23 GROUP BY orders.id, orders.status ORDER BY order_item_count DESC, orders.status, id LIMIT 3;

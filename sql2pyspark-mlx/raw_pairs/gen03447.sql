@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', customers.signup_date) AS signup_month, MAX(orders.shipping_fee) - MIN(orders.shipping_fee) AS shipping_fee_range FROM orders JOIN customers ON orders.customer_id = customers.id WHERE customers.name LIKE '%Lee%' GROUP BY DATE_TRUNC('MONTH', customers.signup_date) ORDER BY signup_month, shipping_fee_range DESC LIMIT 1

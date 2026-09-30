@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.6 THEN 'PREMIUM' ELSE 'STANDARD' END AS rating_tier, AVG(rating) FILTER (WHERE city = 'Chiang Mai') AS chiang_mai_avg_rating, SIZE(COLLECT_SET(country)) AS num_countries FROM suppliers GROUP BY CASE WHEN rating >= 4.6 THEN 'PREMIUM' ELSE 'STANDARD' END

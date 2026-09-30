@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, currency, EXPLODE(discounts) AS val FROM price_tiers) SELECT *, PERCENT_RANK() OVER (PARTITION BY plan ORDER BY val NULLS LAST) AS val_percent_rank FROM flattened;

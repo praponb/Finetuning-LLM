@@ -1,0 +1,1 @@
+SELECT 'customer' AS source, signup_date AS event_date FROM customers WHERE signup_date IS NOT NULL UNION SELECT 'shipment' AS source, delivered_date AS event_date FROM shipments WHERE delivered_date IS NOT NULL ORDER BY event_date DESC

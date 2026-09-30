@@ -1,0 +1,1 @@
+SELECT id, order_id, carrier, delivered_date, cost, SUM(cost) OVER (PARTITION BY order_id, carrier ORDER BY delivered_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_cost FROM shipments ORDER BY running_cost

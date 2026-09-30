@@ -1,0 +1,1 @@
+select case when year(signup_date) < 2024 then 'before_2024' when year(signup_date) = 2024 then '2024' else 'after_2024' end as signup_cohort, year(signup_date) as signup_year, max(age) as max_age from customers where year(signup_date) >= 2025 group by signup_cohort, signup_year having max(age) < 39 order by signup_year;

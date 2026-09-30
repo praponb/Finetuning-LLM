@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LOWER(page) AS page_lower FROM web_events WHERE event_time >= DATE '2023-08-28' AND page IS NOT NULL) SELECT e.*, s.country, s.browser, s.device FROM base e LEFT JOIN sessions s ON e.session_id = s.id;

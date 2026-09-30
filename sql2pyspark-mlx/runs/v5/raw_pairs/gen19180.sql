@@ -1,0 +1,1 @@
+select date_format(s.opened_date, 'yyyy-MM') opened_month, year(s.opened_date) opened_year, count(ss.units) units_count, round(stddev(ss.units), 2) stddev_units from store_sales ss inner join stores s on ss.store_id = s.id where ss.product_id in (1, 2) group by date_format(s.opened_date, 'yyyy-MM'), year(s.opened_date) order by opened_year desc;

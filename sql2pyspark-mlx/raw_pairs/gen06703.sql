@@ -1,0 +1,1 @@
+with valid as (select id, full_name, manager_id, salary, hire_date, is_remote, level, date_format(hire_date, 'MMM yyyy') as hire_date_label, cast(is_remote as int) as is_remote_flag from employees where level is not null) select level, count(case when level = 'L4' then 1 end) as l4_count, round(avg(is_remote_flag), 2) as avg_is_remote_flag from valid group by level;

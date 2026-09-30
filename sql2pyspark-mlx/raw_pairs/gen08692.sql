@@ -1,0 +1,1 @@
+SELECT id, order_id, quantity, unit_price, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity DESC, id) AS quantity_row, LAG(quantity, 2) OVER (PARTITION BY order_id ORDER BY unit_price, id) AS prev_quantity FROM order_items ORDER BY id;

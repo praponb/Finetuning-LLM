@@ -1,0 +1,5 @@
+SELECT id
+FROM courses
+INTERSECT
+SELECT id
+FROM courses

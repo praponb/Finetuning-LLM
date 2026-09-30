@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, CASE WHEN units >= 40 THEN 'high' WHEN units >= 17 THEN 'mid' ELSE 'low' END AS units_bucket, ROUND(STDDEV(units), 2) AS stddev_units, AVG(units) AS avg_units FROM store_sales WHERE product_id IN (4, 9) GROUP BY 1, 2 HAVING avg_units < 17;

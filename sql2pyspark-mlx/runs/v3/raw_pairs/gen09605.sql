@@ -1,0 +1,1 @@
+SELECT we.id, we.event_type, we.session_id, we.event_time, s.browser, s.country FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE TO_DATE(s.started_at) >= '2024-05-29' AND s.browser = 'Chrome' ORDER BY session_id DESC;

@@ -1,0 +1,1 @@
+SELECT c.id, c.city, COUNT(o.id) AS order_count, AVG(o.shipping_fee) AS avg_shipping_fee FROM customers c LEFT JOIN orders o ON c.id = o.customer_id GROUP BY c.id, c.city ORDER BY city, avg_shipping_fee;

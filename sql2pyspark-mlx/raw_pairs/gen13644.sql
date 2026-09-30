@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, customer_id, monthly_fee FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date DESC, id) AS row_num FROM subscriptions) ranked WHERE row_num = 1) SELECT customer_id, STDDEV_SAMP(monthly_fee) AS monthly_fee_stddev, APPROX_PERCENTILE(monthly_fee, 0.9) AS monthly_fee_p90 FROM ranked GROUP BY 1;

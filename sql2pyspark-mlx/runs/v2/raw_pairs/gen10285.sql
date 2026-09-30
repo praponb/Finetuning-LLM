@@ -1,0 +1,1 @@
+SELECT s.region, MAX(oi.quantity) AS max_quantity FROM order_items oi JOIN orders o ON oi.order_id = o.id JOIN stores s ON o.store_id = s.id WHERE s.city NOT IN ('Chiang Mai', 'New York', 'London') GROUP BY s.region;

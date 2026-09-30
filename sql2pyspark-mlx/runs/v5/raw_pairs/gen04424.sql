@@ -1,0 +1,1 @@
+SELECT c.id, c.age, c.signup_date FROM customers c WHERE YEAR(c.signup_date) >= 2023 AND NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id AND o.store_id IN (9, 24, 33)) ORDER BY c.age, id LIMIT 5

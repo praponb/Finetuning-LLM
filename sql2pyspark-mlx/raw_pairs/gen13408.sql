@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.revenue, s.sqft, p.cost, p.category FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON p.id = ss.product_id WHERE ss.product_id IN (1, 2, 7, 8) ORDER BY s.sqft;

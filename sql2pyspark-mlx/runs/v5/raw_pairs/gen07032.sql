@@ -1,0 +1,1 @@
+SELECT a.id, a.status, a.opened_date, t.txn_type_values FROM accounts a LEFT OUTER JOIN (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY opened_date, a.status DESC

@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, host, attr_key, v FROM app_logs LATERAL VIEW EXPLODE(context) e AS attr_key, v) SELECT service, COUNT_IF(attr_key = 'version') AS version_events, COUNT_IF(attr_key = 'trace') AS trace_events, SIZE(COLLECT_SET(host)) AS num_hosts, GROUPING_ID() AS gid FROM flattened GROUP BY CUBE (service) HAVING SIZE(COLLECT_SET(host)) > 1;

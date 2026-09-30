@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, items, attributes, COALESCE(attributes['gift'], 'none') AS gift_or_default, SIZE(attributes) AS num_attributes, ARRAY_CONTAINS(MAP_KEYS(attributes), 'weight_kg') AS has_weight_kg, TRANSFORM(items, x -> x.product_id) AS product_ids, ship_to.zip AS ship_zip FROM carts WHERE ARRAY_CONTAINS(coupon_codes, 'SPRING10')

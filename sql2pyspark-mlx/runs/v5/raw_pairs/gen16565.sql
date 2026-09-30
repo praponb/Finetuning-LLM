@@ -1,0 +1,1 @@
+SELECT emp.level employee_level, emp.job_title employee_job_title, emp.email employee_email, mgr.manager_id manager_manager_id FROM employees emp INNER JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.level NOT IN ('L3', 'L1', 'L2') ORDER BY employee_level;

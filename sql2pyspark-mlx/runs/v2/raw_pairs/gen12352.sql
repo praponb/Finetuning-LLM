@@ -1,0 +1,1 @@
+SELECT id, customer_id, discount, order_date, FIRST_VALUE(order_date) OVER (PARTITION BY customer_id ORDER BY discount, id) AS first_order_date FROM orders WHERE status NOT IN ('PENDING', 'RETURNED') ORDER BY customer_id DESC;

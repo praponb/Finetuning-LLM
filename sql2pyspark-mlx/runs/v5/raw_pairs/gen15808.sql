@@ -1,0 +1,1 @@
+SELECT id, order_id, carrier, shipped_date, delivered_date, status, COUNT(cost) OVER w_hist AS running_count_cost, SUM(cost) OVER w_hist AS running_sum_cost, MAX(cost) OVER w_hist AS running_max_cost FROM shipments WHERE delivered_date > '2025-02-01' WINDOW w_hist AS (PARTITION BY order_id, carrier ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)

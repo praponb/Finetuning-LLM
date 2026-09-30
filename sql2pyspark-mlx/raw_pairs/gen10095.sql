@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, customer_id, coupon_codes, line.product_id, line.price, line.promo FROM carts LATERAL VIEW OUTER EXPLODE(items) e AS line) SELECT customer_id, coupon_codes, product_id, price, promo FROM flattened ORDER BY price NULLS FIRST, product_id

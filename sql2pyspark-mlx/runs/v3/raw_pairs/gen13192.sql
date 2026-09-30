@@ -1,0 +1,1 @@
+WITH filtered_stores AS (SELECT * FROM stores WHERE opened_date > '2023-08-01'), stores_stats AS (SELECT city, MAX(sqft) - MIN(sqft) sqft_range, ROUND(STDDEV(sqft), 2) stddev_sqft FROM filtered_stores GROUP BY city) SELECT city, sqft_range FROM stores_stats WHERE stddev_sqft > 34

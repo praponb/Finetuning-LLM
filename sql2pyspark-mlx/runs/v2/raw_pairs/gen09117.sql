@@ -1,0 +1,1 @@
+WITH inventory_by_store AS (SELECT store_id, MAX(quantity) - MIN(quantity) AS quantity_range, AVG(quantity) AS avg_quantity FROM inventory GROUP BY store_id) SELECT stores.id, stores.city, inventory_by_store.quantity_range, inventory_by_store.avg_quantity FROM stores INNER JOIN inventory_by_store ON stores.id = inventory_by_store.store_id ORDER BY city DESC;

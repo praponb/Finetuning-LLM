@@ -1,0 +1,1 @@
+WITH valid_stores AS (SELECT * FROM stores WHERE region = 'Central' AND region IN ('East', 'North')), agg AS (SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM valid_stores GROUP BY DATE_TRUNC('MONTH', opened_date)) SELECT opened_month, city_list FROM agg ORDER BY opened_month DESC;

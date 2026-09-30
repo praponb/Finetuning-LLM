@@ -1,0 +1,1 @@
+SELECT product_id, revenue_count FROM (SELECT product_id, COUNT(revenue) revenue_count FROM store_sales WHERE sale_date BETWEEN '2024-01-13' AND '2025-01-24' GROUP BY product_id) sub WHERE revenue_count >= 10;

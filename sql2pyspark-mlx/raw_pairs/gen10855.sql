@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, COUNT(p.id) AS product_count, MAX(p.cost) - MIN(p.cost) AS cost_range, SUM(CASE WHEN p.category = 'Electronics' THEN p.price ELSE 0 END) AS electronics_price FROM suppliers s LEFT JOIN products p ON p.supplier_id = s.id GROUP BY s.id, s.supplier_name;

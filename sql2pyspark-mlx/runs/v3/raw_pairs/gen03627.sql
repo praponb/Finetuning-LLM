@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, p.cost, s.rating, s.city FROM inventory i INNER JOIN products p ON i.product_id = p.id RIGHT JOIN suppliers s ON p.supplier_id = s.id WHERE s.country IN ('SG', 'JP') ORDER BY rating

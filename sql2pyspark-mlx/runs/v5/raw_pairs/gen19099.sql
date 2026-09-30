@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT d.status AS order_status, d.channel, src.carrier, COUNT(*) AS cnt, ROUND(AVG(src.cost), 2) AS avg_cost, GROUPING_ID() AS gid FROM shipments src INNER JOIN orders d ON src.order_id = d.id GROUP BY GROUPING SETS ((d.status, d.channel, src.carrier), (d.status), ())) SELECT cnt, avg_cost FROM by_dimension ORDER BY cnt NULLS FIRST

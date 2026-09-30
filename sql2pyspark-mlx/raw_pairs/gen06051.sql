@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN unit_price >= 310 THEN 'LARGE' ELSE 'SMALL' END AS unit_price_tier, MIN(quantity) AS min_quantity, BIT_OR(quantity) AS quantity_bit_or FROM order_items GROUP BY product_id, unit_price_tier;

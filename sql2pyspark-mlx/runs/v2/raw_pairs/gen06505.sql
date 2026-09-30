@@ -1,0 +1,1 @@
+select id, product_id, revenue, store_id from (select id, product_id, revenue, store_id, row_number() over (partition by product_id order by revenue desc, id) rnk from store_sales) ranked where rnk <= 5 order by id desc

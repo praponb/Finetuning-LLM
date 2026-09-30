@@ -1,0 +1,1 @@
+WITH ranked_suppliers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS row_num FROM suppliers) SELECT id, city, rating FROM ranked_suppliers WHERE row_num <= 5 ORDER BY rating DESC;

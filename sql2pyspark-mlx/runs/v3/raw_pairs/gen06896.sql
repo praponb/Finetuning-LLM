@@ -1,0 +1,1 @@
+SELECT CASE WHEN segment IN ('Corporate', 'Consumer') THEN 'priority' ELSE 'other' END AS segment_group, is_active, SUM(age) AS total_age FROM customers WHERE is_active = FALSE GROUP BY CASE WHEN segment IN ('Corporate', 'Consumer') THEN 'priority' ELSE 'other' END, is_active ORDER BY total_age DESC;

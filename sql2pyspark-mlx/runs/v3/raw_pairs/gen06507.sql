@@ -1,0 +1,1 @@
+WITH WebEventsBySession AS (SELECT session_id, MIN(event_time) first_event_time FROM web_events GROUP BY session_id) SELECT s.customer_id, W.first_event_time FROM sessions s INNER JOIN WebEventsBySession W ON s.id = W.session_id ORDER BY s.customer_id DESC;

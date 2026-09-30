@@ -1,0 +1,1 @@
+select s.id, s.browser, s.started_at, c.segment from sessions s left join customers c on s.customer_id = c.id where s.device in ('mobile', 'tablet') or s.device not in ('tablet', 'desktop', 'mobile') order by started_at desc;

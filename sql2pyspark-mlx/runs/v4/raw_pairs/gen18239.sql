@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, p.product_name, s.supplier_name, s.rating FROM order_items oi INNER JOIN products p ON oi.product_id = p.id RIGHT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE NOT (s.country IN ('TH', 'UK', 'JP') AND p.product_name LIKE 'Off%') ORDER BY oi.id DESC

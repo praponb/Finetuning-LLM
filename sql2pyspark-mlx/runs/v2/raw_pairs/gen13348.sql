@@ -1,0 +1,1 @@
+select id, rating, supplier_name, country, case when rating >= 4.3 then 'High' when rating >= 2.2 then 'Medium' else 'Low' end as rating_band, cast(rating as int) as rating_int from suppliers where country != 'DE' and length(supplier_name) < 5

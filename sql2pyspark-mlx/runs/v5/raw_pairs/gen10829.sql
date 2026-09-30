@@ -1,0 +1,1 @@
+SELECT city, region, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values, SORT_ARRAY(COLLECT_SET(city)) AS city_list, COUNT(sqft) AS sqft_count FROM stores WHERE region <> 'Central' OR store_name NOT LIKE '%Downtow%' GROUP BY 1, 2 ORDER BY sqft_count DESC

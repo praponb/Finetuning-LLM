@@ -1,0 +1,1 @@
+select category, brand, case when year(launch_date) < 2024 then 'before_2024' when year(launch_date) = 2024 then '2024' else 'after_2024' end as launch_cohort, concat_ws(', ', sort_array(collect_set(category))) as category_values from products group by 1, 2, 3 order by brand, launch_cohort desc;

@@ -1,0 +1,1 @@
+SELECT we.session_id, s.customer_id, s.country, s.started_at, CAST(we.event_time AS DATE) AS event_time_day FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE we.duration_sec >= 194 ORDER BY session_id DESC;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, customer_id, start_date, end_date, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date DESC, id) AS rn FROM subscriptions) AS ranked WHERE rn <= 3 ORDER BY start_date, rn DESC;

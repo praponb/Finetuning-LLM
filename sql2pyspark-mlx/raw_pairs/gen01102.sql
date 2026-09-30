@@ -1,0 +1,1 @@
+select payments.paid_at, payments.order_id, payments.amount, orders.customer_id, orders.amount as order_amount, orders.store_id, hour(payments.paid_at) as paid_at_hour from payments inner join orders on payments.order_id = orders.id where year(orders.order_date) = 2023 order by paid_at_hour desc, paid_at desc

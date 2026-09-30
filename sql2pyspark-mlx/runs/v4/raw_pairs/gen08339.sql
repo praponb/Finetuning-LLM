@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance DESC NULLS LAST, id) AS dedup_rank FROM accounts) ranked WHERE dedup_rank = 1) SELECT id, account_type, opened_date FROM ranked ORDER BY id NULLS FIRST, account_type LIMIT 10;

@@ -1,0 +1,1 @@
+select product_id, case when quantity >= 221 then 'high' when quantity >= 88 then 'mid' else 'low' end as quantity_bucket, count(distinct quantity) as unique_products from inventory where quantity != 191 group by 1, 2 order by quantity_bucket;

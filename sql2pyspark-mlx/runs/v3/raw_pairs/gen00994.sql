@@ -1,0 +1,1 @@
+WITH store_sales_by_product AS (SELECT product_id, COUNT(DISTINCT revenue) AS unique_stores FROM store_sales WHERE YEAR(sale_date) = 2025 GROUP BY product_id) SELECT p.id, p.product_name, ssbp.unique_stores FROM products p INNER JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id;

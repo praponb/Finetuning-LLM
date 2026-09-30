@@ -1,0 +1,1 @@
+WITH ValidOrderItems AS (SELECT *, ROUND(quantity, 2) AS quantity_rounded FROM order_items WHERE order_id IN (3, 20, 28, 30)), Agg AS (SELECT order_id, AVG(unit_price) AS avg_unit_price, COUNT(*) AS row_count FROM ValidOrderItems GROUP BY order_id) SELECT order_id, avg_unit_price, row_count FROM Agg;

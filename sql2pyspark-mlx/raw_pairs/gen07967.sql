@@ -1,0 +1,1 @@
+SELECT we.page, we.event_type, s.customer_id, s.device, s.started_at FROM web_events we JOIN sessions s ON we.session_id = s.id WHERE s.browser IN ('Chrome', 'Safari', 'Firefox') AND s.started_at >= '2025-02-01' ORDER BY s.started_at ASC, we.event_type ASC;

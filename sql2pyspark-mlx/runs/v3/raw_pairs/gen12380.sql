@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.country IN ('SG', 'TH') THEN 'group_a' ELSE 'other' END country_group, SORT_ARRAY(COLLECT_SET(we.event_type)) event_type_list FROM web_events we INNER JOIN sessions s ON we.session_id = s.id GROUP BY CASE WHEN s.country IN ('SG', 'TH') THEN 'group_a' ELSE 'other' END;

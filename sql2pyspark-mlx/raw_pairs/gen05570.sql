@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('CANCELLED', 'EXPIRED') THEN 'priority' ELSE 'other' END AS status_group, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions GROUP BY CASE WHEN status IN ('CANCELLED', 'EXPIRED') THEN 'priority' ELSE 'other' END HAVING COUNT(monthly_fee) < 1

@@ -1,0 +1,1 @@
+SELECT s.id, s.opened_date, t.avg_quantity, t.min_quantity FROM stores s JOIN (SELECT store_id, ROUND(AVG(quantity), 2) avg_quantity, MIN(quantity) min_quantity FROM inventory GROUP BY store_id) t ON s.id = t.store_id;

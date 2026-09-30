@@ -1,0 +1,1 @@
+select is_remote, max_salary, avg_salary from (select is_remote, max(salary) as max_salary, avg(salary) as avg_salary from employees where job_title <> 'Manager' group by is_remote) as s where avg_salary > 82000

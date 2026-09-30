@@ -1,0 +1,1 @@
+select id, product_name, category, price, cost, tags, ntile(3) over (partition by month(launch_date) order by cost desc, id asc) as cost_bucket, lag(stock_qty, 2, 0) over (partition by brand order by cost asc, id asc) as prev_stock_qty, stddev_samp(stock_qty) over (partition by date_trunc('month', launch_date), category) as launch_date_period_stddev_samp_stock_qty from products;

@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, UPPER(region) AS region_upper FROM stores WHERE YEAR(opened_date) >= 2025), summary AS (SELECT region, MAX(sqft) - MIN(sqft) AS sqft_range FROM base GROUP BY region) SELECT region, sqft_range FROM summary WHERE sqft_range > 28 ORDER BY region DESC, sqft_range

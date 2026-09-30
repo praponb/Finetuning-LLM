@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, COUNT(DISTINCT revenue) AS unique_stores FROM store_sales WHERE MONTH(sale_date) IN (3, 4, 12) GROUP BY product_id) SELECT p.price, p.product_name, ps.unique_stores FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id WHERE ps.unique_stores > 10

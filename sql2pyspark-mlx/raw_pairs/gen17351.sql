@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', last_restock) AS activity_month, DATE_TRUNC('WEEK', last_restock) AS week_start, APPROX_PERCENTILE(quantity, ARRAY(0.25, 0.5, 0.75)) AS quantity_quartiles, BIT_OR(quantity) AS quantity_bit_or FROM inventory GROUP BY activity_month, week_start ORDER BY week_start DESC;

@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, MIN(end_date) AS first_end_date, SUM(CASE WHEN plan = 'premium' THEN monthly_fee ELSE 0 END) AS premium_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.id, c.age, cs.first_end_date, cs.premium_monthly_fee FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY age DESC

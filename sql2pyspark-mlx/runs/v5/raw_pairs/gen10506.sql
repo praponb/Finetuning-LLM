@@ -1,0 +1,1 @@
+SELECT event_type, total_duration_sec FROM (SELECT event_type, SUM(duration_sec) AS total_duration_sec FROM web_events WHERE session_id IN (1, 2, 26) GROUP BY event_type) AS s WHERE total_duration_sec >= 1300 ORDER BY total_duration_sec;

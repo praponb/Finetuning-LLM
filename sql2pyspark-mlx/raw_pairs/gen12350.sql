@@ -1,0 +1,1 @@
+SELECT CASE WHEN salary >= 136000 THEN 'HIGH' ELSE 'LOW' END AS salary_tier, COUNT(CASE WHEN level = 'L3' THEN 1 END) AS l3_count, SIZE(COLLECT_SET(job_title)) AS num_job_titles, MAX(salary) AS max_salary FROM employees GROUP BY ROLLUP (CASE WHEN salary >= 136000 THEN 'HIGH' ELSE 'LOW' END) HAVING l3_count > 1 ORDER BY l3_count;

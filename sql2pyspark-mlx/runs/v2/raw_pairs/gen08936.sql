@@ -1,0 +1,1 @@
+WITH ValidSubscriptions AS (SELECT *, TRIM(status) AS clean_status FROM subscriptions WHERE monthly_fee < 180), agg AS (SELECT customer_id, plan, SUM(monthly_fee) AS total_monthly_fee, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM ValidSubscriptions GROUP BY customer_id, plan) SELECT * FROM agg ORDER BY customer_id DESC, total_monthly_fee;

@@ -1,0 +1,1 @@
+SELECT session_id, SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) AS search_duration_sec, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events GROUP BY session_id ORDER BY search_duration_sec;

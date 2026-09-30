@@ -1,0 +1,1 @@
+SELECT s.browser, MAX(we.duration_sec) AS max_duration_sec, MAX(we.duration_sec) - MIN(we.duration_sec) AS duration_sec_range FROM web_events we RIGHT OUTER JOIN sessions s ON s.id = we.session_id GROUP BY s.browser

@@ -1,0 +1,1 @@
+WITH payments_by_order AS (SELECT order_id, COUNT(*) payment_count, COUNT(CASE WHEN method = 'card' THEN 1 END) card_count FROM payments WHERE method = 'bank_transfer' GROUP BY order_id) SELECT o.shipping_fee, o.discount, pbo.payment_count, pbo.card_count FROM orders o INNER JOIN payments_by_order pbo ON o.id = pbo.order_id ORDER BY o.discount DESC;

@@ -1,0 +1,1 @@
+SELECT t.id, t.merchant, a.account_type, c.credit_limit FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id JOIN customers c ON c.id = a.customer_id WHERE t.account_id IN (2, 21, 36, 37) OR a.status IN ('CLOSED', 'FROZEN');

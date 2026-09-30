@@ -1,0 +1,1 @@
+select transactions.id, transactions.txn_time, transactions.txn_type from transactions where transactions.amount >= 3400 and transactions.account_id not in (select id from accounts where customer_id in (3, 18)) order by id, 2;

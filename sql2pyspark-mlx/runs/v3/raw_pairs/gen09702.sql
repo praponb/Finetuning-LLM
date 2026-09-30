@@ -1,0 +1,1 @@
+SELECT c.segment, YEAR(c.signup_date) AS signup_year, COUNT(*) AS num_order_items FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id GROUP BY c.segment, YEAR(c.signup_date) HAVING COUNT(*) >= 2 ORDER BY c.segment

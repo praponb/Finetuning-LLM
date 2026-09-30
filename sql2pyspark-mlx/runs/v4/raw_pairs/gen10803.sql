@@ -1,0 +1,1 @@
+SELECT s.id, s.opened_date, s.store_name, t.stddev_units, t.max_units FROM stores s LEFT OUTER JOIN (SELECT store_id, ROUND(STDDEV(units), 2) stddev_units, MAX(units) max_units FROM store_sales WHERE product_id IN (1, 5, 7, 10) GROUP BY store_id) t ON s.id = t.store_id ORDER BY store_name

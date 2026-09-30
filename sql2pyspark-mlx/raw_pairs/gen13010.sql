@@ -1,0 +1,1 @@
+SELECT id, method, paid_at, amount, status, SUM(amount) OVER (PARTITION BY method ORDER BY paid_at, id) AS running_amount, RANK() OVER (PARTITION BY status, method ORDER BY paid_at) AS rnk FROM payments WHERE method NOT IN ('paypal', 'cash') ORDER BY method

@@ -1,0 +1,1 @@
+SELECT id, order_id, method, status, SUM(amount) OVER (PARTITION BY TO_DATE(paid_at), method ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, RANK() OVER (ORDER BY amount NULLS FIRST) AS amount_rank, LEAD(amount, 1) OVER (PARTITION BY method, order_id ORDER BY amount, id) AS next_amount FROM payments

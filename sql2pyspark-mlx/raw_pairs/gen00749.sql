@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, c.country, MIN(p.paid_at) AS min_paid_at FROM payments p LEFT JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id GROUP BY DATE_TRUNC('MONTH', c.signup_date), c.country ORDER BY country

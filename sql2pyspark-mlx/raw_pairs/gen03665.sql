@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, COUNT(*) num_products, MIN(cost) min_cost FROM products GROUP BY supplier_id) SELECT suppliers.id, suppliers.country, suppliers.rating, supplier_totals.num_products, supplier_totals.min_cost FROM suppliers LEFT JOIN supplier_totals ON suppliers.id = supplier_totals.supplier_id;

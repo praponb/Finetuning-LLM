@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, DENSE_RANK() OVER (PARTITION BY browser ORDER BY started_at DESC) rn FROM sessions WHERE customer_id IS NOT NULL) SELECT id, browser, started_at, device FROM ranked WHERE rn <= 3 ORDER BY id;

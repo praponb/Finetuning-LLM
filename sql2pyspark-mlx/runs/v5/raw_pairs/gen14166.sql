@@ -1,0 +1,1 @@
+select id, amount, account_id, txn_type, case when txn_type = 'CREDIT' then 1 else 0 end as is_credit from transactions where to_date(txn_time) >= '2023-04-27' and is_flagged order by id, is_credit desc limit 50

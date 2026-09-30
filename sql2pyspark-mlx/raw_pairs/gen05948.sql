@@ -1,0 +1,1 @@
+select opened_month, min_sqft, berlin_count from (select date_format(opened_date, 'yyyy-MM') as opened_month, min(sqft) as min_sqft, sum(case when city = 'Berlin' then 1 else 0 end) as berlin_count from stores group by date_format(opened_date, 'yyyy-MM')) as s where min_sqft < 8500;

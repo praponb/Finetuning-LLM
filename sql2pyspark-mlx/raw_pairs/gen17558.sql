@@ -1,0 +1,1 @@
+select id, order_id, quantity, unit_price, ntile(4) over (partition by order_id, product_id order by unit_price, id) as unit_price_bucket, first_value(unit_price, true) over (order by unit_price, id rows between unbounded preceding and current row) as first_known_unit_price, lag(quantity, 1) over (partition by order_id order by unit_price, id) as prev_quantity from order_items

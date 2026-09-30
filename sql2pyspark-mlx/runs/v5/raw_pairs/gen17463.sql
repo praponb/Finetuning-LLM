@@ -1,0 +1,1 @@
+SELECT QUARTER(txn_time) AS txn_quarter, ROUND(AVG(amount), 2) AS avg_amount, MAX(txn_time) AS latest_txn_time FROM transactions WHERE merchant = 'Grab' AND txn_time < '2025-10-10' GROUP BY QUARTER(txn_time) HAVING ROUND(AVG(amount), 2) >= 67 ORDER BY avg_amount

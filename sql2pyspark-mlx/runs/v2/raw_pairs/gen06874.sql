@@ -1,0 +1,1 @@
+SELECT carrier, pct_fedex, stddev_cost FROM (SELECT carrier, ROUND((100 * SUM(CASE WHEN carrier = 'FedEx' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fedex, ROUND(STDDEV(cost), 2) AS stddev_cost FROM shipments WHERE shipped_date < '2025-01-14' GROUP BY carrier) AS x WHERE pct_fedex >= 32 ORDER BY pct_fedex DESC, carrier;

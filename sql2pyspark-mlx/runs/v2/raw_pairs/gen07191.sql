@@ -1,0 +1,1 @@
+select country, sum(case when country = 'UK' then rating else 0 end) uk_rating from suppliers where city in ('Tokyo', 'New York') group by 1 having sum(case when country = 'UK' then rating else 0 end) > 25;

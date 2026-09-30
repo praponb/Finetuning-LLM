@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, COUNT(ss.units) AS units_count, MAX(ss.units) AS max_units FROM store_sales ss JOIN products p ON ss.product_id = p.id GROUP BY DATE_FORMAT(p.launch_date, 'yyyy-MM') ORDER BY launch_month DESC

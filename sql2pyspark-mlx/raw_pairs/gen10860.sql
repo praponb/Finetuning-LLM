@@ -1,0 +1,1 @@
+SELECT opened_date, 'store' AS record_type FROM stores WHERE opened_date IS NOT NULL UNION ALL SELECT end_date, 'subscription' AS record_type FROM subscriptions WHERE end_date IS NOT NULL ORDER BY opened_date;

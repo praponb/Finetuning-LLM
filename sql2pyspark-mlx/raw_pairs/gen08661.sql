@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT city, CASE WHEN sqft >= 18047 THEN 'high' WHEN sqft >= 2618 THEN 'mid' ELSE 'low' END AS sqft_bucket, MAX(sqft) - MIN(sqft) AS sqft_range, AVG(sqft) AS avg_sqft FROM stores GROUP BY city, CASE WHEN sqft >= 18047 THEN 'high' WHEN sqft >= 2618 THEN 'mid' ELSE 'low' END) AS agg WHERE sqft_range < 26;

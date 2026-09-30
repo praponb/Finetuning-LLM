@@ -1,0 +1,1 @@
+select * from (select date_format(event_time, 'yyyy-MM') as event_month, page, round((100 * sum(case when event_type = 'add_to_cart' then 1 else 0 end)) / count(*), 1) as pct_add_to_cart from web_events where event_time < '2024-07-30' group by date_format(event_time, 'yyyy-MM'), page) as t where pct_add_to_cart >= 67 order by event_month, page limit 5;

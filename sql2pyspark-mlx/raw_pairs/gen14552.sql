@@ -1,0 +1,1 @@
+SELECT product_id, YEAR(last_restock) AS last_restock_year, MAX(quantity) AS max_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE quantity BETWEEN 143 AND 160 GROUP BY product_id, YEAR(last_restock) HAVING MAX(quantity) - MIN(quantity) > 57 ORDER BY last_restock_year DESC;

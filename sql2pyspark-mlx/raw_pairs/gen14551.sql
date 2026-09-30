@@ -1,0 +1,1 @@
+SELECT d.country, d.city, e.category, COUNT(*) AS num_rows, AVG(e.cost) AS avg_cost, MAX(e.stock_qty) AS max_stock_qty FROM products e INNER JOIN suppliers d ON e.supplier_id = d.id GROUP BY d.country, d.city, e.category ORDER BY num_rows NULLS FIRST

@@ -1,0 +1,1 @@
+select id, store_id, product_id, units, sale_date, row_number() over (partition by store_id, product_id order by units, id) as units_row, max(units) over (partition by year(sale_date), product_id) as sale_date_year_max_units from store_sales where revenue >= 2500

@@ -1,0 +1,1 @@
+SELECT CASE WHEN discount >= 0.41 THEN 'high' WHEN discount >= 0.07 THEN 'mid' ELSE 'low' END AS discount_bucket, MAX(discount) - MIN(discount) AS discount_range, ROUND(AVG(discount), 2) AS avg_discount FROM orders GROUP BY CASE WHEN discount >= 0.41 THEN 'high' WHEN discount >= 0.07 THEN 'mid' ELSE 'low' END

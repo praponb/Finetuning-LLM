@@ -1,0 +1,1 @@
+WITH with_dims AS (SELECT a.*, d.location FROM employees a LEFT JOIN departments d ON a.dept_id = d.id) SELECT s.id, s.full_name, s.email, s.dept_id, s.manager_id, s.job_title, s.salary, s.is_remote, s.level, (SELECT SUM(e2.salary) FROM employees e2 WHERE e2.dept_id = s.dept_id) AS sum_employee_salary FROM with_dims s ORDER BY job_title;

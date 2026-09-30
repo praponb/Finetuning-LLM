@@ -1,0 +1,1 @@
+SELECT CASE WHEN location IN ('Chiang Mai', 'Berlin') THEN 'priority' ELSE 'other' END AS location_group, MIN(budget) AS min_budget FROM departments GROUP BY CASE WHEN location IN ('Chiang Mai', 'Berlin') THEN 'priority' ELSE 'other' END;

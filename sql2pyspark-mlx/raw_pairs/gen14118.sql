@@ -1,0 +1,1 @@
+SELECT departments.dept_name, MAX(employees.hire_date) AS latest_hire_date, ROUND(STDDEV(employees.salary), 2) AS stddev_salary FROM employees INNER JOIN departments ON departments.id = employees.dept_id GROUP BY departments.dept_name HAVING ROUND(STDDEV(employees.salary), 2) >= 25

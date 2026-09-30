@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.store_name, s.region FROM stores s WHERE s.region IN ('West', 'East') AND NOT EXISTS (SELECT 1 FROM store_sales ss WHERE ss.store_id = s.id AND ss.product_id IN (6, 10)) ORDER BY s.id

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT account_type, SUM(CASE WHEN status = 'FROZEN' THEN balance ELSE 0 END) frozen_balance, SUM(balance) total_balance FROM accounts GROUP BY account_type) sub WHERE frozen_balance >= 66 ORDER BY frozen_balance, account_type LIMIT 10

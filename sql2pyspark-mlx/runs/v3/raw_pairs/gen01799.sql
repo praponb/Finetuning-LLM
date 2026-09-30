@@ -1,0 +1,1 @@
+with store_sales_by_store as (select store_id, max(units) as max_units from store_sales group by store_id) select s.id, s.city, s.region, ssbs.max_units from stores s left outer join store_sales_by_store ssbs on s.id = ssbs.store_id order by s.region;

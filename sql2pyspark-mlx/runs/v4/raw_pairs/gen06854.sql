@@ -1,0 +1,1 @@
+SELECT d.dept_name, COUNT(e.id) AS employee_count, ROUND((100 * SUM(CASE WHEN e.job_title = 'Director' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_director FROM departments d LEFT JOIN employees e ON e.dept_id = d.id WHERE e.level = 'L3' GROUP BY d.dept_name ORDER BY pct_director DESC, d.dept_name

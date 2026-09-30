@@ -1,0 +1,1 @@
+SELECT id, location, budget, COALESCE(dept_name, 'N/A') AS dept_name_filled, CONCAT(dept_name, ', ', location) AS dept_name_location FROM departments WHERE location NOT IN ('London', 'Bangkok', 'New York');

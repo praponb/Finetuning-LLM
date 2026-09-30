@@ -1,0 +1,1 @@
+SELECT p.brand, COUNT(ss.id) store_sale_count, COUNT(ss.revenue) revenue_count, COUNT(DISTINCT ss.revenue) unique_stores FROM products p LEFT JOIN store_sales ss ON ss.product_id = p.id WHERE LENGTH(p.product_name) < 14 GROUP BY p.brand

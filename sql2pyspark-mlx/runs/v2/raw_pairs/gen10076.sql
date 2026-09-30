@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', last_restock) AS last_restock_month, COUNT(quantity) AS quantity_count, MAX(quantity) AS max_quantity FROM inventory WHERE store_id = 4 GROUP BY DATE_TRUNC('MONTH', last_restock)

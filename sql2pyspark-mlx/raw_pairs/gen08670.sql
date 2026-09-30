@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, effective_from, currency, EXPLODE_OUTER(tier_limits) AS tier_value FROM price_tiers) SELECT id, plan, effective_from, tier_value FROM lines ORDER BY tier_value ASC NULLS LAST;

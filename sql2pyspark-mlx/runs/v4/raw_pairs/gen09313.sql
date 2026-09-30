@@ -1,0 +1,1 @@
+SELECT id, country, rating, DENSE_RANK() OVER (PARTITION BY country ORDER BY rating DESC) AS rating_dense_rank, DENSE_RANK() OVER (ORDER BY rating DESC) AS dense_rnk FROM suppliers WHERE rating < 2.4 ORDER BY country;

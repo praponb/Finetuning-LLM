@@ -1,0 +1,1 @@
+SELECT id, customer_id, amount, order_date, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY amount DESC) AS amount_dense_rank, LAG(amount, 1) OVER (PARTITION BY customer_id ORDER BY order_date, id) AS prev_amount FROM orders WHERE store_id IS NULL

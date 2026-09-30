@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', start_date) start_month, SORT_ARRAY(COLLECT_SET(status)) status_list FROM subscriptions WHERE end_date <= '2024-02-01' GROUP BY DATE_TRUNC('MONTH', start_date) ORDER BY start_month DESC LIMIT 10

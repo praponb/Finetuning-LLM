@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MAX(units) AS max_units, MAX(revenue) AS max_revenue FROM store_sales GROUP BY product_id) SELECT p.id, p.supplier_id, p.launch_date, pt.max_units, pt.max_revenue FROM products p INNER JOIN product_totals pt ON p.id = pt.product_id WHERE pt.max_units > 18 ORDER BY supplier_id DESC, launch_date ASC, id ASC LIMIT 10

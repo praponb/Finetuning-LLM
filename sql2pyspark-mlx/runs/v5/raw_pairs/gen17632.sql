@@ -1,0 +1,1 @@
+SELECT d.location, CASE WHEN d.budget >= 3201000 THEN 'high' WHEN d.budget >= 1306000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(DISTINCT e.salary) AS unique_levels FROM employees e JOIN departments d ON e.dept_id = d.id GROUP BY d.location, CASE WHEN d.budget >= 3201000 THEN 'high' WHEN d.budget >= 1306000 THEN 'mid' ELSE 'low' END ORDER BY unique_levels ASC;

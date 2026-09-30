@@ -1,0 +1,1 @@
+SELECT id, order_id, product_id, quantity, ROUND(unit_price / SUM(unit_price) OVER (PARTITION BY product_id), 4) AS unit_price_share, LAG(quantity, 1) OVER (PARTITION BY product_id, order_id ORDER BY unit_price, id) AS prev_quantity, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity, id) AS seq_no FROM order_items;

@@ -1,0 +1,1 @@
+SELECT a.id, a.status, a.balance, a.account_type FROM accounts a WHERE a.balance <= 33000 AND a.customer_id NOT IN (SELECT id FROM customers WHERE segment = 'SMB') ORDER BY a.balance DESC, account_type DESC, id ASC LIMIT 5;

@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, plan, effective_from, currency, EXPLODE(discounts) AS tier_value FROM price_tiers) SELECT id, plan, effective_from, currency, tier_value, CASE WHEN currency RLIKE '^(EUR|USD)$' THEN 'OTHER_ZONE' WHEN currency RLIKE '^(THB)$' THEN 'PRIORITY' ELSE 'EXTENDED' END AS currency_zone FROM exploded ORDER BY id NULLS FIRST;

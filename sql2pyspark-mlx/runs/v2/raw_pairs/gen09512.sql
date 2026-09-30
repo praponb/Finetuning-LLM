@@ -1,0 +1,1 @@
+with supplier_summary as (select supplier_id, avg(stock_qty) as avg_stock_qty, max(stock_qty) as max_stock_qty from products where product_name is not null group by supplier_id) select s.rating, ss.avg_stock_qty, ss.max_stock_qty from suppliers s left join supplier_summary ss on s.id = ss.supplier_id where ss.max_stock_qty > 400 order by ss.avg_stock_qty desc;

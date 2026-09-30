@@ -1,0 +1,1 @@
+select job_title, is_remote, max(salary) - min(salary) as salary_range, min(hire_date) as first_hire_date, round(avg(salary), 2) as avg_salary from employees where manager_id in (9, 18, 21) group by job_title, is_remote

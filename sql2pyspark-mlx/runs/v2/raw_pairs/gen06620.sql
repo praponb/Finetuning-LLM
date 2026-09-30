@@ -1,0 +1,1 @@
+SELECT oi.order_id, p.launch_date, o.status, CASE WHEN p.brand = 'Acme' THEN 1 ELSE 0 END AS is_acme FROM order_items oi JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE oi.product_id = 24

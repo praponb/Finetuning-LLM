@@ -1,0 +1,1 @@
+SELECT budget, ROUND(budget, 0) AS budget_rounded, TRIM(location) AS clean_location FROM departments WHERE dept_name = 'HR' AND (location IN ('Bangkok', 'Berlin') OR budget <= 3764000) ORDER BY budget DESC

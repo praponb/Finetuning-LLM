@@ -1,0 +1,1 @@
+SELECT launch_year, cost_count, brand_list FROM (SELECT YEAR(launch_date) AS launch_year, COUNT(cost) AS cost_count, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list FROM products WHERE brand IN ('Globex', 'Umbrella') GROUP BY YEAR(launch_date)) AS t WHERE cost_count > 8

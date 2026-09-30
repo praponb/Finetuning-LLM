@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date DESC, id) AS dedup_rank FROM employees) t WHERE dedup_rank = 1) SELECT id, full_name, email, dept_id, manager_id, salary, hire_date, is_remote, level FROM deduped;

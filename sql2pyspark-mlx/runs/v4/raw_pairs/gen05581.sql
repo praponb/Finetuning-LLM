@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, COALESCE(budget, 0) budget_filled FROM departments WHERE budget > 2909000) SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND c.salary BETWEEN 87000 AND 88000)

@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, COUNT(CASE WHEN txn_type = 'FEE' THEN 1 END) AS fee_count FROM transactions GROUP BY account_id) SELECT a.id, a.balance, a.opened_date, at.fee_count FROM accounts a JOIN account_totals at ON a.id = at.account_id WHERE at.fee_count >= 8

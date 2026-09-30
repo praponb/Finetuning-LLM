@@ -1,0 +1,1 @@
+select quarter(launch_date) as launch_quarter, round(avg(cost), 2) as avg_cost, round((100 * sum(case when category = 'Home' then 1 else 0 end)) / count(*), 1) as pct_home from products group by quarter(launch_date);

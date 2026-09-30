@@ -1,0 +1,1 @@
+SELECT p.account_type, src.merchant, COUNT(*) AS rows_total, MIN(src.amount) AS min_amount FROM transactions src INNER JOIN accounts p ON src.account_id = p.id GROUP BY GROUPING SETS ((p.account_type, src.merchant), (p.account_type)) ORDER BY rows_total DESC NULLS FIRST

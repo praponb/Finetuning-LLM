@@ -1,0 +1,1 @@
+SELECT segment, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(segment))) AS segment_values, AVG(credit_limit) AS avg_credit_limit FROM customers WHERE age BETWEEN 38 AND 44 AND email IS NOT NULL GROUP BY segment ORDER BY 2, segment LIMIT 10;

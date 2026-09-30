@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, oi.order_id, o.shipping_fee, o.store_id, p.cost, UPPER(TRIM(p.product_name)) AS product_name_normalized FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id LEFT JOIN products p ON oi.product_id = p.id ORDER BY id DESC, o.shipping_fee DESC

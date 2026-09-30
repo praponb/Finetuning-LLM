@@ -1,0 +1,1 @@
+WITH TopSubscriptions AS (SELECT id, plan, end_date, monthly_fee, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY end_date DESC, id) AS rnk FROM subscriptions) SELECT * FROM TopSubscriptions WHERE rnk <= 5

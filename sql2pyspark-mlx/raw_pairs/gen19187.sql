@@ -1,0 +1,1 @@
+SELECT method, CASE WHEN status IN ('REFUNDED', 'SUCCESS') THEN 'priority' ELSE 'other' END AS status_group, SORT_ARRAY(COLLECT_SET(method)) AS method_list FROM payments GROUP BY 1, 2 ORDER BY method;

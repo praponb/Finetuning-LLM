@@ -1,0 +1,1 @@
+with exploded as (select id, plan, effective_from, currency, element from price_tiers lateral view explode(discounts) e as element) select plan, effective_from, currency, max(element) over (partition by plan, currency) plan_max_element from exploded where effective_from > '2024-05-01'

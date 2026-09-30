@@ -1,0 +1,1 @@
+SELECT CASE WHEN status IN ('PAUSED', 'CANCELLED') THEN 'priority' ELSE 'other' END status_group, COUNT(monthly_fee) monthly_fee_count, SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END) premium_count FROM subscriptions GROUP BY 1;

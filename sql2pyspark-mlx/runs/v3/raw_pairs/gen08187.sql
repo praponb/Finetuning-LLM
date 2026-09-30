@@ -1,0 +1,1 @@
+SELECT CASE WHEN balance >= 63000 THEN 'high' WHEN balance >= 14000 THEN 'mid' ELSE 'low' END AS balance_bucket, account_type, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts WHERE customer_id IS NOT NULL AND account_type NOT IN ('CREDIT', 'CHECKING') GROUP BY CASE WHEN balance >= 63000 THEN 'high' WHEN balance >= 14000 THEN 'mid' ELSE 'low' END, account_type

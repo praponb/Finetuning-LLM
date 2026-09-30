@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, customer_id, started_at, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at, id) AS rnk FROM sessions) SELECT id, customer_id, started_at FROM ranked WHERE rnk = 1 ORDER BY started_at

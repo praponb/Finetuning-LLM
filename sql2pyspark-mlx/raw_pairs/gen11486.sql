@@ -1,0 +1,1 @@
+select month(opened_date) as opened_month, sum(case when account_type = 'CHECKING' then balance else 0 end) as checking_balance, sum(case when account_type = 'SAVINGS' then balance else 0 end) as savings_balance, min(balance) as min_balance from accounts group by opened_month order by savings_balance desc, opened_month limit 3

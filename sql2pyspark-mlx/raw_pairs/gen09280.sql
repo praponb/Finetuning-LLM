@@ -1,0 +1,1 @@
+SELECT store_sales.product_id, products.stock_qty, products.price, suppliers.rating, suppliers.city FROM store_sales LEFT JOIN products ON store_sales.product_id = products.id FULL OUTER JOIN suppliers ON suppliers.id = products.supplier_id

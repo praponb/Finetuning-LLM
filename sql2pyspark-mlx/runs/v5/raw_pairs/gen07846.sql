@@ -1,0 +1,1 @@
+SELECT e.level AS employee_level, e.job_title AS employee_job_title, a.job_title AS employee_job_title, COUNT(*) AS cnt, SUM(a.salary) AS total_salary, GROUPING_ID() AS gid FROM employees a JOIN employees e ON a.manager_id = e.id GROUP BY CUBE (e.level, e.job_title, a.job_title)

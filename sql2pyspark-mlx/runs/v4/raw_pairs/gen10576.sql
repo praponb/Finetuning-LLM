@@ -1,0 +1,1 @@
+SELECT id, order_id, MONTH(shipped_date) AS shipped_date_month, DATEDIFF(delivered_date, shipped_date) AS days_shipped_date_to_delivered_date FROM shipments WHERE order_id IN (1, 5) AND status != 'RETURNED' AND delivered_date BETWEEN '2023-10-01' AND '2024-06-01'

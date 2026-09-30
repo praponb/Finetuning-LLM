@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, SUM(CASE WHEN page = '/checkout' THEN 1 ELSE 0 END) AS checkout_count FROM web_events GROUP BY session_id) SELECT s.id, s.customer_id, s.country, ss.duration_sec_range, ss.checkout_count FROM sessions s LEFT JOIN session_stats ss ON s.id = ss.session_id

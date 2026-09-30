@@ -1,0 +1,1 @@
+WITH CustomerTotals AS (SELECT customer_id, MIN(started_at) AS first_started_at, COUNT(DISTINCT country) AS unique_countrys FROM sessions WHERE country = 'DE' GROUP BY customer_id) SELECT c.id, c.age, c.country, C.first_started_at, C.unique_countrys FROM customers c LEFT JOIN CustomerTotals C ON c.id = C.customer_id WHERE C.unique_countrys > 7

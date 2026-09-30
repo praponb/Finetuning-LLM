@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, oi.product_id, p.cost, s.city, s.country, LENGTH(s.city) AS city_length FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id;

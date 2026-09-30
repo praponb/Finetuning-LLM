@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, channel, promo_code, ends_on, discount_pct, UPPER(channel) AS channel_upper FROM promotions WHERE starts_on > DATE '2023-08-28' AND channel IS NOT NULL) SELECT * FROM (SELECT promo_code, channel, discount_pct FROM cleaned) src PIVOT (MAX(discount_pct) AS value_sum, COUNT(1) AS n FOR channel IN ('partner', 'mobile'))

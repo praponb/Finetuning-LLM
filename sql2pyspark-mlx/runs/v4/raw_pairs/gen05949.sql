@@ -1,0 +1,1 @@
+select s.city, date_format(s.opened_date, 'yyyy-MM') opened_month, round(stddev(o.amount), 2) stddev_amount from orders o full outer join stores s on s.id = o.store_id where s.store_name is not null group by s.city, date_format(s.opened_date, 'yyyy-MM') having round(stddev(o.amount), 2) >= 38 order by opened_month, stddev_amount

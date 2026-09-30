@@ -1,0 +1,1 @@
+select id, sale_date, product_id, units, store_id, last_value(store_id) over (partition by date_trunc('MONTH', sale_date), product_id order by units desc, id rows between unbounded preceding and unbounded following) last_store_id from store_sales

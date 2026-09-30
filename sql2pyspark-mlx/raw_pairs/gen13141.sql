@@ -1,0 +1,1 @@
+SELECT i.store_id, i.quantity, ss.sale_date, ss.store_id AS store_sale_store_id, ss.revenue * ss.units AS revenue_per_unit FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE NOT (i.store_id IN (3, 4, 6) AND i.store_id IN (4, 6));

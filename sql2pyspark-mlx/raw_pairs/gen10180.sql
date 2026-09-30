@@ -1,0 +1,1 @@
+SELECT store_sales.units, store_sales.store_id, products.stock_qty, products.product_name, suppliers.country FROM store_sales INNER JOIN products ON store_sales.product_id = products.id INNER JOIN suppliers ON products.supplier_id = suppliers.id;

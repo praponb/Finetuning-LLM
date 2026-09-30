@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, MAX(sale_date) AS last_sale_date, MAX(units) AS max_units FROM store_sales WHERE units BETWEEN 13 AND 16 GROUP BY store_id) SELECT s.id, s.opened_date, s.city, ss.last_sale_date, ss.max_units FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id;

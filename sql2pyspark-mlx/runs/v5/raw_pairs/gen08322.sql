@@ -1,0 +1,1 @@
+select status, min(opened_date) as min_opened_date, round((100 * sum(case when account_type = 'SAVINGS' then 1 else 0 end)) / count(*), 1) as pct_savings, max(balance) - min(balance) as balance_range from accounts where month(opened_date) in (1, 2, 3) and customer_id = 6 group by status;

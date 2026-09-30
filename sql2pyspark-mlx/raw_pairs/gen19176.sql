@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock DESC, id) AS pos FROM inventory WHERE last_restock BETWEEN '2023-12-03' AND '2025-02-01') SELECT id, store_id, last_restock FROM ranked WHERE pos <= 3 ORDER BY id DESC, store_id;

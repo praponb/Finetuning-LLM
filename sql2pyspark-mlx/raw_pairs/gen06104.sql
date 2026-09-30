@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, items, ship_to.country AS ship_country, ARRAY_CONTAINS(MAP_KEYS(attributes), 'weight_kg') AS has_weight_kg, COALESCE(attributes['device'], 'direct') AS device_or_default, AGGREGATE(items, 0D, (acc, x) -> acc + x.qty * x.price, acc -> ROUND(acc, 2)) AS items_total FROM carts

@@ -1,0 +1,1 @@
+with enriched as (select *, row_number() over (partition by customer_id, status order by end_date asc, id asc) as event_seq, first_value(monthly_fee) ignore nulls over (partition by status, customer_id order by monthly_fee asc, id asc rows between unbounded preceding and current row) as first_known_monthly_fee from subscriptions) select id, customer_id, plan from enriched

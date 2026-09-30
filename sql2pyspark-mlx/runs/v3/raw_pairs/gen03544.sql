@@ -1,0 +1,1 @@
+SELECT dept_name, pct_engineering FROM (SELECT dept_name, ROUND((100 * SUM(CASE WHEN dept_name = 'Engineering' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_engineering FROM departments GROUP BY dept_name) AS t WHERE pct_engineering > 74;

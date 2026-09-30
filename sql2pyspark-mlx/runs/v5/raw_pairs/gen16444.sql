@@ -1,0 +1,1 @@
+select suppliers.id, suppliers.supplier_name, suppliers.rating from suppliers where suppliers.rating between 2.3 and 4.1 and suppliers.id in (select supplier_id from products where stock_qty != 185) order by id asc, rating desc limit 1

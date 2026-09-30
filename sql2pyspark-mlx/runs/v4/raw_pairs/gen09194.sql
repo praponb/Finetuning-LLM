@@ -1,0 +1,1 @@
+with product_totals as (select product_id, sum(unit_price * quantity) revenue, count(*) order_item_count from order_items where unit_price < 190 group by product_id) select p.id, p.launch_date, p.supplier_id, pt.revenue, pt.order_item_count from products p join product_totals pt on p.id = pt.product_id where pt.order_item_count >= 9

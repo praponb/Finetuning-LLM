@@ -1,0 +1,1 @@
+WITH store_sales_by_product AS (SELECT product_id, COUNT(revenue) AS revenue_count, MAX(units) AS max_units FROM store_sales WHERE sale_date > '2024-02-01' GROUP BY product_id) SELECT p.brand, p.launch_date, ssbp.revenue_count, ssbp.max_units FROM products p JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id WHERE ssbp.max_units > 28 ORDER BY launch_date;

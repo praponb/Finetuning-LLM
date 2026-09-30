@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, MAX(duration_sec) AS max_duration_sec FROM web_events WHERE duration_sec < 439 GROUP BY session_id) SELECT s.id, s.started_at, ss.max_duration_sec FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id WHERE ss.max_duration_sec >= 280 ORDER BY id DESC, started_at

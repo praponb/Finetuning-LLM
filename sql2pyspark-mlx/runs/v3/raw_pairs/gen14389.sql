@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', stores.opened_date) AS opened_month, stores.region, COUNT(store_sales.units) AS units_count FROM store_sales LEFT JOIN stores ON stores.id = store_sales.store_id GROUP BY DATE_TRUNC('MONTH', stores.opened_date), stores.region;

@@ -1,0 +1,1 @@
+SELECT e.level employee_level, e.hire_date employee_hire_date, e.job_title employee_job_title, m.salary manager_salary, m.is_remote manager_is_remote FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE e.salary < 80000

@@ -1,0 +1,1 @@
+SELECT i.store_id, i.last_restock, i.product_id, ss.units, COALESCE(i.quantity, 0) AS quantity_filled FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id = 1 AND i.quantity < 149;

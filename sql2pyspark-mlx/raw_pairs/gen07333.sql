@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, MAX(cost) - MIN(cost) AS cost_range, MAX(stock_qty) AS max_stock_qty FROM products GROUP BY supplier_id) SELECT s.city, pbs.cost_range, pbs.max_stock_qty FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY pbs.cost_range

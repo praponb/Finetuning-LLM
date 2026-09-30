@@ -1,0 +1,1 @@
+select s.id, s.delivered_date, o.discount, o.customer_id, st.city, st.sqft, date_add(o.order_date, 75) as order_date_plus_75d from shipments s left join orders o on s.order_id = o.id inner join stores st on st.id = o.store_id where st.region in ('South', 'West', 'Central') or st.city = 'Tokyo'

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, MIN(sale_date) AS min_sale_date, MAX(revenue) AS max_revenue, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM') HAVING stddev_revenue < 32;

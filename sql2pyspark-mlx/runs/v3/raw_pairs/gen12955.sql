@@ -1,0 +1,1 @@
+SELECT c.id, c.name, COUNT(s.id) AS subscription_count, MAX(s.monthly_fee) AS max_monthly_fee FROM customers c LEFT JOIN subscriptions s ON s.customer_id = c.id GROUP BY c.id, c.name HAVING MAX(s.monthly_fee) > 190 ORDER BY subscription_count, max_monthly_fee, id, name LIMIT 3

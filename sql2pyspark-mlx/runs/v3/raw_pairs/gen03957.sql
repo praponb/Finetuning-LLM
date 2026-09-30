@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, COUNT(quantity) AS quantity_count, AVG(quantity) AS avg_quantity FROM inventory GROUP BY store_id) SELECT s.id, s.store_name, s.region, ss.quantity_count, ss.avg_quantity FROM stores s LEFT OUTER JOIN store_summary ss ON s.id = ss.store_id WHERE ss.avg_quantity > 160

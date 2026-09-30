@@ -1,0 +1,1 @@
+select id, order_id, delivered_date, concat(status, '/', carrier) as status_carrier from shipments where (delivered_date between '2024-01-08' and '2025-01-01' and order_id is not null) or year(delivered_date) >= 2025

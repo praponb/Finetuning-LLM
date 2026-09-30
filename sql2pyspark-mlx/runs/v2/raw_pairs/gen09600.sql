@@ -1,0 +1,1 @@
+select id, product_id, units, sale_date, revenue, round(units / sum(units) over (partition by product_id), 3) as units_share, lead(revenue, 2) over (partition by product_id order by sale_date, id) as next_revenue from store_sales where sale_date between '2024-01-12' and '2024-04-01'

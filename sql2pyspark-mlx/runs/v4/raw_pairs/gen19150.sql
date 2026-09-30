@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(*) AS cnt, SUM(ss.revenue) AS total_revenue FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON p.id = ss.product_id WHERE p.stock_qty < 367 GROUP BY p.category ORDER BY category DESC LIMIT 5;

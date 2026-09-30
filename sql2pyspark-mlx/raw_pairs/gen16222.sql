@@ -1,0 +1,1 @@
+with product_totals as (select product_id, count(distinct units) unique_stores, round(stddev(units), 2) stddev_units from store_sales group by product_id) select p.id, p.supplier_id, p.launch_date, pt.unique_stores, pt.stddev_units from products p left join product_totals pt on p.id = pt.product_id

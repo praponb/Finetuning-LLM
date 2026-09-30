@@ -1,0 +1,1 @@
+SELECT id, store_id, sale_date, units, ROUND(AVG(units) OVER (PARTITION BY store_id ORDER BY sale_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS units_moving_avg_4 FROM store_sales WHERE revenue < 2700 ORDER BY sale_date

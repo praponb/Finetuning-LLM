@@ -1,0 +1,1 @@
+select id, txn_type, txn_time, amount, round(avg(amount) over (partition by txn_type order by txn_time, id rows between 3 preceding and current row), 2) as amount_moving_avg_4 from transactions where account_id = 9

@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_time, t.txn_type, t.account_id, a.status FROM transactions t RIGHT OUTER JOIN accounts a ON t.account_id = a.id WHERE a.balance >= 31000 AND a.opened_date <= '2024-06-28' ORDER BY t.account_id ASC;

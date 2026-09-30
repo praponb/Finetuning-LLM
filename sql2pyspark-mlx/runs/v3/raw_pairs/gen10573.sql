@@ -1,0 +1,1 @@
+SELECT s.id, s.cost, s.status, o.store_id, c.segment FROM shipments s INNER JOIN orders o ON o.id = s.order_id FULL OUTER JOIN customers c ON o.customer_id = c.id WHERE NOT (o.status NOT IN ('PENDING', 'RETURNED', 'COMPLETED') OR o.channel IS NOT NULL);

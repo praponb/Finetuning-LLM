@@ -1,0 +1,1 @@
+SELECT emp.full_name AS employee_full_name, mgr.dept_id AS manager_dept_id, mgr.is_remote AS manager_is_remote, mgr.full_name AS manager_full_name FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.full_name IS NOT NULL;

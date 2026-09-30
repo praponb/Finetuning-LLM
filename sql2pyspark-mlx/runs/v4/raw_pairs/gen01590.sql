@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, COUNT(DISTINCT balance) AS unique_account_types, MAX(opened_date) AS latest_opened_date FROM accounts WHERE balance BETWEEN 49000 AND 50000 GROUP BY customer_id) SELECT c.is_active, ct.unique_account_types, ct.latest_opened_date FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id

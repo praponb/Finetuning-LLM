@@ -1,0 +1,1 @@
+SELECT account_type, CASE WHEN YEAR(opened_date) < 2024 THEN 'before_2024' WHEN YEAR(opened_date) = 2024 THEN '2024' ELSE 'after_2024' END AS opened_cohort, SUM(balance) AS total_balance, COUNT(DISTINCT balance) AS unique_account_types FROM accounts WHERE NOT (balance >= 18000 AND customer_id IN (11, 14, 27)) GROUP BY 1, 2 ORDER BY account_type, opened_cohort LIMIT 5

@@ -1,0 +1,1 @@
+SELECT p.brand, AVG(i.quantity) AS avg_quantity, MIN(i.last_restock) AS min_last_restock FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON s.id = i.store_id GROUP BY p.brand

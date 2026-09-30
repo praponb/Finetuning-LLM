@@ -1,0 +1,1 @@
+SELECT a.id, a.opened_date, a.account_type, a.status FROM accounts a WHERE a.status = 'CLOSED' AND a.customer_id NOT IN (SELECT id FROM customers WHERE signup_date >= '2025-04-01') ORDER BY a.id DESC, a.account_type

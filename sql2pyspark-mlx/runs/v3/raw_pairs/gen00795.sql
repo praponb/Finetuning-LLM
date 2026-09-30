@@ -1,0 +1,1 @@
+SELECT id, dept_name, location, budget, LAG(budget, 1) OVER (PARTITION BY dept_name, location ORDER BY budget, id) AS prev_budget, NTILE(4) OVER (PARTITION BY location ORDER BY budget DESC, id) AS bucket FROM departments

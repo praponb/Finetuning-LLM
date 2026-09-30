@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT method, COUNT(CASE WHEN status = 'REFUNDED' THEN 1 END) AS refunded_count, MAX(amount) - MIN(amount) AS amount_range FROM payments GROUP BY method) AS t WHERE refunded_count >= 6 ORDER BY method;

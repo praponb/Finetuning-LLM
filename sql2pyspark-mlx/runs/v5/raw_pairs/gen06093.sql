@@ -1,0 +1,1 @@
+SELECT o.status, o.channel, COUNT(p.amount) AS amount_count, COUNT(CASE WHEN p.status = 'FAILED' THEN 1 END) AS failed_count FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id LEFT OUTER JOIN customers c ON o.customer_id = c.id GROUP BY o.status, o.channel;

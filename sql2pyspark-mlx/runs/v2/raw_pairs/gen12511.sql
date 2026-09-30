@@ -1,0 +1,1 @@
+SELECT products.supplier_id, COUNT(*) AS cnt FROM order_items LEFT OUTER JOIN products ON products.id = order_items.product_id JOIN orders ON order_items.order_id = orders.id WHERE orders.customer_id = 18 GROUP BY products.supplier_id HAVING cnt > 3 ORDER BY 2

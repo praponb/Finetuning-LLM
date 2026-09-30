@@ -1,0 +1,1 @@
+SELECT id, carrier, shipped_date, order_id, cost, DENSE_RANK() OVER (PARTITION BY carrier ORDER BY shipped_date DESC) AS shipped_date_dense_rank, AVG(cost) OVER (PARTITION BY order_id) AS order_id_avg_cost FROM shipments ORDER BY order_id_avg_cost ASC;

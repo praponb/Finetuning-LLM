@@ -1,0 +1,1 @@
+SELECT status, DATE_FORMAT(delivered_date, 'yyyy-MM') delivered_month, COUNT(CASE WHEN status = 'LOST' THEN 1 END) lost_count, SORT_ARRAY(COLLECT_SET(carrier)) carrier_list FROM shipments GROUP BY status, DATE_FORMAT(delivered_date, 'yyyy-MM')

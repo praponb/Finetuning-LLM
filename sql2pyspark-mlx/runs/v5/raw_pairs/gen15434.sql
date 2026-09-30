@@ -1,0 +1,1 @@
+SELECT id, customer_id, monthly_fee, plan, LAST_VALUE(plan) OVER (PARTITION BY customer_id ORDER BY monthly_fee DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_plan FROM subscriptions;

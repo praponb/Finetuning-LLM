@@ -1,0 +1,1 @@
+SELECT product_id, SUM(quantity) AS total_quantity, SUM(SUM(quantity)) OVER (ORDER BY product_id) AS cumulative_quantity FROM inventory WHERE quantity IS NOT NULL GROUP BY product_id ORDER BY cumulative_quantity DESC, product_id DESC

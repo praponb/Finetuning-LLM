@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM inventory QUALIFY ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_restock DESC NULLS LAST, id) = 1) SELECT id, store_id, product_id, quantity, last_restock FROM deduped ORDER BY store_id DESC;

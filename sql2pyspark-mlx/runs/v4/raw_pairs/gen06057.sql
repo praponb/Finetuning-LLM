@@ -1,0 +1,1 @@
+WITH accounts_by_customer AS (SELECT customer_id, MAX(opened_date) AS last_opened_date, MIN(opened_date) AS first_opened_date FROM accounts GROUP BY customer_id) SELECT customers.name, accounts_by_customer.last_opened_date, accounts_by_customer.first_opened_date FROM customers INNER JOIN accounts_by_customer ON customers.id = accounts_by_customer.customer_id;

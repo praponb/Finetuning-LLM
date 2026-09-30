@@ -1,0 +1,1 @@
+SELECT txn_type, CASE WHEN merchant IN ('Amazon', 'Shell') THEN 'Priority' ELSE 'Other' END merchant_group FROM transactions WHERE NOT (amount IS NOT NULL AND account_id IN (8, 23, 29)) ORDER BY txn_type;

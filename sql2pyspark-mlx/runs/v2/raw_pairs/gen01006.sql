@@ -1,0 +1,1 @@
+SELECT event_type, COUNT(*) AS row_count, AVG(duration_sec) AS avg_duration_sec, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events WHERE HOUR(event_time) BETWEEN 7 AND 15 AND session_id IN (6, 15, 31) AND page IN ('/cart', '/search') GROUP BY event_type ORDER BY avg_duration_sec DESC, event_type LIMIT 20;

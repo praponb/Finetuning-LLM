@@ -1,0 +1,1 @@
+SELECT a.id, a.account_type, COUNT(t.id) AS transaction_count, ROUND(STDDEV(t.amount), 2) AS stddev_amount, COUNT(DISTINCT t.amount) AS unique_txn_types FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id WHERE a.account_type = 'LOAN' GROUP BY a.id, a.account_type ORDER BY unique_txn_types DESC

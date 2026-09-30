@@ -1,0 +1,1 @@
+SELECT job_title_group, l5_count FROM (SELECT CASE WHEN job_title IN ('Designer', 'Intern') THEN 'priority' ELSE 'other' END AS job_title_group, SUM(CASE WHEN level = 'L5' THEN 1 ELSE 0 END) AS l5_count FROM employees WHERE salary BETWEEN 75000 AND 112000 GROUP BY CASE WHEN job_title IN ('Designer', 'Intern') THEN 'priority' ELSE 'other' END) AS agg WHERE l5_count > 64

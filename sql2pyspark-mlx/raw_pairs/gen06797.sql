@@ -1,0 +1,1 @@
+with order_summary as (select order_id, round(stddev(unit_price), 2) as stddev_unit_price, count(quantity) as quantity_count from order_items where quantity <= 5 group by order_id) select o.discount, o.customer_id, os.stddev_unit_price, os.quantity_count from orders o inner join order_summary os on o.id = os.order_id;

@@ -1,0 +1,1 @@
+SELECT store_id, ROUND(AVG(units), 2) AS avg_units, COUNT(*) AS total_count, MIN(sale_date) AS first_sale_date FROM store_sales WHERE units <= 11 AND units = 30 AND product_id IN (1, 9) GROUP BY store_id;

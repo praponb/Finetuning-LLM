@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4429000 THEN 'high' WHEN budget >= 1420000 THEN 'mid' ELSE 'low' END budget_bucket, SORT_ARRAY(COLLECT_SET(dept_name)) dept_name_list, COUNT(DISTINCT budget) unique_locations, SORT_ARRAY(COLLECT_SET(location)) location_list FROM departments GROUP BY 1 ORDER BY unique_locations DESC, budget_bucket LIMIT 20;

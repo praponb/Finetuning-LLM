@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("status").orderBy("amount", "id")
+
+result = (
+    df_orders
+    .filter(F.col("discount") <= 0.25)
+    .select("id", "status", "amount", F.row_number().over(w).alias("rn"))
+    .filter(F.col("rn") <= 3)
+    .select("id", "status", "amount")
+)

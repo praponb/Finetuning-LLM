@@ -1,0 +1,1 @@
+WITH valid_products AS (SELECT * FROM products WHERE price > 790 AND (stock_qty < 100 OR product_name LIKE '%Running%')), products_stats AS (SELECT brand, MIN(cost) AS min_cost FROM valid_products GROUP BY brand) SELECT brand, min_cost FROM products_stats;

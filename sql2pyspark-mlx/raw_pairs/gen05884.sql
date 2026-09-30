@@ -1,0 +1,1 @@
+select * from (select account_type, round(stddev(balance), 2) as stddev_balance, min(balance) as min_balance from accounts where opened_date between '2025-08-01' and '2025-08-08' group by account_type) as agg where stddev_balance >= 61;

@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, host, level, latency_ms, attr_key, v FROM app_logs LATERAL VIEW EXPLODE(context) li AS attr_key, v) SELECT id, service, level, attr_key, v, CASE WHEN level RLIKE '^(ERROR|DEBUG)$' THEN 'GROUP_B' WHEN level RLIKE '^(INFO|WARN)$' THEN 'GROUP_A' ELSE 'PRIORITY' END AS level_zone FROM flattened ORDER BY service DESC;

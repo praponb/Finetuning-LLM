@@ -1,0 +1,1 @@
+SELECT id, dept_name, location, budget, SUM(budget) OVER (PARTITION BY dept_name, location ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_budget FROM departments WHERE dept_name <> 'Finance';

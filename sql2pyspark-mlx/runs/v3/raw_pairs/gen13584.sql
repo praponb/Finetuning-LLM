@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY txn_time, id) AS row_num FROM transactions WHERE NOT is_flagged) SELECT id, merchant, txn_time, is_flagged FROM ranked WHERE row_num <= 1 ORDER BY merchant DESC, id DESC;

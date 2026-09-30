@@ -1,0 +1,1 @@
+SELECT quantity, product_id, store_id, CASE WHEN quantity >= 230 THEN 'High' WHEN quantity >= 38 THEN 'Medium' ELSE 'Low' END AS quantity_tier, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_label FROM inventory ORDER BY product_id DESC;

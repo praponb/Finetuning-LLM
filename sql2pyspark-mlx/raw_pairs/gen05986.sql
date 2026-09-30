@@ -1,0 +1,1 @@
+SELECT *, DATE_TRUNC('month', order_date) AS order_date_period, CASE WHEN shipping_fee >= 33 THEN 'High' WHEN shipping_fee >= 18 THEN 'Medium' ELSE 'Low' END AS shipping_fee_tier FROM orders WHERE channel = 'web' AND order_date <= '2024-11-01';

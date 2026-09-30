@@ -1,0 +1,1 @@
+select status, sum(case when carrier = 'Kerry' then cost else 0 end) as kerry_cost, sum(case when carrier = 'Flash' then 1 else 0 end) as flash_count from shipments where order_id in (23, 32) or cost < 91 group by status;

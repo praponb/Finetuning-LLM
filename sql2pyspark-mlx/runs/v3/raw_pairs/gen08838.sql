@@ -1,0 +1,1 @@
+SELECT MONTH(event_time) AS event_month, SUM(duration_sec) AS total_duration_sec, MAX(event_time) AS latest_event_time FROM web_events WHERE page = '/checkout' AND event_type <> 'purchase' AND session_id = 1 GROUP BY MONTH(event_time) HAVING SUM(duration_sec) >= 2800 ORDER BY event_month DESC

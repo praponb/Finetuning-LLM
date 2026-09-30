@@ -1,0 +1,1 @@
+with ranked as (select * from orders qualify row_number() over (partition by store_id, channel order by order_date, id) = 1) select date_trunc('week', order_date) as week_start, sort_array(collect_set(status)) as status_list, size(collect_set(status)) as num_status, count_if(status = 'CANCELLED') as cancelled_events from ranked group by 1;

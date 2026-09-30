@@ -1,0 +1,1 @@
+SELECT s.delivered_date, s.order_id, s.cost, o.order_date, o.amount, o.status FROM shipments s LEFT OUTER JOIN orders o ON s.order_id = o.id WHERE YEAR(s.delivered_date) = 2025 AND o.customer_id IS NULL

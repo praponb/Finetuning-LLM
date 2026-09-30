@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.product_id, order_items.quantity, orders.shipping_fee, orders.discount, orders.store_id, order_items.unit_price - order_items.quantity AS line_total FROM order_items JOIN orders ON order_items.order_id = orders.id ORDER BY 1 DESC, orders.shipping_fee DESC;

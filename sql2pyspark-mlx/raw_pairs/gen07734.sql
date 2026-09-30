@@ -1,0 +1,1 @@
+SELECT QUARTER(launch_date) AS launch_quarter, SUM(stock_qty) AS total_stock_qty FROM products WHERE MONTH(launch_date) IN (2, 4, 11) AND category IN ('Grocery', 'Home', 'Books') AND LENGTH(product_name) < 5 GROUP BY 1 HAVING COUNT(DISTINCT cost) > 1 ORDER BY total_stock_qty ASC, launch_quarter ASC LIMIT 5

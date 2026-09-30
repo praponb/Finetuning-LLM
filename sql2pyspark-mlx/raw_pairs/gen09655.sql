@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1450 THEN 'LARGE' ELSE 'SMALL' END AS amount_tier, COUNT_IF(status = 'REFUNDED') AS refunded_events, COUNT_IF(method = 'card') AS card_events FROM payments GROUP BY CASE WHEN amount >= 1450 THEN 'LARGE' ELSE 'SMALL' END ORDER BY card_events;

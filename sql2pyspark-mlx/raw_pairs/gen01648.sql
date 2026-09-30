@@ -1,0 +1,1 @@
+SELECT order_id, SUM(quantity) AS total_quantity, ROUND(SUM(quantity) * 100.0 / SUM(SUM(quantity)) OVER (), 2) AS pct_of_total FROM order_items WHERE order_id IN (1, 4, 10) GROUP BY order_id ORDER BY order_id DESC;

@@ -1,0 +1,1 @@
+select page, sum(duration_sec) as total_duration_sec, round(sum(duration_sec) * 100.0 / sum(sum(duration_sec)) over (), 2) as pct_of_total from web_events where event_type = 'search' group by page order by total_duration_sec desc

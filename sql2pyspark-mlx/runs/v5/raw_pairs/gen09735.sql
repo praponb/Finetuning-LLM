@@ -1,0 +1,1 @@
+SELECT id, customer_id, coupon_codes, ship_to, attributes, AGGREGATE(items, 0.0D, (acc, i) -> acc + i.qty * i.price, acc -> ROUND(acc, 2)) AS items_total, ARRAY_JOIN(ARRAY_SORT(coupon_codes), ',') AS coupons_text, COALESCE(attributes['device'], 'direct') AS device_or_default FROM carts

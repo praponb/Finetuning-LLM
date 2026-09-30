@@ -1,0 +1,1 @@
+with joined as (select src.*, b.city, b.supplier_name, b.rating from products src left join suppliers b on src.supplier_id = b.id where b.supplier_name like '%Trad%') select s.id, s.category, s.brand, s.cost, s.stock_qty, s.launch_date, s.tags, s.supplier_id, s.city, (select avg(p2.price) from products p2 where p2.supplier_id = s.supplier_id) as avg_product_price from joined s;

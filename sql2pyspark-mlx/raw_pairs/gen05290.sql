@@ -1,0 +1,1 @@
+SELECT paid_quarter, method, method_list, max_amount FROM (SELECT QUARTER(paid_at) AS paid_quarter, method, SORT_ARRAY(COLLECT_SET(method)) AS method_list, MAX(amount) AS max_amount FROM payments WHERE status = 'REFUNDED' GROUP BY QUARTER(paid_at), method) AS sub WHERE max_amount < 1190 ORDER BY max_amount, method DESC, paid_quarter LIMIT 5

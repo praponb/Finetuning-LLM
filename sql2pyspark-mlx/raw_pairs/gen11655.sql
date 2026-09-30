@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY balance DESC, id) AS dedup_rank FROM accounts) ranked WHERE dedup_rank = 1) SELECT id, customer_id, account_type, balance, opened_date, status, dedup_rank FROM latest

@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, MAX(quantity) AS max_quantity FROM order_items WHERE unit_price <= 400 GROUP BY order_id) SELECT o.id, o.shipping_fee, o.order_date, ot.max_quantity FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.max_quantity > 7.1

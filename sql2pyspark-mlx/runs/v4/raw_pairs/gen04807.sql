@@ -1,0 +1,1 @@
+SELECT *, NTILE(3) OVER (PARTITION BY store_id ORDER BY amount DESC, id) AS amount_bucket, LEAD(amount, 1, 0) OVER w_part AS next_amount FROM orders WINDOW w_part AS (PARTITION BY channel ORDER BY discount, id);

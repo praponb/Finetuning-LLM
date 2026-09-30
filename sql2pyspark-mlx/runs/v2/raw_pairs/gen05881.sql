@@ -1,0 +1,15 @@
+SELECT
+    id,
+    city,
+    opened_date,
+    region
+FROM (
+    SELECT
+        id,
+        city,
+        opened_date,
+        region,
+        ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS pos
+    FROM stores
+) AS r
+WHERE pos <= 2;

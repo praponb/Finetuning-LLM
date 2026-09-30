@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.unit_price, p.launch_date, s.rating, s.country FROM order_items oi FULL OUTER JOIN products p ON oi.product_id = p.id FULL OUTER JOIN suppliers s ON s.id = p.supplier_id WHERE p.stock_qty < 385

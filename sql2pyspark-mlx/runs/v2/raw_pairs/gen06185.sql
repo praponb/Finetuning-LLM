@@ -1,0 +1,1 @@
+SELECT customer_id, channel, MAX(order_date) AS last_order_date, SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) AS returned_count FROM orders GROUP BY customer_id, channel HAVING MAX(discount) > 0.26;

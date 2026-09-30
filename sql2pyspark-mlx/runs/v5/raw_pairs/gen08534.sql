@@ -1,0 +1,1 @@
+SELECT o.store_id, o.channel, t.avg_unit_price FROM orders o JOIN (SELECT order_id, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items WHERE quantity < 4 GROUP BY order_id) t ON o.id = t.order_id ORDER BY store_id;

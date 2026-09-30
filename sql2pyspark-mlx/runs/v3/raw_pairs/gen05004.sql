@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, store_id, revenue, product_id, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY revenue DESC, id) rn FROM store_sales) SELECT * FROM numbered WHERE rn <= 3 ORDER BY rn DESC

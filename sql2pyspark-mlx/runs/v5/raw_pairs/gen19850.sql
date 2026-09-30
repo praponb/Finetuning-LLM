@@ -1,0 +1,1 @@
+SELECT id, discount_pct, ROW_NUMBER() OVER (PARTITION BY channel, promo_code ORDER BY discount_pct DESC, id ASC) AS row_seq, LAG(discount_pct, 1, 0) OVER (PARTITION BY channel ORDER BY discount_pct ASC, id ASC) AS prev_discount_pct FROM promotions WHERE discount_pct > 0.16

@@ -1,0 +1,1 @@
+select customer_id, round(stddev(monthly_fee), 2) as stddev_monthly_fee from subscriptions where end_date between '2023-07-01' and '2024-06-19' group by customer_id having round(stddev(monthly_fee), 2) > 30;

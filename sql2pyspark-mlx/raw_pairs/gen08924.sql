@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, INITCAP(TRIM(level)) AS level_title, FLOOR(salary) AS salary_whole, COALESCE(job_title, 'NONE') AS job_title_filled FROM employees WHERE level IS NOT NULL) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY salary DESC, id ASC) AS rank_in_group FROM filtered) t WHERE rank_in_group = 1

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, carrier, delivered_date, DENSE_RANK() OVER (PARTITION BY carrier ORDER BY delivered_date DESC) AS row_num FROM shipments WHERE carrier NOT IN ('Kerry', 'Flash')) AS t WHERE row_num <= 3;

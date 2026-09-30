@@ -1,0 +1,1 @@
+SELECT YEAR(customers.signup_date) AS signup_year, COUNT(CASE WHEN sessions.country = 'SG' THEN 1 END) AS sg_count, MIN(sessions.started_at) AS first_started_at FROM sessions LEFT JOIN customers ON sessions.customer_id = customers.id GROUP BY YEAR(customers.signup_date);

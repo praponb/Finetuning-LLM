@@ -1,0 +1,1 @@
+select p.status as order_status, e.method, count(*) as rows_total, sum(e.amount) as total_amount from payments e inner join orders p on e.order_id = p.id group by grouping sets ((p.status, e.method), (p.status))

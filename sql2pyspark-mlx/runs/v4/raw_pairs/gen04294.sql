@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, LAST_DAY(delivered_date) AS delivered_date_month_end, COALESCE(carrier, 'DIRECT') AS resolved_carrier FROM shipments WHERE shipped_date >= DATE '2023-11-26' AND carrier IS NOT NULL) SELECT * FROM (SELECT status, order_id, carrier, cost FROM filtered) src PIVOT (AVG(cost) FOR carrier IN ('Flash' AS flash, 'FedEx' AS fedex))

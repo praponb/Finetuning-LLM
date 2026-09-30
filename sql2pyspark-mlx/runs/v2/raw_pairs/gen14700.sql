@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT location, dept_name, MIN(budget) AS min_budget, MAX(budget) - MIN(budget) AS budget_range FROM departments GROUP BY location, dept_name) AS s WHERE budget_range > 66 ORDER BY budget_range

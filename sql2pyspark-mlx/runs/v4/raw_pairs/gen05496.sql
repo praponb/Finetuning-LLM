@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, COUNT(CASE WHEN category = 'Home' THEN 1 END) AS home_count, AVG(cost) AS avg_cost FROM products WHERE brand IN ('Globex', 'Initech') GROUP BY supplier_id) SELECT s.id, s.city, st.home_count, st.avg_cost FROM suppliers s LEFT JOIN supplier_totals st ON s.id = st.supplier_id WHERE st.avg_cost >= 410 ORDER BY st.home_count DESC

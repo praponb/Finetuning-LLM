@@ -1,0 +1,1 @@
+select p.brand, p.cost, p.launch_date, s.city, s.supplier_name, s.country from products p inner join suppliers s on s.id = p.supplier_id where p.price between 430 and 1200 and s.city = 'London' order by p.brand desc;

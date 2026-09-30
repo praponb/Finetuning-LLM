@@ -1,0 +1,1 @@
+SELECT page, SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END) page_view_count, COUNT(CASE WHEN page = '/search' THEN 1 END) search_count FROM web_events GROUP BY page ORDER BY search_count DESC

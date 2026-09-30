@@ -1,0 +1,1 @@
+SELECT s.id, s.country, COUNT(p.id) AS product_count, AVG(p.cost) AS avg_cost, MAX(p.price) - MIN(p.price) AS price_range FROM suppliers s LEFT JOIN products p ON p.supplier_id = s.id WHERE s.city IN ('Berlin', 'Bangkok') GROUP BY s.id, s.country;

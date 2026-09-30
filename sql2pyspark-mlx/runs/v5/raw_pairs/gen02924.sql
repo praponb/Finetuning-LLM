@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, COALESCE(pressure, 0) AS pressure_filled FROM device_readings WHERE reading_ts >= DATE '2025-09-01') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY humidity DESC, id) AS row_num FROM base) t WHERE row_num = 1;

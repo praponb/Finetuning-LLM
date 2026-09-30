@@ -1,0 +1,1 @@
+select carrier, date_trunc('MONTH', shipped_date) as shipped_month, min(delivered_date) as first_delivered_date from shipments where shipped_date < '2024-12-23' group by carrier, date_trunc('MONTH', shipped_date) order by carrier

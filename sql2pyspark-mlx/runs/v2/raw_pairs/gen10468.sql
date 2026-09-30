@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, d.budget, t.employee_count FROM departments d LEFT JOIN (SELECT dept_id, COUNT(*) AS employee_count FROM employees WHERE job_title IS NOT NULL GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY t.employee_count

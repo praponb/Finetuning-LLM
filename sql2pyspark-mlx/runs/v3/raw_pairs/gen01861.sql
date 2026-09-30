@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 269 THEN 'high' WHEN quantity >= 38 THEN 'mid' ELSE 'low' END quantity_bucket, MIN(quantity) min_quantity, COUNT(*) inventory_count, MAX(quantity) max_quantity FROM inventory GROUP BY 1

@@ -1,0 +1,1 @@
+SELECT p.brand, p.supplier_id, MAX(i.quantity) AS max_quantity FROM inventory i INNER JOIN products p ON p.id = i.product_id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE p.cost < 200 GROUP BY p.brand, p.supplier_id ORDER BY max_quantity DESC

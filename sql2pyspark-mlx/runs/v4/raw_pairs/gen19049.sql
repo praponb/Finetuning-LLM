@@ -1,0 +1,1 @@
+SELECT id, channel, promo_code, starts_on, ends_on, discount_pct, STDDEV_SAMP(discount_pct) OVER (PARTITION BY promo_code) AS promo_code_stddev_samp_discount_pct, RANK() OVER (PARTITION BY channel, promo_code ORDER BY discount_pct DESC) AS discount_pct_rank FROM promotions;

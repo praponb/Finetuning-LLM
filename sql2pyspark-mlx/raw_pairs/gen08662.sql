@@ -1,0 +1,1 @@
+SELECT order_id, MIN(amount) AS min_amount, COUNT(amount) AS amount_count, ROUND(AVG(amount), 2) AS avg_amount FROM payments WHERE (method IN ('card', 'cash', 'paypal') AND order_id IS NULL) OR order_id IN (3, 14, 15, 24) GROUP BY order_id HAVING COUNT(amount) > 3

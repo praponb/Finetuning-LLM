@@ -1,0 +1,1 @@
+with valid as (select *, case when device = 'tablet' then 1 else 0 end as is_tablet from sessions where browser = 'Edge') select *, row_number() over (partition by customer_id order by started_at desc, id) as rn from valid qualify rn = 1;

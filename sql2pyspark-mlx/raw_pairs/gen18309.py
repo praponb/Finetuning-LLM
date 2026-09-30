@@ -1,0 +1,27 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("city").orderBy(F.col("credit_limit").desc())
+
+deduped = (
+    df_customers
+    .withColumn("rank_in_group", F.rank().over(w))
+    .filter(F.col("rank_in_group") == 1)
+    .drop("rank_in_group")
+)
+
+result = (
+    deduped
+    .select(
+        "id",
+        "email",
+        "country",
+        "city",
+        "segment",
+        "signup_date",
+        "is_active",
+        "credit_limit",
+        F.when(F.col("country").rlike("^(TH|US)$"), "CORE").when(F.col("country").rlike("^(SG|JP)$"), "GROUP_A").otherwise("OTHER_ZONE").alias("country_zone"),
+    )
+    .orderBy(F.col("segment").asc_nulls_first())
+)

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, device_code, reading_ts, humidity, pressure, ROUND(pressure * 1.15, 2) pressure_scaled, status_bits * humidity status_bits_times_humidity FROM device_readings WHERE temp_c <= 36) SELECT id, device_code, metric_name, val FROM (SELECT id, device_code, humidity, pressure FROM valid) src UNPIVOT (val FOR metric_name IN (humidity, pressure AS PRESSURE))

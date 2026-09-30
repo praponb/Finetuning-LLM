@@ -1,0 +1,1 @@
+SELECT status, delivered_date FROM shipments WHERE carrier NOT IN ('Kerry', 'DHL') UNION ALL SELECT status, delivered_date FROM shipments WHERE status IN ('LOST', 'RETURNED', 'DELIVERED') ORDER BY delivered_date;

@@ -1,0 +1,1 @@
+WITH latest_match AS (SELECT s.id, s.browser, top1.web_event_duration_sec FROM sessions s JOIN LATERAL (SELECT c.duration_sec AS web_event_duration_sec FROM web_events c WHERE c.session_id = s.id AND c.event_time <= s.started_at ORDER BY c.event_time DESC, c.id DESC LIMIT 1) top1 ON TRUE) SELECT id, browser, web_event_duration_sec FROM latest_match

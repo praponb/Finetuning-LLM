@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT d.dept_name, d.location, a.job_title, COUNT(*) AS rows_total, SUM(a.salary) AS total_salary FROM employees a LEFT JOIN departments d ON a.dept_id = d.id GROUP BY GROUPING SETS ((d.dept_name, d.location, a.job_title), (d.dept_name))) SELECT dept_name, location, total_salary FROM by_dimension ORDER BY location DESC;

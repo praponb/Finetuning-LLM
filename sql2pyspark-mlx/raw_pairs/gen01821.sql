@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LOWER(status) AS status_lower, COALESCE(status, 'NONE') AS status_filled FROM accounts WHERE opened_date >= DATE '2023-04-28' AND customer_id IS NOT NULL) SELECT * FROM (SELECT customer_id, account_type, balance FROM base) src PIVOT (MAX(balance) AS amount, COUNT(1) AS item_count FOR account_type IN ('LOAN', 'CHECKING'));

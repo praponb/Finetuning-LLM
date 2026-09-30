@@ -1,0 +1,1 @@
+SELECT suppliers.id, suppliers.rating, suppliers.supplier_name, t.total_price FROM suppliers JOIN (SELECT supplier_id, SUM(price) AS total_price FROM products WHERE brand IN ('Umbrella', 'Stark') GROUP BY supplier_id) t ON suppliers.id = t.supplier_id ORDER BY total_price, id

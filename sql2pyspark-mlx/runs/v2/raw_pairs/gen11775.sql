@@ -1,0 +1,1 @@
+SELECT s.id, s.customer_id, s.monthly_fee, s.end_date, c.signup_date, c.segment, INITCAP(TRIM(c.city)) AS city_title FROM subscriptions s INNER JOIN customers c ON c.id = s.customer_id WHERE s.plan <> 'standard';

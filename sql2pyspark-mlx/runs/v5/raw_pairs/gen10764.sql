@@ -1,0 +1,1 @@
+SELECT YEAR(last_restock) last_restock_year, ROUND(STDDEV(quantity), 2) stddev_quantity, AVG(quantity) avg_quantity, MIN(last_restock) first_last_restock FROM inventory GROUP BY last_restock_year ORDER BY stddev_quantity, last_restock_year;

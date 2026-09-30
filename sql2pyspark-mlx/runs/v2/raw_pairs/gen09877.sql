@@ -1,0 +1,1 @@
+select session_id, sum(duration_sec) as total_duration_sec, max(event_time) as latest_event_time, concat_ws(', ', sort_array(collect_set(event_type))) as event_type_values from web_events group by session_id having sum(duration_sec) < 2000;

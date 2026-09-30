@@ -1,0 +1,1 @@
+SELECT product_id, QUARTER(last_restock) AS last_restock_quarter, MIN(last_restock) AS min_last_restock, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE last_restock BETWEEN '2024-01-01' AND '2024-07-01' GROUP BY product_id, last_restock_quarter;

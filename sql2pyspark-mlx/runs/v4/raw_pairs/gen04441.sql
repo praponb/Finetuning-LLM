@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, MIN(duration_sec) min_duration_sec FROM web_events WHERE TO_DATE(event_time) < '2023-05-17' GROUP BY session_id) SELECT sessions.id, sessions.country, session_summary.min_duration_sec FROM sessions INNER JOIN session_summary ON sessions.id = session_summary.session_id ORDER BY country, session_summary.min_duration_sec DESC;

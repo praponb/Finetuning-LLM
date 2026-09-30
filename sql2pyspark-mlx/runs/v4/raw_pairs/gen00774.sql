@@ -1,0 +1,1 @@
+SELECT p.category, CASE WHEN p.brand IN ('Initech', 'Globex') THEN 'group_a' ELSE 'other' END AS brand_group, ROUND(AVG(i.quantity), 2) AS avg_quantity, MAX(i.quantity) AS max_quantity FROM inventory i RIGHT OUTER JOIN products p ON i.product_id = p.id WHERE i.product_id IN (4, 8) GROUP BY p.category, CASE WHEN p.brand IN ('Initech', 'Globex') THEN 'group_a' ELSE 'other' END

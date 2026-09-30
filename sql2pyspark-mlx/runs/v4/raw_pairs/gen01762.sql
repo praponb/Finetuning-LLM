@@ -1,0 +1,1 @@
+SELECT s.region, s.city, MIN(o.amount) AS min_amount, SUM(CASE WHEN o.channel = 'partner' THEN 1 ELSE 0 END) AS partner_count FROM orders o INNER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON s.id = o.store_id WHERE s.city = 'Berlin' GROUP BY s.region, s.city ORDER BY min_amount DESC, city DESC;

@@ -1,0 +1,1 @@
+with latest as (select *, row_number() over (partition by order_id order by delivered_date asc nulls first, id asc) as row_num from shipments qualify row_num = 1) select id, shipped_date, delivered_date, cost, status, case when status rlike '^(RETURNED|IN_TRANSIT)$' then 'CORE' else 'PRIORITY' end as status_zone from latest;

@@ -1,0 +1,1 @@
+SELECT s.id, s.shipped_date, s.cost, o.customer_id, o.shipping_fee FROM shipments s INNER JOIN orders o ON s.order_id = o.id WHERE YEAR(s.delivered_date) >= 2025 AND s.carrier IS NULL ORDER BY s.cost DESC;

@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, COUNT(CASE WHEN event_type = 'click' THEN 1 END) AS click_count FROM web_events WHERE session_id IN (19, 27) GROUP BY session_id) SELECT s.country, ss.click_count FROM sessions s INNER JOIN session_stats ss ON s.id = ss.session_id ORDER BY country ASC;

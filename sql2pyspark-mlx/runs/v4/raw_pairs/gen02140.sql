@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(i.quantity) AS quantity_count, COUNT(*) AS row_count FROM inventory i LEFT JOIN products p ON i.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.category ORDER BY category LIMIT 1;

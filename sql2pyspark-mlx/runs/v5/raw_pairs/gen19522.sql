@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, customer_id, device, started_at, HOUR(started_at) AS started_at_hour FROM sessions WHERE started_at > TIMESTAMP '2023-02-23 03:00:00' AND country IS NOT NULL) SELECT e.*, d.segment, d.country, d.name FROM valid e INNER JOIN customers d ON e.customer_id = d.id

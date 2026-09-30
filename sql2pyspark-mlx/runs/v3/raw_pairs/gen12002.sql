@@ -1,0 +1,1 @@
+SELECT product_id, unique_products, unit_price_count FROM (SELECT product_id, COUNT(DISTINCT unit_price) AS unique_products, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY product_id) AS agg WHERE unique_products >= 3

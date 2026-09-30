@@ -1,0 +1,1 @@
+SELECT id, status, start_date, monthly_fee FROM (SELECT id, status, start_date, monthly_fee, ROW_NUMBER() OVER (PARTITION BY status ORDER BY start_date DESC, id) AS row_num FROM subscriptions WHERE customer_id IN (10, 18, 30)) AS ranked WHERE row_num <= 2;

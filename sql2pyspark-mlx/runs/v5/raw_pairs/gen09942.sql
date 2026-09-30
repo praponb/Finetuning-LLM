@@ -1,0 +1,1 @@
+select id, store_id, product_id, sum(quantity) over (partition by store_id order by last_restock, id rows between unbounded preceding and current row) as running_quantity, stddev_samp(quantity) over (partition by product_id, store_id) as product_id_stddev_samp_quantity from inventory

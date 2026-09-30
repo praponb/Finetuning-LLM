@@ -1,0 +1,1 @@
+SELECT id, product_id, sale_date, units, store_id, revenue, LAST_VALUE(units) OVER (PARTITION BY product_id ORDER BY sale_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_units, LEAD(revenue, 1, 0) OVER (PARTITION BY store_id ORDER BY sale_date, id) AS next_revenue FROM store_sales WHERE revenue <= 1200

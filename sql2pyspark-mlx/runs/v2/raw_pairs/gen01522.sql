@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, MAX(signup_date) AS latest_signup_date, SUM(CASE WHEN city = 'Singapore' THEN credit_limit ELSE 0 END) AS singapore_credit_limit FROM customers WHERE signup_date < '2024-10-22' GROUP BY 1 HAVING SUM(credit_limit) < 25000

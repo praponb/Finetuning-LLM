@@ -1,0 +1,1 @@
+SELECT id, status, COUNT(balance) OVER (PARTITION BY account_type) AS account_type_count_balance, NTILE(10) OVER w_hist AS balance_bucket FROM accounts WINDOW w_hist AS (PARTITION BY status ORDER BY balance DESC, id);

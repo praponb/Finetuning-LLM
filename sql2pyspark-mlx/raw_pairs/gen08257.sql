@@ -1,0 +1,1 @@
+with deduped as (select * from customers qualify row_number() over (partition by segment, city order by signup_date desc, id asc) = 1) select id, country, city, segment, signup_date, is_active, credit_limit from deduped order by signup_date desc nulls first, segment desc

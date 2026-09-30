@@ -1,0 +1,1 @@
+select s.country, sum(case when we.event_type = 'page_view' then 1 else 0 end) as page_view_count from web_events we inner join sessions s on we.session_id = s.id left join customers c on s.customer_id = c.id where s.device not in ('tablet', 'mobile') group by s.country;

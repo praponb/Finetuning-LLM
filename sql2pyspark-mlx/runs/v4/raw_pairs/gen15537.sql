@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN brand IN ('Umbrella', 'Acme') THEN 'core' ELSE 'other' END AS brand_group, ROUND(AVG(price), 2) AS avg_price, SUM(CASE WHEN category = 'Fashion' THEN stock_qty ELSE 0 END) AS fashion_stock_qty FROM products GROUP BY CASE WHEN brand IN ('Umbrella', 'Acme') THEN 'core' ELSE 'other' END) AS t WHERE fashion_stock_qty < 25 ORDER BY brand_group LIMIT 50;

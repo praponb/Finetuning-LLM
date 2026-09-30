@@ -1,0 +1,1 @@
+SELECT category, supplier_id, pct_sports, avg_price FROM (SELECT category, supplier_id, ROUND((100 * SUM(CASE WHEN category = 'Sports' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_sports, ROUND(AVG(price), 2) AS avg_price FROM products WHERE YEAR(launch_date) = 2025 GROUP BY category, supplier_id) AS t WHERE avg_price < 30;

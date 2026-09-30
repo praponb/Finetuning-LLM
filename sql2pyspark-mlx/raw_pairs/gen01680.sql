@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3185000 THEN 'high' WHEN budget >= 1560000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(*) AS department_count, MIN(budget) AS min_budget FROM departments WHERE location = 'New York' GROUP BY CASE WHEN budget >= 3185000 THEN 'high' WHEN budget >= 1560000 THEN 'mid' ELSE 'low' END;

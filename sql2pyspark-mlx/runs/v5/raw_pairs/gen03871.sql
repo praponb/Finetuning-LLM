@@ -1,0 +1,1 @@
+SELECT city, COUNT(*) FILTER (WHERE region = 'North') AS north_rows, SIZE(COLLECT_SET(city)) AS num_cities, SUM(sqft) AS total_sqft, ROUND(AVG(sqft), 2) AS avg_sqft, ROUND(SUM(sqft) / NULLIF(COUNT(CASE WHEN city = 'London' THEN 1 END), 0), 2) AS sqft_per_london FROM stores GROUP BY 1

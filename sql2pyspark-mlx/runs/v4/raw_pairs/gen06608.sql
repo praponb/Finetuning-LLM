@@ -1,0 +1,1 @@
+with top_suppliers as (select *, rank() over (partition by city order by rating desc) as pos from suppliers where city in ('London', 'Singapore', 'Bangkok')) select * from top_suppliers where pos <= 5

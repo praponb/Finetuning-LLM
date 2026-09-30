@@ -1,0 +1,1 @@
+SELECT id, customer_id, amount, order_date, shipping_fee, ROUND(amount / SUM(amount) OVER (PARTITION BY customer_id), 3) amount_share, ROUND(AVG(shipping_fee) OVER (ORDER BY order_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) shipping_fee_moving_avg_7 FROM orders WHERE customer_id = 33

@@ -1,0 +1,1 @@
+select status, status_values, total_count from (select status, concat_ws(', ', sort_array(collect_set(status))) as status_values, count(*) as total_count from payments group by status) as t where total_count >= 8 order by status desc

@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT p.category, p.brand, COUNT(*) AS cnt, MAX(src.quantity) AS max_quantity, GROUPING_ID() AS grouping_level FROM order_items src INNER JOIN products p ON src.product_id = p.id GROUP BY ROLLUP (p.category, p.brand)) SELECT max_quantity FROM by_dimension ORDER BY max_quantity DESC;

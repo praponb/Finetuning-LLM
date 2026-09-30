@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, ROUND(budget * 100, 2) adjusted_budget, COALESCE(location, 'NONE') location_filled FROM departments WHERE dept_name IS NOT NULL) SELECT * FROM (SELECT id, location, adjusted_budget, budget FROM filtered) src UNPIVOT (reading FOR metric_name IN (adjusted_budget AS ADJUSTED_BUDGET_VAL, budget AS BUDGET_VAL));

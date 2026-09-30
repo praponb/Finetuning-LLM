@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, MAX(amount) - MIN(amount) AS amount_range, MIN(txn_time) AS first_txn_time FROM transactions WHERE merchant = 'Lazada' GROUP BY account_id) SELECT a.id, a.status, as.amount_range, as.first_txn_time FROM accounts a INNER JOIN account_summary as ON a.id = as.account_id

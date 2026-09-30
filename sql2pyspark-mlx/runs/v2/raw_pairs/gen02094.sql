@@ -1,0 +1,1 @@
+WITH filtered_store_sales AS (SELECT * FROM store_sales WHERE units >= 27), store_id_summary AS (SELECT store_id, COUNT(DISTINCT revenue) AS unique_stores, MIN(sale_date) AS min_sale_date FROM filtered_store_sales GROUP BY store_id) SELECT store_id, unique_stores, min_sale_date FROM store_id_summary WHERE unique_stores >= 4;

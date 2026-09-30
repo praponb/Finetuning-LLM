@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, TRIM(plan) AS clean_plan FROM subscriptions WHERE start_date >= DATE '2023-04-18') SELECT id FROM valid INTERSECT ALL SELECT id FROM subscriptions WHERE monthly_fee BETWEEN 100 AND 170;

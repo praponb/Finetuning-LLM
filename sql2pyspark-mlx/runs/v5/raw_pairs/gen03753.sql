@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.product_id, inventory.last_restock, products.brand, products.category, products.product_name FROM inventory INNER JOIN products ON inventory.product_id = products.id WHERE inventory.product_id IN (5, 6, 9, 10) AND ARRAY_CONTAINS(products.tags, 'premium');

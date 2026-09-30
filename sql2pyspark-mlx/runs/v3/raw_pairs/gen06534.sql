@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, MAX(launch_date) AS latest_launch_date, COUNT(*) AS num_products FROM products WHERE stock_qty != 160 GROUP BY supplier_id) SELECT s.city, pbs.latest_launch_date, pbs.num_products FROM suppliers s JOIN products_by_supplier pbs ON s.id = pbs.supplier_id;

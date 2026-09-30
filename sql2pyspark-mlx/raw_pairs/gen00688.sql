@@ -1,0 +1,1 @@
+with top_inventory as (select *, row_number() over (partition by store_id order by quantity desc, id) as rnk from inventory where quantity >= 140) select * from top_inventory where rnk <= 2 order by store_id desc, rnk desc;

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, FLOOR(rating) AS rating_whole FROM suppliers WHERE city IS NOT NULL AND city NOT IN ('Chiang Mai', 'New York')) SELECT city FROM cleaned EXCEPT SELECT city FROM suppliers WHERE city = 'Chiang Mai';

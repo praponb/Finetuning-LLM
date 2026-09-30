@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, s.region, p.supplier_id, p.price, DATEDIFF(CURRENT_DATE(), ss.sale_date) AS days_since_sale_date FROM store_sales ss JOIN stores s ON ss.store_id = s.id JOIN products p ON ss.product_id = p.id ORDER BY ss.sale_date, id LIMIT 20

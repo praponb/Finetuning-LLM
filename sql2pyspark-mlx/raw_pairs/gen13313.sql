@@ -1,0 +1,1 @@
+select oi.id, oi.unit_price, oi.product_id, o.shipping_fee, o.store_id, p.price, substring(p.product_name, 1, 3) as product_name_prefix from order_items oi inner join orders o on oi.order_id = o.id inner join products p on oi.product_id = p.id where o.status = 'SHIPPED' or p.brand = 'Initech'

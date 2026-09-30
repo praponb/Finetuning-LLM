@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, SUM(stock_qty) total_stock_qty FROM products GROUP BY supplier_id) SELECT suppliers.city, supplier_totals.total_stock_qty FROM suppliers INNER JOIN supplier_totals ON suppliers.id = supplier_totals.supplier_id ORDER BY city, total_stock_qty DESC;

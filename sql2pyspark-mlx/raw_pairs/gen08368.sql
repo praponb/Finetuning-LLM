@@ -1,0 +1,1 @@
+SELECT CASE WHEN c.age >= 68 THEN 'high' WHEN c.age >= 30 THEN 'mid' ELSE 'low' END AS age_bucket, SUM(s.monthly_fee) AS total_monthly_fee FROM subscriptions s INNER JOIN customers c ON c.id = s.customer_id WHERE s.end_date >= '2025-05-01' GROUP BY CASE WHEN c.age >= 68 THEN 'high' WHEN c.age >= 30 THEN 'mid' ELSE 'low' END ORDER BY total_monthly_fee DESC, age_bucket

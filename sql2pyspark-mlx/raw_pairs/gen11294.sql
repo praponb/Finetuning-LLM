@@ -1,0 +1,1 @@
+SELECT id, device_code, temp_c, firmware, MAX(temp_c) OVER w_recent AS running_max_temp_c, MIN(temp_c) OVER w_recent AS running_min_temp_c, SUM(temp_c) OVER w_recent AS running_sum_temp_c, COUNT(temp_c) OVER w_recent AS running_count_temp_c FROM device_readings WINDOW w_recent AS (PARTITION BY device_code ORDER BY status_bits, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)

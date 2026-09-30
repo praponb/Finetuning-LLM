@@ -1,0 +1,1 @@
+SELECT id, hire_date, salary, manager_id, LAG(salary, 2, 0) OVER (ORDER BY hire_date, id) AS prev_salary, RANK() OVER (PARTITION BY DATE_TRUNC('WEEK', hire_date), manager_id ORDER BY salary DESC) AS salary_rank FROM employees

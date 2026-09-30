@@ -1,0 +1,1 @@
+SELECT *, ROW_NUMBER() OVER (ORDER BY started_at, id) AS seq_no, LAST_VALUE(country, TRUE) OVER (PARTITION BY browser ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_country FROM sessions

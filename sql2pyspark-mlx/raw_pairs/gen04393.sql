@@ -1,0 +1,1 @@
+SELECT o.id, o.store_id, t.status_values FROM orders o LEFT JOIN (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM shipments GROUP BY order_id) t ON o.id = t.order_id ORDER BY o.store_id DESC;

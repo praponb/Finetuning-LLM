@@ -1,0 +1,1 @@
+SELECT c.id, c.segment, c.city, t.min_started_at FROM customers c INNER JOIN (SELECT customer_id, MIN(started_at) AS min_started_at FROM sessions WHERE device IN ('desktop', 'tablet', 'mobile') GROUP BY customer_id) t ON c.id = t.customer_id;

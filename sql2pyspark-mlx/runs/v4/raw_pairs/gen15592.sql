@@ -1,0 +1,4 @@
+SELECT DISTINCT channel
+FROM orders
+WHERE status IN ('CANCELLED', 'COMPLETED')
+ORDER BY channel

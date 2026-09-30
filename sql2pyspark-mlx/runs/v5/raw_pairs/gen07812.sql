@@ -1,0 +1,1 @@
+WITH lines AS (SELECT c.id, c.customer_id, elem.product_id, elem.price FROM carts c LATERAL VIEW EXPLODE(c.items) li AS elem) SELECT id, price, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY product_id DESC NULLS FIRST) product_id_dense_rank FROM lines;

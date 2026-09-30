@@ -1,0 +1,1 @@
+SELECT session_id, event_type, COUNT(CASE WHEN page = '/search' THEN 1 END) AS search_count, COUNT(*) AS row_count FROM web_events GROUP BY ROLLUP (session_id, event_type) ORDER BY row_count DESC NULLS FIRST

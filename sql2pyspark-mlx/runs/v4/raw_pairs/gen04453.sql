@@ -1,0 +1,1 @@
+SELECT channel, COUNT(shipping_fee) AS shipping_fee_count, ROUND(STDDEV(shipping_fee), 2) AS stddev_shipping_fee, MAX(order_date) AS last_order_date FROM orders GROUP BY channel HAVING ROUND(STDDEV(shipping_fee), 2) > 60 ORDER BY shipping_fee_count, stddev_shipping_fee, channel LIMIT 3;

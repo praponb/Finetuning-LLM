@@ -1,0 +1,1 @@
+SELECT t.id, t.account_id, t.txn_type, a.status, UPPER(t.txn_type) AS txn_type_upper FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE HOUR(t.txn_time) BETWEEN 10 AND 16 OR a.customer_id IS NULL ORDER BY txn_type_upper;

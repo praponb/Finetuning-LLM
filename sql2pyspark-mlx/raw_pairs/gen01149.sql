@@ -1,0 +1,1 @@
+SELECT city, ROUND((100 * SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_new_york, AVG(age) AS avg_age FROM customers WHERE (country = 'US' AND is_active) OR LENGTH(name) >= 12 GROUP BY city HAVING avg_age < 45 ORDER BY city;

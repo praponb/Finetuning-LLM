@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LOWER(name) AS name_lower, COALESCE(city, 'DIRECT') AS city_clean FROM customers WHERE email LIKE '%@company.co') SELECT country, id FROM valid INTERSECT SELECT country, id FROM customers WHERE name LIKE 'Gr%';

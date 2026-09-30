@@ -1,0 +1,1 @@
+SELECT id, status, delivered_date, cost, order_id, LEAD(cost, 1) OVER (PARTITION BY status ORDER BY delivered_date, id) AS next_cost, ROUND(AVG(cost) OVER (PARTITION BY order_id ORDER BY delivered_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_3 FROM shipments WHERE shipped_date BETWEEN '2023-09-01' AND '2024-07-27';

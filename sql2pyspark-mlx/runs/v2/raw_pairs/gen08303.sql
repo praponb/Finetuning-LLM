@@ -1,0 +1,1 @@
+SELECT p.id, p.supplier_id, t.total_unit_price FROM products p INNER JOIN (SELECT product_id, SUM(unit_price) AS total_unit_price FROM order_items WHERE order_id IN (10, 38) GROUP BY product_id) t ON p.id = t.product_id WHERE t.total_unit_price > 1300 ORDER BY total_unit_price DESC

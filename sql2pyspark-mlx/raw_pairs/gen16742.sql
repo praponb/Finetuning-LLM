@@ -1,0 +1,1 @@
+select *, row_number() over (partition by category order by stock_qty asc, id asc) as event_seq, sum(price) over (partition by supplier_id, brand order by price asc, id asc rows between unbounded preceding and current row) as cumulative_price from products where brand is null

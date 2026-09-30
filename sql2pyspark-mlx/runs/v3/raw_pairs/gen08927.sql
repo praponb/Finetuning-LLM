@@ -1,0 +1,1 @@
+SELECT COUNT(*) AS row_count, ROUND((100 * SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_completed FROM orders WHERE store_id IN (8, 9, 10, 20) ORDER BY row_count DESC, pct_completed

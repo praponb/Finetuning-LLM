@@ -1,0 +1,1 @@
+with with_gaps as (select *, case when event_time - lag(event_time) over (partition by page order by event_time, id) > interval 7 days then 1 else 0 end as new_group_flag from web_events) select id, page, event_time, sum(new_group_flag) over (partition by page order by event_time, id rows between unbounded preceding and current row) as session_id_2 from with_gaps;

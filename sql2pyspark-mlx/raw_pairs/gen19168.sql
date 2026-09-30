@@ -1,0 +1,1 @@
+select carrier, sort_array(collect_set(carrier)) as carrier_list, max(cost) as max_cost, sum(case when status = 'DELIVERED' then cost else 0 end) as delivered_cost from shipments group by carrier order by max_cost desc

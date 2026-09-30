@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, dept_id, salary, job_title, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY salary, id) AS rn FROM employees) SELECT id, dept_id, salary, job_title FROM numbered WHERE rn <= 3 ORDER BY dept_id DESC;

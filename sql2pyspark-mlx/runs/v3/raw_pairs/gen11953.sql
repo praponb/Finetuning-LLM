@@ -1,0 +1,1 @@
+SELECT i.store_id, i.last_restock, i.product_id, ss.units FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id IN (2, 3, 8, 10) AND i.store_id IN (5, 6) ORDER BY units DESC

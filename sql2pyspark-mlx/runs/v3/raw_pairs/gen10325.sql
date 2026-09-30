@@ -1,0 +1,1 @@
+WITH filtered_orders AS (SELECT * FROM orders WHERE discount <= 0.13), agg AS (SELECT status, ROUND((100 * SUM(CASE WHEN channel = 'web' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_web FROM filtered_orders GROUP BY status) SELECT status, pct_web FROM agg ORDER BY status DESC;

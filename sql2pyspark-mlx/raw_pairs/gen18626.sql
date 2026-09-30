@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, device_code, temp_c, humidity, pressure, status_bits, firmware, humidity / NULLIF(status_bits, 0) AS humidity_per_status_bits FROM device_readings WHERE temp_c BETWEEN 29 AND 37) SELECT * FROM (SELECT id, device_code, humidity, temp_c, pressure FROM cleaned) src UNPIVOT (val FOR metric IN (humidity AS HUMIDITY, temp_c AS TEMP_C, pressure AS PRESSURE));

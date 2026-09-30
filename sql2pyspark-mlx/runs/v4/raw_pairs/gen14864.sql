@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM transactions WHERE amount >= 2800 AND txn_type IN ('CREDIT', 'FEE', 'REFUND')), Agg AS (SELECT merchant, ROUND(AVG(amount), 2) AS avg_amount, MAX(amount) AS max_amount FROM src GROUP BY merchant) SELECT merchant, avg_amount, max_amount FROM Agg

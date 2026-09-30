@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, city, credit_limit, ROW_NUMBER() OVER (PARTITION BY city ORDER BY credit_limit DESC, id) AS pos FROM customers) SELECT id, city, credit_limit FROM numbered WHERE pos <= 3 ORDER BY city

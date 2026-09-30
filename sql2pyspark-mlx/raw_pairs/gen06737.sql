@@ -1,0 +1,1 @@
+with ranked as (select *, row_number() over (partition by plan order by end_date desc nulls first, id) as dedup_rank from subscriptions qualify dedup_rank = 1) select id, customer_id, plan, start_date, dedup_rank from ranked;

@@ -1,0 +1,1 @@
+SELECT s.region, MAX(ss.sale_date) AS last_sale_date, COUNT(DISTINCT ss.units) AS unique_products FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id GROUP BY s.region ORDER BY last_sale_date, unique_products DESC;

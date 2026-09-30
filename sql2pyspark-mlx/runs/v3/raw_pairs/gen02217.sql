@@ -1,0 +1,1 @@
+select plan, case when monthly_fee >= 262 then 'high' when monthly_fee >= 58 then 'mid' else 'low' end as monthly_fee_bucket, avg(monthly_fee) as avg_monthly_fee from subscriptions group by 1, 2 having avg(monthly_fee) > 100;

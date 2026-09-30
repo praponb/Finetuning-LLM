@@ -1,0 +1,1 @@
+select p.status, s.txn_type, count(*) as cnt, round(avg(s.amount), 2) as avg_amount, grouping_id() as level_id from transactions s inner join accounts p on s.account_id = p.id group by grouping sets ((p.status, s.txn_type), (p.status), ());

@@ -1,0 +1,1 @@
+select store_sales.id, store_sales.sale_date, store_sales.store_id, products.cost, suppliers.rating, suppliers.supplier_name, case when suppliers.rating >= 4.2 then 'High' when suppliers.rating >= 2.0 then 'Medium' else 'Low' end as rating_band from store_sales join products on store_sales.product_id = products.id join suppliers on products.supplier_id = suppliers.id

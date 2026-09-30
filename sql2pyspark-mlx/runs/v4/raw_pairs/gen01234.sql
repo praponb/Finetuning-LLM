@@ -1,0 +1,1 @@
+SELECT carrier, DATE_FORMAT(shipped_date, 'yyyy-MM') AS shipped_month, COUNT(*) AS num_shipments, COUNT(cost) AS cost_count FROM shipments GROUP BY carrier, DATE_FORMAT(shipped_date, 'yyyy-MM') HAVING COUNT(cost) > 4 ORDER BY carrier DESC, num_shipments;

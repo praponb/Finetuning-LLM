@@ -1,0 +1,1 @@
+SELECT order_id, MAX(paid_at) AS last_paid_at, STDDEV_SAMP(amount) AS amount_stddev, MIN(paid_at) AS first_paid_at, PERCENTILE_APPROX(amount, 0.9) AS amount_p90 FROM payments GROUP BY order_id ORDER BY amount_stddev NULLS FIRST;

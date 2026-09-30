@@ -1,0 +1,1 @@
+with store_totals as (select store_id, round(avg(quantity), 2) as avg_quantity, count(distinct quantity) as unique_products from inventory group by store_id) select s.city, st.avg_quantity, st.unique_products from stores s inner join store_totals st on s.id = st.store_id where st.unique_products > 8;

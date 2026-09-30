@@ -1,0 +1,1 @@
+SELECT a.status, a.account_type, a.opened_date, t.txn_time, t.amount FROM accounts a LEFT OUTER JOIN transactions t ON a.id = t.account_id WHERE t.account_id = 5 AND a.customer_id IN (10, 32, 33, 38);

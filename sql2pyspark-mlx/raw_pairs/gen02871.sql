@@ -1,0 +1,1 @@
+with src as (select * from departments where dept_name = 'Legal'), agg as (select case when location in ('Tokyo', 'Berlin') then 'tier_1' else 'other' end as location_group, max(budget) - min(budget) as budget_range from src group by case when location in ('Tokyo', 'Berlin') then 'tier_1' else 'other' end) select * from agg where budget_range >= 54;

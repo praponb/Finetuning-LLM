@@ -1,0 +1,1 @@
+SELECT orders.status, ROUND(STDDEV(shipments.cost), 2) AS stddev_cost, COUNT(CASE WHEN shipments.carrier = 'Kerry' THEN 1 END) AS kerry_count FROM shipments JOIN orders ON shipments.order_id = orders.id GROUP BY orders.status ORDER BY stddev_cost DESC, orders.status;

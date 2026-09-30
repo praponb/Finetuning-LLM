@@ -1,0 +1,1 @@
+SELECT p.region, src.status, COUNT(*) AS rows_total, SUM(src.discount) AS total_discount FROM orders src JOIN stores p ON src.store_id = p.id GROUP BY GROUPING SETS ((p.region, src.status), (p.region), ())

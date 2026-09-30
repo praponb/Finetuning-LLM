@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating DESC NULLS LAST, id) AS latest_rank FROM suppliers) x WHERE latest_rank = 1) SELECT id, supplier_name, country, city, latest_rank, CASE WHEN country RLIKE '^(DE|TH)$' THEN 'EXTENDED' ELSE 'OTHER_ZONE' END AS country_zone FROM deduped ORDER BY city DESC NULLS FIRST, country DESC;

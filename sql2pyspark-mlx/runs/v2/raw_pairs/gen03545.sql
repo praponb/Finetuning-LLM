@@ -1,0 +1,1 @@
+SELECT s.browser, we.event_type, we.page, we.duration_sec FROM sessions s LEFT JOIN web_events we ON s.id = we.session_id WHERE s.device IN ('desktop', 'tablet', 'mobile') AND we.event_time < '2023-08-01' ORDER BY we.duration_sec DESC;

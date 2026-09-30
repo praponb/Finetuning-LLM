@@ -1,0 +1,1 @@
+with filtered as (select *, cast(is_remote as int) as is_remote_flag from employees where salary <= 65000) select dim.location, dim.dept_name, a.job_title, count(*) as num_rows, min(a.is_remote_flag) as min_is_remote_flag, max(a.salary) as max_salary from filtered a join departments dim on a.dept_id = dim.id group by cube (dim.location, dim.dept_name, a.job_title)

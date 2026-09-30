@@ -1,0 +1,1 @@
+SELECT s.id, s.city, COUNT(o.id) AS order_count, SORT_ARRAY(COLLECT_SET(o.channel)) AS channel_list FROM stores s LEFT JOIN orders o ON s.id = o.store_id WHERE o.channel NOT IN ('store', 'mobile') GROUP BY s.id, s.city ORDER BY order_count DESC

@@ -1,0 +1,1 @@
+SELECT e.manager_id AS employee_manager_id, e.level AS employee_level, e.email AS employee_email, m.salary AS manager_salary FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE e.level = 'L5' AND e.hire_date BETWEEN '2023-06-06' AND '2025-10-01'

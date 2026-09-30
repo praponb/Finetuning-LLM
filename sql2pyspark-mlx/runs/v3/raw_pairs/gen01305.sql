@@ -1,0 +1,1 @@
+SELECT id, status, end_date, customer_id, start_date, RANK() OVER (PARTITION BY status ORDER BY end_date) rnk, NTILE(10) OVER (PARTITION BY customer_id ORDER BY start_date, id) quartile FROM subscriptions WHERE status = 'CANCELLED'

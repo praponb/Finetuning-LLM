@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, order_id, unit_price, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY quantity) AS quantity_dense_rank, LAG(unit_price, 1) OVER (PARTITION BY order_id ORDER BY quantity, id) AS prev_unit_price FROM order_items;

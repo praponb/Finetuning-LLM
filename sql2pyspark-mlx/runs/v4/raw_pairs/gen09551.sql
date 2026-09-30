@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT dept_name, ROUND((100 * SUM(CASE WHEN dept_name = 'HR' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_hr, MAX(budget) - MIN(budget) AS budget_range FROM departments WHERE dept_name IS NOT NULL GROUP BY dept_name) AS x WHERE budget_range >= 20 ORDER BY pct_hr DESC, dept_name DESC

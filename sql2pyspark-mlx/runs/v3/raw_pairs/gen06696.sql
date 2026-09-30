@@ -1,0 +1,1 @@
+SELECT we.id, we.session_id, s.customer_id, CONCAT(s.browser, ' ', s.country) AS browser_country FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE s.browser = 'Chrome' AND s.customer_id IS NULL ORDER BY customer_id, id LIMIT 50

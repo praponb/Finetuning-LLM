@@ -1,0 +1,1 @@
+SELECT id, manager_id, salary, hire_date FROM (SELECT id, manager_id, salary, hire_date, DENSE_RANK() OVER (PARTITION BY manager_id ORDER BY salary DESC) AS row_num FROM employees WHERE is_remote) AS ranked WHERE row_num <= 2;

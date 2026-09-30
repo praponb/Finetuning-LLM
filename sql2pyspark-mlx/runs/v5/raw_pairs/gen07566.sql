@@ -1,0 +1,1 @@
+SELECT event_type, page, CASE WHEN event_type IN ('search', 'purchase') THEN 'tier_1' ELSE 'other' END AS event_type_group, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY 1, 2, 3;

@@ -1,0 +1,1 @@
+SELECT id, balance, customer_id, account_type, ROUND(balance, 2) AS balance_rounded FROM accounts WHERE account_type = 'CREDIT' AND (opened_date BETWEEN '2023-03-01' AND '2025-08-01' OR balance BETWEEN 25000 AND 30000)

@@ -1,0 +1,1 @@
+WITH subscriptions_by_customer AS (SELECT customer_id, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.email, c.credit_limit, sbc.max_monthly_fee FROM customers c INNER JOIN subscriptions_by_customer sbc ON c.id = sbc.customer_id WHERE sbc.max_monthly_fee >= 230 ORDER BY email

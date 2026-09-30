@@ -1,0 +1,1 @@
+with lines as (select id, explode(discounts) as tier_value from price_tiers) select id, tier_value, percent_rank() over (order by tier_value nulls last) as tier_value_percent_rank, cume_dist() over (order by tier_value) as tier_value_cume_dist from lines where tier_value >= 34;

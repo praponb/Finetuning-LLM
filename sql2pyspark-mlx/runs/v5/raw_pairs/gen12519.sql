@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT session_id, page, event_type, duration_sec FROM web_events) src PIVOT (MAX(duration_sec) AS value_sum, COUNT(1) AS cnt FOR event_type IN ('add_to_cart' AS add_to_cart, 'click' AS click))

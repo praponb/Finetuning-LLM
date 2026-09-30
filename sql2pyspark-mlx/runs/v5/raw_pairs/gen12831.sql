@@ -1,0 +1,1 @@
+SELECT suppliers.country, COUNT(products.cost) AS cost_count, MAX(products.launch_date) AS last_launch_date FROM products RIGHT JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY suppliers.country ORDER BY suppliers.country;

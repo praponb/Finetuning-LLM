@@ -1,0 +1,1 @@
+select level, round(avg(salary), 2) as avg_salary, max(hire_date) as latest_hire_date, round((100 * sum(case when job_title = 'Engineer' then 1 else 0 end)) / count(*), 1) as pct_engineer from employees group by level order by avg_salary desc

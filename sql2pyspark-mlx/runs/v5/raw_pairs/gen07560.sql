@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, carrier, shipped_date, cost, status, INITCAP(TRIM(status)) AS status_title FROM shipments WHERE carrier IS NOT NULL) SELECT id, cost, status, status_title FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY cost DESC, id) AS row_num FROM filtered) t WHERE row_num = 1;

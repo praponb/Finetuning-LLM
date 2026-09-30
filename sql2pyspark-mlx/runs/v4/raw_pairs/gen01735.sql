@@ -1,0 +1,1 @@
+WITH ProductsBySupplier AS (SELECT supplier_id, AVG(cost) AS avg_cost, MAX(price) - MIN(price) AS price_range FROM products GROUP BY supplier_id) SELECT s.country, s.city, P.avg_cost, P.price_range FROM suppliers s LEFT OUTER JOIN ProductsBySupplier P ON s.id = P.supplier_id WHERE P.price_range > 57;

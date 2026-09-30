@@ -1,0 +1,1 @@
+WITH payments_by_order AS (SELECT order_id, COUNT(*) AS row_count FROM payments GROUP BY order_id) SELECT o.id, o.store_id, o.customer_id, pbo.row_count FROM orders o LEFT OUTER JOIN payments_by_order pbo ON o.id = pbo.order_id WHERE pbo.row_count >= 9;

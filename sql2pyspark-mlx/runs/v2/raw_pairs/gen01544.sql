@@ -1,0 +1,1 @@
+SELECT p.id, p.method, o.store_id, o.shipping_fee, o.customer_id FROM payments p LEFT JOIN orders o ON o.id = p.order_id WHERE p.method NOT IN ('cash', 'bank_transfer', 'promptpay') AND p.order_id IS NULL;

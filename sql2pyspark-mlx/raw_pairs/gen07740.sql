@@ -1,0 +1,1 @@
+SELECT p.id, p.brand, COUNT(ss.id) AS store_sale_count FROM products p INNER JOIN store_sales ss ON p.id = ss.product_id WHERE ss.units BETWEEN 20 AND 28 GROUP BY p.id, p.brand ORDER BY store_sale_count DESC, p.brand;

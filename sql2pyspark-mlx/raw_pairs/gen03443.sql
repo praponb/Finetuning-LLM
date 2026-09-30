@@ -1,0 +1,1 @@
+with store_sales_by_product as (select product_id, min(units) as min_units from store_sales where revenue between 1600 and 3200 group by product_id) select p.id, p.supplier_id, ssbp.min_units from products p inner join store_sales_by_product ssbp on p.id = ssbp.product_id where ssbp.min_units >= 15

@@ -1,0 +1,1 @@
+select year(c.signup_date) as signup_year, max(s.cost) as max_cost, max(s.cost) - min(s.cost) as cost_range from shipments s inner join orders o on s.order_id = o.id left outer join customers c on o.customer_id = c.id where month(s.shipped_date) in (1, 7, 10) group by year(c.signup_date) having max(s.cost) >= 41 order by signup_year desc limit 10;

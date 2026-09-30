@@ -1,0 +1,1 @@
+select case when duration_sec >= 436 then 'high' when duration_sec >= 212 then 'mid' else 'low' end as duration_sec_bucket, count(duration_sec) as duration_sec_count, round(stddev(duration_sec), 2) as stddev_duration_sec, avg(duration_sec) as avg_duration_sec from web_events group by duration_sec_bucket having avg(duration_sec) > 450;

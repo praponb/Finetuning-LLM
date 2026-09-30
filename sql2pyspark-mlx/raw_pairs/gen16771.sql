@@ -1,0 +1,1 @@
+SELECT MONTH(opened_date) AS opened_month, SUM(sqft) AS total_sqft, ROUND((100 * SUM(CASE WHEN region = 'Central' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_central FROM stores GROUP BY MONTH(opened_date) HAVING pct_central >= 47 ORDER BY total_sqft DESC;

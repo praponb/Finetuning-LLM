@@ -1,0 +1,1 @@
+WITH order_items_by_product AS (SELECT product_id, SUM(unit_price) AS total_unit_price FROM order_items GROUP BY product_id) SELECT p.id, p.product_name, oibp.total_unit_price FROM products p LEFT JOIN order_items_by_product oibp ON p.id = oibp.product_id WHERE oibp.total_unit_price > 2000;

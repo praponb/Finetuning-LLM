@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, category, brand, price, cost, stock_qty, launch_date, tags, supplier_id, ARRAY_JOIN(tags, '|') AS tags_text FROM products WHERE launch_date > DATE '2023-09-17') SELECT * FROM (SELECT category, brand, cost FROM cleaned) src PIVOT (AVG(cost) AS value_sum FOR brand IN ('Stark', 'Acme', 'Globex'))

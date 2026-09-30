@@ -1,0 +1,1 @@
+SELECT id, status, paid_at, order_id FROM (SELECT id, status, paid_at, order_id, RANK() OVER (PARTITION BY status ORDER BY paid_at DESC) AS rnk FROM payments WHERE method IS NULL) AS r WHERE rnk <= 3;

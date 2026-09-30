@@ -1,0 +1,1 @@
+with ranked as (select id, product_id, units, sale_date, row_number() over (partition by product_id order by units desc, id) as pos from store_sales) select id, product_id, units, sale_date from ranked where pos <= 3 order by sale_date desc

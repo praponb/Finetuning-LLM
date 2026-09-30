@@ -1,0 +1,1 @@
+select date_format(delivered_date, 'yyyy-MM') as delivered_month, sum(cost) as total_cost, count(*) as cnt, round(sum(cost) * 100.0 / sum(sum(cost)) over (), 2) as pct_of_total from shipments group by date_format(delivered_date, 'yyyy-MM') order by pct_of_total asc;

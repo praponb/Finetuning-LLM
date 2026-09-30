@@ -1,0 +1,1 @@
+with with_dims as (select src.*, s.city, s.supplier_name from products src left join suppliers s on src.supplier_id = s.id) select id, product_name, price, cost, stock_qty, launch_date, tags, supplier_id, city from with_dims;

@@ -1,0 +1,1 @@
+select is_flagged, min(txn_time) as min_txn_time, sum(case when merchant = '7-Eleven' then 1 else 0 end) as 7_eleven_count from transactions where merchant = '7-Eleven' group by is_flagged having sum(case when merchant = '7-Eleven' then 1 else 0 end) >= 43;

@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, MIN(sale_date) AS min_sale_date, ROUND(AVG(revenue), 2) AS avg_revenue FROM store_sales GROUP BY store_id) SELECT s.opened_date, s.sqft, ss.min_sale_date, ss.avg_revenue FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id WHERE ss.avg_revenue >= 49 ORDER BY avg_revenue DESC, sqft DESC;

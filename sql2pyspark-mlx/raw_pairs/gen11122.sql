@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END) AS chiang_mai_count, MAX(rating) - MIN(rating) AS rating_range, ROUND(AVG(rating), 2) AS avg_rating FROM suppliers WHERE country != 'US' GROUP BY rating_bucket;

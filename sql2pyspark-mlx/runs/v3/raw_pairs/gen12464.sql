@@ -1,0 +1,1 @@
+select e.id, e.level as employee_level, e.full_name as employee_full_name, e.email as employee_email, m.manager_id as manager_manager_id, m.job_title as manager_job_title, case when m.is_remote then 'Yes' else 'No' end as is_remote_label from employees e inner join employees m on e.manager_id = m.id order by id asc;

@@ -1,0 +1,1 @@
+SELECT t.amount, t.account_id, a.customer_id, c.segment, c.email, DATE_SUB(a.opened_date, 56) AS opened_date_minus_56d FROM transactions t INNER JOIN accounts a ON t.account_id = a.id LEFT OUTER JOIN customers c ON a.customer_id = c.id WHERE a.customer_id IN (2, 9, 18) ORDER BY opened_date_minus_56d ASC, amount DESC

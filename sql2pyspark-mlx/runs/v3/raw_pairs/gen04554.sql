@@ -1,0 +1,1 @@
+WITH ranked_customers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date, id) AS rnk FROM customers WHERE LENGTH(name) < 10) SELECT * FROM ranked_customers WHERE rnk <= 3 ORDER BY name;

@@ -1,0 +1,1 @@
+SELECT id, started_at, DATE_TRUNC('year', started_at) AS started_at_period, CASE WHEN device = 'mobile' THEN 1 ELSE 0 END AS is_mobile FROM sessions WHERE browser NOT IN ('Firefox', 'Edge', 'Safari');

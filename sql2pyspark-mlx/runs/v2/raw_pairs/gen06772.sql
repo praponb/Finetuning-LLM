@@ -1,0 +1,1 @@
+SELECT customer_id, status, ROUND(AVG(amount), 2) AS avg_amount, COUNT(DISTINCT amount) AS unique_stores, MIN(order_date) AS first_order_date FROM orders WHERE channel IN ('mobile', 'web', 'store') AND shipping_fee < 19 GROUP BY customer_id, status ORDER BY customer_id DESC, status;

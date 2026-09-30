@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, country, age, ROW_NUMBER() OVER (PARTITION BY country ORDER BY age DESC, id) AS row_num FROM customers WHERE segment = 'Corporate') SELECT id, country, age FROM ranked WHERE row_num <= 3 ORDER BY age DESC

@@ -1,0 +1,1 @@
+WITH filtered_subscriptions AS (SELECT * FROM subscriptions WHERE status IN ('EXPIRED', 'ACTIVE', 'CANCELLED') AND monthly_fee >= 180), plan_summary AS (SELECT plan, MIN(monthly_fee) AS min_monthly_fee FROM filtered_subscriptions GROUP BY plan) SELECT plan, min_monthly_fee FROM plan_summary ORDER BY plan LIMIT 10;

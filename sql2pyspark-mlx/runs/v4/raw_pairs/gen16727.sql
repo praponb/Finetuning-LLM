@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DATE_FORMAT(event_time, 'yyyy-MM') event_time_label, COALESCE(page, 'UNKNOWN') page_filled FROM web_events WHERE event_time >= TIMESTAMP '2023-09-19 14:00:00') SELECT * FROM cleaned QUALIFY RANK() OVER (PARTITION BY session_id, event_type ORDER BY event_time) = 1;

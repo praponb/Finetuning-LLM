@@ -1,0 +1,1 @@
+SELECT id, country, CEIL(rating) AS rating_whole, CASE WHEN city IN ('Berlin', 'Chiang Mai') THEN 'Priority' ELSE 'Other' END AS city_group FROM suppliers WHERE city IS NULL AND country = 'UK' ORDER BY city_group, id DESC LIMIT 3;

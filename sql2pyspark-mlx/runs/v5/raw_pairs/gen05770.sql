@@ -1,0 +1,1 @@
+with flattened as (select id, created_at, tag from carts lateral view outer explode(coupon_codes) e as tag) select tag, date_trunc('hour', created_at) as hour_window, sort_array(collect_set(tag)) as tag_list, count(case when tag = 'VIP' then 1 end) as vip_count from flattened group by tag, date_trunc('hour', created_at) order by vip_count

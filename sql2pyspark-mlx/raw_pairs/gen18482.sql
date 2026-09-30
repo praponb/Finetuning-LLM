@@ -1,0 +1,1 @@
+SELECT id, event_type, ROUND(duration_sec, 1) AS duration_sec_rounded FROM web_events WHERE (event_time < '2023-09-01' AND session_id = 7) OR event_time >= '2023-12-01' ORDER BY duration_sec_rounded DESC

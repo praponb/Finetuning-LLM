@@ -1,0 +1,1 @@
+SELECT t.id, t.is_flagged, a.balance, c.is_active FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id RIGHT JOIN customers c ON c.id = a.customer_id WHERE t.amount <= 1500 AND a.status IS NULL ORDER BY id DESC

@@ -1,0 +1,1 @@
+SELECT MONTH(ss.sale_date) AS sale_month, SUM(i.quantity) AS total_quantity FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY MONTH(ss.sale_date) HAVING total_quantity > 410 ORDER BY total_quantity DESC, sale_month LIMIT 3

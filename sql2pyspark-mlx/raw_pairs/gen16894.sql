@@ -1,0 +1,1 @@
+SELECT id, full_name, job_title, salary, hire_date, STDDEV_SAMP(salary) OVER (PARTITION BY level) level_stddev_samp_salary, RANK() OVER (PARTITION BY job_title, dept_id ORDER BY salary) salary_rank, MAX(salary) OVER (PARTITION BY job_title) job_title_max_salary FROM employees

@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, EXPLODE(coupon_codes) AS value FROM carts) SELECT s.id, s.customer_id, s.value, CASE WHEN value RLIKE '^(WELCOME5|VIP)$' THEN 'OTHER_ZONE' WHEN value RLIKE '^(SPRING10|BUNDLE)$' THEN 'GROUP_A' ELSE 'GROUP_B' END AS value_zone, (SELECT AVG(a2.balance) FROM accounts a2 WHERE a2.customer_id = s.customer_id) AS avg_account_balance FROM lines s;

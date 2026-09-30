@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM products WHERE price > 610 AND brand NOT IN ('Umbrella', 'Acme')), Agg AS (SELECT brand, COUNT(*) AS row_count, COUNT(DISTINCT price) AS unique_brands FROM base GROUP BY brand) SELECT * FROM Agg WHERE unique_brands > 8;

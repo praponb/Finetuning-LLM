@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM inventory WHERE (store_id IN (2, 4, 6) AND product_id = 3) OR quantity > 200), Summary AS (SELECT product_id, MONTH(last_restock) AS last_restock_month, MIN(last_restock) AS first_last_restock FROM base GROUP BY product_id, MONTH(last_restock)) SELECT product_id, last_restock_month FROM Summary ORDER BY product_id

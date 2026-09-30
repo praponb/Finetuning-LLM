@@ -1,0 +1,1 @@
+WITH top_transactions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY txn_time DESC, id) rnk FROM transactions) SELECT id, txn_type, txn_time, account_id FROM top_transactions WHERE rnk <= 3

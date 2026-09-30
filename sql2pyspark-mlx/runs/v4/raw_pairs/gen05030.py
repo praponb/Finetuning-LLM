@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_suppliers.alias("s")
+    .join(df_products.alias("p"), F.col("s.id") == F.col("p.supplier_id"), "left")
+    .groupBy(F.col("s.id"))
+    .agg(
+        F.count(F.col("p.id")).alias("product_count"),
+        F.concat_ws(", ", F.sort_array(F.collect_set(F.col("p.brand")))).alias("brand_values"),
+    )
+    .orderBy("product_count")
+)

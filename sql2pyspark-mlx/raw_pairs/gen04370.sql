@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, INITCAP(TRIM(txn_type)) AS txn_type_title, COALESCE(merchant, 'OTHER') AS merchant_filled FROM transactions WHERE is_flagged) SELECT p.account_type, p.status, a.txn_type, COUNT(*) AS cnt, MIN(a.amount) AS min_amount FROM base a INNER JOIN accounts p ON a.account_id = p.id GROUP BY p.account_type, p.status, a.txn_type ORDER BY account_type DESC;

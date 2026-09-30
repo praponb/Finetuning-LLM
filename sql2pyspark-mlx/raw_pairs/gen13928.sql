@@ -1,0 +1,1 @@
+select case when salary >= 128000 then 'high' when salary >= 48000 then 'mid' else 'low' end salary_bucket, date_trunc('MONTH', hire_date) hire_month, count(distinct salary) unique_depts, min(salary) min_salary from employees group by salary_bucket, hire_month;

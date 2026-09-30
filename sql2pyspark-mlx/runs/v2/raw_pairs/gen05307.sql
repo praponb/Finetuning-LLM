@@ -1,0 +1,1 @@
+select id, customer_id, order_date, shipping_fee, round(avg(shipping_fee) over (partition by customer_id order by order_date, id rows between 6 preceding and current row), 2) as shipping_fee_moving_avg_7 from orders where amount <= 1210;

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, QUARTER(opened_date) opened_quarter, MIN(sqft) min_sqft, MAX(sqft) max_sqft FROM stores GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM'), QUARTER(opened_date)

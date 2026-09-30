@@ -1,0 +1,1 @@
+select device, count_if(country = 'UK') as uk_events, count(distinct device) as distinct_devices, count_if(device = 'mobile') as mobile_events, min(started_at) as first_started_at, (unix_timestamp(max(started_at)) - unix_timestamp(min(started_at))) / 60 as span_minutes, max(started_at) as last_started_at from sessions group by device;

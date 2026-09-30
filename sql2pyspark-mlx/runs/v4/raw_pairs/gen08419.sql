@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4346000 THEN 'high' WHEN budget >= 1480000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, COUNT(budget) AS budget_count, SORT_ARRAY(COLLECT_SET(location)) AS location_list FROM departments GROUP BY CASE WHEN budget >= 4346000 THEN 'high' WHEN budget >= 1480000 THEN 'mid' ELSE 'low' END, location HAVING COUNT(budget) > 3 ORDER BY budget_count DESC

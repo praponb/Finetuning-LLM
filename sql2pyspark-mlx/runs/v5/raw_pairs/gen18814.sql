@@ -1,0 +1,1 @@
+SELECT *, SUM(age) OVER (ORDER BY signup_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_age, RANK() OVER (PARTITION BY city ORDER BY credit_limit NULLS LAST) credit_limit_rank, SUM(age) OVER (PARTITION BY city ORDER BY age, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) cumulative_age FROM customers;

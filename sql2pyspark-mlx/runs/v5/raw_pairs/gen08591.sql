@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DAY(delivered_date) AS delivered_date_day, ROUND(cost * 0.85, 2) AS adjusted_cost FROM shipments WHERE delivered_date >= DATE '2023-08-16' AND carrier IS DISTINCT FROM 'Kerry') SELECT status, order_id FROM cleaned EXCEPT SELECT status, order_id FROM shipments WHERE cost >= 47;

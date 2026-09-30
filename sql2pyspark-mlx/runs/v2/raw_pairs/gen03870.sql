@@ -1,0 +1,1 @@
+WITH payments_by_order AS (SELECT order_id, MAX(amount) - MIN(amount) AS amount_range, MAX(amount) AS max_amount FROM payments WHERE status = 'REFUNDED' GROUP BY order_id) SELECT o.id, o.shipping_fee, pbo.amount_range, pbo.max_amount FROM orders o INNER JOIN payments_by_order pbo ON o.id = pbo.order_id ORDER BY o.shipping_fee DESC, amount_range

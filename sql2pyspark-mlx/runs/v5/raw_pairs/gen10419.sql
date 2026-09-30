@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DATEDIFF(CURRENT_DATE(), hire_date) days_since_hire_date, ADD_MONTHS(hire_date, 6) hire_date_plus_months, COALESCE(level, 'OTHER') level_filled FROM employees WHERE full_name LIKE 'FR%') SELECT job_title FROM cleaned INTERSECT ALL SELECT job_title FROM employees WHERE email LIKE '%@mail.co.th'

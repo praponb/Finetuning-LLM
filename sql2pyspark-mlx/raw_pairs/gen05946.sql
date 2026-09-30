@@ -1,0 +1,1 @@
+with exploded as (select id, service, host, level, status_code, key, attr_value from app_logs lateral view explode(context) x as key, attr_value) select id, service, host, key, attr_value, case when service rlike '^(checkout|search)$' then 'PRIORITY' else 'CORE' end as service_zone from exploded;

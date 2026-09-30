@@ -1,0 +1,1 @@
+SELECT start_date, monthly_fee, DATEDIFF(CURRENT_DATE(), start_date) AS days_since_start_date, DATE_FORMAT(start_date, 'yyyy-MM-dd') AS start_date_label FROM subscriptions WHERE monthly_fee <= 100 ORDER BY monthly_fee DESC;

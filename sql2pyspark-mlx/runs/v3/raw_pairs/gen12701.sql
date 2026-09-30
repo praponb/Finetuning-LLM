@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, MIN(quantity) AS min_quantity FROM order_items WHERE unit_price > 190 GROUP BY product_id) SELECT p.id, p.launch_date, p.brand, ps.min_quantity FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id

@@ -1,0 +1,1 @@
+with src as (select * from order_items where not (product_id is null and quantity = 3)), agg as (select product_id, avg(unit_price) avg_unit_price from src group by product_id) select product_id, avg_unit_price from agg where avg_unit_price > 160 order by product_id desc

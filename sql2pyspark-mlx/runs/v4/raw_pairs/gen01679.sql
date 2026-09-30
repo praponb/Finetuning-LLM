@@ -1,0 +1,1 @@
+SELECT id, supplier_id, category, launch_date, DENSE_RANK() OVER (PARTITION BY supplier_id, category ORDER BY launch_date) AS launch_date_dense_rank FROM products WHERE category IN ('Fashion', 'Home')

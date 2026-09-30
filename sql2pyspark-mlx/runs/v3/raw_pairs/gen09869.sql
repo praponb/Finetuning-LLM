@@ -1,0 +1,1 @@
+SELECT country, CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(STDDEV(rating), 2) AS stddev_rating, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM suppliers WHERE city NOT IN ('Chiang Mai', 'New York') GROUP BY country, CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END;

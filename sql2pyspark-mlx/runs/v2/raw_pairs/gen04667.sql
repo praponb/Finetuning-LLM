@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT brand, DATE_TRUNC('MONTH', launch_date) AS launch_month, MAX(cost) - MIN(cost) AS cost_range FROM products GROUP BY brand, DATE_TRUNC('MONTH', launch_date)) AS x WHERE cost_range < 55;

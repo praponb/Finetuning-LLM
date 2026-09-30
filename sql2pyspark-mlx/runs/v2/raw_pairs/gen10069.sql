@@ -1,0 +1,1 @@
+with department_stats as (select dept_id, sum(case when level = 'L4' then 1 else 0 end) as l4_count, count(case when level = 'L3' then 1 end) as l3_count from employees group by dept_id) select d.id, d.dept_name, d.budget, ds.l4_count, ds.l3_count from departments d join department_stats ds on d.id = ds.dept_id

@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, COUNT(CASE WHEN category = 'Grocery' THEN 1 END) AS grocery_count FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, st.grocery_count FROM suppliers s INNER JOIN supplier_totals st ON s.id = st.supplier_id

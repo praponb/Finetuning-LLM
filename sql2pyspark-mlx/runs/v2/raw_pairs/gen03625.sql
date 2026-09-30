@@ -1,0 +1,1 @@
+SELECT QUARTER(delivered_date) delivered_quarter, YEAR(shipped_date) shipped_year, SUM(CASE WHEN carrier = 'Flash' THEN 1 ELSE 0 END) flash_count, COUNT(cost) cost_count, SUM(CASE WHEN carrier = 'FedEx' THEN cost ELSE 0 END) fedex_cost FROM shipments WHERE cost < 94 AND carrier != 'UPS' GROUP BY 1, 2;

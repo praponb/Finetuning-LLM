@@ -1,0 +1,1 @@
+SELECT status, delivered_month, avg_cost, min_cost FROM (SELECT status, DATE_TRUNC('MONTH', delivered_date) AS delivered_month, ROUND(AVG(cost), 2) AS avg_cost, MIN(cost) AS min_cost FROM shipments GROUP BY status, DATE_TRUNC('MONTH', delivered_date)) AS sub WHERE avg_cost > 56 ORDER BY min_cost;

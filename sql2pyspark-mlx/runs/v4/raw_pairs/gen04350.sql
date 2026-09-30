@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM order_items WHERE product_id IS NULL AND unit_price > 250), summary AS (SELECT product_id, ROUND(AVG(quantity), 2) avg_quantity, SUM(quantity * unit_price) revenue FROM src GROUP BY product_id) SELECT product_id, avg_quantity, revenue FROM summary

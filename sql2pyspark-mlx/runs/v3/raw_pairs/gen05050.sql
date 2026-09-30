@@ -1,0 +1,1 @@
+with store_stats as (select store_id, max(discount) as max_discount, min(amount) as min_amount from orders group by store_id) select s.id, s.city, s.region, ss.max_discount, ss.min_amount from stores s left outer join store_stats ss on s.id = ss.store_id;

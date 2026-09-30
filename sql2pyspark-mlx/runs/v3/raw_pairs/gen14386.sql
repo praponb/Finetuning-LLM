@@ -1,0 +1,1 @@
+with products_by_supplier as (select supplier_id, avg(stock_qty) avg_stock_qty, sort_array(collect_set(category)) category_list from products group by supplier_id) select s.supplier_name, pbs.avg_stock_qty, pbs.category_list from suppliers s left outer join products_by_supplier pbs on s.id = pbs.supplier_id order by s.supplier_name desc;

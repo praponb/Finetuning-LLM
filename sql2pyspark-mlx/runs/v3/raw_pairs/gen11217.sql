@@ -1,0 +1,1 @@
+SELECT s.id, s.status, s.delivered_date FROM shipments s WHERE s.shipped_date <= '2025-09-29' AND s.order_id NOT IN (SELECT id FROM orders WHERE customer_id IN (1, 15, 26, 27)) ORDER BY status DESC, id LIMIT 10;

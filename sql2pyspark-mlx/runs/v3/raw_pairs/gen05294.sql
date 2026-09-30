@@ -1,0 +1,1 @@
+SELECT customers.id, customers.city, COUNT(sessions.id) AS session_count, SORT_ARRAY(COLLECT_SET(sessions.country)) AS country_list FROM customers LEFT JOIN sessions ON sessions.customer_id = customers.id GROUP BY customers.id, customers.city

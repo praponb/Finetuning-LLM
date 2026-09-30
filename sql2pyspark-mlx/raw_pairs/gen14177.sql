@@ -1,0 +1,1 @@
+SELECT o.status, MAX(oi.quantity) - MIN(oi.quantity) AS quantity_range, COUNT(DISTINCT oi.quantity) AS unique_products FROM order_items oi JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE o.store_id = 10 GROUP BY o.status ORDER BY quantity_range DESC, unique_products DESC

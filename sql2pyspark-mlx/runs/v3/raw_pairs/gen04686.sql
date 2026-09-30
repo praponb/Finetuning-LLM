@@ -1,0 +1,1 @@
+SELECT status, account_type, ROUND((100 * SUM(CASE WHEN status = 'FROZEN' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_frozen, MAX(balance) - MIN(balance) AS balance_range FROM accounts WHERE status = 'OPEN' GROUP BY 1, 2

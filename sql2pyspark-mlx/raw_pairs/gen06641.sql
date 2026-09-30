@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM payments WHERE (paid_at < '2023-06-09' AND paid_at >= '2023-11-01') OR method IN ('bank_transfer', 'promptpay', 'paypal')), summary AS (SELECT status, order_id, MIN(paid_at) AS first_paid_at FROM base GROUP BY status, order_id) SELECT status, order_id, first_paid_at FROM summary ORDER BY first_paid_at DESC, order_id DESC;

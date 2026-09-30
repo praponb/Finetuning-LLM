@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM sessions QUALIFY ROW_NUMBER() OVER (PARTITION BY device ORDER BY started_at DESC, id) = 1) SELECT s.id, s.customer_id, s.device, s.country, (SELECT MIN(x.monthly_fee) FROM subscriptions x WHERE x.customer_id = s.customer_id) AS min_subscription_monthly_fee FROM latest s ORDER BY device, min_subscription_monthly_fee;

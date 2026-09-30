@@ -1,0 +1,1 @@
+SELECT departments.budget, employees.hire_date, employees.email, employees.dept_id FROM departments LEFT OUTER JOIN employees ON employees.dept_id = departments.id WHERE departments.dept_name = 'Legal' ORDER BY email

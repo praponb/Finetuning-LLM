@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, created_at, EXPLODE_OUTER(coupon_codes) AS value FROM carts) SELECT value, SORT_ARRAY(COLLECT_SET(value)) AS value_list, MAX(created_at) AS ended_at, COUNT(DISTINCT value) AS distinct_values, (UNIX_TIMESTAMP(MAX(created_at)) - UNIX_TIMESTAMP(MIN(created_at))) / 60 AS span_minutes FROM flattened GROUP BY value ORDER BY value DESC NULLS FIRST;

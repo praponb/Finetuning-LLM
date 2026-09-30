@@ -1,0 +1,1 @@
+select order_id, case when unit_price >= 400 then 'high' when unit_price >= 70 then 'mid' else 'low' end as unit_price_bucket, min(unit_price) as min_unit_price from order_items where unit_price <= 390 and order_id in (19, 26, 28, 36) group by order_id, unit_price_bucket

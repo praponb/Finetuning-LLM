@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, ROUND((100 * SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_cancelled FROM orders WHERE discount > 0.26 GROUP BY store_id) SELECT s.id, s.region, ss.pct_cancelled FROM stores s LEFT OUTER JOIN store_summary ss ON s.id = ss.store_id ORDER BY s.region

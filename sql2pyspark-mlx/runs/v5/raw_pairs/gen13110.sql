@@ -1,0 +1,1 @@
+SELECT YEAR(p.launch_date) AS launch_year, SUM(i.quantity) AS total_quantity FROM inventory i INNER JOIN products p ON p.id = i.product_id WHERE ARRAY_CONTAINS(p.tags, 'sale') GROUP BY YEAR(p.launch_date) HAVING SUM(i.quantity) >= 1290;

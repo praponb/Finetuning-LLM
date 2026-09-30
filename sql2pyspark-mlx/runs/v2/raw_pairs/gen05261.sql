@@ -1,0 +1,1 @@
+SELECT s.customer_id, s.device, SUM(CASE WHEN we.event_type = 'purchase' THEN we.duration_sec ELSE 0 END) AS purchase_duration_sec FROM web_events we JOIN sessions s ON we.session_id = s.id WHERE s.browser IN ('Safari', 'Chrome', 'Firefox') GROUP BY s.customer_id, s.device HAVING SUM(CASE WHEN we.event_type = 'purchase' THEN we.duration_sec ELSE 0 END) >= 76;

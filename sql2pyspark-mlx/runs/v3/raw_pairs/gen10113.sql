@@ -1,0 +1,1 @@
+SELECT status, MAX(monthly_fee) AS max_monthly_fee, SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END) AS premium_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM subscriptions WHERE MONTH(start_date) IN (1, 4, 5) AND (plan != 'basic' OR start_date < '2024-05-28') GROUP BY status ORDER BY plan_values DESC

@@ -1,0 +1,1 @@
+select s.id, s.cost, o.order_date, concat(s.status, ' ', s.carrier) as status_carrier from shipments s inner join orders o on o.id = s.order_id where o.order_date between '2023-08-03' and '2024-04-01' and o.amount < 1080;

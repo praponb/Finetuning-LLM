@@ -1,0 +1,1 @@
+select p.id, p.order_id, o.shipping_fee, c.country from payments p join orders o on p.order_id = o.id left join customers c on o.customer_id = c.id where p.method != 'cash' and p.status in ('SUCCESS', 'FAILED', 'REFUNDED')

@@ -1,0 +1,14 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy()
+
+result = (
+    df_customers
+    .filter(F.col("signup_date") <= "2023-12-01")
+    .groupBy(F.month("signup_date").alias("signup_month"))
+    .agg(F.sum("credit_limit").alias("total_credit_limit"))
+    .withColumn("pct_of_total", F.round(((F.col("total_credit_limit") * 100) / F.sum("total_credit_limit").over(w)), 2))
+    .orderBy(F.col("pct_of_total").desc(), "signup_month")
+    .limit(20)
+)

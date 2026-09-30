@@ -1,0 +1,1 @@
+SELECT s.id, s.country, s.city, s.rating FROM suppliers s WHERE NOT EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND p.category NOT IN ('Home', 'Grocery', 'Fashion')) ORDER BY s.rating DESC, id LIMIT 20;

@@ -1,0 +1,1 @@
+SELECT id, page, event_type, CONCAT_WS('-', event_type, page) AS event_type_page_key, COALESCE(duration_sec, 0) AS duration_sec_filled FROM web_events WHERE session_id IN (23, 26) AND (session_id IN (9, 28, 38) OR event_type IN ('page_view', 'click'))

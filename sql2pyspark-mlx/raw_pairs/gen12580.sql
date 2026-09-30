@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, COUNT(balance) AS balance_count, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts GROUP BY customer_id) SELECT c.is_active, ct.balance_count, ct.stddev_balance FROM customers c JOIN customer_totals ct ON c.id = ct.customer_id;

@@ -1,0 +1,1 @@
+select products.id, products.category, count(inventory.id) as inventory_count from products left outer join inventory on inventory.product_id = products.id where inventory.product_id in (1, 3, 6) group by products.id, products.category order by products.id, inventory_count desc, category limit 50

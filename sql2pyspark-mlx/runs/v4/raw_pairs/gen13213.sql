@@ -1,0 +1,1 @@
+SELECT p.id, p.order_id, p.paid_at, o.customer_id, s.region, s.sqft FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE p.paid_at < '2024-12-01' ORDER BY s.region

@@ -1,0 +1,1 @@
+SELECT account_id, amount_range FROM (SELECT account_id, MAX(amount) - MIN(amount) AS amount_range FROM transactions WHERE HOUR(txn_time) BETWEEN 12 AND 15 GROUP BY account_id) AS t WHERE amount_range < 61;

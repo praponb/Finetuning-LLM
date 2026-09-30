@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3151000 THEN 'high' WHEN budget >= 981000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(budget) AS total_budget, ROUND(AVG(budget), 2) AS avg_budget, MIN(budget) AS min_budget FROM departments GROUP BY 1 ORDER BY budget_bucket DESC LIMIT 5;

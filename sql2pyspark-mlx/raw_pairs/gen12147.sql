@@ -1,0 +1,1 @@
+SELECT s.id, s.name, s.country, s.city, s.segment, s.signup_date, s.is_active, x.order_discount, x.order_channel FROM customers s LEFT JOIN LATERAL (SELECT c.discount AS order_discount, c.channel AS order_channel FROM orders c WHERE c.customer_id = s.id ORDER BY c.discount DESC, c.id DESC LIMIT 1) x ON TRUE;

@@ -1,0 +1,1 @@
+select * from (select case when rating >= 4.0 then 'high' when rating >= 2.2 then 'mid' else 'low' end as rating_bucket, sum(case when city = 'Chiang Mai' then 1 else 0 end) as chiang_mai_count from suppliers group by case when rating >= 4.0 then 'high' when rating >= 2.2 then 'mid' else 'low' end) as agg where chiang_mai_count < 53 order by chiang_mai_count desc, rating_bucket

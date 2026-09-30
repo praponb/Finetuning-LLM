@@ -1,0 +1,1 @@
+SELECT level, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees WHERE full_name IS NOT NULL AND hire_date BETWEEN '2025-08-01' AND '2025-09-16' GROUP BY level HAVING stddev_salary > 28 ORDER BY stddev_salary DESC;

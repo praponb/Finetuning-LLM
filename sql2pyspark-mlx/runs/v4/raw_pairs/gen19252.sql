@@ -1,0 +1,1 @@
+SELECT s.id, s.city, s.store_name, t.max_revenue FROM stores s JOIN (SELECT store_id, MAX(revenue) AS max_revenue FROM store_sales WHERE sale_date >= '2025-07-01' GROUP BY store_id) t ON s.id = t.store_id WHERE t.max_revenue > 1600 ORDER BY city ASC;

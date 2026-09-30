@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY region ORDER BY opened_date, id) AS rnk FROM stores) AS r WHERE rnk <= 3;

@@ -1,0 +1,1 @@
+SELECT *, NTILE(5) OVER (PARTITION BY plan ORDER BY monthly_fee ASC, id ASC) AS monthly_fee_bucket, LAG(monthly_fee, 1, 0) OVER (PARTITION BY plan ORDER BY end_date ASC, id ASC) AS prev_monthly_fee, ROW_NUMBER() OVER w_running AS seq_no FROM subscriptions WINDOW w_running AS (PARTITION BY customer_id ORDER BY end_date ASC, id ASC)

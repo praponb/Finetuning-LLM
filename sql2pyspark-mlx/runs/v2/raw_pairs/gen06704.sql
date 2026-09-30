@@ -1,0 +1,1 @@
+SELECT city, country, COUNT(CASE WHEN country = 'UK' THEN 1 END) AS uk_count FROM suppliers WHERE (supplier_name IS NOT NULL AND city IN ('Chiang Mai', 'Berlin')) OR city IN ('New York', 'Tokyo', 'Bangkok') GROUP BY city, country ORDER BY uk_count DESC;

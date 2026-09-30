@@ -1,0 +1,1 @@
+SELECT channel, CASE WHEN amount >= 1490 THEN 'high' WHEN amount >= 490 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(CASE WHEN channel = 'partner' THEN 1 END) AS partner_count FROM orders GROUP BY 1, 2;

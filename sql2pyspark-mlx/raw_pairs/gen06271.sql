@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', last_restock) AS last_restock_month, AVG(quantity) AS avg_quantity, MAX(quantity) - MIN(quantity) AS quantity_range, SUM(quantity) AS total_quantity FROM inventory WHERE product_id IN (4, 6, 10) GROUP BY DATE_TRUNC('MONTH', last_restock) HAVING MAX(quantity) - MIN(quantity) < 45 ORDER BY avg_quantity

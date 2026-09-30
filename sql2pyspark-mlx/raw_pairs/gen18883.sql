@@ -1,0 +1,1 @@
+SELECT d.channel, d.status AS order_status, s.status AS shipment_status, COUNT(*) AS rows_total, MAX(s.cost) AS max_cost FROM shipments s JOIN orders d ON s.order_id = d.id GROUP BY GROUPING SETS ((d.channel, d.status, s.status), (d.channel));

@@ -1,0 +1,1 @@
+SELECT c.signup_date, o.channel, o.customer_id, CASE WHEN c.age >= 62 THEN 'High' WHEN c.age >= 28 THEN 'Medium' ELSE 'Low' END age_band FROM customers c INNER JOIN orders o ON c.id = o.customer_id WHERE c.credit_limit <= 8600 AND c.is_active ORDER BY signup_date, channel DESC;

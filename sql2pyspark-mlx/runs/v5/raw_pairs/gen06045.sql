@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, host, log_ts, status_code, key, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) x AS key, value) SELECT id, service, host, status_code, value, CASE WHEN host RLIKE '^(h2|h3)$' THEN 'GROUP_A' WHEN host RLIKE '^(h1|h4)$' THEN 'EXTENDED' ELSE 'PRIORITY' END AS host_zone FROM flattened;

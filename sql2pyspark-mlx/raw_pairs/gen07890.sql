@@ -1,0 +1,1 @@
+select id, account_id, txn_time, amount, ntile(10) over (partition by account_id order by txn_time, id) as quartile, last_value(amount) over (partition by account_id order by txn_time, id rows between unbounded preceding and unbounded following) as last_amount from transactions order by id, last_amount

@@ -1,0 +1,1 @@
+SELECT d.channel, d.status AS order_status, COUNT(*) AS rows_total, MIN(e.cost) AS min_cost FROM shipments e LEFT JOIN orders d ON e.order_id = d.id GROUP BY GROUPING SETS ((d.channel, d.status), (d.channel))

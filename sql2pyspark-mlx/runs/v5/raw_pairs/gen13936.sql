@@ -1,0 +1,1 @@
+select * from (select brand, sort_array(collect_set(category)) as category_list, avg(stock_qty) as avg_stock_qty from products where array_contains(tags, 'new') group by brand) as sub where avg_stock_qty >= 220

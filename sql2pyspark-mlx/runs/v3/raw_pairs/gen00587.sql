@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT method, MAX(amount) - MIN(amount) AS amount_range FROM payments WHERE order_id IN (11, 31, 38) GROUP BY method) AS sub WHERE amount_range < 27 ORDER BY amount_range DESC, method;

@@ -1,0 +1,1 @@
+SELECT id, customer_id, account_type, LAG(balance, 1, 0) OVER (PARTITION BY customer_id ORDER BY opened_date, id) AS prev_balance, ROW_NUMBER() OVER (ORDER BY opened_date, id) AS row_seq FROM accounts WHERE opened_date < '2023-11-01';

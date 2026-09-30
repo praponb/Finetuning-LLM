@@ -1,0 +1,1 @@
+WITH products_by_supplier AS (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values FROM products WHERE cost <= 300 GROUP BY supplier_id) SELECT s.id, s.supplier_name, s.rating, pbs.category_values FROM suppliers s INNER JOIN products_by_supplier pbs ON s.id = pbs.supplier_id ORDER BY s.rating DESC, id LIMIT 10

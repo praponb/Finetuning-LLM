@@ -1,0 +1,1 @@
+select id, plan, date_trunc('MONTH', start_date) as start_date_period, datediff(current_date(), start_date) as days_since_start_date from subscriptions where not (start_date <= '2024-10-01' or plan in ('basic', 'enterprise')) order by plan desc

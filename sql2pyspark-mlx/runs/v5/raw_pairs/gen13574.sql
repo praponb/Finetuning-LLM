@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.3 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(rating) AS total_rating, SUM(CASE WHEN country = 'TH' THEN rating ELSE 0 END) AS th_rating, SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END) AS berlin_count FROM suppliers GROUP BY 1;

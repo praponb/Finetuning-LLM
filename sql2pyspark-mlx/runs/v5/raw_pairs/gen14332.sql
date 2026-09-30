@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, host, log_ts, latency_ms, k, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) x AS k, attr_value) SELECT id, host, k, attr_value, DENSE_RANK() OVER (ORDER BY latency_ms NULLS LAST) latency_ms_dense_rank FROM exploded

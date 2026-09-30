@@ -1,0 +1,1 @@
+SELECT txn_type, account_id, ROUND(AVG(amount), 2) AS avg_amount, SUM(CASE WHEN merchant = 'Grab' THEN amount ELSE 0 END) AS grab_amount, COUNT(amount) AS amount_count FROM transactions GROUP BY txn_type, account_id HAVING COUNT(amount) >= 5

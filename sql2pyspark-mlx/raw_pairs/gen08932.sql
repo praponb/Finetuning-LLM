@@ -1,0 +1,1 @@
+WITH ValidAccounts AS (SELECT * FROM accounts WHERE opened_date <= '2025-09-01'), accounts_stats AS (SELECT status, AVG(balance) AS avg_balance, ROUND(STDDEV(balance), 2) AS stddev_balance FROM ValidAccounts GROUP BY status) SELECT status, stddev_balance FROM accounts_stats WHERE avg_balance >= 72000;

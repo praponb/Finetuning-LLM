@@ -1,0 +1,1 @@
+SELECT store_id, last_restock, CASE WHEN quantity >= 195 THEN 'High' WHEN quantity >= 45 THEN 'Medium' ELSE 'Low' END quantity_band FROM inventory WHERE NOT (product_id IN (5, 7, 10) AND YEAR(last_restock) = 2024 AND quantity < 60);

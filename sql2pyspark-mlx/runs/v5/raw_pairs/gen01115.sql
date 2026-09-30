@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, ROUND(age / credit_limit, 2) AS age_per_credit_limit, CAST(is_active AS INT) AS is_active_flag FROM customers WHERE credit_limit > 12300) SELECT id, segment, kpi, value FROM (SELECT id, segment, age_per_credit_limit, credit_limit FROM filtered) src UNPIVOT (value FOR kpi IN (age_per_credit_limit, credit_limit))

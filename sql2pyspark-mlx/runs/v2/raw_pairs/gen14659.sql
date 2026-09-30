@@ -1,0 +1,1 @@
+with ranked_inventory as (select *, row_number() over (partition by store_id order by quantity, id) as rn from inventory) select id, store_id, quantity from ranked_inventory where rn <= 2 order by store_id

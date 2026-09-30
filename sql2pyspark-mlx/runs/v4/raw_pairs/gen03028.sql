@@ -1,0 +1,1 @@
+SELECT *, NTILE(3) OVER (PARTITION BY page ORDER BY duration_sec DESC, id) AS duration_sec_bucket, PERCENT_RANK() OVER (PARTITION BY session_id, page ORDER BY duration_sec DESC) AS duration_sec_percent_rank, DENSE_RANK() OVER (PARTITION BY page ORDER BY duration_sec NULLS FIRST) AS duration_sec_dense_rank FROM web_events

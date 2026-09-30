@@ -1,0 +1,1 @@
+SELECT emp.level AS employee_level, mgr.is_remote AS manager_is_remote, mgr.hire_date AS manager_hire_date, mgr.manager_id AS manager_manager_id FROM employees emp INNER JOIN employees mgr ON emp.manager_id = mgr.id

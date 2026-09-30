@@ -1,0 +1,1 @@
+SELECT c.id, c.country, COUNT(o.id) AS order_count, COUNT(CASE WHEN o.status = 'CANCELLED' THEN 1 END) AS cancelled_count FROM customers c JOIN orders o ON c.id = o.customer_id WHERE c.email LIKE '%@outlook.com' GROUP BY c.id, c.country HAVING order_count > 2 ORDER BY id DESC, country ASC LIMIT 3

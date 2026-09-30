@@ -1,0 +1,1 @@
+SELECT id, page, event_time, event_type, ROUND(duration_sec * 1.15, 2) AS adjusted_duration_sec, INITCAP(TRIM(page)) AS page_title FROM web_events WHERE event_type = 'page_view' OR HOUR(event_time) BETWEEN 11 AND 16

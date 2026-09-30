@@ -1,0 +1,1 @@
+SELECT ss.id, ss.revenue, p.brand, p.price, p.category, FLOOR(ss.units) AS units_whole FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id WHERE ss.revenue < 1400 OR p.brand IN ('Stark', 'Initech');

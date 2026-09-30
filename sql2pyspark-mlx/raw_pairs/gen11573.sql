@@ -1,0 +1,1 @@
+select round((100 * sum(case when event_type = 'page_view' then 1 else 0 end)) / count(*), 1) as pct_page_view, sum(duration_sec) as total_duration_sec from web_events where duration_sec >= 149 and event_type in ('search', 'click') order by total_duration_sec;

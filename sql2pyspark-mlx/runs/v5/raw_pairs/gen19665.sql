@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) signup_year, AVG(o.shipping_fee) avg_shipping_fee FROM orders o JOIN customers c ON c.id = o.customer_id RIGHT JOIN stores s ON o.store_id = s.id GROUP BY YEAR(c.signup_date) ORDER BY signup_year DESC, avg_shipping_fee LIMIT 20;

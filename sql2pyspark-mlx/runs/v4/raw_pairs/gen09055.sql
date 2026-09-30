@@ -1,0 +1,1 @@
+select products.category, count(distinct inventory.quantity) as unique_products, count(inventory.quantity) as quantity_count from inventory right join products on inventory.product_id = products.id join stores on inventory.store_id = stores.id group by products.category order by unique_products desc;

@@ -1,0 +1,1 @@
+SELECT status, CASE WHEN YEAR(order_date) < 2024 THEN 'before_2024' WHEN YEAR(order_date) = 2024 THEN '2024' ELSE 'after_2024' END AS order_cohort, SUM(shipping_fee) AS total_shipping_fee FROM orders WHERE YEAR(order_date) >= 2024 GROUP BY status, order_cohort ORDER BY total_shipping_fee, status, order_cohort LIMIT 50;

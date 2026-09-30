@@ -1,0 +1,1 @@
+SELECT CASE WHEN balance >= 61000 THEN 'LARGE' ELSE 'SMALL' END AS balance_tier, ROUND(SUM(balance) / NULLIF(COUNT(CASE WHEN account_type = 'LOAN' THEN 1 END), 0), 2) AS balance_per_loan, AVG(balance) FILTER (WHERE account_type = 'LOAN') AS loan_avg_balance FROM accounts GROUP BY balance_tier HAVING loan_avg_balance >= 0 ORDER BY loan_avg_balance NULLS FIRST;

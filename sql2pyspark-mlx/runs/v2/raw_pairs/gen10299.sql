@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END quantity_bucket, ROUND(STDDEV(unit_price), 2) stddev_unit_price FROM order_items GROUP BY CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END ORDER BY quantity_bucket, 2 DESC;

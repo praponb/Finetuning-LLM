@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(CASE WHEN p.brand = 'Globex' THEN 1 END) AS globex_count, COUNT(p.cost) AS cost_count FROM products p LEFT JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.city ORDER BY globex_count DESC, cost_count;

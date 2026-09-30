@@ -1,0 +1,1 @@
+with supplier_stats as (select supplier_id, min(launch_date) as first_launch_date from products group by supplier_id) select s.city, s.country, ss.first_launch_date from suppliers s left join supplier_stats ss on s.id = ss.supplier_id order by first_launch_date

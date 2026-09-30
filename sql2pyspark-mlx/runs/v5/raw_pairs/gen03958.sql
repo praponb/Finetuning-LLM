@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT * FROM payments QUALIFY ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount NULLS LAST, id) = 1) SELECT s.id, s.order_id, s.paid_at, s.status, (SELECT MAX(o2.quantity) FROM order_items o2 WHERE o2.order_id = s.order_id) AS max_order_item_quantity FROM ranked s ORDER BY max_order_item_quantity, id;

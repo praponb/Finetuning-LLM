@@ -1,0 +1,1 @@
+select year(end_date) as end_year, max(start_date) as last_start_date, count(*) as subscription_count from subscriptions where customer_id = 1 and monthly_fee > 110 group by 1 order by last_start_date asc, end_year asc limit 10

@@ -1,0 +1,1 @@
+WITH shipments_by_order AS (SELECT order_id, COUNT(cost) cost_count FROM shipments GROUP BY order_id) SELECT orders.id, orders.channel, orders.customer_id, shipments_by_order.cost_count FROM orders LEFT JOIN shipments_by_order ON orders.id = shipments_by_order.order_id ORDER BY 1 DESC;

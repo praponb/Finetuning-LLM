@@ -1,0 +1,1 @@
+SELECT inventory.product_id, products.product_name, suppliers.rating, CASE WHEN suppliers.rating >= 4.4 THEN 'High' WHEN suppliers.rating >= 1.6 THEN 'Medium' ELSE 'Low' END AS rating_level FROM inventory INNER JOIN products ON inventory.product_id = products.id INNER JOIN suppliers ON products.supplier_id = suppliers.id;

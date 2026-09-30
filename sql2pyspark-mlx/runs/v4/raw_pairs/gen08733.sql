@@ -1,0 +1,1 @@
+SELECT status, method, STDDEV_SAMP(amount) AS amount_stddev, MAX(paid_at) AS ended_at, (UNIX_TIMESTAMP(MAX(paid_at)) - UNIX_TIMESTAMP(MIN(paid_at))) / 60 AS span_minutes, PERCENTILE_APPROX(amount, 0.9) AS amount_p90, RANK() OVER (PARTITION BY status ORDER BY STDDEV_SAMP(amount) DESC) AS amount_stddev_rank FROM payments GROUP BY status, method ORDER BY method DESC NULLS LAST

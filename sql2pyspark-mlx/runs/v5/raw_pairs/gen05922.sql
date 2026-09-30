@@ -1,0 +1,1 @@
+SELECT brand, MONTH(launch_date) AS launch_month, COUNT(stock_qty) AS stock_qty_count FROM products WHERE supplier_id IS NOT NULL GROUP BY ROLLUP(brand, MONTH(launch_date)) ORDER BY stock_qty_count DESC;

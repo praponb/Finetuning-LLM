@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, customer_id, amount, discount, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY amount DESC) AS rnk FROM orders WHERE shipping_fee >= 39) AS t WHERE rnk <= 3 ORDER BY customer_id DESC

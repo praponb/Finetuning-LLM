@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', order_date) AS activity_month, store_id, customer_id, COUNT_IF(status = 'CANCELLED') AS cancelled_events, SIZE(COLLECT_SET(channel)) AS num_channels, COUNT(*) AS num_rows, GROUPING(DATE_TRUNC('MONTH', order_date)) AS grouping_id FROM orders GROUP BY ROLLUP (DATE_TRUNC('MONTH', order_date), store_id, customer_id) ORDER BY store_id NULLS FIRST;

@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM subscriptions WHERE monthly_fee <= 100 GROUP BY customer_id) SELECT c.id, c.email, c.signup_date, cs.plan_values FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY plan_values DESC

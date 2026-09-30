@@ -1,0 +1,1 @@
+select order_id, product_id, sum(quantity * unit_price) as revenue, round(avg(quantity), 2) as avg_quantity from order_items where quantity is not null and product_id in (8, 23) group by order_id, product_id having sum(quantity * unit_price) < 31 order by avg_quantity desc

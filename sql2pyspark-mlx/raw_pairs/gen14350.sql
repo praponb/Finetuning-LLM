@@ -1,0 +1,1 @@
+with store_stats as (select store_id, avg(amount) as avg_amount from orders where store_id in (18, 33) group by store_id) select s.id, s.sqft, s.region, ss.avg_amount from stores s left outer join store_stats ss on s.id = ss.store_id

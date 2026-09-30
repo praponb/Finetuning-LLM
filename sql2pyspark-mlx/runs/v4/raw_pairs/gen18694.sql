@@ -1,0 +1,1 @@
+with ranked_subscriptions as (select *, dense_rank() over (partition by customer_id order by start_date desc) as row_num from subscriptions where year(start_date) = 2025) select id, customer_id, start_date from ranked_subscriptions where row_num = 1 order by id asc;

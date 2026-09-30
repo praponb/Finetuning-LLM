@@ -1,0 +1,1 @@
+WITH recent_orders AS (SELECT * FROM orders WHERE shipping_fee < 30), orders_stats AS (SELECT QUARTER(order_date) order_quarter, SORT_ARRAY(COLLECT_SET(status)) status_list, SUM(CASE WHEN channel = 'web' THEN 1 ELSE 0 END) web_count FROM recent_orders GROUP BY QUARTER(order_date)) SELECT * FROM orders_stats ORDER BY web_count;

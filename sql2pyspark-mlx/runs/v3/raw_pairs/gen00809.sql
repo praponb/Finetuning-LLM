@@ -1,0 +1,1 @@
+SELECT id, region, city, sqft, COUNT(*) OVER (PARTITION BY region, city) AS region_count, DENSE_RANK() OVER (PARTITION BY city, region ORDER BY sqft DESC) AS dense_rnk FROM stores WHERE store_name LIKE 'Si%';

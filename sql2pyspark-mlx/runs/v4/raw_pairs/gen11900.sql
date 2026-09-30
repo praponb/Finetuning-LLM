@@ -1,0 +1,1 @@
+SELECT product_id, DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, COUNT(units) AS units_count, MAX(sale_date) AS latest_sale_date FROM store_sales GROUP BY product_id, sale_month HAVING units_count >= 4

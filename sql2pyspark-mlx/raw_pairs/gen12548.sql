@@ -1,0 +1,1 @@
+SELECT p.stock_qty, i.product_id, i.last_restock FROM products p LEFT JOIN inventory i ON p.id = i.product_id WHERE p.stock_qty BETWEEN 358 AND 374 AND i.quantity IS NOT NULL ORDER BY stock_qty DESC, last_restock

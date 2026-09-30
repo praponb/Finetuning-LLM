@@ -1,0 +1,1 @@
+WITH InventoryByStore AS (SELECT store_id, COUNT(quantity) AS quantity_count, MAX(last_restock) AS last_last_restock FROM inventory WHERE quantity = 80 GROUP BY store_id) SELECT s.store_name, s.opened_date, I.quantity_count, I.last_last_restock FROM stores s INNER JOIN InventoryByStore I ON s.id = I.store_id WHERE I.quantity_count > 4 ORDER BY opened_date DESC;

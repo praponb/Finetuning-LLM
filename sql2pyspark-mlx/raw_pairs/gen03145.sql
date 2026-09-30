@@ -1,0 +1,1 @@
+SELECT s.region, MAX(i.quantity) - MIN(i.quantity) AS quantity_range, COUNT(*) AS cnt FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON s.id = i.store_id GROUP BY s.region ORDER BY quantity_range DESC;

@@ -1,0 +1,1 @@
+SELECT a.id, a.status, a.balance, c.age, c.is_active, c.credit_limit FROM accounts a INNER JOIN customers c ON a.customer_id = c.id WHERE MONTH(c.signup_date) IN (6, 7, 9) AND c.signup_date < '2025-09-01';

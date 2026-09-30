@@ -1,0 +1,1 @@
+select is_flagged, case when merchant in ('Lazada', 'Shell') then 'core' else 'other' end as merchant_group, sum(case when txn_type = 'CREDIT' then 1 else 0 end) as credit_count from transactions where account_id in (5, 32, 37) and account_id in (30, 31) and amount >= 1800 group by is_flagged, merchant_group

@@ -1,0 +1,1 @@
+SELECT id, discount, order_date, shipping_fee, FLOOR(discount) AS discount_whole, DATEDIFF(CURRENT_DATE(), order_date) AS days_since_order_date FROM orders WHERE channel = 'mobile' AND store_id IS NULL

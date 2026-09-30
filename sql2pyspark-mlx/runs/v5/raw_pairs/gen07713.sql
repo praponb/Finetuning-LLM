@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, coupon_codes, items, ship_to, attributes, EXISTS(coupon_codes, c -> c LIKE 'W%') AS has_welcome_code, SIZE(attributes) AS num_attributes, ARRAY_CONTAINS(coupon_codes, 'BUNDLE') AS used_bundle FROM carts WHERE ARRAY_CONTAINS(coupon_codes, 'SPRING10')

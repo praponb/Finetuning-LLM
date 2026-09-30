@@ -1,0 +1,1 @@
+SELECT accounts.account_type, MAX(transactions.amount) - MIN(transactions.amount) AS amount_range, COUNT(*) AS num_transactions FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id GROUP BY accounts.account_type

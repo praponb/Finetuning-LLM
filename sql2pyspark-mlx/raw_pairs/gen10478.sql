@@ -1,0 +1,1 @@
+select case when budget >= 4021000 then 'high' when budget >= 916000 then 'mid' else 'low' end as budget_bucket, location, count(budget) as budget_count, sum(budget) as total_budget from departments group by case when budget >= 4021000 then 'high' when budget >= 916000 then 'mid' else 'low' end, location order by total_budget desc;

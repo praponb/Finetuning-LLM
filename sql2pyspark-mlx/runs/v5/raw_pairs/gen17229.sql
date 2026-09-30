@@ -1,0 +1,1 @@
+select i.last_restock, s.opened_date, s.city, round(i.quantity, 0) as quantity_rounded from inventory i inner join stores s on i.store_id = s.id where i.store_id in (2, 3, 4) and i.store_id in (1, 4, 5) order by quantity_rounded desc;

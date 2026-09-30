@@ -1,0 +1,1 @@
+SELECT c.is_active, c.email, t.total_monthly_fee, t.avg_monthly_fee FROM customers c INNER JOIN (SELECT customer_id, SUM(monthly_fee) AS total_monthly_fee, AVG(monthly_fee) AS avg_monthly_fee FROM subscriptions GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.avg_monthly_fee >= 140

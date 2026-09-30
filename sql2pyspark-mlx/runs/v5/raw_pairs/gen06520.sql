@@ -1,0 +1,1 @@
+with employees_by_department as (select dept_id, count(distinct salary) as unique_managers from employees group by dept_id) select d.id, d.location, d.dept_name, ebd.unique_managers from departments d inner join employees_by_department ebd on d.id = ebd.dept_id order by location;

@@ -1,0 +1,1 @@
+SELECT * FROM order_items QUALIFY ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity DESC NULLS LAST, id) = 1

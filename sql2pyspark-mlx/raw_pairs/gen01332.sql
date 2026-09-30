@@ -1,0 +1,1 @@
+SELECT d.location, CASE WHEN d.budget >= 4091000 THEN 'high' WHEN d.budget >= 1272000 THEN 'mid' ELSE 'low' END AS budget_bucket, MAX(e.salary) - MIN(e.salary) AS salary_range FROM employees e FULL OUTER JOIN departments d ON e.dept_id = d.id WHERE d.budget IS NULL GROUP BY d.location, CASE WHEN d.budget >= 4091000 THEN 'high' WHEN d.budget >= 1272000 THEN 'mid' ELSE 'low' END

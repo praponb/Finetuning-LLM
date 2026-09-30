@@ -1,0 +1,1 @@
+WITH StoreTotals AS (SELECT store_id, MAX(quantity) AS max_quantity FROM inventory WHERE store_id IN (1, 6) GROUP BY store_id) SELECT s.id, s.sqft, S.max_quantity FROM stores s INNER JOIN StoreTotals S ON s.id = S.store_id

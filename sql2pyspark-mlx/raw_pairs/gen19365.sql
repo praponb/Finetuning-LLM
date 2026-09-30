@@ -1,0 +1,1 @@
+SELECT method, SUM(amount) AS total_amount, COUNT(*) AS cnt, ROUND(SUM(amount) * 100.0 / SUM(SUM(amount)) OVER (), 2) AS pct_of_total FROM payments WHERE order_id IN (14, 15, 31, 36) GROUP BY method ORDER BY total_amount DESC, method LIMIT 5;

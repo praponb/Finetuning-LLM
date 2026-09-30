@@ -1,0 +1,1 @@
+select inventory.id, inventory.quantity, inventory.last_restock, stores.store_name, products.launch_date from inventory left join stores on inventory.store_id = stores.id left join products on products.id = inventory.product_id where array_contains(products.tags, 'bestseller');

@@ -1,0 +1,1 @@
+SELECT s.id, s.carrier, o.store_id, o.discount, st.city, st.region, COALESCE(s.carrier, 'unassigned') AS carrier_filled FROM shipments s LEFT JOIN orders o ON s.order_id = o.id INNER JOIN stores st ON st.id = o.store_id;

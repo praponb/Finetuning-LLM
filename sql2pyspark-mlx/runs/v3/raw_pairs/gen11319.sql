@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, CASE WHEN monthly_fee >= 194 THEN 'High' WHEN monthly_fee >= 78 THEN 'Medium' ELSE 'Low' END AS monthly_fee_level FROM subscriptions WHERE start_date BETWEEN '2025-03-02' AND '2025-10-01' AND customer_id IS NULL), summary AS (SELECT status, COUNT(monthly_fee) AS monthly_fee_count FROM src GROUP BY status) SELECT status, monthly_fee_count FROM summary

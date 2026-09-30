@@ -1,0 +1,1 @@
+SELECT ss.id, ss.units, ss.product_id, s.city, s.sqft, p.launch_date FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id WHERE p.cost < 590 ORDER BY launch_date

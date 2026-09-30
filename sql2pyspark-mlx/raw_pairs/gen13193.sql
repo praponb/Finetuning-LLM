@@ -1,0 +1,1 @@
+SELECT p.id, p.status, p.order_id, o.status AS order_status FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id WHERE p.order_id IN (17, 33) OR p.order_id IS NULL ORDER BY p.order_id DESC, id LIMIT 5

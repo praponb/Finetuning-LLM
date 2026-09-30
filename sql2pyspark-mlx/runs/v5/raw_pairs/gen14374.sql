@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, product_id, quantity, store_id, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) rnk FROM inventory) SELECT id, product_id, quantity, store_id FROM numbered WHERE rnk = 1 ORDER BY product_id

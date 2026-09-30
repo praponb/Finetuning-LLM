@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE units > 28 AND product_id IN (3, 4)), StoreSalesStats AS (SELECT store_id, AVG(revenue) AS avg_revenue FROM base GROUP BY store_id) SELECT store_id, avg_revenue FROM StoreSalesStats ORDER BY avg_revenue DESC, store_id DESC

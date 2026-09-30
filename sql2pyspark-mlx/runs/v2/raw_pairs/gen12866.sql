@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, COUNT(CASE WHEN city = 'London' THEN 1 END) AS london_count, SORT_ARRAY(COLLECT_SET(city)) AS city_list, MIN(sqft) AS min_sqft FROM stores GROUP BY opened_quarter HAVING MIN(sqft) > 14200

@@ -1,0 +1,1 @@
+SELECT *, MIN(monthly_fee) OVER (PARTITION BY plan) AS plan_min_monthly_fee, ROUND(monthly_fee / SUM(monthly_fee) OVER (PARTITION BY customer_id), 4) AS monthly_fee_share, CUME_DIST() OVER (PARTITION BY status ORDER BY monthly_fee NULLS FIRST) AS monthly_fee_cume_dist, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date DESC, id) AS seq_no FROM subscriptions

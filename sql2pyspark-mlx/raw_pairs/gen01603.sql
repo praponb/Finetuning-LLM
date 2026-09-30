@@ -1,0 +1,1 @@
+SELECT id, status, account_type, balance, LAST_DAY(opened_date) AS opened_date_month_end, DATE_FORMAT(opened_date, 'yyyy-MM-dd') AS opened_date_label FROM accounts WHERE MONTH(opened_date) IN (1, 2, 9) AND MONTH(opened_date) IN (6, 7, 12) ORDER BY status, id LIMIT 50

@@ -1,0 +1,1 @@
+SELECT d.budget, t.unique_depts, t.job_title_values FROM departments d INNER JOIN (SELECT dept_id, COUNT(DISTINCT salary) AS unique_depts, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees GROUP BY dept_id) t ON d.id = t.dept_id

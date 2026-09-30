@@ -1,0 +1,1 @@
+SELECT s.region, SUM(ss.units) AS total_units FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN stores s ON ss.store_id = s.id WHERE p.launch_date BETWEEN '2024-08-01' AND '2024-09-17' GROUP BY s.region ORDER BY region LIMIT 50;

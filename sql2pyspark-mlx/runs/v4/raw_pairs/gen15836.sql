@@ -1,0 +1,1 @@
+SELECT s.browser, t.total_duration_sec, t.avg_duration_sec FROM sessions s LEFT JOIN (SELECT session_id, SUM(duration_sec) AS total_duration_sec, AVG(duration_sec) AS avg_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.total_duration_sec >= 1900

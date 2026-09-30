@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, status, shipped_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date DESC, id) AS rn FROM shipments) SELECT id, status, shipped_date FROM ranked WHERE rn = 1 ORDER BY shipped_date ASC;

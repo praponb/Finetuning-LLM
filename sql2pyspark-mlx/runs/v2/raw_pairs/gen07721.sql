@@ -1,0 +1,1 @@
+with recent_suppliers as (select * from suppliers where city in ('Tokyo', 'Singapore', 'London') or country in ('TH', 'UK', 'JP')), summary as (select city, country, max(rating) as max_rating from recent_suppliers group by city, country) select city, country from summary;

@@ -1,0 +1,1 @@
+SELECT customers.city, ROUND(AVG(orders.amount), 2) AS avg_amount FROM orders JOIN customers ON orders.customer_id = customers.id GROUP BY customers.city HAVING ROUND(AVG(orders.amount), 2) > 80 ORDER BY city;

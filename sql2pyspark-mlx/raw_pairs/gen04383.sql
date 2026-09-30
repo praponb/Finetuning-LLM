@@ -1,0 +1,1 @@
+SELECT s.id, s.started_at, t.search_count FROM sessions s INNER JOIN (SELECT session_id, SUM(CASE WHEN page = '/search' THEN 1 ELSE 0 END) AS search_count FROM web_events WHERE page = '/product' GROUP BY session_id) t ON s.id = t.session_id WHERE t.search_count >= 35;

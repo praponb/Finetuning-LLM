@@ -1,0 +1,1 @@
+with cleaned as (select id, full_name, email, dept_id, job_title, salary, hire_date, is_remote, level, concat_ws(',', email, job_title) email_job_title_key from employees where level is not null and dept_id = 37) select * from (select dept_id, job_title, salary from cleaned) src pivot (max(salary) for job_title in ('Intern', 'Designer'));

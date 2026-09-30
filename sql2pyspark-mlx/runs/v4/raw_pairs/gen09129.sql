@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT session_id, event_type FROM web_events EXCEPT SELECT session_id, event_type FROM web_events WHERE duration_sec <= 120), kept_rows AS (SELECT s.* FROM web_events s INNER JOIN remaining_keys k ON s.session_id = k.session_id AND s.event_type = k.event_type) SELECT id, duration_sec FROM kept_rows;

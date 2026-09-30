@@ -1,0 +1,1 @@
+SELECT product_id, SUM(revenue) AS total_revenue, RANK() OVER (ORDER BY SUM(revenue) DESC) AS rnk FROM store_sales WHERE revenue BETWEEN 1300 AND 3400 GROUP BY product_id ORDER BY rnk DESC, total_revenue DESC

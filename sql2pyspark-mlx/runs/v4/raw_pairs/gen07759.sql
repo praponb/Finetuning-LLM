@@ -1,0 +1,1 @@
+SELECT segment, signup_year, cnt FROM (SELECT segment, YEAR(signup_date) AS signup_year, COUNT(*) AS cnt FROM customers GROUP BY segment, YEAR(signup_date)) AS s WHERE cnt < 4 ORDER BY 2 DESC, segment LIMIT 3

@@ -1,0 +1,1 @@
+SELECT CASE WHEN account_type IN ('CREDIT', 'LOAN') THEN 'tier_1' ELSE 'other' END AS account_type_group, COUNT(DISTINCT balance) AS unique_account_types, SUM(CASE WHEN account_type = 'SAVINGS' THEN balance ELSE 0 END) AS savings_balance FROM accounts WHERE customer_id IN (18, 24, 31) AND customer_id = 5 AND balance BETWEEN 38000 AND 55000 GROUP BY 1;

@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, COUNT(amount) AS amount_count, MIN(paid_at) AS min_paid_at FROM payments GROUP BY order_id) SELECT orders.id, orders.shipping_fee, order_stats.amount_count, order_stats.min_paid_at FROM orders INNER JOIN order_stats ON orders.id = order_stats.order_id ORDER BY shipping_fee DESC, id LIMIT 10

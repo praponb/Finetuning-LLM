@@ -1,0 +1,1 @@
+SELECT id, event_type, event_time, duration_sec, ROUND(AVG(duration_sec) OVER (PARTITION BY event_type ORDER BY event_time, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS duration_sec_moving_avg_4, LEAD(duration_sec, 1, 0) OVER (ORDER BY event_time, id) AS next_duration_sec FROM web_events WHERE duration_sec <= 385 ORDER BY next_duration_sec DESC

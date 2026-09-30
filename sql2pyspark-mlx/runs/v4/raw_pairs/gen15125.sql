@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.country IN ('TH', 'US') THEN 'group_a' ELSE 'other' END AS country_group, s.country, ROUND(AVG(p.cost), 2) AS avg_cost FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id WHERE LENGTH(p.product_name) > 12 GROUP BY CASE WHEN s.country IN ('TH', 'US') THEN 'group_a' ELSE 'other' END, s.country ORDER BY s.country DESC, country_group ASC LIMIT 10

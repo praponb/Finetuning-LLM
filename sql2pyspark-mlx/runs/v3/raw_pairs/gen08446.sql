@@ -1,0 +1,1 @@
+SELECT store_sales.units, store_sales.sale_date, stores.region, stores.city, products.brand, products.category FROM store_sales LEFT JOIN stores ON store_sales.store_id = stores.id LEFT JOIN products ON store_sales.product_id = products.id WHERE stores.sqft < 11249 AND LOWER(stores.store_name) LIKE '%irp%';

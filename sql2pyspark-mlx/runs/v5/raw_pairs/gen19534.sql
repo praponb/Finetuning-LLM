@@ -1,0 +1,1 @@
+select product_id, quarter(sale_date) as sale_quarter, case when revenue >= 3800 then 'high' when revenue >= 1600 then 'mid' else 'low' end as revenue_bucket, count(revenue) as revenue_count, sum(revenue) as total_revenue from store_sales group by product_id, quarter(sale_date), case when revenue >= 3800 then 'high' when revenue >= 1600 then 'mid' else 'low' end;

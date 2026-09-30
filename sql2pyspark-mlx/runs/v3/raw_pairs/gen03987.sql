@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE units BETWEEN 14 AND 19), ProductIdSummary AS (SELECT product_id, MAX(units) - MIN(units) AS units_range FROM base GROUP BY product_id) SELECT product_id, units_range FROM ProductIdSummary ORDER BY product_id

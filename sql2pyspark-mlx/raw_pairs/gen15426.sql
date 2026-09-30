@@ -1,0 +1,1 @@
+select store_sales.id, store_sales.revenue, products.product_name, products.stock_qty, stores.city, stores.sqft from store_sales left join products on store_sales.product_id = products.id left join stores on store_sales.store_id = stores.id where length(products.product_name) < 6 and store_sales.revenue >= 2700;

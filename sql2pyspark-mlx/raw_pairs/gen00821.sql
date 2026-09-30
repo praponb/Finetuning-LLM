@@ -1,0 +1,1 @@
+SELECT QUARTER(last_restock) AS last_restock_quarter, MAX(quantity) - MIN(quantity) AS quantity_range, MIN(last_restock) AS min_last_restock, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE last_restock BETWEEN '2024-07-18' AND '2025-09-01' GROUP BY QUARTER(last_restock) ORDER BY quantity_range DESC;

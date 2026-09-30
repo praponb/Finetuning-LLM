@@ -1,0 +1,1 @@
+SELECT s.id, s.status, s.carrier, s.shipped_date, o.amount, CONCAT(o.channel, ' - ', o.status) AS channel_status FROM shipments s LEFT JOIN orders o ON s.order_id = o.id WHERE s.shipped_date BETWEEN '2023-10-01' AND '2024-09-01' OR s.order_id = 35;

@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipping_fee DESC, id) pos FROM orders) SELECT id, status, shipping_fee FROM Ranked WHERE pos <= 2 ORDER BY status, shipping_fee

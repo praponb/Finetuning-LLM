@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(a.opened_date, 'yyyy-MM') opened_month, SUM(CASE WHEN t.merchant = 'Lazada' THEN t.amount ELSE 0 END) lazada_amount, COUNT(t.amount) amount_count FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id JOIN customers c ON a.customer_id = c.id GROUP BY DATE_FORMAT(a.opened_date, 'yyyy-MM')

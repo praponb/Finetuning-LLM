@@ -1,0 +1,1 @@
+SELECT id, job_title, salary, hire_date, ROUND(salary / SUM(salary) OVER (PARTITION BY job_title), 3) AS salary_share, salary - LAG(salary, 2) OVER (PARTITION BY job_title ORDER BY hire_date, id) AS salary_change FROM employees;

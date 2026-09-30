@@ -1,0 +1,1 @@
+SELECT id, status, paid_at, method, LAST_VALUE(method) OVER (PARTITION BY status ORDER BY paid_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_method, PERCENT_RANK() OVER (ORDER BY paid_at DESC) paid_at_pct_rank FROM payments WHERE TO_DATE(paid_at) < '2024-09-01'

@@ -1,0 +1,1 @@
+select rating, city, initcap(trim(country)) as country_title from suppliers where country in ('DE', 'US', 'SG') and city in ('Berlin', 'London', 'Bangkok') and country not in ('TH', 'JP', 'US') order by city desc;

@@ -1,0 +1,1 @@
+with department_summary as (select dept_id, min(hire_date) as min_hire_date, min(salary) as min_salary from employees group by dept_id) select d.id, d.budget, ds.min_hire_date, ds.min_salary from departments d left join department_summary ds on d.id = ds.dept_id where ds.min_salary >= 82000;

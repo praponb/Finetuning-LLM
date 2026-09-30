@@ -1,0 +1,1 @@
+WITH recent_customers AS (SELECT * FROM customers WHERE credit_limit IS NULL), agg AS (SELECT segment, AVG(credit_limit) AS avg_credit_limit, COUNT(*) AS customer_count FROM recent_customers GROUP BY segment) SELECT * FROM agg

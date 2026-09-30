@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT s.browser, a.page, COUNT(*) AS num_rows, ROUND(SUM(a.duration_sec), 2) AS total_duration_sec FROM web_events a INNER JOIN sessions s ON a.session_id = s.id GROUP BY GROUPING SETS ((s.browser, a.page), (s.browser))) SELECT total_duration_sec FROM dim_totals ORDER BY total_duration_sec DESC

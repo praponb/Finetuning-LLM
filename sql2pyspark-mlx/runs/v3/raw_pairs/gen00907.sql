@@ -1,0 +1,1 @@
+WITH valid_departments AS (SELECT * FROM departments WHERE dept_name = 'Sales'), departments_stats AS (SELECT location, MAX(budget) AS max_budget, SUM(CASE WHEN location = 'Tokyo' THEN budget ELSE 0 END) AS tokyo_budget FROM valid_departments GROUP BY location) SELECT location, max_budget FROM departments_stats ORDER BY location DESC LIMIT 5;

@@ -1,0 +1,1 @@
+with top_inventory as (select id, store_id, last_restock, dense_rank() over (partition by store_id order by last_restock desc) as pos from inventory) select id, store_id, last_restock from top_inventory where pos = 1

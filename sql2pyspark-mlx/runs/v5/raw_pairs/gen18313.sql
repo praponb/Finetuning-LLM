@@ -1,0 +1,1 @@
+select p.product_name, p.supplier_id, p.category, s.rating, lower(p.product_name) product_name_lower from products p inner join suppliers s on p.supplier_id = s.id where s.rating <= 2.4 order by p.category

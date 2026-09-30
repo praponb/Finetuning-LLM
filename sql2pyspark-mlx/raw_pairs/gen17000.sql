@@ -1,0 +1,1 @@
+SELECT orders.status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(payments.method))) AS method_values, SUM(CASE WHEN payments.method = 'cash' THEN 1 ELSE 0 END) AS cash_count FROM payments LEFT JOIN orders ON payments.order_id = orders.id GROUP BY orders.status ORDER BY cash_count DESC

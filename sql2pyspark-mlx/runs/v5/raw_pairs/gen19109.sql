@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.quantity, s.store_name, p.brand, p.cost, DATE_ADD(i.last_restock, 3) AS last_restock_plus_3d FROM inventory i JOIN stores s ON i.store_id = s.id JOIN products p ON p.id = i.product_id

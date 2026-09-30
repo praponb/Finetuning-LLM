@@ -1,0 +1,1 @@
+SELECT id, customer_id, status, LEAD(monthly_fee) OVER w_running AS next_monthly_fee, ROW_NUMBER() OVER w_running AS seq_no, CUME_DIST() OVER (PARTITION BY status ORDER BY monthly_fee DESC NULLS FIRST) AS monthly_fee_cume_dist FROM subscriptions WINDOW w_running AS (PARTITION BY plan ORDER BY monthly_fee, id)

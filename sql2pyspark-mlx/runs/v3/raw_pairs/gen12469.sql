@@ -1,0 +1,1 @@
+WITH top_employees AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY hire_date DESC, id) AS pos FROM employees) SELECT id, dept_id, hire_date, manager_id FROM top_employees WHERE pos <= 5 ORDER BY hire_date;

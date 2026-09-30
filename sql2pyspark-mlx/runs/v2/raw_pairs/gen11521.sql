@@ -1,0 +1,1 @@
+SELECT store_id, MAX(sale_date) AS last_sale_date, MAX(revenue) - MIN(revenue) AS revenue_range, MAX(sale_date) AS latest_sale_date FROM store_sales GROUP BY store_id ORDER BY 4 DESC, revenue_range DESC;

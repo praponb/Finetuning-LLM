@@ -1,0 +1,1 @@
+WITH filtered_transactions AS (SELECT *, CASE WHEN txn_type IN ('DEBIT', 'FEE') THEN 'Group A' ELSE 'Other' END AS txn_type_group FROM transactions WHERE txn_type IN ('REFUND', 'CREDIT', 'DEBIT')), summary AS (SELECT is_flagged, COUNT(amount) AS amount_count FROM filtered_transactions GROUP BY is_flagged) SELECT * FROM summary WHERE amount_count < 8

@@ -1,0 +1,1 @@
+SELECT c.id, c.name, COUNT(s.id) AS subscription_count, ROUND((100 * SUM(CASE WHEN s.status = 'ACTIVE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_active, MIN(s.monthly_fee) AS min_monthly_fee FROM customers c LEFT OUTER JOIN subscriptions s ON c.id = s.customer_id GROUP BY c.id, c.name HAVING COUNT(s.id) > 2;

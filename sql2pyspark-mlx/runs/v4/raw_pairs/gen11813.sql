@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, unit_price, ROUND(quantity / SUM(quantity) OVER (PARTITION BY product_id), 3) AS quantity_share, SUM(unit_price) OVER (PARTITION BY product_id ORDER BY unit_price, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_unit_price FROM order_items WHERE quantity < 7

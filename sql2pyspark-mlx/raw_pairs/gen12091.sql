@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, COUNT(CASE WHEN event_type = 'page_view' THEN 1 END) page_view_count FROM web_events WHERE duration_sec != 133 GROUP BY session_id) SELECT s.id, s.customer_id, ss.page_view_count FROM sessions s LEFT JOIN session_stats ss ON s.id = ss.session_id ORDER BY page_view_count DESC

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, COUNT(amount) AS amount_count FROM payments GROUP BY order_id) SELECT o.shipping_fee, os.amount_count FROM orders o INNER JOIN order_summary os ON o.id = os.order_id ORDER BY 1 DESC;

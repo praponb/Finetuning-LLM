@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, session_id, page, duration_sec, INITCAP(TRIM(event_type)) AS event_type_title, CAST(duration_sec AS DOUBLE) AS duration_sec_str FROM web_events WHERE page IS NOT NULL) SELECT * FROM (SELECT session_id, page, duration_sec FROM filtered) src PIVOT (AVG(duration_sec) FOR page IN ('/product' AS product, '/cart' AS cart))

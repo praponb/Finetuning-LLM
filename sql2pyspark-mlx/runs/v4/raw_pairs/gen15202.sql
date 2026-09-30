@@ -1,0 +1,1 @@
+select shipments.id, shipments.order_id, shipments.status, shipments.delivered_date from shipments where shipments.cost > 85 and shipments.order_id not in (select id from orders where discount >= 0.17)

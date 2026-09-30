@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, COUNT(CASE WHEN device = 'mobile' THEN 1 END) AS mobile_count FROM sessions GROUP BY customer_id) SELECT customers.age, customers.name, customer_stats.mobile_count FROM customers LEFT JOIN customer_stats ON customers.id = customer_stats.customer_id ORDER BY customer_stats.mobile_count ASC

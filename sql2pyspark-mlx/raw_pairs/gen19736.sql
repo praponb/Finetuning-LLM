@@ -1,0 +1,1 @@
+select o.id, o.customer_id, o.channel, s.sqft, s.region, c.city from orders o join stores s on o.store_id = s.id right join customers c on c.id = o.customer_id where s.region in ('North', 'Central', 'South') or c.segment in ('Corporate', 'Consumer') order by city desc;

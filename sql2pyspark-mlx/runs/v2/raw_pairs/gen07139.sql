@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, ss.product_id, p.stock_qty, s.opened_date FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id LEFT JOIN stores s ON ss.store_id = s.id ORDER BY ss.product_id DESC, id

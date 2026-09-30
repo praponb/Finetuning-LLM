@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items GROUP BY order_id) SELECT o.id, o.status, o.shipping_fee, os.avg_quantity, os.unit_price_range FROM orders o LEFT OUTER JOIN order_stats os ON o.id = os.order_id ORDER BY o.status

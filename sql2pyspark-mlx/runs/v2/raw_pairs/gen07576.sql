@@ -1,0 +1,1 @@
+SELECT s.country, s.browser, c.signup_date, CASE WHEN s.browser IN ('Chrome', 'Edge') THEN 'Group A' ELSE 'Other' END AS browser_group FROM sessions s INNER JOIN customers c ON s.customer_id = c.id ORDER BY browser_group;

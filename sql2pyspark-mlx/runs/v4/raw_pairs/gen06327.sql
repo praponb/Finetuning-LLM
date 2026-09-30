@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, CASE WHEN firmware = '1.0.3' THEN 1 ELSE 0 END AS is_1_0_3 FROM device_readings WHERE device_code IN ('DV-01', 'DV-02')) SELECT * FROM (SELECT id, device_code, temp_c, humidity, pressure FROM filtered) src UNPIVOT (value FOR metric_name IN (temp_c, humidity, pressure));

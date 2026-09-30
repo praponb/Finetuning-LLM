@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.order_id, oi.product_id, o.customer_id, o.shipping_fee, o.status, ROUND(o.discount, 2) AS discount_rounded FROM order_items oi RIGHT JOIN orders o ON oi.order_id = o.id WHERE oi.order_id = 35 ORDER BY oi.product_id DESC

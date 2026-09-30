@@ -1,0 +1,1 @@
+SELECT p.region, p.city, COUNT(*) AS num_rows, ROUND(SUM(src.quantity), 2) AS total_quantity, GROUPING_ID() AS level_id FROM inventory src INNER JOIN stores p ON src.store_id = p.id GROUP BY GROUPING SETS ((p.region, p.city), (p.region), ())

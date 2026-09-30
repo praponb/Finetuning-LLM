@@ -1,0 +1,1 @@
+select region, total_sqft, first_opened_date from (select region, sum(sqft) total_sqft, min(opened_date) first_opened_date from stores where sqft <> 10456 group by region) x where total_sqft > 40000 order by region limit 50;

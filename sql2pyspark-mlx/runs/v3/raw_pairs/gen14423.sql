@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, COUNT(discount) AS discount_count FROM orders WHERE channel IN ('mobile', 'store', 'partner') GROUP BY customer_id) SELECT customers.id, customers.segment, customer_stats.discount_count FROM customers INNER JOIN customer_stats ON customers.id = customer_stats.customer_id ORDER BY customers.segment

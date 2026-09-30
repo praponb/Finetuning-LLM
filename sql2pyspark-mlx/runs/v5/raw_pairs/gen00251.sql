@@ -1,0 +1,1 @@
+SELECT is_flagged, txn_quarter, credit_amount FROM (SELECT is_flagged, QUARTER(txn_time) AS txn_quarter, SUM(CASE WHEN txn_type = 'CREDIT' THEN amount ELSE 0 END) AS credit_amount FROM transactions WHERE account_id IN (8, 25, 35) GROUP BY is_flagged, QUARTER(txn_time)) AS agg WHERE credit_amount > 63 ORDER BY txn_quarter, is_flagged LIMIT 20;

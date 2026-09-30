@@ -1,0 +1,1 @@
+SELECT id, delivered_date, SUBSTRING(carrier, 1, 3) AS carrier_prefix, CASE WHEN carrier IN ('Kerry', 'DHL') THEN 'Core' ELSE 'Other' END AS carrier_group FROM shipments WHERE status IN ('RETURNED', 'IN_TRANSIT');

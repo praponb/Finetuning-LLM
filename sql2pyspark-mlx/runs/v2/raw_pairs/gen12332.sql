@@ -1,0 +1,1 @@
+select shipments.id, shipments.cost, shipments.status from shipments where shipments.status != 'RETURNED' and shipments.order_id in (select id from orders where discount < 0.13) order by shipments.cost desc

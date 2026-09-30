@@ -1,0 +1,1 @@
+with flattened as (select id, log_ts, level, status_code, attr_key, v from app_logs lateral view outer explode(context) t as attr_key, v) select id, log_ts, attr_key, v, case when attr_key rlike '^(trace|version)$' then 'OTHER_ZONE' when attr_key rlike '^(region)$' then 'CORE' else 'GROUP_B' end as attr_key_zone from flattened order by attr_key desc;

@@ -1,0 +1,1 @@
+SELECT id, status, method, paid_at, amount, LAG(amount, 1) OVER (PARTITION BY status, method ORDER BY paid_at, id) prev_amount, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount, id) rn FROM payments;

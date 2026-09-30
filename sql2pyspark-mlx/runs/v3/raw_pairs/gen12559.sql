@@ -1,0 +1,1 @@
+SELECT customers.id, customers.name, COUNT(accounts.id) AS account_count, SUM(CASE WHEN accounts.status = 'CLOSED' THEN accounts.balance ELSE 0 END) AS closed_balance FROM customers LEFT JOIN accounts ON accounts.customer_id = customers.id GROUP BY customers.id, customers.name ORDER BY id;

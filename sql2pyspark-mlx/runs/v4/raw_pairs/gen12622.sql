@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, service, host, log_ts, level, status_code, k, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) li AS k, value) SELECT service, host, level, status_code, k FROM flattened ORDER BY host DESC, k ASC;

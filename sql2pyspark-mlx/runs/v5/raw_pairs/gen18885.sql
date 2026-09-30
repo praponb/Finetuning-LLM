@@ -1,0 +1,1 @@
+select web_events.id, web_events.event_time, web_events.session_id from web_events where web_events.event_type != 'add_to_cart' and web_events.session_id not in (select id from sessions where started_at < '2024-08-01')

@@ -1,0 +1,1 @@
+select store_id, case when revenue >= 3200 then 'High' when revenue >= 2000 then 'Medium' else 'Low' end as revenue_band, round(revenue * 100, 2) as revenue_adjusted from store_sales where store_id in (1, 2, 6) and units between 19 and 24 order by store_id desc

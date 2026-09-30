@@ -1,0 +1,1 @@
+SELECT id, city, opened_date, sqft, region, SUM(sqft) OVER (PARTITION BY city ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_sqft, LAG(sqft, 1) OVER (PARTITION BY region ORDER BY opened_date, id) AS prev_sqft FROM stores WHERE city IN ('Tokyo', 'Singapore', 'New York') ORDER BY id DESC;

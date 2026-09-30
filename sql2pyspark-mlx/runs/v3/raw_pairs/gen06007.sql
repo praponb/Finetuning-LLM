@@ -1,0 +1,1 @@
+SELECT e.email AS employee_email, e.full_name AS employee_full_name, m.level AS manager_level, m.email AS manager_email, m.job_title AS manager_job_title FROM employees e LEFT JOIN employees m ON e.manager_id = m.id ORDER BY employee_email, employee_full_name DESC;

@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT d.country, src.status, COUNT(*) AS num_rows, ROUND(SUM(src.monthly_fee), 2) AS total_monthly_fee, GROUPING_ID() AS gid FROM subscriptions src INNER JOIN customers d ON src.customer_id = d.id GROUP BY CUBE (d.country, src.status)) SELECT num_rows, total_monthly_fee FROM dim_totals ORDER BY total_monthly_fee DESC, num_rows DESC;

@@ -1,0 +1,1 @@
+SELECT channel, DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, MAX(amount) - MIN(amount) AS amount_range, SUM(shipping_fee) AS total_shipping_fee FROM orders GROUP BY channel, DATE_FORMAT(order_date, 'yyyy-MM') ORDER BY total_shipping_fee, channel, order_month LIMIT 50;

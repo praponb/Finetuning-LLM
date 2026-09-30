@@ -1,0 +1,1 @@
+SELECT id, order_id, paid_at, amount, ROUND(AVG(amount) OVER (PARTITION BY order_id ORDER BY paid_at, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_7 FROM payments WHERE amount BETWEEN 550 AND 940 ORDER BY paid_at DESC, 4;

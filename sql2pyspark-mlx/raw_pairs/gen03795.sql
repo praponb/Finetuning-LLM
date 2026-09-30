@@ -1,0 +1,1 @@
+WITH latest AS (SELECT *, RANK() OVER (PARTITION BY product_id ORDER BY unit_price DESC) AS latest_rank FROM order_items QUALIFY latest_rank = 1) SELECT id, order_id, unit_price FROM latest ORDER BY unit_price DESC NULLS FIRST, id;

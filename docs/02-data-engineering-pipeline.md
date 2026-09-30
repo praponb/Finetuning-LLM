@@ -306,3 +306,39 @@ Each record uses the MLX chat format and the same prompt the Ollama runtime and 
 }
 ```
 v4 training samples are 411 tokens long on average (v3: ~230) and at most 3,119 tokens, under `max_seq_length: 3200`; the answer (the part that is trained) averages 211 tokens.
+
+---
+
+## 7. The complex_v8 dataset (v8)
+
+`sql2pyspark-mlx/complex_v8/` is a **standalone** second pipeline (2026-09-29), built so the 10,000 new pairs needed no change to the v1–v7 generator. It only imports `compare()` / `rows_of()` from `verify_pairs.py` and `split()` / `format_sample()` from `convert_sql_pyspark.py`. See [complex_v8/README.md](../sql2pyspark-mlx/complex_v8/README.md).
+
+| File | Role |
+|---|---|
+| `catalog.py` | 20 **new tables** in 6 domains never used before: music (`artists`, `tracks`, `listeners`, `plays`), insurance (`policyholders`, `adjusters`, `policies`, `claims`), logistics (`warehouses`, `skus`, `stock_moves`), energy (`sites`, `meter_readings`, `tariff_windows`), education (`students`, `courses`, `enrollments`), support (`support_agents`, `tickets`, `ticket_events`); clustered timestamps (bursts of minutes, days between bursts) so session logic has something to find |
+| `generate.py` | stage-based generator: every stage emits a SQL CTE and the matching PySpark block together; filter thresholds come from the real sample values, so most filters keep rows |
+| `verify.py` | Spark execution check with the same rules as `verify_pairs.py` |
+| `build.py` | drops empty-result pairs and pairs over 3,000 tokens, excludes eval-set SQL, splits by feature signature, writes `data/` and `data_mix/` |
+| `eval_tables.py` | the catalog for `eval/evaluate.py --tables` (a wrapper: `evaluate.py` loads the file without registering it in `sys.modules`, which breaks `@dataclass` on Python 3.14) |
+
+**Families** (share of the 10,000 training pairs):
+
+| Family | Pairs | Content |
+|---|---|---|
+| `cx_pipeline` | 2,786 | 3–7 stages: joins (incl. grandparent and multi-joins), EXISTS / NOT EXISTS / IN subqueries → `left_semi` / `left_anti`, correlated scalar subqueries → pre-aggregated LEFT JOIN + COALESCE, dedup with ROW_NUMBER, compare-to-group-average, LATERAL VIEW [OUTER] [POS]EXPLODE, aggregation with FILTER / CASE / HAVING / PERCENTILE_APPROX / COLLECT_SET |
+| `cx_window_heavy` | 1,690 | 8–16 window functions over 3–6 window specs (named `WINDOW` clauses, ROWS frames, IGNORE NULLS, NTH_VALUE, NTILE, PERCENT_RANK, share-of-total with NULLIF, windows partitioned by date expressions), often followed by a second window stage |
+| `cx_setop` | 1,355 | UNION ALL / UNION / INTERSECT [ALL] / EXCEPT [ALL] / MINUS; **positional unions of differently named columns → `.union()`**, same names → `.unionByName()`; literal source columns; 3-way unions; union-then-aggregate |
+| `cx_grouping` | 1,043 | ROLLUP / CUBE / GROUPING SETS (`.groupingSets`), GROUPING_ID / GROUPING, `COALESCE(key, 'ALL')` labels |
+| `cx_reshape` | 944 | PIVOT (one or two aggregates) and UNPIVOT (EXCLUDE / INCLUDE NULLS, `col AS label` aliases) |
+| `cx_sessionize` | 861 | gaps and islands: LAG → new-session flag (`INTERVAL` or `UNIX_TIMESTAMP` gap) → running SUM → per-session metrics |
+| `cx_interval` | 730 | range joins (claims inside policy coverage, readings inside tariff windows, events while a ticket is open) and time-window self-joins |
+| `cx_full_outer` | 591 | two aggregates FULL OUTER JOINed on a shared key with COALESCE |
+
+**Build (seed 8)**: 13,000 generated → **12,999 match in Spark** (1 SQL error) → 1,999 empty-result and 175 over-length pairs dropped, 0 eval overlaps → **10,000 train / 500 valid / 300 test**, no empty results, 0 signatures shared between train and valid/test. Samples average **1,163 tokens** (p95 2,421, max 2,999), about 2.4× the v7 data (486). `data_mix/` adds 7,000 random v7 training pairs (17,000 train, ~881 tokens on average) and 500 v7 validation pairs, so a model continued from v7 keeps its classic-query accuracy (v4 lost 12 classic queries when classic samples fell to ~58% of its mix).
+
+```bash
+cd sql2pyspark-mlx/complex_v8
+../.venv/bin/python generate.py --n 13000 --seed 8 --out raw_pairs     # ~1 min
+../.venv/bin/python verify.py --src raw_pairs --workers 5 2>/dev/null   # ~33 min
+../.venv/bin/python build.py                                            # split -> data/ + data_mix/
+```

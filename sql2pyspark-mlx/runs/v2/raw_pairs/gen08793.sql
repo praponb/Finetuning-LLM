@@ -1,0 +1,1 @@
+SELECT o.customer_id, o.store_id, o.status, s.status AS shipment_status, s.shipped_date, s.cost, ROUND(o.shipping_fee * 100, 2) AS shipping_fee_scaled FROM orders o INNER JOIN shipments s ON s.order_id = o.id ORDER BY cost

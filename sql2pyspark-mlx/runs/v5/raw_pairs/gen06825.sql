@@ -1,0 +1,1 @@
+WITH recent_shipments AS (SELECT * FROM shipments WHERE delivered_date < '2023-10-27'), carrier_summary AS (SELECT carrier, status, COUNT(CASE WHEN status = 'DELIVERED' THEN 1 END) AS delivered_count FROM recent_shipments GROUP BY carrier, status) SELECT carrier, delivered_count FROM carrier_summary WHERE delivered_count > 8 ORDER BY delivered_count DESC, carrier ASC

@@ -1,0 +1,1 @@
+select i.product_id, i.store_id, p.supplier_id, s.country, s.city from inventory i inner join products p on i.product_id = p.id inner join suppliers s on p.supplier_id = s.id where i.store_id in (1, 2, 4, 6);

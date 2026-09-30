@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, unit_price, RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) AS rnk, SUM(quantity) OVER (PARTITION BY product_id ORDER BY unit_price, id) AS running_quantity FROM order_items WHERE order_id IN (2, 3, 32, 34) ORDER BY id DESC

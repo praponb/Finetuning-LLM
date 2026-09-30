@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('YEAR', delivered_date) AS year_start, MAX(cost) AS max_cost, APPROX_PERCENTILE(cost, 0.95) AS cost_p95, COUNT(*) FILTER (WHERE status = 'IN_TRANSIT') AS in_transit_rows FROM shipments GROUP BY 1 ORDER BY in_transit_rows ASC

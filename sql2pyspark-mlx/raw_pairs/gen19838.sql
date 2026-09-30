@@ -1,0 +1,1 @@
+SELECT a.id, a.balance, a.account_type, t.unique_merchants FROM accounts a INNER JOIN (SELECT account_id, COUNT(DISTINCT amount) AS unique_merchants FROM transactions GROUP BY account_id) t ON a.id = t.account_id;

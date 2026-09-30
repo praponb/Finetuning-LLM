@@ -1,0 +1,1 @@
+select t.is_flagged, t.txn_type, a.opened_date, c.is_active, case when t.merchant in ('Amazon', 'Grab') then 'Priority' else 'Other' end as merchant_group from transactions t join accounts a on t.account_id = a.id join customers c on a.customer_id = c.id;

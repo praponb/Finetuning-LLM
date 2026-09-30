@@ -1,0 +1,1 @@
+with account_summary as (select account_id, count(distinct amount) as unique_merchants from transactions where not is_flagged group by account_id) select a.id, a.balance, as.unique_merchants from accounts a inner join account_summary as on a.id = as.account_id order by a.balance

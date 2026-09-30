@@ -1,0 +1,1 @@
+SELECT MONTH(p.launch_date) AS launch_month, AVG(ss.revenue) AS avg_revenue FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY MONTH(p.launch_date)

@@ -1,0 +1,1 @@
+SELECT country, AVG(credit_limit) avg_credit_limit FROM customers WHERE LOWER(email) LIKE '%ack%' AND country = 'SG' GROUP BY country HAVING AVG(credit_limit) < 5300 ORDER BY country DESC, avg_credit_limit;

@@ -11,8 +11,8 @@ VENV     := $(MLX)/.venv/bin
 PY       := $(CURDIR)/$(VENV)/python
 # base model: 7B since v6 (v1-v5: mlx-community/Qwen2.5-Coder-3B-Instruct-4bit)
 BASE     ?= mlx-community/Qwen2.5-Coder-7B-Instruct-4bit
-TAG      ?= v8
-PREV     ?= v7
+TAG      ?= v9
+PREV     ?= v8
 N        ?= 20000
 SEED     ?= 0
 EXCLUDE  ?= ../eval/test_fixed.jsonl

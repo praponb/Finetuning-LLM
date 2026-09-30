@@ -1,0 +1,1 @@
+SELECT emp.id, emp.dept_id employee_dept_id, emp.salary employee_salary, mgr.is_remote manager_is_remote, mgr.job_title manager_job_title FROM employees emp INNER JOIN employees mgr ON emp.manager_id = mgr.id;

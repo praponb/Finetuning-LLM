@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) AS checking_balance FROM accounts GROUP BY QUARTER(opened_date), DATE_FORMAT(opened_date, 'yyyy-MM') ORDER BY 3 DESC, opened_quarter, opened_month LIMIT 5

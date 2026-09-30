@@ -1,0 +1,1 @@
+SELECT segment, QUARTER(signup_date) AS signup_quarter, SUM(age) AS total_age FROM customers WHERE NOT is_active AND country = 'TH' GROUP BY ROLLUP(segment, QUARTER(signup_date)) ORDER BY signup_quarter DESC;

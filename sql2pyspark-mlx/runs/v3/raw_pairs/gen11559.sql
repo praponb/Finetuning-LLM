@@ -1,0 +1,1 @@
+SELECT YEAR(opened_date) AS opened_year, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, MIN(sqft) AS min_sqft FROM stores WHERE MONTH(opened_date) IN (2, 7, 11) AND city = 'Chiang Mai' GROUP BY YEAR(opened_date) HAVING MIN(sqft) < 13200 ORDER BY opened_year ASC

@@ -1,0 +1,1 @@
+SELECT orders.id, orders.discount, orders.shipping_fee, orders.amount FROM orders WHERE orders.customer_id IN (6, 10, 12, 34) AND EXISTS (SELECT 1 FROM shipments WHERE shipments.order_id = orders.id AND shipments.shipped_date BETWEEN '2023-07-03' AND '2024-05-01')

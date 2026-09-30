@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.status, COUNT(transactions.id) AS transaction_count, MAX(transactions.amount) - MIN(transactions.amount) AS amount_range FROM accounts LEFT JOIN transactions ON accounts.id = transactions.account_id WHERE accounts.status = 'OPEN' GROUP BY accounts.id, accounts.status

@@ -1,0 +1,1 @@
+select a.balance, a.customer_id, t.max_amount from accounts a join (select account_id, max(amount) as max_amount from transactions where account_id in (19, 25, 33) group by account_id) t on a.id = t.account_id order by max_amount, customer_id desc;

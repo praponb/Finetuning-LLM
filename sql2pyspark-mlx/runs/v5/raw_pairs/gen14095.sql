@@ -1,0 +1,1 @@
+SELECT MONTH(order_date) AS order_month, channel, SUM(CASE WHEN channel = 'partner' THEN 1 ELSE 0 END) AS partner_count, AVG(amount) AS avg_amount, AVG(shipping_fee) AS avg_shipping_fee FROM orders WHERE shipping_fee < 39 GROUP BY order_month, channel ORDER BY partner_count DESC;

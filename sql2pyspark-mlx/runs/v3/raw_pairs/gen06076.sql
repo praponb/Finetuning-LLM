@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, SUM(CASE WHEN brand = 'Globex' THEN stock_qty ELSE 0 END) AS globex_stock_qty, MAX(stock_qty) AS max_stock_qty FROM products GROUP BY supplier_id) SELECT s.id, s.country, st.globex_stock_qty, st.max_stock_qty FROM suppliers s JOIN supplier_totals st ON s.id = st.supplier_id;

@@ -1,0 +1,1 @@
+with base as (select * from orders where customer_id is not null), channel_summary as (select channel, max(order_date) latest_order_date, min(order_date) first_order_date from base group by channel) select channel, latest_order_date, first_order_date from channel_summary order by latest_order_date, first_order_date desc

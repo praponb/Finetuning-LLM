@@ -1,0 +1,1 @@
+select quarter(txn_time) as txn_quarter, sum(case when txn_type = 'REFUND' then amount else 0 end) as refund_amount, sum(amount) as total_amount, count(case when merchant = 'Starbucks' then 1 end) as starbucks_count from transactions group by 1 order by refund_amount desc;

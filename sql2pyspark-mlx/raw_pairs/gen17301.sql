@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3362000 THEN 'high' WHEN budget >= 951000 THEN 'mid' ELSE 'low' END AS budget_bucket, dept_name, location, SUM(budget) AS total_budget FROM departments WHERE location IN ('Tokyo', 'Bangkok') GROUP BY CASE WHEN budget >= 3362000 THEN 'high' WHEN budget >= 951000 THEN 'mid' ELSE 'low' END, dept_name, location;

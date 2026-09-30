@@ -1,0 +1,1 @@
+SELECT a.id, a.opened_date, t.debit_amount FROM accounts a LEFT OUTER JOIN (SELECT account_id, SUM(CASE WHEN txn_type = 'DEBIT' THEN amount ELSE 0 END) AS debit_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY opened_date;

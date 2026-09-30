@@ -1,0 +1,1 @@
+SELECT store_id, MIN(sale_date) AS first_sale_date, MIN(sale_date) AS min_sale_date FROM store_sales WHERE NOT (store_id IN (1, 3, 4, 6) AND (units >= 22 OR revenue < 3600)) GROUP BY store_id ORDER BY first_sale_date

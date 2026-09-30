@@ -1,0 +1,1 @@
+select a.customer_id, a.account_type, sort_array(collect_set(t.txn_type)) as txn_type_list from transactions t join accounts a on t.account_id = a.id left join customers c on c.id = a.customer_id where not t.is_flagged group by a.customer_id, a.account_type order by a.customer_id;

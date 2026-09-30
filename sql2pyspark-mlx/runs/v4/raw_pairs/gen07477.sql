@@ -1,0 +1,1 @@
+SELECT s.id, s.customer_id FROM sessions s WHERE HOUR(s.started_at) BETWEEN 6 AND 12 AND s.customer_id NOT IN (SELECT id FROM customers WHERE credit_limit BETWEEN 10200 AND 15600) ORDER BY s.id DESC LIMIT 10;

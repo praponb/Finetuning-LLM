@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, COUNT(sqft) AS sqft_count, MIN(opened_date) AS first_opened_date, AVG(sqft) AS avg_sqft FROM stores GROUP BY 1 HAVING MAX(sqft) > 9000 ORDER BY opened_quarter LIMIT 50;

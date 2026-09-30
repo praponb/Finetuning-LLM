@@ -1,0 +1,1 @@
+select date_format(ss.sale_date, 'yyyy-MM') sale_month, ss.product_id, round(stddev(i.quantity), 2) stddev_quantity from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by date_format(ss.sale_date, 'yyyy-MM'), ss.product_id order by sale_month, product_id limit 50;

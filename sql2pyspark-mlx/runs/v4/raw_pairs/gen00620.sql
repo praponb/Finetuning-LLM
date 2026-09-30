@@ -1,0 +1,1 @@
+select dept_name, sum(budget) as total_budget, min(budget) as min_budget from departments where dept_name in ('Legal', 'Finance') and budget < 1199000 and dept_name in ('HR', 'Finance') group by dept_name having sum(budget) >= 12709000;

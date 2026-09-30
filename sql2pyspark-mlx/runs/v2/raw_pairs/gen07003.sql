@@ -1,0 +1,1 @@
+SELECT channel, order_month, mobile_discount FROM (SELECT channel, DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, SUM(CASE WHEN channel = 'mobile' THEN discount ELSE 0 END) AS mobile_discount FROM orders GROUP BY channel, DATE_FORMAT(order_date, 'yyyy-MM')) AS x WHERE mobile_discount > 43

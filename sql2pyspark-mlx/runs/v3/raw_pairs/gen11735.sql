@@ -1,0 +1,1 @@
+select quarter(s.opened_date) as opened_quarter, round(avg(ss.revenue), 2) as avg_revenue from store_sales ss join stores s on ss.store_id = s.id group by quarter(s.opened_date) having avg_revenue >= 54;

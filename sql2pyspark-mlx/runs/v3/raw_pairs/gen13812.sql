@@ -1,0 +1,1 @@
+SELECT d.location, COUNT(*) AS num_employees, MAX(e.salary) AS max_salary FROM employees e INNER JOIN departments d ON e.dept_id = d.id WHERE d.dept_name = 'Engineering' GROUP BY d.location HAVING MAX(e.salary) > 143000 ORDER BY location

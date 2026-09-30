@@ -1,0 +1,1 @@
+SELECT YEAR(ss.sale_date) sale_year, MIN(i.quantity) min_quantity, COUNT(DISTINCT i.quantity) unique_products FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id = 9 GROUP BY YEAR(ss.sale_date) ORDER BY 1

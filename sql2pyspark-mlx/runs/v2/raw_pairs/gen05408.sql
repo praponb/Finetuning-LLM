@@ -1,0 +1,1 @@
+SELECT id, price, supplier_id, COALESCE(brand, 'unassigned') AS brand_filled FROM products WHERE (SIZE(tags) > 1 AND supplier_id IS NULL) OR category NOT IN ('Electronics', 'Sports', 'Books') ORDER BY price, id DESC;

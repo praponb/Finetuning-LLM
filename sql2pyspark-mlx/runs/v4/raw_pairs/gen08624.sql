@@ -1,0 +1,1 @@
+SELECT p.category, t.last_last_restock FROM products p LEFT JOIN (SELECT product_id, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY product_id) t ON p.id = t.product_id ORDER BY last_last_restock DESC

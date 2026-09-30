@@ -1,0 +1,1 @@
+select merchant, max_amount, amount_count from (select merchant, max(amount) as max_amount, count(amount) as amount_count from transactions group by merchant) as t where max_amount > 2300 order by merchant desc, max_amount desc limit 1;

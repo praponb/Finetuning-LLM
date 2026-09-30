@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_month, COUNT(*) AS num_shipments FROM shipments GROUP BY DATE_FORMAT(delivered_date, 'yyyy-MM')) AS x WHERE num_shipments >= 8;

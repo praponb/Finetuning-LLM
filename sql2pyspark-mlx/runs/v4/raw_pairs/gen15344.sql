@@ -1,0 +1,1 @@
+SELECT s.id, s.customer_id, c.credit_limit, c.country, FLOOR(s.monthly_fee) AS monthly_fee_whole FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.end_date <= '2023-07-01' ORDER BY id

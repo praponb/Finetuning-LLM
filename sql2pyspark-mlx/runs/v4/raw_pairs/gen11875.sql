@@ -1,0 +1,1 @@
+select store_id, case when year(sale_date) < 2024 then 'before_2024' when year(sale_date) = 2024 then '2024' else 'after_2024' end as sale_cohort, max(sale_date) as last_sale_date, round(avg(units), 2) as avg_units, max(units) - min(units) as units_range from store_sales group by 1, 2 having round(avg(units), 2) > 71

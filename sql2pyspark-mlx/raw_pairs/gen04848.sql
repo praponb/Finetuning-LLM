@@ -1,0 +1,1 @@
+SELECT QUARTER(hire_date) hire_quarter, COUNT(CASE WHEN job_title = 'Analyst' THEN 1 END) analyst_count, SORT_ARRAY(COLLECT_SET(job_title)) job_title_list FROM employees GROUP BY QUARTER(hire_date) ORDER BY analyst_count DESC, hire_quarter DESC

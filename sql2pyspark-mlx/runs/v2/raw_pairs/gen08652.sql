@@ -1,0 +1,1 @@
+WITH top_orders AS (SELECT id, status, order_date, store_id, ROW_NUMBER() OVER (PARTITION BY status ORDER BY order_date DESC, id) AS row_num FROM orders) SELECT id, status, order_date, store_id FROM top_orders WHERE row_num = 1 ORDER BY id DESC, order_date DESC

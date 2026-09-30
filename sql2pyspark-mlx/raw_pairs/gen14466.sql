@@ -1,0 +1,1 @@
+WITH ranked_web_events AS (SELECT id, session_id, event_time, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY event_time DESC, id) AS rn FROM web_events) SELECT id, session_id, event_time FROM ranked_web_events WHERE rn <= 2

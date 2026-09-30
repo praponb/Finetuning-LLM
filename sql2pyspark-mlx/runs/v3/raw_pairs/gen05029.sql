@@ -1,0 +1,1 @@
+SELECT CASE WHEN carrier IN ('Flash', 'FedEx') THEN 'core' ELSE 'other' END AS carrier_group, SUM(cost) AS total_cost, DENSE_RANK() OVER (ORDER BY SUM(cost) DESC) AS rnk FROM shipments WHERE order_id IS NOT NULL GROUP BY CASE WHEN carrier IN ('Flash', 'FedEx') THEN 'core' ELSE 'other' END

@@ -1,0 +1,1 @@
+SELECT id, merchant, txn_time, amount, SUM(amount) OVER (PARTITION BY merchant ORDER BY txn_time, id) AS running_amount, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY txn_time, id) AS rn FROM transactions

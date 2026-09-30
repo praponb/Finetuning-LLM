@@ -1,0 +1,1 @@
+WITH ValidSuppliers AS (SELECT * FROM suppliers WHERE supplier_name LIKE 'Li%'), country_summary AS (SELECT country, SUM(CASE WHEN country = 'TH' THEN rating ELSE 0 END) AS th_rating, SUM(CASE WHEN country = 'US' THEN 1 ELSE 0 END) AS us_count FROM ValidSuppliers GROUP BY country) SELECT * FROM country_summary WHERE th_rating < 59

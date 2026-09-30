@@ -1,0 +1,1 @@
+SELECT o.id, o.order_date, o.discount, t.max_amount FROM orders o INNER JOIN (SELECT order_id, MAX(amount) AS max_amount FROM payments GROUP BY order_id) t ON o.id = t.order_id WHERE t.max_amount > 1140

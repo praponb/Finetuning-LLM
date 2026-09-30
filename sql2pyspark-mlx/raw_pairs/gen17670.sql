@@ -1,0 +1,1 @@
+with top_order_items as (select id, product_id, unit_price, quantity, row_number() over (partition by product_id order by unit_price desc, id) as pos from order_items) select id, product_id, unit_price, quantity from top_order_items where pos <= 3 order by product_id desc;

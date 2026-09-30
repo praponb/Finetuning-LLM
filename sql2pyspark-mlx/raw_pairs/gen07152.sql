@@ -1,0 +1,1 @@
+SELECT id, carrier, order_id, CASE WHEN cost >= 100 THEN 'High' WHEN cost >= 21 THEN 'Medium' ELSE 'Low' END AS cost_band, ROUND(DATEDIFF(delivered_date, shipped_date) / 30, 1) AS months_shipped_date_to_delivered_date FROM shipments WHERE MONTH(delivered_date) IN (4, 8, 12) OR MONTH(shipped_date) IN (2, 6, 11);

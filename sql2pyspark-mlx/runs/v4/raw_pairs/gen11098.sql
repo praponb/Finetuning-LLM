@@ -1,0 +1,1 @@
+with deduped as (select * from (select *, row_number() over (partition by customer_id order by opened_date nulls first, id) as rn from accounts) ranked where rn = 1) select id, customer_id, balance, opened_date, rn from deduped

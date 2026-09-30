@@ -1,0 +1,1 @@
+WITH valid_customers AS (SELECT * FROM customers WHERE NOT (email LIKE '%@GMAIL.COM' AND age < 55)), summary AS (SELECT YEAR(signup_date) signup_year, MAX(credit_limit) max_credit_limit FROM valid_customers GROUP BY YEAR(signup_date)) SELECT signup_year, max_credit_limit FROM summary;

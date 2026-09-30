@@ -1,0 +1,1 @@
+WITH ranked_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date, id) AS row_num FROM accounts) SELECT * FROM ranked_accounts WHERE row_num <= 3 ORDER BY id DESC, status;

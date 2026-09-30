@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at DESC, id) AS rn FROM sessions WHERE device = 'tablet') SELECT id, country, started_at FROM ranked WHERE rn <= 3 ORDER BY country;

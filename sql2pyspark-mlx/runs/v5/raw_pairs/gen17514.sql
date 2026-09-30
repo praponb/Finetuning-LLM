@@ -1,0 +1,1 @@
+select c.country, avg(s.cost) as avg_cost, max(s.cost) - min(s.cost) as cost_range from shipments s inner join orders o on s.order_id = o.id left join customers c on o.customer_id = c.id where month(s.shipped_date) in (3, 8, 12) group by c.country order by cost_range desc;

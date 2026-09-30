@@ -1,0 +1,1 @@
+SELECT a.opened_date, a.status, t.merchant, COALESCE(t.amount, 0) AS amount_filled FROM accounts a LEFT OUTER JOIN transactions t ON a.id = t.account_id WHERE t.merchant NOT IN ('Lazada', 'Shell', 'Grab') ORDER BY amount_filled DESC

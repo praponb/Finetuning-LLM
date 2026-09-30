@@ -1,0 +1,1 @@
+select orders.customer_id, customers.age, customers.country, stores.opened_date, stores.store_name from orders inner join customers on orders.customer_id = customers.id right join stores on orders.store_id = stores.id;

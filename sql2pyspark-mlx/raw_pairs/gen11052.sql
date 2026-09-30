@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT id, region, opened_date, store_name, DENSE_RANK() OVER (PARTITION BY region ORDER BY opened_date DESC) AS row_num FROM stores WHERE city != 'London') SELECT id, region, opened_date, store_name FROM Numbered WHERE row_num = 1 ORDER BY opened_date;

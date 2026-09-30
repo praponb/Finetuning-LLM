@@ -1,0 +1,1 @@
+SELECT id, paid_at, amount, status, SUM(amount) OVER (ORDER BY paid_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, RANK() OVER (PARTITION BY status ORDER BY amount) AS rnk FROM payments

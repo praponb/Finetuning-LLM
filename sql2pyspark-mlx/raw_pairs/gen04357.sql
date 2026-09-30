@@ -1,0 +1,1 @@
+SELECT d.location, ROUND((100 * SUM(CASE WHEN e.job_title = 'Engineer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_engineer, AVG(e.salary) AS avg_salary FROM employees e LEFT JOIN departments d ON d.id = e.dept_id WHERE e.dept_id IN (17, 25, 35) GROUP BY d.location

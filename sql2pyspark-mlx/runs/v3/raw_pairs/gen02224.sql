@@ -1,0 +1,1 @@
+select manager_id, round(stddev(salary), 2) as stddev_salary, count(case when level = 'L3' then 1 end) as l3_count from employees where job_title in ('Analyst', 'Director') or job_title in ('Designer', 'Engineer') group by manager_id;

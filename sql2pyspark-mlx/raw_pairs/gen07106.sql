@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT account_type FROM accounts INTERSECT ALL SELECT account_type FROM accounts WHERE balance >= 40000), verified AS (SELECT s.* FROM accounts s JOIN matched_keys k ON s.account_type = k.account_type) SELECT id, account_type, balance, opened_date, status FROM verified ORDER BY balance;

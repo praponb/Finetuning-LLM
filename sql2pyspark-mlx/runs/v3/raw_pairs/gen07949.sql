@@ -1,0 +1,1 @@
+select store_id, round(stddev(quantity), 2) as stddev_quantity, min(last_restock) as min_last_restock from inventory where store_id in (2, 5) group by store_id order by min_last_restock, stddev_quantity desc

@@ -1,0 +1,1 @@
+WITH with_last AS (SELECT s.id, s.store_name, s.city, s.region, s.opened_date, top1.quantity, top1.last_restock FROM stores s LEFT JOIN LATERAL (SELECT c.quantity, c.last_restock FROM inventory c WHERE c.store_id = s.id ORDER BY c.quantity DESC, c.id DESC LIMIT 1) top1 ON TRUE) SELECT id, region, quantity, last_restock FROM with_last ORDER BY last_restock DESC NULLS FIRST;

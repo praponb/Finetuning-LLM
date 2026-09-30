@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, MIN(salary) AS min_salary FROM employees GROUP BY dept_id) SELECT d.location, dt.min_salary FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id ORDER BY min_salary DESC;

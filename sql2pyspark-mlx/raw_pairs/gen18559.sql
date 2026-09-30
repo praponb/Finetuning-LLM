@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT id, txn_time FROM (SELECT *, RANK() OVER (PARTITION BY account_id ORDER BY txn_time) AS latest_rank FROM transactions) t WHERE latest_rank = 1) SELECT id, txn_time FROM deduped ORDER BY txn_time, id

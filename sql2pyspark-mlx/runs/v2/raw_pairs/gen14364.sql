@@ -1,0 +1,1 @@
+SELECT id, customer_id, device, TRIM(country) AS clean_country, DAYOFWEEK(started_at) AS started_at_dayofweek FROM sessions WHERE country = 'US' AND (device = 'mobile' OR TO_DATE(started_at) >= '2024-07-01');

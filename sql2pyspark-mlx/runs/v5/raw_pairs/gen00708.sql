@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, customer_id, coupon_codes, elem.product_id, elem.qty, elem.promo FROM (SELECT id, customer_id, coupon_codes, EXPLODE_OUTER(items) AS elem FROM carts) x) SELECT customer_id, coupon_codes, product_id, qty, PERCENT_RANK() OVER (PARTITION BY promo ORDER BY product_id DESC NULLS LAST) product_id_percent_rank FROM flattened;

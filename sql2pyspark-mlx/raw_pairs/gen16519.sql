@@ -1,0 +1,1 @@
+SELECT a.balance, a.opened_date, t.latest_txn_time, t.amount_range FROM accounts a LEFT JOIN (SELECT account_id, MAX(txn_time) AS latest_txn_time, MAX(amount) - MIN(amount) AS amount_range FROM transactions WHERE amount <= 3800 GROUP BY account_id) t ON a.id = t.account_id ORDER BY balance DESC;

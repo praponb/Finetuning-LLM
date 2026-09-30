@@ -1,0 +1,1 @@
+WITH ranked_inventory AS (SELECT id, product_id, last_restock, quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_restock DESC, id) AS pos FROM inventory) SELECT id, product_id, last_restock, quantity FROM ranked_inventory WHERE pos <= 5 ORDER BY product_id

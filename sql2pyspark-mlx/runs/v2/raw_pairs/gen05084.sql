@@ -1,0 +1,1 @@
+SELECT e.email AS employee_email, e.manager_id AS employee_manager_id, m.hire_date AS manager_hire_date, m.level AS manager_level, m.manager_id AS manager_manager_id FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.level IN ('L5', 'L2') ORDER BY e.email DESC

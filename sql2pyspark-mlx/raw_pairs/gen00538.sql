@@ -1,0 +1,1 @@
+select case when budget >= 3732000 then 'high' when budget >= 1390000 then 'mid' else 'low' end as budget_bucket, round(avg(budget), 2) as avg_budget, count(*) as row_count from departments where budget >= 1650000 and dept_name not in ('Finance', 'Legal', 'Sales') group by budget_bucket

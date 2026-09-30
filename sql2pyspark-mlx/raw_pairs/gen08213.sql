@@ -1,0 +1,1 @@
+select product_id, quantity_count, stddev_quantity from (select product_id, count(quantity) as quantity_count, round(stddev(quantity), 2) as stddev_quantity from inventory group by product_id) as sub where stddev_quantity < 38

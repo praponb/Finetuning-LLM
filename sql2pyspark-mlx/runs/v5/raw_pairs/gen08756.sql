@@ -1,0 +1,1 @@
+SELECT c.city, COUNT(DISTINCT t.amount) AS unique_merchants FROM transactions t JOIN accounts a ON a.id = t.account_id LEFT JOIN customers c ON a.customer_id = c.id GROUP BY c.city ORDER BY unique_merchants DESC, c.city;

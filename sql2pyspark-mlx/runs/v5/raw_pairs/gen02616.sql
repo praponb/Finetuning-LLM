@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, segment, age, credit_limit, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY age DESC, id) AS rn FROM customers) SELECT id, segment, age, credit_limit FROM ranked WHERE rn = 1 ORDER BY age, credit_limit DESC

@@ -1,0 +1,1 @@
+SELECT id, level, salary, hire_date, NTILE(4) OVER (PARTITION BY level ORDER BY salary, id) AS salary_ntile, ROUND(AVG(salary) OVER (PARTITION BY level ORDER BY hire_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS salary_moving_avg_7 FROM employees

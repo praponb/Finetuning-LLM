@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, CAST(amount AS INT) AS amount_int FROM orders WHERE (store_id = 6 AND store_id = 40) OR order_date > '2024-02-01'), order_quarter_summary AS (SELECT QUARTER(order_date) AS order_quarter, COUNT(CASE WHEN channel = 'store' THEN 1 END) AS store_count FROM src GROUP BY QUARTER(order_date)) SELECT * FROM order_quarter_summary ORDER BY store_count DESC;

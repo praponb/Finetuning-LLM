@@ -1,0 +1,1 @@
+with valid as (select id, order_id, carrier, shipped_date, delivered_date, cost, length(status) as status_length, coalesce(carrier, 'NONE') as carrier_clean from shipments where delivered_date > date '2023-07-03') select * from (select order_id, carrier, cost from valid) src pivot (avg(cost) for carrier in ('DHL' as dhl, 'UPS' as ups, 'FedEx' as fedex))

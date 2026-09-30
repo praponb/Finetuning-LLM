@@ -1,0 +1,1 @@
+SELECT p.brand, DATE_TRUNC('MONTH', p.launch_date) AS launch_month, ROUND(STDDEV(oi.quantity), 2) AS stddev_quantity FROM order_items oi INNER JOIN products p ON p.id = oi.product_id INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.brand, DATE_TRUNC('MONTH', p.launch_date);

@@ -1,0 +1,1 @@
+SELECT city, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_chiang_mai, SUM(CASE WHEN country = 'SG' THEN rating ELSE 0 END) sg_rating FROM suppliers WHERE country != 'US' GROUP BY city;

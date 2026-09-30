@@ -1,0 +1,1 @@
+select id, merchant, amount, txn_type, txn_time, dense_rank() over (partition by merchant order by amount) as amount_dense_rank, rank() over (partition by merchant, txn_type order by txn_time desc) as rnk from transactions where account_id in (13, 24, 25) order by txn_time desc;

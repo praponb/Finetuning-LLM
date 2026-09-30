@@ -1,0 +1,1 @@
+select o.channel, sum(case when s.carrier = 'DHL' then 1 else 0 end) as dhl_count, max(s.cost) - min(s.cost) as cost_range from shipments s inner join orders o on s.order_id = o.id group by o.channel order by o.channel limit 20;

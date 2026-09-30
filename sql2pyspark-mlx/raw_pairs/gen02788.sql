@@ -1,0 +1,1 @@
+SELECT id, location, budget, dept_name, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget, id) AS rn, LAST_VALUE(location) OVER (PARTITION BY dept_name ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_location FROM departments WHERE dept_name IN ('Engineering', 'Legal', 'Marketing');

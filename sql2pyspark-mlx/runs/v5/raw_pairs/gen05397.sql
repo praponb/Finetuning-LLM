@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', txn_time) txn_month, MAX(amount) - MIN(amount) amount_range FROM transactions WHERE HOUR(txn_time) BETWEEN 7 AND 14 GROUP BY DATE_TRUNC('MONTH', txn_time) HAVING MAX(amount) - MIN(amount) > 60 ORDER BY amount_range DESC, txn_month;

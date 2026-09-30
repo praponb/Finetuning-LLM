@@ -1,0 +1,1 @@
+SELECT p.supplier_id, COUNT(DISTINCT i.quantity) AS unique_products FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id FULL OUTER JOIN stores s ON i.store_id = s.id GROUP BY p.supplier_id

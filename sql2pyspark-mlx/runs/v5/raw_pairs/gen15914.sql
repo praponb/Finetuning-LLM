@@ -1,0 +1,1 @@
+SELECT id, device_code, metric_name, metric_value FROM (SELECT id, device_code, humidity, pressure, temp_c FROM device_readings) src UNPIVOT (metric_value FOR metric_name IN (humidity, pressure, temp_c))

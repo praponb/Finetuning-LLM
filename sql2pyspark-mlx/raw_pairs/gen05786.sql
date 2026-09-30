@@ -1,0 +1,1 @@
+SELECT id, country, signup_date, age, segment, age - LAG(age, 1, 0) OVER (PARTITION BY country ORDER BY signup_date, id) AS age_change, DENSE_RANK() OVER (PARTITION BY segment ORDER BY age) AS dense_rnk FROM customers;

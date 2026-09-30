@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(orders.order_date, 'yyyy-MM') AS order_month, ROUND(AVG(shipments.cost), 2) AS avg_cost, MAX(shipments.shipped_date) AS last_shipped_date FROM shipments INNER JOIN orders ON shipments.order_id = orders.id WHERE orders.channel != 'store' GROUP BY DATE_FORMAT(orders.order_date, 'yyyy-MM');

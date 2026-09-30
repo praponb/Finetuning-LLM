@@ -1,0 +1,14 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_subscriptions.alias("s")
+    .join(df_customers.alias("c"), F.col("c.id") == F.col("s.customer_id"), "inner")
+    .groupBy(
+        F.when(F.year(F.col("c.signup_date")) < 2024, "before_2024").when(F.year(F.col("c.signup_date")) == 2024, "2024").otherwise("after_2024").alias("signup_cohort"),
+    )
+    .agg(
+        F.sort_array(F.collect_set(F.col("s.status"))).alias("status_list"),
+        F.round(F.stddev(F.col("s.monthly_fee")), 2).alias("stddev_monthly_fee"),
+    )
+    .orderBy(F.col("stddev_monthly_fee").desc())
+)

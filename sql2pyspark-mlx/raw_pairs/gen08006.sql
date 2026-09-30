@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, SORT_ARRAY(COLLECT_SET(status)) status_list FROM payments GROUP BY order_id) SELECT o.id, o.order_date, o.amount, ot.status_list FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id

@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, t.latest_launch_date, t.avg_cost FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, MAX(launch_date) AS latest_launch_date, AVG(cost) AS avg_cost FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id

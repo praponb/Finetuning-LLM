@@ -1,0 +1,1 @@
+select txn_month, lazada_amount, stddev_amount from (select month(txn_time) as txn_month, sum(case when merchant = 'Lazada' then amount else 0 end) as lazada_amount, round(stddev(amount), 2) as stddev_amount from transactions group by month(txn_time)) as x where lazada_amount >= 56;

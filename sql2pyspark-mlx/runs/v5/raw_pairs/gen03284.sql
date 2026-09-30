@@ -1,0 +1,1 @@
+with products_by_supplier as (select supplier_id, min(stock_qty) as min_stock_qty, sum(stock_qty) as total_stock_qty from products group by supplier_id) select s.id, s.supplier_name, s.city, pbs.min_stock_qty, pbs.total_stock_qty from suppliers s join products_by_supplier pbs on s.id = pbs.supplier_id where pbs.total_stock_qty >= 600

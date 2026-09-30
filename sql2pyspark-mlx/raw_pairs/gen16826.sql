@@ -1,0 +1,1 @@
+SELECT id, supplier_name, city, SUM(rating) OVER (PARTITION BY country, city ORDER BY rating ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_rating, SUM(rating) OVER (PARTITION BY city, country ORDER BY rating ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_rating_2 FROM suppliers WHERE city NOT IN ('Bangkok', 'Singapore')

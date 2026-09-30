@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', p.launch_date) launch_month, MAX(i.quantity) max_quantity FROM inventory i LEFT JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE i.quantity BETWEEN 97 AND 163 GROUP BY DATE_TRUNC('MONTH', p.launch_date)

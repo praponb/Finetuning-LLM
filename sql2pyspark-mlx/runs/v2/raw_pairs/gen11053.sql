@@ -1,0 +1,1 @@
+select date_trunc('MONTH', event_time) as event_month, session_id, round((100 * sum(case when event_type = 'search' then 1 else 0 end)) / count(*), 1) as pct_search, avg(duration_sec) as avg_duration_sec, count(*) as total_count from web_events where to_date(event_time) < '2023-10-23' and session_id = 12 group by rollup(date_trunc('MONTH', event_time), session_id)

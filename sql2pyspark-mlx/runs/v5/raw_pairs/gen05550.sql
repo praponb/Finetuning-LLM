@@ -1,0 +1,1 @@
+SELECT account_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, SUM(CASE WHEN account_type = 'CREDIT' THEN 1 ELSE 0 END) AS credit_count FROM accounts WHERE account_type IN ('SAVINGS', 'LOAN') GROUP BY account_type HAVING credit_count < 77 ORDER BY account_type, status_values LIMIT 20;

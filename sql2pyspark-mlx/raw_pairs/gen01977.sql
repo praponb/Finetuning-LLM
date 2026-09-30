@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT id, customer_id FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY discount, id) AS rank_in_group FROM orders) x WHERE rank_in_group = 1) SELECT id, customer_id FROM deduped;

@@ -1,0 +1,1 @@
+SELECT QUARTER(sale_date) AS sale_quarter, SUM(units) AS total_units, ROUND(SUM(units) * 100.0 / SUM(SUM(units)) OVER (), 2) AS pct_of_total FROM store_sales WHERE units BETWEEN 11 AND 22 GROUP BY QUARTER(sale_date);

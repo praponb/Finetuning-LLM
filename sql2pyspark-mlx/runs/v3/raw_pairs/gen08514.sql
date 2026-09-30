@@ -1,0 +1,1 @@
+SELECT a.opened_date, a.status, a.balance, t.txn_time, t.amount FROM accounts a INNER JOIN transactions t ON t.account_id = a.id WHERE a.status != 'FROZEN' AND a.customer_id IS NOT NULL ORDER BY a.opened_date

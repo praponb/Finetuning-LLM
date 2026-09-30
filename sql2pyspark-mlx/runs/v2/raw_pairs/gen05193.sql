@@ -1,0 +1,1 @@
+SELECT delivered_date, shipped_date FROM shipments WHERE delivered_date BETWEEN '2023-12-01' AND '2025-07-01' INTERSECT SELECT delivered_date, shipped_date FROM shipments WHERE shipped_date > '2023-11-04';

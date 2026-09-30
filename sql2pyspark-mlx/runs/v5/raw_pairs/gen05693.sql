@@ -1,0 +1,1 @@
+WITH store_sales_by_store AS (SELECT store_id, ROUND(AVG(units), 2) avg_units FROM store_sales WHERE product_id IN (7, 8, 10) GROUP BY store_id) SELECT s.id, s.store_name, s.opened_date, ssbs.avg_units FROM stores s INNER JOIN store_sales_by_store ssbs ON s.id = ssbs.store_id;

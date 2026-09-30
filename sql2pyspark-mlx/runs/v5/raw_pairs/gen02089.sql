@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT id FROM accounts EXCEPT SELECT id FROM accounts WHERE account_type IN ('SAVINGS', 'CHECKING', 'CREDIT')), verified AS (SELECT s.* FROM accounts s INNER JOIN matched_keys k ON s.id = k.id) SELECT id, customer_id, account_type, balance, opened_date FROM verified ORDER BY id DESC NULLS FIRST;

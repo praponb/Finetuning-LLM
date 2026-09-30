@@ -1,0 +1,1 @@
+WITH shipments_by_order AS (SELECT order_id, MAX(delivered_date) AS latest_delivered_date, AVG(cost) AS avg_cost FROM shipments GROUP BY order_id) SELECT o.shipping_fee, o.channel, sbo.latest_delivered_date, sbo.avg_cost FROM orders o INNER JOIN shipments_by_order sbo ON o.id = sbo.order_id WHERE sbo.avg_cost >= 37;

@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(unit_price) AS max_unit_price FROM order_items WHERE product_id = 10 AND (order_id IN (1, 37) OR product_id IS NOT NULL) GROUP BY product_id, quantity_bucket HAVING MAX(unit_price) < 350;

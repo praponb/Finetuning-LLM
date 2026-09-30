@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items GROUP BY product_id) SELECT p.id, p.cost, p.brand, ps.quantity_range FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id WHERE ps.quantity_range > 69 ORDER BY p.cost DESC, id ASC LIMIT 10

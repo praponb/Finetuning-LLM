@@ -1,0 +1,1 @@
+SELECT s.store_name, i.quantity, i.product_id, WEEKOFYEAR(i.last_restock) AS last_restock_weekofyear FROM stores s LEFT JOIN inventory i ON s.id = i.store_id WHERE i.product_id IN (5, 6) AND i.quantity != 240

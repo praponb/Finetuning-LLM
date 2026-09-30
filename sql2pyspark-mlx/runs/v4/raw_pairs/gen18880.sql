@@ -1,0 +1,1 @@
+with store_totals as (select store_id, min(discount) as min_discount from orders where shipping_fee between 14 and 29 group by store_id) select s.store_name, st.min_discount from stores s left join store_totals st on s.id = st.store_id order by st.min_discount asc;

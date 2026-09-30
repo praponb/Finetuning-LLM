@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM stores WHERE region = 'Central'), Agg AS (SELECT city, MAX(opened_date) latest_opened_date, SORT_ARRAY(COLLECT_SET(city)) city_list FROM Base GROUP BY city) SELECT city, latest_opened_date, city_list FROM Agg ORDER BY city DESC, latest_opened_date LIMIT 50

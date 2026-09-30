@@ -1,0 +1,8 @@
+SELECT
+    id,
+    store_id,
+    revenue,
+    units - revenue AS revenue_per_unit
+FROM store_sales
+ORDER BY id DESC
+LIMIT 1;

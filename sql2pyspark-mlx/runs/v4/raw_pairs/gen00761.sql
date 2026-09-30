@@ -1,0 +1,1 @@
+SELECT city, SUM(CASE WHEN region = 'South' THEN 1 ELSE 0 END) AS south_count, COUNT(sqft) AS sqft_count FROM stores WHERE (city NOT IN ('London', 'Bangkok', 'Tokyo') AND city != 'Bangkok') OR city = 'Bangkok' GROUP BY city

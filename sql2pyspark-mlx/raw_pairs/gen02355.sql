@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM web_events WHERE event_type IN ('page_view', 'purchase')), web_events_stats AS (SELECT event_type, ROUND((100 * SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_click, ROUND(AVG(duration_sec), 2) avg_duration_sec FROM src GROUP BY event_type) SELECT * FROM web_events_stats ORDER BY avg_duration_sec DESC, event_type;

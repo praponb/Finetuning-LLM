@@ -1,0 +1,1 @@
+WITH sessions_by_customer AS (SELECT customer_id, MIN(started_at) AS first_started_at FROM sessions GROUP BY customer_id) SELECT c.name, sbc.first_started_at FROM customers c LEFT JOIN sessions_by_customer sbc ON c.id = sbc.customer_id ORDER BY first_started_at DESC, name

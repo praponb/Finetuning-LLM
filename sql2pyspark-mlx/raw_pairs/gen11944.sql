@@ -1,0 +1,1 @@
+SELECT id, txn_type, amount, merchant, txn_time, NTILE(3) OVER (PARTITION BY txn_type ORDER BY amount DESC, id) bucket, LAG(amount, 1) OVER (PARTITION BY merchant ORDER BY txn_time, id) prev_amount FROM transactions ORDER BY txn_type DESC

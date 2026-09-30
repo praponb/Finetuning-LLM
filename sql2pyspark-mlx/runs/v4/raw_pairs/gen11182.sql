@@ -1,0 +1,1 @@
+select id, items, ship_to, attributes['gift'] as gift, size(attributes) as num_attributes, transform(filter(items, i -> i.promo is not null), i -> struct(i.product_id as pid, round(i.price * 0.9, 2) as discounted_price)) as promo_lines from carts

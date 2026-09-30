@@ -1,0 +1,1 @@
+SELECT status, carrier, CASE WHEN carrier IN ('Kerry', 'DHL') THEN 'priority' ELSE 'other' END carrier_group, COUNT(cost) cost_count, MIN(cost) min_cost, MIN(shipped_date) first_shipped_date FROM shipments WHERE NOT (delivered_date BETWEEN '2023-06-01' AND '2025-09-08' AND carrier = 'Flash') GROUP BY 1, 2, 3;

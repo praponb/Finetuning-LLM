@@ -1,0 +1,1 @@
+select status, date_format(order_date, 'yyyy-MM') as order_month, concat_ws(', ', sort_array(collect_set(status))) as status_values from orders where year(order_date) >= 2025 and customer_id is null group by 1, 2 order by status_values;

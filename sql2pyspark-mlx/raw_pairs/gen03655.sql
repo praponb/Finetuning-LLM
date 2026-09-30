@@ -1,0 +1,1 @@
+with customer_summary as (select customer_id, sum(case when device = 'desktop' then 1 else 0 end) as desktop_count from sessions where browser in ('Safari', 'Edge', 'Chrome') group by customer_id) select c.email, c.city, cs.desktop_count from customers c inner join customer_summary cs on c.id = cs.customer_id;

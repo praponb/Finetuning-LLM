@@ -1,0 +1,1 @@
+SELECT s.cost, s.status, o.status AS order_status, st.city, st.sqft FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id FULL OUTER JOIN stores st ON o.store_id = st.id WHERE o.store_id = 31;

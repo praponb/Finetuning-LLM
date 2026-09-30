@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, coupon_codes, key, value FROM carts LATERAL VIEW EXPLODE(attributes) x AS key, value) SELECT id, coupon_codes, key, CASE WHEN key RLIKE '^(utm_source|weight_kg)$' THEN 'EXTENDED' WHEN key RLIKE '^(device|gift)$' THEN 'GROUP_B' ELSE 'CORE' END AS key_zone FROM flattened ORDER BY key NULLS LAST

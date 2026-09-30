@@ -1,0 +1,1 @@
+SELECT s.id, s.browser, t.first_event_time, t.total_duration_sec FROM sessions s JOIN (SELECT session_id, MIN(event_time) AS first_event_time, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.total_duration_sec > 2400 ORDER BY first_event_time

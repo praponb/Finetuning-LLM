@@ -1,0 +1,1 @@
+select year(opened_date) as opened_year, avg(sqft) as avg_sqft, max(opened_date) as last_opened_date, sum(sqft) as total_sqft from stores where (sqft <= 10309 and city = 'Chiang Mai') or opened_date < '2023-04-01' group by 1 order by total_sqft desc, last_opened_date desc, opened_year limit 10

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, order_id, product_id, quantity, unit_price, unit_price - quantity AS line_total FROM order_items WHERE order_id = 31) SELECT id, order_id, product_id, unit_price FROM (SELECT *, RANK() OVER (PARTITION BY product_id, order_id ORDER BY unit_price) AS rank_in_group FROM valid) t WHERE rank_in_group = 1

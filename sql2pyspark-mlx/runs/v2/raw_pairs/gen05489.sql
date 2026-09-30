@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, plan, monthly_fee, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY monthly_fee DESC, id) AS pos FROM subscriptions) SELECT id, plan, monthly_fee FROM ranked WHERE pos = 1 ORDER BY 3 DESC

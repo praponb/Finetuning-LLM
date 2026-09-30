@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM web_events QUALIFY ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY duration_sec DESC NULLS FIRST, id) = 1) SELECT s.id, s.session_id, s.event_type, s.page, s.event_time, (SELECT MIN(w2.duration_sec) FROM web_events w2 WHERE w2.session_id = s.session_id) AS min_web_event_duration_sec FROM deduped s ORDER BY min_web_event_duration_sec DESC

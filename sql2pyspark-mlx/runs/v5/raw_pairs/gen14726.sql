@@ -1,0 +1,1 @@
+SELECT id, quantity, product_id, unit_price, ROUND(AVG(quantity) OVER (ORDER BY quantity, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS quantity_moving_avg_4, SUM(unit_price) OVER (PARTITION BY product_id ORDER BY quantity, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_unit_price FROM order_items

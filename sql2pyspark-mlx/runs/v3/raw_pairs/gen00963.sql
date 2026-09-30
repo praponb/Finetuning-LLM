@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(*) AS total_count, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM inventory i LEFT OUTER JOIN stores s ON i.store_id = s.id LEFT OUTER JOIN products p ON i.product_id = p.id GROUP BY p.category HAVING COUNT(*) >= 4

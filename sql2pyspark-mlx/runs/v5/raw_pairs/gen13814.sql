@@ -1,0 +1,1 @@
+SELECT c.segment, src.status, COUNT(*) AS rows_total, MIN(src.balance) AS min_balance FROM accounts src INNER JOIN customers c ON src.customer_id = c.id GROUP BY GROUPING SETS ((c.segment, src.status), (c.segment)) ORDER BY min_balance ASC NULLS LAST;

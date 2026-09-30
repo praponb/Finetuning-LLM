@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT dim.country, a.category, COUNT(*) AS cnt, MIN(a.stock_qty) AS min_stock_qty, ROUND(SUM(a.price), 2) AS total_price FROM products a INNER JOIN suppliers dim ON a.supplier_id = dim.id GROUP BY ROLLUP (dim.country, a.category)) SELECT cnt, total_price FROM rollup_totals ORDER BY total_price, cnt

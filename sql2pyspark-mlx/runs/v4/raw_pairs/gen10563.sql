@@ -1,0 +1,1 @@
+WITH recent_employees AS (SELECT * FROM employees WHERE dept_id IN (4, 11, 18, 19) AND hire_date > '2023-11-19'), is_remote_summary AS (SELECT is_remote, COUNT(CASE WHEN job_title = 'Intern' THEN 1 END) AS intern_count FROM recent_employees GROUP BY is_remote) SELECT is_remote, intern_count FROM is_remote_summary ORDER BY intern_count DESC

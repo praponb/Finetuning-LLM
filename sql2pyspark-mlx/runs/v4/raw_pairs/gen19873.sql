@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, EXPLODE_OUTER(coupon_codes) AS value FROM carts) SELECT s.id, s.customer_id, (SELECT AVG(t2.balance) FROM accounts t2 WHERE t2.customer_id = s.customer_id) AS avg_account_balance FROM exploded s ORDER BY avg_account_balance DESC, id DESC;

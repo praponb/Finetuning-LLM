@@ -1,0 +1,1 @@
+SELECT id, order_id, status, shipped_date, DATEDIFF(delivered_date, shipped_date) / 7 AS weeks_shipped_date_to_delivered_date FROM shipments WHERE YEAR(shipped_date) >= 2025 AND order_id IS NOT NULL ORDER BY status;

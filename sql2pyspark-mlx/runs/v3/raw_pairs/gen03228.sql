@@ -1,0 +1,1 @@
+SELECT shipping_fee, status, store_id, discount * shipping_fee AS discount_times_shipping_fee, CASE WHEN status IN ('COMPLETED', 'CANCELLED') THEN 'Group A' ELSE 'Other' END AS status_group FROM orders WHERE order_date BETWEEN '2024-08-10' AND '2025-01-17' ORDER BY discount_times_shipping_fee

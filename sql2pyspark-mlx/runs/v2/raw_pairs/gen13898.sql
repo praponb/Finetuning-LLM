@@ -1,0 +1,1 @@
+SELECT is_flagged, MAX(amount) AS max_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY is_flagged HAVING COUNT(*) < 4 ORDER BY txn_type_values, is_flagged LIMIT 20;

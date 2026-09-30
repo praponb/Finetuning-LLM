@@ -1,0 +1,1 @@
+WITH valid_accounts AS (SELECT * FROM accounts WHERE customer_id = 30 AND account_type NOT IN ('CHECKING', 'CREDIT')), status_summary AS (SELECT status, COUNT(CASE WHEN account_type = 'SAVINGS' THEN 1 END) AS savings_count FROM valid_accounts GROUP BY status) SELECT * FROM status_summary ORDER BY savings_count DESC, status LIMIT 50;

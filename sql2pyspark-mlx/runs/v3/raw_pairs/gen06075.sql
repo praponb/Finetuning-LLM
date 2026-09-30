@@ -1,0 +1,1 @@
+SELECT o.channel, o.status, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id JOIN products p ON p.id = oi.product_id WHERE oi.unit_price < 360 GROUP BY o.channel, o.status HAVING ROUND(AVG(oi.unit_price), 2) > 42 ORDER BY status, channel LIMIT 5;

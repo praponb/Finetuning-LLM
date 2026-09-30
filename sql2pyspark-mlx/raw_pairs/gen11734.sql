@@ -1,0 +1,1 @@
+SELECT dim.channel, dim.status AS order_status, a.carrier, COUNT(*) AS cnt, MIN(a.cost) AS min_cost, GROUPING_ID() AS grouping_level FROM shipments a LEFT JOIN orders dim ON a.order_id = dim.id GROUP BY GROUPING SETS ((dim.channel, dim.status, a.carrier), (dim.channel)) ORDER BY cnt DESC NULLS LAST;

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', customers.signup_date) AS signup_month, SUM(transactions.amount) AS total_amount, ROUND(STDDEV(transactions.amount), 2) AS stddev_amount FROM transactions RIGHT OUTER JOIN accounts ON transactions.account_id = accounts.id JOIN customers ON accounts.customer_id = customers.id GROUP BY DATE_TRUNC('MONTH', customers.signup_date) ORDER BY total_amount DESC;

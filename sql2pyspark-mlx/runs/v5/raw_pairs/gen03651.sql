@@ -1,0 +1,1 @@
+WITH customer_stats AS (SELECT customer_id, MIN(opened_date) AS first_opened_date FROM accounts WHERE account_type = 'CREDIT' GROUP BY customer_id) SELECT customers.id, customers.segment, customers.name, customer_stats.first_opened_date FROM customers INNER JOIN customer_stats ON customers.id = customer_stats.customer_id ORDER BY customers.name;

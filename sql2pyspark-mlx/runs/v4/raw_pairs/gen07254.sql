@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, elem.product_id, elem.qty, elem.price, elem.promo FROM carts LATERAL VIEW OUTER EXPLODE(items) x AS elem) SELECT s.id, s.customer_id, s.qty, s.price, s.promo, (SELECT AVG(a2.balance) FROM accounts a2 WHERE a2.customer_id = s.customer_id) AS avg_account_balance FROM exploded s;

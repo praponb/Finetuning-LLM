@@ -1,0 +1,18 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("txn_type").orderBy(F.col("amount").desc(), "id").rowsBetween(Window.unboundedPreceding, Window.unboundedFollowing)
+w2 = Window.partitionBy("txn_type").orderBy("amount")
+
+result = (
+    df_transactions
+    .filter(F.col("merchant") == "Grab")
+    .select(
+        "id",
+        "txn_type",
+        "amount",
+        "merchant",
+        F.last("merchant").over(w).alias("last_merchant"),
+        F.rank().over(w2).alias("rnk"),
+    )
+)

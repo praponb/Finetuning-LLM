@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, host, level, latency_ms, status_code, attr_key, value FROM app_logs LATERAL VIEW EXPLODE(context) x AS attr_key, value) SELECT id, service, level, status_code, attr_key, value FROM exploded ORDER BY id NULLS LAST;

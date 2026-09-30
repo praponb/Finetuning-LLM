@@ -1,0 +1,1 @@
+with products_by_supplier as (select supplier_id, count(*) as num_products, max(launch_date) as latest_launch_date from products group by supplier_id) select s.id, s.country, s.city, pbs.num_products, pbs.latest_launch_date from suppliers s left join products_by_supplier pbs on s.id = pbs.supplier_id where pbs.num_products >= 3 order by id desc

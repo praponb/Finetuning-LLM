@@ -1,0 +1,1 @@
+select status, max(balance) - min(balance) as balance_range, round((100 * sum(case when account_type = 'SAVINGS' then 1 else 0 end)) / count(*), 1) as pct_savings from accounts group by status having pct_savings >= 47

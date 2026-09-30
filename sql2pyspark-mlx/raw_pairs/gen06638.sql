@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.status, COUNT(transactions.id) AS transaction_count, MIN(transactions.amount) AS min_amount, SUM(transactions.amount) AS total_amount FROM accounts LEFT JOIN transactions ON accounts.id = transactions.account_id GROUP BY accounts.id, accounts.status ORDER BY transaction_count DESC, id, status LIMIT 10

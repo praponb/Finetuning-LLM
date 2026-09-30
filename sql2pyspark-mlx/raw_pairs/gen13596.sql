@@ -1,0 +1,1 @@
+select date_trunc('MONTH', o.order_date) as order_month, min(p.paid_at) as min_paid_at from payments p inner join orders o on p.order_id = o.id group by date_trunc('MONTH', o.order_date) order by min_paid_at desc

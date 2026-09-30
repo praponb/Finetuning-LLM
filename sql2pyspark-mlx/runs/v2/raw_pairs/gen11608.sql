@@ -1,0 +1,1 @@
+select d.id, count(e.id) as employee_count, concat_ws(', ', sort_array(collect_set(e.level))) as level_values, count(case when e.level = 'L5' then 1 end) as l5_count from departments d join employees e on e.dept_id = d.id group by d.id order by l5_count desc, id limit 5;

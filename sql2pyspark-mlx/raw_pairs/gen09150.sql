@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, log_ts, latency_ms, status_code, attr_key, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) li AS attr_key, value) SELECT id, log_ts, latency_ms, status_code, attr_key FROM flattened ORDER BY log_ts DESC NULLS FIRST;

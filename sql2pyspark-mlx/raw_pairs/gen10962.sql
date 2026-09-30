@@ -1,0 +1,1 @@
+select c.country, count(*) as order_count from orders o right join stores s on o.store_id = s.id join customers c on c.id = o.customer_id where c.signup_date <= '2025-06-01' group by c.country having count(*) > 3;

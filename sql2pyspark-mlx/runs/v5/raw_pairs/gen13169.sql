@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, is_flagged, SUM(CASE WHEN merchant = 'Lazada' THEN amount ELSE 0 END) AS lazada_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions WHERE account_id IN (30, 31) GROUP BY DATE_FORMAT(txn_time, 'yyyy-MM'), is_flagged ORDER BY txn_month DESC;

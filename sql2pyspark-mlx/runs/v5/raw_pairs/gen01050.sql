@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT d.job_title AS employee_job_title, a.level AS employee_level, COUNT(*) AS rows_total, AVG(a.salary) AS avg_salary FROM employees a INNER JOIN employees d ON a.manager_id = d.id GROUP BY GROUPING SETS ((d.job_title, a.level), (d.job_title), ())) SELECT employee_level, rows_total FROM rollup_totals ORDER BY employee_level DESC NULLS LAST

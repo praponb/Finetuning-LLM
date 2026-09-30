@@ -1,0 +1,1 @@
+SELECT accounts.status, accounts.opened_date, accounts.customer_id, transactions.txn_type, transactions.is_flagged, transactions.account_id FROM accounts INNER JOIN transactions ON transactions.account_id = accounts.id WHERE accounts.opened_date > '2024-10-01' AND accounts.status NOT IN ('CLOSED', 'OPEN');

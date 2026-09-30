@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM store_sales WHERE store_id IN (2, 5, 6)), summary AS (SELECT product_id, ROUND(AVG(revenue), 2) AS avg_revenue, MAX(revenue) - MIN(revenue) AS revenue_range FROM src GROUP BY product_id) SELECT * FROM summary WHERE avg_revenue < 29 ORDER BY product_id DESC, avg_revenue

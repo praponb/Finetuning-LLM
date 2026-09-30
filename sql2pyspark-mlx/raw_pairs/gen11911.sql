@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, MAX(quantity) AS max_quantity FROM order_items GROUP BY order_id) SELECT orders.store_id, orders.order_date, order_stats.max_quantity FROM orders LEFT JOIN order_stats ON orders.id = order_stats.order_id ORDER BY store_id DESC;

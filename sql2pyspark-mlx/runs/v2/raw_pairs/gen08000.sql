@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) account_type_values, ROUND(AVG(balance), 2) avg_balance FROM accounts WHERE balance <= 50000 GROUP BY customer_id) SELECT c.id, c.signup_date, c.name, cs.account_type_values, cs.avg_balance FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY 1;

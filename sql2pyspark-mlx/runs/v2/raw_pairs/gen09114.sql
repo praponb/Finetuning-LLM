@@ -1,0 +1,1 @@
+SELECT i.product_id, p.supplier_id, p.price, s.city, s.supplier_name, SUBSTRING(s.country, 1, 3) AS country_prefix FROM inventory i JOIN products p ON i.product_id = p.id FULL OUTER JOIN suppliers s ON s.id = p.supplier_id WHERE s.city IN ('Berlin', 'Singapore') AND p.cost > 600;

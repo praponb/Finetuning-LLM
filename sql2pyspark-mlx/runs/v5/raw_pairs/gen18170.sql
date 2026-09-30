@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END) AS l2_count, SORT_ARRAY(COLLECT_SET(level)) AS level_list FROM employees GROUP BY dept_id) SELECT d.id, d.location, d.budget, dt.l2_count, dt.level_list FROM departments d LEFT JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.l2_count > 61

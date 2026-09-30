@@ -1,0 +1,1 @@
+SELECT products.brand, products.category, SUM(store_sales.units) AS total_units FROM store_sales INNER JOIN products ON products.id = store_sales.product_id INNER JOIN stores ON stores.id = store_sales.store_id WHERE products.stock_qty = 336 GROUP BY products.brand, products.category ORDER BY products.category, brand;

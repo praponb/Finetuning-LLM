@@ -1,0 +1,1 @@
+SELECT status, MONTH(paid_at) AS paid_month, MIN(paid_at) AS min_paid_at, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM payments WHERE amount > 900 AND order_id = 39 GROUP BY status, paid_month ORDER BY 1;

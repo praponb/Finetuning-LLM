@@ -1,0 +1,1 @@
+select c.segment, round(stddev(s.cost), 2) stddev_cost, min(s.cost) min_cost from shipments s inner join orders o on s.order_id = o.id inner join customers c on o.customer_id = c.id where o.store_id in (3, 8, 11, 21) group by c.segment order by stddev_cost desc, segment limit 5

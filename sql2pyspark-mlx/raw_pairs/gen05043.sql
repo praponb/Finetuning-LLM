@@ -1,0 +1,1 @@
+with base as (select * from store_sales where product_id in (1, 4) and month(sale_date) in (6, 8, 10)), store_sales_stats as (select product_id, count(distinct units) as unique_stores, count(distinct revenue) as unique_products from base group by product_id) select * from store_sales_stats order by unique_products desc, product_id limit 10

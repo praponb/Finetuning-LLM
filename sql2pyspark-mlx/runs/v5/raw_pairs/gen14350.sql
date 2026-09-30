@@ -1,0 +1,1 @@
+SELECT id, order_id, quantity, ROUND(AVG(quantity) OVER (PARTITION BY order_id ORDER BY quantity, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) quantity_moving_avg_3 FROM order_items WHERE product_id = 22 ORDER BY quantity;

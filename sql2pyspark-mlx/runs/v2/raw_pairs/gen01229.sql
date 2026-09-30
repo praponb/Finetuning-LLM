@@ -1,0 +1,1 @@
+with filtered_shipments as (select * from shipments where cost between 49 and 91), agg as (select carrier, max(cost) - min(cost) as cost_range from filtered_shipments group by carrier) select carrier, cost_range from agg where cost_range > 37 order by cost_range desc;

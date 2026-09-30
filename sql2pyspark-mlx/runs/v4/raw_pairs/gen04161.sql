@@ -1,0 +1,1 @@
+with filtered as (select id, order_id, product_id, quantity, unit_price, quantity - unit_price as line_total, round(unit_price / quantity, 2) as line_total_2 from order_items where product_id is not null) select *, row_number() over (partition by product_id order by line_total desc nulls first, id) as row_num from filtered qualify row_num = 1

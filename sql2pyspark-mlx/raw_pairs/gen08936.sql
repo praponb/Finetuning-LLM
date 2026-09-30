@@ -1,0 +1,1 @@
+with order_stats as (select order_id, round((100 * sum(case when status = 'LOST' then 1 else 0 end)) / count(*), 1) as pct_lost, sum(cost) as total_cost from shipments where cost >= 27 group by order_id) select o.id, o.status, os.pct_lost, os.total_cost from orders o left outer join order_stats os on o.id = os.order_id order by 2 desc, id desc;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, SUBSTRING(carrier, 1, 2) AS carrier_prefix, UPPER(status) AS status_upper, COALESCE(carrier, 'NONE') AS carrier_clean FROM shipments WHERE order_id IS NOT NULL AND order_id = 40) SELECT * FROM (SELECT order_id, carrier, status, cost FROM filtered) src PIVOT (MAX(cost) AS total, COUNT(1) AS item_count FOR status IN ('IN_TRANSIT', 'RETURNED'))

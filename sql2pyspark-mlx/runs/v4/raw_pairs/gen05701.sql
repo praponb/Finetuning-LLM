@@ -1,0 +1,1 @@
+WITH ranked_employees AS (SELECT id, job_title, salary, DENSE_RANK() OVER (PARTITION BY job_title ORDER BY salary DESC) AS rnk FROM employees) SELECT id, job_title, salary FROM ranked_employees WHERE rnk <= 1;

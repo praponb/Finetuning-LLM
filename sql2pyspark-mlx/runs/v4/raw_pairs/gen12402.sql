@@ -1,0 +1,1 @@
+SELECT p.stock_qty, p.launch_date, p.product_name, oi.product_id, oi.quantity - oi.unit_price line_total FROM products p LEFT JOIN order_items oi ON p.id = oi.product_id WHERE oi.quantity BETWEEN 5 AND 8;

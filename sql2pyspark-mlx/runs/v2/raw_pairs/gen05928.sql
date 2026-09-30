@@ -1,0 +1,1 @@
+select s.city, count(oi.quantity) as quantity_count, sum(oi.quantity) as total_quantity from order_items oi left join orders o on o.id = oi.order_id left join stores s on o.store_id = s.id group by s.city;

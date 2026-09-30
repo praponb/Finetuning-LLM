@@ -1,0 +1,1 @@
+select i.id, i.last_restock, i.store_id, i.quantity, ss.units from inventory i left outer join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.store_id = 2 and i.store_id in (3, 6) order by i.quantity;

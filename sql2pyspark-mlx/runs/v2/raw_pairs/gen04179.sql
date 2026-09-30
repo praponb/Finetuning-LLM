@@ -1,0 +1,1 @@
+SELECT a.status, MAX(t.amount) - MIN(t.amount) AS amount_range, SUM(CASE WHEN t.txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count FROM transactions t INNER JOIN accounts a ON t.account_id = a.id GROUP BY a.status ORDER BY amount_range DESC

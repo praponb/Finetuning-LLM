@@ -1,0 +1,1 @@
+SELECT id, order_id, cost, delivered_date FROM (SELECT id, order_id, cost, delivered_date, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY cost DESC, id) AS rnk FROM shipments WHERE shipped_date BETWEEN '2023-04-05' AND '2025-01-01') AS r WHERE rnk <= 2 ORDER BY cost DESC, delivered_date DESC;

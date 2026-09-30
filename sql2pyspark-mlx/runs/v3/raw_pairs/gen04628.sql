@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT segment, YEAR(signup_date) signup_year, ROUND(STDDEV(age), 2) stddev_age FROM customers WHERE country = 'SG' GROUP BY segment, YEAR(signup_date)) agg WHERE stddev_age > 75 ORDER BY signup_year DESC;

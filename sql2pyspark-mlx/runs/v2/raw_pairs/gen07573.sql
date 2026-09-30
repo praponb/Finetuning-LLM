@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, SUM(revenue) AS total_revenue, MAX(units) AS max_units FROM store_sales WHERE product_id IN (1, 2, 4, 5) GROUP BY store_id) SELECT stores.id, stores.city, store_stats.total_revenue, store_stats.max_units FROM stores LEFT OUTER JOIN store_stats ON stores.id = store_stats.store_id WHERE store_stats.total_revenue >= 22000;

@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT id, city, opened_date, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS row_num FROM stores) SELECT id, city, opened_date FROM Ranked WHERE row_num = 1 ORDER BY city

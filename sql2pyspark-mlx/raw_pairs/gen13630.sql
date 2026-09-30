@@ -1,0 +1,1 @@
+SELECT p.id, p.method, p.paid_at, o.order_date, o.customer_id, c.credit_limit FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id ORDER BY p.method DESC, c.credit_limit DESC, id LIMIT 20

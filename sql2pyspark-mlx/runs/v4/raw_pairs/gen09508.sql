@@ -1,0 +1,1 @@
+SELECT CASE WHEN duration_sec >= 465 THEN 'high' WHEN duration_sec >= 206 THEN 'mid' ELSE 'low' END AS duration_sec_bucket, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY CASE WHEN duration_sec >= 465 THEN 'high' WHEN duration_sec >= 206 THEN 'mid' ELSE 'low' END HAVING COUNT(duration_sec) < 4 ORDER BY total_duration_sec DESC, duration_sec_bucket ASC

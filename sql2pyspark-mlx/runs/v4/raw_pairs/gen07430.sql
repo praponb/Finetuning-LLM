@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, a.balance, t.stddev_amount, t.starbucks_count FROM accounts a INNER JOIN (SELECT account_id, ROUND(STDDEV(amount), 2) stddev_amount, SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END) starbucks_count FROM transactions GROUP BY account_id) t ON a.id = t.account_id;

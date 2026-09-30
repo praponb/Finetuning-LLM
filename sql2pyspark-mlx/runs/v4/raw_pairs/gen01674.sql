@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', launch_date) AS launch_month, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products WHERE (cost BETWEEN 610 AND 720 AND cost < 280) OR category = 'Home' GROUP BY launch_month ORDER BY avg_stock_qty DESC

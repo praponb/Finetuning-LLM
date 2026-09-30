@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.txn_time, accounts.customer_id, accounts.account_type FROM transactions LEFT JOIN accounts ON transactions.account_id = accounts.id WHERE accounts.opened_date <= '2024-07-23' AND transactions.merchant <> 'Amazon'

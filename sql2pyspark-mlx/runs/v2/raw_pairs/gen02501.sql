@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, MAX(salary) AS max_salary, SUM(salary) AS total_salary FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, ds.max_salary, ds.total_salary FROM departments d INNER JOIN department_summary ds ON d.id = ds.dept_id

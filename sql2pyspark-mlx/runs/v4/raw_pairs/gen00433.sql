@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.store_id, s.city, p.cost FROM store_sales ss RIGHT OUTER JOIN stores s ON s.id = ss.store_id JOIN products p ON ss.product_id = p.id WHERE p.category != 'Electronics' ORDER BY city DESC;

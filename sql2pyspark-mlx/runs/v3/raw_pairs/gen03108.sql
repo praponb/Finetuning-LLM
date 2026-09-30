@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(order_date) < 2024 THEN 'before_2024' WHEN YEAR(order_date) = 2024 THEN '2024' ELSE 'after_2024' END AS order_cohort, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count FROM orders GROUP BY 1 ORDER BY order_cohort ASC LIMIT 20

@@ -1,0 +1,1 @@
+WITH filtered_accounts AS (SELECT * FROM accounts WHERE balance < 45000), accounts_stats AS (SELECT account_type, MAX(balance) - MIN(balance) AS balance_range, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list FROM filtered_accounts GROUP BY account_type) SELECT account_type, balance_range, account_type_list FROM accounts_stats ORDER BY balance_range DESC;

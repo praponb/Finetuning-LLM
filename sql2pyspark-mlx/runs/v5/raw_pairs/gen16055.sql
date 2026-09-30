@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DATE_FORMAT(delivered_date, 'yyyy-MM-dd') AS delivered_date_label FROM shipments WHERE shipped_date > DATE '2023-08-09' AND carrier != 'Kerry') SELECT * FROM (SELECT order_id, status, cost FROM cleaned) src PIVOT (SUM(cost) AS total, COUNT(1) AS cnt FOR status IN ('IN_TRANSIT' AS in_transit, 'LOST' AS lost, 'RETURNED' AS returned));

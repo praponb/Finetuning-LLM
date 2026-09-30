@@ -1,0 +1,1 @@
+WITH ranked_orders AS (SELECT id, channel, discount, shipping_fee, DENSE_RANK() OVER (PARTITION BY channel ORDER BY discount DESC) AS rn FROM orders WHERE amount < 1210) SELECT id, channel, discount, shipping_fee FROM ranked_orders WHERE rn = 1 ORDER BY discount ASC, shipping_fee DESC;

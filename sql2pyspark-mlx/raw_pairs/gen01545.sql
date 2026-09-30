@@ -1,0 +1,1 @@
+WITH web_events_by_session AS (SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, MIN(event_time) AS first_event_time FROM web_events GROUP BY session_id) SELECT s.browser, s.country, webs.duration_sec_range, webs.first_event_time FROM sessions s LEFT JOIN web_events_by_session webs ON s.id = webs.session_id ORDER BY s.browser ASC;

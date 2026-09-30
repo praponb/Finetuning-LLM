@@ -1,0 +1,1 @@
+SELECT transactions.amount, accounts.balance, accounts.customer_id, customers.name, HOUR(transactions.txn_time) txn_time_hour FROM transactions LEFT JOIN accounts ON transactions.account_id = accounts.id RIGHT JOIN customers ON accounts.customer_id = customers.id

@@ -1,0 +1,1 @@
+SELECT id, device_code, reading_ts, humidity, pressure, status_bits, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY temp_c ASC, id ASC) AS row_seq, CUME_DIST() OVER w_recent AS pressure_cume_dist FROM device_readings WINDOW w_recent AS (PARTITION BY device_code ORDER BY pressure ASC NULLS LAST)

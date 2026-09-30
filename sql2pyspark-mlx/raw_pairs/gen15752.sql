@@ -1,0 +1,1 @@
+select id, city, country, signup_date, age, segment, lag(age, 1) over (partition by city, country order by signup_date, id) as prev_age, sum(age) over (partition by segment order by signup_date, id rows between unbounded preceding and current row) as running_age from customers order by signup_date

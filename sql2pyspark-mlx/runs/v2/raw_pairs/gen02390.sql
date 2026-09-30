@@ -1,0 +1,1 @@
+select o.status, o.channel, min(p.paid_at) as min_paid_at, sum(case when p.method = 'promptpay' then p.amount else 0 end) as promptpay_amount from payments p left join orders o on p.order_id = o.id full outer join customers c on o.customer_id = c.id group by o.status, o.channel order by min_paid_at, status, channel limit 1

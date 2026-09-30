@@ -1,0 +1,1 @@
+SELECT page, event_type, pct_purchase, search_count FROM (SELECT page, event_type, ROUND((100 * SUM(CASE WHEN event_type = 'purchase' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_purchase, COUNT(CASE WHEN event_type = 'search' THEN 1 END) AS search_count FROM web_events GROUP BY page, event_type) AS x WHERE search_count > 6

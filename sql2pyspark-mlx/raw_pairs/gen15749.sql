@@ -1,0 +1,1 @@
+SELECT a.id, a.customer_id, a.status, a.opened_date FROM accounts a WHERE YEAR(a.opened_date) >= 2024 AND NOT EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND t.txn_type NOT IN ('DEBIT', 'CREDIT')) ORDER BY a.opened_date

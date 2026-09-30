@@ -1,0 +1,1 @@
+SELECT merchant, CASE WHEN txn_type IN ('REFUND', 'DEBIT') THEN 'Group A' ELSE 'Other' END AS txn_type_group, CEIL(amount) AS amount_whole FROM transactions WHERE TO_DATE(txn_time) >= '2024-06-01' AND merchant NOT IN ('Shell', 'Amazon', 'Lazada') ORDER BY merchant;

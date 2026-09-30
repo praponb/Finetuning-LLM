@@ -1,0 +1,1 @@
+SELECT customers.signup_date, accounts.account_type, accounts.opened_date, REGEXP_REPLACE(customers.name, ' ', '_') AS name_slug FROM customers INNER JOIN accounts ON customers.id = accounts.customer_id WHERE NOT customers.is_active AND customers.segment = 'SMB';

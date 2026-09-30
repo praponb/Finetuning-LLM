@@ -1,0 +1,1 @@
+select product_id, avg(quantity) as avg_quantity, max(last_restock) as latest_last_restock, max(quantity) as max_quantity from inventory where not (product_id in (2, 4, 5, 7) and quantity != 85 and last_restock between '2023-05-01' and '2023-07-01') group by product_id having sum(quantity) < 790

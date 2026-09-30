@@ -1,0 +1,1 @@
+with recent_customers as (select *, round(age * 1.07, 2) as adjusted_age from customers where city not in ('Chiang Mai', 'Bangkok')), summary as (select country, count(*) as num_customers, avg(age) as avg_age from recent_customers group by country) select country, num_customers, avg_age from summary order by avg_age

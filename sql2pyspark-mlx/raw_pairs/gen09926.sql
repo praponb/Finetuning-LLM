@@ -1,0 +1,1 @@
+WITH orders_by_store AS (SELECT store_id, COUNT(DISTINCT discount) AS unique_channels FROM orders GROUP BY store_id) SELECT s.opened_date, s.city, obs.unique_channels FROM stores s LEFT JOIN orders_by_store obs ON s.id = obs.store_id

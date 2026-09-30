@@ -1,0 +1,1 @@
+SELECT p.id, p.brand, COUNT(i.id) AS inventory_count, MIN(i.quantity) AS min_quantity FROM products p INNER JOIN inventory i ON i.product_id = p.id WHERE p.cost IS NOT NULL GROUP BY p.id, p.brand ORDER BY inventory_count DESC

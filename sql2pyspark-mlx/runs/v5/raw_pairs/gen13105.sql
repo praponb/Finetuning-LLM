@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, txn_type, amount, is_flagged, UPPER(txn_type) AS txn_type_upper FROM transactions WHERE is_flagged) SELECT id, is_flagged, txn_type_upper FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY amount NULLS LAST, id) AS dedup_rank FROM cleaned) x WHERE dedup_rank = 1

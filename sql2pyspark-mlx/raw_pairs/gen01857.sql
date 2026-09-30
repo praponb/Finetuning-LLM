@@ -1,0 +1,1 @@
+SELECT s.device, ROUND(STDDEV(we.duration_sec), 2) AS stddev_duration_sec, SUM(CASE WHEN we.page = '/cart' THEN 1 ELSE 0 END) AS cart_count FROM web_events we FULL OUTER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE we.page IN ('/search', '/product') GROUP BY s.device ORDER BY cart_count ASC, device ASC LIMIT 5

@@ -1,0 +1,1 @@
+SELECT is_active, SUM(CASE WHEN country = 'UK' THEN credit_limit ELSE 0 END) AS uk_credit_limit FROM customers GROUP BY 1 HAVING SUM(CASE WHEN country = 'UK' THEN credit_limit ELSE 0 END) < 27 ORDER BY uk_credit_limit, is_active LIMIT 10;

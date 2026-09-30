@@ -1,0 +1,1 @@
+SELECT c.id, c.city, COUNT(s.id) AS session_count, MAX(s.started_at) AS latest_started_at FROM customers c LEFT JOIN sessions s ON c.id = s.customer_id GROUP BY c.id, c.city ORDER BY latest_started_at, id, city LIMIT 50;

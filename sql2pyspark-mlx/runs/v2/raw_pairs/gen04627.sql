@@ -1,0 +1,1 @@
+select i.store_id, i.product_id, i.quantity, ss.sale_date, ss.store_id as store_sale_store_id from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.quantity between 65 and 195 and i.store_id in (1, 4, 5, 6);

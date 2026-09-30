@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, SORT_ARRAY(COLLECT_SET(event_type)) event_type_list FROM web_events GROUP BY session_id) SELECT sessions.id, sessions.device, sessions.started_at, session_summary.event_type_list FROM sessions JOIN session_summary ON sessions.id = session_summary.session_id

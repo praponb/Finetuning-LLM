@@ -1,0 +1,1 @@
+SELECT YEAR(orders.order_date) AS order_year, orders.status, AVG(order_items.quantity) AS avg_quantity, MIN(order_items.unit_price) AS min_unit_price FROM order_items INNER JOIN products ON products.id = order_items.product_id LEFT JOIN orders ON order_items.order_id = orders.id GROUP BY YEAR(orders.order_date), orders.status ORDER BY min_unit_price

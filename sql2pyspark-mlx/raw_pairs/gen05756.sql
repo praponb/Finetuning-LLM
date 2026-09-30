@@ -1,0 +1,1 @@
+select id, customer_id, monthly_fee, plan from (select id, customer_id, monthly_fee, plan, dense_rank() over (partition by customer_id order by monthly_fee) as pos from subscriptions) as ranked where pos = 1 order by id desc, customer_id

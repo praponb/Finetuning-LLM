@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name, location ORDER BY budget DESC NULLS FIRST, id) AS rank_in_group FROM departments) t WHERE rank_in_group = 1) SELECT id, dept_name FROM latest ORDER BY id DESC

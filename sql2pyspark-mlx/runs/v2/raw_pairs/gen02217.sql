@@ -1,0 +1,1 @@
+select txn_month, unique_merchants, avg_amount from (select date_format(txn_time, 'yyyy-MM') as txn_month, count(distinct amount) as unique_merchants, avg(amount) as avg_amount from transactions group by date_format(txn_time, 'yyyy-MM')) as t where unique_merchants > 7 order by txn_month;

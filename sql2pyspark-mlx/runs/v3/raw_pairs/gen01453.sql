@@ -1,0 +1,1 @@
+SELECT page, session_id, YEAR(event_time) AS event_year, MAX(duration_sec) AS max_duration_sec, SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) AS search_duration_sec FROM web_events WHERE session_id IN (1, 6) GROUP BY 1, 2, 3 ORDER BY search_duration_sec DESC, 1

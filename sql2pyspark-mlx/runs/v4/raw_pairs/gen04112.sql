@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN cost >= 81 THEN 'high' WHEN cost >= 20 THEN 'mid' ELSE 'low' END AS cost_bucket, COUNT(DISTINCT cost) AS unique_orders, MAX(shipped_date) AS latest_shipped_date FROM shipments GROUP BY CASE WHEN cost >= 81 THEN 'high' WHEN cost >= 20 THEN 'mid' ELSE 'low' END) AS agg WHERE unique_orders < 10 ORDER BY unique_orders DESC, cost_bucket ASC LIMIT 20;

@@ -1,0 +1,1 @@
+SELECT id, product_id, unit_price, ROUND(unit_price, 2) AS unit_price_rounded, quantity * unit_price AS line_total FROM order_items WHERE quantity <> 7 AND product_id = 7 AND unit_price > 260 ORDER BY id;

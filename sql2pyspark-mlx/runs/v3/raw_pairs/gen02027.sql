@@ -1,0 +1,1 @@
+WITH DepartmentTotals AS (SELECT dept_id, ROUND(AVG(salary), 2) avg_salary, MIN(salary) min_salary FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.location, D.avg_salary, D.min_salary FROM departments d LEFT JOIN DepartmentTotals D ON d.id = D.dept_id WHERE D.avg_salary > 69

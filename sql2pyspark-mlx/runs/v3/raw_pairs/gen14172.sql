@@ -1,0 +1,1 @@
+SELECT customers.segment, customers.city, MAX(accounts.opened_date) AS last_opened_date FROM accounts INNER JOIN customers ON accounts.customer_id = customers.id WHERE customers.segment = 'Consumer' GROUP BY customers.segment, customers.city ORDER BY segment, last_opened_date DESC, city LIMIT 10

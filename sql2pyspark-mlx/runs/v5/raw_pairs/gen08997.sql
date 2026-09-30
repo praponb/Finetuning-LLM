@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT status FROM payments INTERSECT SELECT status FROM payments WHERE status IN ('REFUNDED', 'SUCCESS', 'FAILED')), kept_rows AS (SELECT s.* FROM payments s INNER JOIN matched_keys k ON s.status = k.status) SELECT id, order_id, amount FROM kept_rows ORDER BY amount DESC NULLS FIRST, order_id

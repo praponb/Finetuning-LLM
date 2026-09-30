@@ -1,0 +1,1 @@
+select t.merchant, t.is_flagged, a.status, a.opened_date, c.name, c.country from transactions t left join accounts a on t.account_id = a.id join customers c on c.id = a.customer_id where a.balance >= 32000 and c.city in ('New York', 'Chiang Mai') order by c.name desc, a.status;

@@ -1,0 +1,1 @@
+SELECT p.id, p.launch_date FROM products p WHERE ARRAY_CONTAINS(p.tags, 'sale') AND NOT EXISTS (SELECT 1 FROM order_items oi WHERE oi.product_id = p.id AND oi.order_id IN (9, 10, 27, 28)) ORDER BY launch_date, p.id DESC;

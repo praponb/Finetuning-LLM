@@ -1,0 +1,1 @@
+SELECT city, 'customer' AS source FROM customers WHERE signup_date BETWEEN '2024-09-01' AND '2025-02-25' UNION ALL SELECT city, 'store' AS source FROM stores WHERE opened_date > '2024-02-27' ORDER BY city DESC

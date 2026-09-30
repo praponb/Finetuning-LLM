@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 390 THEN 'high' WHEN unit_price >= 160 THEN 'mid' ELSE 'low' END AS unit_price_bucket, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items GROUP BY unit_price_bucket;

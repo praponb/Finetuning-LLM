@@ -1,0 +1,1 @@
+SELECT YEAR(products.launch_date) AS launch_year, COUNT(*) AS order_item_count FROM order_items RIGHT OUTER JOIN orders ON order_items.order_id = orders.id JOIN products ON order_items.product_id = products.id WHERE products.product_name IS NOT NULL GROUP BY YEAR(products.launch_date)

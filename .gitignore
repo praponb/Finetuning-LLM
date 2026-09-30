@@ -4,25 +4,22 @@ mlx-env/
 # API keys: .env holds KIMI_API_KEY (and optionally KIMI_BASE_URL, KIMI_MODEL) for the Kimi K3 repair
 .env
 __pycache__/
+*.pyc
 
-# model weights and build artifacts (regenerate with `make data train export`)
+# model binaries and large fused artifacts (can be rebuilt with `make export`)
 *.gguf
-*.safetensors
 sql2pyspark-hf/
+sql2pyspark-model/
 sql2pyspark-mlx/sql2pyspark-model/
-sql2pyspark-mlx/adapters/
 archive/
-
-# generated data (regenerate with `make data`)
-sql2pyspark-mlx/raw_pairs/
-sql2pyspark-mlx/data/
 
 # vendored upstream checkout
 llama.cpp/
 
-# earlier training runs (adapters, data, logs) kept for rollback
-sql2pyspark-mlx/runs/
-
 # local agent/editor tooling (symlinks into the venv)
 .agents/
 .claude/
+
+
+# intermediate LoRA checkpoints (every 100-200 iterations); only each run's final adapters.safetensors is tracked
+[0-9][0-9][0-9][0-9][0-9][0-9][0-9]_adapters.safetensors

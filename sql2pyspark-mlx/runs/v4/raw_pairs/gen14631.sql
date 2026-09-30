@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.4 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END AS rating_bucket, SORT_ARRAY(COLLECT_SET(country)) AS country_list, MIN(rating) AS min_rating, MAX(rating) AS max_rating FROM suppliers WHERE country NOT IN ('TH', 'SG') AND supplier_name LIKE '%Tokyo%' AND city IN ('Tokyo', 'New York', 'Singapore') GROUP BY rating_bucket ORDER BY max_rating

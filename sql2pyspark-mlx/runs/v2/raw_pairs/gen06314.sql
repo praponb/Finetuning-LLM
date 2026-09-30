@@ -1,0 +1,1 @@
+select level, year(hire_date) as hire_year, is_remote, count(distinct salary) as unique_depts, min(hire_date) as min_hire_date, round(avg(salary), 2) as avg_salary from employees where is_remote group by level, year(hire_date), is_remote having avg_salary >= 58;

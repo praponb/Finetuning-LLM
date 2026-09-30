@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LOWER(dept_name) AS dept_name_lower FROM departments WHERE dept_name NOT IN ('Engineering', 'HR')) SELECT dept_name, id FROM valid EXCEPT SELECT dept_name, id FROM departments WHERE dept_name = 'Engineering'

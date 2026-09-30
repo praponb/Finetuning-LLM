@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, MIN(amount) AS min_amount, ROUND(AVG(amount), 2) AS avg_amount FROM payments GROUP BY order_id) SELECT o.discount, ot.min_amount, ot.avg_amount FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.avg_amount >= 70 ORDER BY 2;

@@ -1,0 +1,1 @@
+WITH ranked_stores AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS rn FROM stores WHERE region IN ('West', 'Central')) SELECT * FROM ranked_stores WHERE rn = 1 ORDER BY city DESC;

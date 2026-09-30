@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT brand, MONTH(launch_date) AS launch_month, COUNT(DISTINCT stock_qty) AS unique_categorys, MIN(launch_date) AS min_launch_date FROM products WHERE ARRAY_CONTAINS(tags, 'sale') GROUP BY brand, MONTH(launch_date)) AS s WHERE unique_categorys < 9

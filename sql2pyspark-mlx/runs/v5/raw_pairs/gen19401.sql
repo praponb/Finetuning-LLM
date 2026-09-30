@@ -1,0 +1,1 @@
+SELECT o.id, o.status, COUNT(p.id) AS payment_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.status))) AS status_values FROM orders o INNER JOIN payments p ON p.order_id = o.id GROUP BY o.id, o.status ORDER BY status DESC

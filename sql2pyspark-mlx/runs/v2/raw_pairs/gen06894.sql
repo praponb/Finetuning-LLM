@@ -1,0 +1,1 @@
+SELECT store_id, min_units, avg_units FROM (SELECT store_id, MIN(units) AS min_units, AVG(units) AS avg_units FROM store_sales GROUP BY store_id) AS sub WHERE avg_units < 24 ORDER BY store_id DESC, min_units DESC

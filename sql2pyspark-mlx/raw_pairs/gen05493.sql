@@ -1,0 +1,1 @@
+SELECT YEAR(start_date) AS start_year, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM subscriptions WHERE start_date BETWEEN '2024-04-28' AND '2024-11-01' AND (start_date BETWEEN '2023-08-01' AND '2025-02-01' OR plan = 'standard') GROUP BY start_year ORDER BY plan_values;

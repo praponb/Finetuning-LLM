@@ -1,0 +1,1 @@
+WITH recent_orders AS (SELECT * FROM orders WHERE store_id IN (7, 18)), orders_stats AS (SELECT status, COUNT(CASE WHEN status = 'SHIPPED' THEN 1 END) AS shipped_count FROM recent_orders GROUP BY status) SELECT status, shipped_count FROM orders_stats WHERE shipped_count >= 7 ORDER BY status, shipped_count DESC;

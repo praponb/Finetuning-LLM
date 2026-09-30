@@ -1,0 +1,1 @@
+SELECT CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, COUNT(stock_qty) AS stock_qty_count FROM products WHERE category != 'Grocery' ORDER BY brand_values;

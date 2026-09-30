@@ -1,0 +1,1 @@
+WITH RankedWebEvents AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY event_time DESC, id) AS pos FROM web_events) SELECT id, session_id, event_time, event_type FROM RankedWebEvents WHERE pos <= 5 ORDER BY session_id DESC, event_time;

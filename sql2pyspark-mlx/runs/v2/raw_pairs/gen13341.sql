@@ -1,0 +1,1 @@
+SELECT p.cost, t.avg_quantity, t.unique_stores FROM products p JOIN (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(DISTINCT quantity) AS unique_stores FROM inventory GROUP BY product_id) t ON p.id = t.product_id WHERE t.avg_quantity > 45 ORDER BY p.cost DESC

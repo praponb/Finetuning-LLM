@@ -1,0 +1,1 @@
+SELECT orders.id, orders.store_id, t.lost_cost FROM orders INNER JOIN (SELECT order_id, SUM(CASE WHEN status = 'LOST' THEN cost ELSE 0 END) lost_cost FROM shipments WHERE delivered_date < '2023-10-01' GROUP BY order_id) t ON orders.id = t.order_id ORDER BY t.lost_cost DESC, id LIMIT 1

@@ -1,0 +1,1 @@
+WITH valid_orders AS (SELECT * FROM orders WHERE channel = 'partner' AND (shipping_fee > 17 OR status NOT IN ('SHIPPED', 'COMPLETED', 'RETURNED'))), orders_stats AS (SELECT channel, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list, MIN(amount) AS min_amount FROM valid_orders GROUP BY channel) SELECT * FROM orders_stats WHERE min_amount >= 1560 ORDER BY min_amount DESC

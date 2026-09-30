@@ -1,0 +1,1 @@
+SELECT MAX(rating) max_rating, COUNT(rating) rating_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) city_values FROM suppliers WHERE country = 'SG' OR supplier_name LIKE '%Par%' ORDER BY 2 DESC;

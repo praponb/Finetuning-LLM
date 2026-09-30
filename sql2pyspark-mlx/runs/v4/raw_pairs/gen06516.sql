@@ -1,0 +1,1 @@
+SELECT id, delivered_date, order_id, DATE_ADD(delivered_date, 22) AS delivered_date_plus_22d FROM shipments WHERE NOT (shipped_date BETWEEN '2023-04-01' AND '2024-12-01' AND shipped_date < '2023-06-01') ORDER BY delivered_date ASC

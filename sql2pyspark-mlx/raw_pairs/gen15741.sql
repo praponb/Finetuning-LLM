@@ -1,0 +1,1 @@
+SELECT CASE WHEN location IN ('New York', 'Singapore') THEN 'priority' ELSE 'other' END AS location_group, dept_name, SUM(budget) AS total_budget, ROUND(STDDEV(budget), 2) AS stddev_budget FROM departments WHERE budget > 1958000 GROUP BY CASE WHEN location IN ('New York', 'Singapore') THEN 'priority' ELSE 'other' END, dept_name;

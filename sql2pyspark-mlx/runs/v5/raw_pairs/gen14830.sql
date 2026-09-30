@@ -1,0 +1,1 @@
+with enriched as (select id, dept_name, lag(budget) over w_recent as prev_budget, row_number() over w_recent as event_seq, rank() over (order by budget desc) as budget_rank from departments window w_recent as (partition by location order by budget, id)) select id, budget_rank from enriched order by budget_rank nulls first

@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, SUM(salary) AS total_salary FROM employees GROUP BY dept_id) SELECT d.dept_name, ebd.total_salary FROM departments d JOIN employees_by_department ebd ON d.id = ebd.dept_id WHERE ebd.total_salary >= 533000 ORDER BY total_salary DESC

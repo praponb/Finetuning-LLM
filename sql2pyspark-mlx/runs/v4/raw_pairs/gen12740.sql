@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', event_time) AS event_month, SUM(duration_sec) AS total_duration_sec, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY 1 ORDER BY duration_sec_range DESC

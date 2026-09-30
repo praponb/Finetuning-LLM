@@ -1,0 +1,1 @@
+select * from (select category, date_format(launch_date, 'yyyy-MM') as launch_month, count(stock_qty) as stock_qty_count from products group by category, date_format(launch_date, 'yyyy-MM')) as sub where stock_qty_count >= 9 order by launch_month;

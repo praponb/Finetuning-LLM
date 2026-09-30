@@ -1,0 +1,1 @@
+with dim_totals as (select p.brand, count(*) as cnt, avg(a.quantity) as avg_quantity from inventory a left join products p on a.product_id = p.id group by p.brand) select brand, cnt from dim_totals order by cnt desc;

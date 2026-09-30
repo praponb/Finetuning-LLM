@@ -1,0 +1,1 @@
+SELECT CASE WHEN price >= 1100 THEN 'high' WHEN price >= 240 THEN 'mid' ELSE 'low' END AS price_bucket, ROUND(STDDEV(price), 2) AS stddev_price, SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END) AS umbrella_count FROM products GROUP BY 1

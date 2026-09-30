@@ -1,0 +1,1 @@
+with src as (select *, date_trunc('week', delivered_date) as delivered_date_period from shipments where order_id in (7, 11, 35, 39)), carrier_summary as (select carrier, round(avg(cost), 2) as avg_cost, count(cost) as cost_count from src group by carrier) select carrier, cost_count from carrier_summary where cost_count >= 6 order by cost_count desc

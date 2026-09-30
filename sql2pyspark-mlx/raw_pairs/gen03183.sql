@@ -1,0 +1,1 @@
+with filtered as (select id, reading_ts, temp_c, humidity, pressure, status_bits, round(humidity, 2) as humidity_rounded from device_readings where temp_c > 24) select * from (select id, pressure, temp_c, humidity_rounded from filtered) src unpivot (metric_value for metric_name in (pressure, temp_c as TEMP_C_VAL, humidity_rounded))

@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.6 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(AVG(rating), 2) AS avg_rating FROM suppliers WHERE rating > 2.2 AND rating <= 1.8 GROUP BY rating_bucket ORDER BY rating_bucket

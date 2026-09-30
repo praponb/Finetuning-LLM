@@ -1,0 +1,1 @@
+select case when sqft >= 16013 then 'high' when sqft >= 7869 then 'mid' else 'low' end as sqft_bucket, region, round(stddev(sqft), 2) as stddev_sqft, count(distinct sqft) as unique_regions, count(case when city = 'Chiang Mai' then 1 end) as chiang_mai_count from stores where city = 'Bangkok' and sqft < 6838 group by 1, 2 order by stddev_sqft desc;

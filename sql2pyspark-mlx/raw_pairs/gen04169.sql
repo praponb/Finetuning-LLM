@@ -1,0 +1,1 @@
+SELECT category, unique_brands, first_launch_date FROM (SELECT category, COUNT(DISTINCT price) unique_brands, MIN(launch_date) first_launch_date FROM products WHERE brand IN ('Acme', 'Initech', 'Umbrella') GROUP BY category) s WHERE unique_brands < 4;

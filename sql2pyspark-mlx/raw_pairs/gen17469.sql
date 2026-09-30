@@ -1,0 +1,1 @@
+WITH recent_inventory AS (SELECT * FROM inventory WHERE quantity <> 118), store_id_summary AS (SELECT store_id, MIN(last_restock) AS first_last_restock FROM recent_inventory GROUP BY store_id) SELECT store_id, first_last_restock FROM store_id_summary ORDER BY store_id DESC LIMIT 5;

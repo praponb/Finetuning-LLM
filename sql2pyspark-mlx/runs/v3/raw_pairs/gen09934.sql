@@ -1,0 +1,1 @@
+SELECT dept_name, CASE WHEN budget >= 3607000 THEN 'high' WHEN budget >= 1769000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(budget) AS total_budget, MIN(budget) AS min_budget FROM departments GROUP BY dept_name, CASE WHEN budget >= 3607000 THEN 'high' WHEN budget >= 1769000 THEN 'mid' ELSE 'low' END HAVING SUM(budget) >= 14155000;

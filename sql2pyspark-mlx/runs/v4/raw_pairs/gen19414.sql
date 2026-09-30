@@ -1,0 +1,1 @@
+WITH employees_by_department AS (SELECT dept_id, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, MAX(hire_date) AS latest_hire_date FROM employees GROUP BY dept_id) SELECT d.location, d.dept_name, ebd.job_title_list, ebd.latest_hire_date FROM departments d LEFT JOIN employees_by_department ebd ON d.id = ebd.dept_id ORDER BY d.location ASC

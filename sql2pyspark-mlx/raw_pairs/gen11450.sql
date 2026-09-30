@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, SUM(amount) AS total_amount FROM transactions WHERE amount BETWEEN 3300 AND 3900 GROUP BY account_id) SELECT a.status, a.opened_date, as.total_amount FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id ORDER BY status

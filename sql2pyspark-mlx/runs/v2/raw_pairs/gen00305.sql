@@ -1,0 +1,1 @@
+SELECT is_active, SUM(age) AS total_age, COUNT(*) AS cnt, SUM(SUM(age)) OVER (ORDER BY is_active) AS cumulative_age FROM customers WHERE credit_limit >= 4500 GROUP BY is_active ORDER BY cumulative_age DESC;

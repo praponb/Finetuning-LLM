@@ -1,0 +1,1 @@
+SELECT p.supplier_id, AVG(i.quantity) AS avg_quantity, COUNT(i.quantity) AS quantity_count FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON s.id = i.store_id WHERE i.product_id IN (7, 8, 10) GROUP BY p.supplier_id ORDER BY avg_quantity, quantity_count, supplier_id LIMIT 10;

@@ -1,0 +1,1 @@
+SELECT customers.is_active, MIN(accounts.balance) AS min_balance, MAX(accounts.opened_date) AS last_opened_date FROM accounts INNER JOIN customers ON accounts.customer_id = customers.id GROUP BY customers.is_active

@@ -1,0 +1,1 @@
+select customer_id, status from accounts where account_type in ('CHECKING', 'SAVINGS', 'CREDIT') intersect select customer_id, status from accounts where month(opened_date) in (1, 5, 8) order by customer_id;

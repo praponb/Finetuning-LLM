@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, INITCAP(TRIM(supplier_name)) AS supplier_name_title, COALESCE(rating, 0) AS rating_filled, COALESCE(city, 'N/A') AS city_filled FROM suppliers WHERE country != 'US') SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM products c WHERE c.supplier_id = s.id AND SIZE(c.tags) >= 1)

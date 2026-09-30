@@ -1,0 +1,1 @@
+select ss.id, ss.store_id, ss.sale_date, s.city, p.brand from store_sales ss inner join stores s on s.id = ss.store_id inner join products p on p.id = ss.product_id where ss.revenue <= 3300 and s.city != 'Chiang Mai' order by ss.sale_date

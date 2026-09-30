@@ -1,0 +1,1 @@
+SELECT c.is_active, MIN(oi.quantity) AS min_quantity FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id WHERE oi.product_id IN (10, 16, 26, 37) GROUP BY c.is_active ORDER BY 2 ASC, is_active ASC LIMIT 20;

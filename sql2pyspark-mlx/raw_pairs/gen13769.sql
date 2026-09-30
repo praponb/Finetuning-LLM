@@ -1,0 +1,1 @@
+with flattened as (select id, plan, element from price_tiers lateral view outer explode(tier_prices) x as element) select plan, element, case when plan rlike '^(pro|starter)$' then 'GROUP_B' else 'OTHER_ZONE' end as plan_zone from flattened

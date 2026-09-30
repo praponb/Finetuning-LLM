@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.unit_price, order_items.quantity, order_items.product_id, orders.status, orders.customer_id, orders.store_id FROM order_items LEFT OUTER JOIN orders ON order_items.order_id = orders.id WHERE orders.customer_id IS NULL AND order_items.product_id IN (8, 12, 25);

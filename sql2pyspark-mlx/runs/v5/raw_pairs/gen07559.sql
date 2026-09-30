@@ -1,0 +1,1 @@
+SELECT city, name, age, CONCAT(segment, ', ', email) AS segment_email, CASE WHEN age >= 67 THEN 'High' WHEN age >= 30 THEN 'Medium' ELSE 'Low' END AS age_level FROM customers WHERE credit_limit BETWEEN 8700 AND 11900;

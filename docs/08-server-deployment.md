@@ -48,7 +48,8 @@ Training needs Apple MLX, so it stays on the Mac. The finished model is a plain 
 ## 🔄 Updates
 
 - **Code**: `cd ~/Finetuning-LLM && git pull && sudo systemctl restart sql2pyspark`.
-- **Model** (after a new fine-tune and `make export` on the Mac): copy the new `sql2pyspark.gguf` to the server, then `ollama create sql2pyspark -f Modelfile` in its folder (overwrites `sql2pyspark:latest`; keep the old one first with `ollama cp sql2pyspark sql2pyspark:v7` if you want a rollback).
+- **Model** (after a new fine-tune, `make export` and `make promote` on the Mac): `zsh deploy/update_model.sh v8 v7` copies the Mac's `sql2pyspark.gguf` to the server (`scp`, 8.1 GB), keeps the server's current `latest` as `sql2pyspark:v7`, registers the new file as `sql2pyspark:v8` (same `Modelfile` as the repo) and points `latest` at it; no sudo and no app restart needed. Rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v7 sql2pyspark:latest'`.
+- **Status 2026-09-30**: the setup script has been run (Java 17, `WorkingDirectory=/home/prapon/Finetuning-LLM`, Kimi off); **Cloudflare Access is not set up yet** (the public URL answers without a login), so keep `KIMI_API_KEY=` empty. The server still serves v7 until `deploy/update_model.sh` is run.
 
 ## 🩺 Troubleshooting (seen during the setup)
 

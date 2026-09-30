@@ -1,0 +1,1 @@
+SELECT o.channel, o.amount, t.avg_quantity FROM orders o LEFT OUTER JOIN (SELECT order_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items GROUP BY order_id) t ON o.id = t.order_id WHERE t.avg_quantity > 60 ORDER BY t.avg_quantity DESC

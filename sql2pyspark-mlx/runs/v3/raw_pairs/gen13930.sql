@@ -1,0 +1,2 @@
+SELECT id, email
+FROM employees

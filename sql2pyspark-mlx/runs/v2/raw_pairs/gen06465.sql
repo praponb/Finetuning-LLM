@@ -1,0 +1,1 @@
+SELECT subscriptions.end_date, subscriptions.monthly_fee, customers.city, customers.signup_date, ADD_MONTHS(customers.signup_date, 3) signup_date_plus_months FROM subscriptions RIGHT JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.plan IN ('enterprise', 'basic') ORDER BY 1 DESC;

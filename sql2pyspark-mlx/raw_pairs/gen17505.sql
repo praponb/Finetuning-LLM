@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, COALESCE(amount, 0) AS amount_filled, FLOOR(amount) AS amount_whole, COALESCE(merchant, 'OTHER') AS merchant_filled FROM transactions WHERE account_id = 4) SELECT * FROM (SELECT id, account_id, amount_filled, amount FROM valid) src UNPIVOT (metric_value FOR kpi IN (amount_filled AS AMOUNT_FILLED_VAL, amount AS AMOUNT))

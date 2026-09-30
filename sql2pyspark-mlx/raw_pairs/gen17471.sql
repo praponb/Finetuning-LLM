@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, account_id, amount, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount DESC, id) AS row_num FROM transactions WHERE is_flagged) SELECT id, account_id, amount FROM ranked WHERE row_num <= 1 ORDER BY amount DESC;

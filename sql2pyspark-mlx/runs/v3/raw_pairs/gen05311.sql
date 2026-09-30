@@ -1,0 +1,1 @@
+select id, txn_time, upper(merchant) as merchant_upper from transactions where is_flagged = false and (to_date(txn_time) < '2025-08-01' or merchant in ('Lazada', 'Shell', '7-Eleven')) order by merchant_upper desc

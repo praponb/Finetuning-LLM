@@ -1,0 +1,1 @@
+SELECT o.amount, c.age, c.city, s.sqft, s.opened_date, SUBSTRING(c.city, 1, 4) AS city_prefix FROM orders o LEFT JOIN customers c ON o.customer_id = c.id RIGHT JOIN stores s ON o.store_id = s.id WHERE c.city = 'Bangkok' ORDER BY city_prefix

@@ -1,0 +1,1 @@
+select date_trunc('MONTH', opened_date) as opened_month, sum(case when account_type = 'SAVINGS' then 1 else 0 end) as savings_count, round((100 * sum(case when status = 'OPEN' then 1 else 0 end)) / count(*), 1) as pct_open from accounts where status = 'FROZEN' group by date_trunc('MONTH', opened_date) having sum(case when account_type = 'SAVINGS' then 1 else 0 end) >= 39

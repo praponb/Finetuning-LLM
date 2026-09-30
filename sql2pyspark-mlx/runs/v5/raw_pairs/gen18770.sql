@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM orders s WHERE NOT EXISTS (SELECT 1 FROM payments x WHERE x.order_id = s.id AND x.paid_at >= s.order_date)) SELECT store_id, COUNT(*) FILTER (WHERE status = 'CANCELLED') AS cancelled_rows, SIZE(COLLECT_SET(channel)) AS num_channels FROM not_flagged GROUP BY store_id;

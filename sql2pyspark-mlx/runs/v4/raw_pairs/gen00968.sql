@@ -1,0 +1,1 @@
+SELECT channel, MIN(order_date) first_order_date, ROUND((100 * SUM(CASE WHEN status = 'SHIPPED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_shipped FROM orders WHERE discount IS NOT NULL GROUP BY 1 ORDER BY channel, first_order_date;

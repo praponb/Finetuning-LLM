@@ -1,0 +1,1 @@
+SELECT product_id, latest_last_restock, max_quantity FROM (SELECT product_id, MAX(last_restock) latest_last_restock, MAX(quantity) max_quantity FROM inventory WHERE product_id IN (2, 3, 5) GROUP BY product_id) agg WHERE max_quantity >= 130 ORDER BY latest_last_restock

@@ -1,0 +1,1 @@
+SELECT t.txn_time, t.txn_type, a.customer_id, a.opened_date, c.country FROM transactions t INNER JOIN accounts a ON t.account_id = a.id RIGHT JOIN customers c ON a.customer_id = c.id WHERE MONTH(a.opened_date) IN (4, 5, 8) ORDER BY txn_type ASC

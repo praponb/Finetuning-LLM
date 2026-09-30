@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, SUM(CASE WHEN carrier = 'FedEx' THEN 1 ELSE 0 END) AS fedex_count FROM shipments GROUP BY order_id) SELECT o.id, o.status, o.discount, ot.fedex_count FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.fedex_count >= 79

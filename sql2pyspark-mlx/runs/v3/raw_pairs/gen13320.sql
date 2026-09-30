@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3581000 THEN 'high' WHEN budget >= 1723000 THEN 'mid' ELSE 'low' END budget_bucket, COUNT(CASE WHEN location = 'London' THEN 1 END) london_count, SUM(CASE WHEN location = 'Singapore' THEN budget ELSE 0 END) singapore_budget FROM departments GROUP BY 1 HAVING COUNT(CASE WHEN dept_name = 'HR' THEN 1 END) < 1;

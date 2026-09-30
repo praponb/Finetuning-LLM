@@ -1,0 +1,14 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_stores.alias("s")
+    .join(df_store_sales.alias("ss"), F.col("s.id") == F.col("ss.store_id"), "left")
+    .filter((F.col("s.sqft") <= 8752) | (F.col("s.opened_date") > "2023-09-01"))
+    .select(
+        F.col("s.region"),
+        F.col("s.city"),
+        F.col("ss.product_id"),
+        F.col("ss.units").cast("double").alias("units_str"),
+    )
+    .orderBy(F.col("units_str").desc())
+)

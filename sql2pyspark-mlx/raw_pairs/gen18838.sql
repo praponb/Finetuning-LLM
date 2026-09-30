@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM subscriptions WHERE YEAR(start_date) = 2024 AND customer_id IS NOT NULL AND MONTH(end_date) IN (3, 4, 12)), summary AS (SELECT status, COUNT(*) AS cnt FROM base GROUP BY status) SELECT * FROM summary WHERE cnt < 6;

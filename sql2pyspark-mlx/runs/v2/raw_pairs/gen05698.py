@@ -1,0 +1,17 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("store_id").orderBy("last_restock", "id").rowsBetween(-6, Window.currentRow)
+
+result = (
+    df_inventory
+    .filter(F.col("last_restock") <= "2023-11-01")
+    .select(
+        "id",
+        "store_id",
+        "last_restock",
+        "quantity",
+        F.round(F.avg("quantity").over(w), 2).alias("quantity_moving_avg_7"),
+    )
+    .orderBy(F.col("quantity").desc(), F.col("quantity_moving_avg_7").desc())
+)

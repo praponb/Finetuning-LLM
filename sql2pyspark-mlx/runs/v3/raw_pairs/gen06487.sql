@@ -1,0 +1,1 @@
+select status, case when amount >= 1540 then 'high' when amount >= 550 then 'mid' else 'low' end as amount_bucket, round((100 * sum(case when status = 'REFUNDED' then 1 else 0 end)) / count(*), 1) as pct_refunded from payments where method not in ('promptpay', 'cash') group by status, amount_bucket

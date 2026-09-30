@@ -1,0 +1,1 @@
+SELECT id, store_id, amount, customer_id, shipping_fee, MAX(amount) OVER (PARTITION BY store_id) store_id_max_amount, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY shipping_fee DESC, id) row_num FROM orders;

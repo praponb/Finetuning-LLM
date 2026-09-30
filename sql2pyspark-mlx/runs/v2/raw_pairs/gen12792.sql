@@ -1,0 +1,1 @@
+SELECT s.device, COUNT(CASE WHEN we.page = '/cart' THEN 1 END) AS cart_count, SUM(we.duration_sec) AS total_duration_sec FROM web_events we LEFT OUTER JOIN sessions s ON we.session_id = s.id WHERE s.browser IN ('Edge', 'Safari') GROUP BY s.device ORDER BY total_duration_sec;

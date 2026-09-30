@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, i.store_id, i.last_restock, ss.store_id AS store_sale_store_id, ROUND(ss.units, 0) AS units_rounded FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id IN (2, 3, 4)

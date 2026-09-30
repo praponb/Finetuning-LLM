@@ -1,0 +1,1 @@
+WITH store_sales_by_store AS (SELECT store_id, MAX(units) AS max_units FROM store_sales WHERE store_id IN (2, 3, 6) GROUP BY store_id) SELECT s.id, s.store_name, s.opened_date, ssbs.max_units FROM stores s LEFT JOIN store_sales_by_store ssbs ON s.id = ssbs.store_id WHERE ssbs.max_units > 17 ORDER BY s.id, s.store_name;

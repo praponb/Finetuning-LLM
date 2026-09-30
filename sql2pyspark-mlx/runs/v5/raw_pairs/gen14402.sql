@@ -1,0 +1,1 @@
+SELECT YEAR(opened_date) AS opened_year, SUM(sqft) AS total_sqft, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai FROM stores WHERE sqft = 15246 GROUP BY YEAR(opened_date) HAVING COUNT(sqft) >= 4 ORDER BY total_sqft DESC

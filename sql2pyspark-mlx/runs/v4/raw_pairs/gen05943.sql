@@ -1,0 +1,1 @@
+SELECT s.id, s.rating, t.avg_price, t.stark_count FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, AVG(price) AS avg_price, SUM(CASE WHEN brand = 'Stark' THEN 1 ELSE 0 END) AS stark_count FROM products WHERE category = 'Grocery' GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.stark_count >= 57;

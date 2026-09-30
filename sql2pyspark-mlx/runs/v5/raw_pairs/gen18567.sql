@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, p.cost, o.channel, o.shipping_fee FROM order_items oi JOIN products p ON oi.product_id = p.id RIGHT JOIN orders o ON oi.order_id = o.id WHERE p.price IS NULL ORDER BY channel

@@ -1,0 +1,1 @@
+WITH ranked_customers AS (SELECT id, country, signup_date, segment, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date DESC, id) AS rn FROM customers) SELECT id, country, signup_date, segment FROM ranked_customers WHERE rn = 1 ORDER BY segment, 1 DESC

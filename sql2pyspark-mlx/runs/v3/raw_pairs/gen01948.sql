@@ -1,0 +1,1 @@
+SELECT YEAR(opened_date) AS opened_year, DATE_TRUNC('MONTH', opened_date) AS opened_month, status, ROUND(STDDEV(balance), 2) AS stddev_balance, MIN(opened_date) AS first_opened_date FROM accounts GROUP BY YEAR(opened_date), DATE_TRUNC('MONTH', opened_date), status ORDER BY opened_month;

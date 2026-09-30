@@ -1,0 +1,1 @@
+SELECT plan, unique_plans, first_end_date FROM (SELECT plan, COUNT(DISTINCT monthly_fee) AS unique_plans, MIN(end_date) AS first_end_date FROM subscriptions WHERE status IN ('EXPIRED', 'PAUSED', 'ACTIVE') GROUP BY plan) AS agg WHERE unique_plans > 6 ORDER BY first_end_date

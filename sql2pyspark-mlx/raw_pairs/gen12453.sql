@@ -1,0 +1,1 @@
+SELECT id, dept_name, location, budget, DENSE_RANK() OVER (PARTITION BY dept_name, location ORDER BY budget DESC) AS budget_dense_rank, LEAD(budget, 2) OVER (PARTITION BY dept_name ORDER BY budget, id) AS next_budget FROM departments ORDER BY next_budget DESC;

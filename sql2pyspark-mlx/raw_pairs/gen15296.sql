@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY temp_c NULLS FIRST, id) AS dedup_rank FROM device_readings QUALIFY dedup_rank = 1) SELECT id, reading_ts, temp_c, humidity, pressure, firmware, dedup_rank FROM deduped ORDER BY reading_ts DESC, firmware DESC;

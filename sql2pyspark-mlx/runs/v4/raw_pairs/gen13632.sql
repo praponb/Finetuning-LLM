@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC NULLS FIRST, id) AS latest_rank FROM departments) ranked WHERE latest_rank = 1) SELECT id, dept_name FROM deduped ORDER BY dept_name NULLS LAST

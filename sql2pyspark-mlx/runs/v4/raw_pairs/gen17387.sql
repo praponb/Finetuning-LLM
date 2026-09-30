@@ -1,0 +1,1 @@
+select orders.discount, orders.customer_id, orders.order_date, shipments.cost, shipments.order_id from orders left join shipments on shipments.order_id = orders.id where orders.store_id = 22 order by cost

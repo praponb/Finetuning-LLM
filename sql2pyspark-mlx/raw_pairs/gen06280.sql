@@ -1,0 +1,1 @@
+WITH orders_by_store AS (SELECT store_id, COUNT(CASE WHEN status = 'PENDING' THEN 1 END) AS pending_count FROM orders GROUP BY store_id) SELECT s.id, s.region, s.sqft, obs.pending_count FROM stores s INNER JOIN orders_by_store obs ON s.id = obs.store_id WHERE obs.pending_count > 8;

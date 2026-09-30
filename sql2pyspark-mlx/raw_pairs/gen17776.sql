@@ -1,0 +1,1 @@
+SELECT id, txn_time, amount, txn_type, LEAD(amount, 2) OVER (ORDER BY txn_time, id) AS next_amount, LAG(amount, 2, 0) OVER (PARTITION BY txn_type ORDER BY txn_time, id) AS prev_amount FROM transactions

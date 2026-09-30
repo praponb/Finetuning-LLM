@@ -1,0 +1,1 @@
+select merchant, min(txn_time) as min_txn_time, sum(case when txn_type = 'CREDIT' then 1 else 0 end) as credit_count from transactions where merchant = 'Shell' and txn_time < '2025-02-01' and is_flagged = false group by merchant order by credit_count asc;

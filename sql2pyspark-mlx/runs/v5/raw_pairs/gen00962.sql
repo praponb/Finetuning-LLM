@@ -1,0 +1,1 @@
+select c.country, s.status, count(*) as rows_total, min(s.monthly_fee) as min_monthly_fee, grouping_id() as gid from subscriptions s inner join customers c on s.customer_id = c.id group by rollup (c.country, s.status) order by country nulls first;

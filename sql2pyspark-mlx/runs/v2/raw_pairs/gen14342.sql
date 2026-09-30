@@ -1,0 +1,1 @@
+select product_id, order_id, max(unit_price) as max_unit_price, sum(quantity * unit_price) as revenue from order_items where product_id = 33 group by product_id, order_id order by product_id desc, 4 desc, order_id limit 10

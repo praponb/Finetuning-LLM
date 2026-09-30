@@ -1,0 +1,1 @@
+SELECT emp.id, emp.level AS employee_level, emp.hire_date AS employee_hire_date, mgr.salary AS manager_salary, mgr.full_name AS manager_full_name FROM employees AS emp LEFT JOIN employees AS mgr ON emp.manager_id = mgr.id ORDER BY mgr.full_name, id LIMIT 3

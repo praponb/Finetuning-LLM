@@ -1,0 +1,1 @@
+SELECT we.event_type, we.duration_sec, s.started_at, s.customer_id, c.segment FROM web_events we INNER JOIN sessions s ON we.session_id = s.id LEFT OUTER JOIN customers c ON c.id = s.customer_id WHERE we.page IN ('/checkout', '/search') AND c.segment IN ('Corporate', 'SMB', 'Consumer') ORDER BY s.customer_id DESC;

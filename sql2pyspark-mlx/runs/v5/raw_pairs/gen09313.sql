@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(paid_at) < 2024 THEN 'before_2024' WHEN YEAR(paid_at) = 2024 THEN '2024' ELSE 'after_2024' END AS paid_cohort, COUNT(*) AS total_count FROM payments WHERE status IN ('FAILED', 'REFUNDED', 'SUCCESS') AND HOUR(paid_at) BETWEEN 10 AND 17 AND order_id IN (36, 39) GROUP BY paid_cohort

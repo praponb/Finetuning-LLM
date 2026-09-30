@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, order_id, product_id, quantity, quantity - unit_price AS line_total, FLOOR(quantity) AS quantity_whole FROM order_items WHERE product_id IS NOT NULL) SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, BIT_AND(quantity) AS quantity_bit_and, ROUND(AVG(quantity), 2) AS avg_quantity_2 FROM valid GROUP BY 1;

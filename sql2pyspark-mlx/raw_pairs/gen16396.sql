@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM suppliers WHERE city = 'New York'), agg AS (SELECT CASE WHEN country IN ('JP', 'DE') THEN 'group_a' ELSE 'other' END AS country_group, ROUND(AVG(rating), 2) AS avg_rating, MIN(rating) AS min_rating FROM base GROUP BY CASE WHEN country IN ('JP', 'DE') THEN 'group_a' ELSE 'other' END) SELECT country_group, min_rating FROM agg ORDER BY country_group

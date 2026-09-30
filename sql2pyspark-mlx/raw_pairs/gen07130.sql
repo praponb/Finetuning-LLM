@@ -1,0 +1,1 @@
+SELECT CASE WHEN shipping_fee >= 30 THEN 'high' WHEN shipping_fee >= 20 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, status, MIN(amount) AS min_amount FROM orders WHERE amount IS NULL GROUP BY shipping_fee_bucket, status ORDER BY status

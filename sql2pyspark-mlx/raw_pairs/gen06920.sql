@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT dim.country, dim.city, COUNT(*) AS num_rows, MAX(s.balance) AS max_balance FROM accounts s JOIN customers dim ON s.customer_id = dim.id GROUP BY GROUPING SETS ((dim.country, dim.city), (dim.country), ())) SELECT num_rows, max_balance FROM rollup_totals ORDER BY num_rows NULLS FIRST;

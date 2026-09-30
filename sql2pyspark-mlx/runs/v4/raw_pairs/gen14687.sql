@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, order_id FROM (SELECT id, product_id, quantity, order_id, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) AS pos FROM order_items) AS ranked WHERE pos = 1 ORDER BY id DESC

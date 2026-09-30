@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 420 THEN 'high' WHEN unit_price >= 50 THEN 'mid' ELSE 'low' END AS unit_price_bucket, product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, MIN(quantity) AS min_quantity FROM order_items WHERE unit_price BETWEEN 230 AND 300 OR order_id IN (5, 8, 17) GROUP BY 1, 2 HAVING MIN(quantity) >= 4.7;

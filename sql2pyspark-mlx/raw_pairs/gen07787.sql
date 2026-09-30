@@ -1,0 +1,1 @@
+select ss.units, p.cost, s.opened_date from store_sales ss inner join products p on ss.product_id = p.id full outer join stores s on ss.store_id = s.id where size(p.tags) >= 2 and length(s.store_name) >= 10 order by p.cost desc;

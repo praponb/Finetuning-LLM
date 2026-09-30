@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.revenue, p.stock_qty, s.opened_date FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE p.category IN ('Sports', 'Grocery') AND p.cost <= 370 ORDER BY s.opened_date, ss.revenue, id LIMIT 50;

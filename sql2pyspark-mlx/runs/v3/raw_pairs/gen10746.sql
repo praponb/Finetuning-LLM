@@ -1,0 +1,1 @@
+SELECT DISTINCT country FROM customers WHERE credit_limit BETWEEN 5400 AND 16000;

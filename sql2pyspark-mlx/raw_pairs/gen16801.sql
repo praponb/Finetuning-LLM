@@ -1,0 +1,1 @@
+SELECT c.name, c.segment, t.last_opened_date FROM customers c INNER JOIN (SELECT customer_id, MAX(opened_date) AS last_opened_date FROM accounts GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY c.segment;

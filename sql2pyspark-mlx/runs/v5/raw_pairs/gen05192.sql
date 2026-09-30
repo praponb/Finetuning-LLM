@@ -1,0 +1,1 @@
+select * from (select product_id, date_format(last_restock, 'yyyy-MM') as last_restock_month, sum(quantity) as total_quantity, round(avg(quantity), 2) as avg_quantity from inventory where month(last_restock) in (7, 8, 11) group by product_id, date_format(last_restock, 'yyyy-MM')) as x where avg_quantity < 54 order by product_id;

@@ -1,0 +1,1 @@
+select we.session_id, we.event_time, s.started_at, s.country, c.is_active from web_events we left join sessions s on we.session_id = s.id inner join customers c on s.customer_id = c.id order by country, started_at;

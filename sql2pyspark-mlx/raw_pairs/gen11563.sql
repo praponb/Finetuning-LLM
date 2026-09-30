@@ -1,0 +1,1 @@
+SELECT c.credit_limit, c.city, a.opened_date, a.customer_id FROM customers c LEFT OUTER JOIN accounts a ON a.customer_id = c.id WHERE a.opened_date BETWEEN '2024-06-25' AND '2024-08-18' AND a.balance BETWEEN 44000 AND 55000 ORDER BY c.city DESC;

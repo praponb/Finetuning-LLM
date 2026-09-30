@@ -1,0 +1,1 @@
+SELECT is_flagged, HOUR(txn_time) AS txn_hour, AVG(amount) AS avg_amount, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list, MAX(txn_time) AS latest_txn_time FROM transactions WHERE amount < 1500 AND amount >= 2200 AND account_id IN (3, 17, 33) GROUP BY is_flagged, txn_hour

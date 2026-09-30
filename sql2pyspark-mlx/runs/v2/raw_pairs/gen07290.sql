@@ -1,0 +1,1 @@
+SELECT products.supplier_id, products.brand, COUNT(*) AS total_count, COUNT(*) AS num_order_items FROM order_items JOIN products ON order_items.product_id = products.id WHERE products.launch_date <= '2023-11-01' GROUP BY products.supplier_id, products.brand;

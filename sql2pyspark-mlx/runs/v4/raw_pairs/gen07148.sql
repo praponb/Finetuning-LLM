@@ -1,0 +1,1 @@
+SELECT CASE WHEN brand IN ('Umbrella', 'Stark') THEN 'group_a' ELSE 'other' END AS brand_group, category, ROUND((100 * SUM(CASE WHEN brand = 'Stark' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_stark FROM products GROUP BY CASE WHEN brand IN ('Umbrella', 'Stark') THEN 'group_a' ELSE 'other' END, category HAVING pct_stark > 31;

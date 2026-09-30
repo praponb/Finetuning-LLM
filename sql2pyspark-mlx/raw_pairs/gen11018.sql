@@ -1,0 +1,1 @@
+WITH flattened_attrs AS (SELECT id, created_at, coupon_codes, items, ship_to.city AS ship_city, attributes['device'] AS device FROM carts) SELECT *, LAST_VALUE(device, TRUE) OVER (ORDER BY created_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_device, ROW_NUMBER() OVER (PARTITION BY ship_city ORDER BY created_at DESC, id) AS event_seq FROM flattened_attrs

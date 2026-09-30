@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name AS employee_full_name, m.salary AS manager_salary, m.hire_date AS manager_hire_date, m.full_name AS manager_full_name FROM employees e INNER JOIN employees m ON e.manager_id = m.id ORDER BY m.salary DESC

@@ -1,0 +1,1 @@
+WITH product_summary AS (SELECT product_id, MAX(units) - MIN(units) units_range, ROUND(STDDEV(revenue), 2) stddev_revenue FROM store_sales GROUP BY product_id) SELECT p.id, p.price, ps.units_range, ps.stddev_revenue FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id ORDER BY units_range DESC, price;

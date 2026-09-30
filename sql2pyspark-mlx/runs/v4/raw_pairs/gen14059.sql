@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 1.9 THEN 'mid' ELSE 'low' END AS rating_bucket, city, AVG(rating) AS avg_rating FROM suppliers WHERE rating >= 2.9 GROUP BY CUBE(CASE WHEN rating >= 3.8 THEN 'high' WHEN rating >= 1.9 THEN 'mid' ELSE 'low' END, city) ORDER BY rating_bucket;

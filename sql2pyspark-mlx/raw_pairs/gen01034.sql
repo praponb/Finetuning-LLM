@@ -1,0 +1,1 @@
+select id, created_at, coupon_codes, ship_to, array_contains(map_keys(attributes), 'weight_kg') as has_weight_kg, attributes['gift'] as gift, try_cast(attributes['weight_kg'] as double) as weight_kg, attributes['device'] as device from carts where array_contains(coupon_codes, 'BUNDLE')

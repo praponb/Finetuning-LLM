@@ -1,0 +1,1 @@
+SELECT ss.units, ss.revenue, s.city, s.sqft, p.product_name, p.category FROM store_sales ss JOIN stores s ON s.id = ss.store_id LEFT JOIN products p ON ss.product_id = p.id WHERE s.sqft = 6612 ORDER BY city DESC, product_name

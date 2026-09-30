@@ -1,0 +1,1 @@
+SELECT id, store_id, order_date, customer_id FROM (SELECT id, store_id, order_date, customer_id, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY order_date, id) AS row_num FROM orders) AS ranked WHERE row_num <= 3

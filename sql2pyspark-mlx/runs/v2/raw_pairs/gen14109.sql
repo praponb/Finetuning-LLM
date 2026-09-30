@@ -1,0 +1,1 @@
+SELECT ss.sale_date, ss.store_id, p.brand, p.stock_qty, s.city, s.supplier_name FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id JOIN suppliers s ON s.id = p.supplier_id WHERE p.brand = 'Globex' ORDER BY s.supplier_name ASC

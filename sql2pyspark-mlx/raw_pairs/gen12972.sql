@@ -1,0 +1,1 @@
+SELECT is_flagged, merchant, SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count, ROUND(AVG(amount), 2) AS avg_amount FROM transactions WHERE account_id IN (21, 27, 38) OR amount <= 3500 GROUP BY is_flagged, merchant ORDER BY avg_amount DESC, is_flagged, merchant LIMIT 5

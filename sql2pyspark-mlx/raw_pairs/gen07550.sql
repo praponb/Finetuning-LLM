@@ -1,0 +1,1 @@
+SELECT CASE WHEN shipping_fee >= 44 THEN 'high' WHEN shipping_fee >= 7 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, channel, SUM(discount) AS total_discount FROM orders GROUP BY 1, 2 HAVING COUNT(shipping_fee) < 2;

@@ -1,0 +1,1 @@
+WITH top_accounts AS (SELECT id, status, opened_date, balance, DENSE_RANK() OVER (PARTITION BY status ORDER BY opened_date) AS row_num FROM accounts WHERE customer_id = 14) SELECT id, status, opened_date, balance FROM top_accounts WHERE row_num <= 3 ORDER BY id, balance

@@ -1,0 +1,1 @@
+SELECT status, SUM(amount) total_amount, COUNT(*) cnt, ROUND(SUM(amount) * 100.0 / SUM(SUM(amount)) OVER (), 2) AS pct_of_total FROM payments WHERE TO_DATE(paid_at) >= '2025-03-12' GROUP BY status ORDER BY pct_of_total DESC

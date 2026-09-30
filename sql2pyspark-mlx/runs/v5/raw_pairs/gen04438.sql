@@ -1,0 +1,1 @@
+select id, opened_date, concat(account_type, ' - ', status) as account_type_status, date_sub(opened_date, 14) as opened_date_minus_14d from accounts where status in ('CLOSED', 'FROZEN') and account_type in ('CHECKING', 'LOAN') order by id desc limit 1

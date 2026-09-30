@@ -1,0 +1,1 @@
+select i.id, i.store_id, i.last_restock, ss.units from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.store_id in (3, 5, 6) and i.store_id in (2, 4, 5) order by store_id desc, last_restock

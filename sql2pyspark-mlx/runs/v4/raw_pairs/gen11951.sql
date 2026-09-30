@@ -1,0 +1,1 @@
+with web_events_by_session as (select session_id, min(event_time) as first_event_time, count(duration_sec) as duration_sec_count from web_events group by session_id) select s.id, s.device, webs.first_event_time, webs.duration_sec_count from sessions s left outer join web_events_by_session webs on s.id = webs.session_id order by 1 desc

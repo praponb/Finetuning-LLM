@@ -1,0 +1,1 @@
+select customers.id, customers.email, count(sessions.id) session_count, min(sessions.started_at) min_started_at from customers inner join sessions on sessions.customer_id = customers.id where customers.segment = 'Consumer' group by customers.id, customers.email order by min_started_at;

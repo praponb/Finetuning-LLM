@@ -1,0 +1,1 @@
+SELECT id, email, country, signup_date, credit_limit, age, NTILE(3) OVER (PARTITION BY city, country ORDER BY age DESC, id ASC) age_bucket, FIRST_VALUE(age, TRUE) OVER (PARTITION BY country ORDER BY credit_limit ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) first_known_age FROM customers;

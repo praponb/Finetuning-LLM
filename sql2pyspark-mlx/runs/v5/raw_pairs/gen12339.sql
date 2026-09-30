@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, account_type, opened_date, DENSE_RANK() OVER (PARTITION BY account_type ORDER BY opened_date) AS rnk FROM accounts) SELECT id, account_type, opened_date FROM numbered WHERE rnk = 1 ORDER BY opened_date, account_type

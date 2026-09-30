@@ -1,0 +1,1 @@
+WITH SupplierStats AS (SELECT supplier_id, MAX(launch_date) AS latest_launch_date FROM products WHERE supplier_id = 20 GROUP BY supplier_id) SELECT suppliers.id, suppliers.city, suppliers.supplier_name, SupplierStats.latest_launch_date FROM suppliers INNER JOIN SupplierStats ON suppliers.id = SupplierStats.supplier_id ORDER BY id DESC LIMIT 10;

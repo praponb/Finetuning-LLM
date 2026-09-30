@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, INITCAP(TRIM(method)) AS method_title, COALESCE(method, 'OTHER') AS method_filled FROM payments WHERE status = 'REFUNDED') SELECT * FROM (SELECT status, order_id, method, amount FROM valid) src PIVOT (MAX(amount) AS amount FOR method IN ('cash', 'paypal', 'card'));

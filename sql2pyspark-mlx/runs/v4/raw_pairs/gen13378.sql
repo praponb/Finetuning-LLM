@@ -1,0 +1,1 @@
+WITH RankedEmployees AS (SELECT *, DENSE_RANK() OVER (PARTITION BY dept_id ORDER BY hire_date) AS pos FROM employees) SELECT id, dept_id, hire_date, job_title FROM RankedEmployees WHERE pos = 1 ORDER BY job_title

@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 440 THEN 'high' WHEN unit_price >= 80 THEN 'mid' ELSE 'low' END unit_price_bucket, SUM(unit_price) total_unit_price, COUNT(*) cnt, RANK() OVER (ORDER BY SUM(unit_price) DESC) AS unit_price_rank FROM order_items WHERE quantity BETWEEN 3 AND 6 GROUP BY CASE WHEN unit_price >= 440 THEN 'high' WHEN unit_price >= 80 THEN 'mid' ELSE 'low' END;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN c.segment IN ('SMB', 'Consumer') THEN 'priority' ELSE 'other' END AS segment_group, AVG(o.shipping_fee) AS avg_shipping_fee FROM orders o LEFT JOIN customers c ON o.customer_id = c.id WHERE c.email LIKE '%@gmail.com' GROUP BY CASE WHEN c.segment IN ('SMB', 'Consumer') THEN 'priority' ELSE 'other' END ORDER BY avg_shipping_fee DESC, segment_group LIMIT 5

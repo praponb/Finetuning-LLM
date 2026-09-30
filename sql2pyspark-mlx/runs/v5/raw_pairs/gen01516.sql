@@ -1,0 +1,1 @@
+SELECT merchant, SUM(amount) AS total_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE amount BETWEEN 3400 AND 3600 AND (txn_type IN ('DEBIT', 'FEE', 'REFUND') OR amount < 2400) GROUP BY merchant;

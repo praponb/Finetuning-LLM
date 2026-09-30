@@ -1,0 +1,1 @@
+select is_active, sum(case when country = 'SG' then 1 else 0 end) as sg_count, max(signup_date) as latest_signup_date, count(distinct credit_limit) as unique_segments from customers group by is_active

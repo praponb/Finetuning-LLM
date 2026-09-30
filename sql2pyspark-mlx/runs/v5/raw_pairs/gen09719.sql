@@ -1,0 +1,1 @@
+select o.customer_id, o.channel, max(oi.unit_price) - min(oi.unit_price) as unit_price_range, count(*) as row_count from order_items oi left join orders o on o.id = oi.order_id group by o.customer_id, o.channel having unit_price_range > 37

@@ -1,0 +1,1 @@
+SELECT s.id, s.country, s.city FROM suppliers s WHERE s.city IN ('Chiang Mai', 'Singapore', 'Berlin') AND EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND p.brand NOT IN ('Acme', 'Globex', 'Umbrella')) ORDER BY s.id DESC;

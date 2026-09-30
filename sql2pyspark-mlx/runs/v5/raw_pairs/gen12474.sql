@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(*) AS total_count, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales WHERE store_id IN (2, 5) GROUP BY store_id) SELECT s.opened_date, s.store_name, st.total_count, st.revenue_range FROM stores s JOIN store_totals st ON s.id = st.store_id

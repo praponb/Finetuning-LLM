@@ -1,0 +1,1 @@
+WITH ProductSummary AS (SELECT product_id, MAX(quantity) AS max_quantity FROM inventory GROUP BY product_id) SELECT p.id, p.launch_date, p.category, P.max_quantity FROM products p INNER JOIN ProductSummary P ON p.id = P.product_id WHERE P.max_quantity >= 230 ORDER BY P.max_quantity DESC, id LIMIT 5

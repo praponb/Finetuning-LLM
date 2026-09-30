@@ -1,0 +1,1 @@
+WITH ranked_accounts AS (SELECT id, account_type, balance, opened_date, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance DESC, id) AS row_num FROM accounts) SELECT id, account_type, balance, opened_date FROM ranked_accounts WHERE row_num <= 2

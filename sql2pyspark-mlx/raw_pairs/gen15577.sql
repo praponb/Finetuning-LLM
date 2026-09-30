@@ -1,0 +1,1 @@
+with supplier_totals as (select supplier_id, round(stddev(cost), 2) stddev_cost from products group by supplier_id) select s.id, s.rating, st.stddev_cost from suppliers s inner join supplier_totals st on s.id = st.supplier_id order by s.rating desc, id limit 10;

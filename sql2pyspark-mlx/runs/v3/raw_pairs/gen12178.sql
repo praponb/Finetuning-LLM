@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM web_events WHERE session_id IN (6, 14, 32)), summary AS (SELECT page, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM src GROUP BY page) SELECT page, duration_sec_range FROM summary ORDER BY page

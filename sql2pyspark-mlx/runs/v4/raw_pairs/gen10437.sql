@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, p.stock_qty, p.launch_date, s.rating, s.city FROM inventory i LEFT JOIN products p ON p.id = i.product_id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE s.country = 'UK' AND i.quantity <> 113 ORDER BY city, s.rating DESC;

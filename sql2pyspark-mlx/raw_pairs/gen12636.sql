@@ -1,0 +1,1 @@
+with kept_keys as (select id, segment from customers intersect all select id, segment from customers where credit_limit >= 12300), kept_rows as (select s.* from customers s inner join kept_keys k on s.id = k.id and s.segment = k.segment) select country, bit_and(age) as age_bit_and, min(age) as min_age from kept_rows group by 1;

@@ -1,0 +1,1 @@
+WITH scored AS (SELECT id, order_id, method, amount, status, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY amount NULLS FIRST) AS amount_dense_rank, LEAD(amount, 1) OVER (ORDER BY amount, id) AS next_amount FROM payments WHERE paid_at >= '2024-09-01') SELECT id, order_id, amount, status, next_amount FROM scored ORDER BY order_id DESC NULLS FIRST

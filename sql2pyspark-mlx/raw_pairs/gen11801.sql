@@ -1,0 +1,1 @@
+select case when rating >= 3.5 then 'high' when rating >= 2.1 then 'mid' else 'low' end as rating_bucket, round(avg(rating), 2) as avg_rating from suppliers where rating <= 3.5 or upper(trim(supplier_name)) = 'SIAM PARTS CO' group by case when rating >= 3.5 then 'high' when rating >= 2.1 then 'mid' else 'low' end having round(avg(rating), 2) > 42;

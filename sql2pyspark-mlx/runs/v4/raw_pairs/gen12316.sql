@@ -1,0 +1,1 @@
+select order_id, round((100 * sum(case when method = 'bank_transfer' then 1 else 0 end)) / count(*), 1) as pct_bank_transfer from payments where method = 'cash' and (method is null or method in ('card', 'cash', 'promptpay')) group by 1 having pct_bank_transfer >= 44;

@@ -1,0 +1,1 @@
+SELECT a.status, QUARTER(a.opened_date) AS opened_quarter, ROUND(STDDEV(t.amount), 2) AS stddev_amount FROM transactions t INNER JOIN accounts a ON t.account_id = a.id LEFT OUTER JOIN customers c ON a.customer_id = c.id GROUP BY a.status, QUARTER(a.opened_date) HAVING ROUND(STDDEV(t.amount), 2) >= 35 ORDER BY opened_quarter DESC, stddev_amount DESC;

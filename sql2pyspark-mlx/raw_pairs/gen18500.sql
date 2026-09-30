@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, browser, started_at, country, CONCAT_WS('/', device, browser) AS device_browser_key, COALESCE(browser, 'N/A') AS browser_filled FROM sessions WHERE started_at >= TIMESTAMP '2023-06-21 00:00:00' AND browser IS DISTINCT FROM 'Safari') SELECT * FROM valid QUALIFY RANK() OVER (PARTITION BY browser ORDER BY started_at DESC) = 1

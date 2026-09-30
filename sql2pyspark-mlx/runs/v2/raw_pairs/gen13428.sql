@@ -1,0 +1,1 @@
+select i.id, i.store_id, i.last_restock, i.quantity, s.region from inventory i right outer join stores s on i.store_id = s.id where i.last_restock between '2024-11-15' and '2025-10-01' and s.region is not null order by i.id desc, i.last_restock

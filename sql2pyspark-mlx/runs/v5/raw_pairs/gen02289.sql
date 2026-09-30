@@ -1,0 +1,1 @@
+WITH scored AS (SELECT id, supplier_name, rating, NTILE(3) OVER (ORDER BY rating DESC, id ASC) rating_bucket, DENSE_RANK() OVER (PARTITION BY country, city ORDER BY rating ASC) rating_dense_rank, RANK() OVER (ORDER BY rating ASC NULLS FIRST) rating_rank FROM suppliers) SELECT id, rating, rating_bucket, rating_dense_rank, rating_rank FROM scored ORDER BY rating_rank ASC NULLS LAST

@@ -1,0 +1,1 @@
+SELECT id, status, carrier, delivered_date, cost, LEAD(cost, 1) OVER (PARTITION BY status, carrier ORDER BY delivered_date, id) AS next_cost, ROUND(cost / SUM(cost) OVER (PARTITION BY carrier), 3) AS cost_share FROM shipments;

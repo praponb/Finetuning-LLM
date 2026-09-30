@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, price + stock_qty AS price_plus_stock_qty, COALESCE(brand, 'NONE') AS brand_filled FROM products WHERE launch_date >= DATE '2024-02-08' AND brand IS NOT NULL) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY category, supplier_id ORDER BY stock_qty DESC, id) AS dedup_rank FROM base) t WHERE dedup_rank = 1

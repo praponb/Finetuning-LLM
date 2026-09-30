@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM accounts s WHERE EXISTS (SELECT 1 FROM transactions c WHERE c.account_id = s.id AND c.txn_time < s.opened_date)) SELECT id, balance FROM eligible ORDER BY balance, id DESC;

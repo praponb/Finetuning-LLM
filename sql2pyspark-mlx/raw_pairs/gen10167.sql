@@ -1,0 +1,1 @@
+SELECT id, units, store_id, QUARTER(sale_date) AS sale_date_quarter, DATE_FORMAT(sale_date, 'MMM yyyy') AS sale_date_label FROM store_sales WHERE revenue BETWEEN 1300 AND 2800 AND units BETWEEN 16 AND 18

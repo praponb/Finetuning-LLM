@@ -1,0 +1,1 @@
+SELECT brand, SORT_ARRAY(COLLECT_SET(brand)) brand_list, MAX(price) - MIN(price) price_range FROM products WHERE cost < 420 AND YEAR(launch_date) >= 2024 AND price > 810 GROUP BY brand ORDER BY price_range DESC, brand LIMIT 3;

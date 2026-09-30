@@ -1,0 +1,1 @@
+with deduped as (select * from suppliers qualify rank() over (partition by city order by rating desc nulls last) = 1) select id, supplier_name, country, city, rating from deduped order by rating desc nulls first;

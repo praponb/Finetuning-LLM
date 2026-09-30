@@ -1,0 +1,1 @@
+with deduped as (select * from orders qualify row_number() over (partition by customer_id, channel order by amount desc, id) = 1) select id, amount, discount from deduped order by discount desc, amount

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT QUARTER(order_date) AS order_quarter, MIN(order_date) AS first_order_date, COUNT(CASE WHEN status = 'SHIPPED' THEN 1 END) AS shipped_count FROM orders GROUP BY QUARTER(order_date)) AS x WHERE shipped_count >= 7;

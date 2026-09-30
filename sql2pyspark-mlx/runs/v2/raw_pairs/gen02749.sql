@@ -1,0 +1,1 @@
+select oi.quantity, oi.unit_price, o.shipping_fee, o.channel, c.country, c.city from order_items oi join orders o on oi.order_id = o.id join customers c on o.customer_id = c.id where o.order_date <= '2023-09-26' and c.age between 66 and 67

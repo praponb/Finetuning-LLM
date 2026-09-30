@@ -1,0 +1,1 @@
+SELECT transactions.id, transactions.txn_time, transactions.txn_type, transactions.account_id, accounts.status, accounts.account_type, accounts.customer_id FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id;

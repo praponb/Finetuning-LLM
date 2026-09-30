@@ -1,0 +1,1 @@
+select subscriptions.customer_id, customers.credit_limit, case when subscriptions.plan = 'basic' then 1 else 0 end as is_basic from subscriptions join customers on customers.id = subscriptions.customer_id where subscriptions.status in ('EXPIRED', 'ACTIVE') order by is_basic desc, credit_limit desc;

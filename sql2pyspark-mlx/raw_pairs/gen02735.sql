@@ -1,0 +1,1 @@
+SELECT status, CASE WHEN discount >= 0.35 THEN 'high' WHEN discount >= 0.06 THEN 'mid' ELSE 'low' END AS discount_bucket, MAX(discount) - MIN(discount) AS discount_range FROM orders GROUP BY 1, 2 HAVING discount_range < 31;

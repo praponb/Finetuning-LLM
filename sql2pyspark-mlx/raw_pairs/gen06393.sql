@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.session_id, web_events.event_type, web_events.event_time, sessions.browser FROM web_events LEFT OUTER JOIN sessions ON web_events.session_id = sessions.id ORDER BY sessions.browser;

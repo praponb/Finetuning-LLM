@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity, id) row_num FROM order_items WHERE unit_price BETWEEN 220 AND 250) SELECT id, order_id, quantity, product_id FROM ranked WHERE row_num <= 5

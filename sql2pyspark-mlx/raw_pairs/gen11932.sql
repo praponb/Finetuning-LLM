@@ -1,0 +1,1 @@
+select o.status, o.channel, sum(oi.unit_price) as total_unit_price from order_items oi full outer join orders o on oi.order_id = o.id inner join products p on oi.product_id = p.id group by o.status, o.channel having sum(oi.unit_price) > 1500 order by channel, status limit 1

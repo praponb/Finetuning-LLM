@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT p.category, COUNT(*) AS rows_total, ROUND(SUM(a.unit_price), 2) AS total_unit_price FROM order_items a LEFT JOIN products p ON a.product_id = p.id GROUP BY CUBE (p.category)) SELECT total_unit_price FROM dim_totals ORDER BY total_unit_price

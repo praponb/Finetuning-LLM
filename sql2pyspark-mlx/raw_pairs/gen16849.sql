@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CAST(quantity AS STRING) AS quantity_num FROM inventory WHERE YEAR(last_restock) >= 2023) SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id, store_id ORDER BY last_restock, id) AS rn FROM cleaned QUALIFY rn = 1

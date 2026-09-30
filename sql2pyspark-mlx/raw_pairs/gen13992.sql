@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.sale_date, p.brand, s.rating, s.country FROM store_sales ss JOIN products p ON ss.product_id = p.id LEFT JOIN suppliers s ON s.id = p.supplier_id WHERE p.brand NOT IN ('Umbrella', 'Acme') ORDER BY 2, id LIMIT 10;

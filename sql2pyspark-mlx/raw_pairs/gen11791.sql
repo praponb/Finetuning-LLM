@@ -1,0 +1,1 @@
+SELECT CASE WHEN c.age >= 71 THEN 'high' WHEN c.age >= 30 THEN 'mid' ELSE 'low' END AS age_bucket, COUNT(*) AS cnt FROM orders o LEFT OUTER JOIN customers c ON c.id = o.customer_id GROUP BY CASE WHEN c.age >= 71 THEN 'high' WHEN c.age >= 30 THEN 'mid' ELSE 'low' END;

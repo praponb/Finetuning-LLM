@@ -1,0 +1,1 @@
+WITH valid_orders AS (SELECT *, CONCAT(status, ', ', channel) AS status_channel FROM orders WHERE store_id IS NULL AND discount < 0.12), status_summary AS (SELECT status, COUNT(*) AS num_orders FROM valid_orders GROUP BY status) SELECT status, num_orders FROM status_summary;

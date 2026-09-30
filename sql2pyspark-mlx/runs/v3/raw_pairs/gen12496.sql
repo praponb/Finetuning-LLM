@@ -1,0 +1,1 @@
+SELECT e.hire_date AS employee_hire_date, e.email AS employee_email, e.salary AS employee_salary, m.hire_date AS manager_hire_date, m.full_name AS manager_full_name, m.level AS manager_level FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.manager_id IN (2, 19, 27, 30) ORDER BY manager_full_name

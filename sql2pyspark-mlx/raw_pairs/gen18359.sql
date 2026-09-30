@@ -1,0 +1,1 @@
+with valid as (select id, product_id, sale_date, units, revenue, floor(units) as units_whole, coalesce(units, 0) as units_filled from store_sales where sale_date >= date '2023-08-24') select product_id, id from valid except all select product_id, id from store_sales where product_id = 3;

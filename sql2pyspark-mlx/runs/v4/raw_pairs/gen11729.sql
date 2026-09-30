@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CAST(quantity AS STRING) quantity_num FROM inventory WHERE product_id IN (4, 5)) SELECT DATE_TRUNC('MONTH', last_restock) AS activity_month, COUNT(DISTINCT store_id) AS distinct_store_ids, SUM(quantity) AS total_quantity, COUNT(*) AS event_count FROM valid GROUP BY DATE_TRUNC('MONTH', last_restock) ORDER BY total_quantity DESC;

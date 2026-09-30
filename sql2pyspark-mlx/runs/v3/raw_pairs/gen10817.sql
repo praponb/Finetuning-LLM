@@ -1,0 +1,1 @@
+select p.paid_at, p.method, o.discount, case when p.status = 'FAILED' then 1 else 0 end as is_failed from payments p left join orders o on p.order_id = o.id where o.store_id in (24, 31) or o.discount < 0.2;

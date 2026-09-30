@@ -1,0 +1,1 @@
+SELECT id, store_id, last_restock, quantity, product_id, LEAD(quantity, 1, 0) OVER (PARTITION BY store_id ORDER BY last_restock, id) AS next_quantity, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY last_restock) AS last_restock_dense_rank FROM inventory WHERE YEAR(last_restock) >= 2023

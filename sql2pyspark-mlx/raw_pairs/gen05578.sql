@@ -1,0 +1,1 @@
+SELECT location FROM departments WHERE budget BETWEEN 1319000 AND 3849000;

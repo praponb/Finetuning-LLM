@@ -1,0 +1,1 @@
+SELECT c.segment, a.customer_id, CONCAT_WS('-', a.status, a.account_type) AS status_account_type_key FROM customers c INNER JOIN accounts a ON c.id = a.customer_id WHERE NOT (a.balance BETWEEN 64000 AND 72000 AND a.balance <= 56000) ORDER BY a.customer_id DESC;

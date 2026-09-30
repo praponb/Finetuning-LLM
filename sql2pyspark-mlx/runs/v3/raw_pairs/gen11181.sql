@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1620 THEN 'high' WHEN amount >= 420 THEN 'mid' ELSE 'low' END AS amount_bucket, MONTH(paid_at) AS paid_month, SUM(amount) AS total_amount, COUNT(*) AS num_payments FROM payments GROUP BY CASE WHEN amount >= 1620 THEN 'high' WHEN amount >= 420 THEN 'mid' ELSE 'low' END, MONTH(paid_at) HAVING COUNT(*) > 3 ORDER BY paid_month, amount_bucket;

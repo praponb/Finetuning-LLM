@@ -1,0 +1,1 @@
+SELECT status, ROUND(STDDEV(amount), 2) stddev_amount, AVG(amount) avg_amount FROM payments WHERE TO_DATE(paid_at) >= '2024-04-01' AND order_id IS NULL AND amount > 890 GROUP BY status ORDER BY status

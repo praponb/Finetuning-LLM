@@ -1,0 +1,1 @@
+SELECT s.id, s.sqft, s.store_name, s.opened_date FROM stores s WHERE UPPER(s.store_name) LIKE '%IVE%' AND s.id IN (SELECT store_id FROM store_sales WHERE sale_date BETWEEN '2023-08-01' AND '2025-02-04') ORDER BY store_name;

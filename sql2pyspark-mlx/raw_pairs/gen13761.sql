@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM orders WHERE customer_id IS NOT NULL AND (store_id = 31 OR customer_id IN (27, 28, 29))), orders_stats AS (SELECT status, MAX(order_date) AS latest_order_date FROM base GROUP BY status) SELECT * FROM orders_stats ORDER BY latest_order_date DESC, status DESC

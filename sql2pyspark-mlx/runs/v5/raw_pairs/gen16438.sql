@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM customers WHERE is_active = TRUE OR country = 'DE'), summary AS (SELECT MONTH(signup_date) signup_month, country, COUNT(*) num_customers FROM base GROUP BY MONTH(signup_date), country) SELECT signup_month, country, num_customers FROM summary ORDER BY country;

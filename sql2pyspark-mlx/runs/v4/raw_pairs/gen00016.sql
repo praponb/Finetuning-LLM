@@ -1,0 +1,1 @@
+SELECT opened_year, pct_central FROM (SELECT YEAR(opened_date) AS opened_year, ROUND((100 * SUM(CASE WHEN region = 'Central' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_central FROM stores GROUP BY YEAR(opened_date)) AS t WHERE pct_central >= 55

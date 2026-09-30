@@ -1,0 +1,1 @@
+SELECT id, log_ts, latency_ms, status_code, context['region'] AS region, context['version'] AS version, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').retries AS retry_count, context['trace'] AS trace FROM app_logs WHERE latency_ms < 610;

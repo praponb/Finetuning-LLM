@@ -1,0 +1,1 @@
+select is_remote, sum(case when job_title = 'Director' then salary else 0 end) as director_salary, sort_array(collect_set(job_title)) as job_title_list from employees where salary between 119000 and 146000 group by is_remote having director_salary >= 39;

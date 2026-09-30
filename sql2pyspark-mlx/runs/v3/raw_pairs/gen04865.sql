@@ -1,0 +1,1 @@
+with product_summary as (select product_id, avg(quantity) as avg_quantity from inventory group by product_id) select p.price, ps.avg_quantity from products p join product_summary ps on p.id = ps.product_id where ps.avg_quantity > 140

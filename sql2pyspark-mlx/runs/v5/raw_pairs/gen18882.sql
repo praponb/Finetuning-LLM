@@ -1,0 +1,1 @@
+select id, country, rating, city, last_value(city) over (partition by country order by rating, id rows between unbounded preceding and unbounded following) as last_city, lag(rating, 1) over (partition by city, country order by rating, id) as prev_rating from suppliers

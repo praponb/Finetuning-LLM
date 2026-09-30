@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.event_time, web_events.session_id, sessions.device, customers.email, customers.signup_date FROM web_events INNER JOIN sessions ON web_events.session_id = sessions.id LEFT JOIN customers ON sessions.customer_id = customers.id WHERE web_events.session_id IN (14, 32) ORDER BY web_events.event_time

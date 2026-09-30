@@ -1,0 +1,8 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_web_events
+    .groupBy("page")
+    .pivot("event_type", ["page_view", "search"])
+    .agg(F.max("duration_sec").alias("value_sum"), F.count(F.lit(1)).alias("n"))
+)

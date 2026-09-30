@@ -1,0 +1,1 @@
+SELECT sessions.started_at, sessions.customer_id, web_events.session_id, web_events.page, web_events.event_time FROM sessions INNER JOIN web_events ON sessions.id = web_events.session_id WHERE HOUR(sessions.started_at) BETWEEN 10 AND 16 AND web_events.event_type = 'purchase' ORDER BY sessions.started_at

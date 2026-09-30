@@ -1,0 +1,1 @@
+SELECT CASE WHEN channel IN ('store', 'web') THEN 'core' ELSE 'other' END AS channel_group, COUNT(*) AS total_count FROM orders GROUP BY CASE WHEN channel IN ('store', 'web') THEN 'core' ELSE 'other' END;

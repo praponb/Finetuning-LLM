@@ -1,0 +1,1 @@
+WITH filtered_payments AS (SELECT * FROM payments WHERE status = 'REFUNDED'), agg AS (SELECT order_id, AVG(amount) AS avg_amount, COUNT(DISTINCT amount) AS unique_statuss FROM filtered_payments GROUP BY order_id) SELECT * FROM agg WHERE avg_amount >= 1450 ORDER BY order_id DESC, unique_statuss DESC

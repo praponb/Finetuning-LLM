@@ -1,0 +1,1 @@
+select s.id, s.store_name, count(ss.id) as store_sale_count, min(ss.units) as min_units, avg(ss.revenue) as avg_revenue from stores s left join store_sales ss on ss.store_id = s.id group by s.id, s.store_name order by s.id desc

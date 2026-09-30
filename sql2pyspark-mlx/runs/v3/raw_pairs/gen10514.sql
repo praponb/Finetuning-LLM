@@ -1,0 +1,1 @@
+SELECT status, carrier, DATE_TRUNC('MONTH', shipped_date) AS shipped_month, ROUND(AVG(cost), 2) AS avg_cost, MAX(delivered_date) AS last_delivered_date FROM shipments WHERE cost BETWEEN 80 AND 96 GROUP BY status, carrier, DATE_TRUNC('MONTH', shipped_date) HAVING avg_cost > 41 ORDER BY shipped_month;

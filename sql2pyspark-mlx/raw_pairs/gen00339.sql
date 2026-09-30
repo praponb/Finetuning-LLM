@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM suppliers WHERE rating >= 1.8), suppliers_stats AS (SELECT city, COUNT(*) AS num_suppliers, MAX(rating) AS max_rating FROM src GROUP BY city) SELECT city, num_suppliers, max_rating FROM suppliers_stats WHERE max_rating < 4.0 ORDER BY num_suppliers DESC

@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM transactions WHERE NOT (is_flagged = FALSE AND NOT is_flagged)), summary AS (SELECT merchant, account_id, COUNT(CASE WHEN txn_type = 'CREDIT' THEN 1 END) AS credit_count FROM base GROUP BY merchant, account_id) SELECT merchant, credit_count FROM summary WHERE credit_count < 4 ORDER BY merchant, credit_count DESC;

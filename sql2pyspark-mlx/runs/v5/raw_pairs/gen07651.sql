@@ -1,0 +1,1 @@
+with ranked as (select id, order_id, shipped_date, status, dense_rank() over (partition by order_id order by shipped_date desc) as pos from shipments where status <> 'IN_TRANSIT') select * from ranked where pos <= 3

@@ -1,0 +1,1 @@
+SELECT customers.city, ROUND(STDDEV(subscriptions.monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions JOIN customers ON customers.id = subscriptions.customer_id WHERE subscriptions.monthly_fee > 130 GROUP BY customers.city;

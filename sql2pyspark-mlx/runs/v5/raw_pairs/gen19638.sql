@@ -1,0 +1,1 @@
+select id, name, email, is_active, percent_rank() over (order by credit_limit desc nulls first) as credit_limit_percent_rank, ntile(10) over w_ordered as credit_limit_bucket from customers window w_ordered as (partition by country order by credit_limit, id)

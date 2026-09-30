@@ -1,0 +1,1 @@
+SELECT is_remote, SUM(CASE WHEN level = 'L3' THEN salary ELSE 0 END) AS l3_salary FROM employees WHERE job_title IN ('Designer', 'Director', 'Engineer') AND level NOT IN ('L2', 'L1', 'L5') GROUP BY is_remote HAVING l3_salary >= 37 ORDER BY l3_salary DESC, is_remote ASC LIMIT 5

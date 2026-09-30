@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, dept_id, salary, manager_id, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY salary DESC, id) row_num FROM employees) SELECT * FROM ranked WHERE row_num <= 3 ORDER BY manager_id DESC, salary DESC;

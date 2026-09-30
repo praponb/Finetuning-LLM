@@ -1,0 +1,1 @@
+SELECT HOUR(event_time) AS event_hour, event_type, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events WHERE event_type IN ('purchase', 'search', 'click') AND page IN ('/checkout', '/cart') GROUP BY event_hour, event_type;

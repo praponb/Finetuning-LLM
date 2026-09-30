@@ -1,0 +1,1 @@
+select id, session_id, event_type, page, event_time, duration_sec, avg(duration_sec) over (order by event_time, id rows between 6 preceding and current row) as duration_sec_avg_6, row_number() over (order by duration_sec desc, id) as event_seq, last_value(page, true) over (order by event_time, id rows between unbounded preceding and current row) as last_known_page from web_events

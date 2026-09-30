@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN unit_price >= 360 THEN 'high' WHEN unit_price >= 120 THEN 'mid' ELSE 'low' END unit_price_bucket, SUM(quantity) total_quantity FROM order_items GROUP BY 1, 2 ORDER BY product_id;

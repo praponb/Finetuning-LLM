@@ -1,0 +1,1 @@
+SELECT id, name, email, country, city, segment, signup_date, is_active, credit_limit, age, DENSE_RANK() OVER (ORDER BY credit_limit) AS credit_limit_dense_rank, ROUND(age / SUM(age) OVER (PARTITION BY country), 4) AS age_share FROM customers

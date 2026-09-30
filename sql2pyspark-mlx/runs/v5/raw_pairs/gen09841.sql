@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, session_id, page, event_time, duration_sec, HOUR(event_time) AS event_time_hour, CONCAT_WS('/', event_type, page) AS event_type_page_key FROM web_events WHERE page IS NOT NULL AND event_type IN ('page_view', 'search', 'click')) SELECT session_id, MIN(event_time) AS first_seen, COUNT_IF(page = '/cart') AS cart_events FROM filtered GROUP BY session_id;

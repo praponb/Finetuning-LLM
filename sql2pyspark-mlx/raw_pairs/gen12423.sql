@@ -1,0 +1,1 @@
+SELECT id, order_id, unit_price, product_id FROM (SELECT id, order_id, unit_price, product_id, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY unit_price DESC, id) rnk FROM order_items WHERE order_id IN (7, 26, 27)) t WHERE rnk <= 3 ORDER BY id DESC;

@@ -1,0 +1,1 @@
+SELECT s.region, AVG(o.discount) AS avg_discount, SUM(CASE WHEN o.channel = 'mobile' THEN 1 ELSE 0 END) AS mobile_count FROM orders o JOIN stores s ON o.store_id = s.id RIGHT JOIN customers c ON o.customer_id = c.id GROUP BY s.region HAVING SUM(CASE WHEN o.channel = 'mobile' THEN 1 ELSE 0 END) > 21;

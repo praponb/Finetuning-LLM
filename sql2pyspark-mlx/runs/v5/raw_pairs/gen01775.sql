@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(revenue / units, 2) revenue_per_unit FROM store_sales WHERE sale_date >= DATE '2023-05-24' AND product_id = 4) SELECT id, store_id, sale_date FROM cleaned QUALIFY ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY revenue_per_unit NULLS LAST, id) = 1

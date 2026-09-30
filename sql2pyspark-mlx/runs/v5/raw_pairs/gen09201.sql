@@ -1,0 +1,1 @@
+SELECT e.email AS employee_email, e.job_title AS employee_job_title, e.full_name AS employee_full_name, m.hire_date AS manager_hire_date FROM employees AS e INNER JOIN employees AS m ON e.manager_id = m.id WHERE e.level IN ('L1', 'L3')

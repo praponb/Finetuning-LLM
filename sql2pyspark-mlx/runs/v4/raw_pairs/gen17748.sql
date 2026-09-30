@@ -1,0 +1,1 @@
+WITH with_last AS (SELECT s.*, latest.transaction_txn_time FROM accounts s LEFT JOIN LATERAL (SELECT c.txn_time AS transaction_txn_time FROM transactions c WHERE c.account_id = s.id ORDER BY c.amount DESC, c.id DESC LIMIT 1) latest ON TRUE) SELECT id, customer_id, opened_date FROM with_last ORDER BY customer_id DESC NULLS FIRST, id DESC LIMIT 10;

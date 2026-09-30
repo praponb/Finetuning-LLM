@@ -1,0 +1,1 @@
+SELECT status, DATE_TRUNC('YEAR', start_date) AS year_start, COUNT(*) AS num_rows, PERCENTILE_APPROX(monthly_fee, ARRAY(0.25, 0.5, 0.75)) AS monthly_fee_quartiles, MAX(monthly_fee) FILTER (WHERE plan = 'basic') AS basic_max_monthly_fee FROM subscriptions GROUP BY status, DATE_TRUNC('YEAR', start_date) HAVING COUNT(*) > 1

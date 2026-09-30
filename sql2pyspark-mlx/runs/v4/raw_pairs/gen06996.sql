@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT account_type, status, balance FROM accounts WHERE opened_date BETWEEN '2024-03-01' AND '2024-06-04') PIVOT (MAX(balance) FOR status IN ('FROZEN', 'CLOSED')) ORDER BY account_type;

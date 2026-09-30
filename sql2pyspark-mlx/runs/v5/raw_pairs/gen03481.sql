@@ -1,0 +1,1 @@
+select a.id, a.account_type, a.customer_id from accounts a where a.account_type in ('CHECKING', 'CREDIT', 'SAVINGS') and a.customer_id not in (select id from customers where upper(trim(name)) = 'IVY CHEN')

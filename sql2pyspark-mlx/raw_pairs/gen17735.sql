@@ -1,0 +1,1 @@
+select case when status in ('RETURNED', 'SHIPPED') then 'tier_1' else 'other' end as status_group, avg(amount) as avg_amount, count(case when channel = 'mobile' then 1 end) as mobile_count from orders where customer_id is null and discount > 0.23 group by 1 order by status_group

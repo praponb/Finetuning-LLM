@@ -1,0 +1,1 @@
+SELECT store_id, CASE WHEN YEAR(last_restock) < 2024 THEN 'before_2024' WHEN YEAR(last_restock) = 2024 THEN '2024' ELSE 'after_2024' END AS last_restock_cohort, MIN(quantity) AS min_quantity FROM inventory WHERE product_id IN (1, 9) AND quantity IS NULL AND last_restock > '2024-12-01' GROUP BY 1, 2;

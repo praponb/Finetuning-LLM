@@ -1,0 +1,1 @@
+select case when budget >= 3285000 then 'high' when budget >= 1656000 then 'mid' else 'low' end as budget_bucket, dept_name, count(*) as department_count from departments group by case when budget >= 3285000 then 'high' when budget >= 1656000 then 'mid' else 'low' end, dept_name;

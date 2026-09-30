@@ -1,0 +1,1 @@
+with filtered as (select *, datediff(current_date(), txn_time) / 365.25 as years_since_txn_time from transactions where merchant is not null and is_flagged) select id, txn_type, txn_time, merchant from (select *, row_number() over (partition by merchant order by amount nulls first, id) as rank_in_group from filtered) t where rank_in_group = 1;

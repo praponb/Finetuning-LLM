@@ -1,0 +1,1 @@
+SELECT s.city, MAX(p.amount) - MIN(p.amount) AS amount_range, ROUND(AVG(p.amount), 2) AS avg_amount FROM payments p INNER JOIN orders o ON p.order_id = o.id LEFT JOIN stores s ON o.store_id = s.id WHERE p.status = 'FAILED' GROUP BY s.city;

@@ -1,0 +1,1 @@
+select ss.id, ss.product_id, ss.sale_date, p.stock_qty, s.supplier_name from store_sales ss join products p on p.id = ss.product_id join suppliers s on p.supplier_id = s.id where s.city <> 'London' and ss.revenue >= 1900

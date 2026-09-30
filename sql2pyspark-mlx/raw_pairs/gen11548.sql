@@ -1,0 +1,1 @@
+select case when balance >= 58000 then 'high' when balance >= 35000 then 'mid' else 'low' end balance_bucket, count(distinct balance) unique_statuss, max(balance) - min(balance) balance_range from accounts where balance >= 41000 group by balance_bucket;

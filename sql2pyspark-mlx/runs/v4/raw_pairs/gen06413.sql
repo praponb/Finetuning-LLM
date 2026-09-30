@@ -1,0 +1,1 @@
+SELECT s.city, s.country, s.supplier_name, p.stock_qty, p.product_name, p.brand, INITCAP(TRIM(s.city)) AS city_title FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE ARRAY_CONTAINS(p.tags, 'clearance') ORDER BY s.city DESC;

@@ -1,0 +1,3 @@
+SELECT *
+FROM payments
+QUALIFY ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY paid_at DESC NULLS LAST, id) = 1;

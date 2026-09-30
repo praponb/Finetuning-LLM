@@ -1,0 +1,1 @@
+WITH filtered_web_events AS (SELECT *, HOUR(event_time) AS event_time_hour FROM web_events WHERE page IN ('/checkout', '/search', '/cart')), EventHourSummary AS (SELECT HOUR(event_time) AS event_hour, MAX(duration_sec) AS max_duration_sec FROM filtered_web_events GROUP BY HOUR(event_time)) SELECT event_hour, max_duration_sec FROM EventHourSummary

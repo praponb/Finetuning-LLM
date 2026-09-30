@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4309000 THEN 'high' WHEN budget >= 1423000 THEN 'mid' ELSE 'low' END AS budget_bucket, dept_name, location, AVG(budget) AS avg_budget, COUNT(budget) AS budget_count FROM departments GROUP BY budget_bucket, dept_name, location ORDER BY avg_budget, location, budget_bucket, dept_name LIMIT 10

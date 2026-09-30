@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, txn_type, amount, txn_time, merchant, DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_time_label FROM transactions WHERE merchant IS NOT NULL AND merchant IS DISTINCT FROM '7-Eleven') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount DESC, id ASC) AS rank_in_group FROM cleaned) t WHERE rank_in_group = 1;

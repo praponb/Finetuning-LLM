@@ -1,0 +1,1 @@
+SELECT dept_name, SUM(CASE WHEN dept_name = 'Finance' THEN budget ELSE 0 END) AS finance_budget, COUNT(CASE WHEN location = 'London' THEN 1 END) AS london_count, AVG(budget) AS avg_budget FROM departments GROUP BY dept_name ORDER BY dept_name ASC;

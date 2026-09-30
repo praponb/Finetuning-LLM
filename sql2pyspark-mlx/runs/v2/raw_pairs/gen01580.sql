@@ -1,0 +1,1 @@
+SELECT p.category, MAX(i.last_restock) AS latest_last_restock, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id GROUP BY p.category ORDER BY stddev_quantity DESC

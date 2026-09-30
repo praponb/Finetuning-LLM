@@ -1,0 +1,1 @@
+select dim.status as order_status, dim.channel, count(*) as rows_total, sum(e.amount) as total_amount, grouping_id() as grouping_level from payments e left join orders dim on e.order_id = dim.id group by grouping sets ((dim.status, dim.channel), (dim.status), ())

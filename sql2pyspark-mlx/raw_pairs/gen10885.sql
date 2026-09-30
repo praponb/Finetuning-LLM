@@ -1,0 +1,1 @@
+WITH EmployeesByDepartment AS (SELECT dept_id, ROUND(AVG(salary), 2) avg_salary FROM employees GROUP BY dept_id) SELECT d.dept_name, d.budget, E.avg_salary FROM departments d JOIN EmployeesByDepartment E ON d.id = E.dept_id ORDER BY budget DESC;

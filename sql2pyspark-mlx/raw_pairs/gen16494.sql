@@ -1,0 +1,1 @@
+select rating_bucket, avg_rating, unique_citys from (select case when rating >= 4.0 then 'high' when rating >= 1.7 then 'mid' else 'low' end as rating_bucket, round(avg(rating), 2) as avg_rating, count(distinct rating) as unique_citys from suppliers group by case when rating >= 4.0 then 'high' when rating >= 1.7 then 'mid' else 'low' end) as x where unique_citys < 10

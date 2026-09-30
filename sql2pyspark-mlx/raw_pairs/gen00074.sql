@@ -1,0 +1,1 @@
+SELECT account_type, COUNT(CASE WHEN status = 'OPEN' THEN 1 END) AS open_count, MAX(balance) - MIN(balance) AS balance_range, SUM(CASE WHEN status = 'CLOSED' THEN balance ELSE 0 END) AS closed_balance FROM accounts WHERE balance BETWEEN 25000 AND 51000 GROUP BY account_type

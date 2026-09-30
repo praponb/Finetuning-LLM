@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, o.amount, o.discount, p.category FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id LEFT JOIN products p ON oi.product_id = p.id WHERE oi.order_id IN (11, 12) ORDER BY product_id DESC, id LIMIT 5;

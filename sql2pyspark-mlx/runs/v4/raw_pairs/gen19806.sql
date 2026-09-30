@@ -1,0 +1,1 @@
+with ranked as (select *, rank() over (partition by status order by monthly_fee) as pos from subscriptions) select id, status, monthly_fee, start_date from ranked where pos = 1 order by id desc, monthly_fee desc

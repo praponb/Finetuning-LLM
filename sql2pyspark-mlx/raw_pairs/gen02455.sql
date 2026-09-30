@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS rank_in_group FROM departments QUALIFY rank_in_group = 1) SELECT id, dept_name, budget, rank_in_group, CASE WHEN dept_name RLIKE '^(HR|Sales)$' THEN 'PRIORITY' ELSE 'GROUP_B' END AS dept_name_zone FROM deduped ORDER BY id DESC NULLS FIRST, dept_name;

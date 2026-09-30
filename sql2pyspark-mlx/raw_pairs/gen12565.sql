@@ -1,0 +1,1 @@
+WITH valid_subscriptions AS (SELECT *, CASE WHEN monthly_fee >= 241 THEN 'High' WHEN monthly_fee >= 80 THEN 'Medium' ELSE 'Low' END AS monthly_fee_tier FROM subscriptions WHERE plan = 'standard'), summary AS (SELECT status, MAX(end_date) AS latest_end_date FROM valid_subscriptions GROUP BY status) SELECT status, latest_end_date FROM summary ORDER BY 1 LIMIT 5;

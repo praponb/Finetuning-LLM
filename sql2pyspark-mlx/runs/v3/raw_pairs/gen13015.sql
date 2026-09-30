@@ -1,0 +1,1 @@
+SELECT id, customer_id, end_date, monthly_fee, plan, status, LEAD(monthly_fee, 1, 0) OVER (PARTITION BY customer_id ORDER BY end_date, id) next_monthly_fee, LAG(monthly_fee, 1) OVER (PARTITION BY plan, status ORDER BY end_date, id) prev_monthly_fee FROM subscriptions WHERE end_date < '2025-08-24' ORDER BY next_monthly_fee, status

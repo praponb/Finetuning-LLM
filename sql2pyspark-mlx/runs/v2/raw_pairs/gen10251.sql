@@ -1,0 +1,1 @@
+WITH top_shipments AS (SELECT *, DENSE_RANK() OVER (PARTITION BY carrier ORDER BY shipped_date DESC) AS rnk FROM shipments WHERE status = 'LOST') SELECT id, carrier, shipped_date FROM top_shipments WHERE rnk <= 3 ORDER BY carrier

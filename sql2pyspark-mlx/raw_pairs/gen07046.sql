@@ -1,0 +1,1 @@
+SELECT id, name, email, country, city, is_active, age, ROW_NUMBER() OVER (ORDER BY age DESC, id) AS row_seq, RANK() OVER (PARTITION BY MONTH(signup_date), segment ORDER BY age NULLS LAST) AS age_rank FROM customers;

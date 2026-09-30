@@ -1,0 +1,1 @@
+SELECT id, event_time, duration_sec, LAG(duration_sec) OVER w_running prev_duration_sec, LEAD(duration_sec) OVER w_running next_duration_sec, ROW_NUMBER() OVER w_running event_seq FROM web_events WINDOW w_running AS (PARTITION BY session_id ORDER BY event_time, id)

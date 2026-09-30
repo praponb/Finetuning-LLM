@@ -1,0 +1,1 @@
+SELECT channel, DATE_TRUNC('WEEK', starts_on) AS week_start, PERCENTILE_APPROX(discount_pct, ARRAY(0.25, 0.5, 0.75)) AS discount_pct_quartiles, STDDEV_SAMP(discount_pct) AS discount_pct_stddev FROM promotions GROUP BY ROLLUP (channel, DATE_TRUNC('WEEK', starts_on)) ORDER BY channel DESC NULLS LAST;

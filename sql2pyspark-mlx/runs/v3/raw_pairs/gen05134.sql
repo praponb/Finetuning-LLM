@@ -1,0 +1,1 @@
+SELECT o.id, COUNT(oi.id) AS order_item_count, COUNT(DISTINCT oi.quantity) AS unique_products FROM orders o LEFT JOIN order_items oi ON o.id = oi.order_id WHERE oi.product_id IN (12, 27) GROUP BY o.id;

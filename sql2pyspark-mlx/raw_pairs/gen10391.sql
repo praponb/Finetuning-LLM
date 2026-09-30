@@ -1,0 +1,1 @@
+SELECT id, page, event_time, ROUND(duration_sec, 0) AS duration_sec_rounded, SUBSTRING(event_type, 1, 3) AS event_type_prefix FROM web_events WHERE NOT (TO_DATE(event_time) < '2024-02-01' AND duration_sec = 195 AND page IN ('/home', '/product'))

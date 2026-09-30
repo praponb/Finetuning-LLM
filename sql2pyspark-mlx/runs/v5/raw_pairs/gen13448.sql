@@ -1,0 +1,1 @@
+SELECT level, avg_salary, last_hire_date FROM (SELECT level, ROUND(AVG(salary), 2) AS avg_salary, MAX(hire_date) AS last_hire_date FROM employees GROUP BY level) AS x WHERE avg_salary >= 76 ORDER BY 1 DESC, last_hire_date DESC;

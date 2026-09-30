@@ -1,0 +1,1 @@
+with numbered as (select id, event_type, event_time, session_id, rank() over (partition by event_type order by event_time desc) rnk from web_events where event_time >= '2024-05-01') select * from numbered where rnk <= 3

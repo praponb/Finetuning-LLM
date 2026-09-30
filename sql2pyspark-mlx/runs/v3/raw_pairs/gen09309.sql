@@ -1,0 +1,1 @@
+SELECT t.id, t.amount, a.opened_date, a.status, c.credit_limit, c.city FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON c.id = a.customer_id WHERE TO_DATE(t.txn_time) >= '2025-05-01' ORDER BY opened_date

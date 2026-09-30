@@ -1,0 +1,1 @@
+SELECT p.id, p.order_id, p.method, p.status, o.amount, o.store_id, o.order_date FROM payments p INNER JOIN orders o ON p.order_id = o.id WHERE o.store_id IN (4, 17, 26, 27) OR p.amount BETWEEN 770 AND 1310 ORDER BY o.amount, 7

@@ -1,0 +1,1 @@
+select cost, date_sub(shipped_date, 90) shipped_date_minus_90d, case when cost >= 97 then 'High' when cost >= 16 then 'Medium' else 'Low' end cost_band from shipments where delivered_date between '2023-04-01' and '2023-11-03' order by cost desc

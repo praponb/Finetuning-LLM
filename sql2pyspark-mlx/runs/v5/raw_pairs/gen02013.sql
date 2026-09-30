@@ -1,0 +1,1 @@
+SELECT job_title, SUM(CASE WHEN level = 'L5' THEN 1 ELSE 0 END) AS l5_count, COUNT(*) AS num_employees FROM employees WHERE (full_name LIKE 'Dav%' AND full_name LIKE '%Kanya%') OR dept_id IN (13, 19, 40) GROUP BY 1

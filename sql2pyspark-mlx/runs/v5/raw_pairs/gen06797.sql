@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY event_type, page ORDER BY event_time DESC, id ASC) AS dedup_rank FROM web_events QUALIFY dedup_rank = 1) SELECT id, session_id, event_type, page, duration_sec, dedup_rank FROM deduped

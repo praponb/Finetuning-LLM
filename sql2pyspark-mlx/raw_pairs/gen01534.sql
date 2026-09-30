@@ -1,0 +1,1 @@
+select city, max(sqft) as max_sqft, max(sqft) - min(sqft) as sqft_range, avg(sqft) as avg_sqft from stores where region in ('East', 'West', 'North') group by city order by sqft_range asc, city asc limit 5;

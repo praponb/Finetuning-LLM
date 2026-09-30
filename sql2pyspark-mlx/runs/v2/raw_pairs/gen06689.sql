@@ -1,0 +1,1 @@
+SELECT t.amount, a.account_type, c.name, ADD_MONTHS(a.opened_date, 6) opened_date_plus_months FROM transactions t INNER JOIN accounts a ON t.account_id = a.id RIGHT OUTER JOIN customers c ON c.id = a.customer_id WHERE a.account_type <> 'LOAN' AND a.balance < 35000

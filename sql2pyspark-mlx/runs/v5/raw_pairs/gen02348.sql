@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT p.status, e.txn_type, COUNT(*) AS rows_total, AVG(e.amount) AS avg_amount FROM transactions e LEFT JOIN accounts p ON e.account_id = p.id GROUP BY GROUPING SETS ((p.status, e.txn_type), (p.status), ())) SELECT status, txn_type, avg_amount FROM dim_totals ORDER BY txn_type DESC;

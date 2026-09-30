@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 330 THEN 'high' WHEN unit_price >= 190 THEN 'mid' ELSE 'low' END unit_price_bucket, product_id, SUM(quantity) total_quantity FROM order_items GROUP BY CUBE(CASE WHEN unit_price >= 330 THEN 'high' WHEN unit_price >= 190 THEN 'mid' ELSE 'low' END, product_id) ORDER BY product_id;

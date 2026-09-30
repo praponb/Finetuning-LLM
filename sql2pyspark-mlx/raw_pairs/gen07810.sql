@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 630 THEN 'high' WHEN cost >= 190 THEN 'mid' ELSE 'low' END AS cost_bucket, SUM(CASE WHEN category = 'Home' THEN 1 ELSE 0 END) AS home_count, SORT_ARRAY(COLLECT_SET(category)) AS category_list FROM products GROUP BY 1 HAVING SUM(CASE WHEN category = 'Home' THEN 1 ELSE 0 END) < 56 ORDER BY cost_bucket DESC;

@@ -1,0 +1,1 @@
+SELECT order_month, pct_completed, max_amount FROM (SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, ROUND((100 * SUM(CASE WHEN status = 'COMPLETED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_completed, MAX(amount) AS max_amount FROM orders GROUP BY DATE_FORMAT(order_date, 'yyyy-MM')) AS x WHERE pct_completed >= 74;

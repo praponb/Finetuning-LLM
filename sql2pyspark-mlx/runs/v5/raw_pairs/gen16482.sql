@@ -1,0 +1,1 @@
+SELECT a.status, a.customer_id, MIN(t.txn_time) AS first_txn_time, COUNT(*) AS row_count FROM transactions t JOIN accounts a ON t.account_id = a.id WHERE a.balance BETWEEN 52000 AND 64000 GROUP BY a.status, a.customer_id ORDER BY row_count DESC;

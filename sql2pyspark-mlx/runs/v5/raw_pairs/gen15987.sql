@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM customers WHERE is_active = TRUE), CustomersStats AS (SELECT segment, COUNT(CASE WHEN country = 'UK' THEN 1 END) AS uk_count, COUNT(credit_limit) AS credit_limit_count FROM base GROUP BY segment) SELECT segment, uk_count FROM CustomersStats ORDER BY uk_count DESC, 1 DESC;

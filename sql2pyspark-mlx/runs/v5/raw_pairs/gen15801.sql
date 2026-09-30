@@ -1,0 +1,1 @@
+SELECT id, order_id, method, AVG(amount) OVER w_grp last4_avg_amount, SUM(amount) OVER w_grp last4_sum_amount, MAX(amount) OVER w_grp last4_max_amount, MIN(amount) OVER w_grp last4_min_amount FROM payments WHERE method = 'cash' WINDOW w_grp AS (PARTITION BY method ORDER BY amount, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW);

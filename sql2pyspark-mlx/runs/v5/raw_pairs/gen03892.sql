@@ -1,0 +1,1 @@
+SELECT device, DATE_TRUNC('MONTH', started_at) AS activity_month, COUNT(DISTINCT customer_id) AS distinct_customer_ids, SORT_ARRAY(COLLECT_SET(device)) AS device_list, COUNT(DISTINCT customer_id) AS distinct_customer_ids_2 FROM sessions GROUP BY device, DATE_TRUNC('MONTH', started_at) ORDER BY device NULLS FIRST

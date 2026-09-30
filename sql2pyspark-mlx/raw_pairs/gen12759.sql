@@ -1,0 +1,1 @@
+select e.manager_id, e.full_name, d.budget, d.dept_name, d.location from employees e inner join departments d on e.dept_id = d.id where length(e.email) > 13 and e.hire_date between '2024-08-01' and '2025-07-01' order by d.location;

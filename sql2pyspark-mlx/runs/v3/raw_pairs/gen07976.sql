@@ -1,0 +1,1 @@
+WITH top_store_sales AS (SELECT id, store_id, sale_date, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY sale_date DESC) AS pos FROM store_sales) SELECT * FROM top_store_sales WHERE pos <= 5 ORDER BY id DESC, store_id DESC;

@@ -1,0 +1,1 @@
+SELECT p.id, p.launch_date, t.unit_price_range FROM products p LEFT JOIN (SELECT product_id, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items WHERE product_id IS NULL GROUP BY product_id) t ON p.id = t.product_id

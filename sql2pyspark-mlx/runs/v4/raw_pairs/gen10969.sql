@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, effective_from, val FROM price_tiers LATERAL VIEW EXPLODE(tier_prices) e AS val) SELECT CASE WHEN val >= 88 THEN 'HIGH' ELSE 'LOW' END AS val_tier, APPROX_PERCENTILE(val, 0.95) AS val_p95, PERCENTILE_APPROX(val, ARRAY(0.25, 0.5, 0.75)) AS val_quartiles, MAX(val) AS max_val FROM lines GROUP BY CASE WHEN val >= 88 THEN 'HIGH' ELSE 'LOW' END

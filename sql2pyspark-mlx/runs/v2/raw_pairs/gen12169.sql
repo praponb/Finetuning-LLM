@@ -1,0 +1,1 @@
+SELECT MONTH(launch_date) launch_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values FROM products WHERE product_name LIKE '%Maker%' OR brand IS NOT NULL GROUP BY 1 ORDER BY brand_values DESC

@@ -1,0 +1,1 @@
+SELECT txn_type, merchant, COUNT(*) AS total_count, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list, ROUND((100 * SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_amazon FROM transactions WHERE NOT is_flagged AND account_id IN (7, 27, 33) GROUP BY 1, 2 ORDER BY merchant DESC, txn_type LIMIT 3;

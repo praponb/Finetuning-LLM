@@ -1,0 +1,1 @@
+WITH DepartmentTotals AS (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary FROM employees GROUP BY dept_id) SELECT d.id, d.budget, D.avg_salary FROM departments d JOIN DepartmentTotals D ON d.id = D.dept_id WHERE D.avg_salary >= 67 ORDER BY D.avg_salary DESC

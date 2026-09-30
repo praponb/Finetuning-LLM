@@ -1,0 +1,1 @@
+with src as (select * from products where cost < 260), category_summary as (select category, supplier_id, sum(case when brand = 'Stark' then cost else 0 end) as stark_cost from src group by category, supplier_id) select category, supplier_id, stark_cost from category_summary order by supplier_id desc;

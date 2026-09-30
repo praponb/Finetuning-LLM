@@ -1,0 +1,1 @@
+SELECT s.browser, MIN(we.duration_sec) min_duration_sec FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id WHERE HOUR(we.event_time) BETWEEN 7 AND 11 GROUP BY s.browser ORDER BY min_duration_sec ASC

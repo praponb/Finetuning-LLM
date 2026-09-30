@@ -1,0 +1,1 @@
+SELECT e.id, e.hire_date AS employee_hire_date, e.manager_id AS employee_manager_id, m.email AS manager_email, m.hire_date AS manager_hire_date, m.full_name AS manager_full_name FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE m.dept_id IN (10, 22, 29, 38) AND m.email LIKE '%@GMAIL.COM';

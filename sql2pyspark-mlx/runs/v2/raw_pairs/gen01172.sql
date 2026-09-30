@@ -1,0 +1,1 @@
+SELECT subscriptions.start_date, customers.city, customers.country, customers.email, customers.credit_limit - customers.age credit_limit_minus_age FROM subscriptions JOIN customers ON subscriptions.customer_id = customers.id WHERE customers.segment IN ('Consumer', 'Corporate', 'SMB') AND subscriptions.monthly_fee < 230 ORDER BY country DESC;

@@ -1,0 +1,1 @@
+SELECT signup_month, row_count, last_signup_date FROM (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, COUNT(*) AS row_count, MAX(signup_date) AS last_signup_date FROM customers WHERE segment IS NULL GROUP BY DATE_TRUNC('MONTH', signup_date)) AS s WHERE row_count < 3

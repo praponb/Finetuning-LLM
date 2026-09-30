@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, channel, ends_on, discount_pct, CAST(discount_pct AS INT) AS discount_pct_int, COALESCE(channel, 'NONE') AS channel_filled FROM promotions WHERE starts_on >= TO_DATE('2023-07-18') AND channel IS NOT NULL) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY discount_pct, id) AS latest_rank FROM filtered) t WHERE latest_rank = 1

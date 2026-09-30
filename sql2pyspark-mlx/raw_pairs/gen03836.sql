@@ -1,0 +1,1 @@
+SELECT id, customer_id, device, browser, started_at, FIRST_VALUE(country, TRUE) OVER (PARTITION BY device ORDER BY started_at ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_country FROM sessions;

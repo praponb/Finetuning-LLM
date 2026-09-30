@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, GREATEST(status_bits, temp_c) greatest_status_bits_temp_c FROM device_readings WHERE reading_ts > DATE '2025-09-01') SELECT id, device_code, kpi, val FROM (SELECT id, device_code, humidity, greatest_status_bits_temp_c, pressure FROM valid) src UNPIVOT (val FOR kpi IN (humidity AS HUMIDITY, greatest_status_bits_temp_c, pressure));

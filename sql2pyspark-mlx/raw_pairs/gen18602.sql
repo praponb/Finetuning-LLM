@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END AS rating_bucket, MAX(rating) AS max_rating FROM suppliers GROUP BY rating_bucket ORDER BY rating_bucket LIMIT 5

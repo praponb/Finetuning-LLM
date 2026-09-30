@@ -1,0 +1,1 @@
+select case when units >= 44 then 'high' when units >= 11 then 'mid' else 'low' end as units_bucket, store_id, count(distinct units) as unique_stores from store_sales where units between 36 and 38 and product_id in (5, 10) group by case when units >= 44 then 'high' when units >= 11 then 'mid' else 'low' end, store_id having unique_stores < 2

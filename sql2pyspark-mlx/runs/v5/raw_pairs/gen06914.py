@@ -1,0 +1,18 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("dept_name")
+w2 = Window.partitionBy("location").orderBy("budget", "id")
+
+result = (
+    df_departments
+    .filter(F.col("budget") >= 1280000)
+    .select(
+        "id",
+        "dept_name",
+        "budget",
+        "location",
+        F.round((F.col("budget") / F.sum("budget").over(w)), 3).alias("budget_share"),
+        F.lag("budget", 2).over(w2).alias("prev_budget"),
+    )
+)

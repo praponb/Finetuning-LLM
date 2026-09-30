@@ -1,0 +1,1 @@
+SELECT product_id, store_id, MAX(quantity) AS max_quantity, COUNT(*) AS num_inventory, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY product_id, store_id HAVING AVG(quantity) > 160 ORDER BY store_id DESC;

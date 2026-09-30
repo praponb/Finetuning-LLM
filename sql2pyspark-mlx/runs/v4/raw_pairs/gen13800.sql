@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LENGTH(location) AS location_length, COALESCE(location, 'UNKNOWN') AS location_clean FROM departments WHERE dept_name IS NOT NULL) SELECT s.*, latest.employee_hire_date FROM base s LEFT JOIN LATERAL (SELECT c.hire_date AS employee_hire_date FROM employees c WHERE c.dept_id = s.id ORDER BY c.hire_date DESC, c.id DESC LIMIT 1) latest ON TRUE;

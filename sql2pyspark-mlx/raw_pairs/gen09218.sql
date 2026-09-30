@@ -1,0 +1,1 @@
+SELECT suppliers.country, COUNT(products.stock_qty) AS stock_qty_count, ROUND(STDDEV(products.cost), 2) AS stddev_cost FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY suppliers.country HAVING stock_qty_count >= 5;

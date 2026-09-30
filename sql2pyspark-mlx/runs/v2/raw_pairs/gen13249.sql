@@ -1,0 +1,1 @@
+SELECT a.id, a.status, COUNT(t.id) transaction_count, ROUND((100 * SUM(CASE WHEN t.txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_fee FROM accounts a LEFT OUTER JOIN transactions t ON a.id = t.account_id GROUP BY a.id, a.status;

@@ -1,0 +1,1 @@
+SELECT c.country, COUNT(DISTINCT s.cost) AS unique_statuss FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE c.name IS NULL GROUP BY c.country ORDER BY country DESC, unique_statuss;

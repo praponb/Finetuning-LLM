@@ -1,0 +1,1 @@
+SELECT CASE WHEN s.device IN ('tablet', 'mobile') THEN 'core' ELSE 'other' END AS device_group, MIN(we.duration_sec) AS min_duration_sec FROM web_events we RIGHT JOIN sessions s ON we.session_id = s.id GROUP BY CASE WHEN s.device IN ('tablet', 'mobile') THEN 'core' ELSE 'other' END ORDER BY min_duration_sec DESC;

@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM accounts WHERE MONTH(opened_date) IN (6, 11, 12) OR account_type IN ('CREDIT', 'SAVINGS', 'CHECKING')), agg AS (SELECT account_type, SUM(balance) AS total_balance FROM src GROUP BY account_type) SELECT * FROM agg WHERE total_balance < 142000 ORDER BY total_balance DESC;

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, TO_DATE(txn_time) AS txn_time_date FROM transactions WHERE txn_time > DATE '2023-04-26' AND merchant IS NOT NULL) SELECT txn_type, merchant FROM valid INTERSECT ALL SELECT txn_type, merchant FROM transactions WHERE txn_time < '2023-03-01'

@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.shipping_fee >= 31 THEN 'high' WHEN o.shipping_fee >= 7 THEN 'mid' ELSE 'low' END AS shipping_fee_bucket, COUNT(p.amount) AS amount_count FROM payments p RIGHT JOIN orders o ON p.order_id = o.id WHERE o.customer_id IN (23, 28, 38) GROUP BY CASE WHEN o.shipping_fee >= 31 THEN 'high' WHEN o.shipping_fee >= 7 THEN 'mid' ELSE 'low' END HAVING amount_count >= 5

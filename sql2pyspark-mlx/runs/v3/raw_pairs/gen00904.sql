@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, o.order_date, p.launch_date, p.category FROM order_items oi JOIN orders o ON oi.order_id = o.id JOIN products p ON p.id = oi.product_id WHERE oi.unit_price < 370 OR oi.product_id IN (13, 24, 38, 40)

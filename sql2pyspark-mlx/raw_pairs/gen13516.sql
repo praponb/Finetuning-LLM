@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM sessions s WHERE EXISTS (SELECT 1 FROM web_events x WHERE x.session_id = s.id AND x.event_time <= s.started_at)) SELECT id, device, browser, started_at, country, CASE WHEN browser RLIKE '^(Chrome|Edge)$' THEN 'PRIORITY' WHEN browser RLIKE '^(Safari|Firefox)$' THEN 'GROUP_A' ELSE 'OTHER_ZONE' END AS browser_zone FROM not_flagged;

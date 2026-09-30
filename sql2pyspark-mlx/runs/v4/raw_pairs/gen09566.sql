@@ -1,0 +1,1 @@
+SELECT QUARTER(a.opened_date) AS opened_quarter, COUNT(CASE WHEN t.txn_type = 'CREDIT' THEN 1 END) AS credit_count FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id GROUP BY QUARTER(a.opened_date) ORDER BY opened_quarter

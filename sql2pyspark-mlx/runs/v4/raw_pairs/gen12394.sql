@@ -1,0 +1,1 @@
+WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY job_title, dept_id ORDER BY salary, id) AS rn FROM employees) ranked WHERE rn = 1) SELECT s.id, s.email, s.dept_id, s.salary, s.is_remote, s.level, (SELECT SUM(x.salary) FROM employees x WHERE x.dept_id = s.dept_id) AS sum_employee_salary FROM latest s ORDER BY dept_id NULLS LAST, salary DESC

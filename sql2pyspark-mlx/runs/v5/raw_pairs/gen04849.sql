@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) AS checking_balance FROM accounts WHERE account_type <> 'CREDIT' GROUP BY customer_id) SELECT c.is_active, cs.checking_balance FROM customers c JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.checking_balance > 76;

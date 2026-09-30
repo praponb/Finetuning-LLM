@@ -1,0 +1,1 @@
+SELECT we.id, we.session_id, s.started_at, s.country, c.segment, c.email FROM web_events we LEFT JOIN sessions s ON s.id = we.session_id JOIN customers c ON s.customer_id = c.id WHERE s.browser = 'Firefox' ORDER BY email ASC;

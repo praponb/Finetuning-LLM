@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, ROUND((100 * SUM(CASE WHEN category = 'Grocery' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_grocery, SUM(stock_qty) AS total_stock_qty FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, ss.pct_grocery, ss.total_stock_qty FROM suppliers s JOIN supplier_summary ss ON s.id = ss.supplier_id WHERE ss.pct_grocery > 76

@@ -1,0 +1,1 @@
+WITH latest AS (SELECT id, customer_id, store_id, shipping_fee FROM orders QUALIFY ROW_NUMBER() OVER (PARTITION BY status ORDER BY discount NULLS LAST, id) = 1) SELECT s.id, s.customer_id, s.store_id, s.shipping_fee, (SELECT AVG(o2.amount) FROM orders o2 WHERE o2.store_id = s.store_id) AS avg_order_amount FROM latest s ORDER BY id NULLS FIRST;

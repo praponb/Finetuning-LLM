@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.last_restock, inventory.product_id, products.price, suppliers.rating, ROUND(inventory.quantity * 1.15, 2) AS adjusted_quantity FROM inventory JOIN products ON inventory.product_id = products.id JOIN suppliers ON suppliers.id = products.supplier_id ORDER BY price DESC, id LIMIT 10

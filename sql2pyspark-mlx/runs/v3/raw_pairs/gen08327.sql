@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 15995 THEN 'high' WHEN sqft >= 7343 THEN 'mid' ELSE 'low' END AS sqft_bucket, MAX(opened_date) AS last_opened_date, COUNT(DISTINCT sqft) AS unique_regions, COUNT(*) AS total_count FROM stores WHERE sqft = 12359 AND opened_date > '2023-04-01' GROUP BY 1 HAVING COUNT(*) < 1 ORDER BY sqft_bucket DESC

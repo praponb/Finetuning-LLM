@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(o.channel))) AS channel_values, ROUND(AVG(o.discount), 2) AS avg_discount FROM orders o INNER JOIN customers c ON o.customer_id = c.id WHERE o.amount >= 530 GROUP BY YEAR(c.signup_date) ORDER BY avg_discount DESC;

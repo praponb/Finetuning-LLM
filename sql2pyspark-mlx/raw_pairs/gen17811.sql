@@ -1,0 +1,1 @@
+select ss.sale_date, ss.product_id, s.store_name, p.supplier_id, p.cost from store_sales ss right join stores s on ss.store_id = s.id left join products p on ss.product_id = p.id where p.launch_date < '2023-09-01';

@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, MAX(unit_price) max_unit_price FROM order_items GROUP BY product_id) SELECT p.cost, p.brand, pt.max_unit_price FROM products p INNER JOIN product_totals pt ON p.id = pt.product_id WHERE pt.max_unit_price >= 160

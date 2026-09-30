@@ -1,0 +1,1 @@
+SELECT region, SUM(CASE WHEN city = 'New York' THEN sqft ELSE 0 END) AS new_york_sqft, SUM(sqft) AS total_sqft FROM stores WHERE opened_date <= '2023-04-09' OR sqft <> 10265 GROUP BY region HAVING SUM(CASE WHEN city = 'New York' THEN sqft ELSE 0 END) < 47;

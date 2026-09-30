@@ -1,0 +1,1 @@
+WITH valid_stores AS (SELECT * FROM stores WHERE store_name IS NOT NULL), stores_stats AS (SELECT region, SUM(CASE WHEN region = 'North' THEN sqft ELSE 0 END) AS north_sqft FROM valid_stores GROUP BY region) SELECT region, north_sqft FROM stores_stats ORDER BY region DESC

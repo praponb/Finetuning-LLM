@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.started_at) started_month, SUM(CASE WHEN we.page = '/cart' THEN 1 ELSE 0 END) cart_count FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE we.event_type IN ('add_to_cart', 'purchase', 'page_view') GROUP BY DATE_TRUNC('MONTH', s.started_at) HAVING SUM(CASE WHEN we.page = '/cart' THEN 1 ELSE 0 END) >= 80;

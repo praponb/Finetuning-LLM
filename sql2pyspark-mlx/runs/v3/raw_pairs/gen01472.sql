@@ -1,0 +1,1 @@
+WITH recent_accounts AS (SELECT *, DATE_FORMAT(opened_date, 'yyyy-MM-dd') AS opened_date_label FROM accounts WHERE customer_id = 17 AND (balance < 66000 OR MONTH(opened_date) IN (1, 5, 6))), accounts_stats AS (SELECT status, ROUND(STDDEV(balance), 2) AS stddev_balance, AVG(balance) AS avg_balance FROM recent_accounts GROUP BY status) SELECT * FROM accounts_stats

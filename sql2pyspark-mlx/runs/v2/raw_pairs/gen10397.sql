@@ -1,0 +1,1 @@
+SELECT shipments.id, shipments.delivered_date, orders.shipping_fee, customers.age, customers.city FROM shipments FULL OUTER JOIN orders ON shipments.order_id = orders.id LEFT JOIN customers ON orders.customer_id = customers.id WHERE MONTH(orders.order_date) IN (3, 6, 11)

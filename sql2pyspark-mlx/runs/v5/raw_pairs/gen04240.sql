@@ -1,0 +1,1 @@
+SELECT merchant, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) txn_type_values FROM transactions WHERE (txn_type IN ('FEE', 'DEBIT', 'CREDIT') AND txn_type IN ('CREDIT', 'REFUND')) OR is_flagged = TRUE GROUP BY merchant;

@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, ss.product_id, s.store_name, p.cost, p.brand FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON ss.product_id = p.id WHERE ss.store_id IN (2, 5, 6) ORDER BY cost ASC;

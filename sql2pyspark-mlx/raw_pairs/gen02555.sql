@@ -1,0 +1,1 @@
+with base as (select *, initcap(trim(country)) as country_title, round(rating, 0) as rating_rounded from suppliers where city is not null) select * from (select country, city, rating_rounded from base) src pivot (sum(rating_rounded) as amount, count(1) as n for city in ('Tokyo' as tokyo, 'New York' as new_york));

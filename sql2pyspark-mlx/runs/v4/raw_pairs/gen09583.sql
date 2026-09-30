@@ -1,0 +1,1 @@
+SELECT id, merchant, txn_time, amount, account_id, SUM(amount) OVER (PARTITION BY merchant ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, ROUND(amount / SUM(amount) OVER (PARTITION BY account_id), 3) AS amount_share FROM transactions

@@ -1,0 +1,1 @@
+SELECT YEAR(a.opened_date) AS opened_year, ROUND((100 * SUM(CASE WHEN t.txn_type = 'REFUND' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refund FROM transactions t INNER JOIN accounts a ON a.id = t.account_id WHERE t.is_flagged = TRUE GROUP BY YEAR(a.opened_date) HAVING ROUND((100 * SUM(CASE WHEN t.txn_type = 'REFUND' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 45 ORDER BY pct_refund DESC;

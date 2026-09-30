@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, customer_id, start_date, end_date, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date, id) AS rn FROM subscriptions WHERE monthly_fee BETWEEN 100 AND 190) SELECT * FROM numbered WHERE rn = 1

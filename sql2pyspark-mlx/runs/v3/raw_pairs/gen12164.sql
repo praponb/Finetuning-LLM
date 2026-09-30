@@ -1,0 +1,1 @@
+SELECT a.customer_id, a.status, t.unique_txn_types FROM accounts a INNER JOIN (SELECT account_id, COUNT(DISTINCT amount) AS unique_txn_types FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.unique_txn_types > 9 ORDER BY status ASC;

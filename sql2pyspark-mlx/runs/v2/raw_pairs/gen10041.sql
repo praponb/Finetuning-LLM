@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(shipped_date, 'yyyy-MM') AS shipped_month, MIN(delivered_date) AS first_delivered_date, SUM(cost) AS total_cost FROM shipments GROUP BY DATE_FORMAT(shipped_date, 'yyyy-MM') ORDER BY first_delivered_date DESC;

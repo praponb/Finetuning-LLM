@@ -1,0 +1,1 @@
+with top_departments as (select id, dept_name, budget, location, rank() over (partition by dept_name order by budget desc) as rn from departments where dept_name in ('Sales', 'Finance', 'Legal')) select id, dept_name, budget, location from top_departments where rn = 1

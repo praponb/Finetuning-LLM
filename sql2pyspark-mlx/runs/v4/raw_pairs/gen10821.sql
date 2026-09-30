@@ -1,0 +1,1 @@
+select *, date_add(shipped_date, 89) as shipped_date_plus_89d, case when cost >= 98 then 'High' when cost >= 34 then 'Medium' else 'Low' end as cost_tier from shipments where not (cost < 29 and status = 'LOST') order by carrier;

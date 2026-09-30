@@ -1,0 +1,1 @@
+SELECT MONTH(c.signup_date) AS signup_month, c.is_active, COUNT(*) AS cnt FROM sessions s LEFT OUTER JOIN customers c ON c.id = s.customer_id GROUP BY MONTH(c.signup_date), c.is_active ORDER BY signup_month DESC, is_active LIMIT 3

@@ -1,0 +1,1 @@
+select date_trunc('MONTH', c.signup_date) as signup_month, max(o.order_date) as latest_order_date, count(o.shipping_fee) as shipping_fee_count from orders o left outer join customers c on o.customer_id = c.id left outer join stores s on o.store_id = s.id group by date_trunc('MONTH', c.signup_date);

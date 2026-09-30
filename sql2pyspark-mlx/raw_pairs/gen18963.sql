@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, customer_id, created_at, EXPLODE_OUTER(coupon_codes) AS element FROM carts) SELECT id, customer_id, created_at, element, CASE WHEN element RLIKE '^(WELCOME5|VIP)$' THEN 'PRIORITY' ELSE 'GROUP_A' END AS element_zone FROM flattened ORDER BY created_at DESC NULLS FIRST;

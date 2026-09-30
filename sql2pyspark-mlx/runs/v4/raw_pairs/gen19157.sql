@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, TRIM(country) AS clean_country FROM sessions WHERE browser IS NOT NULL AND browser NOT IN ('Chrome', 'Safari', 'Edge')) SELECT s.* FROM valid s WHERE EXISTS (SELECT 1 FROM web_events c WHERE c.session_id = s.id AND c.event_time >= s.started_at)

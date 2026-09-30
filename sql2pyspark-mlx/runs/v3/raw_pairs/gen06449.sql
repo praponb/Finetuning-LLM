@@ -1,0 +1,1 @@
+SELECT s.store_name, t.discount_count FROM stores s INNER JOIN (SELECT store_id, COUNT(discount) AS discount_count FROM orders WHERE channel = 'partner' GROUP BY store_id) t ON s.id = t.store_id WHERE t.discount_count > 6 ORDER BY store_name DESC;

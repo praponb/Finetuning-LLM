@@ -1,0 +1,1 @@
+SELECT *, ROW_NUMBER() OVER (ORDER BY rating DESC, id) event_seq, NTILE(3) OVER (ORDER BY rating, id) rating_bucket, ROUND(rating / SUM(rating) OVER (PARTITION BY country), 4) rating_share FROM suppliers;

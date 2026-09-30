@@ -1,0 +1,1 @@
+SELECT carrier, ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_returned, SORT_ARRAY(COLLECT_SET(status)) status_list, MAX(cost) - MIN(cost) cost_range FROM shipments WHERE carrier <> 'UPS' AND carrier IN ('UPS', 'FedEx') AND MONTH(shipped_date) IN (3, 4, 7) GROUP BY carrier

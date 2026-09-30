@@ -1,0 +1,1 @@
+WITH RankedSuppliers AS (SELECT id, country, rating, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating, id) row_num FROM suppliers) SELECT id, country, rating FROM RankedSuppliers WHERE row_num = 1

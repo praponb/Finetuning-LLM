@@ -1,0 +1,1 @@
+SELECT d.category, d.brand, COUNT(*) AS num_rows, MIN(e.revenue) AS min_revenue, MAX(e.units) AS max_units FROM store_sales e INNER JOIN products d ON e.product_id = d.id GROUP BY GROUPING SETS ((d.category, d.brand), (d.category), ())

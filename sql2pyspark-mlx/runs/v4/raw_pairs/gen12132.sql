@@ -1,0 +1,1 @@
+SELECT *, ROW_NUMBER() OVER (ORDER BY rating DESC, id ASC) AS event_seq, NTILE(3) OVER (PARTITION BY country ORDER BY rating DESC, id ASC) AS rating_bucket, NTILE(5) OVER (ORDER BY rating ASC, id ASC) AS rating_bucket_2 FROM suppliers

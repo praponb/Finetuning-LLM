@@ -1,0 +1,1 @@
+SELECT oi.unit_price, p.launch_date, p.cost, o.amount FROM order_items oi RIGHT OUTER JOIN products p ON p.id = oi.product_id INNER JOIN orders o ON oi.order_id = o.id WHERE o.amount BETWEEN 530 AND 1380

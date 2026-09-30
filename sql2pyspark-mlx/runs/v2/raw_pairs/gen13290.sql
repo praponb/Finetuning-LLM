@@ -1,0 +1,1 @@
+SELECT store_id, product_id, MAX(quantity) AS max_quantity, SUM(quantity) AS total_quantity, COUNT(DISTINCT quantity) AS unique_products FROM inventory WHERE store_id IN (1, 2, 3, 5) AND last_restock >= '2024-08-01' GROUP BY 1, 2;

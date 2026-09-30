@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, MAX(salary) AS max_salary FROM employees WHERE level IS NOT NULL GROUP BY dept_id) SELECT d.id, d.budget, d.dept_name, dt.max_salary FROM departments d LEFT JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.max_salary > 126000;

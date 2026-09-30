@@ -1,0 +1,1 @@
+WITH metrics AS (SELECT id, city, LAST_VALUE(rating) IGNORE NULLS OVER (ORDER BY rating, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_rating, NTILE(4) OVER (PARTITION BY country, city ORDER BY rating DESC, id) AS rating_bucket FROM suppliers) SELECT id, last_known_rating, rating_bucket FROM metrics ORDER BY rating_bucket, last_known_rating

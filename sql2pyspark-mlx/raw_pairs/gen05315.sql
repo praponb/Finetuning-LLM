@@ -1,0 +1,1 @@
+select o.id, o.status, c.credit_limit, c.city, s.city store_city, s.region from orders o inner join customers c on o.customer_id = c.id left join stores s on s.id = o.store_id where o.customer_id in (7, 23, 31, 34)

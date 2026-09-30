@@ -1,0 +1,1 @@
+with Ranked as (select *, rank() over (partition by customer_id order by balance) as rn from accounts where account_type not in ('SAVINGS', 'LOAN', 'CHECKING')) select id, customer_id, balance, opened_date from Ranked where rn <= 5;

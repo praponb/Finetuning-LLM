@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, val FROM price_tiers LATERAL VIEW OUTER EXPLODE(discounts) t AS val) SELECT *, RANK() OVER w_hist AS val_rank, PERCENT_RANK() OVER (ORDER BY val DESC NULLS LAST) AS val_percent_rank, CUME_DIST() OVER w_hist AS val_cume_dist FROM exploded WINDOW w_hist AS (ORDER BY val);

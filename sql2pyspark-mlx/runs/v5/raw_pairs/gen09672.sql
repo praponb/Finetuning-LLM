@@ -1,0 +1,1 @@
+WITH valid_store_sales AS (SELECT *, units - revenue AS revenue_per_unit FROM store_sales WHERE store_id = 5 AND units BETWEEN 11 AND 15), summary AS (SELECT store_id, MIN(sale_date) AS min_sale_date FROM valid_store_sales GROUP BY store_id) SELECT store_id, min_sale_date FROM summary ORDER BY min_sale_date DESC, store_id DESC LIMIT 5

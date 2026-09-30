@@ -1,0 +1,12 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("store_id").orderBy(F.col("revenue").desc(), "id")
+
+result = (
+    df_store_sales
+    .filter(F.col("product_id").isin([1, 5, 7, 9]))
+    .withColumn("rnk", F.row_number().over(w))
+    .filter(F.col("rnk") == 1)
+    .select("id", "store_id", "revenue")
+)

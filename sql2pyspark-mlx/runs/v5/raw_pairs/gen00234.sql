@@ -1,0 +1,1 @@
+SELECT dim.city, COUNT(*) AS rows_total, SUM(a.revenue) AS total_revenue, GROUPING_ID() AS gid FROM store_sales a LEFT JOIN stores dim ON a.store_id = dim.id GROUP BY ROLLUP (dim.city) ORDER BY city ASC NULLS FIRST;

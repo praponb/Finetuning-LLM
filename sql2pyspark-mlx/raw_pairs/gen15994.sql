@@ -1,0 +1,1 @@
+select level, sum(salary) as total_salary, count(*) as cnt, sum(sum(salary)) over (order by level) as cumulative_salary from employees group by level order by cumulative_salary desc, level asc limit 1;

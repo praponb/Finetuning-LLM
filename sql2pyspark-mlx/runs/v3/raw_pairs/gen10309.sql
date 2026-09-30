@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3782000 THEN 'high' WHEN budget >= 1562000 THEN 'mid' ELSE 'low' END AS budget_bucket, MAX(budget) - MIN(budget) AS budget_range, MAX(budget) AS max_budget FROM departments GROUP BY 1 HAVING budget_range > 77

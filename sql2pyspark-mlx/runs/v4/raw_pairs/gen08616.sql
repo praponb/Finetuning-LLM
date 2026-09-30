@@ -1,0 +1,1 @@
+SELECT * FROM orders QUALIFY ROW_NUMBER() OVER (PARTITION BY channel ORDER BY shipping_fee DESC, id ASC) = 1;

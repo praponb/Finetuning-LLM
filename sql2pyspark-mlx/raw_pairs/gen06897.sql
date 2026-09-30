@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, UPPER(product_name) AS product_name_upper FROM products WHERE brand IS NOT NULL) SELECT dim.city, s.brand, COUNT(*) AS cnt, MAX(s.cost) AS max_cost FROM filtered s INNER JOIN suppliers dim ON s.supplier_id = dim.id GROUP BY CUBE (dim.city, s.brand)

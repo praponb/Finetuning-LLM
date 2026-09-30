@@ -1,0 +1,1 @@
+SELECT id, start_date, customer_id, status, DATEDIFF(CURRENT_DATE(), end_date) AS days_since_end_date, CAST(monthly_fee AS INT) AS monthly_fee_int FROM subscriptions WHERE status IN ('PAUSED', 'ACTIVE') AND status NOT IN ('PAUSED', 'ACTIVE', 'EXPIRED') AND end_date < '2025-04-01' ORDER BY customer_id DESC

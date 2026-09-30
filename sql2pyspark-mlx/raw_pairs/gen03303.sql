@@ -1,0 +1,1 @@
+SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE last_restock BETWEEN '2023-08-05' AND '2023-09-27' AND product_id IN (2, 4, 5, 9) GROUP BY product_id HAVING quantity_range > 35

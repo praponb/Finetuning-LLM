@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN status IN ('FAILED', 'SUCCESS') THEN 'core' ELSE 'other' END AS status_group, status, MIN(paid_at) AS min_paid_at, MIN(amount) AS min_amount FROM payments GROUP BY CASE WHEN status IN ('FAILED', 'SUCCESS') THEN 'core' ELSE 'other' END, status) AS agg WHERE min_amount >= 820 ORDER BY min_amount DESC, min_paid_at

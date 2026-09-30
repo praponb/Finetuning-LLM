@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.sale_date, s.opened_date, s.city, p.launch_date, DATE_TRUNC('week', s.opened_date) AS opened_date_period FROM store_sales ss LEFT JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id ORDER BY ss.product_id DESC, id LIMIT 3;

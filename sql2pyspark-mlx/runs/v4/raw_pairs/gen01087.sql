@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', sale_date) AS sale_month, COUNT(DISTINCT revenue) AS unique_stores, AVG(units) AS avg_units, MAX(sale_date) AS last_sale_date FROM store_sales WHERE revenue BETWEEN 2300 AND 2800 GROUP BY DATE_TRUNC('MONTH', sale_date);

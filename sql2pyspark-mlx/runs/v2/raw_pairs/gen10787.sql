@@ -1,0 +1,1 @@
+select case when quantity >= 7 then 'high' when quantity >= 4 then 'mid' else 'low' end quantity_bucket, max(quantity) - min(quantity) quantity_range, count(*) num_order_items from order_items where order_id in (23, 29, 36) group by case when quantity >= 7 then 'high' when quantity >= 4 then 'mid' else 'low' end

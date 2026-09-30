@@ -1,0 +1,1 @@
+SELECT quantity, store_id, product_id, LAST_DAY(last_restock) AS last_restock_month_end, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_label FROM inventory WHERE last_restock BETWEEN '2023-03-01' AND '2024-02-14'

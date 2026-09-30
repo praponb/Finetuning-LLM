@@ -1,0 +1,1 @@
+SELECT id, customer_id, opened_date, status, LAST_VALUE(balance) IGNORE NULLS OVER (PARTITION BY account_type ORDER BY balance ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_balance, SUM(balance) OVER w_grp AS customer_id_sum_balance FROM accounts WINDOW w_grp AS (PARTITION BY customer_id, status);

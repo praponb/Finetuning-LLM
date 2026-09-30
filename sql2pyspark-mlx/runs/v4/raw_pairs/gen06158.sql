@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, customer_id, created_at, coupon_codes, key, value FROM carts LATERAL VIEW OUTER EXPLODE(attributes) li AS key, value) SELECT customer_id, COUNT(DISTINCT key) AS distinct_keys, COUNT(DISTINCT key) AS distinct_keys_2 FROM lines GROUP BY 1 HAVING COUNT(DISTINCT key) < 1 ORDER BY distinct_keys DESC NULLS LAST;

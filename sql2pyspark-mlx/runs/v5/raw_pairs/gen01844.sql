@@ -1,0 +1,1 @@
+SELECT oi.unit_price, oi.product_id, p.category, p.product_name, p.stock_qty FROM order_items oi INNER JOIN products p ON p.id = oi.product_id WHERE oi.product_id IN (7, 11, 21, 37) AND oi.unit_price <= 160

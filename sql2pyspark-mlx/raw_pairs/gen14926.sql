@@ -1,0 +1,1 @@
+SELECT c.id, c.city, COUNT(s.id) AS subscription_count, ROUND(STDDEV(s.monthly_fee), 2) AS stddev_monthly_fee, SORT_ARRAY(COLLECT_SET(s.plan)) AS plan_list FROM customers c LEFT JOIN subscriptions s ON c.id = s.customer_id WHERE LOWER(c.name) LIKE '%vy %' GROUP BY c.id, c.city HAVING COUNT(s.id) >= 4 ORDER BY subscription_count

@@ -1,0 +1,1 @@
+WITH filtered_employees AS (SELECT * FROM employees WHERE dept_id IN (7, 9, 13, 25)), level_summary AS (SELECT level, ROUND(AVG(salary), 2) AS avg_salary FROM filtered_employees GROUP BY level) SELECT level, avg_salary FROM level_summary WHERE avg_salary < 67 ORDER BY 2 DESC, level

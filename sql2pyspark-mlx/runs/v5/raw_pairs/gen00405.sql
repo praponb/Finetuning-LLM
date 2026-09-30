@@ -1,0 +1,1 @@
+SELECT id, store_id, discount, status, GREATEST(discount, shipping_fee) AS greatest_discount_shipping_fee, LAST_DAY(order_date) AS order_date_month_end FROM orders WHERE discount BETWEEN 0.31 AND 0.38 ORDER BY greatest_discount_shipping_fee DESC;

@@ -1,0 +1,8 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_sessions
+    .filter(F.col("browser").isin(["Firefox", "Chrome", "Safari"]) & F.hour("started_at").between(10, 18))
+    .select("country", "browser")
+    .orderBy("browser")
+)

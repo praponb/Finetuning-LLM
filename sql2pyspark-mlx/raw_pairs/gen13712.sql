@@ -1,0 +1,1 @@
+SELECT o.id, o.amount, o.customer_id, t.revenue, t.order_item_count FROM orders o LEFT OUTER JOIN (SELECT order_id, SUM(unit_price * quantity) revenue, COUNT(*) order_item_count FROM order_items WHERE order_id IN (6, 10, 30) GROUP BY order_id) t ON o.id = t.order_id ORDER BY t.order_item_count;

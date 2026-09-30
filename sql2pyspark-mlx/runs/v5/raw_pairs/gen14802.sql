@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(last_restock) < 2024 THEN 'before_2024' WHEN YEAR(last_restock) = 2024 THEN '2024' ELSE 'after_2024' END last_restock_cohort, product_id, ROUND(AVG(quantity), 2) avg_quantity FROM inventory WHERE store_id IN (2, 3, 5, 6) AND store_id IN (4, 6) GROUP BY last_restock_cohort, product_id;

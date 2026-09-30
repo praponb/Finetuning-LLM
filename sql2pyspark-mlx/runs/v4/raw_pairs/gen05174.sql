@@ -1,0 +1,1 @@
+SELECT *, AVG(age) OVER w_recent AS age_avg_6_prior, ROW_NUMBER() OVER (PARTITION BY city ORDER BY credit_limit DESC, id) AS seq_no FROM customers WINDOW w_recent AS (PARTITION BY segment ORDER BY signup_date, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING);

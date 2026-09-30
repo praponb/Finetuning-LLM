@@ -1,0 +1,1 @@
+SELECT d.segment, src.status, COUNT(*) AS rows_total, MAX(src.shipping_fee) AS max_shipping_fee, ROUND(SUM(src.amount), 2) AS total_amount FROM orders src INNER JOIN customers d ON src.customer_id = d.id GROUP BY ROLLUP (d.segment, src.status) ORDER BY total_amount DESC

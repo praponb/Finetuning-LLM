@@ -1,0 +1,1 @@
+SELECT customers.country, SUM(accounts.balance) AS total_balance FROM accounts JOIN customers ON accounts.customer_id = customers.id WHERE LENGTH(customers.name) > 8 GROUP BY customers.country ORDER BY customers.country;

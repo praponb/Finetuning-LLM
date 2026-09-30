@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, brand, launch_date, category, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY launch_date, id) AS rnk FROM products WHERE category <> 'Electronics') SELECT id, brand, launch_date, category FROM ranked WHERE rnk = 1

@@ -1,0 +1,1 @@
+SELECT location, COUNT(*) department_count, COUNT(budget) budget_count, SORT_ARRAY(COLLECT_SET(location)) location_list FROM departments WHERE dept_name NOT IN ('Sales', 'HR', 'Finance') GROUP BY location

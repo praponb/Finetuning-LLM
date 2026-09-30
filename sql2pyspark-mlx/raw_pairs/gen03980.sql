@@ -1,0 +1,1 @@
+select plan, end_month, basic_count from (select plan, date_trunc('MONTH', end_date) as end_month, sum(case when plan = 'basic' then 1 else 0 end) as basic_count from subscriptions group by plan, date_trunc('MONTH', end_date)) as s where basic_count < 74;

@@ -1,0 +1,1 @@
+with filtered as (select *, length(carrier) as carrier_length from shipments where carrier is not null) select * from filtered qualify row_number() over (partition by status order by carrier_length desc, id) = 1

@@ -1,0 +1,1 @@
+WITH FilteredTransactions AS (SELECT * FROM transactions WHERE txn_type IN ('CREDIT', 'DEBIT')), summary AS (SELECT merchant, COUNT(DISTINCT amount) unique_accounts FROM FilteredTransactions GROUP BY merchant) SELECT * FROM summary ORDER BY 2 DESC

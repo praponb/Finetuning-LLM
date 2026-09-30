@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CASE WHEN quantity >= 220 THEN 'High' WHEN quantity >= 100 THEN 'Medium' ELSE 'Low' END quantity_tier FROM inventory WHERE store_id IN (1, 2, 5)) SELECT a.id, a.store_id, a.product_id, a.last_restock, s.store_name FROM cleaned a LEFT JOIN stores s ON a.store_id = s.id

@@ -1,0 +1,1 @@
+SELECT e.email AS employee_email, e.is_remote AS employee_is_remote, e.salary AS employee_salary, m.manager_id AS manager_manager_id, m.job_title AS manager_job_title, TRIM(e.job_title) AS clean_job_title FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE m.manager_id IN (3, 15, 20) OR e.manager_id IN (30, 35)

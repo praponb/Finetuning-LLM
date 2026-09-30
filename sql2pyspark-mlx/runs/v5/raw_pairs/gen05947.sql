@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, plan, element FROM price_tiers LATERAL VIEW EXPLODE(tier_prices) x AS element) SELECT plan, COUNT(DISTINCT plan) AS distinct_plans, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list, SIZE(COLLECT_SET(plan)) AS num_plans FROM exploded GROUP BY plan ORDER BY distinct_plans DESC NULLS LAST

@@ -1,0 +1,1 @@
+SELECT o.amount, o.store_id, s.opened_date, s.store_name, c.age FROM orders o LEFT JOIN stores s ON o.store_id = s.id LEFT JOIN customers c ON c.id = o.customer_id WHERE s.region IS NOT NULL ORDER BY opened_date DESC;

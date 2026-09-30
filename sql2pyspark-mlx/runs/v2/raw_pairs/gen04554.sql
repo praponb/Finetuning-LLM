@@ -1,0 +1,1 @@
+SELECT customers.country, AVG(orders.discount) AS avg_discount FROM orders LEFT JOIN customers ON customers.id = orders.customer_id LEFT JOIN stores ON orders.store_id = stores.id GROUP BY customers.country HAVING AVG(orders.discount) > 0.32 ORDER BY 1;

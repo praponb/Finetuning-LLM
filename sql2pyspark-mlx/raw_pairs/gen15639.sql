@@ -1,0 +1,1 @@
+SELECT id, customer_id, order_date, channel, amount, shipping_fee FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY order_date DESC, id) AS latest_rank FROM orders) t WHERE latest_rank = 1;

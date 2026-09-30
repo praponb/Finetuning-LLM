@@ -1,0 +1,1 @@
+with supplier_totals as (select supplier_id, concat_ws(', ', sort_array(collect_set(category))) as category_values from products where stock_qty < 159 group by supplier_id) select s.id, s.country, s.rating, st.category_values from suppliers s inner join supplier_totals st on s.id = st.supplier_id order by s.country desc

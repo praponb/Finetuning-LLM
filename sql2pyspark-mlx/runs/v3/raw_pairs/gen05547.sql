@@ -1,0 +1,1 @@
+select o.status, sum(s.cost) as total_cost from shipments s join orders o on s.order_id = o.id full outer join customers c on o.customer_id = c.id where o.channel in ('partner', 'mobile') group by o.status order by total_cost desc, status limit 5

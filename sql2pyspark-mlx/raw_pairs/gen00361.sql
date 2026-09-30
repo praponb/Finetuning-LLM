@@ -1,0 +1,1 @@
+WITH filtered_inventory AS (SELECT * FROM inventory WHERE store_id = 3 AND (last_restock <= '2023-06-28' OR last_restock BETWEEN '2024-01-01' AND '2025-06-01')), agg AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_stores, COUNT(*) AS total_count FROM filtered_inventory GROUP BY store_id) SELECT * FROM agg ORDER BY total_count DESC

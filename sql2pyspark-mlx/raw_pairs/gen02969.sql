@@ -1,0 +1,1 @@
+WITH ranked_suppliers AS (SELECT id, country, rating, DENSE_RANK() OVER (PARTITION BY country ORDER BY rating DESC) AS row_num FROM suppliers) SELECT id, country, rating FROM ranked_suppliers WHERE row_num <= 1

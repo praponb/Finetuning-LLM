@@ -1,0 +1,1 @@
+SELECT YEAR(paid_at) AS paid_year, method, COUNT(CASE WHEN method = 'cash' THEN 1 END) AS cash_count, COUNT(DISTINCT amount) AS unique_methods, MIN(amount) AS min_amount FROM payments WHERE amount < 1050 AND (method IS NOT NULL OR order_id = 21) GROUP BY YEAR(paid_at), method HAVING COUNT(CASE WHEN method = 'bank_transfer' THEN 1 END) < 4 ORDER BY method DESC, paid_year LIMIT 20

@@ -1,0 +1,1 @@
+SELECT store_id, unique_stores, total_quantity FROM (SELECT store_id, COUNT(DISTINCT quantity) AS unique_stores, SUM(quantity) AS total_quantity FROM inventory WHERE quantity > 68 GROUP BY store_id) AS t WHERE unique_stores > 8;

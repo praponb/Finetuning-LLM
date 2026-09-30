@@ -1,0 +1,1 @@
+SELECT store_id, QUARTER(last_restock) last_restock_quarter, product_id, MAX(last_restock) last_last_restock, COUNT(quantity) quantity_count, AVG(quantity) avg_quantity FROM inventory WHERE quantity != 232 AND YEAR(last_restock) >= 2024 AND last_restock <= '2023-10-21' GROUP BY store_id, QUARTER(last_restock), product_id

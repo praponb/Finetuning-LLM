@@ -1,0 +1,1 @@
+with ranked_suppliers as (select id, country, rating, city, row_number() over (partition by country order by rating, id) as row_num from suppliers) select id, country, rating, city from ranked_suppliers where row_num <= 2 order by 1 desc;

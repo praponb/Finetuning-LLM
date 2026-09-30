@@ -1,0 +1,1 @@
+with lines as (select id, service, host, log_ts, key, v from app_logs lateral view explode(context) li as key, v) select id, service, host, log_ts, key, v, case when service rlike '^(checkout|search)$' then 'CORE' else 'OTHER_ZONE' end as service_zone from lines order by key nulls last;

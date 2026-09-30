@@ -1,0 +1,1 @@
+select status, sum(case when status = 'FAILED' then amount else 0 end) as failed_amount from payments where paid_at < '2023-03-01' and amount <= 1580 group by status having sum(case when status = 'FAILED' then amount else 0 end) >= 35;

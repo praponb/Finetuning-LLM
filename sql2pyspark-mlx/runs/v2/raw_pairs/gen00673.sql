@@ -1,0 +1,1 @@
+select e.id, e.manager_id as employee_manager_id, e.dept_id as employee_dept_id, m.full_name as manager_full_name, m.hire_date as manager_hire_date, m.level as manager_level from employees e left outer join employees m on e.manager_id = m.id order by manager_hire_date desc, employee_dept_id;

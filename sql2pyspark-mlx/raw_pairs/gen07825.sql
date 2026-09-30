@@ -1,0 +1,1 @@
+WITH AccountStats AS (SELECT account_id, SUM(amount) AS total_amount, ROUND((100 * SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refund FROM transactions GROUP BY account_id) SELECT a.customer_id, A.total_amount, A.pct_refund FROM accounts a LEFT OUTER JOIN AccountStats A ON a.id = A.account_id WHERE A.pct_refund >= 54

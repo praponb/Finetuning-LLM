@@ -1,0 +1,1 @@
+SELECT city, rating_count, total_rating FROM (SELECT city, COUNT(rating) AS rating_count, SUM(rating) AS total_rating FROM suppliers WHERE supplier_name LIKE 'Pa%' GROUP BY city) AS x WHERE total_rating >= 13 ORDER BY city, 3;

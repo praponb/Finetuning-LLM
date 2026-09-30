@@ -1,0 +1,1 @@
+SELECT c.id, c.age, c.credit_limit, t.browser_list, t.cnt FROM customers c JOIN (SELECT customer_id, SORT_ARRAY(COLLECT_SET(browser)) AS browser_list, COUNT(*) AS cnt FROM sessions GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY t.cnt ASC

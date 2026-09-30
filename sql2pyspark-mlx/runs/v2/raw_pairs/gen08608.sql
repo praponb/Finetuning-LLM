@@ -1,0 +1,1 @@
+SELECT account_type, MAX(balance) - MIN(balance) AS balance_range, COUNT(balance) AS balance_count FROM accounts WHERE status NOT IN ('OPEN', 'CLOSED', 'FROZEN') AND account_type = 'CHECKING' GROUP BY 1 ORDER BY account_type LIMIT 50;

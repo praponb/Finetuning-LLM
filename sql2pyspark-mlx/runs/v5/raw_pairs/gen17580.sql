@@ -1,0 +1,1 @@
+SELECT o.status, DATE_FORMAT(o.order_date, 'yyyy-MM') AS order_month, MIN(p.amount) AS min_amount FROM payments p FULL OUTER JOIN orders o ON p.order_id = o.id GROUP BY o.status, DATE_FORMAT(o.order_date, 'yyyy-MM');

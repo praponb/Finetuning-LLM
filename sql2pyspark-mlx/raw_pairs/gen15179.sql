@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, COUNT(ss.revenue) AS revenue_count, ROUND(STDDEV(ss.revenue), 2) AS stddev_revenue FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id GROUP BY DATE_TRUNC('MONTH', s.opened_date) ORDER BY stddev_revenue DESC, revenue_count DESC

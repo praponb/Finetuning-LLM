@@ -1,0 +1,1 @@
+SELECT dept_id, ROUND(AVG(salary), 2) avg_salary FROM employees WHERE hire_date BETWEEN '2023-05-01' AND '2024-05-01' AND full_name IS NOT NULL AND level IN ('L4', 'L1') GROUP BY dept_id ORDER BY dept_id, avg_salary DESC;

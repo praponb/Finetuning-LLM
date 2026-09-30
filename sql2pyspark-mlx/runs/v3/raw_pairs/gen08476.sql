@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, AVG(cost) AS avg_cost, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values FROM products GROUP BY supplier_id) SELECT s.city, s.country, st.avg_cost, st.category_values FROM suppliers s INNER JOIN supplier_totals st ON s.id = st.supplier_id WHERE st.avg_cost >= 310;

@@ -1,0 +1,1 @@
+with order_summary as (select order_id, sum(unit_price * quantity) as revenue from order_items group by order_id) select o.shipping_fee, os.revenue from orders o inner join order_summary os on o.id = os.order_id;

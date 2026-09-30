@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, ROUND(salary * 1.15, 2) AS salary_scaled FROM employees WHERE hire_date > TO_DATE('2023-10-09') AND level IS NOT NULL AND dept_id IN (12, 35, 39)) SELECT e.*, b.level AS employee_level, b.job_title AS employee_job_title, b.hire_date AS employee_hire_date FROM filtered e LEFT JOIN employees b ON e.manager_id = b.id;

@@ -1,0 +1,1 @@
+SELECT id, customer_id, end_date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY end_date DESC, id) AS row_num FROM subscriptions WHERE MONTH(end_date) IN (1, 2, 5)) AS t WHERE row_num <= 3

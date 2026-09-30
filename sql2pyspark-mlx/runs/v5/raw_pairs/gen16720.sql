@@ -1,0 +1,1 @@
+select i.quantity, s.city, s.sqft, p.launch_date from inventory i inner join stores s on i.store_id = s.id left join products p on i.product_id = p.id where i.last_restock >= '2023-04-22' and i.store_id in (3, 4, 5) order by city desc

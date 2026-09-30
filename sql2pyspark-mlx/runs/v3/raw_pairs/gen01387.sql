@@ -1,0 +1,1 @@
+SELECT id, city, signup_date, age, credit_limit, SUM(age) OVER (PARTITION BY city ORDER BY signup_date, id) running_age, ROUND(credit_limit / SUM(credit_limit) OVER (PARTITION BY city), 3) credit_limit_share FROM customers ORDER BY credit_limit_share DESC;

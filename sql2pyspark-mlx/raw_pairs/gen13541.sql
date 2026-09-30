@@ -1,0 +1,1 @@
+select s.id, s.browser, s.started_at, s.country, top1.event_time from sessions s left join lateral (select c.event_time from web_events c where c.session_id = s.id order by c.duration_sec desc, c.id desc limit 1) top1 on true;

@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, MIN(unit_price) AS min_unit_price, COUNT(quantity) AS quantity_count, SUM(quantity) AS total_quantity FROM order_items GROUP BY 1, 2 HAVING MIN(unit_price) >= 290 ORDER BY product_id DESC;

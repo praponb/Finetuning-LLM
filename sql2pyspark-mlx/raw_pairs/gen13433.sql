@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, SUBSTRING(page, 1, 2) AS page_prefix, CONCAT_WS(',', event_type, page) AS event_type_page_key FROM web_events WHERE page != '/cart') SELECT * FROM (SELECT session_id, page, duration_sec FROM cleaned) src PIVOT (SUM(duration_sec) FOR page IN ('/home' AS home, '/search' AS search))

@@ -1,0 +1,1 @@
+select payments.method, orders.discount, customers.country from payments join orders on payments.order_id = orders.id join customers on orders.customer_id = customers.id where payments.amount between 580 and 810;

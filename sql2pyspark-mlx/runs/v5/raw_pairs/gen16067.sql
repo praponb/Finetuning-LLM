@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.status, t.stddev_amount FROM accounts LEFT OUTER JOIN (SELECT account_id, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE txn_time < '2023-06-09' GROUP BY account_id) t ON accounts.id = t.account_id;

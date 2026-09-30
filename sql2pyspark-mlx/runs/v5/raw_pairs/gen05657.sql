@@ -1,0 +1,1 @@
+select emp.id, emp.dept_id as employee_dept_id, emp.hire_date as employee_hire_date, mgr.dept_id as manager_dept_id from employees as emp left join employees as mgr on emp.manager_id = mgr.id where emp.job_title = 'Analyst' and emp.is_remote = true

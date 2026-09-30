@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY amount DESC, id) AS row_num FROM payments WHERE status IN ('REFUNDED', 'SUCCESS')) SELECT id, order_id, amount, status FROM ranked WHERE row_num <= 3 ORDER BY order_id DESC, id

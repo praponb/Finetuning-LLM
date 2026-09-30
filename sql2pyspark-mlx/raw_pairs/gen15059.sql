@@ -1,0 +1,1 @@
+WITH valid_transactions AS (SELECT * FROM transactions WHERE txn_time >= '2023-05-01'), is_flagged_summary AS (SELECT is_flagged, MAX(amount) - MIN(amount) AS amount_range, COUNT(amount) AS amount_count FROM valid_transactions GROUP BY is_flagged) SELECT * FROM is_flagged_summary WHERE amount_count < 6 ORDER BY amount_count;

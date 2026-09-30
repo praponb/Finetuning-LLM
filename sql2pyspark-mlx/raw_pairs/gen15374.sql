@@ -1,0 +1,1 @@
+select id, units, product_id, sale_date, datediff(current_date(), sale_date) days_since_sale_date from store_sales where store_id in (1, 3, 6) and units = 15 order by product_id desc, id desc limit 5;

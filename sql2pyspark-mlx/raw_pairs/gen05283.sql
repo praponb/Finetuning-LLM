@@ -1,0 +1,1 @@
+SELECT id, product_id, ROUND(revenue / units, 2) AS revenue_per_unit, revenue * units AS revenue_per_unit_2 FROM store_sales WHERE sale_date BETWEEN '2023-05-26' AND '2025-08-24' OR revenue <= 1800 ORDER BY revenue_per_unit DESC;

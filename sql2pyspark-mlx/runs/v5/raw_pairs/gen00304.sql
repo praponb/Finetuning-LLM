@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, SUM(CASE WHEN level = 'L4' THEN 1 ELSE 0 END) l4_count, COUNT(DISTINCT salary) unique_job_titles FROM employees GROUP BY dept_id) SELECT d.id, d.budget, dt.l4_count, dt.unique_job_titles FROM departments d LEFT JOIN department_totals dt ON d.id = dt.dept_id ORDER BY id DESC;

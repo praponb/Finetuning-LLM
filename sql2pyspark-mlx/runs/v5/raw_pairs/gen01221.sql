@@ -1,0 +1,1 @@
+SELECT txn_type, MAX(amount) AS max_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions WHERE account_id = 26 OR merchant IN ('7-Eleven', 'Lazada') GROUP BY txn_type ORDER BY txn_type_values;

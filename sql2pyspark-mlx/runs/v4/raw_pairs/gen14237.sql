@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CAST(revenue AS INT) AS revenue_int FROM store_sales WHERE sale_date >= DATE '2023-03-27') SELECT store_id, id FROM base INTERSECT SELECT store_id, id FROM store_sales WHERE store_id IN (1, 2, 4, 5)

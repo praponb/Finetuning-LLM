@@ -1,0 +1,1 @@
+SELECT id, cost, product_name, UPPER(TRIM(product_name)) AS product_name_normalized FROM products WHERE (launch_date >= '2025-10-20' AND product_name LIKE '%Backpac%') OR ARRAY_CONTAINS(tags, 'bestseller');

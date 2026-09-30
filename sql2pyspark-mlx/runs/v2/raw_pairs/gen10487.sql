@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, CASE WHEN page IN ('/product', '/checkout') THEN 'Tier 1' ELSE 'Other' END AS page_group, LENGTH(page) AS page_length FROM web_events WHERE page IN ('/home', '/cart') ORDER BY event_time, id LIMIT 10

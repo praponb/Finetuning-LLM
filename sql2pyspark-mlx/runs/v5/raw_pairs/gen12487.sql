@@ -1,0 +1,1 @@
+select location, stddev_budget, dept_name_list from (select location, round(stddev(budget), 2) as stddev_budget, sort_array(collect_set(dept_name)) as dept_name_list from departments group by location) as sub where stddev_budget < 72 order by stddev_budget desc, location;

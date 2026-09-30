@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 90 THEN 'high' WHEN cost >= 17 THEN 'mid' ELSE 'low' END cost_bucket, status, AVG(cost) avg_cost FROM shipments GROUP BY CASE WHEN cost >= 90 THEN 'high' WHEN cost >= 17 THEN 'mid' ELSE 'low' END, status ORDER BY status DESC, cost_bucket LIMIT 20;

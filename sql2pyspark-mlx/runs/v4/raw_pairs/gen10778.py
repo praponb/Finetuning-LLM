@@ -1,0 +1,22 @@
+from pyspark.sql import functions as F
+
+store_totals = (
+    df_store_sales
+    .groupBy("store_id")
+    .agg(
+        F.count("revenue").alias("revenue_count"),
+        F.min("units").alias("min_units"),
+    )
+)
+
+result = (
+    df_stores.alias("s")
+    .join(store_totals.alias("st"), F.col("s.id") == F.col("st.store_id"), "inner")
+    .select(
+        F.col("s.region"),
+        F.col("s.store_name"),
+        F.col("st.revenue_count"),
+        F.col("st.min_units"),
+    )
+    .orderBy(F.col("region").desc())
+)

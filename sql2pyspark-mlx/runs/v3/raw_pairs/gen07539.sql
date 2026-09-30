@@ -1,0 +1,1 @@
+select id, order_id, delivered_date, shipped_date, row_number() over (partition by order_id order by delivered_date, id) as rn, last_value(shipped_date) over (partition by order_id order by delivered_date desc, id rows between unbounded preceding and unbounded following) as last_shipped_date from shipments where year(delivered_date) = 2023

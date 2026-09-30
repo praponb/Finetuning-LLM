@@ -1,0 +1,1 @@
+with lines as (select id, effective_from, element from price_tiers lateral view explode(tier_limits) t as element) select effective_from, element, rank() over (order by element desc) as element_rank, dense_rank() over (order by element) as element_dense_rank from lines;

@@ -1,0 +1,1 @@
+SELECT *, NTILE(4) OVER (PARTITION BY device_code ORDER BY humidity DESC, id) AS humidity_bucket, AVG(humidity) OVER (PARTITION BY device_code ORDER BY status_bits, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS humidity_avg_2, DENSE_RANK() OVER (PARTITION BY device_code ORDER BY status_bits DESC) AS status_bits_dense_rank FROM device_readings

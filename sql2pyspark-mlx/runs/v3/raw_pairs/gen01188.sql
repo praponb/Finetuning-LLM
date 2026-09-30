@@ -1,0 +1,1 @@
+SELECT method, pct_success, min_amount FROM (SELECT method, ROUND((100 * SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_success, MIN(amount) min_amount FROM payments GROUP BY method) s WHERE min_amount > 500 ORDER BY method

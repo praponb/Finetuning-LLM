@@ -1,0 +1,1 @@
+SELECT category, DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty, COUNT(DISTINCT cost) AS unique_brands FROM products WHERE product_name LIKE '%Desk%' GROUP BY category, DATE_FORMAT(launch_date, 'yyyy-MM') HAVING ROUND(STDDEV(stock_qty), 2) > 24 ORDER BY category DESC;

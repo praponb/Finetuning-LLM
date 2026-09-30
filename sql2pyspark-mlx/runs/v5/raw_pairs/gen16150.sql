@@ -1,0 +1,1 @@
+SELECT CASE WHEN city IN ('Chiang Mai', 'Tokyo') THEN 'priority' ELSE 'other' END AS city_group, SUM(rating) AS total_rating, DENSE_RANK() OVER (ORDER BY SUM(rating) DESC) AS rnk FROM suppliers GROUP BY CASE WHEN city IN ('Chiang Mai', 'Tokyo') THEN 'priority' ELSE 'other' END;

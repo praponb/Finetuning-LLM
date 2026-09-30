@@ -1,0 +1,1 @@
+SELECT c.segment, COUNT(DISTINCT s.device) AS unique_devices FROM sessions s INNER JOIN customers c ON c.id = s.customer_id WHERE MONTH(c.signup_date) IN (3, 4, 6) GROUP BY c.segment ORDER BY unique_devices, segment LIMIT 5

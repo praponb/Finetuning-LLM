@@ -1,0 +1,1 @@
+select is_flagged, txn_type, merchant, round(stddev(amount), 2) as stddev_amount, count(*) as cnt, sum(case when txn_type = 'FEE' then amount else 0 end) as fee_amount from transactions where account_id in (10, 12) group by is_flagged, txn_type, merchant

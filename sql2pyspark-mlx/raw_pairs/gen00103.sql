@@ -1,0 +1,1 @@
+SELECT s.id, s.browser, t.purchase_count FROM sessions s LEFT OUTER JOIN (SELECT session_id, COUNT(CASE WHEN event_type = 'purchase' THEN 1 END) AS purchase_count FROM web_events WHERE duration_sec > 351 GROUP BY session_id) t ON s.id = t.session_id WHERE t.purchase_count >= 6 ORDER BY t.purchase_count

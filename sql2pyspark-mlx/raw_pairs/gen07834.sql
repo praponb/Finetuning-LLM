@@ -1,0 +1,1 @@
+SELECT suppliers.city, SUM(inventory.quantity) AS total_quantity, MAX(inventory.quantity) - MIN(inventory.quantity) AS quantity_range FROM inventory LEFT JOIN products ON inventory.product_id = products.id LEFT JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY suppliers.city;

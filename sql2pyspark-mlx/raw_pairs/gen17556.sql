@@ -1,0 +1,1 @@
+SELECT CASE WHEN dept_name IN ('Sales', 'Engineering') THEN 'tier_1' ELSE 'other' END AS dept_name_group, SUM(budget) AS total_budget, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) AS location_values FROM departments WHERE budget BETWEEN 1340000 AND 2774000 GROUP BY dept_name_group HAVING SUM(budget) >= 15301000

@@ -1,0 +1,1 @@
+WITH top_products AS (SELECT id, brand, price, cost, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY price DESC, id) AS row_num FROM products) SELECT id, brand, price, cost FROM top_products WHERE row_num <= 3;

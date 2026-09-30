@@ -1,0 +1,1 @@
+SELECT account_type, ROUND((100 * SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_closed, SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END) AS closed_count, COUNT(DISTINCT balance) AS unique_statuss FROM accounts GROUP BY 1 ORDER BY account_type

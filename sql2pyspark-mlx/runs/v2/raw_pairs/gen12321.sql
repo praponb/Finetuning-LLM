@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE units BETWEEN 18 AND 29), agg AS (SELECT QUARTER(sale_date) AS sale_quarter, MAX(units) - MIN(units) AS units_range FROM base GROUP BY QUARTER(sale_date)) SELECT * FROM agg WHERE units_range > 46 ORDER BY sale_quarter

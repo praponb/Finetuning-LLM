@@ -1,0 +1,1 @@
+SELECT plan, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions WHERE monthly_fee BETWEEN 160 AND 170 GROUP BY 1 ORDER BY monthly_fee_range DESC, plan;

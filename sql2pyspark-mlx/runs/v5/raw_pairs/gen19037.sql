@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM customers WHERE MONTH(signup_date) IN (5, 11, 12) AND credit_limit BETWEEN 5800 AND 15500 GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM') ORDER BY signup_month, country_values;

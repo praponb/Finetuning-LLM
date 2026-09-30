@@ -1,0 +1,1 @@
+WITH AccountStats AS (SELECT account_id, SUM(amount) AS total_amount, MAX(amount) AS max_amount FROM transactions WHERE account_id IN (8, 10, 17, 36) GROUP BY account_id) SELECT a.id, a.customer_id, A.total_amount, A.max_amount FROM accounts a LEFT JOIN AccountStats A ON a.id = A.account_id ORDER BY 4 DESC;

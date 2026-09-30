@@ -1,0 +1,1 @@
+WITH RecentOrderItems AS (SELECT * FROM order_items WHERE quantity BETWEEN 5 AND 7), order_id_summary AS (SELECT order_id, product_id, COUNT(quantity) AS quantity_count, MIN(quantity) AS min_quantity FROM RecentOrderItems GROUP BY order_id, product_id) SELECT order_id, product_id, quantity_count, min_quantity FROM order_id_summary ORDER BY order_id DESC;

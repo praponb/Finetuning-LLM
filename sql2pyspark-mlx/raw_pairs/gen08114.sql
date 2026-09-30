@@ -1,0 +1,1 @@
+with valid as (select *, floor(revenue) as revenue_whole from store_sales where sale_date > date '2023-06-09' and product_id in (3, 4, 6)) select *, rank() over (partition by product_id, store_id order by revenue desc) as rn from valid qualify rn = 1

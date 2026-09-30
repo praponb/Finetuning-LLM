@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, manager_id, salary, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY salary, id) pos FROM employees WHERE email IS NOT NULL) SELECT id, manager_id, salary FROM numbered WHERE pos <= 2;

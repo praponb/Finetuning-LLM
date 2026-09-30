@@ -1,0 +1,1 @@
+select is_flagged, txn_type, date_format(txn_time, 'yyyy-MM') as txn_month, concat_ws(', ', sort_array(collect_set(txn_type))) as txn_type_values from transactions group by is_flagged, txn_type, date_format(txn_time, 'yyyy-MM') order by txn_type, is_flagged, txn_month limit 5;

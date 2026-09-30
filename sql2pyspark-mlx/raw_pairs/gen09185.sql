@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, MIN(txn_time) AS min_txn_time FROM transactions WHERE HOUR(txn_time) BETWEEN 8 AND 12 GROUP BY account_id) SELECT a.balance, a.customer_id, as.min_txn_time FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id ORDER BY as.min_txn_time;

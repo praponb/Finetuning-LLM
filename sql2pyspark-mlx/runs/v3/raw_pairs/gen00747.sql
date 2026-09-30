@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, COUNT(CASE WHEN page = '/product' THEN 1 END) AS product_count FROM web_events GROUP BY session_id) SELECT s.id, s.browser, s.customer_id, ss.product_count FROM sessions s LEFT OUTER JOIN session_stats ss ON s.id = ss.session_id ORDER BY product_count DESC

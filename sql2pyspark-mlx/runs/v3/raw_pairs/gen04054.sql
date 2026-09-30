@@ -1,0 +1,1 @@
+SELECT YEAR(opened_date) opened_year, COUNT(sqft) sqft_count, MAX(opened_date) last_opened_date, MAX(sqft) max_sqft FROM stores WHERE opened_date <= '2025-02-15' AND region = 'North' GROUP BY 1 HAVING MAX(sqft) < 11800

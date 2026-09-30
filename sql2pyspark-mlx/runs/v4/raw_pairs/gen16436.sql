@@ -1,0 +1,1 @@
+with filtered_products as (select *, coalesce(product_name, 'Unknown') as product_name_filled from products where length(product_name) >= 12 or stock_qty != 296), agg as (select brand, max(launch_date) as last_launch_date from filtered_products group by brand) select * from agg order by 1, last_launch_date desc

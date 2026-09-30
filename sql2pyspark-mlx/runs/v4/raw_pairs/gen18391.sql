@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 550 THEN 'high' WHEN cost >= 250 THEN 'mid' ELSE 'low' END AS cost_bucket, ROUND(STDDEV(price), 2) AS stddev_price FROM products GROUP BY CASE WHEN cost >= 550 THEN 'high' WHEN cost >= 250 THEN 'mid' ELSE 'low' END ORDER BY stddev_price

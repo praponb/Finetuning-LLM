@@ -1,0 +1,1 @@
+SELECT city, de_count, pct_chiang_mai FROM (SELECT city, COUNT(CASE WHEN country = 'DE' THEN 1 END) AS de_count, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai FROM customers GROUP BY city) AS x WHERE de_count >= 7 ORDER BY de_count, city LIMIT 10;

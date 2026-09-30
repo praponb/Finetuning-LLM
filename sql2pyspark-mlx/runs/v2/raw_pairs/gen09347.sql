@@ -1,0 +1,1 @@
+SELECT event_type, page, ROUND((100 * SUM(CASE WHEN event_type = 'purchase' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_purchase FROM web_events WHERE event_type IN ('page_view', 'search', 'click') AND event_type IN ('click', 'purchase') AND duration_sec >= 228 GROUP BY event_type, page ORDER BY pct_purchase, event_type

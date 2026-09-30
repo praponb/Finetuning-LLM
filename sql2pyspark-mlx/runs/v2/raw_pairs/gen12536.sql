@@ -1,0 +1,1 @@
+SELECT status, ROUND((100 * SUM(CASE WHEN status = 'FAILED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_failed, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) method_values FROM payments WHERE paid_at >= '2025-04-01' GROUP BY status HAVING pct_failed < 76 ORDER BY pct_failed DESC, status LIMIT 5;

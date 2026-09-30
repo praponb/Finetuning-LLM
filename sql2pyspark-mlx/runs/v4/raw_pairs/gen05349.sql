@@ -1,0 +1,1 @@
+SELECT employees.salary, employees.manager_id, employees.email, departments.budget, departments.location FROM employees INNER JOIN departments ON departments.id = employees.dept_id WHERE departments.budget <= 2497000 ORDER BY employees.manager_id;

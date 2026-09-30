@@ -1,0 +1,1 @@
+SELECT MIN(quantity) AS min_quantity, MIN(last_restock) AS min_last_restock FROM inventory WHERE NOT (store_id = 1 AND quantity IS NOT NULL AND last_restock BETWEEN '2025-03-01' AND '2025-10-09') ORDER BY min_quantity DESC;

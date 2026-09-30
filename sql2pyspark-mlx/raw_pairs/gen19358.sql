@@ -1,0 +1,1 @@
+WITH account_stats AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_txn_types FROM transactions WHERE merchant IN ('7-Eleven', 'Grab', 'Starbucks') GROUP BY account_id) SELECT a.account_type, a.opened_date, as.unique_txn_types FROM accounts a JOIN account_stats as ON a.id = as.account_id WHERE as.unique_txn_types >= 7 ORDER BY a.account_type DESC

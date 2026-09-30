@@ -1,0 +1,1 @@
+WITH top_web_events AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY event_time DESC, id) rn FROM web_events) SELECT id, event_type, event_time FROM top_web_events WHERE rn = 1 ORDER BY event_time, id DESC;

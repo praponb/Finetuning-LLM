@@ -1,0 +1,1 @@
+select o.id, o.store_id, o.channel, c.country, s.sqft, s.city from orders o join customers c on o.customer_id = c.id left join stores s on s.id = o.store_id where year(c.signup_date) = 2024 order by id desc

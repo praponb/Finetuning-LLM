@@ -1,0 +1,1 @@
+WITH valid_payments AS (SELECT * FROM payments WHERE status IN ('FAILED', 'REFUNDED')), method_summary AS (SELECT method, ROUND((100 * SUM(CASE WHEN status = 'FAILED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_failed, AVG(amount) AS avg_amount FROM valid_payments GROUP BY method) SELECT * FROM method_summary WHERE pct_failed < 24

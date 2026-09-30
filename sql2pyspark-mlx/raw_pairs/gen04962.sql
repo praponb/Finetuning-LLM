@@ -1,0 +1,1 @@
+SELECT CASE WHEN city IN ('London', 'New York') THEN 'priority' ELSE 'other' END AS city_group, DATE_TRUNC('MONTH', opened_date) AS opened_month, MIN(sqft) AS min_sqft, MAX(sqft) AS max_sqft FROM stores GROUP BY 1, 2 ORDER BY city_group

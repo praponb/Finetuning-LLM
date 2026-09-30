@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, SUM(CASE WHEN brand = 'Globex' THEN 1 ELSE 0 END) AS globex_count FROM products GROUP BY supplier_id) SELECT s.id, s.country, st.globex_count FROM suppliers s INNER JOIN supplier_totals st ON s.id = st.supplier_id WHERE st.globex_count >= 42 ORDER BY country ASC, id ASC LIMIT 3;

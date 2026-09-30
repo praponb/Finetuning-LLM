@@ -1,0 +1,1 @@
+SELECT budget, location, LOWER(dept_name) AS dept_name_lower, CASE WHEN budget >= 3660000 THEN 'High' WHEN budget >= 2017000 THEN 'Medium' ELSE 'Low' END AS budget_band FROM departments WHERE budget <= 1619000;

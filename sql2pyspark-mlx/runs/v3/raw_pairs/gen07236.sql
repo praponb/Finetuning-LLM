@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM suppliers WHERE country IN ('DE', 'JP') AND city = 'Chiang Mai'), CitySummary AS (SELECT city, COUNT(*) AS total_count FROM base GROUP BY city) SELECT * FROM CitySummary WHERE total_count < 5 ORDER BY city LIMIT 5

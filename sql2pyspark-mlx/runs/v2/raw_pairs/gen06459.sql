@@ -1,0 +1,1 @@
+SELECT status, ROUND(STDDEV(amount), 2) AS stddev_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) AS method_values, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count FROM payments WHERE amount BETWEEN 710 AND 1570 GROUP BY status ORDER BY success_count DESC

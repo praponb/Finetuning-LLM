@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, COUNT(quantity) quantity_count, MAX(quantity) max_quantity FROM inventory GROUP BY store_id) SELECT s.id, s.region, s.sqft, st.quantity_count, st.max_quantity FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id;

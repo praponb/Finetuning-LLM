@@ -1,0 +1,1 @@
+SELECT i.last_restock, p.category, s.rating, s.supplier_name, CASE WHEN p.price >= 1250 THEN 'High' WHEN p.price >= 440 THEN 'Medium' ELSE 'Low' END AS price_level FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id

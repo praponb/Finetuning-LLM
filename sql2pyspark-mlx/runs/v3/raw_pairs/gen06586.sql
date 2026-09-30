@@ -1,0 +1,1 @@
+WITH store_summary AS (SELECT store_id, MIN(discount) AS min_discount, COUNT(DISTINCT discount) AS unique_channels FROM orders WHERE store_id IN (12, 20, 36) GROUP BY store_id) SELECT stores.region, store_summary.min_discount, store_summary.unique_channels FROM stores INNER JOIN store_summary ON stores.id = store_summary.store_id;

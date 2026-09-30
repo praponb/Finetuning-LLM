@@ -1,0 +1,1 @@
+with filtered_payments as (select * from payments where order_id in (5, 18)), status_summary as (select status, method, avg(amount) as avg_amount from filtered_payments group by status, method) select * from status_summary where avg_amount > 1260;

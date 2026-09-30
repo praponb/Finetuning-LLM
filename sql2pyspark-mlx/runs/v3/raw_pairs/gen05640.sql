@@ -1,0 +1,1 @@
+SELECT segment, CASE WHEN age >= 67 THEN 'high' WHEN age >= 27 THEN 'mid' ELSE 'low' END AS age_bucket, MAX(age) - MIN(age) AS age_range FROM customers GROUP BY segment, CASE WHEN age >= 67 THEN 'high' WHEN age >= 27 THEN 'mid' ELSE 'low' END HAVING MAX(age) - MIN(age) >= 45 ORDER BY segment ASC, age_range ASC, age_bucket ASC LIMIT 5

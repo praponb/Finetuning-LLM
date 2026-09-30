@@ -1,0 +1,1 @@
+select id, product_id, last_restock, quantity from (select id, product_id, last_restock, quantity, row_number() over (partition by product_id order by last_restock desc, id) as pos from inventory) as t where pos = 1 order by quantity desc;

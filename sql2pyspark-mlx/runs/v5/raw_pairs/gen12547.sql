@@ -1,0 +1,1 @@
+select brand, stock_qty_range, sports_count from (select brand, max(stock_qty) - min(stock_qty) as stock_qty_range, count(case when category = 'Sports' then 1 end) as sports_count from products where supplier_id = 38 group by brand) as agg where sports_count >= 5 order by sports_count, brand limit 1;

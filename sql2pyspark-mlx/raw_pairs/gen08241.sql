@@ -1,0 +1,1 @@
+SELECT status, COUNT(DISTINCT monthly_fee) AS unique_statuss, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee, SUM(CASE WHEN plan = 'enterprise' THEN monthly_fee ELSE 0 END) AS enterprise_monthly_fee FROM subscriptions GROUP BY status HAVING stddev_monthly_fee >= 74 ORDER BY enterprise_monthly_fee, status

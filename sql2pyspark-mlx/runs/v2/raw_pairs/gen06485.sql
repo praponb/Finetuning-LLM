@@ -1,0 +1,1 @@
+SELECT opened_year, total_sqft, stddev_sqft FROM (SELECT YEAR(opened_date) AS opened_year, SUM(sqft) AS total_sqft, ROUND(STDDEV(sqft), 2) AS stddev_sqft FROM stores GROUP BY YEAR(opened_date)) AS s WHERE total_sqft < 66000

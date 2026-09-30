@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.channel IN ('store', 'partner') THEN 'priority' ELSE 'other' END AS channel_group, MIN(p.amount) AS min_amount FROM payments p LEFT JOIN orders o ON p.order_id = o.id LEFT JOIN stores s ON o.store_id = s.id GROUP BY CASE WHEN o.channel IN ('store', 'partner') THEN 'priority' ELSE 'other' END ORDER BY channel_group, min_amount

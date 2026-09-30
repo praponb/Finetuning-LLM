@@ -1,0 +1,1 @@
+WITH SupplierTotals AS (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(category)) category_list FROM products GROUP BY supplier_id) SELECT s.id, s.city, S.category_list FROM suppliers s INNER JOIN SupplierTotals S ON s.id = S.supplier_id ORDER BY id

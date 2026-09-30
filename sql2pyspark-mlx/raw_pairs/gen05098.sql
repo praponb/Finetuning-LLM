@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, account_id, txn_type, amount, txn_time, is_flagged, INITCAP(TRIM(merchant)) AS merchant_title, COALESCE(merchant, 'N/A') AS merchant_clean FROM transactions WHERE account_id IN (21, 29) AND txn_time >= TIMESTAMP '2023-08-21 00:00:00') SELECT id FROM valid INTERSECT ALL SELECT id FROM transactions WHERE is_flagged;

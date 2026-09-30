@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, d.location, t.avg_salary, t.total_salary FROM departments d INNER JOIN (SELECT dept_id, AVG(salary) AS avg_salary, SUM(salary) AS total_salary FROM employees GROUP BY dept_id) t ON d.id = t.dept_id;

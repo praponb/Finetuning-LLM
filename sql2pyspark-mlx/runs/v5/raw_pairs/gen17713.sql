@@ -1,0 +1,1 @@
+with filtered as (select *, cast(units as string) as units_str from store_sales where revenue <= 3300) select d.city, count(*) as num_rows, round(sum(a.units), 2) as total_units, avg(a.revenue) as avg_revenue from filtered a inner join stores d on a.store_id = d.id group by d.city order by city desc nulls first

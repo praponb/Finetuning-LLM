@@ -1,0 +1,1 @@
+WITH valid_accounts AS (SELECT * FROM accounts WHERE opened_date > '2023-06-01'), agg AS (SELECT account_type, MIN(opened_date) AS min_opened_date, SUM(balance) AS total_balance FROM valid_accounts GROUP BY account_type) SELECT account_type, min_opened_date, total_balance FROM agg WHERE total_balance >= 355000 ORDER BY account_type DESC

@@ -1,0 +1,1 @@
+SELECT product_id, store_id, last_last_restock, cnt FROM (SELECT product_id, store_id, MAX(last_restock) AS last_last_restock, COUNT(*) AS cnt FROM inventory WHERE product_id IN (3, 7, 10) GROUP BY product_id, store_id) AS x WHERE cnt >= 4 ORDER BY 2 ASC, cnt DESC, product_id ASC LIMIT 20;

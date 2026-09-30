@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity, unit_price, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) quantity_dense_rank, AVG(unit_price) OVER (PARTITION BY product_id) product_id_avg_unit_price FROM order_items WHERE order_id = 30;

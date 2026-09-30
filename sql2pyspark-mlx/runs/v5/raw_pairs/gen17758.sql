@@ -1,0 +1,1 @@
+SELECT id, hire_date, job_title, salary, ROW_NUMBER() OVER (ORDER BY hire_date DESC, id) rn, LEAD(salary, 2) OVER (PARTITION BY job_title ORDER BY hire_date, id) next_salary FROM employees WHERE manager_id IS NULL ORDER BY job_title

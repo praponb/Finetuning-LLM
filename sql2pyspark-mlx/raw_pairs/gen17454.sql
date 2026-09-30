@@ -1,0 +1,1 @@
+select id, order_id, shipped_date, cost, status, delivered_date, sum(cost) over (partition by order_id order by shipped_date, id rows between unbounded preceding and current row) as running_cost, rank() over (partition by status order by delivered_date) as rnk from shipments where order_id = 16 order by running_cost desc

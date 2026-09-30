@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', event_time) AS event_month, page, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, COUNT(DISTINCT duration_sec) AS unique_sessions FROM web_events WHERE session_id = 17 GROUP BY DATE_TRUNC('MONTH', event_time), page) AS agg WHERE stddev_duration_sec >= 37 ORDER BY unique_sessions DESC;

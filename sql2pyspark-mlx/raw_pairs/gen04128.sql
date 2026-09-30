@@ -1,0 +1,1 @@
+select s.id, s.cost, s.shipped_date from shipments s where s.delivered_date between '2023-09-22' and '2025-06-12' and s.order_id not in (select id from orders where status in ('RETURNED', 'SHIPPED', 'COMPLETED'));

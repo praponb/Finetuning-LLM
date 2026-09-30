@@ -1,0 +1,1 @@
+WITH session_totals AS (SELECT session_id, COUNT(duration_sec) duration_sec_count FROM web_events GROUP BY session_id) SELECT s.customer_id, st.duration_sec_count FROM sessions s LEFT JOIN session_totals st ON s.id = st.session_id WHERE st.duration_sec_count >= 4;

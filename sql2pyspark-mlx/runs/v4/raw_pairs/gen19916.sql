@@ -1,0 +1,1 @@
+SELECT MONTH(sale_date) AS sale_month, ROUND(STDDEV(revenue), 2) AS stddev_revenue, MIN(sale_date) AS min_sale_date, COUNT(revenue) AS revenue_count FROM store_sales WHERE sale_date BETWEEN '2023-03-09' AND '2024-04-01' AND revenue > 3800 GROUP BY 1

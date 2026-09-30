@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, currency, EXPLODE(discounts) AS val FROM price_tiers) SELECT id, currency, val, CASE WHEN currency RLIKE '^(THB|EUR)$' THEN 'GROUP_B' WHEN currency RLIKE '^(USD)$' THEN 'OTHER_ZONE' ELSE 'CORE' END AS currency_zone FROM flattened ORDER BY id DESC NULLS LAST;

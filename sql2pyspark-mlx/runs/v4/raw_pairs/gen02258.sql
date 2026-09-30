@@ -1,0 +1,1 @@
+WITH remaining_keys AS (SELECT id, supplier_id FROM products INTERSECT SELECT id, supplier_id FROM products WHERE supplier_id = 17), verified AS (SELECT s.* FROM products s INNER JOIN remaining_keys k ON s.id = k.id AND s.supplier_id = k.supplier_id) SELECT id, product_name, category, brand, price, stock_qty, launch_date, tags, supplier_id FROM verified

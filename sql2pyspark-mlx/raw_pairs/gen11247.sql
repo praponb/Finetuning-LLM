@@ -1,0 +1,1 @@
+SELECT id, supplier_name, country, city, SUBSTRING(supplier_name, 1, 2) AS supplier_name_prefix, ROUND(rating * 1.07, 2) AS adjusted_rating FROM suppliers WHERE supplier_name LIKE '%Tokyo%' AND country = 'JP'

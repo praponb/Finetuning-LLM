@@ -1,0 +1,1 @@
+select level, unique_job_titles, salary_range from (select level, count(distinct salary) as unique_job_titles, max(salary) - min(salary) as salary_range from employees where salary > 57000 group by level) as sub where salary_range >= 71 order by unique_job_titles desc

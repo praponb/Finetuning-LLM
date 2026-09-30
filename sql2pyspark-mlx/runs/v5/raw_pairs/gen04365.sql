@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, country, signup_date, age, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date DESC, id) AS rnk FROM customers) SELECT id, country, signup_date, age FROM numbered WHERE rnk = 1 ORDER BY age DESC

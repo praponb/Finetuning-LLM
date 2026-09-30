@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, AVG(balance) AS avg_balance, COUNT(DISTINCT balance) AS unique_customers FROM accounts GROUP BY DATE_TRUNC('MONTH', opened_date)) AS x WHERE unique_customers > 9 ORDER BY unique_customers DESC

@@ -1,0 +1,1 @@
+SELECT id, opened_date, DATE_FORMAT(opened_date, 'yyyy-MM-dd') AS opened_date_label FROM accounts WHERE status = 'FROZEN' AND (opened_date BETWEEN '2024-06-01' AND '2025-07-01' OR customer_id IS NULL) ORDER BY opened_date_label DESC

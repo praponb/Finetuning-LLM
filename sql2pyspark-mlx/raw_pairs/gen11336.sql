@@ -1,0 +1,1 @@
+SELECT QUARTER(order_date) order_quarter, MAX(discount) - MIN(discount) discount_range, SORT_ARRAY(COLLECT_SET(status)) status_list FROM orders GROUP BY QUARTER(order_date) ORDER BY order_quarter DESC, discount_range DESC;

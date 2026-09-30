@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, service, host, level, latency_ms, status_code, k, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) e AS k, attr_value) SELECT id, host, level, k, CASE WHEN host RLIKE '^(h4|h3)$' THEN 'PRIORITY' ELSE 'OTHER_ZONE' END AS host_zone FROM exploded ORDER BY level DESC;

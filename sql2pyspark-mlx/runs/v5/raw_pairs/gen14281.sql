@@ -1,0 +1,1 @@
+SELECT CASE WHEN o.status IN ('RETURNED', 'SHIPPED') THEN 'core' ELSE 'other' END status_group, o.store_id, COUNT(*) num_shipments FROM shipments s JOIN orders o ON s.order_id = o.id GROUP BY CASE WHEN o.status IN ('RETURNED', 'SHIPPED') THEN 'core' ELSE 'other' END, o.store_id;

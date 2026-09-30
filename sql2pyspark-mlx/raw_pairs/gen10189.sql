@@ -1,0 +1,1 @@
+select o.channel, round(stddev(s.cost), 2) stddev_cost, max(s.cost) max_cost from shipments s left join orders o on s.order_id = o.id where o.shipping_fee is null group by o.channel order by stddev_cost, channel limit 5;

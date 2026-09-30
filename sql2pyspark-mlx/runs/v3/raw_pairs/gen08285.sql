@@ -1,0 +1,1 @@
+WITH ranked_orders AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount, id) AS row_num FROM orders) SELECT id, customer_id, amount, shipping_fee FROM ranked_orders WHERE row_num <= 3 ORDER BY id DESC

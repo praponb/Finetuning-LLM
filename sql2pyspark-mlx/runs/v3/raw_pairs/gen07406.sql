@@ -1,0 +1,1 @@
+SELECT orders.id, orders.status, COUNT(shipments.id) AS shipment_count, MIN(shipments.shipped_date) AS min_shipped_date, SUM(CASE WHEN shipments.carrier = 'FedEx' THEN shipments.cost ELSE 0 END) AS fedex_cost FROM orders LEFT JOIN shipments ON orders.id = shipments.order_id WHERE orders.shipping_fee <= 22 GROUP BY orders.id, orders.status ORDER BY min_shipped_date

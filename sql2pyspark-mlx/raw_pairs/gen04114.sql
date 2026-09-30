@@ -1,0 +1,1 @@
+select account_type, checking_balance, min_opened_date from (select account_type, sum(case when account_type = 'CHECKING' then balance else 0 end) as checking_balance, min(opened_date) as min_opened_date from accounts where status in ('OPEN', 'CLOSED', 'FROZEN') group by account_type) as s where checking_balance >= 61

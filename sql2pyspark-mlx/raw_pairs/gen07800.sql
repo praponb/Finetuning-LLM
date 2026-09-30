@@ -1,0 +1,1 @@
+WITH order_totals AS (SELECT order_id, SUM(quantity) AS total_quantity, MIN(unit_price) AS min_unit_price FROM order_items GROUP BY order_id) SELECT o.id, o.store_id, o.shipping_fee, ot.total_quantity, ot.min_unit_price FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id ORDER BY shipping_fee;

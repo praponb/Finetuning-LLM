@@ -1,0 +1,9 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_accounts
+    .groupBy("status")
+    .pivot("account_type", ["CREDIT", "SAVINGS"])
+    .agg(F.count("balance"))
+    .orderBy("status")
+)

@@ -1,0 +1,1 @@
+SELECT city, YEAR(opened_date) opened_year, ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_berlin FROM stores GROUP BY city, YEAR(opened_date) ORDER BY pct_berlin DESC;

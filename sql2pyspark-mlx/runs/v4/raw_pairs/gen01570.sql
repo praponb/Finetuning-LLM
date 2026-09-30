@@ -1,0 +1,1 @@
+SELECT p.id, p.product_name, COUNT(oi.id) AS order_item_count FROM products p INNER JOIN order_items oi ON oi.product_id = p.id WHERE LENGTH(p.product_name) < 10 GROUP BY p.id, p.product_name ORDER BY product_name DESC;

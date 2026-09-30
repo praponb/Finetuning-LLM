@@ -1,0 +1,1 @@
+SELECT emp.id, emp.is_remote AS employee_is_remote, emp.salary AS employee_salary, emp.full_name AS employee_full_name, mgr.salary AS manager_salary, mgr.email AS manager_email FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id ORDER BY id;

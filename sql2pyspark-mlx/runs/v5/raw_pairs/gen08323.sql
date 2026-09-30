@@ -1,0 +1,1 @@
+WITH web_events_by_session AS (SELECT session_id, SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END) AS search_count FROM web_events GROUP BY session_id) SELECT s.id, s.browser, s.country, webs.search_count FROM sessions s JOIN web_events_by_session webs ON s.id = webs.session_id WHERE webs.search_count > 49 ORDER BY s.country;

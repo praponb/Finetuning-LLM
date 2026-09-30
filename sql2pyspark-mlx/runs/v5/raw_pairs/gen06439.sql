@@ -1,0 +1,1 @@
+with exploded as (select id, log_ts, latency_ms, status_code, key, attr_value from app_logs lateral view outer explode(context) t as key, attr_value) select id, log_ts, latency_ms, key, case when key rlike '^(trace|version)$' then 'GROUP_A' else 'GROUP_B' end as key_zone from exploded order by key_zone desc nulls last;

@@ -1,0 +1,1 @@
+SELECT *, CONCAT_WS(',', product_name, brand) product_name_brand_key, CASE WHEN stock_qty >= 355 THEN 'High' WHEN stock_qty >= 191 THEN 'Medium' ELSE 'Low' END stock_qty_tier FROM products WHERE MONTH(launch_date) IN (2, 9, 12)

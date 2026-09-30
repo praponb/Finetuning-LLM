@@ -1,0 +1,1 @@
+select is_remote, date_format(hire_date, 'yyyy-MM') as hire_month, sum(case when job_title = 'Engineer' then 1 else 0 end) as engineer_count, sum(salary) as total_salary from employees where (full_name like '%smith%' and level <> 'L4') or length(full_name) > 8 group by is_remote, date_format(hire_date, 'yyyy-MM') having count(case when level = 'L2' then 1 end) >= 5;

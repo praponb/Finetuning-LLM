@@ -1,0 +1,1 @@
+SELECT event_type, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, COUNT(DISTINCT duration_sec) AS unique_sessions, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events GROUP BY event_type ORDER BY unique_sessions DESC;

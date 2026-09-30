@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM shipments GROUP BY order_id) SELECT o.id, o.store_id, os.status_values FROM orders o INNER JOIN order_summary os ON o.id = os.order_id

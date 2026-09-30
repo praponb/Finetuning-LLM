@@ -1,0 +1,1 @@
+select * from (select year(hire_date) as hire_year, date_trunc('MONTH', hire_date) as hire_month, round(avg(salary), 2) as avg_salary, max(hire_date) as last_hire_date from employees where email is not null group by year(hire_date), date_trunc('MONTH', hire_date)) as x where avg_salary < 43 order by last_hire_date desc;

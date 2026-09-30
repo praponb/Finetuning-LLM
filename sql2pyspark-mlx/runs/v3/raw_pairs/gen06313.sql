@@ -1,0 +1,1 @@
+SELECT p.price, t.unique_stores FROM products p INNER JOIN (SELECT product_id, COUNT(DISTINCT revenue) AS unique_stores FROM store_sales GROUP BY product_id) t ON p.id = t.product_id WHERE t.unique_stores >= 9 ORDER BY price;

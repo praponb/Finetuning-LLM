@@ -1,0 +1,1 @@
+SELECT e.id, e.level AS employee_level, e.email AS employee_email, m.is_remote AS manager_is_remote, m.manager_id AS manager_manager_id FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE LOWER(TRIM(m.email)) = 'jack@startup.io'

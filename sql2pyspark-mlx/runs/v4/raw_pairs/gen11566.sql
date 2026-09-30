@@ -1,0 +1,1 @@
+SELECT CASE WHEN a.account_type IN ('CHECKING', 'CREDIT') THEN 'group_a' ELSE 'other' END AS account_type_group, AVG(t.amount) AS avg_amount FROM transactions t LEFT OUTER JOIN accounts a ON t.account_id = a.id GROUP BY CASE WHEN a.account_type IN ('CHECKING', 'CREDIT') THEN 'group_a' ELSE 'other' END;

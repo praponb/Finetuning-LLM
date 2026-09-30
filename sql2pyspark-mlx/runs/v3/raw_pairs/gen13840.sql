@@ -1,0 +1,1 @@
+SELECT *, CAST(txn_time AS DATE) AS txn_time_day, CONCAT_WS('-', merchant, txn_type) AS merchant_txn_type_key FROM transactions WHERE (account_id IN (8, 27, 32) AND txn_time < '2025-03-01') OR merchant IN ('Lazada', 'Starbucks', 'Amazon')

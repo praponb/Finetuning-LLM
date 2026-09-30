@@ -1,0 +1,1 @@
+SELECT id, plan, status, LAST_DAY(start_date) start_date_month_end, DATE_TRUNC('WEEK', end_date) end_date_period FROM subscriptions WHERE end_date BETWEEN '2023-12-01' AND '2025-01-01' AND status IN ('ACTIVE', 'PAUSED', 'CANCELLED');

@@ -1,0 +1,1 @@
+SELECT customers.country, customers.credit_limit, t.checking_balance, t.min_balance FROM customers JOIN (SELECT customer_id, SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) AS checking_balance, MIN(balance) AS min_balance FROM accounts GROUP BY customer_id) t ON customers.id = t.customer_id WHERE t.checking_balance >= 55;

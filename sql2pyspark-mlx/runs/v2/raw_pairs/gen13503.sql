@@ -1,0 +1,1 @@
+select o.amount, o.channel, t.avg_cost from orders o left join (select order_id, round(avg(cost), 2) as avg_cost from shipments group by order_id) t on o.id = t.order_id where t.avg_cost > 78 order by o.channel, amount desc

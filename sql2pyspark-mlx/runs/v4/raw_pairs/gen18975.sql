@@ -1,0 +1,1 @@
+WITH FilteredStoreSales AS (SELECT * FROM store_sales WHERE units <> 11 AND units <> 28), agg AS (SELECT product_id, COUNT(DISTINCT units) unique_products, SUM(units) total_units FROM FilteredStoreSales GROUP BY product_id) SELECT product_id, unique_products, total_units FROM agg;

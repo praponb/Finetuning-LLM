@@ -1,0 +1,1 @@
+select s.device, we.event_time, we.duration_sec, we.event_type, case when we.event_type = 'click' then 1 else 0 end as is_click from sessions s left join web_events we on we.session_id = s.id where we.event_type not in ('add_to_cart', 'purchase') order by we.duration_sec desc, device;

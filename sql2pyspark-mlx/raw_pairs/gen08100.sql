@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END AS rating_bucket, city, ROUND(AVG(rating), 2) AS avg_rating FROM suppliers WHERE city = 'London' GROUP BY rating_bucket, city ORDER BY avg_rating DESC;

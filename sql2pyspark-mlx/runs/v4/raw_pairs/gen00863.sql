@@ -1,0 +1,1 @@
+SELECT status, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, SUM(CASE WHEN account_type = 'CREDIT' THEN 1 ELSE 0 END) AS credit_count, ROUND((100 * SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_savings FROM accounts GROUP BY status, DATE_FORMAT(opened_date, 'yyyy-MM')

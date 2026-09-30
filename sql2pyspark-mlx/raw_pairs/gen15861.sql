@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, customer_id, created_at, EXPLODE_OUTER(coupon_codes) AS tag FROM carts) SELECT tag, DATE_TRUNC('HOUR', created_at) AS hour_window, MIN(created_at) AS first_created_at, COUNT(*) FILTER (WHERE tag = 'BUNDLE') AS bundle_rows FROM flattened GROUP BY tag, DATE_TRUNC('HOUR', created_at) ORDER BY bundle_rows NULLS LAST

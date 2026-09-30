@@ -1,0 +1,1 @@
+SELECT oi.id, oi.unit_price, oi.product_id, p.price, p.category, s.supplier_name FROM order_items oi INNER JOIN products p ON p.id = oi.product_id INNER JOIN suppliers s ON p.supplier_id = s.id ORDER BY oi.unit_price, id LIMIT 1;

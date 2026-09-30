@@ -1,0 +1,1 @@
+with flattened as (select id, service, log_ts, attr_key, attr_value from app_logs lateral view outer explode(context) t as attr_key, attr_value) select service, attr_key, case when service rlike '^(auth|checkout)$' then 'OTHER_ZONE' when service rlike '^(billing|search)$' then 'CORE' else 'EXTENDED' end as service_zone from flattened;

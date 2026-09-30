@@ -1,0 +1,1 @@
+SELECT status, carrier, CASE WHEN cost >= 82 THEN 'high' WHEN cost >= 23 THEN 'mid' ELSE 'low' END AS cost_bucket, AVG(cost) AS avg_cost, COUNT(cost) AS cost_count FROM shipments GROUP BY status, carrier, CASE WHEN cost >= 82 THEN 'high' WHEN cost >= 23 THEN 'mid' ELSE 'low' END ORDER BY status, carrier, cost_bucket LIMIT 5;

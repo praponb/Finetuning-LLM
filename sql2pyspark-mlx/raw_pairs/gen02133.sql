@@ -1,0 +1,1 @@
+select * from (select status, count(case when account_type = 'CHECKING' then 1 end) as checking_count, min(balance) as min_balance from accounts group by status) as s where checking_count < 5 order by min_balance

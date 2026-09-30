@@ -1,0 +1,1 @@
+SELECT id, store_id, last_restock, quantity, product_id, LEAD(quantity, 2) OVER (PARTITION BY store_id ORDER BY last_restock, id) AS next_quantity, SUM(quantity) OVER (PARTITION BY product_id ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_quantity FROM inventory WHERE store_id IN (2, 4, 5);

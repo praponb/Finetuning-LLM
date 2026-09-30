@@ -1,0 +1,1 @@
+SELECT inventory.id, inventory.product_id, inventory.store_id, store_sales.units, CAST(inventory.quantity AS DOUBLE) AS quantity_num FROM inventory JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id;

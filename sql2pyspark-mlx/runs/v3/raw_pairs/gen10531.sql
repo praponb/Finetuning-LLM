@@ -1,0 +1,1 @@
+SELECT brand, CASE WHEN brand IN ('Acme', 'Initech') THEN 'core' ELSE 'other' END AS brand_group, COUNT(price) AS price_count FROM products WHERE price <= 940 GROUP BY brand, CASE WHEN brand IN ('Acme', 'Initech') THEN 'core' ELSE 'other' END HAVING price_count >= 3;

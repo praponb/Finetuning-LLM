@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, COUNT(CASE WHEN carrier = 'DHL' THEN 1 END) AS dhl_count, COUNT(DISTINCT cost) AS unique_orders FROM shipments GROUP BY order_id) SELECT o.customer_id, os.dhl_count, os.unique_orders FROM orders o LEFT JOIN order_summary os ON o.id = os.order_id WHERE os.dhl_count >= 6 ORDER BY unique_orders DESC;

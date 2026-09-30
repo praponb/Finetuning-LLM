@@ -1,0 +1,1 @@
+SELECT p.category, SUM(i.quantity) AS total_quantity FROM inventory i JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE LENGTH(s.supplier_name) > 12 GROUP BY p.category;

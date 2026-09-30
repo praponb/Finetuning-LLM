@@ -1,0 +1,1 @@
+WITH store_sales_by_store AS (SELECT store_id, SUM(units) AS total_units FROM store_sales GROUP BY store_id) SELECT s.id, s.sqft, ssbs.total_units FROM stores s JOIN store_sales_by_store ssbs ON s.id = ssbs.store_id WHERE ssbs.total_units >= 90 ORDER BY sqft DESC, ssbs.total_units ASC;

@@ -1,0 +1,1 @@
+SELECT oi.id, oi.quantity, oi.order_id, p.price, p.category, o.order_date FROM order_items oi JOIN products p ON p.id = oi.product_id LEFT OUTER JOIN orders o ON oi.order_id = o.id WHERE o.status != 'COMPLETED' AND o.status IN ('COMPLETED', 'RETURNED', 'SHIPPED') ORDER BY oi.id DESC;

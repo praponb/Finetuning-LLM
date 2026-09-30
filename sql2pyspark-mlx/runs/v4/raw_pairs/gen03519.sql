@@ -1,0 +1,1 @@
+with filtered as (select *, round(pressure, 2) as pressure_rounded from device_readings where temp_c <= 28) select * from (select firmware, device_code, temp_c from filtered) src pivot (avg(temp_c) as value_sum for device_code in ('DV-03' as dv_03, 'DV-04' as dv_04))

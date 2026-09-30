@@ -1,0 +1,1 @@
+select date_trunc('MONTH', end_date) as end_month, sum(case when status = 'ACTIVE' then monthly_fee else 0 end) as active_monthly_fee, max(monthly_fee) as max_monthly_fee from subscriptions where customer_id in (6, 11) and customer_id = 39 and end_date >= '2024-02-01' group by end_month having sum(monthly_fee) > 560 order by max_monthly_fee, end_month limit 10;

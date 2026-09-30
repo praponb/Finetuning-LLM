@@ -1,0 +1,1 @@
+with joined as (select e.*, d.shipping_fee, d.order_date from shipments e left join orders d on e.order_id = d.id) select s.id, s.order_id, s.cost, s.order_date, (select sum(t2.unit_price) from order_items t2 where t2.order_id = s.order_id) as sum_order_item_unit_price from joined s order by cost desc nulls first;

@@ -1,0 +1,1 @@
+SELECT segment, QUARTER(signup_date) AS signup_quarter, SUM(CASE WHEN city = 'Singapore' THEN age ELSE 0 END) AS singapore_age, SUM(CASE WHEN country = 'US' THEN credit_limit ELSE 0 END) AS us_credit_limit FROM customers WHERE is_active GROUP BY 1, 2;

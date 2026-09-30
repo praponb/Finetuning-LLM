@@ -1,0 +1,1 @@
+SELECT id, segment, signup_date, email, COALESCE(city, 'unassigned') AS city_filled, IF(is_active, 'Yes', 'No') AS is_active_label FROM customers WHERE (segment = 'SMB' AND email LIKE '%@gmail.com') OR is_active;

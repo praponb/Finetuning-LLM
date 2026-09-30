@@ -1,0 +1,1 @@
+select p.order_id, p.method, o.status, o.shipping_fee, date_trunc('YEAR', p.paid_at) as paid_at_period from payments p inner join orders o on p.order_id = o.id where p.status = 'SUCCESS' and p.method <> 'bank_transfer' order by p.order_id

@@ -1,0 +1,1 @@
+SELECT id, account_id, txn_type, txn_time, amount, SUM(amount) OVER (PARTITION BY account_id, txn_type ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount FROM transactions

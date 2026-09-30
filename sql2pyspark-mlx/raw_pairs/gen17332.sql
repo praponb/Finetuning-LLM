@@ -1,0 +1,1 @@
+SELECT country, segment_values, age_count FROM (SELECT country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(segment))) segment_values, COUNT(age) age_count FROM customers GROUP BY country) sub WHERE age_count >= 8 ORDER BY age_count

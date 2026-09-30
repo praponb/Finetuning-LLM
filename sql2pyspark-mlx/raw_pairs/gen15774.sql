@@ -1,0 +1,1 @@
+select e.id, e.hire_date as employee_hire_date, e.full_name as employee_full_name, e.manager_id as employee_manager_id, m.full_name as manager_full_name, m.manager_id as manager_manager_id, m.hire_date as manager_hire_date from employees e inner join employees m on e.manager_id = m.id where e.dept_id in (12, 27, 34, 38) order by m.full_name desc

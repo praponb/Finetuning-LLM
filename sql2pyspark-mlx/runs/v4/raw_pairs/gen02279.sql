@@ -1,0 +1,1 @@
+select month(s.started_at) as started_month, sum(we.duration_sec) as total_duration_sec from web_events we inner join sessions s on s.id = we.session_id left join customers c on s.customer_id = c.id group by month(s.started_at) having sum(we.duration_sec) > 1300 order by total_duration_sec desc;

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, temp_c, humidity, pressure, status_bits, firmware, UPPER(firmware) AS firmware_upper FROM device_readings WHERE status_bits < 11) SELECT id, measure, val FROM (SELECT id, temp_c, humidity, pressure FROM cleaned) src UNPIVOT (val FOR measure IN (temp_c, humidity, pressure));

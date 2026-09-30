@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT page, DATE_TRUNC('MONTH', event_time) AS event_month, COUNT(duration_sec) AS duration_sec_count, COUNT(CASE WHEN page = '/search' THEN 1 END) AS search_count FROM web_events WHERE page IN ('/checkout', '/home') GROUP BY page, DATE_TRUNC('MONTH', event_time)) AS s WHERE duration_sec_count >= 6;

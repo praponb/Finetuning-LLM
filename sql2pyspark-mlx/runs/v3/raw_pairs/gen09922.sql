@@ -1,0 +1,1 @@
+select orders.id, orders.status, t.total_quantity from orders left join (select order_id, sum(quantity) as total_quantity from order_items where quantity between 7 and 8 group by order_id) t on orders.id = t.order_id order by status;

@@ -1,0 +1,1 @@
+with session_summary as (select session_id, min(duration_sec) as min_duration_sec, max(duration_sec) - min(duration_sec) as duration_sec_range from web_events group by session_id) select s.country, ss.min_duration_sec, ss.duration_sec_range from sessions s left join session_summary ss on s.id = ss.session_id where ss.duration_sec_range >= 60 order by ss.duration_sec_range desc

@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, supplier_name, country, city, CONCAT_WS(',', supplier_name, country) AS supplier_name_country_key FROM suppliers WHERE city IS NOT NULL) SELECT city, COUNT(*) AS row_count, COUNT(*) FILTER (WHERE country = 'US') AS us_rows, COUNT(*) FILTER (WHERE city = 'London') AS london_rows FROM base GROUP BY city;

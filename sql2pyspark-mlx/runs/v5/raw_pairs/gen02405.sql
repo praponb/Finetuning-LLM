@@ -1,0 +1,1 @@
+SELECT id, name, city, is_active, AVG(credit_limit) OVER (PARTITION BY city ORDER BY credit_limit, id ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS credit_limit_avg_5, CORR(age, credit_limit) OVER (PARTITION BY city, country) AS corr_age_credit_limit FROM customers

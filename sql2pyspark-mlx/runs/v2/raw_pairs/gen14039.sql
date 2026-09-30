@@ -1,0 +1,1 @@
+SELECT id, country, age, segment, credit_limit, ROUND(age / SUM(age) OVER (PARTITION BY country), 3) AS age_share, MIN(credit_limit) OVER (PARTITION BY segment) AS segment_min_credit_limit FROM customers WHERE email LIKE '%@GMAIL.COM'

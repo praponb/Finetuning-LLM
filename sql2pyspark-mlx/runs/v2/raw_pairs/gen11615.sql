@@ -1,0 +1,1 @@
+WITH product_totals AS (SELECT product_id, COUNT(unit_price) AS unit_price_count FROM order_items WHERE quantity IS NULL GROUP BY product_id) SELECT p.price, pt.unit_price_count FROM products p INNER JOIN product_totals pt ON p.id = pt.product_id WHERE pt.unit_price_count > 5 ORDER BY price ASC, pt.unit_price_count DESC;

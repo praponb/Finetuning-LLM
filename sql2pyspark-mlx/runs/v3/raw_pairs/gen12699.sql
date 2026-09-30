@@ -1,0 +1,1 @@
+WITH recent_order_items AS (SELECT * FROM order_items WHERE product_id IN (9, 20, 28, 34)), Agg AS (SELECT product_id, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM recent_order_items GROUP BY product_id) SELECT * FROM Agg WHERE unit_price_range > 22

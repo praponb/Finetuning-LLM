@@ -1,0 +1,1 @@
+SELECT id, store_id, quantity, product_id, MAX(quantity) OVER (PARTITION BY store_id) AS store_id_max_quantity, NTILE(3) OVER (PARTITION BY product_id, store_id ORDER BY quantity, id) AS bucket FROM inventory ORDER BY quantity DESC, 4 ASC

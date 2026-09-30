@@ -1,0 +1,1 @@
+SELECT MONTH(end_date) AS end_month, plan, CASE WHEN monthly_fee >= 229 THEN 'high' WHEN monthly_fee >= 80 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, MIN(start_date) AS min_start_date, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE YEAR(start_date) = 2025 GROUP BY 1, 2, 3

@@ -1,0 +1,1 @@
+select store_id, revenue_range, revenue_count from (select store_id, max(revenue) - min(revenue) revenue_range, count(revenue) revenue_count from store_sales group by store_id) s where revenue_count > 8 order by store_id desc, revenue_range;

@@ -1,0 +1,1 @@
+SELECT s.id, s.shipped_date FROM shipments s WHERE s.carrier IN ('UPS', 'Kerry') AND s.order_id IN (SELECT id FROM orders WHERE order_date BETWEEN '2025-09-01' AND '2025-10-01') ORDER BY shipped_date, s.id DESC

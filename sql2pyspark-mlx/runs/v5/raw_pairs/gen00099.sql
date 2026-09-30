@@ -1,0 +1,1 @@
+SELECT id, supplier_id, category, cost, price / NULLIF(stock_qty, 0) AS price_per_stock_qty, CONCAT_WS('/', product_name, category) AS product_name_category_key FROM products ORDER BY cost, id LIMIT 10;

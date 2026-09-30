@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, MAX(credit_limit) - MIN(credit_limit) AS credit_limit_range, ROUND((100 * SUM(CASE WHEN segment = 'Consumer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_consumer, SUM(age) AS total_age FROM customers WHERE credit_limit < 7200 GROUP BY DATE_TRUNC('MONTH', signup_date) ORDER BY credit_limit_range DESC;

@@ -1,0 +1,1 @@
+SELECT o.channel, AVG(oi.unit_price) AS avg_unit_price FROM order_items oi INNER JOIN products p ON oi.product_id = p.id LEFT OUTER JOIN orders o ON o.id = oi.order_id WHERE o.discount <= 0.17 GROUP BY o.channel ORDER BY avg_unit_price DESC, o.channel;

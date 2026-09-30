@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, COALESCE(revenue, 0) AS revenue_filled, CASE WHEN units >= 30 THEN 'High' WHEN units >= 9 THEN 'Medium' ELSE 'Low' END AS units_band FROM store_sales WHERE sale_date >= DATE '2023-07-14') SELECT p.region, COUNT(*) AS num_rows, AVG(e.revenue) AS avg_revenue FROM filtered e LEFT JOIN stores p ON e.store_id = p.id GROUP BY p.region ORDER BY region DESC

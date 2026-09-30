@@ -1,0 +1,1 @@
+WITH AccountStats AS (SELECT account_id, SUM(amount) AS total_amount, COUNT(*) AS cnt FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, a.balance, A.total_amount, A.cnt FROM accounts a INNER JOIN AccountStats A ON a.id = A.account_id WHERE A.cnt >= 3

@@ -1,0 +1,1 @@
+SELECT s.id, s.end_date, s.monthly_fee, s.customer_id, c.name, c.age, FLOOR(c.credit_limit) AS credit_limit_whole FROM subscriptions s LEFT JOIN customers c ON s.customer_id = c.id WHERE c.signup_date >= '2025-09-01' AND s.start_date >= '2024-01-01'

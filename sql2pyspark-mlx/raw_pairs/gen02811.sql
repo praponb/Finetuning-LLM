@@ -1,0 +1,1 @@
+SELECT d.dept_name, d.location, s.level, COUNT(*) AS cnt, SUM(s.salary) AS total_salary, GROUPING_ID() AS gid FROM employees s LEFT JOIN departments d ON s.dept_id = d.id GROUP BY ROLLUP (d.dept_name, d.location, s.level) ORDER BY location NULLS LAST;

@@ -1,0 +1,1 @@
+select d.dept_name, d.budget, t.level_list, t.analyst_count from departments d left join (select dept_id, sort_array(collect_set(level)) as level_list, sum(case when job_title = 'Analyst' then 1 else 0 end) as analyst_count from employees group by dept_id) t on d.id = t.dept_id where t.analyst_count > 42 order by analyst_count;

@@ -1,0 +1,1 @@
+select 'customer' as record_type, email as label from customers where email is not null union select 'product' as record_type, category as label from products where category is not null order by label desc;

@@ -1,0 +1,1 @@
+SELECT c.is_active, MAX(s.monthly_fee) - MIN(s.monthly_fee) monthly_fee_range, SUM(CASE WHEN s.status = 'EXPIRED' THEN s.monthly_fee ELSE 0 END) expired_monthly_fee FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY c.is_active;

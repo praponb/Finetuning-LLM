@@ -1,0 +1,1 @@
+with exploded as (select id, host, log_ts, latency_ms, status_code, k, value from app_logs lateral view explode(context) t as k, value) select k, bit_or(status_code) as status_code_bit_or, avg(status_code) as avg_status_code, count(distinct k) as distinct_ks from exploded group by k having distinct_ks > 1;

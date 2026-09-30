@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CASE WHEN quantity >= 257 THEN 'High' WHEN quantity >= 116 THEN 'Medium' ELSE 'Low' END AS quantity_tier FROM inventory WHERE last_restock > DATE '2023-11-15') SELECT s.*, d.brand, d.product_name, d.cost FROM valid s LEFT JOIN products d ON s.product_id = d.id

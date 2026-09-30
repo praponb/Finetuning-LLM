@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, full_name, hire_date, level FROM (SELECT *, RANK() OVER (PARTITION BY job_title ORDER BY salary) AS rank_in_group FROM employees) x WHERE rank_in_group = 1) SELECT id FROM ranked ORDER BY id DESC;

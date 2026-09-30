@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, plan, start_date, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY start_date DESC, id) AS rnk FROM subscriptions WHERE status = 'EXPIRED') SELECT id, plan, start_date FROM ranked WHERE rnk = 1 ORDER BY id DESC

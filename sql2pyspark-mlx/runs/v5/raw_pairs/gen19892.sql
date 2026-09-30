@@ -1,0 +1,1 @@
+SELECT * FROM shipments WHERE shipped_date BETWEEN '2024-09-01' AND '2025-03-02' AND status = 'IN_TRANSIT' AND status IN ('DELIVERED', 'IN_TRANSIT') ORDER BY id;

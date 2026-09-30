@@ -1,0 +1,1 @@
+SELECT id, product_id, quantity FROM (SELECT id, product_id, quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS pos FROM order_items) AS ranked WHERE pos <= 3 ORDER BY quantity DESC

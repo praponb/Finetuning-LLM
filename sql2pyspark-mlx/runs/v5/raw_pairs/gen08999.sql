@@ -1,0 +1,1 @@
+SELECT *, LEAD(age, 1, 0) OVER (PARTITION BY city ORDER BY signup_date, id) AS next_age, LEAD(credit_limit, 2) OVER (PARTITION BY country ORDER BY age, id) AS next_credit_limit, AVG(credit_limit) OVER (PARTITION BY city ORDER BY credit_limit, id ROWS BETWEEN 2 PRECEDING AND 1 PRECEDING) AS credit_limit_avg_2_prior FROM customers;

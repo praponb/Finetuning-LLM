@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(signup_date) < 2024 THEN 'before_2024' WHEN YEAR(signup_date) = 2024 THEN '2024' ELSE 'after_2024' END AS signup_cohort, AVG(age) AS avg_age, COUNT(age) AS age_count FROM customers WHERE segment IN ('Consumer', 'SMB') GROUP BY 1;

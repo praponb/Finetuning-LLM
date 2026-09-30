@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, UPPER(method) AS method_upper, TRIM(status) AS clean_status, COALESCE(method, 'OTHER') AS resolved_method FROM payments WHERE method IS DISTINCT FROM 'promptpay' AND paid_at > TO_DATE('2023-07-23')) SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id, method ORDER BY amount NULLS FIRST, id) AS rank_in_group FROM valid QUALIFY rank_in_group = 1;

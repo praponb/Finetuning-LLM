@@ -1,0 +1,1 @@
+WITH RankedOrders AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount DESC, id) AS rnk FROM orders WHERE amount > 640) SELECT id, status, amount FROM RankedOrders WHERE rnk <= 2 ORDER BY id DESC, amount DESC

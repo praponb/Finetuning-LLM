@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, host, log_ts, k, value FROM app_logs LATERAL VIEW EXPLODE(context) li AS k, value) SELECT id, host, log_ts, k, value, CASE WHEN host RLIKE '^(h1|h2)$' THEN 'GROUP_A' WHEN host RLIKE '^(h3|h4)$' THEN 'GROUP_B' ELSE 'PRIORITY' END AS host_zone FROM exploded ORDER BY k DESC NULLS LAST

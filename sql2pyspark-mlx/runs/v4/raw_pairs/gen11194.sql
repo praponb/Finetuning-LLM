@@ -1,0 +1,1 @@
+select ss.id, ss.revenue, p.product_name, p.category, s.rating from store_sales ss full outer join products p on ss.product_id = p.id left join suppliers s on s.id = p.supplier_id where p.supplier_id in (2, 21) and ss.units != 37;

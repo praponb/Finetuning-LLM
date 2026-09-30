@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, country, city, rating, TRIM(supplier_name) AS clean_supplier_name, ROUND(rating, 2) AS rating_rounded FROM suppliers WHERE city IS NOT NULL) SELECT id, city, metric_name, metric_value FROM (SELECT id, city, rating_rounded, rating FROM cleaned) src UNPIVOT INCLUDE NULLS (metric_value FOR metric_name IN (rating_rounded AS RATING_ROUNDED_VAL, rating)) u;

@@ -1,0 +1,1 @@
+SELECT id, status, shipped_date, cost, order_id, delivered_date, ROUND(AVG(cost) OVER (PARTITION BY status ORDER BY shipped_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_4, LEAD(cost, 2) OVER (PARTITION BY order_id ORDER BY delivered_date, id) AS next_cost FROM shipments WHERE carrier IN ('FedEx', 'DHL');

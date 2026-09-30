@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.status, COUNT(transactions.id) AS transaction_count, SUM(CASE WHEN transactions.merchant = 'Starbucks' THEN 1 ELSE 0 END) AS starbucks_count FROM accounts INNER JOIN transactions ON transactions.account_id = accounts.id WHERE accounts.opened_date < '2023-04-01' GROUP BY accounts.id, accounts.status ORDER BY 1, status LIMIT 10;

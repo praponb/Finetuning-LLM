@@ -1,0 +1,1 @@
+select case when p.category in ('Electronics', 'Books') then 'priority' else 'other' end as category_group, round(avg(ss.revenue), 2) as avg_revenue from store_sales ss inner join products p on p.id = ss.product_id where p.price > 900 group by case when p.category in ('Electronics', 'Books') then 'priority' else 'other' end;

@@ -1,0 +1,1 @@
+SELECT a.account_type, COUNT(CASE WHEN t.merchant = 'Starbucks' THEN 1 END) AS starbucks_count, COUNT(t.amount) AS amount_count FROM transactions t LEFT JOIN accounts a ON a.id = t.account_id WHERE a.opened_date >= '2023-04-01' GROUP BY a.account_type HAVING COUNT(t.amount) >= 5 ORDER BY amount_count, account_type LIMIT 20;

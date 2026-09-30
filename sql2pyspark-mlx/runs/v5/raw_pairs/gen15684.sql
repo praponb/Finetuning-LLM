@@ -1,0 +1,1 @@
+with base as (select id, event_type, page, event_time, duration_sec, case when page = '/home' then 1 else 0 end as is_home from web_events where event_time > date '2023-10-15' and event_type <> 'page_view') select page from base except select page from web_events where event_time < '2023-04-01';

@@ -1,0 +1,1 @@
+select e.id, e.hire_date as employee_hire_date, e.email as employee_email, m.manager_id as manager_manager_id, m.dept_id as manager_dept_id from employees e left outer join employees m on e.manager_id = m.id where m.job_title not in ('Manager', 'Intern', 'Engineer') order by manager_dept_id desc, employee_email desc;

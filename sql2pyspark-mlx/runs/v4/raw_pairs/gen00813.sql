@@ -1,0 +1,1 @@
+select *, last_value(monthly_fee) ignore nulls over (partition by status order by start_date asc, id asc rows between unbounded preceding and current row) as last_known_monthly_fee, count(monthly_fee) over w_part as plan_count_monthly_fee from subscriptions window w_part as (partition by plan)

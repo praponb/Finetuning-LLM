@@ -1,0 +1,1 @@
+SELECT c.city, c.is_active, MAX(s.started_at) AS last_started_at FROM sessions s LEFT OUTER JOIN customers c ON c.id = s.customer_id WHERE c.city <> 'Tokyo' GROUP BY c.city, c.is_active ORDER BY city, last_started_at;

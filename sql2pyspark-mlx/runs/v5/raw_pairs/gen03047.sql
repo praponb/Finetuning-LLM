@@ -1,0 +1,1 @@
+select e.hire_date employee_hire_date, e.salary employee_salary, m.level manager_level, m.email manager_email from employees e join employees m on e.manager_id = m.id where upper(trim(e.email)) = 'IVY@GMAIL.COM' order by m.level;

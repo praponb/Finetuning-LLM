@@ -1,0 +1,1 @@
+WITH TopSuppliers AS (SELECT *, DENSE_RANK() OVER (PARTITION BY city ORDER BY rating DESC) AS row_num FROM suppliers WHERE country != 'TH') SELECT id, city, rating, country FROM TopSuppliers WHERE row_num = 1 ORDER BY city, rating DESC

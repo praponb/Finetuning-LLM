@@ -1,0 +1,1 @@
+SELECT products.category, DATE_TRUNC('MONTH', products.launch_date) AS launch_month, COUNT(DISTINCT order_items.unit_price) AS unique_products FROM order_items INNER JOIN products ON order_items.product_id = products.id WHERE products.supplier_id IS NULL GROUP BY products.category, DATE_TRUNC('MONTH', products.launch_date) ORDER BY products.category, unique_products DESC;

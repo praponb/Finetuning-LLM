@@ -1,0 +1,1 @@
+with kept_keys as (select device from sessions intersect select device from sessions where customer_id in (3, 6, 7)), verified as (select s.* from sessions s inner join kept_keys k on s.device = k.device) select id, customer_id, device, started_at, case when device rlike '^(mobile|desktop)$' then 'OTHER_ZONE' else 'EXTENDED' end as device_zone from verified

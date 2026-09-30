@@ -1,0 +1,1 @@
+SELECT id, plan, effective_from, currency, tier_limits, discounts, SLICE(tier_limits, 1, 2) AS first_two_limits, ELEMENT_AT(tier_prices, 1) AS entry_price, TRANSFORM(tier_prices, (p, i) -> ROUND(p * tier_limits[i], 2)) AS tier_revenue_caps, ARRAY_MIN(tier_prices) AS lowest_price FROM price_tiers WHERE effective_from >= '2024-02-01'

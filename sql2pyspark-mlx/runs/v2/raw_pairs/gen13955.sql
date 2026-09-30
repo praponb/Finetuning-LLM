@@ -1,0 +1,1 @@
+select status, quarter(order_date) as order_quarter, min(shipping_fee) as min_shipping_fee, round(avg(amount), 2) as avg_amount from orders where (customer_id = 10 and channel = 'partner') or customer_id in (6, 11, 36) group by status, quarter(order_date)

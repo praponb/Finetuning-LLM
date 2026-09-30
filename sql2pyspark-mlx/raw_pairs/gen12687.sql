@@ -1,0 +1,1 @@
+select event_type, min(event_time) as min_event_time, sum(case when event_type = 'add_to_cart' then duration_sec else 0 end) as add_to_cart_duration_sec, sum(duration_sec) as total_duration_sec from web_events where event_type in ('purchase', 'add_to_cart') or to_date(event_time) < '2023-09-09' group by event_type;

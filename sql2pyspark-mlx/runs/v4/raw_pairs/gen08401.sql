@@ -1,0 +1,1 @@
+SELECT status, SUM(CASE WHEN status = 'LOST' THEN cost ELSE 0 END) AS lost_cost FROM shipments WHERE status NOT IN ('IN_TRANSIT', 'RETURNED') GROUP BY status HAVING SUM(CASE WHEN status = 'LOST' THEN cost ELSE 0 END) >= 65;

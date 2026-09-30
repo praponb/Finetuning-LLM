@@ -1,0 +1,1 @@
+SELECT t.txn_time, a.balance, a.account_type, c.email, c.signup_date FROM transactions t RIGHT OUTER JOIN accounts a ON t.account_id = a.id JOIN customers c ON a.customer_id = c.id WHERE a.account_type IN ('CHECKING', 'LOAN')

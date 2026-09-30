@@ -1,0 +1,1 @@
+SELECT products.price, products.supplier_id, suppliers.rating, suppliers.country, suppliers.city FROM products JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.supplier_id IS NULL AND suppliers.supplier_name NOT LIKE 'Eur%' ORDER BY supplier_id DESC

@@ -1,0 +1,1 @@
+select we.id, we.page, we.duration_sec, s.started_at, c.signup_date, add_months(c.signup_date, 6) as signup_date_plus_months from web_events we left join sessions s on we.session_id = s.id join customers c on s.customer_id = c.id where s.browser is not null order by we.id desc;

@@ -1,0 +1,1 @@
+SELECT txn_type, merchant, SUM(CASE WHEN merchant = 'Starbucks' THEN amount ELSE 0 END) AS starbucks_amount, AVG(amount) AS avg_amount, SUM(amount) AS total_amount FROM transactions WHERE TO_DATE(txn_time) >= '2024-04-19' AND is_flagged GROUP BY txn_type, merchant HAVING MIN(amount) >= 3400;

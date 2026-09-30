@@ -1,0 +1,1 @@
+SELECT id, cost, launch_date, tags, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY stock_qty DESC, id) AS seq_no, AVG(stock_qty) OVER (PARTITION BY category, brand ORDER BY cost, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) AS stock_qty_avg_3 FROM products;

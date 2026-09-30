@@ -1,0 +1,1 @@
+SELECT id, city, opened_date, sqft, LAST_VALUE(sqft) OVER (PARTITION BY city ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_sqft FROM stores

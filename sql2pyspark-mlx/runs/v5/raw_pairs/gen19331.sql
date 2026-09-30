@@ -1,0 +1,1 @@
+SELECT sale_date, CASE WHEN units >= 36 THEN 'High' WHEN units >= 16 THEN 'Medium' ELSE 'Low' END AS units_band, FLOOR(revenue) AS revenue_whole FROM store_sales WHERE store_id = 1 AND revenue >= 2300 ORDER BY units_band

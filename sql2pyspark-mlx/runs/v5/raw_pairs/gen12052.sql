@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM products WHERE LOWER(product_name) LIKE '%ate%'), products_stats AS (SELECT category, MAX(launch_date) AS last_launch_date, MAX(cost) AS max_cost FROM src GROUP BY category) SELECT category, last_launch_date FROM products_stats WHERE max_cost < 250 ORDER BY category ASC;

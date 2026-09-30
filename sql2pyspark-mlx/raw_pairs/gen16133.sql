@@ -1,0 +1,1 @@
+SELECT txn_type, 'transaction' AS origin FROM transactions WHERE txn_type IS NOT NULL UNION ALL SELECT product_name AS txn_type, 'product' AS origin FROM products WHERE product_name IS NOT NULL ORDER BY txn_type

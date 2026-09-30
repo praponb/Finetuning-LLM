@@ -1,0 +1,1 @@
+SELECT c.id, c.city, c.name, t.closed_count FROM customers c INNER JOIN (SELECT customer_id, COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) closed_count FROM accounts GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY c.name ASC;

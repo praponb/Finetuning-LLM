@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END AS rating_bucket, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM suppliers WHERE supplier_name LIKE '%Global%' AND rating > 2.8 AND country = 'JP' GROUP BY rating_bucket;

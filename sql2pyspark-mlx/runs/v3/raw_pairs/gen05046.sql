@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, AVG(discount) AS avg_discount, COUNT(*) AS total_count FROM orders WHERE order_date < '2023-07-01' GROUP BY customer_id) SELECT c.email, cs.avg_discount, cs.total_count FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY total_count DESC, avg_discount DESC;

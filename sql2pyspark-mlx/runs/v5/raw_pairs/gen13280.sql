@@ -1,0 +1,1 @@
+with recent_accounts as (select * from accounts where account_type = 'SAVINGS' and balance >= 79000), status_summary as (select status, avg(balance) as avg_balance from recent_accounts group by status) select * from status_summary order by status, 2 desc;

@@ -1,0 +1,1 @@
+WITH session_totals AS (SELECT session_id, MIN(duration_sec) AS min_duration_sec FROM web_events GROUP BY session_id) SELECT s.browser, st.min_duration_sec FROM sessions s INNER JOIN session_totals st ON s.id = st.session_id ORDER BY st.min_duration_sec DESC, 1;

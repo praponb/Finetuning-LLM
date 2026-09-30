@@ -1,0 +1,1 @@
+SELECT id, method, COALESCE(amount, 0) AS amount_filled, INITCAP(TRIM(status)) AS status_title FROM payments WHERE amount < 700 AND (amount < 470 OR method IN ('card', 'bank_transfer')) ORDER BY method, status_title DESC

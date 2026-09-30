@@ -1,0 +1,1 @@
+SELECT c.country, MIN(s.start_date) AS min_start_date FROM subscriptions s LEFT OUTER JOIN customers c ON s.customer_id = c.id WHERE c.name LIKE '%smi%' GROUP BY c.country ORDER BY min_start_date DESC

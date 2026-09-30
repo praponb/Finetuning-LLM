@@ -1,0 +1,1 @@
+SELECT we.id, we.duration_sec, we.event_time, s.customer_id, c.city, c.signup_date FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id WHERE c.is_active AND c.country IN ('UK', 'JP');

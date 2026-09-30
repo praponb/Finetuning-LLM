@@ -1,0 +1,1 @@
+SELECT page, SUM(CASE WHEN event_type = 'search' THEN duration_sec ELSE 0 END) AS search_duration_sec, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values FROM web_events WHERE event_type NOT IN ('page_view', 'search') GROUP BY page ORDER BY page_values

@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', started_at) AS activity_month, MIN(started_at) AS started_at, SORT_ARRAY(COLLECT_SET(country)) AS country_list, SORT_ARRAY(COLLECT_SET(browser)) AS browser_list, (UNIX_TIMESTAMP(MAX(started_at)) - UNIX_TIMESTAMP(MIN(started_at))) / 60 AS span_minutes FROM sessions GROUP BY DATE_TRUNC('MONTH', started_at) HAVING span_minutes > 0

@@ -1,0 +1,1 @@
+select id, txn_type, txn_time from (select id, txn_type, txn_time, row_number() over (partition by txn_type order by txn_time, id) as pos from transactions where amount <= 3400) as r where pos <= 5 order by txn_type;

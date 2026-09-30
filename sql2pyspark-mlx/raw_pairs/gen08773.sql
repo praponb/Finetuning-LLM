@@ -1,0 +1,1 @@
+SELECT device, SORT_ARRAY(COLLECT_SET(device)) AS device_list, COUNT_IF(device = 'tablet') AS tablet_events, COUNT(CASE WHEN country = 'JP' THEN 1 END) AS jp_count, COUNT(DISTINCT customer_id) AS distinct_customer_ids FROM sessions GROUP BY device;

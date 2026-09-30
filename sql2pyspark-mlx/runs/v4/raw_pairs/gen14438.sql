@@ -1,0 +1,1 @@
+SELECT id, store_id, sale_date, units, revenue, LEAD(units, 1) OVER (PARTITION BY store_id ORDER BY sale_date, id) AS next_units, RANK() OVER (PARTITION BY store_id ORDER BY revenue DESC) AS rnk FROM store_sales WHERE revenue <= 1600;

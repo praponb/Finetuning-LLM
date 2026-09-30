@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT id FROM inventory EXCEPT DISTINCT SELECT id FROM inventory WHERE quantity >= 140), kept_rows AS (SELECT s.* FROM inventory s INNER JOIN matched_keys k ON s.id = k.id) SELECT id, store_id, product_id FROM kept_rows;

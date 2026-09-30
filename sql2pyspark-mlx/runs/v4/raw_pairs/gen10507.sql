@@ -1,0 +1,1 @@
+select date_trunc('MONTH', p.launch_date) as launch_month, p.brand, round(avg(i.quantity), 2) as avg_quantity, max(i.quantity) - min(i.quantity) as quantity_range from inventory i full outer join products p on p.id = i.product_id group by date_trunc('MONTH', p.launch_date), p.brand order by quantity_range, avg_quantity desc;

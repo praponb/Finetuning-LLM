@@ -1,0 +1,1 @@
+SELECT *, SUM(status_bits) OVER (PARTITION BY device_code ORDER BY status_bits, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_status_bits, PERCENT_RANK() OVER (PARTITION BY device_code ORDER BY temp_c DESC) AS temp_c_percent_rank, ROW_NUMBER() OVER (ORDER BY status_bits, id) AS seq_no FROM device_readings

@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, latency_ms, status_code, k, value FROM app_logs LATERAL VIEW EXPLODE(context) li AS k, value) SELECT id, status_code, k, value, CASE WHEN k RLIKE '^(trace|region)$' THEN 'PRIORITY' WHEN k RLIKE '^(version)$' THEN 'GROUP_A' ELSE 'CORE' END AS k_zone FROM flattened ORDER BY k;

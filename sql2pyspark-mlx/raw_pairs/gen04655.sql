@@ -1,0 +1,1 @@
+SELECT session_id, SUM(duration_sec) AS total_duration_sec, COUNT(*) AS cnt, RANK() OVER (ORDER BY SUM(duration_sec) DESC) AS rnk FROM web_events WHERE event_time >= '2023-11-01' GROUP BY session_id ORDER BY total_duration_sec

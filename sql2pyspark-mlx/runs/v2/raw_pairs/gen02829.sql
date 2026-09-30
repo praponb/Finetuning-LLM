@@ -1,0 +1,1 @@
+SELECT s.carrier, s.delivered_date, s.cost, o.customer_id, FLOOR(s.cost) AS cost_whole FROM shipments s INNER JOIN orders o ON o.id = s.order_id WHERE o.status IN ('SHIPPED', 'RETURNED', 'PENDING') ORDER BY cost_whole DESC;

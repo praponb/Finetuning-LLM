@@ -1,0 +1,1 @@
+select date_trunc('MONTH', signup_date) as signup_month, max(age) as max_age, sum(case when country = 'DE' then credit_limit else 0 end) as de_credit_limit from customers where upper(name) like '%IA %' group by date_trunc('MONTH', signup_date) having max(age) >= 43 order by max_age desc

@@ -1,0 +1,10 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("location").orderBy("budget")
+
+result = (
+    df_departments
+    .filter(~F.col("dept_name").isin(["HR", "Finance", "Legal"]))
+    .select("id", "location", "budget", F.rank().over(w).alias("budget_rank"))
+)

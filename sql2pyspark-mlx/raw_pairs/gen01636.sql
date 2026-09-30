@@ -1,0 +1,1 @@
+select event_type, sum(duration_sec) as total_duration_sec, sum(sum(duration_sec)) over (order by event_type) as cumulative_duration_sec from web_events where session_id = 16 group by event_type order by cumulative_duration_sec desc;

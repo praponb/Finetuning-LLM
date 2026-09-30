@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, supplier_id, cost, price, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY cost DESC, id) AS rnk FROM products WHERE LOWER(TRIM(product_name)) = 'noise-cancel headphones') SELECT id, supplier_id, cost, price FROM numbered WHERE rnk <= 3;

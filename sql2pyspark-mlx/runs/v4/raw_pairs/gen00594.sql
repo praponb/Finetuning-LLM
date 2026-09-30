@@ -1,0 +1,1 @@
+select case when humidity >= 78 then 'PREMIUM' else 'STANDARD' end as humidity_tier, count(distinct firmware) as distinct_firmwares, (unix_timestamp(max(reading_ts)) - unix_timestamp(min(reading_ts))) / 60 as duration_min from device_readings group by humidity_tier having count(distinct firmware) >= 1 order by distinct_firmwares desc nulls first;

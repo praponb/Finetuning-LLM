@@ -1,0 +1,1 @@
+SELECT CASE WHEN method IN ('promptpay', 'bank_transfer') THEN 'core' ELSE 'other' END AS method_group, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM payments GROUP BY CASE WHEN method IN ('promptpay', 'bank_transfer') THEN 'core' ELSE 'other' END;

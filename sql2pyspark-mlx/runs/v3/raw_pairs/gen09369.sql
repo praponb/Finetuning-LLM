@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.revenue, p.price, s.country, s.city, COALESCE(s.supplier_name, 'unassigned') AS supplier_name_filled FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id ORDER BY revenue ASC, city ASC

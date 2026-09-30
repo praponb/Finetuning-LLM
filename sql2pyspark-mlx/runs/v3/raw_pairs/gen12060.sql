@@ -1,0 +1,2 @@
+SELECT device
+FROM sessions

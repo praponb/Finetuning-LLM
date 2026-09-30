@@ -1,0 +1,1 @@
+SELECT s.country, MAX(i.last_restock) AS latest_last_restock, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i RIGHT JOIN products p ON i.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.country ORDER BY 3 DESC;

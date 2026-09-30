@@ -1,0 +1,1 @@
+with src as (select * from store_sales where store_id = 3 and sale_date > '2025-07-13'), agg as (select product_id, min(units) as min_units, round(stddev(units), 2) as stddev_units from src group by product_id) select * from agg where min_units > 19 order by min_units desc;

@@ -1,0 +1,1 @@
+WITH top_inventory AS (SELECT *, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) AS pos FROM inventory WHERE quantity = 194) SELECT * FROM top_inventory WHERE pos <= 3 ORDER BY id DESC

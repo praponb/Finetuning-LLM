@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(event_time, 'yyyy-MM') event_month, event_type, MIN(duration_sec) min_duration_sec FROM web_events GROUP BY event_month, event_type HAVING min_duration_sec < 400 ORDER BY min_duration_sec ASC, event_month ASC, event_type ASC LIMIT 20;

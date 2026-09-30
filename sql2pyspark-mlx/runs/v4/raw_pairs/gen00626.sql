@@ -1,0 +1,1 @@
+WITH recent_transactions AS (SELECT * FROM transactions WHERE amount BETWEEN 1400 AND 3100), agg AS (SELECT is_flagged, txn_type, ROUND(AVG(amount), 2) AS avg_amount FROM recent_transactions GROUP BY is_flagged, txn_type) SELECT is_flagged, txn_type, avg_amount FROM agg WHERE avg_amount > 62 ORDER BY txn_type DESC

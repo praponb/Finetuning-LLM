@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, SUM(CASE WHEN country = 'UK' THEN 1 ELSE 0 END) AS uk_count FROM sessions GROUP BY customer_id) SELECT c.id, c.age, c.signup_date, cs.uk_count FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.uk_count >= 74 ORDER BY c.id DESC

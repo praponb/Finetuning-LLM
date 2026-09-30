@@ -1,0 +1,1 @@
+SELECT city, SUM(credit_limit) AS total_credit_limit, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit, MIN(credit_limit) AS min_credit_limit FROM customers GROUP BY city HAVING MAX(credit_limit) > 6200 ORDER BY city

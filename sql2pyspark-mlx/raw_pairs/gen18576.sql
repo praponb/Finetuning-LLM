@@ -1,0 +1,1 @@
+SELECT id, order_date, status, channel, discount, COUNT(discount) OVER w_recent AS last4_count_discount, AVG(discount) OVER w_recent AS last4_avg_discount, MIN(discount) OVER w_recent AS last4_min_discount FROM orders WINDOW w_recent AS (PARTITION BY status, customer_id ORDER BY discount, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW);

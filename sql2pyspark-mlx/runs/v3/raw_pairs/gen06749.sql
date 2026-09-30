@@ -1,0 +1,1 @@
+select page, sum(case when event_type = 'click' then 1 else 0 end) as click_count, round((100 * sum(case when page = '/product' then 1 else 0 end)) / count(*), 1) as pct_product, count(duration_sec) as duration_sec_count from web_events group by 1;

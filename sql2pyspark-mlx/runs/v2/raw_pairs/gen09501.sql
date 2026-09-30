@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, dept_id, hire_date, level, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY hire_date, id) AS pos FROM employees WHERE salary <= 98000) SELECT * FROM numbered WHERE pos <= 5;

@@ -1,0 +1,1 @@
+SELECT plan, standard_count, unique_statuss FROM (SELECT plan, COUNT(CASE WHEN plan = 'standard' THEN 1 END) AS standard_count, COUNT(DISTINCT monthly_fee) AS unique_statuss FROM subscriptions WHERE MONTH(end_date) IN (2, 7, 11) GROUP BY plan) AS agg WHERE standard_count < 8 ORDER BY plan, unique_statuss DESC

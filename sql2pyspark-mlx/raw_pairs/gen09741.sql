@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE revenue <= 1800 AND sale_date <= '2023-09-20'), summary AS (SELECT product_id, COUNT(*) AS cnt, COUNT(revenue) AS revenue_count FROM base GROUP BY product_id) SELECT * FROM summary WHERE revenue_count > 6 ORDER BY revenue_count DESC, 1 DESC LIMIT 1

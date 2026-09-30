@@ -1,0 +1,1 @@
+select case when salary >= 150000 then 'high' when salary >= 73000 then 'mid' else 'low' end as salary_bucket, min(hire_date) as min_hire_date, count(*) as num_employees, count(case when job_title = 'Engineer' then 1 end) as engineer_count from employees group by 1

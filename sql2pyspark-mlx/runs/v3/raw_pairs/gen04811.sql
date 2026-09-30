@@ -1,0 +1,1 @@
+SELECT QUARTER(start_date) AS start_quarter, CASE WHEN monthly_fee >= 256 THEN 'high' WHEN monthly_fee >= 119 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, MAX(end_date) AS last_end_date FROM subscriptions WHERE status IN ('ACTIVE', 'CANCELLED', 'EXPIRED') OR status = 'ACTIVE' GROUP BY 1, 2;

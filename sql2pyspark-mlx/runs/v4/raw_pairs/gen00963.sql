@@ -1,0 +1,1 @@
+SELECT id, customer_id, end_date, monthly_fee, plan, start_date, monthly_fee - LAG(monthly_fee, 1) OVER (PARTITION BY customer_id ORDER BY end_date, id) AS monthly_fee_change, ROUND(AVG(monthly_fee) OVER (PARTITION BY plan ORDER BY start_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS monthly_fee_moving_avg_3 FROM subscriptions

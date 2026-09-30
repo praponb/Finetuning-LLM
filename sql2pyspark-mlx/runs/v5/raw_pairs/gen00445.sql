@@ -1,0 +1,1 @@
+SELECT page, COUNT(duration_sec) AS duration_sec_count, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events WHERE event_type IN ('add_to_cart', 'click') AND HOUR(event_time) BETWEEN 8 AND 14 GROUP BY page HAVING COUNT(duration_sec) < 4;

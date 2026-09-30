@@ -1,0 +1,1 @@
+SELECT products.id, products.cost, t.max_unit_price, t.cnt FROM products INNER JOIN (SELECT product_id, MAX(unit_price) AS max_unit_price, COUNT(*) AS cnt FROM order_items GROUP BY product_id) t ON products.id = t.product_id

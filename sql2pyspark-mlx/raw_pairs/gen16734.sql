@@ -1,0 +1,1 @@
+SELECT d.id, d.budget, d.location, t.salary_range FROM departments d JOIN (SELECT dept_id, MAX(salary) - MIN(salary) AS salary_range FROM employees WHERE is_remote = FALSE GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY location DESC, id LIMIT 3

@@ -1,0 +1,1 @@
+SELECT 'product' AS record_type, price FROM products WHERE brand IN ('Initech', 'Stark', 'Umbrella') UNION SELECT 'payment' AS record_type, amount AS price FROM payments WHERE method = 'bank_transfer' ORDER BY price

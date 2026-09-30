@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 310 THEN 'high' WHEN unit_price >= 110 THEN 'mid' ELSE 'low' END AS unit_price_bucket, SUM(unit_price) AS total_unit_price, DENSE_RANK() OVER (ORDER BY SUM(unit_price) DESC) AS rnk FROM order_items WHERE order_id = 13 GROUP BY CASE WHEN unit_price >= 310 THEN 'high' WHEN unit_price >= 110 THEN 'mid' ELSE 'low' END;

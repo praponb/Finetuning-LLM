@@ -1,0 +1,1 @@
+SELECT SUM(CASE WHEN carrier = 'DHL' THEN cost ELSE 0 END) AS dhl_cost, SUM(CASE WHEN status = 'LOST' THEN cost ELSE 0 END) AS lost_cost, MAX(cost) - MIN(cost) AS cost_range FROM shipments ORDER BY dhl_cost;

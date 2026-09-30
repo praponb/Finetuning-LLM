@@ -1,0 +1,1 @@
+SELECT t.txn_time, t.is_flagged, a.customer_id, a.balance, c.credit_limit FROM transactions t RIGHT JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE a.customer_id = 26

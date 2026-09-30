@@ -1,0 +1,1 @@
+SELECT id, customer_id, shipping_fee, store_id FROM (SELECT id, customer_id, shipping_fee, store_id, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY shipping_fee DESC, id) AS rn FROM orders WHERE channel NOT IN ('partner', 'mobile', 'web')) AS t WHERE rn <= 2;

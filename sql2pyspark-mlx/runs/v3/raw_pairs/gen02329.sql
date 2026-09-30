@@ -1,0 +1,1 @@
+select case when brand in ('Initech', 'Acme') then 'group_a' else 'other' end as brand_group, avg(cost) as avg_cost from products where product_name like '%Yoga%' group by brand_group having avg(cost) >= 370 order by brand_group desc

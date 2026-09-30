@@ -1,0 +1,1 @@
+SELECT id, status, amount, discount, LAST_VALUE(discount) OVER (PARTITION BY status ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_discount FROM orders WHERE order_date >= '2024-02-12'

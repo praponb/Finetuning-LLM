@@ -1,0 +1,1 @@
+WITH TopStores AS (SELECT id, city, opened_date, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date, id) AS row_num FROM stores) SELECT id, city, opened_date FROM TopStores WHERE row_num <= 2 ORDER BY id DESC;

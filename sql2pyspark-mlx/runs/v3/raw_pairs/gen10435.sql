@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT id, session_id, duration_sec, event_type, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec DESC, id) AS rnk FROM web_events WHERE event_type = 'purchase') AS ranked WHERE rnk = 1

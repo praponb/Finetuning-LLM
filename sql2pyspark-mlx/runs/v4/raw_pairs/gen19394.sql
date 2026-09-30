@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, service, host, latency_ms, status_code, k, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS k, value) SELECT id, service, host, k FROM lines ORDER BY service DESC NULLS LAST

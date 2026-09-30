@@ -1,0 +1,1 @@
+select year(last_restock) as last_restock_year, store_id, product_id, round(avg(quantity), 2) as avg_quantity, count(quantity) as quantity_count from inventory group by last_restock_year, store_id, product_id having round(avg(quantity), 2) >= 65

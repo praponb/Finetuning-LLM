@@ -1,0 +1,1 @@
+with base as (select *, round(discount, 2) as discount_rounded from orders where amount >= 1430 and discount >= 0.14), agg as (select channel, concat_ws(', ', sort_array(collect_set(status))) as status_values from base group by channel) select channel, status_values from agg order by status_values asc, channel asc limit 50

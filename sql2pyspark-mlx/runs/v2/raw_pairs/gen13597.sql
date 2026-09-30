@@ -1,0 +1,1 @@
+SELECT country, CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN city = 'Singapore' THEN 1 ELSE 0 END) AS singapore_count FROM suppliers GROUP BY country, CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END ORDER BY rating_bucket, country

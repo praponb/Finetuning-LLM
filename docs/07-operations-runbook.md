@@ -63,7 +63,7 @@ make data N=20000 WORKERS=6
 ### Phase 2: LoRA Fine-Tuning
 ```bash
 # MLX LoRA fine-tuning via train_resumable.py
-# (v7: 7B model continued from v6, 2,400 steps, 4 h 58 min; v6: 7B model fresh adapters, 4,800 steps, 8 h 19 min; v5: continued from v4's 3B adapters with peak LR 5e-5, ~5 h 40 min).
+# (v8: 7B continued from v7 on complex_v8/data_mix, 3,200 steps, 11 h 42 min, see below; v7: 7B model continued from v6, 2,400 steps, 4 h 58 min; v6: 7B model fresh adapters, 4,800 steps, 8 h 19 min; v5: continued from v4's 3B adapters with peak LR 5e-5, ~5 h 40 min).
 # Stop Docker (docker compose down, quit Docker Desktop) and unload Ollama models (ollama stop <model>) first.
 # Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v7/): adapters/, data/, raw_pairs/, train.log
 make train
@@ -78,24 +78,26 @@ To continue from an earlier model instead of starting from scratch (v5 continued
 *Automated unattended pipeline:*
 You can orchestrate unattended execution via `zsh eval/start_training_v7.sh`: it waits for dataset verification and Kimi repair, terminates Docker and Ollama models to free GPU RAM, starts `make train`, and calls `eval/post_training_v7.sh` upon completion.
 
+**v8 (complex_v8 data)**: `zsh eval/start_training_v8.sh` checks `sql2pyspark-mlx/complex_v8/data_mix/` and the `runs/v7/` backup, stops Docker and Ollama models, runs `train_resumable.py --config complex_v8/lora_config.yaml` (adapters go to `complex_v8/adapters/`, so `./adapters` stays v7) and then `eval/post_training_v8.sh` (export with `mlx_lm.fuse --adapter-path complex_v8/adapters`, evals, Docker, Kimi repair). To rebuild the complex dataset itself see [complex_v8/README.md](../sql2pyspark-mlx/complex_v8/README.md). For `evaluate.py --tables` use `sql2pyspark-mlx/complex_v8/eval_tables.py`, not `catalog.py` (Python 3.14 `@dataclass` + importlib issue).
+
 `make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 or 200 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
 
 ### Phase 3: Export, Fuse & Quantize
 ```bash
 # Fuse adapters, dequantize to BF16, convert to Q8_0 GGUF, register in Ollama
-make export TAG=v8
+make export TAG=v9
 
 # Or step by step:
 make fuse           # 4-bit MLX model + dequantized BF16 copy in sql2pyspark-hf/
 make gguf           # llama.cpp convert_hf_to_gguf.py -> sql2pyspark.gguf
-make ollama TAG=v8  # registers the GGUF as sql2pyspark:v8
+make ollama TAG=v9  # registers the GGUF as sql2pyspark:v9
 ```
 
 ### Phase 4: Benchmark & Evaluate
 ```bash
 # Compare the new model with the previous one on the hold-out set, the v4 hold-out set, the real-world queries
 # and 150 test queries (~2 h in total; on 7B, use --timeout 600)
-make eval TAG=v8 PREV=v7
+make eval TAG=v9 PREV=v8
 ```
 
 *Update the README results table:*
@@ -111,7 +113,7 @@ make promote TAG=v8 PREV=v7
 ```
 Promote only if the new model scores at least the previous one on the hold-out set, keeps the classic-family accuracy, beats it on the v4 hold-out set, gets a real-world query right, and doesn't regress on the fixed test set (details in [Evaluation](04-evaluation-and-benchmarking.md#promotions)). v5 was promoted by the owner's decision; v6 (7B) was promoted on 2026-09-28 and v7 on 2026-09-29, each meeting every condition except the real-world one that no model has met (v7 also only ties v6 on the v4 hold-out). Roll back anytime with `ollama cp sql2pyspark:v6 sql2pyspark:latest` (or any other tag).
 
-The Makefile defaults are `TAG=v8 PREV=v7` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`), i.e. the next model; until `sql2pyspark:v8` exists a bare `make promote` fails instead of re-promoting an old tag. Earlier runs used `TAG=v7 PREV=v6`, `TAG=v6 PREV=v5`, `TAG=v5 PREV=v3` and `TAG=v4 PREV=v3`.
+The Makefile defaults are `TAG=v9 PREV=v8` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`), i.e. the next model; until `sql2pyspark:v9` exists a bare `make promote` fails instead of promoting a model nobody decided on. To promote v8 use `make promote TAG=v8 PREV=v7`. Earlier runs used `TAG=v8 PREV=v7`, `TAG=v7 PREV=v6`, `TAG=v6 PREV=v5`, `TAG=v5 PREV=v3` and `TAG=v4 PREV=v3`.
 
 ### Phase 6: Launch Web Interface
 ```bash

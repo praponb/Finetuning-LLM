@@ -1,0 +1,1 @@
+select customers.segment, customers.is_active, sort_array(collect_set(accounts.status)) as status_list from accounts left join customers on customers.id = accounts.customer_id group by customers.segment, customers.is_active order by segment, is_active limit 20

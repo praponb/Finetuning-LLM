@@ -1,0 +1,1 @@
+select case when dept_name in ('Marketing', 'Legal') then 'tier_1' else 'other' end as dept_name_group, max(budget) - min(budget) as budget_range, concat_ws(', ', sort_array(collect_set(location))) as location_values from departments group by 1 order by location_values asc, dept_name_group desc;

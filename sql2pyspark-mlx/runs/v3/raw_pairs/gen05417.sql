@@ -1,0 +1,1 @@
+select ss.id, ss.sale_date, s.region, s.sqft, p.cost from store_sales ss join stores s on ss.store_id = s.id left join products p on ss.product_id = p.id where month(s.opened_date) in (1, 9, 11) and length(s.store_name) > 12

@@ -1,0 +1,1 @@
+select * from (select id, customer_id, balance, status, row_number() over (partition by customer_id order by balance desc, id) as row_num from accounts where customer_id in (3, 16, 28, 39)) as r where row_num <= 2;

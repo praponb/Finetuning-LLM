@@ -1,0 +1,1 @@
+SELECT p.id, p.category, p.stock_qty, s.country, s.rating, CONCAT_WS('/', s.supplier_name, s.country) AS supplier_name_country_key FROM products p INNER JOIN suppliers s ON s.id = p.supplier_id ORDER BY category, p.id DESC;

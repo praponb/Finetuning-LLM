@@ -1,0 +1,1 @@
+SELECT location, dept_name, budget, CASE WHEN dept_name IN ('Sales', 'HR') THEN 'Core' ELSE 'Other' END AS dept_name_group FROM departments WHERE budget BETWEEN 1530000 AND 2206000 OR budget BETWEEN 1497000 AND 3441000;

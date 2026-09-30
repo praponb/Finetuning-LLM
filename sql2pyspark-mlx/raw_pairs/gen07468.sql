@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LEAST(price, stock_qty) AS least_price_stock_qty, UPPER(category) AS category_upper FROM products WHERE launch_date >= DATE '2023-08-27') SELECT * FROM (SELECT supplier_id, brand, least_price_stock_qty FROM valid) src PIVOT (MAX(least_price_stock_qty) FOR brand IN ('Initech' AS initech, 'Stark' AS stark, 'Acme' AS acme));

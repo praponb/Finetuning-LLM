@@ -1,0 +1,1 @@
+WITH with_last AS (SELECT s.*, x.order_date, x.discount FROM stores s LEFT JOIN LATERAL (SELECT c.order_date, c.discount FROM orders c WHERE c.store_id = s.id ORDER BY c.order_date DESC, c.id DESC LIMIT 1) x ON TRUE) SELECT id, store_name, order_date, discount FROM with_last ORDER BY order_date NULLS FIRST;

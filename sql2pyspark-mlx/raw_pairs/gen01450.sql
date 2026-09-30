@@ -1,0 +1,1 @@
+select i.last_restock, i.quantity, i.store_id, ss.revenue, ss.product_id, round(i.quantity * 100, 2) as quantity_scaled from inventory i left outer join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.units <= 39

@@ -1,0 +1,1 @@
+select p.category, p.brand, round(avg(oi.quantity), 2) as avg_quantity, count(*) as cnt from order_items oi inner join products p on oi.product_id = p.id inner join orders o on oi.order_id = o.id group by p.category, p.brand having avg_quantity > 58;

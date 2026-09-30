@@ -1,0 +1,1 @@
+select ss.product_id, ss.revenue, s.city, s.region, p.category from store_sales ss left outer join stores s on s.id = ss.store_id inner join products p on ss.product_id = p.id order by product_id desc

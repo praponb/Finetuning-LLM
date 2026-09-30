@@ -1,0 +1,1 @@
+with store_summary as (select store_id, max(quantity) - min(quantity) as quantity_range, round(stddev(quantity), 2) as stddev_quantity from inventory group by store_id) select s.region, s.opened_date, ss.quantity_range, ss.stddev_quantity from stores s left outer join store_summary ss on s.id = ss.store_id where ss.quantity_range >= 63 order by stddev_quantity

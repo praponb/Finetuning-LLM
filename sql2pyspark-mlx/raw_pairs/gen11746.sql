@@ -1,0 +1,1 @@
+SELECT * FROM products WHERE cost BETWEEN 610 AND 680

@@ -1,0 +1,1 @@
+SELECT o.status, DATE_TRUNC('MONTH', o.order_date) AS order_month, COUNT(oi.unit_price) AS unit_price_count, COUNT(*) AS order_item_count FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id LEFT JOIN stores s ON o.store_id = s.id GROUP BY o.status, DATE_TRUNC('MONTH', o.order_date);

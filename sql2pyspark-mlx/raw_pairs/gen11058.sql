@@ -1,0 +1,1 @@
+WITH valid_store_sales AS (SELECT * FROM store_sales WHERE units IS NOT NULL), summary AS (SELECT product_id, MAX(sale_date) AS last_sale_date, COUNT(units) AS units_count FROM valid_store_sales GROUP BY product_id) SELECT * FROM summary WHERE units_count >= 4 ORDER BY product_id DESC LIMIT 3

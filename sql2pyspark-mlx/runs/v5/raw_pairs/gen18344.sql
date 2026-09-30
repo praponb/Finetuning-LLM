@@ -1,0 +1,1 @@
+SELECT id, event_type, duration_sec, session_id, MAX(duration_sec) OVER (PARTITION BY event_type) AS event_type_max_duration_sec, NTILE(10) OVER (PARTITION BY session_id ORDER BY duration_sec, id) AS bucket FROM web_events

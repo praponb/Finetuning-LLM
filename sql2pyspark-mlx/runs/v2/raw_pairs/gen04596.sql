@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY page ORDER BY duration_sec, id) AS pos FROM web_events WHERE page = '/product') SELECT id, page, duration_sec, event_type FROM Ranked WHERE pos <= 5 ORDER BY page, duration_sec DESC;

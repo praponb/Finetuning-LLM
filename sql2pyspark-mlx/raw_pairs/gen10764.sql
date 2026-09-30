@@ -1,0 +1,1 @@
+SELECT t.account_id, a.account_type, c.name FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id RIGHT JOIN customers c ON a.customer_id = c.id WHERE t.txn_time < '2024-02-01' AND a.opened_date >= '2023-07-01' ORDER BY account_type

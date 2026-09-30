@@ -1,0 +1,1 @@
+SELECT payments.id, payments.paid_at, payments.amount, orders.order_date, stores.store_name, stores.sqft FROM payments JOIN orders ON payments.order_id = orders.id LEFT JOIN stores ON orders.store_id = stores.id WHERE stores.region = 'West' ORDER BY orders.order_date DESC, payments.amount DESC;

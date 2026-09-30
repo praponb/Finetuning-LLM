@@ -1,0 +1,1 @@
+SELECT merchant, refund_count, txn_type_list FROM (SELECT merchant, SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions WHERE merchant IN ('Amazon', 'Lazada') GROUP BY merchant) AS agg WHERE refund_count >= 54 ORDER BY refund_count DESC;

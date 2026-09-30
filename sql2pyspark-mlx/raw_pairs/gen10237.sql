@@ -1,0 +1,1 @@
+select ss.id, ss.sale_date, ss.product_id, p.category, s.country from store_sales ss inner join products p on ss.product_id = p.id full outer join suppliers s on p.supplier_id = s.id where p.price > 940 and ss.store_id in (2, 4, 6) order by ss.sale_date desc, ss.product_id desc

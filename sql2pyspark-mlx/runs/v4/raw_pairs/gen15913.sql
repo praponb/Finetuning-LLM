@@ -1,0 +1,1 @@
+SELECT s.id, s.device, s.browser, t.stddev_duration_sec FROM sessions s INNER JOIN (SELECT session_id, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events WHERE event_type != 'add_to_cart' GROUP BY session_id) t ON s.id = t.session_id

@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT id, event_type, event_time, session_id, RANK() OVER (PARTITION BY event_type ORDER BY event_time DESC) AS rn FROM web_events) SELECT id, event_type, event_time, session_id FROM ranked WHERE rn <= 3;

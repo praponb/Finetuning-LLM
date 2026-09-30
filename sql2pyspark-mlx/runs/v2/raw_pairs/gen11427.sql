@@ -1,0 +1,1 @@
+SELECT oi.quantity, oi.unit_price, oi.product_id, p.price, p.brand, p.category FROM order_items oi RIGHT JOIN products p ON oi.product_id = p.id WHERE oi.unit_price <= 360 OR oi.product_id IN (8, 28, 30, 36)

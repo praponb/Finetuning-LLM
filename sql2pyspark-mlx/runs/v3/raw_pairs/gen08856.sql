@@ -1,0 +1,1 @@
+with session_stats as (select session_id, max(event_time) last_event_time, sort_array(collect_set(page)) page_list from web_events group by session_id) select s.browser, s.started_at, ss.last_event_time, ss.page_list from sessions s left outer join session_stats ss on s.id = ss.session_id

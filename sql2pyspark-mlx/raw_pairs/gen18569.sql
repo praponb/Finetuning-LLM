@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, ADD_MONTHS(hire_date, 6) hire_date_plus_months FROM employees WHERE salary >= 65000) SELECT id, full_name, email, dept_id, manager_id, is_remote, level FROM valid QUALIFY RANK() OVER (PARTITION BY manager_id ORDER BY salary DESC) = 1

@@ -1,0 +1,1 @@
+with valid_shipments as (select * from shipments where cost >= 72), Agg as (select year(shipped_date) as shipped_year, min(shipped_date) as first_shipped_date from valid_shipments group by year(shipped_date)) select shipped_year, first_shipped_date from Agg;

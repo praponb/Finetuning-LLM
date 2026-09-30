@@ -1,0 +1,1 @@
+WITH recent_payments AS (SELECT * FROM payments WHERE status = 'REFUNDED' AND status != 'SUCCESS'), summary AS (SELECT method, COUNT(DISTINCT amount) unique_statuss, MAX(amount) - MIN(amount) amount_range FROM recent_payments GROUP BY method) SELECT method, unique_statuss, amount_range FROM summary WHERE amount_range < 61 ORDER BY amount_range DESC, method LIMIT 5

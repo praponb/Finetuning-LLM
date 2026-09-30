@@ -1,0 +1,1 @@
+SELECT web_events.event_type, web_events.page, sessions.customer_id, sessions.started_at, customers.is_active, customers.country FROM web_events LEFT JOIN sessions ON web_events.session_id = sessions.id LEFT JOIN customers ON sessions.customer_id = customers.id WHERE sessions.browser IN ('Firefox', 'Edge') AND TO_DATE(sessions.started_at) >= '2025-07-01'

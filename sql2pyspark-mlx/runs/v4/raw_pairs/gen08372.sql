@@ -1,0 +1,1 @@
+WITH valid_payments AS (SELECT * FROM payments WHERE amount > 460), paid_month_summary AS (SELECT DATE_TRUNC('MONTH', paid_at) AS paid_month, SUM(amount) AS total_amount, COUNT(amount) AS amount_count FROM valid_payments GROUP BY DATE_TRUNC('MONTH', paid_at)) SELECT paid_month, total_amount FROM paid_month_summary WHERE amount_count > 5 ORDER BY 1 ASC, total_amount DESC LIMIT 20;

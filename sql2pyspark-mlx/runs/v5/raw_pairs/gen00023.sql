@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, COUNT(amount) AS amount_count, COUNT(DISTINCT amount) AS unique_merchants FROM transactions WHERE amount <= 3400 GROUP BY account_id) SELECT a.id, a.opened_date, tba.amount_count, tba.unique_merchants FROM accounts a JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY amount_count DESC

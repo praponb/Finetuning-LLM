@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 450 THEN 'high' WHEN unit_price >= 170 THEN 'mid' ELSE 'low' END AS unit_price_bucket, MAX(unit_price) - MIN(unit_price) AS unit_price_range, COUNT(*) AS total_count FROM order_items WHERE product_id IS NOT NULL GROUP BY 1;

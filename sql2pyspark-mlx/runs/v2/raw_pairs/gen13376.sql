@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, SUM(quantity * unit_price) AS revenue FROM order_items WHERE quantity IS NOT NULL GROUP BY product_id) SELECT p.id, p.price, p.supplier_id, ps.revenue FROM products p LEFT JOIN product_stats ps ON p.id = ps.product_id WHERE ps.revenue > 40 ORDER BY p.id DESC;

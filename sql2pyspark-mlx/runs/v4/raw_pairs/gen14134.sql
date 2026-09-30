@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, status, shipped_date, RANK() OVER (PARTITION BY status ORDER BY shipped_date DESC) AS rnk FROM shipments) SELECT id, status, shipped_date FROM numbered WHERE rnk <= 3 ORDER BY shipped_date;

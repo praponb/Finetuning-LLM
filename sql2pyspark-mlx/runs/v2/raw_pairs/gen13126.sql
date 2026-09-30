@@ -1,0 +1,1 @@
+with recent_orders as (select * from orders where status in ('RETURNED', 'CANCELLED', 'COMPLETED')), orders_stats as (select channel, round(stddev(discount), 2) stddev_discount, round(avg(amount), 2) avg_amount from recent_orders group by channel) select channel, stddev_discount, avg_amount from orders_stats where avg_amount > 29 order by avg_amount;

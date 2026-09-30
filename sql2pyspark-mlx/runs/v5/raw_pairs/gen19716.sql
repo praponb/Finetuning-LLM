@@ -1,0 +1,1 @@
+with base as (select *, round(revenue, 2) as revenue_rounded, units - revenue as revenue_per_unit from store_sales where revenue < 3400) select * from base qualify row_number() over (partition by product_id order by revenue desc, id) = 1;

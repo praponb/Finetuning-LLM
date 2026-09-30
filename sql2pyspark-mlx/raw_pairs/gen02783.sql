@@ -1,0 +1,1 @@
+SELECT store_id, SUM(quantity) total_quantity, ROUND(SUM(quantity) * 100.0 / SUM(SUM(quantity)) OVER (), 2) AS pct_of_total FROM inventory WHERE quantity > 236 GROUP BY store_id ORDER BY total_quantity, pct_of_total, store_id LIMIT 10;

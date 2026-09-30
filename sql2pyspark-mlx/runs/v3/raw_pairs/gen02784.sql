@@ -1,0 +1,1 @@
+SELECT a.balance, a.customer_id, t.merchant_values FROM accounts a LEFT JOIN (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE merchant IS NOT NULL GROUP BY account_id) t ON a.id = t.account_id

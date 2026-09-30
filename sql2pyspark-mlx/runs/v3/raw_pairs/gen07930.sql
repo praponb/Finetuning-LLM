@@ -1,0 +1,1 @@
+SELECT status, SORT_ARRAY(COLLECT_SET(status)) AS status_list, COUNT(DISTINCT cost) AS unique_carriers FROM shipments WHERE shipped_date BETWEEN '2023-04-30' AND '2025-08-01' AND order_id IS NULL GROUP BY status ORDER BY status DESC;

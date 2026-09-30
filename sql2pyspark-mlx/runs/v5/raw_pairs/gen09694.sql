@@ -1,0 +1,1 @@
+select case when age >= 57 then 'high' when age >= 37 then 'mid' else 'low' end as age_bucket, round((100 * sum(case when city = 'London' then 1 else 0 end)) / count(*), 1) as pct_london, count(distinct credit_limit) as unique_citys from customers group by 1 order by age_bucket;

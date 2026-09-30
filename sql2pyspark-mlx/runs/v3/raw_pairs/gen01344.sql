@@ -1,0 +1,1 @@
+SELECT c.credit_limit, c.signup_date, a.customer_id, CASE WHEN c.age >= 67 THEN 'High' WHEN c.age >= 33 THEN 'Medium' ELSE 'Low' END age_tier FROM customers c LEFT JOIN accounts a ON c.id = a.customer_id ORDER BY customer_id, age_tier;

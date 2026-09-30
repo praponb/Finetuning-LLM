@@ -1,0 +1,1 @@
+SELECT s.id, s.carrier, s.status, o.channel, o.amount, c.name, c.signup_date FROM shipments s INNER JOIN orders o ON o.id = s.order_id INNER JOIN customers c ON o.customer_id = c.id WHERE o.shipping_fee > 21 AND LENGTH(c.name) < 11

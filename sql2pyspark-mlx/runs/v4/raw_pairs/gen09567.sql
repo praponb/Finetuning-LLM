@@ -1,0 +1,1 @@
+select p.product_name, p.category, t.unique_stores, t.store_sale_count from products p inner join (select product_id, count(distinct revenue) as unique_stores, count(*) as store_sale_count from store_sales where product_id = 8 group by product_id) t on p.id = t.product_id where t.store_sale_count >= 4;

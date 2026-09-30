@@ -1,0 +1,1 @@
+SELECT id, customer_id, CASE WHEN account_type IN ('CHECKING', 'CREDIT') THEN 'Tier 1' ELSE 'Other' END AS account_type_group FROM accounts WHERE YEAR(opened_date) >= 2025 OR account_type NOT IN ('SAVINGS', 'LOAN');

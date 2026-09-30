@@ -1,0 +1,1 @@
+SELECT QUARTER(p.launch_date) AS launch_quarter, SUM(ss.revenue) AS total_revenue FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE ss.units > 22 GROUP BY QUARTER(p.launch_date) HAVING SUM(ss.revenue) >= 14000 ORDER BY total_revenue DESC

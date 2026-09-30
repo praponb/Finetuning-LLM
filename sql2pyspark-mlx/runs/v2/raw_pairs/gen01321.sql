@@ -1,0 +1,1 @@
+select ss.sale_date, ss.product_id, ss.store_id, p.category, p.cost, p.supplier_id from store_sales ss inner join products p on ss.product_id = p.id where array_contains(p.tags, 'sale') and length(p.product_name) < 14;

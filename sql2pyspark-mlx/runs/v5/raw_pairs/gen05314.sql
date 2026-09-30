@@ -1,0 +1,1 @@
+SELECT id, units, revenue, CUME_DIST() OVER (PARTITION BY store_id ORDER BY revenue DESC) AS revenue_cume_dist, SUM(revenue) OVER (ORDER BY sale_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_revenue FROM store_sales

@@ -1,0 +1,1 @@
+select status, avg_amount, cancelled_count from (select status, round(avg(amount), 2) avg_amount, sum(case when status = 'CANCELLED' then 1 else 0 end) cancelled_count from orders where shipping_fee > 35 group by status) agg where avg_amount < 33 order by cancelled_count desc, status asc limit 10

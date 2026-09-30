@@ -1,0 +1,1 @@
+SELECT products.id, products.brand, COUNT(inventory.id) AS inventory_count, MIN(inventory.quantity) AS min_quantity, COUNT(inventory.quantity) AS quantity_count FROM products LEFT OUTER JOIN inventory ON products.id = inventory.product_id WHERE inventory.quantity BETWEEN 218 AND 225 GROUP BY products.id, products.brand ORDER BY products.id DESC

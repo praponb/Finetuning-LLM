@@ -1,0 +1,1 @@
+select id, dept_name, budget, location, last_value(location) over (partition by dept_name order by budget desc, id rows between unbounded preceding and unbounded following) as last_location from departments where location is not null order by budget desc

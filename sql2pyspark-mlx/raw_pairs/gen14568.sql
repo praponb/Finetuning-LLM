@@ -1,0 +1,1 @@
+SELECT device_code, CASE WHEN humidity >= 71 THEN 'HIGH' ELSE 'LOW' END AS humidity_tier, COUNT_IF(device_code = 'DV-03') AS dv_03_events, APPROX_PERCENTILE(pressure, 0.9) AS pressure_p90 FROM device_readings GROUP BY device_code, CASE WHEN humidity >= 71 THEN 'HIGH' ELSE 'LOW' END ORDER BY device_code DESC NULLS LAST;

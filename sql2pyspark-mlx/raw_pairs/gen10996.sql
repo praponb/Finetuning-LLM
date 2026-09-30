@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, MIN(launch_date) AS first_launch_date, MIN(stock_qty) AS min_stock_qty FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, ss.first_launch_date, ss.min_stock_qty FROM suppliers s INNER JOIN supplier_stats ss ON s.id = ss.supplier_id WHERE ss.min_stock_qty >= 210;

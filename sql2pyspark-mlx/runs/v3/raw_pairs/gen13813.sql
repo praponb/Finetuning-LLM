@@ -1,0 +1,1 @@
+SELECT product_id, order_id, MAX(unit_price) AS max_unit_price, SUM(unit_price) AS total_unit_price FROM order_items WHERE unit_price > 140 AND product_id IS NOT NULL GROUP BY 1, 2 HAVING COUNT(*) >= 5 ORDER BY 4 ASC, product_id ASC, order_id ASC LIMIT 10

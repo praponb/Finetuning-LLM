@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT id, store_id, amount, discount, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY amount DESC, id) AS pos FROM orders) SELECT id, store_id, amount, discount FROM Ranked WHERE pos <= 5;

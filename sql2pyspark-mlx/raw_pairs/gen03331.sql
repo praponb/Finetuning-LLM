@@ -1,0 +1,1 @@
+SELECT 'store' source, opened_date event_date FROM stores WHERE city IN ('London', 'Chiang Mai', 'New York') UNION SELECT 'customer' source, signup_date event_date FROM customers WHERE segment IS NOT NULL ORDER BY source DESC;

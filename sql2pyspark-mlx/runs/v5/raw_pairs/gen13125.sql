@@ -1,0 +1,1 @@
+SELECT customer_id, enterprise_monthly_fee, active_count FROM (SELECT customer_id, SUM(CASE WHEN plan = 'enterprise' THEN monthly_fee ELSE 0 END) enterprise_monthly_fee, COUNT(CASE WHEN status = 'ACTIVE' THEN 1 END) active_count FROM subscriptions GROUP BY customer_id) s WHERE enterprise_monthly_fee >= 60

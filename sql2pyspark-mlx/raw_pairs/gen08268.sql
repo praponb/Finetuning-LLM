@@ -1,0 +1,1 @@
+with base as (select id, method, amount, paid_at, status, initcap(trim(method)) as method_title from payments where paid_at >= timestamp '2023-06-11 01:00:00' and order_id in (20, 39)) select id, status from base except distinct select id, status from payments where hour(paid_at) between 6 and 11

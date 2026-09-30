@@ -1,0 +1,1 @@
+SELECT o.discount, o.shipping_fee, o.customer_id, oi.order_id, oi.quantity, oi.unit_price FROM orders o LEFT JOIN order_items oi ON o.id = oi.order_id WHERE NOT (oi.order_id IN (9, 10, 36) AND o.store_id IS NULL);

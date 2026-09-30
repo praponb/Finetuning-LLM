@@ -1,0 +1,1 @@
+with supplier_totals as (select supplier_id, max(launch_date) as latest_launch_date from products group by supplier_id) select suppliers.id, suppliers.city, suppliers.rating, supplier_totals.latest_launch_date from suppliers left join supplier_totals on suppliers.id = supplier_totals.supplier_id order by city

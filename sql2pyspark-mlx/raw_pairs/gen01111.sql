@@ -1,0 +1,1 @@
+SELECT id, status, opened_date, customer_id, LAST_VALUE(customer_id) OVER (PARTITION BY status ORDER BY opened_date DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_customer_id FROM accounts ORDER BY status DESC

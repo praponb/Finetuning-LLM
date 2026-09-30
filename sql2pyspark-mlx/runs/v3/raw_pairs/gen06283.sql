@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT QUARTER(opened_date) AS opened_quarter, COUNT(DISTINCT balance) AS unique_statuss, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM accounts WHERE account_type = 'SAVINGS' GROUP BY QUARTER(opened_date)) AS t WHERE unique_statuss < 9 ORDER BY unique_statuss, opened_quarter LIMIT 50;

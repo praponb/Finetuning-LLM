@@ -1,0 +1,1 @@
+WITH supplier_summary AS (SELECT supplier_id, AVG(price) avg_price, SORT_ARRAY(COLLECT_SET(category)) category_list FROM products GROUP BY supplier_id) SELECT s.id, s.rating, s.supplier_name, ss.avg_price, ss.category_list FROM suppliers s INNER JOIN supplier_summary ss ON s.id = ss.supplier_id

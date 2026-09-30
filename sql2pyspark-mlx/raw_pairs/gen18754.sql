@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.customer_id, accounts.balance FROM accounts WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE transactions.account_id = accounts.id AND transactions.merchant <> '7-Eleven') ORDER BY accounts.id

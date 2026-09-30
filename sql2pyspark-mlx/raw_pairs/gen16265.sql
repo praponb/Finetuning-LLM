@@ -1,0 +1,1 @@
+WITH ranked_transactions AS (SELECT id, merchant, txn_time, account_id, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY txn_time DESC, id) AS rn FROM transactions WHERE merchant = '7-Eleven') SELECT id, merchant, txn_time, account_id FROM ranked_transactions WHERE rn <= 3 ORDER BY txn_time DESC;

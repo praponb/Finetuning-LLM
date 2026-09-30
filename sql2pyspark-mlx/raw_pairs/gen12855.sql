@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT YEAR(opened_date) opened_year, MAX(opened_date) latest_opened_date, ROUND((100 * SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_savings FROM accounts GROUP BY YEAR(opened_date)) sub WHERE pct_savings < 28 ORDER BY pct_savings DESC, opened_year LIMIT 50

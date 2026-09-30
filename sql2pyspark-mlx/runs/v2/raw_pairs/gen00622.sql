@@ -1,0 +1,1 @@
+SELECT product_id, SUM(unit_price) AS total_unit_price, COUNT(*) AS cnt, SUM(SUM(unit_price)) OVER (ORDER BY product_id) AS cumulative_unit_price FROM order_items WHERE quantity != 5 GROUP BY product_id ORDER BY product_id LIMIT 10

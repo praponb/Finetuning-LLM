@@ -1,0 +1,1 @@
+with exploded as (select id, customer_id, created_at, explode(coupon_codes) as code from carts) select date_trunc('hour', created_at) as hour_window, count(*) as num_rows, max(created_at) as last_seen, count(case when code = 'BUNDLE' then 1 end) as bundle_count, size(collect_set(code)) as num_codes from exploded group by date_trunc('hour', created_at)

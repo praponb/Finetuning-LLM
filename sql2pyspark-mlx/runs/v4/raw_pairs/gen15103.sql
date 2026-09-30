@@ -1,0 +1,1 @@
+SELECT o.order_date, o.status, p.order_id, p.amount, DATE_TRUNC('week', o.order_date) AS order_date_period FROM orders o LEFT JOIN payments p ON p.order_id = o.id WHERE NOT (o.status = 'RETURNED' AND o.channel IN ('store', 'mobile')) ORDER BY order_date

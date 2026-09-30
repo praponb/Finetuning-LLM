@@ -1,0 +1,1 @@
+SELECT id, session_id, page, duration_sec, PERCENT_RANK() OVER (ORDER BY duration_sec DESC) AS duration_sec_percent_rank, ROW_NUMBER() OVER (ORDER BY event_time, id) AS event_seq, NTILE(5) OVER (PARTITION BY page ORDER BY duration_sec, id) AS duration_sec_bucket FROM web_events;

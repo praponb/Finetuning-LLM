@@ -1,0 +1,1 @@
+with product_totals as (select product_id, count(*) as row_count from store_sales group by product_id) select p.price, p.supplier_id, pt.row_count from products p inner join product_totals pt on p.id = pt.product_id where pt.row_count > 10

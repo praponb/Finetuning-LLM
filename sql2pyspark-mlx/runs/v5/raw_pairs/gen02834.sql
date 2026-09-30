@@ -1,0 +1,1 @@
+SELECT shipping_fee, amount, order_date, WEEKOFYEAR(order_date) order_date_weekofyear, amount + shipping_fee amount_with_shipping FROM orders WHERE store_id IN (20, 24, 33) AND (order_date > '2025-10-01' OR status NOT IN ('RETURNED', 'SHIPPED', 'PENDING'))

@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, MAX(hire_date) AS latest_hire_date, SUM(CASE WHEN level = 'L3' THEN 1 ELSE 0 END) AS l3_count FROM employees GROUP BY dept_id) SELECT d.location, d.budget, ds.latest_hire_date, ds.l3_count FROM departments d LEFT OUTER JOIN department_summary ds ON d.id = ds.dept_id WHERE ds.l3_count >= 43;

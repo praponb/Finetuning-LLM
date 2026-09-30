@@ -1,0 +1,1 @@
+select case when year(shipped_date) < 2024 then 'before_2024' when year(shipped_date) = 2024 then '2024' else 'after_2024' end as shipped_cohort, max(cost) - min(cost) as cost_range from shipments where cost between 75 and 94 and order_id = 31 group by shipped_cohort order by shipped_cohort;

@@ -1,0 +1,1 @@
+SELECT brand, DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, SUM(CASE WHEN brand = 'Initech' THEN 1 ELSE 0 END) AS initech_count FROM products WHERE price BETWEEN 440 AND 620 AND price BETWEEN 320 AND 710 GROUP BY 1, 2 HAVING SUM(CASE WHEN brand = 'Initech' THEN 1 ELSE 0 END) < 36;

@@ -1,0 +1,1 @@
+select orders.channel, count(*) as num_payments, concat_ws(', ', sort_array(collect_set(payments.method))) as method_values from payments left join orders on payments.order_id = orders.id join customers on customers.id = orders.customer_id group by orders.channel order by num_payments desc, channel asc limit 5;

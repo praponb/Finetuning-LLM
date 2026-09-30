@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, ROUND((100 * SUM(CASE WHEN level = 'L5' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l5 FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, dt.pct_l5 FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.pct_l5 >= 50

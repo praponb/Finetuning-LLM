@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 87 THEN 'high' WHEN cost >= 18 THEN 'mid' ELSE 'low' END cost_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(carrier))) carrier_values, SORT_ARRAY(COLLECT_SET(carrier)) carrier_list FROM shipments WHERE delivered_date >= '2025-08-19' AND order_id IN (16, 38) GROUP BY 1;

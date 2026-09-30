@@ -1,0 +1,1 @@
+SELECT customer_id, start_date, status, CASE WHEN monthly_fee >= 249 THEN 'High' WHEN monthly_fee >= 71 THEN 'Medium' ELSE 'Low' END AS monthly_fee_level FROM subscriptions WHERE customer_id IN (34, 36) ORDER BY start_date ASC;

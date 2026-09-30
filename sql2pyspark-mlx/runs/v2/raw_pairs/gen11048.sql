@@ -1,0 +1,1 @@
+select c.country, quarter(c.signup_date) as signup_quarter, min(s.end_date) as min_end_date, count(*) as row_count from subscriptions s left outer join customers c on s.customer_id = c.id group by c.country, quarter(c.signup_date)

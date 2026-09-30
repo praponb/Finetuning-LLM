@@ -1,0 +1,1 @@
+SELECT suppliers.id, suppliers.country, suppliers.supplier_name, suppliers.rating FROM suppliers WHERE suppliers.supplier_name LIKE '%Par%' AND NOT EXISTS (SELECT 1 FROM products WHERE products.supplier_id = suppliers.id);

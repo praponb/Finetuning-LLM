@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT o.channel, o.status AS order_status, COUNT(*) AS rows_total, MAX(src.amount) AS max_amount, GROUPING_ID() AS gid FROM payments src INNER JOIN orders o ON src.order_id = o.id GROUP BY GROUPING SETS ((o.channel, o.status), (o.channel))) SELECT channel, gid FROM rollup_totals ORDER BY gid DESC

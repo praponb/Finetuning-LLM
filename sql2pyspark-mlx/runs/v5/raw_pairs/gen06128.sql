@@ -1,0 +1,1 @@
+SELECT id, channel, order_date, discount, customer_id, amount, SUM(discount) OVER (PARTITION BY channel ORDER BY order_date, id) AS running_discount, LAST_VALUE(order_date) OVER (PARTITION BY customer_id ORDER BY amount DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_order_date FROM orders WHERE shipping_fee < 21 ORDER BY running_discount DESC, 1;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT id, customer_id, status, channel, amount, discount, CONCAT_WS(',', channel, status) AS channel_status_key, COALESCE(channel, 'DIRECT') AS channel_filled FROM orders WHERE order_date >= DATE '2024-02-22' AND shipping_fee IS NOT NULL) SELECT s.* FROM filtered s WHERE NOT EXISTS (SELECT 1 FROM payments c WHERE c.order_id = s.id AND c.paid_at < '2025-05-01')

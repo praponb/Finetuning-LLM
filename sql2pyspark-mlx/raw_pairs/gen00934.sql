@@ -1,0 +1,1 @@
+SELECT MONTH(p.launch_date) AS launch_month, MAX(ss.revenue) - MIN(ss.revenue) AS revenue_range, MAX(ss.sale_date) AS last_sale_date FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id GROUP BY MONTH(p.launch_date);

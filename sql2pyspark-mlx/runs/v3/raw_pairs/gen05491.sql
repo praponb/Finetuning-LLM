@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN unit_price >= 360 THEN 'high' WHEN unit_price >= 190 THEN 'mid' ELSE 'low' END AS unit_price_bucket, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM order_items WHERE quantity > 5 GROUP BY product_id, CASE WHEN unit_price >= 360 THEN 'high' WHEN unit_price >= 190 THEN 'mid' ELSE 'low' END

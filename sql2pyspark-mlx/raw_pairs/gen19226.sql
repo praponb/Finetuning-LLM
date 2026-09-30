@@ -1,0 +1,1 @@
+WITH product_stats AS (SELECT product_id, ROUND(STDDEV(unit_price), 2) stddev_unit_price, AVG(unit_price) avg_unit_price FROM order_items WHERE unit_price > 360 GROUP BY product_id) SELECT p.id, p.supplier_id, ps.stddev_unit_price, ps.avg_unit_price FROM products p LEFT JOIN product_stats ps ON p.id = ps.product_id ORDER BY avg_unit_price ASC, supplier_id DESC

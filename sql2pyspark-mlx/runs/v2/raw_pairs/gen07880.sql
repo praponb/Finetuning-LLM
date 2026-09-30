@@ -1,0 +1,1 @@
+select ss.id, ss.sale_date, p.supplier_id, p.launch_date, s.country from store_sales ss left join products p on ss.product_id = p.id join suppliers s on p.supplier_id = s.id where length(s.supplier_name) > 11 and s.country in ('US', 'SG', 'UK');

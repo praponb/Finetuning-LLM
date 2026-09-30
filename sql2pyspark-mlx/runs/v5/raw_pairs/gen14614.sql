@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM web_events WHERE page = '/checkout'), page_summary AS (SELECT page, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, COUNT(DISTINCT duration_sec) AS unique_event_types FROM src GROUP BY page) SELECT * FROM page_summary ORDER BY page DESC, unique_event_types DESC LIMIT 10;

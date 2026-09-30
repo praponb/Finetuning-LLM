@@ -1,0 +1,1 @@
+SELECT id, order_id, CASE WHEN amount >= 1690 THEN 'High' WHEN amount >= 700 THEN 'Medium' ELSE 'Low' END AS amount_band, DATE_TRUNC('YEAR', paid_at) AS paid_at_period FROM payments WHERE method = 'bank_transfer' ORDER BY paid_at_period

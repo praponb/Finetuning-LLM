@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', last_restock) AS activity_month, AVG(quantity) AS avg_quantity, BIT_AND(quantity) AS quantity_bit_and, SUM(quantity) AS total_quantity FROM inventory GROUP BY 1 HAVING quantity_bit_and < 1000 ORDER BY quantity_bit_and;

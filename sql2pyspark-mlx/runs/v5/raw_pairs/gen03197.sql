@@ -1,0 +1,3 @@
+SELECT *
+FROM orders
+QUALIFY ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY discount NULLS LAST, id) = 1

@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, d.location, t.avg_salary FROM departments d INNER JOIN (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE level IN ('L3', 'L4', 'L1') GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.avg_salary >= 38;

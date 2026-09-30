@@ -1,0 +1,1 @@
+SELECT id, order_id, paid_at, status, amount, PERCENT_RANK() OVER (PARTITION BY order_id ORDER BY paid_at DESC) AS paid_at_pct_rank, LAG(amount, 2) OVER (PARTITION BY status ORDER BY paid_at, id) AS prev_amount FROM payments;

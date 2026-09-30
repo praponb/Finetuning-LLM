@@ -1,0 +1,1 @@
+SELECT p.category, p.brand, SUM(oi.unit_price * oi.quantity) AS revenue, COUNT(DISTINCT oi.unit_price) AS unique_orders FROM order_items oi INNER JOIN products p ON oi.product_id = p.id GROUP BY p.category, p.brand ORDER BY 1 DESC;

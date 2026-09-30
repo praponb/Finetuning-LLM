@@ -1,0 +1,1 @@
+SELECT c.id, c.segment, c.name, c.is_active FROM customers c WHERE c.country = 'JP' AND NOT EXISTS (SELECT 1 FROM sessions s WHERE s.customer_id = c.id AND s.browser IN ('Chrome', 'Safari')) ORDER BY id

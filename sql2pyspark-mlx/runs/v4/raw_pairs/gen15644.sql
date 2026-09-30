@@ -1,0 +1,1 @@
+SELECT id, city, rating, supplier_name, rating - LAG(rating, 1) OVER (PARTITION BY city ORDER BY rating, id) AS rating_change, FIRST_VALUE(supplier_name) OVER (PARTITION BY city ORDER BY rating, id) AS first_supplier_name FROM suppliers

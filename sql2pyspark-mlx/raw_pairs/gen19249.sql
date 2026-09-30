@@ -1,0 +1,1 @@
+SELECT id, store_id, product_id, units, revenue, LEAD(units) OVER w_grp AS next_units, LAG(units) OVER w_grp AS prev_units, LEAD(revenue) OVER w_grp AS next_revenue, LAG(revenue) OVER w_grp AS prev_revenue, ROW_NUMBER() OVER w_grp AS row_seq FROM store_sales WHERE revenue <= 1500 WINDOW w_grp AS (PARTITION BY product_id ORDER BY units, id);

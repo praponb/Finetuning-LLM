@@ -1,0 +1,1 @@
+SELECT p.brand, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity, MIN(i.last_restock) AS first_last_restock FROM inventory i LEFT JOIN products p ON p.id = i.product_id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.brand;

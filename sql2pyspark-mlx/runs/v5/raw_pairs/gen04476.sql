@@ -1,0 +1,1 @@
+SELECT p.category, ROUND(AVG(oi.quantity), 2) AS avg_quantity FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id GROUP BY p.category HAVING ROUND(AVG(oi.quantity), 2) > 28;

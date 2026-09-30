@@ -1,0 +1,1 @@
+select s.country, s.city, max(p.price) max_price, min(p.price) min_price from products p inner join suppliers s on p.supplier_id = s.id group by s.country, s.city having min(p.price) >= 440 order by city, country limit 1

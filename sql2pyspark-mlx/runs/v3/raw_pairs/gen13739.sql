@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3549000 THEN 'high' WHEN budget >= 866000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(CASE WHEN dept_name = 'Marketing' THEN 1 END) AS marketing_count FROM departments WHERE location IS NOT NULL GROUP BY CASE WHEN budget >= 3549000 THEN 'high' WHEN budget >= 866000 THEN 'mid' ELSE 'low' END ORDER BY budget_bucket DESC;

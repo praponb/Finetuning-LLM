@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, event_type, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY event_time, id) row_num, RANK() OVER (PARTITION BY event_type ORDER BY event_time DESC) event_time_rank FROM web_events;

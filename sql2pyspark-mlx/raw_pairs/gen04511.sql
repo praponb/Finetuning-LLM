@@ -1,0 +1,1 @@
+SELECT COUNT(DISTINCT cost) AS unique_suppliers, ROUND((100 * SUM(CASE WHEN category = 'Fashion' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fashion FROM products WHERE category IN ('Grocery', 'Electronics') ORDER BY unique_suppliers DESC

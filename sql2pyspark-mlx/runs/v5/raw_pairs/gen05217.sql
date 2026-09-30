@@ -1,0 +1,1 @@
+WITH supplier_stats AS (SELECT supplier_id, MAX(launch_date) AS last_launch_date FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, ss.last_launch_date FROM suppliers s INNER JOIN supplier_stats ss ON s.id = ss.supplier_id ORDER BY last_launch_date ASC, id DESC LIMIT 5

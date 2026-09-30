@@ -1,0 +1,1 @@
+SELECT id, product_id, last_restock, store_id, quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_restock, id) AS rn, SUM(quantity) OVER (PARTITION BY store_id ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_quantity FROM inventory

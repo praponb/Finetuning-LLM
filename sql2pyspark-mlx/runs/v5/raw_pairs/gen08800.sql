@@ -1,0 +1,1 @@
+select id, account_id, txn_time, amount, sum(amount) over (partition by account_id order by txn_time, id rows between unbounded preceding and current row) as running_amount from transactions where account_id in (1, 13, 29, 35) order by amount desc

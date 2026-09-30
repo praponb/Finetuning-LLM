@@ -1,0 +1,38 @@
+# LoRA fine-tune of Qwen2.5-Coder-3B-Instruct (4-bit MLX) on the v2 SQL -> PySpark dataset.
+# Run from sql2pyspark-mlx/:   mlx_lm.lora -c lora_config.yaml
+model: mlx-community/Qwen2.5-Coder-3B-Instruct-4bit
+train: true
+fine_tune_type: lora
+data: ./data                 # train.jsonl / valid.jsonl / test.jsonl from convert_sql_pyspark.py
+adapter_path: ./adapters
+seed: 0
+
+# ~0.4 epoch over ~12.7k training pairs at batch 4. The data is learned fast (train loss ~0.04 after
+# 50 steps) and a base M2 does ~0.14-0.2 it/s, so this keeps training to ~2 hours.
+iters: 1200
+batch_size: 4
+grad_accumulation_steps: 1
+max_seq_length: 1024
+mask_prompt: true            # loss only on the assistant (PySpark) tokens
+grad_checkpoint: false       # true cut peak memory 13 GB -> 4.5 GB (16-layer run) but was ~40% slower
+
+num_layers: 8                # adapt the last 8 of 36 transformer blocks (16 was ~1.4x slower per step)
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+
+optimizer: adamw
+learning_rate: 1.0e-4
+lr_schedule:
+  name: cosine_decay
+  warmup: 100
+  warmup_init: 1.0e-6
+  arguments: [1.0e-4, 1100, 1.0e-5]   # [init, decay_steps, end]
+
+steps_per_report: 25
+steps_per_eval: 300
+val_batches: 25              # 100 held-out-signature samples per eval
+save_every: 300
+test: false
+test_batches: 200

@@ -1,0 +1,1 @@
+SELECT e.id, e.is_remote AS employee_is_remote, m.full_name AS manager_full_name FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE m.hire_date BETWEEN '2023-06-13' AND '2024-09-01' AND m.email LIKE '%@startup.io'

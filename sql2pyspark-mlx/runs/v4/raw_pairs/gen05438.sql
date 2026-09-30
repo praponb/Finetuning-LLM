@@ -1,0 +1,1 @@
+SELECT id, location, budget, dept_name, LAST_VALUE(dept_name) OVER (PARTITION BY location ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_dept_name FROM departments WHERE dept_name NOT IN ('Legal', 'Finance') ORDER BY id DESC

@@ -1,0 +1,1 @@
+SELECT web_events.id, web_events.session_id, web_events.event_time, web_events.event_type, sessions.started_at, sessions.customer_id, sessions.device FROM web_events JOIN sessions ON web_events.session_id = sessions.id WHERE sessions.browser IN ('Chrome', 'Safari', 'Edge');

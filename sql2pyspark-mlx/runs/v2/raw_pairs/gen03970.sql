@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM web_events WHERE session_id IN (28, 30, 35)), summary AS (SELECT event_type, page, COUNT(CASE WHEN page = '/product' THEN 1 END) AS product_count FROM src GROUP BY event_type, page) SELECT event_type, page, product_count FROM summary WHERE product_count > 4 ORDER BY page DESC;

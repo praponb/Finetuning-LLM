@@ -1,0 +1,1 @@
+SELECT id, order_id, cost, shipped_date FROM (SELECT id, order_id, cost, shipped_date, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY cost DESC) AS rn FROM shipments WHERE cost <= 87) AS r WHERE rn <= 1;

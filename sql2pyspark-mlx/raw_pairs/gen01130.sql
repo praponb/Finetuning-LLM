@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, store_id, product_id, units, CEIL(revenue) AS revenue_whole FROM store_sales WHERE sale_date > TO_DATE('2023-05-03') AND product_id IN (4, 8, 9, 10)) SELECT product_id FROM base INTERSECT SELECT product_id FROM store_sales WHERE YEAR(sale_date) >= 2024;

@@ -1,0 +1,1 @@
+select ss.sale_date, ss.store_id, p.supplier_id, s.store_name from store_sales ss left join products p on ss.product_id = p.id inner join stores s on ss.store_id = s.id order by store_id, s.store_name

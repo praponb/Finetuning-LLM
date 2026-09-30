@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, currency, element FROM price_tiers LATERAL VIEW EXPLODE(tier_prices) x AS element) SELECT id, currency, element FROM flattened ORDER BY id DESC NULLS LAST

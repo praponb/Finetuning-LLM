@@ -1,0 +1,1 @@
+WITH TopStores AS (SELECT id, region, opened_date, ROW_NUMBER() OVER (PARTITION BY region ORDER BY opened_date, id) AS rn FROM stores WHERE sqft != 6276) SELECT id, region, opened_date FROM TopStores WHERE rn <= 5;

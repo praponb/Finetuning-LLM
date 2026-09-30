@@ -1,0 +1,1 @@
+SELECT id, monthly_fee, end_date, plan, CASE WHEN plan IN ('premium', 'standard') THEN 'Group A' ELSE 'Other' END AS plan_group FROM subscriptions WHERE status = 'ACTIVE' OR monthly_fee BETWEEN 90 AND 180 ORDER BY end_date DESC

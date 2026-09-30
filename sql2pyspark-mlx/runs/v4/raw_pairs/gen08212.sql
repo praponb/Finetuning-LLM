@@ -1,0 +1,1 @@
+WITH web_events_by_session AS (SELECT session_id, COUNT(CASE WHEN event_type = 'page_view' THEN 1 END) page_view_count FROM web_events WHERE duration_sec < 337 GROUP BY session_id) SELECT s.id, s.customer_id, webs.page_view_count FROM sessions s INNER JOIN web_events_by_session webs ON s.id = webs.session_id WHERE webs.page_view_count > 6 ORDER BY s.id DESC

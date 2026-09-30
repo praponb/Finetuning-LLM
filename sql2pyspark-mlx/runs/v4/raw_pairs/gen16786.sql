@@ -1,0 +1,1 @@
+WITH CustomerStats AS (SELECT customer_id, MAX(balance) - MIN(balance) AS balance_range FROM accounts GROUP BY customer_id) SELECT c.signup_date, c.city, C.balance_range FROM customers c JOIN CustomerStats C ON c.id = C.customer_id WHERE C.balance_range > 40 ORDER BY balance_range

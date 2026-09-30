@@ -1,0 +1,1 @@
+SELECT s.region, MAX(oi.unit_price) - MIN(oi.unit_price) AS unit_price_range, MAX(oi.quantity) - MIN(oi.quantity) AS quantity_range FROM order_items oi JOIN orders o ON oi.order_id = o.id LEFT JOIN stores s ON o.store_id = s.id WHERE oi.quantity < 5 GROUP BY s.region ORDER BY unit_price_range, region LIMIT 10

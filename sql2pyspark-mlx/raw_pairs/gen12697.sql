@@ -1,0 +1,1 @@
+WITH TopProducts AS (SELECT id, brand, launch_date, category, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY launch_date, id) AS rnk FROM products) SELECT * FROM TopProducts WHERE rnk <= 3 ORDER BY id

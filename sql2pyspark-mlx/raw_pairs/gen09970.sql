@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_accounts, MIN(txn_time) AS first_txn_time FROM transactions GROUP BY account_id) SELECT accounts.status, account_totals.unique_accounts, account_totals.first_txn_time FROM accounts LEFT JOIN account_totals ON accounts.id = account_totals.account_id ORDER BY unique_accounts

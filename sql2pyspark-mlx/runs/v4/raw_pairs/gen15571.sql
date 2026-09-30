@@ -1,0 +1,1 @@
+SELECT id, account_type, balance, status, LAST_VALUE(status) OVER (PARTITION BY account_type ORDER BY balance DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_status FROM accounts ORDER BY last_status DESC, status;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN brand IN ('Globex', 'Umbrella') THEN 'priority' ELSE 'other' END AS brand_group, COUNT(stock_qty) AS stock_qty_count, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products WHERE ARRAY_CONTAINS(tags, 'clearance') GROUP BY brand_group HAVING COUNT(stock_qty) > 4 ORDER BY brand_group, avg_stock_qty DESC;

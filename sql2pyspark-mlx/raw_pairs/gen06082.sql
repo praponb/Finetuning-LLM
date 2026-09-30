@@ -1,0 +1,1 @@
+SELECT QUARTER(launch_date) AS launch_quarter, SUM(CASE WHEN brand = 'Globex' THEN cost ELSE 0 END) AS globex_cost FROM products WHERE stock_qty BETWEEN 188 AND 246 AND stock_qty < 119 AND stock_qty >= 254 GROUP BY launch_quarter

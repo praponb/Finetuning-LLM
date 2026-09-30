@@ -1,0 +1,1 @@
+SELECT c.country, MIN(t.txn_time) AS min_txn_time FROM transactions t JOIN accounts a ON t.account_id = a.id JOIN customers c ON c.id = a.customer_id WHERE c.city IN ('Tokyo', 'London') GROUP BY c.country ORDER BY c.country

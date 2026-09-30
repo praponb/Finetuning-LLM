@@ -1,0 +1,1 @@
+SELECT accounts.status, transactions.account_id, transactions.txn_time, transactions.is_flagged FROM accounts INNER JOIN transactions ON transactions.account_id = accounts.id WHERE transactions.merchant = 'Grab'

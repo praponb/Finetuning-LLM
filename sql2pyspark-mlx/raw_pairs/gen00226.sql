@@ -1,0 +1,1 @@
+select brand, category, sort_array(collect_set(brand)) as brand_list from products where stock_qty > 163 and lower(trim(product_name)) = 'backpack xl' group by brand, category order by category, brand limit 10

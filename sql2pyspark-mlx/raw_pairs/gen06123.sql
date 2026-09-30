@@ -1,0 +1,1 @@
+with valid_orders as (select * from orders where channel is null), summary as (select channel, count(case when status = 'PENDING' then 1 end) as pending_count from valid_orders group by channel) select * from summary

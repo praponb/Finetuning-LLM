@@ -1,0 +1,1 @@
+SELECT sqft, store_name, city, INITCAP(TRIM(store_name)) AS store_name_title, REGEXP_REPLACE(store_name, ' ', '') AS store_name_slug FROM stores WHERE store_name LIKE 'S%' AND (store_name LIKE '%Cen%' OR MONTH(opened_date) IN (3, 8, 11)) ORDER BY store_name_title

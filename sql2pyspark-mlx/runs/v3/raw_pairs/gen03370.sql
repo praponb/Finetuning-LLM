@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, MIN(txn_time) AS min_txn_time, SUM(amount) AS total_amount FROM transactions GROUP BY account_id) SELECT a.id, a.account_type, tba.min_txn_time, tba.total_amount FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY total_amount, id LIMIT 3;

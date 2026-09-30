@@ -1,0 +1,1 @@
+SELECT MONTH(ss.sale_date) sale_month, MIN(i.last_restock) first_last_restock, MIN(i.quantity) min_quantity FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY MONTH(ss.sale_date) ORDER BY first_last_restock;

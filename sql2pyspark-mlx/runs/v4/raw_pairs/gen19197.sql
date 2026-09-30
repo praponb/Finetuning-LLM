@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT id, session_id, duration_sec, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec, id) AS pos FROM web_events WHERE event_type IN ('click', 'search')) SELECT * FROM Ranked WHERE pos <= 3

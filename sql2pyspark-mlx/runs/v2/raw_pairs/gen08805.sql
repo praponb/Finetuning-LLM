@@ -1,0 +1,1 @@
+SELECT shipped_date, ROUND(cost * 100, 2) AS cost_adjusted, CASE WHEN cost >= 104 THEN 'High' WHEN cost >= 47 THEN 'Medium' ELSE 'Low' END AS cost_level FROM shipments WHERE shipped_date <= '2025-07-12' AND (shipped_date <= '2023-10-01' OR delivered_date < '2025-07-24') ORDER BY shipped_date DESC;

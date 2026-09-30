@@ -1,0 +1,1 @@
+with ranked as (select *, rank() over (partition by store_id, product_id order by last_restock desc) as row_num from inventory qualify row_num = 1) select id, store_id, product_id, quantity, row_num from ranked order by store_id asc;

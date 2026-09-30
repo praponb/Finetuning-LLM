@@ -1,0 +1,1 @@
+SELECT p.amount, p.method, o.customer_id, o.channel, s.region, s.sqft, CEIL(s.sqft) AS sqft_whole FROM payments p LEFT OUTER JOIN orders o ON o.id = p.order_id INNER JOIN stores s ON o.store_id = s.id WHERE p.status != 'SUCCESS' ORDER BY s.sqft DESC;

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, brand, MAX(cost) AS max_cost, COUNT(DISTINCT price) AS unique_categorys, MAX(launch_date) AS last_launch_date FROM products GROUP BY CUBE(DATE_FORMAT(launch_date, 'yyyy-MM'), brand)

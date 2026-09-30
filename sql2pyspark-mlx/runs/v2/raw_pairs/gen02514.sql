@@ -1,0 +1,1 @@
+SELECT id, status, start_date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY start_date DESC, id) AS rnk FROM subscriptions WHERE monthly_fee BETWEEN 110 AND 180) AS ranked WHERE rnk = 1 ORDER BY status DESC

@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, effective_from, currency, val FROM price_tiers LATERAL VIEW EXPLODE(discounts) e AS val) SELECT effective_from, currency, val, CASE WHEN currency RLIKE '^(USD|THB)$' THEN 'GROUP_B' ELSE 'OTHER_ZONE' END AS currency_zone FROM flattened ORDER BY currency_zone ASC NULLS FIRST

@@ -1,0 +1,1 @@
+SELECT order_items.id, order_items.unit_price FROM order_items WHERE order_items.product_id IS NOT NULL AND order_items.order_id IN (SELECT id FROM orders WHERE order_date >= '2023-12-01') ORDER BY 1 DESC LIMIT 3

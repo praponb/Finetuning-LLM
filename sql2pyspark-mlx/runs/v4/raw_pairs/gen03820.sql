@@ -1,0 +1,1 @@
+SELECT o.id, o.store_id, t.cost_range, t.lost_count FROM orders o JOIN (SELECT order_id, MAX(cost) - MIN(cost) AS cost_range, COUNT(CASE WHEN status = 'LOST' THEN 1 END) AS lost_count FROM shipments WHERE order_id = 38 GROUP BY order_id) t ON o.id = t.order_id WHERE t.cost_range >= 66

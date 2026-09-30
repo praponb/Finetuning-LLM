@@ -1,0 +1,1 @@
+SELECT CASE WHEN unit_price >= 420 THEN 'high' WHEN unit_price >= 130 THEN 'mid' ELSE 'low' END AS unit_price_bucket, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, order_id, SUM(quantity) AS total_quantity FROM order_items WHERE product_id IS NULL OR unit_price BETWEEN 200 AND 280 GROUP BY 1, 2, 3

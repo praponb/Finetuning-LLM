@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, t.stddev_salary, t.job_title_values FROM departments d JOIN (SELECT dept_id, ROUND(STDDEV(salary), 2) AS stddev_salary, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.stddev_salary > 50 ORDER BY id ASC, job_title_values ASC LIMIT 10;

@@ -1,0 +1,1 @@
+select case when monthly_fee >= 221 then 'high' when monthly_fee >= 71 then 'mid' else 'low' end as monthly_fee_bucket, avg(monthly_fee) as avg_monthly_fee from subscriptions where plan in ('standard', 'enterprise', 'premium') and monthly_fee >= 200 group by case when monthly_fee >= 221 then 'high' when monthly_fee >= 71 then 'mid' else 'low' end order by monthly_fee_bucket;

@@ -1,0 +1,1 @@
+SELECT location, ROUND((100 * SUM(CASE WHEN location = 'Bangkok' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_bangkok, SUM(CASE WHEN dept_name = 'Marketing' THEN budget ELSE 0 END) AS marketing_budget FROM departments GROUP BY location HAVING ROUND((100 * SUM(CASE WHEN location = 'Bangkok' THEN 1 ELSE 0 END)) / COUNT(*), 1) >= 21 ORDER BY pct_bangkok DESC

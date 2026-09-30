@@ -1,0 +1,1 @@
+SELECT id, service, host, log_ts, level, payload_json, COALESCE(context['version'], 'unknown') AS version_or_default, SHIFTRIGHT(status_code, 2) AS status_code_high FROM app_logs WHERE level IN ('INFO', 'WARN')

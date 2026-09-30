@@ -1,0 +1,1 @@
+SELECT event_type, duration_sec_range FROM (SELECT event_type, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events WHERE session_id IN (15, 27, 28) GROUP BY event_type) AS sub WHERE duration_sec_range > 21

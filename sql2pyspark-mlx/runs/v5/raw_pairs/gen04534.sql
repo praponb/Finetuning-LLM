@@ -1,0 +1,1 @@
+select quarter(order_date) as order_quarter, sum(case when status = 'PENDING' then discount else 0 end) as pending_discount from orders where amount between 1080 and 1430 group by quarter(order_date) order by order_quarter desc, pending_discount desc;

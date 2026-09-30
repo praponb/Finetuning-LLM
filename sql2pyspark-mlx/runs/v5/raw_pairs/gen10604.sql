@@ -1,0 +1,1 @@
+SELECT id, shipped_date, cost, SUM(cost) OVER (ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_cost FROM shipments WHERE shipped_date BETWEEN '2024-10-01' AND '2025-05-01';

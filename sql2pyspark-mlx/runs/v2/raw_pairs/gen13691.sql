@@ -1,0 +1,1 @@
+WITH WebEventsBySession AS (SELECT session_id, MIN(event_time) AS first_event_time, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values FROM web_events GROUP BY session_id) SELECT s.id, s.browser, s.country, W.first_event_time, W.page_values FROM sessions s LEFT JOIN WebEventsBySession W ON s.id = W.session_id;

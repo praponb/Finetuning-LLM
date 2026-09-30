@@ -1,0 +1,7 @@
+SELECT
+    id,
+    product_id,
+    unit_price,
+    order_id
+FROM order_items
+WHERE quantity != 5

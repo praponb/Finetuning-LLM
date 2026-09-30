@@ -1,0 +1,1 @@
+SELECT emp.id, emp.email AS employee_email, emp.level AS employee_level, emp.salary AS employee_salary, mgr.dept_id AS manager_dept_id, mgr.is_remote AS manager_is_remote, mgr.hire_date AS manager_hire_date, ROUND(emp.salary * 0.9, 2) AS adjusted_salary FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id;

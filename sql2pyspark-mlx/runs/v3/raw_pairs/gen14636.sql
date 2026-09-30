@@ -1,0 +1,5 @@
+SELECT *
+FROM orders
+WHERE (amount IS NOT NULL AND amount BETWEEN 1400 AND 1560) OR order_date < '2023-03-01'
+ORDER BY 6, id
+LIMIT 10

@@ -1,0 +1,1 @@
+select emp.id, emp.full_name as employee_full_name, emp.is_remote as employee_is_remote, mgr.manager_id as manager_manager_id, mgr.salary as manager_salary, mgr.is_remote as manager_is_remote from employees emp left outer join employees mgr on emp.manager_id = mgr.id where upper(mgr.full_name) like '%MMA%' order by id desc, mgr.salary desc

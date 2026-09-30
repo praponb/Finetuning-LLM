@@ -1,0 +1,1 @@
+select is_flagged, txn_type, concat_ws(', ', sort_array(collect_set(merchant))) as merchant_values, sort_array(collect_set(txn_type)) as txn_type_list from transactions where not is_flagged group by rollup(is_flagged, txn_type);

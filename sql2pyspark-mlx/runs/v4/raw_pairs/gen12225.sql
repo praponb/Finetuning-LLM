@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, supplier_name, country, city, rating, ROUND(rating * 1.1, 2) AS adjusted_rating, COALESCE(city, 'UNKNOWN') AS city_filled FROM suppliers WHERE city IS NOT NULL) SELECT * FROM (SELECT city, country, adjusted_rating FROM cleaned) src PIVOT (SUM(adjusted_rating) AS amount, COUNT(1) AS item_count FOR country IN ('US', 'DE'))

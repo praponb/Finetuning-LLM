@@ -1,0 +1,1 @@
+SELECT job_title, level, level_list, analyst_count FROM (SELECT job_title, level, SORT_ARRAY(COLLECT_SET(level)) AS level_list, COUNT(CASE WHEN job_title = 'Analyst' THEN 1 END) AS analyst_count FROM employees WHERE manager_id IS NOT NULL GROUP BY job_title, level) AS sub WHERE analyst_count < 4;

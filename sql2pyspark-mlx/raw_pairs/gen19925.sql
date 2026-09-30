@@ -1,0 +1,1 @@
+SELECT o.discount, c.name, s.region, s.city FROM orders o INNER JOIN customers c ON o.customer_id = c.id LEFT OUTER JOIN stores s ON o.store_id = s.id WHERE s.opened_date <= '2025-07-01' ORDER BY c.name, city DESC;

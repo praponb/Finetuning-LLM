@@ -1,0 +1,1 @@
+SELECT p.browser, s.page, COUNT(*) AS rows_total, ROUND(SUM(s.duration_sec), 2) AS total_duration_sec FROM web_events s LEFT JOIN sessions p ON s.session_id = p.id GROUP BY GROUPING SETS ((p.browser, s.page), (p.browser)) ORDER BY total_duration_sec

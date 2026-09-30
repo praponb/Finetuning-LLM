@@ -1,0 +1,1 @@
+WITH customer_totals AS (SELECT customer_id, ROUND((100 * SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_store FROM orders GROUP BY customer_id) SELECT c.id, c.email, ct.pct_store FROM customers c JOIN customer_totals ct ON c.id = ct.customer_id WHERE ct.pct_store > 78 ORDER BY ct.pct_store DESC;

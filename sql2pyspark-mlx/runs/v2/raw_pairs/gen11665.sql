@@ -1,0 +1,1 @@
+select plan, sum(monthly_fee) total_monthly_fee, round(sum(monthly_fee) * 100.0 / sum(sum(monthly_fee)) over (), 2) as pct_of_total from subscriptions where plan = 'enterprise' group by plan order by total_monthly_fee desc;

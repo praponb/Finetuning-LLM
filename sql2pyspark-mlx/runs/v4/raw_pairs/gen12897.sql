@@ -1,0 +1,1 @@
+SELECT customers.segment, SORT_ARRAY(COLLECT_SET(orders.status)) AS status_list FROM orders INNER JOIN customers ON orders.customer_id = customers.id WHERE orders.shipping_fee <= 26 GROUP BY customers.segment

@@ -1,0 +1,1 @@
+SELECT s.id, s.region, s.store_name, t.first_sale_date, t.total_count FROM stores s LEFT JOIN (SELECT store_id, MIN(sale_date) AS first_sale_date, COUNT(*) AS total_count FROM store_sales GROUP BY store_id) t ON s.id = t.store_id ORDER BY t.first_sale_date ASC;

@@ -1,0 +1,1 @@
+SELECT p.category, p.supplier_id, COUNT(DISTINCT ss.revenue) AS unique_stores, MIN(ss.revenue) AS min_revenue FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id WHERE UPPER(TRIM(p.product_name)) = 'WIRELESS MOUSE' GROUP BY p.category, p.supplier_id ORDER BY p.category

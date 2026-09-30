@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 3549000 THEN 'high' WHEN budget >= 1196000 THEN 'mid' ELSE 'low' END budget_bucket, SUM(CASE WHEN dept_name = 'Marketing' THEN budget ELSE 0 END) marketing_budget FROM departments GROUP BY 1;

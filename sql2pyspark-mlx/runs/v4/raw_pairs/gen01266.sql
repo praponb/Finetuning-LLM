@@ -1,0 +1,1 @@
+SELECT channel, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, ROUND(AVG(amount), 2) AS avg_amount FROM orders WHERE amount < 1390 GROUP BY channel ORDER BY avg_amount ASC, channel ASC LIMIT 10;

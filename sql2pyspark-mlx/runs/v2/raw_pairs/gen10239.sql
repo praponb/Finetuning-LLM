@@ -1,0 +1,1 @@
+WITH ranked_customers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY credit_limit DESC, id) AS rn FROM customers) SELECT id, segment, credit_limit FROM ranked_customers WHERE rn <= 3 ORDER BY 3 DESC, id DESC

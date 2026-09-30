@@ -1,0 +1,1 @@
+select p.brand, count(*) as total_count, round(stddev(oi.unit_price), 2) as stddev_unit_price from order_items oi inner join orders o on oi.order_id = o.id left join products p on oi.product_id = p.id group by p.brand having count(*) >= 4 order by stddev_unit_price;

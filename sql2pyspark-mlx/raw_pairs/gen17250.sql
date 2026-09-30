@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, TRIM(dept_name) clean_dept_name FROM departments WHERE location IS NOT NULL AND location IS NULL) SELECT s.* FROM cleaned s WHERE NOT EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND c.hire_date <= '2024-10-23')

@@ -1,0 +1,1 @@
+SELECT id, product_name, category, brand, price, stock_qty, NTILE(5) OVER (PARTITION BY brand, category ORDER BY stock_qty DESC, id) AS stock_qty_bucket, NTILE(4) OVER (PARTITION BY category ORDER BY cost, id) AS cost_bucket FROM products WHERE stock_qty = 136;

@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, coupon_codes, items, attributes, SIZE(FILTER(items, i -> i.qty >= 3)) AS bulk_lines, COALESCE(attributes['gift'], 'none') AS gift_or_default, attributes['utm_source'] AS utm_source FROM carts;

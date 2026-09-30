@@ -1,0 +1,1 @@
+SELECT country, ROUND(STDDEV(rating), 2) AS stddev_rating, MAX(rating) AS max_rating, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values FROM suppliers WHERE country = 'US' GROUP BY country ORDER BY country ASC LIMIT 3;

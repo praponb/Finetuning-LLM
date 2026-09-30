@@ -1,0 +1,1 @@
+SELECT e.email AS employee_email, e.manager_id AS employee_manager_id, m.is_remote AS manager_is_remote, m.job_title AS manager_job_title, m.hire_date AS manager_hire_date FROM employees AS e LEFT JOIN employees AS m ON e.manager_id = m.id WHERE UPPER(TRIM(m.full_name)) = 'IVY CHEN' ORDER BY manager_job_title DESC;

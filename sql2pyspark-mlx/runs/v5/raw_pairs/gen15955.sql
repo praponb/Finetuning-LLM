@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN budget >= 4020000 THEN 'high' WHEN budget >= 1003000 THEN 'mid' ELSE 'low' END AS budget_bucket, MAX(budget) - MIN(budget) AS budget_range FROM departments GROUP BY CASE WHEN budget >= 4020000 THEN 'high' WHEN budget >= 1003000 THEN 'mid' ELSE 'low' END) AS x WHERE budget_range > 55 ORDER BY budget_bucket DESC;

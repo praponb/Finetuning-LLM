@@ -1,0 +1,1 @@
+SELECT o.id, o.status, o.store_id, c.is_active, DATEDIFF(CURRENT_DATE(), o.order_date) AS days_since_order_date FROM orders o INNER JOIN customers c ON c.id = o.customer_id ORDER BY days_since_order_date DESC, id LIMIT 1;

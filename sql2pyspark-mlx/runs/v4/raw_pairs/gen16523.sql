@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, CASE WHEN status IN ('SUCCESS', 'FAILED') THEN 'Group A' ELSE 'Other' END AS status_group, COALESCE(method, 'UNKNOWN') AS method_clean FROM payments WHERE paid_at >= DATE '2024-04-10' AND order_id = 39) SELECT s.*, o.channel, o.status AS order_status FROM cleaned s LEFT JOIN orders o ON s.order_id = o.id;

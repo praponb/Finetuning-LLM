@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date DESC, id) AS pos FROM employees WHERE is_remote = TRUE) SELECT id, manager_id, hire_date FROM ranked WHERE pos <= 5 ORDER BY manager_id DESC

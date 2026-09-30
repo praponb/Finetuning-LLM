@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at DESC, id) AS rnk FROM payments WHERE order_id IN (2, 6, 7)) SELECT id, status, paid_at FROM Ranked WHERE rnk <= 5 ORDER BY id DESC;

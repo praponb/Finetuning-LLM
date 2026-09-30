@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', hire_date) AS hire_month, MAX(hire_date) AS last_hire_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values, COUNT(*) AS total_count FROM employees GROUP BY DATE_TRUNC('MONTH', hire_date);

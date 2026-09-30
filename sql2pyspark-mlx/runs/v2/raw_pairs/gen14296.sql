@@ -1,0 +1,1 @@
+SELECT customers.segment, customers.country, SUM(CASE WHEN accounts.status = 'FROZEN' THEN accounts.balance ELSE 0 END) AS frozen_balance FROM accounts INNER JOIN customers ON accounts.customer_id = customers.id GROUP BY customers.segment, customers.country ORDER BY country

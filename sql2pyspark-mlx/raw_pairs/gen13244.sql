@@ -1,0 +1,1 @@
+SELECT TO_DATE(paid_at) AS paid_day, status, SORT_ARRAY(COLLECT_SET(method)) AS method_list, MIN(amount) AS min_amount FROM payments WHERE amount <= 600 AND amount <= 1450 GROUP BY TO_DATE(paid_at), status HAVING min_amount < 1120 ORDER BY status DESC, paid_day LIMIT 50

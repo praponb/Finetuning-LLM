@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, TRIM(location) AS clean_location, CONCAT(location, ' - ', dept_name) AS location_dept_name, COALESCE(location, 'N/A') AS resolved_location FROM departments WHERE location IS NOT NULL AND location <> 'New York') SELECT s.* FROM base s WHERE EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND c.job_title IN ('Director', 'Engineer', 'Designer'));

@@ -1,0 +1,1 @@
+select year(launch_date) as launch_year, brand, round(avg(stock_qty), 2) as avg_stock_qty, sort_array(collect_set(brand)) as brand_list from products group by year(launch_date), brand having avg_stock_qty < 31 order by avg_stock_qty desc

@@ -1,0 +1,1 @@
+select method, round(stddev(amount), 2) as stddev_amount, count(distinct amount) as unique_statuss from payments where method not in ('paypal', 'bank_transfer', 'cash') and (method = 'promptpay' or status not in ('REFUNDED', 'SUCCESS')) group by 1 order by stddev_amount desc, unique_statuss, method limit 5

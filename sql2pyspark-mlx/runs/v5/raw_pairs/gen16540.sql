@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 85 THEN 'HIGH' ELSE 'LOW' END AS cost_tier, APPROX_PERCENTILE(cost, ARRAY(0.25, 0.5, 0.75)) AS cost_quartiles, COUNT(DISTINCT order_id) AS distinct_order_ids, COUNT(CASE WHEN status = 'LOST' THEN 1 END) AS lost_count FROM shipments GROUP BY CASE WHEN cost >= 85 THEN 'HIGH' ELSE 'LOW' END ORDER BY cost_tier DESC;

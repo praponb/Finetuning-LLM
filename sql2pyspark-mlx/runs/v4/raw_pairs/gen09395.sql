@@ -1,0 +1,1 @@
+SELECT id, merchant, txn_type, CASE WHEN txn_type IN ('REFUND', 'DEBIT') THEN 'Tier 1' ELSE 'Other' END AS txn_type_group FROM transactions WHERE account_id IN (4, 18, 33, 40) AND (txn_type = 'CREDIT' OR HOUR(txn_time) BETWEEN 10 AND 14);

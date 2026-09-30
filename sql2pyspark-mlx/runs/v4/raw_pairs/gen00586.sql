@@ -1,0 +1,1 @@
+SELECT o.amount, o.discount, t.fedex_count FROM orders o INNER JOIN (SELECT order_id, SUM(CASE WHEN carrier = 'FedEx' THEN 1 ELSE 0 END) AS fedex_count FROM shipments WHERE cost IS NOT NULL GROUP BY order_id) t ON o.id = t.order_id ORDER BY fedex_count DESC;

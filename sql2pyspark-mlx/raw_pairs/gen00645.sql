@@ -1,0 +1,1 @@
+select *, avg(rating) over (partition by country order by rating, id rows between 5 preceding and current row) as rating_avg_5, min(rating) over w_recent as country_min_rating, row_number() over w_part as row_seq from suppliers window w_recent as (partition by country), w_part as (partition by country order by rating desc, id)

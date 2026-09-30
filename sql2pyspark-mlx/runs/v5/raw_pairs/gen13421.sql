@@ -1,0 +1,1 @@
+SELECT id, region, opened_date, store_name FROM (SELECT id, region, opened_date, store_name, ROW_NUMBER() OVER (PARTITION BY region ORDER BY opened_date DESC, id) AS row_num FROM stores WHERE region IS NOT NULL) AS ranked WHERE row_num <= 3 ORDER BY region ASC

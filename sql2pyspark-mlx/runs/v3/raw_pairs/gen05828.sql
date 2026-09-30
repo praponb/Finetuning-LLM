@@ -1,0 +1,1 @@
+SELECT status, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range, MAX(amount) AS max_amount FROM orders WHERE discount < 0.1 GROUP BY status HAVING SUM(CASE WHEN channel = 'web' THEN amount ELSE 0 END) >= 45

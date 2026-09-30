@@ -1,0 +1,1 @@
+SELECT ss.id, ss.product_id, ss.units, p.cost, s.country, s.supplier_name FROM store_sales ss JOIN products p ON p.id = ss.product_id RIGHT JOIN suppliers s ON s.id = p.supplier_id WHERE ss.revenue <= 1800 AND ss.store_id = 2 ORDER BY s.country, cost DESC;

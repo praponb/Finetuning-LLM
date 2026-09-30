@@ -1,0 +1,1 @@
+WITH AccountTotals AS (SELECT account_id, SORT_ARRAY(COLLECT_SET(merchant)) merchant_list, ROUND(STDDEV(amount), 2) stddev_amount FROM transactions GROUP BY account_id) SELECT a.customer_id, A.merchant_list, A.stddev_amount FROM accounts a INNER JOIN AccountTotals A ON a.id = A.account_id

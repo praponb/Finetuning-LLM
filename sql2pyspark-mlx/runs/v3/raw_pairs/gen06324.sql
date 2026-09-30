@@ -1,0 +1,1 @@
+select * from (select order_id, count(case when carrier = 'Flash' then 1 end) as flash_count, sum(case when status = 'RETURNED' then 1 else 0 end) as returned_count from shipments group by order_id) as sub where returned_count >= 42 order by returned_count;

@@ -1,0 +1,1 @@
+with cleaned as (select *, coalesce(monthly_fee, 0) as monthly_fee_filled from subscriptions where customer_id is not null and end_date > '2025-02-01') select p.segment, src.status, count(*) as rows_total, avg(src.monthly_fee_filled) as avg_monthly_fee_filled from cleaned src inner join customers p on src.customer_id = p.id group by p.segment, src.status;

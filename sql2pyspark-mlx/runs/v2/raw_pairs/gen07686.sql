@@ -1,0 +1,1 @@
+SELECT id, status, amount, order_id FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount DESC, id) AS rn FROM payments WHERE status = 'SUCCESS') AS r WHERE rn <= 5 ORDER BY id DESC, order_id DESC;

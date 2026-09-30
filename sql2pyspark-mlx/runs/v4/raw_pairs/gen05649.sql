@@ -1,0 +1,1 @@
+select we.id, we.event_time, we.session_id from web_events we where we.duration_sec != 297 and we.session_id in (select id from sessions where device not in ('desktop', 'tablet')) order by we.event_time desc;

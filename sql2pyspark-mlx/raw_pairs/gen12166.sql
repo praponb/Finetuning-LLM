@@ -1,0 +1,1 @@
+select subscriptions.id, subscriptions.start_date from subscriptions where subscriptions.customer_id in (select id from customers where is_active) order by subscriptions.start_date asc, subscriptions.id desc

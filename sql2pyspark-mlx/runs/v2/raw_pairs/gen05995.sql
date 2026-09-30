@@ -1,0 +1,1 @@
+WITH valid_payments AS (SELECT * FROM payments WHERE status IN ('FAILED', 'SUCCESS') AND (paid_at >= '2024-07-07' OR order_id IN (22, 31, 40))), Summary AS (SELECT order_id, SUM(CASE WHEN method = 'paypal' THEN 1 ELSE 0 END) AS paypal_count FROM valid_payments GROUP BY order_id) SELECT * FROM Summary WHERE paypal_count >= 30;

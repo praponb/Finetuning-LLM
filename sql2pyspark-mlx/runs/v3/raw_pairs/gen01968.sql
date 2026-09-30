@@ -1,0 +1,1 @@
+SELECT store_id, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_month, MAX(last_restock) AS last_last_restock, COUNT(quantity) AS quantity_count FROM inventory WHERE store_id = 2 AND quantity BETWEEN 63 AND 151 GROUP BY 1, 2;

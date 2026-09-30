@@ -1,0 +1,1 @@
+with filtered_transactions as (select * from transactions where merchant not in ('7-Eleven', 'Shell')), summary as (select txn_type, max(amount) - min(amount) amount_range from filtered_transactions group by txn_type) select txn_type, amount_range from summary;

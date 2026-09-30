@@ -1,0 +1,1 @@
+WITH recent_store_sales AS (SELECT * FROM store_sales WHERE revenue IS NULL), summary AS (SELECT MONTH(sale_date) AS sale_month, MIN(sale_date) AS min_sale_date FROM recent_store_sales GROUP BY MONTH(sale_date)) SELECT sale_month, min_sale_date FROM summary;

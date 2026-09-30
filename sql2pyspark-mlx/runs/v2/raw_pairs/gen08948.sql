@@ -1,0 +1,1 @@
+WITH recent_accounts AS (SELECT * FROM accounts WHERE opened_date > '2025-06-24'), accounts_stats AS (SELECT account_type, SORT_ARRAY(COLLECT_SET(status)) AS status_list, COUNT(balance) AS balance_count FROM recent_accounts GROUP BY account_type) SELECT account_type, status_list, balance_count FROM accounts_stats ORDER BY account_type

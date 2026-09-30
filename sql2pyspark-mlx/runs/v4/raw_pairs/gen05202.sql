@@ -1,0 +1,1 @@
+SELECT s.city, COUNT(ss.units) AS units_count, AVG(ss.revenue) AS avg_revenue FROM store_sales ss LEFT OUTER JOIN products p ON p.id = ss.product_id LEFT OUTER JOIN suppliers s ON s.id = p.supplier_id WHERE ss.store_id = 4 GROUP BY s.city;

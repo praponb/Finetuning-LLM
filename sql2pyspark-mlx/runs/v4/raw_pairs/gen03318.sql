@@ -1,0 +1,1 @@
+SELECT carrier, status, MIN(cost) AS min_cost, ROUND((100 * SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_delivered FROM shipments GROUP BY carrier, status HAVING ROUND((100 * SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END)) / COUNT(*), 1) < 46 ORDER BY carrier

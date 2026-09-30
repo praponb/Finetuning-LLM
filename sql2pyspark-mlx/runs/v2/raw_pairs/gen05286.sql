@@ -1,0 +1,1 @@
+SELECT p.brand, DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, COUNT(i.quantity) AS quantity_count, AVG(i.quantity) AS avg_quantity FROM inventory i JOIN stores s ON i.store_id = s.id LEFT OUTER JOIN products p ON i.product_id = p.id GROUP BY p.brand, DATE_FORMAT(p.launch_date, 'yyyy-MM')

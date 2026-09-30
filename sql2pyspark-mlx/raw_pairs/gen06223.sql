@@ -1,0 +1,1 @@
+SELECT country, SUM(CASE WHEN country = 'JP' THEN rating ELSE 0 END) jp_rating, AVG(rating) avg_rating FROM suppliers GROUP BY country HAVING SUM(CASE WHEN country = 'JP' THEN rating ELSE 0 END) < 48 ORDER BY country DESC

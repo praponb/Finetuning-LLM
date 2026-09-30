@@ -1,0 +1,1 @@
+WITH kept_keys AS (SELECT status, id FROM subscriptions EXCEPT ALL SELECT status, id FROM subscriptions WHERE MONTH(end_date) IN (3, 4, 6)), reconciled AS (SELECT s.* FROM subscriptions s INNER JOIN kept_keys k ON s.status = k.status AND s.id = k.id) SELECT id, plan, start_date, end_date, status FROM reconciled ORDER BY plan, start_date;

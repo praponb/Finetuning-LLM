@@ -1,0 +1,1 @@
+WITH valid_payments AS (SELECT * FROM payments WHERE order_id = 19 AND (HOUR(paid_at) BETWEEN 6 AND 9 OR status = 'REFUNDED')), PaymentsStats AS (SELECT HOUR(paid_at) AS paid_hour, status, SUM(amount) AS total_amount, MIN(paid_at) AS min_paid_at FROM valid_payments GROUP BY HOUR(paid_at), status) SELECT * FROM PaymentsStats WHERE total_amount < 8800;

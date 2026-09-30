@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', launch_date) AS activity_month, DATE_TRUNC('YEAR', launch_date) AS year_start, COUNT(*) AS row_count, BIT_OR(stock_qty) AS stock_qty_bit_or, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products GROUP BY 1, 2

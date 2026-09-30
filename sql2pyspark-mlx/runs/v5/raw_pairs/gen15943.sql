@@ -1,0 +1,1 @@
+SELECT id, customer_id, created_at, ship_to, attributes, EXISTS(items, item -> item.price > 100) AS has_premium_item, COALESCE(attributes['utm_source'], 'unknown') AS utm_source_or_default, ARRAY_CONTAINS(coupon_codes, 'SPRING10') AS used_spring10 FROM carts WHERE TO_DATE(created_at) >= '2025-10-01'

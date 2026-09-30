@@ -1,0 +1,1 @@
+select category, date_trunc('week', launch_date) as week_start, max(price) filter (where category = 'Fashion') as fashion_max_price, bit_or(stock_qty) as stock_qty_bit_or, count(*) as num_rows from products group by grouping sets ((category, date_trunc('week', launch_date)), (category)) order by stock_qty_bit_or nulls last;

@@ -1,0 +1,1 @@
+SELECT s.id, s.shipped_date, s.order_id, o.shipping_fee, o.customer_id, c.city FROM shipments s RIGHT OUTER JOIN orders o ON o.id = s.order_id INNER JOIN customers c ON o.customer_id = c.id WHERE o.status = 'SHIPPED' ORDER BY s.shipped_date;

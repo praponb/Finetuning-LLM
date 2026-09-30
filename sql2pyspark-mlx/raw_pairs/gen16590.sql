@@ -1,0 +1,1 @@
+SELECT suppliers.city, ROUND(AVG(inventory.quantity), 2) avg_quantity, MIN(inventory.last_restock) min_last_restock FROM inventory LEFT JOIN products ON inventory.product_id = products.id JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY suppliers.city;

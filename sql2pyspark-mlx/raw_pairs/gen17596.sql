@@ -1,0 +1,1 @@
+SELECT CASE WHEN cost >= 650 THEN 'high' WHEN cost >= 190 THEN 'mid' ELSE 'low' END AS cost_bucket, brand, ROUND((100 * SUM(CASE WHEN brand = 'Stark' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_stark FROM products WHERE SIZE(tags) > 1 GROUP BY 1, 2 HAVING pct_stark < 55 ORDER BY brand DESC, cost_bucket

@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, LENGTH(status) AS status_length FROM orders WHERE customer_id IS NOT NULL AND amount < 540) SELECT * FROM (SELECT customer_id, store_id, status, amount FROM base) src PIVOT (MAX(amount) AS value_sum, COUNT(1) AS item_count FOR status IN ('PENDING', 'RETURNED', 'CANCELLED'))

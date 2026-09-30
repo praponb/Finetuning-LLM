@@ -1,0 +1,1 @@
+select o.id, o.amount, t.carrier_values, t.avg_cost from orders o left join (select order_id, concat_ws(', ', sort_array(collect_set(carrier))) as carrier_values, round(avg(cost), 2) as avg_cost from shipments group by order_id) t on o.id = t.order_id order by t.carrier_values desc, avg_cost desc;

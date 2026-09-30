@@ -1,0 +1,1 @@
+with base as (select id, reading_ts, temp_c, humidity, pressure, status_bits, round(pressure, 2) as pressure_rounded from device_readings where reading_ts >= date '2025-09-01') select id from base intersect select id from device_readings where pressure is not null

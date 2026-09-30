@@ -1,0 +1,1 @@
+WITH ProductsBySupplier AS (SELECT supplier_id, SUM(CASE WHEN category = 'Fashion' THEN 1 ELSE 0 END) fashion_count FROM products GROUP BY supplier_id) SELECT suppliers.id, suppliers.city, ProductsBySupplier.fashion_count FROM suppliers LEFT JOIN ProductsBySupplier ON suppliers.id = ProductsBySupplier.supplier_id ORDER BY city, suppliers.id

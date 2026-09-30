@@ -1,0 +1,1 @@
+SELECT products.brand, ROUND(AVG(inventory.quantity), 2) AS avg_quantity FROM inventory INNER JOIN stores ON stores.id = inventory.store_id INNER JOIN products ON products.id = inventory.product_id GROUP BY products.brand HAVING ROUND(AVG(inventory.quantity), 2) >= 60

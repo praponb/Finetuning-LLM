@@ -1,0 +1,1 @@
+SELECT s.store_name, i.last_restock FROM stores s LEFT OUTER JOIN inventory i ON i.store_id = s.id WHERE i.last_restock BETWEEN '2023-03-01' AND '2025-07-14' OR i.store_id IN (2, 6) ORDER BY store_name

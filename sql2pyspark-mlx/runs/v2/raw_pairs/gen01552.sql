@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM order_items WHERE unit_price IS NOT NULL AND (product_id = 31 OR unit_price < 360)), agg AS (SELECT order_id, COUNT(*) AS order_item_count, COUNT(quantity) AS quantity_count FROM base GROUP BY order_id) SELECT order_id, order_item_count, quantity_count FROM agg;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN discount >= 0.41 THEN 'HIGH' ELSE 'LOW' END AS discount_tier, SORT_ARRAY(COLLECT_SET(status)) AS status_list, COUNT(*) AS cnt, SORT_ARRAY(COLLECT_SET(status)) AS status_list_2, COUNT(DISTINCT store_id) AS distinct_store_ids FROM orders GROUP BY CASE WHEN discount >= 0.41 THEN 'HIGH' ELSE 'LOW' END ORDER BY discount_tier DESC NULLS LAST

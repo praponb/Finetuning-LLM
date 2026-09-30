@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') sale_month, store_id, MAX(revenue) - MIN(revenue) revenue_range, MIN(sale_date) first_sale_date FROM store_sales GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM'), store_id) t WHERE revenue_range >= 58;

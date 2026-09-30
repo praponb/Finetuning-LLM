@@ -1,0 +1,1 @@
+select a.account_type, case when a.balance >= 62000 then 'high' when a.balance >= 22000 then 'mid' else 'low' end as balance_bucket, sum(t.amount) as total_amount, count(t.amount) as amount_count from transactions t full outer join accounts a on t.account_id = a.id group by a.account_type, case when a.balance >= 62000 then 'high' when a.balance >= 22000 then 'mid' else 'low' end

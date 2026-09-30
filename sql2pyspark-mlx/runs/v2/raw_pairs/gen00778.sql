@@ -1,0 +1,1 @@
+with filtered_store_sales as (select *, add_months(sale_date, 6) as sale_date_plus_months from store_sales where units between 15 and 32 and store_id in (3, 5)), summary as (select product_id, month(sale_date) as sale_month, avg(units) as avg_units from filtered_store_sales group by product_id, month(sale_date)) select * from summary order by sale_month desc, product_id;

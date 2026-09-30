@@ -1,0 +1,1 @@
+SELECT id, location, budget, dept_name, LEAD(budget, 1, 0) OVER (PARTITION BY location ORDER BY budget, id) AS next_budget, LAST_VALUE(location) OVER (PARTITION BY dept_name ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_location FROM departments ORDER BY last_location;

@@ -1,0 +1,1 @@
+SELECT id, customer_id, status, monthly_fee, ROUND(monthly_fee / SUM(monthly_fee) OVER (PARTITION BY customer_id, status), 3) AS monthly_fee_share, MAX(monthly_fee) OVER (PARTITION BY customer_id) AS customer_id_max_monthly_fee FROM subscriptions WHERE YEAR(end_date) >= 2024;

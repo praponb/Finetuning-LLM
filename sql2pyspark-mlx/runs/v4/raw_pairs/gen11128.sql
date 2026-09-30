@@ -1,0 +1,1 @@
+SELECT store_id, product_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE quantity <= 121 AND (product_id IN (1, 8, 9) OR quantity BETWEEN 237 AND 240) GROUP BY 1, 2 HAVING ROUND(STDDEV(quantity), 2) > 64

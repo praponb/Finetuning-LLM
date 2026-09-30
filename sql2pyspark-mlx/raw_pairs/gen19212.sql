@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, city, ROUND(AVG(sqft), 2) AS avg_sqft, MIN(sqft) AS min_sqft FROM stores WHERE store_name IS NULL AND LENGTH(store_name) > 12 GROUP BY QUARTER(opened_date), city HAVING min_sqft < 11600

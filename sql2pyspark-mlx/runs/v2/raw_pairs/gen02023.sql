@@ -1,0 +1,1 @@
+SELECT i.id, i.quantity, i.store_id, ss.store_id AS store_sale_store_id, ss.product_id, ss.sale_date, DATE_TRUNC('MONTH', i.last_restock) AS last_restock_period FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id = 3 ORDER BY ss.product_id

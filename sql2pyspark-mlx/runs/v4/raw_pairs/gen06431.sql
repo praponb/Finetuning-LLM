@@ -1,0 +1,1 @@
+WITH Base AS (SELECT *, LOWER(email) AS email_lower FROM employees WHERE NOT (email IS NULL OR LOWER(full_name) LIKE '%avi%')), agg AS (SELECT YEAR(hire_date) AS hire_year, MIN(hire_date) AS min_hire_date, COUNT(DISTINCT salary) AS unique_depts FROM Base GROUP BY YEAR(hire_date)) SELECT hire_year, min_hire_date, unique_depts FROM agg WHERE unique_depts < 5

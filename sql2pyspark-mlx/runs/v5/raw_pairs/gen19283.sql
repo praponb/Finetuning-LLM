@@ -1,0 +1,1 @@
+SELECT carrier, SUM(CASE WHEN status = 'RETURNED' THEN cost ELSE 0 END) AS returned_cost, MAX(cost) AS max_cost, COUNT(DISTINCT cost) AS unique_carriers FROM shipments GROUP BY carrier ORDER BY max_cost;

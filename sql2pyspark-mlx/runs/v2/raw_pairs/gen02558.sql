@@ -1,0 +1,1 @@
+SELECT s.id, s.country, t.total_count FROM sessions s INNER JOIN (SELECT session_id, COUNT(*) AS total_count FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.total_count >= 9 ORDER BY s.id DESC, t.total_count DESC

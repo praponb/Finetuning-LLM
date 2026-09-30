@@ -1,0 +1,1 @@
+SELECT c.id, c.country, COUNT(s.id) AS session_count, SUM(CASE WHEN s.device = 'tablet' THEN 1 ELSE 0 END) AS tablet_count FROM customers c LEFT OUTER JOIN sessions s ON c.id = s.customer_id GROUP BY c.id, c.country ORDER BY id DESC

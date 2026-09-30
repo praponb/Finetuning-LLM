@@ -1,0 +1,1 @@
+SELECT sessions.browser, COUNT(DISTINCT web_events.duration_sec) AS unique_event_types, MIN(web_events.event_time) AS min_event_time FROM web_events LEFT JOIN sessions ON web_events.session_id = sessions.id GROUP BY sessions.browser

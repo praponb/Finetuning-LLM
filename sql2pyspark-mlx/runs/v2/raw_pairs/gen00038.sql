@@ -1,0 +1,1 @@
+SELECT status, YEAR(end_date) AS end_year, SORT_ARRAY(COLLECT_SET(status)) AS status_list, MAX(monthly_fee) AS max_monthly_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM subscriptions GROUP BY status, YEAR(end_date);

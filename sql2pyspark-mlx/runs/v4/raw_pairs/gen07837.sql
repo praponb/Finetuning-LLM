@@ -1,0 +1,1 @@
+WITH not_flagged AS (SELECT s.* FROM stores s WHERE NOT EXISTS (SELECT 1 FROM inventory c WHERE c.store_id = s.id AND c.last_restock >= s.opened_date)) SELECT id, store_name, region, opened_date, sqft FROM not_flagged ORDER BY region DESC

@@ -1,0 +1,1 @@
+WITH subscriptions_by_customer AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list FROM subscriptions GROUP BY customer_id) SELECT c.country, c.segment, sbc.plan_list FROM customers c JOIN subscriptions_by_customer sbc ON c.id = sbc.customer_id ORDER BY c.country, segment;

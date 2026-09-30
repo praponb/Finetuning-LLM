@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, LAST_DAY(delivered_date) AS delivered_date_month_end FROM shipments WHERE status = 'DELIVERED'), agg AS (SELECT status, AVG(cost) AS avg_cost, MIN(cost) AS min_cost FROM src GROUP BY status) SELECT status, avg_cost, min_cost FROM agg ORDER BY avg_cost;

@@ -1,0 +1,1 @@
+select c.id, c.country, c.signup_date, t.unique_devices from customers c inner join (select customer_id, count(distinct device) as unique_devices from sessions group by customer_id) t on c.id = t.customer_id where t.unique_devices >= 3 order by signup_date desc

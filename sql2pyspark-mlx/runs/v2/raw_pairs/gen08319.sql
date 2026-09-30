@@ -1,0 +1,1 @@
+SELECT suppliers.city, suppliers.country, t.stddev_stock_qty, t.avg_cost FROM suppliers LEFT OUTER JOIN (SELECT supplier_id, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty, AVG(cost) AS avg_cost FROM products GROUP BY supplier_id) t ON suppliers.id = t.supplier_id WHERE t.stddev_stock_qty > 31;

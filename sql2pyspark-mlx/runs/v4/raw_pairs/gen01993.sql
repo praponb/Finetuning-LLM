@@ -1,0 +1,1 @@
+WITH enriched AS (SELECT *, LAST_VALUE(country, TRUE) OVER (PARTITION BY browser ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_country, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) AS seq_no FROM sessions) SELECT id, device, browser, started_at, country, seq_no FROM enriched ORDER BY seq_no DESC

@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, COUNT(*) AS num_order_items, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM order_items GROUP BY order_id) SELECT o.customer_id, o.order_date, os.num_order_items, os.stddev_quantity FROM orders o LEFT JOIN order_summary os ON o.id = os.order_id;

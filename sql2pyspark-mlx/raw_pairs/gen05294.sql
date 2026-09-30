@@ -1,0 +1,1 @@
+SELECT QUARTER(end_date) AS end_quarter, plan, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM subscriptions WHERE customer_id IS NOT NULL OR MONTH(end_date) IN (2, 8, 9) GROUP BY QUARTER(end_date), plan;

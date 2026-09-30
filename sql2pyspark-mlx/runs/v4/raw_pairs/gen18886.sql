@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 3800 THEN 'high' WHEN amount >= 1500 THEN 'mid' ELSE 'low' END AS amount_bucket, MAX(txn_time) AS last_txn_time, SUM(CASE WHEN merchant = 'Starbucks' THEN amount ELSE 0 END) AS starbucks_amount, COUNT(CASE WHEN txn_type = 'FEE' THEN 1 END) AS fee_count FROM transactions GROUP BY 1 ORDER BY last_txn_time, amount_bucket LIMIT 5

@@ -1,0 +1,1 @@
+WITH recent_stores AS (SELECT *, DATEDIFF(CURRENT_DATE(), opened_date) AS days_since_opened_date FROM stores WHERE city IN ('Chiang Mai', 'Singapore', 'New York') AND sqft <= 15322), StoresStats AS (SELECT YEAR(opened_date) AS opened_year, MAX(opened_date) AS last_opened_date FROM recent_stores GROUP BY YEAR(opened_date)) SELECT opened_year, last_opened_date FROM StoresStats;

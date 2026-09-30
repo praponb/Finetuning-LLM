@@ -1,0 +1,1 @@
+select p.id, p.category, t.avg_unit_price, t.total_unit_price from products p left join (select product_id, avg(unit_price) avg_unit_price, sum(unit_price) total_unit_price from order_items group by product_id) t on p.id = t.product_id where t.avg_unit_price >= 220 order by t.total_unit_price desc;

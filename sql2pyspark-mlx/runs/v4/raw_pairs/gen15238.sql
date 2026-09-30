@@ -1,0 +1,1 @@
+WITH RankedSessions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY device ORDER BY started_at DESC, id) AS rnk FROM sessions) SELECT id, device, started_at, customer_id FROM RankedSessions WHERE rnk = 1 ORDER BY started_at DESC

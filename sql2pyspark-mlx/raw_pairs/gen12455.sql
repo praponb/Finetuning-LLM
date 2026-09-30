@@ -1,0 +1,1 @@
+WITH store_totals AS (SELECT store_id, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY store_id) SELECT s.store_name, st.last_last_restock FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id ORDER BY store_name DESC;

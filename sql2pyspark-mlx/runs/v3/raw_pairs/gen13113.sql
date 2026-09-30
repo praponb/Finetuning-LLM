@@ -1,0 +1,1 @@
+SELECT store_sales.id, store_sales.product_id, store_sales.revenue, products.price, stores.region, stores.sqft FROM store_sales RIGHT JOIN products ON store_sales.product_id = products.id RIGHT JOIN stores ON store_sales.store_id = stores.id WHERE products.brand = 'Stark'

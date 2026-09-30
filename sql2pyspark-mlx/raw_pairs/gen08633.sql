@@ -1,0 +1,1 @@
+SELECT channel, ROUND((100 * SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_store FROM orders GROUP BY channel HAVING ROUND((100 * SUM(CASE WHEN channel = 'store' THEN 1 ELSE 0 END)) / COUNT(*), 1) >= 64 ORDER BY channel;

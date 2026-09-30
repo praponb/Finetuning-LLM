@@ -1,0 +1,1 @@
+SELECT c.country, SUM(s.cost) AS total_cost FROM shipments s JOIN orders o ON o.id = s.order_id LEFT JOIN customers c ON c.id = o.customer_id WHERE c.credit_limit >= 9100 GROUP BY c.country ORDER BY total_cost DESC, c.country DESC

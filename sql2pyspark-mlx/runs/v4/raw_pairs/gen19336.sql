@@ -1,0 +1,1 @@
+SELECT *, FIRST_VALUE(channel, TRUE) OVER (PARTITION BY channel ORDER BY discount_pct, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) first_known_channel, FIRST_VALUE(channel, TRUE) OVER (PARTITION BY channel ORDER BY discount_pct, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) first_known_channel_2 FROM promotions

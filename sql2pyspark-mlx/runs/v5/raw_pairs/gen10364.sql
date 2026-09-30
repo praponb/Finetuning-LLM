@@ -1,0 +1,1 @@
+WITH RecentOrderItems AS (SELECT * FROM order_items WHERE unit_price >= 270), summary AS (SELECT order_id, product_id, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM RecentOrderItems GROUP BY order_id, product_id) SELECT order_id, product_id, avg_unit_price FROM summary ORDER BY order_id DESC, avg_unit_price DESC

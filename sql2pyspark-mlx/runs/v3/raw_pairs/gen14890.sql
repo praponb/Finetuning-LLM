@@ -1,0 +1,1 @@
+with SupplierSummary as (select supplier_id, concat_ws(', ', sort_array(collect_set(category))) as category_values from products group by supplier_id) select s.supplier_name, S.category_values from suppliers s join SupplierSummary S on s.id = S.supplier_id order by supplier_name;

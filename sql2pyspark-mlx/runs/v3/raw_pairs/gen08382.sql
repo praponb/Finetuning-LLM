@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, COUNT(amount) amount_count FROM transactions WHERE is_flagged = TRUE GROUP BY account_id) SELECT a.id, a.balance, at.amount_count FROM accounts a LEFT JOIN account_totals at ON a.id = at.account_id ORDER BY a.balance DESC;

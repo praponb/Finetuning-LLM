@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT product_id, ROUND(STDDEV(units), 2) stddev_units FROM store_sales WHERE revenue <= 2700 GROUP BY product_id) sub WHERE stddev_units >= 34 ORDER BY stddev_units DESC, product_id DESC LIMIT 1;

@@ -1,0 +1,1 @@
+SELECT CASE WHEN country IN ('US', 'UK') THEN 'core' ELSE 'other' END country_group, SUM(rating) total_rating, COUNT(*) cnt, ROUND(SUM(rating) * 100.0 / SUM(SUM(rating)) OVER (), 2) AS pct_of_total FROM suppliers WHERE rating BETWEEN 3.0 AND 3.1 GROUP BY CASE WHEN country IN ('US', 'UK') THEN 'core' ELSE 'other' END;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, DATE_TRUNC('YEAR', reading_ts) AS reading_ts_period FROM device_readings WHERE reading_ts > DATE '2025-09-01') SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY pressure NULLS FIRST, id) AS rn FROM filtered QUALIFY rn = 1

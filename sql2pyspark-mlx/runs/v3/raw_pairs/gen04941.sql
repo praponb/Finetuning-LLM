@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, MIN(event_time) AS first_event_time, MAX(duration_sec) AS max_duration_sec FROM web_events WHERE page IN ('/home', '/product') GROUP BY session_id) SELECT s.device, ss.first_event_time, ss.max_duration_sec FROM sessions s INNER JOIN session_stats ss ON s.id = ss.session_id;

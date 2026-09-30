@@ -1,0 +1,1 @@
+WITH filtered_accounts AS (SELECT * FROM accounts WHERE customer_id IN (1, 34, 39)), agg AS (SELECT account_type, SUM(CASE WHEN status = 'FROZEN' THEN 1 ELSE 0 END) AS frozen_count FROM filtered_accounts GROUP BY account_type) SELECT account_type, frozen_count FROM agg;

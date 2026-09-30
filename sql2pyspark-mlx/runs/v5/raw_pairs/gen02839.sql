@@ -1,0 +1,1 @@
+SELECT id, location, MAX(budget) OVER w_running AS running_max_budget, AVG(budget) OVER w_running AS running_avg_budget, MIN(budget) OVER w_running AS running_min_budget FROM departments WHERE location = 'Chiang Mai' WINDOW w_running AS (PARTITION BY location ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)

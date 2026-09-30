@@ -1,0 +1,1 @@
+SELECT d.id, COUNT(e.id) AS employee_count, MAX(e.hire_date) AS latest_hire_date, COUNT(CASE WHEN e.level = 'L2' THEN 1 END) AS l2_count FROM departments d LEFT JOIN employees e ON e.dept_id = d.id GROUP BY d.id ORDER BY latest_hire_date;

@@ -1,0 +1,1 @@
+WITH SessionTotals AS (SELECT session_id, SUM(CASE WHEN event_type = 'purchase' THEN 1 ELSE 0 END) AS purchase_count, MAX(event_time) AS latest_event_time FROM web_events GROUP BY session_id) SELECT s.id, s.customer_id, s.started_at, S.purchase_count, S.latest_event_time FROM sessions s LEFT OUTER JOIN SessionTotals S ON s.id = S.session_id WHERE S.purchase_count > 36;

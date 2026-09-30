@@ -1,0 +1,1 @@
+SELECT id, txn_type, txn_time, merchant, LAST_VALUE(merchant) OVER (PARTITION BY txn_type ORDER BY txn_time DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_merchant FROM transactions WHERE account_id IN (21, 22, 32)

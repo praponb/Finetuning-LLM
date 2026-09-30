@@ -1,0 +1,1 @@
+WITH account_summary AS (SELECT account_id, MIN(amount) AS min_amount FROM transactions GROUP BY account_id) SELECT a.id, a.account_type, a.balance, as.min_amount FROM accounts a INNER JOIN account_summary as ON a.id = as.account_id WHERE as.min_amount >= 1900

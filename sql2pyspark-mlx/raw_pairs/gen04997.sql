@@ -1,0 +1,1 @@
+SELECT id, page, event_time, event_type, RANK() OVER (PARTITION BY page ORDER BY event_time) AS event_time_rank, RANK() OVER (PARTITION BY event_type ORDER BY event_time) AS event_time_rank_2 FROM web_events WHERE duration_sec BETWEEN 223 AND 427

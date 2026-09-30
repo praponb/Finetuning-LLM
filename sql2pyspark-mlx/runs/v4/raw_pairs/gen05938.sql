@@ -1,0 +1,1 @@
+SELECT customer_id, COUNT(CASE WHEN plan = 'basic' THEN 1 END) AS basic_count, COUNT(CASE WHEN status = 'PAUSED' THEN 1 END) AS paused_count, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions GROUP BY customer_id HAVING COUNT(CASE WHEN status = 'PAUSED' THEN 1 END) < 4;

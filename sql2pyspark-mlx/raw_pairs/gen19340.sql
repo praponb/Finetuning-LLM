@@ -1,0 +1,1 @@
+SELECT 'subscription' AS kind, monthly_fee FROM subscriptions WHERE end_date >= '2024-10-01' UNION SELECT 'product' AS kind, price AS monthly_fee FROM products WHERE supplier_id IN (9, 22, 30, 38) ORDER BY kind DESC

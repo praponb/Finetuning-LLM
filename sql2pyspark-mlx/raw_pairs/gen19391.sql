@@ -1,0 +1,1 @@
+WITH parsed AS (SELECT id, coupon_codes, items, attributes['device'] AS device, SIZE(items) AS num_items FROM carts) SELECT id, coupon_codes, num_items, LAG(num_items) OVER w_hist AS prev_num_items, ROW_NUMBER() OVER w_hist AS event_seq, LEAD(num_items, 1) OVER w_hist AS next_num_items FROM parsed WINDOW w_hist AS (ORDER BY num_items, id)

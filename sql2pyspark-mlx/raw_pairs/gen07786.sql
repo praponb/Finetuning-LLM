@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.store_id, i.quantity, p.launch_date, p.brand, p.product_name, COALESCE(i.quantity, 0) quantity_filled FROM inventory i INNER JOIN products p ON p.id = i.product_id WHERE i.quantity <> 235 AND YEAR(i.last_restock) = 2025

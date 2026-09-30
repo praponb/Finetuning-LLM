@@ -1,0 +1,1 @@
+with top_customers as (select *, row_number() over (partition by country order by signup_date desc, id) as rnk from customers where age >= 42) select * from top_customers where rnk <= 1 order by 1 desc;

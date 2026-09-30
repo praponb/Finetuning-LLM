@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, host, log_ts, level, latency_ms, attr_key, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) x AS attr_key, attr_value) SELECT id, log_ts, level, latency_ms, attr_key FROM flattened;

@@ -1,0 +1,1 @@
+SELECT oi.product_id, oi.quantity, o.discount, o.amount, p.category FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id INNER JOIN products p ON p.id = oi.product_id WHERE p.supplier_id IN (5, 25, 36, 38)

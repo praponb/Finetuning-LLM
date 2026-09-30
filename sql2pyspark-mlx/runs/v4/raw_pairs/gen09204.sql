@@ -1,0 +1,3 @@
+SELECT *
+FROM departments
+WHERE budget BETWEEN 1446000 AND 2832000

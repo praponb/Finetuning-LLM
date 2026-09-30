@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 13712 THEN 'high' WHEN sqft >= 2451 THEN 'mid' ELSE 'low' END AS sqft_bucket, DATE_TRUNC('MONTH', opened_date) AS opened_month, MAX(sqft) - MIN(sqft) AS sqft_range FROM stores WHERE region NOT IN ('East', 'Central') GROUP BY CASE WHEN sqft >= 13712 THEN 'high' WHEN sqft >= 2451 THEN 'mid' ELSE 'low' END, DATE_TRUNC('MONTH', opened_date);

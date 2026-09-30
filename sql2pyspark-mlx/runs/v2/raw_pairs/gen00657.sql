@@ -1,0 +1,1 @@
+SELECT YEAR(a.opened_date) AS opened_year, SUM(CASE WHEN t.txn_type = 'FEE' THEN t.amount ELSE 0 END) AS fee_amount, AVG(t.amount) AS avg_amount FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id WHERE t.account_id IN (22, 34) GROUP BY YEAR(a.opened_date) HAVING fee_amount > 44;

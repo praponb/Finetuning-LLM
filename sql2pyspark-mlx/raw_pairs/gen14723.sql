@@ -1,0 +1,1 @@
+select carrier, round(stddev(cost), 2) as stddev_cost from shipments where not (carrier <> 'DHL' and order_id in (15, 26, 30) and delivered_date between '2024-01-11' and '2024-10-01') group by carrier

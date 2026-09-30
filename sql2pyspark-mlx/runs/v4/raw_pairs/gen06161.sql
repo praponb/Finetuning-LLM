@@ -1,0 +1,1 @@
+select session_id, case when duration_sec >= 440 then 'PREMIUM' else 'STANDARD' end as duration_sec_tier, bit_or(duration_sec) as duration_sec_bit_or, count(*) as cnt, bit_and(duration_sec) as duration_sec_bit_and from web_events group by session_id, case when duration_sec >= 440 then 'PREMIUM' else 'STANDARD' end having bit_or(duration_sec) >= 1;

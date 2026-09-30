@@ -1,0 +1,1 @@
+SELECT a.id, a.status, COUNT(t.id) AS transaction_count, COUNT(CASE WHEN t.txn_type = 'REFUND' THEN 1 END) AS refund_count, ROUND(AVG(t.amount), 2) AS avg_amount FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id GROUP BY a.id, a.status HAVING COUNT(CASE WHEN t.txn_type = 'REFUND' THEN 1 END) >= 5 ORDER BY 4;

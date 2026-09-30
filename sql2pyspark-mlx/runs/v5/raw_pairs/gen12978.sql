@@ -1,0 +1,1 @@
+SELECT a.opened_date, a.account_type, t.txn_time, t.txn_type, CONCAT(a.account_type, ' ', a.status) AS account_type_status FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id WHERE a.customer_id IS NOT NULL OR a.opened_date BETWEEN '2023-12-01' AND '2024-12-01' ORDER BY txn_time DESC;

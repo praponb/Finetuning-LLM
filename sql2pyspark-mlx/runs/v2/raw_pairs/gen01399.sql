@@ -1,0 +1,1 @@
+SELECT sessions.started_at, t.max_duration_sec FROM sessions INNER JOIN (SELECT session_id, MAX(duration_sec) AS max_duration_sec FROM web_events WHERE duration_sec = 147 GROUP BY session_id) t ON sessions.id = t.session_id ORDER BY t.max_duration_sec DESC;

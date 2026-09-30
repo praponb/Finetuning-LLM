@@ -1,0 +1,1 @@
+SELECT * FROM payments WHERE HOUR(paid_at) BETWEEN 12 AND 19

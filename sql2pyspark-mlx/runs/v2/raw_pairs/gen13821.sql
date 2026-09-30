@@ -1,0 +1,1 @@
+select id, last_restock, quantity, store_id, weekofyear(last_restock) as last_restock_weekofyear, cast(quantity as double) as quantity_num from inventory where product_id = 7 order by 5 desc, id limit 5;

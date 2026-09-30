@@ -1,0 +1,1 @@
+with filtered_customers as (select *, concat_ws(',', country, name) as country_name_key from customers where (is_active = true and city = 'Chiang Mai') or country in ('TH', 'US')), customers_stats as (select city, max(age) as max_age from filtered_customers group by city) select * from customers_stats where max_age > 47;

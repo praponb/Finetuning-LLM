@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, city, MAX(rating) - MIN(rating) AS rating_range, MIN(rating) AS min_rating FROM suppliers WHERE country = 'US' AND country IN ('SG', 'US', 'JP') GROUP BY ROLLUP(CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END, city) ORDER BY rating_range DESC

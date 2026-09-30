@@ -1,0 +1,1 @@
+select s.id, s.start_date, s.customer_id, c.age, concat(c.city, ', ', c.segment) as city_segment from subscriptions s join customers c on s.customer_id = c.id where c.email like '%@GMAIL.COM' or s.monthly_fee > 160

@@ -1,0 +1,1 @@
+SELECT MONTH(sale_date) AS sale_month, COUNT(DISTINCT units) AS unique_products, ROUND(AVG(units), 2) AS avg_units FROM store_sales GROUP BY MONTH(sale_date) ORDER BY avg_units DESC, unique_products DESC;

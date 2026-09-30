@@ -1,0 +1,1 @@
+select customer_id, status_values, min_balance from (select customer_id, concat_ws(', ', sort_array(collect_set(status))) as status_values, min(balance) as min_balance from accounts group by customer_id) as s where min_balance >= 68000;

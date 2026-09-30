@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, MIN(quantity) AS min_quantity, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items GROUP BY CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END) AS t WHERE avg_quantity < 46;

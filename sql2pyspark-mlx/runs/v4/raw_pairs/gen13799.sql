@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, AVG(amount) AS avg_amount FROM transactions WHERE account_id = 38 GROUP BY account_id) SELECT a.id, a.balance, at.avg_amount FROM accounts a LEFT OUTER JOIN account_totals at ON a.id = at.account_id;

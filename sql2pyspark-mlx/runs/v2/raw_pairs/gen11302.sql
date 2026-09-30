@@ -1,0 +1,1 @@
+SELECT id, balance, account_type, CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END AS is_savings FROM accounts WHERE balance BETWEEN 26000 AND 41000 OR account_type IN ('SAVINGS', 'CREDIT', 'CHECKING');

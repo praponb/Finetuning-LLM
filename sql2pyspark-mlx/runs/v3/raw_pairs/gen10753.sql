@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.6 THEN 'high' WHEN rating >= 2.0 THEN 'mid' ELSE 'low' END AS rating_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, AVG(rating) AS avg_rating FROM suppliers WHERE rating <= 2.1 AND supplier_name LIKE '%Supp%' GROUP BY 1;

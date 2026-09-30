@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, SUBSTRING(dept_name, 1, 2) AS dept_name_prefix FROM departments WHERE dept_name = 'HR') SELECT id, dept_name, location, dept_name_prefix FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_name, location ORDER BY budget, id) AS dedup_rank FROM base) x WHERE dedup_rank = 1

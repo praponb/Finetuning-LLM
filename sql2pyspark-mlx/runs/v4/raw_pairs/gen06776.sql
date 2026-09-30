@@ -1,0 +1,1 @@
+select method, method_list, promptpay_count from (select method, sort_array(collect_set(method)) method_list, sum(case when method = 'promptpay' then 1 else 0 end) promptpay_count from payments where order_id = 26 group by method) t where promptpay_count >= 50 order by method

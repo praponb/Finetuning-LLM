@@ -1,0 +1,1 @@
+WITH src AS (SELECT *, price * cost AS margin FROM products WHERE price <= 560 AND supplier_id = 29), summary AS (SELECT category, SUM(CASE WHEN brand = 'Globex' THEN margin ELSE 0 END) AS globex_margin FROM src GROUP BY category) SELECT * FROM summary ORDER BY globex_margin DESC;

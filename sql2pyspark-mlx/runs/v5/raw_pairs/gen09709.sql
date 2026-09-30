@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, LENGTH(device) AS device_length, UPPER(device) AS device_upper FROM sessions WHERE started_at > DATE '2023-04-08' AND customer_id IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY device_length DESC NULLS LAST, id) AS rank_in_group FROM cleaned QUALIFY rank_in_group = 1;

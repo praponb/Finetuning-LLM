@@ -1,0 +1,1 @@
+SELECT d.location, d.budget, t.avg_salary, t.level_list FROM departments d LEFT JOIN (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary, SORT_ARRAY(COLLECT_SET(level)) AS level_list FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.avg_salary > 33 ORDER BY d.location DESC

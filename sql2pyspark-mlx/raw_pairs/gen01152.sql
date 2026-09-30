@@ -1,0 +1,1 @@
+SELECT c.segment, c.is_active, c.age, s.plan, s.end_date, s.customer_id, INITCAP(TRIM(c.name)) AS name_title FROM customers c LEFT JOIN subscriptions s ON c.id = s.customer_id ORDER BY name_title ASC;

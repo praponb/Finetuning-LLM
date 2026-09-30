@@ -1,0 +1,1 @@
+with ProductStats as (select product_id, sum(unit_price * quantity) as revenue from order_items where order_id = 17 group by product_id) select p.id, p.stock_qty, P.revenue from products p inner join ProductStats P on p.id = P.product_id where P.revenue > 54 order by p.id limit 20

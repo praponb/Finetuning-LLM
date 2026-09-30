@@ -1,0 +1,1 @@
+select opened_year, east_count, row_count from (select year(opened_date) as opened_year, count(case when region = 'East' then 1 end) as east_count, count(*) as row_count from stores group by year(opened_date)) as sub where row_count > 4 order by 2;

@@ -1,0 +1,1 @@
+SELECT we.event_type, we.page, s.customer_id, s.device, c.email, c.age FROM web_events we FULL OUTER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id WHERE s.device = 'mobile' ORDER BY device;

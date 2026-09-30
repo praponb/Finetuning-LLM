@@ -1,0 +1,1 @@
+WITH session_totals AS (SELECT session_id, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY session_id) SELECT s.browser, st.avg_duration_sec FROM sessions s LEFT JOIN session_totals st ON s.id = st.session_id WHERE st.avg_duration_sec >= 58 ORDER BY 1 DESC

@@ -1,0 +1,1 @@
+with not_flagged as (select s.* from accounts s where exists (select 1 from transactions c where c.account_id = s.id and c.txn_time <= s.opened_date)) select case when balance >= 88000 then 'LARGE' else 'SMALL' end as balance_tier, count_if(status = 'FROZEN') as frozen_events, sort_array(collect_set(status)) as status_list, count(*) as cnt from not_flagged group by balance_tier;

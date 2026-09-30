@@ -1,0 +1,1 @@
+SELECT *, CONCAT_WS('-', page, event_type) AS page_event_type_key, DATE_TRUNC('month', event_time) AS event_time_period FROM web_events WHERE page IN ('/product', '/cart', '/search') AND page IN ('/home', '/cart', '/checkout')

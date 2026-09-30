@@ -1,0 +1,1 @@
+SELECT customers.id, customers.city FROM customers WHERE customers.country = 'TH' AND NOT EXISTS (SELECT 1 FROM accounts WHERE accounts.customer_id = customers.id AND accounts.balance > 72000) ORDER BY customers.id DESC LIMIT 20

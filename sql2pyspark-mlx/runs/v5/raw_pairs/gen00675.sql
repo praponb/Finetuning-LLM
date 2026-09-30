@@ -1,0 +1,1 @@
+SELECT ss.store_id, ss.units, ss.revenue, s.region, s.sqft FROM store_sales ss LEFT OUTER JOIN stores s ON ss.store_id = s.id WHERE s.city IN ('Singapore', 'Berlin', 'Chiang Mai') ORDER BY ss.units DESC;

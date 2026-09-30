@@ -1,0 +1,1 @@
+select id, store_id, last_restock, percent_rank() over (partition by store_id order by last_restock) as last_restock_pct_rank from inventory where quantity between 65 and 103 order by store_id, id desc;

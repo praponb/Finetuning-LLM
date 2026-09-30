@@ -1,0 +1,1 @@
+select budget, case when budget >= 3766000 then 'High' when budget >= 1592000 then 'Medium' else 'Low' end as budget_tier from departments where budget between 1567000 and 3759000 order by budget desc;

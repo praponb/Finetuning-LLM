@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(p.launch_date, 'yyyy-MM') launch_month, QUARTER(p.launch_date) launch_quarter, COUNT(*) store_sale_count, COUNT(DISTINCT ss.units) unique_products FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY DATE_FORMAT(p.launch_date, 'yyyy-MM'), QUARTER(p.launch_date)

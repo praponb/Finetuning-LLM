@@ -1,0 +1,1 @@
+SELECT id, event_type, NTILE(10) OVER (ORDER BY duration_sec DESC, id) AS duration_sec_bucket, AVG(duration_sec) OVER (PARTITION BY YEAR(event_time), session_id ORDER BY event_time, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS duration_sec_avg_6_prior, RANK() OVER (PARTITION BY session_id ORDER BY duration_sec NULLS LAST) AS duration_sec_rank FROM web_events

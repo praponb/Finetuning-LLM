@@ -1,0 +1,1 @@
+SELECT region, SUM(CASE WHEN region = 'East' THEN sqft ELSE 0 END) AS east_sqft, COUNT(CASE WHEN city = 'New York' THEN 1 END) AS new_york_count FROM stores WHERE region IN ('South', 'Central', 'North') AND (city = 'Singapore' OR opened_date < '2024-03-01') GROUP BY region HAVING COUNT(*) >= 5

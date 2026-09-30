@@ -1,0 +1,1 @@
+select oi.id, oi.quantity, oi.order_id, oi.product_id from order_items oi where oi.quantity <> 4 and oi.product_id not in (select id from products where launch_date < '2023-07-01') order by oi.order_id

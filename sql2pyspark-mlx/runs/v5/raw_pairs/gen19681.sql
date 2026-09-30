@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM accounts WHERE account_type = 'LOAN' AND balance BETWEEN 57000 AND 69000 AND MONTH(opened_date) IN (2, 4, 12)), accounts_stats AS (SELECT account_type, MIN(opened_date) AS min_opened_date, AVG(balance) AS avg_balance FROM base GROUP BY account_type) SELECT * FROM accounts_stats WHERE avg_balance > 40000;

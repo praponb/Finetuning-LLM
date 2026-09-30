@@ -1,0 +1,1 @@
+select id, location, budget, lag(budget, 1, 0) over (partition by location order by budget, id) prev_budget, round(avg(budget) over (order by budget, id rows between 6 preceding and current row), 2) budget_moving_avg_7 from departments where location in ('Bangkok', 'Tokyo', 'London')

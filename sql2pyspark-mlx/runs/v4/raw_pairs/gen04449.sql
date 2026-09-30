@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, created_at, pos, item.product_id, item.qty, item.price FROM carts LATERAL VIEW OUTER POSEXPLODE(items) t AS pos, item) SELECT *, MAX(price) OVER w_running AS price_max_15m, AVG(pos) OVER w_running AS pos_avg_15m FROM lines WINDOW w_running AS (ORDER BY CAST(created_at AS BIGINT) RANGE BETWEEN 900 PRECEDING AND CURRENT ROW)

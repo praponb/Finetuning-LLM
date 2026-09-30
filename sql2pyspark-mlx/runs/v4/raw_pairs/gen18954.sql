@@ -1,0 +1,1 @@
+select subscriptions.customer_id, subscriptions.plan, subscriptions.status, customers.city, customers.name, customers.email from subscriptions join customers on subscriptions.customer_id = customers.id

@@ -1,0 +1,1 @@
+select d.location, d.dept_name, t.analyst_count from departments d left outer join (select dept_id, sum(case when job_title = 'Analyst' then 1 else 0 end) analyst_count from employees group by dept_id) t on d.id = t.dept_id

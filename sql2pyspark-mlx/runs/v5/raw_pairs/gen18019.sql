@@ -1,0 +1,1 @@
+SELECT location, CASE WHEN budget >= 4174000 THEN 'high' WHEN budget >= 821000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(CASE WHEN dept_name = 'Finance' THEN budget ELSE 0 END) AS finance_budget FROM departments WHERE dept_name != 'Sales' GROUP BY location, CASE WHEN budget >= 4174000 THEN 'high' WHEN budget >= 821000 THEN 'mid' ELSE 'low' END

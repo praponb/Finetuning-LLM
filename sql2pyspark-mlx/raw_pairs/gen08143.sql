@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, ROUND(balance, 0) AS balance_rounded FROM accounts WHERE opened_date > DATE '2023-09-18' AND status IS NOT NULL) SELECT s.id, s.customer_id, x.txn_type, x.merchant FROM cleaned s JOIN LATERAL (SELECT c.txn_type, c.merchant FROM transactions c WHERE c.account_id = s.id AND c.txn_time <= s.opened_date ORDER BY c.txn_time DESC, c.id DESC LIMIT 1) x ON TRUE

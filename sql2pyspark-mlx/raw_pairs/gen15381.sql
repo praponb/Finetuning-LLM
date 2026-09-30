@@ -1,0 +1,1 @@
+with order_stats as (select order_id, round(avg(quantity), 2) as avg_quantity from order_items group by order_id) select orders.id, orders.order_date, order_stats.avg_quantity from orders left join order_stats on orders.id = order_stats.order_id where order_stats.avg_quantity >= 48 order by orders.id, avg_quantity desc;

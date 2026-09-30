@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(start_date, 'yyyy-MM') AS start_month, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions WHERE MONTH(start_date) IN (1, 7, 8) OR start_date BETWEEN '2024-05-01' AND '2024-09-01' GROUP BY 1 HAVING MIN(monthly_fee) >= 90 ORDER BY start_month DESC;

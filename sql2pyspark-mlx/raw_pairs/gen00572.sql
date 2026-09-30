@@ -1,0 +1,1 @@
+WITH filtered_order_items AS (SELECT * FROM order_items WHERE product_id IS NULL), product_id_summary AS (SELECT product_id, SUM(quantity) AS total_quantity FROM filtered_order_items GROUP BY product_id) SELECT * FROM product_id_summary WHERE total_quantity >= 35;

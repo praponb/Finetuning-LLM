@@ -1,0 +1,1 @@
+SELECT sessions.device, web_events.event_type, web_events.event_time FROM sessions LEFT JOIN web_events ON web_events.session_id = sessions.id WHERE TO_DATE(sessions.started_at) >= '2024-05-01' AND TO_DATE(web_events.event_time) < '2025-09-01' ORDER BY sessions.device;

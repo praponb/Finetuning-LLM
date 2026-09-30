@@ -1,0 +1,1 @@
+WITH ranked_customers AS (SELECT id, country, credit_limit, RANK() OVER (PARTITION BY country ORDER BY credit_limit DESC) pos FROM customers) SELECT * FROM ranked_customers WHERE pos <= 2 ORDER BY id DESC, country

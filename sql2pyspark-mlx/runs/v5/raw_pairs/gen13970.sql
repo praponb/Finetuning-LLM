@@ -1,0 +1,1 @@
+SELECT p.browser, src.page, COUNT(*) AS cnt, MAX(src.duration_sec) AS max_duration_sec, GROUPING_ID() AS gid FROM web_events src INNER JOIN sessions p ON src.session_id = p.id GROUP BY GROUPING SETS ((p.browser, src.page), (p.browser), ()) ORDER BY page NULLS FIRST;

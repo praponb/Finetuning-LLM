@@ -1,0 +1,1 @@
+select id, customer_id, hour(started_at) as started_at_hour, case when device in ('desktop', 'tablet') then 'Group A' else 'Other' end as device_group from sessions where browser = 'Safari' and to_date(started_at) >= '2025-05-01' order by customer_id desc;

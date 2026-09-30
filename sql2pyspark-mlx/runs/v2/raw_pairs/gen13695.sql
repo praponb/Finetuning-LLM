@@ -1,0 +1,1 @@
+SELECT orders.channel, COUNT(shipments.id) AS shipment_count, SORT_ARRAY(COLLECT_SET(shipments.carrier)) AS carrier_list FROM orders LEFT JOIN shipments ON orders.id = shipments.order_id GROUP BY orders.channel

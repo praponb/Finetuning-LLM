@@ -1,0 +1,1 @@
+SELECT e.id, e.full_name AS employee_full_name, e.job_title AS employee_job_title, m.is_remote AS manager_is_remote, m.salary AS manager_salary, m.full_name AS manager_full_name, INITCAP(TRIM(m.full_name)) AS full_name_title FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.manager_id IN (19, 30, 32) AND e.hire_date > '2024-10-23';

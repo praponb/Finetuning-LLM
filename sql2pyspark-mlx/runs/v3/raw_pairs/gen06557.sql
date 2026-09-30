@@ -1,0 +1,1 @@
+with web_events_by_session as (select session_id, concat_ws(', ', sort_array(collect_set(page))) as page_values, sort_array(collect_set(page)) as page_list from web_events group by session_id) select s.browser, webs.page_values, webs.page_list from sessions s left join web_events_by_session webs on s.id = webs.session_id order by s.browser, page_values;

@@ -1,0 +1,1 @@
+SELECT i.store_id, p.price, s.supplier_name, s.country FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.stock_qty >= 242 ORDER BY price DESC

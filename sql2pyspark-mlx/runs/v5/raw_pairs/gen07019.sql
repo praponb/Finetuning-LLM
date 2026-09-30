@@ -1,0 +1,1 @@
+SELECT products.id, products.price FROM products WHERE products.launch_date BETWEEN '2024-01-01' AND '2024-12-07' AND products.id IN (SELECT product_id FROM order_items WHERE quantity <= 8) ORDER BY id DESC

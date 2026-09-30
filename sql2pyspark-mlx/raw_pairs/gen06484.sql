@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, p.price, p.brand, p.supplier_id, COALESCE(oi.unit_price, 0) AS unit_price_filled FROM order_items oi JOIN products p ON p.id = oi.product_id WHERE oi.order_id IN (9, 18, 21, 29)

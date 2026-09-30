@@ -1,0 +1,1 @@
+SELECT *, ROW_NUMBER() OVER (ORDER BY signup_date, id) AS seq_no, ROW_NUMBER() OVER (PARTITION BY segment, country ORDER BY signup_date DESC, id) AS event_seq, NTILE(4) OVER (ORDER BY age DESC, id) AS age_bucket, SUM(age) OVER (PARTITION BY segment ORDER BY signup_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_age FROM customers

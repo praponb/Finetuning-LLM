@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, full_name, email, manager_id, salary, hire_date, level, TRIM(job_title) AS clean_job_title FROM employees WHERE hire_date >= TO_DATE('2023-02-28')) SELECT level, id FROM cleaned EXCEPT ALL SELECT level, id FROM employees WHERE level = 'L5';

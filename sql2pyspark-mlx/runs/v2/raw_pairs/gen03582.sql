@@ -1,0 +1,1 @@
+SELECT id, country, signup_date FROM (SELECT id, country, signup_date, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date DESC, id) AS rnk FROM customers WHERE city IN ('Singapore', 'Berlin', 'Tokyo')) AS t WHERE rnk <= 3 ORDER BY signup_date, id;

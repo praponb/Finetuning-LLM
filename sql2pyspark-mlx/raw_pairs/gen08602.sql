@@ -1,0 +1,1 @@
+SELECT o.store_id, ROUND(STDDEV(oi.unit_price), 2) AS stddev_unit_price, COUNT(oi.unit_price) AS unit_price_count FROM order_items oi RIGHT JOIN orders o ON o.id = oi.order_id WHERE o.customer_id IN (7, 12, 27, 40) GROUP BY o.store_id ORDER BY store_id;

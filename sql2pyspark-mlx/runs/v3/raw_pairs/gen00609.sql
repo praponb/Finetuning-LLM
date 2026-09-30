@@ -1,0 +1,1 @@
+select we.id, we.duration_sec, we.event_time, we.session_id, s.customer_id, s.browser from web_events we inner join sessions s on we.session_id = s.id where s.device = 'desktop' and we.event_type = 'purchase' order by we.id desc

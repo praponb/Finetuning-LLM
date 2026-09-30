@@ -1,0 +1,1 @@
+SELECT id, hire_date, salary, dept_id, manager_id, SUM(salary) OVER (ORDER BY hire_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_salary, AVG(salary) OVER (PARTITION BY dept_id, manager_id) dept_id_avg_salary FROM employees WHERE manager_id = 27 ORDER BY manager_id DESC;

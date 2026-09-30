@@ -1,0 +1,1 @@
+WITH department_summary AS (SELECT dept_id, MAX(salary) - MIN(salary) AS salary_range FROM employees WHERE full_name LIKE 'b%' GROUP BY dept_id) SELECT d.id, d.budget, d.location, ds.salary_range FROM departments d LEFT JOIN department_summary ds ON d.id = ds.dept_id WHERE ds.salary_range > 71 ORDER BY id DESC;

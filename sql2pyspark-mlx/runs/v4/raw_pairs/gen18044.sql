@@ -1,0 +1,1 @@
+SELECT age_bucket, max_age FROM (SELECT CASE WHEN age >= 59 THEN 'high' WHEN age >= 26 THEN 'mid' ELSE 'low' END AS age_bucket, MAX(age) AS max_age FROM customers WHERE city != 'Tokyo' GROUP BY CASE WHEN age >= 59 THEN 'high' WHEN age >= 26 THEN 'mid' ELSE 'low' END) AS x WHERE max_age < 40 ORDER BY max_age DESC;

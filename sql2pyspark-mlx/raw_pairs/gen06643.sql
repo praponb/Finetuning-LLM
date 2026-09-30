@@ -1,0 +1,1 @@
+SELECT id, city, rating, country, FIRST_VALUE(country) OVER (PARTITION BY city ORDER BY rating DESC, id) AS first_country, DENSE_RANK() OVER (ORDER BY rating DESC) AS rating_dense_rank FROM suppliers;

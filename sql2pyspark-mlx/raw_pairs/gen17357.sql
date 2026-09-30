@@ -1,0 +1,1 @@
+SELECT c.email, t.standard_count FROM customers c LEFT JOIN (SELECT customer_id, SUM(CASE WHEN plan = 'standard' THEN 1 ELSE 0 END) AS standard_count FROM subscriptions GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY 1, t.standard_count;

@@ -1,0 +1,1 @@
+WITH lines AS (SELECT t.id, t.customer_id, t.created_at, pos + 1 AS line_no, line.qty, line.price, line.promo FROM carts t LATERAL VIEW POSEXPLODE(t.items) li AS pos, line) SELECT id, customer_id, line_no, qty, price, promo, CASE WHEN promo RLIKE '^(VIP|BUNDLE)$' THEN 'GROUP_B' ELSE 'PRIORITY' END AS promo_zone FROM lines ORDER BY price NULLS LAST;

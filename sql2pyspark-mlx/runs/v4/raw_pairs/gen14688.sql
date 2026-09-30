@@ -1,0 +1,1 @@
+select date_trunc('month', started_at) as activity_month, size(collect_set(country)) as num_countries, sort_array(collect_set(device)) as device_list, count(distinct customer_id) as distinct_customer_ids, max(started_at) as last_seen from sessions group by date_trunc('month', started_at)

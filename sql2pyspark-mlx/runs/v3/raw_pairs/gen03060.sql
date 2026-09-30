@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_month, COUNT(CASE WHEN status = 'LOST' THEN 1 END) AS lost_count, MIN(shipped_date) AS min_shipped_date FROM shipments GROUP BY DATE_FORMAT(delivered_date, 'yyyy-MM')

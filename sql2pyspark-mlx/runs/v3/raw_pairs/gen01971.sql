@@ -1,0 +1,1 @@
+SELECT city, country, SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END) chiang_mai_count, AVG(rating) avg_rating FROM suppliers WHERE rating < 3.0 AND supplier_name LIKE 'Li%' AND LOWER(TRIM(supplier_name)) = 'eurogoods gmbh' GROUP BY city, country

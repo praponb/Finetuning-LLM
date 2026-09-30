@@ -1,0 +1,1 @@
+select product_id, store_id, min(quantity) min_quantity, round(stddev(quantity), 2) stddev_quantity, sum(quantity) total_quantity from inventory where store_id in (4, 5) or product_id in (1, 5, 8, 9) group by product_id, store_id order by total_quantity desc

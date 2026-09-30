@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, COUNT(*) AS cnt, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(we.event_type))) AS event_type_values FROM web_events we INNER JOIN sessions s ON we.session_id = s.id LEFT OUTER JOIN customers c ON c.id = s.customer_id GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM') HAVING COUNT(*) > 4 ORDER BY 3 DESC, cnt DESC

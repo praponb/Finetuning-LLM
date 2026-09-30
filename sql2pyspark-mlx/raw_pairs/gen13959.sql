@@ -1,0 +1,1 @@
+SELECT TO_DATE(paid_at) AS paid_day, SUM(amount) AS total_amount, ROUND(SUM(amount) * 100.0 / SUM(SUM(amount)) OVER (), 2) AS pct_of_total FROM payments WHERE status != 'SUCCESS' GROUP BY TO_DATE(paid_at);

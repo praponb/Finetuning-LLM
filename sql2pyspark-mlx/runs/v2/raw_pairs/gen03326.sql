@@ -1,0 +1,1 @@
+SELECT hire_quarter, min_salary, l2_count FROM (SELECT QUARTER(hire_date) AS hire_quarter, MIN(salary) AS min_salary, SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END) AS l2_count FROM employees WHERE email IS NOT NULL GROUP BY QUARTER(hire_date)) AS agg WHERE min_salary < 121000;

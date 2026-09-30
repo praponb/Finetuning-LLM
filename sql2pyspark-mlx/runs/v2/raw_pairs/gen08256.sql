@@ -1,0 +1,1 @@
+with product_stats as (select product_id, round(stddev(quantity), 2) as stddev_quantity from inventory group by product_id) select p.id, p.stock_qty, p.category, ps.stddev_quantity from products p left outer join product_stats ps on p.id = ps.product_id order by p.stock_qty desc

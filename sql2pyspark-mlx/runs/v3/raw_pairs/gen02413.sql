@@ -1,0 +1,1 @@
+select quarter(hire_date) as hire_quarter, sum(salary) as total_salary, round(sum(salary) * 100.0 / sum(sum(salary)) over (), 2) as pct_of_total from employees where salary >= 117000 group by quarter(hire_date);

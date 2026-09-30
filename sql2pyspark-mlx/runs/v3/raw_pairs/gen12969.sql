@@ -1,0 +1,1 @@
+select case when quantity >= 183 then 'high' when quantity >= 68 then 'mid' else 'low' end as quantity_bucket, product_id, min(quantity) as min_quantity from inventory where store_id in (2, 5) and store_id in (1, 3, 4) group by case when quantity >= 183 then 'high' when quantity >= 68 then 'mid' else 'low' end, product_id order by quantity_bucket desc, product_id desc

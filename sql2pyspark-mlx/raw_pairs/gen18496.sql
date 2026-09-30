@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, SUM(cost) AS total_cost, COUNT(DISTINCT cost) AS unique_orders FROM shipments WHERE cost BETWEEN 60 AND 83 GROUP BY order_id) SELECT o.id, o.status, o.shipping_fee, os.total_cost, os.unique_orders FROM orders o INNER JOIN order_summary os ON o.id = os.order_id

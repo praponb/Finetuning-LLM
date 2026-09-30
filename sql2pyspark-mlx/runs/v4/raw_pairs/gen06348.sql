@@ -1,0 +1,1 @@
+SELECT id, device, started_at, DENSE_RANK() OVER (PARTITION BY device ORDER BY started_at) AS started_at_dense_rank, RANK() OVER (ORDER BY started_at DESC) AS started_at_rank FROM sessions WHERE device = 'desktop';

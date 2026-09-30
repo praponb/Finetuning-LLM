@@ -1,0 +1,1 @@
+SELECT txn_month, credit_count, merchant_values FROM (SELECT MONTH(txn_time) AS txn_month, COUNT(CASE WHEN txn_type = 'CREDIT' THEN 1 END) AS credit_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE merchant = 'Amazon' GROUP BY MONTH(txn_time)) AS sub WHERE credit_count < 7 ORDER BY txn_month DESC

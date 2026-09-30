@@ -1,0 +1,1 @@
+select s.country, t.duration_sec_range from sessions s inner join (select session_id, max(duration_sec) - min(duration_sec) duration_sec_range from web_events where session_id in (1, 8, 21, 30) group by session_id) t on s.id = t.session_id order by country desc

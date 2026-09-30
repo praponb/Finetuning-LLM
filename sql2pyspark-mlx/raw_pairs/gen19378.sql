@@ -1,0 +1,1 @@
+select quarter(c.signup_date) signup_quarter, min(we.duration_sec) min_duration_sec from web_events we join sessions s on we.session_id = s.id left join customers c on s.customer_id = c.id where c.credit_limit < 6200 group by quarter(c.signup_date);

@@ -1,0 +1,1 @@
+SELECT id, session_id, event_time, duration_sec FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY event_time DESC, id) AS rn FROM web_events) AS t WHERE rn <= 5 ORDER BY duration_sec DESC;

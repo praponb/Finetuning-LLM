@@ -1,0 +1,1 @@
+SELECT CASE WHEN sqft >= 16634 THEN 'high' WHEN sqft >= 6672 THEN 'mid' ELSE 'low' END AS sqft_bucket, YEAR(opened_date) AS opened_year, MAX(sqft) AS max_sqft, SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END) AS tokyo_count FROM stores GROUP BY CASE WHEN sqft >= 16634 THEN 'high' WHEN sqft >= 6672 THEN 'mid' ELSE 'low' END, YEAR(opened_date) ORDER BY 4;

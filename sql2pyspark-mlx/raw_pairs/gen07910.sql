@@ -1,0 +1,1 @@
+select p.brand, round(stddev(oi.unit_price), 2) stddev_unit_price, round(stddev(oi.quantity), 2) stddev_quantity from order_items oi left outer join products p on oi.product_id = p.id where p.product_name like 'w%' group by p.brand order by brand, stddev_unit_price desc;

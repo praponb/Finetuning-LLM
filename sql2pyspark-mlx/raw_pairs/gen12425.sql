@@ -1,0 +1,1 @@
+SELECT account_type, SUM(balance) AS total_balance, AVG(balance) AS avg_balance, SUM(CASE WHEN account_type = 'SAVINGS' THEN balance ELSE 0 END) AS savings_balance FROM accounts WHERE balance < 73000 GROUP BY account_type HAVING COUNT(DISTINCT balance) > 3 ORDER BY savings_balance DESC, avg_balance;

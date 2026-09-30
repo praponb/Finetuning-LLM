@@ -1,0 +1,1 @@
+WITH recent_shipments AS (SELECT * FROM shipments WHERE cost < 68), summary AS (SELECT DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_month, COUNT(CASE WHEN carrier = 'Kerry' THEN 1 END) AS kerry_count FROM recent_shipments GROUP BY DATE_FORMAT(delivered_date, 'yyyy-MM')) SELECT * FROM summary WHERE kerry_count > 8

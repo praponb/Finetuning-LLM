@@ -1,0 +1,1 @@
+SELECT emp.full_name AS employee_full_name, mgr.full_name AS manager_full_name, mgr.manager_id AS manager_manager_id, UPPER(TRIM(mgr.email)) AS email_normalized FROM employees emp LEFT OUTER JOIN employees mgr ON emp.manager_id = mgr.id ORDER BY email_normalized, mgr.manager_id DESC

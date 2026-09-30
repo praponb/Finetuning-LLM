@@ -1,0 +1,1 @@
+SELECT id, customer_id, plan, start_date, end_date, monthly_fee, status, CUME_DIST() OVER (PARTITION BY plan ORDER BY monthly_fee DESC) AS monthly_fee_cume_dist, ROUND(monthly_fee / SUM(monthly_fee) OVER (PARTITION BY plan), 4) AS monthly_fee_share, PERCENT_RANK() OVER (PARTITION BY plan ORDER BY monthly_fee DESC NULLS FIRST) AS monthly_fee_percent_rank FROM subscriptions;

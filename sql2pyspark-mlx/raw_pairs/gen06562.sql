@@ -1,0 +1,3 @@
+SELECT s.city, p.supplier_id
+FROM suppliers s
+LEFT JOIN products p ON s.id = p.supplier_id

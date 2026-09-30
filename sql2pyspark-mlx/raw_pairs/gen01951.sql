@@ -1,0 +1,1 @@
+SELECT oi.id, oi.order_id, p.launch_date, p.stock_qty - p.price stock_qty_minus_price FROM order_items oi INNER JOIN products p ON oi.product_id = p.id WHERE p.price > 420 AND oi.product_id IN (5, 36)

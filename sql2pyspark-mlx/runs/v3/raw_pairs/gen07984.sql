@@ -1,0 +1,1 @@
+select channel, case when shipping_fee >= 41 then 'high' when shipping_fee >= 20 then 'mid' else 'low' end as shipping_fee_bucket, sum(case when status = 'CANCELLED' then 1 else 0 end) as cancelled_count from orders group by 1, 2 having sum(case when status = 'CANCELLED' then 1 else 0 end) > 78 order by cancelled_count;

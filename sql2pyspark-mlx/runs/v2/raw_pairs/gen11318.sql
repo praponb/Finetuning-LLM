@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, RANK() OVER (PARTITION BY account_id ORDER BY txn_time DESC) AS rnk FROM transactions WHERE merchant NOT IN ('Amazon', 'Grab')) SELECT id, account_id, txn_time, txn_type FROM ranked WHERE rnk = 1 ORDER BY txn_time;

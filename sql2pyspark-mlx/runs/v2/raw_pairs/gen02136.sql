@@ -1,0 +1,1 @@
+SELECT MAX(unit_price) - MIN(unit_price) AS unit_price_range, MAX(quantity) - MIN(quantity) AS quantity_range, COUNT(quantity) AS quantity_count FROM order_items WHERE unit_price >= 210 AND order_id IN (15, 23, 27, 36) ORDER BY quantity_count DESC;

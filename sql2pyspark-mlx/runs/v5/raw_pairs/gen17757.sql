@@ -1,0 +1,1 @@
+WITH flattened AS (SELECT id, plan, effective_from, currency, EXPLODE_OUTER(tier_prices) AS val FROM price_tiers) SELECT plan, effective_from, currency, RANK() OVER (PARTITION BY plan ORDER BY val DESC NULLS FIRST) AS val_rank, CUME_DIST() OVER (ORDER BY val) AS val_cume_dist, CUME_DIST() OVER (PARTITION BY currency, plan ORDER BY val DESC) AS val_cume_dist_2 FROM flattened

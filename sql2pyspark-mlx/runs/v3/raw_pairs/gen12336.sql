@@ -1,0 +1,1 @@
+SELECT id, region, ADD_MONTHS(opened_date, 12) AS opened_date_plus_months, CEIL(sqft) AS sqft_whole FROM stores WHERE LOWER(TRIM(store_name)) = 'old town' AND (city IN ('London', 'Tokyo') OR city IN ('Bangkok', 'Chiang Mai', 'Singapore'));

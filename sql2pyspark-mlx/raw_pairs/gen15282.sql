@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, device_code, humidity, firmware, TO_DATE(reading_ts) AS reading_ts_date FROM device_readings WHERE device_code NOT IN ('DV-04', 'DV-03')) SELECT * FROM (SELECT firmware, device_code, humidity FROM cleaned) src PIVOT (AVG(humidity) AS value_sum, COUNT(1) AS item_count FOR device_code IN ('DV-03' AS dv_03, 'DV-04' AS dv_04));

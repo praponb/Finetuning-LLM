@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 1710 THEN 'high' WHEN amount >= 550 THEN 'mid' ELSE 'low' END AS amount_bucket, status, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments GROUP BY amount_bucket, status HAVING COUNT(*) > 2 ORDER BY amount_bucket;

@@ -1,0 +1,1 @@
+select event_month, avg_duration_sec from (select date_trunc('MONTH', event_time) as event_month, avg(duration_sec) as avg_duration_sec from web_events group by date_trunc('MONTH', event_time)) as sub where avg_duration_sec >= 140

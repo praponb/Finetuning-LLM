@@ -1,0 +1,1 @@
+SELECT account_type, CASE WHEN status IN ('FROZEN', 'OPEN') THEN 'tier_1' ELSE 'other' END status_group, MAX(balance) max_balance, MAX(opened_date) last_opened_date, SUM(balance) total_balance FROM accounts GROUP BY account_type, status_group ORDER BY total_balance DESC;

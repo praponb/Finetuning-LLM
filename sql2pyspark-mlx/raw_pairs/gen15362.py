@@ -1,0 +1,7 @@
+from pyspark.sql import functions as F
+
+result = (
+    df_suppliers
+    .filter(F.col("city") == "Berlin")
+    .select("id", "country", "supplier_name", "rating")
+)

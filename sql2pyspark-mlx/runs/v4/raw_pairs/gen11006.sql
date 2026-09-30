@@ -1,0 +1,1 @@
+SELECT CASE WHEN discount >= 0.4 THEN 'high' WHEN discount >= 0.12 THEN 'mid' ELSE 'low' END AS discount_bucket, ROUND(AVG(amount), 2) AS avg_amount, SUM(shipping_fee) AS total_shipping_fee FROM orders WHERE channel = 'partner' AND (amount >= 880 OR customer_id IS NULL) GROUP BY CASE WHEN discount >= 0.4 THEN 'high' WHEN discount >= 0.12 THEN 'mid' ELSE 'low' END;

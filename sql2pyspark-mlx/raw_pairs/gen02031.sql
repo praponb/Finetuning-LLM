@@ -1,0 +1,1 @@
+select p.id, p.product_name, count(oi.id) as order_item_count, min(oi.quantity) as min_quantity from products p inner join order_items oi on oi.product_id = p.id where oi.order_id in (7, 35, 37) group by p.id, p.product_name order by p.id;

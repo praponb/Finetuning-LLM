@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM store_sales WHERE units < 33 AND (units BETWEEN 34 AND 37 OR product_id IN (6, 8))), agg AS (SELECT product_id, ROUND(AVG(revenue), 2) AS avg_revenue FROM base GROUP BY product_id) SELECT * FROM agg ORDER BY product_id DESC LIMIT 1;

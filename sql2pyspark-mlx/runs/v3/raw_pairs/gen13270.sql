@@ -1,0 +1,1 @@
+select p.id, count(oi.id) as order_item_count, round(stddev(oi.unit_price), 2) as stddev_unit_price, avg(oi.quantity) as avg_quantity from products p left join order_items oi on oi.product_id = p.id group by p.id order by order_item_count

@@ -1,0 +1,1 @@
+SELECT d.budget, d.location, d.dept_name, e.manager_id, e.level, e.dept_id, CASE WHEN e.is_remote THEN 'Yes' ELSE 'No' END AS is_remote_label FROM departments d LEFT JOIN employees e ON e.dept_id = d.id WHERE d.dept_name IN ('Engineering', 'Marketing', 'HR') ORDER BY level

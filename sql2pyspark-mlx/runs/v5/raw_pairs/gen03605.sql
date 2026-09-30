@@ -1,0 +1,1 @@
+SELECT id, store_name, opened_date, sqft, LAST_VALUE(sqft, TRUE) OVER w_hist AS last_known_sqft, SUM(sqft) OVER (ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_sqft FROM stores WHERE sqft > 5279 WINDOW w_hist AS (PARTITION BY region ORDER BY opened_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW);

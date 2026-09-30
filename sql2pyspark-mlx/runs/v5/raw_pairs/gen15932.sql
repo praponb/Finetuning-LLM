@@ -1,0 +1,1 @@
+SELECT 'shipment' AS source, delivered_date FROM shipments WHERE delivered_date < '2025-02-01' UNION SELECT 'store' AS source, opened_date FROM stores WHERE opened_date > '2024-09-01' ORDER BY source;

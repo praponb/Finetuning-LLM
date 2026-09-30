@@ -1,0 +1,1 @@
+SELECT dept_name, CASE WHEN dept_name IN ('Legal', 'Engineering') THEN 'tier_1' ELSE 'other' END AS dept_name_group, location, ROUND(AVG(budget), 2) AS avg_budget, COUNT(DISTINCT budget) AS unique_dept_names FROM departments WHERE dept_name != 'Legal' GROUP BY dept_name, dept_name_group, location

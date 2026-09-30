@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM products WHERE ARRAY_CONTAINS(tags, 'clearance') AND cost > 710), agg AS (SELECT brand, category, ROUND(AVG(stock_qty), 2) AS avg_stock_qty, MAX(cost) - MIN(cost) AS cost_range FROM Base GROUP BY brand, category) SELECT * FROM agg WHERE avg_stock_qty > 22

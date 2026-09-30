@@ -1,0 +1,1 @@
+WITH Src AS (SELECT * FROM products WHERE category = 'Fashion'), Agg AS (SELECT brand, COUNT(CASE WHEN category = 'Home' THEN 1 END) AS home_count FROM Src GROUP BY brand) SELECT * FROM Agg WHERE home_count > 8 ORDER BY home_count

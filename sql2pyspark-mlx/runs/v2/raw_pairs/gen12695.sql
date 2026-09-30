@@ -1,0 +1,1 @@
+WITH recent_inventory AS (SELECT * FROM inventory WHERE store_id IN (1, 3, 5)), product_id_summary AS (SELECT product_id, MIN(last_restock) AS min_last_restock FROM recent_inventory GROUP BY product_id) SELECT * FROM product_id_summary;

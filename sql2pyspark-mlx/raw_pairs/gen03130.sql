@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT id, store_id, last_restock, product_id, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock, id) AS pos FROM inventory) SELECT id, store_id, last_restock, product_id FROM Numbered WHERE pos <= 1

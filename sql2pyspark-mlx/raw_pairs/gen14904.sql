@@ -1,0 +1,1 @@
+SELECT CASE WHEN amount >= 3100 THEN 'high' WHEN amount >= 1600 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(DISTINCT amount) AS unique_accounts FROM transactions GROUP BY CASE WHEN amount >= 3100 THEN 'high' WHEN amount >= 1600 THEN 'mid' ELSE 'low' END

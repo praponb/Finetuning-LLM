@@ -1,0 +1,1 @@
+select event_type, date_trunc('MONTH', event_time) as event_month, round(stddev(duration_sec), 2) as stddev_duration_sec, sum(case when event_type = 'add_to_cart' then 1 else 0 end) as add_to_cart_count from web_events where session_id = 8 and event_time >= '2023-05-01' group by event_type, date_trunc('MONTH', event_time) order by event_type;

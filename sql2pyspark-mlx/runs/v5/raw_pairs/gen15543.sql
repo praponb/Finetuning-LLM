@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT id, customer_id, EXPLODE_OUTER(coupon_codes) AS code FROM carts) SELECT customer_id, COUNT(DISTINCT id) AS distinct_ids, COUNT(DISTINCT customer_id) AS distinct_customer_ids FROM exploded GROUP BY customer_id;

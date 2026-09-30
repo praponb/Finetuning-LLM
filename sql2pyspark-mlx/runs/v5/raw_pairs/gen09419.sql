@@ -1,0 +1,1 @@
+with SessionSummary as (select session_id, avg(duration_sec) as avg_duration_sec from web_events where duration_sec between 195 and 437 group by session_id) select s.device, s.browser, S.avg_duration_sec from sessions s left join SessionSummary S on s.id = S.session_id where S.avg_duration_sec >= 410 order by s.device

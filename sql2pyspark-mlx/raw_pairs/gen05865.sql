@@ -1,0 +1,1 @@
+with session_totals as (select session_id, count(duration_sec) as duration_sec_count from web_events where event_type in ('search', 'page_view', 'click') group by session_id) select s.id, s.started_at, st.duration_sec_count from sessions s left outer join session_totals st on s.id = st.session_id where st.duration_sec_count >= 5

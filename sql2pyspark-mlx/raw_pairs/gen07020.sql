@@ -1,0 +1,1 @@
+SELECT CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END AS rating_bucket, MAX(rating) AS max_rating, COUNT(CASE WHEN country = 'US' THEN 1 END) AS us_count FROM suppliers WHERE supplier_name IS NOT NULL GROUP BY CASE WHEN rating >= 3.9 THEN 'high' WHEN rating >= 2.2 THEN 'mid' ELSE 'low' END;

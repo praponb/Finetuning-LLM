@@ -1,0 +1,1 @@
+SELECT customer_id, CASE WHEN YEAR(end_date) < 2024 THEN 'before_2024' WHEN YEAR(end_date) = 2024 THEN '2024' ELSE 'after_2024' END AS end_cohort, SUM(CASE WHEN status = 'EXPIRED' THEN monthly_fee ELSE 0 END) AS expired_monthly_fee FROM subscriptions GROUP BY 1, 2 HAVING expired_monthly_fee >= 46;

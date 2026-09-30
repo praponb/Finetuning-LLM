@@ -1,0 +1,1 @@
+select id, page, duration_sec, event_type from (select id, page, duration_sec, event_type, dense_rank() over (partition by page order by duration_sec desc) pos from web_events) r where pos <= 3 order by event_type;

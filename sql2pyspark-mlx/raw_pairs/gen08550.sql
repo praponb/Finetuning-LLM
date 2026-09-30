@@ -1,0 +1,1 @@
+select s.device, round(avg(we.duration_sec), 2) avg_duration_sec, sum(case when we.event_type = 'add_to_cart' then 1 else 0 end) add_to_cart_count from web_events we left join sessions s on we.session_id = s.id left join customers c on s.customer_id = c.id where we.session_id = 7 group by s.device order by 1 desc, avg_duration_sec desc;

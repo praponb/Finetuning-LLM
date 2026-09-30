@@ -1,0 +1,1 @@
+select status, method, sum(case when method = 'paypal' then amount else 0 end) as paypal_amount from payments where order_id is not null and amount between 1110 and 1300 group by status, method having sum(case when method = 'paypal' then amount else 0 end) > 37;

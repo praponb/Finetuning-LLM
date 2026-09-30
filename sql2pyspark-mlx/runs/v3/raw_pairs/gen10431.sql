@@ -1,0 +1,1 @@
+select case when rating >= 4.2 then 'high' when rating >= 2.4 then 'mid' else 'low' end rating_bucket, sum(rating) total_rating from suppliers group by 1 order by total_rating desc, rating_bucket asc limit 10;

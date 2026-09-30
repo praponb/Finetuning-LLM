@@ -1,0 +1,1 @@
+with orders_by_store as (select store_id, max(order_date) as latest_order_date, min(discount) as min_discount from orders group by store_id) select s.id, s.opened_date, s.store_name, obs.latest_order_date, obs.min_discount from stores s left join orders_by_store obs on s.id = obs.store_id;

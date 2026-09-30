@@ -1,0 +1,1 @@
+SELECT s.country, s.city, p.product_name, p.category, INITCAP(TRIM(s.supplier_name)) AS supplier_name_title FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE p.supplier_id IN (15, 18, 20, 32) AND p.stock_qty <= 369

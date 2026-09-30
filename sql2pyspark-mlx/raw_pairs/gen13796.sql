@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM store_sales WHERE MONTH(sale_date) IN (1, 3, 4)), agg AS (SELECT product_id, COUNT(*) AS num_store_sales FROM src GROUP BY product_id) SELECT product_id, num_store_sales FROM agg WHERE num_store_sales < 7;

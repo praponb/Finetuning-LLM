@@ -1,0 +1,1 @@
+SELECT p.id, p.brand, COUNT(i.id) AS inventory_count, MIN(i.last_restock) AS min_last_restock, MAX(i.quantity) AS max_quantity FROM products p LEFT OUTER JOIN inventory i ON p.id = i.product_id GROUP BY p.id, p.brand ORDER BY max_quantity

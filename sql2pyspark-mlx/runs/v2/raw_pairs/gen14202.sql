@@ -1,0 +1,1 @@
+WITH ValidAccounts AS (SELECT *, ROUND(balance, 0) AS balance_rounded FROM accounts WHERE NOT (status = 'CLOSED' AND opened_date <= '2024-12-23')), accounts_stats AS (SELECT status, account_type, SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) AS checking_balance FROM ValidAccounts GROUP BY status, account_type) SELECT * FROM accounts_stats;

@@ -1,0 +1,1 @@
+select s.id, s.sqft, s.opened_date from stores s where s.city in ('Chiang Mai', 'Bangkok') and not exists (select 1 from inventory i where i.store_id = s.id and i.quantity is not null) order by sqft desc

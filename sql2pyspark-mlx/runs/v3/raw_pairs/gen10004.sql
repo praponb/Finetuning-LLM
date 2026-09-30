@@ -1,0 +1,1 @@
+SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) AS account_type_values FROM accounts WHERE MONTH(opened_date) IN (6, 11, 12) AND balance IS NULL GROUP BY status ORDER BY status, account_type_values;

@@ -1,0 +1,1 @@
+SELECT i.id, i.last_restock, i.product_id, i.store_id, ss.sale_date, ss.product_id AS store_sale_product_id, ss.revenue FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.last_restock >= '2025-03-01' AND ss.product_id IN (5, 6, 8, 9) ORDER BY ss.sale_date;

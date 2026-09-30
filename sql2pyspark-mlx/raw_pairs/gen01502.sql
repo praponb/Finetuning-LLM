@@ -1,0 +1,1 @@
+select s.id, s.country, s.city, top1.product_category from suppliers s join lateral (select c.category as product_category from products c where c.supplier_id = s.id order by c.price desc, c.id desc limit 1) top1 on true;

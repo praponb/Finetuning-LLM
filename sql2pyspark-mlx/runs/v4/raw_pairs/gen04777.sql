@@ -1,0 +1,1 @@
+select channel, max(order_date) last_order_date, sum(case when channel = 'partner' then 1 else 0 end) partner_count from orders where discount <= 0.24 or discount is not null group by channel having partner_count >= 42

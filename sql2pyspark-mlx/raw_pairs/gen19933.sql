@@ -1,0 +1,1 @@
+SELECT transactions.is_flagged, transactions.account_id, transactions.txn_type, accounts.opened_date, accounts.account_type FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id WHERE accounts.account_type = 'CHECKING' OR accounts.opened_date > '2024-02-28'

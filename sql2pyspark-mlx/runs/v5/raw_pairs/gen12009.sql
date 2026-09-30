@@ -1,0 +1,1 @@
+select case when city in ('Bangkok', 'New York') then 'priority' else 'other' end as city_group, sum(case when region = 'North' then 1 else 0 end) as north_count, sum(case when region = 'South' then sqft else 0 end) as south_sqft from stores group by city_group order by south_sqft desc

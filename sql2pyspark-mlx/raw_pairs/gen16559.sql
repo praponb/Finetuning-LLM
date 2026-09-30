@@ -1,0 +1,1 @@
+SELECT city, COUNT(age) AS age_count, COUNT(CASE WHEN city = 'Berlin' THEN 1 END) AS berlin_count, ROUND((100 * SUM(CASE WHEN country = 'TH' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_th FROM customers WHERE city = 'Tokyo' GROUP BY city

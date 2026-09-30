@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, created_at, coupon_codes, item.product_id, item.qty, item.price, item.promo FROM carts LATERAL VIEW EXPLODE(items) x AS item) SELECT created_at, product_id, promo FROM lines ORDER BY created_at

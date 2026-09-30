@@ -1,0 +1,1 @@
+SELECT *, PERCENT_RANK() OVER (ORDER BY shipping_fee DESC NULLS LAST) AS shipping_fee_percent_rank, ROW_NUMBER() OVER w_running AS row_seq FROM orders WINDOW w_running AS (ORDER BY shipping_fee DESC, id);

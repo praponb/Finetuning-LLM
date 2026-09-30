@@ -1,0 +1,1 @@
+SELECT status, max_monthly_fee FROM (SELECT status, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions WHERE plan IN ('premium', 'enterprise', 'standard') GROUP BY status) AS t WHERE max_monthly_fee > 80 ORDER BY status LIMIT 1;

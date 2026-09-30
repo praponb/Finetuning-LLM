@@ -1,0 +1,1 @@
+WITH recent_store_sales AS (SELECT * FROM store_sales WHERE revenue > 3600), store_sales_stats AS (SELECT store_id, MIN(revenue) AS min_revenue, ROUND(AVG(units), 2) AS avg_units FROM recent_store_sales GROUP BY store_id) SELECT store_id, min_revenue, avg_units FROM store_sales_stats WHERE min_revenue < 1700 ORDER BY min_revenue DESC

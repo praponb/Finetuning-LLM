@@ -1,0 +1,1 @@
+SELECT customer_id, SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END) enterprise_count, COUNT(*) num_subscriptions, SUM(CASE WHEN plan = 'standard' THEN monthly_fee ELSE 0 END) standard_monthly_fee FROM subscriptions GROUP BY 1 HAVING standard_monthly_fee < 26 ORDER BY enterprise_count;

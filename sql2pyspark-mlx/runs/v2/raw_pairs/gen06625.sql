@@ -1,0 +1,1 @@
+WITH top_customers AS (SELECT id, city, signup_date, RANK() OVER (PARTITION BY city ORDER BY signup_date DESC) AS pos FROM customers WHERE name LIKE 'C%') SELECT id, city, signup_date FROM top_customers WHERE pos <= 5

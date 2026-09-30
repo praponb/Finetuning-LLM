@@ -1,0 +1,1 @@
+SELECT emp.id, emp.level AS employee_level, mgr.dept_id AS manager_dept_id, mgr.is_remote AS manager_is_remote, mgr.manager_id AS manager_manager_id FROM employees AS emp LEFT OUTER JOIN employees AS mgr ON emp.manager_id = mgr.id WHERE mgr.manager_id IN (6, 21, 29) ORDER BY id DESC;

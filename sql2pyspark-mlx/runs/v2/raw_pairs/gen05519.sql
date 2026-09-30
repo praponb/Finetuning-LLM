@@ -1,0 +1,1 @@
+SELECT id, city, signup_date, segment, RANK() OVER (PARTITION BY city ORDER BY signup_date) signup_date_rank, RANK() OVER (PARTITION BY segment ORDER BY signup_date) rnk FROM customers WHERE name IS NULL

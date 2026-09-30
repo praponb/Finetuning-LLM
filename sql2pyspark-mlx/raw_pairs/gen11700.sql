@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, DAY(launch_date) AS launch_date_day FROM products WHERE launch_date > TO_DATE('2023-06-27') AND cost > 220) SELECT s.id, s.category, s.price, s.cost, s.tags, x.store_sale_sale_date FROM valid s JOIN LATERAL (SELECT c.sale_date AS store_sale_sale_date FROM store_sales c WHERE c.product_id = s.id ORDER BY c.units DESC, c.id DESC LIMIT 1) x ON TRUE;

@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, INITCAP(TRIM(status)) status_title, COALESCE(cost, 0) cost_filled FROM shipments WHERE shipped_date > DATE '2023-08-15') SELECT * FROM (SELECT carrier, status, cost_filled FROM filtered) src PIVOT (AVG(cost_filled) AS amount FOR status IN ('LOST', 'IN_TRANSIT', 'DELIVERED'))

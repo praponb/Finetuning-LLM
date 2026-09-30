@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM web_events WHERE event_type = 'search'), page_summary AS (SELECT page, SUM(CASE WHEN event_type = 'page_view' THEN duration_sec ELSE 0 END) page_view_duration_sec FROM src GROUP BY page) SELECT page, page_view_duration_sec FROM page_summary;

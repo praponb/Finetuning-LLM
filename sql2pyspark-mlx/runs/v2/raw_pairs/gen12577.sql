@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 6 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, order_id, AVG(quantity) AS avg_quantity, MAX(quantity) AS max_quantity FROM order_items WHERE product_id IN (11, 29) AND order_id IN (34, 38, 40) GROUP BY quantity_bucket, product_id, order_id HAVING MAX(quantity) >= 3.8;

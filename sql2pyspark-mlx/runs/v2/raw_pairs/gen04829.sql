@@ -1,0 +1,1 @@
+SELECT store_sales.revenue, store_sales.units, store_sales.sale_date, products.supplier_id, products.product_name, products.brand FROM store_sales INNER JOIN products ON store_sales.product_id = products.id;

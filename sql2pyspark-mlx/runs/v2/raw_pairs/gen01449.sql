@@ -1,0 +1,1 @@
+select date_trunc('MONTH', opened_date) as opened_month, city, region, concat_ws(', ', sort_array(collect_set(region))) as region_values, avg(sqft) as avg_sqft from stores group by date_trunc('MONTH', opened_date), city, region order by region_values;

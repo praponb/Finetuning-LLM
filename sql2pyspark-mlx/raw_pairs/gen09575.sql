@@ -1,0 +1,1 @@
+select id, carrier, delivered_date, shipped_date from (select *, row_number() over (partition by carrier order by delivered_date desc, id) as rnk from shipments where carrier not in ('DHL', 'Kerry')) as t where rnk <= 3

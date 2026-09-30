@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, DATEDIFF(CURRENT_DATE(), reading_ts) AS days_since_reading_ts FROM device_readings WHERE HOUR(reading_ts) BETWEEN 8 AND 13) SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY reading_ts DESC, id) AS latest_rank FROM cleaned QUALIFY latest_rank = 1;

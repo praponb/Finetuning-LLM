@@ -1,0 +1,1 @@
+with AccountSummary as (select account_id, sum(case when txn_type = 'CREDIT' then amount else 0 end) credit_amount, avg(amount) avg_amount from transactions where amount >= 3300 group by account_id) select a.balance, A.credit_amount, A.avg_amount from accounts a inner join AccountSummary A on a.id = A.account_id where A.credit_amount >= 47 order by 1 desc;

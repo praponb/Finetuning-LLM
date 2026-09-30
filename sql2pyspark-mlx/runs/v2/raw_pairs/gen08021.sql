@@ -1,0 +1,1 @@
+SELECT e.id, e.is_remote, e.dept_id, e.job_title, d.dept_name, d.location FROM employees e INNER JOIN departments d ON e.dept_id = d.id WHERE e.hire_date BETWEEN '2024-09-02' AND '2024-11-01' ORDER BY id DESC

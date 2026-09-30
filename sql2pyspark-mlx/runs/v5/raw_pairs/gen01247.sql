@@ -1,0 +1,1 @@
+SELECT id, dept_name, location, CONCAT_WS('-', location, dept_name) AS location_dept_name_key FROM departments WHERE dept_name = 'Marketing' AND (dept_name IN ('Marketing', 'HR', 'Legal') OR location IN ('New York', 'London'));

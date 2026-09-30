@@ -1,0 +1,1 @@
+SELECT suppliers.id, suppliers.rating, suppliers.country, suppliers.city FROM suppliers WHERE NOT EXISTS (SELECT 1 FROM products WHERE products.supplier_id = suppliers.id AND products.product_name LIKE 'US%') ORDER BY country ASC;

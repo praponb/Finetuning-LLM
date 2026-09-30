@@ -1,0 +1,20 @@
+from pyspark.sql import functions as F
+
+department_totals = (
+    df_employees
+    .groupBy("dept_id")
+    .agg((F.max("salary") - F.min("salary")).alias("salary_range"))
+)
+
+result = (
+    df_departments.alias("d")
+    .join(department_totals.alias("t"), F.col("d.id") == F.col("t.dept_id"), "left")
+    .filter(F.col("t.salary_range") > 53)
+    .select(
+        F.col("d.id"),
+        F.col("d.dept_name"),
+        F.col("d.budget"),
+        F.col("t.salary_range"),
+    )
+    .orderBy(F.col("salary_range").desc())
+)

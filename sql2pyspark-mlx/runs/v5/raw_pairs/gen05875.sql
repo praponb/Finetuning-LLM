@@ -1,0 +1,1 @@
+SELECT s.id, s.city, t.unique_products, t.avg_revenue FROM stores s LEFT OUTER JOIN (SELECT store_id, COUNT(DISTINCT revenue) AS unique_products, AVG(revenue) AS avg_revenue FROM store_sales GROUP BY store_id) t ON s.id = t.store_id ORDER BY s.city

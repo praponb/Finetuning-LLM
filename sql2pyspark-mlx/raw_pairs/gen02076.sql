@@ -1,0 +1,1 @@
+SELECT e.id, e.email, e.full_name, d.budget, d.dept_name, d.location, LOWER(e.level) AS level_lower FROM employees e INNER JOIN departments d ON e.dept_id = d.id WHERE d.location NOT IN ('Singapore', 'Chiang Mai', 'Berlin') AND e.dept_id IN (2, 31, 34);

@@ -1,0 +1,1 @@
+SELECT method, status, order_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, MIN(paid_at) AS first_paid_at FROM payments WHERE paid_at < '2024-04-15' GROUP BY method, status, order_id ORDER BY 5, method, status, order_id LIMIT 1;

@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, session_id, event_type, page, event_time, duration_sec, ROUND(duration_sec * 0.85, 2) AS adjusted_duration_sec FROM web_events WHERE event_time >= '2025-01-18') SELECT * FROM (SELECT event_type, page, adjusted_duration_sec FROM valid) src PIVOT (MAX(adjusted_duration_sec) FOR page IN ('/product' AS product, '/home' AS home));

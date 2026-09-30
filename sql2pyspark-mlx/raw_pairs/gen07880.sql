@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, ROUND(AVG(s.monthly_fee), 2) AS avg_monthly_fee, COUNT(CASE WHEN s.status = 'EXPIRED' THEN 1 END) AS expired_count FROM subscriptions s JOIN customers c ON s.customer_id = c.id GROUP BY YEAR(c.signup_date) ORDER BY expired_count DESC, signup_year LIMIT 10;

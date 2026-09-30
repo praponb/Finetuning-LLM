@@ -1,0 +1,1 @@
+SELECT p.id, p.price, t.max_quantity, t.avg_quantity FROM products p LEFT JOIN (SELECT product_id, MAX(quantity) max_quantity, AVG(quantity) avg_quantity FROM inventory GROUP BY product_id) t ON p.id = t.product_id WHERE t.avg_quantity >= 200 ORDER BY t.avg_quantity;

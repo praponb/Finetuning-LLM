@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 190 THEN 'high' WHEN quantity >= 114 THEN 'mid' ELSE 'low' END AS quantity_bucket, store_id, product_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY 1, 2, 3 HAVING avg_quantity >= 51 ORDER BY store_id DESC;

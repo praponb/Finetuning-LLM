@@ -1,0 +1,1 @@
+SELECT product_id, MAX(unit_price) - MIN(unit_price) unit_price_range, MAX(unit_price) max_unit_price, ROUND(STDDEV(quantity), 2) stddev_quantity FROM order_items WHERE order_id IN (3, 37) GROUP BY product_id;

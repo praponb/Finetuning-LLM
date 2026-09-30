@@ -1,0 +1,1 @@
+with flattened as (select id, created_at, coupon_codes, inline(items) from carts) select case when qty >= 5 then 'HIGH' else 'LOW' end as qty_tier, max(product_id) filter (where promo = 'WELCOME5') as welcome5_max_product_id, approx_percentile(qty, array(0.25, 0.5, 0.75)) as qty_quartiles from flattened group by 1 having max(product_id) filter (where promo = 'WELCOME5') > 0

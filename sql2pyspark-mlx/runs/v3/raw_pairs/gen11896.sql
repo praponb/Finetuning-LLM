@@ -1,0 +1,1 @@
+SELECT s.status, o.status AS order_status, o.store_id, st.region, st.city FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN stores st ON st.id = o.store_id WHERE st.opened_date BETWEEN '2023-08-01' AND '2025-02-01';

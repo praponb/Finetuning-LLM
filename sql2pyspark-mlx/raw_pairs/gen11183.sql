@@ -1,0 +1,1 @@
+select s.country, min(ss.sale_date) as min_sale_date from store_sales ss inner join products p on ss.product_id = p.id inner join suppliers s on p.supplier_id = s.id group by s.country order by min_sale_date desc

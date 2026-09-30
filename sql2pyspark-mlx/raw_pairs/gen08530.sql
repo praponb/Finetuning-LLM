@@ -1,0 +1,1 @@
+SELECT MAX(discount) - MIN(discount) AS discount_range, ROUND((100 * SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cancelled, MAX(amount) - MIN(amount) AS amount_range FROM orders WHERE (shipping_fee <= 39 AND shipping_fee <= 27) OR status = 'COMPLETED';

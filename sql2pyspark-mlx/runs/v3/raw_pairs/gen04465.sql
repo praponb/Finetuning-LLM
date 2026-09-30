@@ -1,0 +1,1 @@
+with store_stats as (select store_id, max(order_date) as latest_order_date from orders group by store_id) select s.opened_date, s.sqft, ss.latest_order_date from stores s inner join store_stats ss on s.id = ss.store_id order by opened_date desc;

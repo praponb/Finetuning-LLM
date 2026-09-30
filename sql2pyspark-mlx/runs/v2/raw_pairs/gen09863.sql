@@ -1,0 +1,1 @@
+SELECT s.region, s.city, COUNT(*) AS num_orders, SUM(CASE WHEN o.channel = 'mobile' THEN o.amount ELSE 0 END) AS mobile_amount FROM orders o LEFT JOIN stores s ON o.store_id = s.id GROUP BY s.region, s.city ORDER BY mobile_amount DESC, city

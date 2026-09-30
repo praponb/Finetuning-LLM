@@ -1,0 +1,1 @@
+SELECT YEAR(txn_time) AS txn_year, AVG(amount) AS avg_amount, SUM(amount) AS total_amount, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions GROUP BY YEAR(txn_time) ORDER BY stddev_amount DESC

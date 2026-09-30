@@ -1,0 +1,1 @@
+SELECT s.id, s.region, t.pct_mobile FROM stores s JOIN (SELECT store_id, ROUND((100 * SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_mobile FROM orders WHERE amount > 640 GROUP BY store_id) t ON s.id = t.store_id WHERE t.pct_mobile > 48

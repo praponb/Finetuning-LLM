@@ -1,0 +1,1 @@
+SELECT CASE WHEN budget >= 4503000 THEN 'high' WHEN budget >= 868000 THEN 'mid' ELSE 'low' END AS budget_bucket, AVG(budget) AS avg_budget, COUNT(DISTINCT budget) AS unique_locations FROM departments GROUP BY CASE WHEN budget >= 4503000 THEN 'high' WHEN budget >= 868000 THEN 'mid' ELSE 'low' END ORDER BY avg_budget DESC

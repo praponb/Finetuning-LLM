@@ -1,0 +1,1 @@
+select s.id, s.country, count(we.id) web_event_count, sum(we.duration_sec) total_duration_sec, count(distinct we.duration_sec) unique_pages from sessions s left join web_events we on we.session_id = s.id where we.event_time >= '2023-09-01' group by s.id, s.country

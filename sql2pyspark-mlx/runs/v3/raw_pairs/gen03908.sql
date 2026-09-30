@@ -1,0 +1,1 @@
+SELECT YEAR(delivered_date) AS delivered_year, ROUND(AVG(cost), 2) AS avg_cost, COUNT(DISTINCT cost) AS unique_carriers, SUM(CASE WHEN carrier = 'Flash' THEN cost ELSE 0 END) AS flash_cost FROM shipments GROUP BY delivered_year ORDER BY flash_cost;

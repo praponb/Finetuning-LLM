@@ -1,0 +1,1 @@
+SELECT *, LEAD(pressure, 2) OVER w_hist AS next_pressure, SUM(pressure) OVER (PARTITION BY DATE_TRUNC('week', reading_ts), device_code ORDER BY reading_ts, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_pressure FROM device_readings WINDOW w_hist AS (PARTITION BY YEAR(reading_ts), device_code ORDER BY status_bits, id);

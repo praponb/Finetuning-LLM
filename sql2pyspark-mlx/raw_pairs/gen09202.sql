@@ -1,0 +1,1 @@
+SELECT account_type, CASE WHEN balance >= 73000 THEN 'high' WHEN balance >= 26000 THEN 'mid' ELSE 'low' END AS balance_bucket, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, AVG(balance) AS avg_balance FROM accounts GROUP BY account_type, CASE WHEN balance >= 73000 THEN 'high' WHEN balance >= 26000 THEN 'mid' ELSE 'low' END HAVING AVG(balance) < 26000;

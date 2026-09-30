@@ -1,0 +1,1 @@
+WITH CustomerTotals AS (SELECT customer_id, SUM(CASE WHEN channel = 'partner' THEN 1 ELSE 0 END) AS partner_count FROM orders WHERE YEAR(order_date) >= 2025 GROUP BY customer_id) SELECT c.id, c.segment, c.city, C.partner_count FROM customers c JOIN CustomerTotals C ON c.id = C.customer_id ORDER BY c.id DESC

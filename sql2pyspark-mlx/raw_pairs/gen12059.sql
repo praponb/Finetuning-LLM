@@ -1,0 +1,1 @@
+SELECT s.id, s.region, COUNT(o.id) order_count, MAX(o.amount) - MIN(o.amount) amount_range, ROUND((100 * SUM(CASE WHEN o.channel = 'store' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_store FROM stores s LEFT JOIN orders o ON o.store_id = s.id GROUP BY s.id, s.region ORDER BY pct_store DESC;

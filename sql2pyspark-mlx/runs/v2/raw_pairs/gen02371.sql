@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, AVG(amount) AS avg_amount, COUNT(*) AS transaction_count FROM transactions WHERE amount < 2800 GROUP BY account_id) SELECT a.balance, tba.avg_amount, tba.transaction_count FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id WHERE tba.transaction_count > 4;

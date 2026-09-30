@@ -1,0 +1,1 @@
+SELECT status, MONTH(order_date) AS order_month, COUNT(*) AS num_orders, SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END) AS mobile_count FROM orders GROUP BY status, MONTH(order_date) HAVING AVG(shipping_fee) < 24 ORDER BY 3 DESC;

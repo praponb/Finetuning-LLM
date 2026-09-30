@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.balance, accounts.opened_date, t.first_txn_time FROM accounts INNER JOIN (SELECT account_id, MIN(txn_time) AS first_txn_time FROM transactions WHERE amount > 2000 GROUP BY account_id) t ON accounts.id = t.account_id ORDER BY id;

@@ -1,0 +1,1 @@
+SELECT d.dept_name, e.job_title, CASE WHEN d.budget >= 4125000 THEN 'High' WHEN d.budget >= 1402000 THEN 'Medium' ELSE 'Low' END AS budget_tier FROM departments d JOIN employees e ON d.id = e.dept_id WHERE d.budget >= 3424000 ORDER BY dept_name;

@@ -1,0 +1,1 @@
+SELECT e.id, e.salary AS employee_salary, e.level AS employee_level, e.manager_id AS employee_manager_id, m.manager_id AS manager_manager_id FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id WHERE m.salary >= 137000;

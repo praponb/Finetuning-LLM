@@ -1,0 +1,1 @@
+SELECT departments.id, departments.location, COUNT(employees.id) AS employee_count, SORT_ARRAY(COLLECT_SET(employees.level)) AS level_list FROM departments LEFT JOIN employees ON employees.dept_id = departments.id GROUP BY departments.id, departments.location ORDER BY id DESC;

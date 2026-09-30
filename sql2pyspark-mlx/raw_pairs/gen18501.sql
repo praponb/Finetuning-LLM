@@ -1,0 +1,1 @@
+select ss.revenue, ss.sale_date, ss.units, p.brand, p.cost from store_sales ss right join products p on ss.product_id = p.id where array_contains(p.tags, 'sale') and ss.revenue < 1500 order by ss.units desc, ss.revenue desc;

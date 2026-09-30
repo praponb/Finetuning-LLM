@@ -1,0 +1,1 @@
+SELECT c.country, c.credit_limit, c.age, a.balance, INITCAP(TRIM(c.city)) AS city_title FROM customers c INNER JOIN accounts a ON c.id = a.customer_id WHERE c.credit_limit BETWEEN 4500 AND 15700 ORDER BY age DESC

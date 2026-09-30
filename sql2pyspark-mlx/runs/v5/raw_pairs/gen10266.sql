@@ -1,0 +1,1 @@
+SELECT orders.id, orders.status, orders.amount, customers.is_active, customers.credit_limit, stores.opened_date, stores.store_name FROM orders LEFT OUTER JOIN customers ON customers.id = orders.customer_id JOIN stores ON orders.store_id = stores.id WHERE orders.status != 'PENDING' AND customers.country = 'DE';

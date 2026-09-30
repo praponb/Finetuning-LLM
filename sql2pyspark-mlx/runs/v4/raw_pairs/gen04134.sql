@@ -1,0 +1,1 @@
+SELECT status, ROUND((100 * SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_mobile, ROUND(AVG(discount), 2) AS avg_discount FROM orders WHERE store_id = 31 AND amount <= 890 AND amount <= 1080 GROUP BY 1

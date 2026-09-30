@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, TO_DATE(reading_ts) AS reading_ts_date, pressure - temp_c AS pressure_minus_temp_c FROM device_readings WHERE reading_ts > DATE '2025-09-01') SELECT device_code, firmware FROM valid EXCEPT ALL SELECT device_code, firmware FROM device_readings WHERE status_bits < 3

@@ -1,0 +1,1 @@
+select suppliers.id, suppliers.supplier_name, t.stddev_stock_qty, t.max_price from suppliers inner join (select supplier_id, round(stddev(stock_qty), 2) stddev_stock_qty, max(price) max_price from products group by supplier_id) t on suppliers.id = t.supplier_id where t.stddev_stock_qty > 31 order by id limit 5;

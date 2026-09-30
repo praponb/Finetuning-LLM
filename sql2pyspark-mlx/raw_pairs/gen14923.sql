@@ -1,0 +1,1 @@
+SELECT txn_month, txn_type, pct_fee FROM (SELECT DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, txn_type, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fee FROM transactions WHERE amount > 1500 GROUP BY DATE_FORMAT(txn_time, 'yyyy-MM'), txn_type) AS s WHERE pct_fee > 41;

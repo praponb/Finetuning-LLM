@@ -1,0 +1,1 @@
+with kept_keys as (select store_id, product_id from inventory intersect all select store_id, product_id from inventory where quantity > 190), kept_rows as (select s.* from inventory s inner join kept_keys k on s.store_id = k.store_id and s.product_id = k.product_id) select id, store_id, quantity from kept_rows order by id desc

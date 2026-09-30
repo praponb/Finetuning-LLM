@@ -1,0 +1,1 @@
+select s.supplier_name, t.total_cost from suppliers s join (select supplier_id, sum(cost) as total_cost from products where stock_qty between 148 and 213 group by supplier_id) t on s.id = t.supplier_id where t.total_cost > 2800 order by total_cost desc

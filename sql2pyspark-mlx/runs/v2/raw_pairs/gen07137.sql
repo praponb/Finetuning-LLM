@@ -1,0 +1,1 @@
+select level, case when salary >= 144000 then 'high' when salary >= 78000 then 'mid' else 'low' end as salary_bucket, avg(salary) as avg_salary from employees group by level, salary_bucket having avg_salary > 84000 order by avg_salary desc, level, salary_bucket limit 5

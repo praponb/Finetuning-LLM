@@ -1,0 +1,1 @@
+with matched_keys as (select id, product_id from order_items intersect all select id, product_id from order_items where order_id in (2, 24, 39)), kept_rows as (select s.* from order_items s inner join matched_keys k on s.id = k.id and s.product_id = k.product_id) select id, quantity, unit_price from kept_rows order by quantity;

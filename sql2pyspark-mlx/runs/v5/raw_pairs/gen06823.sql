@@ -1,0 +1,1 @@
+SELECT id, carrier, shipped_date, cost, status, delivered_date, SUM(cost) OVER (PARTITION BY carrier ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_cost, LAG(cost, 1) OVER (PARTITION BY status ORDER BY delivered_date, id) AS prev_cost FROM shipments WHERE delivered_date >= '2025-04-01'

@@ -1,0 +1,1 @@
+select opened_month, total_balance, loan_count from (select date_trunc('MONTH', opened_date) as opened_month, sum(balance) as total_balance, sum(case when account_type = 'LOAN' then 1 else 0 end) as loan_count from accounts group by date_trunc('MONTH', opened_date)) as sub where total_balance < 458000

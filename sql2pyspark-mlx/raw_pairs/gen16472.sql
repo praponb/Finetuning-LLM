@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.product_id, p.price, s.opened_date FROM inventory i LEFT OUTER JOIN products p ON i.product_id = p.id LEFT OUTER JOIN stores s ON s.id = i.store_id WHERE LENGTH(s.store_name) < 10;

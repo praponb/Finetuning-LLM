@@ -1,0 +1,1 @@
+SELECT products.id, products.product_name, COUNT(order_items.id) AS order_item_count, MAX(order_items.unit_price) - MIN(order_items.unit_price) AS unit_price_range FROM products INNER JOIN order_items ON order_items.product_id = products.id WHERE order_items.unit_price > 320 GROUP BY products.id, products.product_name ORDER BY product_name, unit_price_range DESC;

@@ -1,0 +1,1 @@
+SELECT i.id, i.store_id, i.product_id, ss.units, COALESCE(i.quantity, 0) AS quantity_filled FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.quantity <= 71 AND ss.product_id IN (6, 9);

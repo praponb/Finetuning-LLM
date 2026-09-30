@@ -1,0 +1,1 @@
+SELECT c.name, t.min_monthly_fee FROM customers c LEFT JOIN (SELECT customer_id, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions WHERE start_date BETWEEN '2023-04-02' AND '2025-02-02' GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.min_monthly_fee >= 150 ORDER BY name;

@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN unit_price >= 400 THEN 'high' WHEN unit_price >= 90 THEN 'mid' ELSE 'low' END AS unit_price_bucket, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items WHERE unit_price > 350 GROUP BY product_id, unit_price_bucket;

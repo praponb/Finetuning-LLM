@@ -1,0 +1,1 @@
+SELECT YEAR(launch_date) AS launch_year, COUNT(stock_qty) AS stock_qty_count, SUM(cost) AS total_cost FROM products WHERE brand NOT IN ('Acme', 'Umbrella') GROUP BY launch_year ORDER BY stock_qty_count DESC, launch_year LIMIT 5

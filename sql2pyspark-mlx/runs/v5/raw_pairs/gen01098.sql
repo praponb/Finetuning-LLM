@@ -1,0 +1,1 @@
+SELECT d.dept_name, COUNT(e.id) AS employee_count, SUM(e.salary) AS total_salary, COUNT(DISTINCT e.salary) AS unique_managers FROM departments d LEFT JOIN employees e ON e.dept_id = d.id GROUP BY d.dept_name HAVING COUNT(e.id) > 4 ORDER BY total_salary DESC;

@@ -1,0 +1,1 @@
+SELECT customer_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list, PERCENTILE_APPROX(balance, ARRAY(0.25, 0.5, 0.75)) AS balance_quartiles, GROUPING(customer_id) AS grouping_level FROM accounts GROUP BY ROLLUP (customer_id) ORDER BY customer_id NULLS FIRST;

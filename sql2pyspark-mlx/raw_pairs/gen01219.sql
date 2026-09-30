@@ -1,0 +1,1 @@
+select i.quantity, i.last_restock, i.store_id, s.city, s.store_name, s.opened_date from inventory i left join stores s on s.id = i.store_id where s.city in ('Tokyo', 'London') and i.product_id in (1, 6) order by opened_date

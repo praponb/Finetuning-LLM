@@ -1,0 +1,1 @@
+select id, price, tags, lag(price, 1) over (order by launch_date, id) as prev_price, ntile(5) over (order by stock_qty, id) as stock_qty_bucket, ntile(4) over (partition by category order by stock_qty, id) as stock_qty_bucket_2 from products where supplier_id is not null;

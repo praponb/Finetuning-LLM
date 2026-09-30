@@ -1,0 +1,6 @@
+SELECT id
+FROM artists
+EXCEPT ALL
+SELECT id
+FROM listeners
+ORDER BY id

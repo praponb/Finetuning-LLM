@@ -1,0 +1,1 @@
+SELECT suppliers.country, MAX(products.price) max_price, MIN(products.launch_date) min_launch_date FROM products INNER JOIN suppliers ON products.supplier_id = suppliers.id GROUP BY suppliers.country ORDER BY country ASC

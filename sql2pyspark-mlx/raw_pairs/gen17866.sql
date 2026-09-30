@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, name, country, city, segment, credit_limit, age, TRIM(name) AS clean_name FROM customers WHERE signup_date > TO_DATE('2023-05-25')) SELECT * FROM (SELECT country, city, credit_limit FROM base) src PIVOT (SUM(credit_limit) AS amount, COUNT(1) AS item_count FOR city IN ('Singapore', 'Tokyo'));

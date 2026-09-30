@@ -1,0 +1,1 @@
+WITH store_sales_by_store AS (SELECT store_id, ROUND(STDDEV(units), 2) AS stddev_units FROM store_sales GROUP BY store_id) SELECT stores.sqft, stores.opened_date, store_sales_by_store.stddev_units FROM stores INNER JOIN store_sales_by_store ON stores.id = store_sales_by_store.store_id WHERE store_sales_by_store.stddev_units > 34 ORDER BY 3 ASC, stores.sqft DESC;

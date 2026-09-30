@@ -1,0 +1,1 @@
+SELECT id, dept_id, salary, hire_date, level, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY salary DESC, id) AS row_num, LEAD(salary, 1) OVER (PARTITION BY YEAR(hire_date), level ORDER BY hire_date, id) AS next_salary FROM employees ORDER BY level;

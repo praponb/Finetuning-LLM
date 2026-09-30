@@ -1,0 +1,11 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+w = Window.partitionBy("customer_id").orderBy(F.col("shipping_fee").desc(), "id")
+
+result = (
+    df_orders
+    .filter(F.col("order_date") > "2025-08-01")
+    .withColumn("pos", F.row_number().over(w))
+    .filter(F.col("pos") == 1)
+)

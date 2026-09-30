@@ -1,0 +1,1 @@
+WITH customer_summary AS (SELECT customer_id, MAX(discount) - MIN(discount) AS discount_range FROM orders WHERE shipping_fee >= 26 GROUP BY customer_id) SELECT c.id, c.country, cs.discount_range FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY id DESC, country;

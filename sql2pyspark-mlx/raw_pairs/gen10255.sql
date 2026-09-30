@@ -1,0 +1,1 @@
+WITH order_stats AS (SELECT order_id, AVG(amount) avg_amount FROM payments GROUP BY order_id) SELECT orders.amount, order_stats.avg_amount FROM orders INNER JOIN order_stats ON orders.id = order_stats.order_id WHERE order_stats.avg_amount > 900 ORDER BY amount DESC

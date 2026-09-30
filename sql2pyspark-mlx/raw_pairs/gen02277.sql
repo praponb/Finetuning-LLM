@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.status))) AS status_values FROM subscriptions s LEFT JOIN customers c ON s.customer_id = c.id GROUP BY YEAR(c.signup_date) ORDER BY status_values, signup_year DESC LIMIT 20;

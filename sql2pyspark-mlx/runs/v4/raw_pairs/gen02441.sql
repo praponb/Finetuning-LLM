@@ -1,0 +1,1 @@
+with session_stats as (select session_id, round(avg(duration_sec), 2) as avg_duration_sec, max(duration_sec) as max_duration_sec from web_events where session_id in (14, 17, 28, 39) group by session_id) select s.country, s.device, ss.avg_duration_sec, ss.max_duration_sec from sessions s inner join session_stats ss on s.id = ss.session_id where ss.max_duration_sec >= 380;

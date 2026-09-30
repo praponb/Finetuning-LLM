@@ -1,0 +1,1 @@
+SELECT country, DATE_TRUNC('WEEK', signup_date) AS week_start, BIT_OR(age) AS age_bit_or, BIT_OR(age) AS age_bit_or_2, STDDEV_SAMP(credit_limit) AS credit_limit_stddev FROM customers GROUP BY country, DATE_TRUNC('WEEK', signup_date) HAVING age_bit_or < 1 ORDER BY country ASC NULLS LAST

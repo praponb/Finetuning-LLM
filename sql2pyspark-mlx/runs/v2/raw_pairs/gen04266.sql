@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(*) AS order_item_count FROM order_items WHERE quantity BETWEEN 5 AND 6 GROUP BY CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END HAVING COUNT(*) > 5 ORDER BY order_item_count DESC;

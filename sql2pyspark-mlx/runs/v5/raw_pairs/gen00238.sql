@@ -1,0 +1,1 @@
+with orders_by_customer as (select customer_id, count(amount) as amount_count from orders where status = 'PENDING' group by customer_id) select c.credit_limit, c.country, obc.amount_count from customers c left join orders_by_customer obc on c.id = obc.customer_id where obc.amount_count > 8 order by country, credit_limit;

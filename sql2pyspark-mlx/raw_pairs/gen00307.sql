@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, COUNT(*) AS total_count FROM store_sales WHERE units <= 19 GROUP BY store_id) SELECT s.city, s.opened_date, ss.total_count FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id WHERE ss.total_count >= 9 ORDER BY total_count

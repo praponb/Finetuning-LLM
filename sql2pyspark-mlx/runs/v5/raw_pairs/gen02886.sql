@@ -1,0 +1,1 @@
+SELECT city, sqft, region, SUBSTRING(store_name, 1, 4) AS store_name_prefix, TRIM(city) AS clean_city FROM stores WHERE LENGTH(store_name) >= 14 AND (region IN ('North', 'Central', 'South') OR LENGTH(store_name) >= 12)

@@ -1,0 +1,1 @@
+WITH eligible AS (SELECT s.* FROM suppliers s WHERE NOT EXISTS (SELECT 1 FROM products c WHERE c.supplier_id = s.id AND c.stock_qty = 262)) SELECT id, supplier_name, country, city, rating FROM eligible ORDER BY id;

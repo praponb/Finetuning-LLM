@@ -1,0 +1,1 @@
+SELECT *, SUBSTRING(status, 1, 2) AS status_prefix FROM subscriptions WHERE (plan NOT IN ('premium', 'standard', 'enterprise') AND end_date > '2024-07-01') OR start_date BETWEEN '2023-10-01' AND '2025-04-01'

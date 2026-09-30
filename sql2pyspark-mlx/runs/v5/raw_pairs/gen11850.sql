@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY end_date NULLS FIRST, id) AS latest_rank FROM subscriptions QUALIFY latest_rank = 1) SELECT id, customer_id, plan, start_date, end_date, monthly_fee, status, latest_rank, CASE WHEN status RLIKE '^(CANCELLED|EXPIRED)$' THEN 'PRIORITY' ELSE 'GROUP_A' END AS status_zone FROM deduped ORDER BY latest_rank;

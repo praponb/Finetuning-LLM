@@ -1,0 +1,1 @@
+SELECT e.level employee_level, e.is_remote employee_is_remote, e.hire_date employee_hire_date, m.hire_date manager_hire_date FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE m.manager_id IS NULL

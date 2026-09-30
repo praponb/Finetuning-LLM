@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, MAX(discount) AS max_discount FROM orders WHERE shipping_fee > 39 GROUP BY DATE_FORMAT(order_date, 'yyyy-MM') HAVING COUNT(DISTINCT discount) > 3 ORDER BY max_discount DESC, order_month

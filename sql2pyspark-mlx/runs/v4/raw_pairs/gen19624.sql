@@ -1,0 +1,1 @@
+SELECT CASE WHEN quantity >= 7 THEN 'LARGE' ELSE 'SMALL' END AS quantity_tier, SUM(quantity) AS total_quantity, STDDEV_SAMP(unit_price) AS unit_price_stddev, COUNT(*) AS num_rows FROM order_items GROUP BY CASE WHEN quantity >= 7 THEN 'LARGE' ELSE 'SMALL' END HAVING STDDEV_SAMP(unit_price) > 0 ORDER BY quantity_tier;

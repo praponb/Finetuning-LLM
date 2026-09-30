@@ -1,0 +1,1 @@
+WITH latest AS (SELECT *, RANK() OVER (PARTITION BY order_id ORDER BY delivered_date DESC) AS latest_rank FROM shipments QUALIFY latest_rank = 1) SELECT id, order_id, shipped_date, delivered_date, cost, status, latest_rank FROM latest

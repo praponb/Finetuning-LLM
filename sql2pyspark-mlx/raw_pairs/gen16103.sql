@@ -1,0 +1,1 @@
+with joined as (select a.*, p.rating, p.city, p.supplier_name from products a join suppliers p on a.supplier_id = p.id) select id, product_name, category, price, cost, launch_date, supplier_id, city from joined order by supplier_id

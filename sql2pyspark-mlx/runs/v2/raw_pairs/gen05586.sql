@@ -1,0 +1,1 @@
+WITH recent_products AS (SELECT * FROM products WHERE price BETWEEN 370 AND 1090 AND supplier_id = 33), products_stats AS (SELECT category, MIN(launch_date) AS min_launch_date FROM recent_products GROUP BY category) SELECT category, min_launch_date FROM products_stats ORDER BY category

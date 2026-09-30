@@ -1,0 +1,1 @@
+SELECT *, FIRST_VALUE(amount) IGNORE NULLS OVER (ORDER BY amount ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_amount, NTILE(4) OVER w_grp AS amount_bucket FROM orders WINDOW w_grp AS (PARTITION BY channel, store_id ORDER BY amount ASC, id ASC)

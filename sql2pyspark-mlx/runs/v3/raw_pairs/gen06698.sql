@@ -1,0 +1,1 @@
+SELECT store_sales.revenue, stores.opened_date, stores.region, products.product_name, products.brand FROM store_sales INNER JOIN stores ON store_sales.store_id = stores.id INNER JOIN products ON products.id = store_sales.product_id WHERE NOT (store_sales.product_id IN (2, 6, 9) AND products.stock_qty > 353) ORDER BY stores.region;

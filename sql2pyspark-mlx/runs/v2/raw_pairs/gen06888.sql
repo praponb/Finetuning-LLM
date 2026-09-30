@@ -1,0 +1,1 @@
+WITH ranked_subscriptions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY monthly_fee DESC, id) AS row_num FROM subscriptions WHERE YEAR(end_date) = 2023) SELECT id, plan, monthly_fee, status FROM ranked_subscriptions WHERE row_num <= 3

@@ -1,0 +1,1 @@
+select id, name, country, segment, signup_date, age, sum(age) over (partition by segment order by credit_limit, id rows between unbounded preceding and current row) as running_age, round(credit_limit / sum(credit_limit) over (partition by country), 4) as credit_limit_share from customers

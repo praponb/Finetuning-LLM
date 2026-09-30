@@ -1,0 +1,1 @@
+select ss.id, ss.units, ss.sale_date, p.supplier_id, s.supplier_name from store_sales ss inner join products p on ss.product_id = p.id right join suppliers s on s.id = p.supplier_id where ss.units between 19 and 35 order by ss.sale_date desc;

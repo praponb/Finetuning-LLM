@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY cost, id) AS row_num FROM shipments) SELECT id, order_id, cost, shipped_date FROM ranked WHERE row_num <= 5 ORDER BY cost DESC;

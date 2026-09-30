@@ -1,0 +1,1 @@
+WITH ranked_shipments AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY delivered_date DESC, id) AS pos FROM shipments) SELECT id, carrier, delivered_date FROM ranked_shipments WHERE pos = 1;

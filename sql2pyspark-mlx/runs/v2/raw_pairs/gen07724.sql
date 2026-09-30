@@ -1,0 +1,1 @@
+with recent_transactions as (select * from transactions where txn_type = 'DEBIT' and is_flagged), summary as (select account_id, concat_ws(', ', sort_array(collect_set(merchant))) merchant_values from recent_transactions group by account_id) select account_id, merchant_values from summary order by merchant_values, account_id;

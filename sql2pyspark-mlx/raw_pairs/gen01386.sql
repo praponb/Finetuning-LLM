@@ -1,0 +1,1 @@
+SELECT ss.id, ss.sale_date, s.region, p.cost, p.launch_date FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON p.id = ss.product_id WHERE ARRAY_CONTAINS(p.tags, 'eco') AND UPPER(TRIM(p.product_name)) = 'BACKPACK XL';

@@ -1,0 +1,1 @@
+SELECT page, COUNT(CASE WHEN page = '/product' THEN 1 END) product_count FROM web_events WHERE NOT ((session_id IN (11, 20, 23, 39) AND session_id IN (14, 33)) OR HOUR(event_time) BETWEEN 9 AND 13) GROUP BY page

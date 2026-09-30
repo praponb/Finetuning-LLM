@@ -1,0 +1,1 @@
+SELECT id, txn_type, txn_time, amount, RANK() OVER (PARTITION BY txn_type ORDER BY txn_time) AS rnk, ROUND(AVG(amount) OVER (PARTITION BY txn_type ORDER BY txn_time, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_4 FROM transactions;

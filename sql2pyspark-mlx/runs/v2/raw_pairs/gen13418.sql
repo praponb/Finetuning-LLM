@@ -1,0 +1,1 @@
+SELECT t.txn_type, t.account_id, a.status, a.customer_id, a.balance FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id WHERE a.balance > 19000 AND a.customer_id IN (5, 38) ORDER BY a.balance DESC

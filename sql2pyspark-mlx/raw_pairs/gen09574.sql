@@ -1,0 +1,1 @@
+SELECT s.id, s.order_id, s.method, s.amount, s.paid_at, s.status, b.order_date, b.amount AS order_amount, b.shipping_fee FROM payments s LEFT JOIN orders b ON s.order_id = b.id WHERE b.store_id IN (15, 28)

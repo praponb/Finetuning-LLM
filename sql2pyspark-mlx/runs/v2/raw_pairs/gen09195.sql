@@ -1,0 +1,1 @@
+with FilteredWebEvents as (select * from web_events where page = '/product' and event_type = 'click'), session_id_summary as (select session_id, page, round(stddev(duration_sec), 2) as stddev_duration_sec from FilteredWebEvents group by session_id, page) select session_id, page from session_id_summary where stddev_duration_sec < 49 order by page asc, session_id desc;

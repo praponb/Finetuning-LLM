@@ -1,0 +1,1 @@
+select id, status, lead(balance) over (partition by status order by opened_date, id) as next_balance, row_number() over (partition by status order by opened_date, id) as seq_no, row_number() over (partition by customer_id order by balance desc, id) as event_seq from accounts;

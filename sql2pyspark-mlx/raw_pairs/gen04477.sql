@@ -1,0 +1,1 @@
+SELECT id, sale_date, product_id, revenue, CASE WHEN units >= 44 THEN 'High' WHEN units >= 21 THEN 'Medium' ELSE 'Low' END units_level, DATE_TRUNC('month', sale_date) sale_date_period FROM store_sales WHERE product_id IN (1, 5) AND store_id IN (1, 3, 4, 5) AND units <> 12

@@ -1,0 +1,1 @@
+SELECT status_group, balance_range FROM (SELECT CASE WHEN status IN ('FROZEN', 'CLOSED') THEN 'priority' ELSE 'other' END AS status_group, MAX(balance) - MIN(balance) AS balance_range FROM accounts GROUP BY CASE WHEN status IN ('FROZEN', 'CLOSED') THEN 'priority' ELSE 'other' END) AS t WHERE balance_range < 29;

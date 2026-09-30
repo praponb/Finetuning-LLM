@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, supplier_name, city, rating, LOWER(country) AS country_lower FROM suppliers WHERE city IN ('New York', 'London')) SELECT s.* FROM base s WHERE EXISTS (SELECT 1 FROM products c WHERE c.supplier_id = s.id AND c.product_name LIKE '%Offi%')

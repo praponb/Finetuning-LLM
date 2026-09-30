@@ -1,0 +1,1 @@
+SELECT id, service, host, log_ts, status_code, context, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text, COALESCE(context['version'], 'none') AS version_or_default, CAST((status_code & 4) != 0 AS INT) AS has_fault FROM app_logs WHERE host = 'h3';

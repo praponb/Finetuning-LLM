@@ -1,0 +1,1 @@
+WITH top_employees AS (SELECT id, manager_id, hire_date, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date, id) rnk FROM employees WHERE NOT is_remote) SELECT id, manager_id, hire_date FROM top_employees WHERE rnk <= 3 ORDER BY manager_id ASC

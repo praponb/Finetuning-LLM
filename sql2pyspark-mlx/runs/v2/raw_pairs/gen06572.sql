@@ -1,0 +1,1 @@
+select case when budget >= 4116000 then 'high' when budget >= 1282000 then 'mid' else 'low' end as budget_bucket, dept_name, round(avg(budget), 2) as avg_budget from departments where dept_name is not null or budget > 2070000 group by budget_bucket, dept_name order by budget_bucket desc;

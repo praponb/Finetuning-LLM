@@ -1,0 +1,87 @@
+{
+  "total": 20105,
+  "ok": 20068,
+  "pass_rate": 0.9982,
+  "ok_but_empty_result": 2254,
+  "by_status": {
+    "ok": 20068,
+    "sql_error": 36,
+    "rows": 1
+  },
+  "by_family": {
+    "adv_agg": {
+      "ok": 868,
+      "sql_error": 10
+    },
+    "adv_dedup": {
+      "ok": 519
+    },
+    "adv_join": {
+      "ok": 467
+    },
+    "adv_nested": {
+      "ok": 1229,
+      "sql_error": 2
+    },
+    "adv_reshape": {
+      "ok": 306
+    },
+    "adv_session": {
+      "ok": 530,
+      "sql_error": 1
+    },
+    "adv_setop": {
+      "ok": 455,
+      "sql_error": 2
+    },
+    "adv_window": {
+      "ok": 891,
+      "sql_error": 5
+    },
+    "agg": {
+      "ok": 1743
+    },
+    "cte_agg_join": {
+      "ok": 781
+    },
+    "cte_chain": {
+      "ok": 617
+    },
+    "derived": {
+      "ok": 410
+    },
+    "handwritten": {
+      "ok": 105
+    },
+    "join": {
+      "ok": 1350
+    },
+    "join_agg": {
+      "ok": 878
+    },
+    "pipeline": {
+      "ok": 3136,
+      "sql_error": 16,
+      "rows": 1
+    },
+    "select": {
+      "ok": 1681
+    },
+    "setop": {
+      "ok": 842
+    },
+    "special": {
+      "ok": 664
+    },
+    "subquery": {
+      "ok": 994
+    },
+    "topn": {
+      "ok": 708
+    },
+    "window": {
+      "ok": 894
+    }
+  },
+  "seconds": 1185.7
+}

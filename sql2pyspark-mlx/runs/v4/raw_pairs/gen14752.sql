@@ -1,0 +1,1 @@
+SELECT o.status, o.channel, COUNT(CASE WHEN p.method = 'card' THEN 1 END) AS card_count, COUNT(p.amount) AS amount_count FROM payments p INNER JOIN orders o ON p.order_id = o.id WHERE o.shipping_fee >= 14 GROUP BY o.status, o.channel ORDER BY o.channel, status LIMIT 3;

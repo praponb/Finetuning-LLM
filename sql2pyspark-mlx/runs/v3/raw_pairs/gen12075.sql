@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM accounts WHERE customer_id IS NOT NULL OR account_type IN ('CREDIT', 'LOAN', 'SAVINGS')), account_type_summary AS (SELECT account_type, MIN(balance) min_balance FROM src GROUP BY account_type) SELECT account_type, min_balance FROM account_type_summary WHERE min_balance >= 29000 ORDER BY account_type

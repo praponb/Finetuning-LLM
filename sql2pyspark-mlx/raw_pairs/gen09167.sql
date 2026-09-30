@@ -1,0 +1,1 @@
+SELECT QUARTER(p.launch_date) launch_quarter, COUNT(*) num_inventory FROM inventory i JOIN stores s ON i.store_id = s.id FULL OUTER JOIN products p ON p.id = i.product_id WHERE i.store_id IN (2, 5) GROUP BY QUARTER(p.launch_date) ORDER BY num_inventory ASC, launch_quarter ASC LIMIT 5

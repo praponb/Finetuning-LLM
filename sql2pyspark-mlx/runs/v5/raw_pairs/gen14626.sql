@@ -1,0 +1,1 @@
+WITH session_stats AS (SELECT session_id, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events WHERE session_id IN (14, 28, 31, 38) GROUP BY session_id) SELECT s.browser, s.customer_id, ss.avg_duration_sec FROM sessions s JOIN session_stats ss ON s.id = ss.session_id ORDER BY customer_id

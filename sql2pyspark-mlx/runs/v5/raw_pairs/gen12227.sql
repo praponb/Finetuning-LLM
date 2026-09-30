@@ -1,0 +1,1 @@
+SELECT s.delivered_date, o.order_date, st.opened_date, st.sqft FROM shipments s JOIN orders o ON s.order_id = o.id JOIN stores st ON st.id = o.store_id WHERE NOT (s.order_id IS NOT NULL AND st.region = 'Central') ORDER BY opened_date

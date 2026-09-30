@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('YEAR', starts_on) AS year_start, SORT_ARRAY(COLLECT_SET(promo_code)) AS promo_code_list, COUNT(DISTINCT channel) AS distinct_channels FROM promotions GROUP BY DATE_TRUNC('YEAR', starts_on) ORDER BY year_start DESC NULLS FIRST;

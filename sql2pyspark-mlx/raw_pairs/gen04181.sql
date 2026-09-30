@@ -1,0 +1,1 @@
+SELECT emp.id, emp.manager_id AS employee_manager_id, emp.dept_id AS employee_dept_id, mgr.salary AS manager_salary, mgr.hire_date AS manager_hire_date FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.full_name NOT LIKE 'P%'

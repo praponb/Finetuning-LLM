@@ -1,0 +1,1 @@
+SELECT id, dept_name, budget, LEAD(budget, 1) OVER (PARTITION BY dept_name ORDER BY budget, id) AS next_budget, NTILE(3) OVER (ORDER BY budget DESC, id) AS quartile FROM departments WHERE dept_name = 'HR';

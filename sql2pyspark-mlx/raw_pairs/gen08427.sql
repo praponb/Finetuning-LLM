@@ -1,0 +1,1 @@
+select id, account_id, txn_time, amount, lead(amount, 2, 0) over (partition by account_id order by txn_time, id) as next_amount, sum(amount) over (partition by account_id order by txn_time, id rows between unbounded preceding and current row) as running_amount from transactions

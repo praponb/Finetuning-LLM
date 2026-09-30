@@ -1,0 +1,1 @@
+WITH StoreTotals AS (SELECT store_id, MAX(quantity) - MIN(quantity) quantity_range, COUNT(quantity) quantity_count FROM inventory WHERE store_id IN (1, 6) GROUP BY store_id) SELECT s.city, s.region, S.quantity_range, S.quantity_count FROM stores s INNER JOIN StoreTotals S ON s.id = S.store_id WHERE S.quantity_count >= 4

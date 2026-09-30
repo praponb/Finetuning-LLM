@@ -1,0 +1,1 @@
+SELECT d.location, d.dept_name, d.budget, e.email, e.is_remote, e.hire_date FROM departments d LEFT JOIN employees e ON d.id = e.dept_id WHERE LENGTH(e.email) >= 10 AND e.job_title IN ('Director', 'Intern', 'Engineer') ORDER BY dept_name DESC;

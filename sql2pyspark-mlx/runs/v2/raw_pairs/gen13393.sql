@@ -1,0 +1,1 @@
+WITH filtered_payments AS (SELECT * FROM payments WHERE method IN ('bank_transfer', 'promptpay', 'cash') OR method = 'bank_transfer'), status_summary AS (SELECT status, COUNT(CASE WHEN method = 'card' THEN 1 END) AS card_count FROM filtered_payments GROUP BY status) SELECT * FROM status_summary ORDER BY status LIMIT 10;

@@ -1,0 +1,1 @@
+SELECT quantity, store_id, product_id, ROUND(quantity * 1.07, 2) AS adjusted_quantity, DATE_TRUNC('WEEK', last_restock) AS last_restock_period FROM inventory WHERE product_id IN (2, 6, 7, 9) AND product_id IN (5, 6) ORDER BY adjusted_quantity DESC;

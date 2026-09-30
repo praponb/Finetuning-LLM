@@ -1,0 +1,1 @@
+SELECT page, CASE WHEN duration_sec >= 470 THEN 'high' WHEN duration_sec >= 221 THEN 'mid' ELSE 'low' END AS duration_sec_bucket, AVG(duration_sec) AS avg_duration_sec FROM web_events GROUP BY page, duration_sec_bucket ORDER BY 3, 2, page LIMIT 20;

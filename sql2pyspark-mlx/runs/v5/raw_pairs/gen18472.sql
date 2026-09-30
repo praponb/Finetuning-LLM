@@ -1,0 +1,1 @@
+SELECT *, LAST_DAY(opened_date) opened_date_month_end FROM accounts WHERE customer_id IS NULL AND opened_date BETWEEN '2023-08-04' AND '2023-12-01' AND MONTH(opened_date) IN (3, 5, 12) ORDER BY id DESC;

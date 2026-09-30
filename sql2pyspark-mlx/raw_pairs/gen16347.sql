@@ -1,0 +1,1 @@
+SELECT s.device, we.session_id, we.event_type, we.duration_sec, LOWER(we.page) AS page_lower FROM sessions s LEFT JOIN web_events we ON we.session_id = s.id WHERE TO_DATE(we.event_time) < '2024-10-01' AND we.event_time >= '2023-03-01'

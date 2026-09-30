@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec DESC, id) AS row_num FROM web_events WHERE duration_sec < 293) SELECT id, session_id, duration_sec FROM Numbered WHERE row_num <= 2

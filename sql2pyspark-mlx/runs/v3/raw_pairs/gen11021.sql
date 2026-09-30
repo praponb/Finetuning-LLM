@@ -1,0 +1,1 @@
+WITH RankedTransactions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY txn_time DESC, id) AS row_num FROM transactions) SELECT id, txn_type, txn_time, amount FROM RankedTransactions WHERE row_num = 1;

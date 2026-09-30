@@ -1,0 +1,1 @@
+SELECT accounts.id, accounts.account_type, COUNT(transactions.id) AS transaction_count FROM accounts LEFT JOIN transactions ON accounts.id = transactions.account_id GROUP BY accounts.id, accounts.account_type ORDER BY account_type DESC, id LIMIT 50

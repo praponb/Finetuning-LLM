@@ -1,0 +1,1 @@
+SELECT QUARTER(opened_date) AS opened_quarter, MAX(opened_date) AS last_opened_date, COUNT(CASE WHEN region = 'South' THEN 1 END) AS south_count FROM stores WHERE city = 'Tokyo' GROUP BY QUARTER(opened_date);

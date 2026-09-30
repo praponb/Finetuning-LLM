@@ -1,0 +1,1 @@
+SELECT s.id, s.start_date, c.email FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.monthly_fee > 210 AND s.plan NOT IN ('enterprise', 'standard', 'premium') ORDER BY email DESC, id DESC

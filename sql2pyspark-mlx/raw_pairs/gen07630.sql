@@ -1,0 +1,1 @@
+select country, round(credit_limit * 1.07, 2) as credit_limit_scaled, length(country) as country_length from customers where (city is not null and month(signup_date) in (2, 6, 10)) or segment <> 'Corporate' order by credit_limit_scaled desc

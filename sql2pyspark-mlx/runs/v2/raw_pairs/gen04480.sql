@@ -1,0 +1,1 @@
+select id, country, rating, supplier_name, last_value(supplier_name) over (partition by country order by rating desc, id rows between unbounded preceding and unbounded following) as last_supplier_name from suppliers order by 2;

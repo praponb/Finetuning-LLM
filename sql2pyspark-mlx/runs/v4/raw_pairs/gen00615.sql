@@ -1,0 +1,1 @@
+with filtered_order_items as (select * from order_items where product_id in (1, 9, 15, 40)), product_id_summary as (select product_id, sum(quantity) as total_quantity, count(*) as cnt from filtered_order_items group by product_id) select product_id, total_quantity, cnt from product_id_summary where total_quantity >= 38

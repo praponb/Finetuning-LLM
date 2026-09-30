@@ -1,0 +1,1 @@
+select * from (select year(signup_date) as signup_year, count(distinct credit_limit) as unique_countrys from customers group by year(signup_date)) as s where unique_countrys >= 5 order by unique_countrys desc, signup_year desc limit 3

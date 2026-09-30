@@ -1,0 +1,1 @@
+SELECT p.status, p.channel, COUNT(*) AS cnt, MIN(s.quantity) AS min_quantity, GROUPING_ID() AS level_id FROM order_items s JOIN orders p ON s.order_id = p.id GROUP BY GROUPING SETS ((p.status, p.channel), (p.status), ())

@@ -1,0 +1,1 @@
+SELECT products.supplier_id, products.category, inventory.product_id, inventory.store_id, inventory.quantity FROM products LEFT OUTER JOIN inventory ON products.id = inventory.product_id WHERE inventory.last_restock <= '2025-04-01';

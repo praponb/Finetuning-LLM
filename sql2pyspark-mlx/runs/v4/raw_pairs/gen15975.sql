@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, LOWER(level) AS level_lower, IF(is_remote, 'Yes', 'No') AS is_remote_label, COALESCE(level, 'DIRECT') AS level_filled FROM employees WHERE hire_date > DATE '2023-11-22' AND job_title IS NOT NULL AND manager_id IN (14, 22, 33, 37)) SELECT * FROM (SELECT manager_id, level, salary FROM valid) src PIVOT (SUM(salary) FOR level IN ('L5', 'L3', 'L4'));

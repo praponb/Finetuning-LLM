@@ -1,0 +1,1 @@
+SELECT p.supplier_id, CASE WHEN p.cost >= 680 THEN 'high' WHEN p.cost >= 150 THEN 'mid' ELSE 'low' END cost_bucket, ROUND(AVG(i.quantity), 2) avg_quantity FROM inventory i LEFT JOIN products p ON i.product_id = p.id WHERE i.product_id = 7 GROUP BY p.supplier_id, CASE WHEN p.cost >= 680 THEN 'high' WHEN p.cost >= 150 THEN 'mid' ELSE 'low' END HAVING ROUND(AVG(i.quantity), 2) > 62

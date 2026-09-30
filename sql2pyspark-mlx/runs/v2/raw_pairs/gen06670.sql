@@ -1,0 +1,1 @@
+WITH valid_employees AS (SELECT * FROM employees WHERE job_title = 'Engineer'), level_summary AS (SELECT level, AVG(salary) AS avg_salary, MAX(hire_date) AS last_hire_date FROM valid_employees GROUP BY level) SELECT level, avg_salary FROM level_summary

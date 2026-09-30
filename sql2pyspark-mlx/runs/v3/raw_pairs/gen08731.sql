@@ -1,0 +1,1 @@
+SELECT p.category, COUNT(ss.units) AS units_count FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id WHERE p.brand IN ('Acme', 'Initech') GROUP BY p.category ORDER BY category

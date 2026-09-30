@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, session_id, event_type, page, event_time, duration_sec, SUBSTRING(page, 1, 4) AS page_prefix, CONCAT_WS('-', event_type, page) AS event_type_page_key FROM web_events WHERE event_time >= TO_DATE('2023-04-29') AND page IS NOT NULL) SELECT a.*, s.browser FROM valid a INNER JOIN sessions s ON a.session_id = s.id;

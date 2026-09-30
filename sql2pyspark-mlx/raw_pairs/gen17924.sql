@@ -1,0 +1,1 @@
+SELECT p.price, t.quantity_range FROM products p LEFT JOIN (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items GROUP BY product_id) t ON p.id = t.product_id WHERE t.quantity_range > 30 ORDER BY t.quantity_range DESC;

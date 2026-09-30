@@ -1,0 +1,1 @@
+SELECT dim.channel, dim.status, COUNT(*) AS num_rows, SUM(a.quantity) AS total_quantity, AVG(a.unit_price) AS avg_unit_price, GROUPING_ID() AS level_id FROM order_items a LEFT JOIN orders dim ON a.order_id = dim.id GROUP BY ROLLUP (dim.channel, dim.status) ORDER BY channel ASC;

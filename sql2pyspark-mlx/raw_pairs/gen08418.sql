@@ -1,0 +1,1 @@
+WITH base AS (SELECT * FROM departments WHERE location = 'Tokyo' AND (location = 'Singapore' OR dept_name = 'Legal')), location_summary AS (SELECT location, SUM(CASE WHEN dept_name = 'Legal' THEN budget ELSE 0 END) legal_budget FROM base GROUP BY location) SELECT * FROM location_summary;

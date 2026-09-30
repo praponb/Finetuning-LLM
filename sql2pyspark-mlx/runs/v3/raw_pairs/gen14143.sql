@@ -1,0 +1,1 @@
+WITH store_stats AS (SELECT store_id, COUNT(units) AS units_count, SUM(revenue) AS total_revenue FROM store_sales GROUP BY store_id) SELECT s.id, s.region, ss.units_count, ss.total_revenue FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id ORDER BY units_count DESC, id DESC;

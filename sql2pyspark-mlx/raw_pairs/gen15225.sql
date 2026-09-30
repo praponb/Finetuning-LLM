@@ -1,0 +1,1 @@
+SELECT o.channel, ROUND((100 * SUM(CASE WHEN s.carrier = 'UPS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_ups, COUNT(*) AS shipment_count FROM shipments s INNER JOIN orders o ON o.id = s.order_id GROUP BY o.channel HAVING ROUND((100 * SUM(CASE WHEN s.carrier = 'UPS' THEN 1 ELSE 0 END)) / COUNT(*), 1) > 44;

@@ -1,0 +1,1 @@
+SELECT c.is_active, c.country, ROUND(STDDEV(a.balance), 2) AS stddev_balance, COUNT(*) AS row_count FROM accounts a LEFT JOIN customers c ON a.customer_id = c.id GROUP BY c.is_active, c.country HAVING COUNT(*) >= 1 ORDER BY stddev_balance DESC, row_count;

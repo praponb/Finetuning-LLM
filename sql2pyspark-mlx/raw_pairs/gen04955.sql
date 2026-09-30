@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN budget >= 4396000 THEN 'high' WHEN budget >= 1902000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(CASE WHEN location = 'Tokyo' THEN 1 END) AS tokyo_count FROM departments GROUP BY CASE WHEN budget >= 4396000 THEN 'high' WHEN budget >= 1902000 THEN 'mid' ELSE 'low' END) AS s WHERE tokyo_count > 6 ORDER BY budget_bucket DESC;

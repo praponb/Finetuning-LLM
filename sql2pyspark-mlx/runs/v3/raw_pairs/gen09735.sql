@@ -1,0 +1,1 @@
+SELECT ss.sale_date, s.opened_date, p.supplier_id FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id WHERE ss.product_id IN (1, 4, 6, 9) ORDER BY sale_date DESC

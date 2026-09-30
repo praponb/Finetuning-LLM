@@ -1,0 +1,1 @@
+SELECT d.id, COUNT(e.id) AS employee_count, MAX(e.salary) AS max_salary, SUM(CASE WHEN e.job_title = 'Engineer' THEN 1 ELSE 0 END) AS engineer_count FROM departments d LEFT JOIN employees e ON e.dept_id = d.id GROUP BY d.id;

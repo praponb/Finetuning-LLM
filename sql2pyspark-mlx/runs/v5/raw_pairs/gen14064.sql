@@ -1,0 +1,1 @@
+SELECT i.id, i.product_id, s.opened_date, s.sqft, p.cost, p.stock_qty FROM inventory i INNER JOIN stores s ON i.store_id = s.id LEFT OUTER JOIN products p ON i.product_id = p.id WHERE s.region NOT IN ('South', 'Central') AND p.stock_qty BETWEEN 177 AND 209 ORDER BY product_id DESC, id LIMIT 3;

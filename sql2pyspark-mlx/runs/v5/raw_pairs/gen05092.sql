@@ -1,0 +1,1 @@
+SELECT id, order_id, CASE WHEN method IN ('promptpay', 'card') THEN 'Core' ELSE 'Other' END AS method_group, ROUND(amount, 0) AS amount_rounded FROM payments WHERE amount >= 1050 OR method = 'promptpay';

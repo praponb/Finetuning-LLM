@@ -1,0 +1,1 @@
+select departments.id, departments.location, t.salary_range, t.total_salary from departments left join (select dept_id, max(salary) - min(salary) as salary_range, sum(salary) as total_salary from employees where salary >= 57000 group by dept_id) t on departments.id = t.dept_id

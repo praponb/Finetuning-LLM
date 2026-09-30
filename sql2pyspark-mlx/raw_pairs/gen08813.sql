@@ -1,0 +1,1 @@
+SELECT id, plan, monthly_fee, customer_id, COALESCE(monthly_fee, 0) AS monthly_fee_filled, COALESCE(monthly_fee, 0) AS monthly_fee_filled_2 FROM subscriptions WHERE end_date >= '2024-01-01' ORDER BY id DESC;

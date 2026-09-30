@@ -1,0 +1,1 @@
+WITH Numbered AS (SELECT id, location, budget, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) AS rn FROM departments) SELECT id, location, budget FROM Numbered WHERE rn <= 5 ORDER BY budget

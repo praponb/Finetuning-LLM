@@ -1,0 +1,1 @@
+SELECT CASE WHEN level IN ('L1', 'L3') THEN 'tier_1' ELSE 'other' END level_group, is_remote, MIN(salary) min_salary FROM employees WHERE salary < 130000 AND (hire_date < '2025-04-07' OR is_remote) GROUP BY CASE WHEN level IN ('L1', 'L3') THEN 'tier_1' ELSE 'other' END, is_remote ORDER BY level_group, is_remote LIMIT 3;

@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT product_id, MAX(unit_price) max_unit_price, MAX(quantity) - MIN(quantity) quantity_range FROM order_items GROUP BY product_id) sub WHERE max_unit_price < 380 ORDER BY quantity_range, product_id LIMIT 10

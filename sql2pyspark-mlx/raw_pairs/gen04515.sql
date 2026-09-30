@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, ROUND((100 * SUM(CASE WHEN merchant = 'Shell' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_shell FROM transactions GROUP BY account_id) SELECT accounts.status, account_totals.pct_shell FROM accounts JOIN account_totals ON accounts.id = account_totals.account_id WHERE account_totals.pct_shell >= 51;

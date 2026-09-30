@@ -1,0 +1,1 @@
+with account_summary as (select account_id, max(amount) - min(amount) as amount_range from transactions where amount < 2000 group by account_id) select a.id, a.status, as.amount_range from accounts a join account_summary as on a.id = as.account_id where as.amount_range >= 71

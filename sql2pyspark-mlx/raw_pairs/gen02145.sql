@@ -1,0 +1,1 @@
+WITH supplier_totals AS (SELECT supplier_id, MAX(launch_date) AS latest_launch_date FROM products WHERE product_name LIKE '%wireles%' GROUP BY supplier_id) SELECT s.id, s.supplier_name, s.city, st.latest_launch_date FROM suppliers s JOIN supplier_totals st ON s.id = st.supplier_id ORDER BY latest_launch_date ASC, city DESC

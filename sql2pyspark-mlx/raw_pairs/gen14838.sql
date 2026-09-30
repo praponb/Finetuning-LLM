@@ -1,0 +1,1 @@
+SELECT id, customer_id, coupon_codes, items, attributes, TRANSFORM(items, i -> i.product_id) AS product_ids, ARRAY_CONTAINS(MAP_KEYS(attributes), 'weight_kg') AS has_weight_kg, COALESCE(attributes['utm_source'], 'unknown') AS utm_source_or_default, COALESCE(attributes['device'], 'direct') AS device_or_default FROM carts WHERE ARRAY_CONTAINS(coupon_codes, 'WELCOME5');

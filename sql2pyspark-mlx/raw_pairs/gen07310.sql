@@ -1,0 +1,1 @@
+SELECT order_items.unit_price, orders.amount, orders.order_date, products.launch_date, products.supplier_id FROM order_items JOIN orders ON order_items.order_id = orders.id RIGHT OUTER JOIN products ON order_items.product_id = products.id;

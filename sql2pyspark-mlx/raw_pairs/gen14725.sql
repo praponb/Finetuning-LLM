@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, LENGTH(dept_name) AS dept_name_length FROM departments WHERE dept_name IS NOT NULL) SELECT id, location FROM cleaned INTERSECT SELECT id, location FROM departments WHERE budget <= 2976000;

@@ -1,0 +1,1 @@
+with TopSubscriptions as (select *, row_number() over (partition by plan order by end_date, id) as pos from subscriptions where start_date <= '2024-10-11') select id, plan, end_date, customer_id from TopSubscriptions where pos <= 3;

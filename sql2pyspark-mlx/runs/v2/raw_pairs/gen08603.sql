@@ -1,0 +1,1 @@
+WITH OrdersByStore AS (SELECT store_id, COUNT(DISTINCT amount) AS unique_stores FROM orders GROUP BY store_id) SELECT s.id, s.city, s.sqft, O.unique_stores FROM stores s LEFT JOIN OrdersByStore O ON s.id = O.store_id ORDER BY id DESC;

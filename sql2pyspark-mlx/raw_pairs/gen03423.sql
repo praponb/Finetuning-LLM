@@ -1,0 +1,1 @@
+SELECT oi.product_id, p.stock_qty, p.product_name, s.supplier_name, s.country FROM order_items oi INNER JOIN products p ON oi.product_id = p.id RIGHT OUTER JOIN suppliers s ON s.id = p.supplier_id WHERE p.supplier_id IS NOT NULL OR p.brand IN ('Acme', 'Umbrella') ORDER BY p.product_name ASC;

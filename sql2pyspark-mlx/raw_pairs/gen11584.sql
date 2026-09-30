@@ -1,0 +1,1 @@
+select case when level in ('L5', 'L4') then 'tier_1' else 'other' end as level_group, round((100 * sum(case when level = 'L4' then 1 else 0 end)) / count(*), 1) as pct_l4, sum(salary) as total_salary from employees where email not like '%@company.co' or salary > 82000 group by 1 order by pct_l4 desc;

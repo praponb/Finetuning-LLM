@@ -1,0 +1,1 @@
+WITH filtered AS (SELECT *, cost - stock_qty AS cost_minus_stock_qty FROM products WHERE supplier_id IS NOT NULL) SELECT * FROM filtered QUALIFY RANK() OVER (PARTITION BY category, brand ORDER BY cost) = 1;

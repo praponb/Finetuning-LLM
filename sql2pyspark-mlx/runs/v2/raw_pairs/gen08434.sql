@@ -1,0 +1,1 @@
+SELECT product_id, SUM(quantity * unit_price) AS revenue, COUNT(unit_price) AS unit_price_count FROM order_items WHERE product_id IN (9, 15, 20, 28) GROUP BY product_id HAVING COUNT(unit_price) > 1 ORDER BY unit_price_count DESC;

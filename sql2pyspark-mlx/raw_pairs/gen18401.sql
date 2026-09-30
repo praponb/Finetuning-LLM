@@ -1,0 +1,1 @@
+SELECT o.id, o.customer_id, o.status, o.discount, s.city, s.sqft, s.region, CONCAT(o.status, ', ', o.channel) AS status_channel FROM orders o JOIN stores s ON o.store_id = s.id WHERE o.order_date >= '2023-06-01' ORDER BY status, s.city DESC, id LIMIT 20;

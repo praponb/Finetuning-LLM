@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT id, account_id, amount, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY amount DESC, id) AS row_num FROM transactions) SELECT * FROM numbered WHERE row_num <= 3 ORDER BY account_id

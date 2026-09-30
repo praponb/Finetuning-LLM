@@ -1,0 +1,1 @@
+with account_stats as (select account_id, count(amount) as amount_count from transactions group by account_id) select a.id, a.balance, a.status, as.amount_count from accounts a inner join account_stats as on a.id = as.account_id;

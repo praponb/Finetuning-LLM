@@ -1,0 +1,1 @@
+select status, round((100 * sum(case when status = 'REFUNDED' then 1 else 0 end)) / count(*), 1) as pct_refunded from payments where (order_id is not null and amount > 810) or order_id = 31 group by 1

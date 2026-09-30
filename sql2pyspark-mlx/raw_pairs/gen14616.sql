@@ -1,0 +1,1 @@
+SELECT p.region, src.channel, COUNT(*) AS cnt, MIN(src.amount) AS min_amount, GROUPING_ID() AS level_id FROM orders src INNER JOIN stores p ON src.store_id = p.id GROUP BY GROUPING SETS ((p.region, src.channel), (p.region)) ORDER BY min_amount DESC NULLS FIRST;

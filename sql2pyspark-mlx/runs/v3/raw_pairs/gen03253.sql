@@ -1,0 +1,1 @@
+WITH ranked_subscriptions AS (SELECT id, customer_id, end_date, monthly_fee, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY end_date, id) AS rn FROM subscriptions WHERE monthly_fee <= 100) SELECT id, customer_id, end_date, monthly_fee FROM ranked_subscriptions WHERE rn = 1

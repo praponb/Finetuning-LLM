@@ -1,0 +1,1 @@
+SELECT status, ROUND(STDDEV(amount), 2) AS stddev_amount, COUNT(DISTINCT amount) AS unique_orders FROM payments WHERE status IN ('REFUNDED', 'SUCCESS') AND status = 'FAILED' GROUP BY status ORDER BY unique_orders DESC

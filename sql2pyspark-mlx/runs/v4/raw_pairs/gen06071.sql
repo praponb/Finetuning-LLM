@@ -1,0 +1,1 @@
+SELECT job_title, ROUND(AVG(salary), 2) AS avg_salary, SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END) AS l2_count, MAX(salary) AS max_salary FROM employees GROUP BY job_title HAVING SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END) < 49 ORDER BY max_salary DESC;

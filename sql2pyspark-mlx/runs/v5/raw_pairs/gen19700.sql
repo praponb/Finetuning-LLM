@@ -1,0 +1,1 @@
+select *, lead(cost) over (partition by order_id, status order by delivered_date, id) as next_cost, row_number() over (partition by order_id, status order by delivered_date, id) as row_seq, sum(cost) over (partition by status) as status_sum_cost from shipments;

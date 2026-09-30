@@ -1,0 +1,1 @@
+with employees_by_department as (select dept_id, round(avg(salary), 2) as avg_salary from employees where length(email) < 7 group by dept_id) select d.id, d.dept_name, ebd.avg_salary from departments d left join employees_by_department ebd on d.id = ebd.dept_id where ebd.avg_salary >= 55 order by avg_salary desc, d.dept_name;

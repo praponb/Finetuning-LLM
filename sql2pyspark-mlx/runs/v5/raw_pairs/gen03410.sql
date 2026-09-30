@@ -1,0 +1,1 @@
+SELECT order_items.order_id, products.brand, orders.amount, orders.customer_id FROM order_items INNER JOIN products ON order_items.product_id = products.id INNER JOIN orders ON order_items.order_id = orders.id;

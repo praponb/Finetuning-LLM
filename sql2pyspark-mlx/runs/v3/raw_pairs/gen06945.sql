@@ -1,0 +1,1 @@
+SELECT plan, COUNT(monthly_fee) AS monthly_fee_count, AVG(monthly_fee) AS avg_monthly_fee, SUM(monthly_fee) AS total_monthly_fee FROM subscriptions WHERE end_date < '2023-03-18' AND customer_id IN (6, 16, 18, 33) AND monthly_fee IS NOT NULL GROUP BY plan HAVING AVG(monthly_fee) > 110 ORDER BY total_monthly_fee DESC

@@ -1,0 +1,1 @@
+select oi.id, oi.unit_price, oi.quantity, p.brand, p.supplier_id, s.country from order_items oi join products p on oi.product_id = p.id join suppliers s on p.supplier_id = s.id where p.cost >= 370 and s.supplier_name like 'Tok%'

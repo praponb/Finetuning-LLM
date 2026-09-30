@@ -1,0 +1,1 @@
+select status, round(avg(cost), 2) as avg_cost, count(cost) as cost_count, max(shipped_date) as latest_shipped_date from shipments group by status having sum(case when carrier = 'Kerry' then 1 else 0 end) >= 54 order by cost_count desc;

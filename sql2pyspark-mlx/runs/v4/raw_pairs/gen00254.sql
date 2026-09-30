@@ -1,0 +1,1 @@
+with numbered as (select id, merchant, txn_time, amount, row_number() over (partition by merchant order by txn_time, id) rnk from transactions) select id, merchant, txn_time, amount from numbered where rnk <= 5;

@@ -1,0 +1,1 @@
+SELECT d.id, d.dept_name, d.location, t.engineer_count, t.l1_count FROM departments d INNER JOIN (SELECT dept_id, COUNT(CASE WHEN job_title = 'Engineer' THEN 1 END) AS engineer_count, COUNT(CASE WHEN level = 'L1' THEN 1 END) AS l1_count FROM employees WHERE dept_id IN (10, 14) GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY t.l1_count DESC;

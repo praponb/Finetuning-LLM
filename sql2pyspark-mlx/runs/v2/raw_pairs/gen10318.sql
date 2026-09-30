@@ -1,0 +1,1 @@
+select p.brand, sum(oi.quantity) as total_quantity, round(stddev(oi.unit_price), 2) as stddev_unit_price from order_items oi left outer join products p on oi.product_id = p.id inner join suppliers s on p.supplier_id = s.id group by p.brand order by 1 desc;

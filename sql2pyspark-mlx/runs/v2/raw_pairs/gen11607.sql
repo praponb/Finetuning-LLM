@@ -1,0 +1,1 @@
+SELECT p.id, p.product_name, COUNT(i.id) AS inventory_count, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM products p LEFT JOIN inventory i ON i.product_id = p.id GROUP BY p.id, p.product_name ORDER BY stddev_quantity DESC, id, product_name LIMIT 5;

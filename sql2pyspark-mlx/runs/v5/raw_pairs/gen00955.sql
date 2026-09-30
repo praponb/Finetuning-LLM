@@ -1,0 +1,1 @@
+select status, date_format(order_date, 'yyyy-MM') order_month, count(case when status = 'CANCELLED' then 1 end) cancelled_count, min(amount) min_amount from orders group by status, date_format(order_date, 'yyyy-MM') having min(amount) < 430 order by order_month, status limit 1

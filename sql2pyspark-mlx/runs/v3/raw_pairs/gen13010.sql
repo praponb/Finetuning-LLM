@@ -1,0 +1,1 @@
+SELECT CASE WHEN YEAR(delivered_date) < 2024 THEN 'before_2024' WHEN YEAR(delivered_date) = 2024 THEN '2024' ELSE 'after_2024' END AS delivered_cohort, COUNT(*) AS shipment_count FROM shipments GROUP BY CASE WHEN YEAR(delivered_date) < 2024 THEN 'before_2024' WHEN YEAR(delivered_date) = 2024 THEN '2024' ELSE 'after_2024' END ORDER BY delivered_cohort LIMIT 10

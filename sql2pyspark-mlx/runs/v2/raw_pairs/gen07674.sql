@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY end_date DESC, id) AS pos FROM subscriptions) SELECT id, status, end_date, monthly_fee FROM numbered WHERE pos = 1 ORDER BY status DESC

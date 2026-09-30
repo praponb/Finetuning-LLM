@@ -1,0 +1,1 @@
+WITH lines AS (SELECT id, plan, EXPLODE_OUTER(discounts) AS tier_value FROM price_tiers) SELECT id, plan, tier_value, DENSE_RANK() OVER (ORDER BY tier_value DESC NULLS FIRST) AS tier_value_dense_rank FROM lines WHERE plan IN ('starter', 'enterprise', 'pro');

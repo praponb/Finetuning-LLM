@@ -1,0 +1,1 @@
+SELECT region, SUM(sqft) AS total_sqft, MAX(opened_date) AS latest_opened_date, SUM(CASE WHEN region = 'East' THEN 1 ELSE 0 END) AS east_count FROM stores GROUP BY region ORDER BY east_count DESC, region

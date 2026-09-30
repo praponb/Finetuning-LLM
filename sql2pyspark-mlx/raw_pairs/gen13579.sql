@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, MAX(shipped_date) AS last_shipped_date FROM shipments WHERE status IN ('IN_TRANSIT', 'RETURNED', 'LOST') GROUP BY order_id) SELECT o.id, o.customer_id, o.channel, os.last_shipped_date FROM orders o INNER JOIN order_summary os ON o.id = os.order_id ORDER BY o.id DESC, o.customer_id;

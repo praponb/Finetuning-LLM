@@ -1,0 +1,1 @@
+SELECT id, location, dept_name, budget, MAX(budget) OVER (PARTITION BY location, dept_name) location_max_budget, SUM(budget) OVER (PARTITION BY location ORDER BY budget, id) running_budget FROM departments;

@@ -1,0 +1,1 @@
+with filtered_subscriptions as (select * from subscriptions where status = 'ACTIVE'), Agg as (select status, concat_ws(', ', sort_array(collect_set(plan))) as plan_values from filtered_subscriptions group by status) select * from Agg order by plan_values desc, status;

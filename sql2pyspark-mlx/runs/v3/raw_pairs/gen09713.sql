@@ -1,0 +1,2 @@
+SELECT budget
+FROM departments;

@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY store_id ORDER BY sale_date DESC) AS rn FROM store_sales) t WHERE rn = 1) SELECT id, store_id, sale_date, units, revenue, rn FROM ranked ORDER BY rn NULLS FIRST;

@@ -1,0 +1,1 @@
+SELECT id, amount, status, LAST_VALUE(status) OVER (ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_status FROM orders WHERE amount >= 1340;

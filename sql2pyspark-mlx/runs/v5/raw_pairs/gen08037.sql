@@ -1,0 +1,1 @@
+select id, city, region, opened_date, lead(sqft) over (partition by city order by opened_date asc, id asc) as next_sqft, lag(sqft) over (partition by city order by opened_date asc, id asc) as prev_sqft, row_number() over (partition by city order by opened_date asc, id asc) as row_seq from stores;

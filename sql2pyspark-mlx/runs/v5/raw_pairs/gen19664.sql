@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT id, order_id FROM order_items EXCEPT DISTINCT SELECT id, order_id FROM order_items WHERE product_id IS NULL), kept_rows AS (SELECT s.* FROM order_items s INNER JOIN matched_keys k ON s.id = k.id AND s.order_id = k.order_id) SELECT id, order_id, product_id, unit_price FROM kept_rows ORDER BY product_id NULLS FIRST

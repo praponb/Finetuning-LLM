@@ -1,0 +1,5 @@
+SELECT ss.store_id, COUNT(DISTINCT i.quantity) AS unique_stores
+FROM inventory i
+INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id
+GROUP BY ss.store_id
+ORDER BY 2 DESC;

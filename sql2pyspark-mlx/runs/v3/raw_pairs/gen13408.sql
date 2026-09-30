@@ -1,0 +1,1 @@
+select date_trunc('MONTH', c.signup_date) as signup_month, max(s.end_date) as last_end_date, sum(case when s.status = 'CANCELLED' then s.monthly_fee else 0 end) as cancelled_monthly_fee from subscriptions s join customers c on c.id = s.customer_id group by date_trunc('MONTH', c.signup_date);

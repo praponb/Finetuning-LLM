@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT *, UPPER(firmware) AS firmware_upper FROM device_readings WHERE reading_ts >= '2023-04-01') SELECT id, device_code, metric, reading FROM (SELECT id, device_code, temp_c, humidity, pressure FROM cleaned) src UNPIVOT (reading FOR metric IN (temp_c AS TEMP_C, humidity AS HUMIDITY_VAL, pressure AS PRESSURE));

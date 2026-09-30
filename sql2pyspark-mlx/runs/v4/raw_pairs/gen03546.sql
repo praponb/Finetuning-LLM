@@ -1,0 +1,1 @@
+SELECT p.price, p.stock_qty, p.brand, ss.sale_date, ss.revenue FROM products p LEFT JOIN store_sales ss ON p.id = ss.product_id WHERE ss.sale_date >= '2023-03-01' AND p.category NOT IN ('Books', 'Electronics')

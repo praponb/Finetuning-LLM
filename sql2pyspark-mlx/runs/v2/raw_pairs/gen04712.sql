@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT CASE WHEN budget >= 3537000 THEN 'high' WHEN budget >= 2042000 THEN 'mid' ELSE 'low' END budget_bucket, location, ROUND(STDDEV(budget), 2) stddev_budget FROM departments WHERE dept_name NOT IN ('Marketing', 'Finance') GROUP BY CASE WHEN budget >= 3537000 THEN 'high' WHEN budget >= 2042000 THEN 'mid' ELSE 'low' END, location) agg WHERE stddev_budget > 77;

@@ -1,0 +1,1 @@
+SELECT p.segment, p.city, COUNT(*) AS cnt, AVG(s.monthly_fee) AS avg_monthly_fee, GROUPING_ID() AS grouping_level FROM subscriptions s JOIN customers p ON s.customer_id = p.id GROUP BY CUBE (p.segment, p.city) ORDER BY segment NULLS FIRST;

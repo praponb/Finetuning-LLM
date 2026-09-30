@@ -1,0 +1,1 @@
+SELECT o.customer_id, o.store_id, s.city, c.credit_limit, CONCAT(c.name, ' ', c.email) AS name_email FROM orders o LEFT JOIN stores s ON o.store_id = s.id LEFT JOIN customers c ON o.customer_id = c.id;

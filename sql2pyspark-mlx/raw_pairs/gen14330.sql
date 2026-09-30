@@ -1,0 +1,1 @@
+WITH valid_web_events AS (SELECT * FROM web_events WHERE page IN ('/home', '/checkout')), agg AS (SELECT session_id, MIN(event_time) AS first_event_time, ROUND((100 * SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_click FROM valid_web_events GROUP BY session_id) SELECT session_id, first_event_time, pct_click FROM agg ORDER BY first_event_time;

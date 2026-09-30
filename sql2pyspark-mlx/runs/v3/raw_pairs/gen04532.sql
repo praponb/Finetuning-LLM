@@ -1,0 +1,1 @@
+select date_format(signup_date, 'yyyy-MM') as signup_month, segment, round(avg(credit_limit), 2) as avg_credit_limit from customers where credit_limit between 4900 and 6300 group by signup_month, segment having round(avg(credit_limit), 2) < 63 order by signup_month desc;

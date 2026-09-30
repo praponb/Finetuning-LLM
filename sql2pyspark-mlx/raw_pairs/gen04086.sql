@@ -1,0 +1,1 @@
+WITH department_totals AS (SELECT dept_id, MIN(salary) AS min_salary FROM employees WHERE full_name IS NULL GROUP BY dept_id) SELECT departments.id, departments.location, departments.budget, department_totals.min_salary FROM departments INNER JOIN department_totals ON departments.id = department_totals.dept_id ORDER BY budget DESC

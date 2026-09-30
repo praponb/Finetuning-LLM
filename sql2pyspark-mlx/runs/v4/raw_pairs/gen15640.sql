@@ -1,0 +1,1 @@
+with flattened as (select id, currency, explode(discounts) as element from price_tiers) select currency, sum(element) filter (where currency = 'USD') as usd_total_element, sort_array(collect_set(currency)) as currency_list, approx_percentile(element, array(0.25, 0.5, 0.75)) as element_quartiles, grouping(currency) as grouping_id from flattened group by cube (currency);

@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, SUBSTRING(carrier, 1, 3) carrier_prefix FROM shipments WHERE carrier IS NOT NULL) SELECT * FROM (SELECT status, carrier, cost FROM base) src PIVOT (AVG(cost) AS value_sum FOR carrier IN ('Flash', 'DHL', 'UPS'));

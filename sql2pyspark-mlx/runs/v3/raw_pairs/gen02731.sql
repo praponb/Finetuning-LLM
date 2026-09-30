@@ -1,0 +1,1 @@
+SELECT QUARTER(ss.sale_date) AS sale_quarter, SUM(i.quantity) AS total_quantity, AVG(i.quantity) AS avg_quantity FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY QUARTER(ss.sale_date) ORDER BY avg_quantity DESC, sale_quarter ASC LIMIT 20;

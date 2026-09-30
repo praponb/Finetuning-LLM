@@ -1,0 +1,1 @@
+SELECT CASE WHEN city IN ('Bangkok', 'New York') THEN 'group_a' ELSE 'other' END AS city_group, is_active, COUNT(*) AS customer_count FROM customers WHERE segment NOT IN ('SMB', 'Consumer') GROUP BY CASE WHEN city IN ('Bangkok', 'New York') THEN 'group_a' ELSE 'other' END, is_active ORDER BY city_group, customer_count DESC, is_active LIMIT 3

@@ -1,0 +1,1 @@
+select store_id, case when quantity >= 259 then 'high' when quantity >= 78 then 'mid' else 'low' end as quantity_bucket, max(quantity) - min(quantity) as quantity_range, max(last_restock) as last_last_restock from inventory where quantity between 65 and 181 group by store_id, quantity_bucket order by store_id asc;

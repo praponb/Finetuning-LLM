@@ -1,0 +1,1 @@
+WITH CustomerStats AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list, ROUND(AVG(balance), 2) AS avg_balance FROM accounts WHERE customer_id IS NULL GROUP BY customer_id) SELECT c.id, c.age, c.name, C.status_list, C.avg_balance FROM customers c INNER JOIN CustomerStats C ON c.id = C.customer_id ORDER BY avg_balance DESC, id LIMIT 1

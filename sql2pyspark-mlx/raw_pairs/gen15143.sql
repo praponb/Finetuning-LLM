@@ -1,0 +1,1 @@
+WITH by_dimension AS (SELECT s.city, a.status, COUNT(*) AS rows_total, MAX(a.shipping_fee) AS max_shipping_fee, GROUPING_ID() AS grouping_level FROM orders a LEFT JOIN stores s ON a.store_id = s.id GROUP BY GROUPING SETS ((s.city, a.status), (s.city), ())) SELECT city, status, rows_total, max_shipping_fee, grouping_level FROM by_dimension ORDER BY status ASC, grouping_level DESC;

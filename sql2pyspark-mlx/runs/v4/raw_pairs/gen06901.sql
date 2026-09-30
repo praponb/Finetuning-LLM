@@ -1,0 +1,1 @@
+WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at DESC NULLS FIRST, id) AS rank_in_group FROM sessions) t WHERE rank_in_group = 1) SELECT id, customer_id, device, browser, started_at, country FROM deduped ORDER BY customer_id;

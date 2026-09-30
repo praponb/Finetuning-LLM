@@ -1,0 +1,1 @@
+SELECT id, carrier, cost, status, AVG(cost) OVER (ORDER BY cost, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS cost_avg_6_prior, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date DESC, id) AS event_seq FROM shipments;

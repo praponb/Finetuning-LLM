@@ -1,0 +1,1 @@
+SELECT c.segment, ROUND(STDDEV(p.amount), 2) AS stddev_amount, MIN(p.paid_at) AS min_paid_at FROM payments p JOIN orders o ON p.order_id = o.id JOIN customers c ON c.id = o.customer_id GROUP BY c.segment ORDER BY c.segment;

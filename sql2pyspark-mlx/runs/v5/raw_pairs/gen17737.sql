@@ -1,0 +1,1 @@
+WITH valid AS (SELECT id, email, country, segment, is_active, credit_limit - age credit_limit_minus_age FROM customers WHERE segment IS NOT NULL) SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM sessions x WHERE x.customer_id = s.id AND x.device = 'desktop');

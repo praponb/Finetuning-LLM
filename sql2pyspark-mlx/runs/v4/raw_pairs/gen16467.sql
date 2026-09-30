@@ -1,0 +1,1 @@
+select country, case when city in ('London', 'Chiang Mai') then 'priority' else 'other' end as city_group, max(rating) as max_rating, sort_array(collect_set(country)) as country_list from suppliers where city is not null group by 1, 2 order by max_rating desc, 2, country limit 20

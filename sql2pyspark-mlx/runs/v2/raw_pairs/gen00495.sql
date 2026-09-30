@@ -1,0 +1,1 @@
+SELECT e.id, e.manager_id AS employee_manager_id, e.level AS employee_level, e.job_title AS employee_job_title, m.salary AS manager_salary, CONCAT_WS('-', e.level, e.job_title) AS level_job_title_key FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.manager_id IS NOT NULL ORDER BY level_job_title_key;

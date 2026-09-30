@@ -1,0 +1,1 @@
+select * from (select status, date_trunc('MONTH', start_date) as start_month, sum(monthly_fee) as total_monthly_fee from subscriptions where start_date >= '2024-06-09' group by status, date_trunc('MONTH', start_date)) as t where total_monthly_fee < 520 order by start_month, status limit 3

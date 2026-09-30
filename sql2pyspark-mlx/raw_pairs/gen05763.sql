@@ -1,0 +1,1 @@
+SELECT brand, pct_stark, brand_values FROM (SELECT brand, ROUND((100 * SUM(CASE WHEN brand = 'Stark' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_stark, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values FROM products GROUP BY brand) AS s WHERE pct_stark > 42

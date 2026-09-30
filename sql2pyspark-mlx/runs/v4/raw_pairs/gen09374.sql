@@ -1,0 +1,1 @@
+WITH transactions_by_account AS (SELECT account_id, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list, COUNT(CASE WHEN merchant = 'Amazon' THEN 1 END) AS amazon_count FROM transactions GROUP BY account_id) SELECT a.id, a.status, tba.txn_type_list, tba.amazon_count FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id

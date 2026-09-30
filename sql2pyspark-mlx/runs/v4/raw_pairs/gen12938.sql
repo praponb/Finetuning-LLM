@@ -1,0 +1,1 @@
+WITH filtered_products AS (SELECT * FROM products WHERE stock_qty != 242), products_stats AS (SELECT category, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, ROUND((100 * SUM(CASE WHEN category = 'Electronics' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_electronics FROM filtered_products GROUP BY category) SELECT * FROM products_stats ORDER BY 1 LIMIT 20

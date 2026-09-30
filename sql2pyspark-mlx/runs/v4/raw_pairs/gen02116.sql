@@ -1,0 +1,1 @@
+select t.id, t.amount, a.status from transactions t left join accounts a on t.account_id = a.id where a.account_type in ('CHECKING', 'CREDIT', 'LOAN') or a.account_type not in ('LOAN', 'CHECKING') order by id, t.amount

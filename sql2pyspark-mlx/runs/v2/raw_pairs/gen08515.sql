@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_month, status, MIN(delivered_date) AS first_delivered_date, SUM(CASE WHEN carrier = 'Kerry' THEN 1 ELSE 0 END) AS kerry_count FROM shipments WHERE delivered_date > '2023-05-01' GROUP BY delivered_month, status ORDER BY first_delivered_date ASC, kerry_count DESC;

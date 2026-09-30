@@ -1,0 +1,1 @@
+SELECT ss.id, ss.store_id, s.sqft, p.supplier_id, p.brand FROM store_sales ss JOIN stores s ON ss.store_id = s.id JOIN products p ON ss.product_id = p.id WHERE p.launch_date <= '2024-02-01' AND s.store_name LIKE 'Si%';

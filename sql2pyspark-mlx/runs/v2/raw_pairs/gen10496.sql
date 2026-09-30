@@ -1,0 +1,1 @@
+SELECT t.id, t.txn_type, t.merchant, a.opened_date, a.status, c.city, c.credit_limit FROM transactions t INNER JOIN accounts a ON a.id = t.account_id INNER JOIN customers c ON a.customer_id = c.id WHERE LOWER(TRIM(c.email)) = 'henry@startup.io' AND a.balance >= 45000 ORDER BY c.credit_limit DESC, id LIMIT 10;

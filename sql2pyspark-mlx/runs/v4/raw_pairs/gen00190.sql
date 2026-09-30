@@ -1,0 +1,1 @@
+select i.id, i.quantity, i.product_id, ss.store_id, ss.sale_date, ss.units from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where month(i.last_restock) in (2, 4, 9) order by ss.store_id desc;

@@ -1,0 +1,1 @@
+select unit_price_bucket, stddev_unit_price from (select case when unit_price >= 440 then 'high' when unit_price >= 180 then 'mid' else 'low' end as unit_price_bucket, round(stddev(unit_price), 2) as stddev_unit_price from order_items group by case when unit_price >= 440 then 'high' when unit_price >= 180 then 'mid' else 'low' end) as x where stddev_unit_price >= 46;

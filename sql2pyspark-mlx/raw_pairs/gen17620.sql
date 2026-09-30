@@ -1,0 +1,1 @@
+WITH dim_totals AS (SELECT d.channel, a.status AS payment_status, COUNT(*) AS num_rows, MIN(a.amount) AS min_amount FROM payments a INNER JOIN orders d ON a.order_id = d.id GROUP BY CUBE (d.channel, a.status)) SELECT channel, payment_status, min_amount FROM dim_totals ORDER BY payment_status

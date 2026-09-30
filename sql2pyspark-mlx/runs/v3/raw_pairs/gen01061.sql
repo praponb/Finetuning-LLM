@@ -1,0 +1,1 @@
+SELECT *, FLOOR(budget) AS budget_whole, CASE WHEN location IN ('Chiang Mai', 'Bangkok') THEN 'Group A' ELSE 'Other' END AS location_group FROM departments WHERE dept_name IN ('HR', 'Marketing') AND budget > 3828000 ORDER BY location, id DESC

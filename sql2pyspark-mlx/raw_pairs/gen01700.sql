@@ -1,0 +1,1 @@
+WITH rollup_totals AS (SELECT o.channel, o.status AS order_status, s.status AS payment_status, COUNT(*) AS num_rows, AVG(s.amount) AS avg_amount FROM payments s INNER JOIN orders o ON s.order_id = o.id GROUP BY o.channel, o.status, s.status) SELECT channel, order_status, payment_status, avg_amount FROM rollup_totals;

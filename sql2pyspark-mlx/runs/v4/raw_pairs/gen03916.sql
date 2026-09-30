@@ -1,0 +1,1 @@
+SELECT id, coupon_codes, items, ship_to.city AS ship_city, SIZE(FILTER(items, i -> i.qty >= 3)) AS bulk_lines, ARRAY_JOIN(ARRAY_SORT(coupon_codes), ',') AS coupons_text FROM carts WHERE ARRAY_CONTAINS(coupon_codes, 'SPRING10')

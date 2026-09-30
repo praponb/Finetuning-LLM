@@ -1,0 +1,1 @@
+WITH scored AS (SELECT *, SUM(cost) OVER (PARTITION BY carrier, status ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_cost, ROW_NUMBER() OVER (PARTITION BY status ORDER BY delivered_date DESC, id) AS row_seq FROM shipments) SELECT id, carrier, shipped_date, delivered_date, cost, status FROM scored

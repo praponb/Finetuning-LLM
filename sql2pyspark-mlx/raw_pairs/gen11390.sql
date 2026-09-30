@@ -1,0 +1,1 @@
+SELECT MONTH(opened_date) AS opened_month, CASE WHEN city IN ('New York', 'Bangkok') THEN 'core' ELSE 'other' END AS city_group, MAX(sqft) - MIN(sqft) AS sqft_range FROM stores GROUP BY CUBE(MONTH(opened_date), CASE WHEN city IN ('New York', 'Bangkok') THEN 'core' ELSE 'other' END);

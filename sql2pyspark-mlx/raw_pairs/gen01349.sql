@@ -1,0 +1,1 @@
+select year(txn_time) as txn_year, sum(case when merchant = '7-Eleven' then amount else 0 end) as 7_eleven_amount, min(txn_time) as first_txn_time from transactions where account_id in (5, 12, 27, 34) group by year(txn_time) having 7_eleven_amount >= 79

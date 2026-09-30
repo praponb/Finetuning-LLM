@@ -1,0 +1,1 @@
+with eligible as (select s.* from orders s where not exists (select 1 from order_items ch where ch.order_id = s.id and ch.order_id in (13, 36, 38))) select id, customer_id, store_id, channel, amount, discount from eligible;

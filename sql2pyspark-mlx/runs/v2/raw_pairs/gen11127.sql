@@ -1,0 +1,1 @@
+WITH inventory_by_product AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY product_id) SELECT p.id, p.stock_qty, ibp.avg_quantity FROM products p LEFT JOIN inventory_by_product ibp ON p.id = ibp.product_id WHERE ibp.avg_quantity >= 64 ORDER BY 2;

@@ -1,0 +1,1 @@
+SELECT p.region, COUNT(*) AS rows_total, ROUND(AVG(a.units), 2) AS avg_units, AVG(a.revenue) AS avg_revenue, GROUPING_ID() AS level_id FROM store_sales a INNER JOIN stores p ON a.store_id = p.id GROUP BY ROLLUP (p.region)

@@ -1,0 +1,1 @@
+SELECT channel, shipped_count, min_order_date FROM (SELECT channel, COUNT(CASE WHEN status = 'SHIPPED' THEN 1 END) AS shipped_count, MIN(order_date) AS min_order_date FROM orders WHERE shipping_fee > 30 GROUP BY channel) AS agg WHERE shipped_count < 5 ORDER BY channel DESC, shipped_count DESC LIMIT 1;

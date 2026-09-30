@@ -1,0 +1,1 @@
+WITH Ranked AS (SELECT id, city, credit_limit, signup_date, ROW_NUMBER() OVER (PARTITION BY city ORDER BY credit_limit, id) AS rn FROM customers WHERE credit_limit < 10700) SELECT * FROM Ranked WHERE rn <= 3 ORDER BY credit_limit DESC;

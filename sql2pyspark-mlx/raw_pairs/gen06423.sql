@@ -1,0 +1,1 @@
+WITH matched_keys AS (SELECT segment, id FROM customers EXCEPT DISTINCT SELECT segment, id FROM customers WHERE credit_limit BETWEEN 4700 AND 12400), kept_rows AS (SELECT s.* FROM customers s INNER JOIN matched_keys k ON s.segment = k.segment AND s.id = k.id) SELECT id, email, country, segment, is_active, credit_limit, age FROM kept_rows ORDER BY id DESC NULLS LAST, segment DESC;

@@ -1,0 +1,1 @@
+SELECT inventory.product_id, inventory.last_restock, stores.region, stores.store_name, products.category FROM inventory INNER JOIN stores ON stores.id = inventory.store_id LEFT JOIN products ON inventory.product_id = products.id ORDER BY product_id DESC;

@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(o.channel))) AS channel_values, COUNT(o.discount) AS discount_count FROM orders o JOIN customers c ON o.customer_id = c.id GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM') ORDER BY signup_month, 3 DESC;

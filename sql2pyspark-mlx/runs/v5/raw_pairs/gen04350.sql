@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.start_date, subscriptions.end_date FROM subscriptions WHERE subscriptions.end_date > '2024-10-01' AND subscriptions.customer_id IN (SELECT id FROM customers WHERE LENGTH(email) < 9) ORDER BY subscriptions.start_date, end_date

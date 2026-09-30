@@ -1,0 +1,1 @@
+select to_date(paid_at) paid_day, status, count(case when method = 'paypal' then 1 end) paypal_count, sum(case when method = 'card' then amount else 0 end) card_amount from payments group by paid_day, status

@@ -1,0 +1,1 @@
+WITH cleaned AS (SELECT id, session_id, page, event_time, duration_sec, TO_DATE(event_time) AS event_time_date, LENGTH(event_type) AS event_type_length FROM web_events WHERE event_time > TO_TIMESTAMP('2023-04-30 20:00:00')) SELECT id, page FROM cleaned INTERSECT ALL SELECT id, page FROM web_events WHERE HOUR(event_time) BETWEEN 10 AND 17

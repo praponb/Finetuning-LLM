@@ -1,0 +1,1 @@
+select method, concat_ws(', ', sort_array(collect_set(status))) as status_values, sort_array(collect_set(method)) as method_list from payments where amount <= 1560 and method in ('paypal', 'bank_transfer') group by method;

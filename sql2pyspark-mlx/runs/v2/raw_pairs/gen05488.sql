@@ -1,0 +1,1 @@
+WITH account_totals AS (SELECT account_id, AVG(amount) avg_amount, ROUND(STDDEV(amount), 2) stddev_amount FROM transactions GROUP BY account_id) SELECT a.id, a.status, a.customer_id, at.avg_amount, at.stddev_amount FROM accounts a LEFT JOIN account_totals at ON a.id = at.account_id ORDER BY at.stddev_amount DESC, avg_amount DESC;

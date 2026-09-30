@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CONCAT_WS('/', supplier_name, country) AS supplier_name_country_key FROM suppliers WHERE supplier_name IS NULL) SELECT s.* FROM base s WHERE NOT EXISTS (SELECT 1 FROM products ch WHERE ch.supplier_id = s.id AND ch.price < 760);

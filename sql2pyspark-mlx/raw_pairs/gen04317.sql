@@ -1,0 +1,1 @@
+WITH base AS (SELECT id, full_name, dept_id, manager_id, job_title, salary, hire_date, is_remote, level, DATE_TRUNC('MONTH', hire_date) AS hire_date_period FROM employees WHERE salary < 92000 AND job_title IS NOT NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY salary DESC, id ASC) AS row_num FROM base QUALIFY row_num = 1;

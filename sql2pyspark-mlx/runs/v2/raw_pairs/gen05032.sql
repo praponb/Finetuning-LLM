@@ -1,0 +1,1 @@
+select p.brand, sum(oi.quantity) as total_quantity, round(avg(oi.quantity), 2) as avg_quantity from order_items oi inner join products p on oi.product_id = p.id left join orders o on o.id = oi.order_id where o.channel is not null group by p.brand

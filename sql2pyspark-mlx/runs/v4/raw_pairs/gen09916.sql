@@ -1,0 +1,1 @@
+WITH top_payments AS (SELECT id, status, amount, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount DESC, id) AS rnk FROM payments WHERE amount BETWEEN 840 AND 1160) SELECT * FROM top_payments WHERE rnk <= 3;

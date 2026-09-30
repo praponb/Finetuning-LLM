@@ -1,0 +1,1 @@
+SELECT i.store_id, p.supplier_id, p.launch_date, s.city, s.rating FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.product_name LIKE 'Yo%' OR s.city = 'Tokyo' ORDER BY 2;

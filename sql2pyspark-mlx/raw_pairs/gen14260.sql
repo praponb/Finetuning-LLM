@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, CONCAT_WS('/', store_name, region) AS store_name_region_key FROM stores WHERE region IS NOT NULL AND opened_date >= DATE '2023-02-19') SELECT * FROM (SELECT region, city, sqft FROM base) src PIVOT (AVG(sqft) FOR city IN ('Berlin', 'Bangkok'));

@@ -1,0 +1,1 @@
+SELECT s.id, s.supplier_name, s.rating, s.country FROM suppliers s WHERE s.city = 'Tokyo' AND EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id AND p.launch_date >= '2023-04-27') ORDER BY 4 ASC;

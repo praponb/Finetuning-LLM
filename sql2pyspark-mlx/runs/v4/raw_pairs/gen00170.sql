@@ -1,0 +1,1 @@
+SELECT d.location, t.salary_range FROM departments d INNER JOIN (SELECT dept_id, MAX(salary) - MIN(salary) AS salary_range FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.salary_range >= 69 ORDER BY d.location DESC, 2 DESC;

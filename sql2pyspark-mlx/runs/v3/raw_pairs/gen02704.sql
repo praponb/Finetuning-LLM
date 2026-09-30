@@ -1,0 +1,1 @@
+SELECT MONTH(products.launch_date) AS launch_month, MIN(store_sales.revenue) AS min_revenue FROM store_sales FULL OUTER JOIN products ON store_sales.product_id = products.id WHERE store_sales.store_id IN (1, 2, 5, 6) GROUP BY MONTH(products.launch_date);

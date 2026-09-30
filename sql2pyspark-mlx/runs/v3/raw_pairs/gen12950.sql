@@ -1,0 +1,1 @@
+SELECT dept_name, ROUND(STDDEV(budget), 2) AS stddev_budget, COUNT(CASE WHEN dept_name = 'Legal' THEN 1 END) AS legal_count FROM departments GROUP BY dept_name HAVING SUM(CASE WHEN dept_name = 'Engineering' THEN 1 ELSE 0 END) >= 22;

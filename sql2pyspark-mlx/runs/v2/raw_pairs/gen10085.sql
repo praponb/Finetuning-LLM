@@ -1,0 +1,1 @@
+SELECT p.id, p.paid_at, p.method, p.amount, o.customer_id, o.amount AS order_amount, o.store_id FROM payments p JOIN orders o ON p.order_id = o.id WHERE o.shipping_fee BETWEEN 11 AND 23 AND p.order_id = 4 ORDER BY amount DESC, id LIMIT 20

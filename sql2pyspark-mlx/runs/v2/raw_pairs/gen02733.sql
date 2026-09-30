@@ -1,0 +1,1 @@
+SELECT i.quantity, i.store_id, s.city, p.supplier_id, p.product_name, CONCAT(s.store_name, ' - ', s.region) AS store_name_region FROM inventory i INNER JOIN stores s ON s.id = i.store_id LEFT JOIN products p ON i.product_id = p.id;

@@ -1,0 +1,1 @@
+SELECT id, txn_type, amount, is_flagged, LAG(amount) OVER (PARTITION BY txn_type ORDER BY txn_time, id) AS prev_amount, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY txn_time, id) AS row_seq, DENSE_RANK() OVER (PARTITION BY account_id ORDER BY amount NULLS FIRST) AS amount_dense_rank FROM transactions WHERE is_flagged

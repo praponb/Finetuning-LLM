@@ -1,0 +1,1 @@
+WITH session_summary AS (SELECT session_id, COUNT(*) AS num_web_events FROM web_events GROUP BY session_id) SELECT s.device, ss.num_web_events FROM sessions s LEFT OUTER JOIN session_summary ss ON s.id = ss.session_id ORDER BY device;

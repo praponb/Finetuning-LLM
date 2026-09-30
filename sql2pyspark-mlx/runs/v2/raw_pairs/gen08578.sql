@@ -1,0 +1,1 @@
+select p.id, p.launch_date, p.price, p.category from products p where p.launch_date between '2023-03-01' and '2025-05-01' and not exists (select 1 from inventory i where i.product_id = p.id) order by id desc

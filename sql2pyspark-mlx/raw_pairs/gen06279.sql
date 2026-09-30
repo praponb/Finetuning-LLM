@@ -1,0 +1,1 @@
+SELECT oi.id, oi.product_id, oi.quantity, oi.unit_price FROM order_items oi WHERE oi.product_id IN (5, 18, 40) AND oi.product_id NOT IN (SELECT id FROM products WHERE brand NOT IN ('Acme', 'Initech', 'Globex')) ORDER BY oi.product_id, oi.id DESC;

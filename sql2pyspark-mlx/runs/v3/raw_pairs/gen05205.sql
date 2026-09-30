@@ -1,0 +1,1 @@
+SELECT id, paid_at, amount, ROUND(amount, 0) AS amount_rounded FROM payments WHERE status NOT IN ('FAILED', 'SUCCESS') AND (method IN ('promptpay', 'cash', 'paypal') OR status NOT IN ('FAILED', 'SUCCESS'))

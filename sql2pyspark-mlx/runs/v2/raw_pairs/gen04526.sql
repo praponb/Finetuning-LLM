@@ -1,0 +1,1 @@
+SELECT amount, customer_id, store_id, DATEDIFF(CURRENT_DATE(), order_date) days_since_order_date, ROUND(discount / amount, 2) discount_per_amount FROM orders WHERE channel = 'mobile' OR shipping_fee < 20

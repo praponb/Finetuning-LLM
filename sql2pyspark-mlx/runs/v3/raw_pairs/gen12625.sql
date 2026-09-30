@@ -1,0 +1,1 @@
+WITH top_orders AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC, id) AS rn FROM orders WHERE order_date < '2024-11-01') SELECT * FROM top_orders WHERE rn <= 5 ORDER BY order_date

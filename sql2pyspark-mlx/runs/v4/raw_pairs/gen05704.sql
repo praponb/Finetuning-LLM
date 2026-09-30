@@ -1,0 +1,1 @@
+SELECT product_id, CASE WHEN unit_price >= 410 THEN 'high' WHEN unit_price >= 170 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(quantity) AS quantity_count, MAX(quantity) - MIN(quantity) AS quantity_range, COUNT(unit_price) AS unit_price_count FROM order_items WHERE product_id IN (4, 14) GROUP BY 1, 2 HAVING COUNT(unit_price) >= 1 ORDER BY unit_price_bucket DESC

@@ -1,0 +1,1 @@
+SELECT id, store_id, order_date FROM orders WHERE channel IN ('mobile', 'store') UNION ALL SELECT id, store_id, order_date FROM orders WHERE order_date BETWEEN '2023-10-24' AND '2025-07-01' ORDER BY id DESC;

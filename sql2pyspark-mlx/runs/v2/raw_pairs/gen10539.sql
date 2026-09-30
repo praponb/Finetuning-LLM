@@ -1,0 +1,1 @@
+select city, is_active, sum(case when country = 'US' then credit_limit else 0 end) as us_credit_limit, sort_array(collect_set(segment)) as segment_list from customers where country = 'UK' group by city, is_active having sum(case when country = 'US' then credit_limit else 0 end) >= 36

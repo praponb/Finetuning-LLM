@@ -1,0 +1,1 @@
+SELECT YEAR(c.signup_date) AS signup_year, c.is_active, ROUND(STDDEV(t.amount), 2) AS stddev_amount, MIN(t.txn_time) AS min_txn_time FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON c.id = a.customer_id WHERE a.status = 'FROZEN' GROUP BY YEAR(c.signup_date), c.is_active HAVING stddev_amount >= 67 ORDER BY min_txn_time DESC;

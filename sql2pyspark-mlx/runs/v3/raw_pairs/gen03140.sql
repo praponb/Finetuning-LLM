@@ -1,0 +1,1 @@
+with src as (select * from inventory where last_restock >= '2025-03-19'), product_id_summary as (select product_id, sum(quantity) as total_quantity from src group by product_id) select * from product_id_summary where total_quantity >= 630 order by total_quantity desc, product_id desc

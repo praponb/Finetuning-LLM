@@ -1,0 +1,1 @@
+SELECT o.channel, COUNT(CASE WHEN p.method = 'promptpay' THEN 1 END) AS promptpay_count, MIN(p.amount) AS min_amount FROM payments p RIGHT JOIN orders o ON p.order_id = o.id WHERE o.store_id = 22 GROUP BY o.channel

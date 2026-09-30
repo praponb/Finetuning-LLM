@@ -1,0 +1,1 @@
+SELECT event_type, page, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values, AVG(duration_sec) AS avg_duration_sec FROM web_events GROUP BY event_type, page ORDER BY page_values, event_type

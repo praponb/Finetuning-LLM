@@ -1,0 +1,1 @@
+SELECT orders.id, orders.status, customers.credit_limit, stores.opened_date, stores.region, UPPER(customers.city) AS city_upper FROM orders INNER JOIN customers ON orders.customer_id = customers.id INNER JOIN stores ON orders.store_id = stores.id WHERE stores.city != 'Berlin' OR stores.opened_date >= '2025-06-01' ORDER BY orders.status;

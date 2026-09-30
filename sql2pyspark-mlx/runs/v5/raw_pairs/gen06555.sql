@@ -1,0 +1,1 @@
+WITH exploded AS (SELECT c.id, c.created_at, elem.product_id, elem.qty, elem.price, elem.promo FROM carts c LATERAL VIEW OUTER EXPLODE(c.items) x AS elem) SELECT id, created_at, product_id FROM exploded

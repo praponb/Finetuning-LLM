@@ -1,0 +1,1 @@
+WITH order_summary AS (SELECT order_id, SUM(cost) total_cost, SUM(CASE WHEN carrier = 'DHL' THEN cost ELSE 0 END) dhl_cost FROM shipments GROUP BY order_id) SELECT o.order_date, o.shipping_fee, os.total_cost, os.dhl_cost FROM orders o LEFT JOIN order_summary os ON o.id = os.order_id ORDER BY dhl_cost DESC

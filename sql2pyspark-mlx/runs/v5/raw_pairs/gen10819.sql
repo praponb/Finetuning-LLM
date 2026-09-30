@@ -1,0 +1,1 @@
+SELECT id, store_id, revenue, units, LAST_VALUE(units) OVER (PARTITION BY store_id ORDER BY revenue, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_units FROM store_sales WHERE revenue >= 3700;

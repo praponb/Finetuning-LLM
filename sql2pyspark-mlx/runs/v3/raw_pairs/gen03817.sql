@@ -1,0 +1,1 @@
+SELECT QUARTER(order_date) AS order_quarter, SUM(CASE WHEN channel = 'partner' THEN discount ELSE 0 END) AS partner_discount, COUNT(CASE WHEN channel = 'web' THEN 1 END) AS web_count, COUNT(*) AS cnt FROM orders GROUP BY QUARTER(order_date) HAVING COUNT(CASE WHEN channel = 'web' THEN 1 END) > 3

@@ -1,0 +1,1 @@
+SELECT customers.id, customers.country, COUNT(orders.id) AS order_count, ROUND(AVG(orders.shipping_fee), 2) AS avg_shipping_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(orders.channel))) AS channel_values FROM customers LEFT JOIN orders ON orders.customer_id = customers.id GROUP BY customers.id, customers.country;

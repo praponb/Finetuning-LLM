@@ -1,0 +1,1 @@
+SELECT p.id, p.order_id, p.amount, p.status, o.shipping_fee, o.order_date, o.status AS order_status, LEAST(o.shipping_fee, o.discount) AS least_shipping_fee_discount FROM payments p INNER JOIN orders o ON p.order_id = o.id WHERE NOT (TO_DATE(p.paid_at) < '2023-07-01' AND p.status IN ('REFUNDED', 'FAILED', 'SUCCESS'));

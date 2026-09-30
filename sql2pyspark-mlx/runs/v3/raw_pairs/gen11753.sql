@@ -1,0 +1,1 @@
+select e.id, e.level as employee_level, e.hire_date as employee_hire_date, m.level as manager_level from employees e left outer join employees m on e.manager_id = m.id where e.manager_id in (7, 8, 39, 40) order by m.level desc

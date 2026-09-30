@@ -1,0 +1,1 @@
+select id, plan, currency, tier_limits, tier_prices, aggregate(tier_prices, 0.0D, (acc, p) -> acc + p, acc -> round(acc / size(tier_prices), 2)) as avg_tier_price, slice(tier_limits, 1, 2) as first_two_limits, zip_with(tier_prices, discounts, (p, d) -> round(p * (1 - d), 2)) as net_prices, array_min(tier_prices) as lowest_price from price_tiers;

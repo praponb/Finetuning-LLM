@@ -1,0 +1,1 @@
+WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY credit_limit DESC, id) AS row_num FROM customers) SELECT id, segment, credit_limit, is_active FROM numbered WHERE row_num <= 3 ORDER BY credit_limit;

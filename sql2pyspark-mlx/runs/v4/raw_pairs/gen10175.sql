@@ -1,0 +1,1 @@
+SELECT id, store_id, revenue, units, ROUND(revenue / SUM(revenue) OVER (PARTITION BY store_id), 3) AS revenue_share, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY units DESC, id) AS rn FROM store_sales WHERE units != 38

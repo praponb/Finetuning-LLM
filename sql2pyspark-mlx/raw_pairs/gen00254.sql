@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, account_type, SORT_ARRAY(COLLECT_SET(status)) AS status_list, ROUND(STDDEV(balance), 2) AS stddev_balance, MAX(balance) AS max_balance FROM accounts GROUP BY DATE_TRUNC('MONTH', opened_date), account_type ORDER BY stddev_balance DESC

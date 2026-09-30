@@ -1,0 +1,1 @@
+select date_format(c.signup_date, 'yyyy-MM') as signup_month, min(s.started_at) as min_started_at, count(*) as row_count from sessions s inner join customers c on s.customer_id = c.id group by date_format(c.signup_date, 'yyyy-MM') having row_count > 2 order by min_started_at, signup_month limit 50

@@ -1,0 +1,1 @@
+select order_items.unit_price, order_items.order_id, orders.customer_id, orders.discount, orders.status from order_items left join orders on order_items.order_id = orders.id where orders.amount <= 810;

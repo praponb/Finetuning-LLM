@@ -1,0 +1,1 @@
+WITH base AS (SELECT *, FLOOR(quantity) quantity_whole FROM inventory WHERE NOT (MONTH(last_restock) IN (2, 4, 5) AND store_id IN (1, 4, 5))), inventory_stats AS (SELECT product_id, ROUND(AVG(quantity), 2) avg_quantity FROM base GROUP BY product_id) SELECT product_id, avg_quantity FROM inventory_stats ORDER BY product_id DESC

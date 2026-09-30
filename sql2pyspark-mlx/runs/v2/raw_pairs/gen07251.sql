@@ -1,0 +1,1 @@
+WITH Base AS (SELECT * FROM stores WHERE region = 'North' OR city IN ('Chiang Mai', 'London')), city_summary AS (SELECT city, MONTH(opened_date) AS opened_month, MAX(opened_date) AS latest_opened_date FROM Base GROUP BY city, MONTH(opened_date)) SELECT city, opened_month FROM city_summary

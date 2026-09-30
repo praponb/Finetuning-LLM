@@ -1,0 +1,1 @@
+SELECT subscriptions.id, subscriptions.customer_id, customers.segment, customers.email, customers.city FROM subscriptions FULL OUTER JOIN customers ON subscriptions.customer_id = customers.id WHERE customers.age = 66 AND customers.city IS NOT NULL

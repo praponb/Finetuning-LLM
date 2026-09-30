@@ -1,0 +1,1 @@
+SELECT id, discount, shipping_fee, CONCAT(channel, ' ', status) AS channel_status, GREATEST(shipping_fee, discount) AS greatest_shipping_fee_discount FROM orders WHERE amount < 510 OR status IN ('COMPLETED', 'CANCELLED')

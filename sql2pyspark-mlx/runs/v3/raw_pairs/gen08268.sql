@@ -1,0 +1,1 @@
+SELECT store_id, YEAR(sale_date) AS sale_year, COUNT(revenue) AS revenue_count, COUNT(DISTINCT revenue) AS unique_stores, MAX(sale_date) AS latest_sale_date FROM store_sales GROUP BY store_id, sale_year

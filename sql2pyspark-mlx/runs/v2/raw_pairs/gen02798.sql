@@ -1,0 +1,1 @@
+SELECT accounts.account_type, MAX(transactions.amount) - MIN(transactions.amount) AS amount_range FROM transactions LEFT JOIN accounts ON transactions.account_id = accounts.id WHERE NOT transactions.is_flagged GROUP BY accounts.account_type ORDER BY accounts.account_type, amount_range DESC

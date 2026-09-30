@@ -1,0 +1,1 @@
+SELECT method, stddev_amount, min_amount FROM (SELECT method, ROUND(STDDEV(amount), 2) AS stddev_amount, MIN(amount) AS min_amount FROM payments WHERE order_id IN (5, 17) GROUP BY method) AS sub WHERE min_amount > 1070;

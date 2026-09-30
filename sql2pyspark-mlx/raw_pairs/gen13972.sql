@@ -1,0 +1,1 @@
+WITH src AS (SELECT * FROM store_sales WHERE store_id IN (1, 2)), agg AS (SELECT product_id, COUNT(*) row_count, MAX(sale_date) latest_sale_date FROM src GROUP BY product_id) SELECT product_id, row_count, latest_sale_date FROM agg WHERE row_count < 7 ORDER BY product_id

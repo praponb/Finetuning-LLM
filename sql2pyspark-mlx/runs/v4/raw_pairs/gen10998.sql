@@ -1,0 +1,1 @@
+select *, row_number() over (partition by page order by duration_sec, id) event_seq, lag(duration_sec, 1) over (partition by session_id order by event_time, id) prev_duration_sec, stddev_samp(duration_sec) over (partition by page) page_stddev_samp_duration_sec, max(duration_sec) over (partition by session_id) session_id_max_duration_sec from web_events

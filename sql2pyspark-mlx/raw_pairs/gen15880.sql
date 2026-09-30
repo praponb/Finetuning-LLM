@@ -1,0 +1,1 @@
+WITH recent_employees AS (SELECT * FROM employees WHERE MONTH(hire_date) IN (1, 2, 9) AND salary <= 140000), Agg AS (SELECT QUARTER(hire_date) AS hire_quarter, SUM(salary) AS total_salary, MIN(hire_date) AS min_hire_date FROM recent_employees GROUP BY QUARTER(hire_date)) SELECT hire_quarter, min_hire_date FROM Agg WHERE total_salary > 634000;

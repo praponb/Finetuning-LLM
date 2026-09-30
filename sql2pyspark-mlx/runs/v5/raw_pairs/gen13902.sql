@@ -1,0 +1,1 @@
+select p.brand, count(*) as rows_total, round(avg(s.revenue), 2) as avg_revenue, max(s.units) as max_units, grouping_id() as gid from store_sales s inner join products p on s.product_id = p.id group by rollup (p.brand)

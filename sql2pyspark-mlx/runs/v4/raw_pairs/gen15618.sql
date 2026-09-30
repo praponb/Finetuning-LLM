@@ -1,0 +1,1 @@
+WITH valid AS (SELECT *, CONCAT_WS('-', city, region) AS city_region_key, CAST(sqft AS STRING) AS sqft_str, COALESCE(region, 'UNKNOWN') AS region_filled FROM stores WHERE opened_date >= TO_DATE('2023-04-18') AND region IS NOT NULL AND city IN ('Singapore', 'Berlin')) SELECT region, id FROM valid INTERSECT ALL SELECT region, id FROM stores WHERE LENGTH(store_name) < 11;

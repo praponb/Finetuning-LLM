@@ -1,0 +1,1 @@
+with ranked_transactions as (select *, row_number() over (partition by txn_type order by txn_time desc, id) as rnk from transactions where account_id in (22, 29, 30, 40)) select id, txn_type, txn_time, is_flagged from ranked_transactions where rnk <= 3;

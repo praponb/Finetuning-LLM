@@ -1,0 +1,1 @@
+select month(c.signup_date) as signup_month, count(case when a.status = 'FROZEN' then 1 end) as frozen_count, min(a.balance) as min_balance from accounts a full outer join customers c on c.id = a.customer_id group by month(c.signup_date);

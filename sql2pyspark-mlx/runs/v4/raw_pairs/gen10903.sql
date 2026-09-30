@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY age DESC NULLS FIRST, id) AS rn FROM customers) ranked WHERE rn = 1

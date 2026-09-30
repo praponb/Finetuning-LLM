@@ -1,0 +1,1 @@
+SELECT QUARTER(a.opened_date) AS opened_quarter, MAX(t.amount) AS max_amount, COUNT(*) AS total_count FROM transactions t RIGHT OUTER JOIN accounts a ON t.account_id = a.id WHERE t.amount > 3100 GROUP BY QUARTER(a.opened_date) ORDER BY total_count;

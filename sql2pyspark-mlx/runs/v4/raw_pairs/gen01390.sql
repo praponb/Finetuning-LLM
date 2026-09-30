@@ -1,0 +1,1 @@
+SELECT page, purchase_duration_sec, duration_sec_range FROM (SELECT page, SUM(CASE WHEN event_type = 'purchase' THEN duration_sec ELSE 0 END) AS purchase_duration_sec, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events WHERE duration_sec >= 392 GROUP BY page) AS x WHERE duration_sec_range >= 22
