@@ -73,7 +73,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── 06-file-catalog-and-reference.md
 │   ├── 07-operations-runbook.md
 │   └── 08-server-deployment.md
-├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh
+├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh, update_model.sh
 ├── sql2pyspark-mlx/              # Data synthesis, verification & MLX training
 │   ├── schemas.py                # Table catalog (17 base + 5 extra train, 5 base + 1 extra hold-out)
 │   ├── sqlspec.py                # Dual-rendering expression/query objects

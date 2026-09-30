@@ -88,7 +88,7 @@ Finetuning-LLM/
 ├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v8, 7B, = `latest`); Ollama keeps its own copies
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
-├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh
+├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh, update_model.sh
 ├── sql2pyspark-mlx/              # Data synthesis, verification & MLX training
 │   ├── schemas.py                # 17 base + 5 extra train, 5 base + 1 extra hold-out tables & sample data
 │   ├── sqlspec.py                # Dual-rendering expression/query objects

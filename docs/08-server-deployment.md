@@ -13,8 +13,9 @@ Training needs Apple MLX, so it stays on the Mac. The finished model is a plain 
 | Model | Native Ollama (`ollama.service`), `sql2pyspark:latest` = **v8** (`aa01d9d717f7`, 8.1 GB Q8_0, since 2026-09-30); v7 kept as `sql2pyspark:v7` |
 | App | `sql2pyspark.service` (systemd, Streamlit on port 8501, venv `~/web-env`), code in `~/Finetuning-LLM` |
 | Public access | Cloudflare Tunnel (`cloudflared.service`): `sql2pyspark.praponb.com` → `http://localhost:8501` |
+| Login | Cloudflare Access (since 2026-09-30): application `sql2pyspark`, policy *Owner only*, Cloudflare or one-time PIN login, 24 h session |
 
-**Speed**: without a GPU v7 runs on the CPU. The default query took **69 s** end to end (on the M2 Mac: ~5 s). Long SQL (thousands of characters) can take several minutes and may exceed the app's 600 s timeout; serving v5 (3B, 3.3 GB) instead would be about 2x faster at slightly lower accuracy.
+**Speed**: without a GPU the 7B model runs on the CPU. v7's default query took **69 s** end to end in the app; a short GROUP BY query took **17.8 s** straight from Ollama with v8 (on the M2 Mac: ~5 s). Long SQL (thousands of characters) can take several minutes and may exceed the app's 600 s timeout; serving v5 (3B, 3.3 GB) instead would be about 2x faster at slightly lower accuracy.
 
 ## 📏 Sizing
 
@@ -38,11 +39,11 @@ Training needs Apple MLX, so it stays on the Mac. The finished model is a plain 
    sudo apt-get update && sudo apt-get install cloudflared
    ```
    Then in **Zero Trust → Networks → Tunnels → Create a tunnel → Cloudflared**, run the shown `sudo cloudflared service install <TOKEN>` on the server and add the public hostname `sql2pyspark.praponb.com` → Type **HTTP**, URL `localhost:8501` (or `127.0.0.1:8501`).
-6. **Login** (recommended before enabling Kimi): **Zero Trust → Access → Applications → Self-hosted** for `sql2pyspark.praponb.com`, policy *Allow* for your email.
+6. **Login** (required before enabling Kimi; done on 2026-09-30): in Cloudflare One, **Access controls → Applications → Create new application → Self-hosted and private**, public hostname `sql2pyspark` + `praponb.com`, **Create new policy** (*Allow*, Include → *Emails* → your address), keep *Accept all available identity providers*, **Create**. Then **Integrations → Identity providers → Add → One-time PIN**, so the login page also offers an emailed code (otherwise only *Sign in with Cloudflare*, which needs a Cloudflare account). Check: an unauthenticated `curl -I https://sql2pyspark.praponb.com/` must return `302` to `<team>.cloudflareaccess.com`.
 
 ## 🔒 Security
 
-- The app has no login of its own. With a key, the Kimi K3 repair spends money and sends the user's SQL and code to Moonshot's API, so the service keeps it off (`Environment=KIMI_API_KEY=`, an empty value that wins over `.env`). Enable it only behind a login: delete that line, then `sudo systemctl daemon-reload && sudo systemctl restart sql2pyspark`.
+- The app has no login of its own; Cloudflare Access provides it (only emails in the *Owner only* policy get through). With a key, the Kimi K3 repair spends money and sends the user's SQL and code to Moonshot's API, so the service keeps it off (`Environment=KIMI_API_KEY=`, an empty value that wins over `.env`). Enable it only behind a login: delete that line, then `sudo systemctl daemon-reload && sudo systemctl restart sql2pyspark`.
 - Ollama listens on `localhost:11434` only; the tunnel needs no inbound ports (`sudo ufw allow OpenSSH && sudo ufw enable` is safe).
 
 ## 🔄 Updates
