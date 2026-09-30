@@ -1,1 +1,0 @@
-WITH filtered_stores AS (SELECT * FROM stores WHERE region IN ('Central', 'North', 'South') AND city != 'Tokyo'), summary AS (SELECT DATE_TRUNC('MONTH', opened_date) opened_month, ROUND((100 * SUM(CASE WHEN region = 'East' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_east FROM filtered_stores GROUP BY DATE_TRUNC('MONTH', opened_date)) SELECT opened_month, pct_east FROM summary;

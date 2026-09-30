@@ -1,1 +1,0 @@
-select opened_quarter, city_list, west_sqft from (select quarter(opened_date) as opened_quarter, sort_array(collect_set(city)) as city_list, sum(case when region = 'West' then sqft else 0 end) as west_sqft from stores group by quarter(opened_date)) as sub where west_sqft < 50;

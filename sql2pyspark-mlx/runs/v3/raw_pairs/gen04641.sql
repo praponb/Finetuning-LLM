@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, SUM(amount) AS total_amount, AVG(amount) AS avg_amount FROM payments GROUP BY order_id) SELECT o.discount, ot.total_amount, ot.avg_amount FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id ORDER BY avg_amount DESC

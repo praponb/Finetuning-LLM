@@ -1,1 +1,0 @@
-SELECT city, CASE WHEN age >= 58 THEN 'high' WHEN age >= 27 THEN 'mid' ELSE 'low' END AS age_bucket, MAX(age) AS max_age, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM customers GROUP BY 1, 2;

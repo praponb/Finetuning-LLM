@@ -1,1 +1,0 @@
-with cleaned as (select *, lower(event_type) as event_type_lower, substring(event_type, 1, 4) as event_type_prefix from web_events where event_time >= timestamp '2023-04-21 15:00:00') select id from cleaned except select id from web_events where event_time >= '2023-11-01'

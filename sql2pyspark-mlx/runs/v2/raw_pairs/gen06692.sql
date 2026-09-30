@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, SUM(CASE WHEN merchant = 'Shell' THEN 1 ELSE 0 END) AS shell_count, MAX(amount) AS max_amount FROM transactions GROUP BY account_id) SELECT accounts.opened_date, account_stats.shell_count, account_stats.max_amount FROM accounts LEFT OUTER JOIN account_stats ON accounts.id = account_stats.account_id ORDER BY opened_date DESC

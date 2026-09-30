@@ -1,1 +1,0 @@
-SELECT CASE WHEN c.age >= 69 THEN 'high' WHEN c.age >= 34 THEN 'mid' ELSE 'low' END AS age_bucket, SORT_ARRAY(COLLECT_SET(o.channel)) AS channel_list FROM orders o FULL OUTER JOIN customers c ON c.id = o.customer_id GROUP BY CASE WHEN c.age >= 69 THEN 'high' WHEN c.age >= 34 THEN 'mid' ELSE 'low' END ORDER BY age_bucket DESC

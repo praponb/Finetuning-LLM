@@ -1,1 +1,0 @@
-SELECT region FROM stores

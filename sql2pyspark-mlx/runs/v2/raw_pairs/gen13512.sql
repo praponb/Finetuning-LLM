@@ -1,1 +1,0 @@
-SELECT id, dept_id, salary, level, AVG(salary) OVER (PARTITION BY dept_id) AS dept_id_avg_salary, NTILE(3) OVER (PARTITION BY level ORDER BY salary DESC, id) AS quartile FROM employees WHERE email IS NOT NULL ORDER BY quartile

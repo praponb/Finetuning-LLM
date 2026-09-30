@@ -1,1 +1,0 @@
-SELECT stores.id, stores.city, COUNT(orders.id) AS order_count, ROUND((100 * SUM(CASE WHEN orders.channel = 'web' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_web FROM stores LEFT OUTER JOIN orders ON stores.id = orders.store_id WHERE orders.status NOT IN ('RETURNED', 'COMPLETED', 'PENDING') GROUP BY stores.id, stores.city;

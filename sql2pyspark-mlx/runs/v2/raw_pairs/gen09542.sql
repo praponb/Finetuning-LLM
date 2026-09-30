@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM employees WHERE hire_date < '2025-11-01'), summary AS (SELECT MONTH(hire_date) AS hire_month, COUNT(CASE WHEN level = 'L1' THEN 1 END) AS l1_count FROM base GROUP BY MONTH(hire_date)) SELECT * FROM summary ORDER BY l1_count DESC

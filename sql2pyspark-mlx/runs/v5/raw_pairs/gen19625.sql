@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, COUNT(*) AS cnt FROM orders WHERE discount < 0.2 GROUP BY store_id) SELECT s.id, s.sqft, s.opened_date, ss.cnt FROM stores s INNER JOIN store_summary ss ON s.id = ss.store_id WHERE ss.cnt > 9;

@@ -1,1 +1,0 @@
-select store_id, quarter(last_restock) as last_restock_quarter, min(quantity) as min_quantity from inventory where last_restock < '2024-05-01' and year(last_restock) >= 2024 group by store_id, quarter(last_restock) having min(quantity) >= 150 order by min_quantity desc

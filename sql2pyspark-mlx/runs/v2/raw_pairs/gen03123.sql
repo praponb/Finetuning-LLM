@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, city, rating, country, RANK() OVER (PARTITION BY city ORDER BY rating DESC) AS rnk FROM suppliers WHERE supplier_name LIKE '%Lion%') SELECT id, city, rating, country FROM ranked WHERE rnk <= 3

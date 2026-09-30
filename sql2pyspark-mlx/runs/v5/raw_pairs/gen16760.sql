@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END rating_bucket, SUM(rating) total_rating FROM suppliers WHERE country = 'UK' OR rating <= 2.2 GROUP BY rating_bucket HAVING SUM(rating) < 8 ORDER BY rating_bucket

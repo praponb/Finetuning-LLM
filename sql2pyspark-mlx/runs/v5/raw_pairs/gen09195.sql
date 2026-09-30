@@ -1,6 +1,0 @@
-SELECT status
-FROM orders
-INTERSECT
-SELECT status
-FROM shipments
-WHERE cost BETWEEN 70 AND 96

@@ -1,1 +1,0 @@
-select p.price, p.brand, t.cnt from products p inner join (select product_id, count(*) cnt from store_sales where revenue between 1500 and 1800 group by product_id) t on p.id = t.product_id where t.cnt >= 8 order by cnt desc

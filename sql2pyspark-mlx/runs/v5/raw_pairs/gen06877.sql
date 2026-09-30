@@ -1,1 +1,0 @@
-select d.device, d.browser, count(*) as rows_total, max(e.duration_sec) as max_duration_sec from web_events e inner join sessions d on e.session_id = d.id group by rollup (d.device, d.browser) order by rows_total desc nulls first;

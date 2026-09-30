@@ -1,1 +1,0 @@
-with valid as (select *, substring(channel, 1, 2) as channel_prefix from promotions where channel is not null) select s.*, pr.id as promo_id, pr.promo_code as promotion_promo_code, pr.discount_pct as promotion_discount_pct from valid s left join promotions pr on s.channel = pr.channel and s.starts_on >= pr.starts_on and s.starts_on < pr.ends_on + interval '30' day;

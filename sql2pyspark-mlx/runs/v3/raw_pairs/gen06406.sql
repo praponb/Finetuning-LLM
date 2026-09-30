@@ -1,1 +1,0 @@
-select case when channel in ('partner', 'web') then 'priority' else 'other' end as channel_group, round(stddev(amount), 2) as stddev_amount, sum(discount) as total_discount from orders where channel in ('web', 'mobile') group by case when channel in ('partner', 'web') then 'priority' else 'other' end;

@@ -1,1 +1,0 @@
-SELECT city, ROUND(SUM(sqft) / NULLIF(COUNT(CASE WHEN city = 'Berlin' THEN 1 END), 0), 2) AS sqft_per_berlin, MAX(sqft) FILTER (WHERE city = 'London') AS london_max_sqft, ROUND(SUM(sqft) / NULLIF(COUNT(CASE WHEN region = 'South' THEN 1 END), 0), 2) AS sqft_per_south FROM stores GROUP BY city ORDER BY sqft_per_south

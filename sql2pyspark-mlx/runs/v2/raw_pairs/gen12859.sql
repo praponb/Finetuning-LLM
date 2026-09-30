@@ -1,1 +1,0 @@
-SELECT level, DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, SUM(CASE WHEN level = 'L4' THEN salary ELSE 0 END) AS l4_salary FROM employees WHERE level IN ('L3', 'L4', 'L2') GROUP BY level, hire_month

@@ -1,1 +1,0 @@
-SELECT d.id, d.location, COUNT(e.id) employee_count, SORT_ARRAY(COLLECT_SET(e.job_title)) job_title_list FROM departments d LEFT OUTER JOIN employees e ON e.dept_id = d.id WHERE d.location = 'London' GROUP BY d.id, d.location ORDER BY location, id LIMIT 50;

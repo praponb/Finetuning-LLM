@@ -1,1 +1,0 @@
-SELECT accounts.id, accounts.account_type, accounts.status, t.credit_count FROM accounts INNER JOIN (SELECT account_id, COUNT(CASE WHEN txn_type = 'CREDIT' THEN 1 END) AS credit_count FROM transactions GROUP BY account_id) t ON accounts.id = t.account_id;

@@ -1,1 +1,0 @@
-SELECT id, job_title, hire_date, salary, ROW_NUMBER() OVER (PARTITION BY job_title ORDER BY hire_date, id) AS hire_date_row, SUM(salary) OVER (PARTITION BY job_title ORDER BY hire_date, id) AS running_salary FROM employees

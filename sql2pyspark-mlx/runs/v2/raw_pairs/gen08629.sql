@@ -1,1 +1,0 @@
-WITH recent_transactions AS (SELECT * FROM transactions WHERE merchant = '7-Eleven' AND NOT is_flagged), summary AS (SELECT MONTH(txn_time) AS txn_month, MAX(txn_time) AS latest_txn_time FROM recent_transactions GROUP BY MONTH(txn_time)) SELECT txn_month, latest_txn_time FROM summary;

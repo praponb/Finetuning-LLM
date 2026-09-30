@@ -1,1 +1,0 @@
-SELECT oi.id, oi.order_id, p.category, p.stock_qty, o.channel FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE p.stock_qty < 121 AND o.customer_id IS NULL

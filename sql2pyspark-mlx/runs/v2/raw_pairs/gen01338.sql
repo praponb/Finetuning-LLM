@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, order_id, quantity, unit_price, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity DESC, id) AS pos FROM order_items WHERE unit_price < 250) SELECT id, order_id, quantity, unit_price FROM ranked WHERE pos <= 5 ORDER BY unit_price DESC;

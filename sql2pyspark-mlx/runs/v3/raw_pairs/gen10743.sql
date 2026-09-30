@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(quantity) AS quantity_count, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 2 THEN 'mid' ELSE 'low' END HAVING COUNT(quantity) < 5 ORDER BY 1;

@@ -1,1 +1,0 @@
-WITH SessionTotals AS (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) event_type_values, COUNT(DISTINCT duration_sec) unique_event_types FROM web_events GROUP BY session_id) SELECT s.id, s.browser, S.event_type_values, S.unique_event_types FROM sessions s LEFT JOIN SessionTotals S ON s.id = S.session_id WHERE S.unique_event_types >= 4 ORDER BY browser;

@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM shipments WHERE delivered_date <= '2025-07-02' OR order_id IS NULL), status_summary AS (SELECT status, DATE_TRUNC('MONTH', shipped_date) AS shipped_month, ROUND(AVG(cost), 2) AS avg_cost FROM Base GROUP BY status, DATE_TRUNC('MONTH', shipped_date)) SELECT * FROM status_summary WHERE avg_cost > 30 ORDER BY avg_cost DESC, status, shipped_month LIMIT 1

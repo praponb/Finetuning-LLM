@@ -1,1 +1,0 @@
-SELECT opened_quarter, west_count, first_opened_date FROM (SELECT QUARTER(opened_date) AS opened_quarter, SUM(CASE WHEN region = 'West' THEN 1 ELSE 0 END) AS west_count, MIN(opened_date) AS first_opened_date FROM stores GROUP BY QUARTER(opened_date)) AS x WHERE west_count >= 60;

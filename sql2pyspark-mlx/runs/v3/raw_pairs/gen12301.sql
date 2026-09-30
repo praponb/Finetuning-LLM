@@ -1,1 +1,0 @@
-SELECT id, store_id, shipping_fee, discount FROM (SELECT id, store_id, shipping_fee, discount, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY shipping_fee DESC, id) AS rnk FROM orders) AS t WHERE rnk <= 2;

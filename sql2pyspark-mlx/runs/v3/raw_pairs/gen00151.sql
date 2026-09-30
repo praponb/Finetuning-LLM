@@ -1,1 +1,0 @@
-WITH TransactionsByAccount AS (SELECT account_id, SORT_ARRAY(COLLECT_SET(merchant)) merchant_list, AVG(amount) avg_amount FROM transactions GROUP BY account_id) SELECT a.balance, T.merchant_list, T.avg_amount FROM accounts a LEFT OUTER JOIN TransactionsByAccount T ON a.id = T.account_id ORDER BY balance, avg_amount DESC

@@ -1,1 +1,0 @@
-SELECT QUARTER(s.opened_date) AS opened_quarter, s.city, SUM(CASE WHEN o.status = 'PENDING' THEN o.amount ELSE 0 END) AS pending_amount FROM orders o INNER JOIN customers c ON o.customer_id = c.id INNER JOIN stores s ON o.store_id = s.id WHERE c.city IN ('New York', 'Chiang Mai', 'Singapore') GROUP BY QUARTER(s.opened_date), s.city;

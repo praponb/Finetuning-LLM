@@ -1,1 +1,0 @@
-SELECT s.id, s.store_name, COUNT(o.id) AS order_count, SUM(o.amount) AS total_amount, MAX(o.discount) - MIN(o.discount) AS discount_range FROM stores s LEFT JOIN orders o ON o.store_id = s.id GROUP BY s.id, s.store_name ORDER BY s.id, store_name LIMIT 10;

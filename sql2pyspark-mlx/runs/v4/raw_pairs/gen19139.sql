@@ -1,1 +1,0 @@
-SELECT t.id, t.is_flagged, t.amount, a.status, c.signup_date FROM transactions t FULL OUTER JOIN accounts a ON a.id = t.account_id RIGHT JOIN customers c ON a.customer_id = c.id WHERE t.account_id = 2 AND LENGTH(c.name) < 9 ORDER BY t.id DESC

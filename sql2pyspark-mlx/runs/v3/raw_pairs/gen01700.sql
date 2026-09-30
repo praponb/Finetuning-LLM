@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, COUNT(monthly_fee) AS monthly_fee_count, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.id, c.signup_date, c.credit_limit, ct.monthly_fee_count, ct.avg_monthly_fee FROM customers c LEFT OUTER JOIN customer_totals ct ON c.id = ct.customer_id WHERE ct.monthly_fee_count > 8;

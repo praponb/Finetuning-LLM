@@ -1,1 +1,0 @@
-WITH RankedPayments AS (SELECT id, order_id, amount, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY amount, id) AS row_num FROM payments WHERE order_id IN (4, 8, 16, 17)) SELECT id, order_id, amount FROM RankedPayments WHERE row_num = 1;

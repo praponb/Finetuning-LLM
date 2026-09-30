@@ -1,1 +1,0 @@
-SELECT HOUR(event_time) AS event_hour, DATE_TRUNC('MONTH', event_time) AS event_month, COUNT(DISTINCT duration_sec) AS unique_sessions, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY HOUR(event_time), DATE_TRUNC('MONTH', event_time) HAVING COUNT(DISTINCT duration_sec) > 5;

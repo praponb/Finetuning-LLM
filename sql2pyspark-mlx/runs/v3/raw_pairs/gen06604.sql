@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(sale_date) AS latest_sale_date FROM store_sales WHERE sale_date BETWEEN '2023-04-13' AND '2024-05-18' GROUP BY store_id) SELECT stores.opened_date, stores.store_name, store_stats.latest_sale_date FROM stores JOIN store_stats ON stores.id = store_stats.store_id ORDER BY latest_sale_date DESC;

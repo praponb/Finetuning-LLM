@@ -1,1 +1,0 @@
-SELECT s.cost, o.customer_id, st.store_name, st.opened_date, ADD_MONTHS(s.delivered_date, 6) AS delivered_date_plus_months FROM shipments s LEFT OUTER JOIN orders o ON s.order_id = o.id JOIN stores st ON o.store_id = st.id

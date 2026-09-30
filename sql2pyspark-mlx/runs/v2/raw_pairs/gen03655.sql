@@ -1,1 +1,0 @@
-SELECT id, order_id, method, amount, CAST(paid_at AS DATE) AS paid_at_day, TO_DATE(paid_at) AS paid_at_date FROM payments WHERE method = 'cash' AND order_id IN (3, 18, 28) AND paid_at >= '2025-10-01' ORDER BY paid_at_date DESC, id LIMIT 3;

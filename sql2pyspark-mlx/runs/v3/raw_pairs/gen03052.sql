@@ -1,1 +1,0 @@
-select orders.channel, orders.status, avg(shipments.cost) as avg_cost from shipments left join orders on shipments.order_id = orders.id where shipments.cost > 53 group by orders.channel, orders.status order by orders.status desc

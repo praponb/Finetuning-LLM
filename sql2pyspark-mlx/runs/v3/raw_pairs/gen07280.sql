@@ -1,1 +1,0 @@
-WITH valid_products AS (SELECT * FROM products WHERE SIZE(tags) >= 1), Summary AS (SELECT brand, MONTH(launch_date) AS launch_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values FROM valid_products GROUP BY brand, MONTH(launch_date)) SELECT * FROM Summary ORDER BY launch_month, brand LIMIT 1

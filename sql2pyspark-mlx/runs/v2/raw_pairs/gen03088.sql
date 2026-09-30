@@ -1,1 +1,0 @@
-SELECT employees.id, employees.level FROM employees WHERE employees.email NOT LIKE '%@startup.io' AND employees.dept_id IN (SELECT id FROM departments WHERE dept_name NOT IN ('Finance', 'Legal')) ORDER BY employees.id DESC LIMIT 10

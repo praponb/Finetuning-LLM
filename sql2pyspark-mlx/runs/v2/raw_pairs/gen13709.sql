@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN country = 'US' THEN rating ELSE 0 END) AS us_rating FROM suppliers GROUP BY CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END) AS sub WHERE us_rating > 44;

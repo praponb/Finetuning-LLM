@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, CAST(amount AS INT) AS amount_int FROM payments WHERE order_id IS NULL), PaymentsStats AS (SELECT method, SORT_ARRAY(COLLECT_SET(method)) AS method_list, SUM(CASE WHEN method = 'cash' THEN amount ELSE 0 END) AS cash_amount FROM src GROUP BY method) SELECT method, method_list, cash_amount FROM PaymentsStats ORDER BY cash_amount DESC, method LIMIT 1;

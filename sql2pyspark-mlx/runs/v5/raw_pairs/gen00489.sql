@@ -1,1 +1,0 @@
-WITH by_dimension AS (SELECT d.city, a.category, COUNT(*) AS cnt, MIN(a.cost) AS min_cost, AVG(a.stock_qty) AS avg_stock_qty FROM products a LEFT JOIN suppliers d ON a.supplier_id = d.id GROUP BY ROLLUP (d.city, a.category)) SELECT city, category, cnt, min_cost FROM by_dimension ORDER BY city DESC;

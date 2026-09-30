@@ -1,1 +1,0 @@
-SELECT YEAR(o.order_date) AS order_year, COUNT(CASE WHEN p.status = 'FAILED' THEN 1 END) AS failed_count, COUNT(*) AS row_count FROM payments p JOIN orders o ON p.order_id = o.id GROUP BY YEAR(o.order_date)

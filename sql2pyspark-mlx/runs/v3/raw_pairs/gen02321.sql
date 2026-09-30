@@ -1,1 +1,0 @@
-SELECT channel, DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, status, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list, MAX(order_date) AS latest_order_date, SUM(CASE WHEN status = 'COMPLETED' THEN shipping_fee ELSE 0 END) AS completed_shipping_fee FROM orders GROUP BY channel, order_month, status HAVING SUM(CASE WHEN status = 'COMPLETED' THEN shipping_fee ELSE 0 END) < 62

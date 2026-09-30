@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, customer_id, created_at, EXPLODE(coupon_codes) AS element FROM carts) SELECT id, element, CASE WHEN element RLIKE '^(WELCOME5|SPRING10)$' THEN 'GROUP_A' WHEN element RLIKE '^(VIP|BUNDLE)$' THEN 'CORE' ELSE 'PRIORITY' END AS element_zone FROM lines

@@ -1,1 +1,0 @@
-SELECT a.status, a.account_type, a.customer_id, t.is_flagged, t.txn_type, t.merchant, IF(t.is_flagged, 'Yes', 'No') AS is_flagged_label FROM accounts a INNER JOIN transactions t ON t.account_id = a.id;

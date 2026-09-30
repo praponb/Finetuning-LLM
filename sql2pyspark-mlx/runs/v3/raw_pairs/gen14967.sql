@@ -1,1 +1,0 @@
-SELECT id, location, budget, LOWER(location) AS location_lower, CONCAT_WS(',', location, dept_name) AS location_dept_name_key FROM departments WHERE location = 'Tokyo' AND dept_name = 'Marketing' AND budget IS NOT NULL ORDER BY budget, location_lower DESC

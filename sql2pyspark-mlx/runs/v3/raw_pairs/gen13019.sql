@@ -1,1 +1,0 @@
-select c.country, count(case when s.status = 'ACTIVE' then 1 end) as active_count, max(s.start_date) as latest_start_date from subscriptions s left join customers c on s.customer_id = c.id where s.plan in ('standard', 'premium') group by c.country order by latest_start_date desc

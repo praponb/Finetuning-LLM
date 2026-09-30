@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, i.product_id, p.launch_date, p.stock_qty, s.country, s.rating FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id;

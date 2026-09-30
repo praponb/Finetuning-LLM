@@ -1,1 +1,0 @@
-SELECT customers.is_active, COUNT(*) AS row_count, MAX(sessions.started_at) AS last_started_at FROM sessions INNER JOIN customers ON customers.id = sessions.customer_id WHERE customers.country <> 'TH' GROUP BY customers.is_active ORDER BY last_started_at, row_count DESC;

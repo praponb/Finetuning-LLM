@@ -1,1 +1,0 @@
-SELECT CASE WHEN c.age >= 70 THEN 'high' WHEN c.age >= 27 THEN 'mid' ELSE 'low' END AS age_bucket, COUNT(CASE WHEN s.country = 'UK' THEN 1 END) AS uk_count FROM sessions s INNER JOIN customers c ON c.id = s.customer_id WHERE c.country IN ('US', 'TH') GROUP BY CASE WHEN c.age >= 70 THEN 'high' WHEN c.age >= 27 THEN 'mid' ELSE 'low' END

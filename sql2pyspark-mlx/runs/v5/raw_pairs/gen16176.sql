@@ -1,1 +1,0 @@
-SELECT p.category, p.brand, MAX(i.last_restock) AS last_last_restock, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM inventory i LEFT JOIN stores s ON s.id = i.store_id LEFT JOIN products p ON i.product_id = p.id WHERE i.product_id IN (2, 3, 9, 10) GROUP BY p.category, p.brand;

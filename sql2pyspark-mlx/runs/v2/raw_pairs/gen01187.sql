@@ -1,1 +1,0 @@
-WITH FilteredPayments AS (SELECT *, LENGTH(method) AS method_length FROM payments WHERE paid_at >= '2024-09-25' AND status NOT IN ('REFUNDED', 'SUCCESS')), Summary AS (SELECT status, MAX(method_length) AS max_method_length FROM FilteredPayments GROUP BY status) SELECT status, max_method_length FROM Summary;

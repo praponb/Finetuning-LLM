@@ -1,1 +1,0 @@
-with valid as (select id, store_id, product_id, cast(quantity as string) quantity_str from inventory where last_restock >= to_date('2024-02-26') and store_id in (1, 3, 4, 5)) select store_id, count(*) as cnt, count(distinct product_id) as distinct_product_ids from valid group by 1 order by store_id desc

@@ -1,1 +1,0 @@
-SELECT id, level, hire_date, salary, DENSE_RANK() OVER (PARTITION BY level ORDER BY hire_date DESC) AS hire_date_dense_rank, ROUND(AVG(salary) OVER (ORDER BY hire_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS salary_moving_avg_3 FROM employees;

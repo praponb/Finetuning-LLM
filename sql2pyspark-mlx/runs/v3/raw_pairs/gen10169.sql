@@ -1,1 +1,0 @@
-select * from (select case when salary >= 122000 then 'high' when salary >= 78000 then 'mid' else 'low' end as salary_bucket, level, max(salary) - min(salary) as salary_range from employees group by case when salary >= 122000 then 'high' when salary >= 78000 then 'mid' else 'low' end, level) as sub where salary_range >= 52

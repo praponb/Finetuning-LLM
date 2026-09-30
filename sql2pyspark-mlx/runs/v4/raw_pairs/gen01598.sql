@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM store_sales WHERE store_id IN (4, 5, 6) OR sale_date < '2025-09-16'), store_sales_stats AS (SELECT product_id, store_id, MAX(units) AS max_units, SUM(revenue) AS total_revenue FROM src GROUP BY product_id, store_id) SELECT product_id, store_id, max_units, total_revenue FROM store_sales_stats;

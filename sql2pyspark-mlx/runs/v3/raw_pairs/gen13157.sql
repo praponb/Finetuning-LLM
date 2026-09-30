@@ -1,1 +1,0 @@
-WITH SessionTotals AS (SELECT session_id, COUNT(CASE WHEN event_type = 'purchase' THEN 1 END) AS purchase_count, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, s.customer_id, S.purchase_count, S.total_duration_sec FROM sessions s LEFT JOIN SessionTotals S ON s.id = S.session_id;

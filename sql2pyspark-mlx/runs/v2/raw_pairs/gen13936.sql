@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, p.price, s.sqft FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON s.id = i.store_id WHERE YEAR(s.opened_date) = 2024 AND i.store_id IN (1, 2, 3, 4)

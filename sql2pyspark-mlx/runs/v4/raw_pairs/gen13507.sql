@@ -1,1 +1,0 @@
-SELECT customer_id, CASE WHEN amount >= 1740 THEN 'high' WHEN amount >= 770 THEN 'mid' ELSE 'low' END AS amount_bucket, ROUND(AVG(discount), 2) AS avg_discount, MIN(order_date) AS first_order_date FROM orders WHERE shipping_fee BETWEEN 32 AND 38 GROUP BY customer_id, amount_bucket ORDER BY avg_discount DESC, customer_id, amount_bucket LIMIT 10;

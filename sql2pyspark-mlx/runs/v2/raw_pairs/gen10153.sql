@@ -1,1 +1,0 @@
-SELECT o.channel, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.method))) AS method_values, MIN(p.paid_at) AS min_paid_at FROM payments p JOIN orders o ON p.order_id = o.id GROUP BY o.channel ORDER BY 2, o.channel DESC

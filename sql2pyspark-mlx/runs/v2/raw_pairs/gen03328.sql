@@ -1,1 +1,0 @@
-SELECT COUNT(DISTINCT amount) AS unique_orders, SORT_ARRAY(COLLECT_SET(status)) AS status_list, AVG(amount) AS avg_amount FROM payments WHERE status = 'FAILED' AND order_id IN (7, 13, 23) AND HOUR(paid_at) BETWEEN 9 AND 15;

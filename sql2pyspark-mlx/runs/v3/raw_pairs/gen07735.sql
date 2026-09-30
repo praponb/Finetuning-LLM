@@ -1,1 +1,0 @@
-select case when rating >= 3.5 then 'high' when rating >= 1.8 then 'mid' else 'low' end as rating_bucket, country, count(*) as row_count, sort_array(collect_set(country)) as country_list from suppliers where supplier_name not like '%Suppl%' group by 1, 2 order by rating_bucket;

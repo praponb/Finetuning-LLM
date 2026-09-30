@@ -1,1 +1,0 @@
-WITH accounts_by_customer AS (SELECT customer_id, ROUND(STDDEV(balance), 2) stddev_balance, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values FROM accounts GROUP BY customer_id) SELECT c.city, c.segment, abc.stddev_balance, abc.status_values FROM customers c LEFT OUTER JOIN accounts_by_customer abc ON c.id = abc.customer_id

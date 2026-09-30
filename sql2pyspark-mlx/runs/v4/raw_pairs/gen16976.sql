@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, AVG(salary) AS avg_salary FROM employees WHERE manager_id IN (10, 14) GROUP BY dept_id) SELECT d.id, d.budget, ebd.avg_salary FROM departments d INNER JOIN employees_by_department ebd ON d.id = ebd.dept_id WHERE ebd.avg_salary >= 98000 ORDER BY d.id DESC, avg_salary LIMIT 10;

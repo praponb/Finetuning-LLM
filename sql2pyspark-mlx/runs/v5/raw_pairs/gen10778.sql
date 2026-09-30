@@ -1,1 +1,0 @@
-WITH account_summary AS (SELECT account_id, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions GROUP BY account_id) SELECT accounts.id, accounts.customer_id, accounts.balance, account_summary.merchant_list FROM accounts LEFT OUTER JOIN account_summary ON accounts.id = account_summary.account_id

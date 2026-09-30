@@ -1,1 +1,0 @@
-select inventory.id, inventory.product_id, inventory.quantity, products.product_name, products.price, suppliers.country from inventory inner join products on inventory.product_id = products.id left join suppliers on suppliers.id = products.supplier_id

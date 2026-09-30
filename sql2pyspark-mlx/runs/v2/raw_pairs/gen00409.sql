@@ -1,1 +1,0 @@
-SELECT is_flagged, latest_txn_time, min_amount FROM (SELECT is_flagged, MAX(txn_time) latest_txn_time, MIN(amount) min_amount FROM transactions WHERE txn_time >= '2023-06-01' GROUP BY is_flagged) s WHERE min_amount < 4000 ORDER BY latest_txn_time, min_amount DESC, is_flagged LIMIT 1;

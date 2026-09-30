@@ -1,1 +1,0 @@
-WITH ranked_subscriptions AS (SELECT id, status, monthly_fee, customer_id, ROW_NUMBER() OVER (PARTITION BY status ORDER BY monthly_fee DESC, id) AS row_num FROM subscriptions) SELECT id, status, monthly_fee, customer_id FROM ranked_subscriptions WHERE row_num = 1 ORDER BY status

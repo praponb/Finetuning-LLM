@@ -1,1 +1,0 @@
-SELECT subscriptions.id, subscriptions.plan, subscriptions.customer_id FROM subscriptions WHERE subscriptions.end_date > '2024-11-12' AND subscriptions.customer_id IN (SELECT id FROM customers WHERE signup_date >= '2024-10-01');

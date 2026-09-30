@@ -1,1 +1,0 @@
-with store_stats as (select store_id, min(quantity) as min_quantity, sum(quantity) as total_quantity from inventory group by store_id) select s.opened_date, s.city, ss.min_quantity, ss.total_quantity from stores s inner join store_stats ss on s.id = ss.store_id order by city, s.opened_date;

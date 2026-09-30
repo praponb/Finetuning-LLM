@@ -1,1 +1,0 @@
-SELECT id, location, budget, dept_name, DENSE_RANK() OVER (PARTITION BY location ORDER BY budget) AS dense_rnk, ROUND(budget / SUM(budget) OVER (PARTITION BY dept_name), 3) AS budget_share FROM departments WHERE budget < 3741000 ORDER BY dept_name;

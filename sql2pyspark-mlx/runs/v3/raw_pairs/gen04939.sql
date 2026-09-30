@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.9 THEN 'mid' ELSE 'low' END AS rating_bucket, country, rating FROM suppliers WHERE rating > 3.2) PIVOT (MAX(rating) FOR country IN ('UK', 'JP'));

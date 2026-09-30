@@ -1,1 +1,0 @@
-SELECT s.browser, s.country, t.click_count, t.total_duration_sec FROM sessions s INNER JOIN (SELECT session_id, SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END) AS click_count, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id

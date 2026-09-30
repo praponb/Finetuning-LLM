@@ -1,1 +1,0 @@
-with top_subscriptions as (select id, plan, monthly_fee, start_date, row_number() over (partition by plan order by monthly_fee desc, id) as rn from subscriptions) select id, plan, monthly_fee, start_date from top_subscriptions where rn <= 3 order by id asc;

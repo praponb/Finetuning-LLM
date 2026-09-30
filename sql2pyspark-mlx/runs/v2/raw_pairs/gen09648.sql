@@ -1,1 +1,0 @@
-select supplier_id, count(case when brand = 'Initech' then 1 end) as initech_count, min(stock_qty) as min_stock_qty, count(case when brand = 'Stark' then 1 end) as stark_count from products where launch_date > '2023-07-01' group by supplier_id order by initech_count desc;

@@ -1,1 +1,0 @@
-select c.id, c.signup_date, c.email, t.min_start_date, t.stddev_monthly_fee from customers c inner join (select customer_id, min(start_date) as min_start_date, round(stddev(monthly_fee), 2) as stddev_monthly_fee from subscriptions group by customer_id) t on c.id = t.customer_id

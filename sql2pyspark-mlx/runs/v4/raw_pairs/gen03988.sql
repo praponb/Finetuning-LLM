@@ -1,1 +1,0 @@
-select location, min(budget) min_budget, count(case when location = 'London' then 1 end) london_count from departments where budget is null and location in ('New York', 'Singapore', 'Berlin') and location in ('New York', 'Bangkok', 'Tokyo') group by location order by min_budget;

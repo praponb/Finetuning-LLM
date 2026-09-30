@@ -1,1 +1,0 @@
-SELECT page, duration_sec_count, last_event_time FROM (SELECT page, COUNT(duration_sec) AS duration_sec_count, MAX(event_time) AS last_event_time FROM web_events GROUP BY page) AS s WHERE duration_sec_count < 9 ORDER BY duration_sec_count DESC;

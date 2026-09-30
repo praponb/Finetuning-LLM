@@ -1,1 +1,0 @@
-SELECT s.region, DATE_TRUNC('MONTH', s.opened_date) AS opened_month, MAX(o.shipping_fee) AS max_shipping_fee FROM orders o INNER JOIN stores s ON s.id = o.store_id WHERE o.channel = 'store' GROUP BY s.region, DATE_TRUNC('MONTH', s.opened_date) ORDER BY opened_month

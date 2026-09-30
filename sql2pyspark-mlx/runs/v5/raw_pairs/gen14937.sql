@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, COUNT(CASE WHEN status = 'RETURNED' THEN 1 END) returned_count FROM shipments GROUP BY order_id) SELECT o.id, o.channel, os.returned_count FROM orders o INNER JOIN order_stats os ON o.id = os.order_id WHERE os.returned_count > 4

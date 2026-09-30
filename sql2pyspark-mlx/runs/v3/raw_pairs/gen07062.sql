@@ -1,1 +1,0 @@
-SELECT o.status, MAX(s.shipped_date) AS last_shipped_date FROM shipments s INNER JOIN orders o ON o.id = s.order_id FULL OUTER JOIN customers c ON c.id = o.customer_id GROUP BY o.status ORDER BY 2, status DESC;

@@ -1,1 +1,0 @@
-select date_trunc('MONTH', txn_time) as txn_month, merchant, sum(amount) as total_amount, count(distinct amount) as unique_txn_types from transactions where txn_type in ('CREDIT', 'FEE') and account_id = 37 group by rollup(date_trunc('MONTH', txn_time), merchant) order by total_amount desc;

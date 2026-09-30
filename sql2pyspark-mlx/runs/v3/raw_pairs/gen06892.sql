@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, city, signup_date, ROW_NUMBER() OVER (PARTITION BY city ORDER BY signup_date, id) AS rnk FROM customers) SELECT id, city, signup_date FROM numbered WHERE rnk = 1 ORDER BY city, signup_date

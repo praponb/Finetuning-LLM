@@ -1,1 +1,0 @@
-SELECT s.*, sub.id AS subscription_id, sub.plan, sub.monthly_fee FROM orders s JOIN subscriptions sub ON s.customer_id = sub.customer_id AND s.order_date >= sub.start_date AND s.order_date < sub.end_date + INTERVAL 7 DAYS

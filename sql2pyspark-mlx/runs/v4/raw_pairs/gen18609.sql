@@ -1,1 +1,0 @@
-SELECT d.id, d.budget, d.location, t.salary_range FROM departments d INNER JOIN (SELECT dept_id, MAX(salary) - MIN(salary) AS salary_range FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.salary_range >= 25 ORDER BY budget ASC, t.salary_range DESC;

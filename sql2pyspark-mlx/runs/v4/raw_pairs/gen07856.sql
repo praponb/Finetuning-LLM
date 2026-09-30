@@ -1,1 +1,0 @@
-select status, case when status in ('FROZEN', 'OPEN') then 'priority' else 'other' end as status_group, count(*) as account_count, max(balance) as max_balance from accounts where customer_id = 36 or status = 'FROZEN' group by status, case when status in ('FROZEN', 'OPEN') then 'priority' else 'other' end having max_balance >= 55000;

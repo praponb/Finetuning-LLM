@@ -1,1 +1,0 @@
-SELECT oi.product_id, oi.order_id, o.store_id, c.signup_date, c.is_active FROM order_items oi JOIN orders o ON oi.order_id = o.id JOIN customers c ON o.customer_id = c.id WHERE LOWER(TRIM(c.name)) = 'carol diaz';

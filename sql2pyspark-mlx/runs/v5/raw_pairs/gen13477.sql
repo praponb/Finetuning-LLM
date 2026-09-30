@@ -1,1 +1,0 @@
-select year(sale_date) as sale_year, quarter(sale_date) as sale_quarter, count(distinct revenue) as unique_stores, min(sale_date) as first_sale_date, max(sale_date) as last_sale_date from store_sales where product_id in (3, 7, 8) group by 1, 2 order by sale_year desc;

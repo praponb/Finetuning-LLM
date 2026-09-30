@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, UPPER(product_name) AS product_name_upper, COALESCE(brand, 'OTHER') AS brand_filled FROM products WHERE LOWER(TRIM(product_name)) = 'noise-cancel headphones') SELECT * FROM (SELECT id, supplier_id, price, cost FROM filtered) src UNPIVOT (val FOR measure IN (price AS PRICE_VAL, cost))

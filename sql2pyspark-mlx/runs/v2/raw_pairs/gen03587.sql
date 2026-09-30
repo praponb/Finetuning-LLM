@@ -1,1 +1,0 @@
-with valid_shipments as (select * from shipments where cost >= 93 and cost > 94), agg as (select case when cost >= 90 then 'high' when cost >= 49 then 'mid' else 'low' end cost_bucket, max(delivered_date) latest_delivered_date from valid_shipments group by case when cost >= 90 then 'high' when cost >= 49 then 'mid' else 'low' end) select * from agg order by cost_bucket limit 1;

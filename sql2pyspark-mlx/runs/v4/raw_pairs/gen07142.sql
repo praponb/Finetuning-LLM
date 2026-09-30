@@ -1,1 +1,0 @@
-WITH remaining_keys AS (SELECT id, product_id FROM order_items EXCEPT SELECT id, product_id FROM order_items WHERE quantity = 3), kept_rows AS (SELECT s.* FROM order_items s JOIN remaining_keys k ON s.id = k.id AND s.product_id = k.product_id) SELECT id, quantity, unit_price FROM kept_rows ORDER BY quantity DESC NULLS FIRST;

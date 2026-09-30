@@ -1,1 +1,0 @@
-SELECT opened_month, stddev_sqft FROM (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, ROUND(STDDEV(sqft), 2) stddev_sqft FROM stores WHERE region IS NOT NULL GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) sub WHERE stddev_sqft > 70 ORDER BY opened_month DESC;

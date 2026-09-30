@@ -1,1 +1,0 @@
-SELECT id, order_id, paid_at, status, amount, RANK() OVER (PARTITION BY order_id ORDER BY paid_at) AS rnk, SUM(amount) OVER (PARTITION BY status) AS status_sum_amount FROM payments ORDER BY paid_at, status_sum_amount

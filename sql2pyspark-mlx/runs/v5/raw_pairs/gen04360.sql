@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count, MAX(amount) AS max_amount FROM orders GROUP BY customer_id) SELECT c.id, c.name, cs.cancelled_count, cs.max_amount FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.cancelled_count > 8 ORDER BY max_amount DESC

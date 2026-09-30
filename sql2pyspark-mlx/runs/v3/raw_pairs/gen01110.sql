@@ -1,1 +1,0 @@
-SELECT MONTH(p.launch_date) launch_month, p.category, MAX(i.quantity) - MIN(i.quantity) quantity_range, COUNT(DISTINCT i.quantity) unique_products FROM inventory i LEFT JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id WHERE SIZE(p.tags) > 2 GROUP BY MONTH(p.launch_date), p.category ORDER BY p.category DESC;

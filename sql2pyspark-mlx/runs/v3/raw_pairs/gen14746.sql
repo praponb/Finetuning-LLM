@@ -1,1 +1,0 @@
-SELECT c.is_active, ROUND((100 * SUM(CASE WHEN a.status = 'CLOSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_closed FROM accounts a INNER JOIN customers c ON a.customer_id = c.id GROUP BY c.is_active ORDER BY 2, is_active LIMIT 5

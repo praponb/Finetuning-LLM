@@ -1,1 +1,0 @@
-SELECT o.status, ROUND((100 * SUM(CASE WHEN p.method = 'cash' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cash FROM payments p INNER JOIN orders o ON o.id = p.order_id WHERE o.status IN ('COMPLETED', 'SHIPPED', 'CANCELLED') GROUP BY o.status ORDER BY o.status DESC;

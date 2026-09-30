@@ -1,1 +1,0 @@
-SELECT s.rating, s.city, t.pct_grocery FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, ROUND((100 * SUM(CASE WHEN category = 'Grocery' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_grocery FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id;

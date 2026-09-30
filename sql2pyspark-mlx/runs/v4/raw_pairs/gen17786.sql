@@ -1,1 +1,0 @@
-WITH top_inventory AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY quantity, id) AS row_num FROM inventory WHERE product_id IN (3, 7, 8, 10)) SELECT id, store_id, quantity FROM top_inventory WHERE row_num = 1 ORDER BY id DESC;

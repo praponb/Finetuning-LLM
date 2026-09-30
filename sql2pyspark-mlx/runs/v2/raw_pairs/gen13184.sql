@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance DESC, id) row_num FROM accounts WHERE opened_date < '2025-09-21') SELECT id, account_type, balance, customer_id FROM numbered WHERE row_num = 1

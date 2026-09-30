@@ -1,1 +1,0 @@
-SELECT MONTH(signup_date) AS signup_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, MIN(credit_limit) AS min_credit_limit FROM customers GROUP BY signup_month ORDER BY city_values, signup_month;

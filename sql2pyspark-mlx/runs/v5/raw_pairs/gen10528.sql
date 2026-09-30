@@ -1,1 +1,0 @@
-SELECT id, city, age, signup_date, AVG(age) OVER (PARTITION BY city) AS city_avg_age, SUM(age) OVER (PARTITION BY city ORDER BY signup_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_age FROM customers WHERE city IN ('London', 'Berlin');

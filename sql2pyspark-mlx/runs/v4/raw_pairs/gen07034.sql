@@ -1,1 +1,0 @@
-SELECT orders.id, orders.status, orders.store_id, orders.customer_id FROM orders WHERE orders.customer_id IS NOT NULL AND EXISTS (SELECT 1 FROM order_items WHERE order_items.order_id = orders.id AND order_items.unit_price <= 150);

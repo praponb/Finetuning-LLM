@@ -1,1 +1,0 @@
-SELECT s.device, s.country, ROUND((100 * SUM(CASE WHEN we.event_type = 'add_to_cart' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_add_to_cart, ROUND(STDDEV(we.duration_sec), 2) AS stddev_duration_sec FROM web_events we JOIN sessions s ON we.session_id = s.id GROUP BY s.device, s.country ORDER BY pct_add_to_cart;

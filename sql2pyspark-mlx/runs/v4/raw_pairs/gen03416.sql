@@ -1,1 +1,0 @@
-select txn_type, unique_merchants, min_txn_time from (select txn_type, count(distinct amount) as unique_merchants, min(txn_time) as min_txn_time from transactions where merchant in ('Amazon', '7-Eleven', 'Starbucks') group by txn_type) as x where unique_merchants >= 7

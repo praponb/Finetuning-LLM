@@ -1,1 +1,0 @@
-SELECT city, pct_chiang_mai FROM (SELECT city, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai FROM suppliers GROUP BY city) AS sub WHERE pct_chiang_mai >= 64 ORDER BY pct_chiang_mai DESC;

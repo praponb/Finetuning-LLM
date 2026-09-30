@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, oi.quantity, o.store_id, CASE WHEN o.amount >= 1210 THEN 'High' WHEN o.amount >= 220 THEN 'Medium' ELSE 'Low' END AS amount_band FROM order_items oi JOIN orders o ON oi.order_id = o.id ORDER BY id DESC

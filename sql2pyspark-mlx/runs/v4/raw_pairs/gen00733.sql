@@ -1,1 +1,0 @@
-WITH web_events_by_session AS (SELECT session_id, COUNT(DISTINCT duration_sec) AS unique_sessions FROM web_events GROUP BY session_id) SELECT sessions.device, web_events_by_session.unique_sessions FROM sessions LEFT JOIN web_events_by_session ON sessions.id = web_events_by_session.session_id

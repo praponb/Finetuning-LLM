@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 3600 THEN 'high' WHEN amount >= 900 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(DISTINCT amount) AS unique_txn_types, ROUND(AVG(amount), 2) AS avg_amount FROM transactions GROUP BY amount_bucket HAVING ROUND(AVG(amount), 2) >= 52 ORDER BY amount_bucket

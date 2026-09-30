@@ -1,1 +1,0 @@
-WITH ProductSummary AS (SELECT product_id, COUNT(*) AS row_count FROM order_items WHERE quantity <> 4 GROUP BY product_id) SELECT p.cost, P.row_count FROM products p INNER JOIN ProductSummary P ON p.id = P.product_id

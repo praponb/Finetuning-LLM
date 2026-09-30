@@ -1,1 +1,0 @@
-SELECT city, SUM(CASE WHEN city = 'Bangkok' THEN sqft ELSE 0 END) AS bangkok_sqft, COUNT_IF(region = 'Central') AS central_events, COUNT(DISTINCT city) AS distinct_cities, COUNT(CASE WHEN city = 'Chiang Mai' THEN 1 END) AS chiang_mai_count, SORT_ARRAY(COLLECT_SET(region)) AS region_list FROM stores GROUP BY 1 ORDER BY chiang_mai_count DESC NULLS FIRST;

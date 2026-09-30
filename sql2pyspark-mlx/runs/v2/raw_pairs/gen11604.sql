@@ -1,1 +1,0 @@
-SELECT a.id, a.status, a.account_type, a.balance FROM accounts a WHERE a.account_type NOT IN ('SAVINGS', 'CHECKING') AND EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND t.txn_time < '2024-04-01')

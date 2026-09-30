@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM payments WHERE method IN ('bank_transfer', 'card')), Agg AS (SELECT CASE WHEN status IN ('SUCCESS', 'FAILED') THEN 'tier_1' ELSE 'other' END AS status_group, ROUND(AVG(amount), 2) AS avg_amount FROM src GROUP BY CASE WHEN status IN ('SUCCESS', 'FAILED') THEN 'tier_1' ELSE 'other' END) SELECT status_group, avg_amount FROM Agg;

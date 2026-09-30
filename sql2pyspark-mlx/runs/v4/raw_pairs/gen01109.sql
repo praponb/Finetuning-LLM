@@ -1,1 +1,0 @@
-with cleaned as (select *, length(channel) channel_length from orders where status = 'COMPLETED') select s.*, sub.id as subscription_id, sub.plan, sub.monthly_fee from cleaned s left join subscriptions sub on s.customer_id = sub.customer_id and s.order_date >= sub.start_date and s.order_date <= date_add(sub.end_date, 10)

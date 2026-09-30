@@ -1,1 +1,0 @@
-select hour(event_time) as event_hour, sum(duration_sec) as total_duration_sec, sum(sum(duration_sec)) over (order by hour(event_time)) as cumulative_duration_sec from web_events where page is null group by hour(event_time);

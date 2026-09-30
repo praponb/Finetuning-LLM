@@ -1,1 +1,0 @@
-select c.city, round((100 * sum(case when p.method = 'promptpay' then 1 else 0 end)) / count(*), 1) as pct_promptpay, max(p.amount) - min(p.amount) as amount_range from payments p join orders o on p.order_id = o.id join customers c on o.customer_id = c.id where p.amount < 740 group by c.city order by amount_range desc

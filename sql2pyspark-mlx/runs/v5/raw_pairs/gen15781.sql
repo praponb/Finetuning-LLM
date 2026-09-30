@@ -1,1 +1,0 @@
-with filtered as (select id, session_id, page, event_time, duration_sec, round(duration_sec * 1.15, 2) as duration_sec_adjusted from web_events where page is not null and event_time < '2023-05-01') select *, row_number() over (partition by page, session_id order by duration_sec_adjusted nulls first, id) as rank_in_group from filtered qualify rank_in_group = 1

@@ -1,1 +1,0 @@
-WITH valid_products AS (SELECT *, FLOOR(stock_qty) AS stock_qty_whole FROM products WHERE (launch_date > '2023-11-10' AND SIZE(tags) > 1) OR price <= 970), agg AS (SELECT category, AVG(stock_qty_whole) AS avg_stock_qty_whole FROM valid_products GROUP BY category) SELECT category, avg_stock_qty_whole FROM agg WHERE avg_stock_qty_whole >= 59

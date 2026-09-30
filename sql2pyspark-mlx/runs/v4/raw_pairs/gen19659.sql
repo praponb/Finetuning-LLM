@@ -1,1 +1,0 @@
-select web_events.id, web_events.event_time, web_events.duration_sec, sessions.customer_id, sessions.country, customers.signup_date from web_events full outer join sessions on web_events.session_id = sessions.id join customers on sessions.customer_id = customers.id where customers.age between 35 and 50;

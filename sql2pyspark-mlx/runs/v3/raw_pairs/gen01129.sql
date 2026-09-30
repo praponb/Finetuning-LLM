@@ -1,1 +1,0 @@
-select quarter(signup_date) as signup_quarter, sum(age) as total_age, count(*) as cnt, sum(sum(age)) over (order by quarter(signup_date)) as cumulative_age from customers group by quarter(signup_date);

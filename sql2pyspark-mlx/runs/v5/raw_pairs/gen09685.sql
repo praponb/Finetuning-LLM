@@ -1,1 +1,0 @@
-select e.id, e.manager_id as employee_manager_id, e.salary as employee_salary, e.dept_id as employee_dept_id, m.full_name as manager_full_name, m.manager_id as manager_manager_id, m.job_title as manager_job_title from employees e join employees m on e.manager_id = m.id

@@ -1,1 +1,0 @@
-SELECT event_type, SUM(duration_sec) AS total_duration_sec, COUNT(*) AS num_web_events FROM web_events WHERE HOUR(event_time) BETWEEN 11 AND 17 AND (session_id IN (1, 33) OR duration_sec < 451) GROUP BY event_type ORDER BY event_type DESC

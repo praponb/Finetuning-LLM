@@ -1,1 +1,0 @@
-SELECT YEAR(order_date) AS order_year, status, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count, MIN(order_date) AS first_order_date FROM orders WHERE amount <= 650 GROUP BY YEAR(order_date), status ORDER BY cancelled_count

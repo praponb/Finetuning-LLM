@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, AVG(cost) AS avg_cost FROM products WHERE category IN ('Sports', 'Books') GROUP BY supplier_id) SELECT suppliers.city, suppliers.rating, supplier_summary.avg_cost FROM suppliers INNER JOIN supplier_summary ON suppliers.id = supplier_summary.supplier_id ORDER BY suppliers.city, avg_cost DESC

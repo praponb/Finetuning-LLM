@@ -1,1 +1,0 @@
-SELECT id, hire_date, salary, dept_id, CONCAT_WS(',', job_title, email) AS job_title_email_key, DATE_TRUNC('YEAR', hire_date) AS hire_date_period FROM employees WHERE NOT is_remote ORDER BY hire_date_period

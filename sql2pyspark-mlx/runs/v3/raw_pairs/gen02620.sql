@@ -1,1 +1,0 @@
-SELECT id, dept_name, location, budget, PERCENT_RANK() OVER (PARTITION BY dept_name, location ORDER BY budget DESC) AS budget_pct_rank FROM departments WHERE dept_name IN ('Marketing', 'Engineering', 'HR') ORDER BY 5, budget DESC;

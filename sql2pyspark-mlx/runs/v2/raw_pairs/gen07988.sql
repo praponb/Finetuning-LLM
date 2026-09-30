@@ -1,1 +1,0 @@
-SELECT o.store_id, MIN(s.shipped_date) AS min_shipped_date, COUNT(DISTINCT s.cost) AS unique_orders FROM shipments s JOIN orders o ON s.order_id = o.id GROUP BY o.store_id ORDER BY min_shipped_date, store_id DESC LIMIT 50;

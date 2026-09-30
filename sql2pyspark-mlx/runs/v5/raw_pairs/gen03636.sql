@@ -1,1 +1,0 @@
-select status, min(opened_date) as first_opened_date, max(balance) as max_balance from accounts where (account_type = 'CHECKING' and customer_id is not null) or account_type != 'SAVINGS' group by status

@@ -1,1 +1,0 @@
-with base as (select * from products where cost <= 470 and supplier_id = 18), Agg as (select brand, min(launch_date) as min_launch_date from base group by brand) select brand, min_launch_date from Agg;

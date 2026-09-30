@@ -1,1 +1,0 @@
-WITH valid_products AS (SELECT * FROM products WHERE category IN ('Sports', 'Fashion', 'Books')), agg AS (SELECT supplier_id, MIN(stock_qty) AS min_stock_qty FROM valid_products GROUP BY supplier_id) SELECT supplier_id, min_stock_qty FROM agg WHERE min_stock_qty < 160 ORDER BY min_stock_qty DESC;

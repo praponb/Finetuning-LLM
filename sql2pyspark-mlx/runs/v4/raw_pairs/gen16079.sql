@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM order_items WHERE unit_price BETWEEN 310 AND 400), OrderItemsStats AS (SELECT product_id, MIN(unit_price) AS min_unit_price FROM Base GROUP BY product_id) SELECT * FROM OrderItemsStats WHERE min_unit_price > 170 ORDER BY product_id DESC LIMIT 5;

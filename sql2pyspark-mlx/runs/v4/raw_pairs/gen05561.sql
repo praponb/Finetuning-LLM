@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM departments WHERE dept_name != 'Engineering' AND budget > 1424000), location_summary AS (SELECT location, COUNT(DISTINCT budget) AS unique_dept_names, MIN(budget) AS min_budget FROM base GROUP BY location) SELECT location, min_budget FROM location_summary

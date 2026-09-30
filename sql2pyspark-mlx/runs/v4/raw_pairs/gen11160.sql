@@ -1,1 +1,0 @@
-SELECT start_quarter, start_month, unique_plans FROM (SELECT QUARTER(start_date) start_quarter, MONTH(start_date) start_month, COUNT(DISTINCT monthly_fee) unique_plans FROM subscriptions GROUP BY QUARTER(start_date), MONTH(start_date)) s WHERE unique_plans >= 7 ORDER BY unique_plans;

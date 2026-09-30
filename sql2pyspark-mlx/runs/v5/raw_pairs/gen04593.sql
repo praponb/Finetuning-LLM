@@ -1,1 +1,0 @@
-SELECT p.city, a.status, COUNT(*) AS rows_total, AVG(a.discount) AS avg_discount, MIN(a.amount) AS min_amount FROM orders a INNER JOIN stores p ON a.store_id = p.id GROUP BY GROUPING SETS ((p.city, a.status), (p.city));

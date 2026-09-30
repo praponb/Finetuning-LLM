@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, YEAR(start_date) AS start_year, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions GROUP BY 1, 2

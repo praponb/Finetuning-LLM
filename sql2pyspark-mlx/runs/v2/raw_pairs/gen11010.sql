@@ -1,1 +1,0 @@
-select id, city, rating, supplier_name from (select id, city, rating, supplier_name, dense_rank() over (partition by city order by rating desc) row_num from suppliers) r where row_num <= 5 order by id desc

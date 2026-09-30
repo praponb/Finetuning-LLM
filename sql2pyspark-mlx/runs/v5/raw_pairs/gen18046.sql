@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, COUNT(e.id) AS employee_count, SUM(e.salary) AS total_salary, SORT_ARRAY(COLLECT_SET(e.job_title)) AS job_title_list FROM departments d LEFT OUTER JOIN employees e ON d.id = e.dept_id GROUP BY d.id, d.dept_name ORDER BY dept_name DESC, id LIMIT 3;

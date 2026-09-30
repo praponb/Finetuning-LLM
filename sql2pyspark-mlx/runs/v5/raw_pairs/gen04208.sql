@@ -1,1 +1,0 @@
-SELECT we.duration_sec, s.started_at, CASE WHEN s.device = 'mobile' THEN 1 ELSE 0 END AS is_mobile FROM web_events we FULL OUTER JOIN sessions s ON we.session_id = s.id WHERE s.started_at < '2023-05-01'

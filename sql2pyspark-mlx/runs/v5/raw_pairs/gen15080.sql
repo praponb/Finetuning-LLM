@@ -1,1 +1,0 @@
-select s.id, s.carrier, o.amount, st.region from shipments s full outer join orders o on s.order_id = o.id left join stores st on o.store_id = st.id where lower(trim(st.store_name)) = 'riverside' and o.shipping_fee <= 34 order by amount desc

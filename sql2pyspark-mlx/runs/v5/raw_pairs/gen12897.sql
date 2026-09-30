@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, EXPLODE(tier_limits) AS tier_value FROM price_tiers) SELECT id, tier_value, PERCENT_RANK() OVER (ORDER BY tier_value NULLS FIRST) AS tier_value_percent_rank, DENSE_RANK() OVER w_grp AS tier_value_dense_rank FROM flattened WINDOW w_grp AS (ORDER BY tier_value DESC NULLS LAST);

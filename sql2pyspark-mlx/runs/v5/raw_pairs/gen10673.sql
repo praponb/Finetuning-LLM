@@ -1,1 +1,0 @@
-WITH filtered_inventory AS (SELECT * FROM inventory WHERE store_id = 1), store_id_summary AS (SELECT store_id, MIN(quantity) AS min_quantity FROM filtered_inventory GROUP BY store_id) SELECT * FROM store_id_summary ORDER BY min_quantity DESC

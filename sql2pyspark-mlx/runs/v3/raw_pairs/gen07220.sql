@@ -1,1 +1,0 @@
-SELECT emp.id, emp.salary AS employee_salary, mgr.dept_id AS manager_dept_id, mgr.manager_id AS manager_manager_id, mgr.level AS manager_level FROM employees emp JOIN employees mgr ON emp.manager_id = mgr.id

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(STDDEV(rating), 2) AS stddev_rating FROM suppliers WHERE supplier_name LIKE 'Pa%' GROUP BY CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END) AS sub WHERE stddev_rating > 59

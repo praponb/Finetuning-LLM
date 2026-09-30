@@ -1,1 +1,0 @@
-SELECT id, txn_type, txn_time, amount, merchant, SUM(amount) OVER (PARTITION BY txn_type ORDER BY txn_time, id) AS running_amount, LAG(amount, 1) OVER (PARTITION BY merchant, txn_type ORDER BY txn_time, id) AS prev_amount FROM transactions;

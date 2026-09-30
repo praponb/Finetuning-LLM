@@ -1,1 +1,0 @@
-SELECT id, customer_id, discount, order_date FROM (SELECT id, customer_id, discount, order_date, RANK() OVER (PARTITION BY customer_id ORDER BY discount DESC) AS row_num FROM orders) AS r WHERE row_num <= 5;

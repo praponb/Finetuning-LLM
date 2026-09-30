@@ -1,1 +1,0 @@
-SELECT YEAR(opened_date) opened_year, city, MAX(sqft) - MIN(sqft) sqft_range, COUNT(CASE WHEN region = 'East' THEN 1 END) east_count FROM stores WHERE city = 'Bangkok' GROUP BY opened_year, city HAVING COUNT(sqft) > 3 ORDER BY sqft_range DESC, east_count;

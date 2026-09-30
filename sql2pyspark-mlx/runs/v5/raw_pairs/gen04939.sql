@@ -1,1 +1,0 @@
-SELECT orders.id, orders.order_date, orders.store_id, t.unique_orders, t.unique_products FROM orders LEFT OUTER JOIN (SELECT order_id, COUNT(DISTINCT unit_price) AS unique_orders, COUNT(DISTINCT quantity) AS unique_products FROM order_items WHERE order_id IN (11, 35, 37) GROUP BY order_id) t ON orders.id = t.order_id

@@ -1,1 +1,0 @@
-SELECT region, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, MAX(sqft) AS max_sqft, COUNT(sqft) AS sqft_count, MAX(opened_date) AS latest_opened_date FROM stores WHERE city = 'Chiang Mai' GROUP BY region, opened_month;

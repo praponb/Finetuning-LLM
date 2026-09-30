@@ -1,1 +1,0 @@
-SELECT supplier_id, brand, CASE WHEN price >= 1180 THEN 'high' WHEN price >= 540 THEN 'mid' ELSE 'low' END AS price_bucket, MIN(price) AS min_price, SUM(CASE WHEN category = 'Home' THEN 1 ELSE 0 END) AS home_count FROM products WHERE stock_qty <> 253 AND MONTH(launch_date) IN (7, 9, 10) GROUP BY 1, 2, 3 ORDER BY price_bucket DESC

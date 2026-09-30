@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items WHERE order_id IN (35, 36) GROUP BY product_id) SELECT p.category, p.supplier_id, ps.stddev_unit_price FROM products p LEFT JOIN product_summary ps ON p.id = ps.product_id WHERE ps.stddev_unit_price > 21

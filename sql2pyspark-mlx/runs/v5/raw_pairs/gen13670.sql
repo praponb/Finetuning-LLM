@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, ROUND(discount_pct, 2) AS discount_pct_rounded, COALESCE(channel, 'UNKNOWN') AS channel_clean FROM promotions WHERE channel <> 'web') SELECT *, ROW_NUMBER() OVER (PARTITION BY promo_code ORDER BY discount_pct_rounded DESC NULLS LAST, id) AS latest_rank FROM base QUALIFY latest_rank = 1

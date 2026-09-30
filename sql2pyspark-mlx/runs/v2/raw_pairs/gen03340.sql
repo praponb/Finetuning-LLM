@@ -1,1 +1,0 @@
-WITH TopSuppliers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS rn FROM suppliers WHERE country = 'SG') SELECT id, city, rating, supplier_name FROM TopSuppliers WHERE rn <= 3

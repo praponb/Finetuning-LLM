@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT country, segment FROM customers EXCEPT ALL SELECT country, segment FROM customers WHERE segment IN ('SMB', 'Consumer')), kept_rows AS (SELECT s.* FROM customers s INNER JOIN kept_keys k ON s.country = k.country AND s.segment = k.segment) SELECT name, email, country, segment, is_active, age FROM kept_rows ORDER BY segment NULLS LAST, country

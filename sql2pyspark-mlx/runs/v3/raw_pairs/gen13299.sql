@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, MAX(amount) max_amount, SORT_ARRAY(COLLECT_SET(merchant)) merchant_list FROM transactions GROUP BY account_id) SELECT a.id, a.balance, a.opened_date, at.max_amount, at.merchant_list FROM accounts a LEFT OUTER JOIN account_totals at ON a.id = at.account_id WHERE at.max_amount >= 2400 ORDER BY a.balance DESC

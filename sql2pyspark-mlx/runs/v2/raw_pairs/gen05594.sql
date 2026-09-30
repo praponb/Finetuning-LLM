@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, COUNT(*) AS cnt, MAX(sale_date) AS latest_sale_date FROM store_sales GROUP BY product_id) SELECT p.id, p.cost, p.brand, ps.cnt, ps.latest_sale_date FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id ORDER BY id;

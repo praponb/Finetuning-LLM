@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CEIL(cost) AS cost_whole FROM products WHERE NOT (launch_date > '2025-01-01' OR supplier_id IS NOT NULL)), brand_summary AS (SELECT brand, category, COUNT(*) AS num_products FROM base GROUP BY brand, category) SELECT brand, category, num_products FROM brand_summary WHERE num_products >= 3 ORDER BY brand DESC, num_products DESC;

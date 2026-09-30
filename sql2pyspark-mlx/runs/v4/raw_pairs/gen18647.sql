@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN unit_price >= 310 THEN 'high' WHEN unit_price >= 130 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(DISTINCT unit_price) AS unique_orders, AVG(unit_price) AS avg_unit_price FROM order_items GROUP BY product_id, CASE WHEN unit_price >= 310 THEN 'high' WHEN unit_price >= 130 THEN 'mid' ELSE 'low' END ORDER BY unit_price_bucket;

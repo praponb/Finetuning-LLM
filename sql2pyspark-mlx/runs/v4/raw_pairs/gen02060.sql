@@ -1,1 +1,0 @@
-SELECT id, account_type, opened_date, balance, LAST_VALUE(balance) OVER (PARTITION BY account_type ORDER BY opened_date DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_balance FROM accounts

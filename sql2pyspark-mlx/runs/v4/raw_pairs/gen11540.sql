@@ -1,1 +1,0 @@
-SELECT is_flagged, last_txn_time, starbucks_count FROM (SELECT is_flagged, MAX(txn_time) AS last_txn_time, SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END) AS starbucks_count FROM transactions GROUP BY is_flagged) AS s WHERE starbucks_count < 54

@@ -1,1 +1,0 @@
-SELECT c.is_active, AVG(o.discount) AS avg_discount, ROUND(AVG(o.shipping_fee), 2) AS avg_shipping_fee FROM orders o INNER JOIN stores s ON s.id = o.store_id FULL OUTER JOIN customers c ON o.customer_id = c.id GROUP BY c.is_active

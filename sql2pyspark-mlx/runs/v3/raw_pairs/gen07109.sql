@@ -1,1 +1,0 @@
-select i.id, i.product_id, p.brand, s.store_name, s.city, trim(p.brand) as clean_brand from inventory i inner join products p on i.product_id = p.id inner join stores s on s.id = i.store_id where s.opened_date >= '2024-05-01' and i.store_id = 3;

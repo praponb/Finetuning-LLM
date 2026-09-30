@@ -1,1 +1,0 @@
-SELECT product_id, SUM(quantity) AS total_quantity, DENSE_RANK() OVER (ORDER BY SUM(quantity) DESC) AS quantity_rank FROM inventory WHERE store_id = 2 GROUP BY product_id ORDER BY quantity_rank, product_id LIMIT 5;

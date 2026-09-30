@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, SUM(duration_sec) AS total_duration_sec FROM web_events WHERE session_id IN (2, 11, 16, 27) GROUP BY session_id) SELECT s.id, s.browser, s.customer_id, ss.total_duration_sec FROM sessions s JOIN session_summary ss ON s.id = ss.session_id WHERE ss.total_duration_sec >= 1800

@@ -1,1 +1,0 @@
-SELECT location, ROUND(AVG(budget), 2) AS avg_budget, MAX(budget) AS max_budget, MIN(budget) AS min_budget FROM departments WHERE location IS NOT NULL GROUP BY location HAVING ROUND(AVG(budget), 2) > 54 ORDER BY max_budget DESC

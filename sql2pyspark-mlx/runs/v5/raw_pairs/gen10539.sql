@@ -1,1 +1,0 @@
-SELECT brand, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, ROUND(AVG(price), 2) AS avg_price, COUNT(DISTINCT stock_qty) AS unique_suppliers FROM products GROUP BY brand HAVING ROUND(AVG(price), 2) < 72 ORDER BY avg_price DESC, brand LIMIT 5

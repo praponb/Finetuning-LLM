@@ -1,1 +1,0 @@
-WITH supplier_totals AS (SELECT supplier_id, AVG(cost) AS avg_cost, COUNT(*) AS row_count FROM products GROUP BY supplier_id) SELECT suppliers.id, suppliers.supplier_name, suppliers.city, supplier_totals.avg_cost, supplier_totals.row_count FROM suppliers INNER JOIN supplier_totals ON suppliers.id = supplier_totals.supplier_id ORDER BY supplier_totals.row_count DESC

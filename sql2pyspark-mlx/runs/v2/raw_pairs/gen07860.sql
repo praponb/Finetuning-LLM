@@ -1,1 +1,0 @@
-SELECT p.id, p.order_id, p.paid_at, p.amount, o.shipping_fee, o.amount order_amount, GREATEST(o.discount, o.amount) greatest_discount_amount FROM payments p JOIN orders o ON o.id = p.order_id WHERE p.status IN ('SUCCESS', 'FAILED', 'REFUNDED') OR o.shipping_fee BETWEEN 19 AND 27 ORDER BY order_amount DESC, shipping_fee DESC;

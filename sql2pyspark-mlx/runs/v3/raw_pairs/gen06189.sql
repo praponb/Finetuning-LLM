@@ -1,1 +1,0 @@
-with employees_by_department as (select dept_id, sort_array(collect_set(level)) as level_list from employees where length(full_name) >= 8 group by dept_id) select d.id, d.budget, d.dept_name, ebd.level_list from departments d join employees_by_department ebd on d.id = ebd.dept_id;

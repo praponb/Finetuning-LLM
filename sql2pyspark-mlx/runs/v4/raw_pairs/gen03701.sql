@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled_count, ROUND(AVG(amount), 2) AS avg_amount FROM orders GROUP BY store_id) SELECT s.id, s.store_name, ss.cancelled_count, ss.avg_amount FROM stores s LEFT OUTER JOIN store_summary ss ON s.id = ss.store_id WHERE ss.cancelled_count > 50 ORDER BY ss.cancelled_count

@@ -1,1 +1,0 @@
-select * from (select year(hire_date) as hire_year, job_title, salary from employees where level in ('L1', 'L2')) pivot (count(salary) for job_title in ('Director', 'Intern', 'Analyst', 'Designer')) order by hire_year

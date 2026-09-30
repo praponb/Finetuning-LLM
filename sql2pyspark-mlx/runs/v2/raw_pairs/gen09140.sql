@@ -1,1 +1,0 @@
-WITH recent_orders AS (SELECT * FROM orders WHERE amount BETWEEN 1320 AND 1350 AND (status = 'SHIPPED' OR order_date <= '2025-02-01')), orders_stats AS (SELECT customer_id, SUM(CASE WHEN channel = 'web' THEN discount ELSE 0 END) AS web_discount FROM recent_orders GROUP BY customer_id) SELECT customer_id, web_discount FROM orders_stats ORDER BY customer_id, web_discount;

@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, COUNT(we.id) AS web_event_count, SUM(CASE WHEN we.page = '/search' THEN we.duration_sec ELSE 0 END) AS search_duration_sec FROM sessions s LEFT OUTER JOIN web_events we ON we.session_id = s.id WHERE s.device NOT IN ('tablet', 'desktop') GROUP BY s.id, s.browser

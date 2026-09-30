@@ -1,1 +1,0 @@
-select product_id, case when units >= 40 then 'LARGE' else 'SMALL' end as units_tier, sum(units) as total_units, count(*) as row_count, count(*) as num_rows, count(distinct product_id) as distinct_product_ids, grouping(product_id) as grouping_id from store_sales group by cube (product_id, case when units >= 40 then 'LARGE' else 'SMALL' end) order by num_rows desc

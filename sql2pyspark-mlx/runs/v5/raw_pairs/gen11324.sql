@@ -1,1 +1,0 @@
-select status, min_delivered_date, cost_range from (select status, min(delivered_date) as min_delivered_date, max(cost) - min(cost) as cost_range from shipments group by status) as agg where cost_range >= 28

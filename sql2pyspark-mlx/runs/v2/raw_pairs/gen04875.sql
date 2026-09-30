@@ -1,1 +1,0 @@
-WITH valid_shipments AS (SELECT * FROM shipments WHERE order_id IN (12, 22)), agg AS (SELECT carrier, MAX(shipped_date) AS latest_shipped_date FROM valid_shipments GROUP BY carrier) SELECT carrier, latest_shipped_date FROM agg ORDER BY carrier

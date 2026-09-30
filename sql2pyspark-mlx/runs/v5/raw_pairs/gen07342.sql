@@ -1,1 +1,0 @@
-select subscriptions.id, subscriptions.monthly_fee, customers.age from subscriptions full outer join customers on subscriptions.customer_id = customers.id where subscriptions.status = 'EXPIRED' order by 1 desc;

@@ -1,1 +1,0 @@
-with product_totals as (select product_id, min(unit_price) as min_unit_price, round(stddev(quantity), 2) as stddev_quantity from order_items where product_id in (1, 15) group by product_id) select p.id, p.product_name, pt.min_unit_price, pt.stddev_quantity from products p left outer join product_totals pt on p.id = pt.product_id order by min_unit_price desc;

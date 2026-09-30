@@ -1,1 +1,0 @@
-SELECT status, SUM(CASE WHEN status = 'SUCCESS' THEN amount ELSE 0 END) AS success_amount, MIN(amount) AS min_amount FROM payments WHERE TO_DATE(paid_at) >= '2024-01-01' GROUP BY status ORDER BY success_amount DESC

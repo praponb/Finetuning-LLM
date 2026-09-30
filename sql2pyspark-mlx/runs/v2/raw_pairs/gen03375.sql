@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, ss.product_id FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id IN (3, 5, 7) ORDER BY product_id DESC, id DESC

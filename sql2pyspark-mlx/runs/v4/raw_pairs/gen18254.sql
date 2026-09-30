@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, region, city, SUM(CASE WHEN city = 'Singapore' THEN sqft ELSE 0 END) AS singapore_sqft, SUM(sqft) AS total_sqft FROM stores WHERE region IS NOT NULL GROUP BY opened_month, region, city HAVING total_sqft > 32000 ORDER BY total_sqft;

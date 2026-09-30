@@ -1,1 +1,0 @@
-SELECT MONTH(opened_date) AS opened_month, AVG(sqft) AS avg_sqft, SUM(sqft) AS total_sqft, COUNT(DISTINCT sqft) AS unique_citys FROM stores WHERE opened_date BETWEEN '2024-11-23' AND '2024-12-01' AND sqft <> 9345 GROUP BY MONTH(opened_date) ORDER BY 3

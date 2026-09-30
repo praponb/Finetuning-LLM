@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT order_id, product_id FROM order_items EXCEPT ALL SELECT order_id, product_id FROM order_items WHERE quantity BETWEEN 5 AND 6), verified AS (SELECT s.* FROM order_items s INNER JOIN kept_keys k ON s.order_id = k.order_id AND s.product_id = k.product_id) SELECT id, quantity FROM verified ORDER BY quantity NULLS LAST

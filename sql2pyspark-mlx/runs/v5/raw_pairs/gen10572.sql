@@ -1,1 +1,0 @@
-SELECT status, CASE WHEN cost >= 108 THEN 'LARGE' ELSE 'SMALL' END AS cost_tier, AVG(cost) FILTER (WHERE carrier = 'DHL') AS dhl_avg_cost, APPROX_PERCENTILE(cost, 0.5) AS cost_p50, ROUND(SUM(cost) / NULLIF(COUNT(CASE WHEN status = 'IN_TRANSIT' THEN 1 END), 0), 2) AS cost_per_in_transit FROM shipments GROUP BY 1, 2

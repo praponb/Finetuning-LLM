@@ -1,1 +1,0 @@
-SELECT SUM(amount) AS total_amount, SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count FROM transactions WHERE amount > 1100 OR HOUR(txn_time) BETWEEN 12 AND 17 ORDER BY total_amount

@@ -1,1 +1,0 @@
-SELECT customers.is_active, customers.country, MIN(orders.order_date) AS first_order_date, COUNT(*) AS num_orders FROM orders RIGHT JOIN customers ON orders.customer_id = customers.id INNER JOIN stores ON orders.store_id = stores.id WHERE customers.country NOT IN ('US', 'TH') GROUP BY customers.is_active, customers.country ORDER BY num_orders DESC, is_active, country LIMIT 10

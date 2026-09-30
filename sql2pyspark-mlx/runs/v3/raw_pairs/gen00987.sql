@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, COUNT(e.id) employee_count, MAX(e.salary) max_salary, SUM(CASE WHEN e.job_title = 'Director' THEN e.salary ELSE 0 END) director_salary FROM departments d LEFT JOIN employees e ON d.id = e.dept_id GROUP BY d.id, d.dept_name HAVING director_salary > 50 ORDER BY director_salary DESC, employee_count DESC, id, dept_name LIMIT 10;

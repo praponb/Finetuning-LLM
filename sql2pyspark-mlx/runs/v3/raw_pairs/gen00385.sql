@@ -1,1 +1,0 @@
-SELECT signup_year, max_age FROM (SELECT YEAR(signup_date) AS signup_year, MAX(age) AS max_age FROM customers GROUP BY YEAR(signup_date)) AS agg WHERE max_age >= 63 ORDER BY signup_year DESC LIMIT 10;

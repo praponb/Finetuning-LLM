@@ -1,1 +1,0 @@
-SELECT a.id, a.customer_id, t.debit_count, t.starbucks_amount FROM accounts a JOIN (SELECT account_id, COUNT(CASE WHEN txn_type = 'DEBIT' THEN 1 END) debit_count, SUM(CASE WHEN merchant = 'Starbucks' THEN amount ELSE 0 END) starbucks_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY id DESC, debit_count DESC;

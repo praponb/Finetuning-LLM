@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, MAX(duration_sec) max_duration_sec FROM web_events WHERE event_type = 'search' GROUP BY session_id) SELECT s.id, s.device, ss.max_duration_sec FROM sessions s INNER JOIN session_stats ss ON s.id = ss.session_id WHERE ss.max_duration_sec > 240 ORDER BY ss.max_duration_sec DESC, 1 LIMIT 5

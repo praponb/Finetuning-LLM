@@ -1,1 +1,0 @@
-WITH EmployeesByDepartment AS (SELECT dept_id, SUM(salary) AS total_salary, COUNT(*) AS row_count FROM employees WHERE salary >= 59000 GROUP BY dept_id) SELECT d.location, E.total_salary, E.row_count FROM departments d LEFT JOIN EmployeesByDepartment E ON d.id = E.dept_id ORDER BY d.location DESC;

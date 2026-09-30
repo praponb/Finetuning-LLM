@@ -1,1 +1,0 @@
-SELECT e.id, e.dept_id employee_dept_id, e.full_name employee_full_name, m.email manager_email FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.email IS NULL AND e.manager_id IS NOT NULL ORDER BY m.email, id LIMIT 5;

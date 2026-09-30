@@ -1,1 +1,0 @@
-select oi.id, oi.quantity, oi.unit_price, o.discount, p.launch_date from order_items oi inner join orders o on oi.order_id = o.id inner join products p on p.id = oi.product_id where o.discount <= 0.27

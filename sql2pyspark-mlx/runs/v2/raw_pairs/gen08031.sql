@@ -1,1 +1,0 @@
-select full_name, case when salary >= 146000 then 'High' when salary >= 51000 then 'Medium' else 'Low' end salary_level, concat(job_title, '/', level) job_title_level from employees where job_title is null or job_title <> 'Manager'

@@ -1,1 +1,0 @@
-SELECT suppliers.id, suppliers.city, COUNT(products.id) AS product_count, COUNT(DISTINCT products.stock_qty) AS unique_suppliers, MAX(products.price) - MIN(products.price) AS price_range FROM suppliers INNER JOIN products ON suppliers.id = products.supplier_id WHERE products.product_name LIKE 'L%' GROUP BY suppliers.id, suppliers.city

@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(signup_date) < 2024 THEN 'before_2024' WHEN YEAR(signup_date) = 2024 THEN '2024' ELSE 'after_2024' END AS signup_cohort, COUNT(age) AS age_count, COUNT(*) AS total_count FROM customers WHERE age > 61 GROUP BY 1 ORDER BY total_count DESC;

@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, COUNT(CASE WHEN browser = 'Safari' THEN 1 END) AS safari_count, MIN(started_at) AS first_started_at FROM sessions WHERE device IN ('desktop', 'tablet') GROUP BY customer_id) SELECT c.name, cs.safari_count, cs.first_started_at FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY c.name DESC;

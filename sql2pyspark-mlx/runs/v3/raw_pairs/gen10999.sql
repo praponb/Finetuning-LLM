@@ -1,1 +1,0 @@
-select id, city, credit_limit, email from (select id, city, credit_limit, email, rank() over (partition by city order by credit_limit desc) pos from customers where age is null) t where pos <= 3 order by credit_limit;

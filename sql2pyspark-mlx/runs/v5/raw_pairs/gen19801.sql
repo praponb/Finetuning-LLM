@@ -1,1 +1,0 @@
-SELECT accounts.account_type, accounts.customer_id, t.unique_accounts, t.amount_count FROM accounts LEFT JOIN (SELECT account_id, COUNT(DISTINCT amount) AS unique_accounts, COUNT(amount) AS amount_count FROM transactions GROUP BY account_id) t ON accounts.id = t.account_id ORDER BY customer_id;

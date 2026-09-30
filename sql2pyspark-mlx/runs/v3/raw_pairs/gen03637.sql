@@ -1,1 +1,0 @@
-select d.budget, t.pct_l4, t.unique_managers from departments d join (select dept_id, round((100 * sum(case when level = 'L4' then 1 else 0 end)) / count(*), 1) as pct_l4, count(distinct salary) as unique_managers from employees group by dept_id) t on d.id = t.dept_id;

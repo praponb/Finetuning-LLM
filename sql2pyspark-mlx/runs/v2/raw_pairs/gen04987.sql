@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(DISTINCT unit_price) AS unique_orders, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items WHERE order_id IN (8, 25, 35) AND order_id IN (2, 6, 12, 18) GROUP BY quantity_bucket;

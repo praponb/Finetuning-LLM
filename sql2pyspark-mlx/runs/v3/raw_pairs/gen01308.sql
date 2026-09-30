@@ -1,1 +1,0 @@
-select city, case when rating >= 4.5 then 'high' when rating >= 1.9 then 'mid' else 'low' end as rating_bucket, count(distinct rating) as unique_countrys from suppliers where (rating between 2.5 and 3.5 and rating < 3.0) or lower(supplier_name) like '%iam%' group by city, rating_bucket having unique_countrys < 2 order by unique_countrys desc;

@@ -1,1 +1,0 @@
-SELECT is_remote, SUM(CASE WHEN level = 'L1' THEN salary ELSE 0 END) AS l1_salary, COUNT(CASE WHEN level = 'L5' THEN 1 END) AS l5_count FROM employees WHERE hire_date > '2023-05-01' AND LOWER(full_name) LIKE '%aro%' AND NOT is_remote GROUP BY is_remote;

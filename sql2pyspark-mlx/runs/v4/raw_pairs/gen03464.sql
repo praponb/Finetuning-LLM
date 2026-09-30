@@ -1,1 +1,0 @@
-select i.id, i.store_id, i.quantity, s.store_name, s.opened_date, cast(i.quantity as double) as quantity_num from inventory i left outer join stores s on s.id = i.store_id where month(s.opened_date) in (1, 10, 12)

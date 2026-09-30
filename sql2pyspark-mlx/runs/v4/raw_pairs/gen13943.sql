@@ -1,1 +1,0 @@
-select inventory.quantity, inventory.last_restock, inventory.store_id, store_sales.product_id from inventory join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id where inventory.product_id = 9 or store_sales.sale_date > '2023-06-01'

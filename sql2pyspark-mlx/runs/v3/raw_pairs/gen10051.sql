@@ -1,1 +1,0 @@
-select s.carrier, s.cost, s.delivered_date, o.amount, o.status, o.shipping_fee from shipments s join orders o on o.id = s.order_id where o.status in ('CANCELLED', 'RETURNED') and s.shipped_date <= '2025-04-01';

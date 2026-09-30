@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', s.opened_date) AS opened_month, MAX(i.quantity) - MIN(i.quantity) AS quantity_range, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM inventory i JOIN products p ON i.product_id = p.id FULL OUTER JOIN stores s ON i.store_id = s.id WHERE s.sqft = 11474 GROUP BY DATE_TRUNC('MONTH', s.opened_date) ORDER BY stddev_quantity DESC;

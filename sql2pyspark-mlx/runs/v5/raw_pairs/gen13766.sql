@@ -1,1 +1,0 @@
-SELECT d.country, e.plan, COUNT(*) AS cnt, MAX(e.monthly_fee) AS max_monthly_fee FROM subscriptions e INNER JOIN customers d ON e.customer_id = d.id GROUP BY d.country, e.plan ORDER BY max_monthly_fee DESC;

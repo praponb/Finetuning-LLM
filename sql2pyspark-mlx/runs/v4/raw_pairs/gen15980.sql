@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, customer_id, element FROM carts LATERAL VIEW EXPLODE(coupon_codes) e AS element) SELECT id, element, CASE WHEN element RLIKE '^(BUNDLE|WELCOME5)$' THEN 'PRIORITY' WHEN element RLIKE '^(SPRING10|VIP)$' THEN 'CORE' ELSE 'EXTENDED' END AS element_zone FROM lines ORDER BY element_zone DESC

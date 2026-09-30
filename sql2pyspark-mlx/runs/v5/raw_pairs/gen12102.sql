@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, COUNT(DISTINCT age) AS unique_citys FROM customers WHERE email LIKE '%@company.co' AND age <> 40 AND country = 'SG' GROUP BY signup_month HAVING COUNT(DISTINCT age) >= 1 ORDER BY signup_month, unique_citys

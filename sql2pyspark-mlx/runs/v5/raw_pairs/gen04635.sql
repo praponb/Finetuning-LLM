@@ -1,1 +1,0 @@
-select * from (select carrier, status, round((100 * sum(case when carrier = 'UPS' then 1 else 0 end)) / count(*), 1) as pct_ups from shipments where cost > 66 group by carrier, status) as x where pct_ups >= 75 order by carrier;

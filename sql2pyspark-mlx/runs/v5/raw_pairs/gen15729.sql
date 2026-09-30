@@ -1,1 +1,0 @@
-SELECT ss.id, ss.units, ss.store_id, p.launch_date, p.price, s.region, COALESCE(p.cost, 0) AS cost_filled FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id FULL OUTER JOIN stores s ON ss.store_id = s.id ORDER BY region

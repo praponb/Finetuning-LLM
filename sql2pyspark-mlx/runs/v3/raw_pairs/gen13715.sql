@@ -1,1 +1,0 @@
-select sum(case when method = 'paypal' then amount else 0 end) as paypal_amount, round((100 * sum(case when status = 'REFUNDED' then 1 else 0 end)) / count(*), 1) as pct_refunded, sort_array(collect_set(method)) as method_list from payments;

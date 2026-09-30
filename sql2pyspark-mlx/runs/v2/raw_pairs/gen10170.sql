@@ -1,1 +1,0 @@
-SELECT signup_month, unique_countrys, last_signup_date FROM (SELECT MONTH(signup_date) AS signup_month, COUNT(DISTINCT credit_limit) AS unique_countrys, MAX(signup_date) AS last_signup_date FROM customers WHERE MONTH(signup_date) IN (4, 7, 8) GROUP BY MONTH(signup_date)) AS s WHERE unique_countrys > 5 ORDER BY signup_month DESC;

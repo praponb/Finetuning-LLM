@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, MAX(event_time) AS latest_event_time, COUNT(DISTINCT duration_sec) AS unique_sessions FROM web_events GROUP BY session_id) SELECT s.id, s.customer_id, s.country, ss.latest_event_time, ss.unique_sessions FROM sessions s LEFT OUTER JOIN session_summary ss ON s.id = ss.session_id WHERE ss.unique_sessions > 10 ORDER BY country;

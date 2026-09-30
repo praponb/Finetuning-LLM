@@ -1,1 +1,0 @@
-SELECT c.name, c.credit_limit, c.city, o.channel, o.store_id, o.amount / NULLIF(o.shipping_fee, 0) AS amount_per_shipping_fee FROM customers c LEFT JOIN orders o ON c.id = o.customer_id WHERE c.credit_limit IS NOT NULL OR c.age != 61

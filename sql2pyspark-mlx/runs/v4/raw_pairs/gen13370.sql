@@ -1,1 +1,0 @@
-SELECT status, balance_range, account_count FROM (SELECT status, MAX(balance) - MIN(balance) balance_range, COUNT(*) account_count FROM accounts WHERE customer_id IN (6, 18) GROUP BY status) agg WHERE account_count >= 7 ORDER BY 3 DESC;

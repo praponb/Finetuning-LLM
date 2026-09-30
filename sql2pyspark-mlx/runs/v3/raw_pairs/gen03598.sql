@@ -1,1 +1,0 @@
-WITH ProductsBySupplier AS (SELECT supplier_id, COUNT(stock_qty) AS stock_qty_count FROM products WHERE supplier_id = 24 GROUP BY supplier_id) SELECT s.rating, P.stock_qty_count FROM suppliers s LEFT JOIN ProductsBySupplier P ON s.id = P.supplier_id WHERE P.stock_qty_count > 5 ORDER BY s.rating DESC;

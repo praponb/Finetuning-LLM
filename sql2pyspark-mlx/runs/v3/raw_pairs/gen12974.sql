@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, event_type, duration_sec, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY duration_sec DESC, id) AS rn FROM web_events WHERE page = '/home') SELECT * FROM ranked WHERE rn <= 3 ORDER BY rn ASC

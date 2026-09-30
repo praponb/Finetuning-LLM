@@ -1,1 +1,0 @@
-select id, store_name, round(sqft * 1.1, 2) as adjusted_sqft, date_sub(opened_date, 42) as opened_date_minus_42d from stores where not (city = 'Berlin' or opened_date > '2025-08-01') order by adjusted_sqft desc;

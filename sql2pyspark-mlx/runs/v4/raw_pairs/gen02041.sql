@@ -1,1 +1,0 @@
-select *, ntile(3) over (partition by segment order by age, id) as age_bucket, sum(age) over w_ordered as cumulative_age, last_value(segment) ignore nulls over w_ordered as last_known_segment from customers window w_ordered as (partition by city order by age, id rows between unbounded preceding and current row)

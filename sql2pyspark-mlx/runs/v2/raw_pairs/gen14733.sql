@@ -1,1 +1,0 @@
-select products.category, max(store_sales.units) - min(store_sales.units) as units_range from store_sales inner join products on store_sales.product_id = products.id where products.brand in ('Acme', 'Umbrella', 'Globex') group by products.category order by units_range asc, category asc limit 10;

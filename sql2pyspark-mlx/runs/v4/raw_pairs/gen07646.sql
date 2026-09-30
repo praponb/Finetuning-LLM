@@ -1,1 +1,0 @@
-SELECT location, CASE WHEN budget >= 4206000 THEN 'HIGH' ELSE 'LOW' END AS budget_tier, STDDEV_SAMP(budget) AS budget_stddev, COUNT(DISTINCT dept_name) AS distinct_dept_names, COUNT_IF(dept_name = 'Marketing') AS marketing_events FROM departments GROUP BY location, CASE WHEN budget >= 4206000 THEN 'HIGH' ELSE 'LOW' END ORDER BY location NULLS FIRST

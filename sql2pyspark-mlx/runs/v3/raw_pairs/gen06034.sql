@@ -1,1 +1,0 @@
-SELECT p.price, t.quantity_count, t.unique_orders FROM products p INNER JOIN (SELECT product_id, COUNT(quantity) AS quantity_count, COUNT(DISTINCT unit_price) AS unique_orders FROM order_items GROUP BY product_id) t ON p.id = t.product_id

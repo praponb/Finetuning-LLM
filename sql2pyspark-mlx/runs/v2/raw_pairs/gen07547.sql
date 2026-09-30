@@ -1,1 +1,0 @@
-select id, store_id, units, revenue, product_id, sale_date, first_value(revenue) over (partition by store_id order by units, id) as first_revenue, sum(units) over (partition by product_id order by sale_date, id rows between unbounded preceding and current row) as running_units from store_sales order by sale_date desc

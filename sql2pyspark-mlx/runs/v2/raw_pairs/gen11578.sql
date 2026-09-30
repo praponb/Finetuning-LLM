@@ -1,1 +1,0 @@
-SELECT c.segment, a.status, a.balance, a.opened_date, DATE_TRUNC('year', a.opened_date) AS opened_date_period FROM customers c LEFT JOIN accounts a ON a.customer_id = c.id WHERE LENGTH(c.email) < 6 AND c.country IN ('US', 'SG') ORDER BY c.segment;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 212 THEN 'high' WHEN quantity >= 97 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, COUNT(quantity) AS quantity_count, MIN(quantity) AS min_quantity, COUNT(DISTINCT quantity) AS unique_products FROM inventory GROUP BY quantity_bucket, product_id ORDER BY unique_products DESC, product_id, quantity_bucket LIMIT 1;

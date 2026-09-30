@@ -1,1 +1,0 @@
-WITH department_stats AS (SELECT dept_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees WHERE salary BETWEEN 127000 AND 145000 GROUP BY dept_id) SELECT d.id, d.dept_name, ds.job_title_values FROM departments d INNER JOIN department_stats ds ON d.id = ds.dept_id ORDER BY job_title_values, id LIMIT 50;

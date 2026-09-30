@@ -1,1 +1,0 @@
-SELECT customers.id, customers.email, COUNT(accounts.id) AS account_count, MAX(accounts.opened_date) AS latest_opened_date, SORT_ARRAY(COLLECT_SET(accounts.status)) AS status_list FROM customers LEFT JOIN accounts ON accounts.customer_id = customers.id GROUP BY customers.id, customers.email ORDER BY latest_opened_date DESC;

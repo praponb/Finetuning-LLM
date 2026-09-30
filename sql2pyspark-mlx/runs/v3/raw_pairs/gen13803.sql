@@ -1,1 +1,0 @@
-WITH top_products AS (SELECT id, brand, launch_date, RANK() OVER (PARTITION BY brand ORDER BY launch_date DESC) AS rnk FROM products) SELECT id, brand, launch_date FROM top_products WHERE rnk <= 3 ORDER BY id DESC, launch_date ASC

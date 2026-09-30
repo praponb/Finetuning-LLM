@@ -1,1 +1,0 @@
-WITH joined AS (SELECT a.*, s.city FROM products a INNER JOIN suppliers s ON a.supplier_id = s.id) SELECT id, product_name, cost, stock_qty, launch_date, tags, supplier_id, city FROM joined ORDER BY supplier_id;

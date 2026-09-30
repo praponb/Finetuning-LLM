@@ -1,1 +1,0 @@
-SELECT id, store_id, last_restock, quantity, COUNT(*) OVER (PARTITION BY store_id) AS store_id_count, SUM(quantity) OVER (ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_quantity FROM inventory WHERE product_id IN (1, 5, 6) ORDER BY 1 DESC, store_id_count DESC;

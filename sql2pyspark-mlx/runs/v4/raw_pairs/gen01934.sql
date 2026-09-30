@@ -1,1 +1,0 @@
-WITH recent_stores AS (SELECT * FROM stores WHERE sqft IS NOT NULL), agg AS (SELECT YEAR(opened_date) AS opened_year, MAX(sqft) - MIN(sqft) AS sqft_range, ROUND(STDDEV(sqft), 2) AS stddev_sqft FROM recent_stores GROUP BY YEAR(opened_date)) SELECT opened_year, sqft_range, stddev_sqft FROM agg ORDER BY 3 DESC;

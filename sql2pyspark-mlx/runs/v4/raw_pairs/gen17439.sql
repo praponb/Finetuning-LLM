@@ -1,1 +1,0 @@
-select id, paid_at, status, method, trim(method) as clean_method from payments where (amount < 1130 and order_id in (20, 27, 30, 40)) or to_date(paid_at) < '2024-10-01' order by paid_at asc, id asc limit 3;

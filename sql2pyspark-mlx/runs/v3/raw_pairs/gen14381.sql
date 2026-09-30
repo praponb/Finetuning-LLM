@@ -1,1 +1,0 @@
-SELECT amount_bucket, num_transactions, total_amount FROM (SELECT CASE WHEN amount >= 3900 THEN 'high' WHEN amount >= 2000 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(*) AS num_transactions, SUM(amount) AS total_amount FROM transactions GROUP BY CASE WHEN amount >= 3900 THEN 'high' WHEN amount >= 2000 THEN 'mid' ELSE 'low' END) AS x WHERE num_transactions > 8

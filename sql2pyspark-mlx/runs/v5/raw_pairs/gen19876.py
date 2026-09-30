@@ -1,9 +1,0 @@
-from pyspark.sql import functions as F
-
-result = (
-    df_suppliers
-    .groupBy("city")
-    .pivot("country", ["JP", "US", "UK", "TH"])
-    .agg(F.sum("rating"))
-    .orderBy("city")
-)

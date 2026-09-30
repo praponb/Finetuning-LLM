@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, INITCAP(TRIM(location)) location_title, COALESCE(location, 'DIRECT') location_filled FROM departments WHERE location IS NOT NULL) SELECT s.* FROM filtered s WHERE NOT EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND c.is_remote = TRUE);

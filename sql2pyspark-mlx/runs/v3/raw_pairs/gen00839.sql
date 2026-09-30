@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, account_type, opened_date, customer_id, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY opened_date, id) AS rnk FROM accounts WHERE balance IS NOT NULL) SELECT id, account_type, opened_date, customer_id FROM numbered WHERE rnk <= 2 ORDER BY customer_id ASC;

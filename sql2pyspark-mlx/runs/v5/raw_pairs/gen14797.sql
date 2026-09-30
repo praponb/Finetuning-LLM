@@ -1,1 +1,0 @@
-SELECT p.category, SUM(ss.units) total_units FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE MONTH(s.opened_date) IN (4, 7, 9) GROUP BY p.category ORDER BY total_units DESC, category;

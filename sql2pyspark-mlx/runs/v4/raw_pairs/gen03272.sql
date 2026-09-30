@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(DISTINCT p.amount) AS unique_methods FROM payments p INNER JOIN orders o ON p.order_id = o.id WHERE o.store_id IS NULL GROUP BY o.status ORDER BY status, unique_methods DESC LIMIT 1;

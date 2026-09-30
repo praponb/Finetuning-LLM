@@ -1,1 +1,0 @@
-select s.started_at, s.customer_id, s.country, we.page from sessions s left join web_events we on we.session_id = s.id where s.browser not in ('Chrome', 'Safari') and we.page in ('/cart', '/product', '/home');

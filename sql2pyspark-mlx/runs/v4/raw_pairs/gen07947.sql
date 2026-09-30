@@ -1,1 +1,0 @@
-SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY paid_at, id) AS seq_no, SUM(amount) OVER (PARTITION BY method ORDER BY paid_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_amount, SUM(amount) OVER (PARTITION BY status ORDER BY amount, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_amount_2 FROM payments;

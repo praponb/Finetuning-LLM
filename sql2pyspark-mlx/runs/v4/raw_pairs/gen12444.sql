@@ -1,1 +1,0 @@
-SELECT * FROM accounts WHERE balance BETWEEN 23000 AND 31000;

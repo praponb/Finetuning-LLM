@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, order_id, carrier, shipped_date, delivered_date, cost, DATEDIFF(CURRENT_DATE(), shipped_date) AS days_since_shipped_date FROM shipments WHERE shipped_date > TO_DATE('2023-04-29') AND order_id IS NOT NULL) SELECT id FROM base EXCEPT ALL SELECT id FROM shipments WHERE order_id IN (3, 27);

@@ -1,1 +1,0 @@
-select *, case when quantity >= 184 then 'High' when quantity >= 112 then 'Medium' else 'Low' end as quantity_tier from inventory where store_id in (1, 3, 5, 6) and product_id = 3 and store_id in (1, 2, 4, 5)

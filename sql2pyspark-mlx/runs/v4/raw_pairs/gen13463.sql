@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, category, brand, price, cost, stock_qty, launch_date, tags, supplier_id, price + stock_qty AS price_plus_stock_qty, COALESCE(brand, 'UNKNOWN') AS brand_clean FROM products WHERE cost > 440) SELECT * FROM (SELECT category, brand, price FROM base) src PIVOT (MAX(price) AS total, COUNT(1) AS cnt FOR brand IN ('Stark', 'Umbrella', 'Globex'));

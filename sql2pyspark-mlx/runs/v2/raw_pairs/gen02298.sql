@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT account_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(account_type))) AS account_type_values, AVG(balance) AS avg_balance FROM accounts GROUP BY account_type) AS x WHERE avg_balance > 43000;

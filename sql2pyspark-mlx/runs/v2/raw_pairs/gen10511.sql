@@ -1,1 +1,0 @@
-SELECT YEAR(c.signup_date) signup_year, COUNT(CASE WHEN s.status = 'ACTIVE' THEN 1 END) active_count, ROUND((100 * SUM(CASE WHEN s.plan = 'standard' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_standard FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY YEAR(c.signup_date)

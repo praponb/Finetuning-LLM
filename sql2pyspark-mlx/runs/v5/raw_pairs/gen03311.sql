@@ -1,1 +1,0 @@
-with base as (select * from employees where hire_date > '2024-05-26' or manager_id is not null), summary as (select level, job_title, min(hire_date) as first_hire_date from base group by level, job_title) select level, job_title from summary order by level;

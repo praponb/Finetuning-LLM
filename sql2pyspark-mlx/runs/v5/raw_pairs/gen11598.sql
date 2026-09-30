@@ -1,1 +1,0 @@
-select p.price, p.brand, p.launch_date, ss.revenue, ss.sale_date from products p left outer join store_sales ss on p.id = ss.product_id where p.supplier_id in (4, 20, 37) and ss.store_id = 5 order by brand asc, launch_date asc;

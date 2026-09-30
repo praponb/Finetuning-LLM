@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, MIN(start_date) first_start_date FROM subscriptions WHERE MONTH(end_date) IN (3, 9, 10) GROUP BY customer_id) SELECT customers.id, customers.segment, customers.credit_limit, customer_summary.first_start_date FROM customers JOIN customer_summary ON customers.id = customer_summary.customer_id;

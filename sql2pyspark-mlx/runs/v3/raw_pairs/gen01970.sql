@@ -1,1 +1,0 @@
-SELECT a.account_type, SORT_ARRAY(COLLECT_SET(t.txn_type)) AS txn_type_list, MAX(t.amount) - MIN(t.amount) AS amount_range FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id GROUP BY a.account_type ORDER BY account_type LIMIT 5

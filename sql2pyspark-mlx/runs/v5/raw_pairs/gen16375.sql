@@ -1,1 +1,0 @@
-SELECT employees.id, employees.salary, employees.email FROM employees WHERE UPPER(TRIM(employees.email)) = 'CAROL@COMPANY.CO' AND employees.dept_id IN (SELECT id FROM departments WHERE dept_name = 'Engineering') ORDER BY employees.salary DESC;

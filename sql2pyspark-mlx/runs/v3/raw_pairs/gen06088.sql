@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, city, rating, country, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS pos FROM suppliers WHERE city != 'Bangkok') SELECT * FROM numbered WHERE pos <= 3 ORDER BY id;

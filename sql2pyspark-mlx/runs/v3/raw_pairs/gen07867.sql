@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', s.opened_date) opened_month, MIN(ss.units) min_units, COUNT(DISTINCT ss.revenue) unique_products FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id WHERE s.store_name IS NOT NULL GROUP BY DATE_TRUNC('MONTH', s.opened_date) ORDER BY opened_month;

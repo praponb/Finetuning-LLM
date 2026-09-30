@@ -1,1 +1,0 @@
-SELECT id, status, shipped_date, order_id, DATE_TRUNC('year', shipped_date) shipped_date_period, CASE WHEN carrier IN ('Kerry', 'FedEx') THEN 'Priority' ELSE 'Other' END carrier_group FROM shipments WHERE status = 'IN_TRANSIT' AND status IN ('RETURNED', 'DELIVERED', 'LOST') AND order_id = 23

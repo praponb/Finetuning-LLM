@@ -1,1 +1,0 @@
-SELECT d.id, d.location, COUNT(e.id) employee_count, COUNT(DISTINCT e.salary) unique_job_titles, MAX(e.hire_date) latest_hire_date FROM departments d LEFT JOIN employees e ON e.dept_id = d.id GROUP BY d.id, d.location ORDER BY id DESC

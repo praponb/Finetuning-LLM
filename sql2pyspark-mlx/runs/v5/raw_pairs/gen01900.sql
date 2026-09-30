@@ -1,1 +1,0 @@
-WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date DESC NULLS LAST, id) AS latest_rank FROM employees QUALIFY latest_rank = 1) SELECT s.id, s.email, s.dept_id, s.manager_id, s.salary, s.hire_date, s.level, s.latest_rank, (SELECT AVG(x.salary) FROM employees x WHERE x.dept_id = s.dept_id) AS avg_employee_salary FROM latest s;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.6 THEN 'high' WHEN rating >= 1.4 THEN 'mid' ELSE 'low' END AS rating_bucket, country, ROUND(AVG(rating), 2) AS avg_rating, SUM(rating) AS total_rating FROM suppliers GROUP BY 1, 2

@@ -1,1 +1,0 @@
-SELECT id, plan, CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END AS is_cancelled, DATE_SUB(end_date, 10) AS end_date_minus_10d FROM subscriptions WHERE start_date <= '2024-03-03' ORDER BY is_cancelled DESC

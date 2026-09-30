@@ -1,1 +1,0 @@
-SELECT id, quantity, store_id, last_restock, ADD_MONTHS(last_restock, 1) AS last_restock_plus_months, CAST(quantity AS DOUBLE) AS quantity_str FROM inventory WHERE MONTH(last_restock) IN (2, 4, 10) ORDER BY 2 ASC, store_id ASC, id ASC LIMIT 20

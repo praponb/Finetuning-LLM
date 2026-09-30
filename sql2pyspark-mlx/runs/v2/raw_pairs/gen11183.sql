@@ -1,1 +1,0 @@
-WITH valid_orders AS (SELECT *, LAST_DAY(order_date) AS order_date_month_end FROM orders WHERE channel = 'mobile' OR shipping_fee BETWEEN 25 AND 30), summary AS (SELECT status, MAX(amount) - MIN(amount) AS amount_range FROM valid_orders GROUP BY status) SELECT status, amount_range FROM summary ORDER BY amount_range DESC;

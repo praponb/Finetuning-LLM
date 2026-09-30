@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, i.quantity, s.store_name, s.sqft, p.brand FROM inventory i JOIN stores s ON i.store_id = s.id LEFT OUTER JOIN products p ON i.product_id = p.id ORDER BY s.sqft DESC, i.product_id DESC

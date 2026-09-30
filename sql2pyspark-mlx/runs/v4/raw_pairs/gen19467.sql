@@ -1,1 +1,0 @@
-WITH store_sales_by_product AS (SELECT product_id, ROUND(AVG(revenue), 2) AS avg_revenue FROM store_sales GROUP BY product_id) SELECT p.category, ssbp.avg_revenue FROM products p INNER JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id WHERE ssbp.avg_revenue >= 56;

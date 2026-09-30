@@ -1,1 +1,0 @@
-SELECT is_active, de_credit_limit FROM (SELECT is_active, SUM(CASE WHEN country = 'DE' THEN credit_limit ELSE 0 END) AS de_credit_limit FROM customers GROUP BY is_active) AS t WHERE de_credit_limit > 34 ORDER BY de_credit_limit, is_active LIMIT 10;

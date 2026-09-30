@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.sale_date, products.product_name, suppliers.country FROM store_sales FULL OUTER JOIN products ON products.id = store_sales.product_id LEFT JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.supplier_id = 29;

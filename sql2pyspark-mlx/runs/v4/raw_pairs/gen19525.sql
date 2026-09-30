@@ -1,1 +1,0 @@
-select * from (select quarter(order_date) as order_quarter, sum(amount) as total_amount, sum(case when channel = 'web' then discount else 0 end) as web_discount from orders group by quarter(order_date)) as sub where total_amount >= 5000 order by total_amount asc, order_quarter desc;

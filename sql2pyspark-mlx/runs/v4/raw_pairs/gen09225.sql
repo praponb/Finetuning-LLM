@@ -1,1 +1,0 @@
-select case when budget >= 3090000 then 'high' when budget >= 1426000 then 'mid' else 'low' end as budget_bucket, count(distinct budget) as unique_locations, count(budget) as budget_count from departments where dept_name not in ('Engineering', 'Legal') group by case when budget >= 3090000 then 'high' when budget >= 1426000 then 'mid' else 'low' end

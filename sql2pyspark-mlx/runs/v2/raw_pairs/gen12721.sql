@@ -1,1 +1,0 @@
-SELECT payments.amount, payments.paid_at, payments.status, orders.shipping_fee, orders.status AS order_status, orders.store_id, SUBSTRING(payments.status, 1, 2) AS status_prefix FROM payments RIGHT JOIN orders ON payments.order_id = orders.id WHERE payments.method IN ('paypal', 'card') ORDER BY payments.paid_at;

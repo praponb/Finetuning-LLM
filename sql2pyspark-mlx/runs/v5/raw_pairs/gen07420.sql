@@ -1,1 +1,0 @@
-SELECT QUARTER(signup_date) AS signup_quarter, MAX(age) AS max_age, ROUND(AVG(credit_limit), 2) AS avg_credit_limit FROM customers WHERE city = 'New York' AND segment <> 'Consumer' GROUP BY signup_quarter

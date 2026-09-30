@@ -1,1 +1,0 @@
-SELECT id, dept_name, location, budget, FIRST_VALUE(location, TRUE) OVER (PARTITION BY location, dept_name ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_location, NTILE(5) OVER (ORDER BY budget, id) AS budget_bucket FROM departments

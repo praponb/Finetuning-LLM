@@ -1,1 +1,0 @@
-SELECT id, location, budget, dept_name, NTILE(10) OVER (PARTITION BY location ORDER BY budget DESC, id) budget_ntile, LAG(budget, 1) OVER (PARTITION BY location, dept_name ORDER BY budget, id) prev_budget FROM departments;

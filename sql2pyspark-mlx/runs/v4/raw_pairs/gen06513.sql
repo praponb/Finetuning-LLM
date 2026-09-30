@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, dept_name, budget, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS pos FROM departments WHERE dept_name IN ('Engineering', 'Sales', 'Marketing')) SELECT * FROM ranked WHERE pos <= 3 ORDER BY pos DESC

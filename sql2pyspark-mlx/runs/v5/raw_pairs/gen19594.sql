@@ -1,1 +1,0 @@
-SELECT product_id, avg_units, min_units FROM (SELECT product_id, ROUND(AVG(units), 2) AS avg_units, MIN(units) AS min_units FROM store_sales WHERE product_id IN (4, 8, 9) GROUP BY product_id) AS s WHERE avg_units >= 65

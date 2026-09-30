@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, p.price, p.supplier_id, o.channel FROM order_items oi JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE o.amount > 890 ORDER BY supplier_id ASC, id ASC LIMIT 10

@@ -1,1 +1,0 @@
-WITH order_items_by_order AS (SELECT order_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price, MAX(quantity) AS max_quantity FROM order_items GROUP BY order_id) SELECT o.order_date, oibo.stddev_unit_price, oibo.max_quantity FROM orders o LEFT JOIN order_items_by_order oibo ON o.id = oibo.order_id WHERE oibo.max_quantity > 3.5 ORDER BY oibo.max_quantity DESC;

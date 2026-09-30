@@ -1,1 +1,0 @@
-WITH department_totals AS (SELECT dept_id, SUM(CASE WHEN job_title = 'Manager' THEN salary ELSE 0 END) AS manager_salary, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees GROUP BY dept_id) SELECT d.id, d.location, d.dept_name, dt.manager_salary, dt.job_title_values FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id;

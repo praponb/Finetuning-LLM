@@ -1,1 +1,0 @@
-SELECT order_id, MAX(cost) - MIN(cost) AS cost_range, ROUND(STDDEV(cost), 2) AS stddev_cost FROM shipments WHERE YEAR(shipped_date) >= 2025 AND carrier = 'UPS' GROUP BY order_id HAVING MIN(cost) > 68 ORDER BY order_id DESC;

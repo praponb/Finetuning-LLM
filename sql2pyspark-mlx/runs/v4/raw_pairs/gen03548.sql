@@ -1,1 +1,0 @@
-with recent_products as (select *, round(stock_qty / cost, 2) stock_qty_per_cost from products where supplier_id = 17), summary as (select category, concat_ws(', ', sort_array(collect_set(category))) category_values from recent_products group by category) select * from summary;

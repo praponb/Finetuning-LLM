@@ -1,1 +1,0 @@
-SELECT s.city, MAX(i.last_restock) last_last_restock, MIN(i.quantity) min_quantity FROM inventory i INNER JOIN stores s ON i.store_id = s.id WHERE i.quantity > 143 GROUP BY s.city ORDER BY last_last_restock, 1;

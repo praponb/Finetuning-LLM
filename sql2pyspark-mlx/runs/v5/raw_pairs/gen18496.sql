@@ -1,1 +1,0 @@
-select status, start_quarter, standard_count, min_monthly_fee from (select status, quarter(start_date) as start_quarter, sum(case when plan = 'standard' then 1 else 0 end) as standard_count, min(monthly_fee) as min_monthly_fee from subscriptions group by status, quarter(start_date)) as s where standard_count > 30;

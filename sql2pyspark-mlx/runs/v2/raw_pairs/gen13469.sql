@@ -1,1 +1,0 @@
-SELECT id, country, customer_id, DATE_FORMAT(started_at, 'yyyy-MM-dd') AS started_at_label, CASE WHEN device IN ('tablet', 'desktop') THEN 'Tier 1' ELSE 'Other' END AS device_group FROM sessions ORDER BY started_at_label, id LIMIT 20

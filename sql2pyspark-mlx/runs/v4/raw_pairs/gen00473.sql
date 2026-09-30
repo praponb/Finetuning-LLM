@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, DATE_ADD(signup_date, 85) AS signup_date_plus_85d FROM customers WHERE name LIKE 'O%' AND LENGTH(email) > 6), Agg AS (SELECT country, MAX(credit_limit) AS max_credit_limit FROM src GROUP BY country) SELECT * FROM Agg ORDER BY max_credit_limit DESC, country LIMIT 20;

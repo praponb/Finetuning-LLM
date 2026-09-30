@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM accounts WHERE status = 'CLOSED'), opened_year_summary AS (SELECT YEAR(opened_date) AS opened_year, MAX(balance) AS max_balance FROM src GROUP BY YEAR(opened_date)) SELECT opened_year, max_balance FROM opened_year_summary WHERE max_balance < 38000;

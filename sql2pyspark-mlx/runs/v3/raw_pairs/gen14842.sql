@@ -1,1 +1,0 @@
-with filtered_subscriptions as (select * from subscriptions where year(start_date) >= 2025), subscriptions_stats as (select plan, customer_id, min(monthly_fee) as min_monthly_fee from filtered_subscriptions group by plan, customer_id) select * from subscriptions_stats where min_monthly_fee > 200 order by min_monthly_fee desc, customer_id asc;

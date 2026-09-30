@@ -1,1 +1,0 @@
-SELECT c.country, COUNT(*) row_count, MIN(s.monthly_fee) min_monthly_fee FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.status = 'ACTIVE' GROUP BY c.country HAVING MIN(s.monthly_fee) >= 100

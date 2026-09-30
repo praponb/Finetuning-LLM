@@ -1,1 +1,0 @@
-SELECT is_flagged, txn_type, SUM(CASE WHEN txn_type = 'FEE' THEN amount ELSE 0 END) AS fee_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions GROUP BY is_flagged, txn_type ORDER BY txn_type DESC;

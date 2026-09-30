@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1270 THEN 'high' WHEN amount >= 760 THEN 'mid' ELSE 'low' END AS amount_bucket, MIN(paid_at) AS first_paid_at, AVG(amount) AS avg_amount FROM payments WHERE (status = 'SUCCESS' AND order_id = 33) OR method IN ('card', 'promptpay', 'cash') GROUP BY 1;

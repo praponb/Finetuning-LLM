@@ -1,1 +1,0 @@
-SELECT CASE WHEN page IN ('/product', '/home') THEN 'core' ELSE 'other' END AS page_group, QUARTER(event_time) AS event_quarter, SUM(duration_sec) AS total_duration_sec, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY page_group, event_quarter HAVING SUM(duration_sec) > 2400

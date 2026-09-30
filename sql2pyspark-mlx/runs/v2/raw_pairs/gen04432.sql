@@ -1,1 +1,0 @@
-SELECT channel, pending_count, max_discount FROM (SELECT channel, SUM(CASE WHEN status = 'PENDING' THEN 1 ELSE 0 END) AS pending_count, MAX(discount) AS max_discount FROM orders GROUP BY channel) AS agg WHERE max_discount >= 0.21 ORDER BY max_discount DESC;

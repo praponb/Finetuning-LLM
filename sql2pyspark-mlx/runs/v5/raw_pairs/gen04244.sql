@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, ROUND(AVG(units), 2) AS avg_units, ROUND(AVG(revenue), 2) AS avg_revenue FROM store_sales GROUP BY store_id) SELECT s.id, s.opened_date, s.store_name, st.avg_units, st.avg_revenue FROM stores s JOIN store_totals st ON s.id = st.store_id WHERE st.avg_revenue > 74 ORDER BY store_name DESC, id LIMIT 10;

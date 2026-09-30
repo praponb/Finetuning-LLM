@@ -1,1 +1,0 @@
-with filtered_stores as (select * from stores where region in ('West', 'East')), Summary as (select region, sum(sqft) as total_sqft, count(*) as total_count from filtered_stores group by region) select region, total_sqft, total_count from Summary where total_sqft >= 55000;

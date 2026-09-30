@@ -1,1 +1,0 @@
-WITH payments_by_order AS (SELECT order_id, MAX(amount) AS max_amount FROM payments GROUP BY order_id) SELECT o.channel, o.order_date, pbo.max_amount FROM orders o INNER JOIN payments_by_order pbo ON o.id = pbo.order_id WHERE pbo.max_amount >= 1540 ORDER BY pbo.max_amount DESC, channel

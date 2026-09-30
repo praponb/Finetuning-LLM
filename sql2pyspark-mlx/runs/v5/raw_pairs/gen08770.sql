@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, MIN(quantity) AS min_quantity, COUNT(*) AS inventory_count FROM inventory GROUP BY store_id) SELECT s.opened_date, ss.min_quantity, ss.inventory_count FROM stores s LEFT JOIN store_summary ss ON s.id = ss.store_id WHERE ss.min_quantity > 180 ORDER BY opened_date;

@@ -1,1 +1,0 @@
-select id, city, segment, signup_date, age, sum(age) over (partition by city, segment order by signup_date, id rows between unbounded preceding and current row) as running_age from customers where year(signup_date) >= 2025

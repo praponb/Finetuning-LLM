@@ -1,1 +1,0 @@
-SELECT country, SUM(credit_limit) AS total_credit_limit, SUM(SUM(credit_limit)) OVER (ORDER BY country) AS cumulative_credit_limit FROM customers GROUP BY country ORDER BY cumulative_credit_limit DESC

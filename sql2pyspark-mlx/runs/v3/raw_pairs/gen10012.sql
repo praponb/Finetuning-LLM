@@ -1,1 +1,0 @@
-SELECT country, avg_rating, rating_range FROM (SELECT country, AVG(rating) AS avg_rating, MAX(rating) - MIN(rating) AS rating_range FROM suppliers GROUP BY country) AS t WHERE rating_range < 60 ORDER BY 2 DESC, country LIMIT 5

@@ -1,1 +1,0 @@
-SELECT stores.city, MAX(orders.order_date) AS latest_order_date FROM orders INNER JOIN stores ON stores.id = orders.store_id WHERE stores.city NOT IN ('New York', 'London', 'Tokyo') GROUP BY stores.city;

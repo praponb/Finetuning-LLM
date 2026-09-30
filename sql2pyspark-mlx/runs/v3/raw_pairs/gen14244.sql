@@ -1,1 +1,0 @@
-SELECT status, method, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values, MIN(amount) min_amount FROM payments WHERE amount > 1520 AND status IN ('FAILED', 'REFUNDED') GROUP BY status, method

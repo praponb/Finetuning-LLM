@@ -1,1 +1,0 @@
-SELECT status, carrier, ROUND(AVG(cost), 2) AS avg_cost, MAX(cost) - MIN(cost) AS cost_range, ROUND((100 * SUM(CASE WHEN carrier = 'FedEx' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fedex FROM shipments WHERE carrier IN ('Kerry', 'UPS', 'FedEx') AND (order_id IN (4, 9, 11, 40) OR cost > 90) GROUP BY status, carrier HAVING pct_fedex < 77

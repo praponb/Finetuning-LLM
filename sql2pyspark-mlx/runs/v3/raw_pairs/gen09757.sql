@@ -1,1 +1,0 @@
-SELECT a.id, a.status, COUNT(t.id) AS transaction_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(t.merchant))) AS merchant_values, MIN(t.amount) AS min_amount FROM accounts a LEFT OUTER JOIN transactions t ON t.account_id = a.id GROUP BY a.id, a.status ORDER BY status;

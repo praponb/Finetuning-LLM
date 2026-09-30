@@ -1,1 +1,0 @@
-SELECT c.country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.country))) AS country_values FROM sessions s LEFT OUTER JOIN customers c ON s.customer_id = c.id GROUP BY c.country ORDER BY country_values, country;

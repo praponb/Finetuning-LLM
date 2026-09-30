@@ -1,1 +1,0 @@
-SELECT id, level, hire_date, job_title, salary, RANK() OVER (PARTITION BY level ORDER BY hire_date DESC) AS rnk, DENSE_RANK() OVER (PARTITION BY job_title ORDER BY salary) AS salary_dense_rank FROM employees

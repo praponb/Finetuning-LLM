@@ -1,1 +1,0 @@
-with exploded as (select id, plan, currency, explode(tier_limits) as val from price_tiers) select id, plan, currency, val, rank() over (partition by plan order by val nulls first) as val_rank, rank() over (partition by currency order by val) as val_rank_2 from exploded;

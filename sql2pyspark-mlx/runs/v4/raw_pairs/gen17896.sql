@@ -1,1 +1,0 @@
-SELECT txn_type, ROUND(STDDEV(amount), 2) AS stddev_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values, COUNT(DISTINCT amount) AS unique_accounts FROM transactions GROUP BY txn_type HAVING ROUND(STDDEV(amount), 2) < 51 ORDER BY 1 DESC, unique_accounts DESC;

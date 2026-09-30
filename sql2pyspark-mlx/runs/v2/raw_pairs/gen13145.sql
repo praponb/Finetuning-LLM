@@ -1,1 +1,0 @@
-WITH filtered_transactions AS (SELECT * FROM transactions WHERE is_flagged AND is_flagged), transactions_stats AS (SELECT txn_type, ROUND(STDDEV(amount), 2) AS stddev_amount, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM filtered_transactions GROUP BY txn_type) SELECT txn_type, txn_type_list FROM transactions_stats WHERE stddev_amount >= 48 ORDER BY txn_type DESC

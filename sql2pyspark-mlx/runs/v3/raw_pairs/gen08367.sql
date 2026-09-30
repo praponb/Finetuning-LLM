@@ -1,1 +1,0 @@
-SELECT id, order_date, amount, ROUND(AVG(amount) OVER (ORDER BY order_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_7 FROM orders WHERE discount >= 0.22 ORDER BY amount_moving_avg_7 ASC, order_date ASC;

@@ -1,1 +1,0 @@
-SELECT id, customer_id, amount, channel FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount, id) AS pos FROM orders WHERE order_date BETWEEN '2024-03-01' AND '2025-07-01') AS r WHERE pos <= 2 ORDER BY channel

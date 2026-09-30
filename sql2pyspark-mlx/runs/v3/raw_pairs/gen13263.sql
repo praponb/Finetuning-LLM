@@ -1,1 +1,0 @@
-SELECT oi.id, oi.product_id, p.price, p.category, s.supplier_name FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id LEFT JOIN suppliers s ON s.id = p.supplier_id WHERE s.rating BETWEEN 3.1 AND 3.3 OR ARRAY_CONTAINS(p.tags, 'new') ORDER BY product_id, id LIMIT 20;

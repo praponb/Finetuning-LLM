@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, ROUND(duration_sec, 1) AS duration_sec_rounded, COALESCE(page, 'OTHER') AS resolved_page FROM web_events WHERE page IS NOT NULL) SELECT * FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec DESC NULLS LAST, id) = 1;

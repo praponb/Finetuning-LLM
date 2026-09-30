@@ -1,1 +1,0 @@
-SELECT YEAR(last_restock) AS last_restock_year, AVG(quantity) AS avg_quantity, MAX(quantity) AS max_quantity FROM inventory WHERE product_id IN (3, 5) OR store_id = 3 GROUP BY last_restock_year HAVING MAX(quantity) > 90 ORDER BY avg_quantity, last_restock_year DESC;

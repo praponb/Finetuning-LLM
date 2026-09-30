@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, MAX(balance) - MIN(balance) AS balance_range FROM accounts WHERE customer_id IS NULL GROUP BY customer_id) SELECT c.id, c.name, cs.balance_range FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY c.id, cs.balance_range DESC;

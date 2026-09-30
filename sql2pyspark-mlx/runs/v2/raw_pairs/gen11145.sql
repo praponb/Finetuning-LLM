@@ -1,1 +1,0 @@
-SELECT account_type, AVG(balance) AS avg_balance, MAX(balance) - MIN(balance) AS balance_range FROM accounts WHERE opened_date < '2023-03-01' GROUP BY account_type ORDER BY avg_balance ASC, account_type ASC LIMIT 3

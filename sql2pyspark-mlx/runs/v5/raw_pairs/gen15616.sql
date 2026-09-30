@@ -1,1 +1,0 @@
-SELECT transactions.txn_type, transactions.amount, transactions.merchant, accounts.customer_id, ROUND(transactions.amount, 0) AS amount_rounded FROM transactions LEFT JOIN accounts ON transactions.account_id = accounts.id;

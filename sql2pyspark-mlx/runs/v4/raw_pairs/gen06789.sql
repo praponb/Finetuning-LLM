@@ -1,1 +1,0 @@
-select o.channel, sort_array(collect_set(p.status)) as status_list, sum(case when p.status = 'SUCCESS' then p.amount else 0 end) as success_amount from payments p inner join orders o on p.order_id = o.id inner join stores s on s.id = o.store_id group by o.channel order by channel limit 5

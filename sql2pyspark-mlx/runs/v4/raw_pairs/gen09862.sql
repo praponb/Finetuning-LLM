@@ -1,8 +1,0 @@
-SELECT
-    id,
-    dept_name,
-    budget,
-    location,
-    LAST_VALUE(location) OVER (PARTITION BY dept_name ORDER BY budget DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_location,
-    ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) AS budget_row
-FROM departments;

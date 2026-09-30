@@ -1,1 +1,0 @@
-with filtered_suppliers as (select * from suppliers where rating is not null and supplier_name like '%Cit%'), Summary as (select city, max(rating) as max_rating, count(rating) as rating_count from filtered_suppliers group by city) select city, max_rating, rating_count from Summary order by rating_count desc, 2 desc;

@@ -1,1 +1,0 @@
-with WebEventsBySession as (select session_id, max(event_time) as latest_event_time from web_events where hour(event_time) between 7 and 14 group by session_id) select s.id, s.country, W.latest_event_time from sessions s left join WebEventsBySession W on s.id = W.session_id

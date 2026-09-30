@@ -1,1 +1,0 @@
-SELECT id, city, rating, country, DENSE_RANK() OVER (PARTITION BY city ORDER BY rating DESC) dense_rnk, ROUND(AVG(rating) OVER (PARTITION BY country ORDER BY rating, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) rating_moving_avg_4 FROM suppliers ORDER BY rating_moving_avg_4 DESC

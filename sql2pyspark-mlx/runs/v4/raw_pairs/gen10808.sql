@@ -1,1 +1,0 @@
-SELECT * FROM suppliers WHERE rating BETWEEN 2.3 AND 4.2

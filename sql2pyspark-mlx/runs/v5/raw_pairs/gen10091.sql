@@ -1,1 +1,0 @@
-SELECT dim.status, dim.account_type, s.merchant, COUNT(*) AS rows_total, ROUND(SUM(s.amount), 2) AS total_amount, GROUPING_ID() AS level_id FROM transactions s LEFT JOIN accounts dim ON s.account_id = dim.id GROUP BY CUBE (dim.status, dim.account_type, s.merchant) ORDER BY merchant;

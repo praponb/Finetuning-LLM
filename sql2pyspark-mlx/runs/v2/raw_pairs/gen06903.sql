@@ -1,1 +1,0 @@
-SELECT a.status, COUNT(t.id) AS transaction_count, MIN(t.amount) AS min_amount, ROUND((100 * SUM(CASE WHEN t.merchant = 'Lazada' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_lazada FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id GROUP BY a.status ORDER BY transaction_count DESC;

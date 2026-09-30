@@ -1,1 +1,0 @@
-SELECT country, CASE WHEN country IN ('JP', 'SG') THEN 'priority' ELSE 'other' END AS country_group, SUM(rating) AS total_rating FROM suppliers WHERE rating >= 2.2 OR rating BETWEEN 2.0 AND 4.0 GROUP BY 1, 2;

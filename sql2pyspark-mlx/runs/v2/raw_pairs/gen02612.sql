@@ -1,1 +1,0 @@
-WITH product_totals AS (SELECT product_id, SUM(unit_price * quantity) revenue FROM order_items GROUP BY product_id) SELECT products.id, products.product_name, product_totals.revenue FROM products INNER JOIN product_totals ON products.id = product_totals.product_id ORDER BY product_name DESC;

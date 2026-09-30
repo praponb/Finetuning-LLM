@@ -1,1 +1,0 @@
-SELECT suppliers.id, suppliers.supplier_name, suppliers.rating, suppliers.city FROM suppliers WHERE EXISTS (SELECT 1 FROM products WHERE products.supplier_id = suppliers.id AND products.supplier_id IN (1, 10))

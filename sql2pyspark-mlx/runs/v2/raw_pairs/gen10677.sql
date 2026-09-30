@@ -1,1 +1,0 @@
-SELECT accounts.balance, t.max_amount, t.amount_count FROM accounts JOIN (SELECT account_id, MAX(amount) AS max_amount, COUNT(amount) AS amount_count FROM transactions WHERE txn_type NOT IN ('CREDIT', 'DEBIT') GROUP BY account_id) t ON accounts.id = t.account_id;

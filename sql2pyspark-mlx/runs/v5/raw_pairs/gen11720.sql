@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END) AS closed_count FROM accounts GROUP BY customer_id) SELECT c.city, c.name, ct.closed_count FROM customers c LEFT JOIN customer_totals ct ON c.id = ct.customer_id ORDER BY name;

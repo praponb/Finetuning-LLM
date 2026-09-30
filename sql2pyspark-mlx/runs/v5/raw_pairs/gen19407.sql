@@ -1,1 +1,0 @@
-SELECT id, dept_name, budget, location, budget - LAG(budget, 1) OVER (PARTITION BY dept_name ORDER BY budget, id) AS budget_change, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) AS rn FROM departments WHERE dept_name IN ('Marketing', 'HR')

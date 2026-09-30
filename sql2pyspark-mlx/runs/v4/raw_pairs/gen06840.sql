@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, status, delivered_date, DENSE_RANK() OVER (PARTITION BY status ORDER BY delivered_date DESC) AS rnk FROM shipments) SELECT id, status, delivered_date FROM ranked WHERE rnk <= 3

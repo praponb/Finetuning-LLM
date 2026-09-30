@@ -1,1 +1,0 @@
-SELECT e.id, e.full_name AS employee_full_name, e.hire_date AS employee_hire_date, e.email AS employee_email, m.salary AS manager_salary, m.is_remote AS manager_is_remote FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.full_name LIKE 'Ol%' OR m.dept_id IN (4, 7)

@@ -1,1 +1,0 @@
-SELECT store_id, COUNT(DISTINCT store_id) AS distinct_store_ids, COUNT(DISTINCT product_id) AS distinct_product_ids, COUNT(*) AS event_count FROM inventory GROUP BY store_id HAVING event_count >= 1 ORDER BY distinct_store_ids DESC NULLS LAST;

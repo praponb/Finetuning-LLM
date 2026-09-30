@@ -1,1 +1,0 @@
-SELECT o.channel, COUNT(*) AS row_count, COUNT(oi.unit_price) AS unit_price_count FROM order_items oi RIGHT OUTER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON o.id = oi.order_id WHERE o.discount >= 0.15 GROUP BY o.channel HAVING COUNT(*) > 1 ORDER BY channel;

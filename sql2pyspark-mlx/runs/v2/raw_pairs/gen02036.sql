@@ -1,1 +1,0 @@
-select * from (select city, round((100 * sum(case when country = 'DE' then 1 else 0 end)) / count(*), 1) as pct_de, sum(credit_limit) as total_credit_limit from customers group by city) as s where pct_de >= 62 order by city;

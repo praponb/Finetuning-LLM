@@ -1,1 +1,0 @@
-SELECT id, dept_name, location, budget, AVG(budget) OVER (PARTITION BY dept_name, location ORDER BY budget, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS budget_avg_6_prior, ROW_NUMBER() OVER (PARTITION BY location, dept_name ORDER BY budget, id) AS event_seq, MAX(budget) OVER (PARTITION BY dept_name, location) AS dept_name_max_budget FROM departments WHERE budget <= 1829000

@@ -1,1 +1,0 @@
-SELECT t.id, t.is_flagged, a.customer_id, a.opened_date, c.email, c.name FROM transactions t INNER JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE YEAR(a.opened_date) >= 2025 AND a.balance BETWEEN 27000 AND 61000;

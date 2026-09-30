@@ -1,1 +1,0 @@
-SELECT *, AVG(salary) OVER w_part salary_avg_6, NTILE(4) OVER (PARTITION BY dept_id, job_title ORDER BY salary, id) salary_bucket FROM employees WINDOW w_part AS (PARTITION BY dept_id, job_title ORDER BY salary, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)

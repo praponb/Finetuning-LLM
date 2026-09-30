@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', ss.sale_date) AS sale_month, SUM(i.quantity) AS total_quantity FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.quantity <> 79 GROUP BY DATE_TRUNC('MONTH', ss.sale_date) ORDER BY sale_month DESC;

@@ -1,1 +1,0 @@
-with orders_by_store as (select store_id, avg(discount) avg_discount from orders where channel <> 'store' group by store_id) select stores.id, stores.city, stores.region, orders_by_store.avg_discount from stores inner join orders_by_store on stores.id = orders_by_store.store_id;

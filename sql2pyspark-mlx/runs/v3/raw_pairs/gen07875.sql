@@ -1,1 +1,0 @@
-select id, hire_date, level, salary, rank() over (order by hire_date desc) as rnk, round(avg(salary) over (partition by level order by hire_date, id rows between 3 preceding and current row), 2) as salary_moving_avg_4 from employees where salary < 67000;

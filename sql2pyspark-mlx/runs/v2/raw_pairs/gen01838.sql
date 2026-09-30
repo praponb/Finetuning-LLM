@@ -1,1 +1,0 @@
-select t.account_id, t.txn_type, a.status, a.opened_date, a.account_type, if(t.is_flagged, 'Yes', 'No') as is_flagged_label from transactions t right outer join accounts a on t.account_id = a.id order by account_id

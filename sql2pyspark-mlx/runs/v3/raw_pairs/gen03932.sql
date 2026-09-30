@@ -1,1 +1,0 @@
-SELECT city, CASE WHEN rating >= 4.4 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(CASE WHEN country = 'JP' THEN 1 END) AS jp_count, AVG(rating) AS avg_rating FROM suppliers GROUP BY city, CASE WHEN rating >= 4.4 THEN 'high' WHEN rating >= 2.1 THEN 'mid' ELSE 'low' END

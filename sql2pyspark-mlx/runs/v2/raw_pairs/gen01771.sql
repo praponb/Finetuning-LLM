@@ -1,1 +1,0 @@
-SELECT order_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(unit_price) AS unit_price_count, COUNT(DISTINCT quantity) AS unique_orders FROM order_items WHERE quantity BETWEEN 6 AND 8 GROUP BY order_id

@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount DESC, id ASC) AS rank_in_group FROM payments) t WHERE rank_in_group = 1) SELECT id, order_id, amount, paid_at FROM deduped ORDER BY order_id DESC NULLS FIRST;

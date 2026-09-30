@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, product_id, unit_price, quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY unit_price DESC, id) AS rnk FROM order_items WHERE product_id IS NOT NULL) SELECT id, product_id, unit_price, quantity FROM numbered WHERE rnk <= 5

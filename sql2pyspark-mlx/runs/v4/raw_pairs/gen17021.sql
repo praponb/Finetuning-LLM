@@ -1,1 +1,0 @@
-select case when account_type in ('LOAN', 'CREDIT') then 'tier_1' else 'other' end as account_type_group, status, count(balance) as balance_count from accounts where status in ('OPEN', 'CLOSED') and customer_id is null group by account_type_group, status order by 3, status, account_type_group limit 1;

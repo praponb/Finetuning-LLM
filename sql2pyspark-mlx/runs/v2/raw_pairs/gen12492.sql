@@ -1,1 +1,0 @@
-SELECT p.id, p.stock_qty, p.product_name, t.total_quantity, t.stddev_quantity FROM products p LEFT OUTER JOIN (SELECT product_id, SUM(quantity) AS total_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE product_id IN (4, 8, 10) GROUP BY product_id) t ON p.id = t.product_id

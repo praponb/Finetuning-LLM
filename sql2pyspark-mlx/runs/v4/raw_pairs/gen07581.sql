@@ -1,1 +1,0 @@
-SELECT c.segment, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(a.status))) AS status_values FROM accounts a INNER JOIN customers c ON a.customer_id = c.id WHERE a.opened_date <= '2024-01-01' GROUP BY c.segment ORDER BY 2 ASC, segment ASC LIMIT 50

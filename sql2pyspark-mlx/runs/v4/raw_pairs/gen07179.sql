@@ -1,1 +1,0 @@
-WITH metrics AS (SELECT *, SUM(stock_qty) OVER (PARTITION BY category ORDER BY cost, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_stock_qty, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY cost, id) seq_no FROM products) SELECT id, product_name, brand, cost, stock_qty, launch_date, seq_no FROM metrics ORDER BY id NULLS FIRST, seq_no

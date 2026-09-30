@@ -1,1 +1,0 @@
-SELECT CASE WHEN merchant IN ('Lazada', 'Amazon') THEN 'priority' ELSE 'other' END AS merchant_group, MAX(amount) AS max_amount, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions WHERE account_id IN (6, 13, 36, 40) GROUP BY CASE WHEN merchant IN ('Lazada', 'Amazon') THEN 'priority' ELSE 'other' END

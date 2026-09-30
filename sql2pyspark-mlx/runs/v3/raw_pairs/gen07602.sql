@@ -1,1 +1,0 @@
-select product_id, store_id, min(units) as min_units, round(avg(units), 2) as avg_units from store_sales where product_id in (1, 5) or sale_date < '2025-04-12' group by product_id, store_id having avg_units < 80 order by 1 desc;

@@ -1,1 +1,0 @@
-SELECT id, region, opened_date, sqft, city, ROUND(AVG(sqft) OVER (PARTITION BY region ORDER BY opened_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS sqft_moving_avg_7, LEAD(sqft, 1) OVER (PARTITION BY city ORDER BY opened_date, id) AS next_sqft FROM stores

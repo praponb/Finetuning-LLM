@@ -1,1 +1,0 @@
-WITH product_totals AS (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items GROUP BY product_id) SELECT p.id, p.brand, pt.quantity_range FROM products p INNER JOIN product_totals pt ON p.id = pt.product_id

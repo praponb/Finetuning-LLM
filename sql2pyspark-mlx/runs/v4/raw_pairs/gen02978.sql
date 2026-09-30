@@ -1,1 +1,0 @@
-with src as (select * from products where supplier_id = 2 or year(launch_date) = 2025), products_stats as (select category, sum(case when category = 'Books' then 1 else 0 end) as books_count from src group by category) select category, books_count from products_stats;

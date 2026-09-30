@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.rating >= 3.7 THEN 'high' WHEN s.rating >= 1.9 THEN 'mid' ELSE 'low' END AS rating_bucket, MIN(p.launch_date) AS min_launch_date FROM products p JOIN suppliers s ON p.supplier_id = s.id GROUP BY CASE WHEN s.rating >= 3.7 THEN 'high' WHEN s.rating >= 1.9 THEN 'mid' ELSE 'low' END ORDER BY min_launch_date DESC;

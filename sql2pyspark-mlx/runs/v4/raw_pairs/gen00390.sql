@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT store_id, product_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY store_id, product_id) AS x WHERE avg_quantity < 77 ORDER BY store_id DESC, avg_quantity DESC;

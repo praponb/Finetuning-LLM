@@ -1,1 +1,0 @@
-SELECT accounts.id, accounts.opened_date, accounts.account_type, accounts.customer_id, customers.signup_date, ABS(accounts.balance) AS abs_balance FROM accounts INNER JOIN customers ON accounts.customer_id = customers.id WHERE accounts.opened_date < '2024-11-01' AND accounts.customer_id = 13

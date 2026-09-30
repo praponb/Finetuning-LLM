@@ -1,1 +1,0 @@
-SELECT c.segment, c.city, t.total_count FROM customers c LEFT OUTER JOIN (SELECT customer_id, COUNT(*) AS total_count FROM sessions GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.total_count > 10

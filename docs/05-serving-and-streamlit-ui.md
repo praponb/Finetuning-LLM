@@ -104,13 +104,9 @@ def extract_code(text: str) -> str:
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
 - `sql2pyspark:latest` (default, currently **v8**; 7B; stronger than v7 on complex multi-stage queries and set operations, one hold-out query weaker; see [Evaluation](04-evaluation-and-benchmarking.md))
-- `sql2pyspark:v7` (the previous default)
-- `sql2pyspark:v6` (previous production model, 7B)
-- `sql2pyspark:v5` (previous stable 3B model, about twice as fast)
-- `sql2pyspark:v4` (better at the v4 features: GROUPING SETS, PIVOT/UNPIVOT, nested data, ...; see [Evaluation](04-evaluation-and-benchmarking.md))
-- `sql2pyspark:v3` (previous stable production model)
-- `sql2pyspark:v2` (previous model, for comparison)
-- `sql2pyspark:v1` (template-based first model)
+- `sql2pyspark:v7` (the previous default, kept for rollback)
+
+The older tags `v1`–`v6` were removed on 2026-09-30; see [Model Training & Export](03-model-training-and-export.md) to rebuild one (e.g. the faster 3B v5).
 
 ### Generation settings
 `app.py` sends `temperature` 0.2. For SQL longer than 2,000 characters, `generation_options()` also sets `repeat_last_n` to 2,048 (Ollama's default: 64) and the request timeout rises from 180 s to 600 s: on long multi-CTE queries the model otherwise repeats window definitions until the token limit. Short queries are unaffected (see the repetition-penalty experiment in [Evaluation](04-evaluation-and-benchmarking.md)). With v6 (7B) this setting no longer stops the `real001` loop (identical 92-window reply); the static check flags the resulting syntax error, and the Kimi K3 repair fixed the same kind of looping answer from v5 in both repair tests.

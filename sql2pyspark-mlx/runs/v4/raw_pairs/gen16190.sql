@@ -1,1 +1,0 @@
-SELECT CASE WHEN balance >= 70000 THEN 'high' WHEN balance >= 9000 THEN 'mid' ELSE 'low' END AS balance_bucket, MIN(balance) AS min_balance, ROUND((100 * SUM(CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_checking FROM accounts WHERE customer_id IS NULL GROUP BY 1;

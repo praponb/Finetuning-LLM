@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT plan, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE MONTH(end_date) IN (3, 6, 11) GROUP BY plan) AS t WHERE monthly_fee_range >= 64 ORDER BY plan, monthly_fee_range DESC

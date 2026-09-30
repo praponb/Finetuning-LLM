@@ -1,1 +1,0 @@
-select status, sum(case when status = 'FAILED' then amount else 0 end) as failed_amount from payments group by status having sum(case when status = 'FAILED' then amount else 0 end) < 40 order by status desc

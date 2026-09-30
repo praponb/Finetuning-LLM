@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, MAX(unit_price) - MIN(unit_price) AS unit_price_range FROM order_items WHERE product_id IS NOT NULL GROUP BY product_id) SELECT p.brand, ps.unit_price_range FROM products p INNER JOIN product_summary ps ON p.id = ps.product_id;

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM customers WHERE signup_date >= '2023-08-01'), summary AS (SELECT QUARTER(signup_date) AS signup_quarter, segment, ROUND(STDDEV(age), 2) AS stddev_age, AVG(age) AS avg_age FROM base GROUP BY QUARTER(signup_date), segment) SELECT signup_quarter, segment, stddev_age, avg_age FROM summary ORDER BY signup_quarter DESC, segment ASC;

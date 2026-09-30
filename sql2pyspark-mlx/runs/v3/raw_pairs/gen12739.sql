@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT method, COUNT(CASE WHEN status = 'FAILED' THEN 1 END) AS failed_count, COUNT(amount) AS amount_count FROM payments GROUP BY method) AS agg WHERE failed_count > 5 ORDER BY failed_count DESC, method LIMIT 50;

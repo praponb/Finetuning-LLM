@@ -1,1 +1,0 @@
-SELECT e.full_name AS employee_full_name, e.dept_id AS employee_dept_id, m.email AS manager_email, m.salary AS manager_salary, m.full_name AS manager_full_name FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE LENGTH(m.email) < 5 ORDER BY m.salary DESC;

@@ -1,1 +1,0 @@
-SELECT store_id, product_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(last_restock) AS last_last_restock FROM inventory WHERE product_id IN (2, 3, 6, 9) AND store_id IN (2, 4) GROUP BY store_id, product_id ORDER BY product_id DESC;

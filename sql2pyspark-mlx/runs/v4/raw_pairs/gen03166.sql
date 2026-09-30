@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, quantity + unit_price AS line_total FROM order_items WHERE product_id IN (21, 33)) SELECT * FROM base QUALIFY RANK() OVER (PARTITION BY product_id ORDER BY quantity NULLS FIRST) = 1

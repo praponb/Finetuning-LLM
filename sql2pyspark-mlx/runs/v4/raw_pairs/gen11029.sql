@@ -1,1 +1,0 @@
-SELECT p.order_id, p.amount, o.channel, c.country, LOWER(p.status) AS status_lower FROM payments p INNER JOIN orders o ON p.order_id = o.id LEFT OUTER JOIN customers c ON o.customer_id = c.id WHERE c.name LIKE '%Par%' AND c.signup_date <= '2023-04-15';

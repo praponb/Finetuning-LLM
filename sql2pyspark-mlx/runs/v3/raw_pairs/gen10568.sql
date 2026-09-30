@@ -1,1 +1,0 @@
-SELECT event_time, HOUR(event_time) AS event_time_hour FROM web_events WHERE HOUR(event_time) BETWEEN 7 AND 10 AND (TO_DATE(event_time) >= '2025-02-01' OR session_id IN (7, 22)) ORDER BY event_time_hour

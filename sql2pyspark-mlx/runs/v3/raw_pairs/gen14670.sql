@@ -1,1 +1,0 @@
-SELECT SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list, COUNT(DISTINCT duration_sec) AS unique_sessions FROM web_events WHERE page NOT IN ('/search', '/product', '/home') ORDER BY unique_sessions DESC;

@@ -1,1 +1,0 @@
-SELECT page, CASE WHEN YEAR(event_time) < 2024 THEN 'before_2024' WHEN YEAR(event_time) = 2024 THEN '2024' ELSE 'after_2024' END event_cohort, COUNT(CASE WHEN page = '/checkout' THEN 1 END) checkout_count FROM web_events WHERE event_time < '2024-03-01' OR session_id IN (8, 10, 13, 15) GROUP BY 1, 2 HAVING checkout_count >= 5 ORDER BY page, event_cohort

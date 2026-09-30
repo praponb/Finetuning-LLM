@@ -1,1 +1,0 @@
-SELECT p.category, COUNT(DISTINCT i.quantity) AS unique_stores, AVG(i.quantity) AS avg_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE i.last_restock BETWEEN '2024-10-01' AND '2025-06-10' GROUP BY p.category

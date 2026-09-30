@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, SUM(age) AS total_age, DENSE_RANK() OVER (ORDER BY SUM(age) DESC) AS rnk FROM customers WHERE is_active = TRUE GROUP BY DATE_TRUNC('MONTH', signup_date) ORDER BY total_age

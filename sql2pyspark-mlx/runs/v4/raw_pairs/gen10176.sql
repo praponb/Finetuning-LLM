@@ -1,1 +1,0 @@
-with cleaned as (select *, lower(account_type) account_type_lower from accounts where opened_date > to_date('2024-02-08') and status is not null) select s.* from cleaned s where not exists (select 1 from transactions x where x.account_id = s.id and x.account_id in (16, 29, 37));

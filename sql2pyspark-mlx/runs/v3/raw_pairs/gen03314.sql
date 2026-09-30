@@ -1,1 +1,0 @@
-SELECT e.job_title AS employee_job_title, e.full_name AS employee_full_name, m.salary AS manager_salary, m.job_title AS manager_job_title, m.dept_id AS manager_dept_id FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id

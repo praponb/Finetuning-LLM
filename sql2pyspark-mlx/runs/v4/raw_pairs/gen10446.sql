@@ -1,1 +1,0 @@
-WITH metrics_long AS (SELECT * FROM (SELECT id, category, cost, price FROM products) src UNPIVOT (value FOR measure IN (cost, price AS PRICE))) SELECT category, AVG(value) AS avg_value, SIZE(COLLECT_SET(category)) AS num_categories FROM metrics_long GROUP BY category;

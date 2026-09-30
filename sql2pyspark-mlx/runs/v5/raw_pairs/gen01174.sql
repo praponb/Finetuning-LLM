@@ -1,1 +1,0 @@
-SELECT DISTINCT status FROM orders ORDER BY status ASC LIMIT 3;

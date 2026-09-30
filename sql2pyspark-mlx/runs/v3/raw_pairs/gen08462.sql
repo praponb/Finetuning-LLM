@@ -1,1 +1,0 @@
-SELECT CASE WHEN city IN ('Bangkok', 'Tokyo') THEN 'core' ELSE 'other' END AS city_group, SUM(sqft) AS total_sqft, ROUND(SUM(sqft) * 100.0 / SUM(SUM(sqft)) OVER (), 2) AS pct_of_total FROM stores WHERE region IN ('Central', 'North', 'East') GROUP BY CASE WHEN city IN ('Bangkok', 'Tokyo') THEN 'core' ELSE 'other' END ORDER BY pct_of_total

@@ -1,1 +1,0 @@
-select t.amount, t.merchant, a.balance, a.status, c.city, c.is_active from transactions t join accounts a on t.account_id = a.id left join customers c on a.customer_id = c.id where t.amount < 3100 and a.balance >= 31000;

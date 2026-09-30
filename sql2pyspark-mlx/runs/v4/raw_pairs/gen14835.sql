@@ -1,1 +1,0 @@
-SELECT CASE WHEN event_type IN ('add_to_cart', 'click') THEN 'tier_1' ELSE 'other' END AS event_type_group, SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END) AS page_view_count, COUNT(duration_sec) AS duration_sec_count FROM web_events GROUP BY 1 HAVING SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END) >= 21 ORDER BY duration_sec_count;

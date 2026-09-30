@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.shipped_date, orders.order_date, orders.amount, stores.sqft, stores.region FROM shipments JOIN orders ON shipments.order_id = orders.id JOIN stores ON orders.store_id = stores.id WHERE YEAR(stores.opened_date) >= 2023 AND shipments.carrier IN ('Kerry', 'FedEx', 'Flash') ORDER BY 5;

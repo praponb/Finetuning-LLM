@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, MIN(start_date) AS first_start_date FROM subscriptions GROUP BY customer_id) SELECT c.email, c.signup_date, cs.first_start_date FROM customers c LEFT OUTER JOIN customer_stats cs ON c.id = cs.customer_id;

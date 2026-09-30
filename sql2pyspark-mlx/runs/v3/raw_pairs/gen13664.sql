@@ -1,1 +1,0 @@
-with numbered as (select *, row_number() over (partition by method order by amount desc, id) as pos from payments where order_id is null) select id, method, amount, order_id from numbered where pos = 1;

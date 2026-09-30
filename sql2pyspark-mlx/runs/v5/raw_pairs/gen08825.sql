@@ -1,1 +1,0 @@
-select account_type, month(opened_date) as opened_month, round(stddev(balance), 2) as stddev_balance, avg(balance) as avg_balance from accounts where customer_id is null group by account_type, month(opened_date) order by account_type desc, opened_month;

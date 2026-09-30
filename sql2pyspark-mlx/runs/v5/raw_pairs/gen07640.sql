@@ -1,1 +1,0 @@
-SELECT txn_quarter, txn_type, debit_count FROM (SELECT QUARTER(txn_time) AS txn_quarter, txn_type, SUM(CASE WHEN txn_type = 'DEBIT' THEN 1 ELSE 0 END) AS debit_count FROM transactions GROUP BY QUARTER(txn_time), txn_type) AS agg WHERE debit_count > 23 ORDER BY txn_quarter DESC, txn_type LIMIT 20;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 4232000 THEN 'high' WHEN budget >= 1662000 THEN 'mid' ELSE 'low' END AS budget_bucket, COUNT(*) AS total_count, AVG(budget) AS avg_budget FROM departments GROUP BY CASE WHEN budget >= 4232000 THEN 'high' WHEN budget >= 1662000 THEN 'mid' ELSE 'low' END HAVING avg_budget < 1739000;

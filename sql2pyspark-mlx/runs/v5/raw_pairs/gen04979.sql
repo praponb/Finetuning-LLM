@@ -1,1 +1,0 @@
-SELECT employees.id, employees.hire_date, employees.full_name FROM employees WHERE employees.dept_id NOT IN (SELECT id FROM departments WHERE location NOT IN ('Berlin', 'Singapore', 'London')) ORDER BY full_name DESC, id LIMIT 50;

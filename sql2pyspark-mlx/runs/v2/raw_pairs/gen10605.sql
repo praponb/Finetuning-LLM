@@ -1,1 +1,0 @@
-SELECT o.id, o.channel, o.order_date, s.store_name, s.opened_date, CONCAT_WS('-', o.status, o.channel) AS status_channel_key FROM orders o INNER JOIN stores s ON o.store_id = s.id WHERE s.store_name NOT LIKE '%Centra%' AND o.amount BETWEEN 530 AND 1270;

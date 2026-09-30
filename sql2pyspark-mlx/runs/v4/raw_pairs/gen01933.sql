@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3992000 THEN 'high' WHEN budget >= 1893000 THEN 'mid' ELSE 'low' END AS budget_bucket, ROUND((100 * SUM(CASE WHEN dept_name = 'Legal' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_legal FROM departments WHERE dept_name NOT IN ('Engineering', 'Sales') GROUP BY 1 ORDER BY budget_bucket;

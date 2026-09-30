@@ -1,1 +1,0 @@
-with src as (select *, date_sub(end_date, 29) end_date_minus_29d from subscriptions where status <> 'EXPIRED'), summary as (select plan, max(start_date) latest_start_date, sum(case when plan = 'enterprise' then monthly_fee else 0 end) enterprise_monthly_fee from src group by plan) select * from summary;

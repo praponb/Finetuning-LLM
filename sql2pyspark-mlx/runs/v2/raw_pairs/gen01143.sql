@@ -1,1 +1,0 @@
-SELECT SUM(CASE WHEN region = 'North' THEN 1 ELSE 0 END) AS north_count, COUNT(CASE WHEN city = 'New York' THEN 1 END) AS new_york_count, COUNT(sqft) AS sqft_count FROM stores WHERE store_name LIKE 'Air%' AND region NOT IN ('West', 'East', 'South');

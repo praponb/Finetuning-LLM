@@ -1,1 +1,0 @@
-select i.product_id, ss.units, ss.revenue, ss.product_id as store_sale_product_id, datediff(current_date(), ss.sale_date) as days_since_sale_date from inventory i left outer join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id order by units desc, store_sale_product_id asc;

@@ -1,1 +1,0 @@
-WITH ranked_employees AS (SELECT id, manager_id, hire_date, dept_id, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date DESC, id) AS rn FROM employees WHERE full_name IS NOT NULL) SELECT * FROM ranked_employees WHERE rn <= 2 ORDER BY manager_id ASC;

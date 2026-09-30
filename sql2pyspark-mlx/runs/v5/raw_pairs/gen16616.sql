@@ -1,1 +1,0 @@
-select store_id, case when units >= 35 then 'high' when units >= 9 then 'mid' else 'low' end as units_bucket, max(units) - min(units) as units_range, max(units) as max_units from store_sales where store_id in (3, 4) and product_id in (7, 9) and sale_date >= '2024-06-01' group by store_id, case when units >= 35 then 'high' when units >= 9 then 'mid' else 'low' end

@@ -1,1 +1,0 @@
-WITH joined AS (SELECT e.*, c.age, c.credit_limit, c.city FROM orders e JOIN customers c ON e.customer_id = c.id) SELECT s.id, s.customer_id, s.store_id, s.channel, s.amount, s.shipping_fee, s.age, s.credit_limit, s.city, (SELECT MAX(x.amount) FROM orders x WHERE x.store_id = s.store_id) AS max_order_amount FROM joined s ORDER BY max_order_amount DESC NULLS LAST

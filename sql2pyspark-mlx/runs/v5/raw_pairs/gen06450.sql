@@ -1,1 +1,0 @@
-WITH recent_customers AS (SELECT * FROM customers WHERE age < 63), signup_quarter_summary AS (SELECT QUARTER(signup_date) AS signup_quarter, COUNT(CASE WHEN city = 'Chiang Mai' THEN 1 END) AS chiang_mai_count FROM recent_customers GROUP BY QUARTER(signup_date)) SELECT signup_quarter, chiang_mai_count FROM signup_quarter_summary ORDER BY chiang_mai_count DESC;

@@ -1,1 +1,0 @@
-SELECT brand, category, SUM(CASE WHEN category = 'Sports' THEN 1 ELSE 0 END) AS sports_count, SUM(stock_qty) AS total_stock_qty FROM products GROUP BY brand, category HAVING SUM(CASE WHEN category = 'Sports' THEN 1 ELSE 0 END) < 34;

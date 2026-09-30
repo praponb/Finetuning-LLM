@@ -1,1 +1,0 @@
-with valid_subscriptions as (select * from subscriptions where monthly_fee >= 70), summary as (select date_format(start_date, 'yyyy-MM') start_month, sum(case when status = 'EXPIRED' then monthly_fee else 0 end) expired_monthly_fee from valid_subscriptions group by date_format(start_date, 'yyyy-MM')) select * from summary where expired_monthly_fee < 36

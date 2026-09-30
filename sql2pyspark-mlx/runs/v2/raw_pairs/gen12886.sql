@@ -1,1 +1,0 @@
-with base as (select * from subscriptions where plan = 'basic'), summary as (select customer_id, round(stddev(monthly_fee), 2) as stddev_monthly_fee, sum(case when status = 'EXPIRED' then 1 else 0 end) as expired_count from base group by customer_id) select customer_id, stddev_monthly_fee, expired_count from summary order by customer_id desc

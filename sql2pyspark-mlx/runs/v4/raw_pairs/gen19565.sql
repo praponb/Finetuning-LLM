@@ -1,1 +1,0 @@
-SELECT c.city, MAX(p.amount) AS max_amount FROM payments p INNER JOIN orders o ON p.order_id = o.id FULL OUTER JOIN customers c ON o.customer_id = c.id GROUP BY c.city;

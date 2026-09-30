@@ -1,1 +1,0 @@
-with numbered as (select id, store_id, last_restock, dense_rank() over (partition by store_id order by last_restock desc) as rn from inventory) select id, store_id, last_restock from numbered where rn <= 2;

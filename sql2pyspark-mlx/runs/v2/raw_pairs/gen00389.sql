@@ -1,1 +1,0 @@
-select id, delivered_date, case when status in ('IN_TRANSIT', 'RETURNED') then 'Tier 1' else 'Other' end as status_group, concat_ws('/', status, carrier) as status_carrier_key from shipments where status not in ('LOST', 'DELIVERED', 'IN_TRANSIT') or cost <= 30;

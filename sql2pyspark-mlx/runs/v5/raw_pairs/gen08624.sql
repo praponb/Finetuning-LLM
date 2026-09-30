@@ -1,1 +1,0 @@
-select * from (select case when method in ('card', 'bank_transfer') then 'group_a' else 'other' end as method_group, count(*) as row_count, count(*) as total_count from payments group by case when method in ('card', 'bank_transfer') then 'group_a' else 'other' end) as sub where total_count < 6 order by total_count;

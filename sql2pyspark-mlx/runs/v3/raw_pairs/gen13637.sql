@@ -1,1 +1,0 @@
-with top_sessions as (select *, row_number() over (partition by country order by started_at, id) as pos from sessions where device not in ('desktop', 'mobile')) select id, country, started_at from top_sessions where pos <= 3

@@ -1,1 +1,0 @@
-select id, customer_id, monthly_fee, end_date from (select *, row_number() over (partition by customer_id order by monthly_fee desc, id) as row_num from subscriptions where status in ('EXPIRED', 'PAUSED', 'ACTIVE')) as t where row_num <= 3

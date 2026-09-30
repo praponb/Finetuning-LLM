@@ -1,1 +1,0 @@
-WITH inventory_by_store AS (SELECT store_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory GROUP BY store_id) SELECT stores.store_name, inventory_by_store.quantity_range FROM stores INNER JOIN inventory_by_store ON stores.id = inventory_by_store.store_id;

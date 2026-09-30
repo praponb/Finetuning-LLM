@@ -1,1 +1,0 @@
-SELECT level, COUNT(CASE WHEN level = 'L3' THEN 1 END) AS l3_count, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list, COUNT(*) AS num_employees FROM employees GROUP BY level HAVING COUNT(CASE WHEN level = 'L3' THEN 1 END) >= 3 ORDER BY l3_count DESC;

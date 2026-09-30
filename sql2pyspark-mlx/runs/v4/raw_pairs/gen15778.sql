@@ -1,1 +1,0 @@
-select case when discount_pct >= 0.32 then 'PREMIUM' else 'STANDARD' end as discount_pct_tier, min(discount_pct) as min_discount_pct, stddev_samp(discount_pct) as discount_pct_stddev from promotions group by case when discount_pct >= 0.32 then 'PREMIUM' else 'STANDARD' end order by discount_pct_stddev desc

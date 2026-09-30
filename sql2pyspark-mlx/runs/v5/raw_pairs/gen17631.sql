@@ -1,1 +1,0 @@
-SELECT budget_bucket, dept_name, total_budget FROM (SELECT CASE WHEN budget >= 3844000 THEN 'high' WHEN budget >= 944000 THEN 'mid' ELSE 'low' END AS budget_bucket, dept_name, SUM(budget) AS total_budget FROM departments GROUP BY CASE WHEN budget >= 3844000 THEN 'high' WHEN budget >= 944000 THEN 'mid' ELSE 'low' END, dept_name) AS sub WHERE total_budget >= 13500000 ORDER BY 2;

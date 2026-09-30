@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, TO_DATE(event_time) AS event_time_date FROM web_events WHERE event_time >= '2024-04-13' AND session_id IN (4, 6, 16)), Summary AS (SELECT event_type, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, COUNT(*) AS cnt FROM src GROUP BY event_type) SELECT event_type, avg_duration_sec, cnt FROM Summary WHERE avg_duration_sec > 67

@@ -1,1 +1,0 @@
-SELECT id, order_id, delivered_date, cost, carrier, SUM(cost) OVER (PARTITION BY order_id ORDER BY delivered_date, id) AS running_cost, DENSE_RANK() OVER (PARTITION BY carrier ORDER BY cost DESC) AS cost_dense_rank FROM shipments

@@ -1,1 +1,0 @@
-SELECT signup_year, cnt, total_age FROM (SELECT YEAR(signup_date) AS signup_year, COUNT(*) AS cnt, SUM(age) AS total_age FROM customers GROUP BY YEAR(signup_date)) AS sub WHERE cnt < 7 ORDER BY total_age DESC;

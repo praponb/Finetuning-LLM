@@ -1,1 +1,0 @@
-WITH DepartmentStats AS (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary FROM employees WHERE salary > 85000 GROUP BY dept_id) SELECT d.id, d.location, D.avg_salary FROM departments d INNER JOIN DepartmentStats D ON d.id = D.dept_id WHERE D.avg_salary > 64 ORDER BY d.id ASC;

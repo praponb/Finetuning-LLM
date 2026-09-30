@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, stock_qty - price AS stock_qty_minus_price, COALESCE(brand, 'DIRECT') AS resolved_brand FROM products WHERE launch_date > DATE '2023-08-18' AND supplier_id IS NOT NULL) SELECT * FROM (SELECT category, brand, price FROM base) src PIVOT (AVG(price) AS total, COUNT(1) AS item_count FOR brand IN ('Stark', 'Umbrella'));

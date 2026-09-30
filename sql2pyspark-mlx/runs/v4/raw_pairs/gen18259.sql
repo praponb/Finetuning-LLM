@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CASE WHEN channel IN ('web', 'partner') THEN 'Priority' ELSE 'Other' END AS channel_group FROM promotions WHERE promo_code IN ('VIP', 'BUNDLE', 'SPRING10')) SELECT * FROM (SELECT channel, promo_code, discount_pct FROM base) src PIVOT (MAX(discount_pct) AS value_sum FOR promo_code IN ('SPRING10' AS spring10, 'BUNDLE' AS bundle));

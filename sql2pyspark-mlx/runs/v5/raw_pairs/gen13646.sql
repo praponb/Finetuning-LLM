@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT * FROM promotions QUALIFY ROW_NUMBER() OVER (PARTITION BY channel ORDER BY discount_pct, id) = 1) SELECT id, channel, promo_code, starts_on, discount_pct FROM deduped ORDER BY starts_on NULLS FIRST;

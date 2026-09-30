@@ -1,1 +1,0 @@
-with exploded as (select id, customer_id, created_at, coupon_codes, item.product_id, item.qty, item.price from (select id, customer_id, created_at, coupon_codes, explode(items) as item from carts) e) select id, created_at, coupon_codes, product_id, qty, price from exploded order by product_id asc;

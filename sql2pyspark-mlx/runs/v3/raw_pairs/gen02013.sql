@@ -1,1 +1,0 @@
-SELECT city, SORT_ARRAY(COLLECT_SET(country)) AS country_list, SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) AS sg_count FROM suppliers WHERE city IN ('Tokyo', 'Singapore', 'Bangkok') GROUP BY city HAVING SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) >= 67 ORDER BY city LIMIT 1;

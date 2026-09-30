@@ -1,1 +1,0 @@
-select id, category, explode(tags) as tag_name from products where supplier_id is null

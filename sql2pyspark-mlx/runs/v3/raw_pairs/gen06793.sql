@@ -1,1 +1,0 @@
-SELECT p.id, p.method, p.order_id, p.amount, o.order_date, o.customer_id, DATE_FORMAT(o.order_date, 'yyyy-MM-dd') AS order_date_label FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id WHERE p.amount > 860 AND o.discount <= 0.14;

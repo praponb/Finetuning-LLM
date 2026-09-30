@@ -1,1 +1,0 @@
-SELECT p.supplier_id, COUNT(*) AS inventory_count, SUM(i.quantity) AS total_quantity FROM inventory i LEFT OUTER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON p.id = i.product_id GROUP BY p.supplier_id

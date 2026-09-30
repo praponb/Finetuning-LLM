@@ -1,1 +1,0 @@
-SELECT ss.store_id, ss.product_id, MIN(i.quantity) AS min_quantity, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id IN (7, 10) GROUP BY ss.store_id, ss.product_id HAVING quantity_range >= 29 ORDER BY quantity_range DESC

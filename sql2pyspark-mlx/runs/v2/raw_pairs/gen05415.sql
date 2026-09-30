@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM order_items WHERE product_id IS NULL AND quantity >= 6), summary AS (SELECT order_id, MAX(quantity) AS max_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM base GROUP BY order_id) SELECT * FROM summary ORDER BY max_quantity DESC

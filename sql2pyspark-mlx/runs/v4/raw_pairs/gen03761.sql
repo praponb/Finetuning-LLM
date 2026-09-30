@@ -1,1 +1,0 @@
-SELECT e.job_title, e.email, d.dept_name, d.budget, d.location, COALESCE(d.location, 'unassigned') AS location_filled FROM employees e JOIN departments d ON e.dept_id = d.id WHERE d.dept_name IN ('HR', 'Marketing', 'Finance');

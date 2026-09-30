@@ -1,1 +1,0 @@
-SELECT id, txn_type, amount, merchant, txn_time, SUM(amount) OVER (PARTITION BY txn_type) AS txn_type_sum_amount, RANK() OVER (PARTITION BY merchant ORDER BY txn_time DESC) AS txn_time_rank FROM transactions;

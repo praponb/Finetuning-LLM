@@ -1,1 +1,0 @@
-SELECT order_id, SUM(unit_price) total_unit_price, AVG(quantity) avg_quantity, MAX(quantity) max_quantity FROM order_items WHERE product_id = 18 AND unit_price <= 320 GROUP BY order_id HAVING SUM(unit_price) >= 2300 ORDER BY max_quantity DESC

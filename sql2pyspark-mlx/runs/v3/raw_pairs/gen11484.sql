@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM payments WHERE amount BETWEEN 1390 AND 1480), agg AS (SELECT method, AVG(amount) avg_amount FROM base GROUP BY method) SELECT * FROM agg WHERE avg_amount >= 900 ORDER BY avg_amount DESC

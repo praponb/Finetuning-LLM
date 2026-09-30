@@ -1,1 +1,0 @@
-select e.id, e.level as employee_level, e.salary as employee_salary, m.dept_id as manager_dept_id from employees e inner join employees m on e.manager_id = m.id where e.full_name like 'Mi%' order by manager_dept_id desc, e.id desc;

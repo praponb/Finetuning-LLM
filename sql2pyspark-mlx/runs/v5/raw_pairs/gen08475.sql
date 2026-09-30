@@ -1,1 +1,0 @@
-WITH kept AS (SELECT s.* FROM suppliers s WHERE EXISTS (SELECT 1 FROM products x WHERE x.supplier_id = s.id AND x.brand IS NULL)) SELECT id, supplier_name, city, rating FROM kept ORDER BY rating DESC;

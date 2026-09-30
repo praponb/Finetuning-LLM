@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, MAX(amount) AS max_amount FROM payments GROUP BY order_id) SELECT o.order_date, o.amount, os.max_amount FROM orders o LEFT JOIN order_stats os ON o.id = os.order_id WHERE os.max_amount > 1070

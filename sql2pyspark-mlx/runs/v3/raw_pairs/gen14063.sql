@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT method, ROUND((100 * SUM(CASE WHEN status = 'FAILED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_failed, MAX(amount) AS max_amount FROM payments GROUP BY method) AS x WHERE pct_failed < 32 ORDER BY method

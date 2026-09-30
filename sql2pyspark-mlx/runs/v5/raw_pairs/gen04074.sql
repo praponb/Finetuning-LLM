@@ -1,1 +1,0 @@
-SELECT p.category, COUNT(*) AS num_rows, AVG(a.unit_price) AS avg_unit_price, GROUPING_ID() AS level_id FROM order_items a LEFT JOIN products p ON a.product_id = p.id GROUP BY ROLLUP (p.category) ORDER BY avg_unit_price DESC;

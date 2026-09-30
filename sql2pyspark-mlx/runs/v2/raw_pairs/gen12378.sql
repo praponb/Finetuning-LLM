@@ -1,1 +1,0 @@
-SELECT orders.id, orders.discount, orders.customer_id, t.avg_quantity FROM orders INNER JOIN (SELECT order_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items GROUP BY order_id) t ON orders.id = t.order_id ORDER BY orders.discount DESC

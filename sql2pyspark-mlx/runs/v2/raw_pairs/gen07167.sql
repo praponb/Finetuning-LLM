@@ -1,1 +1,0 @@
-SELECT orders.order_date, stores.sqft, customers.email FROM orders LEFT OUTER JOIN stores ON stores.id = orders.store_id LEFT OUTER JOIN customers ON orders.customer_id = customers.id WHERE customers.segment = 'Consumer' OR orders.status IN ('COMPLETED', 'SHIPPED', 'CANCELLED')

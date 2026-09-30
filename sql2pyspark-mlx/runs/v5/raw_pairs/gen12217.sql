@@ -1,1 +1,0 @@
-SELECT id, paid_at, amount, DENSE_RANK() OVER (ORDER BY paid_at DESC) AS paid_at_dense_rank, SUM(amount) OVER (ORDER BY paid_at, id) AS running_amount FROM payments WHERE TO_DATE(paid_at) < '2024-12-01'

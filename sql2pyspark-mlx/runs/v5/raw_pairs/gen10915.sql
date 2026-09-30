@@ -1,1 +1,0 @@
-WITH dim_totals AS (SELECT d.country, s.page, COUNT(*) AS num_rows, MAX(s.duration_sec) AS max_duration_sec FROM web_events s LEFT JOIN sessions d ON s.session_id = d.id GROUP BY ROLLUP (d.country, s.page)) SELECT country, num_rows, max_duration_sec, CASE WHEN country RLIKE '^(UK|DE)$' THEN 'OTHER_ZONE' ELSE 'CORE' END AS country_zone FROM dim_totals

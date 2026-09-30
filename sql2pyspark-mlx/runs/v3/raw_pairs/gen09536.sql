@@ -1,1 +1,0 @@
-SELECT id, carrier, shipped_date, cost, RANK() OVER (PARTITION BY carrier ORDER BY shipped_date DESC) AS shipped_date_rank, RANK() OVER (PARTITION BY carrier ORDER BY cost) AS rnk FROM shipments WHERE MONTH(shipped_date) IN (3, 4, 10);

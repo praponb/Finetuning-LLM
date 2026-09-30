@@ -1,1 +1,0 @@
-SELECT d.dept_name, t.stddev_salary, t.l1_count FROM departments d INNER JOIN (SELECT dept_id, ROUND(STDDEV(salary), 2) AS stddev_salary, COUNT(CASE WHEN level = 'L1' THEN 1 END) AS l1_count FROM employees GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY d.dept_name DESC

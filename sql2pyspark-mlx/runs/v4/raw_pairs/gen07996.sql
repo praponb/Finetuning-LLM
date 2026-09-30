@@ -1,1 +1,0 @@
-SELECT we.id, we.event_type, s.customer_id, s.country, c.is_active, TO_DATE(s.started_at) AS started_at_date FROM web_events we INNER JOIN sessions s ON we.session_id = s.id LEFT OUTER JOIN customers c ON s.customer_id = c.id WHERE we.duration_sec <> 357

@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, AVG(monthly_fee) AS avg_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.is_active, ct.avg_monthly_fee FROM customers c LEFT JOIN customer_totals ct ON c.id = ct.customer_id;

@@ -1,1 +1,0 @@
-with src as (select * from store_sales where product_id = 1), product_id_summary as (select product_id, max(revenue) - min(revenue) as revenue_range, sum(units) as total_units from src group by product_id) select product_id, revenue_range, total_units from product_id_summary order by product_id desc;

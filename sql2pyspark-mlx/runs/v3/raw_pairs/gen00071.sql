@@ -1,1 +1,0 @@
-select o.id, o.channel, count(p.id) as payment_count, count(p.amount) as amount_count from orders o inner join payments p on p.order_id = o.id group by o.id, o.channel having payment_count >= 3 order by payment_count, id, channel limit 50;

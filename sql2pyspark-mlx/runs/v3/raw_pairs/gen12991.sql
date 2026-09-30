@@ -1,1 +1,0 @@
-with order_totals as (select order_id, max(paid_at) as last_paid_at from payments group by order_id) select o.store_id, ot.last_paid_at from orders o inner join order_totals ot on o.id = ot.order_id order by store_id desc

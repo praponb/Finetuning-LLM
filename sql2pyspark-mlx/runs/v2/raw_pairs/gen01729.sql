@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events WHERE page IS NOT NULL GROUP BY session_id) SELECT sessions.customer_id, session_totals.stddev_duration_sec FROM sessions INNER JOIN session_totals ON sessions.id = session_totals.session_id ORDER BY customer_id DESC, session_totals.stddev_duration_sec DESC;

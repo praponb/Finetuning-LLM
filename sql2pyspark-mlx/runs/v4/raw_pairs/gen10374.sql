@@ -1,1 +1,0 @@
-SELECT id, device_code, reading_ts, temp_c, humidity, pressure, status_bits, firmware, AVG(humidity) OVER (PARTITION BY device_code ORDER BY humidity, id ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) AS humidity_avg_6_prior, STDDEV_SAMP(pressure) OVER (PARTITION BY device_code) AS device_code_stddev_samp_pressure FROM device_readings

@@ -1,1 +1,0 @@
-with filtered as (select id, page, event_time, duration_sec, weekofyear(event_time) event_time_weekofyear, date_trunc('MONTH', event_time) event_time_period, coalesce(page, 'UNKNOWN') page_clean from web_events where event_time > date '2023-07-14') select page, id from filtered except select page, id from web_events where duration_sec < 237;

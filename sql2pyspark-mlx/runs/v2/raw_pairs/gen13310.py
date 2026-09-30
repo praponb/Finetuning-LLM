@@ -1,9 +1,0 @@
-from pyspark.sql import functions as F
-
-result = (
-    df_departments.alias("d")
-    .join(df_employees.alias("e"), F.col("d.id") == F.col("e.dept_id"), "left")
-    .filter(F.col("d.budget").between(1410000, 2139000) & (F.col("d.budget") <= 3223000))
-    .select(F.col("d.dept_name"), F.col("e.salary"))
-    .orderBy(F.col("dept_name").desc())
-)

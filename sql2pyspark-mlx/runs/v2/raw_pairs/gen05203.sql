@@ -1,1 +1,0 @@
-SELECT id, city, rating, supplier_name FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS rn FROM suppliers WHERE rating BETWEEN 2.2 AND 3.4) AS r WHERE rn <= 3 ORDER BY id ASC

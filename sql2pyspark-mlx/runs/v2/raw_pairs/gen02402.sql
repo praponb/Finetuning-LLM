@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', event_time) AS event_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values FROM web_events GROUP BY DATE_TRUNC('MONTH', event_time) ORDER BY event_month, 2 DESC;

@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, plan, effective_from, currency, val FROM price_tiers LATERAL VIEW EXPLODE(tier_limits) e AS val) SELECT id, plan, effective_from, currency, CASE WHEN plan RLIKE '^(pro|enterprise)$' THEN 'EXTENDED' ELSE 'PRIORITY' END AS plan_zone FROM lines ORDER BY plan_zone DESC;

@@ -1,1 +1,0 @@
-SELECT o.status, c.is_active, c.segment, s.region, s.opened_date, INITCAP(TRIM(c.country)) country_title FROM orders o LEFT OUTER JOIN customers c ON c.id = o.customer_id JOIN stores s ON o.store_id = s.id WHERE c.is_active = TRUE ORDER BY status

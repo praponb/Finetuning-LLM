@@ -1,1 +1,0 @@
-SELECT brand, category, MIN(launch_date) min_launch_date, SUM(cost) total_cost, COUNT(*) row_count FROM products WHERE brand = 'Stark' AND product_name LIKE '%Run%' GROUP BY brand, category ORDER BY row_count

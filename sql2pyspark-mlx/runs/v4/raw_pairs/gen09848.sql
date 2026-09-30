@@ -1,1 +1,0 @@
-select id, category, price, cost, product_name, dense_rank() over (partition by category order by price) as dense_rnk, last_value(product_name) over (order by cost desc, id rows between unbounded preceding and unbounded following) as last_product_name from products

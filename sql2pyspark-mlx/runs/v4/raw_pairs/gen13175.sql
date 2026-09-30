@@ -1,1 +1,0 @@
-SELECT t.id, t.txn_time, t.amount, a.status, a.account_type, c.credit_limit, c.country FROM transactions t RIGHT JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id WHERE MONTH(a.opened_date) IN (1, 3, 6);

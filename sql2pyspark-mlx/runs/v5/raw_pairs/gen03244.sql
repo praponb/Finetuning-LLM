@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) AS max_quantity FROM order_items GROUP BY order_id) SELECT orders.id, orders.customer_id, order_summary.avg_quantity, order_summary.max_quantity FROM orders LEFT JOIN order_summary ON orders.id = order_summary.order_id WHERE order_summary.avg_quantity > 35 ORDER BY max_quantity DESC

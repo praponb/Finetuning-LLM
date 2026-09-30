@@ -1,1 +1,0 @@
-select a.id, a.opened_date, a.balance, c.name, c.email, c.city from accounts a join customers c on a.customer_id = c.id where a.account_type not in ('SAVINGS', 'CHECKING', 'LOAN') order by c.email, name

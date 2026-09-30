@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, o.customer_id, st.region, st.sqft FROM shipments s JOIN orders o ON s.order_id = o.id LEFT OUTER JOIN stores st ON o.store_id = st.id WHERE MONTH(st.opened_date) IN (2, 5, 10) ORDER BY id LIMIT 10

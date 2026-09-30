@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(country))) AS country_values, COUNT(CASE WHEN browser = 'Firefox' THEN 1 END) AS firefox_count FROM sessions GROUP BY customer_id) SELECT c.email, cs.country_values, cs.firefox_count FROM customers c LEFT JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY firefox_count DESC

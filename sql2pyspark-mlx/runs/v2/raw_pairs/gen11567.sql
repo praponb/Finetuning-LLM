@@ -1,1 +1,0 @@
-WITH AccountTotals AS (SELECT account_id, ROUND(STDDEV(amount), 2) stddev_amount, COUNT(*) num_transactions FROM transactions WHERE NOT is_flagged GROUP BY account_id) SELECT a.id, a.customer_id, A.stddev_amount, A.num_transactions FROM accounts a LEFT JOIN AccountTotals A ON a.id = A.account_id WHERE A.num_transactions >= 7 ORDER BY num_transactions DESC;

@@ -1,1 +1,0 @@
-SELECT ss.product_id, MAX(i.last_restock) latest_last_restock, MAX(i.quantity) - MIN(i.quantity) quantity_range FROM inventory i JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.product_id IN (5, 9) GROUP BY ss.product_id HAVING MAX(i.quantity) - MIN(i.quantity) >= 26;

@@ -1,1 +1,0 @@
-SELECT rating_bucket, avg_rating, cnt FROM (SELECT CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND(AVG(rating), 2) AS avg_rating, COUNT(*) AS cnt FROM suppliers GROUP BY CASE WHEN rating >= 3.7 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END) AS t WHERE avg_rating > 46 ORDER BY rating_bucket DESC, cnt;

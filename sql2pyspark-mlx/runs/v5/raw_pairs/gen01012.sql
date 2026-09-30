@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM shipments WHERE delivered_date BETWEEN '2023-10-01' AND '2025-03-01'), shipments_stats AS (SELECT carrier, status, COUNT(DISTINCT cost) AS unique_carriers, COUNT(*) AS total_count FROM src GROUP BY carrier, status) SELECT carrier, status, unique_carriers FROM shipments_stats

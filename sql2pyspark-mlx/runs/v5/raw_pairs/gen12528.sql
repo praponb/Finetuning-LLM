@@ -1,1 +1,0 @@
-SELECT c.id, c.age, t.device_list, t.latest_started_at FROM customers c LEFT JOIN (SELECT customer_id, SORT_ARRAY(COLLECT_SET(device)) AS device_list, MAX(started_at) AS latest_started_at FROM sessions WHERE browser IN ('Firefox', 'Edge', 'Safari') GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY latest_started_at

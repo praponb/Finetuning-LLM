@@ -1,1 +1,0 @@
-select id, store_id, sale_date, product_id, last_value(product_id) over (partition by store_id order by sale_date desc, id rows between unbounded preceding and unbounded following) last_product_id, row_number() over (partition by store_id order by sale_date, id) row_num from store_sales where store_id in (1, 4);

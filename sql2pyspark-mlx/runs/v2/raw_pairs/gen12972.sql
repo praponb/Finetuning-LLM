@@ -1,1 +1,0 @@
-WITH top_subscriptions AS (SELECT id, customer_id, start_date, plan, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date, id) AS pos FROM subscriptions) SELECT id, customer_id, start_date, plan FROM top_subscriptions WHERE pos <= 5;

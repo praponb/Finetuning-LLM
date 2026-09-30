@@ -1,1 +1,0 @@
-with base as (select *, date_format(end_date, 'yyyy-MM-dd') as end_date_label, lower(status) as status_lower from subscriptions where monthly_fee > 180) select * from base qualify row_number() over (partition by plan order by end_date desc nulls last, id) = 1

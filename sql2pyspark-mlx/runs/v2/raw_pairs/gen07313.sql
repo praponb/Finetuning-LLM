@@ -1,1 +1,0 @@
-select status, count(case when status = 'RETURNED' then 1 end) as returned_count, sum(case when channel = 'partner' then 1 else 0 end) as partner_count, sum(discount) as total_discount from orders where amount < 430 group by status order by partner_count, 4, status limit 5;

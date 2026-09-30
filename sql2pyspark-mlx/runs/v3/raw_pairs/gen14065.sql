@@ -1,1 +1,0 @@
-SELECT p.id, p.supplier_id, p.category, t.total_units, t.units_range FROM products p INNER JOIN (SELECT product_id, SUM(units) AS total_units, MAX(units) - MIN(units) AS units_range FROM store_sales WHERE revenue >= 1300 GROUP BY product_id) t ON p.id = t.product_id ORDER BY category ASC

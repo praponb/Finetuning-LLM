@@ -1,1 +1,0 @@
-WITH TopStoreSales AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY revenue DESC, id) AS rn FROM store_sales WHERE store_id IN (1, 2, 5, 6)) SELECT id, product_id, revenue, sale_date FROM TopStoreSales WHERE rn = 1;

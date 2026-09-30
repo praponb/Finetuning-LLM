@@ -1,1 +1,0 @@
-SELECT event_type, SUM(duration_sec) AS total_duration_sec, COUNT(CASE WHEN event_type = 'click' THEN 1 END) AS click_count FROM web_events WHERE page IN ('/cart', '/home', '/product') AND page != '/search' GROUP BY event_type HAVING click_count >= 4 ORDER BY 1;

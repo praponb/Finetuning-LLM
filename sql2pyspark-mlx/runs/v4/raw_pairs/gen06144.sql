@@ -1,1 +1,0 @@
-SELECT order_items.quantity, orders.shipping_fee, orders.discount FROM order_items INNER JOIN orders ON orders.id = order_items.order_id WHERE orders.amount BETWEEN 730 AND 1150 ORDER BY orders.discount DESC

@@ -1,1 +1,0 @@
-SELECT o.id, o.store_id, o.order_date, c.credit_limit, c.signup_date, c.email FROM orders o JOIN customers c ON c.id = o.customer_id WHERE o.channel = 'mobile' AND o.shipping_fee BETWEEN 21 AND 32 ORDER BY store_id DESC, o.order_date DESC;

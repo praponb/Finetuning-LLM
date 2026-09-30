@@ -1,1 +1,0 @@
-SELECT ss.store_id, ss.units, ss.product_id, p.cost, CAST(p.cost AS INT) AS cost_int FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id WHERE ss.revenue > 2800 ORDER BY product_id;

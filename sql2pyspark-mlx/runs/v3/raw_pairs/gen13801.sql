@@ -1,1 +1,0 @@
-SELECT id, customer_id, end_date, plan FROM (SELECT id, customer_id, end_date, plan, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY end_date, id) AS rn FROM subscriptions) AS ranked WHERE rn <= 3 ORDER BY plan;

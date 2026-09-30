@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, order_id, method, amount, paid_at, CAST(amount AS INT) AS amount_int FROM payments WHERE HOUR(paid_at) BETWEEN 7 AND 11 AND paid_at >= TO_DATE('2023-07-27')) SELECT * FROM (SELECT order_id, method, amount_int FROM filtered) src PIVOT (SUM(amount_int) FOR method IN ('paypal' AS paypal, 'cash' AS cash, 'bank_transfer' AS bank_transfer))

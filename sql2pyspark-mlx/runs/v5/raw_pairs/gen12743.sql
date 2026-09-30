@@ -1,1 +1,0 @@
-select sessions.browser, customers.signup_date, customers.credit_limit, customers.age from sessions join customers on customers.id = sessions.customer_id where sessions.device in ('desktop', 'mobile')

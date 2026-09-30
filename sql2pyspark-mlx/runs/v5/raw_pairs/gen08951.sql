@@ -1,1 +1,0 @@
-WITH latest AS (SELECT id, store_id, units, revenue FROM (SELECT *, RANK() OVER (PARTITION BY product_id ORDER BY units ASC) AS row_num FROM store_sales) ranked WHERE row_num = 1) SELECT store_id, APPROX_PERCENTILE(revenue, 0.5) AS revenue_p50, MIN(units) AS min_units, COUNT(DISTINCT store_id) AS distinct_store_ids FROM latest GROUP BY store_id ORDER BY min_units ASC NULLS FIRST

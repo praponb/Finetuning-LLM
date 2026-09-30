@@ -1,1 +1,0 @@
-with order_totals as (select order_id, min(cost) as min_cost, sum(case when status = 'RETURNED' then cost else 0 end) as returned_cost from shipments group by order_id) select o.id, o.channel, ot.min_cost, ot.returned_cost from orders o left join order_totals ot on o.id = ot.order_id where ot.min_cost >= 52 order by o.channel;

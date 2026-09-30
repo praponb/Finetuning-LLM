@@ -1,1 +1,0 @@
-select id, job_title, level, salary, dept_id, manager_id, round(salary / sum(salary) over (partition by job_title, level), 3) as salary_share, sum(salary) over (partition by dept_id, manager_id) as dept_id_sum_salary from employees where not is_remote;

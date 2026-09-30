@@ -1,1 +1,0 @@
-SELECT opened_month, pct_london FROM (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, ROUND((100 * SUM(CASE WHEN city = 'London' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_london FROM stores GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) AS t WHERE pct_london < 47 ORDER BY 2 DESC, opened_month ASC LIMIT 1;

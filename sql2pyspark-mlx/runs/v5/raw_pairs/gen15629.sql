@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, o.discount, c.segment, c.signup_date FROM order_items oi FULL OUTER JOIN orders o ON oi.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id WHERE c.country = 'DE'

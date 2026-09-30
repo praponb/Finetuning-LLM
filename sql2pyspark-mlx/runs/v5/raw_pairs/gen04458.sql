@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('YEAR', order_date) AS year_start, SORT_ARRAY(COLLECT_SET(status)) AS status_list, STDDEV_SAMP(discount) AS discount_stddev, CORR(discount, amount) AS corr_discount_amount, MAX(amount) AS max_amount FROM orders GROUP BY year_start ORDER BY corr_discount_amount DESC NULLS FIRST;

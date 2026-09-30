@@ -1,1 +1,0 @@
-SELECT *, PERCENT_RANK() OVER (PARTITION BY channel ORDER BY discount_pct ASC) AS discount_pct_percent_rank, NTILE(10) OVER (ORDER BY discount_pct DESC, id ASC) AS discount_pct_bucket, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY ends_on DESC, id ASC) AS seq_no, ROUND(discount_pct / SUM(discount_pct) OVER (PARTITION BY promo_code), 4) AS discount_pct_share FROM promotions

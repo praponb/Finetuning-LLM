@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT plan, status, monthly_fee FROM subscriptions) PIVOT (COUNT(monthly_fee) FOR status IN ('EXPIRED', 'ACTIVE', 'PAUSED')) ORDER BY plan

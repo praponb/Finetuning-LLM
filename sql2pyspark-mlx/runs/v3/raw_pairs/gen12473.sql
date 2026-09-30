@@ -1,1 +1,0 @@
-SELECT id, status, shipped_date, delivered_date, LAST_VALUE(delivered_date) OVER (PARTITION BY status ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_delivered_date FROM shipments WHERE order_id IS NOT NULL ORDER BY status;

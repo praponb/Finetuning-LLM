@@ -1,1 +1,0 @@
-SELECT c.id, c.age, c.is_active, t.sg_count FROM customers c LEFT JOIN (SELECT customer_id, SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) AS sg_count FROM sessions GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.sg_count > 29;

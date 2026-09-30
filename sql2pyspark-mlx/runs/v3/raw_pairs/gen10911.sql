@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM customers WHERE segment != 'SMB' AND age > 41 AND credit_limit < 8100), customers_stats AS (SELECT city, COUNT(*) AS row_count, MAX(credit_limit) - MIN(credit_limit) AS credit_limit_range FROM src GROUP BY city) SELECT * FROM customers_stats WHERE row_count < 5 ORDER BY credit_limit_range, city LIMIT 50

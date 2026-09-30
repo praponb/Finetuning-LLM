@@ -1,1 +1,0 @@
-SELECT oi.id, oi.quantity, oi.product_id, o.order_date, o.channel, c.name, c.city FROM order_items oi INNER JOIN orders o ON o.id = oi.order_id INNER JOIN customers c ON o.customer_id = c.id WHERE c.city = 'Berlin' OR c.name LIKE '%Grace%' ORDER BY id DESC;

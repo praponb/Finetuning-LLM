@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, plan, effective_from, EXPLODE_OUTER(discounts) AS tier_value FROM price_tiers) SELECT id, plan, effective_from, CASE WHEN plan RLIKE '^(enterprise|starter)$' THEN 'CORE' ELSE 'PRIORITY' END AS plan_zone FROM exploded ORDER BY id DESC NULLS LAST;

@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, status, amount, RANK() OVER (PARTITION BY status ORDER BY amount DESC) AS row_num FROM payments WHERE method IS NOT NULL) SELECT id, status, amount FROM ranked WHERE row_num <= 3;

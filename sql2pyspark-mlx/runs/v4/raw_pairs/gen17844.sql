@@ -1,1 +1,0 @@
-SELECT transactions.is_flagged, accounts.account_type, customers.email FROM transactions JOIN accounts ON transactions.account_id = accounts.id JOIN customers ON accounts.customer_id = customers.id WHERE transactions.merchant IS NULL AND accounts.opened_date > '2024-12-01'

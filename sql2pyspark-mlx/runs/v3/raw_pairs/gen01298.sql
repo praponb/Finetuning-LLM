@@ -1,1 +1,0 @@
-select rating_bucket, city, avg_rating from (select case when rating >= 4.2 then 'high' when rating >= 1.8 then 'mid' else 'low' end as rating_bucket, city, avg(rating) as avg_rating from suppliers where country = 'TH' group by case when rating >= 4.2 then 'high' when rating >= 1.8 then 'mid' else 'low' end, city) as agg where avg_rating < 3.0;

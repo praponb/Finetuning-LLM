@@ -1,1 +1,0 @@
-SELECT job_title, level_values, max_salary FROM (SELECT job_title, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, MAX(salary) AS max_salary FROM employees GROUP BY job_title) AS x WHERE max_salary > 62000;

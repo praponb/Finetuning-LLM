@@ -1,1 +1,0 @@
-WITH store_sales_by_store AS (SELECT store_id, ROUND(AVG(units), 2) AS avg_units, MAX(sale_date) AS last_sale_date FROM store_sales GROUP BY store_id) SELECT s.id, s.store_name, s.sqft, ssbs.avg_units, ssbs.last_sale_date FROM stores s LEFT JOIN store_sales_by_store ssbs ON s.id = ssbs.store_id;

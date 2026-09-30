@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END) AS page_view_count, MIN(event_time) AS min_event_time FROM web_events GROUP BY session_id) SELECT s.customer_id, s.device, ss.page_view_count, ss.min_event_time FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id ORDER BY customer_id DESC, device DESC;

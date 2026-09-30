@@ -1,1 +1,0 @@
-SELECT *, SUM(budget) OVER w_ordered AS running_budget, NTILE(3) OVER w_grp AS budget_bucket FROM departments WHERE location NOT IN ('Bangkok', 'London', 'Singapore') WINDOW w_ordered AS (ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW), w_grp AS (PARTITION BY dept_name ORDER BY budget, id)

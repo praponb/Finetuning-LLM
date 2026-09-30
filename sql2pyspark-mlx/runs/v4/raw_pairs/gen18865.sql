@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions WHERE monthly_fee BETWEEN 160 AND 240 GROUP BY customer_id) SELECT c.id, c.country, c.age, cs.monthly_fee_count FROM customers c JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY age DESC

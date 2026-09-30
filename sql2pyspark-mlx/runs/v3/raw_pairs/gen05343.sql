@@ -1,1 +1,0 @@
-select case when budget >= 3388000 then 'high' when budget >= 601000 then 'mid' else 'low' end as budget_bucket, sum(case when location = 'New York' then budget else 0 end) as new_york_budget from departments group by 1 order by budget_bucket desc, new_york_budget;

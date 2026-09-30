@@ -1,1 +1,0 @@
-select * from (select account_type, count(distinct balance) as unique_customers, round(stddev(balance), 2) as stddev_balance from accounts where opened_date < '2025-10-06' group by account_type) as t where unique_customers > 4 order by account_type

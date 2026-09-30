@@ -1,1 +1,0 @@
-SELECT CASE WHEN salary >= 137000 THEN 'high' WHEN salary >= 77000 THEN 'mid' ELSE 'low' END AS salary_bucket, COUNT(DISTINCT salary) AS unique_levels FROM employees WHERE dept_id IN (1, 12, 26) AND manager_id IS NOT NULL AND email LIKE '%@yahoo.com' GROUP BY salary_bucket

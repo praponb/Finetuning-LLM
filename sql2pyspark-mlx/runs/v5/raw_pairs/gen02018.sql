@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, i.product_id, i.quantity, p.supplier_id, p.category, p.brand, SUBSTRING(p.category, 1, 3) AS category_prefix FROM inventory i INNER JOIN products p ON i.product_id = p.id WHERE p.stock_qty < 132 AND p.brand IN ('Stark', 'Acme');

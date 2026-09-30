@@ -1,1 +1,0 @@
-select *, row_number() over (partition by account_type order by opened_date desc, id) as row_seq, ntile(3) over (partition by status order by balance, id) as balance_bucket, ntile(4) over (order by balance desc, id) as balance_bucket_2 from accounts;

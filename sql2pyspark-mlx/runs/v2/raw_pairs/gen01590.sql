@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT category, supplier_id, SUM(stock_qty) total_stock_qty, SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END) umbrella_count FROM products GROUP BY category, supplier_id) sub WHERE total_stock_qty < 1600 ORDER BY umbrella_count DESC;

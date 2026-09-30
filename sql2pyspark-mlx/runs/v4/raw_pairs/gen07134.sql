@@ -1,1 +1,0 @@
-SELECT id, plan, monthly_fee, status, end_date, DENSE_RANK() OVER (PARTITION BY plan ORDER BY monthly_fee) AS monthly_fee_dense_rank, LEAD(monthly_fee, 1) OVER (PARTITION BY status ORDER BY end_date, id) AS next_monthly_fee FROM subscriptions

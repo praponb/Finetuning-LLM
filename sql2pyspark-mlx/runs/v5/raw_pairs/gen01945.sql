@@ -1,1 +1,0 @@
-SELECT YEAR(opened_date) AS opened_year, city, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, AVG(sqft) AS avg_sqft FROM stores WHERE region = 'North' GROUP BY YEAR(opened_date), city, DATE_FORMAT(opened_date, 'yyyy-MM') ORDER BY opened_month;

@@ -1,1 +1,0 @@
-SELECT QUARTER(order_date) AS order_quarter, YEAR(order_date) AS order_year, COUNT(shipping_fee) AS shipping_fee_count, COUNT(DISTINCT discount) AS unique_customers, AVG(discount) AS avg_discount FROM orders WHERE discount BETWEEN 0.19 AND 0.32 GROUP BY QUARTER(order_date), YEAR(order_date) ORDER BY order_quarter DESC

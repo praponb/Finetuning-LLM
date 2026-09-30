@@ -1,1 +1,0 @@
-select status, concat_ws(', ', sort_array(collect_set(carrier))) carrier_values, count(distinct cost) unique_orders from shipments where status in ('IN_TRANSIT', 'DELIVERED', 'LOST') group by 1 order by carrier_values, unique_orders;

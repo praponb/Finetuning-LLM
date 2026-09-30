@@ -1,1 +1,0 @@
-select store_id, min_shipping_fee from (select store_id, min(shipping_fee) as min_shipping_fee from orders where amount between 1100 and 1320 group by store_id) as sub where min_shipping_fee < 29 order by store_id desc

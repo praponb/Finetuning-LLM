@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN country = 'DE' THEN 1 ELSE 0 END AS is_de, CASE WHEN rating >= 3.8 THEN 'High' WHEN rating >= 2.0 THEN 'Medium' ELSE 'Low' END AS rating_tier FROM suppliers WHERE city IS NOT NULL AND (UPPER(supplier_name) LIKE '%OKY%' OR supplier_name LIKE 'Lio%') ORDER BY supplier_name ASC, id ASC LIMIT 20

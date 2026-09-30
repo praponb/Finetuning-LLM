@@ -1,1 +1,0 @@
-select page, event_type, page_view_count from (select page, event_type, sum(case when event_type = 'page_view' then 1 else 0 end) as page_view_count from web_events where page in ('/product', '/search') group by page, event_type) as x where page_view_count < 62;

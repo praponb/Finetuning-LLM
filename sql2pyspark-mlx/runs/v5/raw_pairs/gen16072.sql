@@ -1,1 +1,0 @@
-select date_format(last_restock, 'yyyy-MM') as last_restock_month, product_id, round(stddev(quantity), 2) as stddev_quantity, max(quantity) as max_quantity from inventory group by date_format(last_restock, 'yyyy-MM'), product_id order by last_restock_month desc

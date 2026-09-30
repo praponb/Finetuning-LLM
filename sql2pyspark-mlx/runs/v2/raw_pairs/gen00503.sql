@@ -1,1 +1,0 @@
-with product_stats as (select product_id, max(quantity) as max_quantity, count(*) as order_item_count from order_items where quantity >= 8 group by product_id) select p.id, p.product_name, ps.max_quantity, ps.order_item_count from products p inner join product_stats ps on p.id = ps.product_id where ps.max_quantity >= 4.3 order by max_quantity, id limit 5;

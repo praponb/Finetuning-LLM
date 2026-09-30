@@ -1,1 +1,0 @@
-with valid as (select *, trim(status) as clean_status from accounts where account_type in ('LOAN', 'CHECKING')) select * from (select customer_id, status, balance from valid) src pivot (max(balance) as amount, count(1) as cnt for status in ('CLOSED', 'OPEN'));

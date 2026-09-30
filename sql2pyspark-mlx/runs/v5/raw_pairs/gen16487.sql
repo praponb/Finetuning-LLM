@@ -1,1 +1,0 @@
-WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY delivered_date, id) AS rank_in_group FROM shipments QUALIFY rank_in_group = 1) SELECT id, order_id, carrier, shipped_date, delivered_date, cost FROM latest ORDER BY order_id NULLS LAST, carrier DESC;

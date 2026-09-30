@@ -1,1 +1,0 @@
-SELECT CASE WHEN plan IN ('standard', 'enterprise') THEN 'core' ELSE 'other' END AS plan_group, MAX(start_date) AS latest_start_date, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM subscriptions GROUP BY CASE WHEN plan IN ('standard', 'enterprise') THEN 'core' ELSE 'other' END ORDER BY latest_start_date DESC;

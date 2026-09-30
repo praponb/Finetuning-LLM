@@ -1,1 +1,0 @@
-SELECT id, status, paid_at, method, ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at, id) AS paid_at_row, COUNT(*) OVER (PARTITION BY status, method) AS status_count FROM payments WHERE order_id IN (1, 5, 12)

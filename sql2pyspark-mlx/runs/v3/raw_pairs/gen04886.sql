@@ -1,1 +1,0 @@
-SELECT id, browser, TRIM(device) AS clean_device, DATE_FORMAT(started_at, 'yyyy-MM-dd') AS started_at_label FROM sessions WHERE (device NOT IN ('mobile', 'desktop', 'tablet') AND browser NOT IN ('Chrome', 'Safari', 'Firefox')) OR browser NOT IN ('Firefox', 'Edge', 'Safari') ORDER BY id;

@@ -1,1 +1,0 @@
-WITH filtered_subscriptions AS (SELECT * FROM subscriptions WHERE (status = 'ACTIVE' AND monthly_fee >= 80) OR start_date <= '2024-08-14'), summary AS (SELECT customer_id, COUNT(monthly_fee) AS monthly_fee_count, AVG(monthly_fee) AS avg_monthly_fee FROM filtered_subscriptions GROUP BY customer_id) SELECT customer_id, monthly_fee_count FROM summary ORDER BY customer_id DESC

@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', customers.signup_date) AS signup_month, COUNT(*) AS cnt, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(subscriptions.status))) AS status_values FROM subscriptions LEFT JOIN customers ON subscriptions.customer_id = customers.id GROUP BY DATE_TRUNC('MONTH', customers.signup_date) ORDER BY signup_month;

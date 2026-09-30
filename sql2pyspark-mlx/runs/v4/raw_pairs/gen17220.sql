@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('QUARTER', hire_date) AS quarter_start, ROUND(SUM(salary) / NULLIF(COUNT(CASE WHEN job_title = 'Intern' THEN 1 END), 0), 2) AS salary_per_intern, SIZE(COLLECT_SET(job_title)) AS num_job_titles, SIZE(COLLECT_SET(level)) AS num_levels FROM employees GROUP BY DATE_TRUNC('QUARTER', hire_date) ORDER BY num_levels NULLS FIRST;

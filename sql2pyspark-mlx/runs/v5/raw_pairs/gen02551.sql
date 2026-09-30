@@ -1,1 +1,0 @@
-SELECT o.status, SUM(s.cost) total_cost, SUM(CASE WHEN s.carrier = 'Flash' THEN 1 ELSE 0 END) flash_count FROM shipments s INNER JOIN orders o ON s.order_id = o.id LEFT OUTER JOIN stores st ON o.store_id = st.id WHERE s.status = 'RETURNED' GROUP BY o.status

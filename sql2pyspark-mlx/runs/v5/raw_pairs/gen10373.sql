@@ -1,1 +1,0 @@
-SELECT QUARTER(ss.sale_date) AS sale_quarter, MIN(i.last_restock) AS first_last_restock, COUNT(i.quantity) AS quantity_count FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.quantity <= 126 GROUP BY QUARTER(ss.sale_date) ORDER BY first_last_restock DESC, sale_quarter DESC

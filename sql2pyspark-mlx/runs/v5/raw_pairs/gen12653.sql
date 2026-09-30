@@ -1,1 +1,0 @@
-SELECT e.job_title AS employee_job_title, m.manager_id AS manager_manager_id, m.job_title AS manager_job_title, m.is_remote AS manager_is_remote FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE e.dept_id IN (6, 20, 31);

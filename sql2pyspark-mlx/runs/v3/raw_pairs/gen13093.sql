@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', start_date) AS start_month, customer_id, COUNT(monthly_fee) AS monthly_fee_count, AVG(monthly_fee) AS avg_monthly_fee, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM subscriptions WHERE start_date < '2024-04-29' GROUP BY DATE_TRUNC('MONTH', start_date), customer_id HAVING AVG(monthly_fee) < 200

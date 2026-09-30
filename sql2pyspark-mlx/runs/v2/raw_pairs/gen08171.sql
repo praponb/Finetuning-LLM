@@ -1,1 +1,0 @@
-SELECT e.salary AS employee_salary, e.hire_date AS employee_hire_date, e.dept_id AS employee_dept_id, m.hire_date AS manager_hire_date, m.job_title AS manager_job_title, m.dept_id AS manager_dept_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.salary <= 107000;

@@ -1,1 +1,0 @@
-SELECT account_type, status, stddev_balance FROM (SELECT account_type, status, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts WHERE account_type != 'LOAN' GROUP BY account_type, status) AS agg WHERE stddev_balance < 25 ORDER BY 2

@@ -1,1 +1,0 @@
-SELECT page, event_type, TO_DATE(event_time) AS event_day, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec FROM web_events WHERE session_id = 32 GROUP BY page, event_type, TO_DATE(event_time) ORDER BY event_day DESC, page ASC, event_type ASC LIMIT 10

@@ -1,1 +1,0 @@
-with ranked as (select * from (select *, row_number() over (partition by device_code order by humidity, id) as latest_rank from device_readings) t where latest_rank = 1) select id, device_code, temp_c, status_bits, firmware, latest_rank from ranked order by latest_rank nulls last;

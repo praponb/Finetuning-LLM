@@ -1,1 +1,0 @@
-select s.browser, max(we.duration_sec) as max_duration_sec, round(avg(we.duration_sec), 2) as avg_duration_sec from web_events we left outer join sessions s on s.id = we.session_id left outer join customers c on c.id = s.customer_id group by s.browser order by avg_duration_sec, max_duration_sec desc;

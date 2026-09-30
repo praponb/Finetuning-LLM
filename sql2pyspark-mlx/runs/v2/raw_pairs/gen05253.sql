@@ -1,1 +1,0 @@
-WITH filtered_products AS (SELECT *, ARRAY_JOIN(tags, ', ') AS tags_text FROM products WHERE stock_qty = 151 AND supplier_id = 38), agg AS (SELECT category, MAX(launch_date) AS latest_launch_date FROM filtered_products GROUP BY category) SELECT category, latest_launch_date FROM agg

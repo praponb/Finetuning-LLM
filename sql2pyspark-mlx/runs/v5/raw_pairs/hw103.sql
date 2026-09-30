@@ -1,1 +1,0 @@
-SELECT * FROM orders ORDER BY amount DESC LIMIT 10;

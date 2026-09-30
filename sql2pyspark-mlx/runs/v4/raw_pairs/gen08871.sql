@@ -1,1 +1,0 @@
-SELECT e.dept_id AS employee_dept_id, e.full_name AS employee_full_name, m.manager_id AS manager_manager_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE e.salary BETWEEN 64000 AND 98000 AND LOWER(TRIM(e.email)) = 'jack@startup.io' ORDER BY employee_dept_id DESC, m.manager_id

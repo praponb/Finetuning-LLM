@@ -1,1 +1,0 @@
-select a.id, a.customer_id, a.account_type from accounts a where a.account_type in ('CHECKING', 'SAVINGS') and a.customer_id in (select id from customers where signup_date >= '2024-12-11') order by a.id asc;

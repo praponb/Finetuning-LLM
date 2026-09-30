@@ -1,1 +1,0 @@
-SELECT location, APPROX_PERCENTILE(budget, 0.95) AS budget_p95, COUNT_IF(dept_name = 'Finance') AS finance_events, STDDEV_SAMP(budget) AS budget_stddev FROM departments GROUP BY location ORDER BY budget_p95;

@@ -1,1 +1,0 @@
-WITH RecentAccounts AS (SELECT * FROM accounts WHERE account_type != 'CHECKING' AND YEAR(opened_date) = 2024), accounts_stats AS (SELECT status, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM RecentAccounts GROUP BY status) SELECT * FROM accounts_stats ORDER BY status;

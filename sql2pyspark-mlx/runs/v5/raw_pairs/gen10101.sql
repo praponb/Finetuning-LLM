@@ -1,1 +1,0 @@
-SELECT id, customer_id, balance, opened_date, status, NTILE(10) OVER (PARTITION BY status, account_type ORDER BY balance, id) AS balance_bucket, ROW_NUMBER() OVER (ORDER BY balance, id) AS row_seq FROM accounts WHERE balance <= 25000

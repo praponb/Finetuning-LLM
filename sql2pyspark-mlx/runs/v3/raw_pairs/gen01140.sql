@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, supplier_id, stock_qty, category, DENSE_RANK() OVER (PARTITION BY supplier_id ORDER BY stock_qty DESC) rn FROM products WHERE category != 'Grocery') SELECT * FROM numbered WHERE rn <= 2;

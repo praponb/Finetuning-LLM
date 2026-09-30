@@ -1,1 +1,0 @@
-select brand, quarter(launch_date) as launch_quarter, sum(case when brand = 'Globex' then cost else 0 end) as globex_cost, count(cost) as cost_count from products group by brand, launch_quarter order by launch_quarter desc

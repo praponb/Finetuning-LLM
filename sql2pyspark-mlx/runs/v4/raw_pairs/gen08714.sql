@@ -1,1 +1,0 @@
-with department_stats as (select dept_id, round((100 * sum(case when level = 'L1' then 1 else 0 end)) / count(*), 1) as pct_l1 from employees group by dept_id) select d.id, d.budget, d.location, ds.pct_l1 from departments d inner join department_stats ds on d.id = ds.dept_id;

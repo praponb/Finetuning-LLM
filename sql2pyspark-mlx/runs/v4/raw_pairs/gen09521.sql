@@ -1,1 +1,0 @@
-select date_trunc('year', launch_date) as year_start, case when stock_qty >= 350 then 'LARGE' else 'SMALL' end as stock_qty_tier, corr(stock_qty, price) as corr_stock_qty_price, stddev_samp(price) as price_stddev, grouping_id() as gid from products group by rollup (date_trunc('year', launch_date), case when stock_qty >= 350 then 'LARGE' else 'SMALL' end);

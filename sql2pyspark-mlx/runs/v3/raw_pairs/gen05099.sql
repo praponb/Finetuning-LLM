@@ -1,1 +1,0 @@
-SELECT oi.quantity, oi.order_id, p.launch_date, p.category, p.brand, ARRAY_CONTAINS(p.tags, 'premium') AS is_premium FROM order_items oi RIGHT JOIN products p ON oi.product_id = p.id WHERE oi.unit_price <= 280;

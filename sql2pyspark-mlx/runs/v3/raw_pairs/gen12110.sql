@@ -1,1 +1,0 @@
-SELECT orders.id, orders.channel, orders.order_date, orders.shipping_fee FROM orders WHERE orders.discount >= 0.27 AND orders.store_id IN (SELECT id FROM stores WHERE sqft BETWEEN 4519 AND 10791) ORDER BY orders.order_date, shipping_fee, id LIMIT 10;

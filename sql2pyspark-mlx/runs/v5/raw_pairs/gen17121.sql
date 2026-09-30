@@ -1,1 +1,0 @@
-SELECT country, avg_rating, city_list FROM (SELECT country, ROUND(AVG(rating), 2) AS avg_rating, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM suppliers GROUP BY country) AS s WHERE avg_rating >= 30 ORDER BY country;

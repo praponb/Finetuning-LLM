@@ -1,1 +1,0 @@
-SELECT city, SUM(age) AS total_age, COUNT(CASE WHEN city = 'Singapore' THEN 1 END) AS singapore_count FROM customers WHERE signup_date < '2023-08-11' AND email LIKE '%@outlook.com' GROUP BY city HAVING SUM(age) > 180;

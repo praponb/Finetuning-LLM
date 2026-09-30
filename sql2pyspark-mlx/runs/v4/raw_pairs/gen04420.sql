@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM store_sales WHERE revenue > 1300), agg AS (SELECT store_id, COUNT(units) AS units_count, COUNT(DISTINCT revenue) AS unique_products FROM base GROUP BY store_id) SELECT * FROM agg WHERE unique_products < 8 ORDER BY unique_products ASC;

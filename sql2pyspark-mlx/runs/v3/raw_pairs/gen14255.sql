@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY price DESC, id) AS row_num FROM products WHERE price < 1000) SELECT * FROM ranked WHERE row_num <= 1 ORDER BY category DESC, stock_qty DESC;

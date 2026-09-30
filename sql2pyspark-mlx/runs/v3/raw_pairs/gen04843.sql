@@ -1,1 +1,0 @@
-select s.id, s.region, count(o.id) as order_count, sort_array(collect_set(o.channel)) as channel_list, sum(case when o.channel = 'store' then o.amount else 0 end) as store_amount from stores s left outer join orders o on o.store_id = s.id group by s.id, s.region order by store_amount desc;

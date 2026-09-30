@@ -1,1 +1,0 @@
-select s.country, s.browser, round(stddev(we.duration_sec), 2) as stddev_duration_sec from web_events we left join sessions s on we.session_id = s.id full outer join customers c on s.customer_id = c.id where s.device = 'desktop' group by s.country, s.browser

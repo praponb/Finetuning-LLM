@@ -1,1 +1,0 @@
-with order_totals as (select order_id, sum(case when status = 'LOST' then cost else 0 end) as lost_cost from shipments group by order_id) select o.discount, ot.lost_cost from orders o left join order_totals ot on o.id = ot.order_id;

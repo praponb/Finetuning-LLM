@@ -1,1 +1,0 @@
-SELECT t.id, t.txn_time, a.account_type, a.opened_date, a.status, CAST(t.is_flagged AS INT) AS is_flagged_flag FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id WHERE t.is_flagged = FALSE AND a.status IN ('FROZEN', 'OPEN')

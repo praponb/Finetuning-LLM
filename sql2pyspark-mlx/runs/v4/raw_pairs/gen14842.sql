@@ -1,1 +1,0 @@
-SELECT p.id, p.amount, p.status, o.discount, c.city, c.email FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE p.method IN ('card', 'promptpay', 'bank_transfer');

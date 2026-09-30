@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, city, credit_limit, name, ROW_NUMBER() OVER (PARTITION BY city ORDER BY credit_limit DESC, id) pos FROM customers WHERE city = 'New York') ranked WHERE pos <= 3 ORDER BY pos DESC

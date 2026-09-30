@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, o.shipping_fee, INITCAP(TRIM(s.status)) status_title FROM shipments s JOIN orders o ON o.id = s.order_id WHERE NOT (o.store_id = 10 AND o.order_date BETWEEN '2024-09-01' AND '2025-05-23') ORDER BY id DESC LIMIT 20

@@ -1,1 +1,0 @@
-SELECT id, carrier, delivered_date, shipped_date, status, cost, FIRST_VALUE(shipped_date) OVER (PARTITION BY carrier ORDER BY delivered_date, id) first_shipped_date, SUM(cost) OVER (PARTITION BY status) status_sum_cost FROM shipments WHERE shipped_date > '2025-10-01';

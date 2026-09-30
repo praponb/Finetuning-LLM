@@ -1,1 +1,0 @@
-select e.is_remote as employee_is_remote, e.dept_id as employee_dept_id, m.hire_date as manager_hire_date from employees as e left join employees as m on e.manager_id = m.id where e.level = 'L1' and m.job_title not in ('Director', 'Manager') order by manager_hire_date;

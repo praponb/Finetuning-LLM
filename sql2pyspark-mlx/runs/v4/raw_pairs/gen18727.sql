@@ -1,1 +1,0 @@
-SELECT *, NTILE(5) OVER w_running AS unit_price_bucket, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS seq_no, ROW_NUMBER() OVER (ORDER BY unit_price DESC, id) AS event_seq FROM order_items WINDOW w_running AS (PARTITION BY product_id ORDER BY unit_price DESC, id)

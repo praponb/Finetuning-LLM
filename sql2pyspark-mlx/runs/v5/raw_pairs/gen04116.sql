@@ -1,1 +1,0 @@
-SELECT CASE WHEN merchant IN ('Amazon', '7-Eleven') THEN 'core' ELSE 'other' END AS merchant_group, account_id, MIN(amount) AS min_amount, COUNT(amount) AS amount_count FROM transactions WHERE NOT is_flagged GROUP BY CUBE(CASE WHEN merchant IN ('Amazon', '7-Eleven') THEN 'core' ELSE 'other' END, account_id) ORDER BY account_id ASC;

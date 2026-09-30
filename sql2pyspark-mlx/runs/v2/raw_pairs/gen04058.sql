@@ -1,1 +1,0 @@
-SELECT a.account_type, t.fee_count FROM accounts a JOIN (SELECT account_id, COUNT(CASE WHEN txn_type = 'FEE' THEN 1 END) AS fee_count FROM transactions GROUP BY account_id) t ON a.id = t.account_id ORDER BY account_type, fee_count;

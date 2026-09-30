@@ -1,1 +1,0 @@
-SELECT ss.store_id, COUNT(*) AS inventory_count FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.sale_date >= '2025-09-17' GROUP BY ss.store_id ORDER BY inventory_count

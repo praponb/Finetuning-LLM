@@ -1,1 +1,0 @@
-WITH TopCustomers AS (SELECT id, country, signup_date, segment, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date, id) AS pos FROM customers WHERE is_active) SELECT * FROM TopCustomers WHERE pos <= 2;

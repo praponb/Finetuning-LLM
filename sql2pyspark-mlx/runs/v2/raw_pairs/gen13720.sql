@@ -1,1 +1,0 @@
-SELECT id, txn_type, txn_time, account_id, amount, FIRST_VALUE(account_id) OVER (PARTITION BY txn_type ORDER BY txn_time, id) AS first_account_id, PERCENT_RANK() OVER (PARTITION BY txn_type ORDER BY amount) AS amount_pct_rank FROM transactions WHERE amount BETWEEN 1100 AND 3300 ORDER BY account_id DESC;

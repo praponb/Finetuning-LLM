@@ -1,1 +1,0 @@
-SELECT CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values, ROUND((100 * SUM(CASE WHEN brand = 'Initech' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_initech FROM products WHERE supplier_id = 37 ORDER BY pct_initech DESC, brand_values DESC

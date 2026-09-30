@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, CASE WHEN location IN ('Singapore', 'New York') THEN 'Group A' ELSE 'Other' END AS location_group FROM departments WHERE location != 'New York') SELECT s.*, x.hire_date, x.salary FROM cleaned s LEFT JOIN LATERAL (SELECT c.hire_date, c.salary FROM employees c WHERE c.dept_id = s.id ORDER BY c.hire_date DESC, c.id DESC LIMIT 1) x ON TRUE;

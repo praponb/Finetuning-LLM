@@ -1,1 +1,0 @@
-select country, case when rating >= 3.4 then 'high' when rating >= 2.2 then 'mid' else 'low' end as rating_bucket, round((100 * sum(case when city = 'Chiang Mai' then 1 else 0 end)) / count(*), 1) as pct_chiang_mai from suppliers group by country, rating_bucket order by rating_bucket;

@@ -1,1 +1,0 @@
-SELECT plan, SUM(monthly_fee) AS total_monthly_fee, COUNT(*) AS cnt, SUM(SUM(monthly_fee)) OVER (ORDER BY plan) AS cumulative_monthly_fee FROM subscriptions GROUP BY plan ORDER BY total_monthly_fee DESC, 3 DESC, plan LIMIT 50;

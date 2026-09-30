@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM transactions WHERE merchant = '7-Eleven' AND TO_DATE(txn_time) >= '2023-09-11'), summary AS (SELECT is_flagged, COUNT(amount) amount_count, MIN(amount) min_amount FROM base GROUP BY is_flagged) SELECT is_flagged, amount_count, min_amount FROM summary;

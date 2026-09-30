@@ -1,1 +1,0 @@
-SELECT QUARTER(c.signup_date) AS signup_quarter, c.segment, COUNT(DISTINCT s.country) AS unique_countrys, SORT_ARRAY(COLLECT_SET(s.country)) AS country_list FROM sessions s JOIN customers c ON c.id = s.customer_id WHERE s.device = 'tablet' GROUP BY QUARTER(c.signup_date), c.segment ORDER BY unique_countrys DESC, signup_quarter DESC, segment LIMIT 50;

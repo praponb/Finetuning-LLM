@@ -1,1 +1,0 @@
-with ranked_employees as (select id, level, hire_date, dense_rank() over (partition by level order by hire_date desc) pos from employees) select id, level, hire_date from ranked_employees where pos <= 3;

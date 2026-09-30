@@ -1,1 +1,0 @@
-WITH CustomerStats AS (SELECT customer_id, COUNT(DISTINCT device) AS unique_devices FROM sessions WHERE device = 'tablet' GROUP BY customer_id) SELECT customers.id, customers.is_active, customers.age, CustomerStats.unique_devices FROM customers LEFT JOIN CustomerStats ON customers.id = CustomerStats.customer_id ORDER BY id;

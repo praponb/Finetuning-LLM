@@ -1,1 +1,0 @@
-SELECT e.job_title AS employee_job_title, e.is_remote AS employee_is_remote, m.dept_id AS manager_dept_id, m.hire_date AS manager_hire_date, m.level AS manager_level FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE m.job_title IN ('Manager', 'Intern', 'Engineer')

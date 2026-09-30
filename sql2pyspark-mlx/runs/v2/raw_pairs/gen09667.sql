@@ -1,1 +1,0 @@
-with numbered as (select id, product_id, revenue, store_id, dense_rank() over (partition by product_id order by revenue desc) as rn from store_sales) select id, product_id, revenue, store_id from numbered where rn <= 5

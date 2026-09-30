@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(*) AS supplier_count, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM suppliers WHERE country IN ('JP', 'SG', 'DE') AND (rating < 1.8 OR rating IS NOT NULL) GROUP BY 1 HAVING SUM(rating) < 16;

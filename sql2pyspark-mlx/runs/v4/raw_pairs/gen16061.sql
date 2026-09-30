@@ -1,1 +1,0 @@
-SELECT id, host, level, payload_json, CAST((status_code & 2) != 0 AS INT) AS flag_bit2, GET_JSON_OBJECT(payload_json, '$.user.id') AS user_id, GET_JSON_OBJECT(payload_json, '$.duration') AS duration_text FROM app_logs WHERE level = 'WARN'

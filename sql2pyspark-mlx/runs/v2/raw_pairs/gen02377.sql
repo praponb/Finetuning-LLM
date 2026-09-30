@@ -1,1 +1,0 @@
-WITH filtered_employees AS (SELECT * FROM employees WHERE LOWER(email) LIKE '%vy@%' AND dept_id = 8 AND full_name IS NOT NULL), summary AS (SELECT QUARTER(hire_date) AS hire_quarter, SORT_ARRAY(COLLECT_SET(level)) AS level_list FROM filtered_employees GROUP BY QUARTER(hire_date)) SELECT hire_quarter, level_list FROM summary ORDER BY hire_quarter DESC;

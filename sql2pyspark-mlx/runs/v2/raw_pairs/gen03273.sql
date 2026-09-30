@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, SORT_ARRAY(COLLECT_SET(page)) AS page_list, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY session_id) SELECT s.customer_id, s.device, ss.page_list, ss.avg_duration_sec FROM sessions s INNER JOIN session_summary ss ON s.id = ss.session_id;

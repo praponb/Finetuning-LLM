@@ -1,1 +1,0 @@
-WITH shipments_by_order AS (SELECT order_id, SUM(cost) AS total_cost FROM shipments GROUP BY order_id) SELECT o.shipping_fee, sbo.total_cost FROM orders o LEFT JOIN shipments_by_order sbo ON o.id = sbo.order_id WHERE sbo.total_cost >= 310 ORDER BY o.shipping_fee, sbo.total_cost DESC;

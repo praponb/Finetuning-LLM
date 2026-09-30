@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM stores WHERE region <> 'South'), stores_stats AS (SELECT MONTH(opened_date) AS opened_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values FROM src GROUP BY MONTH(opened_date)) SELECT * FROM stores_stats ORDER BY region_values ASC

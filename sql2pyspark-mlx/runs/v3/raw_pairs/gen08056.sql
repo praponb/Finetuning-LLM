@@ -1,1 +1,0 @@
-SELECT t.id, t.txn_time, a.status, c.age, c.is_active FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE t.merchant IS NULL AND t.txn_type = 'REFUND';

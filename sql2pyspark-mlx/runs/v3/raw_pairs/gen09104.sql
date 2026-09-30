@@ -1,1 +1,0 @@
-with account_summary as (select account_id, concat_ws(', ', sort_array(collect_set(txn_type))) as txn_type_values from transactions where txn_type not in ('FEE', 'REFUND') group by account_id) select a.customer_id, a.opened_date, as.txn_type_values from accounts a left join account_summary as on a.id = as.account_id;

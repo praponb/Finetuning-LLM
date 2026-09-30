@@ -1,1 +1,0 @@
-SELECT id, segment, age, country, signup_date, credit_limit, RANK() OVER (PARTITION BY segment ORDER BY age DESC) AS rnk, SUM(credit_limit) OVER (PARTITION BY country ORDER BY signup_date, id) AS running_credit_limit FROM customers ORDER BY credit_limit DESC, id

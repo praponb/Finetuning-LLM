@@ -1,1 +1,0 @@
-SELECT is_remote, stddev_salary, max_salary FROM (SELECT is_remote, ROUND(STDDEV(salary), 2) AS stddev_salary, MAX(salary) AS max_salary FROM employees WHERE NOT is_remote GROUP BY is_remote) AS t WHERE stddev_salary < 42 ORDER BY stddev_salary, 3;

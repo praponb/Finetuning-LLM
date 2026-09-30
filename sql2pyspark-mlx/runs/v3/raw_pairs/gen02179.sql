@@ -1,1 +1,0 @@
-SELECT is_remote, level, dept_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) job_title_values, AVG(salary) avg_salary FROM employees WHERE hire_date < '2025-01-10' GROUP BY is_remote, level, dept_id

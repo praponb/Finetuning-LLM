@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM products WHERE cost >= 430 AND stock_qty > 332), category_summary AS (SELECT category, MIN(launch_date) AS min_launch_date, ROUND(STDDEV(cost), 2) AS stddev_cost FROM src GROUP BY category) SELECT category, min_launch_date, stddev_cost FROM category_summary WHERE stddev_cost < 75

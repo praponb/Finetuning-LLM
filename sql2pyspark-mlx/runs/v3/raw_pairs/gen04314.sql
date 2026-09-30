@@ -1,1 +1,0 @@
-select date_format(event_time, 'yyyy-MM') as event_month, sum(duration_sec) as total_duration_sec, count(*) as total_count, count(distinct duration_sec) as unique_sessions from web_events group by date_format(event_time, 'yyyy-MM') order by total_duration_sec desc

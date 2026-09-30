@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM stores WHERE sqft < 12376), stores_stats AS (SELECT YEAR(opened_date) AS opened_year, MAX(sqft) AS max_sqft FROM base GROUP BY YEAR(opened_date)) SELECT opened_year, max_sqft FROM stores_stats WHERE max_sqft >= 13100

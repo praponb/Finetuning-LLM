@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, plan, monthly_fee, RANK() OVER (PARTITION BY plan ORDER BY monthly_fee DESC) AS rnk FROM subscriptions) SELECT id, plan, monthly_fee FROM numbered WHERE rnk <= 2 ORDER BY monthly_fee

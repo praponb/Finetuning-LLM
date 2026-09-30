@@ -1,1 +1,0 @@
-SELECT *, LAST_VALUE(budget) IGNORE NULLS OVER (PARTITION BY location ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_budget, ROUND(budget / SUM(budget) OVER (PARTITION BY location), 4) AS budget_share, NTILE(10) OVER w_recent AS budget_bucket FROM departments WINDOW w_recent AS (PARTITION BY dept_name ORDER BY budget, id)

@@ -1,1 +1,0 @@
-SELECT *, CONCAT_WS('-', email, level) AS email_level_key FROM employees WHERE full_name IS NOT NULL AND (manager_id IN (5, 27, 28, 35) OR job_title IN ('Intern', 'Director', 'Designer')) ORDER BY level

@@ -1,1 +1,0 @@
-SELECT o.status, DATE_FORMAT(o.order_date, 'yyyy-MM') AS order_month, MAX(oi.quantity) - MIN(oi.quantity) AS quantity_range, COUNT(*) AS total_count FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id WHERE o.customer_id IN (6, 34) GROUP BY o.status, DATE_FORMAT(o.order_date, 'yyyy-MM');

@@ -1,1 +1,0 @@
-SELECT id, customer_id, account_type, opened_date, status, NTILE(4) OVER (PARTITION BY account_type ORDER BY balance DESC, id) AS balance_bucket, AVG(balance) OVER (PARTITION BY customer_id ORDER BY balance, id ROWS BETWEEN 2 PRECEDING AND 1 PRECEDING) AS balance_avg_2_prior FROM accounts;

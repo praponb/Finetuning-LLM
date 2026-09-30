@@ -1,1 +1,0 @@
-select s.id, count(p.id) as product_count, round(avg(p.stock_qty), 2) as avg_stock_qty, max(p.stock_qty) - min(p.stock_qty) as stock_qty_range from suppliers s left join products p on p.supplier_id = s.id group by s.id having product_count > 1 order by stock_qty_range desc, product_count;

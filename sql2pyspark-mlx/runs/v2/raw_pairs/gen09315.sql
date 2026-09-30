@@ -1,1 +1,0 @@
-select inventory.id, inventory.store_id, store_sales.sale_date, store_sales.store_id as store_sale_store_id from inventory left join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id where store_sales.store_id in (3, 4, 6) and inventory.store_id in (1, 2, 3, 4)

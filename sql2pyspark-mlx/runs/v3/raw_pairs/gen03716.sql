@@ -1,1 +1,0 @@
-SELECT orders.channel, SUM(order_items.unit_price * order_items.quantity) AS revenue, COUNT(order_items.quantity) AS quantity_count FROM order_items INNER JOIN orders ON order_items.order_id = orders.id LEFT JOIN products ON order_items.product_id = products.id WHERE products.product_name LIKE 'US%' GROUP BY orders.channel;

@@ -1,1 +1,0 @@
-with Base as (select * from suppliers where rating > 3.1), country_summary as (select country, min(rating) as min_rating, round(avg(rating), 2) as avg_rating from Base group by country) select * from country_summary where avg_rating > 25 order by min_rating desc, country limit 5

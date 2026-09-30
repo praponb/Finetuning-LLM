@@ -1,1 +1,0 @@
-with filtered_subscriptions as (select * from subscriptions where start_date < '2023-05-01'), plan_summary as (select plan, count(case when plan = 'basic' then 1 end) as basic_count from filtered_subscriptions group by plan) select plan, basic_count from plan_summary

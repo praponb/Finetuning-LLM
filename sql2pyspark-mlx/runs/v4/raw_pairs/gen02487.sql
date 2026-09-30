@@ -1,1 +1,0 @@
-SELECT s.country, SUM(oi.unit_price) AS total_unit_price, SUM(oi.unit_price * oi.quantity) AS revenue FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id INNER JOIN suppliers s ON s.id = p.supplier_id GROUP BY s.country

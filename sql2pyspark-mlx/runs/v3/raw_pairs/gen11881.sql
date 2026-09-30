@@ -1,1 +1,0 @@
-WITH inventory_by_store AS (SELECT store_id, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY store_id) SELECT s.region, s.store_name, ibs.last_last_restock FROM stores s INNER JOIN inventory_by_store ibs ON s.id = ibs.store_id ORDER BY ibs.last_last_restock, store_name;

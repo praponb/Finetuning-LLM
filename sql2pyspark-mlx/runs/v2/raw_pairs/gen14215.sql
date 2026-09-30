@@ -1,1 +1,0 @@
-SELECT CASE WHEN price >= 1230 THEN 'high' WHEN price >= 330 THEN 'mid' ELSE 'low' END AS price_bucket, SUM(stock_qty) AS total_stock_qty, SUM(SUM(stock_qty)) OVER (ORDER BY CASE WHEN price >= 1230 THEN 'high' WHEN price >= 330 THEN 'mid' ELSE 'low' END) AS cumulative_stock_qty FROM products GROUP BY CASE WHEN price >= 1230 THEN 'high' WHEN price >= 330 THEN 'mid' ELSE 'low' END;

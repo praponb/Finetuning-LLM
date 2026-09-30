@@ -1,1 +1,0 @@
-WITH top_customers AS (SELECT id, city, age, DENSE_RANK() OVER (PARTITION BY city ORDER BY age DESC) AS row_num FROM customers WHERE signup_date BETWEEN '2023-04-01' AND '2024-03-01') SELECT id, city, age FROM top_customers WHERE row_num <= 2

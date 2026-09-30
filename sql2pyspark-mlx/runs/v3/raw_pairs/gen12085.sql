@@ -1,1 +1,0 @@
-SELECT emp.id, emp.manager_id AS employee_manager_id, mgr.email AS manager_email, mgr.manager_id AS manager_manager_id, mgr.is_remote AS manager_is_remote FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id

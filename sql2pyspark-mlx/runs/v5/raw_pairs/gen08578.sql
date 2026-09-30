@@ -1,1 +1,0 @@
-SELECT emp.id, emp.job_title AS employee_job_title, emp.level AS employee_level, mgr.level AS manager_level, mgr.email AS manager_email, FLOOR(emp.salary) AS salary_whole FROM employees emp JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.level NOT IN ('L1', 'L5', 'L4');

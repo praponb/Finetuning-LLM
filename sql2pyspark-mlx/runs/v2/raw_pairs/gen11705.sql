@@ -1,1 +1,0 @@
-WITH ranked_inventory AS (SELECT id, product_id, last_restock, quantity, RANK() OVER (PARTITION BY product_id ORDER BY last_restock) AS rn FROM inventory WHERE product_id = 7) SELECT id, product_id, last_restock, quantity FROM ranked_inventory WHERE rn <= 1;

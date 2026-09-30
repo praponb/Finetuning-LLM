@@ -1,1 +1,0 @@
-SELECT id, city, rating, ROUND(rating / SUM(rating) OVER (PARTITION BY city), 3) AS rating_share, LEAD(rating, 1) OVER (PARTITION BY city ORDER BY rating, id) AS next_rating FROM suppliers WHERE LOWER(TRIM(supplier_name)) = 'pacific wholesale' ORDER BY rating DESC, city

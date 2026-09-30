@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) signup_month, MAX(we.duration_sec) max_duration_sec FROM web_events we LEFT OUTER JOIN sessions s ON s.id = we.session_id LEFT OUTER JOIN customers c ON s.customer_id = c.id WHERE s.country = 'UK' GROUP BY MONTH(c.signup_date)

@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, store_id, amount, RANK() OVER (PARTITION BY store_id ORDER BY amount DESC) rnk FROM orders WHERE channel IN ('store', 'web')) SELECT id, store_id, amount FROM ranked WHERE rnk <= 2;

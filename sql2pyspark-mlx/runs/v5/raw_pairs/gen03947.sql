@@ -1,1 +1,0 @@
-SELECT id, account_type, balance, opened_date, DENSE_RANK() OVER (PARTITION BY account_type ORDER BY balance DESC) balance_dense_rank, DENSE_RANK() OVER (PARTITION BY account_type ORDER BY opened_date DESC) opened_date_dense_rank FROM accounts;

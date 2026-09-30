@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, SUM(CASE WHEN brand = 'Globex' THEN 1 ELSE 0 END) AS globex_count FROM products WHERE supplier_id = 38 GROUP BY supplier_id) SELECT s.id, s.country, ss.globex_count FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id WHERE ss.globex_count > 71 ORDER BY 3 DESC;

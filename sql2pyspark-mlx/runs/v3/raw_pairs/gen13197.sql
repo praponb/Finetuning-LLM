@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_restock DESC, id) AS rn FROM inventory WHERE product_id IN (4, 7, 8)) SELECT id, product_id, last_restock FROM ranked WHERE rn <= 5 ORDER BY id

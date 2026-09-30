@@ -1,1 +1,0 @@
-WITH recent_employees AS (SELECT * FROM employees WHERE is_remote = FALSE), summary AS (SELECT is_remote, COUNT(DISTINCT salary) AS unique_levels FROM recent_employees GROUP BY is_remote) SELECT * FROM summary ORDER BY unique_levels

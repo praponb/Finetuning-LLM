@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, DATE_FORMAT(signup_date, 'MMM yyyy') AS signup_date_label FROM customers WHERE signup_date >= DATE '2023-03-21' AND city IS DISTINCT FROM 'Singapore') SELECT id, email, city, segment, credit_limit, age FROM filtered QUALIFY RANK() OVER (PARTITION BY segment ORDER BY credit_limit DESC NULLS FIRST) = 1

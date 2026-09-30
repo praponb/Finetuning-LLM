@@ -1,1 +1,0 @@
-WITH ranked_transactions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY txn_time, id) AS rnk FROM transactions) SELECT id, account_id, txn_time FROM ranked_transactions WHERE rnk = 1 ORDER BY txn_time;

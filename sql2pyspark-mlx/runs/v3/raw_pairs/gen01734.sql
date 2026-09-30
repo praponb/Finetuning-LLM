@@ -1,1 +1,0 @@
-SELECT a.id, a.customer_id, t.debit_count, t.merchant_values FROM accounts a INNER JOIN (SELECT account_id, SUM(CASE WHEN txn_type = 'DEBIT' THEN 1 ELSE 0 END) AS debit_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.debit_count > 23;

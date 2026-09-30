@@ -1,1 +1,0 @@
-with cleaned as (select *, lower(plan) as plan_lower from subscriptions where start_date > date '2024-01-12' and customer_id is not null) select customer_id from cleaned except select customer_id from subscriptions where start_date > '2025-10-01'

@@ -1,1 +1,0 @@
-SELECT YEAR(opened_date) AS opened_year, SUM(CASE WHEN city = 'Singapore' THEN sqft ELSE 0 END) AS singapore_sqft, ROUND(AVG(sqft), 2) AS avg_sqft FROM stores WHERE store_name IS NOT NULL AND sqft >= 13786 AND opened_date > '2025-03-01' GROUP BY YEAR(opened_date) HAVING avg_sqft < 80 ORDER BY 2 DESC;

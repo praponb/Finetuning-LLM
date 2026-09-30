@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list, COUNT(DISTINCT shipping_fee) AS unique_channels FROM orders GROUP BY store_id) SELECT s.id, s.city, ss.status_list, ss.unique_channels FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id WHERE ss.unique_channels >= 10 ORDER BY city

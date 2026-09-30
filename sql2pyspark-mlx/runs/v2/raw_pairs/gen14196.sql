@@ -1,1 +1,0 @@
-SELECT customer_id, status, ROUND(balance, 0) AS balance_rounded FROM accounts WHERE (opened_date BETWEEN '2023-09-04' AND '2024-10-01' AND status IN ('CLOSED', 'FROZEN', 'OPEN')) OR status = 'CLOSED';

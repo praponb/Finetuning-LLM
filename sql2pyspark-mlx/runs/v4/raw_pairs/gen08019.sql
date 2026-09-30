@@ -1,1 +1,0 @@
-SELECT s.started_at, t.duration_sec_range, t.avg_duration_sec FROM sessions s JOIN (SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range, AVG(duration_sec) AS avg_duration_sec FROM web_events WHERE TO_DATE(event_time) < '2025-05-01' GROUP BY session_id) t ON s.id = t.session_id ORDER BY started_at ASC;

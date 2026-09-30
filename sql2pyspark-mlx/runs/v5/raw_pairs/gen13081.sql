@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM departments WHERE budget <= 3232000), agg AS (SELECT dept_name, ROUND((100 * SUM(CASE WHEN location = 'Tokyo' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_tokyo FROM src GROUP BY dept_name) SELECT * FROM agg WHERE pct_tokyo > 33 ORDER BY pct_tokyo DESC;

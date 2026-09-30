@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.order_id, shipments.delivered_date, shipments.cost, orders.amount FROM shipments INNER JOIN orders ON orders.id = shipments.order_id ORDER BY order_id DESC, shipments.delivered_date;

@@ -1,1 +1,0 @@
-WITH supplier_stats AS (SELECT supplier_id, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products WHERE SIZE(tags) >= 2 GROUP BY supplier_id) SELECT s.city, s.supplier_name, ss.avg_stock_qty FROM suppliers s JOIN supplier_stats ss ON s.id = ss.supplier_id WHERE ss.avg_stock_qty > 44 ORDER BY city, ss.avg_stock_qty DESC;

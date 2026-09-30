@@ -1,1 +1,0 @@
-SELECT COUNT(*) AS row_count, SUM(rating) AS total_rating, SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END) AS chiang_mai_count FROM suppliers WHERE city IN ('Chiang Mai', 'Bangkok', 'Singapore') ORDER BY total_rating DESC, row_count DESC;

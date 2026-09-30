@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, i.last_restock, p.category, s.city FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id FULL OUTER JOIN stores s ON i.store_id = s.id WHERE NOT (p.brand IN ('Stark', 'Globex') AND s.opened_date <= '2023-04-01')

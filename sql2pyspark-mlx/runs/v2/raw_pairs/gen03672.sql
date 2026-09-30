@@ -1,1 +1,0 @@
-select id, product_id, unit_price, quantity, ntile(3) over (partition by product_id order by unit_price desc, id) quartile, dense_rank() over (partition by product_id order by quantity) quantity_dense_rank from order_items where unit_price < 270 order by quantity_dense_rank desc, 4 desc

@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 222 THEN 'high' WHEN quantity >= 60 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, ROUND(AVG(quantity), 2) AS avg_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY ROLLUP(CASE WHEN quantity >= 222 THEN 'high' WHEN quantity >= 60 THEN 'mid' ELSE 'low' END, product_id) ORDER BY product_id

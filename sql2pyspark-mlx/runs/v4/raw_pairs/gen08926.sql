@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CAST(budget AS INT) AS budget_int FROM departments WHERE dept_name IN ('Finance', 'Marketing')) SELECT *, ROW_NUMBER() OVER (ORDER BY budget DESC, id) AS event_seq, ROW_NUMBER() OVER (ORDER BY budget_int DESC, id) AS event_seq_2 FROM valid

@@ -1,1 +1,0 @@
-SELECT *, LAST_VALUE(browser, TRUE) OVER w_grp AS last_known_browser, ROW_NUMBER() OVER w_hist AS event_seq, ROW_NUMBER() OVER w_hist AS event_seq_2 FROM sessions WINDOW w_grp AS (PARTITION BY country ORDER BY started_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW), w_hist AS (ORDER BY started_at DESC, id)

@@ -1,1 +1,0 @@
-WITH filtered_stores AS (SELECT * FROM stores WHERE sqft < 11189 OR city <> 'Berlin'), agg AS (SELECT city, ROUND((100 * SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_bangkok FROM filtered_stores GROUP BY city) SELECT city, pct_bangkok FROM agg WHERE pct_bangkok > 56 ORDER BY city LIMIT 3

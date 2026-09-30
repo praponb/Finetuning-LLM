@@ -1,1 +1,0 @@
-select year(shipped_date) as shipped_year, round(avg(cost), 2) as avg_cost from shipments where cost >= 86 and carrier is not null group by shipped_year having round(avg(cost), 2) < 78 order by avg_cost;

@@ -1,1 +1,0 @@
-SELECT e.id, e.salary AS employee_salary, e.dept_id AS employee_dept_id, e.job_title AS employee_job_title, m.is_remote AS manager_is_remote, m.level AS manager_level FROM employees e JOIN employees m ON e.manager_id = m.id WHERE m.job_title <> 'Director'

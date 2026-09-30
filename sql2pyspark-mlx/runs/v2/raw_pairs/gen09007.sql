@@ -1,1 +1,0 @@
-SELECT status, stddev_shipping_fee FROM (SELECT status, ROUND(STDDEV(shipping_fee), 2) stddev_shipping_fee FROM orders WHERE shipping_fee > 16 GROUP BY status) s WHERE stddev_shipping_fee >= 53 ORDER BY stddev_shipping_fee DESC;

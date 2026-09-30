@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN balance >= 80000 THEN 'High' WHEN balance >= 25000 THEN 'Medium' ELSE 'Low' END AS balance_level, ROUND(balance * 1.15, 2) AS balance_adjusted FROM accounts WHERE customer_id IN (15, 18) AND customer_id IN (8, 15, 35, 36) AND status IN ('OPEN', 'CLOSED', 'FROZEN') ORDER BY customer_id

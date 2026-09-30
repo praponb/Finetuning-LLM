@@ -1,1 +1,0 @@
-select s.city, s.supplier_name, s.country, p.supplier_id, p.brand, substring(s.city, 1, 3) as city_prefix from suppliers s left join products p on p.supplier_id = s.id where p.stock_qty = 303 and s.city is null order by supplier_id desc;

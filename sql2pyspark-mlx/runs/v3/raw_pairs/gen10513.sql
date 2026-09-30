@@ -1,1 +1,0 @@
-select product_id, round(avg(quantity), 2) as avg_quantity, min(last_restock) as min_last_restock from inventory where last_restock > '2025-06-01' group by product_id having round(avg(quantity), 2) > 54

@@ -1,1 +1,0 @@
-select case when rating >= 3.4 then 'high' when rating >= 2.0 then 'mid' else 'low' end as rating_bucket, count(case when country = 'JP' then 1 end) as jp_count, sum(rating) as total_rating from suppliers group by 1 order by rating_bucket desc

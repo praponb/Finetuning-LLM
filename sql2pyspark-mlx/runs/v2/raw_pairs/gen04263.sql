@@ -1,1 +1,0 @@
-SELECT s.customer_id, s.country, s.started_at, we.event_time, we.event_type, we.duration_sec, ROUND(we.duration_sec, 2) AS duration_sec_rounded FROM sessions s LEFT JOIN web_events we ON we.session_id = s.id

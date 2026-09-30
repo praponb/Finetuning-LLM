@@ -1,1 +1,0 @@
-SELECT *, SUM(shipping_fee) OVER (PARTITION BY channel ORDER BY shipping_fee, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_shipping_fee, PERCENT_RANK() OVER (PARTITION BY status ORDER BY shipping_fee DESC) AS shipping_fee_percent_rank, ROW_NUMBER() OVER (PARTITION BY channel, customer_id ORDER BY amount DESC, id) AS row_seq FROM orders

@@ -1,1 +1,0 @@
-SELECT id, account_id, txn_time, amount, merchant, LAG(amount, 2) OVER (PARTITION BY account_id ORDER BY txn_time, id) AS prev_amount, RANK() OVER (PARTITION BY merchant ORDER BY txn_time DESC) AS txn_time_rank FROM transactions ORDER BY txn_time_rank DESC;

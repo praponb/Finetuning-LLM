@@ -1,1 +1,0 @@
-SELECT products.brand, COUNT(store_sales.id) store_sale_count, COUNT(store_sales.units) units_count, COUNT(DISTINCT store_sales.units) unique_stores FROM products LEFT OUTER JOIN store_sales ON products.id = store_sales.product_id GROUP BY products.brand ORDER BY units_count, brand LIMIT 5

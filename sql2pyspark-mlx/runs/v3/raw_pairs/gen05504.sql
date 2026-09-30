@@ -1,1 +1,0 @@
-SELECT id, status, shipped_date, carrier FROM (SELECT id, status, shipped_date, carrier, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date DESC, id) AS rnk FROM shipments) AS t WHERE rnk <= 2 ORDER BY id DESC;

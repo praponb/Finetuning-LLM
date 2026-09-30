@@ -1,1 +1,0 @@
-SELECT dept_name, MAX(budget) AS max_budget, SUM(CASE WHEN dept_name = 'HR' THEN 1 ELSE 0 END) AS hr_count FROM departments WHERE budget >= 2415000 AND budget BETWEEN 1861000 AND 3320000 GROUP BY dept_name ORDER BY max_budget, dept_name LIMIT 10;

@@ -1,1 +1,0 @@
-SELECT shipped_date AS event_date, 'shipment' AS source FROM shipments UNION SELECT start_date AS event_date, 'subscription' AS source FROM subscriptions WHERE end_date > '2024-05-01' ORDER BY source DESC;

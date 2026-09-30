@@ -1,1 +1,0 @@
-WITH OrderItemsByProduct AS (SELECT product_id, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items GROUP BY product_id) SELECT p.id, p.supplier_id, p.product_name, O.avg_unit_price FROM products p LEFT OUTER JOIN OrderItemsByProduct O ON p.id = O.product_id WHERE O.avg_unit_price >= 58 ORDER BY p.product_name DESC;

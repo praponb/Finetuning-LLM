@@ -1,1 +1,0 @@
-select case when quantity >= 8 then 'high' when quantity >= 5 then 'mid' else 'low' end quantity_bucket, max(quantity) - min(quantity) quantity_range, sum(quantity) total_quantity from order_items group by case when quantity >= 8 then 'high' when quantity >= 5 then 'mid' else 'low' end;

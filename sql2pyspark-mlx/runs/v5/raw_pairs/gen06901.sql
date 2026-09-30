@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, product_name, category, price, cost, stock_qty, tags, supplier_id, ROUND(price / cost, 2) AS margin FROM products WHERE supplier_id IS NULL) SELECT * FROM (SELECT supplier_id, category, price FROM valid) src PIVOT (SUM(price) AS amount, COUNT(1) AS item_count FOR category IN ('Home', 'Books'));

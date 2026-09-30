@@ -1,1 +1,0 @@
-with Ranked as (select *, row_number() over (partition by country order by signup_date desc, id) as rnk from customers) select id, country, signup_date, age from Ranked where rnk <= 3 order by signup_date desc

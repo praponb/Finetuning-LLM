@@ -1,1 +1,0 @@
-SELECT id, order_id, quantity, product_id, CEIL(unit_price) AS unit_price_whole, CAST(unit_price AS INT) AS unit_price_int FROM order_items WHERE (order_id IN (12, 15, 31, 37) AND unit_price >= 370) OR quantity IS NOT NULL ORDER BY order_id DESC, id LIMIT 10;

@@ -1,1 +1,0 @@
-SELECT status, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, AVG(balance) AS avg_balance, MAX(opened_date) AS latest_opened_date FROM accounts WHERE (opened_date >= '2023-11-01' AND customer_id IN (1, 31)) OR opened_date > '2025-10-01' GROUP BY status, opened_month HAVING avg_balance >= 46000 ORDER BY opened_month

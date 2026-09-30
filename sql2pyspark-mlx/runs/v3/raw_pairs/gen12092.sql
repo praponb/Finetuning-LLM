@@ -1,1 +1,0 @@
-select e.id, e.email as employee_email, e.dept_id as employee_dept_id, m.salary as manager_salary, m.full_name as manager_full_name, round(e.salary * 0.85, 2) as adjusted_salary from employees e left join employees m on e.manager_id = m.id where m.email like '%@gmail.com'

@@ -1,1 +1,0 @@
-SELECT products.supplier_id, MAX(inventory.quantity) AS max_quantity, COUNT(inventory.quantity) AS quantity_count FROM inventory INNER JOIN products ON inventory.product_id = products.id INNER JOIN stores ON stores.id = inventory.store_id GROUP BY products.supplier_id HAVING max_quantity >= 220 ORDER BY products.supplier_id ASC

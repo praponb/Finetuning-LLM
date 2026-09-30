@@ -1,1 +1,0 @@
-SELECT id, txn_type, is_flagged, CASE WHEN is_flagged THEN 'Yes' ELSE 'No' END AS is_flagged_label FROM transactions WHERE HOUR(txn_time) BETWEEN 11 AND 17 ORDER BY is_flagged_label, txn_type, id LIMIT 20

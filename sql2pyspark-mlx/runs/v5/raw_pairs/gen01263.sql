@@ -1,1 +1,0 @@
-select id, store_id, units, revenue, last_value(revenue) over (partition by store_id order by units desc, id rows between unbounded preceding and unbounded following) as last_revenue from store_sales where revenue <= 2200;

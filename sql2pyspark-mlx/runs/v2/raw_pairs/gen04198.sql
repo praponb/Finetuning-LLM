@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.store_id, inventory.product_id, products.cost, suppliers.city, suppliers.country FROM inventory JOIN products ON inventory.product_id = products.id LEFT JOIN suppliers ON products.supplier_id = suppliers.id;

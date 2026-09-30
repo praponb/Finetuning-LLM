@@ -1,1 +1,0 @@
-select oi.id, oi.product_id, o.channel, o.customer_id, p.product_name, p.brand, concat_ws('/', o.status, o.channel) as status_channel_key from order_items oi left join orders o on o.id = oi.order_id inner join products p on oi.product_id = p.id where p.stock_qty > 259 or o.shipping_fee <= 36

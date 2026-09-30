@@ -1,1 +1,0 @@
-select products.id, products.product_name, products.launch_date, suppliers.supplier_name, suppliers.city, suppliers.rating from products left outer join suppliers on products.supplier_id = suppliers.id order by city desc, id asc limit 10

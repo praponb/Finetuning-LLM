@@ -1,1 +1,0 @@
-SELECT e.id, e.level AS employee_level, e.salary AS employee_salary, m.is_remote AS manager_is_remote, m.full_name AS manager_full_name FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.dept_id IN (3, 7, 20, 40) OR MONTH(m.hire_date) IN (2, 3, 5) ORDER BY manager_full_name

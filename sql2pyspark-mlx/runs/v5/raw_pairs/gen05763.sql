@@ -1,1 +1,0 @@
-SELECT id, duration_sec, event_type, CASE WHEN event_type = 'click' THEN 1 ELSE 0 END AS is_click FROM web_events WHERE event_type IN ('search', 'click') AND (duration_sec = 351 OR event_type NOT IN ('click', 'add_to_cart')) ORDER BY event_type

@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, INITCAP(TRIM(page)) AS page_title FROM web_events WHERE session_id IN (11, 26)), EventYearSummary AS (SELECT YEAR(event_time) AS event_year, MAX(duration_sec) AS max_duration_sec FROM src GROUP BY YEAR(event_time)) SELECT event_year, max_duration_sec FROM EventYearSummary

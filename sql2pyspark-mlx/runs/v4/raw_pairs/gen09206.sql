@@ -1,1 +1,0 @@
-select month(signup_date) as signup_month, max(signup_date) as latest_signup_date, max(signup_date) as last_signup_date, min(credit_limit) as min_credit_limit from customers where upper(trim(email)) = 'ALICE@GMAIL.COM' and city not in ('Bangkok', 'Tokyo') group by signup_month order by signup_month desc

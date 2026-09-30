@@ -1,1 +1,0 @@
-SELECT id, event_type, event_time, duration_sec, duration_sec - LAG(duration_sec, 1) OVER (PARTITION BY event_type ORDER BY event_time, id) AS duration_sec_change, LAST_VALUE(event_time) OVER (ORDER BY duration_sec DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_event_time FROM web_events

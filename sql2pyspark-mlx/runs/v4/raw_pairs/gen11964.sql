@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, COUNT(CASE WHEN level = 'L2' THEN 1 END) AS l2_count FROM employees WHERE job_title = 'Manager' GROUP BY dept_id) SELECT d.dept_name, d.budget, ebd.l2_count FROM departments d LEFT JOIN employees_by_department ebd ON d.id = ebd.dept_id ORDER BY ebd.l2_count

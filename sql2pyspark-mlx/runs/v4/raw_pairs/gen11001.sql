@@ -1,1 +1,0 @@
-SELECT *, AVG(quantity) OVER (PARTITION BY order_id) AS order_id_avg_quantity, MIN(quantity) OVER (PARTITION BY order_id) AS order_id_min_quantity, LAST_VALUE(unit_price, TRUE) OVER (ORDER BY unit_price, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_unit_price FROM order_items;

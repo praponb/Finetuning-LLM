@@ -1,1 +1,0 @@
-select product_id, unique_stores from (select product_id, count(distinct revenue) as unique_stores from store_sales where revenue < 3700 group by product_id) as sub where unique_stores < 8 order by product_id desc;

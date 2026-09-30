@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, quantity * unit_price AS line_total FROM order_items WHERE quantity IS NOT NULL) SELECT * FROM (SELECT id, product_id, line_total, unit_price FROM base) src UNPIVOT (val FOR metric IN (line_total, unit_price AS UNIT_PRICE_VAL));

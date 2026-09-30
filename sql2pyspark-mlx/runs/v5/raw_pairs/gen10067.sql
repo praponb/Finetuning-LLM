@@ -1,1 +1,0 @@
-SELECT product_id, MIN(quantity) AS min_quantity, SUM(quantity) AS total_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY product_id ORDER BY stddev_quantity, product_id LIMIT 1

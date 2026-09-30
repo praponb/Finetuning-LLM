@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, channel, MAX(discount) AS max_discount, MAX(order_date) AS latest_order_date, COUNT(DISTINCT shipping_fee) AS unique_customers FROM orders WHERE discount > 0.17 GROUP BY DATE_FORMAT(order_date, 'yyyy-MM'), channel HAVING COUNT(DISTINCT shipping_fee) >= 5 ORDER BY max_discount DESC, order_month, channel LIMIT 50;

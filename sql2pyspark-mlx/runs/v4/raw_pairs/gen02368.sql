@@ -1,1 +1,0 @@
-with account_totals as (select account_id, concat_ws(', ', sort_array(collect_set(txn_type))) as txn_type_values from transactions where merchant in ('Amazon', '7-Eleven') group by account_id) select a.id, a.customer_id, at.txn_type_values from accounts a inner join account_totals at on a.id = at.account_id;

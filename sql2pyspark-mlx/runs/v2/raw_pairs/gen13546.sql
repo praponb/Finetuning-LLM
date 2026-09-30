@@ -1,1 +1,0 @@
-WITH inventory_by_store AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_products, COUNT(quantity) AS quantity_count FROM inventory GROUP BY store_id) SELECT s.city, ibs.unique_products, ibs.quantity_count FROM stores s LEFT OUTER JOIN inventory_by_store ibs ON s.id = ibs.store_id WHERE ibs.quantity_count >= 8;

@@ -1,1 +1,0 @@
-SELECT is_active, CASE WHEN credit_limit >= 17000 THEN 'High' WHEN credit_limit >= 3100 THEN 'Medium' ELSE 'Low' END AS credit_limit_level, CONCAT_WS('/', country, name) AS country_name_key FROM customers WHERE age IS NOT NULL ORDER BY credit_limit_level

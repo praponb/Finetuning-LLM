@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM store_sales WHERE NOT (store_id IN (2, 3, 4) AND sale_date > '2025-05-01')), agg AS (SELECT product_id, COUNT(DISTINCT revenue) AS unique_products FROM src GROUP BY product_id) SELECT product_id, unique_products FROM agg WHERE unique_products > 10 ORDER BY unique_products DESC, product_id DESC;

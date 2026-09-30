@@ -1,1 +1,0 @@
-SELECT s.region, s.city, SUM(i.quantity) AS total_quantity, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT OUTER JOIN stores s ON i.store_id = s.id WHERE s.sqft <> 9101 GROUP BY s.region, s.city HAVING SUM(i.quantity) > 1350 ORDER BY region, city LIMIT 3;

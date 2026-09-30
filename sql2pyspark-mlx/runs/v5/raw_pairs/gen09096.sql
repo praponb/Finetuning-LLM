@@ -1,1 +1,0 @@
-select t.id, t.amount, t.is_flagged, a.opened_date, a.account_type, date_trunc('YEAR', a.opened_date) as opened_date_period from transactions t join accounts a on t.account_id = a.id order by id desc, amount desc

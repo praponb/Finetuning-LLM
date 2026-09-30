@@ -1,1 +1,0 @@
-select *, last_value(quantity) ignore nulls over (partition by order_id order by unit_price, id rows between unbounded preceding and current row) as last_known_quantity, row_number() over (partition by product_id order by quantity desc, id) as seq_no, round(quantity / sum(quantity) over (partition by product_id), 4) as quantity_share from order_items

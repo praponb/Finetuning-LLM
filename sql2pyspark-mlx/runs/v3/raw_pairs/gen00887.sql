@@ -1,1 +1,0 @@
-WITH AccountTotals AS (SELECT account_id, MAX(amount) AS max_amount FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, a.balance, A.max_amount FROM accounts a LEFT JOIN AccountTotals A ON a.id = A.account_id WHERE A.max_amount >= 1800 ORDER BY a.balance DESC

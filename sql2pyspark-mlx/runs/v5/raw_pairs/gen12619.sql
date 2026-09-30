@@ -1,1 +1,0 @@
-SELECT carrier_group, min_cost FROM (SELECT CASE WHEN carrier IN ('DHL', 'UPS') THEN 'tier_1' ELSE 'other' END AS carrier_group, MIN(cost) AS min_cost FROM shipments GROUP BY CASE WHEN carrier IN ('DHL', 'UPS') THEN 'tier_1' ELSE 'other' END) AS agg WHERE min_cost >= 36 ORDER BY carrier_group;

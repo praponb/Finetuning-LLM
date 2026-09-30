@@ -1,1 +1,0 @@
-select is_active, count(distinct credit_limit) as unique_citys, count(credit_limit) as credit_limit_count from customers where city not in ('Singapore', 'Chiang Mai') group by is_active having unique_citys > 1 order by credit_limit_count desc

@@ -1,1 +1,0 @@
-SELECT COUNT(DISTINCT amount) AS unique_accounts, ROUND(STDDEV(amount), 2) AS stddev_amount, MAX(amount) AS max_amount FROM transactions WHERE is_flagged = TRUE ORDER BY max_amount DESC, unique_accounts

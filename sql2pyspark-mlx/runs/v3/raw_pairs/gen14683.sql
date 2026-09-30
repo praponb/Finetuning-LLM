@@ -1,1 +1,0 @@
-SELECT is_active, ROUND((100 * SUM(CASE WHEN segment = 'Consumer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_consumer, COUNT(CASE WHEN city = 'Tokyo' THEN 1 END) AS tokyo_count FROM customers GROUP BY is_active

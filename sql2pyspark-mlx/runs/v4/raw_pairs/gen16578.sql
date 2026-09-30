@@ -1,1 +1,0 @@
-SELECT o.status, SUM(CASE WHEN p.status = 'FAILED' THEN p.amount ELSE 0 END) AS failed_amount, COUNT(p.amount) AS amount_count FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id WHERE TO_DATE(p.paid_at) < '2024-03-26' GROUP BY o.status HAVING SUM(CASE WHEN p.status = 'FAILED' THEN p.amount ELSE 0 END) > 74

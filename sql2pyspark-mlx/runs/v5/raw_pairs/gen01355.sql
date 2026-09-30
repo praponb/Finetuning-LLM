@@ -1,1 +1,0 @@
-WITH DepartmentStats AS (SELECT dept_id, SUM(CASE WHEN level = 'L3' THEN 1 ELSE 0 END) AS l3_count, MIN(hire_date) AS min_hire_date FROM employees WHERE job_title IN ('Director', 'Intern') GROUP BY dept_id) SELECT d.dept_name, d.budget, D.l3_count, D.min_hire_date FROM departments d INNER JOIN DepartmentStats D ON d.id = D.dept_id ORDER BY dept_name

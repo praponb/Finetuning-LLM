@@ -1,1 +1,0 @@
-select o.id, o.discount, o.order_date, s.sqft, c.segment from orders o inner join stores s on o.store_id = s.id inner join customers c on o.customer_id = c.id where o.amount between 1020 and 1280 order by o.discount desc

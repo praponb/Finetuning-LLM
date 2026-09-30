@@ -1,1 +1,0 @@
-with product_stats as (select product_id, avg(quantity) avg_quantity from inventory group by product_id) select p.supplier_id, p.stock_qty, ps.avg_quantity from products p left join product_stats ps on p.id = ps.product_id where ps.avg_quantity >= 200 order by p.supplier_id, 3

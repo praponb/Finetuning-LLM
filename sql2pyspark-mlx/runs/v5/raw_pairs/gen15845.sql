@@ -1,1 +1,0 @@
-with deduped as (select * from promotions qualify row_number() over (partition by promo_code, channel order by ends_on desc, id) = 1) select id, promo_code, ends_on, discount_pct from deduped order by id desc

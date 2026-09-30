@@ -1,1 +1,0 @@
-SELECT *, ROUND(salary / SUM(salary) OVER (PARTITION BY job_title), 4) AS salary_share, MIN(salary) OVER (PARTITION BY manager_id) AS manager_id_min_salary, CUME_DIST() OVER (PARTITION BY level ORDER BY salary) AS salary_cume_dist FROM employees

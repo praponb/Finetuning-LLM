@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.merchant, transactions.txn_type, transactions.txn_time FROM transactions WHERE transactions.is_flagged = TRUE AND transactions.account_id NOT IN (SELECT id FROM accounts WHERE account_type NOT IN ('CHECKING', 'LOAN')) ORDER BY txn_type DESC;

@@ -1,1 +1,0 @@
-SELECT d.dept_name, t.avg_salary, t.min_salary FROM departments d JOIN (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary, MIN(salary) AS min_salary FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.min_salary > 142000

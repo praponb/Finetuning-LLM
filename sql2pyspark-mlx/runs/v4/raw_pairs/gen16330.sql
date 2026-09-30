@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, name, email, country, city, segment, signup_date, is_active, credit_limit, age, TRIM(country) AS clean_country FROM customers WHERE signup_date > DATE '2023-02-28' AND segment IS NOT NULL) SELECT s.* FROM filtered s WHERE NOT EXISTS (SELECT 1 FROM subscriptions c WHERE c.customer_id = s.id AND c.end_date >= s.signup_date);

@@ -1,1 +1,0 @@
-WITH recent_customers AS (SELECT *, LOWER(email) AS email_lower FROM customers WHERE signup_date <= '2024-05-01'), summary AS (SELECT city, MAX(credit_limit) AS max_credit_limit FROM recent_customers GROUP BY city) SELECT * FROM summary WHERE max_credit_limit < 8200;

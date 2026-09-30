@@ -1,1 +1,0 @@
-SELECT c.country, COUNT(CASE WHEN o.channel = 'web' THEN 1 END) AS web_count, COUNT(*) AS num_orders FROM orders o FULL OUTER JOIN stores s ON o.store_id = s.id JOIN customers c ON o.customer_id = c.id WHERE s.city IN ('Tokyo', 'Berlin', 'Singapore') GROUP BY c.country ORDER BY country DESC

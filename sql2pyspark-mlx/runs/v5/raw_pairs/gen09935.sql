@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, DATE_TRUNC('month', last_restock) AS last_restock_period FROM inventory WHERE last_restock >= TO_DATE('2023-02-25')) SELECT store_id, PERCENTILE_APPROX(quantity, ARRAY(0.25, 0.5, 0.75)) AS quantity_quartiles, ROUND(AVG(quantity), 2) AS avg_quantity FROM filtered GROUP BY store_id ORDER BY avg_quantity NULLS FIRST;

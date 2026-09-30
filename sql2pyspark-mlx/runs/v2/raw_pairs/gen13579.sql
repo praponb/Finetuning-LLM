@@ -1,1 +1,0 @@
-SELECT departments.id, departments.location, departments.dept_name FROM departments WHERE departments.id IN (SELECT dept_id FROM employees WHERE email LIKE '%@company.co') ORDER BY departments.dept_name DESC

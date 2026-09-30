@@ -1,1 +1,0 @@
-SELECT products.supplier_id, t.units_range, t.avg_units FROM products LEFT JOIN (SELECT product_id, MAX(units) - MIN(units) AS units_range, ROUND(AVG(units), 2) AS avg_units FROM store_sales GROUP BY product_id) t ON products.id = t.product_id

@@ -1,1 +1,0 @@
-SELECT YEAR(a.opened_date) AS opened_year, MAX(t.amount) AS max_amount, AVG(t.amount) AS avg_amount FROM transactions t INNER JOIN accounts a ON t.account_id = a.id GROUP BY YEAR(a.opened_date) ORDER BY opened_year, avg_amount

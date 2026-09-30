@@ -1,1 +1,0 @@
-WITH latest AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY age DESC NULLS FIRST, id) AS rn FROM customers QUALIFY rn = 1) SELECT id, name, email, country, segment, is_active, age, rn FROM latest ORDER BY segment NULLS FIRST

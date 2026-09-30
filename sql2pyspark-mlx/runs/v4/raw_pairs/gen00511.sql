@@ -1,1 +1,0 @@
-select s.id, s.monthly_fee from subscriptions s where s.status in ('EXPIRED', 'CANCELLED') and s.customer_id in (select id from customers where city in ('Chiang Mai', 'London', 'New York')) order by id desc;

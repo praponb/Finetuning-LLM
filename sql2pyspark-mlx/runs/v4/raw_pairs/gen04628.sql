@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CAST(is_remote AS INT) AS is_remote_flag, COALESCE(job_title, 'N/A') AS job_title_filled FROM employees WHERE manager_id IS NULL) SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY is_remote_flag, id) AS row_seq, LEAD(salary, 1) OVER (PARTITION BY dept_id ORDER BY salary, id) AS next_salary FROM filtered

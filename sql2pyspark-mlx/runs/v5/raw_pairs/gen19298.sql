@@ -1,7 +1,0 @@
-SELECT
-    id,
-    txn_time,
-    amount,
-    ROUND(AVG(amount) OVER (ORDER BY txn_time, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_4
-FROM transactions
-WHERE is_flagged = FALSE;

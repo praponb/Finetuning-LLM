@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, MAX(ss.sale_date) AS last_sale_date FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM')

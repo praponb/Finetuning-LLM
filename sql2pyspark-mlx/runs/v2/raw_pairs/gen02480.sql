@@ -1,1 +1,0 @@
-with CustomerStats as (select customer_id, sum(discount) as total_discount from orders where channel in ('partner', 'web') group by customer_id) select customers.id, customers.name, CustomerStats.total_discount from customers inner join CustomerStats on customers.id = CustomerStats.customer_id;

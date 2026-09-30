@@ -1,1 +1,0 @@
-WITH payments_by_order AS (SELECT order_id, COUNT(*) AS payment_count, ROUND((100 * SUM(CASE WHEN method = 'cash' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cash FROM payments GROUP BY order_id) SELECT o.id, o.status, o.channel, pbo.payment_count, pbo.pct_cash FROM orders o INNER JOIN payments_by_order pbo ON o.id = pbo.order_id ORDER BY o.id DESC LIMIT 50;

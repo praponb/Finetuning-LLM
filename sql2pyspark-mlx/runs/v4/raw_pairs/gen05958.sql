@@ -1,1 +1,0 @@
-with numbered as (select *, row_number() over (partition by supplier_id order by stock_qty desc, id) as rn from products where launch_date <= '2025-10-21') select id, supplier_id, stock_qty, launch_date from numbered where rn = 1 order by stock_qty asc

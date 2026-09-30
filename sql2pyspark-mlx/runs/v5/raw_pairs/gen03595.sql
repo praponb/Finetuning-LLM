@@ -1,1 +1,0 @@
-SELECT id, order_id, product_id, unit_price, ROUND(quantity, 2) AS quantity_rounded FROM order_items WHERE quantity = 6 AND unit_price > 270 AND unit_price >= 360 ORDER BY quantity_rounded DESC, id LIMIT 20

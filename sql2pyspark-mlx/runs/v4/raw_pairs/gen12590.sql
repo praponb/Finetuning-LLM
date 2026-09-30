@@ -1,1 +1,0 @@
-select id, dept_name, location, budget, case when dept_name = 'Legal' then 1 else 0 end is_legal, round(budget * 100, 2) adjusted_budget from departments where location not in ('Berlin', 'Bangkok') and budget <= 2268000

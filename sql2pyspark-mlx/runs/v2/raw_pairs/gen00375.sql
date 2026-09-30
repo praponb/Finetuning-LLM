@@ -1,1 +1,0 @@
-SELECT plan, start_date FROM subscriptions WHERE customer_id IN (8, 11, 24, 33) UNION ALL SELECT plan, start_date FROM subscriptions WHERE end_date BETWEEN '2023-05-07' AND '2023-06-01' ORDER BY plan DESC

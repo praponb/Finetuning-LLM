@@ -1,1 +1,0 @@
-SELECT id, opened_date, status, LEAD(opened_date, 2) OVER (ORDER BY opened_date, id) AS next_opened_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY opened_date, id) AS opened_date_row FROM accounts WHERE account_type IN ('CHECKING', 'SAVINGS', 'LOAN')

@@ -1,1 +1,0 @@
-select p.brand, max(i.last_restock) as last_last_restock, min(i.last_restock) as min_last_restock from inventory i left outer join stores s on i.store_id = s.id join products p on i.product_id = p.id group by p.brand

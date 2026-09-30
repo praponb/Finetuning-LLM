@@ -1,1 +1,0 @@
-SELECT s.id, s.city, COUNT(p.id) AS product_count, MAX(p.stock_qty) AS max_stock_qty, ROUND((100 * SUM(CASE WHEN p.brand = 'Umbrella' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_umbrella FROM suppliers s LEFT JOIN products p ON s.id = p.supplier_id WHERE s.country = 'JP' GROUP BY s.id, s.city HAVING COUNT(p.id) > 3 ORDER BY product_count DESC, s.city;

@@ -1,1 +1,0 @@
-SELECT orders.store_id, stores.region, stores.store_name, stores.opened_date FROM orders RIGHT JOIN stores ON stores.id = orders.store_id WHERE orders.channel IN ('web', 'partner') ORDER BY region, store_id;

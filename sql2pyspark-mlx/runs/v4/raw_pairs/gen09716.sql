@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('DAY', reading_ts) AS activity_day, COUNT(*) FILTER (WHERE device_code = 'DV-02') AS dv_02_rows, COUNT(*) AS row_count, MAX(reading_ts) AS last_reading_ts FROM device_readings GROUP BY DATE_TRUNC('DAY', reading_ts) HAVING dv_02_rows >= 1;

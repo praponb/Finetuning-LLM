@@ -1,1 +1,0 @@
-SELECT oi.id, oi.product_id, o.shipping_fee, c.name FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id WHERE NOT (YEAR(o.order_date) >= 2025 AND oi.order_id = 33);

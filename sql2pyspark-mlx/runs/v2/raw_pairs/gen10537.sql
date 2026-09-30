@@ -1,1 +1,0 @@
-SELECT oi.order_id, oi.product_id, o.amount, p.product_name, p.launch_date FROM order_items oi LEFT OUTER JOIN orders o ON oi.order_id = o.id LEFT OUTER JOIN products p ON p.id = oi.product_id WHERE oi.product_id IS NULL;

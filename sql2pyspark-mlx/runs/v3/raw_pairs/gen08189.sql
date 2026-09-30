@@ -1,1 +1,0 @@
-SELECT MAX(opened_date) AS latest_opened_date, MAX(balance) - MIN(balance) AS balance_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM accounts WHERE (balance >= 52000 AND status = 'CLOSED') OR MONTH(opened_date) IN (1, 2, 5) ORDER BY 3 DESC, latest_opened_date;

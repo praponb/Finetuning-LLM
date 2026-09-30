@@ -1,1 +1,0 @@
-SELECT id, store_id, amount, shipping_fee FROM (SELECT id, store_id, amount, shipping_fee, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY amount DESC, id) AS rn FROM orders WHERE shipping_fee >= 30) AS ranked WHERE rn = 1

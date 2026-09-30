@@ -1,1 +1,0 @@
-WITH valid_orders AS (SELECT * FROM orders WHERE customer_id = 37), order_month_summary AS (SELECT MONTH(order_date) AS order_month, COUNT(DISTINCT amount) AS unique_channels FROM valid_orders GROUP BY MONTH(order_date)) SELECT order_month, unique_channels FROM order_month_summary WHERE unique_channels < 9 ORDER BY order_month;

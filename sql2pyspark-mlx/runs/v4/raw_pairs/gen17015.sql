@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, element FROM price_tiers LATERAL VIEW EXPLODE(tier_prices) t AS element) SELECT CASE WHEN element >= 84 THEN 'HIGH' ELSE 'LOW' END AS element_tier, ROUND(AVG(element), 2) AS avg_element, COUNT(*) AS row_count FROM lines GROUP BY CASE WHEN element >= 84 THEN 'HIGH' ELSE 'LOW' END HAVING avg_element > 0 ORDER BY avg_element DESC;

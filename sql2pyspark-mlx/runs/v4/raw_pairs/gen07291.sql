@@ -1,1 +1,0 @@
-with ranked_orders as (select id, customer_id, shipping_fee, channel, row_number() over (partition by customer_id order by shipping_fee, id) as rnk from orders) select id, customer_id, shipping_fee, channel from ranked_orders where rnk <= 5 order by channel

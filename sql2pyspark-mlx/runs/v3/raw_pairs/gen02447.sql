@@ -1,1 +1,0 @@
-SELECT products.brand, COUNT(order_items.quantity) AS quantity_count FROM order_items INNER JOIN products ON order_items.product_id = products.id INNER JOIN orders ON order_items.order_id = orders.id GROUP BY products.brand HAVING COUNT(order_items.quantity) > 2 ORDER BY quantity_count DESC

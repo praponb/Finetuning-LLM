@@ -1,1 +1,0 @@
-with store_stats as (select store_id, count(*) as total_count, round(stddev(revenue), 2) as stddev_revenue from store_sales group by store_id) select s.id, s.region, ss.total_count, ss.stddev_revenue from stores s left outer join store_stats ss on s.id = ss.store_id order by id;

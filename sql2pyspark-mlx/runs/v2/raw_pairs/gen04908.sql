@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, MIN(stock_qty) AS min_stock_qty, MAX(price) AS max_price FROM products GROUP BY supplier_id) SELECT s.rating, ss.min_stock_qty, ss.max_price FROM suppliers s INNER JOIN supplier_summary ss ON s.id = ss.supplier_id ORDER BY ss.max_price DESC

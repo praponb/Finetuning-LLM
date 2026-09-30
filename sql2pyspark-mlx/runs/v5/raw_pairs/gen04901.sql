@@ -1,1 +1,0 @@
-SELECT id, session_id, duration_sec, event_time, FIRST_VALUE(event_time) OVER (PARTITION BY session_id ORDER BY duration_sec DESC, id) AS first_event_time, RANK() OVER (ORDER BY duration_sec DESC) AS duration_sec_rank FROM web_events;

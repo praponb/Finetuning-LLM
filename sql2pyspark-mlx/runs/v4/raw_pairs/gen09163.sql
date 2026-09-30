@@ -1,1 +1,0 @@
-SELECT monthly_fee, end_date, WEEKOFYEAR(end_date) AS end_date_weekofyear FROM subscriptions WHERE customer_id IN (14, 20, 33, 35) AND start_date < '2023-09-26' AND start_date BETWEEN '2024-01-01' AND '2025-05-01';

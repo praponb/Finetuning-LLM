@@ -1,1 +1,0 @@
-select segment, round(stddev(credit_limit), 2) as stddev_credit_limit, count(distinct age) as unique_segments, round(avg(credit_limit), 2) as avg_credit_limit from customers group by segment having unique_segments > 5 order by segment;

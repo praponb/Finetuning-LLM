@@ -1,1 +1,0 @@
-select a.status, sum(t.amount) total_amount, concat_ws(', ', sort_array(collect_set(t.merchant))) merchant_values from transactions t inner join accounts a on a.id = t.account_id where a.status not in ('CLOSED', 'OPEN') group by a.status order by merchant_values

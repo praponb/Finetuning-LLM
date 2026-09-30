@@ -1,1 +1,0 @@
-SELECT id, session_id, duration_sec, CEIL(duration_sec) AS duration_sec_whole, CASE WHEN event_type IN ('search', 'click') THEN 'Priority' ELSE 'Other' END AS event_type_group FROM web_events WHERE event_time < '2023-05-26' ORDER BY 4 DESC

@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(DISTINCT s.cost) AS unique_statuss, COUNT(DISTINCT s.cost) AS unique_orders FROM shipments s INNER JOIN orders o ON o.id = s.order_id WHERE s.order_id IS NULL GROUP BY o.status ORDER BY unique_orders DESC, status ASC LIMIT 5;

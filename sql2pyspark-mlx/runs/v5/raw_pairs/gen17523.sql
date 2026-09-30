@@ -1,1 +1,0 @@
-WITH ranked_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance, id) AS rnk FROM accounts WHERE status != 'OPEN') SELECT id, account_type, balance, status FROM ranked_accounts WHERE rnk <= 3;

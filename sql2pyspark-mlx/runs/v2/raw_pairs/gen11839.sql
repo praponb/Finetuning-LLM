@@ -1,1 +1,0 @@
-with top_inventory as (select id, store_id, last_restock, quantity, row_number() over (partition by store_id order by last_restock, id) as rnk from inventory) select id, store_id, last_restock, quantity from top_inventory where rnk <= 5;

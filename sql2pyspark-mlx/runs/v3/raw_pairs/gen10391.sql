@@ -1,1 +1,0 @@
-SELECT region, CASE WHEN city IN ('New York', 'London') THEN 'tier_1' ELSE 'other' END AS city_group, COUNT(CASE WHEN city = 'Berlin' THEN 1 END) AS berlin_count FROM stores GROUP BY ROLLUP(region, CASE WHEN city IN ('New York', 'London') THEN 'tier_1' ELSE 'other' END);

@@ -1,1 +1,0 @@
-with src as (select * from payments where not (method in ('card', 'cash') and (order_id = 11 or status not in ('SUCCESS', 'FAILED')))), summary as (select month(paid_at) as paid_month, sum(amount) as total_amount from src group by month(paid_at)) select paid_month, total_amount from summary where total_amount >= 9300;

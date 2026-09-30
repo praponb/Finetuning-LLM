@@ -1,1 +1,0 @@
-select a.id, a.account_type, count(t.id) transaction_count, max(t.amount) max_amount, sum(case when t.txn_type = 'REFUND' then 1 else 0 end) refund_count from accounts a left join transactions t on t.account_id = a.id where a.customer_id = 11 group by a.id, a.account_type;

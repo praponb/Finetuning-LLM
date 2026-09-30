@@ -1,1 +1,0 @@
-SELECT category, MIN(launch_date) AS min_launch_date, ROUND((100 * SUM(CASE WHEN brand = 'Stark' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_stark, SUM(CASE WHEN brand = 'Acme' THEN 1 ELSE 0 END) AS acme_count FROM products WHERE ARRAY_CONTAINS(tags, 'sale') GROUP BY category

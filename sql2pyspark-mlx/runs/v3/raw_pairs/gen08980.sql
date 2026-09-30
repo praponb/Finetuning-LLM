@@ -1,1 +1,0 @@
-SELECT account_type, COUNT(*) account_count FROM accounts WHERE status = 'OPEN' OR status NOT IN ('OPEN', 'CLOSED', 'FROZEN') GROUP BY account_type HAVING COUNT(*) > 3 ORDER BY account_count DESC, account_type;

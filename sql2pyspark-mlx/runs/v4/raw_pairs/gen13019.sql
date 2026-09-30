@@ -1,1 +1,0 @@
-SELECT signup_month, pct_singapore FROM (SELECT MONTH(signup_date) AS signup_month, ROUND((100 * SUM(CASE WHEN city = 'Singapore' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_singapore FROM customers WHERE is_active GROUP BY MONTH(signup_date)) AS agg WHERE pct_singapore > 52 ORDER BY signup_month DESC, pct_singapore DESC LIMIT 10

@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity, unit_price FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) rnk FROM order_items WHERE product_id IS NULL) t WHERE rnk <= 3 ORDER BY product_id;

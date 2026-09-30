@@ -1,1 +1,0 @@
-select date_trunc('MONTH', order_date) as order_month, sum(discount) as total_discount, rank() over (order by sum(discount) desc) as rnk from orders group by date_trunc('MONTH', order_date) order by order_month;

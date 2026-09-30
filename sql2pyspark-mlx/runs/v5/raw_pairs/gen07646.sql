@@ -1,1 +1,0 @@
-with flattened as (select id, host, log_ts, latency_ms, status_code, attr_key, value from app_logs lateral view explode(context) t as attr_key, value) select id, host, log_ts, latency_ms, status_code, attr_key, value from flattened order by log_ts, host

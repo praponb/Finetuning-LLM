@@ -1,1 +1,0 @@
-with filtered as (select *, case when browser = 'Safari' then 1 else 0 end as is_safari from sessions where country is not null) select s.* from filtered s where not exists (select 1 from web_events c where c.session_id = s.id and c.event_time >= s.started_at);

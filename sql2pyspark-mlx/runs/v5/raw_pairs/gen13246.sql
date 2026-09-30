@@ -1,1 +1,0 @@
-SELECT stores.city, AVG(store_sales.units) AS avg_units FROM store_sales LEFT OUTER JOIN products ON products.id = store_sales.product_id JOIN stores ON store_sales.store_id = stores.id GROUP BY stores.city ORDER BY avg_units DESC, city LIMIT 10

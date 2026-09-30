@@ -1,1 +1,0 @@
-select s.region, min(i.quantity) as min_quantity, sum(i.quantity) as total_quantity from inventory i join products p on i.product_id = p.id left join stores s on i.store_id = s.id group by s.region having sum(i.quantity) >= 1350 order by total_quantity desc, region asc limit 5

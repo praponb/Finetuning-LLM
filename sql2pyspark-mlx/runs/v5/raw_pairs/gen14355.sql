@@ -1,1 +1,0 @@
-with store_summary as (select store_id, count(*) as cnt from inventory where last_restock < '2025-08-08' group by store_id) select stores.city, store_summary.cnt from stores join store_summary on stores.id = store_summary.store_id where store_summary.cnt > 6 order by stores.city

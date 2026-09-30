@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, status, paid_at, amount, ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at DESC, id) AS rn FROM payments WHERE status IN ('REFUNDED', 'FAILED')) SELECT * FROM ranked WHERE rn = 1

@@ -1,1 +1,0 @@
-SELECT d.dept_name, d.location, e.salary, CASE WHEN d.location = 'Chiang Mai' THEN 1 ELSE 0 END AS is_chiang_mai FROM departments d LEFT JOIN employees e ON d.id = e.dept_id WHERE LENGTH(e.email) < 5;

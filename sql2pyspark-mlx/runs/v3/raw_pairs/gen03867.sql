@@ -1,1 +1,0 @@
-SELECT d.id, COUNT(e.id) AS employee_count, MAX(e.salary) - MIN(e.salary) AS salary_range FROM departments d LEFT JOIN employees e ON e.dept_id = d.id WHERE d.location IS NOT NULL GROUP BY d.id HAVING COUNT(e.id) >= 3 ORDER BY d.id DESC LIMIT 3;

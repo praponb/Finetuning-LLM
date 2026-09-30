@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, SUM(CASE WHEN method = 'card' THEN 1 ELSE 0 END) AS card_count, COUNT(amount) AS amount_count FROM payments GROUP BY order_id) SELECT o.id, o.customer_id, o.store_id, os.card_count, os.amount_count FROM orders o LEFT OUTER JOIN order_stats os ON o.id = os.order_id WHERE os.card_count > 45 ORDER BY o.store_id DESC;

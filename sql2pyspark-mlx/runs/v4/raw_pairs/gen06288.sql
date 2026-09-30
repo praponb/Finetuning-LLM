@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_id, merchant ORDER BY txn_time DESC, id) AS latest_rank FROM transactions) t WHERE latest_rank = 1) SELECT s.id, s.account_id, s.amount, s.merchant, s.is_flagged, (SELECT SUM(x.amount) FROM transactions x WHERE x.account_id = s.account_id) AS sum_transaction_amount FROM latest s

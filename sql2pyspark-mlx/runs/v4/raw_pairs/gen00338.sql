@@ -1,1 +1,0 @@
-WITH ranked_payments AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount, id) AS pos FROM payments) SELECT id, status, amount, method FROM ranked_payments WHERE pos <= 3 ORDER BY amount DESC;

@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, MAX(units) AS max_units FROM store_sales GROUP BY product_id) SELECT products.stock_qty, product_stats.max_units FROM products LEFT JOIN product_stats ON products.id = product_stats.product_id WHERE product_stats.max_units >= 26 ORDER BY products.stock_qty DESC

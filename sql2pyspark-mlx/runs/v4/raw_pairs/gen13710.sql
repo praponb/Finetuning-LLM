@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, customer_id, attr_key, attr_value FROM carts LATERAL VIEW OUTER EXPLODE(attributes) li AS attr_key, attr_value) SELECT attr_key, COUNT(DISTINCT customer_id) AS distinct_customer_ids, SIZE(COLLECT_SET(attr_key)) AS num_attr_keys, COUNT(*) FILTER (WHERE attr_key = 'gift') AS gift_rows FROM exploded GROUP BY attr_key

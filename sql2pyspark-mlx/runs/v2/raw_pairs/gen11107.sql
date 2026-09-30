@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(units) AS max_units FROM store_sales GROUP BY store_id) SELECT s.region, ss.max_units FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id ORDER BY s.region DESC

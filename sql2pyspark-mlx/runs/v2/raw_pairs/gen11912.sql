@@ -1,1 +1,0 @@
-with recent_suppliers as (select *, case when city in ('London', 'Bangkok') then 'Core' else 'Other' end as city_group from suppliers where supplier_name like 'L%'), CountrySummary as (select country, count(rating) as rating_count from recent_suppliers group by country) select * from CountrySummary;

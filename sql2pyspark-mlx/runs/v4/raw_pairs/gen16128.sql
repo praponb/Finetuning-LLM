@@ -1,1 +1,0 @@
-SELECT dept_name, location, budget, INITCAP(TRIM(location)) AS location_title, ROUND(budget, 0) AS budget_rounded FROM departments WHERE location IN ('Bangkok', 'Berlin') AND location IN ('London', 'Berlin', 'Bangkok') AND budget BETWEEN 3153000 AND 3608000;

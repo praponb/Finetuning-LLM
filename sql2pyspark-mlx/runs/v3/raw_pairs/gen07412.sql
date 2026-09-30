@@ -1,1 +1,0 @@
-SELECT id, brand, price, supplier_id, stock_qty, PERCENT_RANK() OVER (PARTITION BY brand ORDER BY price DESC) AS price_pct_rank, FIRST_VALUE(price) OVER (PARTITION BY supplier_id ORDER BY stock_qty, id) AS first_price FROM products WHERE ARRAY_CONTAINS(tags, 'bestseller')

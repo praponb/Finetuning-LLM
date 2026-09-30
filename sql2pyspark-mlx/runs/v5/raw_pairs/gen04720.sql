@@ -1,1 +1,0 @@
-WITH scored AS (SELECT *, LEAD(rating, 1) OVER (PARTITION BY city, country ORDER BY rating, id) AS next_rating, FIRST_VALUE(city) IGNORE NULLS OVER (ORDER BY rating, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_city FROM suppliers) SELECT id, supplier_name, city, first_known_city FROM scored ORDER BY city DESC

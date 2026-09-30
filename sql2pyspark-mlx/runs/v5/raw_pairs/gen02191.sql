@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM subscriptions WHERE MONTH(start_date) IN (3, 4, 10) OR start_date >= '2023-11-01'), summary AS (SELECT status, YEAR(start_date) AS start_year, ROUND((100 * SUM(CASE WHEN plan = 'basic' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_basic FROM Base GROUP BY status, YEAR(start_date)) SELECT status, pct_basic FROM summary WHERE pct_basic < 64

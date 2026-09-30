@@ -1,1 +1,0 @@
-SELECT id, event_type, event_time, DENSE_RANK() OVER (PARTITION BY event_type ORDER BY event_time DESC) AS dense_rnk FROM web_events WHERE session_id IN (32, 33) ORDER BY event_time DESC, event_type DESC;

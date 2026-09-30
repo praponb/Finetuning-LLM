@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) page_values, SUM(duration_sec) total_duration_sec FROM web_events GROUP BY session_id) SELECT s.started_at, st.page_values, st.total_duration_sec FROM sessions s JOIN session_totals st ON s.id = st.session_id WHERE st.total_duration_sec > 1900;

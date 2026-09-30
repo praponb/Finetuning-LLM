@@ -1,1 +1,0 @@
-SELECT MONTH(paid_at) AS paid_month, COUNT(amount) AS amount_count, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments WHERE status IN ('REFUNDED', 'SUCCESS') AND paid_at < '2025-09-27' GROUP BY 1 ORDER BY paid_month ASC;

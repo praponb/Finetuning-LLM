@@ -1,1 +1,0 @@
-with filtered_employees as (select *, trim(email) as clean_email from employees where length(email) >= 5), agg as (select is_remote, sum(case when job_title = 'Director' then 1 else 0 end) as director_count from filtered_employees group by is_remote) select is_remote, director_count from agg;

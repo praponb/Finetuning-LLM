@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 181 THEN 'high' WHEN quantity >= 74 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(quantity) - MIN(quantity) AS quantity_range, COUNT(quantity) AS quantity_count, MIN(quantity) AS min_quantity FROM inventory GROUP BY CASE WHEN quantity >= 181 THEN 'high' WHEN quantity >= 74 THEN 'mid' ELSE 'low' END;

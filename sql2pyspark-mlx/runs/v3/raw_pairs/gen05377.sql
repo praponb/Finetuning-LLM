@@ -1,1 +1,0 @@
-SELECT c.id, c.segment, c.credit_limit, t.plan_values FROM customers c JOIN (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM subscriptions GROUP BY customer_id) t ON c.id = t.customer_id

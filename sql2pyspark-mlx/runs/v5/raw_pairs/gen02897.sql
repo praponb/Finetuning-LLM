@@ -1,3 +1,0 @@
-SELECT *
-FROM inventory
-QUALIFY RANK() OVER (PARTITION BY product_id ORDER BY quantity ASC NULLS LAST) = 1;

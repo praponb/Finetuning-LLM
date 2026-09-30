@@ -1,1 +1,0 @@
-select * from (select case when budget >= 4289000 then 'high' when budget >= 759000 then 'mid' else 'low' end as budget_bucket, dept_name, budget from departments) pivot (max(budget) for dept_name in ('Finance', 'Sales', 'HR'))

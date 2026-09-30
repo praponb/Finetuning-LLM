@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM store_sales WHERE sale_date BETWEEN '2023-12-01' AND '2025-08-01' AND (MONTH(sale_date) IN (3, 6, 7) OR units >= 39)), agg AS (SELECT store_id, MAX(sale_date) AS latest_sale_date, SUM(revenue) AS total_revenue FROM base GROUP BY store_id) SELECT store_id, latest_sale_date, total_revenue FROM agg ORDER BY store_id DESC, 3 DESC;

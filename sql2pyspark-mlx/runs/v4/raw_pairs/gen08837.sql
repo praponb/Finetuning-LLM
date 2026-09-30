@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, CONCAT_WS('/', brand, category) AS brand_category_key FROM products WHERE brand IS NOT NULL) SELECT * FROM (SELECT supplier_id, brand, cost FROM cleaned) src PIVOT (SUM(cost) AS total FOR brand IN ('Initech', 'Umbrella'));

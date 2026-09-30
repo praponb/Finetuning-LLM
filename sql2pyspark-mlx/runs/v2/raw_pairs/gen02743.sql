@@ -1,1 +1,0 @@
-select i.store_id, i.product_id, i.last_restock, ss.units from inventory i left outer join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.product_id in (5, 6) and ss.product_id in (2, 6, 8, 10) order by store_id asc

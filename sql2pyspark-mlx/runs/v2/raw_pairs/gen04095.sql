@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, MAX(amount) - MIN(amount) AS amount_range, ROUND((100 * SUM(CASE WHEN method = 'cash' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cash FROM payments WHERE order_id IN (8, 15, 17, 19) GROUP BY order_id) SELECT o.discount, ot.amount_range, ot.pct_cash FROM orders o LEFT OUTER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.amount_range > 26

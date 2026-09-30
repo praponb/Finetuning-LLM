@@ -1,1 +1,0 @@
-with AccountStats as (select account_id, sort_array(collect_set(txn_type)) as txn_type_list, sum(amount) as total_amount from transactions group by account_id) select accounts.id, accounts.opened_date, AccountStats.txn_type_list, AccountStats.total_amount from accounts inner join AccountStats on accounts.id = AccountStats.account_id order by total_amount, id limit 3;

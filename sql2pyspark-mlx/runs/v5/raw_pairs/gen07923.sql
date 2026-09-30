@@ -1,1 +1,0 @@
-SELECT d.location, d.dept_name, t.min_salary, t.pct_manager FROM departments d INNER JOIN (SELECT dept_id, MIN(salary) AS min_salary, ROUND((100 * SUM(CASE WHEN job_title = 'Manager' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_manager FROM employees GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY d.location

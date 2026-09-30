@@ -1,1 +1,0 @@
-SELECT duration_sec, session_id, event_type, UPPER(page) AS page_upper, CAST(event_time AS DATE) AS event_time_day FROM web_events WHERE duration_sec BETWEEN 190 AND 406 ORDER BY session_id DESC, page_upper DESC;

@@ -1,1 +1,0 @@
-SELECT carrier, CASE WHEN cost >= 87 THEN 'high' WHEN cost >= 45 THEN 'mid' ELSE 'low' END AS cost_bucket, COUNT(*) AS total_count, SUM(CASE WHEN carrier = 'UPS' THEN 1 ELSE 0 END) AS ups_count, COUNT(*) AS shipment_count FROM shipments GROUP BY ROLLUP(carrier, CASE WHEN cost >= 87 THEN 'high' WHEN cost >= 45 THEN 'mid' ELSE 'low' END)

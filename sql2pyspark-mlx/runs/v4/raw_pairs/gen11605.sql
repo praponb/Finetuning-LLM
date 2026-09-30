@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipped_date, id) AS pos FROM shipments) SELECT id, status, shipped_date, order_id FROM numbered WHERE pos <= 2 ORDER BY order_id DESC;

@@ -1,1 +1,0 @@
-select store_sales.id, store_sales.revenue, products.product_name, suppliers.supplier_name from store_sales join products on store_sales.product_id = products.id full outer join suppliers on products.supplier_id = suppliers.id where store_sales.revenue > 2200 and suppliers.country in ('US', 'DE', 'JP')

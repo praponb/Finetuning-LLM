@@ -1,1 +1,0 @@
-SELECT o.shipping_fee, o.status, o.customer_id, p.method, p.paid_at FROM orders o INNER JOIN payments p ON o.id = p.order_id WHERE o.shipping_fee <= 39 AND o.channel IN ('partner', 'mobile') ORDER BY 1 DESC, customer_id DESC

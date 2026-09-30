@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT store_id, COUNT(revenue) AS revenue_count, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales WHERE revenue < 2100 GROUP BY store_id) AS t WHERE revenue_count >= 5 ORDER BY stddev_revenue;

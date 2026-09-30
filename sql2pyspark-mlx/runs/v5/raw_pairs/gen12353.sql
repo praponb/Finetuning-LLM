@@ -1,1 +1,0 @@
-select id, product_id, units, lag(units) over w_part as prev_units, lag(revenue) over w_part as prev_revenue, row_number() over w_part as event_seq, ntile(4) over (partition by product_id order by revenue, id) as revenue_bucket from store_sales where units >= 13 window w_part as (partition by store_id, product_id order by revenue, id);

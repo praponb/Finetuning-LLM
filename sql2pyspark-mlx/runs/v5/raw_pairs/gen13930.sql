@@ -1,1 +1,0 @@
-select o.id, count(p.id) as payment_count, sum(case when p.status = 'REFUNDED' then p.amount else 0 end) as refunded_amount from orders o left join payments p on p.order_id = o.id where p.order_id = 9 group by o.id having count(p.id) >= 5;

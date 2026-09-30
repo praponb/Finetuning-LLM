@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, IF(is_flagged, 'Yes', 'No') AS is_flagged_label FROM transactions WHERE txn_time >= DATE '2023-05-11' AND merchant IS NOT NULL) SELECT e.id, e.account_id, e.txn_time, e.is_flagged_label, d.account_type FROM cleaned e JOIN accounts d ON e.account_id = d.id WHERE d.opened_date BETWEEN '2025-04-01' AND '2025-09-01';

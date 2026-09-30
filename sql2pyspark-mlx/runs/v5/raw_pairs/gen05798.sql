@@ -1,1 +1,0 @@
-SELECT product_id, COUNT(DISTINCT quantity) AS unique_stores, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory WHERE store_id IN (1, 2, 4, 5) AND (product_id IN (2, 6, 7) OR last_restock > '2023-04-01') GROUP BY product_id;

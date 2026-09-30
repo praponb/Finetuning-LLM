@@ -1,1 +1,0 @@
-SELECT YEAR(txn_time) AS txn_year, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) AS merchant_values FROM transactions WHERE amount <= 3000 AND merchant = 'Starbucks' AND txn_type IN ('REFUND', 'DEBIT', 'FEE') GROUP BY YEAR(txn_time) HAVING MIN(amount) > 3400;

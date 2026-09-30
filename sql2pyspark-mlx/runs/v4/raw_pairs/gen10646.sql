@@ -1,1 +1,0 @@
-select id, supplier_id, stock_qty, product_name from (select id, supplier_id, stock_qty, product_name, row_number() over (partition by supplier_id order by stock_qty desc, id) as pos from products) as t where pos <= 3;

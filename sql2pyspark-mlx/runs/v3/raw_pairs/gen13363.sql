@@ -1,1 +1,0 @@
-select case when rating >= 3.5 then 'high' when rating >= 1.5 then 'mid' else 'low' end as rating_bucket, count(case when country = 'SG' then 1 end) as sg_count, count(*) as row_count from suppliers where city = 'London' and rating > 3.8 group by rating_bucket order by 1 asc limit 5

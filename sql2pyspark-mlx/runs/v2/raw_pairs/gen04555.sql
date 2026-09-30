@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT location, SUM(CASE WHEN location = 'Chiang Mai' THEN budget ELSE 0 END) AS chiang_mai_budget, COUNT(DISTINCT budget) AS unique_locations FROM departments GROUP BY location) AS x WHERE chiang_mai_budget > 54 ORDER BY 1 DESC;

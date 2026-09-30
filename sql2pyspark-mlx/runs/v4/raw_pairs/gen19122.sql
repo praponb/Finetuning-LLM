@@ -1,1 +1,0 @@
-WITH Numbered AS (SELECT *, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY sale_date) AS rn FROM store_sales WHERE revenue BETWEEN 1600 AND 3000) SELECT id, product_id, sale_date, revenue FROM Numbered WHERE rn <= 2

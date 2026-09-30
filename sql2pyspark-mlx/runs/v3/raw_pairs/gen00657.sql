@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, COUNT(units) units_count FROM store_sales GROUP BY store_id) SELECT s.city, s.store_name, ss.units_count FROM stores s LEFT JOIN store_summary ss ON s.id = ss.store_id;

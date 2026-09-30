@@ -1,1 +1,0 @@
-SELECT region, city, total_count, south_count FROM (SELECT region, city, COUNT(*) AS total_count, COUNT(CASE WHEN region = 'South' THEN 1 END) AS south_count FROM stores WHERE LOWER(TRIM(store_name)) = 'mall central' GROUP BY region, city) AS sub WHERE total_count > 9

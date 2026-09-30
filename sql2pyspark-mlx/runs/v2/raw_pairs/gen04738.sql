@@ -1,1 +1,0 @@
-SELECT web_events.event_time, web_events.event_type, sessions.country, sessions.customer_id, customers.city, customers.signup_date FROM web_events RIGHT OUTER JOIN sessions ON sessions.id = web_events.session_id FULL OUTER JOIN customers ON sessions.customer_id = customers.id WHERE customers.credit_limit <= 15200 AND sessions.country NOT IN ('DE', 'US') ORDER BY event_time;

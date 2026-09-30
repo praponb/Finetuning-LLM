@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT category, SUM(CASE WHEN category = 'Books' THEN 1 ELSE 0 END) books_count FROM products WHERE brand IN ('Umbrella', 'Acme') GROUP BY category) sub WHERE books_count < 48 ORDER BY books_count;

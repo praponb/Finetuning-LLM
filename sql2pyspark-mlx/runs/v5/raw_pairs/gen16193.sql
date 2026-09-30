@@ -1,1 +1,0 @@
-select case when rating >= 4.3 then 'HIGH' else 'LOW' end as rating_tier, min(rating) as min_rating, sum(case when city = 'Bangkok' then rating else 0 end) as bangkok_rating from suppliers group by case when rating >= 4.3 then 'HIGH' else 'LOW' end having min(rating) < 1000000 order by min_rating nulls first

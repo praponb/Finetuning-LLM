@@ -1,1 +1,0 @@
-select d.dept_name, d.location, t.avg_salary, t.first_hire_date from departments d left join (select dept_id, avg(salary) avg_salary, min(hire_date) first_hire_date from employees group by dept_id) t on d.id = t.dept_id order by d.location;

@@ -1,1 +1,0 @@
-WITH payments_by_order AS (SELECT order_id, SUM(CASE WHEN method = 'cash' THEN 1 ELSE 0 END) AS cash_count, COUNT(*) AS row_count FROM payments GROUP BY order_id) SELECT o.channel, pbo.cash_count, pbo.row_count FROM orders o INNER JOIN payments_by_order pbo ON o.id = pbo.order_id ORDER BY row_count DESC

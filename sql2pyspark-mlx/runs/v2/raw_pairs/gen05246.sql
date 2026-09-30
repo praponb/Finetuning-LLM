@@ -1,1 +1,0 @@
-SELECT city, CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 1.7 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(CASE WHEN city = 'New York' THEN rating ELSE 0 END) AS new_york_rating FROM suppliers GROUP BY 1, 2 HAVING SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END) < 71 ORDER BY city DESC, rating_bucket LIMIT 50;

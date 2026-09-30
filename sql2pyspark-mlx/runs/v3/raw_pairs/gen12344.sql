@@ -1,1 +1,0 @@
-select brand_group, stock_qty_range from (select case when brand in ('Acme', 'Stark') then 'group_a' else 'other' end as brand_group, max(stock_qty) - min(stock_qty) as stock_qty_range from products group by case when brand in ('Acme', 'Stark') then 'group_a' else 'other' end) as s where stock_qty_range > 36 order by brand_group;

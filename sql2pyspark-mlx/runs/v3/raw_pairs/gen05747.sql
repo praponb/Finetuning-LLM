@@ -1,1 +1,0 @@
-select id, segment, signup_date, age, rank() over (partition by segment order by signup_date desc) as rnk, sum(age) over (partition by segment order by signup_date, id) as running_age from customers where not is_active

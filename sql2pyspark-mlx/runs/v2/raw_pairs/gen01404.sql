@@ -1,1 +1,0 @@
-SELECT order_items.quantity, products.price, orders.order_date FROM order_items INNER JOIN products ON order_items.product_id = products.id LEFT OUTER JOIN orders ON order_items.order_id = orders.id WHERE NOT (MONTH(orders.order_date) IN (5, 7, 11) OR orders.store_id IN (35, 37));

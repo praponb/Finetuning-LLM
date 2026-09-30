@@ -1,1 +1,0 @@
-WITH StoreSalesByStore AS (SELECT store_id, MAX(revenue) max_revenue, ROUND(STDDEV(revenue), 2) stddev_revenue FROM store_sales WHERE units > 26 GROUP BY store_id) SELECT s.id, s.city, S.max_revenue, S.stddev_revenue FROM stores s INNER JOIN StoreSalesByStore S ON s.id = S.store_id WHERE S.max_revenue >= 2500

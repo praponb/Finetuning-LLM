@@ -1,1 +1,0 @@
-SELECT i.last_restock, i.quantity, p.stock_qty, s.opened_date FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON s.id = i.store_id WHERE s.city = 'Singapore' ORDER BY p.stock_qty DESC, s.opened_date

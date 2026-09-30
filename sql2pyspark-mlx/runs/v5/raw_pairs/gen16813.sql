@@ -1,1 +1,0 @@
-WITH DepartmentTotals AS (SELECT dept_id, MAX(salary) - MIN(salary) AS salary_range, MAX(salary) AS max_salary FROM employees WHERE hire_date <= '2025-09-02' GROUP BY dept_id) SELECT d.dept_name, d.budget, D.salary_range, D.max_salary FROM departments d INNER JOIN DepartmentTotals D ON d.id = D.dept_id ORDER BY max_salary DESC;

@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, host, log_ts, level, k, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) e AS k, attr_value) SELECT id, host, level, k, CASE WHEN k RLIKE '^(trace|region)$' THEN 'GROUP_B' WHEN k RLIKE '^(version)$' THEN 'EXTENDED' ELSE 'PRIORITY' END AS k_zone FROM flattened ORDER BY k_zone DESC, level DESC

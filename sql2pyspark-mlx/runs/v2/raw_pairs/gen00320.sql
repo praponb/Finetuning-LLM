@@ -1,1 +1,0 @@
-WITH filtered_departments AS (SELECT * FROM departments WHERE location <> 'Singapore'), departments_stats AS (SELECT dept_name, ROUND((100 * SUM(CASE WHEN dept_name = 'Sales' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_sales, AVG(budget) AS avg_budget FROM filtered_departments GROUP BY dept_name) SELECT dept_name, pct_sales, avg_budget FROM departments_stats

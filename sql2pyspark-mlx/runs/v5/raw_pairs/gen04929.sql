@@ -1,1 +1,0 @@
-SELECT id, supplier_id, price, brand, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY price DESC, id) row_num, DENSE_RANK() OVER (PARTITION BY brand ORDER BY price DESC) price_dense_rank FROM products WHERE LENGTH(product_name) < 14 ORDER BY id DESC;

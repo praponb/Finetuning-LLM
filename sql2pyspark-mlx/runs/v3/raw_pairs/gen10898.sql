@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.revenue, store_sales.product_id, products.product_name, products.supplier_id FROM store_sales INNER JOIN products ON products.id = store_sales.product_id WHERE ARRAY_CONTAINS(products.tags, 'premium');

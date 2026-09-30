@@ -1,1 +1,0 @@
-with account_summary as (select account_id, sum(case when merchant = '7-Eleven' then amount else 0 end) as 7_eleven_amount from transactions group by account_id) select a.id, a.balance, a.account_type, as.7_eleven_amount from accounts a inner join account_summary as on a.id = as.account_id where as.7_eleven_amount > 44;

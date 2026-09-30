@@ -1,1 +1,0 @@
-SELECT id, plan, end_date, monthly_fee, ROUND(AVG(monthly_fee) OVER (PARTITION BY plan ORDER BY end_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS monthly_fee_moving_avg_3 FROM subscriptions ORDER BY id DESC;

@@ -1,1 +1,0 @@
-SELECT p.brand, MAX(ss.revenue) AS max_revenue FROM store_sales ss INNER JOIN products p ON p.id = ss.product_id LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE ss.units > 30 GROUP BY p.brand ORDER BY max_revenue DESC

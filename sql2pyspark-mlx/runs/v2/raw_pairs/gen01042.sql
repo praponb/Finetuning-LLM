@@ -1,1 +1,0 @@
-SELECT p.id, p.amount, o.channel, o.status, o.discount, CASE WHEN p.amount >= 1370 THEN 'High' WHEN p.amount >= 460 THEN 'Medium' ELSE 'Low' END AS amount_tier FROM payments p LEFT OUTER JOIN orders o ON o.id = p.order_id WHERE p.status IN ('SUCCESS', 'REFUNDED', 'FAILED') AND p.method IN ('cash', 'paypal', 'bank_transfer') ORDER BY amount_tier DESC, id ASC LIMIT 5;

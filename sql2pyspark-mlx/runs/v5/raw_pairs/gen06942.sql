@@ -1,1 +1,0 @@
-SELECT session_id, SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END) AS search_count, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list FROM web_events WHERE (duration_sec < 430 AND page IS NOT NULL) OR page = '/cart' GROUP BY session_id ORDER BY search_count DESC;

@@ -1,1 +1,0 @@
-SELECT ss.store_id, ss.units, p.category, p.supplier_id, s.sqft, s.opened_date FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id RIGHT JOIN stores s ON ss.store_id = s.id WHERE p.cost >= 490 AND ss.units IS NOT NULL ORDER BY ss.store_id DESC

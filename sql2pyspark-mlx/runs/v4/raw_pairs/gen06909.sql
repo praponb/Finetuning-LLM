@@ -1,1 +1,0 @@
-SELECT status, MONTH(opened_date) AS opened_month, MAX(opened_date) AS last_opened_date, SUM(CASE WHEN account_type = 'CHECKING' THEN balance ELSE 0 END) AS checking_balance FROM accounts WHERE account_type <> 'SAVINGS' GROUP BY status, MONTH(opened_date) ORDER BY 2, status

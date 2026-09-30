@@ -1,1 +1,0 @@
-WITH department_totals AS (SELECT dept_id, SUM(salary) AS total_salary, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees GROUP BY dept_id) SELECT d.id, d.budget, d.dept_name, dt.total_salary, dt.stddev_salary FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id ORDER BY dt.stddev_salary;

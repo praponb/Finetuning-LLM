@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity FROM (SELECT id, product_id, quantity, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity DESC, id) AS rnk FROM order_items) AS r WHERE rnk <= 1 ORDER BY product_id DESC

@@ -1,1 +1,0 @@
-with EmployeesByDepartment as (select dept_id, sum(case when level = 'L1' then salary else 0 end) l1_salary, sum(salary) total_salary from employees group by dept_id) select d.id, d.dept_name, d.budget, E.l1_salary, E.total_salary from departments d left join EmployeesByDepartment E on d.id = E.dept_id where E.l1_salary > 24 order by E.total_salary

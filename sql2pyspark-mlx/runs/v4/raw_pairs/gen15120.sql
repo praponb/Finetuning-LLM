@@ -1,1 +1,0 @@
-WITH ranked_stores AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date, id) AS row_num FROM stores WHERE city = 'Chiang Mai') SELECT * FROM ranked_stores WHERE row_num <= 3 ORDER BY sqft DESC

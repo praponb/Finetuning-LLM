@@ -1,1 +1,0 @@
-WITH filtered_subscriptions AS (SELECT *, INITCAP(TRIM(status)) AS status_title FROM subscriptions WHERE customer_id IS NULL), status_summary AS (SELECT status, MIN(monthly_fee) AS min_monthly_fee FROM filtered_subscriptions GROUP BY status) SELECT status, min_monthly_fee FROM status_summary WHERE min_monthly_fee < 180 ORDER BY min_monthly_fee DESC, status LIMIT 5

@@ -1,1 +1,0 @@
-SELECT customers.id, customers.segment, COUNT(orders.id) AS order_count, COUNT(DISTINCT orders.discount) AS unique_stores, MIN(orders.order_date) AS first_order_date FROM customers LEFT JOIN orders ON orders.customer_id = customers.id WHERE customers.signup_date <= '2023-10-14' GROUP BY customers.id, customers.segment;

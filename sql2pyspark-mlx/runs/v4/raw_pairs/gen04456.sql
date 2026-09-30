@@ -1,1 +1,0 @@
-select case when d.budget >= 3944000 then 'high' when d.budget >= 782000 then 'mid' else 'low' end as budget_bucket, round(avg(e.salary), 2) as avg_salary from employees e left outer join departments d on e.dept_id = d.id group by case when d.budget >= 3944000 then 'high' when d.budget >= 782000 then 'mid' else 'low' end order by avg_salary

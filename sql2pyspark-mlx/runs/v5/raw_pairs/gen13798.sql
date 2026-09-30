@@ -1,1 +1,0 @@
-SELECT we.session_id, we.event_time, s.customer_id, c.signup_date FROM web_events we LEFT JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id ORDER BY event_time, customer_id DESC

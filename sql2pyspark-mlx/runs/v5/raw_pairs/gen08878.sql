@@ -1,1 +1,0 @@
-SELECT store_sales.store_id, stores.region, stores.store_name, stores.city FROM store_sales JOIN stores ON stores.id = store_sales.store_id WHERE store_sales.sale_date BETWEEN '2024-06-24' AND '2025-02-24' ORDER BY store_id DESC;

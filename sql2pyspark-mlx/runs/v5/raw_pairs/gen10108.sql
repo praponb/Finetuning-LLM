@@ -1,1 +1,0 @@
-SELECT id, order_id, unit_price, product_id, RANK() OVER (PARTITION BY order_id ORDER BY unit_price) AS unit_price_rank, SUM(unit_price) OVER (PARTITION BY product_id) AS product_id_sum_unit_price FROM order_items;

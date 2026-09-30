@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY city ORDER BY age DESC) rn FROM customers) t WHERE rn <= 5

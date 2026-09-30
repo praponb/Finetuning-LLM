@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, DATE_FORMAT(opened_date, 'yyyy-MM') opened_date_label FROM stores WHERE sqft <= 5713 AND city = 'Tokyo' AND city NOT IN ('Chiang Mai', 'New York', 'Tokyo')), agg AS (SELECT region, YEAR(opened_date) opened_year, COUNT(DISTINCT sqft) unique_citys FROM base GROUP BY region, YEAR(opened_date)) SELECT * FROM agg ORDER BY 1 DESC;

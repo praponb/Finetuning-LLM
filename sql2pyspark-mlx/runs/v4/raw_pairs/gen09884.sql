@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM store_sales WHERE MONTH(sale_date) IN (2, 8, 9)), store_sales_stats AS (SELECT product_id, COUNT(*) AS store_sale_count, MIN(sale_date) AS min_sale_date FROM base GROUP BY product_id) SELECT product_id, store_sale_count FROM store_sales_stats;

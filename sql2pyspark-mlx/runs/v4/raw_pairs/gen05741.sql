@@ -1,1 +1,0 @@
-SELECT is_remote, max_salary, total_salary FROM (SELECT is_remote, MAX(salary) AS max_salary, SUM(salary) AS total_salary FROM employees GROUP BY is_remote) AS t WHERE max_salary > 132000 ORDER BY max_salary DESC, total_salary DESC, is_remote LIMIT 3

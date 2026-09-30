@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, AVG(oi.unit_price) AS avg_unit_price, SUM(oi.unit_price) AS total_unit_price FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id GROUP BY DATE_TRUNC('MONTH', c.signup_date);

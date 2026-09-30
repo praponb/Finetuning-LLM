@@ -1,1 +1,0 @@
-SELECT id, budget, dept_name, FLOOR(budget) budget_whole, CASE WHEN location = 'London' THEN 1 ELSE 0 END is_london FROM departments WHERE dept_name IN ('Legal', 'Engineering', 'Sales') AND location IS NOT NULL

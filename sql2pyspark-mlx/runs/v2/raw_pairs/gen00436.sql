@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM inventory WHERE product_id = 5 OR store_id IN (1, 3, 4)), agg AS (SELECT product_id, MAX(quantity) - MIN(quantity) quantity_range, MIN(last_restock) first_last_restock FROM src GROUP BY product_id) SELECT * FROM agg

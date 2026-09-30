@@ -1,1 +1,0 @@
-select s.id, s.sqft, s.opened_date, t.pct_partner, t.unique_stores from stores s left join (select store_id, round((100 * sum(case when channel = 'partner' then 1 else 0 end)) / count(*), 1) as pct_partner, count(distinct amount) as unique_stores from orders where status = 'RETURNED' group by store_id) t on s.id = t.store_id order by s.id;

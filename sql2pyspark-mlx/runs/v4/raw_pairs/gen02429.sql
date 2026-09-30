@@ -1,1 +1,0 @@
-WITH RecentInventory AS (SELECT * FROM inventory WHERE store_id IN (1, 5) AND store_id = 6 AND store_id IN (1, 2, 3, 5)), inventory_stats AS (SELECT product_id, store_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM RecentInventory GROUP BY product_id, store_id) SELECT product_id, store_id FROM inventory_stats ORDER BY product_id ASC, store_id ASC LIMIT 20

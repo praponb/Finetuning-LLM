@@ -1,1 +1,0 @@
-SELECT job_title, SUM(salary) AS total_salary, ROUND((100 * SUM(CASE WHEN level = 'L1' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l1 FROM employees WHERE hire_date <= '2025-02-01' GROUP BY job_title ORDER BY total_salary DESC, pct_l1

@@ -1,1 +1,0 @@
-SELECT dept_name, CASE WHEN dept_name IN ('Sales', 'Engineering') THEN 'group_a' ELSE 'other' END AS dept_name_group, AVG(budget) AS avg_budget FROM departments WHERE budget BETWEEN 1479000 AND 3283000 GROUP BY dept_name, dept_name_group HAVING AVG(budget) < 3308000 ORDER BY avg_budget DESC, dept_name ASC, dept_name_group ASC LIMIT 5;

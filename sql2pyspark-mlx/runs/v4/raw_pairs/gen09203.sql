@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN region IN ('East', 'North') THEN 'Priority' ELSE 'Other' END AS region_group, INITCAP(TRIM(city)) AS city_title FROM stores WHERE MONTH(opened_date) IN (2, 3, 10) ORDER BY city_title ASC;

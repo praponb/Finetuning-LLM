@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, MIN(quantity) AS min_quantity FROM order_items WHERE unit_price < 290 GROUP BY product_id) SELECT p.brand, p.product_name, ps.min_quantity FROM products p LEFT JOIN product_summary ps ON p.id = ps.product_id ORDER BY p.product_name, min_quantity;

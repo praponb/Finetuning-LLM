@@ -1,1 +1,0 @@
-select city, sum(case when city = 'London' then rating else 0 end) london_rating from suppliers where country not in ('US', 'SG') group by city having sum(case when country = 'TH' then rating else 0 end) > 59

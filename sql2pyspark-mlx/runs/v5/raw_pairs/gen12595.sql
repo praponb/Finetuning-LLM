@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, LOWER(browser) AS browser_lower, COALESCE(country, 'OTHER') AS country_filled FROM sessions WHERE customer_id IS NOT NULL AND browser IN ('Firefox', 'Edge', 'Safari')) SELECT customer_id, country FROM filtered EXCEPT ALL SELECT customer_id, country FROM sessions WHERE country IN ('SG', 'TH', 'US');

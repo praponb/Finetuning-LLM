@@ -1,1 +1,0 @@
-SELECT customers.is_active, SUM(CASE WHEN accounts.status = 'FROZEN' THEN 1 ELSE 0 END) AS frozen_count FROM accounts LEFT JOIN customers ON customers.id = accounts.customer_id GROUP BY customers.is_active ORDER BY frozen_count DESC;

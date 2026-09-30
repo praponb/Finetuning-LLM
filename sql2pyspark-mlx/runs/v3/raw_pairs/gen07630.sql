@@ -1,1 +1,0 @@
-select id, level, salary, dept_id, min(salary) over (partition by level) as level_min_salary, rank() over (partition by dept_id order by salary) as salary_rank from employees where salary > 75000 order by level_min_salary asc;

@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, UPPER(location) AS location_upper, COALESCE(location, 'NONE') AS location_clean FROM departments WHERE dept_name IS NOT NULL) SELECT dept_name, COUNT(*) AS cnt, COUNT(*) AS event_count, SUM(CASE WHEN location = 'London' THEN budget ELSE 0 END) AS london_budget FROM cleaned GROUP BY dept_name HAVING COUNT(*) < 1 ORDER BY dept_name;

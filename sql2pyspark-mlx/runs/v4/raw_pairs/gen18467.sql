@@ -1,1 +1,0 @@
-SELECT product_id, sale_month, revenue_range FROM (SELECT product_id, DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales WHERE product_id IN (3, 4, 5, 6) GROUP BY product_id, DATE_FORMAT(sale_date, 'yyyy-MM')) AS s WHERE revenue_range >= 31 ORDER BY 2, product_id LIMIT 50;

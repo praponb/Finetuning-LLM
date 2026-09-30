@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, SUM(CASE WHEN carrier = 'Flash' THEN 1 ELSE 0 END) AS flash_count FROM shipments GROUP BY order_id) SELECT o.id, o.status, o.order_date, os.flash_count FROM orders o INNER JOIN order_stats os ON o.id = os.order_id WHERE os.flash_count > 67 ORDER BY flash_count;

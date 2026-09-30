@@ -1,1 +1,0 @@
-SELECT s.id, s.country, t.pct_search, t.first_event_time FROM sessions s LEFT JOIN (SELECT session_id, ROUND((100 * SUM(CASE WHEN page = '/search' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_search, MIN(event_time) AS first_event_time FROM web_events WHERE session_id IN (1, 6, 15, 39) GROUP BY session_id) t ON s.id = t.session_id ORDER BY country DESC

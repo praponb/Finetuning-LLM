@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(s.opened_date, 'yyyy-MM') AS opened_month, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i LEFT OUTER JOIN stores s ON i.store_id = s.id WHERE s.city = 'Singapore' GROUP BY DATE_FORMAT(s.opened_date, 'yyyy-MM') HAVING ROUND(AVG(i.quantity), 2) > 71

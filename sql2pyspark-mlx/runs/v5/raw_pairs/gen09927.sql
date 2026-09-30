@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT id FROM stores INTERSECT ALL SELECT id FROM stores WHERE city = 'Berlin'), reconciled AS (SELECT s.* FROM stores s INNER JOIN kept_keys k ON s.id = k.id) SELECT id, store_name, city, region, opened_date FROM reconciled ORDER BY region DESC;

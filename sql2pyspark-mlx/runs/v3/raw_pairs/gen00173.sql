@@ -1,1 +1,0 @@
-select case when dept_name in ('Marketing', 'Engineering') then 'priority' else 'other' end as dept_name_group, min(budget) as min_budget from departments group by case when dept_name in ('Marketing', 'Engineering') then 'priority' else 'other' end;

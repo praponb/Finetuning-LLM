@@ -1,1 +1,0 @@
-select order_id, sum(case when status = 'SUCCESS' then amount else 0 end) as success_amount, count(*) as cnt, sort_array(collect_set(method)) as method_list from payments group by order_id order by order_id desc

@@ -1,1 +1,0 @@
-SELECT s.country, s.supplier_name, s.city, p.product_name, p.price, UPPER(TRIM(s.supplier_name)) AS supplier_name_normalized FROM suppliers s LEFT OUTER JOIN products p ON p.supplier_id = s.id WHERE s.city NOT IN ('Chiang Mai', 'Berlin') AND p.stock_qty < 294

@@ -1,1 +1,0 @@
-select oi.id, oi.unit_price, oi.quantity, oi.order_id from order_items oi where oi.order_id in (18, 19, 32) and oi.order_id not in (select id from orders where status in ('RETURNED', 'COMPLETED')) order by oi.order_id desc

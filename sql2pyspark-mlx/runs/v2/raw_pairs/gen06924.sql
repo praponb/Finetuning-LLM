@@ -1,1 +1,0 @@
-SELECT id, order_id, unit_price, product_id FROM (SELECT id, order_id, unit_price, product_id, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY unit_price DESC, id) AS rnk FROM order_items WHERE unit_price < 180) AS ranked WHERE rnk = 1 ORDER BY unit_price DESC

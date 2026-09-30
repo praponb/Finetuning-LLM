@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, MAX(ss.units) - MIN(ss.units) AS units_range FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN stores s ON ss.store_id = s.id WHERE ss.units != 25 GROUP BY DATE_FORMAT(p.launch_date, 'yyyy-MM') HAVING units_range >= 26;

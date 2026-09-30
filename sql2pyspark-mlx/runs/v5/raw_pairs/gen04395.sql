@@ -1,1 +1,0 @@
-WITH not_flagged AS (SELECT s.* FROM suppliers s WHERE EXISTS (SELECT 1 FROM products c WHERE c.supplier_id = s.id AND LOWER(TRIM(c.product_name)) = 'laptop pro 14')) SELECT id, supplier_name, rating FROM not_flagged;

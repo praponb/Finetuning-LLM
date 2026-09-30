@@ -1,1 +1,0 @@
-SELECT e.level AS employee_level, e.manager_id AS employee_manager_id, e.full_name AS employee_full_name, m.is_remote AS manager_is_remote, m.salary AS manager_salary, m.job_title AS manager_job_title FROM employees e LEFT JOIN employees m ON e.manager_id = m.id

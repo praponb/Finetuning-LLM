@@ -1,1 +1,0 @@
-SELECT id, delivered_date, carrier, status, UPPER(carrier) carrier_upper, DATE_TRUNC('year', shipped_date) shipped_date_period FROM shipments WHERE delivered_date >= '2024-07-01' AND (shipped_date <= '2025-06-12' OR cost < 80) ORDER BY carrier ASC, id ASC LIMIT 3;

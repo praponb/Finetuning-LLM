@@ -1,1 +1,0 @@
-SELECT s.region, COUNT(ss.units) AS units_count, SUM(ss.revenue) AS total_revenue FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id GROUP BY s.region ORDER BY total_revenue DESC, region LIMIT 5

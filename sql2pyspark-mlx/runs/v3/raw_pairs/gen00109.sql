@@ -1,1 +1,0 @@
-SELECT id, page, event_type, duration_sec, event_time, FIRST_VALUE(event_time) OVER (PARTITION BY page, event_type ORDER BY duration_sec DESC, id) AS first_event_time FROM web_events WHERE page IN ('/cart', '/home')

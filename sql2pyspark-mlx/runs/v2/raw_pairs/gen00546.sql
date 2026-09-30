@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(DISTINCT balance) AS unique_customers FROM accounts WHERE account_type IN ('CHECKING', 'CREDIT') GROUP BY customer_id) SELECT customers.signup_date, customers.email, customer_stats.unique_customers FROM customers LEFT OUTER JOIN customer_stats ON customers.id = customer_stats.customer_id WHERE customer_stats.unique_customers > 6;

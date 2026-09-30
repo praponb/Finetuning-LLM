@@ -1,1 +1,0 @@
-select id, hire_date, salary, dept_id, lead(salary, 1) over (order by hire_date, id) as next_salary, row_number() over (partition by dept_id order by hire_date desc, id) as hire_date_row from employees where salary between 104000 and 133000

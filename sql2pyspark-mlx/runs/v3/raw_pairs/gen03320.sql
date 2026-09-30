@@ -1,3 +1,0 @@
-SELECT name
-FROM customers
-WHERE UPPER(TRIM(name)) = 'CAROL DIAZ' AND name IS NOT NULL;

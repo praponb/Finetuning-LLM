@@ -1,1 +1,0 @@
-select month(launch_date) as launch_month, sum(case when brand = 'Umbrella' then 1 else 0 end) as umbrella_count, round((100 * sum(case when category = 'Home' then 1 else 0 end)) / count(*), 1) as pct_home from products group by 1

@@ -1,1 +1,0 @@
-WITH ranked_sessions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at DESC, id) AS pos FROM sessions) SELECT id, country, started_at, device FROM ranked_sessions WHERE pos <= 2

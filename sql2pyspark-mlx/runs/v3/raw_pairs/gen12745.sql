@@ -1,1 +1,0 @@
-SELECT c.country, AVG(t.amount) AS avg_amount, MAX(t.amount) AS max_amount FROM transactions t INNER JOIN accounts a ON a.id = t.account_id LEFT JOIN customers c ON a.customer_id = c.id GROUP BY c.country

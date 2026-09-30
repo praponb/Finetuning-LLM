@@ -1,1 +1,0 @@
-SELECT id, session_id, event_time, duration_sec, LEAD(duration_sec, 2) OVER (PARTITION BY session_id ORDER BY event_time, id) AS next_duration_sec FROM web_events WHERE event_type <> 'search' ORDER BY id;

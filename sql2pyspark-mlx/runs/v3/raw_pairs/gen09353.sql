@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT account_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(merchant))) merchant_values, MAX(amount) - MIN(amount) amount_range FROM transactions GROUP BY account_id) s WHERE amount_range < 64

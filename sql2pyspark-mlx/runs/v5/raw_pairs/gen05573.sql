@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_stores, MIN(quantity) AS min_quantity FROM inventory GROUP BY store_id) SELECT s.id, s.opened_date, s.sqft, st.unique_stores, st.min_quantity FROM stores s JOIN store_totals st ON s.id = st.store_id WHERE st.min_quantity >= 100;

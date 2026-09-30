@@ -1,1 +1,0 @@
-select date_format(opened_date, 'yyyy-MM') as opened_month, concat_ws(', ', sort_array(collect_set(status))) as status_values, count(*) as total_count from accounts group by date_format(opened_date, 'yyyy-MM') having total_count < 2;

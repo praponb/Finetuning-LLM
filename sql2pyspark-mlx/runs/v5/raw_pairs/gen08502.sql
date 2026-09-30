@@ -1,1 +1,0 @@
-with base as (select * from customers where email is not null), agg as (select date_format(signup_date, 'yyyy-MM') as signup_month, sum(credit_limit) as total_credit_limit, avg(credit_limit) as avg_credit_limit from base group by date_format(signup_date, 'yyyy-MM')) select * from agg

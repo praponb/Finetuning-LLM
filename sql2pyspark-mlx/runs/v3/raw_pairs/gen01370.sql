@@ -1,1 +1,0 @@
-SELECT country, SUM(CASE WHEN country = 'UK' THEN rating ELSE 0 END) AS uk_rating, COUNT(DISTINCT rating) AS unique_citys, ROUND(STDDEV(rating), 2) AS stddev_rating FROM suppliers WHERE rating > 2.5 AND city = 'Bangkok' GROUP BY country;

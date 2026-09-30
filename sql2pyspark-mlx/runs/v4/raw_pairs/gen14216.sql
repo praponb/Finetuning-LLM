@@ -1,1 +1,0 @@
-SELECT id, order_id, method, amount, paid_at, status, ROUND(amount / SUM(amount) OVER (PARTITION BY order_id, status), 4) AS amount_share, ROUND(amount / SUM(amount) OVER (PARTITION BY status), 4) AS amount_share_2, AVG(amount) OVER (PARTITION BY status) AS status_avg_amount FROM payments;

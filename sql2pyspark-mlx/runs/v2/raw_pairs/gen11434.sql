@@ -1,1 +1,0 @@
-select status, carrier, round(avg(cost), 2) avg_cost, concat_ws(', ', sort_array(collect_set(carrier))) carrier_values, max(delivered_date) latest_delivered_date from shipments where carrier = 'Kerry' group by status, carrier;

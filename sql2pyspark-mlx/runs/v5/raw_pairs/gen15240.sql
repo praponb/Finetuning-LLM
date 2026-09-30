@@ -1,1 +1,0 @@
-SELECT s.region, s.sqft, s.store_name, i.store_id, i.quantity, i.product_id FROM stores s LEFT OUTER JOIN inventory i ON i.store_id = s.id WHERE s.region = 'North' OR UPPER(TRIM(s.store_name)) = 'RIVERSIDE';

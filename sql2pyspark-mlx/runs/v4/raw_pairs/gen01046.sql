@@ -1,1 +1,0 @@
-SELECT job_title, analyst_count FROM (SELECT job_title, COUNT(CASE WHEN job_title = 'Analyst' THEN 1 END) AS analyst_count FROM employees WHERE job_title IN ('Director', 'Intern', 'Engineer') GROUP BY job_title) AS s WHERE analyst_count >= 6

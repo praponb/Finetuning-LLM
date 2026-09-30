@@ -1,1 +1,0 @@
-SELECT QUARTER(a.opened_date) opened_quarter, ROUND((100 * SUM(CASE WHEN t.merchant = '7-Eleven' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_7_eleven FROM transactions t INNER JOIN accounts a ON a.id = t.account_id GROUP BY QUARTER(a.opened_date) ORDER BY pct_7_eleven DESC;

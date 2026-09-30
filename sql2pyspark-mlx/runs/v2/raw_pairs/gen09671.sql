@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(*) AS total_count, ROUND(AVG(amount), 2) AS avg_amount FROM orders GROUP BY customer_id) SELECT c.credit_limit, c.age, cs.total_count, cs.avg_amount FROM customers c INNER JOIN customer_stats cs ON c.id = cs.customer_id WHERE cs.total_count > 7 ORDER BY avg_amount DESC;

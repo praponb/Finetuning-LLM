@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, SUM(CASE WHEN browser = 'Firefox' THEN 1 ELSE 0 END) AS firefox_count FROM sessions WHERE device NOT IN ('mobile', 'tablet') GROUP BY customer_id) SELECT c.city, cs.firefox_count FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id;

@@ -1,1 +1,0 @@
-SELECT id, account_id, txn_type, amount, txn_time, merchant, is_flagged, NTILE(10) OVER (PARTITION BY txn_type ORDER BY amount, id) AS amount_bucket, ROW_NUMBER() OVER (PARTITION BY txn_type, account_id ORDER BY txn_time, id) AS event_seq, NTILE(4) OVER (PARTITION BY txn_type ORDER BY amount DESC, id) AS amount_bucket_2 FROM transactions;

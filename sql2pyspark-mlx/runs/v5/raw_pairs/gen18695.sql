@@ -1,1 +1,0 @@
-WITH latest AS (SELECT id, store_name, city, opened_date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY city, region ORDER BY sqft NULLS LAST, id) AS rn FROM stores) x WHERE rn = 1) SELECT id, store_name, city, opened_date FROM latest

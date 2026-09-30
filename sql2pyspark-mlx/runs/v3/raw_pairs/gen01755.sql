@@ -1,1 +1,0 @@
-with session_summary as (select session_id, round((100 * sum(case when page = '/home' then 1 else 0 end)) / count(*), 1) as pct_home from web_events group by session_id) select s.id, s.country, ss.pct_home from sessions s left join session_summary ss on s.id = ss.session_id where ss.pct_home >= 29 order by id desc, country;

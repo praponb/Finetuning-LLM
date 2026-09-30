@@ -1,1 +1,0 @@
-WITH with_dims AS (SELECT a.*, b.browser, b.country, b.device FROM web_events a LEFT JOIN sessions b ON a.session_id = b.id) SELECT s.id, s.session_id, s.event_type, s.page, s.event_time, s.duration_sec, (SELECT MAX(w2.duration_sec) FROM web_events w2 WHERE w2.session_id = s.session_id) AS max_web_event_duration_sec FROM with_dims s ORDER BY duration_sec DESC, id DESC;

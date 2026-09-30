@@ -1,1 +1,0 @@
-select status, case when monthly_fee >= 190 then 'high' when monthly_fee >= 62 then 'mid' else 'low' end as monthly_fee_bucket, sum(monthly_fee) as total_monthly_fee from subscriptions where month(end_date) in (2, 8, 11) group by cube(status, case when monthly_fee >= 190 then 'high' when monthly_fee >= 62 then 'mid' else 'low' end) order by total_monthly_fee

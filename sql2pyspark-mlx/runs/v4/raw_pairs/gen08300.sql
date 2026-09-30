@@ -1,1 +1,0 @@
-SELECT MONTH(signup_date) AS signup_month, AVG(age) AS avg_age, COUNT(CASE WHEN city = 'New York' THEN 1 END) AS new_york_count FROM customers WHERE age <= 36 AND city NOT IN ('Bangkok', 'Tokyo', 'New York') GROUP BY 1

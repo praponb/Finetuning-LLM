@@ -1,1 +1,0 @@
-SELECT category, MIN(launch_date) AS min_launch_date, MAX(stock_qty) - MIN(stock_qty) AS stock_qty_range FROM products WHERE supplier_id IS NULL AND SIZE(tags) >= 1 GROUP BY category ORDER BY min_launch_date, category LIMIT 5;

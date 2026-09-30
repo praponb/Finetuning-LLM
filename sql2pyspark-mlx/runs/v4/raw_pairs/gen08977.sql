@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', last_restock) AS activity_month, product_id, store_id, MAX(quantity) AS max_quantity, MAX(quantity) AS max_quantity_2, COUNT(DISTINCT id) AS distinct_ids, COUNT(DISTINCT product_id) AS distinct_product_ids, AVG(quantity) AS avg_quantity, GROUPING_ID() AS gid FROM inventory GROUP BY CUBE (DATE_TRUNC('MONTH', last_restock), product_id, store_id)

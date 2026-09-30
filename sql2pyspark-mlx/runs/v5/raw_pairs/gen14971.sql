@@ -1,1 +1,0 @@
-SELECT id, country, rating, city, rating - LAG(rating, 1) OVER (PARTITION BY country ORDER BY rating, id) AS rating_change, RANK() OVER (PARTITION BY city ORDER BY rating DESC) AS rating_rank FROM suppliers WHERE country = 'JP' ORDER BY rating_change DESC;

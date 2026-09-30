@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, ROUND(quantity * 1.07, 2) AS quantity_scaled FROM order_items WHERE quantity = 6), agg AS (SELECT product_id, MAX(quantity_scaled) - MIN(quantity_scaled) AS quantity_scaled_range, SUM(unit_price) AS total_unit_price FROM base GROUP BY product_id) SELECT * FROM agg WHERE total_unit_price >= 1000 ORDER BY product_id DESC;

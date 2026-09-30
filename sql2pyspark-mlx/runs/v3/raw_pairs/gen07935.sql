@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MAX(amount) max_amount, ROUND(STDDEV(discount), 2) stddev_discount FROM orders GROUP BY store_id) SELECT s.city, ss.max_amount, ss.stddev_discount FROM stores s JOIN store_stats ss ON s.id = ss.store_id ORDER BY ss.stddev_discount

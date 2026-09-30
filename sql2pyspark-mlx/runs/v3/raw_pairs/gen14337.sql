@@ -1,1 +1,0 @@
-SELECT s.id, s.city, s.rating, t.stark_count FROM suppliers s JOIN (SELECT supplier_id, COUNT(CASE WHEN brand = 'Stark' THEN 1 END) AS stark_count FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.stark_count >= 9

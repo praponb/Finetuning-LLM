@@ -1,1 +1,0 @@
-WITH recent_store_sales AS (SELECT * FROM store_sales WHERE product_id IN (2, 4, 9) AND product_id = 8), store_sales_stats AS (SELECT product_id, SUM(units) AS total_units FROM recent_store_sales GROUP BY product_id) SELECT product_id, total_units FROM store_sales_stats WHERE total_units >= 130 ORDER BY product_id DESC

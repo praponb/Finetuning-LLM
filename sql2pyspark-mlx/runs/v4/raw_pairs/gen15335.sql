@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, COUNT(e.id) employee_count, MAX(e.hire_date) latest_hire_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(e.job_title))) job_title_values FROM departments d LEFT OUTER JOIN employees e ON d.id = e.dept_id WHERE e.is_remote GROUP BY d.id, d.dept_name;

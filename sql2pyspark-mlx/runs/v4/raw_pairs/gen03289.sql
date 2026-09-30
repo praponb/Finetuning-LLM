@@ -1,1 +1,0 @@
-select *, avg(amount) over (partition by method order by amount, id rows between 6 preceding and current row) as amount_avg_6, round(amount / sum(amount) over (partition by status), 4) as amount_share, percent_rank() over (partition by status order by amount nulls first) as amount_percent_rank from payments

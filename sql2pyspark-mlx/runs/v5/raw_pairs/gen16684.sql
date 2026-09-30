@@ -1,1 +1,0 @@
-SELECT o.status, AVG(oi.unit_price) AS avg_unit_price, SUM(oi.unit_price * oi.quantity) AS revenue FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN orders o ON oi.order_id = o.id GROUP BY o.status HAVING avg_unit_price > 160 ORDER BY avg_unit_price;

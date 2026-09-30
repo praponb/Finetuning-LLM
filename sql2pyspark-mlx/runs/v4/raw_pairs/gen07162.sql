@@ -1,1 +1,0 @@
-with base as (select *, cast(credit_limit as int) credit_limit_int, coalesce(segment, 'N/A') resolved_segment from customers where city in ('Tokyo', 'Chiang Mai', 'Singapore')) select s.* from base s where exists (select 1 from subscriptions ch where ch.customer_id = s.id and ch.monthly_fee >= 210)

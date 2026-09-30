@@ -1,1 +1,0 @@
-select s.region, s.city, s.sqft, o.store_id, o.shipping_fee, add_months(o.order_date, 3) as order_date_plus_months from stores s join orders o on s.id = o.store_id where o.discount between 0.11 and 0.3 order by o.store_id

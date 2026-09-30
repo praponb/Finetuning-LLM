@@ -1,1 +1,0 @@
-SELECT id, channel, order_date, store_id, amount, RANK() OVER (PARTITION BY channel ORDER BY order_date DESC) AS order_date_rank, SUM(amount) OVER (PARTITION BY store_id ORDER BY order_date, id) AS running_amount FROM orders

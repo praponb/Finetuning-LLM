@@ -1,1 +1,0 @@
-select id, amount, upper(channel) as channel_upper, discount * amount as discount_times_amount from orders where amount <= 550 and status in ('CANCELLED', 'RETURNED', 'SHIPPED') order by channel_upper desc, id;

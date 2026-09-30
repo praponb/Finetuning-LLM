@@ -1,1 +1,0 @@
-select id, hire_date, full_name, job_title, cast(is_remote as int) as is_remote_flag, lower(level) as level_lower from employees where email not like '%@mail.co.th' and salary between 73000 and 109000 and hire_date < '2025-07-01';

@@ -1,1 +1,0 @@
-select i.product_id, i.quantity, p.price, s.supplier_name, s.city from inventory i inner join products p on p.id = i.product_id left join suppliers s on p.supplier_id = s.id where not (p.price between 350 and 730 and s.supplier_name like 'Li%')

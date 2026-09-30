@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM employees WHERE full_name LIKE 'O%' AND manager_id IS NULL), employees_stats AS (SELECT job_title, MIN(hire_date) min_hire_date, ROUND(AVG(salary), 2) avg_salary FROM Base GROUP BY job_title) SELECT job_title, min_hire_date, avg_salary FROM employees_stats WHERE avg_salary > 54 ORDER BY min_hire_date DESC

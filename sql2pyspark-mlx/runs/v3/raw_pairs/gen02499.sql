@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT product_id, MAX(last_restock) AS last_last_restock, COUNT(quantity) AS quantity_count FROM inventory GROUP BY product_id) AS t WHERE quantity_count >= 6 ORDER BY product_id DESC, quantity_count DESC

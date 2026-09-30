@@ -1,1 +1,0 @@
-with supplier_summary as (select supplier_id, sum(price) as total_price from products where array_contains(tags, 'sale') group by supplier_id) select suppliers.id, suppliers.supplier_name, supplier_summary.total_price from suppliers inner join supplier_summary on suppliers.id = supplier_summary.supplier_id order by total_price desc;

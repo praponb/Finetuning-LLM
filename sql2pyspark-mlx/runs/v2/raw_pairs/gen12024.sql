@@ -1,1 +1,0 @@
-SELECT MONTH(stores.opened_date) AS opened_month, stores.city, COUNT(*) AS total_count FROM shipments INNER JOIN orders ON shipments.order_id = orders.id FULL OUTER JOIN stores ON stores.id = orders.store_id WHERE stores.opened_date >= '2023-04-01' GROUP BY MONTH(stores.opened_date), stores.city;

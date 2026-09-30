@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, product_id, last_restock, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_restock, id) AS rn FROM inventory) SELECT id, product_id, last_restock FROM ranked WHERE rn <= 3 ORDER BY product_id DESC

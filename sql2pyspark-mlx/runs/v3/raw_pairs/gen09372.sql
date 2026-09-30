@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) AS signup_month, MAX(s.monthly_fee) - MIN(s.monthly_fee) AS monthly_fee_range FROM subscriptions s JOIN customers c ON s.customer_id = c.id GROUP BY MONTH(c.signup_date) ORDER BY signup_month DESC

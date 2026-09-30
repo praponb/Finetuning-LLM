@@ -1,1 +1,0 @@
-with SupplierStats as (select supplier_id, min(stock_qty) min_stock_qty from products group by supplier_id) select s.id, s.rating, S.min_stock_qty from suppliers s join SupplierStats S on s.id = S.supplier_id;

@@ -1,1 +1,0 @@
-SELECT t.id, t.account_id, t.is_flagged, a.status, a.opened_date, c.age, c.name FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id WHERE c.is_active ORDER BY c.name DESC

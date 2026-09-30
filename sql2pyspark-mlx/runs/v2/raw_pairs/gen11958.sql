@@ -1,1 +1,0 @@
-SELECT store_id, product_id, unique_stores FROM (SELECT store_id, product_id, COUNT(DISTINCT quantity) unique_stores FROM inventory WHERE quantity < 100 GROUP BY store_id, product_id) t WHERE unique_stores >= 6 ORDER BY 1 DESC;

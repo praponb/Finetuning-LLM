@@ -1,1 +1,0 @@
-SELECT id, service, latency_ms, payload_json, context, context['version'] AS version, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').user.tier AS tier, COALESCE(context['trace'], 'none') AS trace_or_default FROM app_logs

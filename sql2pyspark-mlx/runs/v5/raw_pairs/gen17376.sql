@@ -1,1 +1,0 @@
-SELECT s.country, MIN(i.quantity) min_quantity FROM inventory i LEFT JOIN products p ON p.id = i.product_id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.country ORDER BY s.country LIMIT 10

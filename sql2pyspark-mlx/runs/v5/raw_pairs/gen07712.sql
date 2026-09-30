@@ -1,1 +1,0 @@
-SELECT category, COUNT(*) AS event_count, ROUND(SUM(cost) / NULLIF(COUNT(CASE WHEN brand = 'Stark' THEN 1 END), 0), 2) AS cost_per_stark, STDDEV_SAMP(stock_qty) AS stock_qty_stddev, MIN(cost) AS min_cost, COUNT_IF(category = 'Electronics') AS electronics_events FROM products GROUP BY category ORDER BY category DESC NULLS LAST

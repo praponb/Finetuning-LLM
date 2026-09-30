@@ -1,1 +1,0 @@
-SELECT departments.id, departments.location, departments.dept_name FROM departments WHERE NOT EXISTS (SELECT 1 FROM employees WHERE employees.dept_id = departments.id AND employees.level IN ('L5', 'L1', 'L3'))

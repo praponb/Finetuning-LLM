@@ -1,1 +1,0 @@
-SELECT id, store_name, region, city, INITCAP(TRIM(region)) AS region_title, TRIM(store_name) AS clean_store_name FROM stores WHERE region IN ('East', 'West', 'North') AND opened_date BETWEEN '2023-11-01' AND '2024-06-01' AND MONTH(opened_date) IN (1, 5, 8)

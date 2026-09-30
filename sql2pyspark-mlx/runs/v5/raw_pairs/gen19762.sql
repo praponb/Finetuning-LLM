@@ -1,1 +1,0 @@
-SELECT plan, avg_monthly_fee, status_list FROM (SELECT plan, AVG(monthly_fee) AS avg_monthly_fee, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM subscriptions GROUP BY plan) AS x WHERE avg_monthly_fee > 240

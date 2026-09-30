@@ -1,1 +1,0 @@
-SELECT products.id, products.category FROM products WHERE EXISTS (SELECT 1 FROM store_sales WHERE store_sales.product_id = products.id AND store_sales.store_id IN (1, 2, 4, 6)) ORDER BY category DESC;

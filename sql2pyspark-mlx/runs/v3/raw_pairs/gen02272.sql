@@ -1,1 +1,0 @@
-select s.region, min(ss.sale_date) as min_sale_date, round(avg(ss.units), 2) as avg_units from store_sales ss inner join stores s on ss.store_id = s.id left join products p on ss.product_id = p.id group by s.region;

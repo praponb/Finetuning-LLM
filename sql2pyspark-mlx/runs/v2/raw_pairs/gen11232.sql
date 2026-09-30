@@ -1,1 +1,0 @@
-SELECT channel, ROUND(AVG(shipping_fee), 2) AS avg_shipping_fee, ROUND((100 * SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_mobile, AVG(amount) AS avg_amount FROM orders GROUP BY channel

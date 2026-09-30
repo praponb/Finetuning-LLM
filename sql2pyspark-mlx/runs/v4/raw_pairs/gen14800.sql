@@ -1,1 +1,0 @@
-SELECT MONTH(hire_date) AS hire_month, CASE WHEN job_title IN ('Director', 'Manager') THEN 'tier_1' ELSE 'other' END AS job_title_group, COUNT(DISTINCT salary) AS unique_job_titles, COUNT(DISTINCT salary) AS unique_levels FROM employees GROUP BY 1, 2 HAVING COUNT(DISTINCT salary) > 1

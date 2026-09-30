@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, CAST(quantity AS DOUBLE) AS quantity_num FROM order_items WHERE order_id IN (7, 23, 40)) SELECT id, order_id, product_id, quantity, unit_price FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity_num NULLS LAST, id) AS dedup_rank FROM cleaned) x WHERE dedup_rank = 1;

@@ -1,1 +1,0 @@
-SELECT s.id, s.region, t.min_order_date FROM stores s INNER JOIN (SELECT store_id, MIN(order_date) AS min_order_date FROM orders GROUP BY store_id) t ON s.id = t.store_id ORDER BY min_order_date ASC, id DESC;

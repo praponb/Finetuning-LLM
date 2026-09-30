@@ -1,1 +1,0 @@
-SELECT event_type, page, PERCENTILE_APPROX(duration_sec, ARRAY(0.25, 0.5, 0.75)) AS duration_sec_quartiles, MAX(duration_sec) FILTER (WHERE page = '/search') AS search_max_duration_sec, COUNT_IF(page = '/product') AS product_events FROM web_events GROUP BY event_type, page ORDER BY search_max_duration_sec DESC

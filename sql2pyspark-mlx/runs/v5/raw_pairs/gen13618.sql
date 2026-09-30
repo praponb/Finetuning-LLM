@@ -1,1 +1,0 @@
-select device, country, count(case when browser = 'Chrome' then 1 end) as chrome_count, sort_array(collect_set(country)) as country_list, grouping_id() as gid from sessions group by grouping sets ((device, country), (device), ())

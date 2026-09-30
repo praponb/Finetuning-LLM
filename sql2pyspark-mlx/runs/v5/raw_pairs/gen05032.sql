@@ -1,1 +1,0 @@
-SELECT d.dept_name, d.location, t.avg_salary FROM departments d JOIN (SELECT dept_id, AVG(salary) avg_salary FROM employees WHERE email LIKE '%@mail.co.th' GROUP BY dept_id) t ON d.id = t.dept_id ORDER BY location, d.dept_name

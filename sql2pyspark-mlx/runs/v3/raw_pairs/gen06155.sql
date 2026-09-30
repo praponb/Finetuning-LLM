@@ -1,1 +1,0 @@
-WITH recent_shipments AS (SELECT * FROM shipments WHERE order_id IN (11, 13, 23, 30)), shipments_stats AS (SELECT status, MAX(delivered_date) AS last_delivered_date FROM recent_shipments GROUP BY status) SELECT status, last_delivered_date FROM shipments_stats ORDER BY 1, last_delivered_date DESC LIMIT 20;

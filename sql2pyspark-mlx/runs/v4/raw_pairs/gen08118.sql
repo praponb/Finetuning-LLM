@@ -1,1 +1,0 @@
-select case when txn_type in ('REFUND', 'DEBIT') then 'tier_1' else 'other' end as txn_type_group, quarter(txn_time) as txn_quarter, max(txn_time) as latest_txn_time, count(distinct amount) as unique_txn_types, sum(case when txn_type = 'DEBIT' then 1 else 0 end) as debit_count from transactions group by 1, 2 order by txn_quarter desc

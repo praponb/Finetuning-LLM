@@ -1,1 +1,0 @@
-select quarter(opened_date) opened_quarter, account_type, min(opened_date) min_opened_date, count(*) cnt from accounts where customer_id = 18 and status is not null group by quarter(opened_date), account_type order by opened_quarter asc;

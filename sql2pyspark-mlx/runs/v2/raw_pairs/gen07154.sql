@@ -1,1 +1,0 @@
-select id, product_id, store_id, sale_date, units, sum(units) over (partition by product_id, store_id order by sale_date, id) as running_units, sum(units) over (partition by store_id) as store_id_sum_units from store_sales where sale_date between '2023-04-13' and '2024-02-29';

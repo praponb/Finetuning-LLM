@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, COUNT(DISTINCT units) AS unique_stores, SUM(units) AS total_units FROM store_sales GROUP BY product_id) SELECT p.cost, ps.unique_stores, ps.total_units FROM products p LEFT JOIN product_summary ps ON p.id = ps.product_id ORDER BY total_units DESC;

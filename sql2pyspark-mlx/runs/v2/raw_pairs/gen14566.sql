@@ -1,1 +1,0 @@
-SELECT i.store_id, i.product_id, p.stock_qty, p.launch_date, s.store_name, DATE_FORMAT(s.opened_date, 'MMM yyyy') AS opened_date_label FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE s.store_name LIKE '%Dow%' ORDER BY s.store_name;

@@ -1,1 +1,0 @@
-SELECT customer_id, account_type, MAX(balance) - MIN(balance) AS balance_range, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts WHERE NOT (account_type = 'SAVINGS' OR account_type != 'CHECKING') GROUP BY customer_id, account_type

@@ -1,1 +1,0 @@
-SELECT e.id, e.salary employee_salary, e.manager_id employee_manager_id, m.dept_id manager_dept_id FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE e.dept_id = 40 ORDER BY e.id

@@ -1,1 +1,0 @@
-SELECT city, MIN(sqft) AS min_sqft, COUNT(CASE WHEN city = 'Tokyo' THEN 1 END) AS tokyo_count FROM stores WHERE store_name LIKE 'Ri%' OR city IN ('Tokyo', 'Berlin', 'Chiang Mai') GROUP BY city ORDER BY tokyo_count DESC, min_sqft DESC

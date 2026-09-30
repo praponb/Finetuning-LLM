@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) signup_month, ROUND(AVG(a.balance), 2) avg_balance, SUM(a.balance) total_balance FROM accounts a INNER JOIN customers c ON a.customer_id = c.id GROUP BY DATE_TRUNC('MONTH', c.signup_date) HAVING SUM(a.balance) >= 436000

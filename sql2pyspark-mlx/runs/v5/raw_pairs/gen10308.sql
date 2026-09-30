@@ -1,1 +1,0 @@
-SELECT subscriptions.id, subscriptions.start_date, subscriptions.customer_id, subscriptions.end_date, customers.city FROM subscriptions FULL OUTER JOIN customers ON subscriptions.customer_id = customers.id ORDER BY subscriptions.id DESC, subscriptions.end_date DESC

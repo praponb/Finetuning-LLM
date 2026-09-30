@@ -1,5 +1,0 @@
-SELECT
-    *,
-    SUM(age) OVER (PARTITION BY city ORDER BY age, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_age,
-    DENSE_RANK() OVER (PARTITION BY city, segment ORDER BY age DESC NULLS FIRST) AS age_dense_rank
-FROM customers

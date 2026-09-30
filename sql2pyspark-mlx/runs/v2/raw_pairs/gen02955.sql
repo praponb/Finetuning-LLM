@@ -1,1 +1,0 @@
-SELECT e.id, e.is_remote AS employee_is_remote, e.full_name AS employee_full_name, m.hire_date AS manager_hire_date, m.dept_id AS manager_dept_id, m.job_title AS manager_job_title FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.job_title IS NOT NULL ORDER BY m.job_title DESC, id LIMIT 20;

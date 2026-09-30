@@ -1,1 +1,0 @@
-SELECT s.city, s.rating, s.supplier_name, p.brand, CONCAT(p.category, ' ', p.product_name) AS category_product_name FROM suppliers s LEFT OUTER JOIN products p ON p.supplier_id = s.id WHERE p.category IN ('Sports', 'Home') OR s.city NOT IN ('Tokyo', 'New York', 'Berlin')

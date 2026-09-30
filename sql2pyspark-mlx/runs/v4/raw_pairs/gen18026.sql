@@ -1,1 +1,0 @@
-SELECT s.device, SUM(CASE WHEN we.page = '/home' THEN we.duration_sec ELSE 0 END) AS home_duration_sec, COUNT(we.duration_sec) AS duration_sec_count FROM web_events we INNER JOIN sessions s ON s.id = we.session_id WHERE we.duration_sec <= 379 GROUP BY s.device HAVING duration_sec_count > 4 ORDER BY home_duration_sec, 1

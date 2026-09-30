@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, LENGTH(plan) AS plan_length FROM subscriptions WHERE customer_id IS NOT NULL) SELECT * FROM (SELECT customer_id, status, plan, monthly_fee FROM filtered) src PIVOT (AVG(monthly_fee) FOR plan IN ('premium', 'basic'));

@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, TRIM(event_type) AS clean_event_type FROM web_events WHERE event_time > DATE '2023-09-14' AND page NOT IN ('/search', '/checkout', '/home')) SELECT id, session_id, event_type, duration_sec FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id, event_type ORDER BY duration_sec DESC NULLS LAST, id) AS row_num FROM filtered) x WHERE row_num = 1;

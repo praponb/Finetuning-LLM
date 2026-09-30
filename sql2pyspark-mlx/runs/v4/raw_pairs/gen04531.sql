@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(txn_time) < 2024 THEN 'before_2024' WHEN YEAR(txn_time) = 2024 THEN '2024' ELSE 'after_2024' END AS txn_cohort, AVG(amount) AS avg_amount, SUM(amount) AS total_amount FROM transactions WHERE txn_time >= '2025-03-01' AND (account_id IN (16, 37, 39) OR merchant IS NOT NULL) GROUP BY txn_cohort;

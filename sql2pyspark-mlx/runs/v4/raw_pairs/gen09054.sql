@@ -1,1 +1,0 @@
-SELECT CASE WHEN cost >= 80 THEN 'high' WHEN cost >= 19 THEN 'mid' ELSE 'low' END AS cost_bucket, COUNT(cost) AS cost_count FROM shipments WHERE MONTH(shipped_date) IN (2, 9, 10) GROUP BY CASE WHEN cost >= 80 THEN 'high' WHEN cost >= 19 THEN 'mid' ELSE 'low' END ORDER BY cost_bucket DESC;

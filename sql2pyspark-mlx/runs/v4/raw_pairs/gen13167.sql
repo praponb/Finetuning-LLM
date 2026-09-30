@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN page IN ('/home', '/product') THEN 'group_a' ELSE 'other' END AS page_group, event_type, duration_sec FROM web_events) PIVOT (SUM(duration_sec) FOR event_type IN ('click', 'search')) ORDER BY page_group

@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, UPPER(country) AS country_upper FROM suppliers WHERE rating IS NULL), country_summary AS (SELECT country, city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values FROM src GROUP BY country, city) SELECT * FROM country_summary;

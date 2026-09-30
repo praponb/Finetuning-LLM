@@ -1,1 +1,0 @@
-SELECT oi.id, oi.product_id, o.discount, p.product_name, p.stock_qty, TRIM(p.product_name) AS clean_product_name FROM order_items oi LEFT OUTER JOIN orders o ON oi.order_id = o.id RIGHT OUTER JOIN products p ON oi.product_id = p.id ORDER BY clean_product_name

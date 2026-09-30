@@ -1,1 +1,0 @@
-SELECT o.store_id, COUNT(DISTINCT p.amount) AS unique_methods FROM payments p JOIN orders o ON p.order_id = o.id JOIN stores s ON s.id = o.store_id WHERE s.sqft >= 12732 GROUP BY o.store_id ORDER BY store_id ASC;

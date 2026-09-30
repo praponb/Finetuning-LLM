@@ -1,1 +1,0 @@
-with account_summary as (select account_id, count(case when merchant = 'Lazada' then 1 end) as lazada_count, round(avg(amount), 2) as avg_amount from transactions where is_flagged group by account_id) select a.id, a.balance, as.lazada_count, as.avg_amount from accounts a inner join account_summary as on a.id = as.account_id where as.avg_amount > 23 order by id

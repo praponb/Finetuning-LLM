@@ -1,1 +1,0 @@
-SELECT customer_id, channel, SUM(CASE WHEN channel = 'store' THEN amount ELSE 0 END) AS store_amount FROM orders WHERE customer_id IN (14, 28, 31) AND customer_id IN (17, 21, 23) GROUP BY customer_id, channel HAVING SUM(CASE WHEN channel = 'store' THEN amount ELSE 0 END) > 42

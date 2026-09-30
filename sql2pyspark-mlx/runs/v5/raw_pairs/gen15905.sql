@@ -1,1 +1,0 @@
-select s.id, s.rating, s.city, t.unique_brands from suppliers s inner join (select supplier_id, count(distinct cost) as unique_brands from products group by supplier_id) t on s.id = t.supplier_id order by t.unique_brands asc;

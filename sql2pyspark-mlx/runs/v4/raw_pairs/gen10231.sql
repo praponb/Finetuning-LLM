@@ -1,1 +1,0 @@
-SELECT shipped_date, 'shipment' AS source FROM shipments WHERE delivered_date BETWEEN '2024-04-17' AND '2025-02-01' UNION ALL SELECT sale_date, 'store_sale' AS source FROM store_sales WHERE MONTH(sale_date) IN (2, 9, 12) ORDER BY shipped_date;

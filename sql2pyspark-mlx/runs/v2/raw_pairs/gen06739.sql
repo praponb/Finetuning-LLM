@@ -1,1 +1,0 @@
-SELECT id, signup_date, credit_limit, is_active, CASE WHEN country = 'DE' THEN 1 ELSE 0 END AS is_de FROM customers WHERE city NOT IN ('New York', 'Chiang Mai', 'Singapore') ORDER BY is_de DESC, signup_date;

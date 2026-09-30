@@ -1,1 +1,0 @@
-SELECT account_type, customer_id, COUNT(balance) balance_count, ROUND((100 * SUM(CASE WHEN status = 'OPEN' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_open FROM accounts WHERE balance <= 47000 GROUP BY account_type, customer_id ORDER BY customer_id DESC, account_type LIMIT 10;

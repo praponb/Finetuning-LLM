@@ -1,1 +1,0 @@
-select paid_quarter, order_id, stddev_amount from (select quarter(paid_at) as paid_quarter, order_id, round(stddev(amount), 2) as stddev_amount from payments group by quarter(paid_at), order_id) as s where stddev_amount > 57 order by order_id desc, paid_quarter desc

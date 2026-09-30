@@ -1,1 +1,0 @@
-WITH ranked_products AS (SELECT *, DENSE_RANK() OVER (PARTITION BY supplier_id ORDER BY stock_qty DESC) AS rn FROM products WHERE MONTH(launch_date) IN (1, 4, 6)) SELECT id, supplier_id, stock_qty, category FROM ranked_products WHERE rn <= 2;

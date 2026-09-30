@@ -1,1 +1,0 @@
-SELECT s.id, s.order_id, s.shipped_date, o.order_date, c.segment, c.city FROM shipments s LEFT JOIN orders o ON s.order_id = o.id RIGHT JOIN customers c ON c.id = o.customer_id WHERE NOT (s.delivered_date >= '2025-08-01' AND o.channel IN ('mobile', 'partner')) ORDER BY shipped_date DESC;

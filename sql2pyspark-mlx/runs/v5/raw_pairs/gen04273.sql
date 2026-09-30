@@ -1,1 +1,0 @@
-select id, store_id, status, avg(shipping_fee) over (order by order_date, id rows between 6 preceding and current row) as shipping_fee_avg_6, lead(amount, 2) over (partition by status order by shipping_fee, id) as next_amount from orders;

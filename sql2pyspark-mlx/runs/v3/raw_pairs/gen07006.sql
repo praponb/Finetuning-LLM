@@ -1,1 +1,0 @@
-WITH AccountStats AS (SELECT account_id, MAX(txn_time) AS last_txn_time, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list FROM transactions GROUP BY account_id) SELECT a.id, a.status, A.last_txn_time, A.merchant_list FROM accounts a JOIN AccountStats A ON a.id = A.account_id

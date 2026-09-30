@@ -1,1 +1,0 @@
-SELECT s.rating, t.max_stock_qty, t.avg_stock_qty FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, MAX(stock_qty) AS max_stock_qty, ROUND(AVG(stock_qty), 2) AS avg_stock_qty FROM products WHERE supplier_id = 23 GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.avg_stock_qty > 33

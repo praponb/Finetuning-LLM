@@ -1,1 +1,0 @@
-SELECT p.brand, MONTH(p.launch_date) AS launch_month, AVG(ss.units) AS avg_units, SUM(ss.revenue) AS total_revenue FROM store_sales ss FULL OUTER JOIN stores s ON ss.store_id = s.id JOIN products p ON ss.product_id = p.id WHERE p.product_name LIKE 'S%' GROUP BY p.brand, MONTH(p.launch_date) ORDER BY avg_units DESC, total_revenue;

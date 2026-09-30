@@ -1,1 +1,0 @@
-select p.brand, count(ss.id) as store_sale_count, min(ss.revenue) as min_revenue, sum(ss.revenue) as total_revenue from products p left join store_sales ss on p.id = ss.product_id where ss.store_id in (4, 5, 6) group by p.brand order by brand

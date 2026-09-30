@@ -1,1 +1,0 @@
-SELECT sessions.country, sessions.customer_id, sessions.device, customers.credit_limit, LOWER(sessions.country) AS country_lower FROM sessions LEFT OUTER JOIN customers ON sessions.customer_id = customers.id;

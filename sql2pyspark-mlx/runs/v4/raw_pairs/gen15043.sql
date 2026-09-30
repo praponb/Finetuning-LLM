@@ -1,1 +1,0 @@
-SELECT e.id, e.dept_id AS employee_dept_id, e.email AS employee_email, m.manager_id AS manager_manager_id, m.hire_date AS manager_hire_date, m.job_title AS manager_job_title FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.is_remote;

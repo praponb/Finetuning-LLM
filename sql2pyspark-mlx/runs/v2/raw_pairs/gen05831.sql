@@ -1,1 +1,0 @@
-SELECT is_active, DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, MIN(signup_date) AS first_signup_date FROM customers WHERE email LIKE '%@company.co' AND NOT is_active GROUP BY CUBE(is_active, DATE_FORMAT(signup_date, 'yyyy-MM')) ORDER BY signup_month;

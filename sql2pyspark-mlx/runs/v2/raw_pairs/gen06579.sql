@@ -1,1 +1,0 @@
-SELECT carrier, MONTH(delivered_date) AS delivered_month, ROUND(AVG(cost), 2) AS avg_cost, ROUND((100 * SUM(CASE WHEN status = 'IN_TRANSIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_in_transit FROM shipments WHERE order_id = 37 GROUP BY carrier, MONTH(delivered_date);

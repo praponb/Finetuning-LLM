@@ -1,1 +1,0 @@
-with ProductTotals as (select product_id, count(*) as num_store_sales from store_sales group by product_id) select p.id, p.launch_date, p.cost, P.num_store_sales from products p left outer join ProductTotals P on p.id = P.product_id order by id;

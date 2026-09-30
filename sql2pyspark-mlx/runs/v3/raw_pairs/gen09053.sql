@@ -1,1 +1,0 @@
-SELECT ss.store_id, ss.sale_date, s.opened_date, s.sqft, s.store_name, ss.revenue - ss.units AS revenue_per_unit FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id WHERE ss.product_id IN (1, 2, 4, 8);

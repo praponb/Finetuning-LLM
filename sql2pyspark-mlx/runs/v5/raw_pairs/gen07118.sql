@@ -1,1 +1,0 @@
-SELECT id, city, country, INITCAP(TRIM(supplier_name)) AS supplier_name_title, CASE WHEN country IN ('SG', 'US') THEN 'Priority' ELSE 'Other' END AS country_group FROM suppliers WHERE LENGTH(supplier_name) < 12 AND LOWER(TRIM(supplier_name)) = 'pacific wholesale' ORDER BY id DESC, country

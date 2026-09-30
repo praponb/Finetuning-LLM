@@ -1,1 +1,0 @@
-WITH top_web_events AS (SELECT *, RANK() OVER (PARTITION BY page ORDER BY duration_sec DESC) rn FROM web_events) SELECT id, page, duration_sec, session_id FROM top_web_events WHERE rn <= 5 ORDER BY id;

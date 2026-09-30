@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, SUM(CASE WHEN event_type = 'click' THEN duration_sec ELSE 0 END) AS click_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.device, s.started_at, st.click_duration_sec FROM sessions s LEFT JOIN session_totals st ON s.id = st.session_id WHERE st.click_duration_sec >= 42 ORDER BY s.device

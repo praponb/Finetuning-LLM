@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id, p.brand, s.rating, LOWER(s.country) AS country_lower FROM store_sales ss FULL OUTER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id WHERE s.country IN ('TH', 'JP')

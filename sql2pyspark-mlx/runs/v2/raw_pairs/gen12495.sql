@@ -1,1 +1,0 @@
-with supplier_totals as (select supplier_id, count(distinct price) as unique_categorys, min(launch_date) as first_launch_date from products where launch_date <= '2025-03-08' group by supplier_id) select s.rating, st.unique_categorys, st.first_launch_date from suppliers s inner join supplier_totals st on s.id = st.supplier_id where st.unique_categorys > 4 order by rating;

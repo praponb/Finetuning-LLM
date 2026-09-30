@@ -1,1 +1,0 @@
-SELECT p.price, ss.sale_date, CASE WHEN ss.revenue >= 4300 THEN 'High' WHEN ss.revenue >= 500 THEN 'Medium' ELSE 'Low' END AS revenue_tier FROM products p LEFT OUTER JOIN store_sales ss ON ss.product_id = p.id WHERE ss.product_id IN (1, 9) ORDER BY revenue_tier DESC

@@ -1,1 +1,0 @@
-with matched_keys as (select id from order_items except distinct select id from order_items where quantity > 7), kept_rows as (select s.* from order_items s join matched_keys k on s.id = k.id) select s.id, s.order_id, s.product_id, (select avg(x.quantity) from inventory x where x.product_id = s.product_id) as avg_inventory_quantity from kept_rows s

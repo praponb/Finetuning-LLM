@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, i.last_restock, p.supplier_id, p.product_name, s.rating, s.supplier_name, DAYOFWEEK(i.last_restock) AS last_restock_dayofweek FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.country NOT IN ('SG', 'TH', 'JP') ORDER BY supplier_id DESC, s.supplier_name ASC;

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM orders WHERE customer_id = 9 AND discount <= 0.25), orders_stats AS (SELECT QUARTER(order_date) order_quarter, ROUND(AVG(amount), 2) avg_amount FROM base GROUP BY QUARTER(order_date)) SELECT order_quarter, avg_amount FROM orders_stats WHERE avg_amount >= 31 ORDER BY avg_amount, order_quarter LIMIT 5;

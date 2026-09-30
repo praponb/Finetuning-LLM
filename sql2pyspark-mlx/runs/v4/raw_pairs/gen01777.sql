@@ -1,1 +1,0 @@
-WITH metrics AS (SELECT *, NTILE(5) OVER (PARTITION BY store_id ORDER BY revenue DESC, id) AS revenue_bucket, CORR(units, revenue) OVER (PARTITION BY product_id, store_id) AS corr_units_revenue, NTILE(3) OVER (ORDER BY units DESC, id) AS units_bucket FROM store_sales) SELECT id, product_id, sale_date, revenue, revenue_bucket, corr_units_revenue FROM metrics

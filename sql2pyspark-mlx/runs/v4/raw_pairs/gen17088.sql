@@ -1,1 +1,0 @@
-SELECT order_items.unit_price, products.product_name, orders.store_id, ROUND(products.price, 0) AS price_rounded FROM order_items LEFT OUTER JOIN products ON products.id = order_items.product_id JOIN orders ON order_items.order_id = orders.id

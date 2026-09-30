@@ -1,1 +1,0 @@
-select status, min(balance) min_balance, round((100 * sum(case when account_type = 'CREDIT' then 1 else 0 end)) / count(*), 1) pct_credit, count(balance) balance_count from accounts where account_type = 'CHECKING' group by status having min_balance >= 43000

@@ -1,1 +1,0 @@
-SELECT suppliers.city, suppliers.supplier_name, products.brand, products.launch_date, products.price, ARRAY_JOIN(products.tags, ', ') AS tags_text FROM suppliers LEFT JOIN products ON products.supplier_id = suppliers.id WHERE suppliers.country IN ('US', 'TH');

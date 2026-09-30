@@ -1,1 +1,0 @@
-select status, date_format(order_date, 'yyyy-MM') as order_month, sum(discount) as total_discount, sum(case when status = 'SHIPPED' then 1 else 0 end) as shipped_count, min(order_date) as min_order_date from orders group by status, date_format(order_date, 'yyyy-MM');

@@ -1,1 +1,0 @@
-SELECT i.quantity, p.stock_qty, s.sqft, s.city FROM inventory i JOIN products p ON p.id = i.product_id JOIN stores s ON i.store_id = s.id WHERE i.product_id IN (2, 3, 9) AND i.last_restock > '2025-07-01';

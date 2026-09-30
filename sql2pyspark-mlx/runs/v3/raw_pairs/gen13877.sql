@@ -1,1 +1,0 @@
-SELECT p.id, p.order_id, p.paid_at, o.amount, o.order_date, o.status, CONCAT(o.channel, ' - ', o.status) AS channel_status FROM payments p LEFT JOIN orders o ON o.id = p.order_id WHERE o.amount < 450 AND p.order_id IS NULL

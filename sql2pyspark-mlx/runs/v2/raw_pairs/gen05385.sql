@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, s.delivered_date, s.order_id, o.channel, o.shipping_fee, ADD_MONTHS(s.delivered_date, 6) AS delivered_date_plus_months FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id WHERE o.discount <= 0.38 ORDER BY delivered_date_plus_months, s.order_id

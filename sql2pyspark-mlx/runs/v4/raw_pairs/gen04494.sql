@@ -1,1 +1,0 @@
-WITH parsed AS (SELECT id, customer_id, items, ship_to, attributes, SIZE(attributes) AS num_attributes, COALESCE(attributes['gift'], 'none') AS gift_or_default FROM carts WHERE customer_id = 1) SELECT customer_id, MIN(num_attributes) AS min_num_attributes, MIN(num_attributes) AS min_num_attributes_2, AVG(num_attributes) AS avg_num_attributes FROM parsed GROUP BY 1;

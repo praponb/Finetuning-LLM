@@ -1,1 +1,0 @@
-SELECT store_sales.revenue, store_sales.product_id, stores.region, products.price FROM store_sales INNER JOIN stores ON store_sales.store_id = stores.id INNER JOIN products ON products.id = store_sales.product_id WHERE products.stock_qty > 198 ORDER BY region ASC, price DESC;

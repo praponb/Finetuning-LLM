@@ -1,1 +1,0 @@
-select shipments.shipped_date, shipments.order_id, orders.shipping_fee, orders.order_date, orders.amount + orders.shipping_fee as amount_with_shipping from shipments join orders on shipments.order_id = orders.id order by shipping_fee desc;

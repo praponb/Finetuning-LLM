@@ -1,1 +1,0 @@
-SELECT is_flagged, merchant_list, refund_count FROM (SELECT is_flagged, SORT_ARRAY(COLLECT_SET(merchant)) merchant_list, COUNT(CASE WHEN txn_type = 'REFUND' THEN 1 END) refund_count FROM transactions GROUP BY is_flagged) sub WHERE refund_count < 5 ORDER BY refund_count;

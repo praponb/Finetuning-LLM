@@ -34,7 +34,7 @@ SQL2PySpark translates complex SQL queries into clean PySpark code following sta
    - macOS: Launch via Applications or run `open -a Ollama`.
    - Linux: Run `systemctl start ollama` or `ollama serve`.
    - Verify: Run `ollama list` in your terminal to see registered models.
-2. **Model Registered**: At least one `sql2pyspark` tag should be present (e.g. `sql2pyspark:latest`, `sql2pyspark:v6`).
+2. **Model Registered**: At least one `sql2pyspark` tag should be present (e.g. `sql2pyspark:latest`, `sql2pyspark:v7`).
 3. **Python Environment** (for the Web UI): Python 3.10+ with Streamlit installed (`pip install -r requirements.txt`).
 
 ### Quick Start
@@ -107,9 +107,7 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
 - **Model Tag**: Change the text field in the sidebar to switch between model versions:
   - `sql2pyspark` or `sql2pyspark:latest`: Current production model (**v8**, 7B, since 2026-09-30; trained on extra complex multi-stage queries, better on long pipelines and set operations).
   - `sql2pyspark:v7`: The previous production model, kept for rollback.
-  - `sql2pyspark:v6`: Previous production model (7B).
-  - `sql2pyspark:v5`: Previous production model (3B, about twice as fast, slightly less accurate).
-  - `sql2pyspark:v4` / `:v3`: Earlier 3B models, kept for comparison.
+  - The older tags `v1`–`v6` were removed on 2026-09-30 to save disk space (see `docs/03-model-training-and-export.md` to rebuild one).
 - **Kimi K3 Repair**: *When a check fails or the SQL is long* (default; long = over 2,000 characters), *When a check fails*, *Always* or *Off* (requires `KIMI_API_KEY` in `.env`; without it the section explains how to enable it).
 
 ---
@@ -340,7 +338,7 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
 - **Solution**:
   - Run `ollama list` to verify registered tags.
   - If you have exported weights, run `make export TAG=v7` or `ollama cp sql2pyspark:v7 sql2pyspark:latest`.
-  - Alternatively, type an existing tag (e.g., `sql2pyspark:v6` or `sql2pyspark:v5`) in the sidebar text box.
+  - Alternatively, type an existing tag (e.g., `sql2pyspark:v7`) in the sidebar text box.
 
 ### Q3: Why does long SQL produce repeating window definitions?
 - **Cause**: Very long queries (>2,000 characters) can enter repetition loops on smaller models if the repetition penalty window is too small.
@@ -353,7 +351,7 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
 - **Cause**: Running Docker Desktop, Ollama, and local model training concurrently.
 - **Solution**:
   - Docker Desktop's VM allocates ~8 GB RAM. Stop Docker (`docker compose down`) before running model fine-tuning (`make train`).
-  - For inference, Ollama needs about 8 GB with the 7B `latest` model (Q8_0, 4k context) and about 3.5 GB with `sql2pyspark:v5` (3B); the Streamlit app adds about 1 GB when the Kimi repair starts Spark.
+  - For inference, Ollama needs about 8 GB with the 7B `latest` model (Q8_0, 4k context) and about 3.5 GB with a 3B model such as v5; the Streamlit app adds about 1 GB when the Kimi repair starts Spark.
 
 ---
 

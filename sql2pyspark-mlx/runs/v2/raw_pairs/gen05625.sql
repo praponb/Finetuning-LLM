@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id, p.category, s.country, s.supplier_name, UPPER(s.supplier_name) AS supplier_name_upper FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE ss.sale_date BETWEEN '2024-08-01' AND '2025-05-01' ORDER BY s.country DESC

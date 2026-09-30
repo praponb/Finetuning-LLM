@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, LENGTH(promo_code) AS promo_code_length FROM promotions WHERE starts_on >= DATE '2024-04-05') SELECT *, RANK() OVER (PARTITION BY channel, promo_code ORDER BY promo_code_length) AS promo_code_length_rank, NTILE(4) OVER (PARTITION BY channel ORDER BY discount_pct DESC, id) AS discount_pct_bucket FROM valid;

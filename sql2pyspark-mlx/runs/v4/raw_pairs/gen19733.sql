@@ -1,1 +1,0 @@
-SELECT id, created_at, coupon_codes, ship_to, ship_to.city AS ship_city, SIZE(items) AS num_items, attributes['gift'] AS gift, attributes['utm_source'] AS utm_source, COALESCE(attributes['gift'], 'direct') AS gift_or_default FROM carts

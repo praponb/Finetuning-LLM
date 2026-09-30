@@ -1,1 +1,0 @@
-SELECT a.id, a.customer_id, t.unique_txn_types, t.amazon_amount FROM accounts a JOIN (SELECT account_id, COUNT(DISTINCT amount) AS unique_txn_types, SUM(CASE WHEN merchant = 'Amazon' THEN amount ELSE 0 END) AS amazon_amount FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.amazon_amount >= 34 ORDER BY customer_id DESC;

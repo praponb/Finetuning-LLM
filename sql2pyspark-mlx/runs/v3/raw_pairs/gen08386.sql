@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT store_id, product_id, MIN(quantity) AS min_quantity, MAX(quantity) AS max_quantity FROM inventory WHERE quantity = 67 GROUP BY store_id, product_id) AS s WHERE min_quantity >= 180 ORDER BY max_quantity, store_id, product_id LIMIT 5

@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY sale_date, id) AS pos FROM store_sales) SELECT id, store_id, sale_date, revenue FROM numbered WHERE pos = 1 ORDER BY store_id DESC;

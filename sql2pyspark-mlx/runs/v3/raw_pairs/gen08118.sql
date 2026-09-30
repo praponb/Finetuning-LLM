@@ -1,1 +1,0 @@
-select level, l3_count from (select level, count(case when level = 'L3' then 1 end) as l3_count from employees where is_remote group by level) as t where l3_count < 7 order by l3_count desc, level limit 3;

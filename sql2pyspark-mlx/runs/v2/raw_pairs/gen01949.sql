@@ -1,1 +1,0 @@
-WITH valid_shipments AS (SELECT *, DATEDIFF(CURRENT_DATE(), shipped_date) AS days_since_shipped_date FROM shipments WHERE YEAR(shipped_date) >= 2024), ShipmentsStats AS (SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(carrier))) AS carrier_values FROM valid_shipments GROUP BY status) SELECT status, carrier_values FROM ShipmentsStats ORDER BY carrier_values;

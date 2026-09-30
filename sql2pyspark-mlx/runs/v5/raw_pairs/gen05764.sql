@@ -1,1 +1,0 @@
-select id, dept_name, case when dept_name = 'Sales' then 1 else 0 end as is_sales from departments where dept_name not in ('Marketing', 'Legal', 'Finance') and (dept_name is not null or location in ('Bangkok', 'London')) order by is_sales

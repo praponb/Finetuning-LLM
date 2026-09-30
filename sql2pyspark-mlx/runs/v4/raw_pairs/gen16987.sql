@@ -1,1 +1,0 @@
-SELECT MONTH(order_date) order_month, channel, COUNT(CASE WHEN channel = 'mobile' THEN 1 END) mobile_count, ROUND(AVG(discount), 2) avg_discount, MAX(amount) max_amount FROM orders GROUP BY order_month, channel;

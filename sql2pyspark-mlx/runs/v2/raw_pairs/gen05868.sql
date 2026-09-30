@@ -1,1 +1,0 @@
-SELECT store_sales.store_id, store_sales.units, products.supplier_id, stores.sqft, stores.opened_date, INITCAP(TRIM(products.category)) AS category_title FROM store_sales INNER JOIN products ON store_sales.product_id = products.id INNER JOIN stores ON store_sales.store_id = stores.id WHERE products.supplier_id IN (16, 31) AND store_sales.revenue <= 3400

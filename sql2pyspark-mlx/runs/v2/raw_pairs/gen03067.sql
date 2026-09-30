@@ -1,1 +1,0 @@
-SELECT id, plan, status, start_date, monthly_fee, SUM(monthly_fee) OVER (PARTITION BY plan, status ORDER BY start_date, id) AS running_monthly_fee FROM subscriptions WHERE status IN ('ACTIVE', 'EXPIRED', 'CANCELLED');

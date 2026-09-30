@@ -1,1 +1,0 @@
-SELECT txn_type, ROUND(STDDEV(amount), 2) stddev_amount, SUM(CASE WHEN merchant = 'Grab' THEN 1 ELSE 0 END) grab_count FROM transactions WHERE merchant <> 'Amazon' AND txn_time < '2025-06-07' GROUP BY 1 ORDER BY stddev_amount DESC;

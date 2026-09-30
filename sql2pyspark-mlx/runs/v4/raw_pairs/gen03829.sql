@@ -1,1 +1,0 @@
-select quarter(sale_date) as sale_quarter, min(sale_date) as first_sale_date, max(units) - min(units) as units_range, count(units) as units_count from store_sales where store_id in (1, 5) and (product_id in (4, 7) or product_id = 3) group by sale_quarter order by units_count;

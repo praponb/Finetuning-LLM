@@ -1,1 +1,0 @@
-SELECT we.id, we.duration_sec, we.event_time, s.country, c.signup_date FROM web_events we LEFT OUTER JOIN sessions s ON we.session_id = s.id RIGHT OUTER JOIN customers c ON s.customer_id = c.id WHERE s.customer_id IS NOT NULL ORDER BY c.signup_date;

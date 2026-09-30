@@ -1,1 +1,0 @@
-SELECT id, carrier, shipped_date, delivered_date, LAST_VALUE(delivered_date) OVER (PARTITION BY carrier ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_delivered_date FROM shipments WHERE MONTH(shipped_date) IN (3, 6, 10)

@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, MIN(amount) AS min_amount FROM transactions WHERE merchant = 'Starbucks' OR merchant IN ('7-Eleven', 'Amazon') GROUP BY DATE_TRUNC('MONTH', txn_time) ORDER BY min_amount DESC

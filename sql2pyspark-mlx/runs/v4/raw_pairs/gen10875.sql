@@ -1,1 +1,0 @@
-SELECT suppliers.supplier_name, suppliers.rating, products.product_name, products.category, products.supplier_id FROM suppliers LEFT JOIN products ON suppliers.id = products.supplier_id WHERE suppliers.country = 'SG' ORDER BY rating DESC

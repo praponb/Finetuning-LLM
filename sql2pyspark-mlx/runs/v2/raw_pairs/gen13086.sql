@@ -1,1 +1,0 @@
-WITH top_payments AS (SELECT id, order_id, paid_at, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY paid_at DESC, id) AS rnk FROM payments) SELECT * FROM top_payments WHERE rnk <= 2 ORDER BY rnk DESC, id DESC

@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.product_id, ss.store_id AS store_sale_store_id, ADD_MONTHS(i.last_restock, 3) AS last_restock_plus_months FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id

@@ -1,1 +1,0 @@
-WITH SupplierTotals AS (SELECT supplier_id, MAX(cost) AS max_cost, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values FROM products WHERE ARRAY_CONTAINS(tags, 'bestseller') GROUP BY supplier_id) SELECT s.id, s.supplier_name, s.rating, S.max_cost, S.brand_values FROM suppliers s INNER JOIN SupplierTotals S ON s.id = S.supplier_id ORDER BY s.rating DESC, id LIMIT 5;

@@ -1,1 +1,0 @@
-with customer_stats as (select customer_id, max(amount) - min(amount) as amount_range, sum(case when status = 'RETURNED' then amount else 0 end) as returned_amount from orders where channel <> 'partner' group by customer_id) select c.credit_limit, c.country, cs.amount_range, cs.returned_amount from customers c inner join customer_stats cs on c.id = cs.customer_id order by country

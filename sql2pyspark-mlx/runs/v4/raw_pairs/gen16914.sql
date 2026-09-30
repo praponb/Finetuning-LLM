@@ -1,1 +1,0 @@
-SELECT we.page, we.event_time, we.session_id, s.device, s.customer_id, LENGTH(we.event_type) AS event_type_length FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE we.event_type IN ('search', 'add_to_cart') ORDER BY event_type_length DESC;

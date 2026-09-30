@@ -1,1 +1,0 @@
-SELECT p.category, COUNT(DISTINCT ss.revenue) AS unique_stores, ROUND(STDDEV(ss.units), 2) AS stddev_units FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE ss.revenue > 3000 GROUP BY p.category HAVING COUNT(DISTINCT ss.revenue) > 2;

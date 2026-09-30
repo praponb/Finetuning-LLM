@@ -1,1 +1,0 @@
-SELECT p.status, p.method, p.amount, o.amount AS order_amount, o.store_id FROM payments p LEFT JOIN orders o ON p.order_id = o.id WHERE p.method NOT IN ('bank_transfer', 'paypal') AND o.amount < 1220 ORDER BY method DESC

@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, o.status, o.store_id, c.is_active, c.city FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id WHERE s.order_id = 11 AND o.order_date < '2024-11-01' ORDER BY store_id DESC

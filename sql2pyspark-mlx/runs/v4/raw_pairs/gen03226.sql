@@ -1,1 +1,0 @@
-SELECT oi.product_id, p.category, p.brand, s.rating, s.city, GREATEST(oi.unit_price, oi.quantity) greatest_unit_price_quantity FROM order_items oi JOIN products p ON oi.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id

@@ -1,1 +1,0 @@
-select e.hire_date, d.location, d.budget, d.dept_name, upper(d.location) as location_upper from employees e left join departments d on e.dept_id = d.id where d.dept_name not in ('Engineering', 'Sales')

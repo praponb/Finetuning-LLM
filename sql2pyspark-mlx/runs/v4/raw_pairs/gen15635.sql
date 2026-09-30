@@ -1,5 +1,0 @@
-SELECT
-    *,
-    LAST_VALUE(region) IGNORE NULLS OVER (PARTITION BY city, region ORDER BY sqft, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_region,
-    AVG(sqft) OVER (PARTITION BY region ORDER BY opened_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS sqft_avg_2
-FROM stores;

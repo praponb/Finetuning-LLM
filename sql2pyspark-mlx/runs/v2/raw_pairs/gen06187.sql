@@ -1,1 +1,0 @@
-with Base as (select * from web_events where event_type = 'search'), web_events_stats as (select session_id, max(event_time) as last_event_time from Base group by session_id) select session_id, last_event_time from web_events_stats order by last_event_time desc, session_id desc;

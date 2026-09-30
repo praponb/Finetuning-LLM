@@ -1,1 +1,0 @@
-SELECT d.region, d.city, COUNT(*) AS num_rows, MAX(src.revenue) AS max_revenue, MAX(src.units) AS max_units, GROUPING_ID() AS level_id FROM store_sales src INNER JOIN stores d ON src.store_id = d.id GROUP BY GROUPING SETS ((d.region, d.city), (d.region), ()) ORDER BY num_rows NULLS FIRST;

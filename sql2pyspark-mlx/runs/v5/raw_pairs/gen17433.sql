@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, customer_id, created_at, coupon_codes, key, value FROM carts LATERAL VIEW EXPLODE(attributes) e AS key, value) SELECT DATE_TRUNC('DAY', created_at) AS activity_day, customer_id, SORT_ARRAY(COLLECT_SET(key)) AS key_list, MIN(created_at) AS started_at, COUNT_IF(key = 'device') AS device_events FROM exploded GROUP BY 1, 2;

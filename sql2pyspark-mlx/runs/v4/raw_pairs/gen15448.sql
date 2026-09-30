@@ -1,1 +1,0 @@
-SELECT s.rating, s.country, t.category_values, t.stddev_stock_qty FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY s.rating DESC

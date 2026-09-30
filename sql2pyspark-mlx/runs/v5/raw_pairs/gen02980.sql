@@ -1,1 +1,0 @@
-SELECT status, unique_statuss, unique_stores FROM (SELECT status, COUNT(DISTINCT shipping_fee) AS unique_statuss, COUNT(DISTINCT shipping_fee) AS unique_stores FROM orders WHERE MONTH(order_date) IN (9, 11, 12) GROUP BY status) AS t WHERE unique_statuss < 3 ORDER BY 1 ASC LIMIT 5;

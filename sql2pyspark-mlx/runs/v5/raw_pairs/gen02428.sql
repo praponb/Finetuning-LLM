@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT order_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM order_items WHERE product_id IN (9, 21) GROUP BY order_id) AS sub WHERE stddev_quantity < 20 ORDER BY stddev_quantity DESC, order_id DESC;

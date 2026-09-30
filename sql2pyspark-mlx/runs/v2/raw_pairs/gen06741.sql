@@ -1,1 +1,0 @@
-select country, case when country in ('JP', 'UK') then 'Tier 1' else 'Other' end as country_group, concat(city, '/', supplier_name) as city_supplier_name from suppliers where supplier_name like 'T%' and length(supplier_name) >= 6

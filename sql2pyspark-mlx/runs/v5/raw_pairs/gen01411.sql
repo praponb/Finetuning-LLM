@@ -1,1 +1,0 @@
-SELECT QUARTER(shipped_date) AS shipped_quarter, COUNT(DISTINCT cost) AS unique_carriers, ROUND(AVG(cost), 2) AS avg_cost FROM shipments WHERE delivered_date > '2023-05-12' AND (status = 'RETURNED' OR carrier NOT IN ('UPS', 'Kerry')) GROUP BY shipped_quarter

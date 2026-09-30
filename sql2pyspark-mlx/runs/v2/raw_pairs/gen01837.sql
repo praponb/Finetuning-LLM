@@ -1,1 +1,0 @@
-SELECT product_id, ROUND(STDDEV(unit_price), 2) stddev_unit_price, SUM(unit_price) total_unit_price, ROUND(AVG(unit_price), 2) avg_unit_price FROM order_items GROUP BY product_id HAVING COUNT(DISTINCT quantity) < 1 ORDER BY stddev_unit_price, product_id

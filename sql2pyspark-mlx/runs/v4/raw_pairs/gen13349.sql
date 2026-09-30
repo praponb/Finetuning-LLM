@@ -1,1 +1,0 @@
-with department_summary as (select dept_id, sum(case when job_title = 'Engineer' then salary else 0 end) as engineer_salary from employees where salary between 123000 and 134000 group by dept_id) select d.id, d.dept_name, d.location, ds.engineer_salary from departments d inner join department_summary ds on d.id = ds.dept_id where ds.engineer_salary >= 24;

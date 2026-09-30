@@ -1,1 +1,0 @@
-with sessions_by_customer as (select customer_id, count(distinct country) as unique_countrys from sessions group by customer_id) select c.id, c.credit_limit, sbc.unique_countrys from customers c inner join sessions_by_customer sbc on c.id = sbc.customer_id;

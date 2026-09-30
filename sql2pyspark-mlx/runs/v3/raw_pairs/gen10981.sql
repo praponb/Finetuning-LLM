@@ -1,1 +1,0 @@
-WITH top_employees AS (SELECT id, manager_id, salary, hire_date, DENSE_RANK() OVER (PARTITION BY manager_id ORDER BY salary DESC) AS row_num FROM employees) SELECT id, manager_id, salary, hire_date FROM top_employees WHERE row_num <= 3 ORDER BY 1;

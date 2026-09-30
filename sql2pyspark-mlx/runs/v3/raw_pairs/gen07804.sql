@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM products WHERE ARRAY_CONTAINS(tags, 'premium') AND launch_date > '2023-06-01'), summary AS (SELECT brand, category, ROUND(STDDEV(cost), 2) AS stddev_cost FROM base GROUP BY brand, category) SELECT brand, stddev_cost FROM summary WHERE stddev_cost >= 59 ORDER BY stddev_cost;

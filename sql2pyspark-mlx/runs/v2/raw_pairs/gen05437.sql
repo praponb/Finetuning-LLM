@@ -1,1 +1,0 @@
-SELECT method, AVG(amount) avg_amount, ROUND((100 * SUM(CASE WHEN method = 'cash' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_cash, MAX(amount) - MIN(amount) amount_range FROM payments WHERE order_id IN (13, 15, 37, 38) AND (paid_at >= '2024-02-01' OR order_id IN (18, 22, 27, 29)) GROUP BY method ORDER BY pct_cash DESC;

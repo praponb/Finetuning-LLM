@@ -1,1 +1,0 @@
-with filtered_stores as (select * from stores where region = 'North'), stores_stats as (select year(opened_date) opened_year, avg(sqft) avg_sqft from filtered_stores group by year(opened_date)) select opened_year, avg_sqft from stores_stats where avg_sqft < 13800

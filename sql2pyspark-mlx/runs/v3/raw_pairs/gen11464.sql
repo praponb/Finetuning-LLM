@@ -1,1 +1,0 @@
-select i.id, i.last_restock, i.store_id, i.product_id, ss.product_id store_sale_product_id, ss.units from inventory i left outer join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.quantity <= 154 order by store_id desc;

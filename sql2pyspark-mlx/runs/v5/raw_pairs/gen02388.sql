@@ -1,1 +1,0 @@
-with customer_stats as (select customer_id, sum(amount) as total_amount, avg(amount) as avg_amount from orders group by customer_id) select c.id, c.country, c.is_active, cs.total_amount, cs.avg_amount from customers c left outer join customer_stats cs on c.id = cs.customer_id where cs.total_amount > 9200 order by avg_amount asc

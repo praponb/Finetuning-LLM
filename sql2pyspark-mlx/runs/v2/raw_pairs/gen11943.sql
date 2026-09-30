@@ -1,1 +1,0 @@
-select year(customers.signup_date) as signup_year, customers.city, min(accounts.balance) as min_balance, count(*) as account_count from accounts left join customers on customers.id = accounts.customer_id group by year(customers.signup_date), customers.city;

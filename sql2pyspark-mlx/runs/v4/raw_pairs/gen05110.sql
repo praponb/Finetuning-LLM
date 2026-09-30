@@ -1,7 +1,0 @@
-SELECT city
-FROM customers
-INTERSECT
-SELECT city
-FROM stores
-WHERE sqft BETWEEN 5482 AND 11191
-ORDER BY city DESC;

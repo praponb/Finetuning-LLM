@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered_count FROM shipments GROUP BY order_id) SELECT o.id, o.amount, os.delivered_count FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.delivered_count > 71

@@ -1,1 +1,0 @@
-select s.store_name, s.region, ss.store_id from stores s left outer join store_sales ss on ss.store_id = s.id where year(s.opened_date) = 2024 or s.city in ('Tokyo', 'Chiang Mai', 'London') order by store_id;

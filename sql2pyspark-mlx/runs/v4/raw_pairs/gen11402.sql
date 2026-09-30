@@ -1,1 +1,0 @@
-with filtered as (select *, upper(city) city_upper, concat_ws('/', region, city) region_city_key from stores where opened_date >= date '2023-07-25' and region is not null) select id, city from filtered except distinct select id, city from stores where sqft = 5289;

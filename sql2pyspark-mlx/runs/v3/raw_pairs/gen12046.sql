@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, status, ROUND((100 * SUM(CASE WHEN account_type = 'SAVINGS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_savings FROM accounts WHERE customer_id IN (20, 24, 38) GROUP BY opened_month, status ORDER BY pct_savings, status

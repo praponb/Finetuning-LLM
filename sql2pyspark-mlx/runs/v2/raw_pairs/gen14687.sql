@@ -1,1 +1,0 @@
-SELECT channel, CASE WHEN discount >= 0.31 THEN 'high' WHEN discount >= 0.16 THEN 'mid' ELSE 'low' END AS discount_bucket, store_id, MIN(order_date) AS min_order_date FROM orders WHERE order_date > '2025-06-01' AND shipping_fee >= 16 GROUP BY channel, CASE WHEN discount >= 0.31 THEN 'high' WHEN discount >= 0.16 THEN 'mid' ELSE 'low' END, store_id

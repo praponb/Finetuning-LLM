@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, COUNT(DISTINCT s.country) AS unique_countrys FROM sessions s INNER JOIN customers c ON s.customer_id = c.id GROUP BY DATE_TRUNC('MONTH', c.signup_date) HAVING COUNT(DISTINCT s.country) > 2 ORDER BY signup_month DESC LIMIT 5

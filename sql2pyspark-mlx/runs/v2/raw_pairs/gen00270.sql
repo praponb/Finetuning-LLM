@@ -1,1 +1,0 @@
-SELECT plan, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE monthly_fee BETWEEN 80 AND 170 GROUP BY plan HAVING SUM(CASE WHEN status = 'CANCELLED' THEN monthly_fee ELSE 0 END) > 57 ORDER BY monthly_fee_range DESC;

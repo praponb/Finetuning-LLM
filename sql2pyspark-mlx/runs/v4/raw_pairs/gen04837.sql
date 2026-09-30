@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.2 THEN 'high' WHEN rating >= 2.4 THEN 'mid' ELSE 'low' END rating_bucket, country, city, COUNT(DISTINCT rating) unique_citys, MAX(rating) max_rating FROM suppliers GROUP BY 1, 2, 3 HAVING max_rating >= 3.4;

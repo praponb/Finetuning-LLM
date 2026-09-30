@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, plan, effective_from, val FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_limits) li AS val) SELECT *, RANK() OVER (PARTITION BY plan ORDER BY val ASC NULLS FIRST) AS val_rank, RANK() OVER (ORDER BY val DESC NULLS FIRST) AS val_rank_2 FROM flattened

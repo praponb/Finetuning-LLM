@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.product_id, p.cost, p.price, s.country FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id RIGHT JOIN suppliers s ON p.supplier_id = s.id ORDER BY id DESC, store_id DESC;

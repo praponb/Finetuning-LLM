@@ -1,1 +1,0 @@
-SELECT a.account_type, a.customer_id, a.status, t.merchant, t.is_flagged, t.txn_time, CASE WHEN a.account_type IN ('CREDIT', 'CHECKING') THEN 'Group A' ELSE 'Other' END account_type_group FROM accounts a LEFT JOIN transactions t ON a.id = t.account_id

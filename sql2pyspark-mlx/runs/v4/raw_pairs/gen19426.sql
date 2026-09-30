@@ -1,1 +1,0 @@
-SELECT level, ROUND((100 * SUM(CASE WHEN level = 'L2' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l2, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) AS job_title_values FROM employees WHERE full_name IS NULL AND full_name IS NOT NULL GROUP BY level HAVING pct_l2 < 35;

@@ -1,1 +1,0 @@
-SELECT s.id, s.started_at, s.browser, t.cart_count, t.first_event_time FROM sessions s LEFT OUTER JOIN (SELECT session_id, SUM(CASE WHEN page = '/cart' THEN 1 ELSE 0 END) AS cart_count, MIN(event_time) AS first_event_time FROM web_events WHERE page IS NULL GROUP BY session_id) t ON s.id = t.session_id

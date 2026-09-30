@@ -1,1 +1,0 @@
-SELECT s.id, s.city, COUNT(o.id) AS order_count, ROUND((100 * SUM(CASE WHEN o.status = 'CANCELLED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cancelled, ROUND((100 * SUM(CASE WHEN o.channel = 'partner' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_partner FROM stores s LEFT JOIN orders o ON s.id = o.store_id GROUP BY s.id, s.city;

@@ -1,1 +1,0 @@
-select id, product_id, last_restock, quantity, lead(quantity, 1) over (partition by product_id order by last_restock, id) as next_quantity, min(quantity) over (partition by product_id) as product_id_min_quantity from inventory

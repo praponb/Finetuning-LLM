@@ -1,1 +1,0 @@
-SELECT id, page, event_time, event_type, CASE WHEN duration_sec >= 366 THEN 'High' WHEN duration_sec >= 169 THEN 'Medium' ELSE 'Low' END AS duration_sec_band, CAST(event_time AS DATE) AS event_time_day FROM web_events WHERE session_id IN (3, 23) AND HOUR(event_time) BETWEEN 7 AND 13 AND HOUR(event_time) BETWEEN 8 AND 13;

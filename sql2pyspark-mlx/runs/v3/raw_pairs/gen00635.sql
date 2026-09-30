@@ -1,1 +1,0 @@
-select status, round((100 * sum(case when status = 'ACTIVE' then 1 else 0 end)) / count(*), 1) as pct_active, count(case when status = 'ACTIVE' then 1 end) as active_count from subscriptions group by status order by status, active_count desc

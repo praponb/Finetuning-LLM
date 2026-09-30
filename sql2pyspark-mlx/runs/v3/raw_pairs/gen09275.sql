@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.store_id, products.launch_date, stores.opened_date, stores.sqft FROM inventory RIGHT JOIN products ON inventory.product_id = products.id RIGHT JOIN stores ON inventory.store_id = stores.id ORDER BY products.launch_date;

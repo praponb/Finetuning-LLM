@@ -1,1 +1,0 @@
-SELECT c.segment, SORT_ARRAY(COLLECT_SET(s.status)) AS status_list, MAX(s.monthly_fee) AS max_monthly_fee FROM subscriptions s INNER JOIN customers c ON c.id = s.customer_id WHERE c.city = 'Singapore' GROUP BY c.segment ORDER BY c.segment

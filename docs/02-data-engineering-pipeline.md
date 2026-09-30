@@ -279,7 +279,7 @@ $$\text{Signature} = \text{family} \;\|\; \text{sorted}(\text{features})$$
   - **Signatures shared between train and valid/test**: **0**
   - **Features missing from train**: **0**
 - **v5**: verified 20,071; train 16,927 (55.1% classic, 24.5% short v4, 20.4% pipelines) / valid 2,096 / test 1,048
-- **v4**: train 16,924 / valid 2,096 / test 1,048 (backup in `runs/v4/data/`)
+- **v4**: train 16,924 / valid 2,096 / test 1,048 (the `runs/v4/data/` backup was removed on 2026-09-30; still in the git history)
 
 Pipelines have nearly unique signatures, so they make up a larger share of valid/test than of train. Because the split is recomputed for every dataset version, the v2, v3 and v4 test splits contain different queries; compare two models on the same split (see [04 - Evaluation](04-evaluation-and-benchmarking.md)).
 

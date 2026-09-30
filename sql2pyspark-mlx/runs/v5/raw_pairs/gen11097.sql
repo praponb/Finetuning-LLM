@@ -1,1 +1,0 @@
-SELECT id, device, country, customer_id, DATE_FORMAT(started_at, 'yyyy-MM-dd') AS started_at_label FROM sessions WHERE (country IN ('JP', 'UK') AND HOUR(started_at) BETWEEN 7 AND 15) OR country = 'DE' ORDER BY device

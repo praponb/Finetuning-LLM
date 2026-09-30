@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, GREATEST(quantity, unit_price) AS greatest_quantity_unit_price FROM order_items WHERE product_id IS NOT NULL) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY unit_price DESC NULLS LAST, id) AS rn FROM filtered) ranked WHERE rn = 1

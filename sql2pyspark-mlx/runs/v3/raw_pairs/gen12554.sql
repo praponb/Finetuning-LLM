@@ -1,1 +1,0 @@
-SELECT p.id, p.product_name, COUNT(oi.id) AS order_item_count, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price, MAX(oi.quantity) - MIN(oi.quantity) AS quantity_range FROM products p LEFT JOIN order_items oi ON oi.product_id = p.id GROUP BY p.id, p.product_name ORDER BY p.product_name, id LIMIT 5;

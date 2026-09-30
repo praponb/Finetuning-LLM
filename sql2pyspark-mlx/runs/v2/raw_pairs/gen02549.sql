@@ -1,1 +1,0 @@
-select month(stores.opened_date) as opened_month, stores.city, max(order_items.quantity) as max_quantity, sum(order_items.unit_price * order_items.quantity) as revenue from order_items inner join orders on order_items.order_id = orders.id inner join stores on orders.store_id = stores.id where orders.store_id in (7, 32) group by month(stores.opened_date), stores.city

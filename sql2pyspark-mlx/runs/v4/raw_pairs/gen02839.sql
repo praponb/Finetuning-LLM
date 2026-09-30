@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, LAST_DAY(delivered_date) delivered_date_month_end FROM shipments WHERE shipped_date >= DATE '2023-07-24' AND status = 'LOST') SELECT s.*, b.amount, b.status AS order_status FROM cleaned s INNER JOIN orders b ON s.order_id = b.id;

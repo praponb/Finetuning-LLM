@@ -1,1 +1,0 @@
-select order_id, amount, status, floor(amount) as amount_whole, date_trunc('year', paid_at) as paid_at_period from payments where method not in ('card', 'paypal', 'cash') or order_id is not null order by 3;

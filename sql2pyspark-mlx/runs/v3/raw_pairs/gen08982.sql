@@ -1,1 +1,0 @@
-SELECT a.id, a.status, COUNT(t.id) AS transaction_count FROM accounts a LEFT OUTER JOIN transactions t ON t.account_id = a.id WHERE a.status IN ('CLOSED', 'OPEN') GROUP BY a.id, a.status ORDER BY a.status

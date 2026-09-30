@@ -1,1 +1,0 @@
-select ss.product_id, max(i.quantity) - min(i.quantity) as quantity_range from inventory i inner join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.product_id having max(i.quantity) - min(i.quantity) >= 60;

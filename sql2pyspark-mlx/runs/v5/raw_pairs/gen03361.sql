@@ -1,1 +1,0 @@
-SELECT o.id, o.shipping_fee, o.channel, c.signup_date, c.email, s.sqft, s.region FROM orders o INNER JOIN customers c ON c.id = o.customer_id INNER JOIN stores s ON o.store_id = s.id WHERE c.is_active AND s.opened_date > '2025-04-01';

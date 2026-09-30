@@ -1,1 +1,0 @@
-WITH ValidOrderItems AS (SELECT * FROM order_items WHERE unit_price >= 260 AND unit_price > 310), agg AS (SELECT order_id, AVG(quantity) AS avg_quantity, SUM(unit_price * quantity) AS revenue FROM ValidOrderItems GROUP BY order_id) SELECT order_id, avg_quantity, revenue FROM agg WHERE avg_quantity >= 6.2

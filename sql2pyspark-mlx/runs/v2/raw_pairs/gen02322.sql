@@ -1,1 +1,0 @@
-SELECT p.category, p.brand, AVG(i.quantity) AS avg_quantity, SUM(i.quantity) AS total_quantity FROM inventory i JOIN stores s ON i.store_id = s.id JOIN products p ON p.id = i.product_id GROUP BY p.category, p.brand

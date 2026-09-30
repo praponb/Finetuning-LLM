@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, store_id, quantity, DATE_FORMAT(last_restock, 'MMM yyyy') AS last_restock_label FROM inventory WHERE store_id IN (1, 2, 3, 6)) SELECT id, store_id, quantity FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY quantity DESC, id) = 1;

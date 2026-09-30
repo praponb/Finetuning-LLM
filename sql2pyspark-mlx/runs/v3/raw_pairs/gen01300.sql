@@ -1,1 +1,0 @@
-with RankedOrderItems as (select id, order_id, quantity, product_id, rank() over (partition by order_id order by quantity) as rnk from order_items where quantity <= 3) select id, order_id, quantity, product_id from RankedOrderItems where rnk = 1;

@@ -1,1 +1,0 @@
-WITH filtered_subscriptions AS (SELECT * FROM subscriptions WHERE YEAR(start_date) >= 2023 AND status != 'ACTIVE'), summary AS (SELECT status, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM filtered_subscriptions GROUP BY status) SELECT status, monthly_fee_range FROM summary ORDER BY status, monthly_fee_range

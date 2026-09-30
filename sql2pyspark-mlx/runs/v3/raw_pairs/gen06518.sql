@@ -1,1 +1,0 @@
-select id, start_date, customer_id, status, concat(plan, ' - ', status) as plan_status from subscriptions where end_date between '2023-05-01' and '2025-03-11' and start_date >= '2025-03-01' and customer_id = 17;

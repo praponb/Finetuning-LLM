@@ -1,1 +1,0 @@
-SELECT d.dept_name, MAX(e.salary) - MIN(e.salary) AS salary_range, ROUND((100 * SUM(CASE WHEN e.level = 'L2' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l2 FROM employees e INNER JOIN departments d ON e.dept_id = d.id GROUP BY d.dept_name;

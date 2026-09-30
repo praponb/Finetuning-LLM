@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('YEAR', ends_on) AS year_start, ROUND(SUM(discount_pct) / NULLIF(COUNT(CASE WHEN promo_code = 'WELCOME5' THEN 1 END), 0), 2) AS discount_pct_per_welcome5, STDDEV_SAMP(discount_pct) AS discount_pct_stddev FROM promotions GROUP BY CUBE (DATE_TRUNC('YEAR', ends_on)) ORDER BY discount_pct_per_welcome5 DESC;

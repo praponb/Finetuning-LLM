@@ -1,1 +1,0 @@
-SELECT id, coupon_codes, AGGREGATE(items, 0.0D, (acc, li) -> acc + li.qty * li.price, acc -> ROUND(acc, 2)) AS basket_amount, COALESCE(ship_to.city, 'UNKNOWN') AS city_or_unknown, EXISTS(items, li -> li.price > 100) AS has_premium_item, ARRAY_MAX(TRANSFORM(items, li -> li.price)) AS max_item_price, TRY_CAST(attributes['weight_kg'] AS DOUBLE) AS weight_kg FROM carts;

@@ -1,1 +1,0 @@
-with inventory_by_store as (select store_id, count(distinct quantity) as unique_stores, max(last_restock) as latest_last_restock from inventory where store_id = 6 group by store_id) select s.id, s.store_name, s.region, ibs.unique_stores, ibs.latest_last_restock from stores s join inventory_by_store ibs on s.id = ibs.store_id order by s.store_name

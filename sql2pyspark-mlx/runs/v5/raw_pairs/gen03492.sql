@@ -1,1 +1,0 @@
-SELECT s.region, MIN(i.last_restock) AS first_last_restock, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE i.quantity >= 238 GROUP BY s.region ORDER BY first_last_restock DESC, avg_quantity DESC

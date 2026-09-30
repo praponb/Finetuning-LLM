@@ -1,1 +1,0 @@
-SELECT location, MAX(budget) - MIN(budget) AS budget_range, SUM(CASE WHEN location = 'Singapore' THEN budget ELSE 0 END) AS singapore_budget FROM departments WHERE budget < 3696000 AND dept_name = 'HR' GROUP BY location;

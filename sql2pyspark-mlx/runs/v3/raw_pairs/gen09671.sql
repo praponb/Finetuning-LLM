@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id, s.city, s.region, p.cost, p.brand FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id LEFT JOIN products p ON ss.product_id = p.id WHERE ss.product_id IN (1, 3) AND YEAR(p.launch_date) = 2025 ORDER BY p.brand

@@ -1,1 +1,0 @@
-SELECT i.last_restock, s.opened_date, s.city, s.store_name FROM inventory i INNER JOIN stores s ON i.store_id = s.id WHERE s.store_name LIKE 'O%' OR s.city = 'London' ORDER BY s.city, opened_date DESC

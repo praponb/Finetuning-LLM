@@ -1,1 +1,0 @@
-with ranked as (select id, carrier, delivered_date, dense_rank() over (partition by carrier order by delivered_date desc) as rnk from shipments where status in ('RETURNED', 'DELIVERED')) select id, carrier, delivered_date from ranked where rnk = 1 order by delivered_date asc

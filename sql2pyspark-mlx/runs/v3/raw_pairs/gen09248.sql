@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(delivered_date, 'yyyy-MM') AS delivered_month, SUM(cost) AS total_cost, COUNT(*) AS cnt, SUM(SUM(cost)) OVER (ORDER BY DATE_FORMAT(delivered_date, 'yyyy-MM')) AS cumulative_cost FROM shipments WHERE carrier != 'Flash' GROUP BY DATE_FORMAT(delivered_date, 'yyyy-MM')

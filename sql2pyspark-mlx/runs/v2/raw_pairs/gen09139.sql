@@ -1,1 +1,0 @@
-SELECT d.dept_name, d.location, SUM(CASE WHEN e.job_title = 'Director' THEN e.salary ELSE 0 END) AS director_salary, MAX(e.salary) - MIN(e.salary) AS salary_range FROM employees e LEFT JOIN departments d ON e.dept_id = d.id GROUP BY d.dept_name, d.location ORDER BY dept_name DESC;

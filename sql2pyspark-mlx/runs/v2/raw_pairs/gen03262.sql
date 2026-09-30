@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, city, sqft, region, RANK() OVER (PARTITION BY city ORDER BY sqft DESC) AS row_num FROM stores) SELECT id, city, sqft, region FROM ranked WHERE row_num = 1 ORDER BY sqft, city DESC

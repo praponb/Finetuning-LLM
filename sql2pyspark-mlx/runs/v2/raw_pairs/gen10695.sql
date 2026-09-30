@@ -1,1 +1,0 @@
-SELECT order_items.product_id, products.cost, products.stock_qty FROM order_items INNER JOIN products ON order_items.product_id = products.id WHERE products.stock_qty BETWEEN 151 AND 174 ORDER BY product_id DESC

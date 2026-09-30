@@ -1,1 +1,0 @@
-SELECT inventory.product_id, products.launch_date, suppliers.country FROM inventory LEFT JOIN products ON inventory.product_id = products.id FULL OUTER JOIN suppliers ON products.supplier_id = suppliers.id WHERE suppliers.country IN ('JP', 'SG')

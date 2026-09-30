@@ -1,1 +1,0 @@
-with ranked as (select *, rank() over (partition by status order by end_date) as rn from subscriptions qualify rn = 1) select id, customer_id, start_date, end_date, monthly_fee, rn from ranked order by start_date nulls last;

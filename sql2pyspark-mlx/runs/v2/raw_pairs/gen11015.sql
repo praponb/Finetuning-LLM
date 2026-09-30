@@ -1,1 +1,0 @@
-WITH FilteredPayments AS (SELECT * FROM payments WHERE paid_at >= '2024-10-20' AND (method IN ('cash', 'promptpay') OR status = 'FAILED')), status_summary AS (SELECT status, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM FilteredPayments GROUP BY status) SELECT status, status_list FROM status_summary;

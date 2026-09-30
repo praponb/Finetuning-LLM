@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, service, log_ts, level, status_code, key, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) e AS key, value) SELECT id, level, status_code, key FROM flattened ORDER BY level DESC NULLS LAST

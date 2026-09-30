@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM customers WHERE signup_date > '2024-09-01' OR segment IN ('Consumer', 'Corporate')), signup_month_summary AS (SELECT MONTH(signup_date) AS signup_month, COUNT(*) AS total_count, MAX(credit_limit) AS max_credit_limit FROM base GROUP BY MONTH(signup_date)) SELECT * FROM signup_month_summary ORDER BY signup_month DESC, max_credit_limit DESC

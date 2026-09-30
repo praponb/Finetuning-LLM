@@ -1,1 +1,0 @@
-SELECT id, supplier_id, cost, product_name FROM (SELECT id, supplier_id, cost, product_name, RANK() OVER (PARTITION BY supplier_id ORDER BY cost DESC) AS rnk FROM products WHERE LENGTH(product_name) >= 14) AS ranked WHERE rnk <= 3 ORDER BY id

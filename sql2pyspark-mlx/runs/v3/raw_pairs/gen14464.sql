@@ -1,1 +1,0 @@
-SELECT city, SUM(CASE WHEN city = 'New York' THEN rating ELSE 0 END) AS new_york_rating FROM suppliers WHERE city <> 'New York' GROUP BY city HAVING SUM(CASE WHEN city = 'New York' THEN rating ELSE 0 END) < 66;

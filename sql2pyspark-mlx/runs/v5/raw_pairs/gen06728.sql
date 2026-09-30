@@ -1,1 +1,0 @@
-WITH account_summary AS (SELECT account_id, ROUND(AVG(amount), 2) AS avg_amount FROM transactions WHERE account_id = 24 GROUP BY account_id) SELECT accounts.id, accounts.status, accounts.account_type, account_summary.avg_amount FROM accounts INNER JOIN account_summary ON accounts.id = account_summary.account_id WHERE account_summary.avg_amount >= 68;

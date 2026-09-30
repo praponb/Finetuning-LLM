@@ -1,1 +1,0 @@
-SELECT CASE WHEN monthly_fee >= 231 THEN 'HIGH' ELSE 'LOW' END AS monthly_fee_tier, COUNT(CASE WHEN status = 'PAUSED' THEN 1 END) AS paused_count, PERCENTILE_APPROX(monthly_fee, 0.5) AS monthly_fee_p50, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions GROUP BY CASE WHEN monthly_fee >= 231 THEN 'HIGH' ELSE 'LOW' END ORDER BY monthly_fee_p50 DESC NULLS FIRST

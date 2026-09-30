@@ -1,1 +1,0 @@
-SELECT i.quantity, i.last_restock, s.city, s.sqft, p.launch_date, p.cost FROM inventory i RIGHT JOIN stores s ON i.store_id = s.id RIGHT JOIN products p ON i.product_id = p.id WHERE i.quantity BETWEEN 99 AND 136 ORDER BY i.quantity DESC, launch_date DESC;

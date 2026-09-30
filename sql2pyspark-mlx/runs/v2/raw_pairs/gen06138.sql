@@ -1,1 +1,0 @@
-select id, store_id, last_restock, quantity, quantity - lag(quantity, 1) over (partition by store_id order by last_restock, id) as quantity_change, round(avg(quantity) over (partition by store_id order by last_restock, id rows between 3 preceding and current row), 2) as quantity_moving_avg_4 from inventory;

@@ -1,1 +1,0 @@
-SELECT country, CASE WHEN rating >= 4.1 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END rating_bucket, COUNT(CASE WHEN city = 'London' THEN 1 END) london_count FROM suppliers GROUP BY 1, 2 ORDER BY 2;

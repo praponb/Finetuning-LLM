@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, p.supplier_id, s.city, s.rating FROM inventory i LEFT JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE s.city = 'Singapore' AND s.city IS NOT NULL;

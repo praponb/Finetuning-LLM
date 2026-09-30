@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, TRIM(dept_name) AS clean_dept_name FROM departments WHERE location IS NOT NULL) SELECT id, dept_name, budget, clean_dept_name FROM filtered QUALIFY ROW_NUMBER() OVER (PARTITION BY dept_name, location ORDER BY budget DESC NULLS FIRST, id ASC) = 1;

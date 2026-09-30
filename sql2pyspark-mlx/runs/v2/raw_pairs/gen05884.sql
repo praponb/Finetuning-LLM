@@ -1,1 +1,0 @@
-SELECT id, city, sqft, opened_date FROM (SELECT id, city, sqft, opened_date, RANK() OVER (PARTITION BY city ORDER BY sqft DESC) AS rnk FROM stores WHERE store_name LIKE '%Centra%') AS r WHERE rnk <= 2 ORDER BY sqft DESC;

@@ -1,1 +1,0 @@
-SELECT id, service, host, level, status_code, k, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) e AS k, attr_value;

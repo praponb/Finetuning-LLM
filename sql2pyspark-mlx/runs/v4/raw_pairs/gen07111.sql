@@ -1,1 +1,0 @@
-WITH Numbered AS (SELECT id, product_id, units, store_id, RANK() OVER (PARTITION BY product_id ORDER BY units) AS rn FROM store_sales WHERE revenue >= 1100) SELECT id, product_id, units, store_id FROM Numbered WHERE rn <= 2 ORDER BY units DESC

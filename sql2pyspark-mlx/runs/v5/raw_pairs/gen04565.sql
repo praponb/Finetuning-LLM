@@ -1,1 +1,0 @@
-SELECT s.city, MAX(i.quantity) - MIN(i.quantity) quantity_range FROM inventory i FULL OUTER JOIN stores s ON i.store_id = s.id RIGHT JOIN products p ON i.product_id = p.id WHERE p.stock_qty BETWEEN 102 AND 399 GROUP BY s.city;

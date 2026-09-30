@@ -1,1 +1,0 @@
-SELECT id, dept_id, hire_date, salary, job_title, SUM(salary) OVER (PARTITION BY dept_id ORDER BY hire_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_salary, LEAD(salary, 1) OVER (PARTITION BY job_title ORDER BY hire_date, id) AS next_salary FROM employees

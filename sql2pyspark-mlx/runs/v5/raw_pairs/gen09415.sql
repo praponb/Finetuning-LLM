@@ -1,1 +1,0 @@
-SELECT merchant, CASE WHEN txn_type IN ('DEBIT', 'REFUND') THEN 'core' ELSE 'other' END AS txn_type_group, SUM(CASE WHEN txn_type = 'CREDIT' THEN 1 ELSE 0 END) AS credit_count FROM transactions WHERE txn_time >= '2024-07-08' GROUP BY merchant, txn_type_group;

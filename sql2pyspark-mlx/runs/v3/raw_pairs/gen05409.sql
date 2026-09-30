@@ -1,1 +1,0 @@
-WITH ProductSummary AS (SELECT product_id, AVG(quantity) AS avg_quantity, SUM(quantity) AS total_quantity FROM inventory WHERE product_id = 2 GROUP BY product_id) SELECT p.id, p.launch_date, P.avg_quantity, P.total_quantity FROM products p INNER JOIN ProductSummary P ON p.id = P.product_id WHERE P.total_quantity > 1240 ORDER BY avg_quantity DESC, p.launch_date

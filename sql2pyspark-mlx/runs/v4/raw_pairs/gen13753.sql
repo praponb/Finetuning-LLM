@@ -1,1 +1,0 @@
-select * from (select case when amount >= 3800 then 'high' when amount >= 700 then 'mid' else 'low' end as amount_bucket, merchant, amount from transactions) pivot (count(amount) for merchant in ('Starbucks', 'Lazada')) order by amount_bucket

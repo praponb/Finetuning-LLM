@@ -1,1 +1,0 @@
-SELECT channel, SUM(CASE WHEN channel = 'web' THEN 1 ELSE 0 END) AS web_count, AVG(discount) AS avg_discount FROM orders WHERE order_date >= '2024-01-20' OR store_id IN (18, 19, 28, 33) GROUP BY channel

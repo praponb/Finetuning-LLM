@@ -1,1 +1,0 @@
-SELECT QUARTER(order_date) AS order_quarter, DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, MIN(amount) AS min_amount FROM orders WHERE order_date BETWEEN '2023-06-08' AND '2025-05-07' AND order_date <= '2023-08-07' GROUP BY 1, 2 HAVING min_amount < 490 ORDER BY order_quarter DESC, order_month LIMIT 5

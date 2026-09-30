@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, s.customer_id, c.email, c.city, c.country FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE s.country NOT IN ('JP', 'SG') AND TO_DATE(s.started_at) < '2023-08-01' ORDER BY country, s.id LIMIT 50

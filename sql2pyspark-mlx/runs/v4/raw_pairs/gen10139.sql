@@ -1,1 +1,0 @@
-SELECT orders.customer_id, orders.store_id, orders.channel, payments.order_id, payments.paid_at FROM orders LEFT JOIN payments ON payments.order_id = orders.id WHERE payments.order_id IN (17, 28, 34, 39) AND orders.discount >= 0.29;

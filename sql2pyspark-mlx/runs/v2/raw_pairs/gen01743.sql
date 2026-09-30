@@ -1,1 +1,0 @@
-SELECT page, DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, MAX(duration_sec) AS max_duration_sec, COUNT(CASE WHEN page = '/product' THEN 1 END) AS product_count FROM web_events GROUP BY page, DATE_FORMAT(event_time, 'yyyy-MM') HAVING COUNT(CASE WHEN page = '/product' THEN 1 END) > 3;

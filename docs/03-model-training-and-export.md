@@ -258,16 +258,13 @@ Current tags:
 
 | Tag | Image ID | Notes |
 |---|---|---|
-| `sql2pyspark:latest` | `d6a6a0edb9da` | = v7 (7B), promoted 2026-09-29 (see [Evaluation](04-evaluation-and-benchmarking.md#-v7-results-2026-09-29)) |
-| `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); current production model |
-| `sql2pyspark:v6` | `192e20ddb887` | exported 2026-09-28 (7B, 8.1 GB); `latest` 09-28 → 09-29; rollback: `ollama cp sql2pyspark:v6 sql2pyspark:latest` |
-| `sql2pyspark:v5` | `b6a1ace642a4` | exported 2026-09-27 (3B, continued from v4); previous `latest` (09-28); rollback: `ollama cp sql2pyspark:v5 sql2pyspark:latest` |
-| `sql2pyspark:v4` | `23108327a0d7` | exported 2026-09-27; not promoted |
-| `sql2pyspark:v3` | `aa95ad200568` | `latest` 2026-09-26 → 09-28 |
-| `sql2pyspark:v2` | `fb27933c2519` | previous model; rollback: `ollama cp sql2pyspark:v2 sql2pyspark:latest` |
-| `sql2pyspark:v1` | `3dd2beaef9ff` | template-based v1 |
+| `sql2pyspark:latest` | `aa01d9d717f7` | = v8 (7B), promoted 2026-09-30 |
+| `sql2pyspark:v8` | `aa01d9d717f7` | exported 2026-09-30 (7B, v7 continued on the complex_v8 data); current production model |
+| `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); `latest` 09-29 → 09-30; rollback: `ollama cp sql2pyspark:v7 sql2pyspark:latest` |
 
-`sql2pyspark.gguf`, `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/` hold the **v7** weights (last completed export); Ollama keeps its own copy of every tag. The v2–v6 adapters, datasets and logs are backed up in `sql2pyspark-mlx/runs/v2/` … `runs/v6/` (v7's adapters are in `sql2pyspark-mlx/adapters/`; v6 was trained on the v5 data); their GGUFs live inside Ollama. To serve a model on another machine (e.g. the Ubuntu server behind sql2pyspark.praponb.com), copy `sql2pyspark.gguf` and `Modelfile` there and run `ollama create sql2pyspark -f Modelfile`; see [Server Deployment](08-server-deployment.md).
+The older tags were removed from the Mac's Ollama on 2026-09-30 to save ~24.6 GB: `v6` (`192e20ddb887`, 7B), `v5` (`b6a1ace642a4`, 3B), `v4` (`23108327a0d7`), `v3` (`aa95ad200568`), `v2` (`fb27933c2519`) and `v1` (`3dd2beaef9ff`, template-based). v2–v6 can be rebuilt from `sql2pyspark-mlx/runs/vN/adapters/` with `mlx_lm.fuse --adapter-path runs/vN/adapters` (v2–v5 with `--model mlx-community/Qwen2.5-Coder-3B-Instruct-4bit`), then `make gguf ollama TAG=vN` (v1's adapters were deleted with `archive/`).
+
+`sql2pyspark.gguf` holds the **v8** weights (last completed export); Ollama keeps its own copy of every tag. `make fuse` also writes `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/`; `make clean` deletes them (and the LoRA checkpoints) once the export is in Ollama. The v2–v6 adapters, configs and logs are kept in `sql2pyspark-mlx/runs/v2/` … `runs/v6/` (the v2–v5 datasets were removed on 2026-09-30 and are still in the git history; v6 was trained on the v5 data); v7's adapters are in `sql2pyspark-mlx/adapters/` and `runs/v7/`, v8's in `sql2pyspark-mlx/complex_v8/adapters/`. To serve a model on another machine (e.g. the Ubuntu server behind sql2pyspark.praponb.com), copy `sql2pyspark.gguf` and `Modelfile` there and run `ollama create sql2pyspark -f Modelfile`; see [Server Deployment](08-server-deployment.md).
 
 The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v6`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
 

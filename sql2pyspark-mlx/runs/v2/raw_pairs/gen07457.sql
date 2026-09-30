@@ -1,1 +1,0 @@
-SELECT s.region, MAX(o.shipping_fee) - MIN(o.shipping_fee) AS shipping_fee_range FROM orders o INNER JOIN stores s ON o.store_id = s.id WHERE o.amount < 1060 GROUP BY s.region ORDER BY shipping_fee_range DESC;

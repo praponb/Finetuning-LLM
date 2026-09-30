@@ -1,1 +1,0 @@
-select id, status, count(cost) over (partition by order_id) as order_id_count_cost, sum(cost) over (partition by order_id order by shipped_date, id rows between unbounded preceding and current row) as running_cost from shipments;

@@ -1,1 +1,0 @@
-SELECT s.id, s.status, s.start_date, c.country FROM subscriptions s LEFT OUTER JOIN customers c ON s.customer_id = c.id WHERE c.segment IN ('SMB', 'Corporate', 'Consumer') AND s.status = 'CANCELLED' ORDER BY s.id DESC

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, DATE_FORMAT(opened_date, 'MMM yyyy') AS opened_date_label, SUBSTRING(store_name, 1, 3) AS store_name_prefix FROM stores WHERE opened_date > TO_DATE('2023-04-05') AND city IN ('Bangkok', 'Berlin', 'Chiang Mai')) SELECT id, region FROM valid EXCEPT DISTINCT SELECT id, region FROM stores WHERE city <> 'Tokyo';

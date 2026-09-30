@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, event_type, event_time, session_id, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY event_time DESC, id) AS pos FROM web_events WHERE session_id IN (3, 18, 26, 31)) SELECT id, event_type, event_time, session_id FROM ranked WHERE pos = 1 ORDER BY id;

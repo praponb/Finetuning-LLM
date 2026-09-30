@@ -1,1 +1,0 @@
-with ranked as (select * from (select *, row_number() over (partition by job_title order by hire_date nulls last, id) as row_num from employees) t where row_num = 1) select s.id, s.full_name, s.email, s.dept_id, s.salary, s.hire_date, s.row_num, (select avg(t2.salary) from employees t2 where t2.dept_id = s.dept_id) as avg_employee_salary from ranked s order by id desc nulls last

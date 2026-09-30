@@ -1,1 +1,0 @@
-with base as (select *, round(salary * 0.85, 2) salary_adjusted, coalesce(job_title, 'UNKNOWN') job_title_filled from employees where hire_date >= date '2023-10-16' and job_title is not null) select job_title, id from base except select job_title, id from employees where hire_date <= '2023-08-13'

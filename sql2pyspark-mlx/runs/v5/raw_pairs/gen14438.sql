@@ -1,1 +1,0 @@
-select s.id, s.customer_id, s.device, s.browser, c.city, c.name, c.email from sessions s left join customers c on s.customer_id = c.id where s.customer_id in (17, 20, 23) and to_date(s.started_at) < '2024-09-02'

@@ -1,1 +1,0 @@
-SELECT stores.id, stores.opened_date, stores.store_name, stores.sqft FROM stores WHERE EXISTS (SELECT 1 FROM inventory WHERE inventory.store_id = stores.id AND inventory.last_restock BETWEEN '2023-10-01' AND '2024-09-01') ORDER BY id DESC LIMIT 1

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, store_name, region, sqft, CEIL(sqft) AS sqft_whole FROM stores WHERE region IS NOT NULL AND LOWER(TRIM(store_name)) = 'old town') SELECT s.*, latest.amount FROM valid s LEFT JOIN LATERAL (SELECT c.amount FROM orders c WHERE c.store_id = s.id ORDER BY c.shipping_fee DESC, c.id DESC LIMIT 1) latest ON TRUE

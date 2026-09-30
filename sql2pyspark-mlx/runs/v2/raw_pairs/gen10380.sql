@@ -1,1 +1,0 @@
-select o.channel, count(case when s.carrier = 'UPS' then 1 end) as ups_count from shipments s left join orders o on s.order_id = o.id where year(o.order_date) = 2024 group by o.channel order by o.channel desc, ups_count desc;

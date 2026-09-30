@@ -1,1 +1,0 @@
-select quarter(sale_date) as sale_quarter, year(sale_date) as sale_year, max(revenue) as max_revenue, max(sale_date) as latest_sale_date from store_sales group by quarter(sale_date), year(sale_date) order by sale_quarter desc, latest_sale_date, sale_year limit 10

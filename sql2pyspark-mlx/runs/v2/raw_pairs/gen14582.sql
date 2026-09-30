@@ -1,1 +1,0 @@
-SELECT brand, COUNT(*) num_products, MAX(launch_date) last_launch_date, ROUND(STDDEV(price), 2) stddev_price FROM products WHERE (category <> 'Home' AND supplier_id IS NULL) OR cost >= 180 GROUP BY 1 ORDER BY brand DESC;

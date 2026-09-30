@@ -1,1 +1,0 @@
-SELECT s.city, SUM(CASE WHEN p.brand = 'Umbrella' THEN p.price ELSE 0 END) AS umbrella_price FROM products p FULL OUTER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.city HAVING SUM(CASE WHEN p.brand = 'Umbrella' THEN p.price ELSE 0 END) >= 76 ORDER BY city DESC

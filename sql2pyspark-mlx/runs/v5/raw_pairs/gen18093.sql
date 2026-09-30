@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, MAX(we.event_time) AS latest_event_time FROM web_events we INNER JOIN sessions s ON we.session_id = s.id LEFT JOIN customers c ON s.customer_id = c.id GROUP BY DATE_TRUNC('MONTH', c.signup_date) ORDER BY signup_month ASC;

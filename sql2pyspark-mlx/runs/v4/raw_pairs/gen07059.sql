@@ -1,1 +1,0 @@
-select store_id, product_id, total_units, min_sale_date from (select store_id, product_id, sum(units) as total_units, min(sale_date) as min_sale_date from store_sales where store_id in (3, 5, 6) group by store_id, product_id) as s where total_units < 230 order by min_sale_date desc, product_id desc, store_id limit 5

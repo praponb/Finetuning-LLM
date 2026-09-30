@@ -1,1 +1,0 @@
-select d.country, s.status, count(*) as num_rows, max(s.discount) as max_discount, max(s.shipping_fee) as max_shipping_fee from orders s left join customers d on s.customer_id = d.id group by cube (d.country, s.status) order by max_shipping_fee nulls first

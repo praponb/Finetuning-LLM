@@ -1,1 +1,0 @@
-SELECT channel, store_id, order_date, ROUND(discount, 2) discount_rounded, amount / NULLIF(discount, 0) amount_per_discount FROM orders WHERE shipping_fee >= 40 AND (shipping_fee IS NOT NULL OR amount <= 730) ORDER BY amount_per_discount DESC;

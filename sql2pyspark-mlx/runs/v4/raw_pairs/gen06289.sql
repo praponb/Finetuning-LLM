@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', opened_date) AS opened_month, SUM(CASE WHEN region = 'West' THEN sqft ELSE 0 END) AS west_sqft, ROUND(STDDEV(sqft), 2) AS stddev_sqft, MIN(sqft) AS min_sqft FROM stores WHERE region NOT IN ('South', 'North', 'East') GROUP BY DATE_TRUNC('MONTH', opened_date) HAVING west_sqft > 29;

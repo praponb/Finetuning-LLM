@@ -1,1 +1,0 @@
-SELECT job_title, COUNT(CASE WHEN job_title = 'Analyst' THEN 1 END) AS analyst_count FROM employees WHERE job_title IS NOT NULL AND MONTH(hire_date) IN (5, 6, 11) AND salary > 136000 GROUP BY job_title ORDER BY job_title DESC LIMIT 1;

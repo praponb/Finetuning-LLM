@@ -1,1 +1,0 @@
-select id, dept_name, location, count(budget) over w_recent as last7_count_budget, max(budget) over w_recent as last7_max_budget, sum(budget) over w_recent as last7_sum_budget, min(budget) over w_recent as last7_min_budget from departments where location = 'Chiang Mai' window w_recent as (partition by dept_name order by budget asc, id asc rows between 6 preceding and current row)

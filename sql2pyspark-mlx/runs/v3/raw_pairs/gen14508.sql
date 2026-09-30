@@ -1,1 +1,0 @@
-select * from (select carrier, avg(cost) avg_cost, round((100 * sum(case when carrier = 'Kerry' then 1 else 0 end)) / count(*), 1) pct_kerry from shipments where status = 'LOST' group by carrier) x where avg_cost > 58 order by 3;

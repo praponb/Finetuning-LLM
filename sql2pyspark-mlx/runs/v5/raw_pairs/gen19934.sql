@@ -1,1 +1,0 @@
-SELECT s.status, s.start_date, s.customer_id, c.credit_limit FROM subscriptions s INNER JOIN customers c ON c.id = s.customer_id WHERE s.plan IN ('basic', 'enterprise') AND UPPER(c.email) LIKE '%ARO%';

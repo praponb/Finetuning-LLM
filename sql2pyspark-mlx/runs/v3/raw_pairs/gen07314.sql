@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.0 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(DISTINCT rating) AS unique_citys, COUNT(CASE WHEN country = 'TH' THEN 1 END) AS th_count FROM suppliers GROUP BY rating_bucket HAVING COUNT(CASE WHEN country = 'TH' THEN 1 END) > 3 ORDER BY unique_citys DESC, rating_bucket ASC;

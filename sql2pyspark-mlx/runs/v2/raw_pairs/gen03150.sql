@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN budget >= 4064000 THEN 'high' WHEN budget >= 1099000 THEN 'mid' ELSE 'low' END AS budget_bucket, dept_name, budget FROM departments WHERE dept_name IN ('Sales', 'Legal')) PIVOT (MAX(budget) FOR dept_name IN ('Engineering', 'Sales', 'Marketing', 'Legal'))

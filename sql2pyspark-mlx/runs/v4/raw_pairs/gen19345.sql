@@ -1,1 +1,0 @@
-SELECT id, dept_id, salary, job_title, hire_date, FIRST_VALUE(job_title) OVER (PARTITION BY dept_id ORDER BY salary, id) AS first_job_title, PERCENT_RANK() OVER (PARTITION BY dept_id ORDER BY hire_date) AS hire_date_pct_rank FROM employees WHERE salary BETWEEN 61000 AND 142000

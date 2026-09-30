@@ -1,1 +1,0 @@
-select region, month(opened_date) as opened_month, round((100 * sum(case when region = 'West' then 1 else 0 end)) / count(*), 1) as pct_west, round((100 * sum(case when city = 'London' then 1 else 0 end)) / count(*), 1) as pct_london from stores group by region, month(opened_date) order by pct_london, pct_west desc

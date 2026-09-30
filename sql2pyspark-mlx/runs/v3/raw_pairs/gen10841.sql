@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id FROM store_sales ss WHERE ss.product_id IN (5, 9) AND ss.store_id IN (SELECT id FROM stores WHERE region IN ('Central', 'West', 'South')) ORDER BY ss.store_id DESC, id DESC LIMIT 10;

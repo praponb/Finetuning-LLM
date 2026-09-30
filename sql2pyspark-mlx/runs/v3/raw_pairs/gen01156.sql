@@ -1,1 +1,0 @@
-SELECT o.status, ROUND(STDDEV(s.cost), 2) AS stddev_cost, ROUND((100 * SUM(CASE WHEN s.carrier = 'UPS' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_ups FROM shipments s INNER JOIN orders o ON s.order_id = o.id LEFT JOIN stores st ON st.id = o.store_id GROUP BY o.status;

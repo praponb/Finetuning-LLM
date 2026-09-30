@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, COUNT(DISTINCT salary) unique_managers, ROUND(AVG(salary), 2) avg_salary FROM employees GROUP BY dept_id) SELECT d.id, d.budget, d.dept_name, ebd.unique_managers, ebd.avg_salary FROM departments d INNER JOIN employees_by_department ebd ON d.id = ebd.dept_id WHERE ebd.avg_salary >= 37 ORDER BY ebd.unique_managers DESC

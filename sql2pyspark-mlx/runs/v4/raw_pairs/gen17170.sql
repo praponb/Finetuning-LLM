@@ -1,1 +1,0 @@
-select st.region, count(case when s.status = 'DELIVERED' then 1 end) as delivered_count from shipments s inner join orders o on s.order_id = o.id inner join stores st on st.id = o.store_id where lower(trim(st.store_name)) = 'downtown express' group by st.region having count(case when s.status = 'DELIVERED' then 1 end) > 4;

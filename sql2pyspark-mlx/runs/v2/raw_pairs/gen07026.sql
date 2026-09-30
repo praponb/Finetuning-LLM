@@ -1,1 +1,0 @@
-SELECT category, stock_qty, launch_date, UPPER(brand) brand_upper FROM products WHERE NOT (price < 870 AND (supplier_id IS NOT NULL OR category IN ('Grocery', 'Books', 'Sports'))) ORDER BY brand_upper DESC;

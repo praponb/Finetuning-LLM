@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM web_events WHERE page = '/cart' AND duration_sec < 179), agg AS (SELECT event_type, page, SUM(duration_sec) AS total_duration_sec, MIN(event_time) AS min_event_time FROM src GROUP BY event_type, page) SELECT event_type, page, min_event_time FROM agg ORDER BY min_event_time ASC;

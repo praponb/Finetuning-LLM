@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', launch_date) AS launch_month, SUM(CASE WHEN category = 'Grocery' THEN cost ELSE 0 END) AS grocery_cost FROM products WHERE price <= 860 GROUP BY DATE_TRUNC('MONTH', launch_date) ORDER BY grocery_cost DESC;

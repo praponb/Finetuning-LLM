@@ -1,1 +1,0 @@
-with store_totals as (select store_id, max(quantity) as max_quantity, round(avg(quantity), 2) as avg_quantity from inventory group by store_id) select stores.store_name, stores.sqft, store_totals.max_quantity, store_totals.avg_quantity from stores inner join store_totals on stores.id = store_totals.store_id where store_totals.avg_quantity >= 46 order by max_quantity desc

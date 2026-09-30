@@ -1,1 +1,0 @@
-SELECT i.product_id, i.store_id, i.last_restock, ss.units, ss.sale_date, ss.store_id AS store_sale_store_id, DATE_FORMAT(i.last_restock, 'yyyy-MM') AS last_restock_label FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id ORDER BY i.last_restock

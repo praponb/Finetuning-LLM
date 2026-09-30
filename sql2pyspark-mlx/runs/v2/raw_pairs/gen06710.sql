@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, account_id, MAX(txn_time) AS latest_txn_time, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions WHERE is_flagged GROUP BY CUBE(DATE_TRUNC('MONTH', txn_time), account_id) ORDER BY account_id DESC, latest_txn_time DESC

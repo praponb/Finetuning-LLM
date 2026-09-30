@@ -1,1 +1,0 @@
-SELECT sessions.id, sessions.browser, sessions.customer_id, customers.email, customers.city, customers.name FROM sessions INNER JOIN customers ON customers.id = sessions.customer_id WHERE sessions.device IN ('mobile', 'desktop', 'tablet') AND customers.signup_date < '2025-09-01' ORDER BY customers.city;

@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, COUNT(duration_sec) AS duration_sec_count FROM web_events WHERE event_type <> 'add_to_cart' GROUP BY session_id) SELECT s.id, s.customer_id, s.browser, ss.duration_sec_count FROM sessions s LEFT OUTER JOIN session_summary ss ON s.id = ss.session_id ORDER BY duration_sec_count DESC;

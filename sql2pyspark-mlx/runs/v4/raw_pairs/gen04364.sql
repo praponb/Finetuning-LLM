@@ -1,1 +1,0 @@
-SELECT product_id, DATE_TRUNC('MONTH', last_restock) AS last_restock_month, AVG(quantity) AS avg_quantity, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory GROUP BY product_id, DATE_TRUNC('MONTH', last_restock) HAVING ROUND(STDDEV(quantity), 2) > 30 ORDER BY stddev_quantity DESC

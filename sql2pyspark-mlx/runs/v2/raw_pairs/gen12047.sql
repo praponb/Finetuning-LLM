@@ -1,1 +1,0 @@
-SELECT oi.id, oi.product_id, p.launch_date, p.brand, o.channel, o.shipping_fee FROM order_items oi RIGHT JOIN products p ON oi.product_id = p.id FULL OUTER JOIN orders o ON oi.order_id = o.id ORDER BY p.launch_date;

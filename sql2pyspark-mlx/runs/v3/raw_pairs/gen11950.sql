@@ -1,1 +1,0 @@
-SELECT id, name, city, signup_date, SUBSTRING(country, 1, 2) country_prefix, SUBSTRING(country, 1, 3) country_prefix_2 FROM customers WHERE credit_limit < 14300 AND city = 'Berlin' ORDER BY country_prefix;

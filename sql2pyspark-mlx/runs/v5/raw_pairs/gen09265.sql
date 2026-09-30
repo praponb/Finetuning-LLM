@@ -1,1 +1,0 @@
-with store_stats as (select store_id, avg(revenue) as avg_revenue, count(distinct units) as unique_products from store_sales where units < 16 group by store_id) select s.store_name, ss.avg_revenue, ss.unique_products from stores s left join store_stats ss on s.id = ss.store_id where ss.unique_products >= 10

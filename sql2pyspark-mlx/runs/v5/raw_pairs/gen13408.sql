@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(order_date, 'yyyy-MM') AS order_month, COUNT(DISTINCT amount) AS unique_channels, SUM(CASE WHEN status = 'PENDING' THEN shipping_fee ELSE 0 END) AS pending_shipping_fee FROM orders WHERE status = 'RETURNED' AND amount <= 830 GROUP BY DATE_FORMAT(order_date, 'yyyy-MM') ORDER BY pending_shipping_fee DESC;

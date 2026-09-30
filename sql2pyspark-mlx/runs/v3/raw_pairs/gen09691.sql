@@ -1,1 +1,0 @@
-select hour(txn_time) as txn_hour, round((100 * sum(case when txn_type = 'FEE' then 1 else 0 end)) / count(*), 1) as pct_fee, max(amount) - min(amount) as amount_range from transactions group by hour(txn_time)

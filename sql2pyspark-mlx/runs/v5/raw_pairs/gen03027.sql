@@ -1,1 +1,0 @@
-with flattened as (select id, plan, currency, explode_outer(tier_prices) as tier_value from price_tiers) select *, dense_rank() over (order by tier_value desc nulls first) as tier_value_dense_rank from flattened;

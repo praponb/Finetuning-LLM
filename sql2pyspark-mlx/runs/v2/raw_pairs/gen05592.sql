@@ -1,1 +1,0 @@
-SELECT store_id, min_sale_date, units_range FROM (SELECT store_id, MIN(sale_date) AS min_sale_date, MAX(units) - MIN(units) AS units_range FROM store_sales GROUP BY store_id) AS sub WHERE units_range > 47 ORDER BY units_range DESC, store_id

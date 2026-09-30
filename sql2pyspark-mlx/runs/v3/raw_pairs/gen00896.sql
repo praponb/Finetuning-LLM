@@ -1,1 +1,0 @@
-WITH recent_stores AS (SELECT *, ROUND(sqft, 0) AS sqft_rounded FROM stores WHERE NOT (sqft <> 7225 OR sqft BETWEEN 8879 AND 10814)), agg AS (SELECT city, MIN(sqft_rounded) AS min_sqft_rounded FROM recent_stores GROUP BY city) SELECT city, min_sqft_rounded FROM agg WHERE min_sqft_rounded < 32 ORDER BY city LIMIT 5

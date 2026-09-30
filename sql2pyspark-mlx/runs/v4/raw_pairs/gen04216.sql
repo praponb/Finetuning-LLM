@@ -1,1 +1,0 @@
-SELECT c.id, c.segment, c.is_active, t.status_values, t.avg_balance FROM customers c INNER JOIN (SELECT customer_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, ROUND(AVG(balance), 2) AS avg_balance FROM accounts GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY avg_balance DESC

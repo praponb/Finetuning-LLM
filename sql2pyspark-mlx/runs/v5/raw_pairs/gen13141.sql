@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, COALESCE(channel, 'Unknown') AS channel_filled, COALESCE(channel, 'NONE') AS resolved_channel FROM orders WHERE store_id IS NOT NULL AND amount IS NOT NULL) SELECT id, customer_id, kpi, reading FROM (SELECT id, customer_id, shipping_fee, amount FROM valid) src UNPIVOT (reading FOR kpi IN (shipping_fee, amount));

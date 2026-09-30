@@ -1,1 +1,0 @@
-select products.id, products.supplier_id, products.price, products.launch_date, suppliers.rating from products inner join suppliers on products.supplier_id = suppliers.id where suppliers.supplier_name not like 'P%';

@@ -1,1 +1,0 @@
-SELECT ss.id, ss.product_id, ss.store_id, p.product_name, p.launch_date, s.country, s.supplier_name, ROUND(s.rating, 2) rating_rounded FROM store_sales ss RIGHT JOIN products p ON ss.product_id = p.id JOIN suppliers s ON s.id = p.supplier_id

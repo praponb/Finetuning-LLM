@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_TRUNC('MONTH', paid_at) AS paid_month, YEAR(paid_at) AS paid_year, MIN(amount) AS min_amount FROM payments GROUP BY DATE_TRUNC('MONTH', paid_at), YEAR(paid_at)) AS x WHERE min_amount >= 630 ORDER BY paid_month;

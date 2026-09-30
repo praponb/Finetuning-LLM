@@ -1,1 +1,0 @@
-WITH filtered_subscriptions AS (SELECT *, DATE_ADD(end_date, 29) AS end_date_plus_29d FROM subscriptions WHERE end_date >= '2025-08-01'), summary AS (SELECT status, ROUND((100 * SUM(CASE WHEN status = 'PAUSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_paused, COUNT(*) AS cnt FROM filtered_subscriptions GROUP BY status) SELECT status, pct_paused, cnt FROM summary;

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, INITCAP(TRIM(account_type)) account_type_title, CASE WHEN account_type IN ('CREDIT', 'CHECKING') THEN 'Tier 1' ELSE 'Other' END account_type_group FROM accounts WHERE opened_date > TO_DATE('2023-05-02') AND balance IS NULL) SELECT status, id FROM valid INTERSECT ALL SELECT status, id FROM accounts WHERE customer_id IS NULL;

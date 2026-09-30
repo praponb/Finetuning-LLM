@@ -1,1 +1,0 @@
-SELECT YEAR(o.order_date) AS order_year, AVG(oi.unit_price) AS avg_unit_price, AVG(oi.quantity) AS avg_quantity FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id WHERE o.status = 'RETURNED' GROUP BY YEAR(o.order_date) ORDER BY avg_quantity DESC, order_year ASC LIMIT 5

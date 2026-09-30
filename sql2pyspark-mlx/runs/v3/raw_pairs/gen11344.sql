@@ -1,1 +1,0 @@
-SELECT id, customer_id, end_date, monthly_fee, plan, start_date, ROUND(AVG(monthly_fee) OVER (PARTITION BY customer_id ORDER BY end_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS monthly_fee_moving_avg_4, LEAD(monthly_fee, 1) OVER (PARTITION BY plan ORDER BY start_date, id) AS next_monthly_fee FROM subscriptions

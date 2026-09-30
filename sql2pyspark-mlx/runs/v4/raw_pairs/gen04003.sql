@@ -1,1 +1,0 @@
-SELECT id, store_id, last_restock, product_id, LAST_VALUE(product_id) OVER (PARTITION BY store_id ORDER BY last_restock, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_product_id FROM inventory;

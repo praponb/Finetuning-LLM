@@ -1,1 +1,0 @@
-SELECT id, city, credit_limit, segment, signup_date, ROW_NUMBER() OVER (PARTITION BY city ORDER BY credit_limit DESC, id) AS credit_limit_row, credit_limit - LAG(credit_limit, 1) OVER (PARTITION BY segment ORDER BY signup_date, id) AS credit_limit_change FROM customers

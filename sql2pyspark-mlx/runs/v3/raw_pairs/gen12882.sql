@@ -1,1 +1,0 @@
-SELECT order_id, status, SUM(CASE WHEN method = 'bank_transfer' THEN amount ELSE 0 END) bank_transfer_amount, COUNT(*) total_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values FROM payments WHERE order_id = 29 AND status = 'REFUNDED' GROUP BY order_id, status ORDER BY status ASC, status_values ASC;

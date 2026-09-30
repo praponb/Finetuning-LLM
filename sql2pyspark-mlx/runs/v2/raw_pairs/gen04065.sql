@@ -1,1 +1,0 @@
-WITH ranked_order_items AS (SELECT *, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY unit_price DESC) AS rn FROM order_items) SELECT id, product_id, unit_price, quantity FROM ranked_order_items WHERE rn = 1 ORDER BY id DESC

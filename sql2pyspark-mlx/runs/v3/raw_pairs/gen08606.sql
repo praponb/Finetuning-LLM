@@ -1,1 +1,0 @@
-select products.id, products.price, t.min_unit_price, t.total_quantity from products join (select product_id, min(unit_price) as min_unit_price, sum(quantity) as total_quantity from order_items where unit_price < 220 group by product_id) t on products.id = t.product_id

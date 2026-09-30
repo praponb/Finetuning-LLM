@@ -1,1 +1,0 @@
-SELECT employees.id, employees.job_title, employees.salary, employees.level FROM employees WHERE employees.salary < 142000 AND employees.dept_id IN (SELECT id FROM departments WHERE budget >= 3708000)

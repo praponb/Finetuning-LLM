@@ -1,1 +1,0 @@
-with RankedPayments as (select id, method, amount, row_number() over (partition by method order by amount desc, id) as row_num from payments) select id, method, amount from RankedPayments where row_num = 1;

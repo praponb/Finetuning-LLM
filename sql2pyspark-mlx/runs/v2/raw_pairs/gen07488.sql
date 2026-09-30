@@ -1,1 +1,0 @@
-SELECT page, HOUR(event_time) event_hour, MAX(event_time) last_event_time, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) page_values, COUNT(CASE WHEN event_type = 'click' THEN 1 END) click_count FROM web_events GROUP BY page, HOUR(event_time);

@@ -1,1 +1,0 @@
-SELECT plan, unique_plans, stddev_monthly_fee FROM (SELECT plan, COUNT(DISTINCT monthly_fee) AS unique_plans, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions WHERE plan = 'enterprise' GROUP BY plan) AS t WHERE stddev_monthly_fee > 71;

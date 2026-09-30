@@ -1,1 +1,0 @@
-with PaymentsByOrder as (select order_id, count(case when status = 'SUCCESS' then 1 end) as success_count, sum(case when status = 'FAILED' then amount else 0 end) as failed_amount from payments group by order_id) select o.customer_id, P.success_count, P.failed_amount from orders o left outer join PaymentsByOrder P on o.id = P.order_id;

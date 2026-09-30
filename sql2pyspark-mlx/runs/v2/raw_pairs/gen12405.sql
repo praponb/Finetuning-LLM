@@ -1,1 +1,0 @@
-WITH orders_by_customer AS (SELECT customer_id, MIN(order_date) AS min_order_date FROM orders WHERE channel IN ('web', 'partner') GROUP BY customer_id) SELECT c.id, c.name, c.is_active, obc.min_order_date FROM customers c LEFT JOIN orders_by_customer obc ON c.id = obc.customer_id ORDER BY min_order_date;

@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions WHERE txn_type != 'CREDIT' GROUP BY account_id) SELECT a.id, a.opened_date, tba.txn_type_list FROM accounts a JOIN transactions_by_account tba ON a.id = tba.account_id ORDER BY a.opened_date;

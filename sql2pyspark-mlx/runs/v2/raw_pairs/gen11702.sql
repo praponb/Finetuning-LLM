@@ -1,1 +1,0 @@
-SELECT orders.customer_id, COUNT(order_items.unit_price) AS unit_price_count, AVG(order_items.unit_price) AS avg_unit_price FROM order_items JOIN orders ON order_items.order_id = orders.id GROUP BY orders.customer_id ORDER BY avg_unit_price DESC, orders.customer_id DESC LIMIT 5;

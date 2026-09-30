@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, COUNT(oi.quantity) AS quantity_count FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.brand, p.category ORDER BY category, p.brand DESC;

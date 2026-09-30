@@ -1,1 +1,0 @@
-with transactions_by_account as (select account_id, count(amount) as amount_count from transactions group by account_id) select a.opened_date, tba.amount_count from accounts a inner join transactions_by_account tba on a.id = tba.account_id where tba.amount_count >= 5

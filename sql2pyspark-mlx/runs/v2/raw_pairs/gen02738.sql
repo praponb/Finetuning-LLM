@@ -1,1 +1,0 @@
-select s.id, s.region, s.store_name, s.city from stores s where s.region in ('North', 'South') and not exists (select 1 from inventory i where i.store_id = s.id and i.product_id in (4, 6, 9)) order by s.store_name desc, city

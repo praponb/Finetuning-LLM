@@ -1,1 +1,0 @@
-SELECT id, store_id, channel, amount, order_date, PERCENT_RANK() OVER (PARTITION BY store_id, channel ORDER BY amount DESC) AS amount_pct_rank, RANK() OVER (PARTITION BY store_id ORDER BY order_date) AS rnk FROM orders WHERE amount <= 1160;

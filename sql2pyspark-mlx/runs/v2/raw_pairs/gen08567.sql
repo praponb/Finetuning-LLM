@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.quantity, p.supplier_id, s.opened_date, s.city FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE s.region IN ('Central', 'West', 'East') ORDER BY i.quantity

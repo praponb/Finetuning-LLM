@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(a.opened_date, 'yyyy-MM') AS opened_month, AVG(t.amount) AS avg_amount, SUM(t.amount) AS total_amount FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id WHERE t.txn_type NOT IN ('FEE', 'REFUND', 'CREDIT') GROUP BY DATE_FORMAT(a.opened_date, 'yyyy-MM') HAVING AVG(t.amount) >= 1700;

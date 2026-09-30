@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1570 THEN 'high' WHEN amount >= 590 THEN 'mid' ELSE 'low' END AS amount_bucket, status, method, ROUND((100 * SUM(CASE WHEN method = 'cash' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_cash FROM payments WHERE status IN ('SUCCESS', 'FAILED', 'REFUNDED') GROUP BY amount_bucket, status, method ORDER BY method, status, amount_bucket LIMIT 3;

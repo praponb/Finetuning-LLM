@@ -1,1 +1,0 @@
-WITH account_summary AS (SELECT account_id, MAX(amount) max_amount FROM transactions WHERE amount > 2300 GROUP BY account_id) SELECT a.id, a.opened_date, as.max_amount FROM accounts a LEFT JOIN account_summary as ON a.id = as.account_id WHERE as.max_amount > 1200 ORDER BY a.id DESC, as.max_amount ASC

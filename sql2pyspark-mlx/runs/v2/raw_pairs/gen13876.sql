@@ -1,1 +1,0 @@
-WITH ranked_products AS (SELECT id, brand, price, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY price, id) AS pos FROM products) SELECT id, brand, price FROM ranked_products WHERE pos <= 1 ORDER BY brand DESC

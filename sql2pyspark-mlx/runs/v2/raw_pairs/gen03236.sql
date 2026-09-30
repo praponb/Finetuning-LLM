@@ -1,1 +1,0 @@
-SELECT status, plan, monthly_fee_count FROM (SELECT status, plan, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions WHERE start_date BETWEEN '2024-10-03' AND '2025-07-01' GROUP BY status, plan) AS t WHERE monthly_fee_count < 9;

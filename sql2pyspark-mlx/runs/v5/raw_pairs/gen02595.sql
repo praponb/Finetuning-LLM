@@ -1,1 +1,0 @@
-SELECT c.city, SUM(CASE WHEN s.status = 'CANCELLED' THEN s.monthly_fee ELSE 0 END) AS cancelled_monthly_fee, SORT_ARRAY(COLLECT_SET(s.status)) AS status_list FROM subscriptions s JOIN customers c ON c.id = s.customer_id GROUP BY c.city;

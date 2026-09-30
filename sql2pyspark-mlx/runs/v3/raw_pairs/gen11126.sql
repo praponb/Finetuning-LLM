@@ -1,1 +1,0 @@
-SELECT id, channel, discount, status, customer_id, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY discount DESC, id) AS rn, COUNT(*) OVER (PARTITION BY status, customer_id) AS status_count FROM orders WHERE store_id IN (12, 18)

@@ -1,1 +1,0 @@
-SELECT s.id, s.opened_date, t.avg_units, t.unique_stores FROM stores s INNER JOIN (SELECT store_id, AVG(units) AS avg_units, COUNT(DISTINCT units) AS unique_stores FROM store_sales WHERE units = 19 GROUP BY store_id) t ON s.id = t.store_id WHERE t.unique_stores > 8

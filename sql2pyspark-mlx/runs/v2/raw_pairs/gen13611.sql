@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3394000 THEN 'high' WHEN budget >= 1504000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(CASE WHEN location = 'New York' THEN budget ELSE 0 END) AS new_york_budget FROM departments GROUP BY budget_bucket

@@ -1,1 +1,0 @@
-SELECT id, plan, end_date, status, CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END AS is_enterprise FROM subscriptions WHERE (monthly_fee <= 150 AND end_date BETWEEN '2023-06-01' AND '2024-08-24') OR monthly_fee <= 140

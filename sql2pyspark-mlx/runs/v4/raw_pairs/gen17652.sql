@@ -1,1 +1,0 @@
-SELECT oi.quantity, oi.unit_price, o.status, o.channel, c.name, c.country FROM order_items oi LEFT JOIN orders o ON o.id = oi.order_id INNER JOIN customers c ON o.customer_id = c.id WHERE c.age IS NOT NULL AND oi.order_id = 8

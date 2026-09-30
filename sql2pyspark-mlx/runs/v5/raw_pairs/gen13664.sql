@@ -1,1 +1,0 @@
-SELECT s.region, s.sqft, t.first_order_date, t.shipping_fee_range FROM stores s JOIN (SELECT store_id, MIN(order_date) AS first_order_date, MAX(shipping_fee) - MIN(shipping_fee) AS shipping_fee_range FROM orders WHERE shipping_fee < 35 GROUP BY store_id) t ON s.id = t.store_id WHERE t.shipping_fee_range >= 21

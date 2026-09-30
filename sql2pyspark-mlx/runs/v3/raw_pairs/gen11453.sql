@@ -1,1 +1,0 @@
-SELECT TO_DATE(event_time) AS event_day, SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END) AS search_count FROM web_events GROUP BY TO_DATE(event_time) HAVING COUNT(duration_sec) >= 4 ORDER BY search_count DESC, event_day LIMIT 3

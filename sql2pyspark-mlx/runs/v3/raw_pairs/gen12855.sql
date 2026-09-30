@@ -1,1 +1,0 @@
-SELECT p.brand, ROUND(AVG(ss.revenue), 2) AS avg_revenue, MIN(ss.units) AS min_units FROM store_sales ss FULL OUTER JOIN products p ON ss.product_id = p.id INNER JOIN stores s ON ss.store_id = s.id WHERE ARRAY_CONTAINS(p.tags, 'new') GROUP BY p.brand ORDER BY min_units;

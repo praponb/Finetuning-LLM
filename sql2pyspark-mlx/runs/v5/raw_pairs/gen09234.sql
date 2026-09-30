@@ -1,1 +1,0 @@
-with supplier_summary as (select supplier_id, min(launch_date) as first_launch_date, round(stddev(cost), 2) as stddev_cost from products group by supplier_id) select s.rating, ss.first_launch_date, ss.stddev_cost from suppliers s inner join supplier_summary ss on s.id = ss.supplier_id where ss.stddev_cost >= 75 order by first_launch_date;

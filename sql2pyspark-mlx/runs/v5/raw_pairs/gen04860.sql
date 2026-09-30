@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, effective_from, currency, EXPLODE_OUTER(tier_limits) AS element FROM price_tiers) SELECT currency, COUNT(*) FILTER (WHERE currency = 'EUR') AS eur_rows, SIZE(COLLECT_SET(currency)) AS num_currencies, GROUPING(currency) AS grouping_id FROM lines GROUP BY CUBE (currency) ORDER BY currency ASC NULLS LAST;

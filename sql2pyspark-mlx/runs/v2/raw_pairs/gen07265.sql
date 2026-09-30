@@ -1,1 +1,0 @@
-WITH ranked_orders AS (SELECT id, customer_id, amount, order_date, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC, id) AS rn FROM orders) SELECT id, customer_id, amount, order_date FROM ranked_orders WHERE rn <= 3

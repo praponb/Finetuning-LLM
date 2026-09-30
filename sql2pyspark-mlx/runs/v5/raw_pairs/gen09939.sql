@@ -1,1 +1,0 @@
-SELECT products.category, products.brand, SUM(order_items.unit_price) AS total_unit_price FROM order_items JOIN products ON order_items.product_id = products.id GROUP BY products.category, products.brand HAVING SUM(order_items.unit_price) > 600 ORDER BY total_unit_price DESC;

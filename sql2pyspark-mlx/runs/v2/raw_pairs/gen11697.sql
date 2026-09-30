@@ -1,1 +1,0 @@
-with ranked as (select id, status, delivered_date, row_number() over (partition by status order by delivered_date desc, id) rn from shipments where carrier in ('Kerry', 'UPS', 'FedEx')) select id, status, delivered_date from ranked where rn <= 3 order by id desc;

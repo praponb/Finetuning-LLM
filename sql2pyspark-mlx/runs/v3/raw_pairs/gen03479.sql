@@ -1,1 +1,0 @@
-SELECT s.id, s.customer_id, c.email, c.age, c.signup_date, LOWER(c.segment) AS segment_lower FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE c.name LIKE 'Dav%' OR c.signup_date <= '2023-07-01' ORDER BY email

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, supplier_id, price, cost, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY price, id) AS row_num FROM products WHERE ARRAY_CONTAINS(tags, 'premium')) AS ranked WHERE row_num <= 5 ORDER BY price DESC;

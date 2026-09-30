@@ -1,1 +1,0 @@
-with orders_by_store as (select store_id, max(order_date) as latest_order_date, count(case when status = 'SHIPPED' then 1 end) as shipped_count from orders where customer_id is null group by store_id) select s.id, s.city, s.opened_date, obs.latest_order_date, obs.shipped_count from stores s inner join orders_by_store obs on s.id = obs.store_id order by obs.shipped_count desc

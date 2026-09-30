@@ -1,1 +1,0 @@
-WITH ProductStats AS (SELECT product_id, ROUND(STDDEV(quantity), 2) stddev_quantity FROM order_items WHERE order_id IN (29, 34) GROUP BY product_id) SELECT p.supplier_id, P.stddev_quantity FROM products p INNER JOIN ProductStats P ON p.id = P.product_id WHERE P.stddev_quantity > 70

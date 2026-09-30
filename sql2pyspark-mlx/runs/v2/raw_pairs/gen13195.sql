@@ -1,1 +1,0 @@
-with ranked_orders as (select *, row_number() over (partition by store_id order by shipping_fee desc, id) as rnk from orders) select * from ranked_orders where rnk <= 3 order by store_id desc, channel desc

@@ -1,1 +1,0 @@
-with base as (select *, round(revenue / units, 2) as revenue_per_unit from store_sales where (month(sale_date) in (1, 8, 12) and units != 34) or product_id in (1, 2, 6, 9)), summary as (select store_id, max(sale_date) as latest_sale_date, min(units) as min_units from base group by store_id) select store_id, latest_sale_date, min_units from summary order by min_units desc, 1

@@ -1,1 +1,0 @@
-SELECT country, SUM(rating) AS total_rating, COUNT(*) AS cnt, ROUND(SUM(rating) * 100.0 / SUM(SUM(rating)) OVER (), 2) AS pct_of_total FROM suppliers WHERE country IN ('JP', 'SG', 'UK') GROUP BY country ORDER BY cnt DESC, country LIMIT 5;

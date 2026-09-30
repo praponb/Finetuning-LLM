@@ -1,1 +1,0 @@
-SELECT *, LAST_VALUE(page, TRUE) OVER (PARTITION BY session_id ORDER BY event_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_page, NTILE(10) OVER (PARTITION BY page ORDER BY duration_sec DESC, id) AS duration_sec_bucket FROM web_events

@@ -1,1 +1,0 @@
-WITH top_web_events AS (SELECT *, RANK() OVER (PARTITION BY event_type ORDER BY event_time DESC) AS pos FROM web_events) SELECT id, event_type, event_time FROM top_web_events WHERE pos <= 3 ORDER BY event_type;

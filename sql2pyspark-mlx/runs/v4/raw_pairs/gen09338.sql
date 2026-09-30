@@ -1,1 +1,0 @@
-SELECT id, segment, signup_date, credit_limit, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date, id) AS signup_date_row, LEAD(credit_limit, 1, 0) OVER (PARTITION BY segment ORDER BY signup_date, id) AS next_credit_limit FROM customers WHERE UPPER(email) LIKE '%ARO%' ORDER BY credit_limit;

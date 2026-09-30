@@ -1,1 +1,0 @@
-SELECT s.id, s.city, COUNT(o.id) AS order_count, ROUND(STDDEV(o.discount), 2) AS stddev_discount, MIN(o.order_date) AS min_order_date FROM stores s LEFT JOIN orders o ON s.id = o.store_id GROUP BY s.id, s.city;

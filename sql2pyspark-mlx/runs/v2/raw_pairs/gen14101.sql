@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.rating >= 3.9 THEN 'high' WHEN s.rating >= 2.4 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(DISTINCT p.price) AS unique_categorys FROM products p LEFT JOIN suppliers s ON p.supplier_id = s.id GROUP BY CASE WHEN s.rating >= 3.9 THEN 'high' WHEN s.rating >= 2.4 THEN 'mid' ELSE 'low' END HAVING COUNT(DISTINCT p.price) > 5 ORDER BY rating_bucket DESC

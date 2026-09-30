@@ -1,1 +1,0 @@
-SELECT c.segment, ROUND((100 * SUM(CASE WHEN a.status = 'CLOSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_closed FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE a.opened_date >= '2023-11-01' GROUP BY c.segment ORDER BY pct_closed, segment LIMIT 1;

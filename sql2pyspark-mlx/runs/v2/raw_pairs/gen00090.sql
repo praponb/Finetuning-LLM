@@ -1,1 +1,0 @@
-SELECT delivered_date, status, LAST_DAY(shipped_date) AS shipped_date_month_end, DATE_TRUNC('YEAR', shipped_date) AS shipped_date_period FROM shipments WHERE carrier = 'Kerry' AND (delivered_date <= '2025-03-01' OR status = 'LOST') ORDER BY shipped_date_month_end;

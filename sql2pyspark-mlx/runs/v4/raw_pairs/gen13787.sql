@@ -1,1 +1,0 @@
-WITH top_order_items AS (SELECT id, product_id, quantity, unit_price, RANK() OVER (PARTITION BY product_id ORDER BY quantity) AS rnk FROM order_items) SELECT * FROM top_order_items WHERE rnk <= 3 ORDER BY product_id DESC;

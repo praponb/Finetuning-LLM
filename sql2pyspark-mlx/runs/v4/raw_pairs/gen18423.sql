@@ -1,1 +1,0 @@
-SELECT s.id, s.device, t.page_values, t.max_duration_sec FROM sessions s LEFT OUTER JOIN (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) page_values, MAX(duration_sec) max_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.max_duration_sec > 360;

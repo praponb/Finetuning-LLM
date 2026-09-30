@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, SUBSTRING(plan, 1, 3) AS plan_prefix FROM subscriptions WHERE start_date > DATE '2023-05-28' AND monthly_fee >= 240) SELECT p.segment, p.city, src.plan, COUNT(*) AS cnt, MAX(src.monthly_fee) AS max_monthly_fee FROM valid src INNER JOIN customers p ON src.customer_id = p.id GROUP BY ROLLUP (p.segment, p.city, src.plan) ORDER BY cnt DESC NULLS LAST;

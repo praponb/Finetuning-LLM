@@ -1,1 +1,0 @@
-select id, status, amount, method from (select id, status, amount, method, dense_rank() over (partition by status order by amount desc) as rn from payments where method = 'card') as ranked where rn = 1 order by status desc;

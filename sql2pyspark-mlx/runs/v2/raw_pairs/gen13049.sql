@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3678000 THEN 'high' WHEN budget >= 1529000 THEN 'mid' ELSE 'low' END budget_bucket, location, COUNT(*) department_count, MIN(budget) min_budget FROM departments WHERE dept_name <> 'Legal' GROUP BY 1, 2

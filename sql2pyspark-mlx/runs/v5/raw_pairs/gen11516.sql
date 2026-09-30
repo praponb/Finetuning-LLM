@@ -1,1 +1,0 @@
-WITH RankedTransactions AS (SELECT id, txn_type, amount, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY amount DESC, id) AS row_num FROM transactions) SELECT * FROM RankedTransactions WHERE row_num <= 3;

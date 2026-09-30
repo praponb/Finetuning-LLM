@@ -1,1 +1,0 @@
-with filtered as (select *, round(amount, 0) as amount_rounded, ceil(shipping_fee) as shipping_fee_whole from orders where store_id is not null) select store_id, id from filtered except all select store_id, id from orders where discount >= 0.25;

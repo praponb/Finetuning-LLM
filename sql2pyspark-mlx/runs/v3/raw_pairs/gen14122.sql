@@ -1,1 +1,0 @@
-SELECT account_id, txn_type, SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END) fee_count FROM transactions WHERE txn_type = 'FEE' AND txn_time >= '2025-07-09' GROUP BY account_id, txn_type HAVING fee_count < 42 ORDER BY fee_count, account_id DESC;

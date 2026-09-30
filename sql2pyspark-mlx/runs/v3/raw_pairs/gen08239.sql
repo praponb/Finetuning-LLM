@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, SUM(unit_price) AS total_unit_price, MAX(quantity) - MIN(quantity) AS quantity_range FROM order_items WHERE quantity <= 7 GROUP BY order_id) SELECT o.shipping_fee, os.total_unit_price, os.quantity_range FROM orders o LEFT JOIN order_summary os ON o.id = os.order_id ORDER BY quantity_range DESC, shipping_fee DESC;

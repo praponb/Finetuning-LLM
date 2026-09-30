@@ -1,1 +1,0 @@
-SELECT txn_type, MONTH(txn_time) AS txn_month, YEAR(txn_time) AS txn_year, AVG(amount) AS avg_amount, SUM(CASE WHEN txn_type = 'DEBIT' THEN 1 ELSE 0 END) AS debit_count FROM transactions WHERE is_flagged = FALSE OR account_id IN (7, 18, 19, 22) GROUP BY 1, 2, 3

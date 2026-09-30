@@ -1,1 +1,0 @@
-SELECT t.is_flagged, t.txn_time, a.status, a.opened_date, c.signup_date, c.city FROM transactions t RIGHT JOIN accounts a ON t.account_id = a.id JOIN customers c ON a.customer_id = c.id ORDER BY t.txn_time;

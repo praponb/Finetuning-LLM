@@ -1,1 +1,0 @@
-WITH filtered_departments AS (SELECT * FROM departments WHERE location != 'Chiang Mai' AND budget > 1371000), summary AS (SELECT location, COUNT(budget) AS budget_count FROM filtered_departments GROUP BY location) SELECT location, budget_count FROM summary ORDER BY budget_count;

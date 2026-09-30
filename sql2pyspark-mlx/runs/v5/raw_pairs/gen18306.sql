@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, DATE_SUB(opened_date, 77) AS opened_date_minus_77d, COALESCE(region, 'OTHER') AS resolved_region FROM stores WHERE opened_date >= DATE '2023-08-30' AND region IS NOT NULL) SELECT * FROM (SELECT city, region, sqft FROM filtered) src PIVOT (SUM(sqft) AS amount, COUNT(1) AS cnt FOR region IN ('East', 'South'));

@@ -1,1 +1,0 @@
-SELECT product_id, store_id, DATE_TRUNC('MONTH', sale_date) AS sale_month, MAX(sale_date) AS last_sale_date, COUNT(units) AS units_count FROM store_sales GROUP BY product_id, store_id, DATE_TRUNC('MONTH', sale_date) HAVING units_count > 5

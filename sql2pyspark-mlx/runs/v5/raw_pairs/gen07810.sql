@@ -1,1 +1,0 @@
-SELECT p.id, p.order_id, p.method, o.discount, o.amount, c.name, c.country FROM payments p LEFT JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE o.shipping_fee <= 35 ORDER BY o.discount DESC;

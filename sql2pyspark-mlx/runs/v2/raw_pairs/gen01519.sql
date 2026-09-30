@@ -1,1 +1,0 @@
-SELECT emp.hire_date AS employee_hire_date, emp.is_remote AS employee_is_remote, mgr.level AS manager_level, mgr.dept_id AS manager_dept_id, mgr.salary AS manager_salary, LAST_DAY(emp.hire_date) AS hire_date_month_end FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.full_name LIKE 'J%' ORDER BY emp.hire_date DESC

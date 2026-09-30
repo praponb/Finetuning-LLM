@@ -1,1 +1,0 @@
-select c.country, sum(case when s.country = 'DE' then 1 else 0 end) as de_count, concat_ws(', ', sort_array(collect_set(s.country))) as country_values from sessions s left join customers c on s.customer_id = c.id group by c.country;

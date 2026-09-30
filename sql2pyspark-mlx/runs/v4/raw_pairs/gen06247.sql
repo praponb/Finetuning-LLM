@@ -1,1 +1,0 @@
-WITH remaining_keys AS (SELECT id, method FROM payments EXCEPT ALL SELECT id, method FROM payments WHERE order_id IN (30, 34, 40)), verified AS (SELECT s.* FROM payments s JOIN remaining_keys k ON s.id = k.id AND s.method = k.method) SELECT order_id, amount, paid_at FROM verified ORDER BY paid_at DESC NULLS FIRST;

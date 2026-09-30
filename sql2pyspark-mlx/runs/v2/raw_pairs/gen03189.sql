@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MIN(quantity) AS min_quantity, COUNT(DISTINCT quantity) AS unique_products FROM inventory WHERE MONTH(last_restock) IN (1, 2, 12) GROUP BY store_id) SELECT s.region, s.opened_date, ss.min_quantity, ss.unique_products FROM stores s JOIN store_stats ss ON s.id = ss.store_id WHERE ss.unique_products >= 4 ORDER BY s.opened_date;

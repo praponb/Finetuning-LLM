@@ -1,1 +1,0 @@
-SELECT p.supplier_id, AVG(ss.units) avg_units FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id INNER JOIN stores s ON ss.store_id = s.id GROUP BY p.supplier_id ORDER BY supplier_id ASC;

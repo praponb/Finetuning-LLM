@@ -1,1 +1,0 @@
-SELECT d.location, d.budget, e.email, UPPER(e.job_title) AS job_title_upper FROM departments d INNER JOIN employees e ON d.id = e.dept_id WHERE d.budget IS NULL AND d.location IN ('Chiang Mai', 'Bangkok') ORDER BY e.email

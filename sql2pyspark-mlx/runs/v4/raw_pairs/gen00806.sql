@@ -1,1 +1,0 @@
-SELECT id, region, city, sqft, opened_date, PERCENT_RANK() OVER (PARTITION BY region, city ORDER BY sqft DESC) AS sqft_pct_rank, SUM(sqft) OVER (ORDER BY opened_date, id) AS running_sqft FROM stores WHERE opened_date > '2023-10-01'

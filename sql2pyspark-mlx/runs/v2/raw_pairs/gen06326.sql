@@ -1,1 +1,0 @@
-select o.id, o.customer_id, o.order_date, o.shipping_fee from orders o where o.amount < 1080 and not exists (select 1 from payments p where p.order_id = o.id and p.method != 'promptpay') order by id, customer_id;

@@ -1,1 +1,0 @@
-with department_stats as (select dept_id, sum(case when job_title = 'Manager' then 1 else 0 end) as manager_count, count(distinct salary) as unique_depts from employees group by dept_id) select d.id, d.dept_name, ds.manager_count, ds.unique_depts from departments d join department_stats ds on d.id = ds.dept_id

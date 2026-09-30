@@ -1,1 +1,0 @@
-SELECT brand, ROUND(AVG(price), 2) AS avg_price, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list FROM products WHERE category IN ('Home', 'Books', 'Fashion') AND price BETWEEN 650 AND 930 GROUP BY brand;

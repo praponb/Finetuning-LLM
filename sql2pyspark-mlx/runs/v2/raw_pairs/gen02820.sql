@@ -1,1 +1,0 @@
-SELECT COUNT(*) AS department_count, ROUND((100 * SUM(CASE WHEN location = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_berlin, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) AS location_values FROM departments WHERE dept_name != 'Finance' ORDER BY department_count;

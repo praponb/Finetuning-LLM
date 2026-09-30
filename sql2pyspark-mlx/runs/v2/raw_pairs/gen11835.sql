@@ -1,1 +1,0 @@
-SELECT s.id, s.opened_date FROM stores s WHERE s.sqft BETWEEN 7908 AND 10901 AND NOT EXISTS (SELECT 1 FROM inventory i WHERE i.store_id = s.id AND i.last_restock BETWEEN '2024-02-29' AND '2025-01-07');

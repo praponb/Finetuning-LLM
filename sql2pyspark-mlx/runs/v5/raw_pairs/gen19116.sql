@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, MAX(cost) - MIN(cost) AS cost_range FROM shipments WHERE status IN ('LOST', 'RETURNED', 'DELIVERED') GROUP BY order_id) SELECT o.discount, ot.cost_range FROM orders o LEFT JOIN order_totals ot ON o.id = ot.order_id;

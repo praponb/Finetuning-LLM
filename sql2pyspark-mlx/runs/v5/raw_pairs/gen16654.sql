@@ -1,1 +1,0 @@
-SELECT order_month, shipping_fee_range FROM (SELECT MONTH(order_date) order_month, MAX(shipping_fee) - MIN(shipping_fee) shipping_fee_range FROM orders WHERE order_date <= '2023-07-01' GROUP BY MONTH(order_date)) t WHERE shipping_fee_range > 67

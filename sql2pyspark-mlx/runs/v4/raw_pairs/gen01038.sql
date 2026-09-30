@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY credit_limit DESC, id) rnk FROM customers WHERE city IN ('Tokyo', 'Chiang Mai', 'Bangkok')) SELECT * FROM ranked WHERE rnk = 1 ORDER BY country DESC;

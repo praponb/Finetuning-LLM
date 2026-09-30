@@ -1,1 +1,0 @@
-SELECT store_sales.product_id, MAX(inventory.last_restock) latest_last_restock FROM inventory INNER JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE store_sales.revenue >= 1100 GROUP BY store_sales.product_id;

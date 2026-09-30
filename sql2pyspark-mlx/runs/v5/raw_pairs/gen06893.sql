@@ -1,1 +1,0 @@
-SELECT CASE WHEN cost >= 105 THEN 'high' WHEN cost >= 45 THEN 'mid' ELSE 'low' END AS cost_bucket, ROUND(STDDEV(cost), 2) AS stddev_cost, MAX(shipped_date) AS latest_shipped_date FROM shipments WHERE NOT ((shipped_date BETWEEN '2024-06-01' AND '2024-08-01' AND status != 'LOST') OR carrier IN ('DHL', 'Flash', 'Kerry')) GROUP BY 1 ORDER BY latest_shipped_date, cost_bucket DESC;

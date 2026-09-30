@@ -1,1 +1,0 @@
-WITH top_web_events AS (SELECT id, page, event_time, session_id, DENSE_RANK() OVER (PARTITION BY page ORDER BY event_time DESC) AS rn FROM web_events) SELECT id, page, event_time, session_id FROM top_web_events WHERE rn <= 3;

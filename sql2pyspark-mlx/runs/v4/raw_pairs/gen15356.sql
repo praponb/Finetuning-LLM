@@ -1,1 +1,0 @@
-SELECT oi.unit_price, o.shipping_fee, p.launch_date, p.price FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id LEFT OUTER JOIN products p ON oi.product_id = p.id WHERE p.launch_date > '2023-10-22' AND p.cost BETWEEN 370 AND 650 ORDER BY price DESC, p.launch_date DESC;

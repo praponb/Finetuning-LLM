@@ -1,1 +1,0 @@
-select s.id, s.supplier_name, s.country, s.city, top1.launch_date, top1.product_cost from suppliers s left join lateral (select c.launch_date, c.cost as product_cost from products c where c.supplier_id = s.id order by c.stock_qty desc, c.id desc limit 1) top1 on true;

@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, order_id, shipped_date, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY shipped_date DESC) pos FROM shipments WHERE shipped_date >= '2024-07-01') SELECT id, order_id, shipped_date FROM numbered WHERE pos = 1;

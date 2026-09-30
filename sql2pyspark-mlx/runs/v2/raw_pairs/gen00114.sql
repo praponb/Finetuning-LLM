@@ -1,1 +1,0 @@
-SELECT method, COUNT(*) AS cnt, SUM(CASE WHEN method = 'paypal' THEN 1 ELSE 0 END) AS paypal_count, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments GROUP BY method HAVING SUM(CASE WHEN method = 'paypal' THEN 1 ELSE 0 END) >= 25;

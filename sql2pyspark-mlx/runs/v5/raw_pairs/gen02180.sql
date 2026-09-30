@@ -1,1 +1,0 @@
-select id, city, sqft, lead(sqft, 1) over (partition by city, region order by opened_date, id) as next_sqft, avg(sqft) over (partition by region order by sqft, id rows between 2 preceding and current row) as sqft_avg_2, round(sqft / sum(sqft) over (partition by city, region), 4) as sqft_share from stores

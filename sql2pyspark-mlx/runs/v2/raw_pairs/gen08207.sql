@@ -1,1 +1,0 @@
-SELECT p.brand, SUM(i.quantity) AS total_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON s.id = p.supplier_id WHERE i.last_restock > '2025-04-01' GROUP BY p.brand;

@@ -1,1 +1,0 @@
-WITH recent_departments AS (SELECT * FROM departments WHERE location <> 'Singapore' AND location = 'Tokyo'), location_summary AS (SELECT location, COUNT(CASE WHEN dept_name = 'Finance' THEN 1 END) finance_count FROM recent_departments GROUP BY location) SELECT * FROM location_summary;

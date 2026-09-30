@@ -1,1 +1,0 @@
-with numbered as (select *, row_number() over (partition by account_id order by amount desc, id) as pos from transactions) select id, account_id, amount from numbered where pos <= 3 order by account_id desc

@@ -1,1 +1,0 @@
-with DepartmentSummary as (select dept_id, count(*) as num_employees, round(stddev(salary), 2) as stddev_salary from employees where job_title = 'Designer' group by dept_id) select d.budget, D.num_employees, D.stddev_salary from departments d left join DepartmentSummary D on d.id = D.dept_id order by stddev_salary asc;

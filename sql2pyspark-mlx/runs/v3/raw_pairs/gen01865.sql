@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM transactions WHERE txn_type = 'CREDIT'), agg AS (SELECT YEAR(txn_time) AS txn_year, COUNT(CASE WHEN txn_type = 'DEBIT' THEN 1 END) AS debit_count, COUNT(*) AS cnt FROM src GROUP BY YEAR(txn_time)) SELECT txn_year, debit_count, cnt FROM agg;

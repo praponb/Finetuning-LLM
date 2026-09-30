@@ -1,1 +1,0 @@
-WITH DepartmentStats AS (SELECT dept_id, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees GROUP BY dept_id) SELECT d.dept_name, D.job_title_list FROM departments d INNER JOIN DepartmentStats D ON d.id = D.dept_id ORDER BY dept_name;

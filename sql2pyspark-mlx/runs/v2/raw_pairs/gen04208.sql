@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 8 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, COUNT(*) AS order_item_count, SUM(quantity * unit_price) AS revenue, MAX(unit_price) AS max_unit_price FROM order_items GROUP BY quantity_bucket, product_id ORDER BY max_unit_price, quantity_bucket, product_id LIMIT 10

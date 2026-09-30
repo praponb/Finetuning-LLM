@@ -1,1 +1,0 @@
-WITH ranked_suppliers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating, id) AS row_num FROM suppliers WHERE supplier_name LIKE 'Pa%') SELECT id, city, rating, supplier_name FROM ranked_suppliers WHERE row_num <= 2 ORDER BY id DESC

@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, COUNT(amount) amount_count FROM payments GROUP BY order_id) SELECT o.amount, ot.amount_count FROM orders o JOIN order_totals ot ON o.id = ot.order_id WHERE ot.amount_count > 6

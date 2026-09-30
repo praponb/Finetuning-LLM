@@ -1,1 +1,0 @@
-SELECT status, YEAR(paid_at) AS paid_year, MIN(amount) AS min_amount, MAX(paid_at) AS last_paid_at, ROUND(AVG(amount), 2) AS avg_amount FROM payments WHERE amount BETWEEN 1180 AND 1400 AND method = 'cash' GROUP BY status, YEAR(paid_at) ORDER BY avg_amount, status, paid_year LIMIT 10;

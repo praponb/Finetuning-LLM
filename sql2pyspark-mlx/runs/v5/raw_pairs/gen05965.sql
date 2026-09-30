@@ -1,1 +1,0 @@
-WITH eligible AS (SELECT s.* FROM sessions s WHERE EXISTS (SELECT 1 FROM web_events x WHERE x.session_id = s.id AND x.duration_sec BETWEEN 260 AND 441)) SELECT id, customer_id, browser, started_at, country, CASE WHEN country RLIKE '^(US|SG)$' THEN 'CORE' WHEN country RLIKE '^(TH|JP)$' THEN 'EXTENDED' ELSE 'OTHER_ZONE' END AS country_zone FROM eligible;

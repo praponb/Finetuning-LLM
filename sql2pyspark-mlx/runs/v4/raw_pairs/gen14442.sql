@@ -1,1 +1,0 @@
-select *, avg(salary) over (partition by manager_id order by hire_date, id rows between 3 preceding and current row) as salary_avg_3, min(salary) over (partition by dept_id, level) as dept_id_min_salary, avg(salary) over w_part as salary_avg_6 from employees window w_part as (order by salary, id rows between 6 preceding and current row)

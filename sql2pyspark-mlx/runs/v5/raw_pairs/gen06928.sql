@@ -1,1 +1,0 @@
-SELECT s.country, s.city, MAX(ss.sale_date) latest_sale_date FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id RIGHT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE p.category IN ('Sports', 'Electronics', 'Home') GROUP BY s.country, s.city ORDER BY s.city DESC

@@ -1,1 +1,0 @@
-with exploded as (select id, customer_id, coupon_codes, attr_key, v from carts lateral view explode(attributes) e as attr_key, v) select id, customer_id, coupon_codes, attr_key, case when attr_key rlike '^(weight_kg|device)$' then 'OTHER_ZONE' else 'EXTENDED' end as attr_key_zone from exploded order by attr_key desc, attr_key_zone asc;

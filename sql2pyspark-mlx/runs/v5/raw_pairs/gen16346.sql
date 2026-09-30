@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, LOWER(txn_type) AS txn_type_lower FROM transactions WHERE txn_time >= '2023-08-01') SELECT p.account_type, p.status, COUNT(*) AS num_rows, MAX(s.amount) AS max_amount FROM cleaned s INNER JOIN accounts p ON s.account_id = p.id GROUP BY p.account_type, p.status;

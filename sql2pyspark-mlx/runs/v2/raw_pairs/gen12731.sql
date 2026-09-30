@@ -1,1 +1,0 @@
-select e.id, e.full_name as employee_full_name, e.manager_id as employee_manager_id, e.level as employee_level, m.job_title as manager_job_title from employees e left join employees m on e.manager_id = m.id where not (m.salary between 121000 and 132000 and length(e.full_name) < 8) order by employee_level desc, employee_full_name;

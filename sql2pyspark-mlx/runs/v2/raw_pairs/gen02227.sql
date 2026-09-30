@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) AS signup_month, SUM(a.balance) AS total_balance, MAX(a.opened_date) AS latest_opened_date FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE a.opened_date >= '2024-08-26' GROUP BY MONTH(c.signup_date) ORDER BY signup_month DESC;

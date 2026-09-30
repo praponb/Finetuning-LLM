@@ -1,1 +1,0 @@
-SELECT t.id, t.merchant, t.is_flagged, a.account_type, a.opened_date, c.email, ROUND(t.amount * 1.15, 2) adjusted_amount FROM transactions t LEFT OUTER JOIN accounts a ON t.account_id = a.id LEFT OUTER JOIN customers c ON a.customer_id = c.id WHERE c.name IS NULL AND t.merchant <> '7-Eleven' ORDER BY a.opened_date ASC, id ASC LIMIT 3;

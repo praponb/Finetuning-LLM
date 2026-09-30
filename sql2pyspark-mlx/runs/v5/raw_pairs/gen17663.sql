@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.delivered_date, orders.discount, orders.status, stores.region, stores.sqft FROM shipments RIGHT OUTER JOIN orders ON shipments.order_id = orders.id LEFT OUTER JOIN stores ON stores.id = orders.store_id WHERE MONTH(orders.order_date) IN (2, 7, 9)

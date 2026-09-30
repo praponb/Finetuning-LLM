@@ -1,1 +1,0 @@
-with supplier_stats as (select supplier_id, min(cost) as min_cost from products group by supplier_id) select s.id, s.country, s.supplier_name, ss.min_cost from suppliers s join supplier_stats ss on s.id = ss.supplier_id where ss.min_cost > 640

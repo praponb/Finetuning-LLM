@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('YEAR', ends_on) AS year_start, channel, COUNT(*) FILTER (WHERE channel = 'partner') AS partner_rows, ROUND(AVG(discount_pct), 2) AS avg_discount_pct FROM promotions GROUP BY year_start, channel;

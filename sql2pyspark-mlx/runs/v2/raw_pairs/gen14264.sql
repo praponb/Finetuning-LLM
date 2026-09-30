@@ -1,1 +1,0 @@
-WITH RankedPayments AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount DESC, id) AS row_num FROM payments WHERE order_id IN (2, 11, 28, 29)) SELECT * FROM RankedPayments WHERE row_num <= 5

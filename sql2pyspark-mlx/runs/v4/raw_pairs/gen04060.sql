@@ -1,1 +1,0 @@
-WITH enriched AS (SELECT e.*, p.city, p.opened_date, p.store_name FROM inventory e LEFT JOIN stores p ON e.store_id = p.id) SELECT id, store_id, opened_date, store_name, CASE WHEN store_name RLIKE '^(Riverside|Downtown Express)$' THEN 'OTHER_ZONE' ELSE 'GROUP_A' END AS store_name_zone FROM enriched ORDER BY id DESC;

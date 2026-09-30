@@ -1,1 +1,0 @@
-select web_events.id, web_events.event_type, sessions.device, customers.credit_limit, customers.city from web_events left join sessions on web_events.session_id = sessions.id full outer join customers on sessions.customer_id = customers.id where web_events.session_id in (12, 27, 33) and customers.country = 'JP'

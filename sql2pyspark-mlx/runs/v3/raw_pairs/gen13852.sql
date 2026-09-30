@@ -1,1 +1,0 @@
-WITH department_totals AS (SELECT dept_id, COUNT(*) AS total_count, MIN(hire_date) AS first_hire_date FROM employees GROUP BY dept_id) SELECT d.budget, dt.total_count, dt.first_hire_date FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id WHERE dt.total_count >= 7 ORDER BY total_count DESC, first_hire_date;

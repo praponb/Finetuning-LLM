@@ -1,1 +1,0 @@
-SELECT id, customer_id, TRANSFORM(items, x -> x.product_id) AS product_ids, COALESCE(attributes['device'], 'unknown') AS device_or_default, SIZE(items) AS num_items, ARRAY_CONTAINS(MAP_KEYS(attributes), 'gift') AS has_gift FROM carts

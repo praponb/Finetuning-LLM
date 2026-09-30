@@ -1,1 +1,0 @@
-WITH InventoryByProduct AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) - MIN(quantity) AS quantity_range FROM inventory WHERE store_id IN (1, 2) GROUP BY product_id) SELECT p.category, I.avg_quantity, I.quantity_range FROM products p INNER JOIN InventoryByProduct I ON p.id = I.product_id;

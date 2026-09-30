@@ -1,1 +1,0 @@
-SELECT CASE WHEN d.budget >= 3477000 THEN 'high' WHEN d.budget >= 1307000 THEN 'mid' ELSE 'low' END budget_bucket, COUNT(*) total_count, SORT_ARRAY(COLLECT_SET(e.job_title)) job_title_list FROM employees e INNER JOIN departments d ON e.dept_id = d.id GROUP BY CASE WHEN d.budget >= 3477000 THEN 'high' WHEN d.budget >= 1307000 THEN 'mid' ELSE 'low' END ORDER BY budget_bucket

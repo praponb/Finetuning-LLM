@@ -1,1 +1,0 @@
-WITH ranked_web_events AS (SELECT *, DENSE_RANK() OVER (PARTITION BY event_type ORDER BY event_time DESC) AS pos FROM web_events) SELECT id, event_type, event_time FROM ranked_web_events WHERE pos <= 2

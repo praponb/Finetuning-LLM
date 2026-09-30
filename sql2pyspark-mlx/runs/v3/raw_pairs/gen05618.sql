@@ -1,1 +1,0 @@
-WITH ranked_stores AS (SELECT *, DENSE_RANK() OVER (PARTITION BY region ORDER BY sqft) AS pos FROM stores WHERE sqft > 9204) SELECT id, region, sqft FROM ranked_stores WHERE pos <= 2 ORDER BY sqft DESC;

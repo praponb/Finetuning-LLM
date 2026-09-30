@@ -1,1 +1,0 @@
-select o.status, sum(oi.unit_price) as total_unit_price from order_items oi inner join products p on p.id = oi.product_id inner join orders o on oi.order_id = o.id where o.shipping_fee <= 12 group by o.status having sum(oi.unit_price) >= 1700 order by status limit 1

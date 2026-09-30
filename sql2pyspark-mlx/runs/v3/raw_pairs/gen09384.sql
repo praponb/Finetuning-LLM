@@ -1,1 +1,0 @@
-with ValidAccounts as (select * from accounts where year(opened_date) >= 2023 and account_type in ('SAVINGS', 'LOAN')), AccountsStats as (select account_type, round((100 * sum(case when status = 'FROZEN' then 1 else 0 end)) / count(*), 1) as pct_frozen from ValidAccounts group by account_type) select * from AccountsStats where pct_frozen >= 24 order by account_type;

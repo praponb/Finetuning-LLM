@@ -1,1 +1,0 @@
-SELECT MONTH(signup_date) AS signup_month, MAX(credit_limit) AS max_credit_limit, COUNT(credit_limit) AS credit_limit_count FROM customers WHERE credit_limit <= 5500 GROUP BY 1 ORDER BY max_credit_limit DESC;

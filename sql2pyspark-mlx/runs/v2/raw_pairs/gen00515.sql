@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY sale_date, id) AS row_num FROM store_sales) SELECT id, store_id, sale_date FROM numbered WHERE row_num <= 2 ORDER BY sale_date, store_id DESC;

@@ -1,1 +1,0 @@
-select date_format(opened_date, 'yyyy-MM') opened_month, max(balance) max_balance from accounts where status in ('CLOSED', 'FROZEN', 'OPEN') group by date_format(opened_date, 'yyyy-MM') having max(balance) >= 73000;

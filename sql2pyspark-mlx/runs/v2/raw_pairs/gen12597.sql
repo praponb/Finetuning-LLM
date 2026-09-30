@@ -1,1 +1,0 @@
-select a.customer_id, avg(t.amount) as avg_amount, concat_ws(', ', sort_array(collect_set(t.txn_type))) as txn_type_values from transactions t right join accounts a on t.account_id = a.id left join customers c on a.customer_id = c.id group by a.customer_id order by txn_type_values desc, customer_id limit 5

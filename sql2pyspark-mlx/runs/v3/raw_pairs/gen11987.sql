@@ -1,1 +1,0 @@
-SELECT s.region, MAX(ss.sale_date) latest_sale_date FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON p.id = ss.product_id GROUP BY s.region ORDER BY region, latest_sale_date LIMIT 5

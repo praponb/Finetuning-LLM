@@ -1,1 +1,0 @@
-WITH product_summary AS (SELECT product_id, MIN(sale_date) AS min_sale_date FROM store_sales GROUP BY product_id) SELECT p.id, p.supplier_id, ps.min_sale_date FROM products p JOIN product_summary ps ON p.id = ps.product_id

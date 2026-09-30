@@ -1,1 +1,0 @@
-SELECT stores.id, stores.store_name, COUNT(orders.id) AS order_count, MIN(orders.order_date) AS min_order_date, MAX(orders.discount) - MIN(orders.discount) AS discount_range FROM stores INNER JOIN orders ON orders.store_id = stores.id WHERE orders.channel IN ('store', 'partner', 'web') GROUP BY stores.id, stores.store_name ORDER BY 4 ASC, id ASC, store_name ASC LIMIT 10;

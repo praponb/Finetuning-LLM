@@ -1,1 +1,0 @@
-SELECT products.id, products.brand, products.price, products.cost FROM products WHERE products.stock_qty BETWEEN 229 AND 385 AND EXISTS (SELECT 1 FROM inventory WHERE inventory.product_id = products.id)

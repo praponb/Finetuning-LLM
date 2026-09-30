@@ -1,1 +1,0 @@
-select * from (select status, round(stddev(monthly_fee), 2) as stddev_monthly_fee, sum(case when status = 'ACTIVE' then 1 else 0 end) as active_count from subscriptions group by status) as sub where active_count < 62 order by stddev_monthly_fee desc;

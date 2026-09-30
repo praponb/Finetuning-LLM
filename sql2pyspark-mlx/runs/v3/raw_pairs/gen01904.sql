@@ -1,1 +1,0 @@
-SELECT o.status, o.store_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.status))) AS status_values FROM shipments s INNER JOIN orders o ON s.order_id = o.id LEFT OUTER JOIN customers c ON c.id = o.customer_id WHERE s.cost < 68 GROUP BY o.status, o.store_id;

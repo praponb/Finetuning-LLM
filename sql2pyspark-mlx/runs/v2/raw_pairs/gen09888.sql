@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT customer_id, COUNT(CASE WHEN status = 'FROZEN' THEN 1 END) AS frozen_count FROM accounts GROUP BY customer_id) AS agg WHERE frozen_count > 9 ORDER BY customer_id DESC, frozen_count DESC LIMIT 5

@@ -1,1 +1,0 @@
-SELECT we.id, we.event_time, we.session_id FROM web_events we WHERE HOUR(we.event_time) BETWEEN 7 AND 13 AND we.session_id IN (SELECT id FROM sessions WHERE country IN ('SG', 'DE', 'JP')) ORDER BY we.id DESC;

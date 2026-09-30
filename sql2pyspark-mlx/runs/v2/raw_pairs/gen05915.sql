@@ -1,1 +1,0 @@
-select supplier_id, brand, category, round(avg(stock_qty), 2) as avg_stock_qty from products where brand not in ('Acme', 'Umbrella', 'Globex') group by supplier_id, brand, category order by avg_stock_qty desc, supplier_id, brand, category limit 1;

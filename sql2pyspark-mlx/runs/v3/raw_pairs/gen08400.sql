@@ -1,1 +1,0 @@
-SELECT a.status, DATE_TRUNC('MONTH', a.opened_date) AS opened_month, COUNT(CASE WHEN t.merchant = 'Grab' THEN 1 END) AS grab_count FROM transactions t INNER JOIN accounts a ON t.account_id = a.id GROUP BY a.status, DATE_TRUNC('MONTH', a.opened_date) ORDER BY grab_count DESC, opened_month

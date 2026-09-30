@@ -1,1 +1,0 @@
-SELECT event_type, session_id, DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, SUM(duration_sec) AS total_duration_sec, SUM(CASE WHEN page = '/checkout' THEN duration_sec ELSE 0 END) AS checkout_duration_sec FROM web_events WHERE (session_id = 7 AND duration_sec <= 158) OR event_type = 'purchase' GROUP BY event_type, session_id, event_month HAVING COUNT(duration_sec) < 3;

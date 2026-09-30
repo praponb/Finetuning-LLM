@@ -1,1 +1,0 @@
-SELECT s.id, s.supplier_name, COUNT(p.id) AS product_count, COUNT(DISTINCT p.stock_qty) AS unique_categorys, MAX(p.cost) AS max_cost FROM suppliers s INNER JOIN products p ON p.supplier_id = s.id GROUP BY s.id, s.supplier_name ORDER BY 1 DESC;

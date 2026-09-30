@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.product_id, inventory.store_id, inventory.last_restock, store_sales.sale_date, store_sales.units FROM inventory JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE inventory.store_id IN (2, 4, 5) ORDER BY sale_date ASC

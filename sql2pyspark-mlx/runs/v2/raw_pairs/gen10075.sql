@@ -1,1 +1,0 @@
-SELECT account_type, MIN(opened_date) AS first_opened_date, MAX(balance) - MIN(balance) AS balance_range, SUM(balance) AS total_balance FROM accounts WHERE account_type = 'CHECKING' GROUP BY account_type HAVING total_balance >= 268000 ORDER BY account_type DESC LIMIT 5

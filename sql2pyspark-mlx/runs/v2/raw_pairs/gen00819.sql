@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, page, event_time, duration_sec, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time, id) AS row_num FROM web_events WHERE duration_sec BETWEEN 368 AND 447) AS ranked WHERE row_num <= 3 ORDER BY duration_sec

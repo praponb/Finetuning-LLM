@@ -1,1 +1,0 @@
-SELECT o.status, o.order_date, t.max_unit_price FROM orders o INNER JOIN (SELECT order_id, MAX(unit_price) AS max_unit_price FROM order_items GROUP BY order_id) t ON o.id = t.order_id WHERE t.max_unit_price >= 270 ORDER BY max_unit_price DESC;

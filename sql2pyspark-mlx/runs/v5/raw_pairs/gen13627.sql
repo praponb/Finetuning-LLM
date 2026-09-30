@@ -1,1 +1,0 @@
-with valid as (select *, add_months(shipped_date, 1) as shipped_date_plus_months, lower(status) as status_lower, coalesce(carrier, 'DIRECT') as carrier_filled from shipments where shipped_date >= date '2023-07-04' and order_id is not null) select status from valid except distinct select status from shipments where delivered_date < '2025-07-01';

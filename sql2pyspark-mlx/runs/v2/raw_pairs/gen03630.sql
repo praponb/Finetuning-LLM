@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY unit_price DESC, id) AS rn FROM order_items WHERE order_id IN (9, 38)) SELECT * FROM ranked WHERE rn = 1 ORDER BY unit_price DESC, quantity DESC

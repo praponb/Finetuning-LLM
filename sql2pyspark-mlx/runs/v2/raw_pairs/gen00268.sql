@@ -1,1 +1,0 @@
-SELECT order_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, AVG(quantity) AS avg_quantity FROM order_items WHERE (order_id IN (8, 20, 35) AND quantity BETWEEN 4 AND 7) OR quantity < 6 GROUP BY order_id HAVING COUNT(DISTINCT unit_price) >= 4 ORDER BY order_id DESC

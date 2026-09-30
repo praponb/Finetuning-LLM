@@ -1,1 +1,0 @@
-select e.manager_id as employee_manager_id, e.dept_id as employee_dept_id, m.hire_date as manager_hire_date from employees e join employees m on e.manager_id = m.id where e.dept_id in (25, 27, 37, 38);

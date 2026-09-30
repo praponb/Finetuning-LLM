@@ -1,1 +1,0 @@
-SELECT s.id, COUNT(we.id) AS web_event_count, SUM(CASE WHEN we.page = '/search' THEN 1 ELSE 0 END) AS search_count FROM sessions s LEFT OUTER JOIN web_events we ON s.id = we.session_id GROUP BY s.id ORDER BY web_event_count;

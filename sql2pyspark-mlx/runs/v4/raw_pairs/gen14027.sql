@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, coupon_codes, attr_key, v FROM carts LATERAL VIEW EXPLODE(attributes) li AS attr_key, v) SELECT attr_key, SORT_ARRAY(COLLECT_SET(attr_key)) AS attr_key_list, COUNT(*) FILTER (WHERE attr_key = 'weight_kg') AS weight_kg_rows, COUNT_IF(attr_key = 'gift') AS gift_events, GROUPING(attr_key) AS gid FROM flattened GROUP BY CUBE (attr_key) ORDER BY attr_key

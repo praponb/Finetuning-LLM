@@ -1,1 +1,0 @@
-SELECT i.last_restock, i.product_id, p.cost, p.supplier_id, s.rating, s.city FROM inventory i FULL OUTER JOIN products p ON i.product_id = p.id RIGHT OUTER JOIN suppliers s ON s.id = p.supplier_id WHERE s.rating < 2.7 ORDER BY rating;

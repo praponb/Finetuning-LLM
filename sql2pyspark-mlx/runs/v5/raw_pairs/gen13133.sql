@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id, page ORDER BY duration_sec NULLS LAST, id) AS rank_in_group FROM web_events) ranked WHERE rank_in_group = 1) SELECT id, page, event_time, duration_sec, rank_in_group FROM latest ORDER BY id DESC NULLS LAST, rank_in_group DESC LIMIT 20

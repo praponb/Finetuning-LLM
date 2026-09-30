@@ -1,1 +1,0 @@
-with store_totals as (select store_id, min(last_restock) as first_last_restock from inventory group by store_id) select s.id, s.opened_date, st.first_last_restock from stores s join store_totals st on s.id = st.store_id

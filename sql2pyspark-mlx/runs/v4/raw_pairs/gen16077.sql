@@ -1,1 +1,0 @@
-SELECT CASE WHEN salary >= 123000 THEN 'high' WHEN salary >= 51000 THEN 'mid' ELSE 'low' END AS salary_bucket, COUNT(CASE WHEN level = 'L5' THEN 1 END) AS l5_count, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees GROUP BY CASE WHEN salary >= 123000 THEN 'high' WHEN salary >= 51000 THEN 'mid' ELSE 'low' END;

@@ -1,1 +1,0 @@
-SELECT txn_type, COUNT(DISTINCT amount) AS unique_merchants, COUNT(CASE WHEN merchant = '7-Eleven' THEN 1 END) AS 7_eleven_count FROM transactions WHERE txn_type = 'REFUND' AND txn_type = 'CREDIT' GROUP BY txn_type HAVING unique_merchants >= 4 ORDER BY 1

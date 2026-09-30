@@ -1,1 +1,0 @@
-WITH recent_shipments AS (SELECT * FROM shipments WHERE status NOT IN ('IN_TRANSIT', 'LOST', 'DELIVERED') AND cost > 76), shipments_stats AS (SELECT carrier, SUM(CASE WHEN status = 'RETURNED' THEN cost ELSE 0 END) AS returned_cost FROM recent_shipments GROUP BY carrier) SELECT carrier, returned_cost FROM shipments_stats WHERE returned_cost < 54

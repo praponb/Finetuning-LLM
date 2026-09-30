@@ -1,1 +1,0 @@
-SELECT session_id, event_type, COUNT(*) AS row_count, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, SORT_ARRAY(COLLECT_SET(page)) AS page_list FROM web_events GROUP BY session_id, event_type HAVING COUNT(*) >= 2 ORDER BY event_type, row_count DESC;

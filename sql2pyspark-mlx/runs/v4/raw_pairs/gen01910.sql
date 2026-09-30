@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, MAX(amount) AS max_amount FROM transactions GROUP BY account_id) SELECT a.id, a.opened_date, a.customer_id, at.max_amount FROM accounts a INNER JOIN account_totals at ON a.id = at.account_id WHERE at.max_amount >= 2000;

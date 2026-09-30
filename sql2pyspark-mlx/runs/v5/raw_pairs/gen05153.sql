@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', launch_date) AS launch_month, brand, ROUND((100 * SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_umbrella FROM products WHERE price >= 350 GROUP BY DATE_TRUNC('MONTH', launch_date), brand;

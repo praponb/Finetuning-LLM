@@ -1,1 +1,0 @@
-SELECT status, MAX(amount) - MIN(amount) AS amount_range, SUM(CASE WHEN method = 'paypal' THEN 1 ELSE 0 END) AS paypal_count FROM payments WHERE method IN ('cash', 'paypal', 'promptpay') AND method = 'bank_transfer' GROUP BY 1 HAVING SUM(CASE WHEN method = 'paypal' THEN 1 ELSE 0 END) >= 77 ORDER BY status

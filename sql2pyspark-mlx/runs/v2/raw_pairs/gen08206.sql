@@ -1,1 +1,0 @@
-SELECT txn_type, DATE_FORMAT(txn_time, 'yyyy-MM') AS txn_month, TO_DATE(txn_time) AS txn_day, COUNT(amount) AS amount_count, MAX(amount) - MIN(amount) AS amount_range FROM transactions WHERE amount >= 2600 GROUP BY txn_type, DATE_FORMAT(txn_time, 'yyyy-MM'), TO_DATE(txn_time) ORDER BY amount_range DESC, 3 DESC;

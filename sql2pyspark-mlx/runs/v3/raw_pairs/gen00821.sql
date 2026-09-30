@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', last_restock) last_restock_month, SUM(quantity) total_quantity FROM inventory GROUP BY DATE_TRUNC('MONTH', last_restock) HAVING SUM(quantity) < 1090 ORDER BY total_quantity DESC

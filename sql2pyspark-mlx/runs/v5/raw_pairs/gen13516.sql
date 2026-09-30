@@ -1,1 +1,0 @@
-select s.id, s.customer_id, s.end_date, s.monthly_fee, c.credit_limit, c.age, c.is_active, case when s.status = 'EXPIRED' then 1 else 0 end as is_expired from subscriptions s inner join customers c on s.customer_id = c.id order by end_date, s.customer_id desc

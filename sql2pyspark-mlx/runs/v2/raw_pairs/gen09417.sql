@@ -1,1 +1,0 @@
-select products.supplier_id, count(*) as num_order_items, round(avg(order_items.unit_price), 2) as avg_unit_price from order_items left outer join products on order_items.product_id = products.id where order_items.quantity = 4 group by products.supplier_id order by num_order_items, supplier_id limit 10;

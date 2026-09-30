@@ -1,1 +1,0 @@
-WITH ValidStores AS (SELECT * FROM stores WHERE region IS NOT NULL), stores_stats AS (SELECT city, ROUND((100 * SUM(CASE WHEN region = 'East' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_east FROM ValidStores GROUP BY city) SELECT city, pct_east FROM stores_stats WHERE pct_east < 33;

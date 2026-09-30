@@ -1,1 +1,0 @@
-select a.id, a.balance, a.account_type, c.city, c.signup_date, c.is_active from accounts a full outer join customers c on a.customer_id = c.id where c.city = 'New York' order by id desc, a.account_type desc;

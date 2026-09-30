@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, LOWER(country) AS country_lower, COALESCE(city, 'NONE') AS city_filled FROM suppliers WHERE LOWER(supplier_name) LIKE '%aci%') SELECT * FROM (SELECT city, country, rating FROM valid) src PIVOT (MAX(rating) AS value_sum FOR country IN ('JP', 'DE'));

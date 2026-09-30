@@ -1,1 +1,0 @@
-select c.city, round(avg(a.balance), 2) as avg_balance, sort_array(collect_set(a.account_type)) as account_type_list from accounts a left join customers c on c.id = a.customer_id group by c.city order by city desc, avg_balance desc limit 50

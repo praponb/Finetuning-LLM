@@ -1,1 +1,0 @@
-select o.channel, max(oi.unit_price) - min(oi.unit_price) as unit_price_range from order_items oi inner join orders o on o.id = oi.order_id left outer join products p on oi.product_id = p.id where oi.quantity >= 4 group by o.channel order by o.channel asc, unit_price_range asc limit 50

@@ -1,1 +1,0 @@
-SELECT is_flagged, CASE WHEN merchant IN ('Grab', 'Starbucks') THEN 'tier_1' ELSE 'other' END AS merchant_group, COUNT(DISTINCT amount) AS unique_accounts FROM transactions WHERE merchant IS NOT NULL AND TO_DATE(txn_time) < '2023-04-01' AND account_id IN (3, 32, 36) GROUP BY 1, 2 HAVING COUNT(DISTINCT amount) >= 3

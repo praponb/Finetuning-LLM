@@ -1,1 +1,0 @@
-SELECT HOUR(paid_at) AS paid_hour, method, MAX(amount) AS max_amount, MIN(paid_at) AS first_paid_at FROM payments WHERE order_id IN (1, 10, 33, 39) AND (amount <= 900 OR method != 'bank_transfer') GROUP BY HOUR(paid_at), method ORDER BY paid_hour DESC, first_paid_at, method LIMIT 5;

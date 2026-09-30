@@ -1,1 +1,0 @@
-WITH RecentAccounts AS (SELECT * FROM accounts WHERE customer_id = 19 AND balance >= 29000), accounts_stats AS (SELECT account_type, MAX(balance) AS max_balance, SUM(balance) AS total_balance FROM RecentAccounts GROUP BY account_type) SELECT account_type, total_balance FROM accounts_stats;

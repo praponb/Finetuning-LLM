@@ -1,1 +1,0 @@
-SELECT order_month, avg_shipping_fee FROM (SELECT DATE_FORMAT(order_date, 'yyyy-MM') order_month, AVG(shipping_fee) avg_shipping_fee FROM orders GROUP BY DATE_FORMAT(order_date, 'yyyy-MM')) agg WHERE avg_shipping_fee > 31 ORDER BY avg_shipping_fee, order_month LIMIT 5

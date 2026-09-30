@@ -1,1 +1,0 @@
-WITH filtered_accounts AS (SELECT *, LOWER(status) AS status_lower FROM accounts WHERE account_type IN ('CHECKING', 'SAVINGS', 'CREDIT')), accounts_stats AS (SELECT account_type, COUNT(balance) AS balance_count, COUNT(DISTINCT balance) AS unique_statuss FROM filtered_accounts GROUP BY account_type) SELECT account_type, balance_count FROM accounts_stats ORDER BY balance_count;

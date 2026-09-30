@@ -1,1 +1,0 @@
-select payments.order_id, orders.channel, orders.status, stores.store_name from payments right outer join orders on payments.order_id = orders.id left outer join stores on orders.store_id = stores.id order by status

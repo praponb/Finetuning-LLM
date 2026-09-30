@@ -1,1 +1,0 @@
-SELECT c.country, MAX(s.monthly_fee) - MIN(s.monthly_fee) AS monthly_fee_range, MIN(s.start_date) AS first_start_date FROM subscriptions s LEFT JOIN customers c ON s.customer_id = c.id GROUP BY c.country ORDER BY monthly_fee_range DESC, country ASC

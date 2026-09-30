@@ -1,1 +1,0 @@
-SELECT ss.store_id, ss.revenue, s.store_name, p.price, p.supplier_id FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON ss.product_id = p.id WHERE s.store_name LIKE 'Ai%' AND ss.units <> 32 ORDER BY p.price DESC

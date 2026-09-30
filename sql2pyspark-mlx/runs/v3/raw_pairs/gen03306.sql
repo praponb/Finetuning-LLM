@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, QUARTER(sale_date) AS sale_quarter, store_id, MIN(sale_date) AS min_sale_date FROM store_sales WHERE MONTH(sale_date) IN (2, 5, 10) GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM'), QUARTER(sale_date), store_id ORDER BY store_id

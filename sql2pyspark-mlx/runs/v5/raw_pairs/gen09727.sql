@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_returned FROM orders GROUP BY store_id) SELECT s.sqft, s.store_name, ss.pct_returned FROM stores s LEFT JOIN store_stats ss ON s.id = ss.store_id WHERE ss.pct_returned > 57

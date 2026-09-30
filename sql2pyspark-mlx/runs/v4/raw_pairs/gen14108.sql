@@ -1,1 +1,0 @@
-SELECT category, ROUND((100 * SUM(CASE WHEN category = 'Grocery' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_grocery, AVG(price) AS avg_price FROM products WHERE stock_qty = 222 AND stock_qty <= 273 AND LENGTH(product_name) >= 14 GROUP BY category

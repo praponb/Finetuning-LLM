@@ -1,1 +1,0 @@
-WITH recent_transactions AS (SELECT * FROM transactions WHERE merchant = '7-Eleven'), IsFlaggedSummary AS (SELECT is_flagged, txn_type, SORT_ARRAY(COLLECT_SET(merchant)) AS merchant_list, COUNT(DISTINCT amount) AS unique_txn_types FROM recent_transactions GROUP BY is_flagged, txn_type) SELECT is_flagged, txn_type, merchant_list, unique_txn_types FROM IsFlaggedSummary;

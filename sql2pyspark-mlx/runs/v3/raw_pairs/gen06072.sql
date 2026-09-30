@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, i.store_id, i.quantity, p.launch_date FROM inventory i INNER JOIN products p ON p.id = i.product_id WHERE i.last_restock BETWEEN '2024-07-01' AND '2025-03-13' OR p.brand = 'Initech' ORDER BY i.store_id, id LIMIT 10;

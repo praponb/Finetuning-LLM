@@ -1,1 +1,0 @@
-SELECT country, COUNT(rating) AS rating_count, ROUND(STDDEV(rating), 2) AS stddev_rating, SORT_ARRAY(COLLECT_SET(city)) AS city_list FROM suppliers GROUP BY country HAVING ROUND(STDDEV(rating), 2) > 77 ORDER BY 3

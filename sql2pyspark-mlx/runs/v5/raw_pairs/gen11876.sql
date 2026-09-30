@@ -1,1 +1,0 @@
-SELECT id, dept_name, budget, ROUND(budget / SUM(budget) OVER (PARTITION BY dept_name), 3) budget_share, RANK() OVER (PARTITION BY dept_name ORDER BY budget DESC) rnk FROM departments WHERE location NOT IN ('Berlin', 'New York')

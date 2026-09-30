@@ -1,1 +1,0 @@
-SELECT account_type, QUARTER(opened_date) AS opened_quarter, SUM(CASE WHEN account_type = 'CREDIT' THEN balance ELSE 0 END) AS credit_balance, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list FROM accounts WHERE opened_date < '2025-09-01' GROUP BY account_type, QUARTER(opened_date) HAVING SUM(CASE WHEN account_type = 'CREDIT' THEN balance ELSE 0 END) > 62 ORDER BY 3;

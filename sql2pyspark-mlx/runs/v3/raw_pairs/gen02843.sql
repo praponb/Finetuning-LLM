@@ -1,1 +1,0 @@
-SELECT products.product_name, products.launch_date, products.stock_qty, store_sales.units, CAST(store_sales.revenue AS INT) AS revenue_int FROM products INNER JOIN store_sales ON store_sales.product_id = products.id WHERE products.category IN ('Home', 'Fashion') AND products.supplier_id = 6 ORDER BY revenue_int

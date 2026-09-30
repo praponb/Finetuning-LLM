@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, MAX(event_time) AS last_event_time, ROUND(AVG(duration_sec), 2) AS avg_duration_sec FROM web_events GROUP BY session_id) SELECT s.id, s.country, st.last_event_time, st.avg_duration_sec FROM sessions s INNER JOIN session_totals st ON s.id = st.session_id;

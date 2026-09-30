@@ -1,1 +1,0 @@
-select s.id, s.browser, count(we.id) as web_event_count, count(case when we.page = '/cart' then 1 end) as cart_count from sessions s left join web_events we on we.session_id = s.id group by s.id, s.browser order by cart_count desc;

@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, merchant, amount, is_flagged, ROW_NUMBER() OVER (PARTITION BY merchant ORDER BY amount DESC, id) AS pos FROM transactions WHERE is_flagged = TRUE) SELECT id, merchant, amount, is_flagged FROM ranked WHERE pos <= 3

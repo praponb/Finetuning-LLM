@@ -1,1 +1,0 @@
-WITH recent_subscriptions AS (SELECT * FROM subscriptions WHERE customer_id IS NOT NULL AND (monthly_fee < 200 OR plan IN ('enterprise', 'premium'))), summary AS (SELECT plan, YEAR(start_date) start_year, COUNT(*) row_count FROM recent_subscriptions GROUP BY plan, YEAR(start_date)) SELECT * FROM summary ORDER BY row_count;

@@ -1,1 +1,0 @@
-SELECT p.supplier_id, ss.store_id, ss.sale_date, GREATEST(p.cost, p.price) AS greatest_cost_price FROM products p INNER JOIN store_sales ss ON p.id = ss.product_id WHERE p.price > 440 AND p.category != 'Grocery' ORDER BY ss.store_id DESC

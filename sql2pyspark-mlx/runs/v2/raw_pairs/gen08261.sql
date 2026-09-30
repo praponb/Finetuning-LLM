@@ -1,1 +1,0 @@
-SELECT status, account_type, SUM(CASE WHEN account_type = 'CHECKING' THEN 1 ELSE 0 END) AS checking_count, SUM(balance) AS total_balance FROM accounts WHERE customer_id IS NULL GROUP BY status, account_type HAVING total_balance < 426000 ORDER BY 4 DESC;

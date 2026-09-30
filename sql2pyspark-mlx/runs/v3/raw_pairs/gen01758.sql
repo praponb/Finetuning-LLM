@@ -1,1 +1,0 @@
-select id, store_id, product_id, sale_date, revenue, round(avg(revenue) over (partition by store_id, product_id order by sale_date, id rows between 3 preceding and current row), 2) as revenue_moving_avg_4 from store_sales where product_id = 4 order by revenue desc;

@@ -1,1 +1,0 @@
-SELECT e.email AS employee_email, e.dept_id AS employee_dept_id, e.job_title AS employee_job_title, m.hire_date AS manager_hire_date, LOWER(m.level) AS level_lower FROM employees e INNER JOIN employees m ON e.manager_id = m.id;

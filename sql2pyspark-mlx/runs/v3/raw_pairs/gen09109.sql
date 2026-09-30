@@ -1,1 +1,0 @@
-WITH filtered_orders AS (SELECT * FROM orders WHERE amount BETWEEN 480 AND 1040), summary AS (SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM filtered_orders GROUP BY status) SELECT status, channel_values FROM summary;

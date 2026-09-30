@@ -1,1 +1,0 @@
-SELECT status, MONTH(paid_at) AS paid_month, SUM(CASE WHEN method = 'promptpay' THEN 1 ELSE 0 END) AS promptpay_count, SUM(CASE WHEN method = 'bank_transfer' THEN amount ELSE 0 END) AS bank_transfer_amount, COUNT(CASE WHEN status = 'SUCCESS' THEN 1 END) AS success_count FROM payments WHERE amount BETWEEN 1250 AND 1600 GROUP BY 1, 2 HAVING MIN(amount) > 690;

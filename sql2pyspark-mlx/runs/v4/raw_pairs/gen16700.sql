@@ -1,1 +1,0 @@
-WITH Ranked AS (SELECT id, supplier_id, stock_qty, category, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY stock_qty, id) AS row_num FROM products) SELECT * FROM Ranked WHERE row_num = 1 ORDER BY id DESC;

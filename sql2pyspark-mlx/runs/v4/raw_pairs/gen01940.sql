@@ -1,1 +1,0 @@
-select id, country, signup_date, age, round(avg(age) over (partition by country order by signup_date, id rows between 3 preceding and current row), 2) as age_moving_avg_4 from customers where email is null;

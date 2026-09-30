@@ -1,1 +1,0 @@
-SELECT supplier_id, CASE WHEN stock_qty >= 374 THEN 'high' WHEN stock_qty >= 163 THEN 'mid' ELSE 'low' END AS stock_qty_bucket, SORT_ARRAY(COLLECT_SET(category)) AS category_list FROM products WHERE supplier_id IN (5, 8) AND stock_qty = 116 GROUP BY 1, 2

@@ -1,1 +1,0 @@
-SELECT MONTH(start_date) AS start_month, SUM(CASE WHEN status = 'CANCELLED' THEN monthly_fee ELSE 0 END) AS cancelled_monthly_fee FROM subscriptions GROUP BY MONTH(start_date) ORDER BY start_month DESC

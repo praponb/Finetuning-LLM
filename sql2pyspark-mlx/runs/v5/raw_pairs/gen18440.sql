@@ -1,1 +1,0 @@
-SELECT MONTH(start_date) AS start_month, COUNT(CASE WHEN plan = 'basic' THEN 1 END) AS basic_count, COUNT(DISTINCT monthly_fee) AS unique_statuss, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE monthly_fee BETWEEN 140 AND 230 GROUP BY 1 ORDER BY start_month

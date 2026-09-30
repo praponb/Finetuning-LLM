@@ -1,1 +1,0 @@
-SELECT o.id, o.channel, COUNT(p.id) AS payment_count, COUNT(DISTINCT p.amount) AS unique_statuss, MAX(p.amount) - MIN(p.amount) AS amount_range FROM orders o LEFT OUTER JOIN payments p ON o.id = p.order_id WHERE o.order_date >= '2023-05-01' GROUP BY o.id, o.channel ORDER BY amount_range DESC, 4 DESC

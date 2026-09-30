@@ -1,1 +1,0 @@
-SELECT s.country, COUNT(we.duration_sec) AS duration_sec_count, AVG(we.duration_sec) AS avg_duration_sec FROM web_events we INNER JOIN sessions s ON we.session_id = s.id GROUP BY s.country ORDER BY duration_sec_count DESC;

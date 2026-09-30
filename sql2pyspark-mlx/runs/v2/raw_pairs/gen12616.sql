@@ -1,1 +1,0 @@
-SELECT *, ADD_MONTHS(last_restock, 6) last_restock_plus_months, DATE_FORMAT(last_restock, 'MMM yyyy') last_restock_label FROM inventory WHERE (product_id IN (3, 4) AND quantity BETWEEN 135 AND 183) OR quantity IS NOT NULL;

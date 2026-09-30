@@ -1,1 +1,0 @@
-SELECT a.id, a.opened_date, t.avg_amount, t.txn_type_list FROM accounts a INNER JOIN (SELECT account_id, AVG(amount) AS avg_amount, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions GROUP BY account_id) t ON a.id = t.account_id;

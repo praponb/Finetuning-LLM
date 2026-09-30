@@ -1,1 +1,0 @@
-SELECT a.id, a.product_name, a.price, a.cost, a.launch_date, a.tags, a.supplier_id, b.supplier_name, b.rating FROM products a LEFT JOIN suppliers b ON a.supplier_id = b.id WHERE b.supplier_name LIKE '%Supply%'

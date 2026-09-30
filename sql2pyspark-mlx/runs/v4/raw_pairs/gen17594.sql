@@ -1,1 +1,0 @@
-WITH recent_transactions AS (SELECT * FROM transactions WHERE amount >= 2400), agg AS (SELECT merchant, MAX(amount) AS max_amount, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM recent_transactions GROUP BY merchant) SELECT * FROM agg ORDER BY merchant DESC LIMIT 10

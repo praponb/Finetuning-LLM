@@ -1,1 +1,0 @@
-SELECT customer_id, end_date, monthly_fee, CONCAT(plan, ' - ', status) AS plan_status FROM subscriptions WHERE plan IN ('basic', 'standard') AND MONTH(start_date) IN (2, 4, 7) AND status = 'CANCELLED' ORDER BY monthly_fee DESC, customer_id DESC;

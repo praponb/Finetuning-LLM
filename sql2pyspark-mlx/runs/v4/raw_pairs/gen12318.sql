@@ -1,1 +1,0 @@
-SELECT a.account_type, COUNT(t.id) AS transaction_count, MIN(t.txn_time) AS min_txn_time FROM accounts a JOIN transactions t ON t.account_id = a.id GROUP BY a.account_type ORDER BY transaction_count, account_type LIMIT 10

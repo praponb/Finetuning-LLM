@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(end_date, 'yyyy-MM') AS end_month, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee, MAX(start_date) AS latest_start_date FROM subscriptions GROUP BY end_month ORDER BY latest_start_date;

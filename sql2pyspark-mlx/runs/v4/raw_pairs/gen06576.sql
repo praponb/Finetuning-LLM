@@ -1,1 +1,0 @@
-select *, ntile(10) over (partition by session_id order by duration_sec desc, id) as duration_sec_bucket, avg(duration_sec) over (partition by page, event_type order by duration_sec, id rows between 6 preceding and 1 preceding) as duration_sec_avg_6_prior from web_events

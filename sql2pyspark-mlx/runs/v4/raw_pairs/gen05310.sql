@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT YEAR(txn_time) AS txn_year, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE txn_type = 'FEE' GROUP BY YEAR(txn_time)) AS agg WHERE stddev_amount > 75 ORDER BY stddev_amount, txn_year LIMIT 5;

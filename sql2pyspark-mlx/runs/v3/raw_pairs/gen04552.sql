@@ -1,1 +1,0 @@
-WITH inventory_by_store AS (SELECT store_id, ROUND(AVG(quantity), 2) AS avg_quantity, COUNT(*) AS inventory_count FROM inventory WHERE product_id = 4 GROUP BY store_id) SELECT s.id, s.sqft, ibs.avg_quantity, ibs.inventory_count FROM stores s JOIN inventory_by_store ibs ON s.id = ibs.store_id;

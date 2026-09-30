@@ -1,1 +1,0 @@
-WITH ranked_inventory AS (SELECT *, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY last_restock DESC) AS row_num FROM inventory WHERE last_restock BETWEEN '2023-08-30' AND '2024-05-01') SELECT id, product_id, last_restock, store_id FROM ranked_inventory WHERE row_num <= 3

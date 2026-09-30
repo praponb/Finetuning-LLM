@@ -1,1 +1,0 @@
-select s.*, latest.transaction_txn_time, latest.transaction_merchant from accounts s join lateral (select c.txn_time as transaction_txn_time, c.merchant as transaction_merchant from transactions c where c.account_id = s.id and c.txn_time <= s.opened_date order by c.txn_time desc, c.id desc limit 1) latest on true;

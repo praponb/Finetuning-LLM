@@ -1,1 +1,0 @@
-SELECT event_type, COUNT(DISTINCT duration_sec) AS unique_event_types, MIN(duration_sec) AS min_duration_sec, COUNT(*) AS total_count FROM web_events GROUP BY event_type HAVING COUNT(CASE WHEN page = '/product' THEN 1 END) >= 5;

@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, COALESCE(duration_sec, 0) AS duration_sec_filled FROM web_events WHERE session_id IN (7, 11, 16) AND event_time < '2025-01-01'), WebEventsStats AS (SELECT page, COUNT(CASE WHEN page = '/checkout' THEN 1 END) AS checkout_count, COUNT(*) AS web_event_count FROM base GROUP BY page) SELECT * FROM WebEventsStats WHERE web_event_count >= 9

@@ -1,1 +1,0 @@
-select id, product_id, quantity, rank() over (partition by product_id order by quantity) as rnk, lead(quantity, 2) over (partition by product_id order by quantity, id) as next_quantity from order_items

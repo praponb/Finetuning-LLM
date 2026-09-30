@@ -1,1 +1,0 @@
-select s.id, s.city, count(o.id) as order_count, max(o.discount) as max_discount from stores s inner join orders o on o.store_id = s.id where o.shipping_fee is not null group by s.id, s.city having count(o.id) > 5 order by s.city

@@ -1,1 +1,0 @@
-SELECT id, channel, status, amount, customer_id, shipping_fee, ROW_NUMBER() OVER (PARTITION BY channel, status ORDER BY amount, id) AS rn, PERCENT_RANK() OVER (PARTITION BY customer_id ORDER BY shipping_fee DESC) AS shipping_fee_pct_rank FROM orders WHERE shipping_fee > 21

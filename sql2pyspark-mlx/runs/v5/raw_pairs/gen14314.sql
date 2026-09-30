@@ -1,1 +1,0 @@
-WITH recent_departments AS (SELECT * FROM departments WHERE dept_name IS NULL), agg AS (SELECT location, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(location))) AS location_values, MIN(budget) AS min_budget FROM recent_departments GROUP BY location) SELECT location, location_values FROM agg WHERE min_budget >= 1644000;

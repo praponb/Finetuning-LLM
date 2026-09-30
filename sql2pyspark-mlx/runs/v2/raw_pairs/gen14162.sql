@@ -1,1 +1,0 @@
-SELECT s.city, MAX(ss.sale_date) AS latest_sale_date FROM store_sales ss LEFT OUTER JOIN products p ON ss.product_id = p.id LEFT OUTER JOIN stores s ON ss.store_id = s.id WHERE ss.store_id IN (1, 2) GROUP BY s.city ORDER BY city DESC;

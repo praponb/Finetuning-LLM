@@ -1,1 +1,0 @@
-SELECT c.country, c.name, c.signup_date, s.device, s.country AS session_country, s.started_at, LENGTH(s.browser) AS browser_length FROM customers c LEFT JOIN sessions s ON s.customer_id = c.id ORDER BY c.signup_date;

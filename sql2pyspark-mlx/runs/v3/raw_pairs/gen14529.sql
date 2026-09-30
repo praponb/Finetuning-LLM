@@ -1,1 +1,0 @@
-select case when budget >= 3435000 then 'high' when budget >= 1050000 then 'mid' else 'low' end as budget_bucket, count(budget) as budget_count from departments where budget between 1324000 and 1891000 and budget < 1774000 group by 1 having count(*) < 5

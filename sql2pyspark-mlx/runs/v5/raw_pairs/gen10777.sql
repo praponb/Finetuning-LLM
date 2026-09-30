@@ -1,1 +1,0 @@
-SELECT id, plan, start_date, end_date, monthly_fee, status FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY monthly_fee, id) AS dedup_rank FROM subscriptions) t WHERE dedup_rank = 1;

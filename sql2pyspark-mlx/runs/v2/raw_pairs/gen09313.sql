@@ -1,1 +1,0 @@
-WITH valid_shipments AS (SELECT * FROM shipments WHERE delivered_date < '2025-09-25' AND carrier IN ('UPS', 'Flash', 'Kerry')), agg AS (SELECT carrier, ROUND((100 * SUM(CASE WHEN status = 'IN_TRANSIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_in_transit FROM valid_shipments GROUP BY carrier) SELECT * FROM agg ORDER BY pct_in_transit DESC

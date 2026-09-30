@@ -1,1 +1,0 @@
-SELECT id, account_id, amount, txn_time, LAST_VALUE(txn_time) OVER (PARTITION BY account_id ORDER BY amount DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_txn_time FROM transactions ORDER BY 4;

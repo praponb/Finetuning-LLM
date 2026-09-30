@@ -1,1 +1,0 @@
-WITH supplier_totals AS (SELECT supplier_id, MIN(launch_date) AS min_launch_date, MAX(stock_qty) AS max_stock_qty FROM products GROUP BY supplier_id) SELECT s.rating, s.supplier_name, st.min_launch_date, st.max_stock_qty FROM suppliers s LEFT JOIN supplier_totals st ON s.id = st.supplier_id;

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM shipments WHERE cost < 41 OR cost IS NOT NULL), Agg AS (SELECT status, AVG(cost) AS avg_cost, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list FROM base GROUP BY status) SELECT status, avg_cost FROM Agg ORDER BY avg_cost

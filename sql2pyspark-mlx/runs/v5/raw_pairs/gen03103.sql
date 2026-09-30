@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, txn_type, merchant, is_flagged, CAST(is_flagged AS INT) AS is_flagged_flag FROM transactions WHERE txn_time > DATE '2023-09-09' AND merchant IS NOT NULL) SELECT * FROM (SELECT merchant, txn_type, is_flagged_flag FROM cleaned) src PIVOT (AVG(is_flagged_flag) FOR txn_type IN ('REFUND', 'DEBIT'));

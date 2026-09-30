@@ -1,1 +1,0 @@
-SELECT plan, status, SORT_ARRAY(COLLECT_SET(plan)) plan_list, ROUND((100 * SUM(CASE WHEN status = 'PAUSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_paused, MIN(monthly_fee) min_monthly_fee FROM subscriptions WHERE end_date BETWEEN '2023-07-01' AND '2024-03-01' GROUP BY plan, status HAVING pct_paused > 28 ORDER BY pct_paused DESC;

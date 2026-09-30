@@ -1,1 +1,0 @@
-SELECT shipped_date, delivered_date, carrier, CASE WHEN cost >= 107 THEN 'High' WHEN cost >= 48 THEN 'Medium' ELSE 'Low' END AS cost_level, DATE_SUB(delivered_date, 87) AS delivered_date_minus_87d FROM shipments WHERE delivered_date > '2024-07-06'

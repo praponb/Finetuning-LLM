@@ -1,1 +1,0 @@
-SELECT o.id, o.store_id, c.credit_limit, c.age, s.region, s.sqft FROM orders o JOIN customers c ON o.customer_id = c.id LEFT JOIN stores s ON o.store_id = s.id WHERE c.is_active OR s.store_name IS NOT NULL;

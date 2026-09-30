@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, COUNT(DISTINCT customer_id) unique_customers FROM sessions GROUP BY customer_id) SELECT c.id, c.country, c.is_active, ct.unique_customers FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id ORDER BY c.country, id LIMIT 3

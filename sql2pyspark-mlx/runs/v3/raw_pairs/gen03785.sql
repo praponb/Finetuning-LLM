@@ -1,1 +1,0 @@
-select id, carrier, status, delivered_date, case when status = 'DELIVERED' then 1 else 0 end as is_delivered, case when status = 'RETURNED' then 1 else 0 end as is_returned from shipments where cost > 74 order by is_delivered desc;

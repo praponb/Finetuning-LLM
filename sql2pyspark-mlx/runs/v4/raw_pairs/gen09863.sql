@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, MAX(hire_date) AS last_hire_date, COUNT(DISTINCT salary) AS unique_depts FROM employees GROUP BY dept_id) SELECT d.location, d.budget, ebd.last_hire_date, ebd.unique_depts FROM departments d INNER JOIN employees_by_department ebd ON d.id = ebd.dept_id;

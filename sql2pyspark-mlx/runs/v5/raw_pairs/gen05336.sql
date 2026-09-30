@@ -1,1 +1,0 @@
-SELECT event_type, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list, BIT_AND(duration_sec) AS duration_sec_bit_and FROM web_events GROUP BY event_type HAVING BIT_AND(duration_sec) > 1 ORDER BY event_type DESC NULLS FIRST

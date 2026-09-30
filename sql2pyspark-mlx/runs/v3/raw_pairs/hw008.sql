@@ -1,1 +1,0 @@
-SELECT * FROM transactions WHERE amount BETWEEN 50 AND 2000;

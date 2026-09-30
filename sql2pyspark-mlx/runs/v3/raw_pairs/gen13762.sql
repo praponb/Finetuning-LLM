@@ -1,1 +1,0 @@
-SELECT s.supplier_name, s.city, t.brand_list, t.avg_price FROM suppliers s INNER JOIN (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(brand)) AS brand_list, AVG(price) AS avg_price FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.avg_price > 1060 ORDER BY avg_price ASC;

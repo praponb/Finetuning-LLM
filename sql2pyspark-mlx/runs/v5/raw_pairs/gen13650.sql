@@ -1,1 +1,0 @@
-SELECT we.event_time, s.browser, s.device, s.started_at FROM web_events we RIGHT JOIN sessions s ON we.session_id = s.id WHERE s.browser NOT IN ('Safari', 'Firefox') AND we.page IN ('/checkout', '/home', '/product') ORDER BY s.device DESC, we.event_time;

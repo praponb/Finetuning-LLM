@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY stock_qty DESC, id) rn FROM products WHERE product_name LIKE 'Ba%') SELECT * FROM numbered WHERE rn <= 1 ORDER BY category DESC;

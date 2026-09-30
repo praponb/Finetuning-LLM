@@ -1,1 +1,0 @@
-SELECT country, SUM(CASE WHEN city = 'Bangkok' THEN rating ELSE 0 END) AS bangkok_rating, ROUND((100 * SUM(CASE WHEN country = 'DE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_de FROM suppliers WHERE rating > 2.4 AND supplier_name LIKE '%EuroGood%' GROUP BY country;

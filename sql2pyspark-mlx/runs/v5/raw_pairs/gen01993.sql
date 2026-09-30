@@ -1,1 +1,0 @@
-SELECT event_type, SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) AS search_duration_sec, SUM(CASE WHEN page = '/checkout' THEN duration_sec ELSE 0 END) AS checkout_duration_sec, GROUPING(event_type) AS grouping_id FROM web_events GROUP BY ROLLUP (event_type) ORDER BY checkout_duration_sec DESC;

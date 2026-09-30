@@ -1,1 +1,0 @@
-select id, city, date_sub(opened_date, 41) as opened_date_minus_41d, case when sqft >= 14983 then 'High' when sqft >= 6101 then 'Medium' else 'Low' end as sqft_level from stores where store_name not like '%Express%' order by id desc limit 5

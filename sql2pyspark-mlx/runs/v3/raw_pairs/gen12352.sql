@@ -1,1 +1,0 @@
-WITH filtered_order_items AS (SELECT * FROM order_items WHERE quantity BETWEEN 6 AND 7), order_id_summary AS (SELECT order_id, SUM(quantity * unit_price) AS revenue, AVG(quantity) AS avg_quantity FROM filtered_order_items GROUP BY order_id) SELECT * FROM order_id_summary ORDER BY revenue DESC, order_id ASC LIMIT 10;

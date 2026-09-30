@@ -1,1 +1,0 @@
-SELECT QUARTER(s.started_at) AS started_quarter, AVG(we.duration_sec) AS avg_duration_sec FROM web_events we JOIN sessions s ON we.session_id = s.id GROUP BY QUARTER(s.started_at) HAVING AVG(we.duration_sec) >= 200 ORDER BY started_quarter DESC LIMIT 3

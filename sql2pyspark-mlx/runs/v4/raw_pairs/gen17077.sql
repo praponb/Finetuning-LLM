@@ -1,1 +1,0 @@
-SELECT shipments.shipped_date, shipments.delivered_date, orders.status, orders.shipping_fee, orders.order_date FROM shipments LEFT JOIN orders ON shipments.order_id = orders.id WHERE orders.order_date > '2024-06-01' ORDER BY delivered_date DESC, order_date;

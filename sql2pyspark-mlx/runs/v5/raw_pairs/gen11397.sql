@@ -1,1 +1,0 @@
-SELECT is_active, corporate_count FROM (SELECT is_active, COUNT(CASE WHEN segment = 'Corporate' THEN 1 END) AS corporate_count FROM customers WHERE segment <> 'Corporate' GROUP BY is_active) AS agg WHERE corporate_count < 4;

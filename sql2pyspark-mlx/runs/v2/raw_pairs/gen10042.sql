@@ -1,1 +1,0 @@
-SELECT oi.id, oi.quantity, oi.order_id, p.brand, p.price, o.status, o.customer_id FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id INNER JOIN orders o ON oi.order_id = o.id WHERE p.price BETWEEN 880 AND 890 ORDER BY quantity DESC, brand DESC;

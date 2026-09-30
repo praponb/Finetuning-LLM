@@ -1,1 +1,0 @@
-WITH DepartmentStats AS (SELECT dept_id, SUM(CASE WHEN job_title = 'Director' THEN salary ELSE 0 END) AS director_salary, COUNT(*) AS row_count FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.budget, D.director_salary, D.row_count FROM departments d LEFT JOIN DepartmentStats D ON d.id = D.dept_id

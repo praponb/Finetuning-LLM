@@ -1,1 +1,0 @@
-WITH CustomerStats AS (SELECT customer_id, COUNT(CASE WHEN device = 'desktop' THEN 1 END) AS desktop_count, COUNT(*) AS row_count FROM sessions GROUP BY customer_id) SELECT c.id, c.age, c.country, C.desktop_count, C.row_count FROM customers c INNER JOIN CustomerStats C ON c.id = C.customer_id WHERE C.row_count >= 8 ORDER BY c.age DESC, C.desktop_count DESC;

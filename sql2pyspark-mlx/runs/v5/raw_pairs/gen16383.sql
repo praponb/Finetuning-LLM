@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, store_id, discount, order_date, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY discount, id) AS pos FROM orders WHERE shipping_fee >= 24) AS ranked WHERE pos <= 3 ORDER BY id, pos;

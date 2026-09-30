@@ -1,1 +1,0 @@
-SELECT MONTH(s.opened_date) AS opened_month, s.region, ROUND((100 * SUM(CASE WHEN p.status = 'REFUNDED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refunded FROM payments p INNER JOIN orders o ON o.id = p.order_id INNER JOIN stores s ON o.store_id = s.id GROUP BY MONTH(s.opened_date), s.region ORDER BY pct_refunded

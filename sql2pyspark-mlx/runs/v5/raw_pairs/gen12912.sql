@@ -1,1 +1,0 @@
-SELECT c.segment, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.status))) AS status_values, SUM(s.monthly_fee) AS total_monthly_fee FROM subscriptions s INNER JOIN customers c ON c.id = s.customer_id GROUP BY c.segment ORDER BY segment

@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, supplier_name, country, city, rating, TRIM(supplier_name) AS clean_supplier_name, COALESCE(city, 'DIRECT') AS city_filled FROM suppliers WHERE city IS NULL) SELECT s.* FROM filtered s WHERE NOT EXISTS (SELECT 1 FROM products c WHERE c.supplier_id = s.id AND c.supplier_id IN (4, 8, 30, 35));

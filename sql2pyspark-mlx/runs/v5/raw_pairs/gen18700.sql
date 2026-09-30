@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity, id) rnk FROM order_items WHERE quantity <= 7) SELECT id, order_id, quantity, product_id FROM numbered WHERE rnk <= 1 ORDER BY product_id DESC;

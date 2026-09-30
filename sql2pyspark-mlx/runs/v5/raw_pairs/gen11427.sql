@@ -1,1 +1,0 @@
-SELECT job_title, ROUND(STDDEV(salary), 2) stddev_salary, SUM(CASE WHEN job_title = 'Intern' THEN 1 ELSE 0 END) intern_count FROM employees WHERE job_title IN ('Designer', 'Analyst', 'Engineer') AND manager_id IN (18, 19, 22, 27) GROUP BY job_title HAVING intern_count < 31

@@ -1,1 +1,0 @@
-SELECT carrier, ROUND(AVG(cost), 2) AS avg_cost, MAX(cost) AS max_cost FROM shipments WHERE (delivered_date >= '2025-02-01' AND cost < 28) OR MONTH(shipped_date) IN (3, 5, 8) GROUP BY carrier ORDER BY avg_cost

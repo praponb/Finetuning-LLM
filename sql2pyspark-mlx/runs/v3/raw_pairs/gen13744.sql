@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY cost DESC, id) AS rn FROM shipments WHERE carrier NOT IN ('FedEx', 'Flash', 'Kerry')) AS r WHERE rn <= 3 ORDER BY delivered_date DESC;

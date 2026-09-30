@@ -1,1 +1,0 @@
-SELECT p.id, p.stock_qty, t.min_quantity FROM products p LEFT JOIN (SELECT product_id, MIN(quantity) AS min_quantity FROM inventory GROUP BY product_id) t ON p.id = t.product_id ORDER BY stock_qty DESC

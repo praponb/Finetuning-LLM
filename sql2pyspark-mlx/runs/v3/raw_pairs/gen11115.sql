@@ -1,1 +1,0 @@
-SELECT e.full_name AS employee_full_name, e.hire_date AS employee_hire_date, m.job_title AS manager_job_title, m.hire_date AS manager_hire_date, DATEDIFF(CURRENT_DATE(), e.hire_date) AS days_since_hire_date FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE LOWER(e.full_name) LIKE '%mma%' OR m.email LIKE '%@startup.io';

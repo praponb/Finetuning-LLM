@@ -1,1 +1,0 @@
-with base as (select * from products where size(tags) > 1 and cost <= 190), category_summary as (select category, round(stddev(stock_qty), 2) as stddev_stock_qty, avg(price) as avg_price from base group by category) select * from category_summary where stddev_stock_qty >= 59 order by stddev_stock_qty, category limit 10;

@@ -1,1 +1,0 @@
-SELECT s.id, s.sqft FROM stores s WHERE s.city IN ('Tokyo', 'Chiang Mai', 'Singapore') AND EXISTS (SELECT 1 FROM store_sales ss WHERE ss.store_id = s.id AND ss.product_id = 1) ORDER BY id DESC LIMIT 5;

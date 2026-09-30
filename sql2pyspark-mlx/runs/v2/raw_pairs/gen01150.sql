@@ -1,1 +1,0 @@
-select date_trunc('MONTH', signup_date) as signup_month, sum(age) as total_age, count(*) as cnt, sum(sum(age)) over (order by date_trunc('MONTH', signup_date)) as cumulative_age from customers group by date_trunc('MONTH', signup_date);

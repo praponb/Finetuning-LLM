@@ -1,1 +1,0 @@
-SELECT e.level AS employee_level, e.full_name AS employee_full_name, m.email AS manager_email, m.level AS manager_level, m.manager_id AS manager_manager_id FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE LOWER(TRIM(m.full_name)) = 'alice wong' OR m.email IS NOT NULL

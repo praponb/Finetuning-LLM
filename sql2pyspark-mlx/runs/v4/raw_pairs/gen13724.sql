@@ -1,1 +1,0 @@
-SELECT products.category, MAX(inventory.last_restock) AS last_last_restock, AVG(inventory.quantity) AS avg_quantity FROM inventory INNER JOIN products ON products.id = inventory.product_id GROUP BY products.category

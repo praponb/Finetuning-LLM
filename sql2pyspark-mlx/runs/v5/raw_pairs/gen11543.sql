@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, category, stock_qty, price, ROW_NUMBER() OVER (PARTITION BY category ORDER BY stock_qty DESC, id) AS row_num FROM products) SELECT id, category, stock_qty, price FROM ranked WHERE row_num <= 3 ORDER BY price ASC, stock_qty DESC;

@@ -1,1 +1,0 @@
-SELECT product_id, DATE_TRUNC('MONTH', sale_date) AS sale_month, YEAR(sale_date) AS sale_year, AVG(revenue) AS avg_revenue FROM store_sales GROUP BY product_id, sale_month, sale_year HAVING AVG(revenue) > 2700 ORDER BY sale_month, product_id, sale_year LIMIT 10;

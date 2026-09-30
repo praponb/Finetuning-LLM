@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN carrier IN ('Flash', 'Kerry') THEN 'group_a' ELSE 'other' END AS carrier_group, SUM(cost) AS total_cost FROM shipments GROUP BY CASE WHEN carrier IN ('Flash', 'Kerry') THEN 'group_a' ELSE 'other' END) AS t WHERE total_cost > 160 ORDER BY carrier_group, total_cost;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN carrier IN ('DHL', 'Kerry') THEN 'group_a' ELSE 'other' END AS carrier_group, MAX(shipped_date) AS latest_shipped_date, MAX(delivered_date) AS latest_delivered_date, COUNT(CASE WHEN status = 'IN_TRANSIT' THEN 1 END) AS in_transit_count FROM shipments GROUP BY CASE WHEN carrier IN ('DHL', 'Kerry') THEN 'group_a' ELSE 'other' END;

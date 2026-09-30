@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, MAX(unit_price) AS max_unit_price, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM order_items GROUP BY ROLLUP(product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END);

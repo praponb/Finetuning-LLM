@@ -1,1 +1,0 @@
-SELECT id, customer_id, started_at, browser FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at, id) row_num FROM sessions WHERE customer_id IN (8, 12, 28)) ranked WHERE row_num <= 3 ORDER BY id DESC;

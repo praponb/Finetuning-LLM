@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM web_events WHERE HOUR(event_time) BETWEEN 12 AND 20), web_events_stats AS (SELECT DATE_TRUNC('MONTH', event_time) AS event_month, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list FROM src GROUP BY DATE_TRUNC('MONTH', event_time)) SELECT * FROM web_events_stats;

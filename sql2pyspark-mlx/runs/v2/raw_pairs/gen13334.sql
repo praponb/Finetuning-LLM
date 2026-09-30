@@ -1,1 +1,0 @@
-select c.segment, c.age, t.status_values, t.balance_count from customers c inner join (select customer_id, concat_ws(', ', sort_array(collect_set(status))) as status_values, count(balance) as balance_count from accounts group by customer_id) t on c.id = t.customer_id where t.balance_count > 5;

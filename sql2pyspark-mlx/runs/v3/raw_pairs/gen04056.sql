@@ -1,1 +1,0 @@
-SELECT s.id, s.country, COUNT(p.id) AS product_count, ROUND((100 * SUM(CASE WHEN p.category = 'Electronics' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_electronics, MIN(p.stock_qty) AS min_stock_qty FROM suppliers s INNER JOIN products p ON s.id = p.supplier_id WHERE p.cost BETWEEN 330 AND 670 GROUP BY s.id, s.country HAVING COUNT(p.id) > 1 ORDER BY 5 DESC;

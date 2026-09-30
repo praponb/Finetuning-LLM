@@ -1,1 +1,0 @@
-SELECT a.id, a.balance, a.status, t.unique_txn_types, t.min_txn_time FROM accounts a LEFT JOIN (SELECT account_id, COUNT(DISTINCT amount) AS unique_txn_types, MIN(txn_time) AS min_txn_time FROM transactions GROUP BY account_id) t ON a.id = t.account_id WHERE t.unique_txn_types >= 6 ORDER BY 3 DESC, unique_txn_types DESC

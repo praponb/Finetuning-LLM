@@ -1,1 +1,0 @@
-select o.status, sum(p.amount) as total_amount from payments p left outer join orders o on p.order_id = o.id left outer join customers c on c.id = o.customer_id group by o.status having sum(p.amount) >= 3000;

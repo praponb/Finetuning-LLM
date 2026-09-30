@@ -1,1 +1,0 @@
-select c.id, c.city, c.signup_date, t.pct_frozen from customers c inner join (select customer_id, round((100 * sum(case when status = 'FROZEN' then 1 else 0 end)) / count(*), 1) as pct_frozen from accounts where customer_id is not null group by customer_id) t on c.id = t.customer_id

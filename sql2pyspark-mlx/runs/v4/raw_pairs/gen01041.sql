@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, service, host, level, latency_ms, status_code, key, value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) li AS key, value) SELECT service, host, latency_ms, key FROM lines;

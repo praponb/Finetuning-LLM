@@ -1,1 +1,0 @@
-SELECT c.segment, COUNT(DISTINCT s.monthly_fee) AS unique_customers, MIN(s.end_date) AS first_end_date FROM subscriptions s INNER JOIN customers c ON c.id = s.customer_id GROUP BY c.segment HAVING unique_customers > 1 ORDER BY c.segment DESC, unique_customers LIMIT 50;

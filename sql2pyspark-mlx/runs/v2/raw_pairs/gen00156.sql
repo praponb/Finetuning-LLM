@@ -1,1 +1,0 @@
-SELECT location, dept_name, SUM(CASE WHEN location = 'London' THEN 1 ELSE 0 END) AS london_count, MIN(budget) AS min_budget FROM departments WHERE dept_name != 'Marketing' AND dept_name = 'Finance' GROUP BY location, dept_name;

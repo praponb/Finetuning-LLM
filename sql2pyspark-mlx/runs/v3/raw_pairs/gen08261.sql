@@ -1,1 +1,0 @@
-SELECT p.supplier_id, COUNT(DISTINCT i.quantity) AS unique_stores FROM inventory i INNER JOIN stores s ON i.store_id = s.id INNER JOIN products p ON i.product_id = p.id WHERE s.city = 'Bangkok' GROUP BY p.supplier_id ORDER BY p.supplier_id DESC;

@@ -1,1 +1,0 @@
-select case when shipping_fee >= 38 then 'high' when shipping_fee >= 16 then 'mid' else 'low' end as shipping_fee_bucket, count(amount) as amount_count, avg(shipping_fee) as avg_shipping_fee, count(*) as total_count from orders where month(order_date) in (8, 10, 12) and order_date between '2023-04-01' and '2024-07-21' and customer_id = 11 group by shipping_fee_bucket;

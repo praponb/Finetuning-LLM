@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, LENGTH(country) AS country_length FROM suppliers WHERE rating >= 3.5) SELECT s.*, latest.product_brand FROM base s LEFT JOIN LATERAL (SELECT c.brand AS product_brand FROM products c WHERE c.supplier_id = s.id ORDER BY c.stock_qty DESC, c.id DESC LIMIT 1) latest ON TRUE;

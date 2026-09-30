@@ -1,1 +1,0 @@
-select s.customer_id, s.browser, we.event_time, we.session_id, we.page from sessions s left join web_events we on we.session_id = s.id where we.event_time < '2023-10-22' and s.browser = 'Chrome' order by 1

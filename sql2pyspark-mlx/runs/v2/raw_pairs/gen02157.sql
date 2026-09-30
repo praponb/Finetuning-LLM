@@ -1,1 +1,0 @@
-WITH top_subscriptions AS (SELECT id, customer_id, start_date, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date, id) AS rnk FROM subscriptions) SELECT id, customer_id, start_date FROM top_subscriptions WHERE rnk <= 1 ORDER BY id

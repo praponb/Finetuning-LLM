@@ -1,1 +1,0 @@
-SELECT *, ROUND(unit_price / quantity, 2) AS line_total, LEAST(unit_price, quantity) AS least_unit_price_quantity FROM order_items WHERE product_id IS NOT NULL AND order_id IN (2, 16, 20, 36) ORDER BY 4 DESC, 2 DESC

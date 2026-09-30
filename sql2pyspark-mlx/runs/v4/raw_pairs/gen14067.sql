@@ -1,1 +1,0 @@
-SELECT COUNT(CASE WHEN status = 'PENDING' THEN 1 END) pending_count, ROUND(STDDEV(shipping_fee), 2) stddev_shipping_fee, ROUND((100 * SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_mobile FROM orders WHERE order_date BETWEEN '2023-10-05' AND '2025-05-01' AND amount BETWEEN 1590 AND 1600

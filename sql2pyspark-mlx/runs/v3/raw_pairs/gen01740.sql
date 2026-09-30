@@ -1,1 +1,0 @@
-WITH recent_payments AS (SELECT *, DATEDIFF(CURRENT_DATE(), paid_at) AS days_since_paid_at FROM payments WHERE method = 'promptpay'), payments_stats AS (SELECT order_id, MIN(paid_at) AS min_paid_at FROM recent_payments GROUP BY order_id) SELECT order_id, min_paid_at FROM payments_stats

@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, store_id, AVG(revenue) AS avg_revenue FROM store_sales GROUP BY sale_cohort, store_id HAVING SUM(units) > 70;

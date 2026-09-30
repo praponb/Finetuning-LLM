@@ -1,1 +1,0 @@
-SELECT e.id, e.salary, e.manager_id, e.is_remote FROM employees e WHERE e.level = 'L3' AND e.dept_id NOT IN (SELECT id FROM departments WHERE location IN ('Berlin', 'Singapore', 'Tokyo')) ORDER BY 3 ASC, e.id ASC;

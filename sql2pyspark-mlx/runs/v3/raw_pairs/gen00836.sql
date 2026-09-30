@@ -1,1 +1,0 @@
-SELECT id, segment, credit_limit, country, SUBSTRING(segment, 1, 3) AS segment_prefix FROM customers WHERE LENGTH(email) > 11 AND segment IN ('SMB', 'Corporate', 'Consumer') ORDER BY id DESC, country LIMIT 5;

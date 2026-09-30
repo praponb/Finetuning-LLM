@@ -1,1 +1,0 @@
-SELECT a.account_type, COUNT(t.id) transaction_count, MIN(t.txn_time) min_txn_time, ROUND(AVG(t.amount), 2) avg_amount FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id GROUP BY a.account_type

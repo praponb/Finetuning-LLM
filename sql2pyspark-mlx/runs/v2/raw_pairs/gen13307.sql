@@ -1,1 +1,0 @@
-SELECT QUARTER(end_date) AS end_quarter, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions WHERE status = 'CANCELLED' AND monthly_fee > 130 GROUP BY QUARTER(end_date) ORDER BY monthly_fee_count DESC, end_quarter DESC;

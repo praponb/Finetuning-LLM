@@ -1,1 +1,0 @@
-SELECT o.channel, COUNT(oi.id) order_item_count, ROUND(AVG(oi.unit_price), 2) avg_unit_price, SUM(oi.quantity) total_quantity FROM orders o LEFT OUTER JOIN order_items oi ON o.id = oi.order_id WHERE oi.quantity > 8 GROUP BY o.channel ORDER BY order_item_count DESC, channel ASC LIMIT 1

@@ -1,1 +1,0 @@
-SELECT a.account_type, a.balance, t.grab_amount, t.amount_count FROM accounts a JOIN (SELECT account_id, SUM(CASE WHEN merchant = 'Grab' THEN amount ELSE 0 END) AS grab_amount, COUNT(amount) AS amount_count FROM transactions WHERE amount >= 2800 GROUP BY account_id) t ON a.id = t.account_id WHERE t.amount_count > 9 ORDER BY balance DESC

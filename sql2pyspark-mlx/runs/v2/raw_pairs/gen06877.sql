@@ -1,1 +1,0 @@
-SELECT YEAR(signup_date) AS signup_year, MAX(credit_limit) AS max_credit_limit FROM customers WHERE is_active = FALSE AND email LIKE '%@gmail.com' GROUP BY YEAR(signup_date) HAVING SUM(CASE WHEN city = 'Tokyo' THEN age ELSE 0 END) < 44

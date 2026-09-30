@@ -1,1 +1,0 @@
-SELECT p.category, DATE_TRUNC('MONTH', p.launch_date) AS launch_month, AVG(oi.unit_price) AS avg_unit_price FROM order_items oi FULL OUTER JOIN orders o ON o.id = oi.order_id LEFT JOIN products p ON p.id = oi.product_id GROUP BY p.category, DATE_TRUNC('MONTH', p.launch_date) ORDER BY launch_month ASC, p.category DESC;

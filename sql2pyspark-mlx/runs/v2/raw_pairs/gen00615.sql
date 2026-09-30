@@ -1,1 +1,0 @@
-with valid_accounts as (select * from accounts where status = 'FROZEN'), customer_id_summary as (select customer_id, avg(balance) as avg_balance, sort_array(collect_set(account_type)) as account_type_list from valid_accounts group by customer_id) select customer_id, account_type_list from customer_id_summary order by customer_id

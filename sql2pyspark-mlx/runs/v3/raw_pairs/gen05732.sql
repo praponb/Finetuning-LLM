@@ -1,1 +1,0 @@
-SELECT CASE WHEN sqft >= 17652 THEN 'high' WHEN sqft >= 6955 THEN 'mid' ELSE 'low' END AS sqft_bucket, COUNT(CASE WHEN city = 'Chiang Mai' THEN 1 END) AS chiang_mai_count, COUNT(CASE WHEN region = 'East' THEN 1 END) AS east_count FROM stores GROUP BY sqft_bucket;

@@ -1,1 +1,0 @@
-SELECT id, plan, effective_from, currency, tier_limits, tier_prices, SLICE(tier_limits, 1, 2) AS first_two_limits, ZIP_WITH(tier_prices, discounts, (p, d) -> ROUND(p * (1 - d), 2)) AS net_prices, ELEMENT_AT(tier_prices, 1) AS entry_price FROM price_tiers WHERE effective_from BETWEEN '2024-03-09' AND '2025-10-01';

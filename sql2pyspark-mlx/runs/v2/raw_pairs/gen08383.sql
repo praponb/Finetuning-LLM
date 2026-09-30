@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT dept_name, ROUND(AVG(budget), 2) AS avg_budget, COUNT(CASE WHEN dept_name = 'HR' THEN 1 END) AS hr_count FROM departments GROUP BY dept_name) AS s WHERE hr_count > 7 ORDER BY dept_name DESC, avg_budget DESC LIMIT 5

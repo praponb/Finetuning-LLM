@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, channel, promo_code, starts_on, ends_on, discount_pct, DATE_SUB(starts_on, 11) AS starts_on_minus_11d FROM promotions WHERE channel IS NOT NULL) SELECT channel, promo_code FROM base INTERSECT SELECT channel, promo_code FROM promotions WHERE starts_on >= '2024-12-19';

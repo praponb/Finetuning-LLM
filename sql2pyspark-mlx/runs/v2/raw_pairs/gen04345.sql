@@ -1,1 +1,0 @@
-WITH top_payments AS (SELECT id, method, paid_at, status, ROW_NUMBER() OVER (PARTITION BY method ORDER BY paid_at DESC, id) AS pos FROM payments) SELECT id, method, paid_at, status FROM top_payments WHERE pos <= 3 ORDER BY paid_at DESC, method DESC;

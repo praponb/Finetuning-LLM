@@ -1,1 +1,0 @@
-with ranked as (select *, row_number() over (partition by status order by balance desc, id) as rnk from accounts where customer_id in (32, 35, 37)) select id, status, balance from ranked where rnk = 1

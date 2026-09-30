@@ -1,1 +1,0 @@
-SELECT session_id, page, unique_event_types FROM (SELECT session_id, page, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events GROUP BY session_id, page) AS t WHERE unique_event_types > 4;

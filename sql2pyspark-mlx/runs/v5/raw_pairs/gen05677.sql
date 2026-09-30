@@ -1,1 +1,0 @@
-SELECT id, store_id, LAG(revenue) OVER (PARTITION BY product_id, store_id ORDER BY sale_date, id) prev_revenue, LEAD(units) OVER (PARTITION BY product_id, store_id ORDER BY sale_date, id) next_units, ROW_NUMBER() OVER (PARTITION BY product_id, store_id ORDER BY sale_date, id) seq_no, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY sale_date, id) seq_no_2 FROM store_sales;

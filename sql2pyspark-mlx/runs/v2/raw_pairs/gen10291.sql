@@ -1,1 +1,0 @@
-WITH valid_orders AS (SELECT * FROM orders WHERE customer_id IS NOT NULL), summary AS (SELECT status, MAX(shipping_fee) AS max_shipping_fee, SUM(CASE WHEN channel = 'mobile' THEN 1 ELSE 0 END) AS mobile_count FROM valid_orders GROUP BY status) SELECT status, max_shipping_fee, mobile_count FROM summary WHERE mobile_count > 72 ORDER BY mobile_count DESC;

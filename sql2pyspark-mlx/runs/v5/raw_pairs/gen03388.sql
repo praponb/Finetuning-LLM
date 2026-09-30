@@ -1,1 +1,0 @@
-select a.id, a.balance, a.status, a.opened_date from accounts a where a.account_type in ('CHECKING', 'CREDIT', 'SAVINGS') and a.customer_id in (select id from customers where name is not null) order by balance asc;

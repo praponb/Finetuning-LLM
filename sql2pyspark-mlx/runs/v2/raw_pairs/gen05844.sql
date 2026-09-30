@@ -1,1 +1,0 @@
-select event_type, month(event_time) as event_month, sum(case when event_type = 'click' then duration_sec else 0 end) as click_duration_sec from web_events where to_date(event_time) >= '2024-12-01' and session_id = 35 group by event_type, month(event_time) having sum(case when event_type = 'click' then duration_sec else 0 end) < 65 order by event_type

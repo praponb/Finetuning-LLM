@@ -1,1 +1,0 @@
-SELECT a.account_type, a.status, c.segment, c.signup_date FROM accounts a RIGHT OUTER JOIN customers c ON a.customer_id = c.id WHERE a.balance BETWEEN 33000 AND 79000 AND a.opened_date BETWEEN '2024-09-01' AND '2025-08-01' ORDER BY segment

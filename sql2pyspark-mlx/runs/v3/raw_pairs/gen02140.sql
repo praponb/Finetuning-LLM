@@ -1,1 +1,0 @@
-SELECT region, city, COUNT(DISTINCT sqft) AS unique_citys FROM stores WHERE city IN ('Berlin', 'Tokyo', 'Chiang Mai') AND city = 'Tokyo' AND store_name LIKE '%Cen%' GROUP BY CUBE(region, city) ORDER BY unique_citys DESC, region DESC

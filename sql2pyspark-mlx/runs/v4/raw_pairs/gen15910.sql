@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('YEAR', started_at) AS year_start, country, COUNT(DISTINCT id) AS distinct_ids, SORT_ARRAY(COLLECT_SET(browser)) AS browser_list, COUNT(*) FILTER (WHERE browser = 'Chrome') AS chrome_rows FROM sessions GROUP BY DATE_TRUNC('YEAR', started_at), country ORDER BY year_start NULLS FIRST;

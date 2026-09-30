@@ -1,1 +1,0 @@
-SELECT ss.id, ss.units, s.store_name, s.opened_date, p.brand, p.launch_date FROM store_sales ss RIGHT OUTER JOIN stores s ON s.id = ss.store_id JOIN products p ON ss.product_id = p.id WHERE s.region = 'West' ORDER BY ss.id DESC;

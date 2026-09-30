@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', started_at) AS activity_month, SIZE(COLLECT_SET(browser)) AS num_browsers, COUNT_IF(browser = 'Chrome') AS chrome_events, COUNT_IF(device = 'desktop') AS desktop_events, MIN(started_at) AS started_at FROM sessions GROUP BY 1

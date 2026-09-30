@@ -1,1 +1,0 @@
-SELECT id, segment, signup_date, city, CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END AS is_chiang_mai FROM customers WHERE segment IN ('Corporate', 'Consumer') OR segment NOT IN ('Corporate', 'Consumer', 'SMB');

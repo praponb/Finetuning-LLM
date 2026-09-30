@@ -1,1 +1,0 @@
-SELECT CASE WHEN unit_price >= 400 THEN 'high' WHEN unit_price >= 140 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(DISTINCT unit_price) AS unique_products, COUNT(*) AS num_order_items FROM order_items WHERE unit_price < 170 GROUP BY unit_price_bucket;

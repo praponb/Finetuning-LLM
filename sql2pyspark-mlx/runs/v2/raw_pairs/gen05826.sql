@@ -1,1 +1,0 @@
-SELECT s.country, ROUND(STDDEV(ss.revenue), 2) stddev_revenue, MIN(ss.sale_date) min_sale_date FROM store_sales ss LEFT JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY s.country ORDER BY country

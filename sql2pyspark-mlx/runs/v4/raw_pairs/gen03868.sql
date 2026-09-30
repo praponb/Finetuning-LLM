@@ -1,1 +1,0 @@
-select location_group, min_budget from (select case when location in ('Berlin', 'Chiang Mai') then 'tier_1' else 'other' end as location_group, min(budget) as min_budget from departments group by case when location in ('Berlin', 'Chiang Mai') then 'tier_1' else 'other' end) as agg where min_budget < 2628000 order by min_budget desc, location_group;

@@ -1,1 +1,0 @@
-SELECT o.channel, COUNT(*) AS cnt, ROUND(AVG(p.amount), 2) AS avg_amount FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id GROUP BY o.channel ORDER BY o.channel LIMIT 20;

@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', c.signup_date) AS signup_month, c.is_active, COUNT(CASE WHEN we.event_type = 'search' THEN 1 END) AS search_count FROM web_events we FULL OUTER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON s.customer_id = c.id GROUP BY DATE_TRUNC('MONTH', c.signup_date), c.is_active ORDER BY signup_month

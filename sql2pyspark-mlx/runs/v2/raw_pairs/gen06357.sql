@@ -1,1 +1,0 @@
-select id, store_id, sale_date from (select *, row_number() over (partition by store_id order by sale_date desc, id) as rn from store_sales where units is not null) as r where rn <= 3 order by 1 desc, store_id desc

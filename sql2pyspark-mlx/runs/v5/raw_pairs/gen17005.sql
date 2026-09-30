@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM transactions WHERE account_id IN (15, 38)), txn_day_summary AS (SELECT TO_DATE(txn_time) AS txn_day, COUNT(DISTINCT amount) AS unique_accounts FROM src GROUP BY TO_DATE(txn_time)) SELECT * FROM txn_day_summary ORDER BY unique_accounts;

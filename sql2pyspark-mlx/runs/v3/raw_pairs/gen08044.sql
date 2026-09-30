@@ -1,1 +1,0 @@
-WITH top_products AS (SELECT id, category, stock_qty, product_name, ROW_NUMBER() OVER (PARTITION BY category ORDER BY stock_qty DESC, id) AS rn FROM products) SELECT * FROM top_products WHERE rn <= 2 ORDER BY rn DESC, 4;

@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT *, RANK() OVER (PARTITION BY location ORDER BY budget DESC) AS latest_rank FROM departments QUALIFY latest_rank = 1) SELECT id, location, budget FROM deduped ORDER BY location NULLS FIRST, budget;

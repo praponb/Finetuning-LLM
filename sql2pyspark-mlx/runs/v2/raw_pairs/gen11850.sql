@@ -1,1 +1,0 @@
-WITH recent_store_sales AS (SELECT * FROM store_sales WHERE units BETWEEN 36 AND 40 AND (store_id IN (2, 4, 5, 6) OR store_id IN (1, 2, 4, 5))), summary AS (SELECT MONTH(sale_date) AS sale_month, COUNT(DISTINCT revenue) AS unique_products FROM recent_store_sales GROUP BY MONTH(sale_date)) SELECT * FROM summary WHERE unique_products < 8 ORDER BY sale_month, unique_products;

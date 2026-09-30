@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT id FROM customers EXCEPT DISTINCT SELECT id FROM customers WHERE city NOT IN ('Berlin', 'New York')), verified AS (SELECT s.* FROM customers s JOIN kept_keys k ON s.id = k.id) SELECT id, name, country, segment, signup_date, credit_limit, age FROM verified ORDER BY credit_limit DESC NULLS LAST;

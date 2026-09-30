@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CAST(quantity AS DOUBLE) quantity_str FROM order_items WHERE product_id IS NOT NULL AND unit_price BETWEEN 190 AND 250) SELECT id, order_id, metric_name, val FROM (SELECT id, order_id, unit_price, quantity_str FROM filtered) src UNPIVOT INCLUDE NULLS (val FOR metric_name IN (unit_price, quantity_str AS QUANTITY_STR));

@@ -1,1 +1,0 @@
-SELECT channel, ROUND((100 * SUM(CASE WHEN channel = 'web' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_web FROM orders WHERE customer_id IS NOT NULL AND (store_id IN (6, 19) OR store_id IS NOT NULL) GROUP BY channel ORDER BY pct_web DESC

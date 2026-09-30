@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.shipped_date, shipments.delivered_date, shipments.cost, orders.store_id, orders.status, orders.customer_id FROM shipments LEFT JOIN orders ON shipments.order_id = orders.id ORDER BY shipments.delivered_date

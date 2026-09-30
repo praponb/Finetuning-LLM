@@ -1,1 +1,0 @@
-SELECT id, product_id, last_restock, store_id, FLOOR(quantity) AS quantity_whole, ROUND(quantity * 1.15, 2) AS adjusted_quantity FROM inventory WHERE product_id IN (2, 5) AND last_restock > '2023-12-13';

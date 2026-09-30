@@ -1,1 +1,0 @@
-SELECT id, store_name, ROUND(sqft, 0) AS sqft_rounded, CONCAT_WS('/', region, city) AS region_city_key FROM stores WHERE sqft IS NULL AND UPPER(TRIM(store_name)) = 'AIRPORT KIOSK' ORDER BY region_city_key DESC

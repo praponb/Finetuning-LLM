@@ -1,1 +1,0 @@
-SELECT YEAR(shipped_date) shipped_year, QUARTER(shipped_date) shipped_quarter, MIN(cost) min_cost, MAX(cost) max_cost FROM shipments WHERE YEAR(delivered_date) >= 2023 AND cost < 80 GROUP BY shipped_year, shipped_quarter;

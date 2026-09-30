@@ -1,1 +1,0 @@
-WITH order_items_by_order AS (SELECT order_id, SUM(quantity) AS total_quantity FROM order_items GROUP BY order_id) SELECT o.id, o.channel, oibo.total_quantity FROM orders o INNER JOIN order_items_by_order oibo ON o.id = oibo.order_id WHERE oibo.total_quantity >= 25 ORDER BY o.id DESC

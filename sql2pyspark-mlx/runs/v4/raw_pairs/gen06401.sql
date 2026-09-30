@@ -1,1 +1,0 @@
-SELECT id, status, delivered_date, cost, order_id, ROUND(AVG(cost) OVER (PARTITION BY status ORDER BY delivered_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) cost_moving_avg_7, COUNT(*) OVER (PARTITION BY order_id) order_id_count FROM shipments WHERE carrier IN ('FedEx', 'UPS', 'Flash')

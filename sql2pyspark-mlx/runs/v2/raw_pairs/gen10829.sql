@@ -1,1 +1,0 @@
-SELECT status, account_type, customer_id, COUNT(CASE WHEN account_type = 'LOAN' THEN 1 END) AS loan_count FROM accounts WHERE status <> 'CLOSED' GROUP BY status, account_type, customer_id ORDER BY account_type, customer_id DESC

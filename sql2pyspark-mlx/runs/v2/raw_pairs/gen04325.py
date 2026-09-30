@@ -1,7 +1,0 @@
-from pyspark.sql import functions as F
-
-result = (
-    df_accounts
-    .filter((F.col("account_type") != "CREDIT") & F.col("customer_id").isin([4, 12, 16]) & (F.col("status") == "OPEN"))
-    .select("status")
-)

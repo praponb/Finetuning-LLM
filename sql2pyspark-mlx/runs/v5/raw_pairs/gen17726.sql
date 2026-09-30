@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, txn_type, amount, is_flagged, ROW_NUMBER() OVER (PARTITION BY txn_type ORDER BY amount DESC, id) row_num FROM transactions) SELECT id, txn_type, amount, is_flagged FROM ranked WHERE row_num <= 3 ORDER BY txn_type;

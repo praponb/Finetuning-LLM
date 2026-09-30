@@ -1,1 +1,0 @@
-select quarter(opened_date) opened_quarter, account_type, min(balance) min_balance, round(stddev(balance), 2) stddev_balance, count(balance) balance_count from accounts group by opened_quarter, account_type having min_balance > 44000 order by account_type, opened_quarter limit 5

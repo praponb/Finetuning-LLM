@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, COUNT(DISTINCT country) AS unique_countrys, COUNT(*) AS cnt FROM sessions WHERE country = 'SG' GROUP BY customer_id) SELECT c.segment, ct.unique_countrys, ct.cnt FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id;

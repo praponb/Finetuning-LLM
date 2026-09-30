@@ -1,1 +1,0 @@
-WITH valid_store_sales AS (SELECT * FROM store_sales WHERE revenue <= 2000), store_sales_stats AS (SELECT DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, COUNT(*) AS cnt FROM valid_store_sales GROUP BY DATE_FORMAT(sale_date, 'yyyy-MM')) SELECT sale_month, cnt FROM store_sales_stats ORDER BY cnt;

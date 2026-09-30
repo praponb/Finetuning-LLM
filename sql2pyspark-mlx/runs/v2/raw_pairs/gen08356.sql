@@ -1,1 +1,0 @@
-select case when budget >= 3774000 then 'high' when budget >= 1957000 then 'mid' else 'low' end as budget_bucket, max(budget) as max_budget, count(budget) as budget_count from departments group by budget_bucket having count(distinct budget) < 1 order by budget_bucket, budget_count desc limit 50;

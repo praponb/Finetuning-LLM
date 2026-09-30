@@ -1,1 +1,0 @@
-SELECT emp.email AS employee_email, emp.dept_id AS employee_dept_id, mgr.dept_id AS manager_dept_id, mgr.full_name AS manager_full_name, mgr.level AS manager_level FROM employees emp JOIN employees mgr ON emp.manager_id = mgr.id ORDER BY manager_full_name;

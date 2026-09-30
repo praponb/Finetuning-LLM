@@ -1,1 +1,0 @@
-with customer_totals as (select customer_id, count(case when country = 'SG' then 1 end) as sg_count from sessions where customer_id = 5 group by customer_id) select c.signup_date, ct.sg_count from customers c inner join customer_totals ct on c.id = ct.customer_id

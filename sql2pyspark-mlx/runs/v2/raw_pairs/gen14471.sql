@@ -1,1 +1,0 @@
-select s.id, s.order_id, s.status, o.amount, o.discount, st.opened_date, datediff(current_date(), s.shipped_date) days_since_shipped_date from shipments s full outer join orders o on s.order_id = o.id inner join stores st on o.store_id = st.id where o.status in ('RETURNED', 'SHIPPED')

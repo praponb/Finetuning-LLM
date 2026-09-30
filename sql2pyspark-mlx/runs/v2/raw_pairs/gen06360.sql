@@ -1,1 +1,0 @@
-WITH recent_stores AS (SELECT * FROM stores WHERE city != 'Tokyo'), opened_month_summary AS (SELECT MONTH(opened_date) opened_month, city, MAX(sqft) - MIN(sqft) sqft_range FROM recent_stores GROUP BY MONTH(opened_date), city) SELECT opened_month, city, sqft_range FROM opened_month_summary WHERE sqft_range >= 80;

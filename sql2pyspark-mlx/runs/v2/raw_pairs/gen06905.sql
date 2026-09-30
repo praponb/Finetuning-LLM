@@ -1,1 +1,0 @@
-select s.id, s.city, count(p.id) as product_count from suppliers s inner join products p on s.id = p.supplier_id where p.stock_qty <= 219 group by s.id, s.city order by product_count desc, s.city desc

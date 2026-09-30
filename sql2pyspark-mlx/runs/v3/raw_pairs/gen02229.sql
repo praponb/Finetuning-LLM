@@ -1,1 +1,0 @@
-SELECT id, quantity, store_id, DATEDIFF(CURRENT_DATE(), last_restock) AS days_since_last_restock, ROUND(quantity * 1.07, 2) AS quantity_adjusted FROM inventory WHERE store_id IN (1, 4, 6) AND store_id = 3;

@@ -1,1 +1,0 @@
-WITH recent_transactions AS (SELECT *, CASE WHEN is_flagged THEN 'Yes' ELSE 'No' END is_flagged_label FROM transactions WHERE amount <= 3600), agg AS (SELECT merchant, SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END) amazon_count FROM recent_transactions GROUP BY merchant) SELECT merchant, amazon_count FROM agg ORDER BY amazon_count DESC, merchant LIMIT 1

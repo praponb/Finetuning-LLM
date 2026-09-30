@@ -1,1 +1,0 @@
-SELECT QUARTER(end_date) AS end_quarter, MIN(start_date) AS first_start_date, SUM(monthly_fee) AS total_monthly_fee, ROUND((100 * SUM(CASE WHEN plan = 'premium' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_premium FROM subscriptions GROUP BY 1 ORDER BY first_start_date DESC

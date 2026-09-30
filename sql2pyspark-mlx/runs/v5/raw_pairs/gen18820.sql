@@ -1,1 +1,0 @@
-select products.cost, inventory.store_id, day(products.launch_date) as launch_date_day from products left outer join inventory on inventory.product_id = products.id where products.price between 320 and 900 and products.supplier_id = 12

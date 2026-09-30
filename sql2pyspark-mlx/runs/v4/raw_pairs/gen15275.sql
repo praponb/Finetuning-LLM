@@ -1,1 +1,0 @@
-select oi.id, oi.order_id, o.amount, c.credit_limit, c.email from order_items oi inner join orders o on oi.order_id = o.id left join customers c on o.customer_id = c.id where o.order_date <= '2025-04-02'

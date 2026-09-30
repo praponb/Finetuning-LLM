@@ -1,1 +1,0 @@
-with ranked_sessions as (select *, row_number() over (partition by country order by started_at desc, id) row_num from sessions) select id, country, started_at, browser from ranked_sessions where row_num <= 3;

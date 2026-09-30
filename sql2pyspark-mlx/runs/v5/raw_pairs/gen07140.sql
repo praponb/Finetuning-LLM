@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, ROUND(revenue / units, 2) AS revenue_per_unit FROM store_sales WHERE sale_date > DATE '2023-09-10') SELECT *, ROW_NUMBER() OVER (ORDER BY units, id) AS seq_no, LAST_VALUE(revenue, TRUE) OVER (PARTITION BY store_id ORDER BY revenue, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_revenue FROM cleaned;

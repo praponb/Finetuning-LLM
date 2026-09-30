@@ -1,1 +1,0 @@
-SELECT s.order_id, s.status, o.store_id, st.sqft, CONCAT_WS('-', st.region, st.city) AS region_city_key FROM shipments s JOIN orders o ON s.order_id = o.id JOIN stores st ON o.store_id = st.id WHERE s.delivered_date >= '2024-12-07';

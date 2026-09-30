@@ -1,1 +1,0 @@
-WITH kept AS (SELECT s.* FROM departments s WHERE EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND LOWER(c.email) LIKE '%ob.%')) SELECT dept_name, PERCENTILE_APPROX(budget, 0.95) AS budget_p95, COUNT(*) AS cnt, SORT_ARRAY(COLLECT_SET(location)) AS location_list FROM kept GROUP BY 1 ORDER BY budget_p95 DESC NULLS LAST

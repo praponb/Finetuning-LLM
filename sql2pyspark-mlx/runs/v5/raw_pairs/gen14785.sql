@@ -1,1 +1,0 @@
-SELECT id, region, sqft, city, opened_date, ROW_NUMBER() OVER (PARTITION BY region ORDER BY sqft, id) AS rn, RANK() OVER (PARTITION BY city, region ORDER BY opened_date) AS rnk FROM stores WHERE region IS NOT NULL

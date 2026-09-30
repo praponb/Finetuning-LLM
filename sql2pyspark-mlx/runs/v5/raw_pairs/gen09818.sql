@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, supplier_name, country, city, LENGTH(city) AS city_length, COALESCE(city, 'N/A') AS city_filled FROM suppliers WHERE city IS NOT NULL) SELECT id, country, city, city_length, city_filled FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY city_length DESC, id) AS rn FROM base) x WHERE rn = 1;

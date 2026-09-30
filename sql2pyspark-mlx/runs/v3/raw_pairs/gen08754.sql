@@ -1,1 +1,0 @@
-SELECT sessions.browser, COUNT(web_events.id) AS web_event_count, SORT_ARRAY(COLLECT_SET(web_events.event_type)) AS event_type_list, MIN(web_events.event_time) AS first_event_time FROM sessions LEFT JOIN web_events ON web_events.session_id = sessions.id GROUP BY sessions.browser ORDER BY browser;

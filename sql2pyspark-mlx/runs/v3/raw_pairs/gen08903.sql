@@ -1,1 +1,0 @@
-SELECT store_id, last_restock_month, cnt FROM (SELECT store_id, DATE_TRUNC('MONTH', last_restock) last_restock_month, COUNT(*) cnt FROM inventory GROUP BY store_id, DATE_TRUNC('MONTH', last_restock)) agg WHERE cnt < 6 ORDER BY store_id DESC, cnt;

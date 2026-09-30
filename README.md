@@ -91,8 +91,8 @@ drawn more often than `UNION ALL`.
 
 v3 changes to the generator, aimed at the v2 hold-out failures: set operations over differently named columns
 (`union()` / aliases), `GROUP BY` ordinals on `CASE` keys, and exact `NOT IN` semantics
-(`isNotNull() | F.lit(excluded.isEmpty())`). The v2 and v3 datasets, adapters and logs are backed up in
-`sql2pyspark-mlx/runs/v2/` and `runs/v3/`.
+(`isNotNull() | F.lit(excluded.isEmpty())`). The v2 and v3 adapters and logs are kept in
+`sql2pyspark-mlx/runs/v2/` and `runs/v3/` (their datasets were removed on 2026-09-30 and are still in the git history).
 
 ### Output conventions (what the model learns to write)
 
@@ -416,8 +416,7 @@ README.md, USER_MANUAL.md, PROJECT_DOCUMENTATION.md, docs/          documentatio
 sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4–v7 families), handwritten_pairs.py,
                    verify_pairs.py, convert_sql_pyspark.py, lora_config.yaml, train_resumable.py, train.log,
                    data_v7.log, raw_pairs/, data/, adapters/, complex_v8/ (10k complex pairs & v8 LoRA config),
-                   sql2pyspark-model/ (fused 4-bit MLX model), runs/v2/ … runs/v7/ (backups)
-sql2pyspark-hf/    dequantized BF16 fused model (input for GGUF conversion; now v8, ~15.2 GB)
+                   runs/v2/ … runs/v7/ (adapters, configs, logs; v6/v7 data is in the git history too)
 sql2pyspark.gguf   Q8_0 GGUF of the last export (v8, 8.1 GB); Ollama keeps its own copy of every tag
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,
@@ -431,7 +430,13 @@ llama.cpp/         upstream checkout, used only for convert_hf_to_gguf.py
 
 The Docker `ollama` profile registers the model from the mounted `sql2pyspark.gguf`, i.e. the last export (v8, not `latest`).
 
-`archive/` (earlier experiments and the v1 model/data) and the legacy `mlx-env/` venv were deleted on 2026-09-27;
-`sql2pyspark-hf/` can be deleted too (recreated by `make fuse`).
+`archive/` (earlier experiments and the v1 model/data) and the legacy `mlx-env/` venv were deleted on 2026-09-27.
+`make export` also writes `sql2pyspark-hf/` (~15 GB BF16) and `sql2pyspark-mlx/sql2pyspark-model/` (~4 GB), and training
+writes LoRA checkpoints every 200 steps; once the export is in Ollama, `make clean` deletes all of these (and `__pycache__/`)
+and keeps `sql2pyspark.gguf` and each run's final `adapters.safetensors`.
+
+Cleanup on 2026-09-30: those leftovers (~21.6 GB), the Ollama tags `sql2pyspark:v1` … `:v6` (~24.6 GB; the Mac keeps
+`latest` = v8 and v7) and the v2–v5 datasets in `runs/` (~760 MB, still in the git history) were removed. v2–v6 can be
+rebuilt from their adapters: `mlx_lm.fuse --adapter-path runs/vN/adapters` (v2–v5 with `--model mlx-community/Qwen2.5-Coder-3B-Instruct-4bit`), then `make gguf ollama TAG=vN`.
 
 The code is in the private GitHub repo `praponb/Finetuning-LLM`; `.gitignore` keeps large model binaries (`*.gguf`, `sql2pyspark-hf/`, `sql2pyspark-model/`), venvs, and `llama.cpp/` out of git, while data, raw pairs, run logs, configs, and adapters are tracked in plain git.

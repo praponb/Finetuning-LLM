@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 4406000 THEN 'high' WHEN budget >= 1256000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(budget) AS total_budget FROM departments GROUP BY CASE WHEN budget >= 4406000 THEN 'high' WHEN budget >= 1256000 THEN 'mid' ELSE 'low' END;

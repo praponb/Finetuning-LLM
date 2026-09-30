@@ -1,1 +1,0 @@
-WITH filtered_suppliers AS (SELECT * FROM suppliers WHERE (country <> 'DE' AND rating > 2.4) OR country NOT IN ('TH', 'US')), city_summary AS (SELECT city, SORT_ARRAY(COLLECT_SET(city)) AS city_list, MAX(rating) - MIN(rating) AS rating_range FROM filtered_suppliers GROUP BY city) SELECT city, rating_range FROM city_summary

@@ -1,1 +1,0 @@
-SELECT e.hire_date employee_hire_date, m.is_remote manager_is_remote, m.salary manager_salary, m.job_title manager_job_title FROM employees e INNER JOIN employees m ON e.manager_id = m.id WHERE UPPER(e.email) LIKE '%VY@%';

@@ -1,1 +1,0 @@
-select max(launch_date) as last_launch_date, avg(price) as avg_price from products where supplier_id in (4, 27) and (stock_qty >= 199 or upper(product_name) like '%OGA%') order by avg_price desc, last_launch_date desc;

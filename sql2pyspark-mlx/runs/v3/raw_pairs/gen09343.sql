@@ -1,1 +1,0 @@
-SELECT job_title, COUNT(DISTINCT salary) AS unique_depts, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values, MAX(hire_date) AS last_hire_date FROM employees WHERE email IS NOT NULL GROUP BY job_title;

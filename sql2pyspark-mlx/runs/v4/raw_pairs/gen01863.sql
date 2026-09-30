@@ -1,1 +1,0 @@
-SELECT p.brand, MAX(ss.units) - MIN(ss.units) AS units_range FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id INNER JOIN products p ON p.id = ss.product_id WHERE ss.sale_date > '2025-09-01' GROUP BY p.brand ORDER BY units_range DESC

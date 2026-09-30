@@ -1,1 +1,0 @@
-WITH OrderItemsByProduct AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity, MAX(quantity) AS max_quantity FROM order_items WHERE product_id IS NULL GROUP BY product_id) SELECT p.launch_date, p.supplier_id, O.avg_quantity, O.max_quantity FROM products p LEFT JOIN OrderItemsByProduct O ON p.id = O.product_id WHERE O.max_quantity > 4.4;

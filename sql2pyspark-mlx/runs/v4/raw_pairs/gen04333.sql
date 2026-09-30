@@ -1,1 +1,0 @@
-SELECT s.id, s.cost, o.status, st.opened_date, st.sqft FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN stores st ON o.store_id = st.id WHERE st.opened_date > '2025-03-10' ORDER BY st.opened_date, id LIMIT 5;

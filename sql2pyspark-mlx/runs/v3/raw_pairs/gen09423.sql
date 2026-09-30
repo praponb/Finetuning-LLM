@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(a.opened_date, 'yyyy-MM') opened_month, AVG(t.amount) avg_amount, MAX(t.amount) - MIN(t.amount) amount_range FROM transactions t JOIN accounts a ON t.account_id = a.id GROUP BY DATE_FORMAT(a.opened_date, 'yyyy-MM')

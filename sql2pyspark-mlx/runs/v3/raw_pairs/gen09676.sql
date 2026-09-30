@@ -1,1 +1,0 @@
-select date_format(c.signup_date, 'yyyy-MM') as signup_month, max(a.balance) - min(a.balance) as balance_range from accounts a inner join customers c on a.customer_id = c.id group by date_format(c.signup_date, 'yyyy-MM') order by balance_range;

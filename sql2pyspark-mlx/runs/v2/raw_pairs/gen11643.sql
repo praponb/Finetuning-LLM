@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT YEAR(opened_date) AS opened_year, COUNT(DISTINCT balance) AS unique_statuss, SUM(balance) AS total_balance FROM accounts WHERE status IN ('FROZEN', 'OPEN', 'CLOSED') GROUP BY YEAR(opened_date)) AS x WHERE total_balance < 287000;

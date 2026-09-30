@@ -1,1 +1,0 @@
-SELECT c.id, c.is_active, c.signup_date, c.city FROM customers c WHERE EXISTS (SELECT 1 FROM subscriptions s WHERE s.customer_id = c.id AND s.status IN ('ACTIVE', 'PAUSED', 'CANCELLED')) ORDER BY id DESC

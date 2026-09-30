@@ -1,1 +1,0 @@
-SELECT e.job_title AS employee_job_title, e.salary AS employee_salary, m.email AS manager_email, m.full_name AS manager_full_name FROM employees AS e LEFT OUTER JOIN employees AS m ON e.manager_id = m.id WHERE e.level != 'L5' AND e.full_name IS NULL ORDER BY manager_email

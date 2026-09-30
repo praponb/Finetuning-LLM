@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, MIN(started_at) AS first_started_at, COUNT(*) AS cnt FROM sessions GROUP BY customer_id) SELECT customers.id, customers.segment, customer_summary.first_started_at, customer_summary.cnt FROM customers LEFT OUTER JOIN customer_summary ON customers.id = customer_summary.customer_id WHERE customer_summary.cnt >= 6

@@ -1,1 +1,0 @@
-WITH OrdersByStore AS (SELECT store_id, MAX(discount) AS max_discount, ROUND(AVG(discount), 2) AS avg_discount FROM orders WHERE channel = 'web' GROUP BY store_id) SELECT s.id, s.region, O.max_discount, O.avg_discount FROM stores s LEFT JOIN OrdersByStore O ON s.id = O.store_id

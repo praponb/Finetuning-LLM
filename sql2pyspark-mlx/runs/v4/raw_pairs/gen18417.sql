@@ -1,1 +1,0 @@
-SELECT id, browser, started_at, device, LAG(started_at, 1) OVER (PARTITION BY browser ORDER BY started_at, id) AS prev_started_at, ROW_NUMBER() OVER (PARTITION BY device ORDER BY started_at, id) AS rn FROM sessions WHERE browser IS NOT NULL ORDER BY prev_started_at

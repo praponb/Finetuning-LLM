@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, account_type, opened_date, customer_id, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY opened_date DESC, id) AS pos FROM accounts) AS ranked WHERE pos <= 3 ORDER BY pos

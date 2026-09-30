@@ -1,1 +1,0 @@
-SELECT id, device_code, reading_ts, temp_c, humidity, pressure, status_bits, firmware, SUM(humidity) OVER w_recent AS humidity_sum_30m, AVG(humidity) OVER (PARTITION BY device_code) AS device_code_avg_humidity FROM device_readings WINDOW w_recent AS (PARTITION BY device_code ORDER BY CAST(reading_ts AS BIGINT) RANGE BETWEEN 1800 PRECEDING AND CURRENT ROW);

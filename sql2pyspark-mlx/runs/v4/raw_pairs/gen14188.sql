@@ -1,1 +1,0 @@
-select c.id, c.signup_date, t.uk_count from customers c inner join (select customer_id, sum(case when country = 'UK' then 1 else 0 end) as uk_count from sessions group by customer_id) t on c.id = t.customer_id where t.uk_count > 26 order by uk_count

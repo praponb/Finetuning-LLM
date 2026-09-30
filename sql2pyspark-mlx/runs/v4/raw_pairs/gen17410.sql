@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, plan, currency, EXPLODE_OUTER(tier_prices) AS tier_value FROM price_tiers) SELECT plan, PERCENTILE_APPROX(tier_value, 0.95) AS tier_value_p95, COUNT(*) FILTER (WHERE currency = 'EUR') AS eur_rows FROM flattened GROUP BY plan HAVING COUNT(*) FILTER (WHERE currency = 'EUR') > 1 ORDER BY tier_value_p95 ASC NULLS LAST

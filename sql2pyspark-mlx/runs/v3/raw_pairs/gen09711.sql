@@ -1,1 +1,0 @@
-select i.id, i.product_id, i.last_restock, ss.sale_date, ss.revenue, least(ss.units, ss.revenue) least_units_revenue from inventory i left outer join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id;

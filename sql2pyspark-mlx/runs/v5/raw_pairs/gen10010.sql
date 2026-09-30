@@ -1,1 +1,0 @@
-SELECT s.device, s.started_at, t.duration_sec_count FROM sessions s LEFT JOIN (SELECT session_id, COUNT(duration_sec) AS duration_sec_count FROM web_events GROUP BY session_id) t ON s.id = t.session_id ORDER BY device DESC;

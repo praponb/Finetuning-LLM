@@ -1,1 +1,0 @@
-SELECT id, sqft, region, city, opened_date, FIRST_VALUE(region) OVER (ORDER BY sqft DESC, id) AS first_region, ROW_NUMBER() OVER (PARTITION BY region, city ORDER BY opened_date, id) AS opened_date_row FROM stores;

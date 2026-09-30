@@ -1,1 +1,0 @@
-select inventory.id, inventory.store_id, inventory.quantity, products.category, suppliers.rating from inventory inner join products on inventory.product_id = products.id left outer join suppliers on suppliers.id = products.supplier_id where suppliers.rating < 3.2;

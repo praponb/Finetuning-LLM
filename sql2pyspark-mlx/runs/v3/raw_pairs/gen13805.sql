@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, MIN(opened_date) AS min_opened_date, COUNT(balance) AS balance_count FROM accounts WHERE customer_id IS NOT NULL AND (customer_id IS NOT NULL OR status != 'CLOSED') GROUP BY QUARTER(opened_date);

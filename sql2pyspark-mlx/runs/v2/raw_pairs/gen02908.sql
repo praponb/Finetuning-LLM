@@ -1,1 +1,0 @@
-SELECT is_active, segment_values, stddev_credit_limit FROM (SELECT is_active, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(segment))) AS segment_values, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit FROM customers WHERE city NOT IN ('Chiang Mai', 'Bangkok') GROUP BY is_active) AS t WHERE stddev_credit_limit < 31;

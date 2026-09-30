@@ -1,1 +1,0 @@
-SELECT HOUR(paid_at) AS paid_hour, status, SUM(CASE WHEN status = 'REFUNDED' THEN amount ELSE 0 END) AS refunded_amount, MAX(paid_at) AS last_paid_at FROM payments WHERE amount > 1540 GROUP BY HOUR(paid_at), status ORDER BY paid_hour;

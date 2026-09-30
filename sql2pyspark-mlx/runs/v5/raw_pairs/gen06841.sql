@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(oi.id) AS order_item_count, SUM(oi.quantity * oi.unit_price) AS revenue, COUNT(oi.quantity) AS quantity_count FROM orders o LEFT OUTER JOIN order_items oi ON o.id = oi.order_id WHERE oi.order_id = 31 GROUP BY o.status ORDER BY status, quantity_count

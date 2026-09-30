@@ -1,1 +1,0 @@
-SELECT id, supplier_id, launch_date, cost, RANK() OVER (PARTITION BY supplier_id ORDER BY launch_date) AS rnk, SUM(cost) OVER (PARTITION BY supplier_id) AS supplier_id_sum_cost FROM products WHERE ARRAY_CONTAINS(tags, 'premium');

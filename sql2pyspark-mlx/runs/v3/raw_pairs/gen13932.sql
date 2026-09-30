@@ -1,1 +1,0 @@
-SELECT id, customer_id, start_date, monthly_fee, SUM(monthly_fee) OVER (PARTITION BY customer_id ORDER BY start_date, id) AS running_monthly_fee, RANK() OVER (ORDER BY start_date) AS rnk FROM subscriptions WHERE monthly_fee BETWEEN 160 AND 220 ORDER BY rnk DESC;

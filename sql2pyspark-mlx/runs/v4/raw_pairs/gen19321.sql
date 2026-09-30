@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 3798000 THEN 'high' WHEN budget >= 1542000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(CASE WHEN location = 'New York' THEN budget ELSE 0 END) AS new_york_budget, COUNT(budget) AS budget_count, ROUND((100 * SUM(CASE WHEN location = 'Singapore' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_singapore FROM departments WHERE budget IS NULL GROUP BY 1;

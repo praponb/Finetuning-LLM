@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, SUBSTRING(carrier, 1, 2) AS carrier_prefix FROM shipments WHERE order_id IS NOT NULL AND carrier NOT IN ('FedEx', 'DHL', 'UPS')) SELECT carrier FROM filtered INTERSECT SELECT carrier FROM shipments WHERE cost < 32;

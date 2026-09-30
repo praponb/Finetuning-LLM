@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, plan, effective_from, EXPLODE(tier_limits) AS tier_value FROM price_tiers) SELECT *, PERCENT_RANK() OVER (ORDER BY tier_value DESC) AS tier_value_percent_rank, RANK() OVER (PARTITION BY plan ORDER BY tier_value NULLS LAST) AS tier_value_rank FROM exploded;

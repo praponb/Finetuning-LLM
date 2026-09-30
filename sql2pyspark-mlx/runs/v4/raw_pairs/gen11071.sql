@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM accounts WHERE customer_id IS NOT NULL AND account_type = 'LOAN'), summary AS (SELECT status, ROUND(STDDEV(balance), 2) AS stddev_balance, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM base GROUP BY status) SELECT * FROM summary WHERE stddev_balance >= 35;

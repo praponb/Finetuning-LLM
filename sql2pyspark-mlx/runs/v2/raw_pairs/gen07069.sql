@@ -1,1 +1,0 @@
-SELECT channel, status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values, SUM(shipping_fee) AS total_shipping_fee FROM orders WHERE (status = 'CANCELLED' AND status = 'COMPLETED') OR status NOT IN ('CANCELLED', 'COMPLETED') GROUP BY CUBE(channel, status) ORDER BY total_shipping_fee DESC;

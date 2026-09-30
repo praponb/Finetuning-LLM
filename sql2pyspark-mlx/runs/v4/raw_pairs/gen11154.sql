@@ -1,1 +1,0 @@
-select ss.sale_date, p.product_name, s.city, s.country from store_sales ss left outer join products p on ss.product_id = p.id left outer join suppliers s on s.id = p.supplier_id where ss.units <> 21 and p.stock_qty < 322;

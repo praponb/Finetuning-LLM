@@ -1,1 +1,0 @@
-SELECT CASE WHEN cost >= 82 THEN 'PREMIUM' ELSE 'STANDARD' END AS cost_tier, ROUND(SUM(cost) / NULLIF(COUNT(CASE WHEN carrier = 'UPS' THEN 1 END), 0), 2) AS cost_per_ups, ROUND(AVG(cost), 2) AS avg_cost, ROUND(AVG(cost), 2) AS avg_cost_2 FROM shipments GROUP BY CASE WHEN cost >= 82 THEN 'PREMIUM' ELSE 'STANDARD' END ORDER BY avg_cost DESC NULLS FIRST;

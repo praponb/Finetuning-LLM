@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN country IN ('JP', 'UK') THEN 'tier_1' ELSE 'other' END AS country_group, city, credit_limit FROM customers) PIVOT (SUM(credit_limit) FOR city IN ('Berlin', 'Chiang Mai', 'Bangkok', 'Singapore'));

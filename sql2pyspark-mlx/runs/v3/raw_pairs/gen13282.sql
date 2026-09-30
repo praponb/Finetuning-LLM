@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, MIN(revenue) AS min_revenue FROM store_sales WHERE units <= 15 GROUP BY store_id) SELECT s.store_name, s.city, st.min_revenue FROM stores s LEFT OUTER JOIN store_totals st ON s.id = st.store_id WHERE st.min_revenue > 1800 ORDER BY store_name DESC;

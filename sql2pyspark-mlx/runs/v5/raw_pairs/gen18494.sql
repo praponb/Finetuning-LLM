@@ -1,1 +1,0 @@
-select case when salary >= 133000 then 'high' when salary >= 82000 then 'mid' else 'low' end as salary_bucket, max(salary) as max_salary, sort_array(collect_set(level)) as level_list from employees group by salary_bucket;

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM subscriptions WHERE plan != 'enterprise' AND YEAR(start_date) >= 2024), agg AS (SELECT YEAR(end_date) end_year, MAX(monthly_fee) - MIN(monthly_fee) monthly_fee_range FROM base GROUP BY YEAR(end_date)) SELECT end_year, monthly_fee_range FROM agg ORDER BY monthly_fee_range DESC, end_year DESC

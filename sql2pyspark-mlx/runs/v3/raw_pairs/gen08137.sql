@@ -1,1 +1,0 @@
-with department_summary as (select dept_id, count(*) total_count from employees group by dept_id) select d.dept_name, ds.total_count from departments d inner join department_summary ds on d.id = ds.dept_id order by d.dept_name;

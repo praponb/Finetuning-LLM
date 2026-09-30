@@ -1,1 +1,0 @@
-SELECT balance_bucket, max_balance, total_balance FROM (SELECT CASE WHEN balance >= 65000 THEN 'high' WHEN balance >= 26000 THEN 'mid' ELSE 'low' END AS balance_bucket, MAX(balance) AS max_balance, SUM(balance) AS total_balance FROM accounts GROUP BY CASE WHEN balance >= 65000 THEN 'high' WHEN balance >= 26000 THEN 'mid' ELSE 'low' END) AS s WHERE total_balance < 423000

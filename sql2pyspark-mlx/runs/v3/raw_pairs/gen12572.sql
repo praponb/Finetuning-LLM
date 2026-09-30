@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT method, COUNT(CASE WHEN method = 'bank_transfer' THEN 1 END) AS bank_transfer_count, ROUND((100 * SUM(CASE WHEN status = 'REFUNDED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_refunded FROM payments WHERE amount BETWEEN 1190 AND 1310 GROUP BY method) AS t WHERE pct_refunded >= 43 ORDER BY 1;

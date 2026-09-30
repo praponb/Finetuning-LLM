@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, country, started_at, device, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at DESC, id) AS pos FROM sessions WHERE HOUR(started_at) BETWEEN 11 AND 17) AS r WHERE pos <= 5 ORDER BY country;

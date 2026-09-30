@@ -1,1 +1,0 @@
-SELECT t.txn_time, t.account_id, a.customer_id, a.status, a.balance, CAST(t.is_flagged AS INT) AS is_flagged_flag FROM transactions t INNER JOIN accounts a ON a.id = t.account_id WHERE YEAR(a.opened_date) >= 2025 ORDER BY a.customer_id DESC;

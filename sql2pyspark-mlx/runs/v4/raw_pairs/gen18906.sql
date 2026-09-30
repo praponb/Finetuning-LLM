@@ -1,1 +1,0 @@
-select case when rating >= 3.5 then 'high' when rating >= 2.5 then 'mid' else 'low' end as rating_bucket, count(*) as num_suppliers, count(distinct rating) as unique_citys, round(avg(rating), 2) as avg_rating from suppliers where supplier_name like '%Sup%' group by case when rating >= 3.5 then 'high' when rating >= 2.5 then 'mid' else 'low' end order by num_suppliers asc

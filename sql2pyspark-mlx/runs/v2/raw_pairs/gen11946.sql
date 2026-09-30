@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, session_id, duration_sec, page, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec DESC, id) AS pos FROM web_events WHERE session_id IN (6, 19)) SELECT id, session_id, duration_sec, page FROM numbered WHERE pos <= 3

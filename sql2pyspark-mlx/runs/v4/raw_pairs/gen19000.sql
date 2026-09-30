@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, COALESCE(channel, 'Unknown') AS channel_filled FROM orders WHERE order_date >= DATE '2023-10-02' AND status IN ('SHIPPED', 'COMPLETED')) SELECT CASE WHEN discount >= 0.36 THEN 'LARGE' ELSE 'SMALL' END AS discount_tier, COUNT(*) AS num_rows, COUNT(*) FILTER (WHERE status = 'PENDING') AS pending_rows FROM filtered GROUP BY 1 ORDER BY pending_rows DESC

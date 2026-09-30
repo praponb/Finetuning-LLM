@@ -1,1 +1,0 @@
-SELECT o.id, o.order_date, o.status, c.is_active, s.city FROM orders o LEFT OUTER JOIN customers c ON c.id = o.customer_id JOIN stores s ON o.store_id = s.id WHERE o.order_date <= '2023-04-01' AND s.region IN ('West', 'East', 'Central') ORDER BY id DESC;

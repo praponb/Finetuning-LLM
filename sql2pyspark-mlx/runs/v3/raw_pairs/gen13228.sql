@@ -1,1 +1,0 @@
-SELECT country, SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END) AS berlin_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) AS city_values, COUNT(*) AS num_suppliers FROM suppliers GROUP BY country HAVING COUNT(rating) < 1 ORDER BY city_values, country;

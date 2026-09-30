@@ -1,1 +1,0 @@
-SELECT store_id, total_units FROM (SELECT store_id, SUM(units) AS total_units FROM store_sales WHERE sale_date <= '2025-09-01' GROUP BY store_id) AS agg WHERE total_units > 90 ORDER BY 1 DESC, total_units;

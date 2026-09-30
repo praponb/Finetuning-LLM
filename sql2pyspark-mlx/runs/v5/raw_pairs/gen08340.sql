@@ -1,1 +1,0 @@
-SELECT s.country, ROUND(STDDEV(we.duration_sec), 2) AS stddev_duration_sec FROM web_events we RIGHT JOIN sessions s ON s.id = we.session_id JOIN customers c ON s.customer_id = c.id WHERE c.city NOT IN ('Tokyo', 'London', 'Bangkok') GROUP BY s.country HAVING stddev_duration_sec >= 55

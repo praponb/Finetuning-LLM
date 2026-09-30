@@ -1,1 +1,0 @@
-WITH Numbered AS (SELECT id, channel, amount, store_id, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY amount DESC, id) AS pos FROM orders) SELECT id, channel, amount, store_id FROM Numbered WHERE pos <= 3 ORDER BY amount DESC;

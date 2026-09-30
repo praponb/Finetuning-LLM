@@ -1,1 +1,0 @@
-select s.cost, s.shipped_date, s.order_id, o.store_id, o.order_date, o.shipping_fee from shipments s inner join orders o on o.id = s.order_id where s.status in ('LOST', 'DELIVERED') order by s.shipped_date

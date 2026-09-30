@@ -1,1 +1,0 @@
-select month(s.started_at) started_month, max(we.event_time) latest_event_time from web_events we inner join sessions s on we.session_id = s.id where we.session_id in (2, 24, 37) group by month(s.started_at)

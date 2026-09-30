@@ -1,1 +1,0 @@
-SELECT s.id, s.started_at, t.total_duration_sec, t.min_duration_sec FROM sessions s LEFT JOIN (SELECT session_id, SUM(duration_sec) AS total_duration_sec, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE event_type = 'add_to_cart' GROUP BY session_id) t ON s.id = t.session_id

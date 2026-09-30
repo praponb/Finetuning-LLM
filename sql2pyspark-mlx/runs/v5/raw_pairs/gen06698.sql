@@ -1,1 +1,0 @@
-SELECT *, LAST_VALUE(browser, TRUE) OVER (PARTITION BY customer_id ORDER BY started_at ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_browser FROM sessions;

@@ -1,1 +1,0 @@
-with supplier_summary as (select supplier_id, round(stddev(price), 2) as stddev_price, round(stddev(stock_qty), 2) as stddev_stock_qty from products where cost > 370 group by supplier_id) select s.rating, ss.stddev_price, ss.stddev_stock_qty from suppliers s inner join supplier_summary ss on s.id = ss.supplier_id where ss.stddev_stock_qty > 25;

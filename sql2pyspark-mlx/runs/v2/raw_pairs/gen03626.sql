@@ -1,1 +1,0 @@
-SELECT order_id, COUNT(CASE WHEN status = 'REFUNDED' THEN 1 END) AS refunded_count, MAX(paid_at) AS latest_paid_at FROM payments WHERE paid_at < '2025-07-16' OR paid_at < '2024-08-01' GROUP BY 1 ORDER BY refunded_count DESC, order_id LIMIT 1;

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT job_title, dept_id, MAX(hire_date) AS last_hire_date, ROUND((100 * SUM(CASE WHEN job_title = 'Designer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_designer FROM employees GROUP BY job_title, dept_id) AS sub WHERE pct_designer > 44 ORDER BY dept_id DESC;

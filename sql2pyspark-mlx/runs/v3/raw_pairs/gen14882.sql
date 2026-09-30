@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM order_items WHERE unit_price >= 120 AND order_id IN (4, 18, 34) AND order_id = 27), OrderIdSummary AS (SELECT order_id, MIN(quantity) AS min_quantity FROM base GROUP BY order_id) SELECT order_id, min_quantity FROM OrderIdSummary ORDER BY min_quantity, order_id;

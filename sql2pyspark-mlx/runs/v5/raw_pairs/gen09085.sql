@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, ROUND(quantity * 1.1, 2) AS quantity_adjusted, WEEKOFYEAR(last_restock) AS last_restock_weekofyear FROM inventory WHERE last_restock > DATE '2023-02-12') SELECT s.*, p.brand, p.launch_date FROM base s LEFT JOIN products p ON s.product_id = p.id

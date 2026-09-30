@@ -1,1 +1,0 @@
-select ss.product_id, max(i.last_restock) as last_last_restock from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where i.quantity <> 75 group by ss.product_id order by last_last_restock

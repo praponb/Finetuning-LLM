@@ -1,1 +1,0 @@
-select d.dept_name, d.location, avg(e.salary) as avg_salary, concat_ws(', ', sort_array(collect_set(e.job_title))) as job_title_values from employees e inner join departments d on e.dept_id = d.id group by d.dept_name, d.location order by avg_salary;

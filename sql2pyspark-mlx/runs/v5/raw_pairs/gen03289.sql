@@ -1,1 +1,0 @@
-SELECT s.id, s.opened_date, s.sqft, t.min_quantity, t.unique_stores FROM stores s INNER JOIN (SELECT store_id, MIN(quantity) AS min_quantity, COUNT(DISTINCT quantity) AS unique_stores FROM inventory WHERE quantity = 151 GROUP BY store_id) t ON s.id = t.store_id ORDER BY sqft DESC, unique_stores, id LIMIT 5;

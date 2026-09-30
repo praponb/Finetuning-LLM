@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(o.order_date, 'yyyy-MM') AS order_month, o.status, ROUND((100 * SUM(CASE WHEN s.carrier = 'Kerry' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_kerry FROM shipments s JOIN orders o ON s.order_id = o.id WHERE o.order_date BETWEEN '2024-02-22' AND '2025-02-01' GROUP BY DATE_FORMAT(o.order_date, 'yyyy-MM'), o.status;

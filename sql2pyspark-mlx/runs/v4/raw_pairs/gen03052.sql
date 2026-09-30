@@ -1,1 +1,0 @@
-with subscriptions_by_customer as (select customer_id, max(monthly_fee) - min(monthly_fee) as monthly_fee_range from subscriptions group by customer_id) select c.segment, c.is_active, sbc.monthly_fee_range from customers c left join subscriptions_by_customer sbc on c.id = sbc.customer_id order by segment

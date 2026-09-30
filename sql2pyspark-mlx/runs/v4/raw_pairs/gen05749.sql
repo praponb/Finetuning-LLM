@@ -1,1 +1,0 @@
-select s.id, s.country from suppliers s where s.city <> 'London' and not exists (select 1 from products p where p.supplier_id = s.id and p.category not in ('Electronics', 'Books')) order by country desc, id limit 1;

@@ -1,1 +1,0 @@
-SELECT is_remote, MIN(salary) AS min_salary, SUM(CASE WHEN job_title = 'Intern' THEN salary ELSE 0 END) AS intern_salary FROM employees WHERE NOT (full_name LIKE '%Mia%' OR manager_id = 5) GROUP BY is_remote ORDER BY intern_salary DESC

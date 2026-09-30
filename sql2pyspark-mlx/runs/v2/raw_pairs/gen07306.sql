@@ -1,1 +1,0 @@
-select product_id, last_restock_month, quantity_count from (select product_id, month(last_restock) as last_restock_month, count(quantity) as quantity_count from inventory group by product_id, month(last_restock)) as t where quantity_count < 9 order by product_id desc

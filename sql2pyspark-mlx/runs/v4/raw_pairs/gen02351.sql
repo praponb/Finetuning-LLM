@@ -1,1 +1,0 @@
-WITH matched_keys AS (SELECT page, session_id FROM web_events EXCEPT SELECT page, session_id FROM web_events WHERE duration_sec IS NOT NULL), verified AS (SELECT s.* FROM web_events s INNER JOIN matched_keys k ON s.page = k.page AND s.session_id = k.session_id) SELECT session_id, page, event_time, duration_sec FROM verified ORDER BY event_time DESC NULLS LAST

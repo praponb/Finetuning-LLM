@@ -1,1 +1,0 @@
-SELECT city, COUNT(CASE WHEN region = 'Central' THEN 1 END) AS central_count, SUM(CASE WHEN city = 'Chiang Mai' THEN sqft ELSE 0 END) AS chiang_mai_sqft FROM stores GROUP BY city ORDER BY central_count

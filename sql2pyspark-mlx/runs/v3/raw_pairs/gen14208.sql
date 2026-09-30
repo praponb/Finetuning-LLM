@@ -1,1 +1,0 @@
-SELECT a.status, COUNT(*) cnt, ROUND(STDDEV(t.amount), 2) stddev_amount FROM transactions t LEFT JOIN accounts a ON a.id = t.account_id GROUP BY a.status HAVING COUNT(*) >= 5 ORDER BY stddev_amount, status LIMIT 1;

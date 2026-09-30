@@ -1,1 +1,0 @@
-SELECT balance, customer_id, DATEDIFF(CURRENT_DATE(), opened_date) AS days_since_opened_date FROM accounts WHERE status NOT IN ('CLOSED', 'FROZEN', 'OPEN') AND opened_date > '2024-10-01' AND YEAR(opened_date) = 2024;

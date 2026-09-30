@@ -1,1 +1,0 @@
-SELECT *, UPPER(txn_type) AS txn_type_upper, CASE WHEN is_flagged THEN 'Yes' ELSE 'No' END AS is_flagged_label FROM transactions WHERE HOUR(txn_time) BETWEEN 9 AND 13 AND amount BETWEEN 1700 AND 2800 AND amount BETWEEN 1700 AND 2000 ORDER BY id LIMIT 3;

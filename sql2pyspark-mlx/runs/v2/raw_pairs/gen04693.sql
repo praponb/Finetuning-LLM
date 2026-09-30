@@ -1,1 +1,0 @@
-SELECT QUARTER(launch_date) AS launch_quarter, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values, COUNT(stock_qty) AS stock_qty_count, COUNT(*) AS row_count FROM products GROUP BY QUARTER(launch_date) HAVING stock_qty_count >= 3 ORDER BY stock_qty_count DESC;

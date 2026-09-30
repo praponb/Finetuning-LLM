@@ -1,1 +1,0 @@
-SELECT id, region, sqft, opened_date FROM (SELECT id, region, sqft, opened_date, ROW_NUMBER() OVER (PARTITION BY region ORDER BY sqft DESC, id) row_num FROM stores) ranked WHERE row_num <= 5 ORDER BY id DESC;

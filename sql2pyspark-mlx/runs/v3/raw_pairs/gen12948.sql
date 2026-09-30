@@ -1,1 +1,0 @@
-select i.id, i.product_id, i.store_id, s.store_name, p.product_name from inventory i left join stores s on i.store_id = s.id right join products p on p.id = i.product_id order by i.product_id desc, product_name desc

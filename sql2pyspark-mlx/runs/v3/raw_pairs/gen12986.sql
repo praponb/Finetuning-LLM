@@ -1,1 +1,0 @@
-SELECT city, MIN(opened_date) AS min_opened_date, SUM(CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END) AS tokyo_count, SUM(CASE WHEN region = 'North' THEN sqft ELSE 0 END) AS north_sqft FROM stores WHERE sqft > 6612 GROUP BY 1

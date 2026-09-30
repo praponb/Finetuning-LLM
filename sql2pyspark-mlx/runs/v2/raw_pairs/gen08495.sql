@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', shipped_date) AS shipped_month, SUM(cost) AS total_cost, SUM(CASE WHEN status = 'IN_TRANSIT' THEN cost ELSE 0 END) AS in_transit_cost FROM shipments WHERE order_id IS NULL AND carrier IS NOT NULL GROUP BY DATE_TRUNC('MONTH', shipped_date)

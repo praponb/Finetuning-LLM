@@ -1,1 +1,0 @@
-SELECT oi.id, oi.order_id, o.amount, o.customer_id, c.is_active, c.segment FROM order_items oi LEFT JOIN orders o ON oi.order_id = o.id JOIN customers c ON c.id = o.customer_id WHERE oi.unit_price <= 300 ORDER BY o.amount DESC, customer_id

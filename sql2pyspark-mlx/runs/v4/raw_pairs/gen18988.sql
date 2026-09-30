@@ -1,1 +1,0 @@
-with not_flagged as (select s.* from stores s where not exists (select 1 from store_sales ch where ch.store_id = s.id and ch.sale_date between '2025-02-04' and '2025-05-11')) select id, city, region, opened_date, sqft from not_flagged order by sqft desc

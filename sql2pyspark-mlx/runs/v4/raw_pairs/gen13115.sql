@@ -1,1 +1,0 @@
-select account_id, is_flagged, sum(amount) as total_amount, count(distinct amount) as unique_txn_types, max(txn_time) as latest_txn_time from transactions group by account_id, is_flagged having count(amount) > 1 order by unique_txn_types

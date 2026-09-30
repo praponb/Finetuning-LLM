@@ -1,1 +1,0 @@
-select transactions.id, transactions.txn_time, transactions.is_flagged, transactions.merchant, accounts.opened_date, accounts.balance from transactions inner join accounts on accounts.id = transactions.account_id where accounts.customer_id is not null or accounts.customer_id is not null order by accounts.balance desc

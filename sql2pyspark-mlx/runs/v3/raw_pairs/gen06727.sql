@@ -1,1 +1,0 @@
-select ss.product_id, year(ss.sale_date) as sale_year, count(distinct i.quantity) as unique_stores from inventory i join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id group by ss.product_id, year(ss.sale_date) having count(distinct i.quantity) >= 5 order by ss.product_id desc

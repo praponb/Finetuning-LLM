@@ -1,1 +1,0 @@
-select case when rating >= 4.6 then 'high' when rating >= 1.7 then 'mid' else 'low' end as rating_bucket, round(stddev(rating), 2) as stddev_rating from suppliers group by 1 having stddev_rating > 64 order by 1 desc, stddev_rating desc;

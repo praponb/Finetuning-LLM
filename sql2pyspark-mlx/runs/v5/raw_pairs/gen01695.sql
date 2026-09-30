@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CAST(is_flagged AS INT) AS is_flagged_flag, COALESCE(merchant, 'UNKNOWN') AS resolved_merchant FROM transactions WHERE txn_type != 'FEE') SELECT a.id, a.account_id, a.txn_type, a.txn_time, a.merchant, a.is_flagged_flag, p2.account_type FROM valid a LEFT JOIN accounts p2 ON a.account_id = p2.id WHERE p2.account_type IN ('SAVINGS', 'CHECKING');

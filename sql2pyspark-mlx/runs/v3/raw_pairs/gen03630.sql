@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, MIN(sale_date) AS first_sale_date, COUNT(DISTINCT units) AS unique_stores FROM store_sales GROUP BY store_id) SELECT s.city, s.store_name, ss.first_sale_date, ss.unique_stores FROM stores s INNER JOIN store_summary ss ON s.id = ss.store_id ORDER BY ss.unique_stores DESC

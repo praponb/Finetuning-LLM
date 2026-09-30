@@ -1,1 +1,0 @@
-SELECT signup_month, avg_credit_limit FROM (SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, ROUND(AVG(credit_limit), 2) AS avg_credit_limit FROM customers WHERE city <> 'Chiang Mai' GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM')) AS x WHERE avg_credit_limit >= 21

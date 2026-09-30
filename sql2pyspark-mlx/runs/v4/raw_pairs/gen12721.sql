@@ -1,1 +1,0 @@
-SELECT id, country, credit_limit, segment, signup_date, age, AVG(credit_limit) OVER (PARTITION BY country) AS country_avg_credit_limit, LAG(age, 1) OVER (PARTITION BY segment ORDER BY signup_date, id) AS prev_age FROM customers

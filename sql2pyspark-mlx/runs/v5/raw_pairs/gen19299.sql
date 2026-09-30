@@ -1,1 +1,0 @@
-WITH FilteredStores AS (SELECT * FROM stores WHERE store_name IS NOT NULL), summary AS (SELECT QUARTER(opened_date) AS opened_quarter, city, MIN(sqft) AS min_sqft FROM FilteredStores GROUP BY QUARTER(opened_date), city) SELECT * FROM summary;

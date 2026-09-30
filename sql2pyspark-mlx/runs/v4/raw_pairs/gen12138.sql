@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, name, email, country, city, segment, is_active, credit_limit, age, LENGTH(city) AS city_length FROM customers WHERE segment IS NOT NULL) SELECT country, id FROM cleaned EXCEPT DISTINCT SELECT country, id FROM customers WHERE LOWER(TRIM(email)) = 'alice@gmail.com'

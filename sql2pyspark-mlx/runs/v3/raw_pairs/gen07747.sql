@@ -1,1 +1,0 @@
-SELECT id, opened_date, region, store_name, ADD_MONTHS(opened_date, 6) AS opened_date_plus_months FROM stores WHERE (city = 'Singapore' AND region <> 'Central') OR region IN ('South', 'West') ORDER BY region

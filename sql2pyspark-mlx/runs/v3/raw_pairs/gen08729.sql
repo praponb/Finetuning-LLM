@@ -1,1 +1,0 @@
-with store_summary as (select store_id, count(*) cnt, round(stddev(revenue), 2) stddev_revenue from store_sales group by store_id) select s.store_name, ss.cnt, ss.stddev_revenue from stores s left join store_summary ss on s.id = ss.store_id

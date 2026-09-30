@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM order_items WHERE quantity BETWEEN 4 AND 6), ProductIdSummary AS (SELECT product_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price, MAX(quantity) AS max_quantity FROM src GROUP BY product_id) SELECT product_id, stddev_unit_price, max_quantity FROM ProductIdSummary WHERE stddev_unit_price >= 45;

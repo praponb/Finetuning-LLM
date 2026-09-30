@@ -1,1 +1,0 @@
-WITH filtered_customers AS (SELECT * FROM customers WHERE country = 'DE'), customers_stats AS (SELECT is_active, MIN(credit_limit) AS min_credit_limit FROM filtered_customers GROUP BY is_active) SELECT * FROM customers_stats;

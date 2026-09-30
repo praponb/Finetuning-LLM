@@ -1,1 +1,0 @@
-SELECT QUARTER(o.order_date) AS order_quarter, SUM(CASE WHEN p.method = 'card' THEN 1 ELSE 0 END) AS card_count FROM payments p LEFT JOIN orders o ON p.order_id = o.id GROUP BY QUARTER(o.order_date) HAVING card_count >= 32 ORDER BY card_count DESC;

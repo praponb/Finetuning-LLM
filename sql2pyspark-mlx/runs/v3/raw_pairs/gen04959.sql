@@ -1,1 +1,0 @@
-SELECT p.id, p.category, p.stock_qty, p.launch_date FROM products p WHERE p.stock_qty > (SELECT AVG(p2.stock_qty) FROM products p2 WHERE p2.category = p.category);

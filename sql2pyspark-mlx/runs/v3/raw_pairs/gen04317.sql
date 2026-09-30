@@ -1,1 +1,0 @@
-select c.city, count(case when we.page = '/cart' then 1 end) as cart_count from web_events we left join sessions s on we.session_id = s.id join customers c on c.id = s.customer_id where length(c.email) > 10 group by c.city

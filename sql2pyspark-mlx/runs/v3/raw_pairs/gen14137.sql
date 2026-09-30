@@ -1,1 +1,0 @@
-SELECT order_year, max_shipping_fee FROM (SELECT YEAR(order_date) order_year, MAX(shipping_fee) max_shipping_fee FROM orders GROUP BY YEAR(order_date)) s WHERE max_shipping_fee > 16 ORDER BY order_year

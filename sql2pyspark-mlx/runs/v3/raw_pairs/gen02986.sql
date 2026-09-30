@@ -1,1 +1,0 @@
-SELECT id, status, amount, channel, order_date, shipping_fee, ROUND(amount / SUM(amount) OVER (PARTITION BY status), 3) amount_share, shipping_fee - LAG(shipping_fee, 1, 0) OVER (PARTITION BY channel ORDER BY order_date, id) shipping_fee_change FROM orders

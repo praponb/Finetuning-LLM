@@ -1,1 +1,0 @@
-select * from (select customer_id, max(monthly_fee) - min(monthly_fee) as monthly_fee_range, sum(monthly_fee) as total_monthly_fee from subscriptions group by customer_id) as t where monthly_fee_range >= 62 order by monthly_fee_range desc;

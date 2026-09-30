@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(customers.signup_date, 'yyyy-MM') signup_month, COUNT(*) cnt, MAX(subscriptions.start_date) last_start_date FROM subscriptions JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.start_date > '2025-02-01' GROUP BY DATE_FORMAT(customers.signup_date, 'yyyy-MM') ORDER BY signup_month LIMIT 1;

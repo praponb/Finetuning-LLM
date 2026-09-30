@@ -1,1 +1,0 @@
-select paid_at, weekofyear(paid_at) as paid_at_weekofyear, coalesce(amount, 0) as amount_filled from payments where (status not in ('SUCCESS', 'FAILED', 'REFUNDED') and order_id is not null) or method is null;

@@ -1,1 +1,0 @@
-SELECT is_flagged, txn_type, min_txn_time, max_amount FROM (SELECT is_flagged, txn_type, MIN(txn_time) AS min_txn_time, MAX(amount) AS max_amount FROM transactions WHERE amount < 1600 GROUP BY is_flagged, txn_type) AS sub WHERE max_amount > 1300;

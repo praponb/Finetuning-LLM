@@ -1,1 +1,0 @@
-SELECT method_group, unique_methods, avg_amount FROM (SELECT CASE WHEN method IN ('promptpay', 'cash') THEN 'tier_1' ELSE 'other' END AS method_group, COUNT(DISTINCT amount) AS unique_methods, ROUND(AVG(amount), 2) AS avg_amount FROM payments WHERE order_id = 3 GROUP BY CASE WHEN method IN ('promptpay', 'cash') THEN 'tier_1' ELSE 'other' END) AS t WHERE unique_methods >= 5

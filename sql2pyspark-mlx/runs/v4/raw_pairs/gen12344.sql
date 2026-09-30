@@ -1,1 +1,0 @@
-SELECT CASE WHEN method IN ('paypal', 'card') THEN 'tier_1' ELSE 'other' END AS method_group, method, AVG(amount) AS avg_amount, MIN(paid_at) AS min_paid_at FROM payments WHERE status <> 'REFUNDED' GROUP BY 1, 2 ORDER BY 2 DESC, method_group LIMIT 5;

@@ -1,1 +1,0 @@
-with base as (select * from payments where order_id = 28), payments_stats as (select case when method in ('card', 'promptpay') then 'core' else 'other' end as method_group, max(paid_at) as last_paid_at from base group by case when method in ('card', 'promptpay') then 'core' else 'other' end) select method_group, last_paid_at from payments_stats order by method_group, last_paid_at

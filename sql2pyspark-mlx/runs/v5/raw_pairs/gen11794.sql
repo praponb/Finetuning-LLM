@@ -1,1 +1,0 @@
-SELECT stores.city, SORT_ARRAY(COLLECT_SET(payments.status)) AS status_list FROM payments RIGHT OUTER JOIN orders ON orders.id = payments.order_id RIGHT OUTER JOIN stores ON orders.store_id = stores.id GROUP BY stores.city ORDER BY stores.city

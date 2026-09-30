@@ -1,1 +1,0 @@
-SELECT s.country, t.max_duration_sec, t.min_event_time FROM sessions s JOIN (SELECT session_id, MAX(duration_sec) AS max_duration_sec, MIN(event_time) AS min_event_time FROM web_events WHERE event_type = 'page_view' GROUP BY session_id) t ON s.id = t.session_id ORDER BY t.min_event_time DESC;

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM payments WHERE status = 'FAILED' AND method IN ('paypal', 'cash', 'card') AND order_id IS NOT NULL), summary AS (SELECT order_id, SUM(amount) AS total_amount, COUNT(amount) AS amount_count FROM base GROUP BY order_id) SELECT * FROM summary WHERE amount_count >= 6 ORDER BY order_id DESC;

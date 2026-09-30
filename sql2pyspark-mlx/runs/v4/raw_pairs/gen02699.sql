@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, plan, effective_from, currency, tier_value FROM price_tiers LATERAL VIEW OUTER EXPLODE(tier_limits) e AS tier_value) SELECT id, plan, effective_from, currency, tier_value FROM exploded ORDER BY effective_from, currency DESC

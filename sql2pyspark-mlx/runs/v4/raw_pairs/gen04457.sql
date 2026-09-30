@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM suppliers WHERE country = 'UK' AND rating BETWEEN 2.6 AND 3.6), agg AS (SELECT city, COUNT(rating) AS rating_count, SUM(rating) AS total_rating FROM base GROUP BY city) SELECT * FROM agg;

@@ -1,1 +1,0 @@
-SELECT status, opened_quarter, stddev_balance FROM (SELECT status, QUARTER(opened_date) AS opened_quarter, ROUND(STDDEV(balance), 2) AS stddev_balance FROM accounts WHERE status IN ('OPEN', 'FROZEN', 'CLOSED') GROUP BY status, QUARTER(opened_date)) AS t WHERE stddev_balance > 67 ORDER BY opened_quarter;

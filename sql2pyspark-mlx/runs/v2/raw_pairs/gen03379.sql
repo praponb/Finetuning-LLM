@@ -1,1 +1,0 @@
-select inventory.quantity, products.category, products.stock_qty, stores.opened_date, stores.region from inventory join products on inventory.product_id = products.id full outer join stores on inventory.store_id = stores.id order by stock_qty desc

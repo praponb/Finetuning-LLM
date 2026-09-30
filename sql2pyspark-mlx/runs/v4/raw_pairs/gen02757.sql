@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY account_type, customer_id ORDER BY balance DESC, id) AS latest_rank FROM accounts QUALIFY latest_rank = 1) SELECT id, customer_id, account_type, opened_date, latest_rank, CASE WHEN account_type RLIKE '^(CREDIT|LOAN)$' THEN 'GROUP_A' ELSE 'PRIORITY' END AS account_type_zone FROM ranked ORDER BY id NULLS LAST;

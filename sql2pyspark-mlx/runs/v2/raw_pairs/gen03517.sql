@@ -1,1 +1,0 @@
-select date_format(paid_at, 'yyyy-MM') as paid_month, sum(case when method = 'paypal' then 1 else 0 end) as paypal_count from payments where to_date(paid_at) < '2023-06-29' and method = 'promptpay' group by date_format(paid_at, 'yyyy-MM') having paypal_count >= 39 order by paid_month

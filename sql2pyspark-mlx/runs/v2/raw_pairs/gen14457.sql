@@ -1,1 +1,0 @@
-SELECT s.id, s.country, s.rating, t.category_list, t.stddev_price FROM suppliers s LEFT OUTER JOIN (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(category)) category_list, ROUND(STDDEV(price), 2) stddev_price FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.stddev_price >= 58 ORDER BY id

@@ -1,1 +1,0 @@
-select quarter(paid_at) as paid_quarter, to_date(paid_at) as paid_day, count(*) as row_count, sum(case when method = 'cash' then amount else 0 end) as cash_amount, min(amount) as min_amount from payments group by quarter(paid_at), to_date(paid_at) having count(case when method = 'promptpay' then 1 end) < 1

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, customer_id, account_type, balance, opened_date, status, INITCAP(TRIM(account_type)) AS account_type_title FROM accounts WHERE status IN ('FROZEN', 'OPEN', 'CLOSED')) SELECT customer_id, id FROM valid INTERSECT ALL SELECT customer_id, id FROM accounts WHERE status = 'FROZEN';

@@ -1,1 +1,0 @@
-SELECT customer_id, MONTH(opened_date) AS opened_month, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list, COUNT(*) AS num_accounts FROM accounts GROUP BY customer_id, opened_month ORDER BY opened_month;

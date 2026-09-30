@@ -1,1 +1,0 @@
-SELECT o.id, o.discount, o.customer_id, s.opened_date, c.name, c.credit_limit, o.discount * o.shipping_fee AS discount_times_shipping_fee FROM orders o INNER JOIN stores s ON o.store_id = s.id INNER JOIN customers c ON c.id = o.customer_id WHERE MONTH(o.order_date) IN (2, 3, 5)

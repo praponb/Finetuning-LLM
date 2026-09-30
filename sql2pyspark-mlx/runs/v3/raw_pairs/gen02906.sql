@@ -1,1 +1,0 @@
-SELECT s.id, s.started_at, s.country, t.page_list, t.stddev_duration_sec FROM sessions s LEFT JOIN (SELECT session_id, SORT_ARRAY(COLLECT_SET(page)) page_list, ROUND(STDDEV(duration_sec), 2) stddev_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.stddev_duration_sec >= 55

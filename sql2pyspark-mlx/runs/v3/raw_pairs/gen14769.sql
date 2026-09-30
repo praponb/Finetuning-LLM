@@ -1,1 +1,0 @@
-SELECT c.is_active, MONTH(c.signup_date) AS signup_month, COUNT(*) AS subscription_count FROM subscriptions s INNER JOIN customers c ON c.id = s.customer_id GROUP BY c.is_active, MONTH(c.signup_date) HAVING COUNT(*) > 2;

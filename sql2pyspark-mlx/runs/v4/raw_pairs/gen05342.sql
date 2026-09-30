@@ -1,1 +1,0 @@
-select case when revenue >= 4400 then 'high' when revenue >= 1300 then 'mid' else 'low' end as revenue_bucket, sum(revenue) as total_revenue, round(sum(revenue) * 100.0 / sum(sum(revenue)) over (), 2) as pct_of_total from store_sales where product_id in (1, 6, 8, 10) group by case when revenue >= 4400 then 'high' when revenue >= 1300 then 'mid' else 'low' end order by 1 limit 1

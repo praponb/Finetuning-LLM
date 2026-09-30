@@ -1,1 +1,0 @@
-SELECT p.id, p.category, p.cost, s.rating, s.city, s.country, DATE_FORMAT(p.launch_date, 'MMM yyyy') AS launch_date_label FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id WHERE UPPER(TRIM(s.supplier_name)) = 'LION CITY IMPORTS' ORDER BY city;

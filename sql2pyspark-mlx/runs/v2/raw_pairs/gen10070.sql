@@ -1,1 +1,0 @@
-SELECT dept_name, location, COUNT(*) AS num_departments, COUNT(CASE WHEN dept_name = 'Finance' THEN 1 END) AS finance_count, SUM(budget) AS total_budget FROM departments WHERE location = 'Singapore' GROUP BY CUBE(dept_name, location) ORDER BY num_departments DESC;

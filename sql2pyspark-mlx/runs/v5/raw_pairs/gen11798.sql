@@ -1,1 +1,0 @@
-SELECT COUNT(DISTINCT salary) AS unique_levels, ROUND((100 * SUM(CASE WHEN job_title = 'Analyst' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_analyst FROM employees WHERE salary < 125000 AND salary BETWEEN 61000 AND 75000 ORDER BY pct_analyst DESC, 1;

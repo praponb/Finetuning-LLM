@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_TRUNC('MONTH', delivered_date) AS delivered_month, COUNT(CASE WHEN status = 'IN_TRANSIT' THEN 1 END) AS in_transit_count FROM shipments GROUP BY DATE_TRUNC('MONTH', delivered_date)) AS t WHERE in_transit_count > 5 ORDER BY delivered_month DESC LIMIT 5

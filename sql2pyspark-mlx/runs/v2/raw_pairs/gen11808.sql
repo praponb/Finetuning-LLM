@@ -1,1 +1,0 @@
-WITH top_customers AS (SELECT id, country, age, is_active, DENSE_RANK() OVER (PARTITION BY country ORDER BY age DESC) AS pos FROM customers) SELECT * FROM top_customers WHERE pos = 1 ORDER BY pos DESC

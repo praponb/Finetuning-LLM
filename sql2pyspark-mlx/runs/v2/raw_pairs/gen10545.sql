@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MIN(quantity) AS min_quantity, SUM(quantity) AS total_quantity FROM inventory GROUP BY store_id) SELECT s.id, s.city, ss.min_quantity, ss.total_quantity FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id WHERE ss.total_quantity >= 1210

@@ -1,1 +1,0 @@
-SELECT store_sales.store_id, MIN(inventory.last_restock) AS first_last_restock, AVG(inventory.quantity) AS avg_quantity FROM inventory JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id GROUP BY store_sales.store_id;

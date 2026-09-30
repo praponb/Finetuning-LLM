@@ -1,1 +1,0 @@
-WITH SessionsByCustomer AS (SELECT customer_id, COUNT(*) AS session_count, COUNT(DISTINCT browser) AS unique_browsers FROM sessions GROUP BY customer_id) SELECT c.id, c.country, S.session_count, S.unique_browsers FROM customers c INNER JOIN SessionsByCustomer S ON c.id = S.customer_id ORDER BY id DESC

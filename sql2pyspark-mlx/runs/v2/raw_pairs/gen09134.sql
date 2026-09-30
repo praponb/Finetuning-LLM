@@ -1,1 +1,0 @@
-WITH RankedShipments AS (SELECT id, status, delivered_date, ROW_NUMBER() OVER (PARTITION BY status ORDER BY delivered_date, id) AS pos FROM shipments WHERE order_id IN (20, 38)) SELECT id, status, delivered_date FROM RankedShipments WHERE pos <= 1

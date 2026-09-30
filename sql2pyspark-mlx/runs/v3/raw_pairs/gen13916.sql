@@ -1,1 +1,0 @@
-SELECT id, status, CASE WHEN amount >= 1720 THEN 'High' WHEN amount >= 730 THEN 'Medium' ELSE 'Low' END AS amount_tier, CASE WHEN method IN ('bank_transfer', 'promptpay') THEN 'Core' ELSE 'Other' END AS method_group FROM payments WHERE paid_at < '2023-03-01' ORDER BY id DESC LIMIT 1

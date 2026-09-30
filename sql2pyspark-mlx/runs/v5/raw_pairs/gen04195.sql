@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, supplier_name, country, city, rating, COALESCE(rating, 0) AS rating_filled FROM suppliers WHERE rating BETWEEN 1.8 AND 2.7) SELECT country, id FROM base EXCEPT ALL SELECT country, id FROM suppliers WHERE supplier_name NOT LIKE 'Eur%'

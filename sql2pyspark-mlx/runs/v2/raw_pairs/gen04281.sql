@@ -1,1 +1,0 @@
-SELECT status, SUM(monthly_fee) AS total_monthly_fee, COUNT(*) AS cnt, RANK() OVER (ORDER BY SUM(monthly_fee) DESC) AS rnk FROM subscriptions WHERE customer_id IS NULL GROUP BY status ORDER BY total_monthly_fee DESC

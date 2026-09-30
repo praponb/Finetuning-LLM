@@ -1,1 +1,0 @@
-SELECT id, city, is_active, ROUND(credit_limit, 2) credit_limit_rounded FROM customers WHERE email LIKE '%@gmail.com' AND signup_date BETWEEN '2023-07-08' AND '2024-06-20' AND city = 'London' ORDER BY id DESC, city DESC

@@ -1,1 +1,0 @@
-SELECT c.id, c.email, COUNT(o.id) AS order_count, SORT_ARRAY(COLLECT_SET(o.channel)) AS channel_list, COUNT(DISTINCT o.amount) AS unique_statuss FROM customers c LEFT JOIN orders o ON c.id = o.customer_id GROUP BY c.id, c.email;

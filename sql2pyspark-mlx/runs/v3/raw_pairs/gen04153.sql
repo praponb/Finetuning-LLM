@@ -1,1 +1,0 @@
-WITH recent_products AS (SELECT *, DATEDIFF(CURRENT_DATE(), launch_date) AS days_since_launch_date FROM products WHERE category IN ('Fashion', 'Sports', 'Electronics') OR supplier_id = 7), summary AS (SELECT category, COUNT(*) AS product_count FROM recent_products GROUP BY category) SELECT category, product_count FROM summary WHERE product_count >= 5 ORDER BY product_count;

@@ -1,1 +1,0 @@
-select job_title, manager_id, sum(case when level = 'L1' then 1 else 0 end) as l1_count, max(salary) as max_salary from employees group by job_title, manager_id having l1_count > 21 order by manager_id desc

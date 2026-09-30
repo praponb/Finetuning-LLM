@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, quantity - unit_price line_total FROM order_items WHERE product_id IN (26, 34, 39)), agg AS (SELECT product_id, COUNT(DISTINCT line_total) unique_orders, SUM(unit_price) total_unit_price FROM base GROUP BY product_id) SELECT product_id, unique_orders, total_unit_price FROM agg ORDER BY product_id, unique_orders;

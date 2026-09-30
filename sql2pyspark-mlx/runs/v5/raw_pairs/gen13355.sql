@@ -1,1 +1,0 @@
-SELECT id, location, dept_name, budget, CONCAT_WS(',', dept_name, location) AS dept_name_location_key FROM departments WHERE location = 'Tokyo' OR dept_name IS NOT NULL ORDER BY dept_name_location_key, id LIMIT 50

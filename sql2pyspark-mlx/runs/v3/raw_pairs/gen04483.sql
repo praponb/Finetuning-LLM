@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(p.launch_date, 'yyyy-MM') AS launch_month, SUM(oi.unit_price) AS total_unit_price FROM order_items oi JOIN products p ON oi.product_id = p.id JOIN suppliers s ON s.id = p.supplier_id WHERE oi.unit_price < 150 GROUP BY DATE_FORMAT(p.launch_date, 'yyyy-MM');

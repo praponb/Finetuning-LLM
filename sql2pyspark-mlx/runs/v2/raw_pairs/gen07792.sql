@@ -1,1 +1,0 @@
-SELECT c.country, SUM(CASE WHEN t.txn_type = 'CREDIT' THEN t.amount ELSE 0 END) AS credit_amount FROM transactions t RIGHT OUTER JOIN accounts a ON a.id = t.account_id INNER JOIN customers c ON a.customer_id = c.id WHERE a.status IN ('FROZEN', 'OPEN') GROUP BY c.country HAVING credit_amount > 25 ORDER BY c.country;

@@ -1,1 +1,0 @@
-SELECT s.city, SUM(ss.units) AS total_units, MIN(ss.sale_date) AS min_sale_date FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id WHERE s.region NOT IN ('South', 'Central', 'North') GROUP BY s.city ORDER BY total_units;

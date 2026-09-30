@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, s.region, p.stock_qty, p.category FROM inventory i LEFT JOIN stores s ON i.store_id = s.id INNER JOIN products p ON p.id = i.product_id WHERE p.stock_qty < 132 OR s.store_name LIKE '%Old%'

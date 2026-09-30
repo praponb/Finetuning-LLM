@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', last_restock) AS last_restock_month, product_id, store_id, MAX(quantity) AS max_quantity, COUNT(quantity) AS quantity_count FROM inventory GROUP BY DATE_TRUNC('MONTH', last_restock), product_id, store_id ORDER BY store_id DESC, max_quantity, last_restock_month, product_id LIMIT 10;

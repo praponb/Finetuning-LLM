@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(start_date, 'yyyy-MM') AS start_month, COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) AS cancelled_count, SORT_ARRAY(COLLECT_SET(status)) AS status_list, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions GROUP BY DATE_FORMAT(start_date, 'yyyy-MM');

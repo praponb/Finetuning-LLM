@@ -1,1 +1,0 @@
-SELECT c.id, c.country, t.avg_discount FROM customers c LEFT OUTER JOIN (SELECT customer_id, AVG(discount) AS avg_discount FROM orders GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY t.avg_discount DESC, id DESC

@@ -1,1 +1,0 @@
-WITH valid_shipments AS (SELECT *, INITCAP(TRIM(status)) AS status_title FROM shipments WHERE shipped_date < '2024-07-17'), agg AS (SELECT status, MAX(cost) AS max_cost FROM valid_shipments GROUP BY status) SELECT status, max_cost FROM agg WHERE max_cost > 74 ORDER BY status ASC

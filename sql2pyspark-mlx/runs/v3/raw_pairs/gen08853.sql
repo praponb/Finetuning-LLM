@@ -1,1 +1,0 @@
-SELECT stores.region, YEAR(stores.opened_date) opened_year, ROUND(AVG(shipments.cost), 2) avg_cost, MAX(shipments.cost) - MIN(shipments.cost) cost_range FROM shipments INNER JOIN orders ON shipments.order_id = orders.id INNER JOIN stores ON orders.store_id = stores.id GROUP BY stores.region, YEAR(stores.opened_date) ORDER BY 2 DESC, avg_cost DESC;

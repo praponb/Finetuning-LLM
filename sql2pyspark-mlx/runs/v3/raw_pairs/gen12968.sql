@@ -1,1 +1,0 @@
-SELECT order_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price, MIN(quantity) AS min_quantity, SUM(quantity * unit_price) AS revenue FROM order_items WHERE unit_price IS NOT NULL AND order_id = 3 AND order_id IN (10, 13, 35, 36) GROUP BY order_id ORDER BY min_quantity, order_id LIMIT 10;

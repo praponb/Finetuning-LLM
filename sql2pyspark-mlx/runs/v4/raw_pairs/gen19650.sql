@@ -1,1 +1,0 @@
-SELECT event_type, DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, AVG(duration_sec) AS avg_duration_sec FROM web_events WHERE duration_sec = 378 GROUP BY event_type, DATE_FORMAT(event_time, 'yyyy-MM') HAVING SUM(duration_sec) > 2100 ORDER BY avg_duration_sec DESC

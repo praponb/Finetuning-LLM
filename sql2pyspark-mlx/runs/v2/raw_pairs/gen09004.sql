@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', o.order_date) order_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.carrier))) carrier_values, MIN(s.shipped_date) min_shipped_date FROM shipments s LEFT OUTER JOIN orders o ON s.order_id = o.id GROUP BY DATE_TRUNC('MONTH', o.order_date) ORDER BY min_shipped_date

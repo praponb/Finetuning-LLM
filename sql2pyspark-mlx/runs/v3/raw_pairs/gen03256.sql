@@ -1,1 +1,0 @@
-SELECT region, DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, ROUND(AVG(sqft), 2) AS avg_sqft FROM stores WHERE opened_date >= '2023-11-20' GROUP BY region, DATE_FORMAT(opened_date, 'yyyy-MM') HAVING ROUND(AVG(sqft), 2) >= 63

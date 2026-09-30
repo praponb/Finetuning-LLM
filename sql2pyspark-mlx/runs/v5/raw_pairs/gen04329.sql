@@ -1,1 +1,0 @@
-select quantity, order_id, case when quantity >= 7 then 'High' when quantity >= 3 then 'Medium' else 'Low' end as quantity_tier, case when quantity >= 7 then 'High' when quantity >= 3 then 'Medium' else 'Low' end as quantity_tier_2 from order_items where not (unit_price >= 140 and (quantity is null or product_id = 34));

@@ -1,1 +1,0 @@
-select accounts.status, max(transactions.txn_time) as last_txn_time from transactions full outer join accounts on transactions.account_id = accounts.id where accounts.opened_date >= '2024-06-01' group by accounts.status order by accounts.status;

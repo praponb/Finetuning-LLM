@@ -1,1 +1,0 @@
-WITH recent_stores AS (SELECT * FROM stores WHERE opened_date BETWEEN '2023-09-17' AND '2025-02-01'), stores_stats AS (SELECT city, COUNT(*) AS total_count, AVG(sqft) AS avg_sqft FROM recent_stores GROUP BY city) SELECT city, total_count FROM stores_stats ORDER BY city, total_count DESC;

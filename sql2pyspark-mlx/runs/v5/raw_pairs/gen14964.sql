@@ -1,1 +1,0 @@
-SELECT p.brand, MAX(i.last_restock) AS last_last_restock, MIN(i.quantity) AS min_quantity FROM inventory i INNER JOIN products p ON p.id = i.product_id RIGHT OUTER JOIN stores s ON s.id = i.store_id GROUP BY p.brand ORDER BY brand LIMIT 1

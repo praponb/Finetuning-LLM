@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, customer_id, k, attr_value FROM carts LATERAL VIEW EXPLODE(attributes) li AS k, attr_value) SELECT s.id, s.customer_id, s.k, s.attr_value, (SELECT AVG(a2.balance) FROM accounts a2 WHERE a2.customer_id = s.customer_id) AS avg_account_balance FROM flattened s ORDER BY customer_id DESC

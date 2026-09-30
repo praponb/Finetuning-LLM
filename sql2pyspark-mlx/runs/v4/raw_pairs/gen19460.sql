@@ -1,1 +1,0 @@
-WITH ranked_sessions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) AS rnk FROM sessions WHERE browser IN ('Firefox', 'Chrome', 'Safari')) SELECT * FROM ranked_sessions WHERE rnk <= 5 ORDER BY device DESC, browser

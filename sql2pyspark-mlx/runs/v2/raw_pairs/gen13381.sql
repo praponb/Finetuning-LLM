@@ -1,1 +1,0 @@
-select id, sale_date, units, product_id, sum(units) over (order by sale_date, id rows between unbounded preceding and current row) as running_units, rank() over (partition by product_id order by units desc) as rnk from store_sales where units is null order by id desc;

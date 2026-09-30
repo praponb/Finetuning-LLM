@@ -1,1 +1,0 @@
-SELECT id, supplier_id, launch_date, product_name, brand, cost, LAST_VALUE(product_name) OVER (PARTITION BY supplier_id ORDER BY launch_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_product_name, SUM(cost) OVER (PARTITION BY brand) AS brand_sum_cost FROM products

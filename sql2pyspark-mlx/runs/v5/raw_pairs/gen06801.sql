@@ -1,1 +1,0 @@
-SELECT country, ROUND((100 * SUM(CASE WHEN country = 'TH' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_th, ROUND(AVG(rating), 2) AS avg_rating FROM suppliers WHERE country <> 'US' GROUP BY 1 ORDER BY country DESC;

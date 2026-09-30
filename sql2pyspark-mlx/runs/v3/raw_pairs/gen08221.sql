@@ -1,1 +1,0 @@
-SELECT o.status, SUM(CASE WHEN p.status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count, MAX(p.amount) - MIN(p.amount) AS amount_range FROM payments p FULL OUTER JOIN orders o ON p.order_id = o.id LEFT OUTER JOIN stores s ON o.store_id = s.id GROUP BY o.status;

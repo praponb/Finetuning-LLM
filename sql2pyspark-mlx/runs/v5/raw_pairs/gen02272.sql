@@ -1,1 +1,0 @@
-WITH ValidDepartments AS (SELECT * FROM departments WHERE NOT (dept_name = 'HR' OR dept_name IN ('Sales', 'Engineering', 'HR'))), summary AS (SELECT location, COUNT(CASE WHEN location = 'Singapore' THEN 1 END) singapore_count, SUM(budget) total_budget FROM ValidDepartments GROUP BY location) SELECT * FROM summary WHERE singapore_count >= 5

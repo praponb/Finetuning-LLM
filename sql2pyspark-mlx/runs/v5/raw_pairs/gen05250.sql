@@ -1,1 +1,0 @@
-SELECT c.age, t.min_amount, t.unique_channels FROM customers c JOIN (SELECT customer_id, MIN(amount) AS min_amount, COUNT(DISTINCT shipping_fee) AS unique_channels FROM orders WHERE status <> 'CANCELLED' GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.unique_channels > 10

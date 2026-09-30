@@ -1,1 +1,0 @@
-select s.id, s.start_date, c.is_active, c.segment, c.signup_date from subscriptions s left join customers c on c.id = s.customer_id where c.city in ('Chiang Mai', 'Singapore', 'Bangkok') and s.end_date between '2024-12-01' and '2025-09-29';

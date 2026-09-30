@@ -1,1 +1,0 @@
-select ss.store_id, max(i.quantity) as max_quantity, max(i.last_restock) as latest_last_restock from inventory i left join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.product_id in (1, 7, 8) group by ss.store_id having max_quantity >= 170

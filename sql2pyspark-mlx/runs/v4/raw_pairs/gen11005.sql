@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, MIN(txn_time) AS first_txn_time, SUM(CASE WHEN merchant = '7-Eleven' THEN 1 ELSE 0 END) AS 7_eleven_count FROM transactions GROUP BY account_id) SELECT a.customer_id, as.first_txn_time, as.7_eleven_count FROM accounts a INNER JOIN account_stats as ON a.id = as.account_id

@@ -1,1 +1,0 @@
-WITH RecentStoreSales AS (SELECT * FROM store_sales WHERE product_id = 7 AND product_id IN (1, 8, 10)), StoreSalesStats AS (SELECT product_id, MAX(sale_date) AS latest_sale_date FROM RecentStoreSales GROUP BY product_id) SELECT * FROM StoreSalesStats ORDER BY product_id DESC, latest_sale_date

@@ -1,1 +1,0 @@
-select departments.id, departments.budget, departments.dept_name, departments.location from departments where departments.dept_name is not null and not exists (select 1 from employees where employees.dept_id = departments.id);

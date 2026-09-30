@@ -1,1 +1,0 @@
-SELECT CASE WHEN units >= 36 THEN 'high' WHEN units >= 14 THEN 'mid' ELSE 'low' END units_bucket, product_id, COUNT(*) num_store_sales FROM store_sales WHERE product_id IN (4, 6, 8, 10) OR product_id = 5 GROUP BY units_bucket, product_id

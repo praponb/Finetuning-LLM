@@ -1,1 +1,0 @@
-SELECT DISTINCT city FROM stores ORDER BY city

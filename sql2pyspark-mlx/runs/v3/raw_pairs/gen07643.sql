@@ -1,1 +1,0 @@
-SELECT is_active, MIN(signup_date) min_signup_date, COUNT(DISTINCT age) unique_countrys, ROUND(AVG(age), 2) avg_age FROM customers WHERE (city NOT IN ('London', 'Chiang Mai') AND is_active) OR signup_date < '2025-03-01' GROUP BY is_active ORDER BY avg_age DESC

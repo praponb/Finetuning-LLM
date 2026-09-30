@@ -1,1 +1,0 @@
-SELECT store_id, product_id, MAX(quantity) - MIN(quantity) AS quantity_range, COUNT(DISTINCT quantity) AS unique_stores FROM inventory WHERE product_id IN (5, 7, 9, 10) AND store_id IN (1, 2, 5) GROUP BY store_id, product_id;

@@ -1,1 +1,0 @@
-select ss.store_id, p.launch_date, s.country from store_sales ss full outer join products p on ss.product_id = p.id inner join suppliers s on p.supplier_id = s.id where s.city = 'London' and year(ss.sale_date) = 2025;

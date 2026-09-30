@@ -1,1 +1,0 @@
-SELECT s.id, s.started_at, t.duration_sec_range FROM sessions s JOIN (SELECT session_id, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events WHERE TO_DATE(event_time) >= '2025-02-01' GROUP BY session_id) t ON s.id = t.session_id ORDER BY id ASC, s.started_at DESC LIMIT 50;

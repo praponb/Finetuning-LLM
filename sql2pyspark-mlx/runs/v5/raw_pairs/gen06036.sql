@@ -1,1 +1,0 @@
-WITH ranked_products AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY stock_qty DESC, id) AS rn FROM products WHERE MONTH(launch_date) IN (1, 4, 9)) SELECT id, brand, stock_qty FROM ranked_products WHERE rn = 1 ORDER BY brand

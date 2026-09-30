@@ -1,1 +1,0 @@
-select year(stores.opened_date) opened_year, count(distinct inventory.quantity) unique_products from inventory right outer join stores on stores.id = inventory.store_id left outer join products on inventory.product_id = products.id group by year(stores.opened_date) having unique_products >= 3 order by 1;

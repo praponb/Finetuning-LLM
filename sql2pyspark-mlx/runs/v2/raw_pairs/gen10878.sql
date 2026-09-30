@@ -1,1 +1,0 @@
-WITH OrdersByStore AS (SELECT store_id, SUM(CASE WHEN status = 'CANCELLED' THEN amount ELSE 0 END) AS cancelled_amount FROM orders GROUP BY store_id) SELECT s.sqft, O.cancelled_amount FROM stores s LEFT JOIN OrdersByStore O ON s.id = O.store_id;

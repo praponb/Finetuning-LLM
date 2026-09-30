@@ -1,1 +1,0 @@
-SELECT s.id, s.country, COUNT(we.id) web_event_count, SORT_ARRAY(COLLECT_SET(we.page)) page_list, MAX(we.duration_sec) max_duration_sec FROM sessions s INNER JOIN web_events we ON s.id = we.session_id GROUP BY s.id, s.country ORDER BY max_duration_sec

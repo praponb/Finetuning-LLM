@@ -1,1 +1,0 @@
-WITH recent_shipments AS (SELECT * FROM shipments WHERE (shipped_date >= '2024-09-01' AND carrier IN ('DHL', 'Flash', 'Kerry')) OR delivered_date <= '2025-01-01'), delivered_month_summary AS (SELECT MONTH(delivered_date) AS delivered_month, COUNT(*) AS row_count, SUM(cost) AS total_cost FROM recent_shipments GROUP BY MONTH(delivered_date)) SELECT * FROM delivered_month_summary;

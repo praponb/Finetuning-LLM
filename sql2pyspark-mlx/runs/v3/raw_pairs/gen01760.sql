@@ -1,1 +1,0 @@
-select emp.id, emp.full_name as employee_full_name, mgr.is_remote as manager_is_remote, mgr.level as manager_level, mgr.dept_id as manager_dept_id from employees emp join employees mgr on emp.manager_id = mgr.id order by manager_level

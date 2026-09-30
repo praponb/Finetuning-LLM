@@ -1,1 +1,0 @@
-SELECT e.hire_date AS employee_hire_date, e.dept_id AS employee_dept_id, e.level AS employee_level, m.salary AS manager_salary FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE m.full_name LIKE 'Ka%' OR m.dept_id IN (5, 22) ORDER BY e.level

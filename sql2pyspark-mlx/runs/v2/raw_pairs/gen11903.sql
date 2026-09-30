@@ -1,1 +1,0 @@
-SELECT p.supplier_id, QUARTER(p.launch_date) AS launch_quarter, COUNT(DISTINCT i.quantity) AS unique_products FROM inventory i INNER JOIN products p ON i.product_id = p.id GROUP BY p.supplier_id, QUARTER(p.launch_date) ORDER BY unique_products DESC;

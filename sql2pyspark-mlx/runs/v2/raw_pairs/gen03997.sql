@@ -1,1 +1,0 @@
-SELECT o.discount, o.order_date, c.country, c.signup_date, s.opened_date, s.sqft FROM orders o INNER JOIN customers c ON c.id = o.customer_id INNER JOIN stores s ON s.id = o.store_id WHERE c.country != 'JP'

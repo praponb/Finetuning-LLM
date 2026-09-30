@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT id, status, shipped_date, order_id, DENSE_RANK() OVER (PARTITION BY status ORDER BY shipped_date DESC) AS pos FROM shipments WHERE delivered_date BETWEEN '2024-03-01' AND '2024-06-01') AS ranked WHERE pos <= 2

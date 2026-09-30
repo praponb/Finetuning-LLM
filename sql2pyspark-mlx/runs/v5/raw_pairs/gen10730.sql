@@ -1,1 +1,0 @@
-SELECT order_items.unit_price, order_items.order_id, products.supplier_id, orders.discount, orders.channel FROM order_items INNER JOIN products ON order_items.product_id = products.id LEFT JOIN orders ON order_items.order_id = orders.id;

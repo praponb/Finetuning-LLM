@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN revenue >= 3900 THEN 'high' WHEN revenue >= 1300 THEN 'mid' ELSE 'low' END AS revenue_bucket, QUARTER(sale_date) AS sale_quarter, COUNT(revenue) AS revenue_count FROM store_sales GROUP BY CASE WHEN revenue >= 3900 THEN 'high' WHEN revenue >= 1300 THEN 'mid' ELSE 'low' END, QUARTER(sale_date)) AS s WHERE revenue_count < 4 ORDER BY sale_quarter DESC

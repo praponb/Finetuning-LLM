@@ -1,1 +1,0 @@
-SELECT o.id, o.amount, o.discount, s.opened_date, s.region, c.is_active, c.signup_date, ROUND(c.age / c.credit_limit, 2) age_per_credit_limit FROM orders o JOIN stores s ON o.store_id = s.id RIGHT JOIN customers c ON o.customer_id = c.id

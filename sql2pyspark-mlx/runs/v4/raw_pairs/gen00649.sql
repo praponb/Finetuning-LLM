@@ -1,1 +1,0 @@
-select o.channel, t.unit_price_range from orders o left join (select order_id, max(unit_price) - min(unit_price) unit_price_range from order_items where unit_price between 210 and 320 group by order_id) t on o.id = t.order_id where t.unit_price_range >= 21;

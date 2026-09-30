@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, country, city, rating, CASE WHEN country IN ('US', 'SG') THEN 'Core' ELSE 'Other' END AS country_group FROM suppliers WHERE city IS NOT DISTINCT FROM 'Singapore') SELECT id FROM base EXCEPT SELECT id FROM suppliers WHERE city = 'Bangkok'

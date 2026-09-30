@@ -1,1 +1,0 @@
-select s.country, s.city, max(ss.units) max_units, round(stddev(ss.units), 2) stddev_units from store_sales ss inner join products p on p.id = ss.product_id inner join suppliers s on p.supplier_id = s.id group by s.country, s.city having max_units >= 19;

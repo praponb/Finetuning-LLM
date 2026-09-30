@@ -1,1 +1,0 @@
-WITH metrics AS (SELECT id, name, email, country, signup_date, is_active, age, LAST_VALUE(city, TRUE) OVER (PARTITION BY country ORDER BY age, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_city, COUNT(age) OVER (PARTITION BY segment) AS segment_count_age FROM customers) SELECT id, name, email, country, signup_date, is_active, age, last_known_city FROM metrics

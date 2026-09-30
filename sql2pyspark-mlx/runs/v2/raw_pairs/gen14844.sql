@@ -1,1 +1,0 @@
-SELECT t.id, t.txn_type, t.amount, a.opened_date, c.segment FROM transactions t INNER JOIN accounts a ON t.account_id = a.id LEFT JOIN customers c ON a.customer_id = c.id WHERE a.balance >= 53000 AND a.customer_id IS NOT NULL;

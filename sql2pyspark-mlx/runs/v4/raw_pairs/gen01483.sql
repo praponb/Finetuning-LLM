@@ -1,1 +1,0 @@
-SELECT id, signup_date, credit_limit, segment, SUM(credit_limit) OVER (ORDER BY signup_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_credit_limit, RANK() OVER (PARTITION BY segment ORDER BY signup_date) AS rnk FROM customers WHERE country IN ('US', 'JP', 'DE') ORDER BY signup_date

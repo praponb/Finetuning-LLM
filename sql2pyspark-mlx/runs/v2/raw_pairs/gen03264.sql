@@ -1,1 +1,0 @@
-with session_summary as (select session_id, round((100 * sum(case when event_type = 'page_view' then 1 else 0 end)) / count(*), 1) as pct_page_view from web_events group by session_id) select sessions.device, sessions.country, session_summary.pct_page_view from sessions left join session_summary on sessions.id = session_summary.session_id where session_summary.pct_page_view >= 77

@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN quantity >= 243 THEN 'High' WHEN quantity >= 116 THEN 'Medium' ELSE 'Low' END AS quantity_tier, DATE_FORMAT(last_restock, 'yyyy-MM') AS last_restock_label FROM inventory WHERE product_id IN (3, 5, 7, 10);

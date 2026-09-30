@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(paid_at, 'yyyy-MM') AS paid_month, COUNT(DISTINCT amount) AS unique_methods, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments WHERE method = 'bank_transfer' GROUP BY DATE_FORMAT(paid_at, 'yyyy-MM');

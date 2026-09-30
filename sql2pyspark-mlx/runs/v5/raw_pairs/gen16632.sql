@@ -1,1 +1,0 @@
-SELECT CASE WHEN country IN ('UK', 'DE') THEN 'core' ELSE 'other' END AS country_group, SUM(age) AS total_age, COUNT(*) AS cnt, ROUND(SUM(age) * 100.0 / SUM(SUM(age)) OVER (), 2) AS pct_of_total FROM customers GROUP BY CASE WHEN country IN ('UK', 'DE') THEN 'core' ELSE 'other' END;

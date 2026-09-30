@@ -1,1 +1,0 @@
-SELECT customers.email, customers.age, t.avg_monthly_fee, t.status_list FROM customers INNER JOIN (SELECT customer_id, AVG(monthly_fee) AS avg_monthly_fee, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM subscriptions WHERE monthly_fee < 110 GROUP BY customer_id) t ON customers.id = t.customer_id

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM customers WHERE city = 'Chiang Mai'), agg AS (SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, SUM(age) AS total_age, MIN(signup_date) AS first_signup_date FROM base GROUP BY DATE_TRUNC('MONTH', signup_date)) SELECT * FROM agg

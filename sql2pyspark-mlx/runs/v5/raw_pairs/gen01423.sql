@@ -1,1 +1,0 @@
-SELECT is_active, country, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(segment))) AS segment_values, COUNT(CASE WHEN country = 'TH' THEN 1 END) AS th_count, AVG(credit_limit) AS avg_credit_limit FROM customers GROUP BY is_active, country HAVING AVG(credit_limit) > 11900;

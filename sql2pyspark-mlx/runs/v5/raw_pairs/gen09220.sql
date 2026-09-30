@@ -1,1 +1,0 @@
-select date_trunc('MONTH', s.opened_date) as opened_month, min(ss.units) as min_units from store_sales ss inner join products p on ss.product_id = p.id inner join stores s on ss.store_id = s.id group by date_trunc('MONTH', s.opened_date) order by min_units;

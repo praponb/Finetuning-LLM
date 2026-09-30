@@ -1,1 +1,0 @@
-with product_totals as (select product_id, count(distinct units) as unique_products, count(distinct revenue) as unique_stores from store_sales where sale_date >= '2025-07-12' group by product_id) select p.id, p.brand, pt.unique_products, pt.unique_stores from products p inner join product_totals pt on p.id = pt.product_id order by id desc limit 5;

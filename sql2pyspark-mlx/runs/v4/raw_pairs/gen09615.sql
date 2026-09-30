@@ -1,1 +1,0 @@
-SELECT orders.id, orders.amount, customers.age, customers.email, stores.opened_date, stores.city FROM orders JOIN customers ON orders.customer_id = customers.id JOIN stores ON orders.store_id = stores.id ORDER BY opened_date, age DESC;

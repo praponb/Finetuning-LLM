@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('WEEK', hire_date) AS week_start, COUNT(CASE WHEN level = 'L5' THEN 1 END) AS l5_count, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees GROUP BY DATE_TRUNC('WEEK', hire_date) HAVING l5_count >= 1

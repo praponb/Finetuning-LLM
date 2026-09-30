@@ -1,1 +1,0 @@
-SELECT CASE WHEN balance >= 60000 THEN 'high' WHEN balance >= 17000 THEN 'mid' ELSE 'low' END AS balance_bucket, MAX(balance) - MIN(balance) AS balance_range FROM accounts GROUP BY 1 HAVING MAX(balance) - MIN(balance) > 47 ORDER BY balance_bucket

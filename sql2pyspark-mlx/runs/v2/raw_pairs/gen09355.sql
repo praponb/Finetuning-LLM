@@ -1,1 +1,0 @@
-select city, count(case when city = 'Tokyo' then 1 end) tokyo_count from suppliers where country in ('SG', 'JP', 'TH') and rating between 3.1 and 3.5 group by city having avg(rating) >= 1.9 order by tokyo_count desc, city asc limit 20

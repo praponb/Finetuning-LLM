@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, COALESCE(quantity, 0) quantity_filled FROM inventory WHERE quantity < 159) SELECT id, store_id FROM base EXCEPT ALL SELECT id, store_id FROM inventory WHERE store_id IN (3, 4, 5, 6)

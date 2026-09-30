@@ -1,1 +1,0 @@
-WITH filtered_payments AS (SELECT * FROM payments WHERE method NOT IN ('cash', 'promptpay', 'bank_transfer')), Agg AS (SELECT order_id, ROUND(STDDEV(amount), 2) AS stddev_amount, MAX(amount) AS max_amount FROM filtered_payments GROUP BY order_id) SELECT * FROM Agg ORDER BY stddev_amount DESC

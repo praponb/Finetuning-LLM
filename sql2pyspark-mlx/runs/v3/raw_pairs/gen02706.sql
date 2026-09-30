@@ -1,1 +1,0 @@
-SELECT id, rating, supplier_name, country, UPPER(TRIM(supplier_name)) AS supplier_name_normalized FROM suppliers WHERE UPPER(supplier_name) LIKE '%LOB%' AND UPPER(TRIM(supplier_name)) = 'TOKYO TRADERS' AND supplier_name IS NOT NULL ORDER BY id

@@ -1,1 +1,0 @@
-select id, country, rating, city, supplier_name, min(rating) over (partition by country) as country_min_rating, first_value(supplier_name) over (partition by city, country order by rating desc, id) as first_supplier_name from suppliers where city is null order by country_min_rating desc, id desc

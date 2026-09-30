@@ -1,1 +1,0 @@
-SELECT s.id, s.delivered_date, s.order_id, o.store_id, o.customer_id, c.email, c.country FROM shipments s JOIN orders o ON s.order_id = o.id JOIN customers c ON o.customer_id = c.id WHERE c.segment = 'Corporate'

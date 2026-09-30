@@ -1,1 +1,0 @@
-with valid_order_items as (select * from order_items where unit_price > 280 or order_id = 4), agg as (select product_id, order_id, count(*) as order_item_count from valid_order_items group by product_id, order_id) select * from agg order by product_id desc;

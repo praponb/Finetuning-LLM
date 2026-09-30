@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1480 THEN 'high' WHEN amount >= 350 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(CASE WHEN method = 'card' THEN 1 END) AS card_count, COUNT(amount) AS amount_count FROM payments GROUP BY 1

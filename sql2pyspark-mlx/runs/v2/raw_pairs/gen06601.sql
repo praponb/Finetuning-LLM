@@ -1,1 +1,0 @@
-SELECT id, dept_name, location, budget, AVG(budget) OVER (PARTITION BY dept_name, location) dept_name_avg_budget, LAG(budget, 1) OVER (ORDER BY budget, id) prev_budget FROM departments WHERE location = 'Chiang Mai' ORDER BY prev_budget ASC

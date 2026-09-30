@@ -1,1 +1,0 @@
-select i.id, i.store_id, i.product_id, i.quantity, ss.units from inventory i inner join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where not (ss.revenue < 3500 or i.product_id in (2, 8)) order by i.quantity

@@ -1,1 +1,0 @@
-SELECT o.id, o.amount, c.country, c.signup_date, s.store_name, s.city FROM orders o FULL OUTER JOIN customers c ON o.customer_id = c.id RIGHT JOIN stores s ON s.id = o.store_id WHERE s.region IN ('East', 'West') AND o.customer_id IN (7, 15)

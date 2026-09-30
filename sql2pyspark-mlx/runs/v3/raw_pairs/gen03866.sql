@@ -1,1 +1,0 @@
-select account_type, round((100 * sum(case when status = 'CLOSED' then 1 else 0 end)) / count(*), 1) as pct_closed, count(balance) as balance_count from accounts group by account_type having balance_count >= 2 order by pct_closed, 1

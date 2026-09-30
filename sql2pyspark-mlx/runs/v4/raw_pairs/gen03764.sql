@@ -1,1 +1,0 @@
-WITH store_sales_by_product AS (SELECT product_id, MIN(units) AS min_units FROM store_sales GROUP BY product_id) SELECT p.brand, ssbp.min_units FROM products p LEFT JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id ORDER BY p.brand;

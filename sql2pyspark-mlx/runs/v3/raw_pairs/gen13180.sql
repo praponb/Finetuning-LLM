@@ -1,1 +1,0 @@
-SELECT s.city, s.region, SUM(CASE WHEN o.channel = 'mobile' THEN o.amount ELSE 0 END) AS mobile_amount, SUM(CASE WHEN o.status = 'SHIPPED' THEN 1 ELSE 0 END) AS shipped_count FROM orders o LEFT JOIN customers c ON o.customer_id = c.id LEFT JOIN stores s ON o.store_id = s.id GROUP BY s.city, s.region ORDER BY shipped_count

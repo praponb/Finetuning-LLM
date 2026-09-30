@@ -1,1 +1,0 @@
-SELECT page, DATE_TRUNC('MONTH', event_time) AS event_month, SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) AS search_duration_sec FROM web_events WHERE session_id IN (10, 13, 36) AND TO_DATE(event_time) >= '2024-03-15' GROUP BY page, DATE_TRUNC('MONTH', event_time) HAVING SUM(CASE WHEN page = '/search' THEN duration_sec ELSE 0 END) < 35;

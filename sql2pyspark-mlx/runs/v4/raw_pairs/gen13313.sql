@@ -1,1 +1,0 @@
-WITH FilteredShipments AS (SELECT * FROM shipments WHERE order_id = 4), shipments_stats AS (SELECT status, SUM(cost) AS total_cost, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM FilteredShipments GROUP BY status) SELECT * FROM shipments_stats ORDER BY status DESC, total_cost DESC LIMIT 10

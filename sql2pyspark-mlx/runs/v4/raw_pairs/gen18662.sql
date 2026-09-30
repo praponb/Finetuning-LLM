@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.status, shipments.carrier, orders.store_id, customers.name, DATE_SUB(shipments.delivered_date, 47) AS delivered_date_minus_47d FROM shipments INNER JOIN orders ON shipments.order_id = orders.id LEFT JOIN customers ON orders.customer_id = customers.id WHERE orders.status = 'CANCELLED';

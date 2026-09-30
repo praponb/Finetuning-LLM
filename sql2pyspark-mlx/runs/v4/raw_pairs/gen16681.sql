@@ -1,1 +1,0 @@
-SELECT suppliers.id, suppliers.supplier_name, t.stddev_stock_qty, t.last_launch_date FROM suppliers JOIN (SELECT supplier_id, ROUND(STDDEV(stock_qty), 2) AS stddev_stock_qty, MAX(launch_date) AS last_launch_date FROM products GROUP BY supplier_id) t ON suppliers.id = t.supplier_id ORDER BY supplier_name DESC, id LIMIT 5

@@ -1,1 +1,0 @@
-SELECT status, COUNT(cost) AS cost_count FROM shipments WHERE shipped_date BETWEEN '2023-06-05' AND '2025-06-01' AND status IN ('IN_TRANSIT', 'DELIVERED', 'RETURNED') AND cost <= 61 GROUP BY status HAVING MIN(cost) < 50 ORDER BY status

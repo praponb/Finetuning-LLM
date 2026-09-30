@@ -1,1 +1,0 @@
-SELECT id, supplier_name, city, rating, SUM(rating) OVER (PARTITION BY country ORDER BY rating ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_rating, AVG(rating) OVER (ORDER BY rating ASC, id ASC ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) rating_avg_3, ROW_NUMBER() OVER (PARTITION BY country, city ORDER BY rating DESC, id ASC) seq_no FROM suppliers;

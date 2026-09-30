@@ -1,1 +1,0 @@
-select *, ntile(5) over (order by units, id) as units_bucket, ntile(5) over (partition by product_id, store_id order by units desc, id) as units_bucket_2, row_number() over (order by units desc, id) as seq_no from store_sales

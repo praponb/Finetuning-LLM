@@ -1,1 +1,0 @@
-SELECT id, city, rating, LAG(rating, 1, 0) OVER (PARTITION BY city ORDER BY rating, id) AS prev_rating, MIN(rating) OVER (PARTITION BY city) AS city_min_rating FROM suppliers WHERE country <> 'DE' ORDER BY prev_rating, city_min_rating

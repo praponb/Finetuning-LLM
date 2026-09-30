@@ -1,1 +1,0 @@
-with product_stats as (select product_id, max(revenue) - min(revenue) as revenue_range from store_sales where product_id = 8 group by product_id) select p.cost, p.category, ps.revenue_range from products p inner join product_stats ps on p.id = ps.product_id where ps.revenue_range > 38 order by revenue_range desc

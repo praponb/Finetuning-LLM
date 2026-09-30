@@ -1,1 +1,0 @@
-SELECT departments.dept_name, AVG(employees.salary) AS avg_salary FROM employees LEFT OUTER JOIN departments ON employees.dept_id = departments.id WHERE employees.is_remote = TRUE GROUP BY departments.dept_name

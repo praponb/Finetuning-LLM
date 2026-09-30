@@ -1,1 +1,0 @@
-with transactions_by_account as (select account_id, sort_array(collect_set(txn_type)) as txn_type_list, sum(amount) as total_amount from transactions group by account_id) select a.id, a.opened_date, a.customer_id, tba.txn_type_list, tba.total_amount from accounts a left join transactions_by_account tba on a.id = tba.account_id where tba.total_amount > 16000 order by a.opened_date

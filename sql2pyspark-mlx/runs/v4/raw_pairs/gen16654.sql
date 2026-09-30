@@ -1,1 +1,0 @@
-SELECT CASE WHEN sqft >= 13630 THEN 'high' WHEN sqft >= 2562 THEN 'mid' ELSE 'low' END AS sqft_bucket, SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END) AS chiang_mai_count FROM stores WHERE LENGTH(store_name) >= 14 GROUP BY sqft_bucket HAVING chiang_mai_count > 67 ORDER BY sqft_bucket, 2 LIMIT 5;

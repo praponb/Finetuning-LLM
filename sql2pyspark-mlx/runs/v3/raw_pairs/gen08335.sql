@@ -1,1 +1,0 @@
-SELECT accounts.opened_date, accounts.account_type, t.txn_type_list FROM accounts INNER JOIN (SELECT account_id, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions GROUP BY account_id) t ON accounts.id = t.account_id;

@@ -1,1 +1,0 @@
-select inventory.last_restock, products.category, products.stock_qty from inventory left outer join products on inventory.product_id = products.id where inventory.store_id in (1, 2, 5) order by products.stock_qty desc, inventory.last_restock asc

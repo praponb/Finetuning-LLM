@@ -1,1 +1,0 @@
-SELECT id, order_id, paid_at, method, status, amount, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY paid_at) dense_rnk, SUM(amount) OVER (PARTITION BY method, status ORDER BY paid_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_amount FROM payments WHERE order_id = 20 ORDER BY 6;

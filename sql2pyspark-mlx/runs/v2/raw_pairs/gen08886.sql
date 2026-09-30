@@ -1,1 +1,0 @@
-with session_totals as (select session_id, count(case when page = '/cart' then 1 end) as cart_count from web_events group by session_id) select s.started_at, s.country, st.cart_count from sessions s left join session_totals st on s.id = st.session_id where st.cart_count > 6;

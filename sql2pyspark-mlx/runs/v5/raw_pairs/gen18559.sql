@@ -1,1 +1,0 @@
-SELECT id, host, log_ts, level, latency_ms, status_code, context, GET_JSON_OBJECT(payload_json, '$.user.id') AS user_id, SIZE(context) AS num_context, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').duration AS duration_sec, COALESCE(context['region'], 'none') AS region_or_default FROM app_logs;

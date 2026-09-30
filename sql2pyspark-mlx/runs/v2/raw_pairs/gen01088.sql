@@ -1,1 +1,0 @@
-select d.id, d.budget, t.min_salary, t.unique_levels from departments d inner join (select dept_id, min(salary) as min_salary, count(distinct salary) as unique_levels from employees group by dept_id) t on d.id = t.dept_id order by d.budget asc;

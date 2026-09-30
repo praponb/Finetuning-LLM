@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, MAX(balance) - MIN(balance) AS balance_range, SUM(CASE WHEN status = 'OPEN' THEN balance ELSE 0 END) AS open_balance FROM accounts WHERE NOT (balance <= 18000 OR balance >= 66000) GROUP BY QUARTER(opened_date) HAVING MAX(balance) - MIN(balance) > 44 ORDER BY opened_quarter;

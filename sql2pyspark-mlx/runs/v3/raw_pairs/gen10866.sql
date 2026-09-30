@@ -1,1 +1,0 @@
-select status, stddev_monthly_fee, avg_monthly_fee from (select status, round(stddev(monthly_fee), 2) as stddev_monthly_fee, avg(monthly_fee) as avg_monthly_fee from subscriptions group by status) as x where stddev_monthly_fee < 21 order by stddev_monthly_fee desc, status limit 50

@@ -1,1 +1,0 @@
-SELECT MONTH(order_date) AS order_month, status, COUNT(DISTINCT shipping_fee) AS unique_statuss, SUM(CASE WHEN status = 'SHIPPED' THEN 1 ELSE 0 END) AS shipped_count FROM orders WHERE store_id IN (7, 18, 21) GROUP BY order_month, status HAVING COUNT(DISTINCT shipping_fee) >= 5;

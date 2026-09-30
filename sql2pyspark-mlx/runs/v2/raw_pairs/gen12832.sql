@@ -1,1 +1,0 @@
-select year(p.launch_date) as launch_year, max(ss.sale_date) as latest_sale_date from store_sales ss inner join stores s on s.id = ss.store_id inner join products p on ss.product_id = p.id group by year(p.launch_date) order by launch_year desc

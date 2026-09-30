@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fee FROM transactions GROUP BY account_id) SELECT a.id, a.status, at.pct_fee FROM accounts a INNER JOIN account_totals at ON a.id = at.account_id WHERE at.pct_fee >= 22 ORDER BY a.id;

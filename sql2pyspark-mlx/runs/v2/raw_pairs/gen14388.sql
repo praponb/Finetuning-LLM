@@ -1,1 +1,0 @@
-SELECT txn_type, amount, is_flagged, CAST(is_flagged AS INT) AS is_flagged_flag, DATEDIFF(CURRENT_DATE(), txn_time) AS days_since_txn_time FROM transactions WHERE merchant IN ('Lazada', 'Grab', '7-Eleven') AND merchant != 'Shell' AND TO_DATE(txn_time) < '2024-10-01';

@@ -1,1 +1,0 @@
-with src as (select * from shipments where carrier <> 'FedEx' and delivered_date > '2024-01-01' and delivered_date between '2023-09-01' and '2025-06-01'), shipments_stats as (select status, round(avg(cost), 2) as avg_cost from src group by status) select * from shipments_stats where avg_cost > 61;

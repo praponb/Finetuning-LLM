@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, MONTH(sale_date) AS sale_date_month FROM store_sales WHERE product_id IN (4, 8)), agg AS (SELECT YEAR(sale_date) AS sale_year, MAX(units) AS max_units FROM src GROUP BY YEAR(sale_date)) SELECT sale_year, max_units FROM agg ORDER BY max_units;

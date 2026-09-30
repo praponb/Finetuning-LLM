@@ -1,1 +1,0 @@
-SELECT id, merchant, CASE WHEN amount >= 3600 THEN 'High' WHEN amount >= 1100 THEN 'Medium' ELSE 'Low' END amount_level, CASE WHEN amount >= 3200 THEN 'High' WHEN amount >= 1400 THEN 'Medium' ELSE 'Low' END amount_level_2 FROM transactions ORDER BY merchant DESC;

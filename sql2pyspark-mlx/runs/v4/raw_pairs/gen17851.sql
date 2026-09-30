@@ -1,1 +1,0 @@
-select status, concat_ws(', ', sort_array(collect_set(channel))) as channel_values, count(distinct discount) as unique_stores from orders where discount > 0.29 group by status having unique_stores >= 4 order by channel_values desc, unique_stores desc, status limit 10;

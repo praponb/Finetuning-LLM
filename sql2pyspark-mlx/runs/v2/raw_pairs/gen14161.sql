@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, COUNT(*) AS total_count, COUNT(*) AS row_count FROM sessions WHERE browser IS NULL GROUP BY customer_id) SELECT c.city, cs.total_count, cs.row_count FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id WHERE cs.row_count > 7 ORDER BY cs.total_count DESC;

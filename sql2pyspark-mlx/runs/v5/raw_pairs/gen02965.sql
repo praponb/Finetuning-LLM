@@ -1,1 +1,0 @@
-SELECT p.method, p.amount, o.amount AS order_amount, c.is_active, UPPER(p.status) AS status_upper FROM payments p INNER JOIN orders o ON p.order_id = o.id INNER JOIN customers c ON c.id = o.customer_id WHERE o.store_id IS NOT NULL

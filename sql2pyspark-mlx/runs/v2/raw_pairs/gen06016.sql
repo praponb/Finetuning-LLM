@@ -1,1 +1,0 @@
-SELECT e.id, e.email AS employee_email, e.hire_date AS employee_hire_date, e.dept_id AS employee_dept_id, m.is_remote AS manager_is_remote, m.level AS manager_level, m.full_name AS manager_full_name FROM employees AS e LEFT JOIN employees AS m ON e.manager_id = m.id WHERE m.email LIKE '%@outlook.com' AND e.full_name LIKE '%Chaiy%';

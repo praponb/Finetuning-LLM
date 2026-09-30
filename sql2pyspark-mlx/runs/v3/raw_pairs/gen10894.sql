@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, MIN(order_date) AS first_order_date FROM orders WHERE order_date < '2025-08-05' GROUP BY store_id) SELECT stores.id, stores.store_name, stores.opened_date, store_stats.first_order_date FROM stores INNER JOIN store_stats ON stores.id = store_stats.store_id ORDER BY stores.opened_date, id LIMIT 1

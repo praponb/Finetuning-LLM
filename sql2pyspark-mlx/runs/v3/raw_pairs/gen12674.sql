@@ -1,1 +1,0 @@
-SELECT id, country, started_at, customer_id, DENSE_RANK() OVER (PARTITION BY country ORDER BY started_at) AS dense_rnk, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at, id) AS rn FROM sessions WHERE browser IN ('Firefox', 'Edge')

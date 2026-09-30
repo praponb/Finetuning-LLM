@@ -1,1 +1,0 @@
-WITH valid_stores AS (SELECT * FROM stores WHERE opened_date BETWEEN '2023-10-01' AND '2024-06-05'), stores_stats AS (SELECT YEAR(opened_date) opened_year, SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END) chiang_mai_count FROM valid_stores GROUP BY YEAR(opened_date)) SELECT * FROM stores_stats

@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 222 THEN 'high' WHEN quantity >= 91 THEN 'mid' ELSE 'low' END AS quantity_bucket, product_id, COUNT(DISTINCT quantity) AS unique_products FROM inventory WHERE last_restock >= '2023-03-01' AND product_id IN (3, 6, 7, 8) GROUP BY 1, 2

@@ -1,1 +1,0 @@
-WITH inventory_by_product AS (SELECT product_id, COUNT(quantity) AS quantity_count FROM inventory GROUP BY product_id) SELECT p.product_name, ibp.quantity_count FROM products p INNER JOIN inventory_by_product ibp ON p.id = ibp.product_id WHERE ibp.quantity_count >= 7 ORDER BY quantity_count DESC, p.product_name

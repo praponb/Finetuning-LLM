@@ -1,1 +1,0 @@
-SELECT customers.segment, MIN(payments.paid_at) AS first_paid_at, MAX(payments.amount) AS max_amount FROM payments INNER JOIN orders ON payments.order_id = orders.id INNER JOIN customers ON orders.customer_id = customers.id GROUP BY customers.segment ORDER BY customers.segment DESC;

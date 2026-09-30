@@ -1,1 +1,0 @@
-SELECT CASE WHEN country IN ('TH', 'SG') THEN 'group_a' ELSE 'other' END AS country_group, COUNT(rating) AS rating_count FROM suppliers GROUP BY CASE WHEN country IN ('TH', 'SG') THEN 'group_a' ELSE 'other' END ORDER BY country_group;

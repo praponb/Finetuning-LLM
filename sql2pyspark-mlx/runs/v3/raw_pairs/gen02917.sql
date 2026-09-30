@@ -1,1 +1,0 @@
-WITH Src AS (SELECT * FROM shipments WHERE MONTH(shipped_date) IN (1, 2, 4)), summary AS (SELECT status, YEAR(shipped_date) AS shipped_year, COUNT(CASE WHEN carrier = 'DHL' THEN 1 END) AS dhl_count, MAX(cost) AS max_cost FROM Src GROUP BY status, YEAR(shipped_date)) SELECT status, shipped_year, dhl_count FROM summary WHERE max_cost < 90 ORDER BY dhl_count, shipped_year DESC;

@@ -1,1 +1,0 @@
-WITH top_orders AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY amount DESC, id) AS rnk FROM orders) SELECT id, store_id, amount, channel FROM top_orders WHERE rnk <= 3 ORDER BY amount DESC

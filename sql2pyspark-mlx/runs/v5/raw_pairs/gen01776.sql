@@ -1,1 +1,0 @@
-SELECT dept_name, CASE WHEN budget >= 3141000 THEN 'high' WHEN budget >= 1459000 THEN 'mid' ELSE 'low' END budget_bucket, MAX(budget) max_budget, SUM(CASE WHEN dept_name = 'Finance' THEN budget ELSE 0 END) finance_budget FROM departments GROUP BY 1, 2 HAVING finance_budget < 24;

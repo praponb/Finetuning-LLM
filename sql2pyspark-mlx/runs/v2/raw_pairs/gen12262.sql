@@ -1,1 +1,0 @@
-SELECT channel, status, ROUND(STDDEV(amount), 2) AS stddev_amount FROM orders WHERE discount > 0.18 AND channel IN ('store', 'web', 'partner') GROUP BY channel, status HAVING ROUND(STDDEV(amount), 2) < 28 ORDER BY channel DESC

@@ -1,1 +1,0 @@
-SELECT id, plan, tier_limits, discounts, ARRAY_MIN(tier_prices) AS lowest_price, ELEMENT_AT(tier_prices, 1) AS entry_price, SLICE(tier_limits, 1, 2) AS first_two_limits FROM price_tiers WHERE plan = 'basic';

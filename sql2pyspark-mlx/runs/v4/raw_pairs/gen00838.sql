@@ -1,1 +1,0 @@
-SELECT o.channel, MAX(oi.unit_price) AS max_unit_price, ROUND(STDDEV(oi.unit_price), 2) AS stddev_unit_price FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id LEFT OUTER JOIN products p ON oi.product_id = p.id GROUP BY o.channel ORDER BY o.channel

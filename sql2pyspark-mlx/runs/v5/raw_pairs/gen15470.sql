@@ -1,1 +1,0 @@
-SELECT id FROM orders INTERSECT ALL SELECT id FROM orders WHERE amount > 1300

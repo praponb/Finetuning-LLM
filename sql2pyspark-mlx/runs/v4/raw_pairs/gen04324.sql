@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, email, dept_id, manager_id, hire_date, is_remote, level, CAST(salary AS INT) AS salary_int, COALESCE(job_title, 'OTHER') AS job_title_filled FROM employees WHERE hire_date > DATE '2023-06-20') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date DESC NULLS FIRST, id) AS rn FROM valid) ranked WHERE rn = 1;

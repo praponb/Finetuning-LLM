@@ -1,1 +1,0 @@
-SELECT id, manager_id, hire_date, dept_id FROM (SELECT id, manager_id, hire_date, dept_id, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date DESC, id) AS rn FROM employees) AS r WHERE rn <= 5 ORDER BY 3 DESC;

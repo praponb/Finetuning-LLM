@@ -1,1 +1,0 @@
-SELECT id, status_bits, firmware, NTILE(3) OVER w_part AS humidity_bucket, AVG(status_bits) OVER (ORDER BY pressure, id ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS status_bits_avg_5, LAG(status_bits, 1) OVER w_part AS prev_status_bits FROM device_readings WINDOW w_part AS (PARTITION BY device_code ORDER BY humidity, id);

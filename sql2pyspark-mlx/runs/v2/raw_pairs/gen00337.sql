@@ -1,1 +1,0 @@
-select status, customer_id, shipping_fee, add_months(order_date, 12) as order_date_plus_months, case when status in ('COMPLETED', 'RETURNED') then 'Priority' else 'Other' end as status_group from orders order by customer_id;

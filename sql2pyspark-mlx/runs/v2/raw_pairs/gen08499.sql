@@ -1,1 +1,0 @@
-select status, count(case when status = 'REFUNDED' then 1 end) as refunded_count from payments where amount between 550 and 560 and order_id = 23 group by status having count(case when status = 'REFUNDED' then 1 end) < 1 order by status asc, refunded_count asc limit 20;

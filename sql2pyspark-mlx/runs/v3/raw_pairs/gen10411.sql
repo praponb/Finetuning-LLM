@@ -1,1 +1,0 @@
-SELECT s.id, s.shipped_date, s.cost, s.status FROM shipments s WHERE MONTH(s.shipped_date) IN (2, 10, 11) AND s.order_id IN (SELECT id FROM orders WHERE order_date BETWEEN '2024-07-24' AND '2024-08-04');

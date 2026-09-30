@@ -1,1 +1,0 @@
-WITH valid_products AS (SELECT * FROM products WHERE brand NOT IN ('Globex', 'Stark')), agg AS (SELECT category, DATE_TRUNC('MONTH', launch_date) AS launch_month, MAX(launch_date) AS latest_launch_date, COUNT(DISTINCT stock_qty) AS unique_suppliers FROM valid_products GROUP BY category, DATE_TRUNC('MONTH', launch_date)) SELECT * FROM agg WHERE unique_suppliers < 5;

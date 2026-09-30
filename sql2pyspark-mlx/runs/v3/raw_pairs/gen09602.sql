@@ -1,1 +1,0 @@
-SELECT city, CASE WHEN sqft >= 17593 THEN 'high' WHEN sqft >= 3702 THEN 'mid' ELSE 'low' END AS sqft_bucket, SUM(sqft) AS total_sqft, AVG(sqft) AS avg_sqft FROM stores GROUP BY city, sqft_bucket HAVING SUM(CASE WHEN city = 'London' THEN 1 ELSE 0 END) < 39 ORDER BY total_sqft DESC, avg_sqft DESC;

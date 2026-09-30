@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM stores WHERE opened_date <= '2025-05-21'), summary AS (SELECT region, ROUND(AVG(sqft), 2) AS avg_sqft FROM base GROUP BY region) SELECT * FROM summary ORDER BY avg_sqft, region LIMIT 3

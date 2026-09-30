@@ -1,1 +1,0 @@
-select case when amount >= 3800 then 'high' when amount >= 1000 then 'mid' else 'low' end as amount_bucket, count(*) as num_transactions, max(amount) - min(amount) as amount_range from transactions group by 1 order by amount_range, amount_bucket;

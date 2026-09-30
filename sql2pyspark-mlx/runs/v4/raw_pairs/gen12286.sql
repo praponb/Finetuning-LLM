@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('YEAR', event_time) AS year_start, MIN(event_time) AS first_seen, MAX(event_time) AS ended_at, (UNIX_TIMESTAMP(MAX(event_time)) - UNIX_TIMESTAMP(MIN(event_time))) / 60 AS span_minutes FROM web_events GROUP BY DATE_TRUNC('YEAR', event_time);

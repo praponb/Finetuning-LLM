@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, city, ROUND((100 * SUM(CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_berlin FROM customers WHERE age < 33 AND segment = 'Corporate' GROUP BY DATE_FORMAT(signup_date, 'yyyy-MM'), city;

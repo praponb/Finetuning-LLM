@@ -1,1 +1,0 @@
-with flattened as (select id, tier_value from price_tiers lateral view outer explode(discounts) e as tier_value) select id, tier_value, percent_rank() over w_recent as tier_value_percent_rank, percent_rank() over w_recent as tier_value_percent_rank_2 from flattened window w_recent as (order by tier_value desc nulls last);

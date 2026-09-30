@@ -1,1 +1,0 @@
-SELECT id, event_type, event_time, page, ROUND(duration_sec, 2) AS duration_sec_rounded, ROUND(duration_sec * 1.15, 2) AS duration_sec_adjusted FROM web_events WHERE (duration_sec < 242 AND session_id IN (6, 31, 39)) OR event_type != 'search';

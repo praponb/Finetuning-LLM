@@ -1,1 +1,0 @@
-SELECT id, channel, promo_code, starts_on, ends_on, discount_pct, ROW_NUMBER() OVER (ORDER BY starts_on, id) AS event_seq, LAST_VALUE(channel) IGNORE NULLS OVER (PARTITION BY channel ORDER BY ends_on, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_channel FROM promotions

@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, ROUND(STDDEV(amount), 2) AS stddev_amount, MIN(amount) AS min_amount FROM payments WHERE amount >= 850 GROUP BY order_id) SELECT o.id, o.discount, ot.stddev_amount, ot.min_amount FROM orders o JOIN order_totals ot ON o.id = ot.order_id WHERE ot.min_amount > 570 ORDER BY min_amount

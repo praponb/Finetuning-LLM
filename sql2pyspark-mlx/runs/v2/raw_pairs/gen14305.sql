@@ -1,1 +1,0 @@
-select s.customer_id, t.total_duration_sec, t.pct_page_view from sessions s inner join (select session_id, sum(duration_sec) total_duration_sec, round((100 * sum(case when event_type = 'page_view' then 1 else 0 end)) / count(*), 1) pct_page_view from web_events group by session_id) t on s.id = t.session_id order by t.pct_page_view desc;

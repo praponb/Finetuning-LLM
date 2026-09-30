@@ -1,1 +1,0 @@
-SELECT accounts.status, accounts.account_type, ROUND(AVG(transactions.amount), 2) AS avg_amount, COUNT(DISTINCT transactions.amount) AS unique_accounts FROM transactions LEFT JOIN accounts ON transactions.account_id = accounts.id GROUP BY accounts.status, accounts.account_type ORDER BY accounts.account_type DESC;

@@ -1,1 +1,0 @@
-select transactions.id, transactions.amount, accounts.opened_date, customers.city, customers.is_active from transactions left join accounts on transactions.account_id = accounts.id join customers on customers.id = accounts.customer_id where accounts.account_type = 'SAVINGS' and hour(transactions.txn_time) between 7 and 10 order by accounts.opened_date

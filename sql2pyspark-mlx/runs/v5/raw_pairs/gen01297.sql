@@ -1,1 +1,0 @@
-SELECT dim.country, s.page, COUNT(*) AS num_rows, MAX(s.duration_sec) AS max_duration_sec, GROUPING_ID() AS gid FROM web_events s LEFT JOIN sessions dim ON s.session_id = dim.id GROUP BY CUBE (dim.country, s.page);

@@ -1,1 +1,0 @@
-SELECT ss.product_id, ss.store_id, p.launch_date, p.brand, s.sqft, s.region FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE p.price >= 1100 AND p.price BETWEEN 400 AND 480

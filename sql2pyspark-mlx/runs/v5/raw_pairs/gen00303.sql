@@ -1,1 +1,0 @@
-SELECT status, ROUND((100 * SUM(CASE WHEN status = 'EXPIRED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_expired, AVG(monthly_fee) AS avg_monthly_fee FROM subscriptions GROUP BY status HAVING ROUND((100 * SUM(CASE WHEN status = 'EXPIRED' THEN 1 ELSE 0 END)) / COUNT(*), 1) < 56;

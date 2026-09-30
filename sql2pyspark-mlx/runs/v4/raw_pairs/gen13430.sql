@@ -1,1 +1,0 @@
-with numbered as (select *, row_number() over (partition by carrier order by cost desc, id) as rnk from shipments where status != 'IN_TRANSIT') select id, carrier, cost, delivered_date from numbered where rnk = 1 order by carrier, delivered_date desc;

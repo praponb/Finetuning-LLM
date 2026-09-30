@@ -1,1 +1,0 @@
-SELECT CASE WHEN units >= 41 THEN 'LARGE' ELSE 'SMALL' END AS units_tier, STDDEV_SAMP(units) AS units_stddev, COUNT(DISTINCT product_id) AS distinct_product_ids, BIT_OR(units) AS units_bit_or FROM store_sales GROUP BY units_tier

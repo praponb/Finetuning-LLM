@@ -1,1 +1,0 @@
-WITH DepartmentTotals AS (SELECT dept_id, MAX(salary) AS max_salary, MAX(salary) - MIN(salary) AS salary_range FROM employees GROUP BY dept_id) SELECT d.budget, D.max_salary, D.salary_range FROM departments d LEFT OUTER JOIN DepartmentTotals D ON d.id = D.dept_id WHERE D.salary_range > 68 ORDER BY max_salary DESC, d.budget;

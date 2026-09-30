@@ -1,1 +1,0 @@
-select category, brand, year(launch_date) launch_year, sum(case when brand = 'Initech' then 1 else 0 end) initech_count, min(cost) min_cost from products where (cost <= 360 and cost between 420 and 520) or brand is not null group by category, brand, year(launch_date) having min(cost) < 400 order by initech_count desc;

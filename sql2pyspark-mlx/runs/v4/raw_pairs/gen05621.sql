@@ -1,1 +1,0 @@
-select status, channel, round((100 * sum(case when channel = 'partner' then 1 else 0 end)) / count(*), 1) as pct_partner, sum(case when status = 'SHIPPED' then 1 else 0 end) as shipped_count from orders group by status, channel having round((100 * sum(case when channel = 'partner' then 1 else 0 end)) / count(*), 1) >= 42 order by pct_partner desc, channel desc

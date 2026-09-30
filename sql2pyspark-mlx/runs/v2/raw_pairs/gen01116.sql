@@ -1,1 +1,0 @@
-SELECT id, dept_name, location, CONCAT_WS('/', dept_name, location) AS dept_name_location_key, CASE WHEN location IN ('London', 'Chiang Mai') THEN 'Group A' ELSE 'Other' END AS location_group FROM departments WHERE dept_name != 'Engineering';

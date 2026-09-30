@@ -1,1 +1,0 @@
-SELECT p.id, p.supplier_id, p.product_name FROM products p WHERE p.product_name LIKE 'De%' AND p.supplier_id NOT IN (SELECT id FROM suppliers WHERE rating >= 3.5) ORDER BY p.supplier_id ASC, id ASC LIMIT 5

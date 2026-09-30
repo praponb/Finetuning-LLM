@@ -1,1 +1,0 @@
-SELECT id, last_restock, quantity, product_id, LAG(quantity, 1) OVER (ORDER BY last_restock, id) AS prev_quantity, PERCENT_RANK() OVER (PARTITION BY product_id ORDER BY last_restock DESC) AS last_restock_pct_rank FROM inventory ORDER BY last_restock_pct_rank DESC

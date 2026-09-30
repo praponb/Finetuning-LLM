@@ -1,1 +1,0 @@
-SELECT last_restock, 'inventory' AS source FROM inventory WHERE quantity = 79 UNION ALL SELECT signup_date, 'customer' AS source FROM customers WHERE segment IN ('Corporate', 'Consumer', 'SMB') ORDER BY last_restock DESC

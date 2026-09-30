@@ -1,1 +1,0 @@
-WITH ranked_employees AS (SELECT id, dept_id, hire_date, job_title, RANK() OVER (PARTITION BY dept_id ORDER BY hire_date DESC) AS rnk FROM employees) SELECT id, dept_id, hire_date, job_title FROM ranked_employees WHERE rnk <= 2;

@@ -1,1 +1,0 @@
-with order_totals as (select order_id, concat_ws(', ', sort_array(collect_set(carrier))) as carrier_values, max(delivered_date) as last_delivered_date from shipments group by order_id) select o.id, o.status, o.order_date, ot.carrier_values, ot.last_delivered_date from orders o inner join order_totals ot on o.id = ot.order_id order by o.id desc, last_delivered_date desc;

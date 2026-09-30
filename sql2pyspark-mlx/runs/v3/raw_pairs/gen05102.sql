@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM store_sales WHERE store_id IN (1, 3, 4, 5) AND product_id = 10), Agg AS (SELECT product_id, SUM(units) AS total_units FROM src GROUP BY product_id) SELECT product_id, total_units FROM Agg WHERE total_units > 200 ORDER BY total_units DESC;

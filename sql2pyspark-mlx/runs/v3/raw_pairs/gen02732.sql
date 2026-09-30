@@ -1,1 +1,0 @@
-SELECT YEAR(event_time) AS event_year, event_type, COUNT(*) AS row_count, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events GROUP BY YEAR(event_time), event_type ORDER BY stddev_duration_sec DESC;

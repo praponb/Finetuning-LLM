@@ -1,1 +1,0 @@
-WITH not_flagged AS (SELECT s.* FROM suppliers s WHERE NOT EXISTS (SELECT 1 FROM products ch WHERE ch.supplier_id = s.id AND ch.stock_qty > 377)) SELECT id, supplier_name, country, rating, CASE WHEN country RLIKE '^(TH|US)$' THEN 'PRIORITY' ELSE 'CORE' END AS country_zone FROM not_flagged ORDER BY country_zone DESC;

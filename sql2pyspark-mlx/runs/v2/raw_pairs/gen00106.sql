@@ -1,1 +1,0 @@
-SELECT city, country, SORT_ARRAY(COLLECT_SET(country)) country_list, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(city))) city_values, SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END) bangkok_count FROM suppliers GROUP BY city, country HAVING bangkok_count > 72

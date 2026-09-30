@@ -1,1 +1,0 @@
-select a.id, a.balance, a.customer_id, a.account_type from accounts a where a.balance <= 29000 and a.customer_id not in (select id from customers where segment in ('SMB', 'Consumer', 'Corporate')) order by balance, id limit 5

@@ -1,1 +1,0 @@
-SELECT store_id, last_restock, CASE WHEN quantity >= 260 THEN 'High' WHEN quantity >= 40 THEN 'Medium' ELSE 'Low' END quantity_level, CASE WHEN quantity >= 267 THEN 'High' WHEN quantity >= 102 THEN 'Medium' ELSE 'Low' END quantity_level_2 FROM inventory WHERE product_id IN (5, 7) AND product_id = 2 AND last_restock > '2024-10-01' ORDER BY quantity_level DESC, quantity_level_2

@@ -1,1 +1,0 @@
-select status, method, sort_array(collect_set(status)) as status_list, avg(amount) as avg_amount, sum(case when method = 'promptpay' then amount else 0 end) as promptpay_amount from payments where amount < 1050 group by 1, 2 having avg_amount < 1380 order by 5 desc, status, method limit 10;

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(o.order_date, 'yyyy-MM') AS order_month, SUM(CASE WHEN p.status = 'SUCCESS' THEN p.amount ELSE 0 END) AS success_amount, SORT_ARRAY(COLLECT_SET(p.status)) AS status_list FROM payments p JOIN orders o ON p.order_id = o.id FULL OUTER JOIN customers c ON o.customer_id = c.id GROUP BY DATE_FORMAT(o.order_date, 'yyyy-MM') ORDER BY success_amount, order_month

@@ -1,1 +1,0 @@
-SELECT store_id, MIN(order_date) AS min_order_date, MAX(order_date) AS latest_order_date, ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_returned FROM orders WHERE amount > 1020 GROUP BY store_id ORDER BY 2 ASC, latest_order_date ASC;

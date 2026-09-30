@@ -1,1 +1,0 @@
-SELECT a.status, SUM(CASE WHEN t.txn_type = 'FEE' THEN t.amount ELSE 0 END) AS fee_amount FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id GROUP BY a.status ORDER BY fee_amount DESC, status ASC LIMIT 20;

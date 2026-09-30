@@ -1,1 +1,0 @@
-select payments.order_id, payments.status, orders.amount, orders.order_date, orders.status as order_status, lower(orders.channel) as channel_lower from payments right join orders on payments.order_id = orders.id;

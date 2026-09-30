@@ -1,1 +1,0 @@
-SELECT id, product_id, revenue, store_id, RANK() OVER (PARTITION BY product_id ORDER BY revenue DESC) AS revenue_rank, PERCENT_RANK() OVER (PARTITION BY store_id ORDER BY revenue DESC) AS revenue_pct_rank FROM store_sales WHERE sale_date >= '2024-02-25';

@@ -1,1 +1,0 @@
-SELECT dept_name, MAX(budget) - MIN(budget) AS budget_range FROM departments WHERE dept_name = 'HR' AND location = 'Chiang Mai' GROUP BY dept_name HAVING budget_range > 76 ORDER BY dept_name, budget_range DESC;

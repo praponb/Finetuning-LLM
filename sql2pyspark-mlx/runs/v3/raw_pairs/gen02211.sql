@@ -1,1 +1,0 @@
-SELECT departments.id, departments.dept_name, departments.location FROM departments WHERE departments.dept_name IN ('Legal', 'HR') AND EXISTS (SELECT 1 FROM employees WHERE employees.dept_id = departments.id AND employees.dept_id IN (19, 20, 21, 29));

@@ -1,1 +1,0 @@
-SELECT status, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values FROM accounts WHERE MONTH(opened_date) IN (2, 6, 8) AND customer_id IN (14, 25) GROUP BY 1 ORDER BY status, status_values DESC

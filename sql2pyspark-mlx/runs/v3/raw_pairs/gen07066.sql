@@ -1,1 +1,0 @@
-select * from (select method, year(paid_at) as paid_year, sum(case when method = 'card' then 1 else 0 end) as card_count, sum(case when status = 'FAILED' then amount else 0 end) as failed_amount from payments group by method, year(paid_at)) as x where card_count >= 74

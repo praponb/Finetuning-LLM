@@ -1,1 +1,0 @@
-select s.id, s.customer_id, s.device, t.page_view_count from sessions s join (select session_id, sum(case when event_type = 'page_view' then 1 else 0 end) page_view_count from web_events where event_type in ('search', 'add_to_cart', 'page_view') group by session_id) t on s.id = t.session_id order by id desc, s.device desc

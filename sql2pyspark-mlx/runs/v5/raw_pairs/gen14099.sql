@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT page, COUNT(DISTINCT duration_sec) AS unique_pages, SUM(CASE WHEN event_type = 'click' THEN duration_sec ELSE 0 END) AS click_duration_sec FROM web_events WHERE session_id = 28 GROUP BY page) AS sub WHERE unique_pages > 5 ORDER BY page LIMIT 3

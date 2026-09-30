@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, plan, effective_from, EXPLODE_OUTER(tier_prices) AS element FROM price_tiers) SELECT id, plan, effective_from, element, AVG(element) OVER w_grp AS plan_avg_element, PERCENT_RANK() OVER w_grp_2 AS element_percent_rank FROM lines WINDOW w_grp AS (PARTITION BY plan), w_grp_2 AS (ORDER BY element NULLS FIRST);

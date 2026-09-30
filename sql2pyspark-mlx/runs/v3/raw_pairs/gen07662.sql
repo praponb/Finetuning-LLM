@@ -1,1 +1,0 @@
-SELECT carrier, CASE WHEN YEAR(shipped_date) < 2024 THEN 'before_2024' WHEN YEAR(shipped_date) = 2024 THEN '2024' ELSE 'after_2024' END AS shipped_cohort, SUM(CASE WHEN status = 'IN_TRANSIT' THEN 1 ELSE 0 END) AS in_transit_count, COUNT(cost) AS cost_count FROM shipments WHERE delivered_date BETWEEN '2024-11-01' AND '2025-09-01' GROUP BY 1, 2;

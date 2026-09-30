@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY unit_price, id) AS rank_in_group FROM order_items) ranked WHERE rank_in_group = 1) SELECT product_id, ROUND(AVG(unit_price), 2) AS avg_unit_price, APPROX_PERCENTILE(quantity, 0.95) AS quantity_p95 FROM latest GROUP BY ROLLUP (product_id) HAVING ROUND(AVG(unit_price), 2) < 0

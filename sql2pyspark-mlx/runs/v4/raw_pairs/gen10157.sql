@@ -1,1 +1,0 @@
-SELECT * FROM stores QUALIFY ROW_NUMBER() OVER (PARTITION BY city ORDER BY sqft, id) = 1

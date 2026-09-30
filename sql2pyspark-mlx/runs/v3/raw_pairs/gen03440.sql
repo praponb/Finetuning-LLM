@@ -1,1 +1,0 @@
-SELECT web_events.id, web_events.event_type, sessions.browser, CONCAT(sessions.device, '/', sessions.browser) AS device_browser FROM web_events LEFT JOIN sessions ON web_events.session_id = sessions.id WHERE sessions.device = 'desktop' AND sessions.customer_id IN (24, 34) ORDER BY device_browser, sessions.browser, id LIMIT 5

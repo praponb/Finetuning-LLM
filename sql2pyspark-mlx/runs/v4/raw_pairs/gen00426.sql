@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, customer_id, plan, start_date, end_date, monthly_fee, COALESCE(monthly_fee, 0) AS monthly_fee_filled FROM subscriptions WHERE end_date > TO_DATE('2024-02-05')) SELECT e.*, c.signup_date, c.segment, c.name FROM valid e INNER JOIN customers c ON e.customer_id = c.id

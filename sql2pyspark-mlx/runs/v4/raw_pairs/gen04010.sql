@@ -1,1 +1,0 @@
-SELECT id, country, started_at FROM (SELECT id, country, started_at, ROW_NUMBER() OVER (PARTITION BY country ORDER BY started_at, id) AS pos FROM sessions) AS ranked WHERE pos <= 5 ORDER BY started_at DESC;

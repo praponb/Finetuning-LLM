@@ -1,1 +1,0 @@
-SELECT o.channel, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.status))) status_values, ROUND(AVG(p.amount), 2) avg_amount FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id JOIN customers c ON o.customer_id = c.id WHERE p.amount IS NULL GROUP BY o.channel ORDER BY channel;

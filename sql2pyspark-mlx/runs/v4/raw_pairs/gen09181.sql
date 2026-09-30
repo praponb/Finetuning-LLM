@@ -1,1 +1,0 @@
-SELECT status, COUNT(DISTINCT amount) AS unique_channels, SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) AS returned_count FROM orders WHERE amount <= 710 AND (customer_id IS NOT NULL OR amount >= 590) GROUP BY status ORDER BY unique_channels DESC, status;

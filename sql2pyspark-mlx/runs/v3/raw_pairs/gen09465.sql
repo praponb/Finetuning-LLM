@@ -1,1 +1,0 @@
-SELECT stores.id, stores.city, COUNT(store_sales.id) AS store_sale_count, SUM(store_sales.units) AS total_units, MIN(store_sales.units) AS min_units FROM stores JOIN store_sales ON stores.id = store_sales.store_id GROUP BY stores.id, stores.city

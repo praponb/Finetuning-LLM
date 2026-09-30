@@ -1,1 +1,0 @@
-select case when city in ('Singapore', 'London') then 'priority' else 'other' end as city_group, year(opened_date) as opened_year, avg(sqft) as avg_sqft from stores where store_name like '%Downt%' and opened_date >= '2023-06-01' group by 1, 2 having avg(sqft) > 12300

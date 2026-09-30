@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, SUM(quantity) AS total_quantity FROM order_items GROUP BY order_id) SELECT o.id, o.channel, ot.total_quantity FROM orders o LEFT JOIN order_totals ot ON o.id = ot.order_id WHERE ot.total_quantity >= 26 ORDER BY ot.total_quantity DESC

@@ -1,1 +1,0 @@
-WITH ranked_web_events AS (SELECT id, page, event_time, ROW_NUMBER() OVER (PARTITION BY page ORDER BY event_time DESC, id) AS row_num FROM web_events) SELECT id, page, event_time FROM ranked_web_events WHERE row_num <= 2 ORDER BY page

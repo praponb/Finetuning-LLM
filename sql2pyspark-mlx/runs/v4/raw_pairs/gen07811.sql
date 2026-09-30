@@ -1,1 +1,0 @@
-SELECT id, order_id, paid_at, amount, status, LAG(amount, 2) OVER (PARTITION BY order_id ORDER BY paid_at, id) AS prev_amount, LEAD(amount, 2) OVER (PARTITION BY status ORDER BY paid_at, id) AS next_amount FROM payments ORDER BY next_amount

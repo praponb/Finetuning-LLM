@@ -1,1 +1,0 @@
-select month(opened_date) as opened_month, city, count(distinct sqft) as unique_citys from stores where sqft is not null and (sqft <= 11609 or region = 'North') group by opened_month, city order by unique_citys;

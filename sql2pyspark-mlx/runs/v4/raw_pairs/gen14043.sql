@@ -1,1 +1,0 @@
-select id, order_id, product_id, quantity, unit_price, row_number() over (partition by order_id order by unit_price, id) as row_seq, sum(unit_price) over (order by unit_price, id rows between unbounded preceding and current row) as running_unit_price from order_items

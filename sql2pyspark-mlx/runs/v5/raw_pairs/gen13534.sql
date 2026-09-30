@@ -1,1 +1,0 @@
-SELECT o.channel, o.status AS order_status, COUNT(*) AS rows_total, MAX(src.cost) AS max_cost, GROUPING_ID() AS level_id FROM shipments src JOIN orders o ON src.order_id = o.id GROUP BY ROLLUP (o.channel, o.status);

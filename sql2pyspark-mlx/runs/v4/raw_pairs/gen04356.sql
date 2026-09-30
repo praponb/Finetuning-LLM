@@ -1,1 +1,0 @@
-SELECT departments.id, departments.dept_name, departments.location FROM departments WHERE departments.budget > 3655000 AND departments.id IN (SELECT dept_id FROM employees WHERE salary >= 115000) ORDER BY dept_name DESC;

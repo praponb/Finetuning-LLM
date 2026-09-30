@@ -1,1 +1,0 @@
-SELECT QUARTER(s.opened_date) AS opened_quarter, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity FROM inventory i LEFT JOIN stores s ON s.id = i.store_id WHERE i.last_restock >= '2024-08-22' GROUP BY QUARTER(s.opened_date);

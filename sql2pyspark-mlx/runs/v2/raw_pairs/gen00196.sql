@@ -1,1 +1,0 @@
-SELECT e.dept_id AS employee_dept_id, e.is_remote AS employee_is_remote, m.email AS manager_email, m.hire_date AS manager_hire_date, m.is_remote AS manager_is_remote FROM employees e JOIN employees m ON e.manager_id = m.id WHERE m.hire_date > '2024-07-01' ORDER BY employee_dept_id;

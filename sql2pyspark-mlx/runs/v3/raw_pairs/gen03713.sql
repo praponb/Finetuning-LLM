@@ -1,1 +1,0 @@
-select quarter(order_date) as order_quarter, round(stddev(discount), 2) as stddev_discount, sort_array(collect_set(channel)) as channel_list from orders where status = 'COMPLETED' group by 1 having max(shipping_fee) < 13 order by stddev_discount desc;

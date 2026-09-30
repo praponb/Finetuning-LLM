@@ -1,1 +1,0 @@
-select id, shipped_date, status, avg(cost) over w_recent as cost_avg_2_prior, count(cost) over w_recent_2 as order_id_count_cost from shipments window w_recent as (partition by carrier order by cost asc, id asc rows between 2 preceding and 1 preceding), w_recent_2 as (partition by order_id);

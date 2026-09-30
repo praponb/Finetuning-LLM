@@ -1,1 +1,0 @@
-select s.plan, s.monthly_fee, s.start_date, c.segment, concat_ws('-', s.plan, s.status) as plan_status_key from subscriptions s left join customers c on s.customer_id = c.id where s.customer_id in (24, 36, 37) and c.country not in ('TH', 'US') order by monthly_fee desc, plan;

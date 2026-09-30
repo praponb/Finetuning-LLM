@@ -1,1 +1,0 @@
-SELECT account_id, is_flagged, COUNT(*) AS cnt FROM transactions WHERE amount >= 2700 AND merchant NOT IN ('Lazada', '7-Eleven', 'Amazon') GROUP BY account_id, is_flagged HAVING SUM(CASE WHEN txn_type = 'DEBIT' THEN amount ELSE 0 END) < 49 ORDER BY account_id DESC;

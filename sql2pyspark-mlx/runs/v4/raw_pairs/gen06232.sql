@@ -1,1 +1,0 @@
-SELECT id, customer_id, created_at, items, attributes, TRANSFORM(FILTER(items, x -> x.promo IS NOT NULL), x -> STRUCT(x.product_id AS pid, ROUND(x.price * 0.9, 2) AS discounted_price)) AS promo_lines, SIZE(attributes) AS num_attributes FROM carts

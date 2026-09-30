@@ -1,1 +1,0 @@
-SELECT product_id, store_id, quantity_range, last_last_restock FROM (SELECT product_id, store_id, MAX(quantity) - MIN(quantity) AS quantity_range, MAX(last_restock) AS last_last_restock FROM inventory GROUP BY product_id, store_id) AS agg WHERE quantity_range >= 48 ORDER BY store_id;

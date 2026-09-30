@@ -1,1 +1,0 @@
-SELECT id, method, paid_at, amount, ROW_NUMBER() OVER (PARTITION BY method ORDER BY paid_at, id) AS rn, SUM(amount) OVER (PARTITION BY method ORDER BY paid_at, id) AS running_amount FROM payments WHERE method = 'paypal';

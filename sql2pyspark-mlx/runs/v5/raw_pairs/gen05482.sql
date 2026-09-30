@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, effective_from, currency, EXPLODE(discounts) AS tier_value FROM price_tiers) SELECT id, tier_value, RANK() OVER (PARTITION BY currency ORDER BY tier_value DESC NULLS FIRST) AS tier_value_rank, PERCENT_RANK() OVER (PARTITION BY currency ORDER BY tier_value NULLS FIRST) AS tier_value_percent_rank FROM exploded;

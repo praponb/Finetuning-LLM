@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, COUNT(DISTINCT quantity) AS unique_products, AVG(quantity) AS avg_quantity FROM order_items GROUP BY order_id) SELECT o.id, o.status, os.unique_products, os.avg_quantity FROM orders o INNER JOIN order_summary os ON o.id = os.order_id ORDER BY status DESC, o.id DESC

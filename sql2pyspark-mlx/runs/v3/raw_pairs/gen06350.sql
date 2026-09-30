@@ -1,1 +1,0 @@
-SELECT s.status, s.carrier, o.channel, o.status AS order_status, o.store_id FROM shipments s INNER JOIN orders o ON s.order_id = o.id WHERE NOT (s.status IN ('IN_TRANSIT', 'DELIVERED', 'RETURNED') AND o.discount IS NOT NULL);

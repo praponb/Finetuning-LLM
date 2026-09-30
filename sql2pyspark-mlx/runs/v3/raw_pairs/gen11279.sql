@@ -1,1 +1,0 @@
-SELECT ss.product_id, ss.store_id, MIN(i.last_restock) AS first_last_restock, COUNT(DISTINCT i.quantity) AS unique_stores FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.last_restock > '2023-03-12' GROUP BY ss.product_id, ss.store_id;

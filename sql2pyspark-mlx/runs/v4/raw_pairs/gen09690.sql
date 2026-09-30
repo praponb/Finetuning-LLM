@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, MAX(cost) - MIN(cost) AS cost_range FROM shipments GROUP BY order_id) SELECT orders.id, orders.order_date, order_summary.cost_range FROM orders JOIN order_summary ON orders.id = order_summary.order_id ORDER BY orders.order_date, orders.id LIMIT 50

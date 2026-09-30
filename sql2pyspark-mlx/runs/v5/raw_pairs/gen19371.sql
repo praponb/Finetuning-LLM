@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, currency, element FROM price_tiers LATERAL VIEW EXPLODE(tier_limits) e AS element) SELECT currency, COUNT(CASE WHEN currency = 'EUR' THEN 1 END) AS eur_count, APPROX_PERCENTILE(element, ARRAY(0.25, 0.5, 0.75)) AS element_quartiles, COUNT(DISTINCT currency) AS distinct_currencies FROM flattened GROUP BY currency ORDER BY currency DESC

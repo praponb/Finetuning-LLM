@@ -1,1 +1,0 @@
-SELECT channel, COUNT(CASE WHEN status = 'COMPLETED' THEN 1 END) AS completed_count, COUNT(DISTINCT discount) AS unique_channels FROM orders WHERE channel NOT IN ('mobile', 'partner', 'web') AND status != 'SHIPPED' GROUP BY channel;

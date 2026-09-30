@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, COALESCE(job_title, 'unassigned') job_title_filled FROM employees WHERE salary > 69000), employees_stats AS (SELECT is_remote, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(job_title))) job_title_values FROM src GROUP BY is_remote) SELECT is_remote, job_title_values FROM employees_stats;

@@ -1,1 +1,0 @@
-WITH recent_payments AS (SELECT * FROM payments WHERE amount >= 1050 AND method IN ('paypal', 'bank_transfer', 'promptpay')), agg AS (SELECT status, COUNT(CASE WHEN method = 'promptpay' THEN 1 END) AS promptpay_count FROM recent_payments GROUP BY status) SELECT status, promptpay_count FROM agg WHERE promptpay_count >= 4

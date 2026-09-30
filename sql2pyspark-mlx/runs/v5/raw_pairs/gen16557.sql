@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, LENGTH(dept_name) AS dept_name_length, COALESCE(dept_name, 'OTHER') AS dept_name_filled FROM departments WHERE location IS DISTINCT FROM 'New York') SELECT s.* FROM cleaned s WHERE NOT EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND c.dept_id IN (2, 37))

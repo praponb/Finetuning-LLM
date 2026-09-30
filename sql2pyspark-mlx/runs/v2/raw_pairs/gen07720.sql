@@ -1,1 +1,0 @@
-select * from (select job_title, concat_ws(', ', sort_array(collect_set(job_title))) as job_title_values, sum(case when job_title = 'Analyst' then 1 else 0 end) as analyst_count from employees group by job_title) as s where analyst_count > 29 order by 2 desc;

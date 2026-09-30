@@ -1,1 +1,0 @@
-SELECT dept_name, max_budget, avg_budget FROM (SELECT dept_name, MAX(budget) AS max_budget, ROUND(AVG(budget), 2) AS avg_budget FROM departments GROUP BY dept_name) AS sub WHERE avg_budget > 37 ORDER BY 1

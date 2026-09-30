@@ -1,1 +1,0 @@
-select count(case when status = 'FROZEN' then 1 end) as frozen_count, sum(case when account_type = 'SAVINGS' then 1 else 0 end) as savings_count, max(balance) as max_balance from accounts where opened_date >= '2023-04-01' and status in ('FROZEN', 'OPEN', 'CLOSED');

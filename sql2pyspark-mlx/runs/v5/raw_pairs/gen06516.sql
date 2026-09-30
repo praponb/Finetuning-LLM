@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CASE WHEN budget >= 3666000 THEN 'High' WHEN budget >= 1855000 THEN 'Medium' ELSE 'Low' END AS budget_tier, COALESCE(location, 'UNKNOWN') AS location_filled FROM departments WHERE budget >= 3127000) SELECT * FROM (SELECT location, dept_name, budget FROM base) src PIVOT (MAX(budget) AS amount, COUNT(1) AS item_count FOR dept_name IN ('Legal', 'HR'))

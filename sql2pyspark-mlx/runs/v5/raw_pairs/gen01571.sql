@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, DATEDIFF(starts_on, ends_on) AS days_ends_on_to_starts_on FROM promotions WHERE ends_on >= DATE '2023-06-18') SELECT *, ROW_NUMBER() OVER (PARTITION BY promo_code, channel ORDER BY days_ends_on_to_starts_on, id) AS latest_rank FROM cleaned QUALIFY latest_rank = 1

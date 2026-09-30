@@ -1,1 +1,0 @@
-WITH Src AS (SELECT *, unit_price * quantity AS line_total FROM order_items WHERE order_id IN (16, 19, 31)), agg AS (SELECT order_id, SUM(unit_price * quantity) AS revenue, MIN(unit_price) AS min_unit_price FROM Src GROUP BY order_id) SELECT * FROM agg ORDER BY revenue DESC;

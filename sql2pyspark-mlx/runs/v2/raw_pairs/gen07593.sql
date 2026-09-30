@@ -1,1 +1,0 @@
-SELECT s.id, s.country, COUNT(p.id) AS product_count, MIN(p.launch_date) AS first_launch_date, SUM(CASE WHEN p.category = 'Electronics' THEN 1 ELSE 0 END) AS electronics_count FROM suppliers s LEFT OUTER JOIN products p ON s.id = p.supplier_id WHERE p.brand NOT IN ('Stark', 'Initech', 'Acme') GROUP BY s.id, s.country ORDER BY id;

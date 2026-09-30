@@ -1,1 +1,0 @@
-SELECT YEAR(opened_date) AS opened_year, customer_id, MAX(opened_date) AS latest_opened_date, AVG(balance) AS avg_balance, COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) AS closed_count FROM accounts GROUP BY YEAR(opened_date), customer_id HAVING COUNT(CASE WHEN status = 'CLOSED' THEN 1 END) >= 3 ORDER BY opened_year, customer_id DESC

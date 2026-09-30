@@ -1,1 +1,0 @@
-WITH recent_order_items AS (SELECT * FROM order_items WHERE unit_price >= 280), order_items_stats AS (SELECT order_id, SUM(quantity) AS total_quantity FROM recent_order_items GROUP BY order_id) SELECT order_id, total_quantity FROM order_items_stats;

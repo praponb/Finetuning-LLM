@@ -1,1 +1,0 @@
-select id, status, delivered_date, cost, order_id, round(avg(cost) over (partition by status order by delivered_date, id rows between 3 preceding and current row), 2) as cost_moving_avg_4, dense_rank() over (partition by order_id order by cost) as dense_rnk from shipments;

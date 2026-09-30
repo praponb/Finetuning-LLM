@@ -1,1 +1,0 @@
-SELECT departments.id, departments.budget, departments.dept_name FROM departments WHERE NOT EXISTS (SELECT 1 FROM employees WHERE employees.dept_id = departments.id AND employees.email LIKE '%@GMAIL.COM') ORDER BY budget DESC, id LIMIT 1

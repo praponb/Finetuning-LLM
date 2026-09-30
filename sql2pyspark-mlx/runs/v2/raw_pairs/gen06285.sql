@@ -1,1 +1,0 @@
-SELECT amount, status, SUBSTRING(method, 1, 4) AS method_prefix, SUBSTRING(status, 1, 3) AS status_prefix FROM payments WHERE (paid_at >= '2024-03-01' AND order_id IN (6, 30, 32)) OR amount <= 790 ORDER BY method_prefix, status_prefix

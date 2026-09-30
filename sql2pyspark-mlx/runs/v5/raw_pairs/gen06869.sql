@@ -1,1 +1,0 @@
-SELECT c.is_active, COUNT(*) AS total_count, MIN(o.shipping_fee) AS min_shipping_fee FROM orders o LEFT JOIN customers c ON o.customer_id = c.id WHERE o.customer_id IN (3, 16, 19, 23) GROUP BY c.is_active HAVING min_shipping_fee > 37 ORDER BY min_shipping_fee, total_count DESC

@@ -1,1 +1,0 @@
-WITH order_items_by_product AS (SELECT product_id, ROUND(AVG(quantity), 2) avg_quantity FROM order_items WHERE unit_price >= 280 GROUP BY product_id) SELECT p.id, p.launch_date, oibp.avg_quantity FROM products p INNER JOIN order_items_by_product oibp ON p.id = oibp.product_id WHERE oibp.avg_quantity >= 79;

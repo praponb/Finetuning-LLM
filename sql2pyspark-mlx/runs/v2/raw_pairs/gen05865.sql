@@ -1,1 +1,0 @@
-SELECT dept_name, SUM(CASE WHEN location = 'London' THEN 1 ELSE 0 END) AS london_count FROM departments WHERE dept_name = 'Sales' GROUP BY dept_name HAVING SUM(CASE WHEN location = 'London' THEN 1 ELSE 0 END) < 48 ORDER BY london_count DESC, dept_name LIMIT 10;

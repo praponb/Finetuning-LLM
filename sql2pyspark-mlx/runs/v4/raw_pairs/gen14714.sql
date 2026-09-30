@@ -1,1 +1,0 @@
-SELECT id, store_id, product_id, quantity, last_restock, NTILE(5) OVER (PARTITION BY store_id ORDER BY quantity DESC, id) AS quantity_bucket, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC NULLS LAST) AS quantity_dense_rank FROM inventory;

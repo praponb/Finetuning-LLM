@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) AS opened_quarter, SUM(sqft) AS total_sqft, COUNT(*) AS cnt, ROUND(SUM(sqft) * 100.0 / SUM(SUM(sqft)) OVER (), 2) AS pct_of_total FROM stores WHERE MONTH(opened_date) IN (5, 6, 10) GROUP BY QUARTER(opened_date);

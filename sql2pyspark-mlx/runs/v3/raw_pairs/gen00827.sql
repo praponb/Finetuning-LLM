@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN sqft >= 13305 THEN 'high' WHEN sqft >= 7860 THEN 'mid' ELSE 'low' END AS sqft_bucket, city, sqft FROM stores) PIVOT (AVG(sqft) FOR city IN ('Singapore', 'Tokyo', 'New York', 'Chiang Mai'))

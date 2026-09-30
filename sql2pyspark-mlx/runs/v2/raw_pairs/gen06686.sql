@@ -1,1 +1,0 @@
-SELECT region, city, COUNT(DISTINCT sqft) AS unique_citys, ROUND(STDDEV(sqft), 2) AS stddev_sqft, SUM(sqft) AS total_sqft FROM stores WHERE region IN ('South', 'East') GROUP BY region, city HAVING unique_citys > 4 ORDER BY unique_citys, total_sqft, region, city LIMIT 3;

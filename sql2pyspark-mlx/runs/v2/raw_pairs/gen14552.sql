@@ -1,1 +1,0 @@
-WITH TopDepartments AS (SELECT id, location, budget, dept_name, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) AS rnk FROM departments) SELECT * FROM TopDepartments WHERE rnk = 1 ORDER BY id DESC;

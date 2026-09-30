@@ -1,1 +1,0 @@
-select event_type, month(event_time) as event_month, max(duration_sec) - min(duration_sec) as duration_sec_range from web_events where page = '/checkout' and event_type != 'page_view' and to_date(event_time) < '2024-06-01' group by event_type, event_month having max(duration_sec) - min(duration_sec) >= 71

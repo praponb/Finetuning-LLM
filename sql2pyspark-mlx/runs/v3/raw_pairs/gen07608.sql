@@ -1,1 +1,0 @@
-SELECT plan, YEAR(end_date) AS end_year, MAX(monthly_fee) AS max_monthly_fee, COUNT(DISTINCT monthly_fee) AS unique_customers FROM subscriptions WHERE plan NOT IN ('standard', 'enterprise') AND status IN ('CANCELLED', 'PAUSED') AND start_date < '2023-07-29' GROUP BY plan, YEAR(end_date);

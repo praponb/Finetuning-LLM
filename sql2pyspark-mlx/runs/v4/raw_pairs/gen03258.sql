@@ -1,1 +1,0 @@
-SELECT o.channel, COUNT(oi.id) AS order_item_count, MIN(oi.quantity) AS min_quantity FROM orders o LEFT JOIN order_items oi ON oi.order_id = o.id WHERE oi.product_id IS NOT NULL GROUP BY o.channel HAVING MIN(oi.quantity) > 3.5 ORDER BY channel

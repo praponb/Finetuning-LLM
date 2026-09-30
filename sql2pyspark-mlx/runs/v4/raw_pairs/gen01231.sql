@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, INITCAP(TRIM(method)) AS method_title FROM payments WHERE paid_at >= DATE '2024-04-09' AND method IS NOT NULL) SELECT CASE WHEN amount >= 1560 THEN 'HIGH' ELSE 'LOW' END AS amount_tier, MAX(paid_at) AS last_paid_at, COUNT(*) FILTER (WHERE method = 'paypal') AS paypal_rows FROM valid GROUP BY CASE WHEN amount >= 1560 THEN 'HIGH' ELSE 'LOW' END

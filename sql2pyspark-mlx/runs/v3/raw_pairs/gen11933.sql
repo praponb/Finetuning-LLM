@@ -1,1 +1,0 @@
-SELECT merchant, account_id, MAX(txn_time) latest_txn_time, MIN(amount) min_amount, MAX(amount) - MIN(amount) amount_range FROM transactions WHERE txn_time >= '2023-04-10' AND is_flagged GROUP BY merchant, account_id ORDER BY 5 DESC;

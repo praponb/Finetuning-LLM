@@ -1,1 +1,0 @@
-WITH ProductStats AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items GROUP BY product_id) SELECT p.id, p.product_name, p.launch_date, P.avg_quantity FROM products p LEFT OUTER JOIN ProductStats P ON p.id = P.product_id WHERE P.avg_quantity >= 23 ORDER BY p.product_name

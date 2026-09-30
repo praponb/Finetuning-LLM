@@ -1,1 +1,0 @@
-with product_summary as (select product_id, min(quantity) as min_quantity, max(quantity) as max_quantity from inventory where store_id in (3, 4) group by product_id) select p.launch_date, ps.min_quantity, ps.max_quantity from products p inner join product_summary ps on p.id = ps.product_id;

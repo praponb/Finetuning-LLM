@@ -1,1 +1,0 @@
-SELECT dept_name, budget, location, COALESCE(budget, 0) AS budget_filled FROM departments WHERE location IN ('New York', 'Singapore', 'Tokyo') AND dept_name = 'Engineering' ORDER BY budget_filled DESC, location;

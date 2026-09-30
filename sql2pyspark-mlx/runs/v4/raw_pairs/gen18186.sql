@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, LENGTH(merchant) merchant_length, COALESCE(merchant, 'OTHER') merchant_filled FROM transactions WHERE merchant IS NOT NULL AND account_id = 26) SELECT * FROM (SELECT account_id, txn_type, amount FROM valid) src PIVOT (SUM(amount) FOR txn_type IN ('REFUND', 'DEBIT'));

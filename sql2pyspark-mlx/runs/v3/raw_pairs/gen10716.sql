@@ -1,1 +1,0 @@
-select e.manager_id as employee_manager_id, m.salary as manager_salary, m.dept_id as manager_dept_id, m.is_remote as manager_is_remote from employees e left join employees m on e.manager_id = m.id where upper(e.full_name) like '%OAH%' and upper(e.full_name) like '%ACK%' order by employee_manager_id desc, m.salary desc;

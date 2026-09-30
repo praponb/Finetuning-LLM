@@ -1,1 +1,0 @@
-select src.*, pr.id as promo_id, pr.promo_code as promotion_promo_code, pr.discount_pct as promotion_discount_pct from promotions src left join promotions pr on coalesce(src.channel, 'store') = pr.channel and src.ends_on >= pr.starts_on and src.ends_on < pr.ends_on + interval 7 days

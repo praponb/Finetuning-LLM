@@ -1,1 +1,0 @@
-SELECT id, plan, start_date, status FROM (SELECT id, plan, start_date, status, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY start_date DESC, id) AS rnk FROM subscriptions WHERE monthly_fee > 180) AS r WHERE rnk <= 5 ORDER BY status;

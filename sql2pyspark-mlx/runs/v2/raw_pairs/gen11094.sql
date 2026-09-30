@@ -1,1 +1,0 @@
-with ranked as (select *, row_number() over (partition by status order by discount desc, id) as pos from orders where store_id is null) select id, status, discount, customer_id from ranked where pos <= 1;

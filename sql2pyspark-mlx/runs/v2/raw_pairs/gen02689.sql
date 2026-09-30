@@ -1,1 +1,0 @@
-SELECT merchant, SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END) AS starbucks_count, ROUND((100 * SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_fee FROM transactions WHERE merchant = 'Grab' OR is_flagged = TRUE GROUP BY merchant

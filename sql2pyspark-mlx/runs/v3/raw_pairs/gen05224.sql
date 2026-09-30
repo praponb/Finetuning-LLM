@@ -1,1 +1,0 @@
-WITH DepartmentTotals AS (SELECT dept_id, COUNT(*) total_count FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.location, D.total_count FROM departments d INNER JOIN DepartmentTotals D ON d.id = D.dept_id;

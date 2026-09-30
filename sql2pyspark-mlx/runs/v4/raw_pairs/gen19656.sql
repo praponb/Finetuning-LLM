@@ -1,1 +1,0 @@
-select case when p.price >= 1130 then 'high' when p.price >= 520 then 'mid' else 'low' end as price_bucket, round(stddev(i.quantity), 2) as stddev_quantity from inventory i join products p on i.product_id = p.id where p.supplier_id is not null group by case when p.price >= 1130 then 'high' when p.price >= 520 then 'mid' else 'low' end

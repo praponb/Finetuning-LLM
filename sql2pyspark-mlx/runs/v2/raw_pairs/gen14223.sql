@@ -1,1 +1,0 @@
-SELECT id, txn_time, amount, merchant, SUM(amount) OVER (ORDER BY txn_time, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_amount, ROUND(AVG(amount) OVER (PARTITION BY merchant ORDER BY txn_time, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS amount_moving_avg_3 FROM transactions

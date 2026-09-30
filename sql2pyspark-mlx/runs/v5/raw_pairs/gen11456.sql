@@ -1,1 +1,0 @@
-SELECT store_id, product_id, MONTH(last_restock) last_restock_month, COUNT(DISTINCT quantity) unique_stores, MIN(quantity) min_quantity FROM inventory WHERE product_id IN (1, 2, 5, 7) AND product_id IN (1, 8, 9, 10) GROUP BY store_id, product_id, MONTH(last_restock) ORDER BY last_restock_month;

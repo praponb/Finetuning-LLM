@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN unit_price >= 320 THEN 'high' WHEN unit_price >= 120 THEN 'mid' ELSE 'low' END AS unit_price_bucket, COUNT(quantity) AS quantity_count, COUNT(DISTINCT quantity) AS unique_orders FROM order_items GROUP BY CASE WHEN unit_price >= 320 THEN 'high' WHEN unit_price >= 120 THEN 'mid' ELSE 'low' END) AS x WHERE unique_orders >= 4;

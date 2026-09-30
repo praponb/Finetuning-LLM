@@ -1,1 +1,0 @@
-WITH valid_employees AS (SELECT * FROM employees WHERE email IS NOT NULL AND dept_id = 38), summary AS (SELECT DATE_FORMAT(hire_date, 'yyyy-MM') AS hire_month, MAX(hire_date) AS latest_hire_date FROM valid_employees GROUP BY DATE_FORMAT(hire_date, 'yyyy-MM')) SELECT hire_month, latest_hire_date FROM summary ORDER BY hire_month DESC, latest_hire_date

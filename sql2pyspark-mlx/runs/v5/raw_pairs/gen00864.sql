@@ -1,1 +1,0 @@
-SELECT id, country, rating, city, RANK() OVER (PARTITION BY country ORDER BY rating) AS rnk, ROUND(rating / SUM(rating) OVER (PARTITION BY city), 3) AS rating_share FROM suppliers WHERE supplier_name IS NOT NULL;

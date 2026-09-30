@@ -1,1 +1,0 @@
-with order_stats as (select order_id, max(quantity) as max_quantity from order_items where order_id in (22, 28, 32, 34) group by order_id) select o.id, o.amount, o.store_id, os.max_quantity from orders o inner join order_stats os on o.id = os.order_id

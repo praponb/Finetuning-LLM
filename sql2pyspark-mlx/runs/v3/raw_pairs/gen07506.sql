@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT *, DENSE_RANK() OVER (PARTITION BY brand ORDER BY price) rn FROM products) r WHERE rn <= 3

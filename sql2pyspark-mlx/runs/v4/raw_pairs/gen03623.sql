@@ -1,1 +1,0 @@
-WITH not_flagged AS (SELECT s.* FROM products s WHERE NOT EXISTS (SELECT 1 FROM order_items x WHERE x.product_id = s.id AND x.quantity > 4)) SELECT id, category, price, cost, launch_date, supplier_id FROM not_flagged ORDER BY launch_date DESC NULLS LAST;

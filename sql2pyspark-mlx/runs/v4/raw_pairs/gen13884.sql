@@ -1,1 +1,0 @@
-SELECT id, status, paid_at, order_id, amount, RANK() OVER (PARTITION BY status ORDER BY paid_at) AS paid_at_rank, PERCENT_RANK() OVER (PARTITION BY order_id ORDER BY amount DESC) AS amount_pct_rank FROM payments ORDER BY paid_at

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM stores WHERE store_name LIKE '%Riverside%' AND opened_date >= '2024-01-01'), city_summary AS (SELECT city, COUNT(CASE WHEN region = 'West' THEN 1 END) AS west_count, COUNT(*) AS store_count FROM base GROUP BY city) SELECT city, west_count, store_count FROM city_summary ORDER BY store_count, west_count DESC, city LIMIT 1;

@@ -1,1 +1,0 @@
-SELECT c.age, s.customer_id, s.status, s.plan FROM customers c LEFT JOIN subscriptions s ON c.id = s.customer_id WHERE NOT (c.segment IN ('Consumer', 'Corporate', 'SMB') AND c.name LIKE 'D%') ORDER BY c.age;

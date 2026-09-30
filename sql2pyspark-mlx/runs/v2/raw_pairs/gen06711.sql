@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, COUNT(DISTINCT monthly_fee) AS unique_customers, ROUND(STDDEV(monthly_fee), 2) AS stddev_monthly_fee FROM subscriptions GROUP BY customer_id) SELECT c.id, c.name, cs.unique_customers, cs.stddev_monthly_fee FROM customers c INNER JOIN customer_summary cs ON c.id = cs.customer_id

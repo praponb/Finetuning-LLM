@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, COALESCE(merchant, 'unassigned') AS merchant_filled FROM transactions WHERE merchant IS NOT NULL) SELECT e.*, b.account_type FROM cleaned e LEFT JOIN accounts b ON e.account_id = b.id;

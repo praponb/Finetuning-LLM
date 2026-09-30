@@ -1,1 +1,0 @@
-SELECT dept_name, COUNT(DISTINCT budget) AS unique_locations, MAX(budget) AS max_budget FROM departments WHERE (budget < 1364000 AND budget >= 3292000) OR budget BETWEEN 1545000 AND 2050000 GROUP BY 1;

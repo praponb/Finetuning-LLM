@@ -1,1 +1,0 @@
-select supplier_id, max(price) - min(price) price_range, concat_ws(', ', sort_array(collect_set(category))) category_values, round(avg(cost), 2) avg_cost from products group by supplier_id order by category_values, supplier_id limit 20;

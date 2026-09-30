@@ -1,1 +1,0 @@
-SELECT *, CAST(event_time AS DATE) AS event_time_day, CASE WHEN event_type IN ('page_view', 'purchase') THEN 'Group A' ELSE 'Other' END AS event_type_group FROM web_events WHERE event_type IN ('click', 'search') AND page = '/product'

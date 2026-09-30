@@ -1,1 +1,0 @@
-SELECT d.budget, d.dept_name, d.location, e.is_remote, e.hire_date FROM departments d LEFT JOIN employees e ON d.id = e.dept_id WHERE e.hire_date > '2024-04-19' AND e.job_title IN ('Intern', 'Analyst')

@@ -1,1 +1,0 @@
-SELECT id, txn_time, HOUR(txn_time) AS txn_time_hour FROM transactions WHERE txn_type IN ('FEE', 'REFUND') AND account_id IN (11, 16, 20, 22) AND TO_DATE(txn_time) >= '2024-06-01' ORDER BY txn_time_hour DESC

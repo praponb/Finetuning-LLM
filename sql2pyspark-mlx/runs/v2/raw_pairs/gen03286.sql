@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM customers WHERE segment = 'SMB' OR country IN ('DE', 'TH', 'JP')), customers_stats AS (SELECT country, ROUND((100 * SUM(CASE WHEN city = 'New York' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_new_york FROM src GROUP BY country) SELECT * FROM customers_stats WHERE pct_new_york > 24 ORDER BY 1 DESC;

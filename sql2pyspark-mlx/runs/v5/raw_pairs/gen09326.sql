@@ -1,1 +1,0 @@
-SELECT page, SUM(duration_sec) AS total_duration_sec, ROUND(SUM(duration_sec) * 100.0 / SUM(SUM(duration_sec)) OVER (), 2) AS pct_of_total FROM web_events WHERE event_time >= '2024-02-01' GROUP BY page ORDER BY total_duration_sec DESC, page LIMIT 50

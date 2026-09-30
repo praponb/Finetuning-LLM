@@ -1,1 +1,0 @@
-SELECT QUARTER(order_date) AS order_quarter, SUM(discount) AS total_discount, RANK() OVER (ORDER BY SUM(discount) DESC) AS discount_rank FROM orders GROUP BY QUARTER(order_date) ORDER BY discount_rank

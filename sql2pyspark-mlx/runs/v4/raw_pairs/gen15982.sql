@@ -1,1 +1,0 @@
-with session_summary as (select session_id, sum(duration_sec) total_duration_sec from web_events group by session_id) select s.customer_id, s.device, ss.total_duration_sec from sessions s left join session_summary ss on s.id = ss.session_id where ss.total_duration_sec >= 2000

@@ -1,1 +1,0 @@
-select customer_id, balance_range, num_accounts from (select customer_id, max(balance) - min(balance) as balance_range, count(*) as num_accounts from accounts group by customer_id) as x where balance_range >= 56;

@@ -1,1 +1,0 @@
-SELECT YEAR(last_restock) last_restock_year, COUNT(DISTINCT quantity) unique_products FROM inventory WHERE quantity = 78 GROUP BY last_restock_year ORDER BY unique_products DESC, last_restock_year DESC LIMIT 10

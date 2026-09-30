@@ -1,1 +1,0 @@
-select month(signup_date) as signup_month, sum(credit_limit) as total_credit_limit, round(sum(credit_limit) * 100.0 / sum(sum(credit_limit)) over (), 2) as pct_of_total from customers where signup_date <= '2023-12-01' group by month(signup_date) order by pct_of_total desc, signup_month asc limit 20;

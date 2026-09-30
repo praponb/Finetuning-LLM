@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, service, status_code, key, v FROM app_logs LATERAL VIEW OUTER EXPLODE(context) t AS key, v) SELECT *, MAX(status_code) OVER (PARTITION BY service) AS service_max_status_code, STDDEV_SAMP(status_code) OVER (PARTITION BY key) AS key_stddev_samp_status_code, PERCENT_RANK() OVER (ORDER BY status_code DESC) AS status_code_percent_rank FROM exploded

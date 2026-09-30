@@ -1,1 +1,0 @@
-SELECT d.id, d.location, d.budget, t.avg_salary, t.unique_managers FROM departments d INNER JOIN (SELECT dept_id, ROUND(AVG(salary), 2) AS avg_salary, COUNT(DISTINCT salary) AS unique_managers FROM employees WHERE full_name LIKE 'bob%' GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.avg_salary >= 71 ORDER BY 2 DESC;

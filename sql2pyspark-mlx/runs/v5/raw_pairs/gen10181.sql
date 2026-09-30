@@ -1,1 +1,0 @@
-WITH account_stats AS (SELECT account_id, MAX(amount) AS max_amount FROM transactions GROUP BY account_id) SELECT a.id, a.account_type, as.max_amount FROM accounts a INNER JOIN account_stats as ON a.id = as.account_id ORDER BY as.max_amount

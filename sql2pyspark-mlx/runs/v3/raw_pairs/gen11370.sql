@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, event_type, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY DATE_FORMAT(event_time, 'yyyy-MM'), event_type HAVING duration_sec_range < 71;

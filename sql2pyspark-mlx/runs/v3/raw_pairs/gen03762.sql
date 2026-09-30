@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, SORT_ARRAY(COLLECT_SET(event_type)) event_type_list FROM web_events WHERE page IN ('/checkout', '/cart', '/product') GROUP BY session_id) SELECT s.browser, ss.event_type_list FROM sessions s LEFT JOIN session_summary ss ON s.id = ss.session_id

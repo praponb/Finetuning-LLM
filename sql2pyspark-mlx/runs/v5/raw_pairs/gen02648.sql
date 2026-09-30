@@ -1,1 +1,0 @@
-SELECT CASE WHEN segment IN ('SMB', 'Consumer') THEN 'tier_1' ELSE 'other' END AS segment_group, MIN(signup_date) AS min_signup_date, MAX(signup_date) AS latest_signup_date, ROUND((100 * SUM(CASE WHEN segment = 'Consumer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_consumer FROM customers WHERE name LIKE '%Taylo%' AND signup_date >= '2024-12-01' GROUP BY segment_group;

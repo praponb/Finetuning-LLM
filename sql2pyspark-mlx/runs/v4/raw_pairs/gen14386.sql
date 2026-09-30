@@ -1,1 +1,0 @@
-SELECT s.sqft, s.city, t.max_quantity, t.latest_last_restock FROM stores s INNER JOIN (SELECT store_id, MAX(quantity) AS max_quantity, MAX(last_restock) AS latest_last_restock FROM inventory WHERE quantity = 135 GROUP BY store_id) t ON s.id = t.store_id WHERE t.max_quantity >= 200

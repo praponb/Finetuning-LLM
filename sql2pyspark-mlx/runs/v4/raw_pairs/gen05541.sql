@@ -1,1 +1,0 @@
-SELECT s.city, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.method))) method_values FROM payments p LEFT JOIN orders o ON p.order_id = o.id INNER JOIN stores s ON o.store_id = s.id WHERE s.store_name LIKE '%Downtown%' GROUP BY s.city ORDER BY city;

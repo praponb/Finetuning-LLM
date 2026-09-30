@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) AS signup_month, MAX(t.amount) - MIN(t.amount) AS amount_range, ROUND(STDDEV(t.amount), 2) AS stddev_amount FROM transactions t LEFT JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id GROUP BY MONTH(c.signup_date) HAVING MAX(t.amount) - MIN(t.amount) >= 69 ORDER BY stddev_amount DESC

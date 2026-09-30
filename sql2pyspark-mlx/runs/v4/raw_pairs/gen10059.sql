@@ -1,1 +1,0 @@
-SELECT d.dept_name, MIN(e.salary) AS min_salary, SORT_ARRAY(COLLECT_SET(e.level)) AS level_list FROM employees e RIGHT JOIN departments d ON e.dept_id = d.id WHERE d.budget <= 3566000 GROUP BY d.dept_name;

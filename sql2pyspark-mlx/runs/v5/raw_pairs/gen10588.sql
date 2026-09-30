@@ -1,1 +1,0 @@
-with base as (select * from transactions where merchant = 'Grab'), summary as (select account_id, quarter(txn_time) as txn_quarter, count(distinct amount) as unique_txn_types, sum(case when txn_type = 'DEBIT' then amount else 0 end) as debit_amount from base group by account_id, quarter(txn_time)) select * from summary order by account_id, txn_quarter limit 10

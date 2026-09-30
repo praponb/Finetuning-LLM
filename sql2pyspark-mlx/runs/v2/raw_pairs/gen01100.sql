@@ -1,1 +1,0 @@
-select product_id, revenue from (select product_id, sum(unit_price * quantity) as revenue from order_items where unit_price between 250 and 360 group by product_id) as s where revenue >= 26 order by product_id desc limit 1

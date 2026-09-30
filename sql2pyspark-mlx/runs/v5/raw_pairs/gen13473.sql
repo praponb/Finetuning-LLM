@@ -1,1 +1,0 @@
-select id, created_at, items, forall(items, i -> i.qty <= 5) as all_small_qty, exists(items, i -> i.price > 100) as has_premium_item, ship_to.zip as ship_zip, ship_to.city as ship_city from carts where hour(created_at) between 11 and 19;

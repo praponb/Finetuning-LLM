@@ -1,1 +1,0 @@
-with recent_shipments as (select *, date_format(delivered_date, 'yyyy-MM') as delivered_date_label from shipments where not (status = 'RETURNED' and carrier in ('Kerry', 'FedEx', 'DHL'))), agg as (select status, max(cost) - min(cost) as cost_range from recent_shipments group by status) select status, cost_range from agg where cost_range > 68 order by cost_range desc, status desc

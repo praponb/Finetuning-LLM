@@ -1,1 +1,0 @@
-SELECT *, NTILE(10) OVER (PARTITION BY status ORDER BY monthly_fee, id) monthly_fee_bucket, NTILE(10) OVER (PARTITION BY plan ORDER BY monthly_fee, id) monthly_fee_bucket_2, ROW_NUMBER() OVER w_hist event_seq FROM subscriptions WINDOW w_hist AS (ORDER BY end_date, id);

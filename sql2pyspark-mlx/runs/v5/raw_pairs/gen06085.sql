@@ -1,1 +1,0 @@
-SELECT store_id, DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, ROUND(STDDEV(units), 2) AS stddev_units, COUNT(revenue) AS revenue_count FROM store_sales WHERE store_id IN (1, 4, 5, 6) AND product_id IN (1, 4, 8, 9) GROUP BY store_id, DATE_FORMAT(sale_date, 'yyyy-MM') ORDER BY stddev_units;

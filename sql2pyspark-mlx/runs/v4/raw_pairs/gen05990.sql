@@ -1,1 +1,0 @@
-SELECT e.id, e.dept_id AS employee_dept_id, e.level AS employee_level, m.email AS manager_email, m.level AS manager_level, LAST_DAY(e.hire_date) AS hire_date_month_end FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE NOT m.is_remote;

@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.product_id, stores.city, products.supplier_id FROM store_sales JOIN stores ON store_sales.store_id = stores.id JOIN products ON store_sales.product_id = products.id WHERE store_sales.sale_date <= '2024-03-01' ORDER BY store_sales.id DESC

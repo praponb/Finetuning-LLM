@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, MAX(salary) - MIN(salary) AS salary_range, SORT_ARRAY(COLLECT_SET(job_title)) AS job_title_list FROM employees GROUP BY dept_id) SELECT d.location, ebd.salary_range, ebd.job_title_list FROM departments d LEFT JOIN employees_by_department ebd ON d.id = ebd.dept_id

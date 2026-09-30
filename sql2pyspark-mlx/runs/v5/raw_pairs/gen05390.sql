@@ -1,1 +1,0 @@
-SELECT CASE WHEN duration_sec >= 404 THEN 'high' WHEN duration_sec >= 72 THEN 'mid' ELSE 'low' END AS duration_sec_bucket, SUM(duration_sec) AS total_duration_sec, COUNT(DISTINCT duration_sec) AS unique_event_types FROM web_events WHERE page IN ('/cart', '/checkout', '/product') GROUP BY duration_sec_bucket;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 4288000 THEN 'high' WHEN budget >= 1621000 THEN 'mid' ELSE 'low' END AS budget_bucket, location, MAX(budget) AS max_budget FROM departments WHERE dept_name IN ('HR', 'Marketing') OR dept_name IN ('Sales', 'Finance', 'Legal') GROUP BY 1, 2 HAVING AVG(budget) >= 2808000 ORDER BY max_budget DESC;

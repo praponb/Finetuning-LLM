@@ -1,1 +1,0 @@
-SELECT store_sales.units, products.supplier_id, suppliers.rating, suppliers.country FROM store_sales INNER JOIN products ON store_sales.product_id = products.id RIGHT OUTER JOIN suppliers ON products.supplier_id = suppliers.id;

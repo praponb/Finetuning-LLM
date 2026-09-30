@@ -1,1 +1,0 @@
-select id, units, store_id, datediff(current_date(), sale_date) as days_since_sale_date, round(units, 0) as units_rounded from store_sales where sale_date between '2025-01-01' and '2025-08-01' and units between 15 and 26;

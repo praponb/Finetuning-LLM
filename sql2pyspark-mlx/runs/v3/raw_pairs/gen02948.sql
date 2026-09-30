@@ -1,1 +1,0 @@
-SELECT id, category, stock_qty, supplier_id, cost, PERCENT_RANK() OVER (PARTITION BY category ORDER BY stock_qty) AS stock_qty_pct_rank, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY cost, id) AS rn FROM products WHERE launch_date >= '2025-09-01';

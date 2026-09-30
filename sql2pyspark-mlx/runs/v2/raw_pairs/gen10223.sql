@@ -1,1 +1,0 @@
-SELECT s.id, s.supplier_name, t.initech_cost, t.avg_cost FROM suppliers s JOIN (SELECT supplier_id, SUM(CASE WHEN brand = 'Initech' THEN cost ELSE 0 END) initech_cost, ROUND(AVG(cost), 2) avg_cost FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id;

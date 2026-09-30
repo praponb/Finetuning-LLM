@@ -1,1 +1,0 @@
-SELECT location, dept_name, MAX(budget) max_budget, COUNT(CASE WHEN dept_name = 'Marketing' THEN 1 END) marketing_count, SORT_ARRAY(COLLECT_SET(dept_name)) dept_name_list FROM departments WHERE location IN ('Singapore', 'New York') GROUP BY location, dept_name ORDER BY marketing_count DESC

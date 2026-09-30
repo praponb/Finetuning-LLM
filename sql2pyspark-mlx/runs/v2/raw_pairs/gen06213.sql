@@ -1,1 +1,0 @@
-with src as (select * from employees where hire_date > '2024-06-25' and email is not null), level_summary as (select level, avg(salary) as avg_salary from src group by level) select * from level_summary where avg_salary > 71000;

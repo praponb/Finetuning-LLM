@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', txn_time) AS txn_month, ROUND(STDDEV(amount), 2) AS stddev_amount FROM transactions WHERE HOUR(txn_time) BETWEEN 6 AND 11 AND amount > 2400 GROUP BY 1 ORDER BY txn_month, stddev_amount DESC

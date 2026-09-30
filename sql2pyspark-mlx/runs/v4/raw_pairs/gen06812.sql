@@ -1,1 +1,0 @@
-WITH valid_subscriptions AS (SELECT * FROM subscriptions WHERE end_date BETWEEN '2023-04-15' AND '2024-06-03'), subscriptions_stats AS (SELECT status, COUNT(*) AS cnt FROM valid_subscriptions GROUP BY status) SELECT * FROM subscriptions_stats WHERE cnt >= 4 ORDER BY cnt;

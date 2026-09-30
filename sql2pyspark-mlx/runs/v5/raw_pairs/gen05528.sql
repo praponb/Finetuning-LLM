@@ -1,1 +1,0 @@
-SELECT CASE WHEN units >= 42 THEN 'high' WHEN units >= 19 THEN 'mid' ELSE 'low' END units_bucket, MIN(revenue) min_revenue, MAX(sale_date) last_sale_date FROM store_sales WHERE store_id IN (1, 2) GROUP BY CASE WHEN units >= 42 THEN 'high' WHEN units >= 19 THEN 'mid' ELSE 'low' END;

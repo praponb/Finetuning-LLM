@@ -1,1 +1,0 @@
-select departments.id, departments.dept_name, departments.budget from departments where departments.location is not null and not exists (select 1 from employees where employees.dept_id = departments.id) order by departments.budget, id limit 1;

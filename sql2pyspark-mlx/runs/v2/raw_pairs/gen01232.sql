@@ -1,1 +1,0 @@
-with valid_employees as (select * from employees where is_remote and (full_name is null or dept_id in (2, 5, 26))), employees_stats as (select is_remote, sort_array(collect_set(job_title)) job_title_list from valid_employees group by is_remote) select is_remote, job_title_list from employees_stats;

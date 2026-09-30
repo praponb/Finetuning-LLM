@@ -1,1 +1,0 @@
-select s.region, count(ss.id) as store_sale_count, avg(ss.revenue) as avg_revenue from stores s inner join store_sales ss on s.id = ss.store_id where length(s.store_name) >= 14 group by s.region order by store_sale_count desc, 1 desc limit 10;

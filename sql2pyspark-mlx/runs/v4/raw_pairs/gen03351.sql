@@ -1,1 +1,0 @@
-WITH supplier_stats AS (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) brand_values FROM products WHERE launch_date <= '2023-08-07' GROUP BY supplier_id) SELECT s.id, s.rating, ss.brand_values FROM suppliers s LEFT JOIN supplier_stats ss ON s.id = ss.supplier_id;

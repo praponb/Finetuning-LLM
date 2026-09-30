@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, SORT_ARRAY(COLLECT_SET(event_type)) AS event_type_list, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events WHERE HOUR(event_time) BETWEEN 6 AND 10 GROUP BY session_id) SELECT s.id, s.device, st.event_type_list, st.duration_sec_range FROM sessions s LEFT JOIN session_totals st ON s.id = st.session_id;

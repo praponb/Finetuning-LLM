@@ -1,1 +1,0 @@
-SELECT emp.id, emp.manager_id AS employee_manager_id, mgr.level AS manager_level, mgr.dept_id AS manager_dept_id, mgr.hire_date AS manager_hire_date FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.manager_id = 34

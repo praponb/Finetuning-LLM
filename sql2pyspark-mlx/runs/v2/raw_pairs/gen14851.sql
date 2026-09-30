@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, manager_id, hire_date, job_title, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY hire_date, id) AS rnk FROM employees WHERE full_name LIKE '%MILLE%') SELECT * FROM ranked WHERE rnk <= 3 ORDER BY 2

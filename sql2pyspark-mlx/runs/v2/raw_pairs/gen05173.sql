@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.quantity, products.product_name, stores.store_name FROM inventory INNER JOIN products ON inventory.product_id = products.id RIGHT JOIN stores ON inventory.store_id = stores.id WHERE inventory.store_id IN (2, 3) ORDER BY product_name

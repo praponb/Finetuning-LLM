@@ -1,1 +1,0 @@
-SELECT id, merchant, is_flagged, CASE WHEN amount >= 4400 THEN 'High' WHEN amount >= 1400 THEN 'Medium' ELSE 'Low' END amount_band, CAST(is_flagged AS INT) is_flagged_flag FROM transactions WHERE txn_type = 'FEE' ORDER BY amount_band, is_flagged_flag;

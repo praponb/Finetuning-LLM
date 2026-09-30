@@ -1,1 +1,0 @@
-SELECT id, product_id, store_id, quantity, SUM(quantity) OVER (PARTITION BY product_id, store_id) AS product_id_sum_quantity, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC) AS quantity_dense_rank FROM inventory WHERE store_id = 2;

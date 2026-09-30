@@ -1,1 +1,0 @@
-SELECT CASE WHEN d.budget >= 3954000 THEN 'high' WHEN d.budget >= 1693000 THEN 'mid' ELSE 'low' END AS budget_bucket, AVG(e.salary) AS avg_salary FROM employees e INNER JOIN departments d ON e.dept_id = d.id WHERE d.budget BETWEEN 2693000 AND 3884000 GROUP BY CASE WHEN d.budget >= 3954000 THEN 'high' WHEN d.budget >= 1693000 THEN 'mid' ELSE 'low' END ORDER BY avg_salary DESC;

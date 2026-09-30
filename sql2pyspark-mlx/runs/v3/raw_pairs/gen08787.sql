@@ -1,1 +1,0 @@
-select year(a.opened_date) as opened_year, count(t.amount) as amount_count, min(t.amount) as min_amount from transactions t inner join accounts a on t.account_id = a.id where t.amount between 2000 and 2300 group by year(a.opened_date) having amount_count >= 3 order by opened_year;

@@ -1,1 +1,0 @@
-with web_events_by_session as (select session_id, count(*) as num_web_events from web_events where event_type in ('click', 'add_to_cart') group by session_id) select s.browser, webs.num_web_events from sessions s join web_events_by_session webs on s.id = webs.session_id where webs.num_web_events >= 9

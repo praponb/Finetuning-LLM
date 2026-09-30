@@ -1,1 +1,0 @@
-SELECT account_type, opened_year, avg_balance FROM (SELECT account_type, YEAR(opened_date) AS opened_year, AVG(balance) AS avg_balance FROM accounts GROUP BY account_type, YEAR(opened_date)) AS t WHERE avg_balance >= 54000

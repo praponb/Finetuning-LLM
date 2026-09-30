@@ -1,1 +1,0 @@
-SELECT MONTH(a.opened_date) AS opened_month, a.account_type, AVG(t.amount) AS avg_amount FROM transactions t INNER JOIN accounts a ON t.account_id = a.id WHERE a.opened_date > '2024-04-01' GROUP BY MONTH(a.opened_date), a.account_type ORDER BY account_type;

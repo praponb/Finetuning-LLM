@@ -1,1 +1,0 @@
-SELECT s.id, s.store_name, COUNT(o.id) AS order_count FROM stores s LEFT OUTER JOIN orders o ON o.store_id = s.id WHERE o.channel NOT IN ('partner', 'mobile', 'store') GROUP BY s.id, s.store_name HAVING order_count > 5;

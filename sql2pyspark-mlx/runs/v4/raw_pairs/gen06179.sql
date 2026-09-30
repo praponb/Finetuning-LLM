@@ -1,1 +1,0 @@
-select s.rating, s.supplier_name, t.unique_suppliers, t.max_stock_qty from suppliers s inner join (select supplier_id, count(distinct stock_qty) as unique_suppliers, max(stock_qty) as max_stock_qty from products where category = 'Grocery' group by supplier_id) t on s.id = t.supplier_id where t.max_stock_qty > 290 order by t.max_stock_qty desc, unique_suppliers desc

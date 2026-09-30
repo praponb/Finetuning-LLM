@@ -1,1 +1,0 @@
-select ss.id, ss.sale_date, ss.units, p.stock_qty, s.store_name, s.city from store_sales ss left join products p on p.id = ss.product_id right join stores s on ss.store_id = s.id where s.sqft between 5776 and 6809 and p.cost between 450 and 630 order by s.store_name;

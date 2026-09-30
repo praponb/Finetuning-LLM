@@ -1,1 +1,0 @@
-select id, account_id, txn_time, amount, merchant, lag(amount, 1) over (partition by account_id order by txn_time, id) as prev_amount, min(amount) over (partition by merchant) as merchant_min_amount from transactions where account_id in (4, 10, 39)

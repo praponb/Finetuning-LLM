@@ -1,1 +1,0 @@
-select store_id, product_id, max(quantity) - min(quantity) as quantity_range, sum(quantity) as total_quantity from inventory group by store_id, product_id having sum(quantity) >= 1170 order by store_id

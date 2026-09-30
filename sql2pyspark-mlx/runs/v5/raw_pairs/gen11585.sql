@@ -1,1 +1,0 @@
-SELECT id, country, signup_date, credit_limit FROM (SELECT id, country, signup_date, credit_limit, ROW_NUMBER() OVER (PARTITION BY country ORDER BY signup_date DESC, id) AS rnk FROM customers WHERE name LIKE 'He%') AS t WHERE rnk <= 3

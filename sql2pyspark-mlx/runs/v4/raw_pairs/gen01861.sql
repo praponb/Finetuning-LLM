@@ -1,1 +1,0 @@
-SELECT s.region, SORT_ARRAY(COLLECT_SET(o.channel)) AS channel_list FROM orders o INNER JOIN customers c ON o.customer_id = c.id LEFT OUTER JOIN stores s ON o.store_id = s.id GROUP BY s.region ORDER BY region DESC

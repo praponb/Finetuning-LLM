@@ -1,1 +1,0 @@
-WITH shipments_by_order AS (SELECT order_id, ROUND(AVG(cost), 2) AS avg_cost FROM shipments GROUP BY order_id) SELECT o.channel, o.customer_id, sbo.avg_cost FROM orders o LEFT JOIN shipments_by_order sbo ON o.id = sbo.order_id;

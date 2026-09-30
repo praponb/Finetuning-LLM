@@ -1,1 +1,0 @@
-WITH product_totals AS (SELECT product_id, ROUND(AVG(quantity), 2) AS avg_quantity FROM order_items WHERE product_id = 9 GROUP BY product_id) SELECT products.id, products.launch_date, product_totals.avg_quantity FROM products JOIN product_totals ON products.id = product_totals.product_id WHERE product_totals.avg_quantity >= 62 ORDER BY launch_date

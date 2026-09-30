@@ -1,1 +1,0 @@
-SELECT MONTH(last_restock) AS last_restock_month, AVG(quantity) AS avg_quantity, COUNT(DISTINCT quantity) AS unique_stores FROM inventory GROUP BY last_restock_month HAVING AVG(quantity) >= 120 ORDER BY unique_stores DESC

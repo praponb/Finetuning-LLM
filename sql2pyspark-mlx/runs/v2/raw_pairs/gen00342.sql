@@ -1,1 +1,0 @@
-SELECT QUARTER(end_date) AS end_quarter, COUNT(*) AS num_subscriptions, SUM(CASE WHEN plan = 'premium' THEN monthly_fee ELSE 0 END) AS premium_monthly_fee FROM subscriptions WHERE monthly_fee <= 220 GROUP BY QUARTER(end_date) HAVING SUM(CASE WHEN plan = 'premium' THEN monthly_fee ELSE 0 END) > 26 ORDER BY 3 DESC;

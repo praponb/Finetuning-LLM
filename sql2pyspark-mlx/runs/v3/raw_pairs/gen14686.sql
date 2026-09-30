@@ -1,1 +1,0 @@
-SELECT id, customer_id, store_id, ROUND(shipping_fee * 0.85, 2) AS shipping_fee_adjusted, CONCAT_WS('/', status, channel) AS status_channel_key FROM orders WHERE channel IN ('partner', 'store', 'web') OR shipping_fee > 26 ORDER BY id, customer_id DESC;

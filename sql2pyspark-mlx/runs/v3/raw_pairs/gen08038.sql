@@ -1,1 +1,0 @@
-select id, supplier_id, category, launch_date, stock_qty, cost, lag(stock_qty, 1) over (partition by supplier_id, category order by launch_date, id) as prev_stock_qty, lag(cost, 2) over (partition by supplier_id order by launch_date, id) as prev_cost from products where launch_date > '2024-06-11' order by prev_stock_qty, launch_date desc

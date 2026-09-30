@@ -1,1 +1,0 @@
-select c.city, c.country, count(distinct s.browser) as unique_browsers from sessions s right join customers c on c.id = s.customer_id where month(c.signup_date) in (1, 7, 9) group by c.city, c.country having unique_browsers > 3 order by unique_browsers desc

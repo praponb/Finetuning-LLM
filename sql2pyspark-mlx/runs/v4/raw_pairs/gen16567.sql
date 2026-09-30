@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, MAX(quantity) AS max_quantity, AVG(quantity) AS avg_quantity FROM inventory GROUP BY product_id) SELECT p.supplier_id, p.price, ps.max_quantity, ps.avg_quantity FROM products p INNER JOIN product_stats ps ON p.id = ps.product_id

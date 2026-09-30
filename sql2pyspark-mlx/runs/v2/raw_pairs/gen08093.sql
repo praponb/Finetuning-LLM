@@ -1,1 +1,0 @@
-select city, max(sqft) as max_sqft, sum(case when region = 'Central' then 1 else 0 end) as central_count from stores where city in ('Berlin', 'Chiang Mai') and sqft between 9701 and 11174 and sqft != 11286 group by 1;

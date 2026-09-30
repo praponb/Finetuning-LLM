@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, CASE WHEN sqft >= 15763 THEN 'High' WHEN sqft >= 3724 THEN 'Medium' ELSE 'Low' END AS sqft_level FROM stores WHERE opened_date >= DATE '2023-05-31' AND region IS NOT NULL) SELECT city FROM cleaned INTERSECT ALL SELECT city FROM stores WHERE sqft < 11998;

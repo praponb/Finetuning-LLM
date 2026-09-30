@@ -1,1 +1,0 @@
-SELECT c.id, c.country, COUNT(s.id) subscription_count, COUNT(s.monthly_fee) monthly_fee_count, ROUND((100 * SUM(CASE WHEN s.status = 'PAUSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_paused FROM customers c INNER JOIN subscriptions s ON s.customer_id = c.id GROUP BY c.id, c.country

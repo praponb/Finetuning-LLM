@@ -1,1 +1,0 @@
-SELECT id, carrier, cost FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY carrier ORDER BY cost, id) AS row_num FROM shipments WHERE status <> 'DELIVERED') AS ranked WHERE row_num <= 3 ORDER BY id, carrier DESC;

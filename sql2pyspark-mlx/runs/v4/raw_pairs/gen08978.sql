@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CAST(balance AS INT) AS balance_int, COALESCE(status, 'NONE') AS status_clean FROM accounts WHERE opened_date > DATE '2023-04-07' AND status IS NOT NULL AND status != 'OPEN') SELECT s.*, d.credit_limit, d.city FROM base s LEFT JOIN customers d ON s.customer_id = d.id

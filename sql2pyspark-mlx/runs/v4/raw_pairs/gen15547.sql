@@ -1,1 +1,0 @@
-SELECT product_id, SUM(unit_price) AS total_unit_price FROM order_items WHERE product_id IN (7, 31, 32) AND order_id IN (11, 14, 23) AND product_id IN (5, 36) GROUP BY product_id HAVING SUM(unit_price) >= 1000 ORDER BY product_id ASC;

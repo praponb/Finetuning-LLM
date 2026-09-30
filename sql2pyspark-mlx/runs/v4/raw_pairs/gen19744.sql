@@ -1,1 +1,0 @@
-SELECT category, COUNT(*) FILTER (WHERE category = 'Fashion') AS fashion_rows, CORR(stock_qty, cost) AS corr_stock_qty_cost, COUNT(*) AS event_count FROM products GROUP BY category ORDER BY category DESC NULLS FIRST

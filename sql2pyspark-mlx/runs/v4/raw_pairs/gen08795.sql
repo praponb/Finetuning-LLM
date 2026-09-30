@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, plan, EXPLODE_OUTER(discounts) AS val FROM price_tiers) SELECT id, plan, val, PERCENT_RANK() OVER (PARTITION BY plan ORDER BY val) AS val_percent_rank, PERCENT_RANK() OVER (PARTITION BY plan ORDER BY val DESC NULLS FIRST) AS val_percent_rank_2, STDDEV_SAMP(val) OVER (PARTITION BY plan) AS plan_stddev_samp_val FROM exploded;

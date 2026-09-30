@@ -1,1 +1,0 @@
-SELECT order_items.product_id, order_items.unit_price, orders.shipping_fee, orders.channel FROM order_items FULL OUTER JOIN orders ON order_items.order_id = orders.id WHERE orders.store_id = 40 OR orders.channel IN ('mobile', 'web') ORDER BY orders.shipping_fee;

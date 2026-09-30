@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, SUBSTRING(segment, 1, 4) AS segment_prefix FROM customers WHERE (segment IN ('Consumer', 'Corporate', 'SMB') AND country IN ('UK', 'JP', 'DE')) OR segment IS NOT NULL), Agg AS (SELECT segment, MAX(signup_date) AS last_signup_date FROM base GROUP BY segment) SELECT * FROM Agg ORDER BY last_signup_date DESC, segment LIMIT 10

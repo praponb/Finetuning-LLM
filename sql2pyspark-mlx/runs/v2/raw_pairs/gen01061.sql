@@ -1,1 +1,0 @@
-SELECT ss.id, ss.units, p.category, s.store_name, s.sqft FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN stores s ON ss.store_id = s.id WHERE ss.product_id IN (2, 3, 9) AND p.price > 890 ORDER BY ss.units

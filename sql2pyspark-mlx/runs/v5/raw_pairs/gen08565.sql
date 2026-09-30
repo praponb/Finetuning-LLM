@@ -1,1 +1,0 @@
-SELECT id, session_id, page, COUNT(duration_sec) OVER (PARTITION BY session_id ORDER BY CAST(event_time AS BIGINT) ASC RANGE BETWEEN 604800 PRECEDING AND CURRENT ROW) AS duration_sec_count_7d, SUM(duration_sec) OVER (ORDER BY event_time ASC, id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_duration_sec FROM web_events WHERE duration_sec <= 428;

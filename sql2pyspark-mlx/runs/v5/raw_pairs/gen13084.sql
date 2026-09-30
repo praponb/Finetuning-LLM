@@ -1,1 +1,0 @@
-WITH recent_subscriptions AS (SELECT *, LAST_DAY(start_date) AS start_date_month_end FROM subscriptions WHERE customer_id IN (18, 22, 32)), summary AS (SELECT status, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM recent_subscriptions GROUP BY status) SELECT * FROM summary ORDER BY avg_monthly_fee, status LIMIT 1;

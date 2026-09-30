@@ -1,1 +1,0 @@
-SELECT web_events.id, web_events.page, sessions.started_at, customers.city, customers.credit_limit FROM web_events LEFT JOIN sessions ON web_events.session_id = sessions.id FULL OUTER JOIN customers ON customers.id = sessions.customer_id WHERE sessions.started_at < '2024-12-01' AND sessions.country IN ('TH', 'UK', 'JP') ORDER BY credit_limit DESC;

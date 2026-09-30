@@ -1,1 +1,0 @@
-WITH department_stats AS (SELECT dept_id, COUNT(*) AS employee_count, ROUND((100 * SUM(CASE WHEN job_title = 'Analyst' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_analyst FROM employees GROUP BY dept_id) SELECT d.id, d.budget, ds.employee_count, ds.pct_analyst FROM departments d INNER JOIN department_stats ds ON d.id = ds.dept_id WHERE ds.pct_analyst >= 60;

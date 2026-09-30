@@ -1,1 +1,0 @@
-SELECT id, customer_id, amount, shipping_fee, AVG(shipping_fee) OVER (PARTITION BY customer_id ORDER BY discount, id ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS shipping_fee_avg_5, NTILE(4) OVER (PARTITION BY store_id ORDER BY shipping_fee, id) AS shipping_fee_bucket, ROW_NUMBER() OVER (ORDER BY discount DESC, id) AS row_seq FROM orders;

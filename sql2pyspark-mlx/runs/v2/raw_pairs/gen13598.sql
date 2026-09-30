@@ -1,1 +1,0 @@
-select date_format(launch_date, 'yyyy-MM') as launch_month, quarter(launch_date) as launch_quarter, min(launch_date) as min_launch_date from products group by date_format(launch_date, 'yyyy-MM'), quarter(launch_date) order by launch_month

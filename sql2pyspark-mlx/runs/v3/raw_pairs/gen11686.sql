@@ -1,1 +1,0 @@
-WITH RankedOrderItems AS (SELECT id, order_id, unit_price, RANK() OVER (PARTITION BY order_id ORDER BY unit_price) AS pos FROM order_items) SELECT * FROM RankedOrderItems WHERE pos <= 3 ORDER BY order_id DESC, id DESC

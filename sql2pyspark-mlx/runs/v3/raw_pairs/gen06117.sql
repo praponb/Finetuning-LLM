@@ -1,1 +1,0 @@
-with RecentStoreSales as (select * from store_sales where units <> 26 and (revenue >= 3300 or store_id = 2)), store_id_summary as (select store_id, sum(revenue) as total_revenue from RecentStoreSales group by store_id) select * from store_id_summary where total_revenue >= 23000;

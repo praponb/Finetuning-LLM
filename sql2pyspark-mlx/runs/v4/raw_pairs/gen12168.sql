@@ -1,1 +1,0 @@
-with ranked as (select id, store_id, last_restock, dense_rank() over (partition by store_id order by last_restock) row_num from inventory) select id, store_id, last_restock from ranked where row_num <= 3 order by store_id desc;

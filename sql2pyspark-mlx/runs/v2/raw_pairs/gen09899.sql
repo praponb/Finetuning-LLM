@@ -1,1 +1,0 @@
-SELECT o.customer_id, o.status, o.discount, oi.product_id, oi.quantity, oi.order_id FROM orders o LEFT JOIN order_items oi ON oi.order_id = o.id WHERE oi.product_id IN (10, 40) AND o.status IN ('PENDING', 'SHIPPED')

@@ -1,1 +1,0 @@
-SELECT id, city, region, opened_date, sqft, ROW_NUMBER() OVER (PARTITION BY city, region ORDER BY opened_date, id) AS row_num, ROUND(sqft / SUM(sqft) OVER (PARTITION BY city), 3) AS sqft_share FROM stores;

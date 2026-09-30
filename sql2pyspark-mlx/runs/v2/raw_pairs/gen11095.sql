@@ -1,1 +1,0 @@
-SELECT segment, pct_bangkok FROM (SELECT segment, ROUND((100 * SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_bangkok FROM customers GROUP BY segment) AS sub WHERE pct_bangkok > 39;

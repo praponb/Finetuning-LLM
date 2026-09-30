@@ -1,1 +1,0 @@
-SELECT id, opened_date, city, store_name, LOWER(store_name) AS store_name_lower, CAST(sqft AS DOUBLE) AS sqft_num FROM stores WHERE store_name IS NOT NULL AND opened_date BETWEEN '2024-08-28' AND '2024-12-01'

@@ -1,1 +1,0 @@
-SELECT ss.id, ss.product_id, ss.revenue, s.opened_date, p.category, p.launch_date FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id WHERE s.opened_date BETWEEN '2023-06-03' AND '2024-09-01' OR s.opened_date > '2023-11-01'

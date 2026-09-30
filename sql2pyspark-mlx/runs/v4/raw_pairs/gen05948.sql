@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.country IN ('US', 'SG') THEN 'group_a' ELSE 'other' END AS country_group, AVG(p.cost) AS avg_cost FROM products p RIGHT JOIN suppliers s ON s.id = p.supplier_id GROUP BY CASE WHEN s.country IN ('US', 'SG') THEN 'group_a' ELSE 'other' END ORDER BY country_group

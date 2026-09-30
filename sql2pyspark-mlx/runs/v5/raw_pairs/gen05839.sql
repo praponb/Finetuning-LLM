@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, plan, end_date, monthly_fee, status, CONCAT(plan, '/', status) plan_status FROM subscriptions WHERE end_date >= DATE '2023-05-19') SELECT * FROM (SELECT status, plan, monthly_fee FROM valid) src PIVOT (MAX(monthly_fee) AS total, COUNT(1) AS cnt FOR plan IN ('premium', 'standard'));

@@ -1,1 +1,0 @@
-with session_summary as (select session_id, max(duration_sec) as max_duration_sec, concat_ws(', ', sort_array(collect_set(page))) as page_values from web_events group by session_id) select s.id, s.started_at, ss.max_duration_sec, ss.page_values from sessions s inner join session_summary ss on s.id = ss.session_id where ss.max_duration_sec >= 460 order by s.id limit 10;

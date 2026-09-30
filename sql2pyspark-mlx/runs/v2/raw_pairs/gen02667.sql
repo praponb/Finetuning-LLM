@@ -1,1 +1,0 @@
-with transactions_by_account as (select account_id, max(txn_time) as latest_txn_time from transactions where merchant in ('Lazada', 'Shell') group by account_id) select a.id, a.account_type, a.opened_date, tba.latest_txn_time from accounts a left join transactions_by_account tba on a.id = tba.account_id order by tba.latest_txn_time;

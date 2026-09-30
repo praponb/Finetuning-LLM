@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT city, MONTH(opened_date) AS opened_month, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values, COUNT(CASE WHEN region = 'Central' THEN 1 END) AS central_count FROM stores GROUP BY city, MONTH(opened_date)) AS agg WHERE central_count > 8 ORDER BY opened_month DESC, 1

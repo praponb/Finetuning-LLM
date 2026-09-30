@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1230 THEN 'high' WHEN amount >= 450 THEN 'mid' ELSE 'low' END amount_bucket, method, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values, ROUND(AVG(amount), 2) avg_amount FROM payments GROUP BY amount_bucket, method HAVING avg_amount > 62

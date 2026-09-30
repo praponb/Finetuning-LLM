@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM payments WHERE TO_DATE(paid_at) < '2025-02-17' OR HOUR(paid_at) BETWEEN 9 AND 15), agg AS (SELECT method, MIN(paid_at) AS min_paid_at, COUNT(amount) AS amount_count FROM base GROUP BY method) SELECT method, min_paid_at, amount_count FROM agg ORDER BY min_paid_at ASC, method ASC LIMIT 50;

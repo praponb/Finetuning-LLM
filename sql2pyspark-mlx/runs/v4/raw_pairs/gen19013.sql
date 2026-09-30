@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity, last_restock FROM (SELECT id, product_id, quantity, last_restock, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY quantity, id) AS rnk FROM inventory) AS t WHERE rnk <= 2;

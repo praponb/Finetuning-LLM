@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT *, DENSE_RANK() OVER (PARTITION BY session_id ORDER BY event_time) AS pos FROM web_events WHERE duration_sec <= 149) SELECT id, session_id, event_time FROM numbered WHERE pos <= 3;

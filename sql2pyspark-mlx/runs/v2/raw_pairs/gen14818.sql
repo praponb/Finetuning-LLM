@@ -1,1 +1,0 @@
-SELECT p.id, p.stock_qty, p.cost, t.unit_price_range, t.unique_products FROM products p LEFT JOIN (SELECT product_id, MAX(unit_price) - MIN(unit_price) unit_price_range, COUNT(DISTINCT unit_price) unique_products FROM order_items WHERE product_id = 13 GROUP BY product_id) t ON p.id = t.product_id ORDER BY t.unique_products DESC;

@@ -1,1 +1,0 @@
-select id, customer_id, coupon_codes, items, attributes, transform(items, li -> li.product_id) as product_ids, try_cast(attributes['weight_kg'] as double) as weight_kg, forall(items, li -> li.qty <= 5) as all_small_qty, ship_to.zip as ship_zip, coalesce(ship_to.country, 'UNKNOWN') as country_or_unknown from carts

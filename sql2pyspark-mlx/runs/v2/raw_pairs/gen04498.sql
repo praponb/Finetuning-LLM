@@ -1,1 +1,0 @@
-SELECT p.product_name, p.stock_qty, i.quantity, i.product_id, i.last_restock, ROUND(p.stock_qty / p.price, 2) AS stock_qty_per_price FROM products p LEFT OUTER JOIN inventory i ON p.id = i.product_id WHERE i.last_restock < '2025-01-17';

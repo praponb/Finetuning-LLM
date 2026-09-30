@@ -1,1 +1,0 @@
-SELECT s.id, s.store_name, s.region, t.stddev_revenue FROM stores s INNER JOIN (SELECT store_id, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales GROUP BY store_id) t ON s.id = t.store_id ORDER BY store_name DESC, t.stddev_revenue DESC;

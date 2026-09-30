@@ -1,1 +1,0 @@
-select c.is_active, min(o.shipping_fee) as min_shipping_fee from orders o left outer join customers c on o.customer_id = c.id where c.city is not null group by c.is_active order by min_shipping_fee, is_active limit 5

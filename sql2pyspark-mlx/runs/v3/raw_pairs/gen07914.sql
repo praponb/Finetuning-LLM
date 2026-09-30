@@ -1,1 +1,0 @@
-SELECT s.city, YEAR(s.opened_date) AS opened_year, MAX(o.shipping_fee) AS max_shipping_fee, COUNT(DISTINCT o.discount) AS unique_statuss FROM orders o FULL OUTER JOIN stores s ON o.store_id = s.id GROUP BY s.city, YEAR(s.opened_date);

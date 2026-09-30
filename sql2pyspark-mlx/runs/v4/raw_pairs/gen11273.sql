@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, customer_id, coupon_codes, key, attr_value FROM carts LATERAL VIEW EXPLODE(attributes) li AS key, attr_value) SELECT id, customer_id, coupon_codes, key FROM flattened ORDER BY customer_id NULLS FIRST;

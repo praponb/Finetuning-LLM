@@ -1,1 +1,0 @@
-SELECT YEAR(c.signup_date) signup_year, AVG(a.balance) avg_balance, MAX(a.opened_date) last_opened_date FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE a.balance > 55000 GROUP BY YEAR(c.signup_date) HAVING avg_balance >= 24000 ORDER BY last_opened_date, signup_year

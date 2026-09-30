@@ -1,1 +1,0 @@
-SELECT * FROM sessions WHERE HOUR(started_at) BETWEEN 11 AND 14 ORDER BY 3, 1 DESC;

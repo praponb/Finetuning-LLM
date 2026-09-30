@@ -1,1 +1,0 @@
-WITH valid_order_items AS (SELECT * FROM order_items WHERE unit_price < 220 AND product_id = 34 AND quantity IS NULL), order_items_stats AS (SELECT product_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM valid_order_items GROUP BY product_id) SELECT product_id, quantity_range FROM order_items_stats WHERE quantity_range >= 62 ORDER BY product_id DESC;

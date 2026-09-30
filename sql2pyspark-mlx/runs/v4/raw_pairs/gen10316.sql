@@ -1,1 +1,0 @@
-SELECT id, store_id, revenue, product_id, units, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY revenue DESC, id) AS rn, MIN(units) OVER (PARTITION BY product_id) AS product_id_min_units FROM store_sales WHERE units > 22 ORDER BY id;

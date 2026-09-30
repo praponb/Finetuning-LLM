@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1290 THEN 'high' WHEN amount >= 770 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(*) AS row_count, MIN(amount) AS min_amount, SUM(CASE WHEN method = 'promptpay' THEN 1 ELSE 0 END) AS promptpay_count FROM payments WHERE method NOT IN ('paypal', 'card') AND order_id IS NOT NULL AND amount <= 550 GROUP BY 1

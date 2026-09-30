@@ -1,1 +1,0 @@
-SELECT *, SUM(rating) OVER (PARTITION BY country ORDER BY rating, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_rating, ROW_NUMBER() OVER (PARTITION BY city ORDER BY rating DESC, id) AS seq_no FROM suppliers WHERE city IN ('Berlin', 'Singapore', 'New York');

@@ -1,1 +1,0 @@
-SELECT id, level, hire_date, manager_id, salary, PERCENT_RANK() OVER (PARTITION BY level ORDER BY hire_date DESC) AS hire_date_pct_rank, LEAD(salary, 1) OVER (PARTITION BY manager_id ORDER BY hire_date, id) AS next_salary FROM employees WHERE level IN ('L4', 'L3', 'L2')

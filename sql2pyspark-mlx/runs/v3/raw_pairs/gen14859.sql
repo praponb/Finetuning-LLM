@@ -1,1 +1,0 @@
-select c.city, round(avg(p.amount), 2) as avg_amount from payments p right outer join orders o on o.id = p.order_id join customers c on o.customer_id = c.id where c.segment = 'SMB' group by c.city having avg_amount >= 42;

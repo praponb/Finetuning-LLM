@@ -1,1 +1,0 @@
-WITH dim_totals AS (SELECT dim.status, src.merchant, COUNT(*) AS num_rows, SUM(src.amount) AS total_amount FROM transactions src LEFT JOIN accounts dim ON src.account_id = dim.id GROUP BY dim.status, src.merchant) SELECT status, merchant FROM dim_totals ORDER BY merchant NULLS FIRST, status

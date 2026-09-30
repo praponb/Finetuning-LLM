@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(last_restock, 'yyyy-MM') last_restock_month, store_id, COUNT(quantity) quantity_count FROM inventory GROUP BY last_restock_month, store_id HAVING COUNT(quantity) > 3 ORDER BY last_restock_month;

@@ -1,1 +1,0 @@
-SELECT CASE WHEN a.balance >= 72000 THEN 'high' WHEN a.balance >= 29000 THEN 'mid' ELSE 'low' END AS balance_bucket, a.customer_id, SORT_ARRAY(COLLECT_SET(t.merchant)) AS merchant_list FROM transactions t FULL OUTER JOIN accounts a ON t.account_id = a.id GROUP BY CASE WHEN a.balance >= 72000 THEN 'high' WHEN a.balance >= 29000 THEN 'mid' ELSE 'low' END, a.customer_id;

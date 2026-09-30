@@ -1,1 +1,0 @@
-SELECT d.location, d.budget, e.job_title, e.salary, e.dept_id FROM departments d LEFT JOIN employees e ON e.dept_id = d.id WHERE e.dept_id IN (34, 37, 38) AND UPPER(e.email) LIKE '%LIC%' ORDER BY location, budget DESC;

@@ -1,1 +1,0 @@
-WITH customer_summary AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(status)) AS status_list FROM accounts GROUP BY customer_id) SELECT c.id, c.city, cs.status_list FROM customers c JOIN customer_summary cs ON c.id = cs.customer_id ORDER BY c.city

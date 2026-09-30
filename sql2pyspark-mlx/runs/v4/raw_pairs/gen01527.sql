@@ -1,1 +1,0 @@
-WITH latest_match AS (SELECT s.*, x.brand, x.product_cost FROM suppliers s LEFT JOIN LATERAL (SELECT c.brand, c.cost AS product_cost FROM products c WHERE c.supplier_id = s.id ORDER BY c.stock_qty DESC, c.id DESC LIMIT 1) x ON TRUE) SELECT id, city, rating FROM latest_match ORDER BY rating DESC NULLS FIRST;

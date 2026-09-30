@@ -1,1 +1,0 @@
-SELECT p.id, p.price, p.category, s.rating, s.supplier_name, s.city, p.price - p.cost AS margin FROM products p INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.brand = 'Initech' AND p.supplier_id IN (4, 30) ORDER BY id DESC

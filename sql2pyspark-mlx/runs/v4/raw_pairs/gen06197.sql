@@ -1,1 +1,0 @@
-SELECT sessions.id, sessions.device, sessions.customer_id FROM sessions WHERE EXISTS (SELECT 1 FROM web_events WHERE web_events.session_id = sessions.id AND web_events.event_type IN ('page_view', 'click', 'search')) ORDER BY id

@@ -1,1 +1,0 @@
-SELECT id, order_id, paid_at, status, DATE_FORMAT(paid_at, 'yyyy-MM') AS paid_at_label, CASE WHEN amount >= 1480 THEN 'High' WHEN amount >= 390 THEN 'Medium' ELSE 'Low' END AS amount_band FROM payments ORDER BY amount_band ASC, id ASC LIMIT 3

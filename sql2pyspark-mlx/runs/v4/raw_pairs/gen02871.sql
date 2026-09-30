@@ -1,1 +1,0 @@
-SELECT a.balance, a.account_type, t.starbucks_count FROM accounts a INNER JOIN (SELECT account_id, SUM(CASE WHEN merchant = 'Starbucks' THEN 1 ELSE 0 END) AS starbucks_count FROM transactions GROUP BY account_id) t ON a.id = t.account_id

@@ -1,1 +1,0 @@
-SELECT event_type, first_event_time, avg_duration_sec FROM (SELECT event_type, MIN(event_time) AS first_event_time, AVG(duration_sec) AS avg_duration_sec FROM web_events WHERE duration_sec = 261 GROUP BY event_type) AS sub WHERE avg_duration_sec > 120 ORDER BY avg_duration_sec DESC, event_type LIMIT 3

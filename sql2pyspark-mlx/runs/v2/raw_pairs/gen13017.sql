@@ -1,1 +1,0 @@
-WITH ranked_shipments AS (SELECT *, RANK() OVER (PARTITION BY status ORDER BY cost) pos FROM shipments) SELECT id, status, cost, delivered_date FROM ranked_shipments WHERE pos <= 3 ORDER BY delivered_date, 1

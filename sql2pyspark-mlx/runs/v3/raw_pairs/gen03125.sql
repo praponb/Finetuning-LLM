@@ -1,1 +1,0 @@
-SELECT id, order_id, quantity FROM (SELECT id, order_id, quantity, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY quantity, id) AS row_num FROM order_items) AS ranked WHERE row_num <= 2 ORDER BY order_id DESC

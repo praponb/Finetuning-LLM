@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, COUNT(DISTINCT quantity) AS unique_orders FROM order_items GROUP BY order_id) SELECT o.id, o.channel, o.amount, os.unique_orders FROM orders o INNER JOIN order_stats os ON o.id = os.order_id;

@@ -1,1 +1,0 @@
-with lines as (select id, plan, effective_from, currency, explode(tier_prices) as tier_value from price_tiers) select id, plan, tier_value, case when plan rlike '^(starter|pro)$' then 'PRIORITY' when plan rlike '^(basic|enterprise)$' then 'EXTENDED' else 'CORE' end as plan_zone from lines;

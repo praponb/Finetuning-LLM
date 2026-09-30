@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, MIN(sale_date) first_sale_date, MIN(sale_date) min_sale_date FROM store_sales WHERE revenue <= 3200 GROUP BY store_id) SELECT s.id, s.sqft, st.first_sale_date, st.min_sale_date FROM stores s INNER JOIN store_totals st ON s.id = st.store_id ORDER BY id DESC, st.min_sale_date;

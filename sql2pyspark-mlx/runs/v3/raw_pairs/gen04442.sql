@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM payments WHERE method != 'paypal'), agg AS (SELECT method, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(method))) method_values, ROUND(STDDEV(amount), 2) stddev_amount FROM base GROUP BY method) SELECT * FROM agg WHERE stddev_amount > 55

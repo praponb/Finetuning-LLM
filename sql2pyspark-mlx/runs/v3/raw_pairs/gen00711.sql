@@ -1,1 +1,0 @@
-SELECT p.stock_qty, t.total_revenue, t.revenue_range FROM products p LEFT JOIN (SELECT product_id, SUM(revenue) AS total_revenue, MAX(revenue) - MIN(revenue) AS revenue_range FROM store_sales GROUP BY product_id) t ON p.id = t.product_id ORDER BY t.total_revenue DESC, p.stock_qty;

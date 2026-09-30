@@ -1,1 +1,0 @@
-SELECT s.id, s.cost, o.customer_id, o.discount, st.sqft, st.opened_date, o.shipping_fee - o.amount AS amount_with_shipping FROM shipments s JOIN orders o ON s.order_id = o.id JOIN stores st ON st.id = o.store_id WHERE st.region = 'North'

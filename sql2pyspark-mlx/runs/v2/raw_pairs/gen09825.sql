@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, COUNT(DISTINCT device) AS unique_devices FROM sessions WHERE country NOT IN ('SG', 'DE', 'TH') GROUP BY customer_id) SELECT customers.signup_date, customers.city, customer_stats.unique_devices FROM customers JOIN customer_stats ON customers.id = customer_stats.customer_id WHERE customer_stats.unique_devices >= 9;

@@ -1,1 +1,0 @@
-SELECT i.quantity, p.launch_date, p.stock_qty, s.city, s.rating FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE ARRAY_CONTAINS(p.tags, 'clearance') AND p.brand IN ('Acme', 'Initech') ORDER BY s.rating DESC;

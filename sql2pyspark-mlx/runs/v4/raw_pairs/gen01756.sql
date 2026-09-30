@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY order_date, id) AS pos FROM orders WHERE discount > 0.25) SELECT id, store_id, order_date, customer_id FROM ranked WHERE pos <= 1;

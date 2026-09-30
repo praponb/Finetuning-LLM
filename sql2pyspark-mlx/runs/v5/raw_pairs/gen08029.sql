@@ -1,1 +1,0 @@
-SELECT we.id, we.event_type, we.session_id, s.device, s.customer_id, c.age FROM web_events we JOIN sessions s ON we.session_id = s.id JOIN customers c ON s.customer_id = c.id ORDER BY we.session_id DESC;

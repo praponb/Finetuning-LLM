@@ -1,1 +1,0 @@
-select id, region, opened_date, sqft, city, lead(sqft, 1, 0) over (partition by region order by opened_date, id) as next_sqft, rank() over (partition by city order by opened_date) as opened_date_rank from stores where sqft = 7017

@@ -1,1 +1,0 @@
-SELECT city, QUARTER(signup_date) AS signup_quarter, SORT_ARRAY(COLLECT_SET(city)) AS city_list, COUNT(*) AS row_count FROM customers WHERE email NOT LIKE '%@GMAIL.COM' AND is_active GROUP BY 1, 2 ORDER BY signup_quarter DESC, city LIMIT 3

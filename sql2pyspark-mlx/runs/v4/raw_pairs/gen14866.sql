@@ -1,1 +1,0 @@
-SELECT id, store_id, product_id, sale_date, units, revenue, AVG(units) OVER (ORDER BY revenue, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS units_avg_6, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY sale_date DESC, id) AS event_seq, LAG(revenue, 2) OVER (PARTITION BY product_id, store_id ORDER BY units, id) AS prev_revenue FROM store_sales

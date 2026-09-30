@@ -1,1 +1,0 @@
-select store_sales.id, store_sales.revenue, store_sales.sale_date, store_sales.product_id, products.cost, products.product_name, products.category from store_sales left outer join products on store_sales.product_id = products.id where products.price > 730 or array_contains(products.tags, 'new');

@@ -1,1 +1,0 @@
-SELECT ss.id, ss.sale_date, ss.product_id, p.product_name, p.price, s.country, s.supplier_name, INITCAP(TRIM(p.product_name)) AS product_name_title FROM store_sales ss LEFT OUTER JOIN products p ON p.id = ss.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.cost BETWEEN 220 AND 370 ORDER BY supplier_name DESC, 8, id LIMIT 5

@@ -1,1 +1,0 @@
-select method, status, count(amount) as amount_count, count(case when method = 'promptpay' then 1 end) as promptpay_count from payments where paid_at >= '2025-02-25' group by 1, 2 order by method asc;

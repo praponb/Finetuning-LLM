@@ -1,1 +1,0 @@
-SELECT c.is_active, t.discount_count FROM customers c LEFT OUTER JOIN (SELECT customer_id, COUNT(discount) AS discount_count FROM orders GROUP BY customer_id) t ON c.id = t.customer_id WHERE t.discount_count > 10;

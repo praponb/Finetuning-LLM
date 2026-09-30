@@ -1,1 +1,0 @@
-SELECT id, region, sqft, city, opened_date, ROUND(sqft / SUM(sqft) OVER (PARTITION BY region), 3) AS sqft_share, LEAD(sqft, 1) OVER (PARTITION BY city, region ORDER BY opened_date, id) AS next_sqft FROM stores

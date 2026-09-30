@@ -1,1 +1,0 @@
-select case when balance >= 88000 then 'high' when balance >= 13000 then 'mid' else 'low' end as balance_bucket, max(balance) - min(balance) as balance_range, min(balance) as min_balance from accounts where status != 'OPEN' and year(opened_date) >= 2025 group by 1;

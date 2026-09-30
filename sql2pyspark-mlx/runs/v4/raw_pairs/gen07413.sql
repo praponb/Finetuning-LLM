@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT id, order_id, method, amount, paid_at, status, TRIM(method) clean_method, TO_DATE(paid_at) paid_at_date FROM payments WHERE status = 'REFUNDED') SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id, status ORDER BY paid_at DESC NULLS LAST, id) AS row_num FROM filtered QUALIFY row_num = 1;

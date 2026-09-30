@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM transactions WHERE amount > 2500 AND (merchant = '7-Eleven' OR txn_type = 'FEE')), TxnTypeSummary AS (SELECT txn_type, MAX(amount) AS max_amount FROM base GROUP BY txn_type) SELECT txn_type, max_amount FROM TxnTypeSummary WHERE max_amount > 2400 ORDER BY max_amount DESC;

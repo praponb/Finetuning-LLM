@@ -1,1 +1,0 @@
-WITH store_sales_by_product AS (SELECT product_id, ROUND(AVG(revenue), 2) AS avg_revenue, COUNT(*) AS total_count FROM store_sales GROUP BY product_id) SELECT p.category, p.launch_date, ssbp.avg_revenue, ssbp.total_count FROM products p JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id ORDER BY category;

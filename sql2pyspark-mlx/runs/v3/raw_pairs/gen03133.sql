@@ -1,1 +1,0 @@
-with ranked_transactions as (select *, dense_rank() over (partition by merchant order by amount desc) row_num from transactions where merchant = 'Shell') select id, merchant, amount, is_flagged from ranked_transactions where row_num = 1 order by amount

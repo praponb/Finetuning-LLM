@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(end_date, 'yyyy-MM') end_month, SORT_ARRAY(COLLECT_SET(plan)) plan_list FROM subscriptions WHERE status NOT IN ('EXPIRED', 'CANCELLED') OR end_date <= '2025-05-01' GROUP BY DATE_FORMAT(end_date, 'yyyy-MM');

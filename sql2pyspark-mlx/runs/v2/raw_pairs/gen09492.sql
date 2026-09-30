@@ -1,1 +1,0 @@
-SELECT *, CASE WHEN browser IN ('Firefox', 'Edge') THEN 'Core' ELSE 'Other' END browser_group, TRIM(browser) clean_browser FROM sessions WHERE (browser IN ('Edge', 'Chrome', 'Firefox') AND customer_id IN (10, 26, 33)) OR device NOT IN ('desktop', 'tablet', 'mobile') ORDER BY browser DESC;

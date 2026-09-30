@@ -1,1 +1,0 @@
-select case when country in ('JP', 'SG') then 'tier_1' else 'other' end as country_group, sort_array(collect_set(country)) as country_list from suppliers where city in ('Tokyo', 'Berlin', 'London') group by 1 order by country_group desc limit 3;

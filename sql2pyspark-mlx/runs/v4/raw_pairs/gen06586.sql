@@ -1,1 +1,0 @@
-SELECT ss.product_id, SUM(i.quantity) AS total_quantity FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY ss.product_id HAVING SUM(i.quantity) >= 1130

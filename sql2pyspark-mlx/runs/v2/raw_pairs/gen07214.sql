@@ -1,1 +1,0 @@
-SELECT status, SORT_ARRAY(COLLECT_SET(plan)) AS plan_list, MAX(end_date) AS latest_end_date, ROUND((100 * SUM(CASE WHEN plan = 'enterprise' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_enterprise FROM subscriptions WHERE end_date >= '2025-04-01' GROUP BY status HAVING pct_enterprise > 37

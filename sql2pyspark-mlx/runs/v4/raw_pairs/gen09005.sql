@@ -1,1 +1,0 @@
-SELECT QUARTER(customers.signup_date) AS signup_quarter, MAX(orders.discount) AS max_discount FROM orders LEFT OUTER JOIN stores ON stores.id = orders.store_id INNER JOIN customers ON orders.customer_id = customers.id WHERE stores.store_name LIKE 'Si%' GROUP BY QUARTER(customers.signup_date)

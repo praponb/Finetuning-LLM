@@ -1,1 +1,0 @@
-SELECT HOUR(event_time) AS event_hour, page, AVG(duration_sec) AS avg_duration_sec, COUNT(CASE WHEN event_type = 'purchase' THEN 1 END) AS purchase_count FROM web_events WHERE session_id IN (14, 18, 19, 29) GROUP BY HOUR(event_time), page;

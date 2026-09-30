@@ -1,1 +1,0 @@
-SELECT status, CASE WHEN monthly_fee >= 202 THEN 'high' WHEN monthly_fee >= 74 THEN 'mid' ELSE 'low' END monthly_fee_bucket, MIN(start_date) min_start_date FROM subscriptions WHERE MONTH(start_date) IN (4, 6, 12) GROUP BY 1, 2;

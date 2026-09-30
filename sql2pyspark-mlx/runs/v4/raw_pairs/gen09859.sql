@@ -1,1 +1,0 @@
-WITH valid_order_items AS (SELECT * FROM order_items WHERE unit_price > 340), order_items_stats AS (SELECT order_id, SUM(quantity * unit_price) AS revenue FROM valid_order_items GROUP BY order_id) SELECT order_id, revenue FROM order_items_stats ORDER BY order_id DESC;

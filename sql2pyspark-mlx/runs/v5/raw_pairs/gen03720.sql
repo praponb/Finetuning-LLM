@@ -1,1 +1,0 @@
-SELECT s.country, s.device, we.event_type, we.event_time, we.duration_sec FROM sessions s JOIN web_events we ON we.session_id = s.id WHERE we.page IN ('/checkout', '/search') OR we.session_id IN (3, 33) ORDER BY we.event_type DESC

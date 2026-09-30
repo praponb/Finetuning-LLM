@@ -1,1 +1,0 @@
-SELECT id, brand, price, supplier_id, AVG(price) OVER (PARTITION BY brand) AS brand_avg_price, ROUND(price / SUM(price) OVER (PARTITION BY supplier_id), 3) AS price_share FROM products WHERE category IN ('Books', 'Fashion')

@@ -1,1 +1,0 @@
-SELECT p.launch_date, p.price, t.num_store_sales FROM products p JOIN (SELECT product_id, COUNT(*) AS num_store_sales FROM store_sales WHERE sale_date < '2023-11-01' GROUP BY product_id) t ON p.id = t.product_id

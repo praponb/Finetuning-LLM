@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT order_id, ROUND(AVG(unit_price), 2) AS avg_unit_price, MIN(quantity) AS min_quantity FROM order_items WHERE quantity BETWEEN 3 AND 8 GROUP BY order_id) AS t WHERE avg_unit_price > 58

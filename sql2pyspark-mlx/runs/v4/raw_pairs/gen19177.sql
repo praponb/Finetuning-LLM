@@ -1,1 +1,0 @@
-WITH valid_shipments AS (SELECT * FROM shipments WHERE shipped_date > '2025-01-10'), summary AS (SELECT status, COUNT(CASE WHEN status = 'LOST' THEN 1 END) AS lost_count, MAX(delivered_date) AS latest_delivered_date FROM valid_shipments GROUP BY status) SELECT status, lost_count, latest_delivered_date FROM summary WHERE lost_count >= 4 ORDER BY lost_count DESC;

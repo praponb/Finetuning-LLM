@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, log_ts, status_code, attr_key, value FROM app_logs LATERAL VIEW EXPLODE(context) x AS attr_key, value) SELECT id, log_ts, status_code, attr_key, value, CASE WHEN attr_key RLIKE '^(trace|region)$' THEN 'GROUP_A' ELSE 'GROUP_B' END AS attr_key_zone FROM exploded

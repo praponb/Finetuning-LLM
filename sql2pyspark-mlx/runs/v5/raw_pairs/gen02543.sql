@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, CEIL(balance) AS balance_whole, CAST(balance AS INT) AS balance_int FROM accounts WHERE opened_date > DATE '2023-06-10' AND status IS DISTINCT FROM 'FROZEN') SELECT id, status FROM valid EXCEPT SELECT id, status FROM accounts WHERE status = 'OPEN'

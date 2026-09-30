@@ -1,1 +1,0 @@
-SELECT event_type, SUM(CASE WHEN event_type = 'add_to_cart' THEN 1 ELSE 0 END) add_to_cart_count, ROUND((100 * SUM(CASE WHEN event_type = 'search' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_search FROM web_events GROUP BY event_type HAVING pct_search >= 34 ORDER BY add_to_cart_count, pct_search DESC;

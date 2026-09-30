@@ -1,1 +1,0 @@
-select t.amount, t.txn_time, a.customer_id, a.status, c.signup_date, c.is_active from transactions t inner join accounts a on t.account_id = a.id inner join customers c on c.id = a.customer_id where t.account_id in (22, 24, 40) order by 1 desc;

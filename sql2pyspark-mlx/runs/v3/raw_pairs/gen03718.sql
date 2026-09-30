@@ -1,1 +1,0 @@
-select a.status, a.balance, t.amount_range from accounts a left join (select account_id, max(amount) - min(amount) as amount_range from transactions where merchant not in ('Amazon', 'Starbucks', 'Grab') group by account_id) t on a.id = t.account_id where t.amount_range >= 26 order by a.status;

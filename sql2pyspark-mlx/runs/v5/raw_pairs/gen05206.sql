@@ -1,1 +1,0 @@
-SELECT i.quantity, p.stock_qty, p.brand, s.rating, s.country FROM inventory i INNER JOIN products p ON i.product_id = p.id LEFT JOIN suppliers s ON s.id = p.supplier_id WHERE i.last_restock <= '2025-05-02';

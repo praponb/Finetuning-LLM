@@ -1,1 +1,0 @@
-WITH with_latest AS (SELECT s.*, latest.subscription_end_date FROM customers s JOIN LATERAL (SELECT c.end_date AS subscription_end_date FROM subscriptions c WHERE c.customer_id = s.id ORDER BY c.start_date DESC, c.id DESC LIMIT 1) latest ON TRUE) SELECT id, name, email, city, segment, signup_date, is_active, credit_limit, age FROM with_latest ORDER BY city DESC NULLS FIRST;

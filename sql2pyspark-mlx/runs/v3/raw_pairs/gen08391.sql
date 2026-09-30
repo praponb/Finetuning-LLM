@@ -1,1 +1,0 @@
-SELECT id, product_id, unit_price, order_id, LAST_VALUE(order_id) OVER (PARTITION BY product_id ORDER BY unit_price DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) last_order_id FROM order_items WHERE unit_price BETWEEN 300 AND 320 ORDER BY order_id

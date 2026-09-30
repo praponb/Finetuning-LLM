@@ -1,1 +1,0 @@
-SELECT id, city, signup_date, credit_limit, segment, LAG(credit_limit, 1, 0) OVER (PARTITION BY city ORDER BY signup_date, id) AS prev_credit_limit, SUM(credit_limit) OVER (PARTITION BY segment ORDER BY signup_date, id) AS running_credit_limit FROM customers ORDER BY credit_limit DESC, running_credit_limit;

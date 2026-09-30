@@ -1,1 +1,0 @@
-SELECT CASE WHEN country IN ('JP', 'DE') THEN 'core' ELSE 'other' END AS country_group, DATE_TRUNC('MONTH', signup_date) AS signup_month, SORT_ARRAY(COLLECT_SET(country)) AS country_list FROM customers WHERE email LIKE '%@GMAIL.COM' GROUP BY CASE WHEN country IN ('JP', 'DE') THEN 'core' ELSE 'other' END, DATE_TRUNC('MONTH', signup_date)

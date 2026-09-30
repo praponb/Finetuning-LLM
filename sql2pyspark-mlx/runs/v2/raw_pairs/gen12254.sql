@@ -1,1 +1,0 @@
-with ranked_order_items as (select *, row_number() over (partition by product_id order by quantity, id) as pos from order_items) select id, product_id, quantity from ranked_order_items where pos <= 1 order by product_id desc;

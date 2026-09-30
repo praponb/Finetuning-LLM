@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM payments WHERE order_id = 29), StatusSummary AS (SELECT status, method, MAX(amount) AS max_amount FROM src GROUP BY status, method) SELECT * FROM StatusSummary WHERE max_amount < 1480

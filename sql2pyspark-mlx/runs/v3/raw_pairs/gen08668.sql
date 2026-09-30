@@ -1,1 +1,0 @@
-SELECT emp.hire_date AS employee_hire_date, emp.is_remote AS employee_is_remote, emp.job_title AS employee_job_title, mgr.level AS manager_level, mgr.job_title AS manager_job_title FROM employees AS emp LEFT JOIN employees AS mgr ON emp.manager_id = mgr.id WHERE mgr.salary > 129000

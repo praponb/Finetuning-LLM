@@ -1,1 +1,0 @@
-with valid_stores as (select * from stores where city = 'London' and sqft between 5737 and 9243), summary as (select region, city, count(case when region = 'West' then 1 end) west_count from valid_stores group by region, city) select * from summary where west_count > 5 order by west_count desc, city;

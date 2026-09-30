@@ -1,1 +1,0 @@
-SELECT customer_id, first_end_date, max_monthly_fee FROM (SELECT customer_id, MIN(end_date) AS first_end_date, MAX(monthly_fee) AS max_monthly_fee FROM subscriptions WHERE plan IN ('basic', 'enterprise', 'premium') GROUP BY customer_id) AS t WHERE max_monthly_fee > 150 ORDER BY max_monthly_fee DESC;

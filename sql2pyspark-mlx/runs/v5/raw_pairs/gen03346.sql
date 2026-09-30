@@ -1,1 +1,0 @@
-SELECT event_type, session_id, SUM(duration_sec) AS total_duration_sec, COUNT(duration_sec) AS duration_sec_count, MIN(event_time) AS first_event_time FROM web_events WHERE page IS NOT NULL GROUP BY 1, 2 ORDER BY event_type DESC, duration_sec_count

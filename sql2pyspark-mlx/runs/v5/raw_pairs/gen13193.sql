@@ -1,1 +1,0 @@
-SELECT c.segment, src.plan, COUNT(*) AS num_rows, MAX(src.monthly_fee) AS max_monthly_fee FROM subscriptions src LEFT JOIN customers c ON src.customer_id = c.id GROUP BY GROUPING SETS ((c.segment, src.plan), (c.segment)) ORDER BY num_rows DESC

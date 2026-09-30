@@ -1,1 +1,0 @@
-with supplier_stats as (select supplier_id, avg(cost) as avg_cost, max(price) as max_price from products group by supplier_id) select s.id, s.supplier_name, ss.avg_cost, ss.max_price from suppliers s inner join supplier_stats ss on s.id = ss.supplier_id where ss.max_price > 660;

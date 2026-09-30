@@ -1,1 +1,0 @@
-select ss.store_id, min(i.last_restock) as min_last_restock, avg(i.quantity) as avg_quantity from inventory i inner join store_sales ss on i.store_id = ss.store_id and i.product_id = ss.product_id where ss.revenue >= 1200 group by ss.store_id order by avg_quantity desc, store_id limit 1

@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(brand))) AS brand_values, AVG(price) AS avg_price FROM products GROUP BY supplier_id) SELECT s.id, s.supplier_name, ss.brand_values, ss.avg_price FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id WHERE ss.avg_price > 400 ORDER BY ss.brand_values ASC

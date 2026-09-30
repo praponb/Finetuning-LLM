@@ -1,1 +1,0 @@
-SELECT CASE WHEN balance >= 88000 THEN 'high' WHEN balance >= 7000 THEN 'mid' ELSE 'low' END AS balance_bucket, SUM(CASE WHEN status = 'OPEN' THEN balance ELSE 0 END) AS open_balance FROM accounts WHERE customer_id = 11 GROUP BY 1 ORDER BY balance_bucket DESC;

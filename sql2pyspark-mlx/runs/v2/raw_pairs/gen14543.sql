@@ -1,1 +1,0 @@
-SELECT event_month, pct_product FROM (SELECT DATE_FORMAT(event_time, 'yyyy-MM') event_month, ROUND((100 * SUM(CASE WHEN page = '/product' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_product FROM web_events GROUP BY DATE_FORMAT(event_time, 'yyyy-MM')) s WHERE pct_product >= 58;

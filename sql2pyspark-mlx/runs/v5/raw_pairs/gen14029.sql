@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(paid_at, 'yyyy-MM') AS paid_month, status, SUM(CASE WHEN status = 'SUCCESS' THEN amount ELSE 0 END) AS success_amount FROM payments GROUP BY paid_month, status ORDER BY success_amount DESC;

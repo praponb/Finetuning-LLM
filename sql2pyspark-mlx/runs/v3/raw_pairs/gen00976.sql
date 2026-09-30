@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.rating >= 3.7 THEN 'high' WHEN s.rating >= 1.8 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(p.cost) AS cost_count FROM products p JOIN suppliers s ON p.supplier_id = s.id WHERE s.rating > 3.1 GROUP BY CASE WHEN s.rating >= 3.7 THEN 'high' WHEN s.rating >= 1.8 THEN 'mid' ELSE 'low' END ORDER BY rating_bucket ASC LIMIT 5

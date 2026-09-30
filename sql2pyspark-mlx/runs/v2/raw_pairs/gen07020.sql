@@ -1,1 +1,0 @@
-SELECT sessions.id, sessions.started_at, customers.signup_date, customers.city FROM sessions LEFT JOIN customers ON sessions.customer_id = customers.id WHERE customers.credit_limit >= 5400 ORDER BY sessions.started_at ASC

@@ -1,1 +1,0 @@
-SELECT a.balance, t.avg_amount, t.refund_count FROM accounts a INNER JOIN (SELECT account_id, AVG(amount) AS avg_amount, SUM(CASE WHEN txn_type = 'REFUND' THEN 1 ELSE 0 END) AS refund_count FROM transactions WHERE is_flagged GROUP BY account_id) t ON a.id = t.account_id WHERE t.refund_count > 25;

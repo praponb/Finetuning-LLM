@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, MIN(i.last_restock) AS min_last_restock FROM inventory i LEFT OUTER JOIN products p ON p.id = i.product_id WHERE p.category IN ('Sports', 'Home') GROUP BY p.brand, p.category ORDER BY p.category ASC, 3 ASC;

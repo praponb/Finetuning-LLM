@@ -1,1 +1,0 @@
-WITH session_totals AS (SELECT session_id, COUNT(CASE WHEN event_type = 'search' THEN 1 END) AS search_count FROM web_events WHERE event_time < '2025-09-13' GROUP BY session_id) SELECT s.id, s.country, st.search_count FROM sessions s INNER JOIN session_totals st ON s.id = st.session_id

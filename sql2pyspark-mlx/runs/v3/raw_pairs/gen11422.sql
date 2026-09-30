@@ -1,1 +1,0 @@
-SELECT d.id, d.budget, d.dept_name, t.pct_analyst, t.first_hire_date FROM departments d LEFT JOIN (SELECT dept_id, ROUND((100 * SUM(CASE WHEN job_title = 'Analyst' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_analyst, MIN(hire_date) AS first_hire_date FROM employees GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.pct_analyst >= 58 ORDER BY d.budget DESC, 4

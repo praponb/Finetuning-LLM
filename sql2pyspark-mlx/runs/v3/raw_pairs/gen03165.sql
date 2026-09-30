@@ -1,1 +1,0 @@
-with department_summary as (select dept_id, count(case when level = 'L3' then 1 end) as l3_count, max(hire_date) as last_hire_date from employees where length(email) >= 13 group by dept_id) select d.id, d.budget, ds.l3_count, ds.last_hire_date from departments d join department_summary ds on d.id = ds.dept_id order by d.budget asc

@@ -1,1 +1,0 @@
-SELECT page, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, ROUND(AVG(duration_sec), 2) AS avg_duration_sec_2, BIT_AND(duration_sec) AS duration_sec_bit_and FROM web_events GROUP BY page ORDER BY duration_sec_bit_and

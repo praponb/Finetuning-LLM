@@ -1,1 +1,0 @@
-SELECT o.customer_id, AVG(oi.unit_price) AS avg_unit_price, MIN(oi.unit_price) AS min_unit_price FROM order_items oi JOIN orders o ON oi.order_id = o.id JOIN stores s ON o.store_id = s.id GROUP BY o.customer_id HAVING MIN(oi.unit_price) > 160;

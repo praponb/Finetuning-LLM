@@ -1,1 +1,0 @@
-WITH product_totals AS (SELECT product_id, MIN(quantity) min_quantity, MAX(quantity) max_quantity FROM inventory WHERE store_id IN (2, 4, 6) GROUP BY product_id) SELECT p.launch_date, p.category, pt.min_quantity, pt.max_quantity FROM products p LEFT OUTER JOIN product_totals pt ON p.id = pt.product_id WHERE pt.max_quantity > 90 ORDER BY max_quantity DESC, p.launch_date DESC

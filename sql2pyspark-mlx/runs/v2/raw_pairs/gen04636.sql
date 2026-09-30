@@ -1,1 +1,0 @@
-WITH customer_totals AS (SELECT customer_id, SORT_ARRAY(COLLECT_SET(browser)) AS browser_list FROM sessions GROUP BY customer_id) SELECT c.id, c.signup_date, ct.browser_list FROM customers c INNER JOIN customer_totals ct ON c.id = ct.customer_id ORDER BY id;

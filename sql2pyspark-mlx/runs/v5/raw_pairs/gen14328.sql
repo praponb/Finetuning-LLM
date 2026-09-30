@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('QUARTER', paid_at) AS quarter_start, COUNT(*) AS event_count, PERCENTILE_APPROX(amount, ARRAY(0.25, 0.5, 0.75)) AS amount_quartiles, SORT_ARRAY(COLLECT_SET(method)) AS method_list, PERCENTILE_APPROX(amount, 0.5) AS amount_p50 FROM payments GROUP BY DATE_TRUNC('QUARTER', paid_at) ORDER BY quarter_start NULLS FIRST;

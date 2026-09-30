@@ -1,1 +1,0 @@
-WITH OrdersByCustomer AS (SELECT customer_id, COUNT(*) AS cnt FROM orders GROUP BY customer_id) SELECT c.id, c.name, O.cnt FROM customers c INNER JOIN OrdersByCustomer O ON c.id = O.customer_id WHERE O.cnt > 5;

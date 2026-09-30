@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, MAX(i.quantity) AS max_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.product_name IS NOT NULL GROUP BY p.brand, p.category;

@@ -1,1 +1,0 @@
-with ranked_order_items as (select *, rank() over (partition by product_id order by quantity) as pos from order_items where product_id in (10, 13, 34, 37)) select id, product_id, quantity from ranked_order_items where pos = 1 order by product_id desc

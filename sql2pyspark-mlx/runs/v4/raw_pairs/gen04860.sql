@@ -1,1 +1,0 @@
-SELECT txn_year, cnt, amount_range FROM (SELECT YEAR(txn_time) AS txn_year, COUNT(*) AS cnt, MAX(amount) - MIN(amount) AS amount_range FROM transactions WHERE amount IS NOT NULL GROUP BY YEAR(txn_time)) AS s WHERE cnt > 10 ORDER BY cnt DESC, txn_year DESC LIMIT 1

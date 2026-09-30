@@ -1,1 +1,0 @@
-WITH valid_payments AS (SELECT *, CONCAT(method, ' - ', status) AS method_status FROM payments WHERE method IN ('bank_transfer', 'paypal', 'cash') AND amount BETWEEN 1430 AND 1480), agg AS (SELECT order_id, MAX(amount) - MIN(amount) AS amount_range FROM valid_payments GROUP BY order_id) SELECT order_id, amount_range FROM agg ORDER BY amount_range DESC

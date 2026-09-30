@@ -1,1 +1,0 @@
-WITH valid_payments AS (SELECT * FROM payments WHERE method != 'paypal'), status_summary AS (SELECT status, method, ROUND(STDDEV(amount), 2) AS stddev_amount FROM valid_payments GROUP BY status, method) SELECT status, stddev_amount FROM status_summary ORDER BY status;

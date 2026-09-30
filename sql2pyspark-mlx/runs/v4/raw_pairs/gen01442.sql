@@ -1,1 +1,0 @@
-SELECT id, city, segment, signup_date, age, credit_limit, LEAD(age, 1) OVER (PARTITION BY city, segment ORDER BY signup_date, id) AS next_age, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY credit_limit, id) AS row_num FROM customers WHERE age < 48 ORDER BY id DESC;

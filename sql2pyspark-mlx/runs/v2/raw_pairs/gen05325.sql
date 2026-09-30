@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM shipments WHERE cost <= 34 OR cost < 92), ShipmentsStats AS (SELECT carrier, MIN(shipped_date) AS min_shipped_date FROM base GROUP BY carrier) SELECT carrier, min_shipped_date FROM ShipmentsStats ORDER BY carrier LIMIT 1

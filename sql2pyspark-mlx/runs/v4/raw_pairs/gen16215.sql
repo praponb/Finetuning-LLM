@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') AS signup_month, SUM(CASE WHEN s.plan = 'standard' THEN 1 ELSE 0 END) AS standard_count FROM subscriptions s INNER JOIN customers c ON s.customer_id = c.id WHERE c.age = 54 GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM') HAVING SUM(CASE WHEN s.plan = 'standard' THEN 1 ELSE 0 END) > 69 ORDER BY signup_month DESC

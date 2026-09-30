@@ -1,1 +1,0 @@
-WITH ranked_products AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY category ORDER BY launch_date DESC, id) AS row_num FROM products WHERE category IN ('Books', 'Sports')) SELECT * FROM ranked_products WHERE row_num <= 2 ORDER BY brand, price DESC;

@@ -1,1 +1,0 @@
-SELECT s.started_at, s.browser, s.customer_id, c.is_active, c.city, c.signup_date FROM sessions s INNER JOIN customers c ON s.customer_id = c.id WHERE c.credit_limit <= 8900 AND c.signup_date > '2025-09-20';

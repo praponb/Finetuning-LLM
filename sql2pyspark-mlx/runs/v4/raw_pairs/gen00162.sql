@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, MAX(salary) max_salary FROM employees WHERE dept_id IN (2, 17, 31) GROUP BY dept_id) SELECT d.budget, ebd.max_salary FROM departments d INNER JOIN employees_by_department ebd ON d.id = ebd.dept_id;

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN units >= 41 THEN 'high' WHEN units >= 18 THEN 'mid' ELSE 'low' END units_bucket, COUNT(revenue) revenue_count FROM store_sales GROUP BY CASE WHEN units >= 41 THEN 'high' WHEN units >= 18 THEN 'mid' ELSE 'low' END) s WHERE revenue_count < 3;

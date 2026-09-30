@@ -1,1 +1,0 @@
-SELECT p.id, p.status, p.amount, p.order_id, o.store_id, o.status AS order_status, o.amount AS order_amount FROM payments p LEFT OUTER JOIN orders o ON p.order_id = o.id WHERE p.method = 'card' AND p.paid_at < '2024-08-01' ORDER BY order_amount;

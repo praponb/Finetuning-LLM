@@ -1,1 +1,0 @@
-SELECT id, brand, supplier_id, launch_date, stock_qty, SUM(stock_qty) OVER (PARTITION BY brand, supplier_id ORDER BY launch_date, id) running_stock_qty, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY stock_qty, id) row_num FROM products WHERE category IN ('Home', 'Grocery', 'Books') ORDER BY launch_date, running_stock_qty

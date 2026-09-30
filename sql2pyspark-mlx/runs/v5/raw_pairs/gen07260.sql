@@ -1,1 +1,0 @@
-SELECT id, order_id, NTILE(10) OVER (PARTITION BY order_id ORDER BY amount, id) amount_bucket, AVG(amount) OVER (PARTITION BY status) status_avg_amount, ROUND(amount / SUM(amount) OVER (PARTITION BY order_id, status), 4) amount_share FROM payments;

@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.last_restock, p.supplier_id, s.city FROM inventory i LEFT OUTER JOIN products p ON p.id = i.product_id LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.city IN ('Berlin', 'Tokyo') AND s.city = 'Singapore';

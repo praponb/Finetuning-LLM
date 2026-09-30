@@ -1,1 +1,0 @@
-WITH Base AS (SELECT * FROM inventory WHERE quantity = 113 AND quantity >= 156), agg AS (SELECT store_id, MAX(quantity) - MIN(quantity) AS quantity_range FROM Base GROUP BY store_id) SELECT store_id, quantity_range FROM agg WHERE quantity_range > 36 ORDER BY quantity_range;

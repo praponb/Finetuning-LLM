@@ -1,1 +1,0 @@
-select * from (select case when brand in ('Acme', 'Globex') then 'tier_1' else 'other' end as brand_group, brand, cost from products where price is not null) pivot (count(cost) for brand in ('Initech', 'Stark', 'Umbrella')) order by brand_group

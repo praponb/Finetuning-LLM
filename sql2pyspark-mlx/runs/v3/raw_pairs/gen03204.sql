@@ -1,1 +1,0 @@
-SELECT store_id, CASE WHEN quantity >= 210 THEN 'high' WHEN quantity >= 39 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(DISTINCT quantity) AS unique_stores FROM inventory WHERE store_id IN (1, 2, 3) GROUP BY store_id, CASE WHEN quantity >= 210 THEN 'high' WHEN quantity >= 39 THEN 'mid' ELSE 'low' END

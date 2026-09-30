@@ -1,1 +1,0 @@
-WITH filtered_accounts AS (SELECT *, ABS(balance) AS abs_balance FROM accounts WHERE opened_date < '2025-02-01' AND balance > 49000), agg AS (SELECT status, MIN(opened_date) AS first_opened_date FROM filtered_accounts GROUP BY status) SELECT status, first_opened_date FROM agg

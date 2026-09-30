@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 4200 THEN 'high' WHEN amount >= 1600 THEN 'mid' ELSE 'low' END AS amount_bucket, COUNT(amount) AS amount_count, COUNT(*) AS row_count, MAX(amount) - MIN(amount) AS amount_range FROM transactions GROUP BY 1;

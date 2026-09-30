@@ -1,1 +1,0 @@
-select customers.is_active, customers.country, concat_ws(', ', sort_array(collect_set(sessions.browser))) as browser_values from sessions right join customers on sessions.customer_id = customers.id group by customers.is_active, customers.country order by browser_values desc;

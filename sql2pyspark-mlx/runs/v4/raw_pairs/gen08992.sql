@@ -1,1 +1,0 @@
-SELECT we.id, we.event_type, we.duration_sec, we.page, s.country, s.device, s.customer_id, DATE_TRUNC('week', we.event_time) AS event_time_period FROM web_events we LEFT JOIN sessions s ON s.id = we.session_id WHERE s.country NOT IN ('UK', 'SG')

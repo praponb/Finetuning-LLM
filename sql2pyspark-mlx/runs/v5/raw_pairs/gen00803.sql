@@ -1,1 +1,0 @@
-SELECT t.id, t.txn_type, t.is_flagged, a.customer_id, a.account_type, c.name FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON a.customer_id = c.id WHERE t.amount >= 2400 AND c.city NOT IN ('Berlin', 'Chiang Mai');

@@ -1,1 +1,0 @@
-SELECT CASE WHEN page IN ('/search', '/home') THEN 'core' ELSE 'other' END AS page_group, MAX(duration_sec) AS max_duration_sec, SUM(CASE WHEN event_type = 'click' THEN duration_sec ELSE 0 END) AS click_duration_sec FROM web_events WHERE event_time >= '2025-09-01' AND event_time >= '2023-11-05' GROUP BY CASE WHEN page IN ('/search', '/home') THEN 'core' ELSE 'other' END

@@ -1,1 +1,0 @@
-select store_id, stddev_samp(quantity) as quantity_stddev, approx_percentile(quantity, 0.9) as quantity_p90, percentile_approx(quantity, array(0.25, 0.5, 0.75)) as quantity_quartiles, round(avg(quantity), 2) as avg_quantity from inventory group by store_id order by store_id desc nulls first

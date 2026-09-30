@@ -1,1 +1,0 @@
-SELECT employees.id, employees.is_remote, employees.full_name, employees.hire_date FROM employees WHERE employees.dept_id IN (SELECT id FROM departments WHERE dept_name = 'HR') ORDER BY full_name DESC;

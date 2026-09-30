@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', end_date) AS end_month, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values, COUNT(DISTINCT monthly_fee) AS unique_customers FROM subscriptions GROUP BY DATE_TRUNC('MONTH', end_date)

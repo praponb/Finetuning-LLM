@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, DENSE_RANK() OVER (PARTITION BY product_id ORDER BY last_restock DESC) AS row_num FROM inventory) SELECT id, product_id, last_restock, quantity FROM ranked WHERE row_num <= 5

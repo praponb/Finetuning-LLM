@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM suppliers WHERE country != 'JP'), suppliers_stats AS (SELECT city, ROUND((100 * SUM(CASE WHEN city = 'London' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_london FROM src GROUP BY city) SELECT * FROM suppliers_stats ORDER BY pct_london DESC

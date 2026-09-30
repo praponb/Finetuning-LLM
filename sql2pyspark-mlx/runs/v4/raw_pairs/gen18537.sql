@@ -1,1 +1,0 @@
-select p.category, count(i.id) as inventory_count, sum(i.quantity) as total_quantity from products p join inventory i on i.product_id = p.id group by p.category having count(i.id) > 4 order by total_quantity desc, inventory_count;

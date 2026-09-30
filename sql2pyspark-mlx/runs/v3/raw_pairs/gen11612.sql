@@ -1,1 +1,0 @@
-SELECT order_items.unit_price, products.stock_qty, orders.shipping_fee FROM order_items INNER JOIN products ON products.id = order_items.product_id LEFT JOIN orders ON order_items.order_id = orders.id ORDER BY orders.shipping_fee DESC

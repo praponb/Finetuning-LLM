@@ -1,1 +1,0 @@
-WITH ranked_subscriptions AS (SELECT id, customer_id, monthly_fee, RANK() OVER (PARTITION BY customer_id ORDER BY monthly_fee) AS rn FROM subscriptions) SELECT id, customer_id, monthly_fee FROM ranked_subscriptions WHERE rn <= 3;

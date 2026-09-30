@@ -1,1 +1,0 @@
-select store_id, case when units >= 44 then 'high' when units >= 20 then 'mid' else 'low' end as units_bucket, avg(revenue) as avg_revenue, round(stddev(units), 2) as stddev_units, count(revenue) as revenue_count from store_sales group by store_id, units_bucket order by revenue_count desc, store_id desc;

@@ -1,1 +1,0 @@
-SELECT MONTH(o.order_date) AS order_month, MAX(oi.quantity) AS max_quantity FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE o.shipping_fee IS NOT NULL GROUP BY MONTH(o.order_date) ORDER BY max_quantity DESC

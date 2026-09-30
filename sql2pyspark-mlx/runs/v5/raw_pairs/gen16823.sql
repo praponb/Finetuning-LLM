@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(delivered_date) < 2024 THEN 'before_2024' WHEN YEAR(delivered_date) = 2024 THEN '2024' ELSE 'after_2024' END AS delivered_cohort, MAX(cost) - MIN(cost) AS cost_range FROM shipments GROUP BY 1 ORDER BY cost_range DESC, delivered_cohort;

@@ -1,1 +1,0 @@
-with top_customers as (select id, segment, credit_limit, city, row_number() over (partition by segment order by credit_limit, id) as pos from customers) select * from top_customers where pos = 1 order by id

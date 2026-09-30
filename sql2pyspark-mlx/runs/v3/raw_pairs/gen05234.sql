@@ -1,1 +1,0 @@
-select p.brand, min(i.quantity) as min_quantity, round(avg(i.quantity), 2) as avg_quantity from inventory i full outer join products p on i.product_id = p.id group by p.brand order by min_quantity desc, brand limit 50

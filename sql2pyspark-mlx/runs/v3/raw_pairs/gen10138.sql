@@ -1,1 +1,0 @@
-SELECT store_id, DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_month, COUNT(DISTINCT units) AS unique_products FROM store_sales GROUP BY CUBE(store_id, DATE_FORMAT(sale_date, 'yyyy-MM')) ORDER BY sale_month DESC;

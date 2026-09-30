@@ -1,1 +1,0 @@
-SELECT we.id, we.duration_sec, we.page, s.customer_id, s.country, c.segment, LOWER(we.event_type) AS event_type_lower FROM web_events we JOIN sessions s ON s.id = we.session_id LEFT JOIN customers c ON c.id = s.customer_id WHERE we.duration_sec = 271

@@ -1,1 +1,0 @@
-SELECT carrier, order_id, DATE_TRUNC('MONTH', delivered_date) AS delivered_month, SUM(cost) AS total_cost, COUNT(DISTINCT cost) AS unique_orders FROM shipments GROUP BY carrier, order_id, delivered_month HAVING COUNT(DISTINCT cost) > 4;

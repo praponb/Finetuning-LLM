@@ -1,1 +1,0 @@
-SELECT id, customer_id, plan, start_date, status, LEAD(monthly_fee, 1) OVER (PARTITION BY status ORDER BY end_date ASC, id ASC) AS next_monthly_fee, NTILE(4) OVER (ORDER BY monthly_fee ASC, id ASC) AS monthly_fee_bucket FROM subscriptions WHERE monthly_fee BETWEEN 190 AND 240;

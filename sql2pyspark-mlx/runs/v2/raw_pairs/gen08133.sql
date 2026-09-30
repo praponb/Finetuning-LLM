@@ -1,1 +1,0 @@
-select products.id, products.launch_date, products.price from products where products.price < 390 and exists (select 1 from inventory where inventory.product_id = products.id and inventory.quantity between 85 and 120);

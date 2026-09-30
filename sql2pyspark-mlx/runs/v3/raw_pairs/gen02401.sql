@@ -1,1 +1,0 @@
-SELECT o.shipping_fee, s.region, c.signup_date, c.credit_limit, IF(c.is_active, 'Yes', 'No') AS is_active_label FROM orders o INNER JOIN stores s ON s.id = o.store_id LEFT JOIN customers c ON o.customer_id = c.id WHERE c.name IS NOT NULL;

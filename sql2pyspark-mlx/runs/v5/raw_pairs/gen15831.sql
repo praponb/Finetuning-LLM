@@ -1,1 +1,0 @@
-select dim.city, a.category, count(*) as rows_total, max(a.stock_qty) as max_stock_qty, grouping_id() as level_id from products a join suppliers dim on a.supplier_id = dim.id group by rollup (dim.city, a.category) order by max_stock_qty desc nulls first

@@ -1,1 +1,0 @@
-SELECT id, status, cost, shipped_date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY cost DESC, id) AS rn FROM shipments WHERE carrier IN ('DHL', 'UPS')) AS r WHERE rn <= 2 ORDER BY status DESC;

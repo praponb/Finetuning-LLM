@@ -1,1 +1,0 @@
-with supplier_totals as (select supplier_id, sum(case when brand = 'Umbrella' then price else 0 end) as umbrella_price from products group by supplier_id) select s.id, s.country, st.umbrella_price from suppliers s inner join supplier_totals st on s.id = st.supplier_id order by st.umbrella_price

@@ -1,1 +1,0 @@
-SELECT order_items.id, order_items.product_id, products.brand, products.product_name, orders.discount, orders.channel FROM order_items INNER JOIN products ON order_items.product_id = products.id INNER JOIN orders ON orders.id = order_items.order_id WHERE orders.customer_id IN (15, 16, 23)

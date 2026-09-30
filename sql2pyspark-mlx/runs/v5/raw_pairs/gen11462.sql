@@ -1,1 +1,0 @@
-SELECT event_type, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(page))) AS page_values, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY event_type HAVING MAX(duration_sec) - MIN(duration_sec) >= 59

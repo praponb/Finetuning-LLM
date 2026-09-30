@@ -1,1 +1,0 @@
-select c.id, c.credit_limit, t.country_list from customers c inner join (select customer_id, sort_array(collect_set(country)) as country_list from sessions group by customer_id) t on c.id = t.customer_id

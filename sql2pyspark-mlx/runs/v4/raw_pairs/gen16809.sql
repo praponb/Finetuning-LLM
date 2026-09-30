@@ -1,1 +1,0 @@
-SELECT store_id, COUNT(*) AS total_count, COUNT(quantity) AS quantity_count FROM inventory WHERE product_id IN (2, 3, 9, 10) OR last_restock < '2025-10-01' GROUP BY store_id HAVING COUNT(quantity) >= 5 ORDER BY total_count DESC;

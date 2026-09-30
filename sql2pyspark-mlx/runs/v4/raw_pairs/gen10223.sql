@@ -1,1 +1,0 @@
-SELECT DISTINCT region FROM stores ORDER BY region DESC;

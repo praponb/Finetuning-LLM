@@ -1,1 +1,0 @@
-with product_stats as (select product_id, count(unit_price) as unit_price_count from order_items group by product_id) select p.cost, ps.unit_price_count from products p left join product_stats ps on p.id = ps.product_id where ps.unit_price_count > 10 order by cost desc

@@ -1,1 +1,0 @@
-SELECT departments.location, t.avg_salary FROM departments LEFT OUTER JOIN (SELECT dept_id, ROUND(AVG(salary), 2) avg_salary FROM employees GROUP BY dept_id) t ON departments.id = t.dept_id WHERE t.avg_salary >= 35

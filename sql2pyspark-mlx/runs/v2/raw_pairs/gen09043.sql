@@ -1,1 +1,0 @@
-SELECT i.id, i.last_restock, i.store_id, i.product_id, s.store_name, s.sqft, COALESCE(s.sqft, 0) AS sqft_filled FROM inventory i FULL OUTER JOIN stores s ON i.store_id = s.id WHERE i.store_id IN (2, 3, 6) AND i.product_id IN (6, 10) ORDER BY product_id

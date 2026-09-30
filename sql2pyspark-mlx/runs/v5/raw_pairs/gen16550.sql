@@ -1,1 +1,0 @@
-select s.id, s.country, t.total_price from suppliers s inner join (select supplier_id, sum(price) as total_price from products where price is null group by supplier_id) t on s.id = t.supplier_id where t.total_price >= 4200 order by t.total_price desc;

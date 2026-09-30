@@ -1,1 +1,0 @@
-SELECT dept_name, budget, CASE WHEN budget >= 3601000 THEN 'High' WHEN budget >= 939000 THEN 'Medium' ELSE 'Low' END AS budget_tier FROM departments WHERE location IN ('Tokyo', 'Bangkok', 'Singapore') OR location IN ('Bangkok', 'Berlin') ORDER BY budget_tier;

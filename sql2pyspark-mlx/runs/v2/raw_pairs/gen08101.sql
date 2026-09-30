@@ -1,1 +1,0 @@
-select date_format(c.signup_date, 'yyyy-MM') as signup_month, count(*) as web_event_count, sum(case when we.event_type = 'click' then 1 else 0 end) as click_count from web_events we left join sessions s on we.session_id = s.id left join customers c on s.customer_id = c.id where s.device in ('mobile', 'tablet') group by date_format(c.signup_date, 'yyyy-MM') order by click_count;

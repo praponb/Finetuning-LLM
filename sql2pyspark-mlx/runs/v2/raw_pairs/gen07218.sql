@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT location, dept_name, budget FROM departments WHERE location IN ('Bangkok', 'Chiang Mai', 'New York')) PIVOT (AVG(budget) FOR dept_name IN ('Finance', 'Sales', 'HR', 'Marketing')) ORDER BY location;

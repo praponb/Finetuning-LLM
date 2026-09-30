@@ -1,1 +1,0 @@
-SELECT s.id, s.opened_date, s.sqft, t.first_last_restock FROM stores s LEFT OUTER JOIN (SELECT store_id, MIN(last_restock) AS first_last_restock FROM inventory WHERE store_id IN (1, 6) GROUP BY store_id) t ON s.id = t.store_id ORDER BY opened_date;

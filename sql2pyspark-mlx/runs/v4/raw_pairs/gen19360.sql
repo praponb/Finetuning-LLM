@@ -1,1 +1,0 @@
-select id, dept_id, salary, level, min(salary) over (partition by dept_id) as dept_id_min_salary, percent_rank() over (partition by level order by salary) as salary_pct_rank from employees where email is not null;

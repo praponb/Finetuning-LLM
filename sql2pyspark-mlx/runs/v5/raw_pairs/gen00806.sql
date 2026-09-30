@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, store_id, product_id, revenue, revenue + units AS revenue_per_unit FROM store_sales WHERE sale_date > TO_DATE('2023-04-11') AND revenue BETWEEN 1100 AND 2800) SELECT id, store_id FROM valid EXCEPT ALL SELECT id, store_id FROM store_sales WHERE product_id IN (2, 6)

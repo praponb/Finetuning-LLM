@@ -1,1 +1,0 @@
-SELECT order_id, stddev_unit_price FROM (SELECT order_id, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items WHERE quantity BETWEEN 4 AND 6 GROUP BY order_id) AS sub WHERE stddev_unit_price >= 65;

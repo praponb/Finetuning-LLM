@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT QUARTER(signup_date) AS signup_quarter, city, MIN(signup_date) AS min_signup_date, ROUND(AVG(age), 2) AS avg_age FROM customers GROUP BY QUARTER(signup_date), city) AS sub WHERE avg_age >= 77 ORDER BY 1 DESC, min_signup_date, city LIMIT 1;

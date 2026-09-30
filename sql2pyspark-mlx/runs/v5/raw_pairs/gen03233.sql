@@ -1,1 +1,0 @@
-WITH src AS (SELECT *, COALESCE(city, 'unassigned') AS city_filled FROM suppliers WHERE LENGTH(supplier_name) < 9), CountrySummary AS (SELECT country, COUNT(*) AS row_count, COUNT(*) AS supplier_count FROM src GROUP BY country) SELECT country, supplier_count FROM CountrySummary ORDER BY country DESC

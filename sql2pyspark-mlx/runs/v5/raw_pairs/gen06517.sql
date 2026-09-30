@@ -1,1 +1,0 @@
-WITH department_summary AS (SELECT dept_id, MAX(hire_date) AS latest_hire_date, MAX(salary) AS max_salary FROM employees GROUP BY dept_id) SELECT d.id, d.dept_name, d.budget, ds.latest_hire_date, ds.max_salary FROM departments d LEFT OUTER JOIN department_summary ds ON d.id = ds.dept_id WHERE ds.max_salary > 130000

@@ -1,1 +1,0 @@
-SELECT id, status, delivered_date, cost, order_id, SUM(cost) OVER (PARTITION BY status ORDER BY delivered_date, id) AS running_cost, ROUND(AVG(cost) OVER (PARTITION BY order_id, status ORDER BY delivered_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS cost_moving_avg_4 FROM shipments

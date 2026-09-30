@@ -1,1 +1,0 @@
-WITH ProductTotals AS (SELECT product_id, AVG(quantity) AS avg_quantity FROM inventory WHERE quantity > 205 GROUP BY product_id) SELECT p.category, P.avg_quantity FROM products p JOIN ProductTotals P ON p.id = P.product_id;

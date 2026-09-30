@@ -1,1 +1,0 @@
-SELECT id, session_id, event_time, duration_sec, SUM(duration_sec) OVER (PARTITION BY session_id ORDER BY event_time, id) AS running_duration_sec FROM web_events WHERE session_id IN (3, 7, 26, 38) ORDER BY duration_sec DESC, session_id DESC;

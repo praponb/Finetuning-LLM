@@ -1,1 +1,0 @@
-SELECT o.id, o.status, o.channel, s.city, s.region, c.email, c.country FROM orders o FULL OUTER JOIN stores s ON o.store_id = s.id JOIN customers c ON o.customer_id = c.id WHERE LENGTH(c.email) < 5 ORDER BY channel

@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, COALESCE(amount, 0) amount_filled FROM transactions WHERE txn_time >= DATE '2023-08-21') SELECT * FROM (SELECT account_id, txn_type, merchant, amount FROM cleaned) src PIVOT (SUM(amount) AS total FOR merchant IN ('Amazon' AS amazon, 'Shell' AS shell, 'Starbucks' AS starbucks));

@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, dept_name, budget, location, DENSE_RANK() OVER (PARTITION BY dept_name ORDER BY budget) AS rn FROM departments) SELECT * FROM numbered WHERE rn = 1 ORDER BY location DESC, rn DESC;

@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN quantity >= 6 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END quantity_bucket, COUNT(unit_price) unit_price_count FROM order_items GROUP BY product_id, CASE WHEN quantity >= 6 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END HAVING COUNT(unit_price) >= 5 ORDER BY product_id DESC, unit_price_count DESC

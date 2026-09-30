@@ -1,1 +1,0 @@
-SELECT CASE WHEN YEAR(sale_date) < 2024 THEN 'before_2024' WHEN YEAR(sale_date) = 2024 THEN '2024' ELSE 'after_2024' END AS sale_cohort, QUARTER(sale_date) AS sale_quarter, COUNT(*) AS cnt FROM store_sales WHERE product_id IN (1, 2, 9, 10) GROUP BY 1, 2 ORDER BY sale_quarter DESC

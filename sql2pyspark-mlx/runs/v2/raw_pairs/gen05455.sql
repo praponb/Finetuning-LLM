@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, TRIM(method) AS clean_method FROM payments WHERE order_id IN (2, 40) AND order_id = 33), method_summary AS (SELECT method, status, ROUND((100 * SUM(CASE WHEN method = 'promptpay' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_promptpay FROM base GROUP BY method, status) SELECT method, status, pct_promptpay FROM method_summary WHERE pct_promptpay < 38;

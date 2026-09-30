@@ -1,1 +1,0 @@
-SELECT plan, standard_count, status_values FROM (SELECT plan, COUNT(CASE WHEN plan = 'standard' THEN 1 END) AS standard_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) AS status_values FROM subscriptions GROUP BY plan) AS s WHERE standard_count > 9

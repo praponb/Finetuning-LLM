@@ -1,1 +1,0 @@
-select s.country, round(avg(i.quantity), 2) as avg_quantity from inventory i inner join products p on i.product_id = p.id left join suppliers s on p.supplier_id = s.id group by s.country having avg_quantity >= 27 order by s.country limit 50;

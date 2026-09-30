@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', o.order_date) AS order_month, o.status, ROUND(STDDEV(oi.quantity), 2) AS stddev_quantity, COUNT(oi.quantity) AS quantity_count FROM order_items oi JOIN orders o ON oi.order_id = o.id GROUP BY DATE_TRUNC('MONTH', o.order_date), o.status HAVING COUNT(oi.quantity) > 5 ORDER BY order_month, stddev_quantity, status LIMIT 5;

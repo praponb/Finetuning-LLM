@@ -1,1 +1,0 @@
-select month(hire_date) as hire_month, avg(salary) as avg_salary, max(salary) - min(salary) as salary_range from employees where dept_id in (2, 35, 40) group by month(hire_date) order by salary_range;

@@ -1,1 +1,0 @@
-WITH filtered_products AS (SELECT * FROM products WHERE stock_qty = 346), summary AS (SELECT QUARTER(launch_date) AS launch_quarter, SUM(CASE WHEN brand = 'Stark' THEN 1 ELSE 0 END) AS stark_count FROM filtered_products GROUP BY QUARTER(launch_date)) SELECT launch_quarter, stark_count FROM summary WHERE stark_count >= 75 ORDER BY stark_count DESC;

@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity, store_id, SUM(quantity) OVER (PARTITION BY product_id) AS product_id_sum_quantity, LAST_VALUE(store_id) OVER (PARTITION BY product_id ORDER BY quantity DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_store_id FROM inventory WHERE product_id = 5 ORDER BY quantity DESC;

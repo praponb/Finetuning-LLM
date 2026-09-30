@@ -1,1 +1,0 @@
-SELECT a.id, a.status, a.balance, a.customer_id FROM accounts a WHERE a.status IN ('FROZEN', 'CLOSED', 'OPEN') AND a.customer_id NOT IN (SELECT id FROM customers WHERE city NOT IN ('Berlin', 'London', 'Chiang Mai')) ORDER BY a.id DESC;

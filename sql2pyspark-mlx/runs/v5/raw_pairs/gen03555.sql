@@ -1,1 +1,0 @@
-select id, status, customer_id, start_date, monthly_fee, sum(monthly_fee) over (partition by status, customer_id order by start_date, id rows between unbounded preceding and current row) as running_monthly_fee from subscriptions order by status;

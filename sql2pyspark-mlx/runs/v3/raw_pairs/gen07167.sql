@@ -1,1 +1,0 @@
-SELECT products.id, products.category, t.total_quantity, t.unit_price_count FROM products INNER JOIN (SELECT product_id, SUM(quantity) AS total_quantity, COUNT(unit_price) AS unit_price_count FROM order_items GROUP BY product_id) t ON products.id = t.product_id WHERE t.total_quantity > 14 ORDER BY 3 DESC, id LIMIT 50;

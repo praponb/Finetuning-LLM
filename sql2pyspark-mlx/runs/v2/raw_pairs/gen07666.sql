@@ -1,1 +1,0 @@
-SELECT c.city, MIN(s.monthly_fee) min_monthly_fee, ROUND((100 * SUM(CASE WHEN s.status = 'PAUSED' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_paused FROM subscriptions s JOIN customers c ON s.customer_id = c.id WHERE s.customer_id = 32 GROUP BY c.city

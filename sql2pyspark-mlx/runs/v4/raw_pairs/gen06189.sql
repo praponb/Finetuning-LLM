@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, store_id, product_id, sale_date, units, ROUND(revenue * 100, 2) AS revenue_adjusted FROM store_sales WHERE sale_date > DATE '2023-04-01' AND revenue BETWEEN 1300 AND 2900) SELECT product_id, id FROM cleaned INTERSECT ALL SELECT product_id, id FROM store_sales WHERE revenue < 1700

@@ -1,1 +1,0 @@
-SELECT id, plan, monthly_fee, start_date, ROUND(monthly_fee / SUM(monthly_fee) OVER (PARTITION BY plan), 3) AS monthly_fee_share, DENSE_RANK() OVER (PARTITION BY plan ORDER BY start_date) AS start_date_dense_rank FROM subscriptions ORDER BY monthly_fee DESC;

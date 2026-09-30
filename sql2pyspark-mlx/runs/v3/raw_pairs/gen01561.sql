@@ -1,1 +1,0 @@
-SELECT ss.id, ss.sale_date, ss.store_id, s.opened_date, s.city, s.region, COALESCE(ss.units, 0) AS units_filled FROM store_sales ss LEFT JOIN stores s ON ss.store_id = s.id WHERE s.store_name IS NOT NULL ORDER BY ss.id ASC LIMIT 50

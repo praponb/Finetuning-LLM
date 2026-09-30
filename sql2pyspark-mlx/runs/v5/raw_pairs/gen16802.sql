@@ -1,1 +1,0 @@
-select ss.id, ss.product_id, p.launch_date, s.city, s.sqft from store_sales ss inner join products p on ss.product_id = p.id inner join stores s on ss.store_id = s.id where ss.product_id in (6, 8, 10) or s.city in ('New York', 'Berlin');

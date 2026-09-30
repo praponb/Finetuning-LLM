@@ -1,1 +1,0 @@
-SELECT s.id, s.started_at, s.customer_id, s.device FROM sessions s WHERE s.browser IN ('Chrome', 'Safari', 'Edge') AND EXISTS (SELECT 1 FROM web_events we WHERE we.session_id = s.id AND we.page = '/home');

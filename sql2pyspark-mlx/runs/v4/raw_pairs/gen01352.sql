@@ -1,1 +1,0 @@
-SELECT CASE WHEN d.budget >= 3389000 THEN 'high' WHEN d.budget >= 725000 THEN 'mid' ELSE 'low' END AS budget_bucket, SUM(CASE WHEN e.level = 'L1' THEN 1 ELSE 0 END) AS l1_count FROM employees e JOIN departments d ON d.id = e.dept_id GROUP BY CASE WHEN d.budget >= 3389000 THEN 'high' WHEN d.budget >= 725000 THEN 'mid' ELSE 'low' END ORDER BY l1_count

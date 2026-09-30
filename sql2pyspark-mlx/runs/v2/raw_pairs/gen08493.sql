@@ -1,1 +1,0 @@
-SELECT payments.method, payments.status, orders.order_date, orders.customer_id, ADD_MONTHS(orders.order_date, 12) AS order_date_plus_months FROM payments FULL OUTER JOIN orders ON payments.order_id = orders.id WHERE payments.method IN ('promptpay', 'card', 'bank_transfer') ORDER BY order_date DESC, method ASC

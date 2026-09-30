@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT TO_DATE(event_time) AS event_day, event_type, COUNT(CASE WHEN event_type = 'search' THEN 1 END) AS search_count FROM web_events WHERE duration_sec IS NULL GROUP BY TO_DATE(event_time), event_type) AS sub WHERE search_count < 9 ORDER BY search_count

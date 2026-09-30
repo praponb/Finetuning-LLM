@@ -1,1 +1,0 @@
-SELECT sessions.device, web_events.duration_sec, ROUND(web_events.duration_sec * 1.07, 2) AS duration_sec_adjusted FROM sessions LEFT JOIN web_events ON web_events.session_id = sessions.id WHERE web_events.page <> '/product' AND HOUR(sessions.started_at) BETWEEN 9 AND 15

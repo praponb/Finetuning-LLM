@@ -1,1 +1,0 @@
-WITH payments_by_order AS (SELECT order_id, SUM(CASE WHEN method = 'paypal' THEN amount ELSE 0 END) AS paypal_amount FROM payments WHERE HOUR(paid_at) BETWEEN 12 AND 18 GROUP BY order_id) SELECT o.id, o.channel, pbo.paypal_amount FROM orders o INNER JOIN payments_by_order pbo ON o.id = pbo.order_id WHERE pbo.paypal_amount >= 45 ORDER BY id DESC LIMIT 10;

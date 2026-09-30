@@ -1,1 +1,0 @@
-SELECT s.sqft, s.opened_date, s.store_name, ss.units, ss.product_id, ss.revenue FROM stores s INNER JOIN store_sales ss ON ss.store_id = s.id WHERE ss.product_id = 5 ORDER BY ss.units DESC, store_name;

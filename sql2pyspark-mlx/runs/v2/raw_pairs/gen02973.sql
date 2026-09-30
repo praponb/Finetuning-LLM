@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, SUM(oi.unit_price * oi.quantity) AS revenue FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id WHERE o.status IN ('RETURNED', 'PENDING') GROUP BY p.brand, p.category

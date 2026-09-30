@@ -1,1 +1,0 @@
-select o.id, o.channel, o.status, t.last_shipped_date from orders o inner join (select order_id, max(shipped_date) as last_shipped_date from shipments where status = 'RETURNED' group by order_id) t on o.id = t.order_id

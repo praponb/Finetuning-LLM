@@ -1,1 +1,0 @@
-SELECT id, account_id, amount, txn_type, LAST_VALUE(txn_type) OVER (PARTITION BY account_id ORDER BY amount DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_txn_type FROM transactions WHERE txn_type = 'CREDIT'

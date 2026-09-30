@@ -1,1 +1,0 @@
-SELECT emp.manager_id AS employee_manager_id, emp.dept_id AS employee_dept_id, mgr.is_remote AS manager_is_remote, mgr.manager_id AS manager_manager_id FROM employees emp JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.hire_date BETWEEN '2023-07-25' AND '2025-01-01';

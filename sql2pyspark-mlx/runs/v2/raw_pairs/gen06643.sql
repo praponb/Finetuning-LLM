@@ -1,1 +1,0 @@
-SELECT event_type, session_id, MAX(duration_sec) AS max_duration_sec, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values FROM web_events GROUP BY CUBE(event_type, session_id);

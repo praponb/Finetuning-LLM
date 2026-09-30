@@ -1,1 +1,0 @@
-SELECT o.channel, COUNT(DISTINCT p.amount) AS unique_statuss FROM payments p INNER JOIN orders o ON o.id = p.order_id INNER JOIN customers c ON c.id = o.customer_id GROUP BY o.channel ORDER BY 2, channel LIMIT 5

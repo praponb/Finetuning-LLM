@@ -1,1 +1,0 @@
-WITH top_subscriptions AS (SELECT id, customer_id, end_date, monthly_fee, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY end_date, id) AS pos FROM subscriptions) SELECT id, customer_id, end_date, monthly_fee FROM top_subscriptions WHERE pos <= 1 ORDER BY customer_id DESC;

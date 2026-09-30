@@ -1,1 +1,0 @@
-SELECT s.device, s.started_at, t.checkout_count FROM sessions s INNER JOIN (SELECT session_id, COUNT(CASE WHEN page = '/checkout' THEN 1 END) AS checkout_count FROM web_events GROUP BY session_id) t ON s.id = t.session_id ORDER BY device;

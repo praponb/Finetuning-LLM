@@ -1,1 +1,0 @@
-SELECT c.credit_limit, c.country, t.min_opened_date, t.avg_balance FROM customers c INNER JOIN (SELECT customer_id, MIN(opened_date) AS min_opened_date, ROUND(AVG(balance), 2) AS avg_balance FROM accounts GROUP BY customer_id) t ON c.id = t.customer_id;

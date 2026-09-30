@@ -1,1 +1,0 @@
-with AccountTotals as (select account_id, max(amount) as max_amount from transactions group by account_id) select a.id, a.balance, A.max_amount from accounts a left join AccountTotals A on a.id = A.account_id where A.max_amount > 2000 order by a.id desc, max_amount asc;

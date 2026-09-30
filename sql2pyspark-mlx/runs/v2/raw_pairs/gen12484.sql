@@ -1,1 +1,0 @@
-SELECT MONTH(s.opened_date) AS opened_month, s.region, MAX(i.quantity) AS max_quantity, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i RIGHT JOIN stores s ON i.store_id = s.id WHERE i.product_id = 1 GROUP BY MONTH(s.opened_date), s.region ORDER BY avg_quantity, 3 DESC;

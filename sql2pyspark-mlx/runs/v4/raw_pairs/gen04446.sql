@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY event_type ORDER BY duration_sec, id) AS rn FROM web_events WHERE HOUR(event_time) BETWEEN 7 AND 12) AS r WHERE rn <= 3 ORDER BY session_id DESC, id;

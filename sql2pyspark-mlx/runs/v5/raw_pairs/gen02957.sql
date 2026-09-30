@@ -1,1 +1,0 @@
-WITH not_flagged AS (SELECT s.* FROM stores s WHERE NOT EXISTS (SELECT 1 FROM inventory c WHERE c.store_id = s.id AND c.last_restock >= s.opened_date)) SELECT id, city, sqft, CASE WHEN city RLIKE '^(Chiang Mai|Tokyo)$' THEN 'GROUP_A' ELSE 'CORE' END AS city_zone FROM not_flagged ORDER BY id DESC;

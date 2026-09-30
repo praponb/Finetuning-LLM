@@ -1,1 +1,0 @@
-SELECT store_sales.product_id, MAX(inventory.quantity) AS max_quantity, MIN(inventory.last_restock) AS first_last_restock FROM inventory INNER JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id GROUP BY store_sales.product_id ORDER BY 2 DESC, product_id DESC;

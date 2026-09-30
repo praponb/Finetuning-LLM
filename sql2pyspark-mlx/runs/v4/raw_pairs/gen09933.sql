@@ -1,1 +1,0 @@
-with matched_keys as (select event_type, session_id from web_events except all select event_type, session_id from web_events where page is not null), verified as (select s.* from web_events s inner join matched_keys k on s.event_type = k.event_type and s.session_id = k.session_id) select id, session_id, duration_sec from verified;

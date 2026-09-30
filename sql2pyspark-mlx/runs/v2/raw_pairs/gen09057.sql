@@ -1,1 +1,0 @@
-SELECT MONTH(event_time) AS event_month, MAX(event_time) AS last_event_time, SUM(CASE WHEN event_type = 'page_view' THEN duration_sec ELSE 0 END) AS page_view_duration_sec FROM web_events GROUP BY event_month HAVING page_view_duration_sec >= 40 ORDER BY page_view_duration_sec, event_month LIMIT 5;

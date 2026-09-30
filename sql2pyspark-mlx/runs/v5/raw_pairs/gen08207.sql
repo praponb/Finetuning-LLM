@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.quantity, ss.sale_date, ss.revenue, ss.units FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.store_id IN (2, 4, 5) AND i.product_id IN (2, 7, 9)

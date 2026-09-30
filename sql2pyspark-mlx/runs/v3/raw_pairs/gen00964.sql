@@ -1,1 +1,0 @@
-with account_totals as (select account_id, count(amount) as amount_count, concat_ws(', ', sort_array(collect_set(txn_type))) as txn_type_values from transactions where amount is not null group by account_id) select a.id, a.opened_date, at.amount_count, at.txn_type_values from accounts a inner join account_totals at on a.id = at.account_id;

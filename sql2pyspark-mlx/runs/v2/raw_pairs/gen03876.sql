@@ -1,1 +1,0 @@
-SELECT s.city, MIN(i.quantity) min_quantity, MAX(i.quantity) - MIN(i.quantity) quantity_range FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE p.brand IN ('Stark', 'Umbrella', 'Acme') GROUP BY s.city ORDER BY city, quantity_range;

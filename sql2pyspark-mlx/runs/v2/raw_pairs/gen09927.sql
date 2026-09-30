@@ -1,1 +1,0 @@
-WITH OrdersByCustomer AS (SELECT customer_id, ROUND(AVG(discount), 2) AS avg_discount, COUNT(*) AS order_count FROM orders WHERE amount <= 1110 GROUP BY customer_id) SELECT c.id, c.credit_limit, c.age, O.avg_discount, O.order_count FROM customers c JOIN OrdersByCustomer O ON c.id = O.customer_id WHERE O.order_count > 8 ORDER BY O.order_count;

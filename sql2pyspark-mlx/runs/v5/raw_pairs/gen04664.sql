@@ -1,1 +1,0 @@
-select status, year(paid_at) as paid_year, round((100 * sum(case when method = 'paypal' then 1 else 0 end)) / count(*), 1) as pct_paypal, count(case when method = 'paypal' then 1 end) as paypal_count from payments where method in ('cash', 'promptpay') and to_date(paid_at) >= '2024-09-01' group by status, year(paid_at) order by paypal_count desc, status, paid_year limit 3

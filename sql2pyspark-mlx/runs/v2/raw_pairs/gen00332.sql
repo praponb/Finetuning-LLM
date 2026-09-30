@@ -1,1 +1,0 @@
-with RecentOrders as (select *, case when discount >= 0.3 then 'High' when discount >= 0.06 then 'Medium' else 'Low' end as discount_tier from orders where amount between 590 and 860), summary as (select status, round((100 * sum(case when channel = 'store' then 1 else 0 end)) / count(*), 1) as pct_store from RecentOrders group by status) select * from summary order by status, 2;

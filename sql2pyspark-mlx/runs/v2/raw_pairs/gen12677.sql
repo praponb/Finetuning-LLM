@@ -1,1 +1,0 @@
-SELECT QUARTER(delivered_date) delivered_quarter, status, COUNT(CASE WHEN carrier = 'Flash' THEN 1 END) flash_count, MIN(shipped_date) min_shipped_date, COUNT(DISTINCT cost) unique_carriers FROM shipments GROUP BY CUBE(QUARTER(delivered_date), status) ORDER BY delivered_quarter DESC;

@@ -1,1 +1,0 @@
-SELECT subscriptions.id, subscriptions.plan, customers.name, customers.signup_date FROM subscriptions INNER JOIN customers ON subscriptions.customer_id = customers.id WHERE subscriptions.monthly_fee >= 80;

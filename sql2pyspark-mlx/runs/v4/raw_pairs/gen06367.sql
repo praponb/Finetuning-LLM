@@ -1,1 +1,0 @@
-SELECT p.brand, MIN(i.quantity) AS min_quantity, COUNT(i.quantity) AS quantity_count FROM inventory i INNER JOIN products p ON i.product_id = p.id GROUP BY p.brand HAVING MIN(i.quantity) >= 80 ORDER BY min_quantity DESC, brand DESC

@@ -1,1 +1,0 @@
-with flattened as (select id, plan, currency, val from price_tiers lateral view explode(tier_limits) e as val) select id, plan, currency, max(val) over (partition by currency, plan) as currency_max_val from flattened;

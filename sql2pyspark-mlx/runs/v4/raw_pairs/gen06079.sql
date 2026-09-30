@@ -1,1 +1,0 @@
-SELECT CASE WHEN monthly_fee >= 209 THEN 'LARGE' ELSE 'SMALL' END AS monthly_fee_tier, COUNT_IF(plan = 'enterprise') AS enterprise_events, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee, STDDEV_SAMP(monthly_fee) AS monthly_fee_stddev FROM subscriptions GROUP BY 1 ORDER BY avg_monthly_fee NULLS LAST

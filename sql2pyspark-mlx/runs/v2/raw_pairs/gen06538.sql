@@ -1,1 +1,0 @@
-WITH session_stats AS (SELECT session_id, SUM(duration_sec) AS total_duration_sec, MAX(duration_sec) - MIN(duration_sec) AS duration_sec_range FROM web_events GROUP BY session_id) SELECT s.browser, ss.total_duration_sec, ss.duration_sec_range FROM sessions s JOIN session_stats ss ON s.id = ss.session_id WHERE ss.duration_sec_range >= 74 ORDER BY total_duration_sec DESC;

@@ -1,1 +1,0 @@
-SELECT o.id, o.channel, COUNT(p.id) AS payment_count, MAX(p.amount) AS max_amount FROM orders o LEFT JOIN payments p ON o.id = p.order_id GROUP BY o.id, o.channel ORDER BY payment_count ASC, id ASC, channel ASC LIMIT 10;

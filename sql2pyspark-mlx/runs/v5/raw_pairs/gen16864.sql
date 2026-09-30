@@ -1,1 +1,0 @@
-SELECT orders.store_id, orders.amount, orders.discount, order_items.order_id FROM orders LEFT JOIN order_items ON order_items.order_id = orders.id WHERE orders.channel IN ('web', 'mobile') ORDER BY order_items.order_id

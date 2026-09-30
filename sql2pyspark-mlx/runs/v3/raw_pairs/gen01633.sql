@@ -1,1 +1,0 @@
-select d.location, d.dept_name, round(avg(e.salary), 2) as avg_salary from employees e join departments d on e.dept_id = d.id where length(e.full_name) >= 14 group by d.location, d.dept_name order by avg_salary desc;

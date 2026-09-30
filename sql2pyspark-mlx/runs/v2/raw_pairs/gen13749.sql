@@ -1,1 +1,0 @@
-WITH ranked_customers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY age, id) AS rn FROM customers WHERE email IS NOT NULL) SELECT id, segment, age, credit_limit FROM ranked_customers WHERE rn <= 3 ORDER BY 1 DESC;

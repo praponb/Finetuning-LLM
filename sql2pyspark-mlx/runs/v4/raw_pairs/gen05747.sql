@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, LENGTH(status) AS status_length FROM shipments WHERE cost > 79) SELECT *, LAG(cost, 1, 0) OVER (PARTITION BY order_id, carrier ORDER BY delivered_date, id) AS prev_cost, SUM(status_length) OVER (PARTITION BY status ORDER BY shipped_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_status_length FROM cleaned;

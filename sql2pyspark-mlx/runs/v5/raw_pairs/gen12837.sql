@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, order_id, method, amount, paid_at, UPPER(method) AS method_upper FROM payments WHERE order_id IS NULL) SELECT * FROM (SELECT order_id, method, amount FROM base) src PIVOT (MAX(amount) AS value_sum, COUNT(1) AS cnt FOR method IN ('cash', 'promptpay'));

@@ -1,1 +1,0 @@
-SELECT p.brand, p.supplier_id, COUNT(i.quantity) AS quantity_count FROM inventory i JOIN products p ON i.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE i.quantity != 217 GROUP BY p.brand, p.supplier_id ORDER BY supplier_id, brand LIMIT 5

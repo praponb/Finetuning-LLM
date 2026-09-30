@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('WEEK', order_date) AS week_start, status, CASE WHEN discount >= 0.45 THEN 'HIGH' ELSE 'LOW' END AS discount_tier, COUNT(*) AS num_rows, COUNT(*) AS event_count, AVG(amount) FILTER (WHERE channel = 'partner') AS partner_avg_amount FROM orders GROUP BY DATE_TRUNC('WEEK', order_date), status, CASE WHEN discount >= 0.45 THEN 'HIGH' ELSE 'LOW' END;

@@ -1,1 +1,0 @@
-SELECT is_flagged, MONTH(txn_time) AS txn_month, SUM(CASE WHEN txn_type = 'REFUND' THEN amount ELSE 0 END) AS refund_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values, MIN(txn_time) AS first_txn_time FROM transactions WHERE NOT is_flagged GROUP BY is_flagged, MONTH(txn_time) HAVING SUM(CASE WHEN txn_type = 'REFUND' THEN amount ELSE 0 END) > 25;

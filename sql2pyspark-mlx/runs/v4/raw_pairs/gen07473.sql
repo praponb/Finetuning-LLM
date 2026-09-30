@@ -1,1 +1,0 @@
-SELECT emp.level AS employee_level, emp.hire_date AS employee_hire_date, mgr.job_title AS manager_job_title, mgr.is_remote AS manager_is_remote, mgr.dept_id AS manager_dept_id, TRIM(emp.level) AS clean_level FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id ORDER BY manager_dept_id DESC;

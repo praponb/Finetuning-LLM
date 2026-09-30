@@ -1,1 +1,0 @@
-SELECT i.product_id, p.price, s.supplier_name, s.country FROM inventory i LEFT JOIN products p ON i.product_id = p.id RIGHT JOIN suppliers s ON p.supplier_id = s.id WHERE ARRAY_CONTAINS(p.tags, 'sale') ORDER BY product_id DESC;

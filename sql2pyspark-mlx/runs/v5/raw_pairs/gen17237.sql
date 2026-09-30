@@ -1,1 +1,0 @@
-select o.status, round((100 * sum(case when p.method = 'promptpay' then 1 else 0 end)) / count(*), 1) as pct_promptpay, min(p.amount) as min_amount from payments p inner join orders o on p.order_id = o.id inner join customers c on o.customer_id = c.id group by o.status having min(p.amount) >= 1400 order by status limit 5;

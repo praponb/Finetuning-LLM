@@ -1,1 +1,0 @@
-SELECT customers.email, customers.segment, subscriptions.plan, subscriptions.monthly_fee, subscriptions.end_date FROM customers LEFT OUTER JOIN subscriptions ON subscriptions.customer_id = customers.id WHERE customers.is_active = FALSE;

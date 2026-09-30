@@ -1,1 +1,0 @@
-select emp.dept_id as employee_dept_id, mgr.dept_id as manager_dept_id, mgr.level as manager_level from employees emp left outer join employees mgr on emp.manager_id = mgr.id where emp.job_title is not null

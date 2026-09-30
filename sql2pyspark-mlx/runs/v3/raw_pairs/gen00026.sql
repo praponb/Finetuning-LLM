@@ -1,1 +1,0 @@
-with store_sales_by_product as (select product_id, count(units) as units_count from store_sales group by product_id) select products.supplier_id, store_sales_by_product.units_count from products join store_sales_by_product on products.id = store_sales_by_product.product_id where store_sales_by_product.units_count > 6 order by units_count desc;

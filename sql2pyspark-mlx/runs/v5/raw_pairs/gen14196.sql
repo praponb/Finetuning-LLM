@@ -1,1 +1,0 @@
-with payments_by_order as (select order_id, max(amount) - min(amount) as amount_range, max(paid_at) as last_paid_at from payments where status != 'FAILED' group by order_id) select o.store_id, pbo.amount_range, pbo.last_paid_at from orders o inner join payments_by_order pbo on o.id = pbo.order_id;

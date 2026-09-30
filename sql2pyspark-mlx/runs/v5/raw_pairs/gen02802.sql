@@ -1,1 +1,0 @@
-SELECT CASE WHEN monthly_fee >= 269 THEN 'high' WHEN monthly_fee >= 85 THEN 'mid' ELSE 'low' END AS monthly_fee_bucket, COUNT(monthly_fee) AS monthly_fee_count FROM subscriptions WHERE monthly_fee IS NOT NULL OR status IN ('EXPIRED', 'CANCELLED') GROUP BY CASE WHEN monthly_fee >= 269 THEN 'high' WHEN monthly_fee >= 85 THEN 'mid' ELSE 'low' END;

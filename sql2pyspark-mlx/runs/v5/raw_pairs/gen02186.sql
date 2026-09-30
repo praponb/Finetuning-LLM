@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, MIN(order_date) AS first_order_date FROM orders WHERE order_date >= '2024-03-31' GROUP BY store_id) SELECT s.id, s.region, s.opened_date, ss.first_order_date FROM stores s JOIN store_summary ss ON s.id = ss.store_id;

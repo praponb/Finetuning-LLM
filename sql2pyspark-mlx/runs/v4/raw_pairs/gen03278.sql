@@ -1,1 +1,0 @@
-WITH matched_keys AS (SELECT customer_id, country FROM sessions EXCEPT SELECT customer_id, country FROM sessions WHERE browser <> 'Safari'), kept_rows AS (SELECT s.* FROM sessions s INNER JOIN matched_keys k ON s.customer_id = k.customer_id AND s.country = k.country) SELECT id, device, browser, started_at, country FROM kept_rows;

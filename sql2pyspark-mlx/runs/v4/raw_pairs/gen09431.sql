@@ -1,1 +1,0 @@
-SELECT QUARTER(ss.sale_date) sale_quarter, SUM(i.quantity) total_quantity, MIN(i.quantity) min_quantity FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY QUARTER(ss.sale_date) ORDER BY total_quantity

@@ -1,1 +1,0 @@
-SELECT shipments.id, shipments.carrier, shipments.shipped_date, shipments.cost, orders.amount, orders.order_date FROM shipments JOIN orders ON shipments.order_id = orders.id WHERE orders.shipping_fee <= 32 OR orders.discount >= 0.1

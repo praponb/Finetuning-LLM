@@ -1,1 +1,0 @@
-WITH top_employees AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY level ORDER BY salary DESC, id) AS rnk FROM employees WHERE LENGTH(email) < 5) SELECT id, level, salary, job_title FROM top_employees WHERE rnk <= 3 ORDER BY id DESC, job_title

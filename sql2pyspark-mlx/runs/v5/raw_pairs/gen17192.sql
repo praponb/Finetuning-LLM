@@ -1,1 +1,0 @@
-with matched_keys as (select id, order_id from payments except all select id, order_id from payments where order_id is not null), verified as (select s.* from payments s join matched_keys k on s.id = k.id and s.order_id = k.order_id) select id, method from verified order by id desc nulls last, method;

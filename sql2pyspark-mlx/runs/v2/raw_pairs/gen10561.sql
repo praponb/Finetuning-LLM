@@ -1,1 +1,0 @@
-WITH top_products AS (SELECT id, brand, cost, supplier_id, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY cost, id) AS rn FROM products WHERE ARRAY_CONTAINS(tags, 'eco')) SELECT id, brand, cost, supplier_id FROM top_products WHERE rn <= 3;

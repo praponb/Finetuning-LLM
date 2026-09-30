@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, customer_id, account_type, status, DATEDIFF(CURRENT_DATE(), opened_date) AS days_since_opened_date FROM accounts WHERE status IS NOT NULL) SELECT s.id, s.customer_id, s.account_type, s.status, s.days_since_opened_date, p.credit_limit FROM base s JOIN customers p ON s.customer_id = p.id

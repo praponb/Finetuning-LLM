@@ -1,1 +1,0 @@
-with products_by_supplier as (select supplier_id, min(cost) as min_cost from products where price <= 900 group by supplier_id) select s.id, s.rating, pbs.min_cost from suppliers s inner join products_by_supplier pbs on s.id = pbs.supplier_id

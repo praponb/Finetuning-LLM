@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CONCAT(dept_name, ' ', location) AS dept_name_location FROM departments WHERE location NOT IN ('Singapore', 'London', 'Chiang Mai')) SELECT * FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY location, dept_name ORDER BY budget DESC NULLS LAST, id) = 1

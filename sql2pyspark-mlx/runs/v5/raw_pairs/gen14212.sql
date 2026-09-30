@@ -1,1 +1,0 @@
-with not_flagged as (select s.* from suppliers s where exists (select 1 from products ch where ch.supplier_id = s.id and ch.category != 'Home')) select case when rating >= 4.4 then 'HIGH' else 'LOW' end as rating_tier, min(rating) as min_rating, percentile_approx(rating, array(0.25, 0.5, 0.75)) as rating_quartiles, count(*) as event_count from not_flagged group by rating_tier

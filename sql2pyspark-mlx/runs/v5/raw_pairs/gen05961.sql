@@ -1,1 +1,0 @@
-WITH top_departments AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) AS rn FROM departments) SELECT id, location, budget, dept_name FROM top_departments WHERE rn <= 1 ORDER BY location, id DESC;

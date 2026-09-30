@@ -1,1 +1,0 @@
-SELECT s.id, s.rating, t.umbrella_stock_qty FROM suppliers s INNER JOIN (SELECT supplier_id, SUM(CASE WHEN brand = 'Umbrella' THEN stock_qty ELSE 0 END) AS umbrella_stock_qty FROM products GROUP BY supplier_id) t ON s.id = t.supplier_id;

@@ -1,1 +1,0 @@
-SELECT s.*, latest.page, latest.web_event_event_type FROM sessions s JOIN LATERAL (SELECT c.page, c.event_type AS web_event_event_type FROM web_events c WHERE c.session_id = s.id ORDER BY c.event_time DESC, c.id DESC LIMIT 1) latest ON TRUE

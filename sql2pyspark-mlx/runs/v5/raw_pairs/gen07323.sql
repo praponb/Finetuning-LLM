@@ -1,1 +1,0 @@
-SELECT c.id, c.city, t.avg_shipping_fee, t.pending_amount FROM customers c INNER JOIN (SELECT customer_id, AVG(shipping_fee) avg_shipping_fee, SUM(CASE WHEN status = 'PENDING' THEN amount ELSE 0 END) pending_amount FROM orders GROUP BY customer_id) t ON c.id = t.customer_id ORDER BY c.city;

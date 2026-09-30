@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, status, shipping_fee, ROW_NUMBER() OVER (PARTITION BY status ORDER BY shipping_fee DESC, id) AS rnk FROM orders) SELECT id, status, shipping_fee FROM ranked WHERE rnk = 1 ORDER BY id DESC;

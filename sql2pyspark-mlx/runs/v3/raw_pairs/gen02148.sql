@@ -1,1 +1,0 @@
-SELECT order_id, SUM(unit_price * quantity) AS revenue, ROUND(AVG(unit_price), 2) AS avg_unit_price FROM order_items WHERE order_id IN (5, 30, 34, 40) AND order_id IN (26, 28, 30, 38) AND product_id = 6 GROUP BY order_id HAVING SUM(unit_price * quantity) < 67

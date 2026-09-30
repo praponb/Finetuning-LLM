@@ -1,1 +1,0 @@
-SELECT MONTH(order_date) AS order_month, COUNT(*) AS total_count, SUM(shipping_fee) AS total_shipping_fee FROM orders WHERE status NOT IN ('CANCELLED', 'RETURNED') AND store_id IS NOT NULL GROUP BY 1 ORDER BY order_month DESC LIMIT 5

@@ -1,1 +1,0 @@
-SELECT CASE WHEN status IN ('ACTIVE', 'EXPIRED') THEN 'core' ELSE 'other' END AS status_group, MAX(monthly_fee) AS max_monthly_fee, ROUND(AVG(monthly_fee), 2) AS avg_monthly_fee FROM subscriptions WHERE monthly_fee <= 90 AND monthly_fee BETWEEN 120 AND 200 GROUP BY 1

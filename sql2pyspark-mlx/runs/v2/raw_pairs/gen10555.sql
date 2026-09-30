@@ -1,1 +1,0 @@
-WITH filtered_transactions AS (SELECT * FROM transactions WHERE TO_DATE(txn_time) >= '2023-07-04' AND HOUR(txn_time) BETWEEN 10 AND 13), transactions_stats AS (SELECT HOUR(txn_time) AS txn_hour, ROUND(AVG(amount), 2) AS avg_amount FROM filtered_transactions GROUP BY HOUR(txn_time)) SELECT txn_hour, avg_amount FROM transactions_stats WHERE avg_amount >= 62 ORDER BY txn_hour;

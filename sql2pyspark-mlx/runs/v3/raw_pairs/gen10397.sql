@@ -1,1 +1,0 @@
-SELECT is_flagged, MONTH(txn_time) AS txn_month, SUM(CASE WHEN merchant = 'Amazon' THEN 1 ELSE 0 END) AS amazon_count, COUNT(DISTINCT amount) AS unique_txn_types, COUNT(*) AS total_count FROM transactions WHERE amount <= 2600 AND is_flagged AND is_flagged GROUP BY is_flagged, MONTH(txn_time);

@@ -1,1 +1,0 @@
-select o.id, o.channel, o.customer_id, s.sqft, s.store_name, greatest(o.discount, o.shipping_fee) as greatest_discount_shipping_fee from orders o left join stores s on o.store_id = s.id where o.customer_id is not null and o.channel not in ('web', 'store', 'mobile');

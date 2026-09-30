@@ -1,1 +1,0 @@
-select max(budget) as max_budget, round((100 * sum(case when location = 'Bangkok' then 1 else 0 end)) / count(*), 1) as pct_bangkok, concat_ws(', ', sort_array(collect_set(dept_name))) as dept_name_values from departments where budget between 3643000 and 3829000 and dept_name in ('Engineering', 'HR', 'Finance') order by dept_name_values desc, pct_bangkok desc

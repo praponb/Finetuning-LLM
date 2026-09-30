@@ -1,1 +1,0 @@
-select product_id, max(revenue) max_revenue, max(sale_date) latest_sale_date from store_sales where revenue >= 3700 group by product_id having max_revenue > 2600 order by max_revenue, product_id limit 20;

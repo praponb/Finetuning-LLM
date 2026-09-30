@@ -1,1 +1,0 @@
-SELECT COUNT(DISTINCT duration_sec) AS unique_sessions, SUM(CASE WHEN page = '/product' THEN duration_sec ELSE 0 END) AS product_duration_sec FROM web_events WHERE page IN ('/search', '/checkout', '/home') AND duration_sec <= 211;

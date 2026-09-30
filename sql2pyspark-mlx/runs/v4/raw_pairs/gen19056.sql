@@ -1,1 +1,0 @@
-SELECT city_group, avg_credit_limit FROM (SELECT CASE WHEN city IN ('Berlin', 'New York') THEN 'core' ELSE 'other' END city_group, AVG(credit_limit) avg_credit_limit FROM customers GROUP BY CASE WHEN city IN ('Berlin', 'New York') THEN 'core' ELSE 'other' END) s WHERE avg_credit_limit >= 13700;

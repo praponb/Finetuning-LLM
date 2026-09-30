@@ -1,1 +1,0 @@
-SELECT id, store_id, shipping_fee, order_date, CONCAT(channel, '/', status) AS channel_status, COALESCE(discount, 0) AS discount_filled FROM orders WHERE status NOT IN ('RETURNED', 'COMPLETED', 'SHIPPED') ORDER BY discount_filled DESC, id LIMIT 1;

@@ -1,1 +1,0 @@
-SELECT oi.product_id, oi.quantity, o.store_id, p.launch_date, p.category, COALESCE(o.discount, 0) AS discount_filled FROM order_items oi INNER JOIN orders o ON oi.order_id = o.id RIGHT OUTER JOIN products p ON oi.product_id = p.id WHERE p.cost > 480 AND p.brand NOT IN ('Initech', 'Acme', 'Globex') ORDER BY product_id DESC, oi.quantity

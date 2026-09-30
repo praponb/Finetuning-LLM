@@ -1,1 +1,0 @@
-SELECT txn_type, is_flagged, SORT_ARRAY(COLLECT_SET(txn_type)) AS txn_type_list FROM transactions WHERE amount >= 1900 AND txn_type = 'FEE' AND account_id = 40 GROUP BY txn_type, is_flagged ORDER BY txn_type

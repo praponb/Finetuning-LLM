@@ -1,1 +1,0 @@
-SELECT emp.id, emp.dept_id AS employee_dept_id, emp.email AS employee_email, emp.level AS employee_level, mgr.job_title AS manager_job_title, mgr.dept_id AS manager_dept_id, mgr.manager_id AS manager_manager_id FROM employees emp LEFT JOIN employees mgr ON emp.manager_id = mgr.id WHERE emp.level = 'L4' ORDER BY id DESC;

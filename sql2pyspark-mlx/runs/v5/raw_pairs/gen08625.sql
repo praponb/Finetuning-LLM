@@ -1,1 +1,0 @@
-SELECT supplier_id, launch_year, price_range FROM (SELECT supplier_id, YEAR(launch_date) AS launch_year, MAX(price) - MIN(price) AS price_range FROM products GROUP BY supplier_id, YEAR(launch_date)) AS sub WHERE price_range < 65 ORDER BY launch_year DESC, supplier_id LIMIT 10;

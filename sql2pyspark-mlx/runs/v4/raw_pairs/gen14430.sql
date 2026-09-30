@@ -1,1 +1,0 @@
-select txn_type, round((100 * sum(case when txn_type = 'DEBIT' then 1 else 0 end)) / count(*), 1) as pct_debit, min(txn_time) as min_txn_time from transactions group by txn_type having avg(amount) > 2300;

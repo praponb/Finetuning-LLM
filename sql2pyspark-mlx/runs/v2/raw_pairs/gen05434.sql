@@ -1,1 +1,0 @@
-select s.browser, t.page_values from sessions s join (select session_id, concat_ws(', ', sort_array(collect_set(page))) as page_values from web_events where event_time < '2025-03-01' group by session_id) t on s.id = t.session_id order by page_values, browser desc;

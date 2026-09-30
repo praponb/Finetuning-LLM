@@ -1,1 +1,0 @@
-WITH ranked_store_sales AS (SELECT id, store_id, revenue, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY revenue, id) AS row_num FROM store_sales) SELECT * FROM ranked_store_sales WHERE row_num <= 2;

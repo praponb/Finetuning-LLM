@@ -1,1 +1,0 @@
-SELECT country, COUNT(*) FILTER (WHERE city = 'New York') AS new_york_rows, STDDEV_SAMP(rating) AS rating_stddev, AVG(rating) FILTER (WHERE country = 'SG') AS sg_avg_rating FROM suppliers GROUP BY country HAVING STDDEV_SAMP(rating) > 0 ORDER BY rating_stddev DESC NULLS LAST;

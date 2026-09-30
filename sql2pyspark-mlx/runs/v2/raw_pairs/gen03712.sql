@@ -1,1 +1,0 @@
-SELECT store_sales.id, store_sales.store_id, stores.store_name, stores.sqft, CONCAT(stores.region, ', ', stores.store_name) AS region_store_name FROM store_sales INNER JOIN stores ON store_sales.store_id = stores.id WHERE stores.opened_date < '2025-03-10' AND store_sales.revenue >= 2600;

@@ -1,1 +1,0 @@
-WITH recent_store_sales AS (SELECT *, ROUND(units * 0.85, 2) adjusted_units FROM store_sales WHERE sale_date < '2024-02-06'), store_sales_stats AS (SELECT product_id, MIN(units) min_units FROM recent_store_sales GROUP BY product_id) SELECT * FROM store_sales_stats;

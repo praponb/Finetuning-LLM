@@ -1,1 +1,0 @@
-SELECT CASE WHEN stock_qty >= 412 THEN 'LARGE' ELSE 'SMALL' END AS stock_qty_tier, DATE_TRUNC('MONTH', launch_date) AS activity_month, SORT_ARRAY(COLLECT_SET(category)) AS category_list, SIZE(COLLECT_SET(category)) AS num_categories, COUNT(*) AS cnt FROM products GROUP BY 1, 2

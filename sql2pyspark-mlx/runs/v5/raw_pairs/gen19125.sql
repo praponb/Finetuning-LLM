@@ -1,1 +1,0 @@
-SELECT CASE WHEN shipping_fee >= 33 THEN 'high' WHEN shipping_fee >= 13 THEN 'mid' ELSE 'low' END shipping_fee_bucket, MIN(shipping_fee) min_shipping_fee, COUNT(discount) discount_count, MAX(amount) max_amount FROM orders WHERE discount > 0.3 AND discount BETWEEN 0.1 AND 0.24 AND channel NOT IN ('mobile', 'partner', 'web') GROUP BY shipping_fee_bucket HAVING discount_count < 2

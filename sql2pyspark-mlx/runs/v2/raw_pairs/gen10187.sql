@@ -1,1 +1,0 @@
-WITH StoreTotals AS (SELECT store_id, COUNT(quantity) AS quantity_count, ROUND(AVG(quantity), 2) AS avg_quantity FROM inventory GROUP BY store_id) SELECT stores.sqft, StoreTotals.quantity_count, StoreTotals.avg_quantity FROM stores INNER JOIN StoreTotals ON stores.id = StoreTotals.store_id ORDER BY avg_quantity, quantity_count DESC

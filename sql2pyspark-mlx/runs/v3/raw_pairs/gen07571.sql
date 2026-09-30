@@ -1,1 +1,0 @@
-WITH session_summary AS (SELECT session_id, COUNT(duration_sec) duration_sec_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) event_type_values FROM web_events WHERE session_id IN (2, 14, 22, 36) GROUP BY session_id) SELECT s.id, s.customer_id, ss.duration_sec_count, ss.event_type_values FROM sessions s LEFT JOIN session_summary ss ON s.id = ss.session_id;

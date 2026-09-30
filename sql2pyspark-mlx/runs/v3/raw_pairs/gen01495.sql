@@ -1,1 +1,0 @@
-SELECT s.id, s.rating, s.supplier_name, s.city FROM suppliers s WHERE s.city NOT IN ('Chiang Mai', 'London') AND EXISTS (SELECT 1 FROM products p WHERE p.supplier_id = s.id) ORDER BY rating DESC, id LIMIT 10;

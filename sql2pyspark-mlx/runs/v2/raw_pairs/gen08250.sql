@@ -1,1 +1,0 @@
-SELECT customer_id, status, COUNT(*) AS total_count FROM accounts WHERE (account_type = 'SAVINGS' AND customer_id = 13) OR balance > 45000 GROUP BY customer_id, status HAVING total_count >= 4 ORDER BY total_count DESC, customer_id, status LIMIT 5

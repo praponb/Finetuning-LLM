@@ -1,1 +1,0 @@
-SELECT *, AVG(balance) OVER (PARTITION BY status ORDER BY opened_date, id ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS balance_avg_6, NTILE(5) OVER (PARTITION BY customer_id, account_type ORDER BY balance, id) AS balance_bucket FROM accounts WHERE balance >= 32000;

@@ -1,1 +1,0 @@
-WITH top_subscriptions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY status ORDER BY monthly_fee DESC, id) AS rn FROM subscriptions) SELECT id, status, monthly_fee, end_date FROM top_subscriptions WHERE rn = 1 ORDER BY end_date;

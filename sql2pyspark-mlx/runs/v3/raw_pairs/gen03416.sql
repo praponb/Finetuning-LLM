@@ -1,1 +1,0 @@
-select id, session_id, event_time, page, duration_sec, row_number() over (partition by session_id order by event_time desc, id) as row_num, lead(duration_sec, 1) over (partition by page order by event_time, id) as next_duration_sec from web_events

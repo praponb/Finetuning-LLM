@@ -1,1 +1,0 @@
-select dept_name, max(budget) as max_budget, max(budget) - min(budget) as budget_range, sort_array(collect_set(dept_name)) as dept_name_list from departments where dept_name = 'Marketing' or budget is null group by dept_name order by max_budget desc;

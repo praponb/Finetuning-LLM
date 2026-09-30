@@ -1,1 +1,0 @@
-SELECT city, AVG(sqft) AS avg_sqft, COUNT(DISTINCT sqft) AS unique_citys FROM stores WHERE opened_date BETWEEN '2023-05-09' AND '2025-01-12' GROUP BY city HAVING avg_sqft >= 11600 ORDER BY unique_citys ASC, city ASC

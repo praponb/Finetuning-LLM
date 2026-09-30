@@ -1,1 +1,0 @@
-SELECT account_type, COUNT(DISTINCT balance) unique_customers FROM accounts WHERE account_type NOT IN ('SAVINGS', 'CREDIT', 'LOAN') OR YEAR(opened_date) = 2024 GROUP BY account_type ORDER BY account_type;

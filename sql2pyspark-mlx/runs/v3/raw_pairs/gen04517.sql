@@ -1,1 +1,0 @@
-SELECT id, supplier_id, launch_date, stock_qty, brand, cost, stock_qty - LAG(stock_qty, 1) OVER (PARTITION BY supplier_id ORDER BY launch_date, id) stock_qty_change, ROUND(cost / SUM(cost) OVER (PARTITION BY brand), 3) cost_share FROM products WHERE brand IN ('Acme', 'Initech')

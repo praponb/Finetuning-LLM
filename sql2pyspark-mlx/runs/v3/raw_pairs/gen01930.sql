@@ -1,1 +1,0 @@
-with filtered_payments as (select * from payments where order_id is null), method_summary as (select method, min(paid_at) as first_paid_at, concat_ws(', ', sort_array(collect_set(method))) as method_values from filtered_payments group by method) select * from method_summary order by method_values, first_paid_at, method limit 10;

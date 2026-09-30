@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN status IN ('EXPIRED', 'ACTIVE') THEN 'group_a' ELSE 'other' END AS status_group, status, monthly_fee FROM subscriptions) PIVOT (AVG(monthly_fee) FOR status IN ('PAUSED', 'ACTIVE', 'EXPIRED'))

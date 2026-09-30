@@ -1,1 +1,0 @@
-SELECT location, SORT_ARRAY(COLLECT_SET(dept_name)) AS dept_name_list, ROUND(STDDEV(budget), 2) AS stddev_budget, MAX(budget) - MIN(budget) AS budget_range FROM departments WHERE budget IS NULL AND location IN ('Tokyo', 'Bangkok') GROUP BY 1

@@ -1,1 +1,0 @@
-SELECT e.job_title AS employee_job_title, e.email AS employee_email, m.manager_id AS manager_manager_id, COALESCE(e.job_title, 'N/A') AS job_title_filled FROM employees e LEFT JOIN employees m ON e.manager_id = m.id WHERE m.job_title = 'Analyst' OR m.job_title IN ('Director', 'Designer') ORDER BY job_title_filled

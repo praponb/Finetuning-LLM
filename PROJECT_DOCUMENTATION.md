@@ -100,13 +100,13 @@ Finetuning-LLM/
 │   ├── convert_sql_pyspark.py    # Signature splitter & chat formatter
 │   ├── lora_config.yaml          # MLX LoRA hyperparameters (v7: 7B, continued from v6)
 │   ├── train_resumable.py        # Crash-proof training wrapper (`make train`)
-│   ├── train.log                 # Last training log (v7; v6 and v5 in runs/v6/, runs/v5/)
+│   ├── train.log                 # Last training log (v7; older ones in runs/vN/)
 │   ├── data/                     # train.jsonl (16.9k), valid.jsonl, test.jsonl, *_meta.jsonl
 │   ├── raw_pairs/                # Generated pairs, verified.jsonl & reports
-│   ├── adapters/                 # LoRA weights (+ checkpoints), v7 (v6 in runs/v6/)
-│   ├── runs/v2/ … runs/v6/       # Backups: adapters, data, raw pairs, logs, configs
-│   └── sql2pyspark-model/        # Fused 4-bit MLX model
-├── sql2pyspark-hf/               # Dequantized BF16 fused model (~15.2 GB on disk, v8)
+│   ├── adapters/                 # LoRA weights, v7 (v6 in runs/v6/)
+│   ├── runs/v2/ … runs/v7/       # Backups: adapters, logs, configs (v2–v5 data only in git history)
+│   └── sql2pyspark-model/        # Fused 4-bit MLX model (only between `make fuse` and `make clean`)
+├── sql2pyspark-hf/               # Dequantized BF16 fused model (~15.2 GB, only between `make fuse` and `make clean`)
 ├── eval/                         # Execution-based evaluation
 │   ├── build_holdout.py          # 62 hand-written queries on unseen tables
 │   ├── holdout.jsonl             # Hold-out benchmark
@@ -290,7 +290,7 @@ To package the fine-tuned model for Ollama (`make export TAG=v9`):
 
 ### Streamlit Web Application (`app.py`):
 - **Two columns**: SQL input on the left, generated PySpark on the right (with a copy button).
-- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v7), `sql2pyspark:v6`, `sql2pyspark:v5`, `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2`, `sql2pyspark:v1`.
+- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v8) or `sql2pyspark:v7` (v1–v6 were removed on 2026-09-30).
 - **Robust code extraction**: `extract_code()` also handles replies that stop before the closing code fence.
 - **Error handling**: clear messages when Ollama is unreachable or the input is blank; 180 s timeout (600 s for SQL longer than 2,000 characters; 120/300 s before the 7B model).
 - **Long SQL** (> 2,000 characters): `repeat_last_n=2048` stops the window-definition loops seen on long real queries; short queries are unaffected (docs/04, repetition-penalty experiment).

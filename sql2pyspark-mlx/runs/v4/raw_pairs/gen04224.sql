@@ -1,1 +1,0 @@
-SELECT orders.customer_id, orders.store_id, stores.region, customers.signup_date FROM orders JOIN stores ON orders.store_id = stores.id JOIN customers ON orders.customer_id = customers.id WHERE orders.discount BETWEEN 0.12 AND 0.23 AND stores.region IS NOT NULL ORDER BY orders.store_id DESC;

@@ -1,1 +1,0 @@
-SELECT plan, QUARTER(end_date) end_quarter, MAX(start_date) last_start_date, COUNT(monthly_fee) monthly_fee_count, SUM(CASE WHEN plan = 'basic' THEN 1 ELSE 0 END) basic_count FROM subscriptions GROUP BY plan, QUARTER(end_date) HAVING monthly_fee_count >= 5;

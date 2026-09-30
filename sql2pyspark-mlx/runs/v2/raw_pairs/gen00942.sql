@@ -1,1 +1,0 @@
-SELECT store_sales.store_id, QUARTER(store_sales.sale_date) AS sale_quarter, MIN(inventory.quantity) AS min_quantity FROM inventory LEFT JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE inventory.last_restock > '2025-04-01' GROUP BY store_sales.store_id, QUARTER(store_sales.sale_date)

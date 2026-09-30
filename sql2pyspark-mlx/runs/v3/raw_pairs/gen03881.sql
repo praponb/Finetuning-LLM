@@ -1,1 +1,0 @@
-SELECT ss.store_id, COUNT(i.quantity) quantity_count, MIN(i.last_restock) first_last_restock FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.quantity IS NOT NULL GROUP BY ss.store_id

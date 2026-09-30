@@ -1,1 +1,0 @@
-SELECT id, customer_id, coupon_codes, ship_to, attributes, ARRAY_CONTAINS(coupon_codes, 'VIP') AS used_vip, COALESCE(ship_to.city, 'UNKNOWN') AS city_or_unknown, TRY_CAST(attributes['weight_kg'] AS DOUBLE) AS weight_kg, EXISTS(coupon_codes, c -> c LIKE 'W%') AS has_welcome_code, SIZE(items) AS num_items FROM carts;

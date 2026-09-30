@@ -1,1 +1,0 @@
-SELECT CASE WHEN quantity >= 238 THEN 'high' WHEN quantity >= 114 THEN 'mid' ELSE 'low' END AS quantity_bucket, store_id, COUNT(*) AS inventory_count, MIN(quantity) AS min_quantity FROM inventory WHERE quantity >= 68 GROUP BY CUBE(CASE WHEN quantity >= 238 THEN 'high' WHEN quantity >= 114 THEN 'mid' ELSE 'low' END, store_id) ORDER BY store_id DESC;

@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT product_id, store_id, COUNT(*) AS total_count, AVG(quantity) AS avg_quantity FROM inventory GROUP BY product_id, store_id) AS s WHERE avg_quantity > 200 ORDER BY avg_quantity DESC, total_count DESC, product_id, store_id LIMIT 3

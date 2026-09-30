@@ -1,1 +1,0 @@
-WITH top_suppliers AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY country ORDER BY rating, id) AS rn FROM suppliers WHERE country IN ('DE', 'UK', 'JP')) SELECT id, country, rating, supplier_name FROM top_suppliers WHERE rn <= 2 ORDER BY rating, supplier_name DESC

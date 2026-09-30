@@ -1,1 +1,0 @@
-select case when quantity >= 184 then 'high' when quantity >= 47 then 'mid' else 'low' end as quantity_bucket, min(last_restock) as min_last_restock, count(*) as num_inventory from inventory where month(last_restock) in (3, 7, 11) group by case when quantity >= 184 then 'high' when quantity >= 47 then 'mid' else 'low' end order by min_last_restock

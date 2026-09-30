@@ -1,1 +1,0 @@
-with with_last as (select s.*, latest.transaction_amount, latest.transaction_txn_time from accounts s join lateral (select c.amount as transaction_amount, c.txn_time as transaction_txn_time from transactions c where c.account_id = s.id order by c.txn_time desc, c.id desc limit 1) latest on true) select id, account_type, balance, status from with_last order by id

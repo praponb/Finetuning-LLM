@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.country IN ('SG', 'JP') THEN 'group_a' ELSE 'other' END AS country_group, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(p.brand))) AS brand_values FROM products p LEFT OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.country = 'SG' GROUP BY CASE WHEN s.country IN ('SG', 'JP') THEN 'group_a' ELSE 'other' END ORDER BY brand_values, country_group DESC;

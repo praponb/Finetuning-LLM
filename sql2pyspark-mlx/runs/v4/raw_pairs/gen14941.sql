@@ -1,1 +1,0 @@
-SELECT id, location, budget, dept_name, TRIM(location) AS clean_location, INITCAP(TRIM(location)) AS location_title FROM departments WHERE (location <> 'Tokyo' AND budget < 2064000) OR budget < 2795000;

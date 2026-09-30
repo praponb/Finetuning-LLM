@@ -1,1 +1,0 @@
-SELECT inventory.store_id, inventory.quantity, store_sales.product_id, ADD_MONTHS(inventory.last_restock, 3) AS last_restock_plus_months FROM inventory JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id WHERE inventory.store_id IN (2, 3) AND inventory.quantity < 140;

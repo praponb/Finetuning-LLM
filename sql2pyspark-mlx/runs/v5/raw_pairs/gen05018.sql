@@ -1,1 +1,0 @@
-SELECT brand, ROUND((100 * SUM(CASE WHEN category = 'Sports' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_sports, COUNT(cost) AS cost_count FROM products WHERE ARRAY_CONTAINS(tags, 'eco') AND cost > 360 GROUP BY 1 ORDER BY pct_sports DESC, brand

@@ -1,1 +1,0 @@
-SELECT store_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity FROM inventory WHERE NOT (last_restock BETWEEN '2024-08-27' AND '2025-09-01' AND last_restock < '2024-04-01') GROUP BY store_id HAVING ROUND(STDDEV(quantity), 2) < 55;

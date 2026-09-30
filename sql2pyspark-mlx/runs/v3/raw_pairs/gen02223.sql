@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, d.location, t.pct_l3 FROM departments d INNER JOIN (SELECT dept_id, ROUND((100 * SUM(CASE WHEN level = 'L3' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_l3 FROM employees WHERE salary >= 95000 GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.pct_l3 >= 48 ORDER BY dept_name;

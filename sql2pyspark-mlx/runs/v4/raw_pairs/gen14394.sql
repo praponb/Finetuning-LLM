@@ -1,1 +1,0 @@
-SELECT * FROM customers WHERE UPPER(TRIM(name)) = 'DAVID LEE' AND LENGTH(name) < 10;

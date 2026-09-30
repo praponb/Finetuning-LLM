@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT city, region, MAX(sqft) - MIN(sqft) AS sqft_range, COUNT(CASE WHEN region = 'East' THEN 1 END) AS east_count FROM stores GROUP BY city, region) AS t WHERE sqft_range < 26 ORDER BY city DESC;

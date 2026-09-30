@@ -1,1 +1,0 @@
-WITH top_products AS (SELECT id, category, stock_qty, ROW_NUMBER() OVER (PARTITION BY category ORDER BY stock_qty DESC, id) AS rnk FROM products) SELECT * FROM top_products WHERE rnk <= 3 ORDER BY id DESC;

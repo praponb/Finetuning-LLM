@@ -1,1 +1,0 @@
-SELECT city, SUM(CASE WHEN segment = 'Corporate' THEN credit_limit ELSE 0 END) AS corporate_credit_limit, SORT_ARRAY(COLLECT_SET(country)) AS country_list, ROUND(AVG(credit_limit), 2) AS avg_credit_limit FROM customers GROUP BY city ORDER BY city, avg_credit_limit DESC;

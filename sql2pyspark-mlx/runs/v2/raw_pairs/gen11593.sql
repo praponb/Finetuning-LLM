@@ -1,1 +1,0 @@
-WITH CustomerStats AS (SELECT customer_id, AVG(amount) AS avg_amount, MAX(discount) AS max_discount FROM orders GROUP BY customer_id) SELECT c.name, c.city, C.avg_amount, C.max_discount FROM customers c INNER JOIN CustomerStats C ON c.id = C.customer_id WHERE C.avg_amount >= 1310 ORDER BY C.avg_amount DESC

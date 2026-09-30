@@ -1,1 +1,0 @@
-WITH filtered_store_sales AS (SELECT * FROM store_sales WHERE product_id IN (5, 6, 10) AND store_id IN (1, 2, 3, 4) AND store_id IN (1, 4, 5, 6)), store_id_summary AS (SELECT store_id, MIN(sale_date) AS min_sale_date FROM filtered_store_sales GROUP BY store_id) SELECT store_id, min_sale_date FROM store_id_summary ORDER BY store_id DESC, min_sale_date DESC

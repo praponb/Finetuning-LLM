@@ -1,1 +1,0 @@
-SELECT id, customer_id, start_date, monthly_fee FROM (SELECT *, DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY start_date DESC) AS rnk FROM subscriptions) AS ranked WHERE rnk = 1 ORDER BY monthly_fee DESC

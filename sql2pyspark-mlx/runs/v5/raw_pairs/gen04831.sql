@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 4.1 THEN 'PREMIUM' ELSE 'STANDARD' END AS rating_tier, COUNT(*) FILTER (WHERE country = 'SG') AS sg_rows, SUM(CASE WHEN country = 'SG' THEN rating ELSE 0 END) AS sg_rating FROM suppliers GROUP BY CASE WHEN rating >= 4.1 THEN 'PREMIUM' ELSE 'STANDARD' END;

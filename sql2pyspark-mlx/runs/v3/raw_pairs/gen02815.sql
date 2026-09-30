@@ -1,1 +1,0 @@
-SELECT is_remote, dept_id, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees WHERE hire_date BETWEEN '2023-05-01' AND '2025-03-01' GROUP BY is_remote, dept_id ORDER BY dept_id DESC, is_remote LIMIT 5

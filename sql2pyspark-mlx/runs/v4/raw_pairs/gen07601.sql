@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.city IN ('New York', 'Tokyo') THEN 'tier_1' ELSE 'other' END AS city_group, COUNT(ss.revenue) AS revenue_count, ROUND(STDDEV(ss.units), 2) AS stddev_units FROM store_sales ss JOIN products p ON ss.product_id = p.id JOIN suppliers s ON p.supplier_id = s.id GROUP BY CASE WHEN s.city IN ('New York', 'Tokyo') THEN 'tier_1' ELSE 'other' END HAVING revenue_count > 3

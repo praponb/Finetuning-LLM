@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, order_id, amount, paid_at, status, FLOOR(amount) amount_whole FROM payments WHERE paid_at > TIMESTAMP '2024-04-30 01:00:00' AND method IS NOT NULL) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY amount DESC NULLS LAST, id) AS latest_rank FROM valid) t WHERE latest_rank = 1

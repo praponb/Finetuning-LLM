@@ -1,1 +1,0 @@
-SELECT id, product_id, store_id, last_restock, quantity, SUM(quantity) OVER (PARTITION BY product_id, store_id ORDER BY last_restock, id) AS running_quantity, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY last_restock, id) AS row_num FROM inventory WHERE store_id = 1;

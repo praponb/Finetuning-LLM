@@ -1,1 +1,0 @@
-WITH top_orders AS (SELECT id, customer_id, amount, channel, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC, id) AS rnk FROM orders) SELECT id, customer_id, amount, channel FROM top_orders WHERE rnk <= 5 ORDER BY id DESC;

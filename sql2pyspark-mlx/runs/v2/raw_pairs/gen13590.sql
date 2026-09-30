@@ -1,1 +1,0 @@
-SELECT store_sales.store_id, COUNT(inventory.quantity) AS quantity_count, MIN(inventory.last_restock) AS min_last_restock FROM inventory LEFT JOIN store_sales ON inventory.store_id = store_sales.store_id AND inventory.product_id = store_sales.product_id GROUP BY store_sales.store_id ORDER BY quantity_count DESC

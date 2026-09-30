@@ -1,1 +1,0 @@
-SELECT s.id, s.customer_id, s.started_at, x.web_event_event_time, x.web_event_event_type FROM sessions s LEFT JOIN LATERAL (SELECT c.event_time AS web_event_event_time, c.event_type AS web_event_event_type FROM web_events c WHERE c.session_id = s.id ORDER BY c.duration_sec DESC, c.id DESC LIMIT 1) x ON TRUE;

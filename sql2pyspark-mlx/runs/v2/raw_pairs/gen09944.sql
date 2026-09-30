@@ -1,1 +1,0 @@
-SELECT shipments.order_id, orders.channel, customers.is_active FROM shipments FULL OUTER JOIN orders ON orders.id = shipments.order_id LEFT JOIN customers ON orders.customer_id = customers.id WHERE customers.city IN ('Tokyo', 'London', 'Berlin') AND orders.amount <= 1510 ORDER BY orders.channel

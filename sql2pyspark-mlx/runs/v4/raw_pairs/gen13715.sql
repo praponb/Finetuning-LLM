@@ -1,1 +1,0 @@
-select id, created_at, ship_to, attributes['device'] as device, transform(filter(items, li -> li.promo is not null), li -> struct(li.product_id as pid, round(li.price * 0.9, 2) as discounted_price)) as promo_lines, aggregate(items, 0D, (acc, li) -> acc + li.qty * li.price, acc -> round(acc, 2)) as cart_value from carts where to_date(created_at) >= '2024-09-05';

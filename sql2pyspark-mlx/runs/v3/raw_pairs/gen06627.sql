@@ -1,1 +1,0 @@
-SELECT o.id, o.discount, t.unique_carriers, t.unique_statuss FROM orders o JOIN (SELECT order_id, COUNT(DISTINCT cost) AS unique_carriers, COUNT(DISTINCT cost) AS unique_statuss FROM shipments WHERE shipped_date > '2023-08-01' GROUP BY order_id) t ON o.id = t.order_id WHERE t.unique_statuss > 5 ORDER BY t.unique_carriers, id LIMIT 10;

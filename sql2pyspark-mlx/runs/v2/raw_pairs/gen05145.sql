@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.merchant, transactions.amount, transactions.is_flagged, accounts.status FROM transactions LEFT JOIN accounts ON accounts.id = transactions.account_id WHERE accounts.customer_id IS NULL AND NOT transactions.is_flagged ORDER BY transactions.amount, id;

@@ -1,1 +1,0 @@
-WITH filtered_products AS (SELECT * FROM products WHERE cost >= 360 AND brand = 'Stark' AND brand = 'Globex'), agg AS (SELECT category, AVG(stock_qty) avg_stock_qty FROM filtered_products GROUP BY category) SELECT category, avg_stock_qty FROM agg ORDER BY 1

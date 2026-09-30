@@ -1,1 +1,0 @@
-SELECT category, MIN(cost) AS min_cost, SORT_ARRAY(COLLECT_SET(category)) AS category_list, AVG(stock_qty) AS avg_stock_qty FROM products GROUP BY category HAVING min_cost > 550 ORDER BY min_cost DESC;

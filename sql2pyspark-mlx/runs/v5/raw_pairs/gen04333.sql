@@ -1,1 +1,0 @@
-SELECT i.product_id, p.cost, s.opened_date, DATEDIFF(CURRENT_DATE(), i.last_restock) AS days_since_last_restock FROM inventory i LEFT OUTER JOIN products p ON i.product_id = p.id INNER JOIN stores s ON i.store_id = s.id WHERE p.stock_qty > 370 AND ARRAY_CONTAINS(p.tags, 'eco') ORDER BY i.product_id ASC, p.cost ASC;

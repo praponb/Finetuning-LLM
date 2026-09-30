@@ -1,1 +1,0 @@
-WITH Ranked AS (SELECT id, customer_id, end_date, status, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY end_date DESC, id) AS pos FROM subscriptions) SELECT * FROM Ranked WHERE pos <= 5 ORDER BY 1

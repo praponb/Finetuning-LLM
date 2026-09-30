@@ -1,1 +1,0 @@
-SELECT e.job_title, e.level, e.manager_id, d.dept_name, d.location, DATEDIFF(CURRENT_DATE(), e.hire_date) AS days_since_hire_date FROM employees e INNER JOIN departments d ON e.dept_id = d.id WHERE e.dept_id IN (4, 23, 27, 35) AND NOT e.is_remote

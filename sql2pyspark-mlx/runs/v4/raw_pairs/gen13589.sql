@@ -1,1 +1,0 @@
-select country, city, case when rating >= 4.3 then 'high' when rating >= 2.3 then 'mid' else 'low' end as rating_bucket, min(rating) as min_rating from suppliers where city != 'London' group by 1, 2, 3

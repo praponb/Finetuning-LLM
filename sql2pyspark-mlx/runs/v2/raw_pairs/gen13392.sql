@@ -1,1 +1,0 @@
-SELECT page, stddev_duration_sec, event_type_values FROM (SELECT page, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values FROM web_events GROUP BY page) AS x WHERE stddev_duration_sec >= 60 ORDER BY stddev_duration_sec;

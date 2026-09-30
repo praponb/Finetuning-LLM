@@ -1,1 +1,0 @@
-select country, sum(case when city = 'Singapore' then rating else 0 end) as singapore_rating, count(case when country = 'SG' then 1 end) as sg_count, sum(rating) as total_rating from suppliers where rating < 3.5 and supplier_name like 'To%' group by country

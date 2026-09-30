@@ -1,1 +1,0 @@
-with cleaned as (select id, store_id, product_id, sale_date, revenue, greatest(units, revenue) as greatest_units_revenue, floor(revenue) as revenue_whole from store_sales where revenue > 3100) select * from (select id, store_id, greatest_units_revenue, revenue from cleaned) src unpivot (reading for kpi in (greatest_units_revenue, revenue))

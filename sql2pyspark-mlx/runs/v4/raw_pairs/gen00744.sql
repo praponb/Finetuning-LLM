@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, supplier_name, country, city, rating, CASE WHEN city = 'Tokyo' THEN 1 ELSE 0 END AS is_tokyo, COALESCE(city, 'DIRECT') AS city_filled FROM suppliers WHERE LENGTH(supplier_name) > 12) SELECT s.*, top1.brand FROM base s LEFT JOIN LATERAL (SELECT c.brand FROM products c WHERE c.supplier_id = s.id ORDER BY c.price DESC, c.id DESC LIMIT 1) top1 ON TRUE;

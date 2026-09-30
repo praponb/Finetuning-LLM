@@ -1,1 +1,0 @@
-SELECT carrier, COUNT(cost) AS cost_count, SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END) AS returned_count, COUNT(CASE WHEN carrier = 'Flash' THEN 1 END) AS flash_count FROM shipments WHERE shipped_date >= '2025-07-01' AND delivered_date < '2023-10-01' GROUP BY carrier;

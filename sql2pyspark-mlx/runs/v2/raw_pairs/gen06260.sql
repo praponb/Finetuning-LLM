@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT carrier, COUNT(CASE WHEN status = 'DELIVERED' THEN 1 END) AS delivered_count FROM shipments WHERE cost BETWEEN 70 AND 75 GROUP BY carrier) AS x WHERE delivered_count > 5 ORDER BY carrier ASC

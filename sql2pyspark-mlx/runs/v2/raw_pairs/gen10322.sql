@@ -1,1 +1,0 @@
-select o.status, max(oi.quantity) as max_quantity, avg(oi.quantity) as avg_quantity from order_items oi left join products p on oi.product_id = p.id left join orders o on o.id = oi.order_id group by o.status having max_quantity >= 3.3 order by status desc, avg_quantity desc;

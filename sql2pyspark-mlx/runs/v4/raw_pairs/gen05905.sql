@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT * FROM orders QUALIFY ROW_NUMBER() OVER (PARTITION BY status ORDER BY amount NULLS LAST, id) = 1) SELECT id, customer_id, store_id, order_date, status, channel, amount, discount FROM ranked ORDER BY customer_id DESC;

@@ -1,1 +1,0 @@
-SELECT quantity, order_id, ROUND(unit_price, 0) AS unit_price_rounded, COALESCE(unit_price, 0) AS unit_price_filled FROM order_items WHERE (quantity != 8 AND product_id = 3) OR quantity BETWEEN 5 AND 7

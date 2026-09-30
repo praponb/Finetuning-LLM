@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN dept_name IN ('Marketing', 'Sales') THEN 'group_a' ELSE 'other' END AS dept_name_group, ROUND(AVG(budget), 2) AS avg_budget FROM departments GROUP BY CASE WHEN dept_name IN ('Marketing', 'Sales') THEN 'group_a' ELSE 'other' END) AS s WHERE avg_budget > 62 ORDER BY avg_budget DESC

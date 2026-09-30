@@ -1,1 +1,0 @@
-select s.city, round(avg(o.discount), 2) as avg_discount, sum(case when o.channel = 'web' then 1 else 0 end) as web_count from orders o inner join customers c on o.customer_id = c.id inner join stores s on o.store_id = s.id group by s.city order by s.city, avg_discount desc;

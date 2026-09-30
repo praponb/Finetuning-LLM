@@ -1,1 +1,0 @@
-SELECT opened_month, sqft_count, south_count FROM (SELECT DATE_FORMAT(opened_date, 'yyyy-MM') AS opened_month, COUNT(sqft) AS sqft_count, COUNT(CASE WHEN region = 'South' THEN 1 END) AS south_count FROM stores WHERE sqft IS NOT NULL GROUP BY DATE_FORMAT(opened_date, 'yyyy-MM')) AS t WHERE sqft_count > 8 ORDER BY south_count, opened_month DESC;

@@ -1,1 +1,0 @@
-SELECT o.id, o.order_date, o.store_id, c.is_active, s.store_name, s.opened_date FROM orders o LEFT JOIN customers c ON o.customer_id = c.id RIGHT JOIN stores s ON s.id = o.store_id ORDER BY id, o.store_id DESC;

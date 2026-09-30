@@ -1,1 +1,0 @@
-with inventory_by_product as (select product_id, sum(quantity) as total_quantity from inventory where month(last_restock) in (3, 4, 8) group by product_id) select p.supplier_id, p.launch_date, ibp.total_quantity from products p inner join inventory_by_product ibp on p.id = ibp.product_id;

@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, order_id, unit_price, quantity, DENSE_RANK() OVER (PARTITION BY order_id ORDER BY unit_price DESC) AS row_num FROM order_items) SELECT id, order_id, unit_price, quantity FROM numbered WHERE row_num <= 3

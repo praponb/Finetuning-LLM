@@ -1,1 +1,0 @@
-select id, store_id, units, sale_date, revenue, percent_rank() over (partition by store_id order by units) units_pct_rank, sum(revenue) over (partition by store_id order by sale_date, id) running_revenue from store_sales where month(sale_date) in (1, 2, 3) order by store_id asc;

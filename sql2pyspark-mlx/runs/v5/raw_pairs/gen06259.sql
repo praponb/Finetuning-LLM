@@ -1,1 +1,0 @@
-SELECT launch_date, 'product' AS origin FROM products WHERE category = 'Grocery' UNION ALL SELECT last_restock AS launch_date, 'inventory' AS origin FROM inventory WHERE MONTH(last_restock) IN (1, 7, 11)

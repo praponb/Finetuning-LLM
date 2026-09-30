@@ -1,1 +1,0 @@
-SELECT p.category, COUNT(DISTINCT ss.revenue) AS unique_stores FROM store_sales ss INNER JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id WHERE ss.product_id IN (5, 7, 10) GROUP BY p.category;

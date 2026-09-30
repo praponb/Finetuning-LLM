@@ -1,1 +1,0 @@
-select ss.id, ss.store_id, ss.sale_date, ss.product_id, s.sqft, s.region, s.store_name from store_sales ss join stores s on s.id = ss.store_id where year(ss.sale_date) >= 2024 order by sale_date, s.sqft, id limit 5;

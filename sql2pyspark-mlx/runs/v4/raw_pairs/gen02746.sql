@@ -1,1 +1,0 @@
-SELECT s.monthly_fee, c.country, c.age, CONCAT(s.status, ' - ', s.plan) AS status_plan FROM subscriptions s LEFT JOIN customers c ON c.id = s.customer_id WHERE s.monthly_fee > 130 OR s.start_date <= '2024-01-25' ORDER BY status_plan

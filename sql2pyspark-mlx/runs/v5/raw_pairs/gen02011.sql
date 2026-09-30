@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, currency, tier_value FROM price_tiers LATERAL VIEW OUTER EXPLODE(discounts) e AS tier_value) SELECT id, currency, RANK() OVER (PARTITION BY currency ORDER BY tier_value NULLS FIRST) AS tier_value_rank, PERCENT_RANK() OVER (PARTITION BY currency ORDER BY tier_value DESC) AS tier_value_percent_rank FROM lines;

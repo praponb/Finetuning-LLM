@@ -1,1 +1,0 @@
-WITH department_summary AS (SELECT dept_id, SUM(salary) total_salary FROM employees WHERE manager_id = 33 GROUP BY dept_id) SELECT d.id, d.dept_name, d.budget, ds.total_salary FROM departments d LEFT OUTER JOIN department_summary ds ON d.id = ds.dept_id ORDER BY id DESC, budget DESC

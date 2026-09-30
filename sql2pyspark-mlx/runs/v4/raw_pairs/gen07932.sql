@@ -1,1 +1,0 @@
-SELECT s.region, t.num_store_sales, t.min_sale_date FROM stores s LEFT OUTER JOIN (SELECT store_id, COUNT(*) num_store_sales, MIN(sale_date) min_sale_date FROM store_sales GROUP BY store_id) t ON s.id = t.store_id WHERE t.num_store_sales >= 9 ORDER BY min_sale_date;

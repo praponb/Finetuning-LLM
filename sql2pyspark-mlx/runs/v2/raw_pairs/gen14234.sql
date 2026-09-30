@@ -1,1 +1,0 @@
-SELECT employees.id, employees.job_title, employees.hire_date, employees.full_name, departments.budget, departments.location, departments.dept_name FROM employees JOIN departments ON employees.dept_id = departments.id ORDER BY dept_name DESC

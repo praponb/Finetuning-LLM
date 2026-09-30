@@ -1,1 +1,0 @@
-select oi.quantity, oi.unit_price, oi.product_id, p.launch_date, p.cost, p.brand from order_items oi inner join products p on oi.product_id = p.id where array_contains(p.tags, 'new') order by p.brand;

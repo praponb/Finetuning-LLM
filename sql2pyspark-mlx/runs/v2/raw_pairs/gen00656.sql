@@ -1,1 +1,0 @@
-SELECT accounts.id, accounts.opened_date, accounts.balance, t.latest_txn_time, t.max_amount FROM accounts INNER JOIN (SELECT account_id, MAX(txn_time) AS latest_txn_time, MAX(amount) AS max_amount FROM transactions WHERE HOUR(txn_time) BETWEEN 8 AND 11 GROUP BY account_id) t ON accounts.id = t.account_id ORDER BY id;

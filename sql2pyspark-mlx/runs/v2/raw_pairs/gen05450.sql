@@ -1,1 +1,0 @@
-WITH department_summary AS (SELECT dept_id, MIN(salary) AS min_salary, AVG(salary) AS avg_salary FROM employees GROUP BY dept_id) SELECT d.dept_name, ds.min_salary, ds.avg_salary FROM departments d INNER JOIN department_summary ds ON d.id = ds.dept_id ORDER BY ds.avg_salary;

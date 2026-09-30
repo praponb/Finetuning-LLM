@@ -1,1 +1,0 @@
-SELECT c.city, ROUND(STDDEV(s.monthly_fee), 2) AS stddev_monthly_fee, MAX(s.monthly_fee) - MIN(s.monthly_fee) AS monthly_fee_range FROM subscriptions s LEFT JOIN customers c ON s.customer_id = c.id WHERE s.status = 'EXPIRED' GROUP BY c.city

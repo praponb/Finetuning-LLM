@@ -1,1 +1,0 @@
-SELECT we.id, we.duration_sec, we.session_id, s.country, c.signup_date, c.email FROM web_events we LEFT OUTER JOIN sessions s ON s.id = we.session_id INNER JOIN customers c ON c.id = s.customer_id ORDER BY signup_date;

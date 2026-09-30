@@ -1,1 +1,0 @@
-SELECT s.id, s.carrier, s.shipped_date, o.amount, o.order_date, st.region FROM shipments s LEFT JOIN orders o ON o.id = s.order_id FULL OUTER JOIN stores st ON o.store_id = st.id WHERE st.store_name LIKE '%Riversi%' AND o.channel IN ('mobile', 'partner');

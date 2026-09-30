@@ -1,1 +1,0 @@
-SELECT MONTH(c.signup_date) AS signup_month, COUNT(CASE WHEN o.channel = 'web' THEN 1 END) AS web_count FROM orders o LEFT OUTER JOIN stores s ON s.id = o.store_id LEFT OUTER JOIN customers c ON o.customer_id = c.id GROUP BY MONTH(c.signup_date)

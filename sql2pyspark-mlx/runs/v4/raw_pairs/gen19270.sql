@@ -1,1 +1,0 @@
-SELECT MONTH(opened_date) AS opened_month, region, SUM(CASE WHEN city = 'Bangkok' THEN sqft ELSE 0 END) AS bangkok_sqft, MAX(opened_date) AS last_opened_date, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(region))) AS region_values FROM stores WHERE sqft = 7289 GROUP BY MONTH(opened_date), region ORDER BY last_opened_date;

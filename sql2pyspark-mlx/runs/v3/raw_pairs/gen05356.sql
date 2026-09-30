@@ -1,1 +1,0 @@
-select month(hire_date) hire_month, sum(salary) total_salary, count(*) cnt, rank() over (order by sum(salary) desc) as salary_rank from employees where dept_id in (5, 27, 32, 39) group by month(hire_date) order by 3 desc;

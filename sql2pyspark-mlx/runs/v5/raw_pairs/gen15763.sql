@@ -1,1 +1,0 @@
-SELECT id, store_id, product_id, last_restock FROM inventory WHERE product_id IN (6, 8) AND (store_id IN (1, 3, 4, 5) OR product_id IN (1, 4, 8, 10)) ORDER BY store_id DESC, last_restock DESC, id LIMIT 3

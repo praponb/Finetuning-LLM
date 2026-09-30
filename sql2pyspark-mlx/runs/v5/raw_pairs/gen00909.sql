@@ -1,1 +1,0 @@
-WITH top_stores AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY region ORDER BY opened_date, id) AS pos FROM stores WHERE store_name LIKE 'Ri%') SELECT id, region, opened_date FROM top_stores WHERE pos <= 5 ORDER BY id DESC;

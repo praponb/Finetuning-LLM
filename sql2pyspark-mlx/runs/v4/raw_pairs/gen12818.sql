@@ -1,1 +1,0 @@
-SELECT CASE WHEN s.rating >= 3.8 THEN 'high' WHEN s.rating >= 2.3 THEN 'mid' ELSE 'low' END AS rating_bucket, SUM(p.stock_qty) AS total_stock_qty FROM products p JOIN suppliers s ON p.supplier_id = s.id WHERE p.supplier_id IN (14, 31, 33) GROUP BY CASE WHEN s.rating >= 3.8 THEN 'high' WHEN s.rating >= 2.3 THEN 'mid' ELSE 'low' END ORDER BY total_stock_qty DESC;

@@ -1,1 +1,0 @@
-WITH order_items_by_order AS (SELECT order_id, SUM(unit_price * quantity) revenue FROM order_items GROUP BY order_id) SELECT o.id, o.amount, oibo.revenue FROM orders o JOIN order_items_by_order oibo ON o.id = oibo.order_id WHERE oibo.revenue >= 26 ORDER BY revenue;

@@ -1,1 +1,0 @@
-SELECT i.last_restock, ss.store_id FROM inventory i INNER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id IN (5, 9) AND i.quantity BETWEEN 146 AND 214 ORDER BY ss.store_id DESC, last_restock DESC;

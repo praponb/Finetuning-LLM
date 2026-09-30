@@ -1,1 +1,0 @@
-WITH supplier_totals AS (SELECT supplier_id, SUM(stock_qty) total_stock_qty, AVG(stock_qty) avg_stock_qty FROM products WHERE price > 710 GROUP BY supplier_id) SELECT s.id, s.country, s.city, st.total_stock_qty, st.avg_stock_qty FROM suppliers s LEFT JOIN supplier_totals st ON s.id = st.supplier_id ORDER BY avg_stock_qty;

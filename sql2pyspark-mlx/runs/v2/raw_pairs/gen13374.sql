@@ -1,1 +1,0 @@
-SELECT d.id, d.dept_name, d.budget, t.avg_salary, t.max_salary FROM departments d LEFT OUTER JOIN (SELECT dept_id, AVG(salary) AS avg_salary, MAX(salary) AS max_salary FROM employees WHERE salary < 79000 GROUP BY dept_id) t ON d.id = t.dept_id WHERE t.max_salary > 75000;

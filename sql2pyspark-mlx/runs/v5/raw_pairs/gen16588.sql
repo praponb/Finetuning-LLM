@@ -1,1 +1,0 @@
-with base as (select id, product_name, category, price, cost, stock_qty, launch_date, tags, supplier_id, array_join(tags, '|') as tags_text from products where price < 330) select supplier_id, category from base except select supplier_id, category from products where price >= 950

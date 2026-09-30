@@ -1,1 +1,0 @@
-select txn_type, round((100 * sum(case when merchant = 'Amazon' then 1 else 0 end)) / count(*), 1) pct_amazon, count(*) total_count, sum(case when txn_type = 'DEBIT' then amount else 0 end) debit_amount from transactions where is_flagged group by txn_type having count(*) < 2 order by 1 asc

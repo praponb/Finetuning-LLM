@@ -1,1 +1,0 @@
-SELECT merchant, SUM(CASE WHEN merchant = 'Shell' THEN 1 ELSE 0 END) AS shell_count, SUM(CASE WHEN txn_type = 'FEE' THEN 1 ELSE 0 END) AS fee_count FROM transactions WHERE amount < 2100 GROUP BY merchant

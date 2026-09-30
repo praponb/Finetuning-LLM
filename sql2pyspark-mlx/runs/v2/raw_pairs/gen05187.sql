@@ -1,1 +1,0 @@
-SELECT id, location, dept_name, SUBSTRING(dept_name, 1, 2) dept_name_prefix, LOWER(location) location_lower FROM departments WHERE location IN ('Bangkok', 'Chiang Mai', 'New York') AND dept_name IS NOT NULL AND location = 'Bangkok' ORDER BY location_lower;

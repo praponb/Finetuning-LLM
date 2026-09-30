@@ -1,1 +1,0 @@
-SELECT suppliers.city, suppliers.rating, products.supplier_id, products.cost, products.launch_date FROM suppliers LEFT JOIN products ON suppliers.id = products.supplier_id ORDER BY suppliers.rating DESC;

@@ -1,1 +1,0 @@
-SELECT id, service, host, log_ts, level, latency_ms, status_code, context, COALESCE(context['version'], 'direct') AS version_or_default, context['trace'] AS trace, context['region'] AS region FROM app_logs WHERE service = 'auth'

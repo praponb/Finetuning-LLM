@@ -1,1 +1,0 @@
-SELECT s.shipped_date, o.amount, o.channel, st.city, LAST_DAY(s.delivered_date) delivered_date_month_end FROM shipments s FULL OUTER JOIN orders o ON s.order_id = o.id JOIN stores st ON o.store_id = st.id WHERE o.discount BETWEEN 0.32 AND 0.38 ORDER BY 5;

@@ -1,1 +1,0 @@
-WITH FilteredWebEvents AS (SELECT *, CAST(event_time AS DATE) AS event_time_day FROM web_events WHERE session_id = 34), event_type_summary AS (SELECT event_type, page, COUNT(CASE WHEN event_type = 'search' THEN 1 END) AS search_count, AVG(duration_sec) AS avg_duration_sec FROM FilteredWebEvents GROUP BY event_type, page) SELECT * FROM event_type_summary WHERE search_count < 5

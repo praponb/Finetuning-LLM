@@ -1,1 +1,0 @@
-with department_stats as (select dept_id, sort_array(collect_set(level)) as level_list from employees where email like '%@mail.co.th' group by dept_id) select d.dept_name, d.location, ds.level_list from departments d left join department_stats ds on d.id = ds.dept_id order by d.location desc;

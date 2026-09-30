@@ -1,1 +1,0 @@
-SELECT id, store_id, quantity, last_restock, ADD_MONTHS(last_restock, 1) AS last_restock_plus_months, DATE_FORMAT(last_restock, 'MMM yyyy') AS last_restock_label FROM inventory WHERE last_restock BETWEEN '2024-02-02' AND '2024-09-01'

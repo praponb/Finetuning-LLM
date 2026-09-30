@@ -1,1 +1,0 @@
-SELECT dept_name, CASE WHEN budget >= 4271000 THEN 'high' WHEN budget >= 1079000 THEN 'mid' ELSE 'low' END AS budget_bucket, AVG(budget) AS avg_budget, COUNT(DISTINCT budget) AS unique_locations FROM departments WHERE location = 'Tokyo' GROUP BY dept_name, budget_bucket HAVING COUNT(CASE WHEN location = 'Bangkok' THEN 1 END) > 4 ORDER BY avg_budget

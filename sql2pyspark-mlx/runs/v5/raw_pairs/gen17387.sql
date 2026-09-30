@@ -1,1 +1,0 @@
-SELECT YEAR(last_restock) AS last_restock_year, store_id, COUNT(DISTINCT quantity) AS unique_stores FROM inventory WHERE store_id IN (1, 2, 4, 6) OR store_id IN (3, 4, 5) GROUP BY ROLLUP(YEAR(last_restock), store_id) ORDER BY last_restock_year DESC

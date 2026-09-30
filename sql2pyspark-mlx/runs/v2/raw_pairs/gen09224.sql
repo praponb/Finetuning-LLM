@@ -1,1 +1,0 @@
-WITH customer_stats AS (SELECT customer_id, MAX(started_at) AS latest_started_at FROM sessions WHERE country NOT IN ('DE', 'UK') GROUP BY customer_id) SELECT c.is_active, cs.latest_started_at FROM customers c LEFT JOIN customer_stats cs ON c.id = cs.customer_id ORDER BY latest_started_at

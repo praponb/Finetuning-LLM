@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY salary, id) AS row_num FROM employees) x WHERE row_num = 1) SELECT s.id, s.full_name, s.email, s.dept_id, s.manager_id, s.job_title, s.salary, s.hire_date, s.row_num, (SELECT AVG(e2.salary) FROM employees e2 WHERE e2.dept_id = s.dept_id) AS avg_employee_salary FROM ranked s;

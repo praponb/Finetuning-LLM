@@ -1,1 +1,0 @@
-SELECT MONTH(s.started_at) AS started_month, s.country, MIN(we.duration_sec) AS min_duration_sec FROM web_events we INNER JOIN sessions s ON we.session_id = s.id GROUP BY MONTH(s.started_at), s.country ORDER BY country

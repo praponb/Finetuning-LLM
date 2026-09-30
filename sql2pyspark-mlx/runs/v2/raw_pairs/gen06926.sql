@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, status, paid_at, ROW_NUMBER() OVER (PARTITION BY status ORDER BY paid_at, id) AS pos FROM payments) SELECT id, status, paid_at FROM numbered WHERE pos <= 3 ORDER BY paid_at;

@@ -1,3 +1,0 @@
-SELECT *
-FROM orders
-WHERE discount BETWEEN 0.35 AND 0.37 AND order_date BETWEEN '2025-02-01' AND '2025-08-26'

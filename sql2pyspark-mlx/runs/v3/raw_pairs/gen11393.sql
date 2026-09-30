@@ -1,1 +1,0 @@
-SELECT we.id, we.page, we.session_id, s.customer_id, s.device, c.is_active FROM web_events we INNER JOIN sessions s ON we.session_id = s.id INNER JOIN customers c ON c.id = s.customer_id ORDER BY we.session_id DESC

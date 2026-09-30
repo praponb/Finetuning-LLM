@@ -1,1 +1,0 @@
-select case when unit_price >= 410 then 'high' when unit_price >= 180 then 'mid' else 'low' end as unit_price_bucket, order_id, round(avg(unit_price), 2) as avg_unit_price from order_items where unit_price between 110 and 250 and quantity = 8 group by 1, 2

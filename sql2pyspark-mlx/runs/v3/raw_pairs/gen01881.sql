@@ -1,1 +1,0 @@
-WITH top_customers AS (SELECT id, segment, signup_date, ROW_NUMBER() OVER (PARTITION BY segment ORDER BY signup_date, id) AS pos FROM customers WHERE age BETWEEN 46 AND 62) SELECT id, segment, signup_date FROM top_customers WHERE pos <= 3 ORDER BY signup_date;

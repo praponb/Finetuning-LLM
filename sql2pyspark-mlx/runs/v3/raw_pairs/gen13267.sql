@@ -1,1 +1,0 @@
-with filtered_payments as (select * from payments where amount >= 1070 and (status in ('REFUNDED', 'SUCCESS') or paid_at >= '2023-07-01')), paid_month_summary as (select month(paid_at) as paid_month, concat_ws(', ', sort_array(collect_set(method))) as method_values from filtered_payments group by month(paid_at)) select paid_month, method_values from paid_month_summary

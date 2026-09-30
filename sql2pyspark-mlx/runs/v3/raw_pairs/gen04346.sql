@@ -1,1 +1,0 @@
-SELECT ss.id, ss.sale_date, ss.units, ss.store_id, s.sqft, s.opened_date, s.region, DATE_FORMAT(ss.sale_date, 'yyyy-MM-dd') AS sale_date_label FROM store_sales ss INNER JOIN stores s ON ss.store_id = s.id WHERE ss.sale_date BETWEEN '2023-06-23' AND '2025-02-21';

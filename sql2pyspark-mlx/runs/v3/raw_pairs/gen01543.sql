@@ -1,1 +1,0 @@
-select products.id, products.category, t.revenue_count from products inner join (select product_id, count(revenue) as revenue_count from store_sales where units between 15 and 30 group by product_id) t on products.id = t.product_id where t.revenue_count >= 5 order by revenue_count desc;

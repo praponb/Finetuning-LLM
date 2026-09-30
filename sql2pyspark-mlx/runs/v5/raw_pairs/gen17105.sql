@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, ROUND(quantity / unit_price, 2) AS line_total FROM order_items WHERE unit_price >= 170) SELECT * FROM (SELECT id, order_id, unit_price, line_total FROM cleaned) src UNPIVOT (reading FOR kpi IN (unit_price, line_total))

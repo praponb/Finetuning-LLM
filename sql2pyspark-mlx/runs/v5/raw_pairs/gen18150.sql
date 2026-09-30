@@ -1,1 +1,0 @@
-select id, store_id, product_id, quantity, last_restock, lag(quantity) over (partition by product_id, store_id order by quantity, id) prev_quantity, row_number() over (partition by product_id, store_id order by quantity, id) event_seq, ntile(3) over (partition by store_id order by quantity, id) quantity_bucket from inventory where month(last_restock) in (4, 6, 8)

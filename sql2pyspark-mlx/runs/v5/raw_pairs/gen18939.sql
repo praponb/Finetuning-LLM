@@ -1,1 +1,0 @@
-SELECT p.brand, MONTH(p.launch_date) AS launch_month, ROUND(AVG(oi.unit_price), 2) AS avg_unit_price, MIN(oi.quantity) AS min_quantity FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id LEFT JOIN orders o ON oi.order_id = o.id GROUP BY p.brand, MONTH(p.launch_date) ORDER BY avg_unit_price DESC

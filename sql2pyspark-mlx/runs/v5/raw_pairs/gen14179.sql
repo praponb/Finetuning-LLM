@@ -1,1 +1,0 @@
-SELECT MONTH(last_restock) AS last_restock_month, SUM(quantity) AS total_quantity, SUM(SUM(quantity)) OVER (ORDER BY MONTH(last_restock)) AS cumulative_quantity FROM inventory WHERE product_id IN (6, 8, 10) GROUP BY MONTH(last_restock);

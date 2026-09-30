@@ -1,1 +1,0 @@
-with ProductTotals as (select product_id, max(revenue) as max_revenue from store_sales group by product_id) select p.product_name, p.cost, P.max_revenue from products p join ProductTotals P on p.id = P.product_id where P.max_revenue >= 1900 order by max_revenue desc

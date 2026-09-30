@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(c.signup_date, 'yyyy-MM') signup_month, YEAR(c.signup_date) signup_year, AVG(a.balance) avg_balance, SORT_ARRAY(COLLECT_SET(a.status)) status_list FROM accounts a LEFT OUTER JOIN customers c ON a.customer_id = c.id WHERE c.country NOT IN ('UK', 'US', 'TH') GROUP BY DATE_FORMAT(c.signup_date, 'yyyy-MM'), YEAR(c.signup_date) HAVING AVG(a.balance) > 68000;

@@ -1,1 +1,0 @@
-WITH recent_orders AS (SELECT * FROM orders WHERE NOT (discount IS NOT NULL AND store_id IS NULL)), agg AS (SELECT channel, MAX(order_date) AS latest_order_date, SUM(discount) AS total_discount FROM recent_orders GROUP BY channel) SELECT * FROM agg WHERE total_discount >= 2.3 ORDER BY total_discount DESC, channel LIMIT 5;

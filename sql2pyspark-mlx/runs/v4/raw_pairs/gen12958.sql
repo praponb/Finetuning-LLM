@@ -1,1 +1,0 @@
-SELECT account_id, SUM(amount) AS total_amount, COUNT(*) AS cnt, DENSE_RANK() OVER (ORDER BY SUM(amount) DESC) AS rnk FROM transactions WHERE txn_type IN ('FEE', 'DEBIT') GROUP BY account_id ORDER BY cnt DESC;

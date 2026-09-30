@@ -1,1 +1,0 @@
-SELECT s.region, s.city, MAX(o.shipping_fee) - MIN(o.shipping_fee) shipping_fee_range FROM orders o FULL OUTER JOIN stores s ON o.store_id = s.id JOIN customers c ON o.customer_id = c.id GROUP BY s.region, s.city;

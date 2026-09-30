@@ -1,1 +1,0 @@
-SELECT QUARTER(txn_time) AS txn_quarter, is_flagged, MIN(txn_time) AS min_txn_time, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(txn_type))) AS txn_type_values FROM transactions GROUP BY txn_quarter, is_flagged ORDER BY txn_quarter DESC

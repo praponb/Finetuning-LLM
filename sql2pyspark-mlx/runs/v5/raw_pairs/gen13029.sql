@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, COALESCE(location, 'Unknown') AS location_filled, COALESCE(location, 'DIRECT') AS location_clean FROM departments WHERE dept_name IN ('Engineering', 'Marketing', 'Legal')) SELECT * FROM filtered QUALIFY ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget, id) = 1;

@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM web_events WHERE page IS NOT NULL AND event_time < '2023-06-01' AND event_type = 'purchase'), agg AS (SELECT YEAR(event_time) AS event_year, SUM(duration_sec) AS total_duration_sec FROM base GROUP BY YEAR(event_time)) SELECT * FROM agg WHERE total_duration_sec < 2300 ORDER BY event_year DESC, 2 DESC LIMIT 5

@@ -1,1 +1,0 @@
-SELECT id, customer_id, monthly_fee, LAG(monthly_fee) OVER w_running AS prev_monthly_fee, ROW_NUMBER() OVER w_running AS seq_no, NTILE(10) OVER (PARTITION BY plan, status ORDER BY monthly_fee DESC, id) AS monthly_fee_bucket FROM subscriptions WHERE monthly_fee BETWEEN 200 AND 230 WINDOW w_running AS (PARTITION BY plan ORDER BY end_date, id);

@@ -1,1 +1,0 @@
-SELECT web_events.id, web_events.duration_sec, sessions.country, customers.email FROM web_events INNER JOIN sessions ON web_events.session_id = sessions.id INNER JOIN customers ON customers.id = sessions.customer_id WHERE LOWER(customers.name) LIKE '%mma%' ORDER BY id DESC, duration_sec DESC

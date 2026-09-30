@@ -1,1 +1,0 @@
-SELECT shipped_date, order_id FROM shipments WHERE delivered_date BETWEEN '2023-06-01' AND '2025-07-03' INTERSECT SELECT shipped_date, order_id FROM shipments WHERE cost BETWEEN 70 AND 89 ORDER BY order_id

@@ -1,1 +1,0 @@
-WITH StoreSummary AS (SELECT store_id, MAX(units) AS max_units FROM store_sales GROUP BY store_id) SELECT stores.region, stores.store_name, StoreSummary.max_units FROM stores LEFT JOIN StoreSummary ON stores.id = StoreSummary.store_id WHERE StoreSummary.max_units > 32

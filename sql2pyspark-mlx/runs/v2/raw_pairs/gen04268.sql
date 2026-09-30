@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, dept_id, hire_date, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY hire_date DESC, id) AS row_num FROM employees WHERE salary >= 92000) SELECT id, dept_id, hire_date FROM numbered WHERE row_num <= 3;

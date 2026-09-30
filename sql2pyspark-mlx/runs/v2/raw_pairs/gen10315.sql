@@ -1,1 +1,0 @@
-SELECT a.account_type, SUM(CASE WHEN t.merchant = '7-Eleven' THEN t.amount ELSE 0 END) AS 7_eleven_amount FROM transactions t JOIN accounts a ON a.id = t.account_id GROUP BY a.account_type ORDER BY account_type, 7_eleven_amount;

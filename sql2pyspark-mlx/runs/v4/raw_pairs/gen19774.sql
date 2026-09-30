@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, ROUND(STDDEV(quantity), 2) AS stddev_quantity, COUNT(*) AS row_count FROM inventory WHERE product_id = 7 GROUP BY store_id) SELECT stores.id, stores.city, store_stats.stddev_quantity, store_stats.row_count FROM stores INNER JOIN store_stats ON stores.id = store_stats.store_id;

@@ -1,1 +1,0 @@
-WITH inventory_by_product AS (SELECT product_id, COUNT(quantity) AS quantity_count FROM inventory WHERE last_restock BETWEEN '2023-12-01' AND '2025-03-01' GROUP BY product_id) SELECT p.id, p.supplier_id, p.price, ibp.quantity_count FROM products p INNER JOIN inventory_by_product ibp ON p.id = ibp.product_id WHERE ibp.quantity_count >= 9

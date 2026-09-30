@@ -1,1 +1,0 @@
-with top_departments as (select id, location, budget, dept_name, row_number() over (partition by location order by budget desc, id) as pos from departments) select id, location, budget, dept_name from top_departments where pos <= 3 order by dept_name desc

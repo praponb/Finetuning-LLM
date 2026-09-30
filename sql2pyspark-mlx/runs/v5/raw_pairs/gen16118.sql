@@ -1,1 +1,0 @@
-SELECT category, SORT_ARRAY(COLLECT_SET(category)) AS category_list, SUM(CASE WHEN category = 'Books' THEN 1 ELSE 0 END) AS books_count, AVG(stock_qty) AS avg_stock_qty FROM products GROUP BY category ORDER BY category DESC

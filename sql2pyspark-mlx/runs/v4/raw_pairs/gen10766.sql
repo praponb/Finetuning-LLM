@@ -1,1 +1,0 @@
-with products_by_supplier as (select supplier_id, concat_ws(', ', sort_array(collect_set(brand))) as brand_values from products where product_name like '%Backp%' group by supplier_id) select s.rating, s.supplier_name, pbs.brand_values from suppliers s inner join products_by_supplier pbs on s.id = pbs.supplier_id order by supplier_name

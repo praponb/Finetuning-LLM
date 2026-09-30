@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(signup_date, 'yyyy-MM') AS signup_month, ROUND((100 * SUM(CASE WHEN city = 'Bangkok' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_bangkok, ROUND(AVG(credit_limit), 2) AS avg_credit_limit, COUNT(DISTINCT credit_limit) AS unique_segments FROM customers GROUP BY 1 ORDER BY avg_credit_limit DESC, signup_month DESC;

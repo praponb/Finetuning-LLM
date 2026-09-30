@@ -1,1 +1,0 @@
-with ranked as (select *, row_number() over (partition by page order by event_time desc, id) as latest_rank from web_events qualify latest_rank = 1) select id, session_id, event_type, event_time, duration_sec, case when event_type rlike '^(page_view|click)$' then 'PRIORITY' else 'CORE' end as event_type_zone from ranked order by event_type_zone nulls first;

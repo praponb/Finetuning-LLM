@@ -1,1 +1,0 @@
-SELECT CASE WHEN price >= 980 THEN 'high' WHEN price >= 470 THEN 'mid' ELSE 'low' END AS price_bucket, brand, COUNT(DISTINCT stock_qty) AS unique_suppliers FROM products GROUP BY CASE WHEN price >= 980 THEN 'high' WHEN price >= 470 THEN 'mid' ELSE 'low' END, brand HAVING COUNT(DISTINCT stock_qty) < 1 ORDER BY unique_suppliers ASC, price_bucket ASC, brand ASC LIMIT 3

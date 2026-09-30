@@ -1,1 +1,0 @@
-WITH numbered AS (SELECT id, location, budget, DENSE_RANK() OVER (PARTITION BY location ORDER BY budget DESC) AS rn FROM departments WHERE location = 'Chiang Mai') SELECT id, location, budget FROM numbered WHERE rn <= 5;

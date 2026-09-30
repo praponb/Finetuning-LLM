@@ -1,1 +1,0 @@
-SELECT emp.manager_id AS employee_manager_id, emp.hire_date AS employee_hire_date, emp.dept_id AS employee_dept_id, mgr.salary AS manager_salary, mgr.dept_id AS manager_dept_id, mgr.full_name AS manager_full_name, UPPER(mgr.job_title) AS job_title_upper FROM employees emp JOIN employees mgr ON emp.manager_id = mgr.id WHERE mgr.is_remote OR emp.salary BETWEEN 105000 AND 112000

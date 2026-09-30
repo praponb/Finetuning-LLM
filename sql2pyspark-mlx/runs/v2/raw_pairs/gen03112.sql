@@ -1,1 +1,0 @@
-select page, sum(duration_sec) as total_duration_sec, round(sum(duration_sec) * 100.0 / sum(sum(duration_sec)) over (), 2) as pct_of_total from web_events group by page order by page desc, pct_of_total desc limit 50;

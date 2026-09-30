@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, INITCAP(TRIM(city)) AS city_title, SUBSTRING(store_name, 1, 3) AS store_name_prefix, COALESCE(region, 'N/A') AS resolved_region FROM stores WHERE opened_date >= TO_DATE('2023-07-07') AND region IS NOT NULL) SELECT region FROM base EXCEPT SELECT region FROM stores WHERE opened_date < '2024-01-01'

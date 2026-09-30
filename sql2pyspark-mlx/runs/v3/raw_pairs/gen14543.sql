@@ -1,1 +1,0 @@
-SELECT city, MAX(opened_date) AS latest_opened_date, COUNT(*) AS store_count, MIN(sqft) AS min_sqft FROM stores WHERE NOT (sqft > 14988 AND (store_name LIKE '%Airp%' OR sqft >= 7849)) GROUP BY city ORDER BY city DESC

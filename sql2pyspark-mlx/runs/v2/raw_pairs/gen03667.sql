@@ -1,1 +1,0 @@
-WITH src AS (SELECT * FROM payments WHERE order_id = 29), agg AS (SELECT status, DATE_FORMAT(paid_at, 'yyyy-MM') AS paid_month, SUM(CASE WHEN status = 'SUCCESS' THEN amount ELSE 0 END) AS success_amount, AVG(amount) AS avg_amount FROM src GROUP BY status, DATE_FORMAT(paid_at, 'yyyy-MM')) SELECT status, paid_month, success_amount, avg_amount FROM agg ORDER BY success_amount

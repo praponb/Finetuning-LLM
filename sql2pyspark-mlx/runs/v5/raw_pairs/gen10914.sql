@@ -1,1 +1,0 @@
-WITH top_stores AS (SELECT id, city, opened_date, RANK() OVER (PARTITION BY city ORDER BY opened_date) AS row_num FROM stores WHERE city = 'Berlin') SELECT id, city, opened_date FROM top_stores WHERE row_num <= 5;

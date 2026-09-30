@@ -1,1 +1,0 @@
-select c.country, count(s.id) as session_count, count(case when s.browser = 'Edge' then 1 end) as edge_count from customers c left join sessions s on s.customer_id = c.id group by c.country having session_count >= 4 order by session_count;

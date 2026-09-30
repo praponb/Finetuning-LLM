@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.quantity, products.brand, stores.region, stores.city FROM inventory LEFT JOIN products ON inventory.product_id = products.id JOIN stores ON inventory.store_id = stores.id WHERE stores.opened_date >= '2025-05-01'

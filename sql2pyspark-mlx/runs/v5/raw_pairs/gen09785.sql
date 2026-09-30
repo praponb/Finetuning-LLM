@@ -1,1 +1,0 @@
-SELECT id, quantity, CEIL(quantity) AS quantity_whole, ADD_MONTHS(last_restock, 1) AS last_restock_plus_months FROM inventory WHERE (product_id IN (3, 4, 6, 9) AND quantity = 164) OR store_id IN (2, 5);

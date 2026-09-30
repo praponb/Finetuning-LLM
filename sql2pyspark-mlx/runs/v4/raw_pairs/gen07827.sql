@@ -1,1 +1,0 @@
-SELECT p.brand, p.category, MIN(i.quantity) min_quantity, ROUND(STDDEV(i.quantity), 2) stddev_quantity FROM inventory i INNER JOIN products p ON i.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id GROUP BY p.brand, p.category HAVING MIN(i.quantity) >= 210 ORDER BY category;

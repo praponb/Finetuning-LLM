@@ -1,1 +1,0 @@
-SELECT QUARTER(hire_date) AS hire_quarter, SORT_ARRAY(COLLECT_SET(level)) AS level_list, SUM(CASE WHEN job_title = 'Manager' THEN salary ELSE 0 END) AS manager_salary, COUNT(*) AS employee_count FROM employees GROUP BY 1 ORDER BY manager_salary DESC

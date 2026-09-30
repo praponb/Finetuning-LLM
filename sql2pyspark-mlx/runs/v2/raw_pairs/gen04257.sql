@@ -1,1 +1,0 @@
-select city, concat_ws(', ', sort_array(collect_set(city))) as city_values, sum(case when city = 'Chiang Mai' then rating else 0 end) as chiang_mai_rating, sum(rating) as total_rating from suppliers group by 1;

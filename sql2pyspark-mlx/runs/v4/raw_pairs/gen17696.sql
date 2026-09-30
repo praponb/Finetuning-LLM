@@ -1,1 +1,0 @@
-with ranked_products as (select *, row_number() over (partition by brand order by stock_qty desc, id) as rnk from products where brand = 'Initech') select id, brand, stock_qty from ranked_products where rnk <= 3 order by brand;

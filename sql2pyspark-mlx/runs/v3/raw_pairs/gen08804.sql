@@ -1,1 +1,0 @@
-select id, end_date, customer_id, datediff(end_date, start_date) as days_start_date_to_end_date from subscriptions where customer_id is null or plan not in ('standard', 'premium', 'basic') order by end_date desc;

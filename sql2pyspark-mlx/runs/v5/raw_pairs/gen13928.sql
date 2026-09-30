@@ -1,1 +1,0 @@
-SELECT id, location, budget, ROW_NUMBER() OVER (PARTITION BY location ORDER BY budget DESC, id) row_num FROM departments WHERE location IN ('Chiang Mai', 'Berlin', 'Tokyo') ORDER BY budget DESC, id DESC;

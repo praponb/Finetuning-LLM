@@ -1,1 +1,0 @@
-select p.device, p.country, count(*) as num_rows, sum(a.duration_sec) as total_duration_sec, grouping_id() as gid from web_events a inner join sessions p on a.session_id = p.id group by rollup (p.device, p.country);

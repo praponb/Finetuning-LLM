@@ -1,1 +1,0 @@
-SELECT dept_name, MIN(budget) AS min_budget FROM departments WHERE budget <= 1428000 AND location IN ('Singapore', 'Berlin', 'Bangkok') GROUP BY dept_name HAVING AVG(budget) >= 2028000 ORDER BY dept_name ASC;

@@ -1,1 +1,0 @@
-with flattened as (select id, log_ts, latency_ms, status_code, key, v from app_logs lateral view outer explode(context) t as key, v) select id, log_ts, key, v, case when key rlike '^(trace|version)$' then 'PRIORITY' else 'EXTENDED' end as key_zone from flattened order by log_ts nulls first

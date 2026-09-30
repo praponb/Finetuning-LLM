@@ -1,1 +1,0 @@
-SELECT id, job_title, hire_date, dept_id, salary, RANK() OVER (PARTITION BY job_title ORDER BY hire_date) AS hire_date_rank, ROUND(AVG(salary) OVER (PARTITION BY dept_id, job_title ORDER BY hire_date, id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS salary_moving_avg_3 FROM employees

@@ -1,1 +1,0 @@
-SELECT plan, MONTH(start_date) AS start_month, MAX(end_date) AS latest_end_date, MAX(start_date) AS latest_start_date, MIN(monthly_fee) AS min_monthly_fee FROM subscriptions GROUP BY 1, 2 ORDER BY start_month ASC

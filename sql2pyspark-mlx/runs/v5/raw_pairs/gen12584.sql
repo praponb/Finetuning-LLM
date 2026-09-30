@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, dept_id, manager_id, salary, hire_date, is_remote, CONCAT_WS('-', full_name, email) AS full_name_email_key, COALESCE(job_title, 'DIRECT') AS job_title_filled FROM employees WHERE job_title IS NOT NULL AND hire_date > DATE '2023-05-18') SELECT dept_id, manager_id FROM base INTERSECT SELECT dept_id, manager_id FROM employees WHERE level IS NOT NULL

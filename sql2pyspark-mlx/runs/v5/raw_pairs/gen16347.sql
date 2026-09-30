@@ -1,1 +1,0 @@
-SELECT id, store_name, city, region, opened_date, NTILE(4) OVER (PARTITION BY city ORDER BY sqft DESC, id ASC) AS sqft_bucket, AVG(sqft) OVER (PARTITION BY region ORDER BY sqft ASC, id ASC ROWS BETWEEN 5 PRECEDING AND 1 PRECEDING) AS sqft_avg_5_prior, CUME_DIST() OVER (PARTITION BY city, region ORDER BY sqft ASC) AS sqft_cume_dist FROM stores

@@ -1,1 +1,0 @@
-SELECT event_type, AVG(duration_sec) AS avg_duration_sec, ROUND((100 * SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_page_view FROM web_events GROUP BY event_type HAVING ROUND((100 * SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END)) / COUNT(*), 1) >= 28;

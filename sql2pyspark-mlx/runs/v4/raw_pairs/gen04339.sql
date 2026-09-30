@@ -1,1 +1,0 @@
-SELECT status, MIN(monthly_fee) AS min_monthly_fee, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(plan))) AS plan_values FROM subscriptions WHERE plan IN ('basic', 'enterprise', 'standard') AND (status = 'CANCELLED' OR plan IN ('standard', 'premium')) GROUP BY status HAVING COUNT(DISTINCT monthly_fee) >= 2 ORDER BY status;

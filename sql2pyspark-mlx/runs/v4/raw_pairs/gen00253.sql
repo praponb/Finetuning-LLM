@@ -1,1 +1,0 @@
-WITH matched_keys AS (SELECT location, id FROM departments EXCEPT ALL SELECT location, id FROM departments WHERE budget BETWEEN 1710000 AND 2502000), reconciled AS (SELECT s.* FROM departments s INNER JOIN matched_keys k ON s.location = k.location AND s.id = k.id) SELECT id, location FROM reconciled ORDER BY id DESC NULLS LAST

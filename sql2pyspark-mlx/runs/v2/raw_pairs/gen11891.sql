@@ -1,1 +1,0 @@
-SELECT we.page, we.session_id, we.duration_sec, s.browser, DATE_FORMAT(s.started_at, 'yyyy-MM') AS started_at_label FROM web_events we LEFT OUTER JOIN sessions s ON we.session_id = s.id WHERE HOUR(we.event_time) BETWEEN 7 AND 13 AND s.browser IS NOT NULL;

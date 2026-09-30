@@ -1,1 +1,0 @@
-select year(c.signup_date) as signup_year, c.city, max(we.duration_sec) - min(we.duration_sec) as duration_sec_range, round((100 * sum(case when we.page = '/search' then 1 else 0 end)) / count(*), 1) as pct_search from web_events we full outer join sessions s on s.id = we.session_id left join customers c on s.customer_id = c.id group by year(c.signup_date), c.city

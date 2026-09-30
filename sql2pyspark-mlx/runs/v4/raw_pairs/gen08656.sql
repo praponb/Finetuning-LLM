@@ -1,1 +1,0 @@
-SELECT s.country, t.event_type_values, t.total_duration_sec FROM sessions s INNER JOIN (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values, SUM(duration_sec) AS total_duration_sec FROM web_events GROUP BY session_id) t ON s.id = t.session_id WHERE t.total_duration_sec > 2800 ORDER BY country

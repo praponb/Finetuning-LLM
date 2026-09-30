@@ -1,1 +1,0 @@
-select i.id, i.last_restock, p.supplier_id, p.cost, s.supplier_name from inventory i full outer join products p on i.product_id = p.id inner join suppliers s on p.supplier_id = s.id where i.store_id = 6 and p.stock_qty between 349 and 397 order by supplier_name, id desc;

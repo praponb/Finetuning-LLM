@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, customer_id, INLINE(items) FROM carts) SELECT id, customer_id, product_id, qty, price, promo, PERCENT_RANK() OVER (ORDER BY qty DESC) AS qty_percent_rank, CUME_DIST() OVER (PARTITION BY customer_id ORDER BY product_id) AS product_id_cume_dist, ROUND(qty / SUM(qty) OVER (PARTITION BY customer_id), 4) AS qty_share FROM exploded;

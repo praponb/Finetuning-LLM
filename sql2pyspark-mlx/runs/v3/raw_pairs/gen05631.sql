@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM products WHERE category = 'Grocery' OR SIZE(tags) > 2), launch_quarter_summary AS (SELECT QUARTER(launch_date) AS launch_quarter, COUNT(DISTINCT cost) AS unique_categorys FROM base GROUP BY QUARTER(launch_date)) SELECT launch_quarter, unique_categorys FROM launch_quarter_summary WHERE unique_categorys < 9 ORDER BY launch_quarter DESC;

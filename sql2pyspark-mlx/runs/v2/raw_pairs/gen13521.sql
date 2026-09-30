@@ -1,1 +1,0 @@
-SELECT account_type, MIN(balance) AS min_balance, SORT_ARRAY(COLLECT_SET(account_type)) AS account_type_list FROM accounts WHERE customer_id IS NOT NULL GROUP BY account_type HAVING MIN(balance) >= 18000 ORDER BY min_balance, account_type LIMIT 50;

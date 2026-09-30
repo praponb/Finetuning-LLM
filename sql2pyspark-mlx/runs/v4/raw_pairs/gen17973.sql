@@ -1,1 +1,0 @@
-WITH top_products AS (SELECT id, brand, price, launch_date, ROW_NUMBER() OVER (PARTITION BY brand ORDER BY price DESC, id) AS row_num FROM products) SELECT id, brand, price, launch_date FROM top_products WHERE row_num <= 5 ORDER BY brand

@@ -1,1 +1,0 @@
-SELECT c.id, c.name, c.email, c.is_active FROM customers c WHERE c.credit_limit IS NOT NULL AND NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id AND o.customer_id IS NULL) ORDER BY email;

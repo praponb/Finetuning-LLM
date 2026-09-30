@@ -1,1 +1,0 @@
-WITH employees_by_department AS (SELECT dept_id, ROUND((100 * SUM(CASE WHEN job_title = 'Intern' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_intern, AVG(salary) avg_salary FROM employees GROUP BY dept_id) SELECT d.budget, ebd.pct_intern, ebd.avg_salary FROM departments d LEFT JOIN employees_by_department ebd ON d.id = ebd.dept_id ORDER BY d.budget;

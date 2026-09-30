@@ -1,1 +1,0 @@
-SELECT p.id, p.amount, p.order_id, p.paid_at FROM payments p WHERE TO_DATE(p.paid_at) >= '2025-04-01' AND p.order_id IN (SELECT id FROM orders WHERE YEAR(order_date) = 2025) ORDER BY amount DESC, order_id

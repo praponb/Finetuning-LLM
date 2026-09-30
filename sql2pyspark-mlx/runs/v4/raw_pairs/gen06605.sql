@@ -1,1 +1,0 @@
-WITH recent_payments AS (SELECT * FROM payments WHERE amount IS NOT NULL OR method NOT IN ('cash', 'card', 'paypal')), payments_stats AS (SELECT status, AVG(amount) avg_amount, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(status))) status_values FROM recent_payments GROUP BY status) SELECT status, avg_amount, status_values FROM payments_stats

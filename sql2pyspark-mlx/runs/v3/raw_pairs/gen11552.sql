@@ -1,1 +1,0 @@
-SELECT s.city, CASE WHEN s.sqft >= 17570 THEN 'high' WHEN s.sqft >= 4121 THEN 'mid' ELSE 'low' END AS sqft_bucket, COUNT(DISTINCT i.quantity) AS unique_products, AVG(i.quantity) AS avg_quantity FROM inventory i LEFT JOIN stores s ON s.id = i.store_id GROUP BY s.city, CASE WHEN s.sqft >= 17570 THEN 'high' WHEN s.sqft >= 4121 THEN 'mid' ELSE 'low' END;

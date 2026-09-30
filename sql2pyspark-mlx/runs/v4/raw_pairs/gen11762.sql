@@ -1,1 +1,0 @@
-WITH latest AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY end_date NULLS FIRST, id) AS latest_rank FROM subscriptions) x WHERE latest_rank = 1) SELECT id, customer_id, plan, start_date, end_date, CASE WHEN plan RLIKE '^(enterprise|standard)$' THEN 'GROUP_A' ELSE 'OTHER_ZONE' END AS plan_zone FROM latest ORDER BY plan DESC NULLS LAST;

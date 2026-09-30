@@ -1,1 +1,0 @@
-SELECT transactions.id, transactions.merchant, transactions.amount, accounts.opened_date, accounts.customer_id, customers.name, UPPER(accounts.status) AS status_upper FROM transactions JOIN accounts ON accounts.id = transactions.account_id LEFT JOIN customers ON customers.id = accounts.customer_id;

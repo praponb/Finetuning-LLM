@@ -1,1 +1,0 @@
-SELECT customer_id, COUNT(DISTINCT discount) AS unique_stores, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(channel))) AS channel_values FROM orders GROUP BY customer_id HAVING COUNT(DISTINCT discount) >= 4

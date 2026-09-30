@@ -1,1 +1,0 @@
-WITH order_summary AS (SELECT order_id, SUM(CASE WHEN method = 'paypal' THEN 1 ELSE 0 END) AS paypal_count, SORT_ARRAY(COLLECT_SET(method)) AS method_list FROM payments GROUP BY order_id) SELECT o.shipping_fee, os.paypal_count, os.method_list FROM orders o INNER JOIN order_summary os ON o.id = os.order_id WHERE os.paypal_count > 66;

@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, SUM(CASE WHEN merchant = 'Lazada' THEN 1 ELSE 0 END) AS lazada_count FROM transactions WHERE merchant IN ('7-Eleven', 'Grab') GROUP BY account_id) SELECT a.balance, at.lazada_count FROM accounts a INNER JOIN account_totals at ON a.id = at.account_id ORDER BY balance DESC;

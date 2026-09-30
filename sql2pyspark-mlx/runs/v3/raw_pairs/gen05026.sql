@@ -1,1 +1,0 @@
-SELECT revenue, store_id, units, GREATEST(revenue, units) AS greatest_revenue_units, DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_date_label FROM store_sales WHERE sale_date BETWEEN '2024-06-19' AND '2024-09-25' OR product_id IN (4, 5, 8);

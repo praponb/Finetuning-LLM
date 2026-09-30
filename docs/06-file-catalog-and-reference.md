@@ -50,14 +50,14 @@ A reference for the directories, scripts, configuration files, datasets and arti
 | `data_v3_docker.log` | v3 dataset build log | `make data` run inside the `tools` container | Record of the v3 data build |
 | `data/` | Split dataset (v7) | `train.jsonl` (16,923), `valid.jsonl` (2,095), `test.jsonl` (1,047), `valid_meta.jsonl`, `test_meta.jsonl`, `split_stats.json` | MLX training data + evaluation metadata |
 | `raw_pairs/` | Generated pairs (v7) | 20,105 `.sql`/`.py` pairs, `meta_*.jsonl`, `verified.jsonl` (20,065), `verify_report.json`, `verify_failures.jsonl`, `verify.log` | Input to `verify_pairs.py` and `convert_sql_pyspark.py` |
-| `adapters/` | LoRA weights (v7; v6 in `runs/v6/adapters/`) | `adapters.safetensors`, checkpoints `0000200_` … `adapters.safetensors`, `adapter_config.json` | Produced by `mlx_lm.lora`; used by `mlx_lm.fuse` |
-| `sql2pyspark-model/` | Fused 4-bit MLX model (v7) | `model.safetensors` (4.28 GB; 3B: 1.74 GB), `config.json`, tokenizer files, model card `README.md` | Native MLX model |
-| `runs/v2/` … `runs/v6/` | Version backups (git-ignored) | `adapters/`, `data/`, `raw_pairs/`, `lora_config.yaml`, `train.log`, post-training logs | Rollback / comparison across versions |
+| `adapters/` | LoRA weights (v7; v6 in `runs/v6/adapters/`) | `adapters.safetensors`, `adapter_config.json` (training also writes git-ignored checkpoints `0000200_adapters.safetensors` …; `make clean` deletes them) | Produced by `mlx_lm.lora`; used by `mlx_lm.fuse` |
+| `sql2pyspark-model/` | Fused 4-bit MLX model, written by `make fuse` (git-ignored; deleted by `make clean`) | `model.safetensors` (4.28 GB; 3B: 1.74 GB), `config.json`, tokenizer files, model card `README.md` | Native MLX model |
+| `runs/v2/` … `runs/v7/` | Version backups | `adapters/`, `lora_config.yaml`, `train.log`, data/post-training logs (the v2–v5 `data/` and `raw_pairs/` were removed on 2026-09-30; still in the git history) | Rebuild / comparison across versions |
 | `.venv/` | Project Python environment | Python 3.14 + `requirements.txt` | Used by the Makefile and Pyrefly |
 
 ---
 
-## 📦 Dequantized Export (`sql2pyspark-hf/`, v7)
+## 📦 Dequantized Export (`sql2pyspark-hf/`, written by `make fuse`, deleted by `make clean`)
 
 | File | Purpose | Size / Format | Role in Pipeline |
 | :--- | :--- | :--- | :--- |
@@ -114,6 +114,6 @@ A reference for the directories, scripts, configuration files, datasets and arti
 
 ## 🏛️ Historical Archives (deleted)
 
-`archive/` (~14 GB: the template-based v1 dataset, adapters, fused model, HF export and GGUF; the first fine-tune on the non-Coder `Qwen2.5-3B-Instruct`; a 3-example trial run) and the legacy `mlx-env/` venv were deleted on 2026-09-27. `sql2pyspark:v1` in Ollama keeps its own copy of the v1 model.
+`archive/` (~14 GB: the template-based v1 dataset, adapters, fused model, HF export and GGUF; the first fine-tune on the non-Coder `Qwen2.5-3B-Instruct`; a 3-example trial run) and the legacy `mlx-env/` venv were deleted on 2026-09-27. The Ollama tags `sql2pyspark:v1` … `:v6` were removed on 2026-09-30, so the v1 model no longer exists.
 
-Other folders: `llama.cpp/` (upstream checkout, used only for `convert_hf_to_gguf.py`). `sql2pyspark-hf/` (~15.2 GB BF16) is only needed as input for `make gguf` and is recreated by `make fuse`.
+Other folders: `llama.cpp/` (upstream checkout, used only for `convert_hf_to_gguf.py`). `sql2pyspark-hf/` (~15.2 GB BF16) is only needed as input for `make gguf`; `make clean` deletes it and `make fuse` recreates it.

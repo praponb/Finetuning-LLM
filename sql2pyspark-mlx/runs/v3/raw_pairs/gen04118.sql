@@ -1,1 +1,0 @@
-select date_trunc('MONTH', signup_date) as signup_month, count(*) as customer_count, max(signup_date) as latest_signup_date, max(credit_limit) - min(credit_limit) as credit_limit_range from customers group by date_trunc('MONTH', signup_date) order by credit_limit_range asc;

@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(p.id) AS payment_count, MAX(p.paid_at) AS latest_paid_at, COUNT(p.amount) AS amount_count FROM orders o LEFT JOIN payments p ON o.id = p.order_id WHERE p.method IN ('paypal', 'promptpay') GROUP BY o.status ORDER BY 1 LIMIT 20;

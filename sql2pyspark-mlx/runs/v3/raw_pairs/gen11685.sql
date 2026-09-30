@@ -1,1 +1,0 @@
-SELECT s.id, s.supplier_name, s.country, t.avg_cost, t.max_cost FROM suppliers s INNER JOIN (SELECT supplier_id, AVG(cost) AS avg_cost, MAX(cost) AS max_cost FROM products WHERE ARRAY_CONTAINS(tags, 'eco') GROUP BY supplier_id) t ON s.id = t.supplier_id WHERE t.max_cost > 280 ORDER BY avg_cost DESC

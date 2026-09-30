@@ -1,1 +1,0 @@
-WITH StoreTotals AS (SELECT store_id, COUNT(units) AS units_count FROM store_sales GROUP BY store_id) SELECT s.id, s.city, s.region, S.units_count FROM stores s LEFT JOIN StoreTotals S ON s.id = S.store_id WHERE S.units_count > 5

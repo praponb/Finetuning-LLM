@@ -1,1 +1,0 @@
-SELECT id, account_id, amount, merchant FROM (SELECT id, account_id, amount, merchant, DENSE_RANK() OVER (PARTITION BY account_id ORDER BY amount DESC) AS rn FROM transactions) AS ranked WHERE rn <= 1 ORDER BY merchant;

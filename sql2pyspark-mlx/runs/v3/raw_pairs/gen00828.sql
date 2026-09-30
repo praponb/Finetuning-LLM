@@ -1,1 +1,0 @@
-SELECT id, supplier_id, launch_date, product_name FROM (SELECT id, supplier_id, launch_date, product_name, ROW_NUMBER() OVER (PARTITION BY supplier_id ORDER BY launch_date DESC, id) AS rn FROM products WHERE category = 'Home') AS t WHERE rn <= 3

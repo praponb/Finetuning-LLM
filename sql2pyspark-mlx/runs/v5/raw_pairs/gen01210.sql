@@ -1,1 +1,0 @@
-SELECT QUARTER(opened_date) opened_quarter, SUM(CASE WHEN city = 'Chiang Mai' THEN sqft ELSE 0 END) chiang_mai_sqft FROM stores WHERE sqft <= 10472 OR LOWER(TRIM(store_name)) = 'siam flagship' GROUP BY 1 HAVING SUM(CASE WHEN city = 'Chiang Mai' THEN sqft ELSE 0 END) < 47;

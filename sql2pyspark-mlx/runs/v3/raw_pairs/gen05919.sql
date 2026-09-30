@@ -1,1 +1,0 @@
-WITH supplier_summary AS (SELECT supplier_id, SORT_ARRAY(COLLECT_SET(category)) AS category_list FROM products WHERE category IN ('Grocery', 'Home', 'Books') GROUP BY supplier_id) SELECT s.country, s.city, ss.category_list FROM suppliers s LEFT JOIN supplier_summary ss ON s.id = ss.supplier_id;

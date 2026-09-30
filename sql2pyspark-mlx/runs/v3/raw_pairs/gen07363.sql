@@ -1,1 +1,0 @@
-with session_summary as (select session_id, round(avg(duration_sec), 2) avg_duration_sec from web_events group by session_id) select s.id, s.customer_id, s.device, ss.avg_duration_sec from sessions s join session_summary ss on s.id = ss.session_id order by 3 desc, id asc limit 5;

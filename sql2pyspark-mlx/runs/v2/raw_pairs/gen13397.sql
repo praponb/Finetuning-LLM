@@ -1,1 +1,0 @@
-select p.id, p.amount, p.method, o.store_id, o.discount, c.is_active, c.city from payments p join orders o on p.order_id = o.id join customers c on o.customer_id = c.id where o.discount <= 0.24 order by c.city, id limit 5;

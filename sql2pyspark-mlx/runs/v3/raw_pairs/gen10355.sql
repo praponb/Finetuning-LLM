@@ -1,1 +1,0 @@
-SELECT id, plan, end_date, monthly_fee, status, monthly_fee - LAG(monthly_fee, 1) OVER (PARTITION BY plan ORDER BY end_date, id) AS monthly_fee_change, RANK() OVER (PARTITION BY status ORDER BY monthly_fee) AS rnk FROM subscriptions ORDER BY monthly_fee, status

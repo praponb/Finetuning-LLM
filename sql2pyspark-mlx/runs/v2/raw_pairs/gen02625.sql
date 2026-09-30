@@ -1,1 +1,0 @@
-select c.city, c.is_active, max(o.amount) max_amount, min(o.order_date) first_order_date from orders o left join stores s on o.store_id = s.id left join customers c on o.customer_id = c.id group by c.city, c.is_active order by c.city desc;

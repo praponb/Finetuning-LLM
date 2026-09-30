@@ -1,1 +1,0 @@
-SELECT p.id, p.product_name, p.category, p.brand FROM products p WHERE p.category NOT IN ('Grocery', 'Fashion') AND EXISTS (SELECT 1 FROM store_sales ss WHERE ss.product_id = p.id AND ss.store_id IN (4, 6)) ORDER BY p.product_name

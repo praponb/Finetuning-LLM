@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, MIN(quantity) min_quantity FROM inventory WHERE store_id IN (2, 3, 4, 6) GROUP BY store_id) SELECT stores.id, stores.region, store_summary.min_quantity FROM stores LEFT JOIN store_summary ON stores.id = store_summary.store_id

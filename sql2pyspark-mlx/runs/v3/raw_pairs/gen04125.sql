@@ -1,1 +1,0 @@
-with base as (select * from stores where length(store_name) > 10 and sqft = 9180), StoresStats as (select city, month(opened_date) as opened_month, max(sqft) as max_sqft from base group by city, month(opened_date)) select * from StoresStats order by max_sqft, city, opened_month limit 3;

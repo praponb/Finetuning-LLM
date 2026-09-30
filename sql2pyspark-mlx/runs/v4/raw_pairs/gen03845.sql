@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY manager_id ORDER BY salary, id) AS latest_rank FROM employees) ranked WHERE latest_rank = 1) SELECT id, full_name, email, manager_id, job_title, salary, level FROM ranked ORDER BY id

@@ -1,1 +1,0 @@
-SELECT inventory.id, inventory.last_restock, products.brand, products.category, suppliers.rating, suppliers.supplier_name FROM inventory LEFT JOIN products ON inventory.product_id = products.id INNER JOIN suppliers ON products.supplier_id = suppliers.id WHERE products.brand IS NOT NULL

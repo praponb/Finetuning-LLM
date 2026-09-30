@@ -1,1 +1,0 @@
-select case when salary >= 126000 then 'high' when salary >= 55000 then 'mid' else 'low' end salary_bucket, sum(salary) total_salary, max(salary) max_salary from employees group by case when salary >= 126000 then 'high' when salary >= 55000 then 'mid' else 'low' end;

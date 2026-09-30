@@ -1,1 +1,0 @@
-select status, count(distinct balance) as unique_customers, sum(case when status = 'FROZEN' then 1 else 0 end) as frozen_count from accounts where customer_id is not null and account_type = 'LOAN' group by status having frozen_count >= 69;

@@ -1,1 +1,0 @@
-select case when status in ('EXPIRED', 'ACTIVE') then 'priority' else 'other' end as status_group, sum(case when plan = 'enterprise' then monthly_fee else 0 end) as enterprise_monthly_fee, min(monthly_fee) as min_monthly_fee from subscriptions group by case when status in ('EXPIRED', 'ACTIVE') then 'priority' else 'other' end order by min_monthly_fee desc;

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(customers.signup_date, 'yyyy-MM') AS signup_month, customers.is_active, COUNT(DISTINCT web_events.duration_sec) AS unique_event_types FROM web_events RIGHT OUTER JOIN sessions ON web_events.session_id = sessions.id LEFT OUTER JOIN customers ON sessions.customer_id = customers.id GROUP BY DATE_FORMAT(customers.signup_date, 'yyyy-MM'), customers.is_active;

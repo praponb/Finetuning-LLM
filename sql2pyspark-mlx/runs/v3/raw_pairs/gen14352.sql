@@ -1,1 +1,0 @@
-with top_customers as (select id, city, signup_date, row_number() over (partition by city order by signup_date, id) as pos from customers where email not like '%@startup.io') select id, city, signup_date from top_customers where pos = 1

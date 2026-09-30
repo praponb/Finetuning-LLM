@@ -1,1 +1,0 @@
-SELECT suppliers.supplier_name, suppliers.rating, suppliers.city, products.supplier_id, products.category, products.cost FROM suppliers LEFT OUTER JOIN products ON suppliers.id = products.supplier_id WHERE products.brand IN ('Stark', 'Globex') AND products.product_name IS NOT NULL ORDER BY city DESC, products.category;

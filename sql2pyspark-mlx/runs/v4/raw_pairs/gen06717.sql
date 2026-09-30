@@ -1,1 +1,0 @@
-with filtered as (select id, session_id, event_type, duration_sec, length(event_type) as event_type_length from web_events where event_time > timestamp '2023-09-02 03:00:00' and event_time >= '2024-06-01') select * from filtered qualify row_number() over (partition by session_id order by event_type_length asc, id asc) = 1;

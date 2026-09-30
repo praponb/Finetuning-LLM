@@ -1,1 +1,0 @@
-select case when o.amount >= 1730 then 'high' when o.amount >= 470 then 'mid' else 'low' end amount_bucket, min(s.cost) min_cost from shipments s inner join orders o on s.order_id = o.id group by case when o.amount >= 1730 then 'high' when o.amount >= 470 then 'mid' else 'low' end having min(s.cost) >= 51 order by min_cost, amount_bucket desc;

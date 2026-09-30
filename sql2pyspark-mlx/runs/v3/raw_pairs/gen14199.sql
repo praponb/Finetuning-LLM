@@ -1,1 +1,0 @@
-SELECT dept_name, SUM(budget) AS total_budget, COUNT(*) AS cnt, SUM(SUM(budget)) OVER (ORDER BY dept_name) AS cumulative_budget FROM departments WHERE location IS NULL GROUP BY dept_name ORDER BY cumulative_budget, cnt DESC

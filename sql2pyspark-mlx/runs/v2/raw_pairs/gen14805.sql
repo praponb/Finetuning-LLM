@@ -1,1 +1,0 @@
-SELECT ss.id, ss.store_id, p.price, p.launch_date, s.store_name, s.city FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id RIGHT OUTER JOIN stores s ON ss.store_id = s.id WHERE ss.units BETWEEN 17 AND 29;

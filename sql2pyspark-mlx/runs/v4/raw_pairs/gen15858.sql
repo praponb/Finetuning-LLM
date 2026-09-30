@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT id, order_id, carrier, status, CONCAT_WS('/', carrier, status) carrier_status_key FROM shipments WHERE shipped_date > DATE '2023-03-06' AND order_id IS NOT NULL) SELECT order_id, COUNT_IF(carrier = 'FedEx') AS fedex_events, SIZE(COLLECT_SET(status)) AS num_status FROM cleaned GROUP BY order_id;

@@ -1,1 +1,0 @@
-SELECT product_id, QUARTER(sale_date) AS sale_quarter, MIN(revenue) AS min_revenue, ROUND(STDDEV(revenue), 2) AS stddev_revenue FROM store_sales WHERE sale_date BETWEEN '2023-12-01' AND '2024-09-01' GROUP BY product_id, QUARTER(sale_date)

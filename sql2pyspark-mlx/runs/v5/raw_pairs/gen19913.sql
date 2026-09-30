@@ -1,1 +1,0 @@
-SELECT city, QUARTER(opened_date) AS opened_quarter, COUNT(*) AS cnt, MIN(opened_date) AS min_opened_date FROM stores WHERE NOT (LOWER(TRIM(store_name)) = 'downtown express' AND (region IN ('East', 'West', 'South') OR region IN ('Central', 'West', 'East'))) GROUP BY 1, 2 ORDER BY min_opened_date, city DESC;

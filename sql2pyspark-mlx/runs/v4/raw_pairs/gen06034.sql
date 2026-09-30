@@ -1,1 +1,0 @@
-WITH remaining_keys AS (SELECT id, country FROM suppliers EXCEPT DISTINCT SELECT id, country FROM suppliers WHERE supplier_name LIKE '%Trade%'), verified AS (SELECT s.* FROM suppliers s INNER JOIN remaining_keys k ON s.id = k.id AND s.country = k.country) SELECT city FROM verified ORDER BY city DESC

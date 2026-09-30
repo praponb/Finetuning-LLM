@@ -1,1 +1,0 @@
-SELECT CASE WHEN c.age >= 70 THEN 'high' WHEN c.age >= 33 THEN 'mid' ELSE 'low' END AS age_bucket, SORT_ARRAY(COLLECT_SET(s.status)) AS status_list FROM shipments s INNER JOIN orders o ON s.order_id = o.id INNER JOIN customers c ON o.customer_id = c.id WHERE c.signup_date < '2023-03-01' GROUP BY CASE WHEN c.age >= 70 THEN 'high' WHEN c.age >= 33 THEN 'mid' ELSE 'low' END;

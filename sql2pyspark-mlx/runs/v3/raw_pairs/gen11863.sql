@@ -1,1 +1,0 @@
-WITH valid_inventory AS (SELECT * FROM inventory WHERE quantity > 133), agg AS (SELECT YEAR(last_restock) last_restock_year, MAX(quantity) max_quantity FROM valid_inventory GROUP BY YEAR(last_restock)) SELECT last_restock_year, max_quantity FROM agg WHERE max_quantity >= 60 ORDER BY max_quantity, last_restock_year LIMIT 50;

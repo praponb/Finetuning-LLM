@@ -1,1 +1,0 @@
-WITH ranked_subscriptions AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY plan ORDER BY start_date, id) rnk FROM subscriptions WHERE YEAR(end_date) >= 2023) SELECT id, plan, start_date FROM ranked_subscriptions WHERE rnk <= 1 ORDER BY id DESC;

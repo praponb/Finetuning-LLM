@@ -1,1 +1,0 @@
-WITH top_accounts AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY opened_date DESC, id) row_num FROM accounts) SELECT id, customer_id, opened_date FROM top_accounts WHERE row_num = 1 ORDER BY opened_date DESC;

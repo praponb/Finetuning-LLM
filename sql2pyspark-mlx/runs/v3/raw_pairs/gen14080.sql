@@ -1,1 +1,0 @@
-SELECT id, country, city, supplier_name, CASE WHEN city = 'Berlin' THEN 1 ELSE 0 END is_berlin FROM suppliers WHERE LENGTH(supplier_name) >= 13 AND city <> 'Chiang Mai' ORDER BY supplier_name, city DESC;

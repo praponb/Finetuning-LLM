@@ -1,1 +1,0 @@
-SELECT p.brand, MAX(ss.sale_date) latest_sale_date, ROUND(STDDEV(ss.units), 2) stddev_units FROM store_sales ss FULL OUTER JOIN products p ON p.id = ss.product_id WHERE ss.revenue > 3900 GROUP BY p.brand ORDER BY latest_sale_date

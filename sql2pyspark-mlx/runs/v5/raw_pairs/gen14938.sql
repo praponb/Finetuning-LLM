@@ -1,1 +1,0 @@
-WITH by_dimension AS (SELECT dim.country, s.brand, COUNT(*) AS cnt, MAX(s.price) AS max_price, ROUND(AVG(s.stock_qty), 2) AS avg_stock_qty FROM products s JOIN suppliers dim ON s.supplier_id = dim.id GROUP BY dim.country, s.brand) SELECT country, brand, max_price FROM by_dimension

@@ -1,1 +1,0 @@
-SELECT t.id, t.txn_type, a.customer_id, c.segment FROM transactions t INNER JOIN accounts a ON t.account_id = a.id INNER JOIN customers c ON c.id = a.customer_id WHERE t.merchant IN ('Amazon', 'Grab', 'Starbucks') OR a.account_type IN ('CHECKING', 'CREDIT', 'SAVINGS') ORDER BY a.customer_id;

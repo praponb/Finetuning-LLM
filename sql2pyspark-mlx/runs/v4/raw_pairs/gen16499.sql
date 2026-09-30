@@ -1,1 +1,0 @@
-SELECT order_id, MAX(quantity) - MIN(quantity) AS quantity_range, COUNT(quantity) AS quantity_count, ROUND(STDDEV(unit_price), 2) AS stddev_unit_price FROM order_items WHERE product_id IN (15, 32, 39) GROUP BY order_id ORDER BY quantity_count

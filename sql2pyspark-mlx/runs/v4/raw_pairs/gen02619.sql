@@ -1,1 +1,0 @@
-select departments.dept_name, departments.budget, t.cnt from departments inner join (select dept_id, count(*) as cnt from employees where level = 'L3' group by dept_id) t on departments.id = t.dept_id

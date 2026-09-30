@@ -1,1 +1,0 @@
-with employees_by_department as (select dept_id, min(hire_date) as min_hire_date from employees where dept_id in (4, 35, 36) group by dept_id) select d.id, d.dept_name, d.budget, ebd.min_hire_date from departments d inner join employees_by_department ebd on d.id = ebd.dept_id order by dept_name desc;

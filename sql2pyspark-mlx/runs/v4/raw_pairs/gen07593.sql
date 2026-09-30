@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, customer_id, account_type, balance, status, YEAR(opened_date) AS opened_date_year, COALESCE(status, 'DIRECT') AS status_filled FROM accounts WHERE opened_date >= DATE '2023-03-31') SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY status, account_type ORDER BY opened_date_year, id) AS rank_in_group FROM valid) t WHERE rank_in_group = 1

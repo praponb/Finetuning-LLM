@@ -1,1 +1,0 @@
-WITH top_store_sales AS (SELECT id, product_id, revenue, sale_date, ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY revenue DESC, id) AS rnk FROM store_sales WHERE MONTH(sale_date) IN (5, 8, 9)) SELECT id, product_id, revenue, sale_date FROM top_store_sales WHERE rnk = 1

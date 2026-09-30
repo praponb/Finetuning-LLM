@@ -1,1 +1,0 @@
-SELECT id, channel, order_date, shipping_fee, ROUND(AVG(shipping_fee) OVER (PARTITION BY channel ORDER BY order_date, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) shipping_fee_moving_avg_4 FROM orders WHERE amount >= 610;

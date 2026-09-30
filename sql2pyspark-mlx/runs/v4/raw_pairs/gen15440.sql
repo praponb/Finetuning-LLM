@@ -1,1 +1,0 @@
-SELECT id, order_id, method, paid_at, amount, COUNT(*) OVER (PARTITION BY order_id) order_id_count, LEAD(amount, 1) OVER (PARTITION BY method ORDER BY paid_at, id) next_amount FROM payments WHERE status = 'FAILED';

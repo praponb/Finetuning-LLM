@@ -1,1 +1,0 @@
-SELECT CASE WHEN discount >= 0.42 THEN 'high' WHEN discount >= 0.13 THEN 'mid' ELSE 'low' END AS discount_bucket, SUM(amount) AS total_amount, DENSE_RANK() OVER (ORDER BY SUM(amount) DESC) AS rnk FROM orders GROUP BY CASE WHEN discount >= 0.42 THEN 'high' WHEN discount >= 0.13 THEN 'mid' ELSE 'low' END;

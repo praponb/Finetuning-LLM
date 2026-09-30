@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT carrier, status, SUM(CASE WHEN status = 'IN_TRANSIT' THEN cost ELSE 0 END) AS in_transit_cost, MAX(cost) AS max_cost FROM shipments WHERE YEAR(shipped_date) >= 2025 GROUP BY carrier, status) AS sub WHERE max_cost >= 65;

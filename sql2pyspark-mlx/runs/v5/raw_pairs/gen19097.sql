@@ -1,1 +1,0 @@
-WITH top_suppliers AS (SELECT id, city, rating, RANK() OVER (PARTITION BY city ORDER BY rating DESC) rnk FROM suppliers) SELECT id, city, rating FROM top_suppliers WHERE rnk = 1 ORDER BY rating ASC, city ASC

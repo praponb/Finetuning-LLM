@@ -1,1 +1,0 @@
-select i.id, i.last_restock, i.store_id, s.city, s.opened_date, p.launch_date from inventory i left join stores s on i.store_id = s.id inner join products p on i.product_id = p.id order by last_restock;

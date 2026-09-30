@@ -1,1 +1,0 @@
-with base as (select id, product_id, quantity, last_restock, last_day(last_restock) last_restock_month_end from inventory where last_restock > date '2023-05-25') select product_id, stddev_samp(quantity) as quantity_stddev, round(avg(quantity), 2) as avg_quantity, count(*) as event_count from base group by rollup (product_id);

@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT order_id, id FROM shipments INTERSECT ALL SELECT order_id, id FROM shipments WHERE delivered_date >= '2024-11-14'), reconciled AS (SELECT s.* FROM shipments s INNER JOIN kept_keys k ON s.order_id = k.order_id AND s.id = k.id) SELECT order_id, carrier, status FROM reconciled;

@@ -1,1 +1,0 @@
-WITH ranked_stores AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY city ORDER BY opened_date DESC, id) AS pos FROM stores WHERE MONTH(opened_date) IN (6, 10, 11)) SELECT id, city, opened_date, region FROM ranked_stores WHERE pos <= 3;

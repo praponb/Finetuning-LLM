@@ -1,1 +1,0 @@
-select job_title, max(hire_date) as last_hire_date, min(hire_date) as min_hire_date, sum(case when level = 'L3' then 1 else 0 end) as l3_count from employees where level in ('L2', 'L3') group by job_title having sum(case when level = 'L3' then 1 else 0 end) < 70 order by last_hire_date, job_title limit 3;

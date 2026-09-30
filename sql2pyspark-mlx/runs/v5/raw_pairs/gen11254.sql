@@ -1,1 +1,0 @@
-SELECT id, launch_date, cost, supplier_id, LEAD(cost, 2) OVER (ORDER BY launch_date, id) AS next_cost, PERCENT_RANK() OVER (PARTITION BY supplier_id ORDER BY launch_date) AS launch_date_pct_rank FROM products ORDER BY supplier_id DESC

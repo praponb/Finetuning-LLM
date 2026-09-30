@@ -1,1 +1,0 @@
-WITH store_sales_by_store AS (SELECT store_id, COUNT(*) AS total_count, MAX(revenue) AS max_revenue FROM store_sales WHERE units > 28 GROUP BY store_id) SELECT s.id, s.city, ssbs.total_count, ssbs.max_revenue FROM stores s LEFT JOIN store_sales_by_store ssbs ON s.id = ssbs.store_id ORDER BY total_count;

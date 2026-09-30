@@ -1,1 +1,0 @@
-SELECT id, host, log_ts, status_code, payload_json, context, SIZE(context) AS num_context, FROM_JSON(payload_json, 'STRUCT<user: STRUCT<id: INT, tier: STRING>, duration: DOUBLE, retries: INT, tags: ARRAY<STRING>>').duration AS duration_sec, SHIFTRIGHT(status_code, 2) AS status_code_high FROM app_logs WHERE host = 'h1';

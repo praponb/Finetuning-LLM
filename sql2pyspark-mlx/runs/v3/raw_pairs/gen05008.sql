@@ -1,1 +1,0 @@
-WITH store_stats AS (SELECT store_id, SUM(quantity) AS total_quantity, MAX(quantity) AS max_quantity FROM inventory GROUP BY store_id) SELECT s.id, s.city, s.sqft, ss.total_quantity, ss.max_quantity FROM stores s INNER JOIN store_stats ss ON s.id = ss.store_id ORDER BY s.id DESC;

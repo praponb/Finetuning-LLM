@@ -1,1 +1,0 @@
-select case when cost >= 103 then 'high' when cost >= 25 then 'mid' else 'low' end as cost_bucket, count(*) as cnt from shipments group by case when cost >= 103 then 'high' when cost >= 25 then 'mid' else 'low' end having count(*) > 2 order by cost_bucket;

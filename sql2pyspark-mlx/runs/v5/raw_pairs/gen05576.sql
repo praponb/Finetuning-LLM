@@ -1,1 +1,0 @@
-SELECT level, MONTH(hire_date) AS hire_month, ROUND(AVG(salary), 2) AS avg_salary, SUM(CASE WHEN level = 'L4' THEN 1 ELSE 0 END) AS l4_count FROM employees WHERE email IS NOT NULL GROUP BY CUBE(level, MONTH(hire_date)) ORDER BY avg_salary DESC

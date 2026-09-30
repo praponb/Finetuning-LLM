@@ -1,1 +1,0 @@
-SELECT category, max_price, price_count FROM (SELECT category, MAX(price) AS max_price, COUNT(price) AS price_count FROM products GROUP BY category) AS sub WHERE price_count > 6 ORDER BY price_count DESC;

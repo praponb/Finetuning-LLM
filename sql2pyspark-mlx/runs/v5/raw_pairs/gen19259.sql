@@ -1,1 +1,0 @@
-WITH web_events_by_session AS (SELECT session_id, ROUND(AVG(duration_sec), 2) AS avg_duration_sec, MIN(event_time) AS min_event_time FROM web_events GROUP BY session_id) SELECT s.started_at, s.device, webs.avg_duration_sec, webs.min_event_time FROM sessions s LEFT JOIN web_events_by_session webs ON s.id = webs.session_id WHERE webs.avg_duration_sec > 75

@@ -1,1 +1,0 @@
-select p.brand, count(ss.id) as store_sale_count, min(ss.units) as min_units from products p left outer join store_sales ss on ss.product_id = p.id group by p.brand having count(ss.id) > 2 order by store_sale_count desc

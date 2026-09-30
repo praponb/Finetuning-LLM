@@ -1,1 +1,0 @@
-SELECT shipped_date, CASE WHEN carrier IN ('Flash', 'UPS') THEN 'Core' ELSE 'Other' END AS carrier_group FROM shipments WHERE order_id = 39 AND status IN ('LOST', 'RETURNED') AND status <> 'LOST' ORDER BY shipped_date DESC

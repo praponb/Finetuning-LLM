@@ -1,1 +1,0 @@
-SELECT channel, ROUND(STDDEV(shipping_fee), 2) AS stddev_shipping_fee, ROUND((100 * SUM(CASE WHEN status = 'RETURNED' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_returned FROM orders GROUP BY channel ORDER BY channel, pct_returned;

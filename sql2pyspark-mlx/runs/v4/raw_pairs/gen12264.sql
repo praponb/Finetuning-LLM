@@ -1,1 +1,0 @@
-SELECT products.id, products.stock_qty, products.supplier_id, products.product_name FROM products WHERE NOT EXISTS (SELECT 1 FROM inventory WHERE inventory.product_id = products.id AND inventory.quantity < 63) ORDER BY products.supplier_id DESC, id LIMIT 5

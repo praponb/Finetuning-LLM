@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered_count, SORT_ARRAY(COLLECT_SET(carrier)) AS carrier_list FROM shipments GROUP BY order_id) SELECT o.id, o.channel, ot.delivered_count, ot.carrier_list FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id WHERE ot.delivered_count >= 30;

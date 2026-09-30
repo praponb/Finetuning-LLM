@@ -1,1 +1,0 @@
-select category, supplier_id, round(avg(stock_qty), 2) as avg_stock_qty, concat_ws(', ', sort_array(collect_set(brand))) as brand_values from products group by category, supplier_id order by brand_values desc, avg_stock_qty desc;

@@ -1,3 +1,0 @@
-SELECT id, amount
-FROM orders
-WHERE amount > (SELECT MAX(amount) FROM orders WHERE store_id = 36)

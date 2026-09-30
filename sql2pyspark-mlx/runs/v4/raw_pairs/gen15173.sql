@@ -1,1 +1,0 @@
-SELECT *, LAST_VALUE(humidity, TRUE) OVER (PARTITION BY device_code ORDER BY temp_c, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_humidity, CORR(temp_c, status_bits) OVER (PARTITION BY device_code) AS corr_temp_c_status_bits FROM device_readings;

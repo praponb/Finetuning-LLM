@@ -1,1 +1,0 @@
-SELECT a.id, a.status FROM accounts a WHERE a.opened_date BETWEEN '2023-07-29' AND '2025-03-01' AND EXISTS (SELECT 1 FROM transactions t WHERE t.account_id = a.id AND t.merchant IN ('Lazada', '7-Eleven'));

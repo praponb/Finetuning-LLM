@@ -1,1 +1,0 @@
-SELECT is_remote, AVG(salary) AS avg_salary, MAX(salary) - MIN(salary) AS salary_range, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values FROM employees WHERE email IS NOT NULL GROUP BY is_remote HAVING AVG(salary) > 78000 ORDER BY 3;

@@ -1,1 +1,0 @@
-SELECT category, DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, ROUND((100 * SUM(CASE WHEN brand = 'Umbrella' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_umbrella FROM products WHERE ARRAY_CONTAINS(tags, 'bestseller') GROUP BY ROLLUP(category, DATE_FORMAT(launch_date, 'yyyy-MM')) ORDER BY launch_month DESC, pct_umbrella DESC;

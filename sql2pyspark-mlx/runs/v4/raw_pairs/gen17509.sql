@@ -1,1 +1,0 @@
-SELECT MAX(order_date) latest_order_date, SUM(amount) total_amount FROM orders WHERE channel IN ('mobile', 'partner') AND (customer_id = 34 OR status IN ('SHIPPED', 'PENDING')) ORDER BY latest_order_date

@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, store_id, amount, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY amount DESC, id) AS row_num FROM orders WHERE channel NOT IN ('store', 'web', 'mobile')) SELECT id, store_id, amount FROM ranked WHERE row_num <= 2 ORDER BY store_id

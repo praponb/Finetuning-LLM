@@ -1,1 +1,0 @@
-SELECT departments.dept_name, COUNT(employees.id) AS employee_count FROM departments LEFT OUTER JOIN employees ON departments.id = employees.dept_id GROUP BY departments.dept_name ORDER BY departments.dept_name ASC;

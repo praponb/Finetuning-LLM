@@ -1,1 +1,0 @@
-SELECT MAX(amount) - MIN(amount) AS amount_range, ROUND((100 * SUM(CASE WHEN channel = 'web' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_web FROM orders WHERE customer_id IS NOT NULL ORDER BY amount_range DESC

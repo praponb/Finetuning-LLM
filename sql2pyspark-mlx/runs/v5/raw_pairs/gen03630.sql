@@ -1,1 +1,0 @@
-select we.id, we.session_id, we.event_type, s.customer_id, c.city, c.email from web_events we join sessions s on we.session_id = s.id left join customers c on c.id = s.customer_id where we.session_id in (21, 26, 33, 37) order by c.email

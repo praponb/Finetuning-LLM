@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY event_time DESC, id) AS rn FROM web_events WHERE page IN ('/product', '/checkout')) SELECT id, session_id, event_time, page FROM ranked WHERE rn = 1

@@ -1,1 +1,0 @@
-select emp.manager_id as employee_manager_id, emp.job_title as employee_job_title, mgr.is_remote as manager_is_remote, mgr.manager_id as manager_manager_id, mgr.salary as manager_salary, concat_ws(',', mgr.full_name, mgr.job_title) as full_name_job_title_key from employees emp inner join employees mgr on emp.manager_id = mgr.id where mgr.manager_id = 26 and not emp.is_remote;

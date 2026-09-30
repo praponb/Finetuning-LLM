@@ -1,1 +1,0 @@
-select id, plan, start_date, monthly_fee, round(avg(monthly_fee) over (partition by plan order by start_date, id rows between 3 preceding and current row), 2) as monthly_fee_moving_avg_4 from subscriptions;

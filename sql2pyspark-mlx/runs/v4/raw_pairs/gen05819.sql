@@ -1,1 +1,0 @@
-SELECT ROUND((100 * SUM(CASE WHEN merchant = 'Shell' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_shell FROM transactions WHERE (merchant = 'Starbucks' AND txn_time < '2025-05-25') OR is_flagged ORDER BY pct_shell

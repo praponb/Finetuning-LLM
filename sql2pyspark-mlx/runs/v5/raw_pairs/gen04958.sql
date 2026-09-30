@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, LOWER(dept_name) AS dept_name_lower, CONCAT(location, '/', dept_name) AS location_dept_name FROM departments WHERE location IS NOT NULL AND location NOT IN ('New York', 'Singapore')) SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM employees c WHERE c.dept_id = s.id AND c.level IN ('L3', 'L4'))

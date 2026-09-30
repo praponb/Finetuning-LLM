@@ -1,1 +1,0 @@
-select stores.region, max(store_sales.units) - min(store_sales.units) as units_range from store_sales inner join stores on store_sales.store_id = stores.id left outer join products on store_sales.product_id = products.id group by stores.region having units_range >= 41 order by stores.region desc limit 5;

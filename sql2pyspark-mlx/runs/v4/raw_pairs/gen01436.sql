@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', signup_date) AS signup_month, MIN(signup_date) AS min_signup_date, ROUND(STDDEV(credit_limit), 2) AS stddev_credit_limit, SUM(CASE WHEN segment = 'Consumer' THEN 1 ELSE 0 END) AS consumer_count FROM customers WHERE email LIKE '%@company.co' GROUP BY signup_month

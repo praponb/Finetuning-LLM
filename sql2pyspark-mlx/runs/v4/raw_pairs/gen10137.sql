@@ -1,1 +1,0 @@
-select * from (select case when budget >= 4318000 then 'high' when budget >= 764000 then 'mid' else 'low' end as budget_bucket, dept_name, budget from departments where budget >= 3806000) pivot (avg(budget) for dept_name in ('Finance', 'Engineering', 'Marketing', 'HR')) order by budget_bucket

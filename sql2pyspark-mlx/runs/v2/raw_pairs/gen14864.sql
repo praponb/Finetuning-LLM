@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('MONTH', p.launch_date) AS launch_month, COUNT(*) AS store_sale_count FROM store_sales ss INNER JOIN products p ON ss.product_id = p.id FULL OUTER JOIN suppliers s ON p.supplier_id = s.id WHERE s.supplier_name LIKE '%Impor%' GROUP BY DATE_TRUNC('MONTH', p.launch_date) HAVING COUNT(*) > 5 ORDER BY launch_month

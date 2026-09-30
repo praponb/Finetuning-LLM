@@ -1,1 +1,0 @@
-select accounts.id, accounts.account_type, accounts.customer_id, accounts.opened_date, customers.name from accounts right join customers on customers.id = accounts.customer_id where accounts.account_type = 'LOAN' order by accounts.customer_id desc;

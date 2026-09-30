@@ -85,13 +85,13 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── convert_sql_pyspark.py    # Leakage-free splitter & chat formatter
 │   ├── lora_config.yaml          # MLX LoRA training hyperparameters (v7: 7B model, continues from v6)
 │   ├── train_resumable.py        # Crash-proof training wrapper used by `make train`
-│   ├── train.log                 # Training log (v7; v6 and v5 in runs/v6/, runs/v5/)
+│   ├── train.log                 # Training log (v7; older ones in runs/vN/)
 │   ├── data/                     # train.jsonl (16.9k), valid.jsonl, test.jsonl (+ *_meta.jsonl)
 │   ├── raw_pairs/                # 20.1k pair files, verified.jsonl & reports
-│   ├── adapters/                 # Fine-tuned LoRA weights + checkpoints (v7; v6 in runs/v6/)
-│   ├── runs/v2/ … runs/v6/       # Backups: adapters, data, raw pairs, configs, logs
-│   └── sql2pyspark-model/        # Fused 4-bit MLX model
-├── sql2pyspark-hf/               # Dequantized BF16 fused model (input for GGUF; v8, ~15.2 GB)
+│   ├── adapters/                 # Fine-tuned LoRA weights (v7; v6 in runs/v6/)
+│   ├── runs/v2/ … runs/v7/       # Backups: adapters, configs, logs (v2–v5 data only in git history)
+│   └── sql2pyspark-model/        # Fused 4-bit MLX model (only between `make fuse` and `make clean`)
+├── sql2pyspark-hf/               # Dequantized BF16 fused model (only between `make fuse` and `make clean`)
 ├── eval/                         # Execution-based evaluation
 │   ├── build_holdout.py          # 62 hand-written queries on unseen schemas
 │   ├── build_holdout_v4.py       # 25 hand-written queries for the v4 features

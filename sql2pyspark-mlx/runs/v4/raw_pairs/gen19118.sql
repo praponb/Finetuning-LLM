@@ -1,1 +1,0 @@
-select customer_id, device, country, sort_array(collect_set(browser)) as browser_list, count_if(country = 'SG') as sg_events, size(collect_set(country)) as num_countries from sessions group by customer_id, device, country order by customer_id nulls first

@@ -1,1 +1,0 @@
-SELECT customers.id, customers.name, COUNT(subscriptions.id) AS subscription_count FROM customers LEFT JOIN subscriptions ON subscriptions.customer_id = customers.id WHERE customers.country NOT IN ('JP', 'TH') GROUP BY customers.id, customers.name ORDER BY customers.id

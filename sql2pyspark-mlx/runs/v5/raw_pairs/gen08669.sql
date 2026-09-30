@@ -1,1 +1,0 @@
-select ss.id, ss.store_id, ss.product_id, s.city, p.category, p.supplier_id, length(s.store_name) as store_name_length from store_sales ss left outer join stores s on s.id = ss.store_id inner join products p on p.id = ss.product_id order by city, id limit 10;

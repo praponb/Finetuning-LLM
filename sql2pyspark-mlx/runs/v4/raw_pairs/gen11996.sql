@@ -1,1 +1,0 @@
-SELECT account_type, total_balance, balance_range FROM (SELECT account_type, SUM(balance) AS total_balance, MAX(balance) - MIN(balance) AS balance_range FROM accounts WHERE MONTH(opened_date) IN (1, 9, 10) GROUP BY account_type) AS sub WHERE total_balance > 453000 ORDER BY balance_range DESC

@@ -1,1 +1,0 @@
-select id, unit_price, product_id, unit_price * quantity as line_total, round(unit_price / quantity, 2) as line_total_2 from order_items where unit_price between 120 and 280 and product_id in (17, 19) order by product_id desc, id limit 5;

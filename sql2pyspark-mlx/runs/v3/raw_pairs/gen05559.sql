@@ -1,1 +1,0 @@
-with OrderSummary as (select order_id, max(amount) as max_amount, count(case when method = 'cash' then 1 end) as cash_count from payments where paid_at >= '2024-02-18' group by order_id) select o.id, o.shipping_fee, O.max_amount, O.cash_count from orders o inner join OrderSummary O on o.id = O.order_id where O.max_amount > 1020

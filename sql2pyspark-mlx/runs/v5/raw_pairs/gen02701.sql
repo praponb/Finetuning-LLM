@@ -1,1 +1,0 @@
-SELECT id, store_id, product_id, sale_date, units, revenue, AVG(revenue) OVER w_ordered AS revenue_avg_3, LAG(units, 1) OVER (ORDER BY revenue, id) AS prev_units FROM store_sales WINDOW w_ordered AS (PARTITION BY product_id ORDER BY units, id ROWS BETWEEN 3 PRECEDING AND CURRENT ROW);

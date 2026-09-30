@@ -1,1 +1,0 @@
-select sessions.id, sessions.browser, sessions.country, customers.country as customer_country, customers.city, customers.age from sessions full outer join customers on sessions.customer_id = customers.id order by browser, customers.age

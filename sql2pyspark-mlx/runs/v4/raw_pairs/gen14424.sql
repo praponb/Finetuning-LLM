@@ -1,1 +1,0 @@
-select inventory.store_id, inventory.last_restock, store_sales.store_id as store_sale_store_id, store_sales.units, store_sales.revenue * store_sales.units as revenue_per_unit from inventory inner join store_sales on inventory.store_id = store_sales.store_id and inventory.product_id = store_sales.product_id order by 4 desc

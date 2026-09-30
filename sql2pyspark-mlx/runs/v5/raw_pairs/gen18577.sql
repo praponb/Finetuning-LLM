@@ -1,1 +1,0 @@
-SELECT o.id, o.customer_id, o.order_date, t.unique_orders, t.num_order_items FROM orders o JOIN (SELECT order_id, COUNT(DISTINCT unit_price) unique_orders, COUNT(*) num_order_items FROM order_items WHERE product_id IN (1, 22, 32, 33) GROUP BY order_id) t ON o.id = t.order_id WHERE t.num_order_items > 8 ORDER BY customer_id, id LIMIT 20;

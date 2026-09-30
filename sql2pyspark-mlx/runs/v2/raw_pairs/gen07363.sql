@@ -1,1 +1,0 @@
-SELECT COUNT(DISTINCT amount) AS unique_methods, SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS success_count FROM payments WHERE HOUR(paid_at) BETWEEN 8 AND 14 AND TO_DATE(paid_at) < '2023-06-12' AND method <> 'promptpay' ORDER BY success_count;

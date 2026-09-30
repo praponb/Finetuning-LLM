@@ -1,1 +1,0 @@
-SELECT order_items.id, order_items.quantity, order_items.product_id FROM order_items WHERE order_items.order_id IN (6, 30, 34) AND order_items.product_id IN (SELECT id FROM products WHERE price > 990)

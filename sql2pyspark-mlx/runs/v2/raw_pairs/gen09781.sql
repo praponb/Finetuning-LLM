@@ -1,1 +1,0 @@
-with EmployeesByDepartment as (select dept_id, count(*) as num_employees from employees where manager_id in (6, 29, 33) group by dept_id) select d.id, d.location, d.dept_name, E.num_employees from departments d inner join EmployeesByDepartment E on d.id = E.dept_id where E.num_employees > 7 order by id, num_employees;

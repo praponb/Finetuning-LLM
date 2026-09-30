@@ -1,1 +1,0 @@
-SELECT CASE WHEN budget >= 4414000 THEN 'LARGE' ELSE 'SMALL' END AS budget_tier, COUNT(DISTINCT location) AS distinct_locations, COUNT_IF(dept_name = 'Finance') AS finance_events, SIZE(COLLECT_SET(dept_name)) AS num_dept_names FROM departments GROUP BY CASE WHEN budget >= 4414000 THEN 'LARGE' ELSE 'SMALL' END ORDER BY budget_tier NULLS FIRST

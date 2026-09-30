@@ -1,1 +1,0 @@
-WITH SupplierStats AS (SELECT supplier_id, MIN(launch_date) AS first_launch_date FROM products GROUP BY supplier_id) SELECT s.id, s.rating, S.first_launch_date FROM suppliers s JOIN SupplierStats S ON s.id = S.supplier_id;

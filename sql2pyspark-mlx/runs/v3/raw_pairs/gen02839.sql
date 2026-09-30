@@ -1,1 +1,0 @@
-SELECT id, monthly_fee, plan, DATE_TRUNC('WEEK', end_date) AS end_date_period, CONCAT_WS(',', status, plan) AS status_plan_key FROM subscriptions WHERE customer_id IS NULL AND monthly_fee <= 190 ORDER BY monthly_fee DESC;

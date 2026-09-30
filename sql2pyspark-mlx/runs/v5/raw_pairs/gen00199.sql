@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, order_id, product_id, CEIL(unit_price) AS unit_price_whole, COALESCE(unit_price, 0) AS unit_price_filled FROM order_items WHERE quantity = 5) SELECT * FROM base QUALIFY ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY unit_price_whole DESC, id) = 1;

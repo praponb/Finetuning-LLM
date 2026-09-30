@@ -1,1 +1,0 @@
-SELECT e.id, e.dept_id, e.is_remote, e.job_title, d.location, d.budget, d.dept_name, CONCAT_WS('-', e.level, e.job_title) AS level_job_title_key FROM employees e JOIN departments d ON e.dept_id = d.id ORDER BY dept_id DESC, d.location DESC;

@@ -1,1 +1,0 @@
-select id, store_id, quantity, product_id, last_restock, dense_rank() over (partition by store_id order by quantity desc) as dense_rnk, ntile(3) over (partition by product_id order by last_restock desc, id) as quartile from inventory

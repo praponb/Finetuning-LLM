@@ -1,1 +1,0 @@
-SELECT o.id, o.discount FROM orders o WHERE o.store_id IN (5, 13, 23, 38) AND EXISTS (SELECT 1 FROM order_items oi WHERE oi.order_id = o.id AND oi.order_id IN (10, 11, 29, 36)) ORDER BY o.discount DESC

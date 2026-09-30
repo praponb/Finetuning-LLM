@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_TRUNC('MONTH', paid_at) AS paid_month, method, ROUND(STDDEV(amount), 2) AS stddev_amount FROM payments GROUP BY DATE_TRUNC('MONTH', paid_at), method) AS sub WHERE stddev_amount > 23;

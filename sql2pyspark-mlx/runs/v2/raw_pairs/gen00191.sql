@@ -1,1 +1,0 @@
-select status, ups_cost, latest_delivered_date from (select status, sum(case when carrier = 'UPS' then cost else 0 end) as ups_cost, max(delivered_date) as latest_delivered_date from shipments group by status) as agg where ups_cost >= 69;

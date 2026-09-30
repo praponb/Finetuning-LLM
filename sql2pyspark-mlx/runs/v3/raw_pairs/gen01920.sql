@@ -1,4 +1,0 @@
-SELECT DISTINCT page
-FROM web_events
-ORDER BY 1 DESC
-LIMIT 5

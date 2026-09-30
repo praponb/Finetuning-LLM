@@ -1,1 +1,0 @@
-SELECT s.id, s.customer_id, t.max_duration_sec, t.min_duration_sec FROM sessions s INNER JOIN (SELECT session_id, MAX(duration_sec) max_duration_sec, MIN(duration_sec) min_duration_sec FROM web_events WHERE page != '/cart' GROUP BY session_id) t ON s.id = t.session_id WHERE t.min_duration_sec >= 410;

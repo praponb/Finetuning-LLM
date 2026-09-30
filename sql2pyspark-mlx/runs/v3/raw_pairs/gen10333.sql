@@ -1,1 +1,0 @@
-WITH recent_shipments AS (SELECT * FROM shipments WHERE MONTH(delivered_date) IN (2, 5, 6)), agg AS (SELECT CASE WHEN carrier IN ('Kerry', 'Flash') THEN 'core' ELSE 'other' END AS carrier_group, ROUND(AVG(cost), 2) AS avg_cost FROM recent_shipments GROUP BY CASE WHEN carrier IN ('Kerry', 'Flash') THEN 'core' ELSE 'other' END) SELECT * FROM agg

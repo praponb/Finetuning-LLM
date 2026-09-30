@@ -1,1 +1,0 @@
-with ranked_inventory as (select *, row_number() over (partition by product_id order by last_restock desc, id) as rn from inventory) select id, product_id, last_restock, store_id from ranked_inventory where rn <= 2

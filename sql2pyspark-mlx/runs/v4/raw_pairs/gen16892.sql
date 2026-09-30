@@ -1,1 +1,0 @@
-SELECT id, order_id, delivered_date, cost FROM (SELECT id, order_id, delivered_date, cost, ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY delivered_date DESC, id) rn FROM shipments WHERE status <> 'DELIVERED') ranked WHERE rn <= 5 ORDER BY order_id;

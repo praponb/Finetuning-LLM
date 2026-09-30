@@ -1,1 +1,0 @@
-with src as (select * from payments where status != 'FAILED' and to_date(paid_at) < '2024-07-01' and status != 'REFUNDED'), payments_stats as (select order_id, max(amount) - min(amount) as amount_range from src group by order_id) select order_id, amount_range from payments_stats where amount_range >= 26 order by order_id desc, amount_range

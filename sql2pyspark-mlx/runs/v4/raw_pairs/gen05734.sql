@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, SUM(CASE WHEN merchant = 'Shell' THEN amount ELSE 0 END) shell_amount FROM transactions WHERE merchant != '7-Eleven' GROUP BY account_id) SELECT a.id, a.customer_id, tba.shell_amount FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id;

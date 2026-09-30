@@ -1,1 +1,0 @@
-select o.id, o.channel, c.segment, s.sqft, s.opened_date, o.shipping_fee - o.discount as shipping_fee_minus_discount from orders o inner join customers c on o.customer_id = c.id full outer join stores s on o.store_id = s.id where not (lower(c.name) like '%mma%' and s.store_name is not null) order by channel;

@@ -1,1 +1,0 @@
-WITH exploded AS (SELECT id, host, level, latency_ms, key, attr_value FROM app_logs LATERAL VIEW OUTER EXPLODE(context) t AS key, attr_value) SELECT id, host, level, key, attr_value, CASE WHEN level RLIKE '^(WARN|INFO)$' THEN 'PRIORITY' WHEN level RLIKE '^(ERROR|DEBUG)$' THEN 'CORE' ELSE 'GROUP_B' END AS level_zone FROM exploded ORDER BY level DESC

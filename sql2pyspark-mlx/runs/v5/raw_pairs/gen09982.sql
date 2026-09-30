@@ -1,1 +1,0 @@
-SELECT p.brand, MAX(oi.unit_price) AS max_unit_price FROM order_items oi LEFT OUTER JOIN orders o ON oi.order_id = o.id FULL OUTER JOIN products p ON oi.product_id = p.id WHERE o.amount BETWEEN 640 AND 870 GROUP BY p.brand;

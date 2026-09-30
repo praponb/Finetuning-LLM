@@ -1,1 +1,0 @@
-SELECT departments.dept_name, departments.budget, departments.location, employees.full_name, employees.email, employees.is_remote, INITCAP(TRIM(departments.dept_name)) AS dept_name_title FROM departments INNER JOIN employees ON departments.id = employees.dept_id;

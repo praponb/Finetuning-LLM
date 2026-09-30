@@ -1,1 +1,0 @@
-SELECT id, order_id, SUBSTRING(carrier, 1, 3) AS carrier_prefix, ROUND(cost * 1.15, 2) AS cost_adjusted FROM shipments WHERE NOT ((YEAR(shipped_date) = 2024 AND order_id IS NOT NULL) OR delivered_date < '2023-08-02')

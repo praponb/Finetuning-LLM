@@ -1,1 +1,0 @@
-SELECT id, txn_type, account_id, amount, merchant, LAST_VALUE(merchant) OVER (PARTITION BY txn_type, account_id ORDER BY amount DESC, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_merchant FROM transactions

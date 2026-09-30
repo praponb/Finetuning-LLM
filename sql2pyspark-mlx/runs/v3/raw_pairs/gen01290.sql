@@ -1,1 +1,0 @@
-select status, quarter(start_date) as start_quarter, round(avg(monthly_fee), 2) as avg_monthly_fee, concat_ws(', ', sort_array(collect_set(status))) as status_values, count(case when status = 'EXPIRED' then 1 end) as expired_count from subscriptions where status = 'CANCELLED' group by status, start_quarter order by start_quarter desc

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(shipped_date, 'yyyy-MM') AS shipped_month, order_id, status, MAX(cost) AS max_cost FROM shipments WHERE (cost BETWEEN 31 AND 63 AND status = 'RETURNED') OR cost >= 83 GROUP BY 1, 2, 3

@@ -1,1 +1,0 @@
-SELECT transactions.amount, transactions.txn_type, accounts.opened_date, accounts.account_type, customers.name, customers.segment FROM transactions INNER JOIN accounts ON transactions.account_id = accounts.id INNER JOIN customers ON accounts.customer_id = customers.id ORDER BY account_type DESC, name;

@@ -1,1 +1,0 @@
-select id, city, opened_date, region, sqft, row_number() over (partition by city order by opened_date, id) as row_num, sum(sqft) over (partition by region order by opened_date, id) as running_sqft from stores;

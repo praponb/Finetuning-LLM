@@ -1,1 +1,0 @@
-SELECT id, customer_id, order_date, amount, status, channel, LEAD(amount, 1) OVER (PARTITION BY customer_id ORDER BY order_date, id) next_amount, SUM(amount) OVER (PARTITION BY status, channel ORDER BY order_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_amount FROM orders ORDER BY amount, order_date

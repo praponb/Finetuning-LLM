@@ -1,1 +1,0 @@
-SELECT id, product_id, quantity, unit_price, LEAD(quantity, 1) OVER (PARTITION BY product_id ORDER BY quantity, id) AS next_quantity, MAX(unit_price) OVER (PARTITION BY product_id) AS product_id_max_unit_price FROM order_items;

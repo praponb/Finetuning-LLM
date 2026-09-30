@@ -1,1 +1,0 @@
-SELECT plan, premium_count FROM (SELECT plan, COUNT(CASE WHEN plan = 'premium' THEN 1 END) AS premium_count FROM subscriptions WHERE start_date >= '2024-01-11' GROUP BY plan) AS x WHERE premium_count >= 6 ORDER BY plan ASC

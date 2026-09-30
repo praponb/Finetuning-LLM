@@ -1,1 +1,0 @@
-SELECT order_id, total_unit_price FROM (SELECT order_id, SUM(unit_price) AS total_unit_price FROM order_items WHERE quantity > 7 GROUP BY order_id) AS agg WHERE total_unit_price > 800 ORDER BY total_unit_price ASC, order_id ASC;

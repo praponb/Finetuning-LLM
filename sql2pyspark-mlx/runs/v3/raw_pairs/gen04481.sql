@@ -1,1 +1,0 @@
-select date_format(last_restock, 'yyyy-MM') as last_restock_month, store_id, sum(quantity) as total_quantity, min(last_restock) as first_last_restock from inventory where last_restock < '2025-03-01' group by date_format(last_restock, 'yyyy-MM'), store_id order by first_last_restock, last_restock_month, store_id limit 50

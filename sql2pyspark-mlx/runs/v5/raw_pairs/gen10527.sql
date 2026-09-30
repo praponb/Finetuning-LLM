@@ -1,1 +1,0 @@
-select category, max_cost, umbrella_count from (select category, max(cost) as max_cost, count(case when brand = 'Umbrella' then 1 end) as umbrella_count from products where array_contains(tags, 'bestseller') group by category) as x where max_cost >= 350 order by max_cost desc

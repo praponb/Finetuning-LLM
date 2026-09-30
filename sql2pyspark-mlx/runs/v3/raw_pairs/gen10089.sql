@@ -1,1 +1,0 @@
-SELECT id, is_flagged, merchant, account_id, LOWER(merchant) merchant_lower FROM transactions WHERE merchant = 'Lazada' AND txn_type IN ('REFUND', 'CREDIT') AND txn_type IN ('DEBIT', 'CREDIT', 'REFUND') ORDER BY merchant, id LIMIT 3;

@@ -1,1 +1,0 @@
-SELECT s.city, ROUND(STDDEV(i.quantity), 2) AS stddev_quantity, ROUND(AVG(i.quantity), 2) AS avg_quantity FROM inventory i LEFT OUTER JOIN stores s ON i.store_id = s.id WHERE i.quantity BETWEEN 95 AND 174 GROUP BY s.city HAVING ROUND(STDDEV(i.quantity), 2) >= 62 ORDER BY stddev_quantity DESC

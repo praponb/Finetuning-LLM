@@ -1,1 +1,0 @@
-SELECT product_id, CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END AS quantity_bucket, COUNT(DISTINCT unit_price) AS unique_products FROM order_items WHERE product_id IS NOT NULL GROUP BY product_id, CASE WHEN quantity >= 9 THEN 'high' WHEN quantity >= 4 THEN 'mid' ELSE 'low' END ORDER BY product_id DESC, quantity_bucket ASC LIMIT 5

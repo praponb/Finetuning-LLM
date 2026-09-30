@@ -1,1 +1,0 @@
-SELECT customer_id, ROUND(SUM(balance) / NULLIF(COUNT(CASE WHEN account_type = 'CREDIT' THEN 1 END), 0), 2) AS balance_per_credit, COUNT(DISTINCT customer_id) AS distinct_customer_ids FROM accounts GROUP BY customer_id ORDER BY customer_id DESC NULLS FIRST;

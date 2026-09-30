@@ -1,1 +1,0 @@
-select *, round(stock_qty / cost, 2) as stock_qty_per_cost, case when category in ('Grocery', 'Sports') then 'Tier 1' else 'Other' end as category_group from products where price < 750 and (array_contains(tags, 'premium') or product_name is not null) order by cost desc

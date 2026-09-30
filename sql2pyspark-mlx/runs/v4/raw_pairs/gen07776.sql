@@ -1,1 +1,0 @@
-WITH valid AS (SELECT *, ROUND(quantity * 0.85, 2) AS adjusted_quantity FROM inventory WHERE product_id IN (6, 8, 9)) SELECT e.*, p.launch_date FROM valid e LEFT JOIN products p ON e.product_id = p.id;

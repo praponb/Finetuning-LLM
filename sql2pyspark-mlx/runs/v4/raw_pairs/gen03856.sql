@@ -1,1 +1,0 @@
-with cleaned as (select id, city, rating, case when country = 'UK' then 1 else 0 end as is_uk from suppliers where city is not null) select * from (select *, row_number() over (partition by city order by is_uk nulls first, id) as rank_in_group from cleaned) ranked where rank_in_group = 1;

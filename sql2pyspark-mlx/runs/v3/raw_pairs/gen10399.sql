@@ -1,1 +1,0 @@
-SELECT channel, COUNT(*) AS total_count, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list, COUNT(DISTINCT amount) AS unique_channels FROM orders WHERE YEAR(order_date) >= 2025 AND store_id IS NULL AND channel = 'partner' GROUP BY channel ORDER BY unique_channels DESC, channel;

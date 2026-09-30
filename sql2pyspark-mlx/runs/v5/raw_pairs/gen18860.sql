@@ -1,1 +1,0 @@
-WITH base AS (SELECT id, customer_id, device, browser, country, LOWER(device) AS device_lower, CASE WHEN device = 'tablet' THEN 1 ELSE 0 END AS is_tablet, COALESCE(browser, 'DIRECT') AS resolved_browser FROM sessions WHERE browser = 'Edge') SELECT device, id FROM base EXCEPT ALL SELECT device, id FROM sessions WHERE country IN ('US', 'SG');

@@ -1,1 +1,0 @@
-WITH ranked AS (SELECT id, country, credit_limit, DENSE_RANK() OVER (PARTITION BY country ORDER BY credit_limit) AS pos FROM customers) SELECT id, country, credit_limit FROM ranked WHERE pos <= 3 ORDER BY country ASC;

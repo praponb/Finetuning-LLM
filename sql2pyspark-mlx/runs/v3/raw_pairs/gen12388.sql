@@ -1,1 +1,0 @@
-SELECT id, dept_name, budget, location, SUM(budget) OVER (PARTITION BY dept_name) AS dept_name_sum_budget, SUM(budget) OVER (PARTITION BY location ORDER BY budget, id) AS running_budget FROM departments WHERE budget BETWEEN 1988000 AND 3042000

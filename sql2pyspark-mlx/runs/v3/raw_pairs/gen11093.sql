@@ -1,1 +1,0 @@
-SELECT ss.product_id, ss.store_id, ROUND(STDDEV(i.quantity), 2) stddev_quantity FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.store_id IN (3, 4) GROUP BY ss.product_id, ss.store_id ORDER BY stddev_quantity DESC, product_id DESC, store_id LIMIT 10

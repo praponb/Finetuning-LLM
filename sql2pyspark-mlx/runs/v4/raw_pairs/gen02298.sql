@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_FORMAT(launch_date, 'yyyy-MM') AS launch_month, category, MIN(launch_date) AS first_launch_date, COUNT(*) AS product_count FROM products GROUP BY DATE_FORMAT(launch_date, 'yyyy-MM'), category) AS t WHERE product_count >= 5 ORDER BY first_launch_date DESC;

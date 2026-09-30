@@ -1,1 +1,0 @@
-select date_trunc('MONTH', opened_date) as opened_month, sum(sqft) as total_sqft, sum(sum(sqft)) over (order by date_trunc('MONTH', opened_date)) as cumulative_sqft from stores where month(opened_date) in (3, 6, 8) group by date_trunc('MONTH', opened_date);

@@ -1,1 +1,0 @@
-SELECT payments.id, payments.method, orders.status, orders.shipping_fee, stores.region, stores.store_name FROM payments INNER JOIN orders ON payments.order_id = orders.id INNER JOIN stores ON orders.store_id = stores.id;

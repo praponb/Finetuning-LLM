@@ -1,1 +1,0 @@
-SELECT e.salary AS employee_salary, m.full_name AS manager_full_name, m.dept_id AS manager_dept_id, m.hire_date AS manager_hire_date, LOWER(m.full_name) AS full_name_lower FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE e.salary > 92000 ORDER BY employee_salary DESC, full_name_lower ASC;

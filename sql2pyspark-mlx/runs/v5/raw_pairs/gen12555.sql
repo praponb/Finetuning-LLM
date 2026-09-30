@@ -1,1 +1,0 @@
-SELECT i.id, i.quantity, p.stock_qty FROM inventory i FULL OUTER JOIN products p ON p.id = i.product_id WHERE p.launch_date BETWEEN '2023-11-01' AND '2025-10-01' AND p.launch_date < '2025-06-01' ORDER BY quantity

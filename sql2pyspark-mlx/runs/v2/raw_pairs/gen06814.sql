@@ -1,1 +1,0 @@
-SELECT QUARTER(o.order_date) order_quarter, o.status, ROUND(STDDEV(s.cost), 2) stddev_cost FROM shipments s JOIN orders o ON s.order_id = o.id RIGHT JOIN customers c ON o.customer_id = c.id GROUP BY QUARTER(o.order_date), o.status ORDER BY o.status, order_quarter LIMIT 50

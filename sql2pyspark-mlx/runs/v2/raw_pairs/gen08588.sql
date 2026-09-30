@@ -1,1 +1,0 @@
-SELECT product_id, revenue, unique_products FROM (SELECT product_id, SUM(unit_price * quantity) AS revenue, COUNT(DISTINCT unit_price) AS unique_products FROM order_items GROUP BY product_id) AS s WHERE unique_products >= 8

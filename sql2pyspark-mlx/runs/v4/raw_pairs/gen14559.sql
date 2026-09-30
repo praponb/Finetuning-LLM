@@ -1,1 +1,0 @@
-SELECT oi.id, oi.order_id, oi.quantity, p.stock_qty, p.brand, s.country FROM order_items oi INNER JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.category = 'Books' ORDER BY order_id DESC

@@ -1,1 +1,0 @@
-with src as (select * from accounts where balance is not null), accounts_stats as (select account_type, status, count(balance) balance_count from src group by account_type, status) select account_type, status from accounts_stats;

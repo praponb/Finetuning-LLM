@@ -1,1 +1,0 @@
-SELECT ss.product_id, s.city, s.store_name, p.category FROM store_sales ss RIGHT JOIN stores s ON s.id = ss.store_id INNER JOIN products p ON ss.product_id = p.id WHERE ss.sale_date >= '2024-05-01' AND ss.units BETWEEN 17 AND 30 ORDER BY city DESC;

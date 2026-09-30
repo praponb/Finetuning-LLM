@@ -1,1 +1,0 @@
-select o.amount, o.discount, c.city, c.email, s.city as store_city from orders o left outer join customers c on o.customer_id = c.id inner join stores s on o.store_id = s.id where s.sqft = 9296 or o.store_id = 14 order by c.email desc

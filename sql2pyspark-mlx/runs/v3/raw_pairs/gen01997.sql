@@ -1,1 +1,0 @@
-SELECT sale_date, 'store_sale' AS source FROM store_sales WHERE store_id IN (1, 3, 5) UNION ALL SELECT end_date AS sale_date, 'subscription' AS source FROM subscriptions WHERE YEAR(end_date) >= 2023 ORDER BY sale_date;

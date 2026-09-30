@@ -1,1 +1,0 @@
-SELECT s.carrier, s.shipped_date, o.store_id, DATE_ADD(s.delivered_date, 78) AS delivered_date_plus_78d FROM shipments s INNER JOIN orders o ON s.order_id = o.id WHERE s.carrier = 'DHL' AND o.status IN ('RETURNED', 'PENDING');

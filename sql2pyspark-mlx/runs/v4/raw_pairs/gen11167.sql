@@ -1,1 +1,0 @@
-WITH filtered_employees AS (SELECT *, CONCAT(level, ', ', job_title) AS level_job_title FROM employees WHERE level IN ('L1', 'L5') AND is_remote AND is_remote = TRUE), employees_stats AS (SELECT manager_id, dept_id, MAX(hire_date) AS latest_hire_date FROM filtered_employees GROUP BY manager_id, dept_id) SELECT * FROM employees_stats;

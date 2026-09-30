@@ -1,1 +1,0 @@
-SELECT id, txn_type, amount, DATE_TRUNC('MONTH', txn_time) AS txn_time_period, TRIM(merchant) AS clean_merchant FROM transactions WHERE NOT is_flagged AND account_id = 31 ORDER BY id DESC, txn_type ASC LIMIT 3

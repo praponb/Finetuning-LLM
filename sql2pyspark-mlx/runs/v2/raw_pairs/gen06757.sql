@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT DATE_FORMAT(event_time, 'yyyy-MM') AS event_month, page, duration_sec FROM web_events) PIVOT (COUNT(duration_sec) FOR page IN ('/cart', '/home', '/checkout', '/product')) ORDER BY event_month

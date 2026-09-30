@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, supplier_name, country, TRIM(supplier_name) AS clean_supplier_name FROM suppliers WHERE city IS NOT NULL) SELECT country, id FROM valid INTERSECT ALL SELECT country, id FROM suppliers WHERE country = 'TH';

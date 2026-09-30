@@ -1,1 +1,0 @@
-select web_events.event_time, web_events.session_id, sessions.device, sessions.started_at, customers.is_active from web_events right join sessions on web_events.session_id = sessions.id join customers on sessions.customer_id = customers.id order by session_id desc;

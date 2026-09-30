@@ -1,1 +1,0 @@
-SELECT id, store_id, last_restock, quantity, DENSE_RANK() OVER (PARTITION BY store_id ORDER BY last_restock DESC) AS last_restock_dense_rank, ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY quantity, id) AS row_num FROM inventory

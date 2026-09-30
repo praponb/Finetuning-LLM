@@ -1,1 +1,0 @@
-WITH flattened AS (SELECT id, EXPLODE_OUTER(coupon_codes) AS tag FROM carts) SELECT tag, COUNT_IF(tag = 'BUNDLE') AS bundle_events, COUNT_IF(tag = 'WELCOME5') AS welcome5_events, COUNT(CASE WHEN tag = 'WELCOME5' THEN 1 END) AS welcome5_count FROM flattened GROUP BY 1 HAVING bundle_events < 1000

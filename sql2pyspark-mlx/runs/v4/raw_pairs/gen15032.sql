@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, ss.revenue FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE i.product_id IN (3, 4, 9) AND i.quantity BETWEEN 140 AND 230;

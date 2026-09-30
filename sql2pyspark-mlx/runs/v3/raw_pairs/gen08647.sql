@@ -1,1 +1,0 @@
-SELECT s.country, COUNT(we.id) AS web_event_count, MAX(we.duration_sec) - MIN(we.duration_sec) AS duration_sec_range FROM sessions s LEFT OUTER JOIN web_events we ON s.id = we.session_id WHERE we.event_type = 'add_to_cart' GROUP BY s.country;

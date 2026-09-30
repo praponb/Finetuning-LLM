@@ -1,1 +1,0 @@
-WITH transactions_by_account AS (SELECT account_id, SUM(amount) AS total_amount, MAX(amount) AS max_amount FROM transactions WHERE is_flagged = TRUE GROUP BY account_id) SELECT a.customer_id, tba.total_amount, tba.max_amount FROM accounts a INNER JOIN transactions_by_account tba ON a.id = tba.account_id WHERE tba.total_amount >= 19000 ORDER BY total_amount DESC, 1

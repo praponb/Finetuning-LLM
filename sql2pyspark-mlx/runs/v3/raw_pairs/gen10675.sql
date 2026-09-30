@@ -1,1 +1,0 @@
-SELECT o.channel, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(s.status))) AS status_values, COUNT(CASE WHEN s.status = 'RETURNED' THEN 1 END) AS returned_count FROM shipments s INNER JOIN orders o ON o.id = s.order_id WHERE o.amount >= 910 GROUP BY o.channel ORDER BY 3 DESC, o.channel;

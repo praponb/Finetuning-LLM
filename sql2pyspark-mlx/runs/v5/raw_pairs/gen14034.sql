@@ -1,1 +1,0 @@
-WITH TransactionsByAccount AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_merchants FROM transactions GROUP BY account_id) SELECT a.id, a.status, a.account_type, T.unique_merchants FROM accounts a JOIN TransactionsByAccount T ON a.id = T.account_id WHERE T.unique_merchants >= 5

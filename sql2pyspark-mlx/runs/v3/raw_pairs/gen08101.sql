@@ -1,1 +1,0 @@
-select ss.store_id, ss.revenue, p.stock_qty, p.category, s.country, s.city, cast(s.rating as int) as rating_int from store_sales ss inner join products p on ss.product_id = p.id right outer join suppliers s on p.supplier_id = s.id where s.city is not null order by p.stock_qty desc

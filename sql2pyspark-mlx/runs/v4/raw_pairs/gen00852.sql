@@ -1,1 +1,0 @@
-select a.customer_id, a.balance, a.status, t.merchant, t.is_flagged, t.amount from accounts a left join transactions t on a.id = t.account_id where a.account_type = 'SAVINGS' or t.txn_type = 'REFUND' order by a.status

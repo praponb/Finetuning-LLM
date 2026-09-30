@@ -1,1 +1,0 @@
-SELECT store_sales.product_id, products.product_name, products.cost, suppliers.city FROM store_sales LEFT JOIN products ON store_sales.product_id = products.id LEFT JOIN suppliers ON suppliers.id = products.supplier_id WHERE suppliers.city IS NULL

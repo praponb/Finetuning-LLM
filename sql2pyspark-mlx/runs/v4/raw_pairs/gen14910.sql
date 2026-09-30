@@ -1,1 +1,0 @@
-SELECT method, order_id, bank_transfer_count, max_amount FROM (SELECT method, order_id, COUNT(CASE WHEN method = 'bank_transfer' THEN 1 END) AS bank_transfer_count, MAX(amount) AS max_amount FROM payments WHERE paid_at >= '2023-07-01' GROUP BY method, order_id) AS sub WHERE max_amount >= 410 ORDER BY max_amount, order_id DESC;

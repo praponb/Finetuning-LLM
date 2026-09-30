@@ -1,1 +1,0 @@
-SELECT country, MIN(signup_date) AS first_signup_date, SUM(age) AS total_age FROM customers WHERE credit_limit BETWEEN 8600 AND 10200 AND age != 66 AND is_active = TRUE GROUP BY country ORDER BY country DESC, first_signup_date

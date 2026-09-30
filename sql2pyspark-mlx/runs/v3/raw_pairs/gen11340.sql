@@ -1,1 +1,0 @@
-select p.cost, p.brand, p.stock_qty, s.supplier_name, s.city, s.country, concat_ws('/', s.city, s.country) as city_country_key from products p join suppliers s on p.supplier_id = s.id where month(p.launch_date) in (1, 4, 12) order by p.stock_qty desc;

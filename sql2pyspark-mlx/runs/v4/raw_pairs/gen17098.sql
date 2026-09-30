@@ -1,1 +1,0 @@
-SELECT we.duration_sec, we.session_id, we.event_time, s.device FROM web_events we RIGHT JOIN sessions s ON we.session_id = s.id WHERE we.session_id IN (4, 18) ORDER BY we.event_time ASC, s.device ASC;

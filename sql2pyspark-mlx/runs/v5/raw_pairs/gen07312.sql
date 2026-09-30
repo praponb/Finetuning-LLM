@@ -1,1 +1,0 @@
-SELECT order_id, CASE WHEN YEAR(delivered_date) < 2024 THEN 'before_2024' WHEN YEAR(delivered_date) = 2024 THEN '2024' ELSE 'after_2024' END AS delivered_cohort, COUNT(CASE WHEN carrier = 'Flash' THEN 1 END) AS flash_count FROM shipments GROUP BY 1, 2 HAVING flash_count >= 3 ORDER BY 2, flash_count

@@ -1,1 +1,0 @@
-SELECT e.manager_id AS employee_manager_id, e.email AS employee_email, e.hire_date AS employee_hire_date, m.is_remote AS manager_is_remote FROM employees e LEFT OUTER JOIN employees m ON e.manager_id = m.id WHERE e.full_name LIKE '%Carol%'

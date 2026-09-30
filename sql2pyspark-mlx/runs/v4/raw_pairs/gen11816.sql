@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END AS is_chiang_mai, UPPER(region) AS region_upper FROM stores WHERE opened_date BETWEEN '2023-12-01' AND '2024-12-07') SELECT * FROM (SELECT city, region, is_chiang_mai FROM filtered) src PIVOT (SUM(is_chiang_mai) AS value_sum, COUNT(1) AS item_count FOR region IN ('West' AS west, 'South' AS south))

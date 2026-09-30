@@ -1,1 +1,0 @@
-SELECT d.id, d.budget, t.level_values FROM departments d INNER JOIN (SELECT dept_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(level))) AS level_values FROM employees GROUP BY dept_id) t ON d.id = t.dept_id;

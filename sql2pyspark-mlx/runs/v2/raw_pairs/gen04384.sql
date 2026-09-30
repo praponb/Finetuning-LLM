@@ -1,1 +1,0 @@
-WITH top_accounts AS (SELECT id, account_type, balance, status, ROW_NUMBER() OVER (PARTITION BY account_type ORDER BY balance DESC, id) AS pos FROM accounts) SELECT id, account_type, balance, status FROM top_accounts WHERE pos = 1 ORDER BY balance

@@ -1,1 +1,0 @@
-SELECT suppliers.city, COUNT(products.id) AS product_count, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(products.brand))) AS brand_values, AVG(products.price) AS avg_price FROM suppliers INNER JOIN products ON products.supplier_id = suppliers.id GROUP BY suppliers.city ORDER BY product_count DESC, avg_price, city LIMIT 50;

@@ -1,1 +1,0 @@
-select o.status, count(oi.id) as order_item_count, sum(oi.quantity) as total_quantity from orders o left join order_items oi on o.id = oi.order_id group by o.status having count(oi.id) >= 1 order by total_quantity desc, order_item_count desc, status asc limit 3

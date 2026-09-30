@@ -1,1 +1,0 @@
-SELECT o.channel, COUNT(CASE WHEN s.carrier = 'UPS' THEN 1 END) AS ups_count, MIN(s.cost) AS min_cost FROM shipments s INNER JOIN orders o ON s.order_id = o.id LEFT JOIN stores st ON o.store_id = st.id GROUP BY o.channel ORDER BY min_cost DESC, o.channel DESC;

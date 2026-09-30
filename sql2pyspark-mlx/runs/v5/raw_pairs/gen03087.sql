@@ -1,1 +1,0 @@
-WITH web_events_by_session AS (SELECT session_id, COUNT(*) row_count, COUNT(DISTINCT duration_sec) unique_pages FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, s.device, webs.row_count, webs.unique_pages FROM sessions s LEFT JOIN web_events_by_session webs ON s.id = webs.session_id WHERE webs.row_count > 6 ORDER BY 2, row_count DESC

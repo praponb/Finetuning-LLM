@@ -1,3 +1,0 @@
-SELECT *
-FROM customers
-QUALIFY RANK() OVER (PARTITION BY segment ORDER BY age ASC) = 1;

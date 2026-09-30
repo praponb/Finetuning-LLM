@@ -1,1 +1,0 @@
-select merchant, account_id, txn_type, concat_ws(', ', sort_array(collect_set(merchant))) as merchant_values, count(amount) as amount_count from transactions where is_flagged group by 1, 2, 3 having count(amount) > 1 order by merchant_values, merchant, account_id, txn_type limit 5

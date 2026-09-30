@@ -1,1 +1,0 @@
-SELECT p.brand, COUNT(*) AS total_count, MAX(i.quantity) AS max_quantity FROM inventory i LEFT JOIN products p ON i.product_id = p.id WHERE i.product_id IN (2, 6) GROUP BY p.brand HAVING max_quantity > 160 ORDER BY total_count DESC, max_quantity, brand LIMIT 3;

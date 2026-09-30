@@ -1,1 +1,0 @@
-WITH base AS (SELECT * FROM accounts WHERE balance > 44000), accounts_stats AS (SELECT status, MAX(balance) max_balance, SUM(balance) total_balance FROM base GROUP BY status) SELECT status, max_balance, total_balance FROM accounts_stats WHERE total_balance >= 472000 ORDER BY status

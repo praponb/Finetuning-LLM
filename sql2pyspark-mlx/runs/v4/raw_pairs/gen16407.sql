@@ -1,1 +1,0 @@
-SELECT *, ROW_NUMBER() OVER (ORDER BY delivered_date DESC, id ASC) AS seq_no, AVG(cost) OVER (ORDER BY cost ASC, id ASC ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS cost_avg_5, ROW_NUMBER() OVER w_recent AS seq_no_2 FROM shipments WINDOW w_recent AS (PARTITION BY order_id, status ORDER BY cost DESC, id ASC)

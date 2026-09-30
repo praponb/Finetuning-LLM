@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT YEAR(order_date) AS order_year, store_id, MIN(order_date) AS min_order_date, COUNT(shipping_fee) AS shipping_fee_count FROM orders WHERE status IN ('COMPLETED', 'RETURNED') GROUP BY YEAR(order_date), store_id) AS sub WHERE shipping_fee_count < 8 ORDER BY shipping_fee_count DESC, order_year, store_id LIMIT 20

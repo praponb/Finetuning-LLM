@@ -1,1 +1,0 @@
-SELECT order_id, product_id, CASE WHEN quantity >= 7 THEN 'high' WHEN quantity >= 3 THEN 'mid' ELSE 'low' END AS quantity_bucket, ROUND(STDDEV(quantity), 2) AS stddev_quantity, SUM(unit_price * quantity) AS revenue FROM order_items WHERE quantity > 8 GROUP BY 1, 2, 3;

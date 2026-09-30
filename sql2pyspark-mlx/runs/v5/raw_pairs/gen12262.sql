@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, CONCAT_WS('-', browser, device) AS browser_device_key FROM sessions WHERE country IS NOT NULL AND country IS DISTINCT FROM 'US') SELECT *, RANK() OVER (PARTITION BY browser ORDER BY started_at DESC NULLS LAST) AS dedup_rank FROM cleaned QUALIFY dedup_rank = 1

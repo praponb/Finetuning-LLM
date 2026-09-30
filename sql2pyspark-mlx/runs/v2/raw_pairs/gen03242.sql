@@ -1,1 +1,0 @@
-SELECT status, COUNT(CASE WHEN carrier = 'DHL' THEN 1 END) dhl_count, ROUND(STDDEV(cost), 2) stddev_cost FROM shipments WHERE carrier IN ('Kerry', 'DHL', 'FedEx') OR YEAR(shipped_date) = 2023 GROUP BY status ORDER BY status, dhl_count DESC

@@ -1,1 +1,0 @@
-SELECT order_id, status, SUM(CASE WHEN carrier = 'UPS' THEN 1 ELSE 0 END) AS ups_count, COUNT(*) AS shipment_count FROM shipments WHERE order_id IN (27, 29, 30, 40) GROUP BY 1, 2 HAVING SUM(CASE WHEN carrier = 'UPS' THEN 1 ELSE 0 END) > 67 ORDER BY status;

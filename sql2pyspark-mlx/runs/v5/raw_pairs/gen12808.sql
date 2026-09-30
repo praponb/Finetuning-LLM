@@ -1,1 +1,0 @@
-SELECT YEAR(hire_date) AS hire_year, MAX(salary) - MIN(salary) AS salary_range, COUNT(CASE WHEN level = 'L4' THEN 1 END) AS l4_count, ROUND(STDDEV(salary), 2) AS stddev_salary FROM employees GROUP BY YEAR(hire_date);

@@ -1,1 +1,0 @@
-SELECT p.brand, ROUND(STDDEV(ss.revenue), 2) stddev_revenue, MIN(ss.units) min_units FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id WHERE ss.sale_date BETWEEN '2023-06-02' AND '2025-08-26' GROUP BY p.brand ORDER BY stddev_revenue DESC, brand LIMIT 50

@@ -1,1 +1,0 @@
-WITH inventory_by_store AS (SELECT store_id, COUNT(DISTINCT quantity) AS unique_products, MIN(last_restock) AS min_last_restock FROM inventory GROUP BY store_id) SELECT s.opened_date, ibs.unique_products, ibs.min_last_restock FROM stores s LEFT JOIN inventory_by_store ibs ON s.id = ibs.store_id;

@@ -1,1 +1,0 @@
-select dept_name, unique_locations from (select dept_name, count(distinct budget) as unique_locations from departments group by dept_name) as s where unique_locations > 10 order by unique_locations desc, dept_name desc

@@ -1,1 +1,0 @@
-SELECT orders.id, orders.amount, orders.channel, orders.order_date FROM orders WHERE EXISTS (SELECT 1 FROM shipments WHERE shipments.order_id = orders.id AND MONTH(shipments.shipped_date) IN (4, 8, 10));

@@ -1,1 +1,0 @@
-WITH department_totals AS (SELECT dept_id, COUNT(CASE WHEN level = 'L2' THEN 1 END) AS l2_count FROM employees WHERE NOT is_remote GROUP BY dept_id) SELECT d.dept_name, dt.l2_count FROM departments d INNER JOIN department_totals dt ON d.id = dt.dept_id ORDER BY l2_count;

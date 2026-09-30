@@ -1,1 +1,0 @@
-select i.quantity, i.last_restock, p.stock_qty, s.supplier_name, s.country, round(s.rating, 1) rating_rounded from inventory i join products p on i.product_id = p.id left join suppliers s on p.supplier_id = s.id order by p.stock_qty desc, 5;

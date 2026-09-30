@@ -1,1 +1,0 @@
-SELECT a.customer_id, a.account_type, t.account_id FROM accounts a LEFT JOIN transactions t ON t.account_id = a.id WHERE a.opened_date BETWEEN '2024-08-24' AND '2025-03-01' ORDER BY t.account_id DESC;

@@ -1,1 +1,0 @@
-WITH valid_store_sales AS (SELECT * FROM store_sales WHERE product_id IN (2, 4, 5, 7)), store_sales_stats AS (SELECT QUARTER(sale_date) AS sale_quarter, COUNT(*) AS cnt, SUM(units) AS total_units FROM valid_store_sales GROUP BY QUARTER(sale_date)) SELECT sale_quarter, cnt FROM store_sales_stats WHERE total_units > 180 ORDER BY sale_quarter, cnt DESC

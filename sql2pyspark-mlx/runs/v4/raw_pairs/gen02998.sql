@@ -1,1 +1,0 @@
-WITH cleaned AS (SELECT *, DATEDIFF(CURRENT_DATE(), shipped_date) AS days_since_shipped_date FROM shipments WHERE shipped_date >= DATE '2023-11-04' AND carrier IS NOT NULL AND carrier = 'FedEx') SELECT * FROM (SELECT carrier, status, cost FROM cleaned) src PIVOT (SUM(cost) AS total, COUNT(1) AS cnt FOR status IN ('DELIVERED', 'RETURNED'));

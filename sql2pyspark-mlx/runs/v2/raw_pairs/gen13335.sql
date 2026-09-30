@@ -1,1 +1,0 @@
-SELECT YEAR(ss.sale_date) AS sale_year, ss.product_id, MAX(i.quantity) AS max_quantity, MAX(i.last_restock) AS latest_last_restock FROM inventory i LEFT OUTER JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id GROUP BY YEAR(ss.sale_date), ss.product_id;

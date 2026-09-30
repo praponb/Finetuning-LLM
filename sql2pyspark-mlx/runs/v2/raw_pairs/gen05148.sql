@@ -1,1 +1,0 @@
-SELECT o.status, COUNT(oi.id) AS order_item_count, AVG(oi.unit_price) AS avg_unit_price, SUM(oi.unit_price * oi.quantity) AS revenue FROM orders o LEFT OUTER JOIN order_items oi ON oi.order_id = o.id GROUP BY o.status ORDER BY status DESC

@@ -1,1 +1,0 @@
-SELECT s.browser, we.event_type, INITCAP(TRIM(we.page)) AS page_title FROM sessions s LEFT OUTER JOIN web_events we ON we.session_id = s.id WHERE s.device <> 'mobile' AND we.event_type IN ('click', 'search', 'page_view')

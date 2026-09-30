@@ -1,1 +1,0 @@
-SELECT id, status, order_id, CASE WHEN status = 'FAILED' THEN 1 ELSE 0 END is_failed, UPPER(method) method_upper FROM payments WHERE amount > 830 AND (amount > 770 OR TO_DATE(paid_at) >= '2023-06-23')

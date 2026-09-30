@@ -1,1 +1,0 @@
-SELECT s.city, s.opened_date, t.num_store_sales FROM stores s JOIN (SELECT store_id, COUNT(*) AS num_store_sales FROM store_sales GROUP BY store_id) t ON s.id = t.store_id WHERE t.num_store_sales > 5 ORDER BY s.city;

@@ -1,1 +1,0 @@
-select brand, case when price >= 1010 then 'high' when price >= 230 then 'mid' else 'low' end as price_bucket, max(price) as max_price from products where category not in ('Books', 'Sports') group by brand, case when price >= 1010 then 'high' when price >= 230 then 'mid' else 'low' end having max(price) < 1050 order by max_price desc

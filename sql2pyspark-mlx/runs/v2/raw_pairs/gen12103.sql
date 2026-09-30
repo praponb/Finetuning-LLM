@@ -1,1 +1,0 @@
-WITH product_stats AS (SELECT product_id, MAX(unit_price) AS max_unit_price FROM order_items GROUP BY product_id) SELECT products.category, products.supplier_id, product_stats.max_unit_price FROM products JOIN product_stats ON products.id = product_stats.product_id ORDER BY products.supplier_id DESC

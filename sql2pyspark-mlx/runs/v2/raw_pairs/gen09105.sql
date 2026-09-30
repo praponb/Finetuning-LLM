@@ -1,1 +1,0 @@
-select date_format(end_date, 'yyyy-MM') as end_month, sort_array(collect_set(status)) as status_list, max(monthly_fee) as max_monthly_fee, max(end_date) as latest_end_date from subscriptions where customer_id = 12 group by 1;

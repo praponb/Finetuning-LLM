@@ -1,1 +1,0 @@
-WITH order_totals AS (SELECT order_id, COUNT(DISTINCT cost) AS unique_carriers, SUM(CASE WHEN status = 'LOST' THEN 1 ELSE 0 END) AS lost_count FROM shipments GROUP BY order_id) SELECT o.discount, o.customer_id, ot.unique_carriers, ot.lost_count FROM orders o INNER JOIN order_totals ot ON o.id = ot.order_id ORDER BY ot.unique_carriers DESC

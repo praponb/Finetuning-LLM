@@ -1,1 +1,0 @@
-with Src as (select * from subscriptions where start_date < '2024-08-08'), subscriptions_stats as (select plan, sum(monthly_fee) as total_monthly_fee from Src group by plan) select plan, total_monthly_fee from subscriptions_stats order by plan

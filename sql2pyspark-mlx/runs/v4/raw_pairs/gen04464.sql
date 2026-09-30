@@ -1,1 +1,0 @@
-SELECT id, job_title, dept_id, hire_date, salary, LAG(salary, 1) OVER (PARTITION BY job_title, dept_id ORDER BY hire_date, id) AS prev_salary, COUNT(*) OVER (PARTITION BY dept_id) AS dept_id_count FROM employees;

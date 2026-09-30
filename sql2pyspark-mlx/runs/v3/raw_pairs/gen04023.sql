@@ -1,1 +1,0 @@
-SELECT customer_id, channel, MIN(discount) AS min_discount FROM orders WHERE discount > 0.18 AND store_id IS NOT NULL AND store_id IS NOT NULL GROUP BY customer_id, channel ORDER BY min_discount DESC;

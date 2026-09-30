@@ -1,1 +1,0 @@
-SELECT region, ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_chiang_mai FROM stores WHERE opened_date >= '2023-09-01' OR opened_date < '2025-10-22' GROUP BY region HAVING ROUND((100 * SUM(CASE WHEN city = 'Chiang Mai' THEN 1 ELSE 0 END)) / COUNT(*), 1) < 52

@@ -1,1 +1,0 @@
-with flattened as (select id, customer_id, attr_key, value from carts lateral view explode(attributes) t as attr_key, value) select id, customer_id, attr_key, value from flattened order by id asc nulls last;

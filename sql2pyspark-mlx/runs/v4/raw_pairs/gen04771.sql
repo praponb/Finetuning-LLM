@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 3.5 THEN 'high' WHEN rating >= 2.3 THEN 'mid' ELSE 'low' END AS rating_bucket, ROUND((100 * SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_sg, ROUND((100 * SUM(CASE WHEN country = 'DE' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_de FROM suppliers GROUP BY rating_bucket HAVING SUM(rating) >= 14;

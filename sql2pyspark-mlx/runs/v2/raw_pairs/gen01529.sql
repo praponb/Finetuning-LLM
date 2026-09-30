@@ -1,1 +1,0 @@
-select id, txn_type, amount, account_id, trim(txn_type) as clean_txn_type, coalesce(merchant, 'unassigned') as merchant_filled from transactions where not (amount is not null and amount >= 3500 and account_id in (12, 31, 33))

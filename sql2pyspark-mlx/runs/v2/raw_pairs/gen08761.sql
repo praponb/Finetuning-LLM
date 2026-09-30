@@ -1,1 +1,0 @@
-SELECT CASE WHEN rating >= 3.6 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(DISTINCT rating) AS unique_citys FROM suppliers GROUP BY CASE WHEN rating >= 3.6 THEN 'high' WHEN rating >= 1.6 THEN 'mid' ELSE 'low' END HAVING COUNT(DISTINCT rating) < 1

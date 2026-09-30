@@ -1,1 +1,0 @@
-SELECT p.price, t.quantity_range, t.unit_price_range FROM products p JOIN (SELECT product_id, MAX(quantity) - MIN(quantity) quantity_range, MAX(unit_price) - MIN(unit_price) unit_price_range FROM order_items GROUP BY product_id) t ON p.id = t.product_id ORDER BY p.price ASC

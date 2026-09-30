@@ -1,1 +1,0 @@
-SELECT p.id, p.launch_date, p.cost, p.category, s.city, s.rating, s.country, CAST(p.stock_qty AS STRING) AS stock_qty_str FROM products p LEFT JOIN suppliers s ON p.supplier_id = s.id WHERE s.rating <= 3.7

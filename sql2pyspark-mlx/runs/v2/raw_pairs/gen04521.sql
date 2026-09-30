@@ -1,1 +1,0 @@
-SELECT c.segment, ROUND((100 * SUM(CASE WHEN t.txn_type = 'DEBIT' THEN 1 ELSE 0 END)) / COUNT(*), 1) pct_debit, ROUND(STDDEV(t.amount), 2) stddev_amount FROM transactions t JOIN accounts a ON t.account_id = a.id JOIN customers c ON c.id = a.customer_id WHERE t.txn_time < '2025-10-13' GROUP BY c.segment;

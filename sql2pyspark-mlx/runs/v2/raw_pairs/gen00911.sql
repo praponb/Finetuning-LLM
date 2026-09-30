@@ -1,1 +1,0 @@
-SELECT c.segment, c.is_active, MIN(p.amount) min_amount, AVG(p.amount) avg_amount FROM payments p JOIN orders o ON p.order_id = o.id JOIN customers c ON o.customer_id = c.id GROUP BY c.segment, c.is_active ORDER BY avg_amount DESC;

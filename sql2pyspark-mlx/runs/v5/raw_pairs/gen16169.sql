@@ -1,1 +1,0 @@
-SELECT country, CASE WHEN rating >= 3.6 THEN 'high' WHEN rating >= 2.5 THEN 'mid' ELSE 'low' END AS rating_bucket, COUNT(DISTINCT rating) AS unique_countrys, MIN(rating) AS min_rating FROM suppliers WHERE supplier_name LIKE 'Glo%' GROUP BY country, rating_bucket;

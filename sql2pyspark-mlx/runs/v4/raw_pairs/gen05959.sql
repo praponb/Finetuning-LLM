@@ -1,1 +1,0 @@
-SELECT DATE_TRUNC('QUARTER', hire_date) AS quarter_start, COUNT(CASE WHEN level = 'L1' THEN 1 END) AS l1_count, COUNT(*) FILTER (WHERE job_title = 'Designer') AS designer_rows FROM employees GROUP BY CUBE (DATE_TRUNC('QUARTER', hire_date));

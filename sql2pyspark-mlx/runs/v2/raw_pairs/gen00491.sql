@@ -1,1 +1,0 @@
-SELECT customers.id, customers.credit_limit, customers.city, customers.signup_date FROM customers WHERE customers.signup_date BETWEEN '2023-11-01' AND '2024-10-01' AND NOT EXISTS (SELECT 1 FROM subscriptions WHERE subscriptions.customer_id = customers.id);

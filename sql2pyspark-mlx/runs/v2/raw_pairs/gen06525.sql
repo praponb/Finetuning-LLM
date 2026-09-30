@@ -1,1 +1,0 @@
-SELECT end_month, monthly_fee_range, total_monthly_fee FROM (SELECT MONTH(end_date) end_month, MAX(monthly_fee) - MIN(monthly_fee) monthly_fee_range, SUM(monthly_fee) total_monthly_fee FROM subscriptions GROUP BY MONTH(end_date)) t WHERE total_monthly_fee > 740 ORDER BY total_monthly_fee DESC

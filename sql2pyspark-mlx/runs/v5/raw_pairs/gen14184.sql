@@ -1,1 +1,0 @@
-SELECT we.id, we.page, we.session_id, s.customer_id, s.device, s.browser FROM web_events we INNER JOIN sessions s ON we.session_id = s.id WHERE NOT (we.event_time >= '2024-10-05' AND we.page NOT IN ('/product', '/search'))

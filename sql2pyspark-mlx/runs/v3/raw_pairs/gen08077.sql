@@ -1,1 +1,0 @@
-WITH account_totals AS (SELECT account_id, COUNT(DISTINCT amount) AS unique_merchants FROM transactions GROUP BY account_id) SELECT a.id, a.account_type, a.status, at.unique_merchants FROM accounts a INNER JOIN account_totals at ON a.id = at.account_id WHERE at.unique_merchants > 9 ORDER BY account_type

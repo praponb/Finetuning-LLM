@@ -1,1 +1,0 @@
-WITH top_web_events AS (SELECT id, session_id, duration_sec, event_time, ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY duration_sec, id) AS rn FROM web_events WHERE event_type <> 'purchase') SELECT * FROM top_web_events WHERE rn <= 3 ORDER BY event_time;

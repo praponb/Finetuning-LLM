@@ -1,1 +1,0 @@
-SELECT oi.id, oi.order_id, p.price, p.cost, s.rating, s.country, GREATEST(p.cost, p.price) AS greatest_cost_price FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE s.city = 'New York'

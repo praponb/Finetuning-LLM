@@ -1,1 +1,0 @@
-SELECT oi.id, oi.order_id, p.cost, s.supplier_name FROM order_items oi LEFT JOIN products p ON p.id = oi.product_id INNER JOIN suppliers s ON p.supplier_id = s.id WHERE p.launch_date BETWEEN '2025-05-01' AND '2025-10-01' AND oi.quantity >= 3

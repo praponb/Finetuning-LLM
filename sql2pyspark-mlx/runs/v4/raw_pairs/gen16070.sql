@@ -1,1 +1,0 @@
-WITH supplier_stats AS (SELECT supplier_id, ROUND(AVG(cost), 2) AS avg_cost FROM products WHERE SIZE(tags) > 2 GROUP BY supplier_id) SELECT suppliers.supplier_name, supplier_stats.avg_cost FROM suppliers JOIN supplier_stats ON suppliers.id = supplier_stats.supplier_id WHERE supplier_stats.avg_cost > 72 ORDER BY suppliers.supplier_name;

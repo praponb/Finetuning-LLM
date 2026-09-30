@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1290 THEN 'high' WHEN amount >= 630 THEN 'mid' ELSE 'low' END AS amount_bucket, MONTH(paid_at) AS paid_month, status, ROUND(AVG(amount), 2) AS avg_amount FROM payments GROUP BY 1, 2, 3 HAVING avg_amount >= 42 ORDER BY amount_bucket;

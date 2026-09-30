@@ -1,1 +1,0 @@
-WITH base AS (SELECT *, CASE WHEN firmware IN ('1.1.0', '2.0.1') THEN 'Tier 1' ELSE 'Other' END AS firmware_group FROM device_readings WHERE reading_ts > TO_DATE('2025-09-01')) SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device_code ORDER BY humidity, id) AS latest_rank FROM base) t WHERE latest_rank = 1

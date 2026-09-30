@@ -1,1 +1,0 @@
-SELECT CASE WHEN amount >= 1350 THEN 'high' WHEN amount >= 450 THEN 'mid' ELSE 'low' END AS amount_bucket, status, method, SUM(amount) AS total_amount, MAX(amount) - MIN(amount) AS amount_range FROM payments GROUP BY 1, 2, 3

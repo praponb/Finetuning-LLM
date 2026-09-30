@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT segment, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(segment))) AS segment_values, SUM(CASE WHEN city = 'London' THEN credit_limit ELSE 0 END) AS london_credit_limit FROM customers WHERE credit_limit IS NOT NULL GROUP BY segment) AS s WHERE london_credit_limit > 58 ORDER BY 1 LIMIT 5

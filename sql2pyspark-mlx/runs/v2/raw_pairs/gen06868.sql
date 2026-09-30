@@ -1,1 +1,0 @@
-SELECT ss.product_id, COUNT(DISTINCT i.quantity) unique_stores FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE ss.store_id IN (2, 3, 4, 5) GROUP BY ss.product_id HAVING COUNT(DISTINCT i.quantity) > 3

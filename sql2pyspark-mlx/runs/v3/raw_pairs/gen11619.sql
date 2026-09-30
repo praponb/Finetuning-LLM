@@ -1,1 +1,0 @@
-SELECT level, ROUND((100 * SUM(CASE WHEN job_title = 'Designer' THEN 1 ELSE 0 END)) / COUNT(*), 1) AS pct_designer, MIN(salary) AS min_salary FROM employees WHERE is_remote AND salary BETWEEN 67000 AND 127000 GROUP BY level

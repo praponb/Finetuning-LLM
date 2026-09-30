@@ -1,1 +1,0 @@
-select id, discount, store_id, amount, month(order_date) order_date_month, round(discount * 0.9, 2) adjusted_discount from orders where store_id in (11, 12, 15) and store_id in (31, 33, 34) and shipping_fee >= 21 order by order_date_month desc;

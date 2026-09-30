@@ -1,1 +1,0 @@
-SELECT e.manager_id employee_manager_id, e.job_title employee_job_title, e.email employee_email, m.is_remote manager_is_remote FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.is_remote = TRUE AND m.hire_date <= '2024-10-04'

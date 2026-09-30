@@ -1,1 +1,0 @@
-select e.job_title as employee_job_title, m.is_remote as manager_is_remote, m.hire_date as manager_hire_date, m.full_name as manager_full_name from employees e left join employees m on e.manager_id = m.id order by m.full_name desc

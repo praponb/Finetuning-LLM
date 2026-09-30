@@ -1,1 +1,0 @@
-select a.id, a.customer_id, c.name from accounts a right join customers c on a.customer_id = c.id where a.status not in ('OPEN', 'FROZEN', 'CLOSED') or year(a.opened_date) >= 2025 order by customer_id

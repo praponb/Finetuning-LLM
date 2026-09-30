@@ -1,1 +1,0 @@
-WITH web_events_by_session AS (SELECT session_id, MIN(event_time) AS first_event_time, COUNT(*) AS total_count FROM web_events GROUP BY session_id) SELECT s.id, s.started_at, s.country, webs.first_event_time, webs.total_count FROM sessions s INNER JOIN web_events_by_session webs ON s.id = webs.session_id WHERE webs.total_count >= 6;

@@ -1,1 +1,0 @@
-WITH store_totals AS (SELECT store_id, ROUND(AVG(amount), 2) AS avg_amount FROM orders WHERE channel NOT IN ('mobile', 'store', 'partner') GROUP BY store_id) SELECT s.sqft, st.avg_amount FROM stores s LEFT JOIN store_totals st ON s.id = st.store_id WHERE st.avg_amount >= 27;

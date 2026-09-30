@@ -1,1 +1,0 @@
-select launch_year, num_products, cost_range from (select year(launch_date) as launch_year, count(*) as num_products, max(cost) - min(cost) as cost_range from products group by year(launch_date)) as s where num_products > 4 order by cost_range, launch_year limit 50

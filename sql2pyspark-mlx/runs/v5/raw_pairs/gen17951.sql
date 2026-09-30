@@ -1,1 +1,0 @@
-WITH deduped AS (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY device ORDER BY started_at DESC NULLS LAST, id) AS dedup_rank FROM sessions) ranked WHERE dedup_rank = 1) SELECT id, customer_id, device, browser, started_at, country, dedup_rank FROM deduped;

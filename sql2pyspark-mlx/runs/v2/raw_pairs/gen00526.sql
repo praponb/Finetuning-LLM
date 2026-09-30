@@ -1,1 +1,0 @@
-SELECT customer_id, MAX(order_date) last_order_date, COUNT(CASE WHEN status = 'SHIPPED' THEN 1 END) shipped_count FROM orders GROUP BY 1 HAVING COUNT(CASE WHEN status = 'SHIPPED' THEN 1 END) < 2 ORDER BY customer_id DESC LIMIT 1;

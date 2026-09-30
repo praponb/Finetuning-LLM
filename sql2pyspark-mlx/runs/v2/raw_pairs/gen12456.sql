@@ -1,1 +1,0 @@
-SELECT i.id, i.store_id, i.product_id, i.last_restock, ss.revenue FROM inventory i LEFT JOIN store_sales ss ON i.store_id = ss.store_id AND i.product_id = ss.product_id WHERE NOT (ss.units BETWEEN 19 AND 23 OR MONTH(i.last_restock) IN (2, 7, 11)) ORDER BY ss.revenue;

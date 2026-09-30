@@ -1,1 +1,0 @@
-WITH lines AS (SELECT id, host, key, attr_value FROM app_logs LATERAL VIEW EXPLODE(context) e AS key, attr_value) SELECT id, host, key, CASE WHEN host RLIKE '^(h4|h3)$' THEN 'GROUP_B' WHEN host RLIKE '^(h1|h2)$' THEN 'CORE' ELSE 'GROUP_A' END AS host_zone FROM lines ORDER BY host_zone;

@@ -1,1 +1,0 @@
-SELECT store_id, MAX(quantity) AS max_quantity, AVG(quantity) AS avg_quantity, COUNT(*) AS cnt, ROUND(AVG(quantity), 2) AS avg_quantity_2, BIT_OR(quantity) AS quantity_bit_or, STDDEV_SAMP(quantity) AS quantity_stddev FROM inventory GROUP BY store_id;

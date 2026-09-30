@@ -1,1 +1,0 @@
-SELECT id, status, method, paid_at, amount, LAG(amount, 1) OVER (PARTITION BY status, method ORDER BY paid_at, id) AS prev_amount, amount - LAG(amount, 2) OVER (PARTITION BY status ORDER BY paid_at, id) AS amount_change FROM payments WHERE TO_DATE(paid_at) >= '2023-06-01' ORDER BY amount_change DESC, id DESC

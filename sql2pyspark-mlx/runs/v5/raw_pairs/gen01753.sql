@@ -1,1 +1,0 @@
-SELECT id, order_id, delivered_date, shipped_date, DATEDIFF(CURRENT_DATE(), delivered_date) AS days_since_delivered_date FROM shipments WHERE carrier IN ('Flash', 'UPS') OR delivered_date BETWEEN '2023-12-01' AND '2024-06-01' ORDER BY days_since_delivered_date ASC, id ASC;

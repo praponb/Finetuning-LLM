@@ -1,1 +1,0 @@
-SELECT *, PERCENT_RANK() OVER (PARTITION BY store_id ORDER BY units DESC) AS units_percent_rank, FIRST_VALUE(units, TRUE) OVER (PARTITION BY product_id ORDER BY revenue, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS first_known_units, PERCENT_RANK() OVER (ORDER BY revenue NULLS LAST) AS revenue_percent_rank FROM store_sales;

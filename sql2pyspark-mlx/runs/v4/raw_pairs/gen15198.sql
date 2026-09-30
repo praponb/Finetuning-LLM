@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, city, region, sqft, ROUND(sqft, 0) AS sqft_rounded, COALESCE(region, 'UNKNOWN') AS region_clean FROM stores WHERE region IS NOT NULL) SELECT s.* FROM valid s WHERE NOT EXISTS (SELECT 1 FROM inventory ch WHERE ch.store_id = s.id AND ch.store_id IN (1, 2, 6));

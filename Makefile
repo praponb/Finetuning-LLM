@@ -5,6 +5,7 @@
 #   make export    fuse adapters, dequantize, convert to GGUF, register in Ollama as sql2pyspark:$(TAG)
 #   make eval      score sql2pyspark:$(TAG) and the previous model on the hold-out, v4 hold-out, real-query and test sets
 #   make promote   make sql2pyspark:$(TAG) the default (`latest`); keeps the old one as :$(PREV)
+#   make clean     delete rebuildable export leftovers and LoRA checkpoints after an export
 
 MLX      := sql2pyspark-mlx
 VENV     := $(MLX)/.venv/bin
@@ -19,7 +20,7 @@ EXCLUDE  ?= ../eval/test_fixed.jsonl
 WORKERS  ?= 5
 SAMPLE   ?= 300
 
-.PHONY: help setup data generate verify split train fuse gguf ollama export eval promote app
+.PHONY: help setup data generate verify split train fuse gguf ollama export eval promote clean app
 
 help:
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
@@ -68,6 +69,11 @@ eval: ## execution-based comparison of sql2pyspark:$(TAG) vs sql2pyspark:$(PREV)
 promote: ## point sql2pyspark:latest (used by app.py) at $(TAG), keeping the old latest as :$(PREV)
 	ollama show sql2pyspark:$(PREV) >/dev/null 2>&1 || ollama cp sql2pyspark:latest sql2pyspark:$(PREV)
 	ollama cp sql2pyspark:$(TAG) sql2pyspark:latest
+
+clean: ## after export: delete sql2pyspark-hf/, the fused MLX model, LoRA checkpoints, caches (keeps sql2pyspark.gguf + final adapters)
+	rm -rf sql2pyspark-hf $(MLX)/sql2pyspark-model
+	find $(MLX) -path $(MLX)/.venv -prune -o -type f -name '[0-9][0-9][0-9][0-9][0-9][0-9][0-9]_adapters.safetensors' -print -delete
+	find . -path ./.git -prune -o -path ./llama.cpp -prune -o -path ./$(MLX)/.venv -prune -o -type d -name __pycache__ -print -prune -exec rm -rf {} +
 
 app: ## start the Streamlit UI
 	$(VENV)/streamlit run app.py

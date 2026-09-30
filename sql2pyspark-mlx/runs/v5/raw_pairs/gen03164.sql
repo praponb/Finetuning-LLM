@@ -1,1 +1,0 @@
-SELECT channel, SORT_ARRAY(COLLECT_SET(channel)) AS channel_list FROM orders WHERE customer_id IS NULL AND channel IN ('store', 'mobile') AND shipping_fee BETWEEN 20 AND 23 GROUP BY channel ORDER BY channel

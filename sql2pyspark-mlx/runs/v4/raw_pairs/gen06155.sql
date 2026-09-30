@@ -1,1 +1,0 @@
-SELECT city FROM suppliers WHERE country = 'DE' INTERSECT SELECT city FROM stores WHERE sqft BETWEEN 5016 AND 11213;

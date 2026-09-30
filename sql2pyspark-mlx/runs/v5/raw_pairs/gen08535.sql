@@ -1,1 +1,0 @@
-SELECT ss.revenue, ss.store_id, p.price, p.launch_date, s.region, s.city FROM store_sales ss LEFT JOIN products p ON ss.product_id = p.id LEFT JOIN stores s ON ss.store_id = s.id WHERE p.product_name LIKE '%mouse%' AND p.supplier_id IN (18, 24);

@@ -1,1 +1,0 @@
-WITH filtered_order_items AS (SELECT *, unit_price - quantity AS line_total FROM order_items WHERE product_id IS NULL AND unit_price BETWEEN 200 AND 280), agg AS (SELECT product_id, COUNT(*) AS order_item_count FROM filtered_order_items GROUP BY product_id) SELECT * FROM agg ORDER BY product_id LIMIT 5;

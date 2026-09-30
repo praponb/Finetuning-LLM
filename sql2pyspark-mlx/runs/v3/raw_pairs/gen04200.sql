@@ -1,1 +1,0 @@
-select date_format(signup_date, 'yyyy-MM') as signup_month, sum(credit_limit) as total_credit_limit, round(sum(credit_limit) * 100.0 / sum(sum(credit_limit)) over (), 2) as pct_of_total from customers where credit_limit between 5300 and 10200 group by date_format(signup_date, 'yyyy-MM')

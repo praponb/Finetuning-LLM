@@ -1,1 +1,0 @@
-SELECT balance, customer_id, LENGTH(status) AS status_length, LAST_DAY(opened_date) AS opened_date_month_end FROM accounts WHERE NOT (opened_date < '2024-09-01' OR account_type IN ('CHECKING', 'CREDIT')) ORDER BY status_length DESC, customer_id DESC;

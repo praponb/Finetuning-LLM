@@ -1,1 +1,0 @@
-SELECT id, budget, dept_name, SUM(budget) OVER (ORDER BY budget, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_budget, COUNT(*) OVER (PARTITION BY dept_name) AS dept_name_count FROM departments ORDER BY running_budget DESC;

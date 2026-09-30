@@ -1,1 +1,0 @@
-WITH store_sales_by_product AS (SELECT product_id, COUNT(DISTINCT revenue) AS unique_stores, AVG(revenue) AS avg_revenue FROM store_sales GROUP BY product_id) SELECT p.id, p.cost, p.supplier_id, ssbp.unique_stores, ssbp.avg_revenue FROM products p INNER JOIN store_sales_by_product ssbp ON p.id = ssbp.product_id ORDER BY supplier_id DESC, id LIMIT 5

@@ -1,1 +1,0 @@
-WITH ProductsBySupplier AS (SELECT supplier_id, COUNT(DISTINCT cost) unique_suppliers FROM products GROUP BY supplier_id) SELECT s.id, s.city, s.country, P.unique_suppliers FROM suppliers s INNER JOIN ProductsBySupplier P ON s.id = P.supplier_id WHERE P.unique_suppliers > 9 ORDER BY country ASC;

@@ -1,1 +1,0 @@
-SELECT brand, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(category))) AS category_values, MAX(stock_qty) AS max_stock_qty FROM products WHERE ARRAY_CONTAINS(tags, 'clearance') GROUP BY brand HAVING COUNT(CASE WHEN brand = 'Initech' THEN 1 END) > 1 ORDER BY max_stock_qty DESC;

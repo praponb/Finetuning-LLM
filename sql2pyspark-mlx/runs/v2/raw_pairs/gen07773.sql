@@ -1,1 +1,0 @@
-SELECT s.city, s.rating, t.min_stock_qty, t.avg_cost FROM suppliers s LEFT JOIN (SELECT supplier_id, MIN(stock_qty) AS min_stock_qty, AVG(cost) AS avg_cost FROM products WHERE cost IS NOT NULL GROUP BY supplier_id) t ON s.id = t.supplier_id ORDER BY s.rating DESC

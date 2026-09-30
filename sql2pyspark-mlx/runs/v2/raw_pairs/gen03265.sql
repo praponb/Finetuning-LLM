@@ -1,1 +1,0 @@
-SELECT id, product_id, unit_price, ROUND(unit_price * 1.1, 2) AS unit_price_scaled FROM order_items WHERE product_id IN (4, 25, 37) AND (quantity != 7 OR order_id = 19) ORDER BY product_id, unit_price DESC;

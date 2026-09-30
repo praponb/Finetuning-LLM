@@ -1,1 +1,0 @@
-SELECT * FROM (SELECT CASE WHEN amount >= 1340 THEN 'high' WHEN amount >= 470 THEN 'mid' ELSE 'low' END AS amount_bucket, status, amount FROM payments WHERE method IN ('bank_transfer', 'cash', 'paypal')) PIVOT (SUM(amount) FOR status IN ('SUCCESS', 'REFUNDED')) ORDER BY amount_bucket;

@@ -1,1 +1,0 @@
-WITH with_latest AS (SELECT s.*, top1.order_date FROM customers s LEFT JOIN LATERAL (SELECT c.order_date FROM orders c WHERE c.customer_id = s.id ORDER BY c.amount DESC, c.id DESC LIMIT 1) top1 ON TRUE) SELECT id, country, city, signup_date, credit_limit, age, order_date FROM with_latest ORDER BY id DESC NULLS LAST

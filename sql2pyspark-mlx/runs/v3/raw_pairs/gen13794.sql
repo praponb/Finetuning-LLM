@@ -1,1 +1,0 @@
-SELECT id, city, signup_date, credit_limit, country, age, LAG(credit_limit, 1) OVER (PARTITION BY city ORDER BY signup_date, id) AS prev_credit_limit, LEAD(age, 2) OVER (PARTITION BY country ORDER BY signup_date, id) AS next_age FROM customers ORDER BY 6 DESC

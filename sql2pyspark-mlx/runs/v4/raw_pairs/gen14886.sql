@@ -1,1 +1,0 @@
-select shipments.shipped_date, shipments.status, shipments.carrier, orders.amount, orders.customer_id, orders.store_id, date_trunc('YEAR', shipments.delivered_date) as delivered_date_period from shipments inner join orders on orders.id = shipments.order_id

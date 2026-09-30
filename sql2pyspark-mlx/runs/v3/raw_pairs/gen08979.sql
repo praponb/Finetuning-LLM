@@ -1,1 +1,0 @@
-select order_items.id, order_items.unit_price, orders.customer_id, stores.store_name, stores.opened_date from order_items join orders on orders.id = order_items.order_id join stores on orders.store_id = stores.id;

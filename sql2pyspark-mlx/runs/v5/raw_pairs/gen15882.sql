@@ -1,1 +1,0 @@
-with employees_by_department as (select dept_id, max(salary) - min(salary) as salary_range, min(hire_date) as min_hire_date from employees group by dept_id) select d.id, d.location, d.budget, ebd.salary_range, ebd.min_hire_date from departments d left outer join employees_by_department ebd on d.id = ebd.dept_id where ebd.salary_range > 57 order by id desc

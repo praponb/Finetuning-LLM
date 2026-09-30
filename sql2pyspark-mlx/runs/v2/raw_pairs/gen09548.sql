@@ -1,1 +1,0 @@
-WITH store_summary AS (SELECT store_id, COUNT(DISTINCT revenue) AS unique_products, MAX(revenue) AS max_revenue FROM store_sales GROUP BY store_id) SELECT s.id, s.opened_date, ss.unique_products, ss.max_revenue FROM stores s JOIN store_summary ss ON s.id = ss.store_id ORDER BY ss.unique_products ASC

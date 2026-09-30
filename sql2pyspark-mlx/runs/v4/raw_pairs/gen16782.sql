@@ -1,1 +1,0 @@
-select *, sum(amount) over (order by amount, id rows between unbounded preceding and current row) as running_amount, last_value(amount) ignore nulls over (order by paid_at, id rows between unbounded preceding and current row) as last_known_amount from payments

@@ -1,1 +1,0 @@
-SELECT oi.id, oi.unit_price, oi.quantity, oi.order_id FROM order_items oi WHERE oi.unit_price < 290 AND oi.order_id IN (SELECT id FROM orders WHERE status NOT IN ('RETURNED', 'SHIPPED', 'CANCELLED'));

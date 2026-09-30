@@ -1,1 +1,0 @@
-SELECT QUARTER(event_time) AS event_quarter, ROUND(STDDEV(duration_sec), 2) AS stddev_duration_sec, MAX(duration_sec) AS max_duration_sec FROM web_events GROUP BY QUARTER(event_time) HAVING stddev_duration_sec < 21

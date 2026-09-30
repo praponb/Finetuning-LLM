@@ -1,1 +1,0 @@
-WITH filtered AS (SELECT *, quantity * unit_price AS line_total FROM order_items WHERE product_id IS NOT NULL) SELECT *, RANK() OVER (PARTITION BY product_id ORDER BY quantity DESC NULLS FIRST) AS rn FROM filtered QUALIFY rn = 1

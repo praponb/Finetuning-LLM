@@ -1,1 +1,0 @@
-WITH top_stores AS (SELECT id, city, opened_date, store_name, RANK() OVER (PARTITION BY city ORDER BY opened_date DESC) AS pos FROM stores WHERE region = 'North') SELECT id, city, opened_date, store_name FROM top_stores WHERE pos <= 1 ORDER BY city, 1

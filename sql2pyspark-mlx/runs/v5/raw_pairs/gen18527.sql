@@ -1,1 +1,0 @@
-SELECT id, supplier_name, country, rating, PERCENT_RANK() OVER (PARTITION BY city ORDER BY rating DESC) AS rating_percent_rank, MAX(rating) OVER (PARTITION BY country) AS country_max_rating, AVG(rating) OVER (ORDER BY rating, id ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) AS rating_avg_3_prior FROM suppliers

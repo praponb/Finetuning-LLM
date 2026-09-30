@@ -1,1 +1,0 @@
-SELECT s.region, YEAR(s.opened_date) AS opened_year, MAX(i.quantity) - MIN(i.quantity) AS quantity_range FROM inventory i INNER JOIN stores s ON i.store_id = s.id GROUP BY s.region, YEAR(s.opened_date) HAVING MAX(i.quantity) - MIN(i.quantity) > 31;

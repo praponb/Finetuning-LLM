@@ -1,1 +1,0 @@
-SELECT s.id, s.browser, t.event_type_values FROM sessions s JOIN (SELECT session_id, CONCAT_WS(', ', SORT_ARRAY(COLLECT_SET(event_type))) AS event_type_values FROM web_events WHERE duration_sec >= 167 GROUP BY session_id) t ON s.id = t.session_id;

@@ -1,1 +1,0 @@
-SELECT DATE_FORMAT(opened_date, 'yyyy-MM') opened_month, MAX(opened_date) latest_opened_date, SUM(balance) total_balance, ROUND(AVG(balance), 2) avg_balance FROM accounts WHERE balance <= 16000 AND account_type IN ('LOAN', 'CREDIT', 'SAVINGS') GROUP BY 1 ORDER BY latest_opened_date DESC;

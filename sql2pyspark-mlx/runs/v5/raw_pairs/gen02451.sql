@@ -1,1 +1,0 @@
-WITH account_summary AS (SELECT account_id, MIN(amount) AS min_amount, COUNT(*) AS total_count FROM transactions WHERE is_flagged GROUP BY account_id) SELECT a.account_type, as.min_amount, as.total_count FROM accounts a INNER JOIN account_summary as ON a.id = as.account_id WHERE as.total_count >= 6 ORDER BY account_type

@@ -1,1 +1,0 @@
-with ranked as (select * from payments qualify row_number() over (partition by order_id, status order by amount, id) = 1) select s.id, s.order_id, s.method, s.amount, s.status, (select min(x.unit_price) from order_items x where x.order_id = s.order_id) as min_order_item_unit_price from ranked s

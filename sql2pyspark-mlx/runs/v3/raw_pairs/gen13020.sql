@@ -1,1 +1,0 @@
-SELECT supplier_id, fashion_stock_qty FROM (SELECT supplier_id, SUM(CASE WHEN category = 'Fashion' THEN stock_qty ELSE 0 END) AS fashion_stock_qty FROM products WHERE stock_qty <= 158 GROUP BY supplier_id) AS sub WHERE fashion_stock_qty >= 20

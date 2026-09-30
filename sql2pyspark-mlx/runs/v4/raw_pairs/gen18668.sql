@@ -1,1 +1,0 @@
-SELECT event_type, COUNT(CASE WHEN event_type = 'purchase' THEN 1 END) AS purchase_count, MIN(duration_sec) AS min_duration_sec FROM web_events WHERE session_id IN (18, 30) GROUP BY event_type HAVING COUNT(CASE WHEN event_type = 'purchase' THEN 1 END) < 5;

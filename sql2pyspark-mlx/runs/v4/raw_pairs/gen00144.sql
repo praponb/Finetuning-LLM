@@ -1,1 +1,0 @@
-select case when brand in ('Stark', 'Acme') then 'core' else 'other' end brand_group, brand, count(case when category = 'Fashion' then 1 end) fashion_count, min(stock_qty) min_stock_qty from products where year(launch_date) >= 2023 group by case when brand in ('Stark', 'Acme') then 'core' else 'other' end, brand order by 3, brand_group

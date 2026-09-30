@@ -1,1 +1,0 @@
-WITH order_stats AS (SELECT order_id, COUNT(*) AS cnt, MAX(quantity) AS max_quantity FROM order_items GROUP BY order_id) SELECT o.id, o.shipping_fee, os.cnt, os.max_quantity FROM orders o INNER JOIN order_stats os ON o.id = os.order_id WHERE os.cnt >= 5 ORDER BY os.max_quantity DESC;

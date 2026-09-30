@@ -1,1 +1,0 @@
-select e.id, e.hire_date as employee_hire_date, m.dept_id as manager_dept_id, m.email as manager_email, m.manager_id as manager_manager_id from employees e inner join employees m on e.manager_id = m.id order by employee_hire_date, id limit 1

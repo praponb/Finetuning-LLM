@@ -1,1 +1,0 @@
-SELECT a.customer_id, a.account_type, c.is_active, c.credit_limit, c.age FROM accounts a LEFT JOIN customers c ON a.customer_id = c.id WHERE c.name LIKE '%Dav%' ORDER BY customer_id, c.credit_limit DESC;

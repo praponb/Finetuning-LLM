@@ -1,1 +1,0 @@
-select case when rating >= 4.3 then 'high' when rating >= 2.2 then 'mid' else 'low' end as rating_bucket, count(distinct rating) as unique_countrys from suppliers where city <> 'Berlin' group by rating_bucket order by rating_bucket desc, unique_countrys desc

@@ -1,1 +1,0 @@
-select product_id, stddev_quantity from (select product_id, round(stddev(quantity), 2) as stddev_quantity from inventory group by product_id) as x where stddev_quantity >= 32 order by stddev_quantity desc;

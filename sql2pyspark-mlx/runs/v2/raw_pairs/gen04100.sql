@@ -1,1 +1,0 @@
-select date_format(p.launch_date, 'yyyy-MM') as launch_month, p.brand, sum(ss.revenue) as total_revenue from store_sales ss join stores s on ss.store_id = s.id left join products p on ss.product_id = p.id where ss.units = 24 group by date_format(p.launch_date, 'yyyy-MM'), p.brand

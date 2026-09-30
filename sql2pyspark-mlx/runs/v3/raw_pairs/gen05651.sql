@@ -1,1 +1,0 @@
-SELECT plan, MAX(monthly_fee) - MIN(monthly_fee) AS monthly_fee_range FROM subscriptions WHERE customer_id IN (9, 15, 23, 34) GROUP BY plan HAVING MAX(monthly_fee) - MIN(monthly_fee) >= 23 ORDER BY monthly_fee_range DESC;

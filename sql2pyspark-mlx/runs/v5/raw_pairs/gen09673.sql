@@ -1,1 +1,0 @@
-WITH kept_keys AS (SELECT level, manager_id FROM employees EXCEPT SELECT level, manager_id FROM employees WHERE email IS NOT NULL), kept_rows AS (SELECT s.* FROM employees s INNER JOIN kept_keys k ON s.level = k.level AND s.manager_id = k.manager_id) SELECT id, email, dept_id, manager_id, job_title, salary, hire_date, level FROM kept_rows ORDER BY level DESC NULLS FIRST;

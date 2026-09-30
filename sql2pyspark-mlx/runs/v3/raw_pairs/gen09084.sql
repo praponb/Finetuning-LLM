@@ -1,1 +1,0 @@
-SELECT txn_type, merchant, COUNT(*) AS total_count FROM transactions WHERE NOT is_flagged AND txn_type IN ('CREDIT', 'DEBIT') AND merchant IN ('Amazon', '7-Eleven', 'Grab') GROUP BY txn_type, merchant HAVING COUNT(*) > 5;

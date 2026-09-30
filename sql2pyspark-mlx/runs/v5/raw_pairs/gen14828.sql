@@ -1,1 +1,0 @@
-WITH ranked_sessions AS (SELECT id, customer_id, started_at, country, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY started_at DESC, id) AS rnk FROM sessions) SELECT id, customer_id, started_at, country FROM ranked_sessions WHERE rnk <= 5 ORDER BY started_at;

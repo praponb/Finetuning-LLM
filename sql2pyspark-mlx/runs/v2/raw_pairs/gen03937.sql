@@ -1,1 +1,0 @@
-select plan, status, customer_id, sum(case when status = 'CANCELLED' then monthly_fee else 0 end) as cancelled_monthly_fee from subscriptions where monthly_fee > 160 and plan in ('basic', 'premium', 'standard') and start_date between '2024-12-01' and '2025-07-01' group by plan, status, customer_id order by customer_id asc, plan desc;

@@ -1,1 +1,0 @@
-WITH valid AS (SELECT id, store_name, region, opened_date, sqft, INITCAP(TRIM(store_name)) AS store_name_title FROM stores WHERE region IS NOT NULL) SELECT * FROM (SELECT *, RANK() OVER (PARTITION BY region ORDER BY sqft) AS rn FROM valid) x WHERE rn = 1

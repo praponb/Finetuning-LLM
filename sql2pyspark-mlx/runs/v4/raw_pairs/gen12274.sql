@@ -1,1 +1,0 @@
-SELECT store_id, YEAR(last_restock) AS last_restock_year, MIN(last_restock) AS first_last_restock, AVG(quantity) AS avg_quantity FROM inventory WHERE product_id IN (2, 7) GROUP BY 1, 2 HAVING COUNT(DISTINCT quantity) > 5;

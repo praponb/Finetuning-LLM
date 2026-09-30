@@ -1,1 +1,0 @@
-WITH ranked_suppliers AS (SELECT *, DENSE_RANK() OVER (PARTITION BY country ORDER BY rating DESC) AS pos FROM suppliers WHERE rating > 3.1) SELECT id, country, rating, supplier_name FROM ranked_suppliers WHERE pos <= 3;

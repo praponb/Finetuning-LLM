@@ -1,1 +1,0 @@
-SELECT id, brand, launch_date, cost, category, LEAD(cost, 2) OVER (PARTITION BY brand ORDER BY launch_date, id) AS next_cost, PERCENT_RANK() OVER (PARTITION BY category ORDER BY cost DESC) AS cost_pct_rank FROM products WHERE MONTH(launch_date) IN (3, 8, 9)

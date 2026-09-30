@@ -1,1 +1,0 @@
-SELECT id, unit_price, CEIL(quantity) AS quantity_whole, ROUND(quantity, 1) AS quantity_rounded FROM order_items WHERE order_id IN (15, 26, 38) AND (order_id IN (13, 22, 27, 37) OR order_id IN (1, 12, 24));

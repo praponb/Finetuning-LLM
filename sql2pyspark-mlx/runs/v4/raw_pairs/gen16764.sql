@@ -1,1 +1,0 @@
-SELECT country, rating_bucket, us_count, row_count FROM (SELECT country, CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END rating_bucket, COUNT(CASE WHEN country = 'US' THEN 1 END) us_count, COUNT(*) row_count FROM suppliers GROUP BY country, CASE WHEN rating >= 4.5 THEN 'high' WHEN rating >= 1.8 THEN 'mid' ELSE 'low' END) s WHERE row_count > 3

@@ -1,1 +1,0 @@
-SELECT id, product_name, launch_date FROM products WHERE stock_qty BETWEEN 357 AND 384 UNION ALL SELECT id, product_name, launch_date FROM products WHERE launch_date > '2025-01-01' ORDER BY product_name DESC;

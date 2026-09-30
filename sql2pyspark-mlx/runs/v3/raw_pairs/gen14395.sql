@@ -1,1 +1,0 @@
-SELECT i.id, i.product_id, s.region, s.sqft, p.launch_date, p.product_name FROM inventory i FULL OUTER JOIN stores s ON i.store_id = s.id LEFT JOIN products p ON i.product_id = p.id WHERE LENGTH(s.store_name) >= 7 OR i.product_id IN (1, 5, 8, 9);

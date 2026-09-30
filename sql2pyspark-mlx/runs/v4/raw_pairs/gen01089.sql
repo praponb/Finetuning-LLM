@@ -1,1 +1,0 @@
-select quarter(end_date) as end_quarter, sum(case when plan = 'premium' then 1 else 0 end) as premium_count, count(case when status = 'EXPIRED' then 1 end) as expired_count from subscriptions group by end_quarter having premium_count < 37 order by expired_count desc

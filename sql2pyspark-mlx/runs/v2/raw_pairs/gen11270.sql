@@ -1,1 +1,0 @@
-SELECT o.id, o.customer_id, c.segment, s.region, s.store_name FROM orders o INNER JOIN customers c ON o.customer_id = c.id LEFT JOIN stores s ON o.store_id = s.id WHERE o.channel <> 'mobile' ORDER BY o.customer_id DESC

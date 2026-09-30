@@ -1,1 +1,0 @@
-WITH TopWebEvents AS (SELECT id, event_type, duration_sec, RANK() OVER (PARTITION BY event_type ORDER BY duration_sec) rn FROM web_events) SELECT id, event_type, duration_sec FROM TopWebEvents WHERE rn <= 5 ORDER BY duration_sec DESC, event_type ASC;

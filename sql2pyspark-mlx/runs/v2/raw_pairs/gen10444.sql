@@ -1,1 +1,0 @@
-with Base as (select * from shipments where status <> 'DELIVERED'), OrderIdSummary as (select order_id, sum(cost) as total_cost, round(stddev(cost), 2) as stddev_cost from Base group by order_id) select * from OrderIdSummary

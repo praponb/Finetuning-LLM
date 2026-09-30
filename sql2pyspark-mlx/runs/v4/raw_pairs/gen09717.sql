@@ -1,1 +1,0 @@
-select channel, count(case when status = 'CANCELLED' then 1 end) as cancelled_count, concat_ws(', ', sort_array(collect_set(status))) as status_values from orders where amount between 1060 and 1280 and order_date <= '2023-10-01' group by channel having count(case when status = 'CANCELLED' then 1 end) > 5;

@@ -1,1 +1,0 @@
-SELECT a.id, a.status, COUNT(t.id) AS transaction_count, MIN(t.txn_time) AS first_txn_time, SUM(t.amount) AS total_amount FROM accounts a LEFT OUTER JOIN transactions t ON t.account_id = a.id WHERE t.account_id IN (10, 14, 26) GROUP BY a.id, a.status ORDER BY transaction_count, id DESC;

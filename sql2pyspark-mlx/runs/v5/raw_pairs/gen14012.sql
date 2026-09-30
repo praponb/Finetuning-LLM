@@ -1,1 +1,0 @@
-SELECT id, dept_name, budget, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget, id) AS rn, ROW_NUMBER() OVER (PARTITION BY dept_name ORDER BY budget DESC, id) AS rn_2 FROM departments WHERE dept_name IN ('Marketing', 'HR', 'Engineering');

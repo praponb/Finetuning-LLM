@@ -1,1 +1,0 @@
-SELECT revenue, DATE_FORMAT(sale_date, 'yyyy-MM') AS sale_date_label, units * revenue AS revenue_per_unit FROM store_sales WHERE revenue <= 3300 AND sale_date >= '2025-08-30' AND sale_date <= '2024-10-01'
