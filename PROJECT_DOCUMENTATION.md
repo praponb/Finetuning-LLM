@@ -34,8 +34,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 5. **Exports a Q8_0 GGUF** served by Ollama behind a Streamlit UI (`app.py`).
 6. **Execution-based evaluation and repair**:
    - Scores models on 62 unseen hold-out queries (v7 98%, v6 97%, v3 95%, v4 94%, v5 90%), 25 v4-feature queries (v7 and v6 64%, v5 56%, v4 36%, v3 12%), 4 real-world production queries (0/4 without repair), and a fixed 150-query test set (v7 137, v6 132, v5 128, v4 110, v3 105).
-   - `sql2pyspark:latest` = **v7** (7B, continued from v6; 61/62 hold-out, 137/150 fixed test, 97/97 classic) since 2026-09-29; v6 (the previous `latest`) is kept as `sql2pyspark:v6` for rollback, and v5 (3B) as `sql2pyspark:v5`.
-   - Candidate `sql2pyspark:v8` (2026-09-30, not promoted yet): v7 continued on the standalone `complex_v8` dataset; 60/62 hold-out, 139/150 fixed test, 18/25 v4 hold-out, 60/100 on the new complex test (v7 31).
+   - `sql2pyspark:latest` = **v8** (7B, v7 continued on the standalone `complex_v8` dataset; 60/62 hold-out, 139/150 fixed test, 97/97 classic, 18/25 v4 hold-out, 60/100 on the new complex test vs. v7's 31) since 2026-09-30, promoted by the owner; v7 (the previous `latest`, 61/62 hold-out) is kept as `sql2pyspark:v7` for rollback, v6 as `sql2pyspark:v6` and v5 (3B) as `sql2pyspark:v5`.
    - **Kimi K3 repair loop** (`kimi_repair.py`): checks and repairs failed answers on empty tables with declared schemas, fixing 3/4 real-world queries for ~$0.20 per query.
 
 ### Architecture Diagram:
@@ -62,7 +61,7 @@ flowchart TD
 
     subgraph ServeEval [Serving, Repair & Validation]
         GGUF --> Modelfile[Modelfile]
-        Modelfile --> Ollama[Ollama Server<br/>latest = v7]
+        Modelfile --> Ollama[Ollama Server<br/>latest = v8]
         Ollama <--> Streamlit[app.py<br/>Streamlit UI]
         Streamlit <--> Kimi[kimi_repair.py<br/>Kimi K3 Repair Loop]
         Ollama <--> Eval[eval/evaluate.py<br/>Spark Scoring]
@@ -86,7 +85,7 @@ Finetuning-LLM/
 ├── kimi_repair.py                # Kimi K3 check + repair loop (app and eval)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
-├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v8, 7B; `latest` = v7); Ollama keeps its own copies
+├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v8, 7B, = `latest`); Ollama keeps its own copies
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh
@@ -385,7 +384,7 @@ v4 hold-out, correct results (lenient) by feature group:
 
 updated README.md
 
-### v8 decision (2026-09-30, pending)
+### v8 decision (2026-09-30, promoted)
 | Eval set | v6 | v7 | v8 | Rule (vs. v7) |
 |---|---|---|---|---|
 | Hold-out (62) | 60 | 61 | **60** | ❌ ≥ 61 |
@@ -395,7 +394,7 @@ updated README.md
 | Real-world (4) | 0 | 0 | 0 | ❌ ≥ 1 |
 | complex_v8 test (100) | — | 31 | **60** | — |
 
-v8 continues from v7 on `complex_v8/data_mix` (10,000 new complex pairs + 7,000 v7 pairs; 3,200 steps, 11 h 42 min). It gains on the v4 hold-out, the fixed test set and, strongly, the new complex test (set operations 21/25 vs. 4/25; many-window queries still 1/15), and the Kimi repair fixes its real-world answers 4/4 in both modes. It loses `holdout024` (unqualified `F.col("id")` in a semi-join), so it misses the hold-out condition by one query. **Promotion is the owner's decision**: `make promote TAG=v8 PREV=v7`; rollback `ollama cp sql2pyspark:v7 sql2pyspark:latest`.
+v8 continues from v7 on `complex_v8/data_mix` (10,000 new complex pairs + 7,000 v7 pairs; 3,200 steps, 11 h 42 min). It gains on the v4 hold-out, the fixed test set and, strongly, the new complex test (set operations 21/25 vs. 4/25; many-window queries still 1/15), and the Kimi repair fixes its real-world answers 4/4 in both modes. It loses `holdout024` (unqualified `F.col("id")` in a semi-join), so it misses the hold-out condition by one query. **Promoted** by the owner on 2026-09-30 (`make promote TAG=v8 PREV=v7`; also on the server via `deploy/update_model.sh v8 v7`); rollback `ollama cp sql2pyspark:v7 sql2pyspark:latest`.
 
 ### v7 decision (2026-09-29)
 | Eval set | v5 | v6 | v7 | Rule (vs. v6) |
@@ -536,7 +535,7 @@ Details, memory tips and troubleshooting: [docs/07-operations-runbook.md](docs/0
 
 ## 11. Server Deployment
 
-Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **https://sql2pyspark.praponb.com** is served from an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v7), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports.
+Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **https://sql2pyspark.praponb.com** is served from an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v8), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports.
 
 - **Sizing (v7, 7B Q8_0)**: ~8 GB RAM for Ollama + ~1.5 GB for the app and Spark + OS → 12 GB minimum, 16 GB recommended; ~25 GB disk (plan 50 GB). v5 (3B) fits in 8 GB RAM.
 - **Speed**: CPU only, the default query took 69 s end to end (M2 Mac: ~5 s); long SQL can exceed the 600 s timeout.
