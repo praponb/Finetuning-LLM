@@ -539,7 +539,8 @@ Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **
 
 - **Sizing (v7, 7B Q8_0)**: ~8 GB RAM for Ollama + ~1.5 GB for the app and Spark + OS → 12 GB minimum, 16 GB recommended; ~25 GB disk (plan 50 GB). v5 (3B) fits in 8 GB RAM.
 - **Speed**: CPU only, the default query took 69 s end to end (M2 Mac: ~5 s); long SQL can exceed the 600 s timeout.
-- **Setup**: `deploy/setup_server.sh` (run once with `sudo`) installs Java 17, points the service at the repo and keeps the Kimi K3 repair off with `Environment=KIMI_API_KEY=` until a login (Cloudflare Access) protects the site; the unit is `deploy/sql2pyspark.service`.
+- **Setup**: `deploy/setup_server.sh` (run once with `sudo`) installs Java 17, points the service at the repo and keeps the Kimi K3 repair off with `Environment=KIMI_API_KEY=` until a login protects the site; the unit is `deploy/sql2pyspark.service`.
+- **Login**: Cloudflare Access (since 2026-09-30) — application `sql2pyspark`, policy *Owner only*, sign-in with Cloudflare or an emailed one-time PIN; see docs/08.
 - **Updates**: `git pull && sudo systemctl restart sql2pyspark` for code; copy the new GGUF and `ollama create sql2pyspark -f Modelfile` for a new model.
 
 Full guide: [docs/08-server-deployment.md](docs/08-server-deployment.md).
