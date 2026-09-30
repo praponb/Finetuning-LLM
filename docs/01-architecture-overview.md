@@ -28,7 +28,7 @@ flowchart TD
     end
 
     subgraph Training["2. Local LoRA Fine-Tuning (Apple MLX)"]
-        BaseModel["Qwen2.5-Coder Base<br/>v1–v5: 3B-Instruct-4bit<br/>v6–v7: 7B-Instruct-4bit"]
+        BaseModel["Qwen2.5-Coder Base<br/>v1–v5: 3B-Instruct-4bit<br/>v6–v8: 7B-Instruct-4bit"]
         Config["lora_config.yaml<br/>(Rank 16, 8 Layers, 1200 updates x 4)"]
         MLX["mlx_lm.lora<br/>train_resumable.py"]
         Adapters["adapters/<br/>(adapters.safetensors)"]
@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & Streamlit UI"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(latest = v7 7B; v6, v5, v4, v3 kept)"]
+        Ollama["Ollama Engine<br/>(latest = v7 7B; v8 candidate; v6, v5, v4, v3 kept)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
         KimiApp["kimi_repair.py<br/>(Static check + EmptyTableRunner)"]
 
@@ -110,6 +110,7 @@ Random row-level splitting leaks: near-identical query structures with different
   - v4/v5 (3B, samples up to 3.1k tokens): batch 2 × 2 gradient accumulation, gradient checkpointing, peak ~9.8–10.3 GB, ~5 h 15 min – 5 h 40 min.
   - v6 (7B, 3.2k tokens): batch 1 × 4 gradient accumulation, gradient checkpointing (batch 2 runs out of GPU memory), peak 10.1 GB, 8 h 19 min on a base M2, ~40–48 trained tokens/s.
   - v7 (7B, continued from v6): batch 1 × 4 gradient accumulation, 2,400 micro-batches (4 h 58 min, peak 9.9 GB), continuing from v6 adapters with halved learning rate.
+  - v8 (7B, continued from v7): the standalone `complex_v8` dataset (10,000 complex pairs on 20 new tables) + 7,000 v7 pairs, 3,200 micro-batches (11 h 42 min, peak 10.0 GB); not promoted yet.
 - **Resilience**: `train_resumable.py` sets smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) and resumes from the latest checkpoint if macOS aborts a long GPU buffer.
 
 ### 5. Hybrid Inference & Empty-Table Verification Loop (`kimi_repair.py`)

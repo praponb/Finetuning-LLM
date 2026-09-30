@@ -35,7 +35,7 @@ sequenceDiagram
 
 ## 🦙 Ollama Serving Engine
 
-Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v7** (the 7B model continued from v6, since 2026-09-29; 7.9 GB loaded, ~9 s per hold-out query vs. ~4 s for the 3B); `sql2pyspark:v6` (the previous `latest`, 7B), `sql2pyspark:v5` (3B), `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the last export (v7, 8.1 GB).
+Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v7** (the 7B model continued from v6, since 2026-09-29; 7.9 GB loaded, ~9 s per hold-out query vs. ~4 s for the 3B); `sql2pyspark:v6` (the previous `latest`, 7B), `sql2pyspark:v5` (3B), `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark:v8` (2026-09-30, v7 continued on the complex_v8 data, `aa01d9d717f7`) is registered but not promoted yet. `sql2pyspark.gguf` on disk holds the last export (v8, 8.1 GB).
 
 ### Server Address
 - Default: `http://localhost:11434`
@@ -103,7 +103,8 @@ def extract_code(text: str) -> str:
 
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
-- `sql2pyspark:latest` (default, currently **v7**; 7B, best on every evaluation set; see [Evaluation](04-evaluation-and-benchmarking.md))
+- `sql2pyspark:latest` (default, currently **v7**; 7B; see [Evaluation](04-evaluation-and-benchmarking.md))
+- `sql2pyspark:v8` (candidate: stronger on complex multi-stage queries and set operations, one hold-out query weaker than v7)
 - `sql2pyspark:v6` (previous production model, 7B)
 - `sql2pyspark:v5` (previous stable 3B model, about twice as fast)
 - `sql2pyspark:v4` (better at the v4 features: GROUPING SETS, PIVOT/UNPIVOT, nested data, ...; see [Evaluation](04-evaluation-and-benchmarking.md))

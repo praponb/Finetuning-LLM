@@ -35,6 +35,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 6. **Execution-based evaluation and repair**:
    - Scores models on 62 unseen hold-out queries (v7 98%, v6 97%, v3 95%, v4 94%, v5 90%), 25 v4-feature queries (v7 and v6 64%, v5 56%, v4 36%, v3 12%), 4 real-world production queries (0/4 without repair), and a fixed 150-query test set (v7 137, v6 132, v5 128, v4 110, v3 105).
    - `sql2pyspark:latest` = **v7** (7B, continued from v6; 61/62 hold-out, 137/150 fixed test, 97/97 classic) since 2026-09-29; v6 (the previous `latest`) is kept as `sql2pyspark:v6` for rollback, and v5 (3B) as `sql2pyspark:v5`.
+   - Candidate `sql2pyspark:v8` (2026-09-30, not promoted yet): v7 continued on the standalone `complex_v8` dataset; 60/62 hold-out, 139/150 fixed test, 18/25 v4 hold-out, 60/100 on the new complex test (v7 31).
    - **Kimi K3 repair loop** (`kimi_repair.py`): checks and repairs failed answers on empty tables with declared schemas, fixing 3/4 real-world queries for ~$0.20 per query.
 
 ### Architecture Diagram:
@@ -77,7 +78,7 @@ Details: [docs/01-architecture-overview.md](docs/01-architecture-overview.md).
 
 ```
 Finetuning-LLM/
-├── Makefile                      # Pipeline orchestration (`make help`, default TAG=v8 PREV=v7)
+├── Makefile                      # Pipeline orchestration (`make help`, default TAG=v9 PREV=v8)
 ├── Modelfile                     # Ollama model definition & system prompt
 ├── README.md                     # Overview, results table, known gaps
 ├── PROJECT_DOCUMENTATION.md      # This file
@@ -85,7 +86,7 @@ Finetuning-LLM/
 ├── kimi_repair.py                # Kimi K3 check + repair loop (app and eval)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
-├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v7, 7B); Ollama keeps its own copies
+├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the last export (v8, 7B; `latest` = v7); Ollama keeps its own copies
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh
@@ -94,7 +95,7 @@ Finetuning-LLM/
 │   ├── sqlspec.py                # Dual-rendering expression/query objects
 │   ├── generate_dataset.py       # Compositional query generator (12 families + v4/v5 families)
 │   ├── advanced.py               # v4/v5 stage-based families (pipelines, advanced SQL, nested data)
-│   ├── complex_v8/               # 10k complex pairs dataset build (20 new tables, 8 families), LoRA config
+│   ├── complex_v8/               # 10k complex pairs dataset build (20 new tables, 8 families), v8 LoRA config + adapters
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # Parallel PySpark verification
 │   ├── convert_sql_pyspark.py    # Signature splitter & chat formatter
@@ -106,7 +107,7 @@ Finetuning-LLM/
 │   ├── adapters/                 # LoRA weights (+ checkpoints), v7 (v6 in runs/v6/)
 │   ├── runs/v2/ … runs/v6/       # Backups: adapters, data, raw pairs, logs, configs
 │   └── sql2pyspark-model/        # Fused 4-bit MLX model
-├── sql2pyspark-hf/               # Dequantized BF16 fused model (~15.2 GB on disk, v7)
+├── sql2pyspark-hf/               # Dequantized BF16 fused model (~15.2 GB on disk, v8)
 ├── eval/                         # Execution-based evaluation
 │   ├── build_holdout.py          # 62 hand-written queries on unseen tables
 │   ├── holdout.jsonl             # Hold-out benchmark
@@ -123,8 +124,10 @@ Finetuning-LLM/
 │   ├── post_training_v6.sh       # v6 export + evaluation chain (--timeout 600)
 │   ├── start_training_v7.sh      # v7 unattended training launcher
 │   ├── post_training_v7.sh       # v7 post-training export + eval chain
+│   ├── start_training_v8.sh, post_training_v8.sh, complex_eval_v8.sh   # v8 train / export+eval / complex test chain
+│   ├── complex_v8_test.jsonl     # 300 held-out complex_v8 test pairs
 │   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
-│   └── results/                  # <tag>__<set>.json results (+ v2..v4-split, v5..v7-repair, v7-repair-rules)
+│   └── results/                  # <tag>__<set>.json results (+ v2..v4-split, v5..v8-repair, v7-repair-rules)
 └── llama.cpp/                    # Upstream checkout used for convert_hf_to_gguf.py
 ```
 
@@ -222,6 +225,11 @@ Whole signatures are held out for validation (10%) and test (5%). A signature is
 - **Framework**: Apple MLX (`mlx-lm`)
 - **Config**: [lora_config.yaml](sql2pyspark-mlx/lora_config.yaml)
 
+### v8 (7B Model, Continued from v7 on complex_v8)
+- **Data**: `sql2pyspark-mlx/complex_v8/` is a standalone build (no change to the v1–v7 generator): 20 new tables in 6 domains, 8 multi-stage families (pipelines, 8–16-window queries, set operations incl. positional `UNION`s, grouping sets, PIVOT/UNPIVOT, sessions, range joins, FULL OUTER JOINs); 12,999 of 13,000 pairs match in Spark; 10,000 train / 500 valid / 300 test; `data_mix/` adds 7,000 v7 pairs.
+- **Training**: `complex_v8/lora_config.yaml`, resume from v7 (`./adapters`), 3,200 micro-batches (800 updates), peak LR 5e-5, 11 h 42 min, peak 10.0 GB, validation loss 0.135 → **0.011**; adapters in `complex_v8/adapters/`.
+- **Automation**: `eval/start_training_v8.sh`, `eval/post_training_v8.sh`, `eval/complex_eval_v8.sh`.
+
 ### v7 (7B Model, Continued from v6)
 To address the remaining hold-out edge cases (`holdout015` date division slips, `holdout031` unrelated column set operations, and window partition expressions), v7 continues fine-tuning Qwen2.5-Coder-7B from v6's adapters:
 - **Adapter source**: `resume_adapter_file: ./runs/v6/adapters/adapters.safetensors`
@@ -260,7 +268,7 @@ Details: [docs/03-model-training-and-export.md](docs/03-model-training-and-expor
 
 ## 7. Fusion, Dequantization & GGUF Quantization
 
-To package the fine-tuned model for Ollama (`make export TAG=v8`):
+To package the fine-tuned model for Ollama (`make export TAG=v9`):
 
 1. **4-bit MLX fusion**:
    `mlx_lm.fuse --model ... --adapter-path adapters --save-path sql2pyspark-model`
@@ -326,23 +334,29 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v5` | holdout | 62 | 97% | 92% | **90%** | 92% | **90%** | 4.3 |
 | `sql2pyspark:v6` | holdout | 62 | 100% | 97% | **97%** | 97% | **97%** | 9.9 |
 | `sql2pyspark:v7` | holdout | 62 | 100% | 98% | **98%** | 98% | **98%** | 9.1 |
+| `sql2pyspark:v8` | holdout | 62 | 100% | 97% | **97%** | 97% | **97%** | 9.3 |
 | `sql2pyspark:v2` | holdout_v4 | 25 | 92% | 32% | **20%** | 32% | **20%** | 6.5 |
 | `sql2pyspark:v3` | holdout_v4 | 25 | 88% | 32% | **12%** | 32% | **12%** | 7.1 |
 | `sql2pyspark:v4` | holdout_v4 | 25 | 96% | 60% | **36%** | 60% | **36%** | 7.0 |
 | `sql2pyspark:v5` | holdout_v4 | 25 | 88% | 68% | **56%** | 68% | **56%** | 8.1 |
 | `sql2pyspark:v6` | holdout_v4 | 25 | 100% | 80% | **64%** | 80% | **64%** | 18.4 |
 | `sql2pyspark:v7` | holdout_v4 | 25 | 100% | 80% | **64%** | 80% | **64%** | 16.4 |
+| `sql2pyspark:v8` | holdout_v4 | 25 | 100% | 76% | **72%** | 76% | **72%** | 17.1 |
 | `sql2pyspark:v2` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 55.3 |
 | `sql2pyspark:v3` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 78.9 |
 | `sql2pyspark:v4` | real_queries | 4 | 25% | 0% | **0%** | 0% | **0%** | 92.8 |
 | `sql2pyspark:v5` | real_queries | 4 | 50% | 0% | **0%** | 0% | **0%** | 75.6 |
 | `sql2pyspark:v6` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 189.4 |
 | `sql2pyspark:v7` | real_queries | 4 | 50% | 0% | **0%** | 0% | **0%** | 163.6 |
+| `sql2pyspark:v8` | real_queries | 4 | 100% | 0% | **0%** | 0% | **0%** | 195.5 |
 | `sql2pyspark:v3` | test_fixed | 150 | 92% | 73% | **69%** | 73% | **70%** | 8.0 |
 | `sql2pyspark:v4` | test_fixed | 150 | 90% | 80% | **73%** | 80% | **73%** | 11.6 |
 | `sql2pyspark:v5` | test_fixed | 150 | 97% | 88% | **85%** | 89% | **85%** | 11.2 |
 | `sql2pyspark:v6` | test_fixed | 150 | 99% | 91% | **88%** | 91% | **88%** | 22.5 |
 | `sql2pyspark:v7` | test_fixed | 150 | 100% | 93% | **91%** | 93% | **91%** | 25.8 |
+| `sql2pyspark:v8` | test_fixed | 150 | 99% | 96% | **93%** | 96% | **93%** | 24.3 |
+| `sql2pyspark:v7` | complex_v8_test | 100 | 83% | 38% | **31%** | 38% | **31%** | 72.9 |
+| `sql2pyspark:v8` | complex_v8_test | 100 | 96% | 68% | **60%** | 68% | **60%** | 96.9 |
 
 Hold-out, correct results (lenient) by difficulty:
 
@@ -355,6 +369,7 @@ Hold-out, correct results (lenient) by difficulty:
 | `sql2pyspark:v5` | 93% | 95% | 84% |
 | `sql2pyspark:v6` | 93% | 95% | 100% |
 | `sql2pyspark:v7` | 100% | 95% | 100% |
+| `sql2pyspark:v8` | 100% | 91% | 100% |
 
 v4 hold-out, correct results (lenient) by feature group:
 
@@ -366,6 +381,21 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v5` | 50% | 100% | 40% | 67% | 50% | 50% | 0% |
 | `sql2pyspark:v6` | 75% | 80% | 60% | 67% | 50% | 50% | 50% |
 | `sql2pyspark:v7` | 50% | 80% | 60% | 33% | 100% | 75% | 50% |
+| `sql2pyspark:v8` | 100% | 60% | 60% | 67% | 100% | 75% | 50% |
+
+updated README.md
+
+### v8 decision (2026-09-30, pending)
+| Eval set | v6 | v7 | v8 | Rule (vs. v7) |
+|---|---|---|---|---|
+| Hold-out (62) | 60 | 61 | **60** | ❌ ≥ 61 |
+| Fixed test: classic (97) | 96 | 97 | **97** | ✅ ≥ 94 |
+| Fixed test: all (150) | 132 | 137 | **139** | ✅ ≥ 137 |
+| v4 hold-out (25) | 16 | 16 | **18** | ✅ > 16 |
+| Real-world (4) | 0 | 0 | 0 | ❌ ≥ 1 |
+| complex_v8 test (100) | — | 31 | **60** | — |
+
+v8 continues from v7 on `complex_v8/data_mix` (10,000 new complex pairs + 7,000 v7 pairs; 3,200 steps, 11 h 42 min). It gains on the v4 hold-out, the fixed test set and, strongly, the new complex test (set operations 21/25 vs. 4/25; many-window queries still 1/15), and the Kimi repair fixes its real-world answers 4/4 in both modes. It loses `holdout024` (unqualified `F.col("id")` in a semi-join), so it misses the hold-out condition by one query. **Promotion is the owner's decision**: `make promote TAG=v8 PREV=v7`; rollback `ollama cp sql2pyspark:v7 sql2pyspark:latest`.
 
 ### v7 decision (2026-09-29)
 | Eval set | v5 | v6 | v7 | Rule (vs. v6) |
@@ -486,12 +516,12 @@ Details: [docs/04-evaluation-and-benchmarking.md](docs/04-evaluation-and-benchma
 | `make setup` | `python3 -m venv sql2pyspark-mlx/.venv && pip install -r requirements.txt` | Creates the environment |
 | `make data N=20000 SEED=5 WORKERS=4` | `make generate verify split` | Generates ~20.1k pairs (incl. the v4/v5 families), verifies them in Spark, splits by signature without the fixed test set (~21 min) |
 | `make train` | `python train_resumable.py` (in `sql2pyspark-mlx/`) → `mlx_lm.lora -c lora_config.yaml` | Fine-tunes on Apple Silicon (v6 7B: batch 1 × 4 accumulation, ~8.5 h, 9.0–9.2 GB memory; v4/v5 3B: ~5 h 15 min); resumes from last checkpoint |
-| `make export TAG=v8` | `make fuse gguf ollama` | Fuses adapters, dequantizes, builds the Q8_0 GGUF, registers it in Ollama |
-| `make eval TAG=v8 PREV=v7` | `python eval/evaluate.py ...` (×8) | Evaluates both models on the hold-out set, the v4 hold-out set, the real-world queries (`--tables eval/real_tables.py`) and the fixed test set |
+| `make export TAG=v9` | `make fuse gguf ollama` | Fuses adapters, dequantizes, builds the Q8_0 GGUF, registers it in Ollama |
+| `make eval TAG=v9 PREV=v8` | `python eval/evaluate.py ...` (×8) | Evaluates both models on the hold-out set, the v4 hold-out set, the real-world queries (`--tables eval/real_tables.py`) and the fixed test set |
 | `make promote TAG=v8 PREV=v7` | `ollama cp sql2pyspark:$(TAG) sql2pyspark:latest` | Makes the model the default, keeping the previous one as `:$(PREV)` |
 | `make app` | `streamlit run app.py` | Starts the web UI at `http://localhost:8501` |
 
-The Makefile defaults are `BASE ?= mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`, `TAG ?= v8`, `PREV ?= v7`.
+The Makefile defaults are `BASE ?= mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`, `TAG ?= v9`, `PREV ?= v8` (bumped after v8 was exported, so a bare `make promote` fails until v9 exists; promote v8 with explicit `TAG=v8 PREV=v7`).
 
 **Promotion rule** (since v5): hold-out ≥ the current model's (59/62), classic-family queries of the fixed test set ≥ v3 − 2 (94/97), better than v3 on the v4 hold-out set, ≥ 1/4 real-world queries, and no regression on the fixed test set overall.
 

@@ -27,7 +27,7 @@ step "v8 test_fixed";   $PY eval/evaluate.py --model sql2pyspark:v8 --set eval/t
 for M in v8 v7; do
   step "$M complex_v8 test (100 of 300)"
   $PY eval/evaluate.py --model sql2pyspark:$M --set sql2pyspark-mlx/complex_v8/data/test_meta.jsonl \
-    --tables sql2pyspark-mlx/complex_v8/catalog.py --sample 100 --seed 0 --timeout 600 \
+    --tables sql2pyspark-mlx/complex_v8/eval_tables.py --sample 100 --seed 0 --timeout 600 \
     --out eval/results/${M}__complex_v8_test.json
 done
 

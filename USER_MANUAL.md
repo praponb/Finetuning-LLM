@@ -105,7 +105,8 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
 ### Sidebar Options
 
 - **Model Tag**: Change the text field in the sidebar to switch between model versions:
-  - `sql2pyspark` or `sql2pyspark:latest`: Current production model (**v7**, 7B; best on every evaluation set).
+  - `sql2pyspark` or `sql2pyspark:latest`: Current production model (**v7**, 7B).
+  - `sql2pyspark:v8`: Newer candidate (2026-09-30), trained on extra complex multi-stage queries; better on long pipelines and set operations, not yet the default.
   - `sql2pyspark:v6`: Previous production model (7B).
   - `sql2pyspark:v5`: Previous production model (3B, about twice as fast, slightly less accurate).
   - `sql2pyspark:v4` / `:v3`: Earlier 3B models, kept for comparison.
