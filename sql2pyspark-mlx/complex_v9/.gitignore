@@ -1,0 +1,4 @@
+__pycache__/
+# regenerable: `generate.py --window-style mirror` + verify.py (see README.md)
+raw_pairs/
+raw_extra/

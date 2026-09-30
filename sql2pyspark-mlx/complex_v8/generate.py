@@ -33,6 +33,11 @@ from pathlib import Path
 from catalog import SINGULAR, TABLE_BY_NAME, TABLES, Col, Table, children_of, values_of
 
 NUM = ("int", "double")
+# How window specs are written on the PySpark side:
+#   hoist   every spec is a variable defined at the top of the script (complex_v8 / v8)
+#   mirror  follows the SQL: OVER (...) -> inline Window spec, OVER name (WINDOW clause) -> variable defined right
+#           before the stage that uses it (complex_v9; v8 looped on long blocks of hoisted definitions)
+WINDOW_STYLE = "hoist"
 GROUPABLE = ("cat", "fk", "bool")
 
 
@@ -635,12 +640,27 @@ class Q:
         if self.wins:
             code.append("from pyspark.sql.window import Window")
         code.append("")
-        if self.wins:
+        if self.wins and WINDOW_STYLE == "hoist":
             code += [f"{v} = {d}" for d, v in self.wins.items()]
             code.append("")
-        for b in self.blocks:
+        blocks = self.blocks + [final_py]
+        if WINDOW_STYLE == "mirror":
+            defined = set()
+            for i, b in enumerate(blocks):
+                defs = []
+                for d, v in self.wins.items():
+                    if f".over({v})" not in b:
+                        continue
+                    if not re.search(rf"\b{v} AS \(", sql):        # not in a WINDOW clause -> inline spec
+                        b = b.replace(f".over({v})", f".over({d})")
+                    elif v not in defined:
+                        defined.add(v)
+                        defs.append(f"{v} = {d}")
+                defs.sort(key=lambda x: sql.find(x.split(" = ")[0] + " AS ("))      # WINDOW clause order
+                blocks[i] = "\n".join(defs + [b])
+        for b in blocks[:-1]:
             code += [b, ""]
-        code.append(final_py)
+        code.append(blocks[-1])
         return sql, "\n".join(code).strip() + "\n"
 
 
@@ -1300,6 +1320,11 @@ def st_windows(q: Q, cur: Rel, n=(2, 6), specs=(1, 3)) -> Rel | None:
             seen.add(i.py)
             uniq.append(i)
     items = uniq
+    if WINDOW_STYLE == "mirror":       # a spec can be named in one expression and written out in another
+        for i in items:
+            for d, v in q.wins.items():
+                if f".over({v})" in i.py and not re.search(rf"OVER {v}\b", i.sql):
+                    i.py = i.py.replace(f".over({v})", f".over({d})")
     ranks = [r for r in ranks if r in {i.col.name for i in items}]
     if not items:
         return None
@@ -2276,15 +2301,20 @@ def main():
     ap.add_argument("--n", type=int, default=11000)
     ap.add_argument("--seed", type=int, default=8)
     ap.add_argument("--out", default="raw_pairs")
+    ap.add_argument("--window-style", choices=["hoist", "mirror"], default="hoist")
+    ap.add_argument("--families", nargs="*", default=[], help="only these families (default: all, weighted)")
+    ap.add_argument("--prefix", default="cx", help="id / file prefix")
     args = ap.parse_args()
+    global WINDOW_STYLE
+    WINDOW_STYLE = args.window_style
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    for f in out.glob("cx*.sql"):
+    for f in out.glob(f"{args.prefix}*.sql"):
         f.unlink()
-    for f in out.glob("cx*.py"):
+    for f in out.glob(f"{args.prefix}*.py"):
         f.unlink()
     rng = random.Random(args.seed)
-    fams = list(FAMILIES)
+    fams = args.families or list(FAMILIES)
     seen, metas, fails = set(), [], 0
     i = 0
     while len(metas) < args.n:
@@ -2305,7 +2335,7 @@ def main():
             continue
         seen.add(norm)
         i += 1
-        pid = f"cx{i:05d}"
+        pid = f"{args.prefix}{i:05d}"
         (out / f"{pid}.sql").write_text(sql + "\n", encoding="utf-8")
         (out / f"{pid}.py").write_text(code, encoding="utf-8")
         metas.append({"id": pid, "family": f"cx_{fam}", "features": sorted(set(feats)), "order_cols": order_cols})

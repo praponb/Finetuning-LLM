@@ -1,0 +1,38 @@
+{
+  "verified_pairs": 12999,
+  "verified_extra": 2500,
+  "extra_used": 1990,
+  "v8_pairs_lost": {
+    "train": 1,
+    "valid": 0,
+    "test": 0
+  },
+  "train": 11989,
+  "valid": 500,
+  "test": 300,
+  "train_with_windows": 7251,
+  "train_without_windows": 4738,
+  "signature_overlap_train_heldout": 0,
+  "family_counts_train": {
+    "cx_window_heavy": 3679,
+    "cx_setop": 1355,
+    "cx_grouping": 1043,
+    "cx_sessionize": 861,
+    "cx_pipeline": 2786,
+    "cx_full_outer": 591,
+    "cx_interval": 730,
+    "cx_reshape": 944
+  },
+  "data_mix": {
+    "train": 13251,
+    "complex": 9251,
+    "from_v7": 4000,
+    "valid": 1000,
+    "complex_tokens": {
+      "mean": 1449,
+      "p50": 1414,
+      "p95": 2580,
+      "max": 2996
+    }
+  }
+}
