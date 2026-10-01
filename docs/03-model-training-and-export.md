@@ -13,7 +13,7 @@ The project has used two base models in the `Qwen2.5-Coder` family:
 | **v1–v5** | `mlx-community/Qwen2.5-Coder-3B-Instruct-4bit` | 36 transformer blocks | 3.09 B | 3,200 tokens (v4/v5) | Fast training (~5.5 h) and fast serving (~3-4 s/query). Solves 95% of hold-out queries. |
 | **v6–v7** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Higher capacity for long, multi-CTE pipelines and complex nested expressions (v7: 61/62 holdout, 137/150 fixed test). |
 | **v8** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Fine-tuned on `complex_v8` (10,000 new complex pairs + 7,000 v7 mix, 20 new tables in 6 domains). |
-| **v9** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Fine-tuned on `complex_v9` (mirror window style, 13,251 mix) against v8's many-window failures; candidate, exported as Q8_0 and Q4_K_M. |
+| **v9** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Fine-tuned on `complex_v9` (mirror window style, 13,251 mix) against v8's many-window failures; exported as Q8_0 (`v9`) and Q4_K_M (`v9-q4` = `latest` since 2026-10-01). |
 
 ### Why scale from 3B to 7B in v6?
 Across v1 through v5, 3B models achieved 95% accuracy on classic queries and 56% on v4 features, but scored 0/4 on real-world queries due to repetition loops (`real001` repeating window definitions until token exhaustion) and syntax slips under heavy nesting. While Kimi K3 repair fixes these in post-processing, a larger 7B base model provides the intrinsic representation capacity needed to generate dense, multi-stage pipelines end-to-end.
@@ -236,7 +236,7 @@ It takes about 80 seconds.
 
 ### Quantization Formats: Q8_0 & Q4_K_M
 - **Q8_0 (8-bit)**: `sql2pyspark.gguf` is **8.10 GB** for the 7B (7.9 GB loaded in Ollama with a 4k context). 8-bit quantization is close to 16-bit quality, ensuring exact syntax and identifier retention.
-- **Q4_K_M (4-bit Medium)**: `sql2pyspark-q4.gguf` is **4.68 GB** for the 7B, created via `llama.cpp/build/bin/llama-quantize sql2pyspark-f16.gguf sql2pyspark-q4.gguf Q4_K_M`. Specifically tailored for CPU-only environments (such as the Ubuntu home server) where memory bandwidth and capacity are limited, roughly halving the memory read per token. On the eval sets it scored the same as or better than the Q8_0 build (differences within noise) and ran 4–33% faster on the M2; its CPU speed on the server is not measured yet.
+- **Q4_K_M (4-bit Medium)**: `sql2pyspark-q4.gguf` is **4.68 GB** for the 7B, created via `llama.cpp/build/bin/llama-quantize sql2pyspark-f16.gguf sql2pyspark-q4.gguf Q4_K_M`. Specifically tailored for CPU-only environments (such as the Ubuntu home server) where memory bandwidth and capacity are limited, roughly halving the memory read per token. On the eval sets it scored the same as or better than the Q8_0 build (differences within noise) and ran 4–33% faster on the M2; on the server's CPU it generates 1.64× as fast as v8's Q8_0 (4.05 vs. 2.47 tokens/s).
 
 ---
 
@@ -275,11 +275,11 @@ Current tags:
 
 | Tag | Image ID / File | Notes |
 |---|---|---|
-| `sql2pyspark:latest` | `aa01d9d717f7` | = v8 (7B), promoted 2026-09-30 |
-| `sql2pyspark:v8` | `aa01d9d717f7` | exported 2026-09-30 (7B, v7 continued on the complex_v8 data); current production model |
+| `sql2pyspark:latest` | `f19cf7096ebb` | = v9-q4, promoted 2026-10-01 (v8 2026-09-30 → 10-01) |
+| `sql2pyspark:v8` | `aa01d9d717f7` | exported 2026-09-30 (7B, v7 continued on the complex_v8 data); rebuilt from its adapters 2026-09-30 (same ID); rollback for `latest` |
 | `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); `latest` 09-29 → 09-30; rollback: `ollama cp sql2pyspark:v7 sql2pyspark:latest` |
-| `sql2pyspark:v9` | `72230e76c3d1` | exported 2026-10-01 from `sql2pyspark.gguf` (Q8_0, 8.1 GB); v8 continued on `complex_v9` (mirror window style); candidate |
-| `sql2pyspark:v9-q4` | `f19cf7096ebb` | the same weights as Q4_K_M (`sql2pyspark-q4.gguf`, 4.7 GB); recommended promotion candidate |
+| `sql2pyspark:v9` | `72230e76c3d1` | exported 2026-10-01 from `sql2pyspark.gguf` (Q8_0, 8.1 GB); v8 continued on `complex_v9` (mirror window style) |
+| `sql2pyspark:v9-q4` | `f19cf7096ebb` | the same weights as Q4_K_M (`sql2pyspark-q4.gguf`, 4.7 GB); production model (`latest`) since 2026-10-01 |
 
 The older tags were removed from the Mac's Ollama on 2026-09-30 to save ~24.6 GB: `v6` (`192e20ddb887`, 7B), `v5` (`b6a1ace642a4`, 3B), `v4` (`23108327a0d7`), `v3` (`aa95ad200568`), `v2` (`fb27933c2519`) and `v1` (`3dd2beaef9ff`, template-based). v2–v6 can be rebuilt from `sql2pyspark-mlx/runs/vN/adapters/` with `mlx_lm.fuse --adapter-path runs/vN/adapters` (v2–v5 with `--model mlx-community/Qwen2.5-Coder-3B-Instruct-4bit`), then `make gguf ollama TAG=vN` (v1's adapters were deleted with `archive/`).
 
