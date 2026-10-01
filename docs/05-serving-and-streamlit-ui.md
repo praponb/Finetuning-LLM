@@ -35,7 +35,7 @@ sequenceDiagram
 
 ## 🦙 Ollama Serving Engine
 
-Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v8** (7B, v7 continued on the complex_v8 data, `aa01d9d717f7`, since 2026-09-30; 7.9 GB loaded, ~9 s per hold-out query vs. ~4 s for the 3B); `sql2pyspark:v7` (the previous `latest`), `sql2pyspark:v6` (7B), `sql2pyspark:v5` (3B), `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the last export (v8, 8.1 GB).
+Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v8** (7B, v7 continued on the complex_v8 data, `aa01d9d717f7`, since 2026-09-30; 7.9 GB loaded, ~9 s per hold-out query vs. ~4 s for the 3B); `sql2pyspark:v9` (mirror window style), `sql2pyspark:v9-q4` (compact Q4_K_M), `sql2pyspark:v7` (the previous `latest`), `sql2pyspark:v6` (7B), `sql2pyspark:v5` (3B), `sql2pyspark:v4`, `sql2pyspark:v3`, `sql2pyspark:v2` and `sql2pyspark:v1` stay available. Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the export (v8/v9, 8.1 GB), and `sql2pyspark-q4.gguf` holds the Q4_K_M export (4.7 GB).
 
 ### Server Address
 - Default: `http://localhost:11434`
@@ -104,6 +104,8 @@ def extract_code(text: str) -> str:
 ### 3. Model Tag Field (Sidebar)
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
 - `sql2pyspark:latest` (default, currently **v8**; 7B; stronger than v7 on complex multi-stage queries and set operations, one hold-out query weaker; see [Evaluation](04-evaluation-and-benchmarking.md))
+- `sql2pyspark:v9` (7B candidate, 2026-10-01; "mirror" window style: 87/100 on the complex test vs. v8's 60, one hold-out query weaker)
+- `sql2pyspark:v9-q4` (the same model as Q4_K_M, 4.7 GB: same or better scores, faster; the recommended promotion candidate)
 - `sql2pyspark:v7` (the previous default, kept for rollback)
 
 The older tags `v1`–`v6` were removed on 2026-09-30; see [Model Training & Export](03-model-training-and-export.md) to rebuild one (e.g. the faster 3B v5).
@@ -114,7 +116,12 @@ The older tags `v1`–`v6` were removed on 2026-09-30; see [Model Training & Exp
 ### Kimi K3 repair (optional)
 With `KIMI_API_KEY` set (in `.env`; Docker passes it in), the app checks and repairs the model's answer with Kimi K3 (Moonshot AI). The shared logic is in `kimi_repair.py`:
 
-1. **Static check** (free, instant, `static_check()`): syntax, names that are used but never defined (e.g. `w93` from a repetition loop) and a missing `result`. It flags 3 of v5's 4 failures on the real-world queries. Since 2026-09-29 it also gets the SQL and flags `.unionByName()` when a `UNION`/`INTERSECT`/`EXCEPT` has branches with differently named columns (`setop_check()`): SQL matches them by position, so `.union()` is needed. This is the `holdout031` failure of every model from v3 to v7; the rule flags it for all five and none of 383 correct `unionByName` pairs in the dataset or any correct stored answer.
+1. **Static check** (free, instant, `static_check()`):
+   - Syntax errors
+   - Names that are used but never defined (e.g. `w93` from a repetition loop)
+   - Missing `result` assignment
+   - Positional set operation mismatches (`setop_check()`): flags `.unionByName()` when a `UNION`/`INTERSECT`/`EXCEPT` has branches with differently named columns (e.g. `holdout031`)
+   - Unqualified join columns (`join_check()`): flags `F.col("id")` without an alias prefix in a join between aliased DataFrames (preventing `AMBIGUOUS_REFERENCE` runtime exceptions such as in `holdout024`)
 2. **Repair** (`repair()`): Kimi K3 gets the SQL and the model's code, plus one tool, `run_pyspark`. There is no data, so the tool (`EmptyTableRunner`) runs the code on **empty tables whose schemas Kimi declares from the SQL**. It reports syntax, name, column and type errors, analyzes the SQL itself on the same tables and compares its output columns with `result`'s. Mistakes that only show in the data are not caught, and `.sql(...)` is refused. At most 5 runs per repair.
 3. **UI**: the sidebar's *Kimi K3 repair* switch runs the repair *When a check fails or the SQL is long* (default since 2026-09-29; long = over 2,000 characters), *When a check fails*, *Always* or *Off*. Long SQL is repaired even when the static check passes because the model's errors there often only show when the code runs (v7's `real002` and `real004`: an invalid method and a missing column). A *Check and repair with Kimi K3* button runs it on demand. The repaired code is shown below the model's, marked as verified when Kimi's last check ran exactly that code with matching columns, with the checks, tokens and cost. Without a key the section is off.
 

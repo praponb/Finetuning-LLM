@@ -2,11 +2,12 @@
 
 Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder** (v1–v5: 3B; v6: 7B) for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
-**Status (2026-09-29):**
-- **Previous production model:** **v7** (latest from 2026-09-29 to 2026-09-30, kept as `sql2pyspark:v7`): Qwen2.5-Coder-7B continued from v6's adapters (2,400 steps, peak LR 5e-5, 4 h 58 min) on the v7 dataset (DATEDIFF arithmetic, unrelated-column UNIONs, windows partitioned by date expressions): 61/62 hold-out, 137/150 fixed test set (97/97 classic), 16/25 v4 hold-out, 0/4 real queries (3/4 or 4/4 with the Kimi K3 repair). v6 (the first 7B model, 60/62 and 132/150) is kept as `sql2pyspark:v6` for rollback, v5 (3B) as `sql2pyspark:v5`. About 2x slower than the 3B, ~8 GB in Ollama.
-- **Production model:** `sql2pyspark:latest` is **v8** (since 2026-09-30, promoted by the owner): v7 continued for 3,200 steps (11 h 42 min) on `complex_v8/data_mix` (10,000 new verified complex pairs on 20 new tables + 7,000 v7 pairs): 60/62 hold-out (one miss more than v7), 139/150 fixed test set (97/97 classic), **18/25** v4 hold-out, 0/4 real queries (**4/4 and 4/4** with the Kimi K3 repair), **60/100** on the new complex test (v7 31). Rollback: `ollama cp sql2pyspark:v7 sql2pyspark:latest`.
-- **Agent repair loop:** Kimi K3 (Moonshot AI) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code (syntax, undefined names, `result`, and positional `UNION` column ordering) and repair it on empty tables with declared schemas (v7's real queries with the Spark-default rules: 11/12 repairs on sample tables and 12/12 on empty tables over 3 runs per mode). Default UI mode runs when a check fails or the SQL is long (> 2,000 characters).
-- **Environment:** Native Apple Silicon training with MLX; Docker setup for Streamlit UI, Spark data pipeline, and evaluation. The codebase is in the private GitHub repo `praponb/Finetuning-LLM`.
+**Status (2026-10-01):**
+- **Production model:** `sql2pyspark:latest` is **v8** (since 2026-09-30, `aa01d9d717f7`, promoted by the owner): v7 continued for 3,200 steps (11 h 42 min) on `complex_v8/data_mix` (10,000 new verified complex pairs on 20 new tables + 7,000 v7 pairs): 60/62 hold-out, 139/150 fixed test set (97/97 classic), **18/25** v4 hold-out, 0/4 real queries (**4/4 and 4/4** with the Kimi K3 repair), **60/100** on the new complex test (v7 31). Rollback: `ollama cp sql2pyspark:v7 sql2pyspark:latest`.
+- **Latest trained candidate:** **v9** (trained 2026-10-01): Qwen2.5-Coder-7B continued from v8's adapters (2,400 steps, peak LR 5e-5, final val loss 0.008 / train loss 0.003) on `complex_v9/data_mix` (13,251 pairs) with the **"mirror" window style** (inline Window specs for `OVER (...)` instead of a hoisted block of variables). Exported as Q8_0 (`sql2pyspark:v9`) and Q4_K_M (`sql2pyspark:v9-q4`, 4.7 GB). **87/100** on the complex test (v8 60; many-window queries 11–12/15 vs. 1/15); v9 / v9-q4: 59 / 59 hold-out, 134 / **140** fixed test, 18 / **21** v4 hold-out, 0 / 0 real queries. **v9-q4** misses the promotion rule only by one hold-out query and is the recommended candidate; not promoted.
+- **Previous models:** v7 (61/62 hold-out, kept as `sql2pyspark:v7`), v6 (the first 7B model, 60/62), v5 (3B, 56/62). Older tags can be rebuilt from their adapters.
+- **Agent repair loop:** Kimi K3 (Moonshot AI) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code (syntax, undefined names, missing `result`, positional `UNION` column ordering via `setop_check`, and ambiguous unqualified columns in aliased joins via `join_check`) and repair it on empty tables with declared schemas.
+- **Environment:** Native Apple Silicon training with MLX; Docker setup for Streamlit UI, Spark data pipeline, and evaluation; deployment options for Ubuntu servers with native Ollama, systemd, and Cloudflare Tunnel/Access.
 
 ---
 
@@ -14,14 +15,14 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 
 | Document | Topic | Target Audience | Key Contents |
 | :--- | :--- | :--- | :--- |
-| [Architecture Overview](01-architecture-overview.md) | High-Level System Architecture | All Developers | End-to-end pipeline diagram, design principles, output conventions (`df_<table>`, `result = ...`), Kimi K3 repair loop |
-| [Data Engineering Pipeline](02-data-engineering-pipeline.md) | Dataset Synthesis & Verification | Data Engineers, ML Engineers | Table catalog (17 base + 5 extra train / 5 base + 1 extra hold-out), dual-rendering expression engine (`sqlspec.py`), 12 query families + the v4/v5 stage-based families (`advanced.py`), Spark dual-execution check, leakage-free signature split |
-| [Model Training & Export](03-model-training-and-export.md) | MLX LoRA & GGUF Quantization | ML Engineers, MLOps | Base model progression (3B v1–v5 → 7B v6), LoRA hyperparameters (v6: batch 1 × 4, 7B memory profiling; v4/v5: batch 2 × 2), crash-proof `train_resumable.py`, training curves, adapter fusion, BF16 dequantization, llama.cpp Q8_0 export, Ollama packaging |
-| [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, 25 v4-feature hold-out queries, 4 real-world queries on their own tables, strict vs. lenient scoring, v1–v5 benchmark results, fixed test set, repetition penalty experiment, Kimi K3 agent repair benchmark |
+| [Architecture Overview](01-architecture-overview.md) | High-Level System Architecture | All Developers | End-to-end pipeline diagram, design principles, output conventions (`df_<table>`, `result = ...`, mirror window style), Kimi K3 repair loop |
+| [Data Engineering Pipeline](02-data-engineering-pipeline.md) | Dataset Synthesis & Verification | Data Engineers, ML Engineers | Table catalog (22 train + 6 hold-out), dual-rendering expression engine (`sqlspec.py`), 12 query families + v4/v5 families (`advanced.py`), `complex_v8` standalone dataset, `complex_v9` mirror window style, Spark dual-execution check |
+| [Model Training & Export](03-model-training-and-export.md) | MLX LoRA & GGUF Quantization | ML Engineers, MLOps | Base model progression (3B v1–v5 → 7B v6–v9), LoRA hyperparameters, crash-proof `train_resumable.py`, training curves, adapter fusion, BF16 dequantization, Q8_0 and Q4_K_M GGUF export, Ollama packaging |
+| [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, 25 v4-feature hold-out queries, 4 real-world queries on their own tables, strict vs. lenient scoring, v1–v9 benchmark results, fixed test set, repetition penalty experiment, Kimi K3 agent repair benchmark |
 | [Serving & Streamlit UI](05-serving-and-streamlit-ui.md) | Local Inference & Frontend | Frontend Developers, Users | Ollama `/api/chat` integration, `OLLAMA_URL`, Streamlit UI (`app.py`), code-block extraction, long-SQL repetition window, Kimi K3 static check & empty-table repair, containerized app with Java 17 + PySpark |
 | [File Catalog & Reference](06-file-catalog-and-reference.md) | Repository Index | All Contributors | Comprehensive reference of all scripts, datasets, configs, logs, and artifacts in the repository |
 | [Operations Runbook](07-operations-runbook.md) | Practical How-To & Makefile Guide | Developers, DevOps | Environment setup, Make targets (`TAG=v9 PREV=v8`), memory limits, Docker profiles, troubleshooting & FAQs |
-| [Server Deployment](08-server-deployment.md) | Hosting on Ubuntu + Cloudflare Tunnel | DevOps, Owners | Moving the trained GGUF to an Ubuntu server, RAM/disk sizing, native Ollama + systemd app (`deploy/`), Cloudflare Tunnel & Access for sql2pyspark.praponb.com, updates, troubleshooting (502, 1033, missing module) |
+| [Server Deployment](08-server-deployment.md) | Hosting on Ubuntu + Cloudflare Tunnel | DevOps, Owners | Moving the trained GGUF to an Ubuntu server, Q4_K_M export for CPU inference, RAM/disk sizing, native Ollama + systemd app (`deploy/`), Cloudflare Tunnel & Access for sql2pyspark.praponb.com, updates, troubleshooting |
 | [User Manual](../USER_MANUAL.md) | End-User Guide & API Reference | End Users, Developers | Web UI walkthrough, Ollama CLI usage, REST API curl/Python examples, SQL feature support, Kimi K3 repair, troubleshooting |
 | [Master Project Documentation](../PROJECT_DOCUMENTATION.md) | All-in-One Guide | All Readers | Single-file consolidated summary of the entire documentation suite |
 
@@ -33,6 +34,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 - How queries are generated: [Data Engineering Pipeline § 3](02-data-engineering-pipeline.md#3-compositional-query-generator-generate_datasetpy)
 - Table schemas and seed data: [Data Engineering Pipeline § 1](02-data-engineering-pipeline.md#1-table-catalog--schema-definitions-schemaspy)
 - The Spark verification engine: [Data Engineering Pipeline § 5](02-data-engineering-pipeline.md#5-spark-dual-execution-verifier-verify_pairspy)
+- Complex datasets & mirror window style: [Data Engineering Pipeline § 7 & 8](02-data-engineering-pipeline.md#7-the-complex_v8-dataset-v8)
 
 ### For Machine Learning Engineers
 - Base model selection & LoRA configs: [Model Training & Export § Base Model](03-model-training-and-export.md#🧠-base-model-selection)
@@ -57,10 +59,11 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 ├── USER_MANUAL.md                # End-user manual (Web UI, CLI, API, SQL guide)
 ├── PROJECT_DOCUMENTATION.md      # Consolidated single-file documentation
 ├── app.py                        # Streamlit web converter UI (Ollama + Kimi K3 repair)
-├── kimi_repair.py                # Kimi K3 check + repair loop (app and eval)
+├── kimi_repair.py                # Kimi K3 check + repair loop (app and eval, incl. join_check)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (uses the project venv)
-├── sql2pyspark.gguf              # Q8_0 GGUF of the last export (v8, 8.1 GB); Ollama keeps its own copies
+├── sql2pyspark.gguf              # Q8_0 GGUF export (8.1 GB); Ollama keeps its own copies
+├── sql2pyspark-q4.gguf           # Q4_K_M GGUF export (4.7 GB, compact CPU export)
 ├── docker-compose.yml            # Docker: app, tools (Spark data/eval) and ollama services
 ├── docker/                       # Dockerfiles, container requirements, Ollama entrypoint
 ├── docs/                         # Detailed modular documentation
@@ -80,6 +83,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── generate_dataset.py       # Compositional query generator (12 families + v4/v5 families)
 │   ├── advanced.py               # v4/v5 stage-based families: pipelines, advanced SQL, nested data
 │   ├── complex_v8/               # 10k complex pairs dataset build (20 new tables, 8 families), v8 LoRA config, v8 adapters + train_v8.log
+│   ├── complex_v9/               # Mirror window style dataset build (13.2k mix), v9 LoRA config, v9 adapters + train_v9.log
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # PySpark dual-execution verifier
 │   ├── convert_sql_pyspark.py    # Leakage-free splitter & chat formatter
@@ -104,16 +108,11 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── evaluate.py               # Execution-based model evaluation (--tables, --num-predict, --option)
 │   ├── agent_repair.py           # Kimi K3 repair loop for failed answers (key in .env)
 │   ├── report.py                 # Markdown results-table generator
-│   ├── post_training_v4.sh       # v4 post-training script
-│   ├── post_training_v5.sh       # v5 post-training script
-│   ├── post_training_v6.sh       # v6 post-training script (timeout 600s for 7B)
-│   ├── start_training_v7.sh      # v7 unattended training launcher
-│   ├── post_training_v7.sh       # v7 post-training export + eval chain
-│   ├── start_training_v8.sh      # v8 launcher (complex_v8 data mix)
-│   ├── post_training_v8.sh       # v8 export + eval + Kimi repair chain
-│   ├── complex_eval_v8.sh        # v7 vs v8 on the complex_v8 test sample
+│   ├── post_training_v4.sh … post_training_v8.sh # Automated post-training scripts
+│   ├── start_training_v7.sh … start_training_v9.sh # End-to-end training & eval runners
+│   ├── complex_eval_v8.sh        # Complex test benchmarking script
 │   ├── complex_v8_test.jsonl     # 300 held-out complex_v8 test pairs (100 sampled, seed 0)
 │   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
-│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5..v8-repair, v7-repair-rules)
+│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 results)
 └── llama.cpp/                    # Upstream checkout (GGUF converter)
 ```

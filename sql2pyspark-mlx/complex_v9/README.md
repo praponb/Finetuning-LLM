@@ -57,3 +57,19 @@ cd sql2pyspark-mlx/complex_v9
 `zsh eval/start_training_v9.sh` (from the repo root) does all of it: stops Docker and Ollama models, trains, exports
 `sql2pyspark:v9` (Q8_0) and `sql2pyspark:v9-q4` (Q4_K_M), and scores both on the 4 eval sets and the complex_v8 test
 sample.
+
+## Results (2026-10-01)
+
+Training: 2026-09-30 19:05 → 10-01 05:23 (10 h 18 min, peak 10.0 GB), validation loss 0.034 → 0.018 → 0.007 → 0.008.
+
+| Eval set | v8 | v9 (Q8_0) | v9-q4 (Q4_K_M) |
+|---|---|---|---|
+| complex_v8 test (same 100 of 300) | 60 | **87** | **87** |
+| … `cx_window_heavy` (15) | 1 | 11 | 12 |
+| Hold-out (62) | 60 | 59 | 59 |
+| Fixed test set (150) | 139 | 134 | 140 |
+| v4 hold-out (25) | 18 | 18 | 21 |
+| Real-world queries (4) | 0 | 0 | 0 |
+
+The mirror style fixed the many-window family; `real001` (classic tables, whose training targets still hoist windows)
+still loops. Details and the promotion recommendation: [README § v9 results](../../README.md#v9-results-2026-10-01).
