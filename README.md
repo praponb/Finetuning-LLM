@@ -7,23 +7,16 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) is the single-file technical guide;
 > [docs/INDEX.md](docs/INDEX.md) indexes the modular guides (architecture, data, training, evaluation, serving, file catalog, runbook).
 
-**Current model:** `sql2pyspark:latest` = **v8** (since 2026-09-30, `aa01d9d717f7`), 7B, v7 continued on the new
-[complex_v8 dataset](sql2pyspark-mlx/complex_v8/README.md) (10,000 verified multi-stage pairs on 20 new tables + 7,000 v7
-pairs). Compared with v7 it is better on the v4-feature hold-out (18/25 vs. 16), the fixed test set (139/150 vs. 137,
-classic still **97/97**) and the new complex test (60/100 vs. 31), and it is the first model whose real-world answers the
-app's [Kimi K3 repair](#evaluation) fixes 4/4 in both modes; on the hold-out it scores 60/62 (v7 61: one
-column-qualification slip), so it missed the promotion rule by one query and was promoted by the owner's decision. Like
-every model it gets 0 of the 4 real-world queries right on its own. ~9 s per hold-out query, ~8 GB in Ollama. See
-[v8 results](#v8-results-2026-09-30). **v7** (the previous `latest`) is kept as `sql2pyspark:v7`: roll back with
-`ollama cp sql2pyspark:v7 sql2pyspark:latest`. v6, v5 (3B), v4, v3, v2 and v1 stay available too.
-
-**v9 (2026-10-01, candidate, not promoted):** 7B, v8 continued on the
+**Current model:** `sql2pyspark:latest` = **v9-q4** (since 2026-10-01, promoted by the owner; on the Mac and the
+server): v9 as a 4-bit Q4_K_M build (4.7 GB). v9 is v8 continued on the
 [complex_v9 dataset](sql2pyspark-mlx/complex_v9/README.md): the complex_v8 queries with **"mirror" window code** (an
 inline `Window` spec for `OVER (...)`, a variable only for a SQL-named `WINDOW`) + 1,990 extra many-window pairs.
-**complex_v8 test 87/100** (v8 60; many-window queries **11/15**, v8 1/15), ~40% faster per query, but hold-out 59/62
-(v8 60) and fixed test 134/150 (v8 139). Its 4-bit build **`sql2pyspark:v9-q4`** (Q4_K_M, 4.7 GB) scores the same or
-better on every set (hold-out 59, fixed test **140**, v4 hold-out **21/25**, complex **87**) and is the promotion
-candidate; see [v9 results](#v9-results-2026-10-01).
+v9-q4 scores **87/100** on the complex test (v8 60; many-window queries **12/15**, v8 1/15), **140/150** on the fixed
+test set (v8 139), **21/25** on the v4 hold-out (v8 18) and 59/62 on the hold-out (v8 60: one `NOT IN` join slip, which
+the app's `join_check()` flags), 0/4 on the real-world queries like every model. It is faster too: 39 s vs. 97 s per
+complex query on the Mac, and on the CPU-only server 4.05 vs. 2.47 tokens/s. See [v9 results](#v9-results-2026-10-01).
+**v8** (the previous `latest`) is kept as `sql2pyspark:v8`: roll back with `ollama cp sql2pyspark:v8 sql2pyspark:latest`
+(the server also keeps v7). `sql2pyspark:v9` is the same model at Q8_0 (8.1 GB).
 
 ```
 schemas.py ─┐
@@ -264,11 +257,11 @@ without + 4,000 v7 pairs = 13,251), 2,400 micro-batches of 1 (600 updates of 4, 
 * **v9-q4 vs. v9**: the Q4_K_M build (made with `llama-quantize` from the same f16 export) is equal or better on every
   set; on sets this small (+3 on the v4 hold-out, +6 on the fixed test) that is noise, not a gain from quantizing, but it
   shows the 4-bit build costs nothing measurable here. It is also faster on the Mac (39 vs. 58 s per complex query).
-  On the CPU-only server it should be faster still (half the memory traffic); that is **not measured yet**.
+  On the CPU-only server it generates 1.64× as fast as v8 (4.05 vs. 2.47 tokens/s).
 
 **Decision**: v9 misses the rule on the hold-out and the fixed test; **v9-q4 misses only the hold-out, by one query**
-(`holdout052`, caught by `join_check`). Recommendation: promote **v9-q4** (`make promote TAG=v9-q4 PREV=v8`, then
-`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v9-q4 v8` for the server); the owner decides. `latest` is still v8.
+(`holdout052`, caught by `join_check`). The owner **promoted v9-q4** on 2026-10-01 (`make promote TAG=v9-q4 PREV=v8`)
+and put it on the server (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v9-q4 v8`); on the server's CPU v9-q4 generates **4.05 tokens/s vs. v8's 2.47** (1.64×): the app's default GROUP BY query takes **23.5 s vs. 38.5 s** warm, and loading the model takes 16 s vs. 36 s (measured 2026-10-01).
 Next data targets: the mirror style for the classic generators (`real001`), and qualified columns in `IN` / `NOT IN`
 semi/anti joins.
 
@@ -469,10 +462,10 @@ way to serve the model on macOS. Stop Docker before `make train`.
 ## Server deployment
 
 The trained model also runs on a Linux server: **https://sql2pyspark.praponb.com** is served from a home Ubuntu machine
-(`192.168.1.49`, CPU only, native Ollama with v8, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS,
+(`192.168.1.49`, CPU only, native Ollama with v9-q4, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS,
 **Cloudflare Access login**: owner's email only, sign in with Cloudflare or an emailed one-time code). The 7B model needs
-~12–16 GB RAM and ~25 GB disk; without a GPU a typical query takes 20 s to a minute. `deploy/update_model.sh` copies a
-newly promoted model to the server (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v9-q4 v8` sends the 4.7 GB Q4_K_M build instead, which should be faster on the CPU; not measured on the server yet). Steps, sizing, updates and
+~8–12 GB RAM as Q4_K_M (12–16 GB as Q8_0) and ~15–25 GB disk; without a GPU a short query takes ~25 s and a typical one up to a minute. `deploy/update_model.sh` copies a
+newly promoted model to the server (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v9-q4 v8` sent the 4.7 GB Q4_K_M build on 2026-10-01; on the server's CPU v9-q4 generates **4.05 tokens/s vs. v8's 2.47** (1.64×): the app's default GROUP BY query takes **23.5 s vs. 38.5 s** warm, and loading the model takes 16 s vs. 36 s (measured 2026-10-01)). Steps, sizing, updates and
 troubleshooting: [docs/08-server-deployment.md](docs/08-server-deployment.md); service files in `deploy/`.
 
 ## Layout

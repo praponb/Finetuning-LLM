@@ -37,7 +37,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 5. **Exports GGUF models**: standard Q8_0 GGUF (8.10 GB) and, since v9, a 4-bit Q4_K_M GGUF (4.68 GB, smaller and faster for the CPU-only server), served by Ollama behind a Streamlit UI (`app.py`).
 6. **Execution-based evaluation and repair**:
    - Scores models on 62 unseen hold-out queries (v7 98%, v6 97%, v8 97%, v9 / v9-q4 95%), 25 v4-feature queries (v9-q4 **84%**, v8 72%, v9 72%, v7 64%), 4 real-world production queries, a fixed 150-query test set (v9-q4 140, v8 139, v7 137, v9 134) and 100 complex queries on new tables (v9 / v9-q4 **87**, v8 60, v7 31).
-   - `sql2pyspark:latest` = **v8** (7B) in production; candidate **v9-q4** (4-bit v9) fixes most many-window failures (complex test 87 vs. 60) and misses the promotion rule only by one hold-out query.
+   - `sql2pyspark:latest` = **v9-q4** (4-bit v9, since 2026-10-01, Mac and server): fixes most many-window failures (complex test 87 vs. v8's 60), missed the promotion rule only by one hold-out query, and generates 1.64× as fast as v8 on the server's CPU.
    - **Kimi K3 repair loop** (`kimi_repair.py`): checks and repairs failed answers on empty tables with declared schemas, fixing 3/4 real-world queries for ~$0.20 per query; includes AST `setop_check()` and `join_check()`.
 
 ### Architecture Diagram:
@@ -66,7 +66,7 @@ flowchart TD
 
     subgraph ServeEval [Serving, Repair & Validation]
         GGUF --> Modelfile[Modelfile]
-        Modelfile --> Ollama[Ollama Server<br/>latest = v8, v9, v9-q4]
+        Modelfile --> Ollama[Ollama Server<br/>latest = v9-q4; v9, v8]
         Q4GGUF --> OllamaServer[Ubuntu Server<br/>sql2pyspark.praponb.com]
         Ollama <--> Streamlit[app.py<br/>Streamlit UI]
         Streamlit <--> Kimi[kimi_repair.py<br/>join_check + setop_check<br/>Kimi K3 Repair Loop]
@@ -91,8 +91,8 @@ Finetuning-LLM/
 ├── kimi_repair.py                # Kimi K3 check + repair loop (join_check, setop_check, EmptyTableRunner)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
-├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the model (v8 in production = `latest`, v9 candidate)
-├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF for fast CPU inference on Ubuntu server
+├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the model (v9 at Q8_0; `latest` = v9-q4)
+├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF = v9-q4 (`latest` since 2026-10-01, also on the Ubuntu server)
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh, update_model.sh
@@ -299,9 +299,9 @@ To package the fine-tuned model for Ollama (`make export TAG=v9`):
      (**8.10 GB** for 7B; whole export ~2.5 min).
    - Fast 4-bit CPU quantization:
      `./llama.cpp/build/bin/llama-quantize sql2pyspark.gguf sql2pyspark-q4.gguf Q4_K_M`
-     (**4.68 GB** for 7B, cuts CPU RAM by ~40% and doubles generation speed).
+     (**4.68 GB** for 7B, ~40% less RAM; 1.64× v8's generation speed on the server's CPU).
 4. **Ollama registration and promotion**:
-   `ollama create sql2pyspark:v9 -f Modelfile`. `sql2pyspark:latest` currently points to **v8** (`make promote TAG=v8 PREV=v7`, promoted on 2026-09-30). `sql2pyspark:v9` and `:v9-q4` are available as candidate tags. Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
+   `ollama create sql2pyspark:v9 -f Modelfile`. `sql2pyspark:latest` currently points to **v9-q4** (`make promote TAG=v9-q4 PREV=v8`, promoted on 2026-10-01); v8 is kept as `sql2pyspark:v8`. Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
 
 ---
 
@@ -313,7 +313,7 @@ To package the fine-tuned model for Ollama (`make export TAG=v9`):
 
 ### Streamlit Web Application (`app.py`):
 - **Two columns**: SQL input on the left, generated PySpark on the right (with a copy button).
-- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v8 in production), `sql2pyspark:v9`, `sql2pyspark:v9-q4`, or `sql2pyspark:v7` (v1–v6 were removed on 2026-09-30).
+- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v9-q4 in production), `sql2pyspark:v9`, or `sql2pyspark:v8` (v1–v6 were removed on 2026-09-30).
 - **Robust code extraction**: `extract_code()` also handles replies that stop before the closing code fence.
 - **Error handling**: clear messages when Ollama is unreachable or the input is blank; 180 s timeout (600 s for SQL longer than 2,000 characters; 120/300 s before the 7B model).
 - **Long SQL** (> 2,000 characters): `repeat_last_n=2048` stops the window-definition loops seen on long real queries; v9's "mirror" window style removes this on complex-style queries, but `real001` still loops on v9.
@@ -419,7 +419,7 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v9` | 75% | 100% | 100% | 33% | 50% | 50% | 50% |
 | `sql2pyspark:v9-q4` | 75% | 100% | 100% | 67% | 50% | 75% | 100% |
 
-### v9 results (2026-10-01, candidate)
+### v9 results (2026-10-01, v9-q4 promoted)
 | Eval set | v8 | v9 (Q8_0) | v9-q4 (Q4_K_M) | Rule (vs. v8) |
 |---|---|---|---|---|
 | Hold-out (62) | 60 | 59 | **59** | ❌ ≥ 60 (both) |
@@ -432,7 +432,7 @@ v4 hold-out, correct results (lenient) by feature group:
 v9 trains on the complex_v8 queries re-rendered in the **"mirror" window style** (`generate.py --window-style mirror`: inline `Window` spec for `OVER (...)`, a variable only for a SQL-named `WINDOW`), which fixed v8's many-window failures (hoisted definition blocks that looped until the token limit):
 - **complex_v8 test 87/100** (v8 60): many-window queries 11/15 (v9-q4 12/15; v8 1/15), pipelines 26–27/32 (15), and ~40% faster per query.
 - **Hold-out 59/62**: new miss `holdout052` (unqualified `F.col("id")` in a `NOT IN` → `left_anti` join), which the new `join_check()` flags in the app. **Real queries** still 0/4: `real001` still loops; the classic-table training targets still hoist windows.
-- **Q4_K_M**: `sql2pyspark:v9-q4` (4.68 GB) is equal or better than the Q8_0 build on every set (differences within noise) and faster on the Mac; CPU speed on the server not measured yet. It misses only the hold-out rule (by one query) and is the recommended promotion candidate (`make promote TAG=v9-q4 PREV=v8`, owner's decision).
+- **Q4_K_M**: `sql2pyspark:v9-q4` (4.68 GB) is equal or better than the Q8_0 build on every set (differences within noise) and faster (Mac: 39 vs. 58 s per complex query; server CPU: 4.05 vs. v8's 2.47 tokens/s). It misses only the hold-out rule (by one query); the owner promoted it on 2026-10-01 (`make promote TAG=v9-q4 PREV=v8`) and deployed it to the server.
 
 ### v8 decision (2026-09-30, promoted)
 | Eval set | v6 | v7 | v8 | Rule (vs. v7) |
@@ -593,7 +593,7 @@ Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **
 - **Sizing**:
   - **Q8_0 (v8)**: ~8 GB RAM for Ollama + ~1.5 GB for the app and Spark + OS → 12 GB minimum, 16 GB recommended; ~25 GB disk.
   - **Q4_K_M (v9-q4)**: ~4.8 GB RAM for Ollama + ~1.5 GB for the app → 8 GB minimum; ~15 GB disk.
-- **Speed**: CPU only, Q8_0 takes ~17.8 s for a GROUP BY query and ~69 s for multi-CTE queries (M2 Mac: ~5 s). The 4-bit `sql2pyspark-q4.gguf` moves about half the bytes per token, so it should be clearly faster on the CPU (not measured on the server yet).
+- **Speed**: CPU only, Q8_0 takes ~17.8 s for a GROUP BY query and ~69 s for multi-CTE queries (M2 Mac: ~5 s). The 4-bit v9-q4 (`latest` since 2026-10-01) generates 4.05 tokens/s vs. v8's 2.47: 23.5 s vs. 38.5 s for the default GROUP BY query.
 - **Setup**: `deploy/setup_server.sh` (run once with `sudo`) installs Java 17, points the service at the repo and keeps the Kimi K3 repair off with `Environment=KIMI_API_KEY=` until a login protects the site; the unit is `deploy/sql2pyspark.service`.
 - **Login**: Cloudflare Access (since 2026-09-30) — application `sql2pyspark`, policy *Owner only*, sign-in with Cloudflare or an emailed one-time PIN; see docs/08.
 - **Updates**: `git pull && sudo systemctl restart sql2pyspark` for code; copy GGUF and create model for updates (`zsh deploy/update_model.sh v8 v7`, or `GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v9-q4 v8` for 4-bit CPU deployment).

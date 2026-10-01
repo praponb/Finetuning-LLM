@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & Streamlit UI"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(latest = v8 7B; candidates v9, v9-q4)"]
+        Ollama["Ollama Engine<br/>(latest = v9-q4, 7B Q4_K_M; v9 Q8_0, v8 kept)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
         KimiApp["kimi_repair.py<br/>(Static check + EmptyTableRunner)"]
 
