@@ -342,3 +342,40 @@ cd sql2pyspark-mlx/complex_v8
 ../.venv/bin/python verify.py --src raw_pairs --workers 5 2>/dev/null   # ~33 min
 ../.venv/bin/python build.py                                            # split -> data/ + data_mix/
 ```
+
+---
+
+## 8. The complex_v9 dataset (v9) & "Mirror" Window Style
+
+`sql2pyspark-mlx/complex_v9/` is the training dataset for **v9**. It keeps the SQL, tables, and train/valid/test split structure of [complex_v8](../sql2pyspark-mlx/complex_v8/README.md), but transforms the PySpark representation of queries that use window functions. See [complex_v9/README.md](../sql2pyspark-mlx/complex_v9/README.md).
+
+### The Problem in v8
+v8 scored only 1/15 on `cx_window_heavy` on the complex_v8 test set despite having 1,690 training pairs of that family. In the v8 target code ("hoist" style), **every** window specification was defined as a variable at the top of the script. This forced the model to plan 8–16 near-identical lines before generating any DataFrame transformations, frequently triggering token-exhaustion loops (`w1` ... `w93` as also seen in `real001`).
+
+### The "Mirror" Style
+The PySpark code now mirrors the SQL structure directly:
+
+| SQL | PySpark (v8, "hoist") | PySpark (v9, "mirror") |
+| :--- | :--- | :--- |
+| `RANK() OVER (PARTITION BY a ORDER BY b DESC)` | `w_a_by_b = Window...` at top, `.over(w_a_by_b)` | `F.rank().over(Window.partitionBy("a").orderBy(F.col("b").desc()))` |
+| `SUM(x) OVER w_a` + `WINDOW w_a AS (PARTITION BY a)` | `w_a = Window...` at top, `.over(w_a)` | `w_a = Window.partitionBy("a")` right before stage, `.over(w_a)` |
+
+`generate.py --window-style mirror` renders this style (the default `hoist` reproduces complex_v8 byte for byte); SQL queries are identical in both styles.
+
+### Dataset Contents & Re-Verification
+- **`data/train.jsonl`**: 11,989 pairs (9,999 complex_v8 training pairs re-rendered in mirror style + 1,990 extra `cx_window_heavy` pairs from seed 9).
+- **`data/valid.jsonl` (500) & `data/test.jsonl` (300)**: re-rendered complex_v8 validation and test sets.
+- **`data_mix/`**: 13,251 training pairs (every complex pair with a window [7,251] + 2,000 complex pairs without windows + 4,000 v7 pairs to retain classic accuracy) and 1,000 validation pairs.
+- **Spark verification**: all 15,500 pairs were re-executed in Spark in the mirror style: **15,499 match** (the single failure is the identical SQL error from complex_v8).
+- **Leakage check**: the extra pairs have non-empty results and zero signature overlap with valid/test.
+
+### Rebuilding complex_v9
+```bash
+cd sql2pyspark-mlx/complex_v9
+../.venv/bin/python ../complex_v8/generate.py --n 13000 --seed 8 --out raw_pairs --window-style mirror
+../.venv/bin/python ../complex_v8/generate.py --n 2500 --seed 9 --out raw_extra --window-style mirror \
+    --families window_heavy --prefix wx
+../.venv/bin/python ../complex_v8/verify.py --src raw_pairs --workers 5 2>/dev/null    # ~26 min
+../.venv/bin/python ../complex_v8/verify.py --src raw_extra --workers 5 2>/dev/null    # ~9 min
+../.venv/bin/python build.py                                                           # -> data/ + data_mix/
+```

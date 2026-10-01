@@ -189,9 +189,34 @@ def setop_check(sql: str, code: str) -> str | None:
     return None
 
 
+def _has_alias(node: ast.AST) -> bool:
+    return any(isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr == "alias"
+               for n in ast.walk(node))
+
+
+def join_check(tree: ast.AST) -> str | None:
+    """Flag F.col("id") without an alias prefix in the condition of a join between aliased DataFrames: when both sides
+    have that column Spark raises AMBIGUOUS_REFERENCE (typical for IN (subquery) -> left_semi joins)."""
+    for n in ast.walk(tree):
+        if not (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr == "join" and n.args):
+            continue
+        cond = n.args[1] if len(n.args) > 1 else next((k.value for k in n.keywords if k.arg == "on"), None)
+        if cond is None or not (_has_alias(n.func.value) and _has_alias(n.args[0])):
+            continue
+        for c in ast.walk(cond):
+            if isinstance(c, ast.Call) and getattr(c.func, "attr", getattr(c.func, "id", "")) == "col" and c.args \
+                    and isinstance(c.args[0], ast.Constant) and isinstance(c.args[0].value, str) \
+                    and "." not in c.args[0].value:
+                return (f'The join condition uses F.col("{c.args[0].value}") without an alias prefix although both '
+                        f"sides are aliased; it is ambiguous when both sides have that column: qualify it "
+                        f'(F.col("<alias>.{c.args[0].value}"))')
+    return None
+
+
 def static_check(code: str, sql: str | None = None) -> str | None:
-    """Problems visible without Spark: a syntax error, names used but never defined, no `result`, or (with the SQL)
-    .unionByName() for a positional UNION of differently named columns.
+    """Problems visible without Spark: a syntax error, names used but never defined, no `result`, an unqualified
+    column in a join condition between aliased DataFrames, or (with the SQL) .unionByName() for a positional UNION of
+    differently named columns.
     Returns None when nothing is found (the code may still be wrong)."""
     try:
         tree = ast.parse(code)
@@ -218,7 +243,7 @@ def static_check(code: str, sql: str | None = None) -> str | None:
         return "Undefined names: " + ", ".join(undefined[:10])
     if "result" not in defined:
         return "The code never assigns `result`"
-    return setop_check(sql, code) if sql else None
+    return join_check(tree) or (setop_check(sql, code) if sql else None)
 
 
 def exec_code(code: str, namespace: dict):

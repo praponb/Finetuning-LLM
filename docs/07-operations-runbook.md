@@ -63,9 +63,12 @@ make data N=20000 WORKERS=6
 ### Phase 2: LoRA Fine-Tuning
 ```bash
 # MLX LoRA fine-tuning via train_resumable.py
-# (v8: 7B continued from v7 on complex_v8/data_mix, 3,200 steps, 11 h 42 min, see below; v7: 7B model continued from v6, 2,400 steps, 4 h 58 min; v6: 7B model fresh adapters, 4,800 steps, 8 h 19 min; v5: continued from v4's 3B adapters with peak LR 5e-5, ~5 h 40 min).
+# (v9: 7B continued from v8 on complex_v9/data_mix with mirror window style, 2,400 steps, 10 h 18 min;
+#  v8: 7B continued from v7 on complex_v8/data_mix, 3,200 steps, 11 h 42 min;
+#  v7: 7B continued from v6, 2,400 steps, 4 h 58 min;
+#  v6: 7B fresh adapters, 4,800 steps, 8 h 19 min).
 # Stop Docker (docker compose down, quit Docker Desktop) and unload Ollama models (ollama stop <model>) first.
-# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v7/): adapters/, data/, raw_pairs/, train.log
+# Before re-training, back up the current run (e.g. to sql2pyspark-mlx/runs/v8/): adapters/, data/, raw_pairs/, train.log
 make train
 ```
 
@@ -73,12 +76,12 @@ make train
 ```bash
 tail -f sql2pyspark-mlx/train.log
 ```
-To continue from an earlier model instead of starting from scratch (v5 continued from v4; v7 continues from v6), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` (e.g. `./runs/v6/adapters/adapters.safetensors`) and use a lower peak learning rate (e.g. 5e-5); the adapter shape (rank, layers) must match.
+To continue from an earlier model instead of starting from scratch (v5 continued from v4; v7 continues from v6; v8 from v7; v9 from v8), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` and use a lower peak learning rate (e.g. 5e-5); the adapter shape (rank, layers) must match.
 
 *Automated unattended pipeline:*
-You can orchestrate unattended execution via `zsh eval/start_training_v7.sh`: it waits for dataset verification and Kimi repair, terminates Docker and Ollama models to free GPU RAM, starts `make train`, and calls `eval/post_training_v7.sh` upon completion.
-
-**v8 (complex_v8 data)**: `zsh eval/start_training_v8.sh` checks `sql2pyspark-mlx/complex_v8/data_mix/` and the `runs/v7/` backup, stops Docker and Ollama models, runs `train_resumable.py --config complex_v8/lora_config.yaml` (adapters go to `complex_v8/adapters/`, so `./adapters` stays v7) and then `eval/post_training_v8.sh` (export with `mlx_lm.fuse --adapter-path complex_v8/adapters`, evals, Docker, Kimi repair). To rebuild the complex dataset itself see [complex_v8/README.md](../sql2pyspark-mlx/complex_v8/README.md). For `evaluate.py --tables` use `sql2pyspark-mlx/complex_v8/eval_tables.py`, not `catalog.py` (Python 3.14 `@dataclass` + importlib issue).
+- **v7**: `zsh eval/start_training_v7.sh` (data build wait, train, post-train evals).
+- **v8**: `zsh eval/start_training_v8.sh` (checks `complex_v8/data_mix/` and `runs/v7/`, trains with `complex_v8/lora_config.yaml`, runs `eval/post_training_v8.sh`).
+- **v9**: `zsh eval/start_training_v9.sh` end-to-end automated runner. It verifies `complex_v9/data_mix/`, stops Docker/Ollama, runs `train_resumable.py` (adapters in `complex_v9/adapters/`), exports both Q8_0 (`sql2pyspark.gguf`) and Q4_K_M (`sql2pyspark-q4.gguf`), registers Ollama tags (`sql2pyspark:v9`, `sql2pyspark:v9-q4`), and benchmarks across all evaluation suites.
 
 `make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 or 200 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
 
@@ -89,11 +92,17 @@ make export TAG=v9
 
 # Or step by step:
 make fuse           # 4-bit MLX model + dequantized BF16 copy in sql2pyspark-hf/
-make gguf           # llama.cpp convert_hf_to_gguf.py -> sql2pyspark.gguf
+make gguf           # llama.cpp convert_hf_to_gguf.py -> sql2pyspark.gguf (Q8_0, 8.10 GB)
 make ollama TAG=v9  # registers the GGUF as sql2pyspark:v9
 
+# Optional: 4-bit build for the CPU server (4.68 GB). llama-quantize needs an f16/f32 source:
+#   python llama.cpp/convert_hf_to_gguf.py sql2pyspark-hf --outtype f16 --outfile sql2pyspark-f16.gguf
+# (build the tool once: pip install cmake; cmake -S llama.cpp -B llama.cpp/build && cmake --build llama.cpp/build --target llama-quantize)
+./llama.cpp/build/bin/llama-quantize sql2pyspark-f16.gguf sql2pyspark-q4.gguf Q4_K_M
+ollama create sql2pyspark:v9-q4 -f <(sed 's/sql2pyspark.gguf/sql2pyspark-q4.gguf/' Modelfile)
+
 # Once it is in Ollama: delete sql2pyspark-hf/, the fused MLX model, LoRA checkpoints and caches (~20 GB);
-# keeps sql2pyspark.gguf (Docker app, deploy/update_model.sh) and the final adapters.safetensors
+# keeps sql2pyspark.gguf, sql2pyspark-q4.gguf, and the final adapters.safetensors
 make clean
 ```
 
@@ -111,13 +120,13 @@ python eval/report.py --readme README.md
 
 ### Phase 5: Promote to Production
 ```bash
-# Point sql2pyspark:latest at the next model (keeps the old latest as :v7 if that tag doesn't exist yet).
-# Always pass TAG and PREV: with the defaults alone it re-promotes the Makefile's TAG.
+# Point sql2pyspark:latest at the next model (keeps the old latest as :<PREV> if that tag doesn't exist yet).
+# Currently in production: sql2pyspark:latest is v8.
 make promote TAG=v8 PREV=v7
 ```
-Promote only if the new model scores at least the previous one on the hold-out set, keeps the classic-family accuracy, beats it on the v4 hold-out set, gets a real-world query right, and doesn't regress on the fixed test set (details in [Evaluation](04-evaluation-and-benchmarking.md#promotions)). v5 was promoted by the owner's decision; v6 (7B) was promoted on 2026-09-28 and v7 on 2026-09-29, each meeting every condition except the real-world one that no model has met (v7 also only ties v6 on the v4 hold-out). Roll back anytime with `ollama cp sql2pyspark:v6 sql2pyspark:latest` (or any other tag).
+Promote only if the new model scores at least the previous one on the hold-out set, keeps the classic-family accuracy, beats it on the v4 hold-out set, gets a real-world query right, and doesn't regress on the fixed test set (details in [Evaluation](04-evaluation-and-benchmarking.md#promotions)). Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
 
-The Makefile defaults are `TAG=v9 PREV=v8` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`), i.e. the next model; until `sql2pyspark:v9` exists a bare `make promote` fails instead of promoting a model nobody decided on. To promote v8 use `make promote TAG=v8 PREV=v7`. Earlier runs used `TAG=v8 PREV=v7`, `TAG=v7 PREV=v6`, `TAG=v6 PREV=v5`, `TAG=v5 PREV=v3` and `TAG=v4 PREV=v3`.
+The Makefile defaults are `TAG=v9 PREV=v8` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`).
 
 ### Phase 6: Launch Web Interface
 ```bash
@@ -195,7 +204,7 @@ What has been verified:
 
 ## 🌐 Hosting on a server
 
-To serve the trained model from an Ubuntu server (the public site https://sql2pyspark.praponb.com), follow [Server Deployment](08-server-deployment.md): copy the GGUF, register it in a native Ollama, run the app as `sql2pyspark.service` (`deploy/`), and publish it through a Cloudflare Tunnel behind a Cloudflare Access login. After promoting a new model on the Mac, `zsh deploy/update_model.sh <TAG> <PREV>` puts it on the server.
+To serve the trained model from an Ubuntu server (the public site https://sql2pyspark.praponb.com), follow [Server Deployment](08-server-deployment.md): copy the GGUF, register it in a native Ollama, run the app as `sql2pyspark.service` (`deploy/`), and publish it through a Cloudflare Tunnel behind a Cloudflare Access login. After promoting a new model on the Mac, `zsh deploy/update_model.sh <TAG> <PREV>` puts it on the server (or `GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh <TAG> <PREV>` to push a 4-bit quantized model for faster CPU inference and lower memory usage).
 
 ## 🩺 Troubleshooting & FAQ
 

@@ -13,6 +13,7 @@ The project has used two base models in the `Qwen2.5-Coder` family:
 | **v1–v5** | `mlx-community/Qwen2.5-Coder-3B-Instruct-4bit` | 36 transformer blocks | 3.09 B | 3,200 tokens (v4/v5) | Fast training (~5.5 h) and fast serving (~3-4 s/query). Solves 95% of hold-out queries. |
 | **v6–v7** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Higher capacity for long, multi-CTE pipelines and complex nested expressions (v7: 61/62 holdout, 137/150 fixed test). |
 | **v8** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Fine-tuned on `complex_v8` (10,000 new complex pairs + 7,000 v7 mix, 20 new tables in 6 domains). |
+| **v9** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | Fine-tuned on `complex_v9` (mirror window style, 13,251 mix) against v8's many-window failures; candidate, exported as Q8_0 and Q4_K_M. |
 
 ### Why scale from 3B to 7B in v6?
 Across v1 through v5, 3B models achieved 95% accuracy on classic queries and 56% on v4 features, but scored 0/4 on real-world queries due to repetition loops (`real001` repeating window definitions until token exhaustion) and syntax slips under heavy nesting. While Kimi K3 repair fixes these in post-processing, a larger 7B base model provides the intrinsic representation capacity needed to generate dense, multi-stage pipelines end-to-end.
@@ -74,6 +75,7 @@ test_batches: 200
 4. **v6 (7B)**: `iters: 4800`, `batch_size: 1`, `grad_accumulation_steps: 4`, 8 of 28 layers adapted, gradient checkpointing. Dry run on the 64 longest samples showed `batch_size: 2` caused Metal OOM; `batch_size: 1` with accumulation 4 peaked at **9.0 GB** in the dry run and **10.1 GB** in the full run, within the ~12.7 GB Metal working set of a 16 GB Mac, at ~37–50 trained tokens/s (**8 h 19 min** in total, no crash).
 5. **v7 (7B, continued from v6)**: `resume_adapter_file: ./runs/v6/adapters/adapters.safetensors`, `iters: 2400` (600 updates of 4 samples), `batch_size: 1`, `grad_accumulation_steps: 4`, peak LR 5.0e-5 (half of v6), warmup 50, cosine decay to 5.0e-6 over 550 updates. 4 h 58 min on a base M2, peak 9.9 GB, validation loss 0.011 → 0.021 (step 800) → 0.010 → **0.009**.
 6. **v8 (7B, continued from v7, `complex_v8/lora_config.yaml`)**: `data: ./complex_v8/data_mix` (10,000 new complex pairs + 7,000 v7 pairs), `resume_adapter_file: ./adapters/adapters.safetensors` (v7), `adapter_path: ./complex_v8/adapters`, `iters: 3200` (800 updates of 4), same batch / accumulation / LR as v7, cosine to 5.0e-6 over 750 updates. Samples average ~881 tokens (v7: 486), so each step is slower: **11 h 42 min**, peak 10.0 GB, validation loss 0.135 → 0.021 (step 800) → 0.016 → 0.012 → **0.011**.
+7. **v9 (7B, continued from v8, `complex_v9/lora_config.yaml`)**: `data: ./complex_v9/data_mix` (13,251 pairs in mirror window style), `resume_adapter_file: ./complex_v8/adapters/adapters.safetensors` (v8), `adapter_path: ./complex_v9/adapters`, `iters: 2400` (600 updates of 4), `batch_size: 1`, `grad_accumulation_steps: 4`, cosine to 5.0e-6 over 550 updates. Final validation loss **0.008**, training loss **0.003**, peak memory 10.0 GB.
 2. **Batch 1 × 4 accumulation + gradient checkpointing (7B since v6)**: on a 16 GB Mac, batch 2 runs out of Metal memory. Batch 1 with gradient accumulation 4 keeps peak memory at 9.0–10.1 GB.
 3. **Masked prompt (`mask_prompt: true`)**: the system message and SQL prompt are excluded from the loss, so updates focus on generating the PySpark answer.
 4. **Cosine decay with warmup**: v6 used 100 warmup updates to $10^{-4}$ decaying to $10^{-5}$ over 1,100 updates; v7 uses 50 warmup updates to $5 \times 10^{-5}$ decaying to $5 \times 10^{-6}$ over 550 updates.
@@ -86,6 +88,21 @@ The first v4 run crashed after ~250 iterations with `[METAL] Command buffer exec
 ---
 
 ## 📊 Training Dynamics (`train.log`)
+
+### v9 (7B, continued from v8, complex_v9 data mix)
+Run with `train_resumable.py --config complex_v9/lora_config.yaml` from `eval/start_training_v9.sh` (log `sql2pyspark-mlx/complex_v9/train_v9.log`). 2026-09-30 19:05 → 2026-10-01 05:23 (10 h 18 min) without a crash; adapters in `sql2pyspark-mlx/complex_v9/adapters/`, so `./adapters` and `complex_v8/adapters` are untouched.
+
+```
+v9 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
+───────────────────────────────────────────────────────────────────────────────────────────────
+1        0.034       —             —                —               —                 —
+50       —           0.019         1.178e-5         0.083           27,091            9.19 GB
+800      0.018       0.017         4.243e-5         0.066           493,491           10.00 GB
+1600     0.007       0.008         1.839e-5         0.072           980,699           10.00 GB
+2400     0.008       0.003         5.001e-6         0.073           1,465,079         10.00 GB
+```
+
+Final training loss reached **0.003**, with validation loss at **0.008**. The model trained on 1,465,079 tokens over 2,400 iterations, with adapters safely saved in `complex_v9/adapters/adapters.safetensors`.
 
 ### v8 (7B, continued from v7, complex_v8 data mix)
 Run with `train_resumable.py --config complex_v8/lora_config.yaml` from `eval/start_training_v8.sh` (log `sql2pyspark-mlx/complex_v8/train_v8.log`; v7 backed up to `runs/v7/` first). 2026-09-29 15:05 → 02:47 (11 h 42 min) without a crash; adapters in `sql2pyspark-mlx/complex_v8/adapters/`, so `./adapters` (v7) is untouched.
@@ -217,9 +234,9 @@ python llama.cpp/convert_hf_to_gguf.py sql2pyspark-hf \
 ```
 It takes about 80 seconds.
 
-### Why Q8_0?
-- **Accuracy**: 8-bit quantization is generally close to 16-bit quality, which matters for code, where one wrong token breaks execution. (Q8_0 vs. BF16 wasn't measured separately here; the evaluation scores are for the Q8_0 model.)
-- **Size**: `sql2pyspark.gguf` is **8.10 GB** for the 7B (v6; 7.9 GB loaded in Ollama with a 4k context) and 3.29 GB for the 3B (v1–v5). On the M2 the 7B takes ~10 s per hold-out query and ~22 s per fixed-test query (3B: ~4 s and ~11 s). The whole v6 export (fuse, dequantize, convert, `ollama create`) took 2.5 minutes.
+### Quantization Formats: Q8_0 & Q4_K_M
+- **Q8_0 (8-bit)**: `sql2pyspark.gguf` is **8.10 GB** for the 7B (7.9 GB loaded in Ollama with a 4k context). 8-bit quantization is close to 16-bit quality, ensuring exact syntax and identifier retention.
+- **Q4_K_M (4-bit Medium)**: `sql2pyspark-q4.gguf` is **4.68 GB** for the 7B, created via `llama.cpp/build/bin/llama-quantize sql2pyspark-f16.gguf sql2pyspark-q4.gguf Q4_K_M`. Specifically tailored for CPU-only environments (such as the Ubuntu home server) where memory bandwidth and capacity are limited, roughly halving the memory read per token. On the eval sets it scored the same as or better than the Q8_0 build (differences within noise) and ran 4–33% faster on the M2; its CPU speed on the server is not measured yet.
 
 ---
 
@@ -252,24 +269,28 @@ make export TAG=v9             # fuse + gguf + ollama create sql2pyspark:v9 -f M
 make promote TAG=v8 PREV=v7    # keeps old latest as :v7, then ollama cp sql2pyspark:v8 sql2pyspark:latest
 ```
 
-The Makefile defaults are `TAG=v9 PREV=v8` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`); v8 was exported from `complex_v8/adapters` by `eval/post_training_v8.sh` (the Makefile fuses `./adapters`).
+The Makefile defaults are `TAG=v9 PREV=v8` (`BASE=mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`); v8 was exported from `complex_v8/adapters` by `eval/post_training_v8.sh` and v9 from `complex_v9/adapters` by `eval/start_training_v9.sh`.
 
 Current tags:
 
-| Tag | Image ID | Notes |
+| Tag | Image ID / File | Notes |
 |---|---|---|
 | `sql2pyspark:latest` | `aa01d9d717f7` | = v8 (7B), promoted 2026-09-30 |
 | `sql2pyspark:v8` | `aa01d9d717f7` | exported 2026-09-30 (7B, v7 continued on the complex_v8 data); current production model |
 | `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); `latest` 09-29 → 09-30; rollback: `ollama cp sql2pyspark:v7 sql2pyspark:latest` |
+| `sql2pyspark:v9` | `72230e76c3d1` | exported 2026-10-01 from `sql2pyspark.gguf` (Q8_0, 8.1 GB); v8 continued on `complex_v9` (mirror window style); candidate |
+| `sql2pyspark:v9-q4` | `f19cf7096ebb` | the same weights as Q4_K_M (`sql2pyspark-q4.gguf`, 4.7 GB); recommended promotion candidate |
 
 The older tags were removed from the Mac's Ollama on 2026-09-30 to save ~24.6 GB: `v6` (`192e20ddb887`, 7B), `v5` (`b6a1ace642a4`, 3B), `v4` (`23108327a0d7`), `v3` (`aa95ad200568`), `v2` (`fb27933c2519`) and `v1` (`3dd2beaef9ff`, template-based). v2–v6 can be rebuilt from `sql2pyspark-mlx/runs/vN/adapters/` with `mlx_lm.fuse --adapter-path runs/vN/adapters` (v2–v5 with `--model mlx-community/Qwen2.5-Coder-3B-Instruct-4bit`), then `make gguf ollama TAG=vN` (v1's adapters were deleted with `archive/`).
 
-`sql2pyspark.gguf` holds the **v8** weights (last completed export); Ollama keeps its own copy of every tag. `make fuse` also writes `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/`; `make clean` deletes them (and the LoRA checkpoints) once the export is in Ollama. The v2–v6 adapters, configs and logs are kept in `sql2pyspark-mlx/runs/v2/` … `runs/v6/` (the v2–v5 datasets were removed on 2026-09-30 and are still in the git history; v6 was trained on the v5 data); v7's adapters are in `sql2pyspark-mlx/adapters/` and `runs/v7/`, v8's in `sql2pyspark-mlx/complex_v8/adapters/`. To serve a model on another machine (e.g. the Ubuntu server behind sql2pyspark.praponb.com), copy `sql2pyspark.gguf` and `Modelfile` there and run `ollama create sql2pyspark -f Modelfile`; see [Server Deployment](08-server-deployment.md).
+`sql2pyspark.gguf` holds the **v8/v9** weights; Ollama keeps its own copy of every tag. `make fuse` also writes `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/`; `make clean` deletes them (and the LoRA checkpoints) once the export is in Ollama. The v2–v6 adapters, configs and logs are kept in `sql2pyspark-mlx/runs/v2/` … `runs/v6/`; v7's adapters are in `sql2pyspark-mlx/adapters/` and `runs/v7/`, v8's in `sql2pyspark-mlx/complex_v8/adapters/`, and v9's in `sql2pyspark-mlx/complex_v9/adapters/`. To serve a model on another machine (e.g. the Ubuntu server behind sql2pyspark.praponb.com), copy `sql2pyspark.gguf` or `sql2pyspark-q4.gguf` and `Modelfile` there and run `ollama create sql2pyspark -f Modelfile`; see [Server Deployment](08-server-deployment.md).
 
 The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v6`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
 
-For v7, [eval/start_training_v7.sh](../eval/start_training_v7.sh) and [eval/post_training_v7.sh](../eval/post_training_v7.sh) provide unattended orchestration: waits for the v7 dataset build and v6 Kimi repair, terminates background Docker and Ollama models to free GPU memory, starts `make train` (2,400 steps, ~4.2 h), runs `make export TAG=v7`, benchmarks across all 4 evaluation sets with `--timeout 600`, reloads Docker, and executes the Kimi K3 repair loop on v7's real-query replies.
+For v7, [eval/start_training_v7.sh](../eval/start_training_v7.sh) and [eval/post_training_v7.sh](../eval/post_training_v7.sh) provide unattended orchestration.
 
-For v8, [eval/start_training_v8.sh](../eval/start_training_v8.sh) and [eval/post_training_v8.sh](../eval/post_training_v8.sh) automate the training of `complex_v8` (`lora_config.yaml`, continuing from v7 adapters on the 10,000 new pairs + 7,000 v7 mix), export as `sql2pyspark:v8`, and run evaluation across all benchmarks including the new complex_v8 test set sample.
+For v8, [eval/start_training_v8.sh](../eval/start_training_v8.sh) and [eval/post_training_v8.sh](../eval/post_training_v8.sh) automate the training of `complex_v8`.
+
+For v9, [eval/start_training_v9.sh](../eval/start_training_v9.sh) orchestrates the entire workflow: verifies data prerequisites, stops background Docker and Ollama processes, fine-tunes with `complex_v9/lora_config.yaml` (2,400 steps resuming from v8 adapters), exports both Q8_0 (`sql2pyspark:v9`) and Q4_K_M (`sql2pyspark:v9-q4`), and benchmarks both models across all evaluation sets.
 
 The model is served at `POST http://localhost:11434/api/chat`.

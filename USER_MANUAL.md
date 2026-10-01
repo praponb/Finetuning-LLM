@@ -21,6 +21,7 @@ Welcome to **SQL2PySpark**, an execution-verified, specialized AI assistant that
 SQL2PySpark translates complex SQL queries into clean PySpark code following standardized best practices:
 
 - **Imports**: Standardized on `from pyspark.sql import functions as F` (and `from pyspark.sql.window import Window` when window functions are used).
+- **Window Specs**: Follows the "mirror" style (v9): inline SQL `OVER (...)` clauses render inline `.over(Window.partitionBy(...))`, while explicit SQL `WINDOW name AS (...)` clauses define named variables `w = Window...`. Earlier models hoisted all window specs to variables.
 - **Table References**: Any table referenced in SQL as `<table>` is accessed in PySpark as `df_<table>` (e.g., `FROM orders` $\rightarrow$ `df_orders`).
 - **Result Output**: The final output DataFrame is always assigned to a variable named `result`.
 - **Method Chaining & Readability**: Uses idiomatic DataFrame API calls (`.select()`, `.filter()`, `.groupBy()`, `.agg()`, `.join()`) rather than embedding raw SQL strings via `spark.sql(...)`.
@@ -106,6 +107,7 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
 
 - **Model Tag**: Change the text field in the sidebar to switch between model versions:
   - `sql2pyspark` or `sql2pyspark:latest`: Current production model (**v8**, 7B, since 2026-09-30; trained on extra complex multi-stage queries, better on long pipelines and set operations).
+  - `sql2pyspark:v9` / `sql2pyspark:v9-q4`: Candidate model (v9, 7B, 2026-10-01), trained with the "mirror" window style: much better on long multi-CTE and many-window queries (87/100 vs. v8's 60 on the complex test), one hold-out query weaker. `:v9-q4` is the 4-bit build (4.7 GB): same or better scores, faster, and the recommended candidate for promotion.
   - `sql2pyspark:v7`: The previous production model, kept for rollback.
   - The older tags `v1`–`v6` were removed on 2026-09-30 to save disk space (see `docs/03-model-training-and-export.md` to rebuild one).
 - **Kimi K3 Repair**: *When a check fails or the SQL is long* (default; long = over 2,000 characters), *When a check fails*, *Always* or *Off* (requires `KIMI_API_KEY` in `.env`; without it the section explains how to enable it).
@@ -264,7 +266,7 @@ SQL2PySpark supports a wide spectrum of SQL constructs:
 | **Joins** | `INNER`, `LEFT`, `RIGHT`, `FULL`, `CROSS` | `df_a.join(df_b, on=..., how="left")` |
 | **Semi / Anti Joins** | `WHERE EXISTS (...)` / `WHERE NOT EXISTS (...)` | `df_a.join(df_b, on=..., how="left_semi" / "left_anti")` |
 | **Null-Safe Join** | `a <=> b` or `a IS NOT DISTINCT FROM b` | `df_a.join(df_b, df_a.id.eqNullSafe(df_b.id))` |
-| **Window Functions** | `ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...)` | `w = Window.partitionBy(...).orderBy(...)`<br>`F.row_number().over(w)` |
+| **Window Functions** | `ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...)` | `w = Window.partitionBy(...).orderBy(...)`<br>`F.row_number().over(w)` (v9 writes the spec inline on long multi-CTE queries) |
 | **Window Frames** | `RANGE BETWEEN INTERVAL 1 DAY PRECEDING...` | `w.rangeBetween(-86400, 0)` or `w.rowsBetween(-5, 0)` |
 | **Set Operations** | `UNION ALL`, `UNION`, `INTERSECT`, `EXCEPT` | `.unionByName()`, `.distinct()`, `.intersect()`, `.subtract()` |
 | **Reshaping** | `PIVOT (SUM(v) FOR col IN ('A', 'B'))` | `.groupBy(...).pivot("col", ["A", "B"]).agg(...)` |
@@ -302,7 +304,8 @@ Every conversion runs through Python's `ast` parser instantly:
 - Detects unclosed parentheses, missing commas, and syntax slips.
 - Detects undefined variable references (such as hallucinated window identifiers like `w93`).
 - Confirms that the target variable `result` is assigned.
-- Flags `.unionByName()` when the SQL's `UNION` branches name their columns differently (SQL matches set-operation columns by position, so the code needs `.union()`).
+- Flags `.unionByName()` when the SQL's `UNION` branches name their columns differently (`setop_check()`; SQL matches set-operation columns by position, so the code needs `.union()`).
+- Flags unqualified `F.col("<name>")` in join conditions when both DataFrames are aliased (`join_check()`; prevents Spark runtime `AMBIGUOUS_REFERENCE` errors).
 
 ### 2. Kimi K3 Repair with Sandboxed Schema Execution
 When a check fails, when the SQL is long (over 2,000 characters), or when requested:
@@ -341,8 +344,9 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
   - Alternatively, type an existing tag (e.g., `sql2pyspark:v7`) in the sidebar text box.
 
 ### Q3: Why does long SQL produce repeating window definitions?
-- **Cause**: Very long queries (>2,000 characters) can enter repetition loops on smaller models if the repetition penalty window is too small.
+- **Cause**: the model writes every window spec as a variable before the query and, on long SQL with many windows, repeats that line until it runs out of tokens (e.g. `w1` ... `w93`).
 - **Solution**:
+  - Try the candidate **v9** / **v9-q4** (`sql2pyspark:v9-q4`): it writes `OVER (...)` specs inline ("mirror" style) and loops far less on multi-CTE queries (many-window queries 11–12/15 vs. v8's 1/15), though the longest real-world query (`real001`) still loops.
   - The Web UI automatically sets `repeat_last_n=2048` for queries over 2,000 characters.
   - If querying the Ollama API directly, pass `"repeat_last_n": 2048` in the request options payload.
   - Enable the Kimi K3 repair toggle in the sidebar to auto-repair looped queries into compact code.
