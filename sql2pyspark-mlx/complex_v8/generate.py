@@ -1998,12 +1998,25 @@ KGROUP = {"id": "int", "fk": "int", "int": "int", "double": "double", "cat": "st
 GENERIC = {"int": ["entity_id", "ref_id", "key_id", "qty"], "double": ["amount", "metric", "value"],
            "str": ["label", "category", "name"], "date": ["event_date", "day"], "ts": ["event_time", "happened_at"],
            "bool": ["flag"]}
+# --fix-union-aliases: the "int" shape group mixes keys and counts, so a branch could stack `id` under a count-like
+# name (`site_id AS qty`). With the fix the group splits into "key" (id / *_id) and "int" (counts, years ...), each
+# with its own generic names. Off by default: it changes the random stream, and complex_v8 / complex_v9 must stay
+# reproducible.
+FIX_UNION_ALIASES = False
+GENERIC_FIXED = {"key": ["entity_id", "ref_id", "key_id"], "int": ["qty", "cnt", "num_value"]}
+
+
+def shape_group(c: Col) -> str | None:
+    g = KGROUP.get(c.kind)
+    if FIX_UNION_ALIASES and g == "int":
+        return "key" if c.kind in ("id", "fk") or c.name == "id" or c.name.endswith("_id") else "int"
+    return g
 
 
 def pick_shape_cols(rng, rel: Rel, shape: list) -> list | None:
     used, out = set(), []
     for g in shape:
-        cands = [c for c in rel.cols if KGROUP.get(c.kind) == g and c.name not in used]
+        cands = [c for c in rel.cols if shape_group(c) == g and c.name not in used]
         if not cands:
             return None
         c = rng.choice(cands)
@@ -2025,6 +2038,8 @@ def fin_setop(q: Q, rng: random.Random):
         shape = rng.choice([["int"], ["int"], ["str"], ["int", "str"]])
     else:
         shape = [rng.choice(["int", "int", "str"])] + rng.sample(["double", "ts", "date", "str", "int"], rng.randint(1, 2))
+    if FIX_UNION_ALIASES:
+        shape = [("key" if rng.random() < 0.7 else "int") if g == "int" else g for g in shape]
     rels = []
     for i in range(n_br):
         for _ in range(12):
@@ -2050,7 +2065,8 @@ def fin_setop(q: Q, rng: random.Random):
     tag_first = rng.random() < 0.4
     first_names = []
     for c, g in zip(rels[0][2], shape):
-        first_names.append(c.name if rng.random() < 0.5 else fresh(set(first_names), rng.choice(GENERIC[g])))
+        pool = GENERIC_FIXED[g] if g in GENERIC_FIXED and FIX_UNION_ALIASES else GENERIC[g]
+        first_names.append(c.name if rng.random() < 0.5 else fresh(set(first_names), rng.choice(pool)))
     branches_sql, branches_py, vars_ = [], [], []
     positional = False
     for bi, (t, rel, cols) in enumerate(rels):
@@ -2304,9 +2320,11 @@ def main():
     ap.add_argument("--window-style", choices=["hoist", "mirror"], default="hoist")
     ap.add_argument("--families", nargs="*", default=[], help="only these families (default: all, weighted)")
     ap.add_argument("--prefix", default="cx", help="id / file prefix")
+    ap.add_argument("--fix-union-aliases", action="store_true", help="key-like / count-like generic union aliases")
     args = ap.parse_args()
-    global WINDOW_STYLE
+    global WINDOW_STYLE, FIX_UNION_ALIASES
     WINDOW_STYLE = args.window_style
+    FIX_UNION_ALIASES = args.fix_union_aliases
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     for f in out.glob(f"{args.prefix}*.sql"):

@@ -1,0 +1,58 @@
+checking 7858 pairs with 5 workers ...
+{
+  "total": 7858,
+  "ok": 7857,
+  "pass_rate": 0.9999,
+  "ok_but_empty_result": 1370,
+  "by_status": {
+    "ok": 7857,
+    "rows": 1
+  },
+  "by_family": {
+    "adv_agg": {
+      "ok": 122
+    },
+    "adv_dedup": {
+      "ok": 542
+    },
+    "adv_join": {
+      "ok": 165
+    },
+    "adv_nested": {
+      "ok": 292
+    },
+    "adv_reshape": {
+      "ok": 1
+    },
+    "adv_session": {
+      "ok": 469
+    },
+    "adv_setop": {
+      "ok": 11
+    },
+    "adv_window": {
+      "ok": 761
+    },
+    "handwritten": {
+      "ok": 10
+    },
+    "pipeline": {
+      "ok": 3702,
+      "rows": 1
+    },
+    "special": {
+      "ok": 191
+    },
+    "subquery": {
+      "ok": 110
+    },
+    "topn": {
+      "ok": 646
+    },
+    "window": {
+      "ok": 835
+    }
+  },
+  "seconds": 1342.7
+}
+VERIFY DONE

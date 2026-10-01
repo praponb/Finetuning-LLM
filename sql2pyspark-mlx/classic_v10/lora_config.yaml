@@ -1,0 +1,43 @@
+# LoRA fine-tune for v10: the classic v7 pairs in the "mirror" window style + targeted IN / NOT IN pairs (README.md).
+# Continues from v9 (complex_v9/adapters) and writes to ./classic_v10/adapters. Settings follow v9 (7B, batch 1 x 4
+# accumulation, half LR because it continues training).
+# Run from sql2pyspark-mlx/ (stop Docker and unload Ollama models first - 16 GB M2):
+#   .venv/bin/python train_resumable.py --config classic_v10/lora_config.yaml
+model: mlx-community/Qwen2.5-Coder-7B-Instruct-4bit
+train: true
+fine_tune_type: lora
+# data_mix = every classic pair whose window code changed + the IN / NOT IN pairs + 2,000 classic pairs without
+# windows + 3,000 complex_v9 pairs (keeps what v9 learned)
+data: ./classic_v10/data_mix
+adapter_path: ./classic_v10/adapters
+resume_adapter_file: ./complex_v9/adapters/adapters.safetensors   # v9 (sql2pyspark:latest = v9-q4)
+seed: 10
+
+# 600 optimizer updates of 4 samples = 2,400 micro-batches of 1 (as v9).
+iters: 2400
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200          # build.py drops pairs longer than 3,000 tokens
+mask_prompt: true             # loss only on the assistant (PySpark) tokens
+grad_checkpoint: true
+
+num_layers: 8                 # last 8 of 28 blocks, same as v6-v8 (required to resume their adapters)
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+
+optimizer: adamw
+learning_rate: 5.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-6
+  arguments: [5.0e-5, 550, 5.0e-6]    # [init, decay_steps, end]  (optimizer updates)
+
+steps_per_report: 50
+steps_per_eval: 800
+val_batches: 100
+save_every: 200
+test: false
+test_batches: 200
