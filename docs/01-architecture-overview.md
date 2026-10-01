@@ -28,7 +28,7 @@ flowchart TD
     end
 
     subgraph Training["2. Local LoRA Fine-Tuning (Apple MLX)"]
-        BaseModel["Qwen2.5-Coder Base<br/>v1–v5: 3B-Instruct-4bit<br/>v6–v9: 7B-Instruct-4bit"]
+        BaseModel["Qwen2.5-Coder Base<br/>v1–v5: 3B-Instruct-4bit<br/>v6–v10: 7B-Instruct-4bit"]
         Config["lora_config.yaml<br/>(Rank 16, 8 Layers, 1200–3200 steps)"]
         MLX["mlx_lm.lora<br/>train_resumable.py"]
         Adapters["adapters/<br/>(adapters.safetensors)"]
@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & Streamlit UI"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(latest = v9-q4, 7B Q4_K_M; v9 Q8_0, v8 kept)"]
+        Ollama["Ollama Engine<br/>(latest = v9-q4, 7B Q4_K_M; v9 Q8_0, v8 kept;<br/>candidate v10 / v10-q4)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
         KimiApp["kimi_repair.py<br/>(Static check + EmptyTableRunner)"]
 
@@ -104,7 +104,7 @@ Random row-level splitting leaks: near-identical query structures with different
 ### 4. Apple Silicon Training (Apple MLX)
 - **Base model**:
   - `v1–v5`: `mlx-community/Qwen2.5-Coder-3B-Instruct-4bit` (36 transformer blocks, 3.09 B parameters)
-  - `v6–v9`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 transformer blocks, 7.61 B parameters)
+  - `v6–v10`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 transformer blocks, 7.61 B parameters)
 - **Unified memory budget**: fine-tuning runs natively in Apple Silicon unified memory using `mlx-lm`.
   - v2/v3 (3B, short samples): batch 4, no gradient checkpointing, peak ~9.7 GB, ~1 h 50 min.
   - v4/v5 (3B, samples up to 3.1k tokens): batch 2 × 2 gradient accumulation, gradient checkpointing, peak ~9.8–10.3 GB, ~5 h 15 min – 5 h 40 min.
@@ -112,6 +112,7 @@ Random row-level splitting leaks: near-identical query structures with different
   - v7 (7B, continued from v6): batch 1 × 4 gradient accumulation, 2,400 micro-batches (4 h 58 min, peak 9.9 GB), continuing from v6 adapters with halved learning rate.
   - v8 (7B, continued from v7): the standalone `complex_v8` dataset (10,000 complex pairs on 20 new tables) + 7,000 v7 pairs, 3,200 micro-batches (11 h 42 min, peak 10.0 GB); `latest` since 2026-09-30.
   - v9 (7B, continued from v8): `complex_v9/data_mix` (11,989 re-rendered pairs with mirror window style + 1,990 extra window-heavy pairs + 4,000 v7 pairs = 13,251 mix), 2,400 micro-batches (peak 10.0 GB, final val loss 0.008, train loss 0.003).
+  - v10 (7B, continued from v9): `classic_v10/data_mix` (6,646 classic pairs rewritten to the mirror window style + 817 bare `IN` / `NOT IN` pairs + 2,000 classic + 3,000 complex_v9 = 12,463 mix), 2,400 micro-batches (6 h 24 min, peak 9.9 GB, final val loss 0.007, train loss 0.006); candidate, not promoted.
 - **Resilience**: `train_resumable.py` sets smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) and resumes from the latest checkpoint if macOS aborts a long GPU buffer.
 
 ### 5. Hybrid Inference & Empty-Table Verification Loop (`kimi_repair.py`)
@@ -155,8 +156,9 @@ result = (
 4. **Column references**: `F.col("name")` in expressions; plain strings for simple `.select("a", "b")` / `.groupBy("a")`; joins use `df_x.alias("a")` with `F.col("a.col")`.
 5. **No bare counts**: aggregations use `.agg(F.count("*").alias("cnt"))` rather than `.count()`, so the column name matches the SQL alias.
 6. **Window specification style**:
-   - Classic queries (all models) and v8's complex data ("hoist" style): window specs are variables defined before the query, as in the example above. On queries with many windows this made v8 repeat definitions until the token limit.
+   - Classic queries (up to v9) and v8's complex data ("hoist" style): window specs are variables defined before the query, as in the example above. On queries with many windows this made v8 repeat definitions until the token limit.
    - v9's complex data ("mirror" style): `OVER (...)` specs are written inline (`.over(Window.partitionBy(...)...)`); standalone variables are created right before the stage only when the SQL explicitly declares a named `WINDOW w AS (...)` clause.
+   - v10's classic data: the classic pairs rewritten to the same mirror style (`classic_v10/mirror.py`), so the classic and complex targets agree.
 7. **Set operations**:
    - `UNION ALL` → `.unionByName(other)` when both sides have the same column names, otherwise `.union(other)` (SQL matches columns by position)
    - `UNION` → the same call followed by `.distinct()`

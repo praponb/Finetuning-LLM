@@ -39,3 +39,22 @@ cd sql2pyspark-mlx/classic_v10
 ```
 
 Train, export and evaluate: `zsh eval/start_training_v10.sh` from the repo root.
+
+## Results (v10, 2026-10-01)
+
+Trained 2026-10-01 12:18 → 18:42 (6 h 24 min, peak 9.9 GB), validation loss 0.013 → 0.012 → 0.006 → **0.007**
+(`train_v10.log`). v10-q4 (Q4_K_M) vs. v9-q4 (`latest`):
+
+| Eval set | v9-q4 | v10-q4 |
+|---|---|---|
+| Held-out `IN` / `NOT IN` (50, `data/inlist_valid_meta.jsonl`) | 11 | **49** |
+| Hold-out (62) | 59 | **60** |
+| Fixed test set (150) | 140 | **147** |
+| v4 hold-out (25) | **21** | 18 |
+| complex_v8 test (100) | **87** | 85 |
+| Real-world queries (4) | 0 | 0 (`real001` no longer loops) |
+
+Both targets were hit: bare `IN` / `NOT IN` now qualify the join columns, and `real001` writes its windows inline and
+ends normally. One new slip comes from the `IN` / `NOT IN` pattern: a correlated `NOT EXISTS` with an outer column in a
+non-equality condition (`holdout_v4_012`) gets that condition in the inner `.filter()` instead of the join condition.
+Details and the promotion recommendation: [README → v10 results](../../README.md#v10-results-2026-10-01).

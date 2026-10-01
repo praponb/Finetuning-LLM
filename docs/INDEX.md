@@ -1,9 +1,10 @@
 # SQL → PySpark Fine-Tuning: Documentation Index
 
-Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder** (v1–v5: 3B; v6: 7B) for translating Spark SQL queries into idiomatic PySpark DataFrame code.
+Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder** (v1–v5: 3B; v6–v10: 7B) for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
 **Status (2026-10-01):**
 - **Production model:** `sql2pyspark:latest` is **v9-q4** (since 2026-10-01, promoted by the owner, on the Mac and the server): **v9** (trained 2026-10-01): Qwen2.5-Coder-7B continued from v8's adapters (2,400 steps, peak LR 5e-5, final val loss 0.008 / train loss 0.003) on `complex_v9/data_mix` (13,251 pairs) with the **"mirror" window style** (inline Window specs for `OVER (...)` instead of a hoisted block of variables), exported as Q8_0 (`sql2pyspark:v9`) and Q4_K_M (`sql2pyspark:v9-q4`, 4.7 GB). **87/100** on the complex test (v8 60; many-window queries 11–12/15 vs. 1/15); v9 / v9-q4: 59 / 59 hold-out, 134 / **140** fixed test, 18 / **21** v4 hold-out, 0 / 0 real queries. **v9-q4** missed the promotion rule only by one hold-out query; on the server's CPU it generates 4.05 tokens/s vs. v8's 2.47. Rollback: `ollama cp sql2pyspark:v8 sql2pyspark:latest`.
+- **Candidate (not promoted, the owner decides):** **v10-q4** / **v10** (trained 2026-10-01 12:18 → 18:42): v9 continued on `classic_v10/data_mix` (12,463 pairs: the classic pairs in the mirror window style + 817 bare `IN` / `NOT IN` pairs), val loss 0.013 → **0.007**. v10-q4 vs. v9-q4: **49 / 11** of 50 held-out `IN` / `NOT IN`, **60** / 59 hold-out, **147** / 140 fixed test, 18 / **21** v4 hold-out, 85 / **87** complex test, 0 / 0 real queries (`real001` no longer loops). Misses the rule on the v4 hold-out and the complex test; see [Evaluation](04-evaluation-and-benchmarking.md#-v10-results-2026-10-01).
 - **Previous production model:** **v8** (2026-09-30 → 10-01, kept as `sql2pyspark:v8`): v7 continued for 3,200 steps on `complex_v8/data_mix`: 60/62 hold-out, 139/150 fixed test set, 18/25 v4 hold-out, 60/100 complex test, 0/4 real queries (4/4 and 4/4 with the Kimi K3 repair).
 - **Previous models:** v7 (61/62 hold-out, kept as `sql2pyspark:v7`), v6 (the first 7B model, 60/62), v5 (3B, 56/62). Older tags can be rebuilt from their adapters.
 - **Agent repair loop:** Kimi K3 (Moonshot AI) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code (syntax, undefined names, missing `result`, positional `UNION` column ordering via `setop_check`, and ambiguous unqualified columns in aliased joins via `join_check`) and repair it on empty tables with declared schemas.
@@ -16,9 +17,9 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 | Document | Topic | Target Audience | Key Contents |
 | :--- | :--- | :--- | :--- |
 | [Architecture Overview](01-architecture-overview.md) | High-Level System Architecture | All Developers | End-to-end pipeline diagram, design principles, output conventions (`df_<table>`, `result = ...`, mirror window style), Kimi K3 repair loop |
-| [Data Engineering Pipeline](02-data-engineering-pipeline.md) | Dataset Synthesis & Verification | Data Engineers, ML Engineers | Table catalog (22 train + 6 hold-out), dual-rendering expression engine (`sqlspec.py`), 12 query families + v4/v5 families (`advanced.py`), `complex_v8` standalone dataset, `complex_v9` mirror window style, Spark dual-execution check |
-| [Model Training & Export](03-model-training-and-export.md) | MLX LoRA & GGUF Quantization | ML Engineers, MLOps | Base model progression (3B v1–v5 → 7B v6–v9), LoRA hyperparameters, crash-proof `train_resumable.py`, training curves, adapter fusion, BF16 dequantization, Q8_0 and Q4_K_M GGUF export, Ollama packaging |
-| [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, 25 v4-feature hold-out queries, 4 real-world queries on their own tables, strict vs. lenient scoring, v1–v9 benchmark results, fixed test set, repetition penalty experiment, Kimi K3 agent repair benchmark |
+| [Data Engineering Pipeline](02-data-engineering-pipeline.md) | Dataset Synthesis & Verification | Data Engineers, ML Engineers | Table catalog (22 train + 6 hold-out), dual-rendering expression engine (`sqlspec.py`), 12 query families + v4/v5 families (`advanced.py`), `complex_v8` standalone dataset, `complex_v9` mirror window style, `classic_v10` (classic mirror + `IN` / `NOT IN`), Spark dual-execution check |
+| [Model Training & Export](03-model-training-and-export.md) | MLX LoRA & GGUF Quantization | ML Engineers, MLOps | Base model progression (3B v1–v5 → 7B v6–v10), LoRA hyperparameters, crash-proof `train_resumable.py`, training curves, adapter fusion, BF16 dequantization, Q8_0 and Q4_K_M GGUF export, Ollama packaging |
+| [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md) | Execution-Based Scoring | ML Engineers, QA | 62 hold-out queries on unseen schemas, 25 v4-feature hold-out queries, 4 real-world queries on their own tables, strict vs. lenient scoring, v1–v10 benchmark results, fixed test set, repetition penalty experiment, Kimi K3 agent repair benchmark |
 | [Serving & Streamlit UI](05-serving-and-streamlit-ui.md) | Local Inference & Frontend | Frontend Developers, Users | Ollama `/api/chat` integration, `OLLAMA_URL`, Streamlit UI (`app.py`), code-block extraction, long-SQL repetition window, Kimi K3 static check & empty-table repair, containerized app with Java 17 + PySpark |
 | [File Catalog & Reference](06-file-catalog-and-reference.md) | Repository Index | All Contributors | Comprehensive reference of all scripts, datasets, configs, logs, and artifacts in the repository |
 | [Operations Runbook](07-operations-runbook.md) | Practical How-To & Makefile Guide | Developers, DevOps | Environment setup, Make targets (`TAG=v9 PREV=v8`), memory limits, Docker profiles, troubleshooting & FAQs |
@@ -84,6 +85,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── advanced.py               # v4/v5 stage-based families: pipelines, advanced SQL, nested data
 │   ├── complex_v8/               # 10k complex pairs dataset build (20 new tables, 8 families), v8 LoRA config, v8 adapters + train_v8.log
 │   ├── complex_v9/               # Mirror window style dataset build (13.2k mix), v9 LoRA config, v9 adapters + train_v9.log
+│   ├── classic_v10/              # Classic pairs in mirror style + 900 IN / NOT IN pairs (12.5k mix), v10 LoRA config, v10 adapters + train_v10.log
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # PySpark dual-execution verifier
 │   ├── convert_sql_pyspark.py    # Leakage-free splitter & chat formatter
@@ -109,10 +111,10 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── agent_repair.py           # Kimi K3 repair loop for failed answers (key in .env)
 │   ├── report.py                 # Markdown results-table generator
 │   ├── post_training_v4.sh … post_training_v8.sh # Automated post-training scripts
-│   ├── start_training_v7.sh … start_training_v9.sh # End-to-end training & eval runners
+│   ├── start_training_v7.sh … start_training_v10.sh # End-to-end training & eval runners
 │   ├── complex_eval_v8.sh        # Complex test benchmarking script
 │   ├── complex_v8_test.jsonl     # 300 held-out complex_v8 test pairs (100 sampled, seed 0)
 │   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
-│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 results)
+│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 / v9-q4 results, v9-q4-repair, v10-q4 results, inlist/ = IN / NOT IN v10-q4 vs. v9-q4)
 └── llama.cpp/                    # Upstream checkout (GGUF converter)
 ```
