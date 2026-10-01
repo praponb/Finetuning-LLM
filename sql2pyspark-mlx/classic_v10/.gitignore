@@ -1,0 +1,4 @@
+__pycache__/
+# regenerable: build.py prepare + inlist.py, then ../verify_pairs.py (see README.md)
+raw_pairs/
+raw_inlist/

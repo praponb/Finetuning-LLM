@@ -63,7 +63,8 @@ make data N=20000 WORKERS=6
 ### Phase 2: LoRA Fine-Tuning
 ```bash
 # MLX LoRA fine-tuning via train_resumable.py
-# (v9: 7B continued from v8 on complex_v9/data_mix with mirror window style, 2,400 steps, 10 h 18 min;
+# (v10: 7B continued from v9 on classic_v10/data_mix (classic mirror + IN / NOT IN), 2,400 steps, 6 h 24 min;
+#  v9: 7B continued from v8 on complex_v9/data_mix with mirror window style, 2,400 steps, 10 h 18 min;
 #  v8: 7B continued from v7 on complex_v8/data_mix, 3,200 steps, 11 h 42 min;
 #  v7: 7B continued from v6, 2,400 steps, 4 h 58 min;
 #  v6: 7B fresh adapters, 4,800 steps, 8 h 19 min).
@@ -76,12 +77,13 @@ make train
 ```bash
 tail -f sql2pyspark-mlx/train.log
 ```
-To continue from an earlier model instead of starting from scratch (v5 continued from v4; v7 continues from v6; v8 from v7; v9 from v8), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` and use a lower peak learning rate (e.g. 5e-5); the adapter shape (rank, layers) must match.
+To continue from an earlier model instead of starting from scratch (v5 continued from v4; v7 continues from v6; v8 from v7; v9 from v8; v10 from v9), set `resume_adapter_file` in `lora_config.yaml` to that run's `adapters.safetensors` and use a lower peak learning rate (e.g. 5e-5); the adapter shape (rank, layers) must match.
 
 *Automated unattended pipeline:*
 - **v7**: `zsh eval/start_training_v7.sh` (data build wait, train, post-train evals).
 - **v8**: `zsh eval/start_training_v8.sh` (checks `complex_v8/data_mix/` and `runs/v7/`, trains with `complex_v8/lora_config.yaml`, runs `eval/post_training_v8.sh`).
 - **v9**: `zsh eval/start_training_v9.sh` end-to-end automated runner. It verifies `complex_v9/data_mix/`, stops Docker/Ollama, runs `train_resumable.py` (adapters in `complex_v9/adapters/`), exports both Q8_0 (`sql2pyspark.gguf`) and Q4_K_M (`sql2pyspark-q4.gguf`), registers Ollama tags (`sql2pyspark:v9`, `sql2pyspark:v9-q4`), and benchmarks across all evaluation suites.
+- **v10**: `zsh eval/start_training_v10.sh`, the same flow for `classic_v10/data_mix` (adapters in `classic_v10/adapters/`; tags `sql2pyspark:v10`, `:v10-q4`); it overwrites `sql2pyspark.gguf` / `sql2pyspark-q4.gguf` (v9 stays as Ollama tags) and also scores v10-q4 and v9-q4 on the 50 held-out `IN` / `NOT IN` pairs (`eval/results/inlist/`). Log `eval/start_training_v10.log`; training log `sql2pyspark-mlx/classic_v10/train_v10.log`. A finished training run is skipped on restart (`exit=0` in the log).
 
 `make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 or 200 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
 
@@ -110,7 +112,7 @@ make clean
 ```bash
 # Compare the new model with the previous one on the hold-out set, the v4 hold-out set, the real-world queries
 # and 150 test queries (~2 h in total; on 7B, use --timeout 600)
-make eval TAG=v9 PREV=v8
+make eval TAG=v10-q4 PREV=v9-q4
 ```
 
 *Update the README results table:*
@@ -121,8 +123,8 @@ python eval/report.py --readme README.md
 ### Phase 5: Promote to Production
 ```bash
 # Point sql2pyspark:latest at the next model (keeps the old latest as :<PREV> if that tag doesn't exist yet).
-# Currently in production: sql2pyspark:latest is v8.
-make promote TAG=v8 PREV=v7
+# Currently in production: sql2pyspark:latest is v9-q4 (since 2026-10-01); candidate: v10-q4.
+make promote TAG=v10-q4 PREV=v9-q4
 ```
 Promote only if the new model scores at least the previous one on the hold-out set, keeps the classic-family accuracy, beats it on the v4 hold-out set, gets a real-world query right, and doesn't regress on the fixed test set (details in [Evaluation](04-evaluation-and-benchmarking.md#promotions)). Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
 

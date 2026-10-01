@@ -1,0 +1,48 @@
+{
+  "v7_pairs": 20066,
+  "mirrored_verified": 7857,
+  "mirror_failures": 1,
+  "split": {
+    "train": 16922,
+    "valid": 2095,
+    "test": 1047
+  },
+  "inlist": {
+    "verified_non_empty": 867,
+    "train": 817,
+    "valid": 50
+  },
+  "data_mix": {
+    "train": 12463,
+    "classic_mirrored": 6646,
+    "inlist": 817,
+    "classic_plain": 2000,
+    "complex_v9": 3000,
+    "valid": 850
+  },
+  "train_families": {
+    "pipeline": 3149,
+    "inlist": 817,
+    "window": 711,
+    "adv_window": 667,
+    "topn": 617,
+    "adv_dedup": 436,
+    "adv_nested": 407,
+    "adv_session": 382,
+    "agg": 296,
+    "select": 274,
+    "subquery": 270,
+    "join": 217,
+    "special": 201,
+    "adv_agg": 182,
+    "adv_join": 172,
+    "cte_agg_join": 133,
+    "join_agg": 126,
+    "setop": 111,
+    "cte_chain": 85,
+    "derived": 79,
+    "adv_setop": 64,
+    "adv_reshape": 44,
+    "handwritten": 23
+  }
+}

@@ -379,3 +379,37 @@ cd sql2pyspark-mlx/complex_v9
 ../.venv/bin/python ../complex_v8/verify.py --src raw_extra --workers 5 2>/dev/null    # ~9 min
 ../.venv/bin/python build.py                                                           # -> data/ + data_mix/
 ```
+
+---
+
+## 9. The classic_v10 dataset (v10): classic pairs in mirror style + bare `IN` / `NOT IN`
+
+`sql2pyspark-mlx/classic_v10/` is the training dataset for **v10**, aimed at two failures v9 still had on the classic tables. See [classic_v10/README.md](../sql2pyspark-mlx/classic_v10/README.md).
+
+### The problems in v9
+- **`real001` loops.** v9 learned the mirror window style only on the complex_v8 tables. The classic v1–v7 targets still hoisted every window spec (`w`, `w2`, … up to `w21`; 6,829 of the 16,923 v7 training pairs), and v9 repeated exactly that block on the real queries (`w70`, `w71`, …).
+- **Bare `IN` / `NOT IN`.** Every classic IN-subquery aliased the outer table in the SQL (`FROM orders o WHERE o.customer_id IN (...)`), and `id NOT IN (SELECT fk FROM child)` never appeared. On the bare form (`holdout024`, `holdout052`) v8/v9 aliased the DataFrames but wrote an unqualified `F.col("id")` in the join condition (`AMBIGUOUS_REFERENCE`).
+
+### What is in it
+| File | Content |
+| :--- | :--- |
+| `mirror.py` | `mirror_code(sql, code)` rewrites hoisted window code: every `name = Window...` (and derived `w2 = w.rowsBetween(...)`, resolved first) is substituted where it is used; a variable stays only when the SQL names the window (`WINDOW w AS (...)`). Returns `None` for multi-line definitions; the result is checked with `ast.parse`. |
+| `inlist.py` | 900 targeted pairs: `parent.id [NOT] IN (SELECT child.fk ...)` and `child.fk [NOT] IN (SELECT parent.id ...)` (50% anti), no SQL aliases. The PySpark side aliases both DataFrames and qualifies the join columns (`df_a.alias("a").join(df_b.filter(...).alias("b"), F.col("a.id") == F.col("b.fk"), "left_semi" / "left_anti")`); `NOT IN` over a nullable column gets an explicit `IS NOT NULL` filter. |
+| `build.py` | `prepare` (mirror `../raw_pairs/verified.jsonl` → `raw_pairs/`, only changed pairs) and `split` (`data/` with the v7 split by SQL + `data_mix/`) |
+
+- **Spark verification**: 7,857 of the 7,858 rewritten classic pairs still match their SQL (the failure is dropped); 900 / 900 `IN` / `NOT IN` pairs match (867 with a non-empty result are used: 817 train, 50 held out in `data/inlist_valid_meta.jsonl`).
+- **`data/`** keeps the v7 train / valid / test membership by SQL, so `../data/test.jsonl` stays held out and `test_fixed` stays excluded.
+- **`data_mix/`** (what v10 trains on): 12,463 pairs = 6,646 classic training pairs whose window code changed + 817 `IN` / `NOT IN` + 2,000 classic pairs without windows + 3,000 complex_v9 pairs (already mirror style); validation 850 = 500 classic + 50 `IN` / `NOT IN` + 300 complex. Mean ~793 tokens; 3 samples exceed `max_seq_length` 3,200 and are truncated.
+
+### Rebuilding classic_v10
+```bash
+cd sql2pyspark-mlx/classic_v10
+../.venv/bin/python build.py prepare                                   # ../raw_pairs/verified.jsonl -> raw_pairs/
+../.venv/bin/python inlist.py --n 900 --seed 10 --out raw_inlist
+../.venv/bin/python ../verify_pairs.py --src raw_pairs --workers 5 2>/dev/null     # ~15 min
+../.venv/bin/python ../verify_pairs.py --src raw_inlist --workers 5 2>/dev/null    # ~1.5 min
+../.venv/bin/python build.py split
+```
+
+### Opt-in: generic union aliases in complex_v8
+`complex_v8/generate.py --fix-union-aliases` stops the set-operation families from renaming a key column to a count-like alias (`site_id AS qty`): branch columns are grouped by shape (keys vs. integers) and keys get key-like generic names (`entity_id`, `ref_id`, `key_id`). The default output is byte-identical to complex_v8; with the flag, 2,999 of 3,000 set-operation pairs verify and none has a key → count alias. Not used by any trained model yet.
