@@ -1,0 +1,3 @@
+__pycache__/
+# regenerable: generate.py, then ../verify_pairs.py (see README.md)
+raw_v11/
