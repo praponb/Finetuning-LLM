@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & Streamlit UI"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(latest = v9-q4, 7B Q4_K_M; v9 Q8_0, v8 kept;<br/>candidate v10 / v10-q4)"]
+        Ollama["Ollama Engine<br/>(latest = v9-q4, 7B Q4_K_M; v9 Q8_0, v8 kept;<br/>candidates v10 / v10-q4, v11 / v11-q4)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
         KimiApp["kimi_repair.py<br/>(Static check + EmptyTableRunner)"]
 
@@ -104,15 +104,16 @@ Random row-level splitting leaks: near-identical query structures with different
 ### 4. Apple Silicon Training (Apple MLX)
 - **Base model**:
   - `v1–v5`: `mlx-community/Qwen2.5-Coder-3B-Instruct-4bit` (36 transformer blocks, 3.09 B parameters)
-  - `v6–v10`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 transformer blocks, 7.61 B parameters)
+  - `v6–v11`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 transformer blocks, 7.61 B parameters)
 - **Unified memory budget**: fine-tuning runs natively in Apple Silicon unified memory using `mlx-lm`.
   - v2/v3 (3B, short samples): batch 4, no gradient checkpointing, peak ~9.7 GB, ~1 h 50 min.
   - v4/v5 (3B, samples up to 3.1k tokens): batch 2 × 2 gradient accumulation, gradient checkpointing, peak ~9.8–10.3 GB, ~5 h 15 min – 5 h 40 min.
   - v6 (7B, 3.2k tokens): batch 1 × 4 gradient accumulation, gradient checkpointing (batch 2 runs out of GPU memory), peak 10.1 GB, 8 h 19 min on a base M2, ~40–48 trained tokens/s.
   - v7 (7B, continued from v6): batch 1 × 4 gradient accumulation, 2,400 micro-batches (4 h 58 min, peak 9.9 GB), continuing from v6 adapters with halved learning rate.
   - v8 (7B, continued from v7): the standalone `complex_v8` dataset (10,000 complex pairs on 20 new tables) + 7,000 v7 pairs, 3,200 micro-batches (11 h 42 min, peak 10.0 GB); `latest` since 2026-09-30.
-  - v9 (7B, continued from v8): `complex_v9/data_mix` (11,989 re-rendered pairs with mirror window style + 1,990 extra window-heavy pairs + 4,000 v7 pairs = 13,251 mix), 2,400 micro-batches (peak 10.0 GB, final val loss 0.008, train loss 0.003).
+  - v9 (7B, continued from v8): `complex_v9/data_mix` (11,989 re-rendered pairs with mirror window style + 1,990 extra window-heavy pairs + 4,000 v7 pairs = 13,251 mix), 2,400 micro-batches (peak 10.0 GB, final val loss 0.008, train loss 0.003). Promoted to `sql2pyspark:latest` (v9-q4) on 2026-10-01.
   - v10 (7B, continued from v9): `classic_v10/data_mix` (6,646 classic pairs rewritten to the mirror window style + 817 bare `IN` / `NOT IN` pairs + 2,000 classic + 3,000 complex_v9 = 12,463 mix), 2,400 micro-batches (6 h 24 min, peak 9.9 GB, final val loss 0.007, train loss 0.006); candidate, not promoted.
+  - v11 (7B, continued from v10): `targeted_v11/data_mix` (10,000 new targeted pairs for correlated subquery cross conditions, two-predicate WHEREs, subquery GROUP BY, setop projections, LATERAL VIEW filters + 5,000 classic_v10/data_mix = 15,000 mix), 4,000 micro-batches (6 h 04 min, peak 9.7 GB, final val loss 0.007, train loss 0.004); candidate, not promoted.
 - **Resilience**: `train_resumable.py` sets smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) and resumes from the latest checkpoint if macOS aborts a long GPU buffer.
 
 ### 5. Hybrid Inference & Empty-Table Verification Loop (`kimi_repair.py`)
@@ -165,3 +166,8 @@ result = (
    - `EXCEPT` → `.subtract(other)`
    - `INTERSECT` → `.intersect(other)`
 8. **CTEs**: become named intermediate DataFrames instead of one nested expression; scalar subqueries become a value computed up front (`avg_x = df.agg(...).first()[0]`).
+9. **Correlated subquery conditions**:
+   - Every condition referencing the outer query (cross conditions or outer-only conditions) goes into the join condition (`left_semi` / `left_anti`).
+   - Only conditions referencing **exclusively inner columns** may go into the inner `.filter()`.
+   - For `LATERAL VIEW [POS]EXPLODE`, explosion occurs first, then filtering on exploded values.
+

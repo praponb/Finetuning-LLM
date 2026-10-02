@@ -1,0 +1,108 @@
+{
+  "verified": 14700,
+  "empty": 2661,
+  "in_eval_sets": 0,
+  "families": {
+    "exists_corr": {
+      "available": 4716,
+      "train": 4000,
+      "valid": 50,
+      "heldout": 50
+    },
+    "in_corr": {
+      "available": 1268,
+      "train": 1000,
+      "valid": 50,
+      "heldout": 50
+    },
+    "exists_multi": {
+      "available": 1942,
+      "train": 1500,
+      "valid": 50,
+      "heldout": 50
+    },
+    "exists_agg": {
+      "available": 1673,
+      "train": 1500,
+      "valid": 50,
+      "heldout": 50
+    },
+    "setop_proj": {
+      "available": 1194,
+      "train": 1000,
+      "valid": 50,
+      "heldout": 50
+    },
+    "lateral_filter": {
+      "available": 1246,
+      "train": 1000,
+      "valid": 50,
+      "heldout": 50
+    }
+  },
+  "data_mix": {
+    "train": 15000,
+    "new": 10000,
+    "replay_v10_mix": 5000,
+    "valid": 600,
+    "mean_chars": 1433,
+    "max_chars": 13781
+  },
+  "train_features": {
+    "inner_filter": 6106,
+    "cross_cmp": 4558,
+    "not_exists": 4119,
+    "exists_corr": 4000,
+    "order_by": 3876,
+    "exists": 3319,
+    "sibling": 2835,
+    "parent_child": 2730,
+    "child_parent": 2727,
+    "outer_filter": 1621,
+    "exists_multi": 1500,
+    "exists_agg": 1500,
+    "cross_arith": 1376,
+    "in_corr": 1248,
+    "cross_datediff": 1023,
+    "lateral_filter": 1000,
+    "setop_proj": 1000,
+    "cross_date_add": 961,
+    "outer_cond_in_subquery": 881,
+    "not_in_corr": 864,
+    "inner": 774,
+    "ex_nex": 729,
+    "cte": 618,
+    "explode": 597,
+    "cross_ne": 522,
+    "array_struct": 497,
+    "cross_between": 476,
+    "setop_same": 444,
+    "posexplode": 403,
+    "not_null_inner": 368,
+    "not_null_outer": 366,
+    "nex_nex": 322,
+    "setop_shared": 304,
+    "self_manager": 289,
+    "array_str": 289,
+    "self_reports": 266,
+    "where_base": 256,
+    "setop_parent_child": 252,
+    "ex_in": 231,
+    "outer": 226,
+    "ex_ex": 218,
+    "having": 217,
+    "set_union": 213,
+    "set_intersect_all": 183,
+    "set_except": 172,
+    "set_intersect": 164,
+    "set_except_all": 159,
+    "aggregate": 158,
+    "where_pos": 145,
+    "array_double": 138,
+    "parenthesized_branches": 121,
+    "cross_between_cols": 94,
+    "array_int": 76,
+    "set_except_distinct": 63,
+    "set_minus": 46
+  }
+}

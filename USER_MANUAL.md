@@ -22,6 +22,7 @@ SQL2PySpark translates complex SQL queries into clean PySpark code following sta
 
 - **Imports**: Standardized on `from pyspark.sql import functions as F` (and `from pyspark.sql.window import Window` when window functions are used).
 - **Window Specs**: Follows the "mirror" style (v9): inline SQL `OVER (...)` clauses render inline `.over(Window.partitionBy(...))`, while explicit SQL `WINDOW name AS (...)` clauses define named variables `w = Window...`. Earlier models hoisted all window specs to variables.
+- **Correlated Subqueries** (the v11 candidate, `sql2pyspark:v11-q4`; the default v9-q4 often misplaces these): follows the join-condition placement rule: every condition that references outer query columns goes into the `.join(..., how="left_semi" | "left_anti")` condition; only inner-only conditions are filtered in the inner DataFrame before joining.
 - **Table References**: Any table referenced in SQL as `<table>` is accessed in PySpark as `df_<table>` (e.g., `FROM orders` $\rightarrow$ `df_orders`).
 - **Result Output**: The final output DataFrame is always assigned to a variable named `result`.
 - **Method Chaining & Readability**: Uses idiomatic DataFrame API calls (`.select()`, `.filter()`, `.groupBy()`, `.agg()`, `.join()`) rather than embedding raw SQL strings via `spark.sql(...)`.
@@ -108,6 +109,7 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
 - **Model Tag**: Change the text field in the sidebar to switch between model versions:
   - `sql2pyspark` or `sql2pyspark:latest`: Current production model (**v9-q4**, 7B as 4-bit Q4_K_M, since 2026-10-01; much better than v8 on long multi-CTE and many-window queries, 87/100 vs. 60 on the complex test, and ~1.6× faster on a CPU).
   - `sql2pyspark:v9`: the same model at Q8_0 (8.1 GB).
+  - `sql2pyspark:v11-q4` (newest candidate, 2026-10-02, not promoted): best on subqueries that compare inner and outer columns (`NOT EXISTS (... AND a.date >= p.date)`), `IN` / `NOT IN`, set operations and `LATERAL VIEW` filters; but it can turn a `WHERE a OR b` into two `.filter()` calls (wrong rows), so check `OR` queries. `sql2pyspark:v11` is the same model at Q8_0.
   - `sql2pyspark:v10-q4` (candidate, 2026-10-01, not promoted): converts bare `IN` / `NOT IN` subqueries correctly (49/50 vs. v9-q4's 11/50) and no longer loops on long window-heavy classic queries, but is slightly weaker on the v4 hold-out (18 vs. 21 of 25); `sql2pyspark:v10` is the same model at Q8_0. Type the tag in this field to try it.
   - `sql2pyspark:v8`: The previous production model, kept for rollback (`ollama cp sql2pyspark:v8 sql2pyspark:latest`; the server also keeps `v7`).
   - The older tags `v1`–`v6` were removed on 2026-09-30 to save disk space (see `docs/03-model-training-and-export.md` to rebuild one).
@@ -347,7 +349,7 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
 ### Q3: Why does long SQL produce repeating window definitions?
 - **Cause**: the model writes every window spec as a variable before the query and, on long SQL with many windows, repeats that line until it runs out of tokens (e.g. `w1` ... `w93`).
 - **Solution**:
-  - Use the current model (**v9-q4**, the default): it writes `OVER (...)` specs inline ("mirror" style) and loops far less on multi-CTE queries (many-window queries 11–12/15 vs. v8's 1/15), though the longest real-world query (`real001`) still loops. The candidate **v10-q4** (`sql2pyspark:v10-q4`) was also trained on the classic tables in the mirror style and no longer loops on `real001` (it ends normally in ~2.5 min; the result still needs repair).
+  - Use the current model (**v9-q4**, the default): it writes `OVER (...)` specs inline ("mirror" style) and loops far less on multi-CTE queries (many-window queries 11–12/15 vs. v8's 1/15), though the longest real-world query (`real001`) still loops. The candidate **v10-q4** (`sql2pyspark:v10-q4`) was also trained on the classic tables in the mirror style and no longer loops on `real001` (it ends normally in ~2.5 min; the result still needs repair). The next iteration, **v11** (trained on `targeted_v11`), further targets correlated subquery cross conditions, setop projections, and lateral view filters.
   - The Web UI automatically sets `repeat_last_n=2048` for queries over 2,000 characters.
   - If querying the Ollama API directly, pass `"repeat_last_n": 2048` in the request options payload.
   - Enable the Kimi K3 repair toggle in the sidebar to auto-repair looped queries into compact code.
