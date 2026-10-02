@@ -326,7 +326,7 @@ Current tags:
 
 | Tag | Image ID / File | Notes |
 |---|---|---|
-| `sql2pyspark:latest` | `096519684f69` | = v12-q4 on the Mac, promoted 2026-10-03 06:55 (v11-q4 2026-10-02 → 10-03, v9-q4 2026-10-01 → 10-02 and still `latest` on the server) |
+| `sql2pyspark:latest` | `096519684f69` | = v12-q4 on the Mac, promoted 2026-10-03 06:05 (v11-q4 2026-10-02 → 10-03, v9-q4 2026-10-01 → 10-02 and still `latest` on the server) |
 | `sql2pyspark:v8` | `aa01d9d717f7` | exported 2026-09-30 (7B, v7 continued on the complex_v8 data); rebuilt from its adapters 2026-09-30 (same ID); rollback for `latest` |
 | `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); `latest` 09-29 → 09-30; rollback: `ollama cp sql2pyspark:v7 sql2pyspark:latest` |
 | `sql2pyspark:v9` | `72230e76c3d1` | exported 2026-10-01 from `sql2pyspark.gguf` (Q8_0, 8.1 GB); v8 continued on `complex_v9` (mirror window style) |

@@ -35,7 +35,7 @@ sequenceDiagram
 
 ## 🦙 Ollama Serving Engine
 
-Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v12-q4** on the Mac (`096519684f69`, since 2026-10-03 06:55; v11-q4 `0afa9fb8d9b0` 2026-10-02 → 10-03, v9-q4 `f19cf7096ebb` before that and still on the server; 5.1 GB loaded, ~8 s per hold-out query on the M2); `sql2pyspark:v9` (the same model at Q8_0) and `sql2pyspark:v8` (the previous `latest`) stay available on the Mac (v1–v7 were removed from the Mac; the server keeps v7). Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the latest export (v12 since 2026-10-02 23:50, 8.1 GB), and `sql2pyspark-q4.gguf` its Q4_K_M build (v12-q4, 4.7 GB); `sql2pyspark:v10`, `:v10-q4`, `:v11`, `:v12` and `:v12-q4` are registered on the Mac as well.
+Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v12-q4** on the Mac (`096519684f69`, since 2026-10-03 06:05; v11-q4 `0afa9fb8d9b0` 2026-10-02 → 10-03, v9-q4 `f19cf7096ebb` before that and still on the server; 5.1 GB loaded, ~8 s per hold-out query on the M2); `sql2pyspark:v9` (the same model at Q8_0) and `sql2pyspark:v8` (the previous `latest`) stay available on the Mac (v1–v7 were removed from the Mac; the server keeps v7). Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the latest export (v12 since 2026-10-02 23:50, 8.1 GB), and `sql2pyspark-q4.gguf` its Q4_K_M build (v12-q4, 4.7 GB); `sql2pyspark:v10`, `:v10-q4`, `:v11`, `:v12` and `:v12-q4` are registered on the Mac as well.
 
 ### Server Address
 - Default: `http://localhost:11434`

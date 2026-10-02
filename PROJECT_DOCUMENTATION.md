@@ -40,7 +40,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 5. **Exports GGUF models**: standard Q8_0 GGUF (8.10 GB) and, since v9, a 4-bit Q4_K_M GGUF (4.68 GB, smaller and faster for the CPU-only server), served by Ollama behind a Streamlit UI (`app.py`).
 6. **Execution-based evaluation and repair**:
    - Scores models on 62 unseen hold-out queries (v7 98%, v6 97%, v8 97%, v10-q4 97%, v9 / v9-q4 95%), 25 v4-feature queries (v9-q4 **84%**, v8 72%, v9 72%, v10-q4 72%, v7 64%), 4 real-world production queries, a fixed 150-query test set (v10-q4 **147**, v9-q4 140, v8 139, v7 137, v9 134), 100 complex queries on new tables (v9 / v9-q4 **87**, v10-q4 85, v8 60, v7 31) and 50 held-out bare `IN` / `NOT IN` queries (v10-q4 **49**, v9-q4 11).
-   - `sql2pyspark:latest` = **v12-q4 on the Mac** (since 2026-10-03 06:55; v11 with the `OR` slip fixed; v11-q4 2026-10-02 → 10-03) and **v9-q4 on the server**. v9-q4 (4-bit v9, `latest` 2026-10-01 → 10-02 on the Mac): fixes most many-window failures (complex test 87 vs. v8's 60), missed the promotion rule only by one hold-out query, and generates 1.64× as fast as v8 on the server's CPU.
+   - `sql2pyspark:latest` = **v12-q4 on the Mac** (since 2026-10-03 06:05; v11 with the `OR` slip fixed; v11-q4 2026-10-02 → 10-03) and **v9-q4 on the server**. v9-q4 (4-bit v9, `latest` 2026-10-01 → 10-02 on the Mac): fixes most many-window failures (complex test 87 vs. v8's 60), missed the promotion rule only by one hold-out query, and generates 1.64× as fast as v8 on the server's CPU.
    - Candidate **v10-q4** (2026-10-01): fixes bare `IN` / `NOT IN` and the `real001` loop, better on the hold-out and fixed test, but misses the rule on the v4 hold-out (18 vs. 21) and the complex test (85 vs. 87); promotion is the owner's call.
    - **Kimi K3 repair loop** (`kimi_repair.py`): checks and repairs failed answers on empty tables with declared schemas, fixing 3/4 real-world queries for ~$0.20 per query; includes AST `setop_check()` and `join_check()`.
 
@@ -486,7 +486,7 @@ v4 hold-out, correct results (lenient) by feature group:
 
 - **`OR` fixed** (11/12 fixed-test `OR` queries, 97/100 held-out `or_where`), **subqueries kept** (287/300, 230/250, `IN` / `NOT IN` 50/50, v4 hold-out 21).
 - **Remaining**: classic 95/97 (two uncorrelated scalar subqueries in `WHERE` compared against a separate aggregate DataFrame's column), complex 83/100 (pipelines 22/32), real queries 0/4.
-- **Decision**: promoted on the Mac with the owner's approval (`make promote TAG=v12-q4 PREV=v11-q4`, 2026-10-03 06:55); no server deploy.
+- **Decision**: promoted on the Mac with the owner's approval (`make promote TAG=v12-q4 PREV=v11-q4`, 2026-10-03 06:05); no server deploy.
 
 ### v11 results (2026-10-02, `latest` on the Mac 2026-10-02 → 10-03)
 | Eval set | v9-q4 (`latest`) | v10-q4 | **v11-q4** | Rule (vs. v9-q4) |
