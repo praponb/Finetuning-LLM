@@ -43,3 +43,21 @@ cd sql2pyspark-mlx/targeted_v12
 ```
 
 Train, export and evaluate: `zsh eval/start_training_v12.sh` from the repo root.
+
+## Results (v12, 2026-10-03)
+
+Trained 2026-10-02 18:55 → 23:47 (4 h 52 min, peak 9.9 GB), validation loss 0.012 → 0.014 → 0.008 → **0.007**
+(`train_v12.log`).
+
+| Eval set | v9-q4 (server) | v11-q4 (`latest` on the Mac) | v12-q4 |
+|---|---|---|---|
+| Held-out targeted_v12 pairs (250, `data/heldout_meta.jsonl`) | 148 | 169 | **230** |
+| … `or_where` (100) | **98** | 79 | 97 |
+| Fixed-test queries with `OR` (12) | **11** | 9 | **11** |
+| Held-out targeted_v11 pairs (300) | 130 | 283 | **287** |
+| Fixed test (150) / classic (97) | 140 / **97** | 143 / 93 | 143 / 95 |
+| v4 hold-out (25) / hold-out (62) | 21 / 59 | 21 / **60** | 21 / 59 |
+| complex_v8 test (100) | **87** | 84 | 83 |
+
+The `OR` slip is gone and v11's subquery gains stay; the two remaining classic misses are uncorrelated scalar
+subqueries in `WHERE`. Details: [README → v12 results](../../README.md#v12-results-2026-10-03).
