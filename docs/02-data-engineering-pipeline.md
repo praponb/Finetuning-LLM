@@ -476,3 +476,23 @@ cd sql2pyspark-mlx/targeted_v11
 
 **Result (v11, 2026-10-02)**: v11-q4 scores 283/300 on the held-out targeted pairs (v10-q4 83, v9-q4 130) and fixes `holdout_v4_012` / `017` / `021`. The pairs write one `.filter()` per condition and contain no `OR`; v11 then split a `WHERE a OR b` into two `.filter()` calls on 2 fixed-test queries, so the next version of these generators should add `OR` / mixed `AND`-`OR` conditions. See [Evaluation](04-evaluation-and-benchmarking.md#-v11-results-2026-10-02).
 
+---
+
+## 11. The targeted_v12 dataset (v12): OR / mixed AND-OR conditions
+
+`sql2pyspark-mlx/targeted_v12/` is the training dataset for **v12** ([targeted_v12/README.md](../sql2pyspark-mlx/targeted_v12/README.md)). Its pairs come from `targeted_v11/generate.py --counts v12 --or-rate 0.5` (the default options still reproduce targeted_v11 byte for byte):
+
+- **`or_where`** (2,000 train): one table, `child JOIN parent` or `GROUP BY`, with a `WHERE` that mixes `OR` / `AND` / `NOT`: `a OR b`, `(a AND b) OR c`, `a AND b OR c`, `a OR b AND c` (AND binds tighter: `(pa) | ((pb) & (pc))`), `a AND (b OR c)`, `NOT (a OR b)` (`~((pa) | (pb))`), `a OR b OR c` → **one `.filter()`** with `|` / `&` / `~`.
+- **The six targeted_v11 families** (2,700 train): half of their filters become an `OR` of two conditions; some subquery cross conditions are OR'ed with an inner condition (`(o.amount > s.sqft OR o.status IN (...))`), which references the outer query and therefore stays in the **join condition**.
+- **Verification & split**: 6,950 / 6,950 raw pairs match in Spark; 597 empty results dropped; nothing shared with an eval set or targeted_v11; 4,700 train, 85 validation, 250 held out (`data/heldout_meta.jsonl`).
+- **`data_mix/`** (12,976): the 4,700 new pairs + all 976 classic v7 training pairs with `OR` + 2,800 other classic + 2,500 complex_v9 + 2,000 targeted_v11 (4,982 samples with `OR`).
+
+```bash
+cd sql2pyspark-mlx/targeted_v12
+../.venv/bin/python ../targeted_v11/generate.py --seed 12 --counts v12 --or-rate 0.5 --out raw_v12   # 6,950 raw pairs
+../.venv/bin/python ../verify_pairs.py --src raw_v12 --workers 5 2>/dev/null                         # ~5 min
+../.venv/bin/python build.py
+```
+
+**Result (v12, 2026-10-03)**: the fixed-test `OR` queries are back to 11/12 (v11 9) and the held-out `or_where` pairs to 97/100 (v11 79), with the subquery gains kept (287/300, 230/250). See [Evaluation](04-evaluation-and-benchmarking.md#-v12-results-2026-10-03).
+

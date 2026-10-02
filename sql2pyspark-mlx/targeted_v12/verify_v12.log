@@ -1,0 +1,55 @@
+or_where: 3000 pairs (3174 tries)
+exists_corr: 1350 pairs (1350 tries)
+in_corr: 450 pairs (450 tries)
+exists_multi: 750 pairs (1058 tries)
+exists_agg: 600 pairs (812 tries)
+setop_proj: 420 pairs (420 tries)
+lateral_filter: 380 pairs (380 tries)
+wrote 6950 pairs to raw_v12
+checking 6950 pairs with 5 workers ...
+  500/6950  ok=500  (69s)
+  1000/6950  ok=1000  (96s)
+  1500/6950  ok=1500  (120s)
+  2000/6950  ok=2000  (145s)
+  2500/6950  ok=2500  (179s)
+  3000/6950  ok=3000  (204s)
+  3500/6950  ok=3500  (217s)
+  4000/6950  ok=4000  (233s)
+  4500/6950  ok=4500  (247s)
+  5000/6950  ok=5000  (261s)
+  5500/6950  ok=5500  (275s)
+  6000/6950  ok=6000  (288s)
+  6500/6950  ok=6500  (301s)
+{
+  "total": 6950,
+  "ok": 6950,
+  "pass_rate": 1.0,
+  "ok_but_empty_result": 597,
+  "by_status": {
+    "ok": 6950
+  },
+  "by_family": {
+    "exists_agg": {
+      "ok": 600
+    },
+    "exists_corr": {
+      "ok": 1350
+    },
+    "exists_multi": {
+      "ok": 750
+    },
+    "in_corr": {
+      "ok": 450
+    },
+    "lateral_filter": {
+      "ok": 380
+    },
+    "or_where": {
+      "ok": 3000
+    },
+    "setop_proj": {
+      "ok": 420
+    }
+  },
+  "seconds": 319.9
+}
