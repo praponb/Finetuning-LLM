@@ -57,7 +57,9 @@ COUNTS = {"exists_corr": 5600, "in_corr": 1500, "exists_multi": 3000, "exists_ag
 # 2,000 or_where + 1,000 / 300 / 400 / 400 / 300 / 300 of the others for training
 COUNTS_V12 = {"or_where": 3000, "exists_corr": 1350, "in_corr": 450, "exists_multi": 750, "exists_agg": 600,
               "setop_proj": 420, "lateral_filter": 380}
-PREFIX = {"or_where": "orw", "exists_corr": "exc", "in_corr": "inc", "exists_multi": "exm", "exists_agg": "exa",
+# v13 (--counts v13): uncorrelated scalar subqueries (WHERE / SELECT list / HAVING); build.py in targeted_v13 keeps 2,000
+COUNTS_V13 = {"scalar_where": 2600}
+PREFIX = {"scalar_where": "scw", "or_where": "orw", "exists_corr": "exc", "in_corr": "inc", "exists_multi": "exm", "exists_agg": "exa",
           "setop_proj": "sop", "lateral_filter": "lvf"}
 
 
@@ -1040,7 +1042,158 @@ def build_or_where():
     return finish(st, sql), code_of(f"df_{t.name}", steps), feats, order_cols
 
 
-BUILDERS = {"or_where": build_or_where, "exists_corr": build_exists_corr, "in_corr": build_in_corr, "exists_multi": build_exists_multi,
+AGG_NAMES = {"MAX": "max", "MIN": "min", "AVG": "avg", "SUM": "total"}
+
+
+def scalar_sub(st, t, col, fn, var_used, where_p=0.7):
+    """Uncorrelated scalar subquery on t.col -> (sql, py_assignment, var). The inner WHERE is filtered first."""
+    k = st.k
+    preds = [cond(t, None, None, st)] if rng.random() < where_p else []
+    if preds and rng.random() < 0.15:
+        preds.append(pred(t, None, None, st))
+    base = f"{AGG_NAMES[fn]}_{col}"
+    var, i = base, 2
+    while var in var_used:
+        var, i = f"{base}_{i}", i + 1
+    var_used.add(var)
+    sql = f"({k('SELECT')} {k(fn)}({col}) {k('FROM')} {t.name}" + (
+        f" {k('WHERE')} " + f" {k('AND')} ".join(s_ for s_, _ in preds) if preds else "") + ")"
+    df = f"df_{t.name}" + "".join(f".filter({p_})" for _, p_ in preds)
+    py = f'{var} = {df}.agg(F.{fn.lower()}("{col}")).first()[0]'
+    return sql, py, var
+
+
+def build_scalar_where():
+    """WHERE / SELECT / HAVING with an uncorrelated scalar subquery -> .agg(...).first()[0] + a Python value (v13)."""
+    st = St()
+    k = st.k
+    nl = st.nl
+    shape = wchoice([("cmp", 0.35), ("arith", 0.15), ("between", 0.1), ("select_item", 0.15), ("having", 0.12),
+                     ("join", 0.13)])
+    feats = {"scalar_where", "scalar_" + shape}
+    nums_of = lambda t: [c for c in t.columns if c.kind in NUM and c.name != "id"]  # noqa: E731
+    t = rng.choice([x for x in TABLES if nums_of(x)])
+    c = rng.choice(nums_of(t))
+    other = t
+    if rng.random() < 0.3:
+        cands = [(x, y) for x in TABLES if x is not t for y in nums_of(x) if related_names(y.name, c.name)]
+        if cands:
+            other, oc = rng.choice(cands)
+            feats.add("scalar_other_table")
+        else:
+            oc = c
+    else:
+        oc = c
+    used: set = set()
+    pre, steps = [], []
+    fn = rng.choice(["AVG", "AVG", "MAX", "MIN", "SUM"]) if shape not in ("between",) else None
+    pool = [x.name for x in t.columns if x.kind not in ("array",) and x.name not in ("id", c.name)]
+    names = ["id"] + rng.sample(pool, min(len(pool), rng.choice([0, 1, 2]))) + [c.name]
+    names = list(dict.fromkeys(names))
+    order_cols = []
+    if shape in ("cmp", "arith", "between"):
+        extra = [cond(t, None, None, st)] if rng.random() < 0.3 else []
+        if shape == "between":
+            s1, p1, v1 = scalar_sub(st, other, oc.name, "MIN", used)
+            s2, p2, v2 = scalar_sub(st, other, oc.name, "AVG", used)
+            wsql = f"{c.name} {k('BETWEEN')} {s1} {k('AND')} {s2}"
+            wpy = f'F.col("{c.name}").between({v1}, {v2})'
+            pre += [p1, p2]
+        else:
+            fn = rng.choice(["AVG", "AVG", "MAX", "MIN"]) if shape == "cmp" else "AVG"
+            s1, p1, v1 = scalar_sub(st, other, oc.name, fn, used)
+            pre.append(p1)
+            op = "=" if fn in ("MAX", "MIN") and rng.random() < 0.3 else rng.choice([">", ">=", "<", "<="])
+            if shape == "arith":
+                f = rng.choice([0.5, 0.8, 1.2, 1.5, 2])
+                wsql = f"{c.name} {op} {f} * {s1}"
+                # F.lit keeps an empty subquery (None) a NULL, as in SQL; a plain Python `f * None` would raise
+                wpy = f'F.col("{c.name}") {op} F.lit({v1}) * {f}'
+                feats.add("scalar_arith")
+            else:
+                wsql = f"{c.name} {op} {s1}"
+                wpy = f'F.col("{c.name}") {"==" if op == "=" else op} {v1}'
+        conds_sql, conds_py = [wsql] + [s_ for s_, _ in extra], [wpy] + [p_ for _, p_ in extra]
+        if len(conds_sql) > 1 and rng.random() < 0.5:
+            conds_sql, conds_py = conds_sql[::-1], conds_py[::-1]
+        sql = f"{k('SELECT')} {', '.join(names)}{nl}{k('FROM')} {t.name}{nl}{where_sql(st, conds_sql)}"
+        steps += [filter_step(p_) for p_ in conds_py]
+        o_sql, o_py, order_cols = order_limit(st, names, feats)
+        if o_sql:
+            sql += nl + o_sql
+        steps += [call_step("select", [json.dumps(n) for n in names])] + o_py
+    elif shape == "select_item":
+        fn = rng.choice(["AVG", "AVG", "MAX", "SUM"])
+        s1, p1, v1 = scalar_sub(st, other, oc.name, fn, used, where_p=0.5)
+        pre.append(p1)
+        if fn == "SUM":
+            out = rng.choice([f"pct_of_total_{c.name}", "pct_of_total", "share_pct"])
+            item_sql = f"{k('ROUND')}({c.name} * 100.0 / {s1}, 2) {k('AS')} {out}"
+            item_py = f'F.round(F.col("{c.name}") * 100.0 / {v1}, 2).alias("{out}")'
+        else:
+            out = rng.choice([f"{c.name}_minus_{AGG_NAMES[fn]}", f"diff_from_{AGG_NAMES[fn]}", f"{c.name}_vs_{AGG_NAMES[fn]}"])
+            item_sql = f"{c.name} - {s1} {k('AS')} {out}"
+            item_py = f'(F.col("{c.name}") - {v1}).alias("{out}")'
+        sql = f"{k('SELECT')} {', '.join(names)}, {item_sql}{nl}{k('FROM')} {t.name}"
+        extra = [cond(t, None, None, st)] if rng.random() < 0.4 else []
+        if extra:
+            sql += f"{nl}{where_sql(st, [s_ for s_, _ in extra])}"
+            steps += [filter_step(p_) for _, p_ in extra]
+        o_sql, o_py, order_cols = order_limit(st, names, feats)
+        if o_sql:
+            sql += nl + o_sql
+        steps += [call_step("select", [json.dumps(n) for n in names] + [item_py])] + o_py
+    elif shape == "having":
+        gcols = [x for x in t.columns if x.kind == "cat" and x.pool]
+        if not gcols:
+            skip()
+        g = rng.choice(gcols).name
+        fn = rng.choice(["AVG", "AVG", "MAX", "SUM"])
+        an = f"{AGG_NAMES[fn]}_{c.name}"
+        s1, p1, v1 = scalar_sub(st, other, oc.name, "AVG", used, where_p=0.5)
+        pre.append(p1)
+        op = rng.choice([">", ">=", "<"])
+        sql = (f"{k('SELECT')} {g}, {k(fn)}({c.name}) {k('AS')} {an}{nl}{k('FROM')} {t.name}{nl}{k('GROUP BY')} {g}"
+               f"{nl}{k('HAVING')} {k(fn)}({c.name}) {op} {s1}")
+        steps += [call_step("groupBy", [json.dumps(g)]), f'.agg(F.{fn.lower()}("{c.name}").alias("{an}"))',
+                  f'.filter(F.col("{an}") {op} {v1})']
+        if rng.random() < 0.5:
+            sql += f"{nl}{k('ORDER BY')} {an} {k('DESC')}"
+            steps.append(f'.orderBy(F.col("{an}").desc())')
+            order_cols = [an]
+            feats.add("order_by")
+    else:   # join: child JOIN parent, scalar filter on a child column
+        child = rng.choice([x for x in TABLES if fks(x) and nums_of(x)])
+        fk = rng.choice(fks(child))
+        parent = TBL[fk.ref]
+        cc = rng.choice(nums_of(child))
+        u2: set = set()
+        ca, pa = make_alias(child.name, u2), make_alias(parent.name, u2)
+        fn = rng.choice(["AVG", "AVG", "MAX", "MIN"])
+        s1, p1, v1 = scalar_sub(st, child, cc.name, fn, used)
+        pre.append(p1)
+        op = rng.choice([">", ">=", "<", "<="])
+        ppool = [x.name for x in parent.columns if x.kind not in ("array", "id")]
+        pcol = rng.choice(ppool)
+        out = pcol if pcol not in [x.name for x in child.columns] else f"{parent.name.rstrip('s')}_{pcol}"
+        items_sql = [f"{ca}.id", f"{ca}.{cc.name}", f"{pa}.{pcol}" + (f" {k('AS')} {out}" if out != pcol else "")]
+        items_py = [f'F.col("{ca}.id")', f'F.col("{ca}.{cc.name}")', f'F.col("{pa}.{pcol}")' + (f'.alias("{out}")' if out != pcol else "")]
+        sql = (f"{k('SELECT')} {', '.join(items_sql)}{nl}{k('FROM')} {frm(st, child.name, ca)}{nl}{k('JOIN')} "
+               f"{frm(st, parent.name, pa)} {k('ON')} {ca}.{fk.name} = {pa}.id{nl}{k('WHERE')} {ca}.{cc.name} {op} {s1}")
+        o_sql, o_py, order_cols = order_limit(st, ["id", cc.name, out], feats)
+        if o_sql:
+            sql += nl + o_sql
+        steps = [f'.join(df_{parent.name}.alias("{pa}"), F.col("{ca}.{fk.name}") == F.col("{pa}.id"), "inner")',
+                 filter_step(f'F.col("{ca}.{cc.name}") {op} {v1}'), call_step("select", items_py)] + o_py
+        code = "from pyspark.sql import functions as F\n\n" + "\n".join(pre) + "\n\n" + code_of(
+            f'df_{child.name}.alias("{ca}")', steps).split("\n\n", 1)[1]
+        return finish(st, sql), code, feats, order_cols
+    code = "from pyspark.sql import functions as F\n\n" + "\n".join(pre) + "\n\n" + code_of(
+        f"df_{t.name}", steps).split("\n\n", 1)[1]
+    return finish(st, sql), code, feats, order_cols
+
+
+BUILDERS = {"scalar_where": build_scalar_where, "or_where": build_or_where, "exists_corr": build_exists_corr, "in_corr": build_in_corr, "exists_multi": build_exists_multi,
             "exists_agg": build_exists_agg, "setop_proj": build_setop, "lateral_filter": build_lateral}
 
 
@@ -1050,12 +1203,12 @@ def main():
     ap.add_argument("--out", default="raw_v11")
     ap.add_argument("--scale", type=float, default=1.0, help="multiply the per-family counts (debugging)")
     ap.add_argument("--families", default=None, help="comma list (default: every family of --counts)")
-    ap.add_argument("--counts", choices=["v11", "v12"], default="v11")
+    ap.add_argument("--counts", choices=["v11", "v12", "v13"], default="v11")
     ap.add_argument("--or-rate", type=float, default=0.0, help="v12: chance that a filter becomes an OR of two")
     args = ap.parse_args()
     global OR_RATE
     OR_RATE = args.or_rate
-    counts = COUNTS_V12 if args.counts == "v12" else COUNTS
+    counts = {"v11": COUNTS, "v12": COUNTS_V12, "v13": COUNTS_V13}[args.counts]
     rng.seed(args.seed)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)

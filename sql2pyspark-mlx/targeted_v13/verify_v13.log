@@ -1,0 +1,23 @@
+scalar_where: 2600 pairs (2686 tries)
+wrote 2600 pairs to raw_v13
+checking 2600 pairs with 5 workers ...
+  500/2600  ok=500  (59s)
+  1000/2600  ok=1000  (85s)
+  1500/2600  ok=1500  (109s)
+  2000/2600  ok=2000  (129s)
+  2500/2600  ok=2500  (148s)
+{
+  "total": 2600,
+  "ok": 2600,
+  "pass_rate": 1.0,
+  "ok_but_empty_result": 347,
+  "by_status": {
+    "ok": 2600
+  },
+  "by_family": {
+    "scalar_where": {
+      "ok": 2600
+    }
+  },
+  "seconds": 151.0
+}
