@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & Streamlit UI"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(latest = v11-q4 on the Mac, v9-q4 on the server;<br/>v9, v10, v12 (+ Q4) kept / candidates)"]
+        Ollama["Ollama Engine<br/>(latest = v12-q4 on the Mac, v9-q4 on the server;<br/>v8–v11 (+ Q4) kept)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
         KimiApp["kimi_repair.py<br/>(Static check + EmptyTableRunner)"]
 
@@ -113,8 +113,8 @@ Random row-level splitting leaks: near-identical query structures with different
   - v8 (7B, continued from v7): the standalone `complex_v8` dataset (10,000 complex pairs on 20 new tables) + 7,000 v7 pairs, 3,200 micro-batches (11 h 42 min, peak 10.0 GB); `latest` since 2026-09-30.
   - v9 (7B, continued from v8): `complex_v9/data_mix` (11,989 re-rendered pairs with mirror window style + 1,990 extra window-heavy pairs + 4,000 v7 pairs = 13,251 mix), 2,400 micro-batches (peak 10.0 GB, final val loss 0.008, train loss 0.003). Promoted to `sql2pyspark:latest` (v9-q4) on 2026-10-01.
   - v10 (7B, continued from v9): `classic_v10/data_mix` (6,646 classic pairs rewritten to the mirror window style + 817 bare `IN` / `NOT IN` pairs + 2,000 classic + 3,000 complex_v9 = 12,463 mix), 2,400 micro-batches (6 h 24 min, peak 9.9 GB, final val loss 0.007, train loss 0.006); candidate, not promoted.
-  - v11 (7B, continued from v10): `targeted_v11/data_mix` (10,000 new targeted pairs for correlated subquery cross conditions, two-predicate WHEREs, subquery GROUP BY, setop projections, LATERAL VIEW filters + 5,000 classic_v10/data_mix = 15,000 mix), 4,000 micro-batches (6 h 04 min, peak 9.7 GB, final val loss 0.007, train loss 0.004); `latest` on the Mac since 2026-10-02 (the owner's choice).
-  - v12 (7B, continued from v11): `targeted_v12/data_mix` (4,700 new pairs with `OR` / mixed `AND`-`OR` conditions + 976 classic `OR` pairs + 2,800 classic + 2,500 complex_v9 + 2,000 targeted_v11 = 12,976), 2,400 micro-batches (4 h 52 min, peak 9.9 GB, final val loss 0.007); candidate, not promoted.
+  - v11 (7B, continued from v10): `targeted_v11/data_mix` (10,000 new targeted pairs for correlated subquery cross conditions, two-predicate WHEREs, subquery GROUP BY, setop projections, LATERAL VIEW filters + 5,000 classic_v10/data_mix = 15,000 mix), 4,000 micro-batches (6 h 04 min, peak 9.7 GB, final val loss 0.007, train loss 0.004); `latest` on the Mac 2026-10-02 → 10-03.
+  - v12 (7B, continued from v11): `targeted_v12/data_mix` (4,700 new pairs with `OR` / mixed `AND`-`OR` conditions + 976 classic `OR` pairs + 2,800 classic + 2,500 complex_v9 + 2,000 targeted_v11 = 12,976), 2,400 micro-batches (4 h 52 min, peak 9.9 GB, final val loss 0.007); `latest` on the Mac since 2026-10-03 06:05.
 - **Resilience**: `train_resumable.py` sets smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) and resumes from the latest checkpoint if macOS aborts a long GPU buffer.
 
 ### 5. Hybrid Inference & Empty-Table Verification Loop (`kimi_repair.py`)

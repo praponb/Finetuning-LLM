@@ -7,8 +7,8 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) is the single-file technical guide;
 > [docs/INDEX.md](docs/INDEX.md) indexes the modular guides (architecture, data, training, evaluation, serving, file catalog, runbook).
 
-**Models in use:** on the **Mac**, `sql2pyspark:latest` = **v11-q4** since 2026-10-02 (the owner's choice; see
-[v11 results](#v11-results-2026-10-02); roll back with `ollama cp sql2pyspark:v9-q4 sql2pyspark:latest`). The
+**Models in use:** on the **Mac**, `sql2pyspark:latest` = **v12-q4** since 2026-10-03 06:05 (`make promote TAG=v12-q4 PREV=v11-q4`;
+see [v12 results](#v12-results-2026-10-03); roll back with `ollama cp sql2pyspark:v11-q4 sql2pyspark:latest`). The
 **server** still serves **v9-q4** (no server deploy yet, by the owner's decision).
 
 **v9-q4** (`latest` 2026-10-01 → 10-02 on the Mac, still on the server): v9 as a 4-bit Q4_K_M build (4.7 GB). v9 is v8 continued on the
@@ -27,7 +27,7 @@ complex query on the Mac, and on the CPU-only server 4.05 vs. 2.47 tokens/s. See
 (140), **60/62** on the hold-out (59; `holdout024` and `holdout052` fixed), `real001` no longer loops; but **18/25** on the
 v4 hold-out (21) and 85/100 on the complex test (87). See [v10 results](#v10-results-2026-10-01).
 
-**v11-q4** (trained 2026-10-02; `latest` on the Mac since 2026-10-02 18:45, `make promote TAG=v11-q4 PREV=v9-q4`):
+**v11-q4** (trained 2026-10-02; `latest` on the Mac 2026-10-02 18:45 → 10-03 06:05):
 v10 continued on the [targeted_v11 dataset](sql2pyspark-mlx/targeted_v11/README.md) (10,000 new pairs for correlated
 subqueries whose outer columns sit outside the key equality, two-subquery `WHERE`s, set operations and `LATERAL VIEW`
 filters + 5,000 v10 pairs). **283/300** on held-out pairs of those forms (v10-q4 83, v9-q4 130), **21/25** on the v4
@@ -35,7 +35,7 @@ hold-out (v10-q4 18; `holdout_v4_012`, `017`, `021` fixed), **50/50** `IN` / `NO
 (v10-q4 147; on 2 queries v11 turned an `OR` into two `.filter()` calls), 84/100 complex test (v9-q4 87). See
 [v11 results](#v11-results-2026-10-02).
 
-**Candidate v12:** `sql2pyspark:v12-q4` (trained 2026-10-02/03, not promoted): v11 continued on the
+**v12-q4** (trained 2026-10-02/03; **`latest` on the Mac since 2026-10-03**): v11 continued on the
 [targeted_v12 dataset](sql2pyspark-mlx/targeted_v12/README.md) (4,700 new pairs with `OR` / mixed `AND`-`OR` conditions +
 replay). It fixes v11's `OR` slip (fixed-test `OR` queries 11/12, v11-q4 9; held-out `OR` pairs 97/100, v11-q4 79) and
 keeps the subquery gains (287/300 v11 held-out pairs, 230/250 v12 held-out pairs vs. v11-q4 169), 21/25 v4 hold-out;
@@ -267,7 +267,7 @@ with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300
 
 ### v12 results (2026-10-03)
 
-| Eval set | v9-q4 (server) | v11-q4 (`latest` on the Mac) | **v12-q4** |
+| Eval set | v9-q4 (server) | v11-q4 (`latest` 10-02 → 10-03) | **v12-q4** |
 |---|---|---|---|
 | Hold-out (62, unseen tables) | 59 | 60 | **59** |
 | Fixed test set: classic families (97) | 97 | 93 | **95** |
@@ -308,8 +308,8 @@ targeted_v11 pairs (12,976 in total, 4,982 with `OR`).
 **Recommendation**: v12-q4 is better than v11-q4 where it matters most for trust: it no longer returns silently
 wrong rows for `OR` filters, and it keeps every subquery gain. It is slightly behind on complex pipelines (run-time
 errors, which the app's static check / Kimi K3 repair can catch) and the four general sets are even (v9-q4 307,
-v11-q4 308, v12-q4 306). Replacing `latest` on the Mac with v12-q4 is the owner's call:
-`make promote TAG=v12-q4 PREV=v11-q4` (no server deploy). Next data targets: uncorrelated scalar subqueries in `WHERE`
+v11-q4 308, v12-q4 306). The owner approved it: `make promote TAG=v12-q4 PREV=v11-q4` on the Mac (2026-10-03 06:05; a
+smoke test through the app gave a correct `OR` + correlated `NOT EXISTS` answer); no server deploy. Next data targets: uncorrelated scalar subqueries in `WHERE`
 (`crossJoin` with the one-row aggregate, or `.first()[0]` as a literal) and more complex-pipeline replay.
 
 ### v11 results (2026-10-02)
