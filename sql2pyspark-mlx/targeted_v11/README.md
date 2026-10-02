@@ -66,3 +66,21 @@ cd sql2pyspark-mlx/targeted_v11
 ```
 
 Train, export and evaluate: `zsh eval/start_training_v11.sh` from the repo root.
+
+## Results (v11, 2026-10-02)
+
+Trained 2026-10-02 05:55 → 11:59 (6 h 04 min, peak 9.7 GB), validation loss 0.072 → 0.009 → 0.008 → 0.007 → **0.007**
+(`train_v11.log`).
+
+| Eval set | v9-q4 (`latest`) | v10-q4 | v11-q4 |
+|---|---|---|---|
+| Held-out targeted pairs (300, `data/heldout_meta.jsonl`) | 130 | 83 | **283** |
+| … correlated `EXISTS` / `IN` / two subqueries / + `GROUP BY` / set ops / `LATERAL VIEW` (50 each) | 18 / 4 / 19 / 27 / 45 / 17 | 9 / 5 / 5 / 10 / 41 / 13 | **47 / 46 / 44 / 48 / 49 / 49** |
+| v4 hold-out (25) | 21 | 18 | **21** (`012`, `017`, `021` fixed) |
+| Hold-out (62) | 59 | 60 | 60 |
+| Fixed test (150) / classic (97) | 140 / 97 | **147 / 97** | 143 / 93 |
+| complex_v8 test (100) | **87** | 85 | 84 |
+
+The rule was learned. One side effect: these pairs always write one `.filter()` per condition and never contain `OR`,
+and v11 split a `WHERE a OR b` into two `.filter()` calls (AND) on 2 fixed-test queries. Next version: add `OR` /
+mixed `AND`-`OR` conditions to the generators. Details: [README → v11 results](../../README.md#v11-results-2026-10-02).

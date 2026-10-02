@@ -413,3 +413,66 @@ cd sql2pyspark-mlx/classic_v10
 
 ### Opt-in: generic union aliases in complex_v8
 `complex_v8/generate.py --fix-union-aliases` stops the set-operation families from renaming a key column to a count-like alias (`site_id AS qty`): branch columns are grouped by shape (keys vs. integers) and keys get key-like generic names (`entity_id`, `ref_id`, `key_id`). The default output is byte-identical to complex_v8; with the flag, 2,999 of 3,000 set-operation pairs verify and none has a key → count alias. Not used by any trained model yet.
+
+---
+
+## 10. The targeted_v11 dataset (v11): correlated subqueries with cross conditions, set operations, and LATERAL VIEW filters
+
+`sql2pyspark-mlx/targeted_v11/` is the training dataset for **v11**, designed to eliminate regressions observed in v10 on the hold-out evaluation suite (`holdout_v4`). See [targeted_v11/README.md](../sql2pyspark-mlx/targeted_v11/README.md).
+
+### The Problems in v10
+1. **`holdout_v4_012` Regression**: When evaluating correlated `NOT EXISTS` queries whose subquery compares an inner column with an outer column (e.g., `a.appt_date >= p.birth_date`), v10 placed that cross comparison in the inner `.filter()`, where the outer alias `p` was not defined, causing a PySpark runtime `AnalysisException`. Classic datasets only correlated on key equality (`o.customer_id = c.id`), and `classic_v10`'s bare `IN` / `NOT IN` pairs inadvertently overfitted the rule "subquery conditions go in the inner filter".
+2. **`holdout_v4_017`**: A projection placed *after* `INTERSECT ALL` instead of selecting columns *before* the set operation.
+3. **`holdout_v4_021`**: A `WHERE` condition on an exploded array value applied *before* the explode rather than exploding first and filtering after.
+
+### The Canonical PySpark Rule
+> **Subquery Condition Placement Rule:**
+> Every condition that references the outer query (cross condition or outer-only condition) **must go into the join condition** (`left_semi` / `left_anti`).
+> Only conditions that reference **exclusively inner columns** may go into the inner `.filter()`.
+
+```python
+# SQL:
+# SELECT c.id, c.name FROM customers c
+# WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id AND o.status = 'PAID'
+#                   AND o.order_date >= c.signup_date)
+
+# PySpark (targeted_v11 convention):
+result = (
+    df_customers.alias("c")
+    .join(
+        df_orders.filter(F.col("status") == "PAID").alias("o"),
+        (F.col("o.customer_id") == F.col("c.id"))
+        & (F.col("o.order_date") >= F.col("c.signup_date")),
+        "left_anti",
+    )
+    .select(F.col("c.id"), F.col("c.name"))
+)
+```
+
+### Dataset Structure & 6 Generator Families
+
+| Family (id prefix) | Train Count | Description & Target Pattern |
+| :--- | :--- | :--- |
+| `exists_corr` (`exc`) | 4,000 | `[NOT] EXISTS` with 1–2 cross conditions: inequality comparisons, `DATE_ADD`, `DATE_SUB`, `DATEDIFF`, `BETWEEN`, arithmetic (`i.x > o.y * 1.5`), `<>`. Cross and outer-only conditions placed in join condition. Relations: parent → child, child → parent, siblings sharing foreign key, self-joins. |
+| `in_corr` (`inc`) | 1,000 | Correlated `x [NOT] IN (SELECT i.k FROM ... WHERE <outer reference>)`. `NOT IN` over nullable columns gets explicit `IS NOT NULL` guards. |
+| `exists_multi` (`exm`) | 1,500 | Two subquery predicates in one `WHERE` (`EXISTS` + `NOT EXISTS`, double `EXISTS`, `EXISTS` + `IN`) chained into sequential semi / anti joins. |
+| `exists_agg` (`exa`) | 1,500 | Correlated subquery followed by `GROUP BY` (+ `HAVING`, `ORDER BY`), written inline or with filtered rows in a CTE. |
+| `setop_proj` (`sop`) | 1,000 | `INTERSECT [ALL]`, `EXCEPT [ALL | DISTINCT]`, `MINUS`, `UNION` over filtered branches: each branch is filtered and **selected before** the set operation. |
+| `lateral_filter` (`lvf`) | 1,000 | `LATERAL VIEW [OUTER] [POS]EXPLODE` over nested arrays/structs (`carts.items`, `carts.coupon_codes`, `products.tags`, `price_tiers`) with `WHERE` on exploded values: **explode first, then filter**. |
+
+### Verification & Splits
+- **Spark verification**: 14,700 / 14,700 raw pairs match execution results (`raw_v11/verify_report.json`). 2,661 pairs with empty sample results were dropped.
+- **`data/`**: 10,000 `train.jsonl`, 300 `valid.jsonl`, 300 `heldout_meta.jsonl` (50 held-out pairs per family evaluated via `eval/evaluate.py --set`).
+- **`data_mix/`**: 15,000 training pairs (10,000 new targeted pairs + 5,000 sampled from `classic_v10/data_mix` covering mirrored classic, bare `IN`/`NOT IN`, and complex_v9). Validation: 600 pairs (300 new + 300 v10). Mean ~1,430 characters per sample.
+- **Zero Evaluation Leakage**: Uses only training tables (`TABLES + EXTRA_TABLES`). The hold-out domain tables (`patients`, `doctors`, `appointments`, `flights`, `bookings`, `vehicle_trips`) never appear in training.
+
+### Rebuilding targeted_v11
+```bash
+cd sql2pyspark-mlx/targeted_v11
+../.venv/bin/python generate.py --seed 11 --out raw_v11                       # 14,700 raw pairs
+../.venv/bin/python ../verify_pairs.py --src raw_v11 --workers 5 2>/dev/null   # ~11 min
+../.venv/bin/python build.py                                                 # -> data/ + data_mix/
+```
+
+**Result (v11, 2026-10-02)**: v11-q4 scores 283/300 on the held-out targeted pairs (v10-q4 83, v9-q4 130) and fixes `holdout_v4_012` / `017` / `021`. The pairs write one `.filter()` per condition and contain no `OR`; v11 then split a `WHERE a OR b` into two `.filter()` calls on 2 fixed-test queries, so the next version of these generators should add `OR` / mixed `AND`-`OR` conditions. See [Evaluation](04-evaluation-and-benchmarking.md#-v11-results-2026-10-02).
+
