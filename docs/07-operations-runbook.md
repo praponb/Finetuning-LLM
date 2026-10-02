@@ -127,8 +127,8 @@ python eval/report.py --readme README.md
 ### Phase 5: Promote to Production
 ```bash
 # Point sql2pyspark:latest at the next model (keeps the old latest as :<PREV> if that tag doesn't exist yet).
-# Currently: sql2pyspark:latest is v11-q4 on the Mac (since 2026-10-02) and v9-q4 on the server; candidate: v12-q4.
-make promote TAG=v10-q4 PREV=v9-q4
+# Currently: sql2pyspark:latest is v12-q4 on the Mac (since 2026-10-03) and v9-q4 on the server.
+make promote TAG=v12-q4 PREV=v11-q4
 ```
 Promote only if the new model scores at least the previous one on the hold-out set, keeps the classic-family accuracy, beats it on the v4 hold-out set, gets a real-world query right, and doesn't regress on the fixed test set (details in [Evaluation](04-evaluation-and-benchmarking.md#promotions)). Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
 
