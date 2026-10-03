@@ -59,7 +59,7 @@ Training needs Apple MLX, so it stays on the Mac. The finished model is a plain 
   ssh prapon@192.168.1.49 'cd ~/Finetuning-LLM && git merge --ff-only main-from-mac && git branch -D main-from-mac'
   ssh -t prapon@192.168.1.49 'sudo systemctl restart sql2pyspark'
   ```
-- **Model** (after a new fine-tune, `make export` and `make promote` on the Mac): `zsh deploy/update_model.sh v8 v7` copies the Mac's `sql2pyspark.gguf` to the server (`scp`, 8.1 GB), keeps the server's current `latest` as `sql2pyspark:v7`, registers the new file as `sql2pyspark:v8` (same `Modelfile` as the repo) and points `latest` at it; no sudo and no app restart needed. To deploy the 4-bit quantized model instead:
+- **Model** (after a new fine-tune, `make export` and `make promote` on the Mac; **run the script on the Mac**, from the repo root — it copies the file with `scp` and runs the Ollama commands on the server over `ssh`): `zsh deploy/update_model.sh v8 v7` copies the Mac's `sql2pyspark.gguf` to the server (`scp`, 8.1 GB), keeps the server's current `latest` as `sql2pyspark:v7`, registers the new file as `sql2pyspark:v8` (same `Modelfile` as the repo) and points `latest` at it; no sudo and no app restart needed. To deploy the 4-bit quantized model instead:
   ```bash
   GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v9-q4 v8
   ```

@@ -464,7 +464,7 @@ result = (
 - **Spark verification**: 14,700 / 14,700 raw pairs match execution results (`raw_v11/verify_report.json`). 2,661 pairs with empty sample results were dropped.
 - **`data/`**: 10,000 `train.jsonl`, 300 `valid.jsonl`, 300 `heldout_meta.jsonl` (50 held-out pairs per family evaluated via `eval/evaluate.py --set`).
 - **`data_mix/`**: 15,000 training pairs (10,000 new targeted pairs + 5,000 sampled from `classic_v10/data_mix` covering mirrored classic, bare `IN`/`NOT IN`, and complex_v9). Validation: 600 pairs (300 new + 300 v10). Mean ~1,430 characters per sample.
-- **Zero Evaluation Leakage**: Uses only training tables (`TABLES + EXTRA_TABLES`). The hold-out domain tables (`patients`, `doctors`, `appointments`, `flights`, `bookings`, `vehicle_trips`) never appear in training.
+- **Zero Evaluation Leakage**: Uses only training tables (`train_tables()` + `extra_train_tables()`; `EXTRA_TABLES` also holds the hold-out `vehicle_trips`). The hold-out domain tables (`patients`, `doctors`, `appointments`, `flights`, `bookings`, `vehicle_trips`) never appear in training.
 
 ### Rebuilding targeted_v11
 ```bash
