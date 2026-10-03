@@ -1,0 +1,37 @@
+{
+  "verified": 2600,
+  "empty": 347,
+  "dropped_seen_sql": 0,
+  "families": {
+    "scalar_where": {
+      "available": 2253,
+      "train": 2000,
+      "valid": 75,
+      "heldout": 150
+    }
+  },
+  "data_mix": {
+    "train": 11500,
+    "new": 2000,
+    "classic_or": 500,
+    "classic_plain": 1500,
+    "complex_v9": 4000,
+    "targeted_v12": 2000,
+    "targeted_v11": 1500,
+    "valid": 375,
+    "with_or": 2566,
+    "mean_chars": 2196,
+    "max_chars": 11848
+  },
+  "train_features": {
+    "scalar_where": 2000,
+    "order_by": 815,
+    "scalar_cmp": 699,
+    "scalar_select_item": 343,
+    "scalar_join": 286,
+    "scalar_arith": 270,
+    "scalar_other_table": 236,
+    "scalar_between": 213,
+    "scalar_having": 189
+  }
+}

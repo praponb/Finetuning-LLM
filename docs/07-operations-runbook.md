@@ -63,7 +63,8 @@ make data N=20000 WORKERS=6
 ### Phase 2: LoRA Fine-Tuning
 ```bash
 # MLX LoRA fine-tuning via train_resumable.py
-# (v12: 7B continued from v11 on targeted_v12/data_mix (OR / mixed AND-OR + replay), 2,400 steps, 4 h 52 min;
+# (v13: 7B continued from v12 on targeted_v13/data_mix (scalar subqueries + replay), 2,400 steps, 5 h 09 min; not used;
+#  v12: 7B continued from v11 on targeted_v12/data_mix (OR / mixed AND-OR + replay), 2,400 steps, 4 h 52 min;
 #  v11: 7B continued from v10 on targeted_v11/data_mix (correlated subquery cross conditions, set operations, LATERAL VIEW filters), 4,000 steps, 6 h 04 min;
 #  v10: 7B continued from v9 on classic_v10/data_mix (classic mirror + IN / NOT IN), 2,400 steps, 6 h 24 min;
 #  v9: 7B continued from v8 on complex_v9/data_mix with mirror window style, 2,400 steps, 10 h 18 min;
@@ -88,6 +89,7 @@ To continue from an earlier model instead of starting from scratch (v5 continued
 - **v10**: `zsh eval/start_training_v10.sh`, the same flow for `classic_v10/data_mix` (adapters in `classic_v10/adapters/`; tags `sql2pyspark:v10`, `:v10-q4`); it overwrites `sql2pyspark.gguf` / `sql2pyspark-q4.gguf` (v9 stays as Ollama tags) and also scores v10-q4 and v9-q4 on the 50 held-out `IN` / `NOT IN` pairs (`eval/results/inlist/`). Log `eval/start_training_v10.log`; training log `sql2pyspark-mlx/classic_v10/train_v10.log`. A finished training run is skipped on restart (`exit=0` in the log).
 - **v11**: `zsh eval/start_training_v11.sh`, end-to-end runner for `targeted_v11/data_mix` (resumes v10 adapters from `classic_v10/adapters/`, writes `targeted_v11/adapters/`; exports Q8_0 as `sql2pyspark:v11` and Q4_K_M as `sql2pyspark:v11-q4`). Evaluates `v11-q4` across all 4 suites, the 100-sample complex_v8 test, the 50 IN/NOT IN pairs, and evaluates `v11-q4`, `v10-q4`, and `v9-q4` on the 300 held-out `targeted_v11` pairs (`eval/results/v11-heldout/`). Log `eval/start_training_v11.log`; training log `sql2pyspark-mlx/targeted_v11/train_v11.log`.
 - **v12**: `zsh eval/start_training_v12.sh`, the same flow for `targeted_v12/data_mix` (resumes `targeted_v11/adapters`, writes `targeted_v12/adapters/`; tags `sql2pyspark:v12`, `:v12-q4`); scores v12-q4 on every suite and the v11 held-out pairs, and v12-q4 / v11-q4 / v9-q4 on the v12 held-out pairs (`eval/results/v12-heldout/`). Note: the log contains `stopping Docker` at the start, so check for `failed; stopping` / `missing; stopping`, not `stopping`, when watching it.
+- **v13**: `zsh eval/start_training_v13.sh` (targeted_v13, resumes v12; tags `sql2pyspark:v13`, `:v13-q4`). Its export overwrites `sql2pyspark.gguf` / `sql2pyspark-q4.gguf`; v13 regressed, so they were restored to v12 from the Ollama blobs: `ollama show --modelfile sql2pyspark:v12-q4 | grep ^FROM` gives the blob path, `cp <blob> sql2pyspark-q4.gguf` (same for `:v12` → `sql2pyspark.gguf`).
 
 `make train` prints to the terminal; to keep a log file, run `make train > sql2pyspark-mlx/train.log 2>&1`. If Metal aborts a step, `train_resumable.py` restarts from the newest checkpoint (saved every 100 or 200 iterations) and continues the learning-rate schedule; its messages start with `[train_resumable]`.
 
