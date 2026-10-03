@@ -35,7 +35,7 @@ sequenceDiagram
 
 ## 🦙 Ollama Serving Engine
 
-Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v12-q4** on the Mac (`096519684f69`, since 2026-10-03 06:05; v11-q4 `0afa9fb8d9b0` 2026-10-02 → 10-03, v9-q4 `f19cf7096ebb` before that and still on the server; 5.1 GB loaded, ~8 s per hold-out query on the M2); `sql2pyspark:v9` (the same model at Q8_0) and `sql2pyspark:v8` (the previous `latest`) stay available on the Mac (v1–v7 were removed from the Mac; the server keeps v7). Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds the latest export (v12 since 2026-10-02 23:50, 8.1 GB), and `sql2pyspark-q4.gguf` its Q4_K_M build (v12-q4, 4.7 GB); `sql2pyspark:v10`, `:v10-q4`, `:v11`, `:v12` and `:v12-q4` are registered on the Mac as well.
+Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v12-q4** on the Mac (`096519684f69`, since 2026-10-03 06:05; v11-q4 `0afa9fb8d9b0` 2026-10-02 → 10-03, v9-q4 `f19cf7096ebb` before that and still on the server; 5.1 GB loaded, ~8 s per hold-out query on the M2); `sql2pyspark:v9` (the same model at Q8_0) and `sql2pyspark:v8` (the previous `latest`) stay available on the Mac (v1–v7 were removed from the Mac; the server keeps v7). Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds v12 (8.1 GB) and `sql2pyspark-q4.gguf` v12-q4 (4.7 GB; both restored from the Ollama blobs after the v13 export on 2026-10-03); `sql2pyspark:v10`, `:v10-q4`, `:v11`, `:v12`, `:v12-q4`, `:v13` and `:v13-q4` are registered on the Mac as well.
 
 ### Server Address
 - Default: `http://localhost:11434`
@@ -106,6 +106,7 @@ A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama
 - `sql2pyspark:latest` (default; on the Mac **v12-q4** since 2026-10-03, on the server still v9-q4). **v9-q4**: v9 as Q4_K_M, 4.7 GB; "mirror" window style, 87/100 on the complex test vs. v8's 60, one hold-out query weaker; see [Evaluation](04-evaluation-and-benchmarking.md))
 - `sql2pyspark:v9` (the same model at Q8_0, 8.1 GB)
 - `sql2pyspark:v10-q4` / `sql2pyspark:v10` (candidate, 2026-10-01: bare `IN` / `NOT IN` 49/50 vs. 11/50, no `real001` loop, v4 hold-out 18 vs. 21; see [Evaluation](04-evaluation-and-benchmarking.md#-v10-results-2026-10-01))
+- `sql2pyspark:v13-q4` / `sql2pyspark:v13` (2026-10-03, **not used**: a regression on correlated scalar subqueries and the hold-out; kept only as a record)
 - `sql2pyspark:v12-q4` / `sql2pyspark:v12` (`latest` on the Mac since 2026-10-03: v11 with the `OR` slip fixed — fixed-test `OR` queries 11/12, held-out `or_where` 97/100 — and the subquery gains kept; classic 95/97, complex 83/100; see [Evaluation](04-evaluation-and-benchmarking.md#-v12-results-2026-10-03))
 - `sql2pyspark:v11-q4` / `sql2pyspark:v11` (`latest` on the Mac 2026-10-02 → 10-03; correlated subqueries 283/300 held-out vs. 130, `IN` / `NOT IN` 50/50, v4 hold-out 21; but an `OR` can become two `.filter()` calls, classic 93/97; see [Evaluation](04-evaluation-and-benchmarking.md#-v11-results-2026-10-02))
 - `sql2pyspark:v8` (the previous default, kept for rollback)

@@ -52,3 +52,15 @@ cd sql2pyspark-mlx/targeted_v13
 ```
 
 Train, export and evaluate: `zsh eval/start_training_v13.sh` from the repo root.
+
+## Results (v13, 2026-10-03) — regression, not used
+
+Trained 2026-10-03 06:29 → 11:38 (5 h 09 min, peak 10.0 GB), validation loss 0.010 → 0.010 → 0.008 → 0.007
+(`train_v13.log`). v13-q4 vs. v12-q4: **150 / 123** of the 150 held-out pairs, `gen01245` / `gen05869` fixed — but hold-out
+52 / 59, fixed test 134 / 143 (classic `subquery` family 6 / 15 of 17), v4 hold-out 19 / 21, complex 79 / 83.
+
+The pairs taught "scalar subquery → separate aggregate value", and v13 applied it to *correlated* scalar subqueries
+(`... WHERE t2.k = t.k`), which need a window or a grouped join; the mix had no such counter-examples and a small
+classic replay. v13 also misspells the unseen hold-out table `patients` as `df_patents`. v12-q4 stays `latest`. A retry
+should put correlated and uncorrelated scalar subqueries side by side and replay all classic scalar-subquery pairs.
+Details: [README → v13 results](../../README.md#v13-results-2026-10-03--regression-not-used).

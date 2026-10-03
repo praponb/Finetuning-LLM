@@ -496,3 +496,11 @@ cd sql2pyspark-mlx/targeted_v12
 
 **Result (v12, 2026-10-03)**: the fixed-test `OR` queries are back to 11/12 (v11 9) and the held-out `or_where` pairs to 97/100 (v11 79), with the subquery gains kept (287/300, 230/250). See [Evaluation](04-evaluation-and-benchmarking.md#-v12-results-2026-10-03).
 
+---
+
+## 12. The targeted_v13 dataset (v13): uncorrelated scalar subqueries — a lesson in counter-examples
+
+`sql2pyspark-mlx/targeted_v13/` ([README](../sql2pyspark-mlx/targeted_v13/README.md)) targets v12's last two classic misses, `x >= (SELECT MAX(x) FROM t WHERE ...)`: 2,000 `scalar_where` pairs from `targeted_v11/generate.py --seed 13 --counts v13` (comparisons, `F.lit(v) * 1.5` arithmetic so an empty subquery stays NULL, `BETWEEN` two scalars, `SELECT`-list items, `HAVING`, joins), written as `v = df.filter(...).agg(F.max("x")).first()[0]` then `.filter(F.col("x") >= v)`. 2,600 / 2,600 raw pairs verified; 150 held out. Mix 11,500 = 2,000 new + 4,000 complex_v9 + 2,000 targeted_v12 + 1,500 targeted_v11 + 2,000 classic.
+
+**Result**: v13 learned the form (150/150 held out) but applied it to *correlated* scalar subqueries too (`... WHERE t2.k = t.k`, which need a window or a grouped join): the fixed-test `subquery` family fell from 15/17 to 6/17, and the hold-out from 59 to 52. Like v10's `IN` / `NOT IN` pairs, a narrow targeted family without contrasting pairs over-generalizes; a retry needs correlated counter-examples in the same family and a larger classic replay. v13 is not used.
+
