@@ -9,7 +9,9 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 
 **Models in use:** on the **Mac**, `sql2pyspark:latest` = **v12-q4** since 2026-10-03 06:05 (`make promote TAG=v12-q4 PREV=v11-q4`;
 see [v12 results](#v12-results-2026-10-03); roll back with `ollama cp sql2pyspark:v11-q4 sql2pyspark:latest`). The
-**server** still serves **v9-q4** (no server deploy yet, by the owner's decision).
+**server** still serves **v9-q4** (no server deploy yet, by the owner's decision). To move the server to v12-q4, run **on the
+Mac** from the repo root: `GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v12-q4 v9-q4` (scp + ssh, no sudo; the
+file on disk is v12-q4; rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v9-q4 sql2pyspark:latest'`).
 
 **v9-q4** (`latest` 2026-10-01 → 10-02 on the Mac, still on the server): v9 as a 4-bit Q4_K_M build (4.7 GB). v9 is v8 continued on the
 [complex_v9 dataset](sql2pyspark-mlx/complex_v9/README.md): the complex_v8 queries with **"mirror" window code** (an
