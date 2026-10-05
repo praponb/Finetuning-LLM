@@ -3,6 +3,7 @@
 Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder** (v1–v5: 3B; v6–v10: 7B) for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
 **Status (2026-10-03):**
+
 - **Models in use:** `sql2pyspark:latest` is **v12-q4 on the Mac** (since 2026-10-03 06:05; v11-q4 before, 2026-10-02 18:45 → 10-03) and **v12-q4 on the server** (since 2026-10-03 16:48; v9-q4 before, kept for rollback). **v12-q4** (2026-10-03): v11 continued on `targeted_v12` (`OR` / mixed `AND`-`OR` conditions + replay) fixes v11's `OR` slip (fixed-test `OR` queries 11/12 vs. 9, held-out `or_where` 97/100 vs. 79) and keeps the subquery gains (287/300 and 230/250 held-out targeted pairs vs. 283 / 169); 59 hold-out, 21 v4 hold-out, 143 fixed test (classic 95/97), 83 complex test; see [Evaluation](04-evaluation-and-benchmarking.md#-v12-results-2026-10-03).
 - **v13 (2026-10-03) — regression, not used:** v12 continued on `targeted_v13` (2,000 uncorrelated scalar-subquery pairs + replay); v13-q4 vs. v12-q4: 150 / 123 of 150 held-out scalar-subquery pairs, but hold-out 52 / 59 (`df_patents` for `df_patients` in 7 answers), fixed test 134 / 143 (classic `subquery` family 6 / 15 of 17: correlated scalar subqueries now written as a separate aggregate), v4 hold-out 19 / 21, complex 79 / 83; the Q8_0 build is no better (49/62). v12-q4 stays `latest` on the Mac; see [Evaluation](04-evaluation-and-benchmarking.md#-v13-results-2026-10-03--regression-not-used).
 - **v9-q4** (`latest` on the Mac 2026-10-01 → 10-02, on the server 10-01 → 10-03): **v9** (trained 2026-10-01): Qwen2.5-Coder-7B continued from v8's adapters (2,400 steps, peak LR 5e-5, final val loss 0.008 / train loss 0.003) on `complex_v9/data_mix` (13,251 pairs) with the **"mirror" window style** (inline Window specs for `OVER (...)` instead of a hoisted block of variables), exported as Q8_0 (`sql2pyspark:v9`) and Q4_K_M (`sql2pyspark:v9-q4`, 4.7 GB). **87/100** on the complex test (v8 60; many-window queries 11–12/15 vs. 1/15); v9 / v9-q4: 59 / 59 hold-out, 134 / **140** fixed test, 18 / **21** v4 hold-out, 0 / 0 real queries. **v9-q4** missed the promotion rule only by one hold-out query; on the server's CPU it generates 4.05 tokens/s vs. v8's 2.47. Rollback: `ollama cp sql2pyspark:v8 sql2pyspark:latest`.
@@ -36,17 +37,20 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 ## 🚀 Quick Navigation by Persona
 
 ### For Data Engineers
+
 - How queries are generated: [Data Engineering Pipeline § 3](02-data-engineering-pipeline.md#3-compositional-query-generator-generate_datasetpy)
 - Table schemas and seed data: [Data Engineering Pipeline § 1](02-data-engineering-pipeline.md#1-table-catalog--schema-definitions-schemaspy)
 - The Spark verification engine: [Data Engineering Pipeline § 5](02-data-engineering-pipeline.md#5-spark-dual-execution-verifier-verify_pairspy)
 - Complex datasets & mirror window style: [Data Engineering Pipeline § 7 & 8](02-data-engineering-pipeline.md#7-the-complex_v8-dataset-v8)
 
 ### For Machine Learning Engineers
+
 - Base model selection & LoRA configs: [Model Training & Export § Base Model](03-model-training-and-export.md#🧠-base-model-selection)
 - The leakage-free signature split: [Data Engineering Pipeline § 6](02-data-engineering-pipeline.md#6-leakage-free-dataset-splitting-convert_sql_pysparkpy)
 - Benchmark metrics and failure analysis: [Evaluation & Benchmarking](04-evaluation-and-benchmarking.md)
 
 ### For Developers & Users
+
 - End-user guide & query conversion: [User Manual](../USER_MANUAL.md)
 - Start the Streamlit interface: [Operations Runbook § Phase 6](07-operations-runbook.md#phase-6-launch-web-interface)
 - Serve the model via Ollama: [Serving & Streamlit UI](05-serving-and-streamlit-ui.md)
@@ -56,7 +60,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 
 ## 🧭 Repository At A Glance
 
-```
+```text
 .
 ├── Makefile                      # Pipeline runner (`make help` lists targets, default TAG=v9 PREV=v8)
 ├── Modelfile                     # Ollama model definition & system prompt

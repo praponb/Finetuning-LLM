@@ -16,7 +16,7 @@ defined, or attaches the wrong frame to a name. The same loop breaks `real001` (
 The PySpark code now follows the SQL one to one:
 
 | SQL | PySpark (v8, "hoist") | PySpark (v9, "mirror") |
-|---|---|---|
+| --- | --- | --- |
 | `RANK() OVER (PARTITION BY a ORDER BY b DESC)` | `w_a_by_b = Window...` at the top, `.over(w_a_by_b)` | `F.rank().over(Window.partitionBy("a").orderBy(F.col("b").desc()))` |
 | `SUM(x) OVER w_a` + `WINDOW w_a AS (PARTITION BY a)` | `w_a = Window...` at the top, `.over(w_a)` | `w_a = Window.partitionBy("a")` right before the stage that uses it, `.over(w_a)` |
 
@@ -27,7 +27,7 @@ complex_v8 byte for byte); the SQL is identical in both styles.
 ## What is in it
 
 | Path | Content |
-|---|---|
+| --- | --- |
 | `data/train.jsonl` | 11,989 pairs: the complex_v8 training pairs re-rendered (9,999) + 1,990 extra `cx_window_heavy` pairs (seed 9) |
 | `data/valid.jsonl`, `data/test.jsonl` | the complex_v8 valid / test pairs (500 / 300), re-rendered (+ `*_meta.jsonl`) |
 | `data_mix/` | what v9 trains on: the 7,251 pairs that use a window + 2,000 complex pairs without windows + 4,000 v7 pairs (13,251) |
@@ -63,7 +63,7 @@ sample.
 Training: 2026-09-30 19:05 → 10-01 05:23 (10 h 18 min, peak 10.0 GB), validation loss 0.034 → 0.018 → 0.007 → 0.008.
 
 | Eval set | v8 | v9 (Q8_0) | v9-q4 (Q4_K_M) |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | complex_v8 test (same 100 of 300) | 60 | **87** | **87** |
 | … `cx_window_heavy` (15) | 1 | 11 | 12 |
 | Hold-out (62) | 60 | 59 | 59 |

@@ -20,6 +20,7 @@ The project has used two base models in the `Qwen2.5-Coder` family:
 | **v13** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | v12 continued on `targeted_v13` (uncorrelated scalar subqueries + replay; 11,500 mix); Q8_0 (`v13`) and Q4_K_M (`v13-q4`); a regression, not used. |
 
 ### Why scale from 3B to 7B in v6?
+
 Across v1 through v5, 3B models achieved 95% accuracy on classic queries and 56% on v4 features, but scored 0/4 on real-world queries due to repetition loops (`real001` repeating window definitions until token exhaustion) and syntax slips under heavy nesting. While Kimi K3 repair fixes these in post-processing, a larger 7B base model provides the intrinsic representation capacity needed to generate dense, multi-stage pipelines end-to-end.
 
 ---
@@ -30,7 +31,7 @@ LoRA (Low-Rank Adaptation) freezes the pretrained weights and trains small low-r
 
 Training is configured in [lora_config.yaml](../sql2pyspark-mlx/lora_config.yaml) and run with `make train`, which calls [train_resumable.py](../sql2pyspark-mlx/train_resumable.py) (see [Crash-proof training](#crash-proof-training-train_resumablepy)).
 
-### Current v6 Configuration (7B Base Model):
+### Current v6 Configuration (7B Base Model)
 
 ```yaml
 # LoRA fine-tune of Qwen2.5-Coder-7B-Instruct (4-bit MLX) on the SQL -> PySpark dataset.
@@ -72,7 +73,8 @@ test: false
 test_batches: 200
 ```
 
-### Hyperparameter Evolution Across Versions:
+### Hyperparameter Evolution Across Versions
+
 1. **v2 / v3 (3B)**: `iters: 1200`, `batch_size: 4`, no accumulation, `max_seq_length: 1024`, no gradient checkpointing, peak ~9.7 GB, ~1 h 50 min.
 2. **v4 (3B)**: `iters: 2400`, `batch_size: 2`, `grad_accumulation_steps: 2`, `max_seq_length: 3200`, gradient checkpointing enabled, peak 9.74 GB, ~5 h 16 min.
 3. **v5 (3B)**: continued from v4 (`resume_adapter_file: ./runs/v4/adapters/adapters.safetensors`), half learning rate (5.0e-5), peak 10.31 GB, ~5 h 39 min.
@@ -83,13 +85,16 @@ test_batches: 200
 8. **v10 (7B, continued from v9, `classic_v10/lora_config.yaml`)**: `data: ./classic_v10/data_mix` (12,463 pairs), `resume_adapter_file: ./complex_v9/adapters/adapters.safetensors` (v9), `adapter_path: ./classic_v10/adapters`, `iters: 2400`, seed 10, otherwise as v9. 6 h 24 min, peak 9.9 GB, validation loss 0.013 → 0.012 → 0.006 → **0.007**.
 9. **v11 (7B, continued from v10, `targeted_v11/lora_config.yaml`)**: `data: ./targeted_v11/data_mix` (15,000 pairs: 10,000 targeted subquery/setop/lateral pairs + 5,000 sampled from classic_v10), `resume_adapter_file: ./classic_v10/adapters/adapters.safetensors` (v10), `adapter_path: ./targeted_v11/adapters`, `iters: 4000` (1,000 optimizer updates of 4 samples), `batch_size: 1`, `grad_accumulation_steps: 4`, peak LR 5.0e-5, warmup 50, cosine decay to 5.0e-6 over 950 updates, seed 11. Mean sample length ~1,430 chars. 6 h 04 min (2026-10-02 05:55 → 11:59), peak 9.7 GB, validation loss 0.072 → 0.009 → 0.008 → 0.007 → **0.007**.
 
-### Key Architectural Choices:
+### Key Architectural Choices
+
 - **Batch 1 × 4 accumulation + gradient checkpointing (7B since v6)**: on a 16 GB Mac, batch 2 runs out of Metal memory. Batch 1 with gradient accumulation 4 keeps peak memory at 9.0–10.1 GB.
 - **Masked prompt (`mask_prompt: true`)**: the system message and SQL prompt are excluded from the loss, so updates focus on generating the PySpark answer.
 - **Cosine decay with warmup**: v6 used 100 warmup updates to $10^{-4}$ decaying to $10^{-5}$ over 1,100 updates; the continuations since v7 use 50 warmup updates to $5 \times 10^{-5}$ decaying to $5 \times 10^{-6}$ (v7/v9/v10: over 550 updates, v8: 750, v11: 950).
 
 ### Crash-proof training (`train_resumable.py`)
+
 The first v4 run crashed after ~250 iterations with `[METAL] Command buffer execution failed: Impacting Interactivity`: macOS aborts a GPU command buffer that runs too long, and mlx_lm cannot recover. `train_resumable.py`:
+
 - runs `mlx_lm.lora` with smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`; ~9% slower), which avoided the error for the whole second run;
 - if the run still dies, restarts from the newest checkpoint (saved every 100 iterations) for the remaining iterations, continuing the cosine learning-rate schedule from where it stopped (AdamW moments restart), up to 6 times.
 
@@ -98,9 +103,10 @@ The first v4 run crashed after ~250 iterations with `[METAL] Command buffer exec
 ## 📊 Training Dynamics (`train.log`)
 
 ### v11 (7B, continued from v10, targeted_v11 data mix)
+
 Run with `train_resumable.py --config targeted_v11/lora_config.yaml` from `eval/start_training_v11.sh` (log `sql2pyspark-mlx/targeted_v11/train_v11.log`). 2026-10-02 05:55 → 11:59 (6 h 04 min) without a crash; adapters in `sql2pyspark-mlx/targeted_v11/adapters/`. The short new pairs make each step faster than v10's (0.18–0.25 it/s).
 
-```
+```text
 v11 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.072       —             —                —               —                 —
@@ -114,9 +120,10 @@ v11 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 The high starting validation loss (0.072, v10 started its run at 0.013) shows the targeted forms were new to v10.
 
 ### v13 (7B, continued from v12, targeted_v13 data mix) — not used
+
 Run with `train_resumable.py --config targeted_v13/lora_config.yaml` from `eval/start_training_v13.sh` (log `sql2pyspark-mlx/targeted_v13/train_v13.log`): 11,500 pairs, resumes `targeted_v12/adapters`, 2,400 micro-batches, seed 13. 2026-10-03 06:29 → 11:38 (5 h 09 min), peak 10.0 GB.
 
-```
+```text
 v13 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.010       —             —                —               —                 —
@@ -128,9 +135,10 @@ v13 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 The validation loss looked like v12's, yet the model regressed on the hold-out (52/62) and the classic subquery family: the validation set (75 new + 300 v12 pairs) had none of the correlated scalar subqueries v13 broke, so a low validation loss did not catch it.
 
 ### v12 (7B, continued from v11, targeted_v12 data mix)
+
 Run with `train_resumable.py --config targeted_v12/lora_config.yaml` from `eval/start_training_v12.sh` (log `sql2pyspark-mlx/targeted_v12/train_v12.log`): `data: ./targeted_v12/data_mix` (12,976: 4,700 new pairs with `OR` + 976 classic `OR` pairs + 2,800 classic + 2,500 complex_v9 + 2,000 targeted_v11), `resume_adapter_file: ./targeted_v11/adapters/adapters.safetensors`, 2,400 micro-batches (600 updates, cosine to 5e-6 over 550), seed 12. 2026-10-02 18:55 → 23:47 (4 h 52 min) without a crash; adapters in `sql2pyspark-mlx/targeted_v12/adapters/`.
 
-```
+```text
 v12 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.012       —             —                —               —                 —
@@ -141,9 +149,10 @@ v12 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 ```
 
 ### v9 (7B, continued from v8, complex_v9 data mix)
+
 Run with `train_resumable.py --config complex_v9/lora_config.yaml` from `eval/start_training_v9.sh` (log `sql2pyspark-mlx/complex_v9/train_v9.log`). 2026-09-30 19:05 → 2026-10-01 05:23 (10 h 18 min) without a crash; adapters in `sql2pyspark-mlx/complex_v9/adapters/`, so `./adapters` and `complex_v8/adapters` are untouched.
 
-```
+```text
 v9 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.034       —             —                —               —                 —
@@ -156,9 +165,10 @@ v9 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 Final training loss reached **0.003**, with validation loss at **0.008**. The model trained on 1,465,079 tokens over 2,400 iterations, with adapters safely saved in `complex_v9/adapters/adapters.safetensors`.
 
 ### v10 (7B, continued from v9, classic_v10 data mix)
+
 Run with `train_resumable.py --config classic_v10/lora_config.yaml` from `eval/start_training_v10.sh` (log `sql2pyspark-mlx/classic_v10/train_v10.log`). 2026-10-01 12:18 → 18:42 (6 h 24 min) without a crash; adapters in `sql2pyspark-mlx/classic_v10/adapters/`. Samples are shorter than v9's (mean ~793 tokens), so the run took 4 h less for the same 2,400 steps.
 
-```
+```text
 v10 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.013       —             —                —               —                 —
@@ -171,9 +181,10 @@ v10 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 The low starting validation loss (0.013) shows v9 already knew most of the data; the loss that dropped is the mirrored classic window code and the new `IN` / `NOT IN` form.
 
 ### v8 (7B, continued from v7, complex_v8 data mix)
+
 Run with `train_resumable.py --config complex_v8/lora_config.yaml` from `eval/start_training_v8.sh` (log `sql2pyspark-mlx/complex_v8/train_v8.log`; v7 backed up to `runs/v7/` first). 2026-09-29 15:05 → 02:47 (11 h 42 min) without a crash; adapters in `sql2pyspark-mlx/complex_v8/adapters/`, so `./adapters` (v7) is untouched.
 
-```
+```text
 v8 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.135       —             —                —               —                 —
@@ -187,9 +198,10 @@ v8 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 The starting validation loss of 0.135 (v7 on its own data: 0.011) shows how new the complex_v8 queries were to v7. Each validation pass over 100 of these long samples took 8–14 minutes. Export (`mlx_lm.fuse --adapter-path complex_v8/adapters`, Q8_0 GGUF, `ollama create sql2pyspark:v8`) ran from `eval/post_training_v8.sh`; `sql2pyspark:v8` = `aa01d9d717f7`. Evaluation results: [v8 results](04-evaluation-and-benchmarking.md#-v8-results-2026-09-30).
 
 ### v7 (7B, continued from v6)
+
 `sql2pyspark-mlx/train.log` is now the **v7** run (the v6 log is in `sql2pyspark-mlx/runs/v6/train.log`): `resume_adapter_file: ./runs/v6/adapters/adapters.safetensors`, peak learning rate 5e-5 (50 warmup updates, cosine to 5e-6), 600 updates of 4 samples on the v7 dataset as 2,400 micro-batches of 1. 18:13 → 23:11 (4 h 58 min) without a crash; peak memory 9.93 GB.
 
-```
+```text
 v7 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.011       —             —                —               —                 —
@@ -202,9 +214,10 @@ v7 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 The validation set is v7's (it contains the new patterns), so its values are not comparable with v6's table. Validation loss rose while the learning rate was near its peak (continued training restarts the optimizer state) and fell below the starting value as the rate decayed. Evaluation results: [v7 results](04-evaluation-and-benchmarking.md#-v7-results-2026-09-29).
 
 ### v6 (7B, fresh adapters)
+
 The **v6** run (log in `sql2pyspark-mlx/runs/v6/train.log`; the v5 log is in `sql2pyspark-mlx/runs/v5/train.log`): `Qwen2.5-Coder-7B-Instruct-4bit`, fresh adapters, peak learning rate 1e-4 (100 warmup updates, cosine to 1e-5), 1,200 updates of 4 samples on the v5 dataset as 4,800 micro-batches of 1. 07:09 → 15:28 (8 h 19 min) without a crash, including five 4.5–7 min validation passes over 100 samples; peak memory 10.11 GB.
 
-```
+```text
 v6 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.289       —             —                —               —                 —
@@ -219,9 +232,10 @@ v6 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 Iterations are micro-batches of 1 sample, so the it/s column is not comparable with the 3B runs (2 samples per micro-batch). On the same validation set as v5, v6 ends at 0.010 vs. v5's 0.012, although v5 had v4's training before its own. Evaluation results: [v6 results](04-evaluation-and-benchmarking.md#-v6-results-2026-09-28).
 
 ### v5 (continued from v4)
+
 The **v5** run (log in `sql2pyspark-mlx/runs/v5/train.log`): `resume_adapter_file: ./runs/v4/adapters/adapters.safetensors`, peak learning rate 5e-5 (50 warmup updates, cosine to 5e-6), 1,200 updates of 4 samples on the v5 mix (55% classic, 25% short v4 features, 20% pipelines). 17:17 → 22:56 (5 h 39 min) without a crash; peak memory 10.31 GB.
 
-```
+```text
 v5 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.030       —             —                —               —                 —
@@ -238,7 +252,7 @@ The v4 run below trained from scratch; its log is in `sql2pyspark-mlx/runs/v4/tr
 
 The **v4** run (restarted with `train_resumable.py` at 09:47 after the Metal crash; finished at 15:04 without another crash). Iterations are micro-batches of 2 samples; the v2 and v3 logs are kept in `sql2pyspark-mlx/runs/v2/` and `runs/v3/`. Measured on a base Apple M2 (16 GB):
 
-```
+```text
 v4 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
 ───────────────────────────────────────────────────────────────────────────────────────────────
 1        0.389       —             —                —               —                 —
@@ -252,7 +266,8 @@ v4 iter  Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 
 For comparison, v3 went from val loss 0.547 to 0.013 / 0.008 / 0.005 / **0.005** at steps 300 / 600 / 900 / 1200 (batch 4, peak 9.70 GB), and v2 to **0.004**. Each version has its own validation set (the split is recomputed per dataset), and v4's contains long pipelines and nested data, so the higher v4 loss is not a regression.
 
-### Observations:
+### Observations
+
 - **Convergence**: training loss fell below 0.07 within 100 micro-batches and to ~0.012 at the end; validation loss flattened around 0.024 between iterations 1,200 and 1,800 and ended at 0.018.
 - **Memory**: peak 9.74 GB with gradient checkpointing. Running Ollama inference or Docker Desktop at the same time is not possible on a 16 GB Mac.
 - **Duration**: 5 h 16 min for 2,400 micro-batches (≈ 4,800 samples, ~1.0 M trained tokens) including five ~3–5 min validation passes; ~2.5× the v3 run because the average v4 sample is 1.8× longer and checkpointing costs ~40%.
@@ -266,16 +281,20 @@ Checkpoints are saved every 100 iterations in `sql2pyspark-mlx/adapters/` (`0000
 Two fused copies are produced:
 
 ### Step 1: 4-bit Native MLX Model
+
 ```bash
 mlx_lm.fuse \
   --model mlx-community/Qwen2.5-Coder-3B-Instruct-4bit \
   --adapter-path adapters \
   --save-path sql2pyspark-model
 ```
+
 Saved in `sql2pyspark-mlx/sql2pyspark-model/` (1.74 GB `model.safetensors`), usable directly with `mlx_lm.generate`.
 
 ### Step 2: Dequantized BF16 Copy for llama.cpp
+
 `llama.cpp` quantizes from 16-bit weights, so the 4-bit base and the adapters are fused and dequantized:
+
 ```bash
 mlx_lm.fuse \
   --model mlx-community/Qwen2.5-Coder-3B-Instruct-4bit \
@@ -283,6 +302,7 @@ mlx_lm.fuse \
   --save-path ../sql2pyspark-hf \
   --dequantize
 ```
+
 Saved in `sql2pyspark-hf/` (BF16): ~15.2 GB for the 7B (v6: `model-00001-of-00003` … `model-00003-of-00003.safetensors`, 5.34 + 5.26 + 4.62 GB), ~6.2 GB for the 3B (two shards, 5.36 GB + 816 MB), plus `tokenizer.json`, `config.json`, `chat_template.jinja` and `model.safetensors.index.json`. `mlx_lm.fuse` doesn't delete shards of an earlier export with a different shard count; only the files named in the index are read.
 
 Note that these weights started as 4-bit, so the BF16 copy carries the 4-bit rounding; dequantizing doesn't restore full precision.
@@ -298,9 +318,11 @@ python llama.cpp/convert_hf_to_gguf.py sql2pyspark-hf \
   --outtype q8_0 \
   --outfile sql2pyspark.gguf
 ```
+
 It takes about 80 seconds.
 
 ### Quantization Formats: Q8_0 & Q4_K_M
+
 - **Q8_0 (8-bit)**: `sql2pyspark.gguf` is **8.10 GB** for the 7B (7.9 GB loaded in Ollama with a 4k context). 8-bit quantization is close to 16-bit quality, ensuring exact syntax and identifier retention.
 - **Q4_K_M (4-bit Medium)**: `sql2pyspark-q4.gguf` is **4.68 GB** for the 7B, created via `llama.cpp/build/bin/llama-quantize sql2pyspark-f16.gguf sql2pyspark-q4.gguf Q4_K_M`. Specifically tailored for CPU-only environments (such as the Ubuntu home server) where memory bandwidth and capacity are limited, roughly halving the memory read per token. On the eval sets it scored the same as or better than the Q8_0 build (differences within noise) and ran 4–33% faster on the M2; on the server's CPU it generates 1.64× as fast as v8's Q8_0 (4.05 vs. 2.47 tokens/s).
 
@@ -329,7 +351,8 @@ SYSTEM "You are an expert data engineer specializing in SQL and Apache Spark. Co
 
 The system prompt matches the one used in the training data.
 
-### Registration Commands:
+### Registration Commands
+
 ```bash
 make export TAG=v9             # fuse + gguf + ollama create sql2pyspark:v9 -f Modelfile
 make promote TAG=v10-q4 PREV=v9-q4   # keeps old latest as :v9-q4, then ollama cp sql2pyspark:v10-q4 sql2pyspark:latest
@@ -340,7 +363,7 @@ The Makefile defaults are `TAG=v9 PREV=v8` (`BASE=mlx-community/Qwen2.5-Coder-7B
 Current tags:
 
 | Tag | Image ID / File | Notes |
-|---|---|---|
+| --- | --- | --- |
 | `sql2pyspark:latest` | `096519684f69` | = v12-q4 on the Mac, promoted 2026-10-03 06:05 (v11-q4 2026-10-02 → 10-03, v9-q4 2026-10-01 → 10-02 and `latest` on the server until v12-q4 replaced it there on 2026-10-03 16:48) |
 | `sql2pyspark:v8` | `aa01d9d717f7` | exported 2026-09-30 (7B, v7 continued on the complex_v8 data); rebuilt from its adapters 2026-09-30 (same ID); rollback for `latest` |
 | `sql2pyspark:v7` | `d6a6a0edb9da` | exported 2026-09-28 23:14 (7B, continued from v6); `latest` 09-29 → 09-30; rollback: `ollama cp sql2pyspark:v7 sql2pyspark:latest` |

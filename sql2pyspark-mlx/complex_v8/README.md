@@ -6,7 +6,7 @@ from `../verify_pairs.py` and `split()` / `format_sample()` from `../convert_sql
 ## What is in it
 
 | Path | Content |
-|---|---|
+| --- | --- |
 | `data/train.jsonl` | **10,000** training pairs (MLX chat format, same system prompt as v1-v7) |
 | `data/valid.jsonl`, `data/test.jsonl` | 500 / 300 pairs with held-out feature signatures (+ `*_meta.jsonl` for execution eval) |
 | `data/split_stats.json` | counts, token lengths, families, features |
@@ -23,7 +23,7 @@ Every pair was executed in Spark (both sides) and kept only if column names, row
 - **Complex by construction** — every query is a multi-stage pipeline. Families:
 
 | Family | What it teaches |
-|---|---|
+| --- | --- |
 | `cx_pipeline` | 3-7 stages: joins (multi / grandparent), EXISTS / NOT EXISTS / IN subqueries, correlated scalar subqueries (→ pre-aggregated LEFT JOIN), dedup with ROW_NUMBER, compare-to-group, LATERAL VIEW [OUTER] [POS]EXPLODE, aggregation with FILTER / CASE / HAVING |
 | `cx_window_heavy` | 8-16 window functions over 3-6 specs: named `WINDOW` clauses, ROWS frames, IGNORE NULLS, NTH_VALUE, NTILE, PERCENT_RANK, windows partitioned by date expressions, share-of-total with NULLIF |
 | `cx_setop` | UNION ALL / UNION / INTERSECT [ALL] / EXCEPT [ALL] / MINUS, **positional unions of differently named columns (`.union`) vs `.unionByName`**, literal source columns, 3-way unions, union-then-aggregate |

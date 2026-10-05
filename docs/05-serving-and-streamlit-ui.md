@@ -38,15 +38,18 @@ sequenceDiagram
 Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its tag. `sql2pyspark:latest` points to **v12-q4** on the Mac (`096519684f69`, since 2026-10-03 06:05; v11-q4 `0afa9fb8d9b0` 2026-10-02 → 10-03, v9-q4 `f19cf7096ebb` before that; the server runs v12-q4 too since 2026-10-03 16:48; 5.1 GB loaded, ~8 s per hold-out query on the M2); `sql2pyspark:v9` (the same model at Q8_0) and `sql2pyspark:v8` (the previous `latest`) stay available on the Mac (v1–v7 were removed from the Mac; the server keeps v7). Ollama keeps its own copy of each tag; `sql2pyspark.gguf` on disk holds v12 (8.1 GB) and `sql2pyspark-q4.gguf` v12-q4 (4.7 GB; both restored from the Ollama blobs after the v13 export on 2026-10-03); `sql2pyspark:v10`, `:v10-q4`, `:v11`, `:v12`, `:v12-q4`, `:v13` and `:v13-q4` are registered on the Mac as well.
 
 ### Server Address
+
 - Default: `http://localhost:11434`
 - Override with the `OLLAMA_URL` environment variable (read by both `app.py` and `eval/evaluate.py`), e.g. `OLLAMA_URL=http://gpu-box:11434 make app`.
 
 ### API Endpoint
+
 - **URL**: `$OLLAMA_URL/api/chat`
 - **Method**: `POST`
 - **Headers**: `Content-Type: application/json`
 
-#### Request Payload (as sent by `app.py`):
+#### Request Payload (as sent by `app.py`)
+
 ```json
 {
   "model": "sql2pyspark",
@@ -62,9 +65,11 @@ Each export registers `sql2pyspark.gguf` in the local Ollama daemon under its ta
   }
 }
 ```
+
 The system prompt and `top_p 0.9` come from the Modelfile, so the app doesn't send them.
 
-#### Response Structure (example):
+#### Response Structure (example)
+
 ```json
 {
   "model": "sql2pyspark",
@@ -84,7 +89,9 @@ The system prompt and `top_p 0.9` come from the Modelfile, so the app doesn't se
 [app.py](../app.py) is a streamlined (~180 lines) Streamlit frontend with support for local Ollama inference and automated Kimi K3 empty-table verification and repair.
 
 ### 1. Robust Code Extraction (`extract_code`)
+
 Models sometimes stop before closing a code fence. `extract_code()` handles both cases:
+
 ```python
 def extract_code(text: str) -> str:
     """Return the longest fenced code block in the reply (or the whole reply if there is none)."""
@@ -95,14 +102,18 @@ def extract_code(text: str) -> str:
     text = re.sub(r"^\s*```(?:python|pyspark|py)?\s*\n", "", text)
     return text.replace("```", "").strip()
 ```
+
 `eval/evaluate.py` and `kimi_repair.py` use an identical implementation, so the UI, evaluation, and repair agent process identical code blocks.
 
 ### 2. Two-Column Layout
+
 - **Left column**: text area preloaded with an example query (`COUNT(*)`, `AVG()`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`).
 - **Right column**: generated code with syntax highlighting, AST check status, and Streamlit's copy button.
 
 ### 3. Model Tag Field (Sidebar)
+
 A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama list`, for example:
+
 - `sql2pyspark:latest` (default; on the Mac **v12-q4** since 2026-10-03, on the server v12-q4 since 2026-10-03 16:48). **v9-q4**: v9 as Q4_K_M, 4.7 GB; "mirror" window style, 87/100 on the complex test vs. v8's 60, one hold-out query weaker; see [Evaluation](04-evaluation-and-benchmarking.md))
 - `sql2pyspark:v9` (the same model at Q8_0, 8.1 GB)
 - `sql2pyspark:v10-q4` / `sql2pyspark:v10` (candidate, 2026-10-01: bare `IN` / `NOT IN` 49/50 vs. 11/50, no `real001` loop, v4 hold-out 18 vs. 21; see [Evaluation](04-evaluation-and-benchmarking.md#-v10-results-2026-10-01))
@@ -114,9 +125,11 @@ A text field (default `sql2pyspark`, i.e. `latest`) accepts any tag from `ollama
 The older tags `v1`–`v6` were removed on 2026-09-30; see [Model Training & Export](03-model-training-and-export.md) to rebuild one (e.g. the faster 3B v5).
 
 ### Generation settings
+
 `app.py` sends `temperature` 0.2. For SQL longer than 2,000 characters, `generation_options()` also sets `repeat_last_n` to 2,048 (Ollama's default: 64) and the request timeout rises from 180 s to 600 s: on long multi-CTE queries the model otherwise repeats window definitions until the token limit. Short queries are unaffected (see the repetition-penalty experiment in [Evaluation](04-evaluation-and-benchmarking.md)). With v6 (7B) this setting no longer stops the `real001` loop (identical 92-window reply); the static check flags the resulting syntax error, and the Kimi K3 repair fixed the same kind of looping answer from v5 in both repair tests.
 
 ### Kimi K3 repair (optional)
+
 With `KIMI_API_KEY` set (in `.env`; Docker passes it in), the app checks and repairs the model's answer with Kimi K3 (Moonshot AI). The shared logic is in `kimi_repair.py`:
 
 1. **Static check** (free, instant, `static_check()`):
@@ -131,6 +144,7 @@ With `KIMI_API_KEY` set (in `.env`; Docker passes it in), the app checks and rep
 On the 4 real-world queries this mode fixes 3 (0/4 before; $0.79 in total, 1.5-6.5 minutes per query); see [Evaluation](04-evaluation-and-benchmarking.md#-agent-repair-loop-with-kimi-k3-2026-09-28). Spark starts once per app process (`get_spark()`, `local[1]`, 1 GB).
 
 ### 4. Error Handling
+
 - **Ollama unreachable**: shows `Cannot connect to Ollama at <OLLAMA_URL>. Make sure the Ollama service is running (open -a Ollama).`
 - **Blank input**: shows a warning.
 - **Timeout**: 180 seconds per request (600 seconds for SQL longer than 2,000 characters; raised from 120/300 s for the slower 7B model, which needed up to ~270 s on the real-world queries).
@@ -150,11 +164,14 @@ streamlit run app.py
 The UI runs at **`http://localhost:8501`**.
 
 ### From Docker
+
 ```bash
 docker compose up -d --build     # app container on http://localhost:8501, model served by the host's Ollama
 docker compose down
 ```
+
 The image includes Java 17 and PySpark for the Kimi K3 checks (2.1 GB; 0.8 GB before). `docker-compose.yml` reads `.env` if it exists (`env_file`, optional), so the key never goes into the image. The `app` container reaches the native Ollama on the host through `OLLAMA_URL=http://host.docker.internal:11434` (the default in `docker-compose.yml`) and reports healthy once Streamlit is up. Keep Ollama native on a Mac: containers can't use the Apple GPU. See the [Operations Runbook](07-operations-runbook.md#-docker) for the other profiles.
 
 ### On a Linux server
-The public site https://sql2pyspark.praponb.com runs on an Ubuntu server with native Ollama and the app as a systemd service behind a Cloudflare Tunnel and a Cloudflare Access login (allowed emails only; Cloudflare account or emailed one-time code); see [Server Deployment](08-server-deployment.md).
+
+The public site <https://sql2pyspark.praponb.com> runs on an Ubuntu server with native Ollama and the app as a systemd service behind a Cloudflare Tunnel and a Cloudflare Access login (allowed emails only; Cloudflare account or emailed one-time code); see [Server Deployment](08-server-deployment.md).

@@ -7,6 +7,7 @@ The data engineering pipeline in `sql2pyspark-mlx/` generates, verifies, and pac
 ## 📂 Pipeline Overview
 
 The pipeline runs in three phases (`make data` runs all three):
+
 1. **Synthesis**: compositional query generation from Python objects (`generate_dataset.py` + `sqlspec.py`) plus curated pairs (`handwritten_pairs.py`).
 2. **Ground-truth verification**: local PySpark execution comparing the SQL result with the PySpark result (`verify_pairs.py`).
 3. **Leakage-free splitting**: signature-based partitioning and chat formatting (`convert_sql_pyspark.py`).
@@ -18,6 +19,7 @@ The pipeline runs in three phases (`make data` runs all three):
 [schemas.py](../sql2pyspark-mlx/schemas.py) defines the relational domain model for the dataset. It provides base tables and extra complex nested tables:
 
 ### A. Training Tables (22 total)
+
 - **17 Base Tables** (used by `generate_dataset.py` and `handwritten_pairs.py`):
   - **E-commerce & retail**: `customers`, `orders`, `order_items`, `products`, `suppliers`, `payments`, `shipments`, `stores`, `inventory`, `store_sales`, `subscriptions`
   - **HR**: `employees`, `departments`
@@ -31,12 +33,16 @@ The pipeline runs in three phases (`make data` runs all three):
   - `promotions`: channel, promotion codes, active date ranges, discount percentages
 
 ### B. Hold-Out Tables (6 total, `holdout=True`)
+
 Never used by the generator or the hand-written training pairs; only evaluation sets use them:
+
 - **5 Base Hold-Out Tables**: `patients`, `doctors`, `appointments` (healthcare); `flights`, `bookings` (aviation)
 - **1 Extra Nested Hold-Out Table**: `vehicle_trips` (driver IDs, trip timestamps, `ARRAY<STRUCT>` stops with wait times and fares, route struct, telemetry JSON strings, extras map, and fare component arrays)
 
 ### C. Column Types, Nested Schemas & Synthetic Data
+
 Every table is defined with typed `Column` descriptors supporting primitive and nested data types:
+
 ```python
 @dataclass(frozen=True)
 class Column:
@@ -58,6 +64,7 @@ class Column:
 [sqlspec.py](../sql2pyspark-mlx/sqlspec.py) keeps the SQL and PySpark sides consistent. Instead of generating text with regexes or templates, it represents each query as a tree of typed objects.
 
 Every expression inherits from base class `E` and implements:
+
 - `.sql(style)`: renders Spark SQL according to the surface `Style`.
 - `.py(ctx)`: renders the equivalent PySpark expression.
 
@@ -104,7 +111,9 @@ classDiagram
 Query-level objects are not expressions: `Rel` (a table, CTE or derived table), `Join`, `Semi` (EXISTS / IN / NOT EXISTS / NOT IN, rendered as semi/anti joins in PySpark) and `Sel` (a full `SELECT` with joins, filters, grouping, HAVING, ORDER BY and LIMIT). `WinSpec` holds a window's partition, order and frame.
 
 ### Surface Styling Variance (`Style`)
+
 To make the model robust to different SQL writing styles, `Style` randomizes non-semantic variations:
+
 - Upper- vs. lower-case keywords (`SELECT` vs. `select`)
 - Explicit vs. implicit aliases (`col AS c` vs. `col c`) and short vs. full table aliases
 - `<>` vs. `!=`
@@ -113,6 +122,7 @@ To make the model robust to different SQL writing styles, `Style` randomizes non
 - Trailing semicolons, explicit `ASC`
 
 ### Preamble Management (`Ctx`)
+
 `Ctx` collects window specifications (`w = Window.partitionBy(...)`) and scalar-subquery values, and places them before the main DataFrame chain; `render_code()` adds the imports.
 
 ---
@@ -139,12 +149,15 @@ To make the model robust to different SQL writing styles, `Style` randomizes non
 Each sample is tagged with feature tags, for example `where_cmp`, `where_like`, `where_null`, `where_or`, `case`, `fn_date`, `fn_str`, `agg_case`, `having`, `order`, `limit`, `join_left`, `window_rank`, `window_frame`, `cte`, `set_union_all`. The tags drive the split in step 6.
 
 ### v3 generator changes
+
 v3 targets the v2 hold-out failures (see [04 - Evaluation](04-evaluation-and-benchmarking.md)):
+
 - **Set operations over differently named columns**: 35% of set operations now pair columns with different names (`city` / `location`). The SQL is written positionally, with an alias on the right side, or with a common alias on both sides. The PySpark uses `.union()` when the names differ and `.unionByName()` when they line up, because SQL matches set-operation columns by position. Feature tags: `set_positional`, `set_alias_right`, `set_alias_both`.
 - **`GROUP BY` references**: grouping keys are referenced by expression, by alias or by ordinal (`GROUP BY 1`). Ordinals are used more often when a key is a `CASE` expression (35%), so the model learns to keep the `CASE` as the grouping key.
 - **Exact `NOT IN` semantics**: `x NOT IN (subquery)` drops rows where `x` is NULL, unless the subquery returns no rows. The PySpark now computes the excluded values first and adds `.filter(F.col(x).isNotNull() | F.lit(excluded.isEmpty()))` after the anti join, so the pair that failed verification in v2 is now correct.
 
 ### v4: stage-based families (`advanced.py`)
+
 v4 adds [advanced.py](../sql2pyspark-mlx/advanced.py), bound into `generate_dataset.FAMILIES`, for the SQL that real production queries use and v1–v3 never generated. A query is a chain of **stages**; each stage turns one relation into the next and renders both a SELECT (a CTE body, or the main query for the last stage) and the matching PySpark chain:
 
 | Stage | SQL | PySpark |
@@ -171,7 +184,9 @@ Row-order-dependent windows (`ROW_NUMBER`, `LAG`, `NTILE`, `ROWS` frames, `FIRST
 Known weaknesses of the v4 data: some `HAVING agg < 0` filters and an inherited `NOT IN` over every value of a column returned empty results, which made their Spark check weak (the pairs were still correct). Both are fixed in v5.
 
 ### v5 generator changes
+
 v5 targets what v4 got wrong on the v4 hold-out set (6 of its 16 misses were wrong column lists) and its regression on classic queries:
+
 1. **Exact projections**: windows, session, dedup, foreign-key-join and LATERAL stages usually end with an explicit column list (`subset_cols()`: the keys plus a random subset) instead of `SELECT *` / `s.*`, and drop helper columns (session flags, previous timestamps, `rn`). Feature tag `explicit_projection`.
 2. **Null-safe comparisons**: `<=>` keys in foreign-key joins (`.eqNullSafe(...)`) and `IS [NOT] DISTINCT FROM` filters (`~F.col(c).eqNullSafe(F.lit(v))`).
 3. **`stg_join_agg`** (new): join a dimension table and aggregate in one SELECT with `GROUPING SETS` / `ROLLUP` / `CUBE` / plain `GROUP BY` and `GROUPING_ID()` (only with the first three); grouping keys that exist in both tables get distinct aliases.
@@ -185,7 +200,9 @@ v5 targets what v4 got wrong on the v4 hold-out set (6 of its 16 misses were wro
 v5 data is generated with `--seed 5` (v4: 0) and 20% pipelines (`fam_pipeline` weight 42); the split drops every pair whose SQL appears in the fixed test set (`convert_sql_pyspark.py --exclude ../eval/test_fixed.jsonl`, 2 pairs). About 36% of pipelines still return an empty result on the 40-row sample tables (stacked dedup / anti-join / set-operation stages); their stages pass the check on thousands of non-empty cases.
 
 ### v7 generator changes
+
 v7 targets the remaining persistent gaps from v5 and v6 evaluations (`holdout015` date division slips, `holdout031` unrelated column set operations, and window partition expressions):
+
 1. **DATEDIFF arithmetic**: `derive()` in `generate_dataset.py` adds arithmetic on date differences (`DATEDIFF(CURRENT_DATE(), birth_date) / 365 AS approx_years`, `... / 7 AS weeks`, `ROUND(DATEDIFF(...) / 30.0, 1)`), explicitly teaching PySpark `(F.datediff(...) / 365)` and preventing the model from confusing string literals or calling `.alias(...)` on a Python float. Tag `fn_date_arith`.
 2. **Window partitioned by date expression**: `date_part_expr()` generates `PARTITION BY DATE_TRUNC('month', ts)`, `YEAR(d)`, `TO_DATE(ts)` within both `generate_dataset.py` (`make_window()`) and `advanced.py` (`make_window_item()`), teaching window specs that partition on derived expressions. Tag `window_expr_partition`.
 3. **Unrelated column set operations**: `unrelated_col_pairs()` in `fam_setop` pairs string columns of different tables with different names and completely unrelated values (e.g. `city` vs. `hospital`, as in `holdout031`). SQL set operations combine them by position, requiring PySpark `.union()` instead of `.unionByName()`. Also adds `WHERE <col> IS NOT NULL` filters on both branches (30% chance). Tags `set_unrelated`, `set_not_null_filter`.
@@ -197,6 +214,7 @@ v7 data is generated with `--seed 7` (`make data N=20000 SEED=7 WORKERS=4`).
 ## 4. Curated Pairs (`handwritten_pairs.py`)
 
 [handwritten_pairs.py](../sql2pyspark-mlx/handwritten_pairs.py) adds **105 hand-written pairs** (the v1 curated set, ported to the v2 conventions and schema). They cover features the generator produces rarely or never, for example:
+
 - Modulo arithmetic (`%`) and `POWER()`
 - `ORDER BY ... NULLS LAST`
 - String functions (`SPLIT`, `CONCAT_WS`, `REGEXP_EXTRACT`, `REPLACE`)
@@ -211,7 +229,7 @@ All 105 are execution-verified and always go to the training split.
 
 [verify_pairs.py](../sql2pyspark-mlx/verify_pairs.py) checks every pair using a pool of worker processes (`multiprocessing`, spawn context), each with its own local `SparkSession`.
 
-```
+```text
                     ┌───────────────────────────────┐
                     │ raw_pairs/*.sql & *.py        │
                     └───────────────┬───────────────┘
@@ -242,12 +260,14 @@ All 105 are execution-verified and always go to the training split.
                  verified.jsonl        verify_failures.jsonl
 ```
 
-### Verification Rules:
+### Verification Rules
+
 1. **Column matching**: names and order must be identical (`s_cols == p_cols`).
 2. **Multiset equivalence**: rows are normalized (numbers rounded to 4 decimals, dates ISO-formatted, NaN standardized) and compared with `Counter(map(repr, rows))`, so row order doesn't matter.
 3. **Ordering**: if the query has `ORDER BY`, the sequence of the ORDER BY columns must match (rows that tie may come out in either order).
 
-### Verification Run Results (`raw_pairs/verify_report.json`):
+### Verification Run Results (`raw_pairs/verify_report.json`)
+
 - **v7**: 20,066 of 20,105 ok, 20,065 after removing 1 fixed-test duplicate (`sql2pyspark-mlx/data_v7.log`, ~28 min; 2,800 return an empty result)
 - **v5**: 20,073 of 20,105 ok (`sql2pyspark-mlx/data_v5.log`, ~21 min, 99.84% pass rate)
 - **v4**: 20,068 of 20,105 ok (`data_v4.log`, in `runs/v4/`)
@@ -262,6 +282,7 @@ The failing pairs are dropped. In v5, 2,761 passing pairs (14%; v4: 11%) return 
 [convert_sql_pyspark.py](../sql2pyspark-mlx/convert_sql_pyspark.py) turns `verified.jsonl` into the JSONL chat datasets.
 
 ### Signature-Based Split
+
 The split is done by **feature signature**:
 $$\text{Signature} = \text{family} \;\|\; \text{sorted}(\text{features})$$
 
@@ -270,7 +291,8 @@ $$\text{Signature} = \text{family} \;\|\; \text{sorted}(\text{features})$$
 3. A signature is only held out if it holds at most 2% of the pairs and every one of its features keeps at least `min_train_per_feature=30` training examples.
 4. All 105 hand-written pairs always go to `train`.
 
-### Final Split Statistics:
+### Final Split Statistics
+
 - **v7 (`data/split_stats.json`)**:
   - **Verified pairs**: 20,065 (minus 1 excluded matching fixed test set)
   - **Training set (`train.jsonl`)**: 16,923 pairs (9,215 signatures)
@@ -285,8 +307,10 @@ Pipelines have nearly unique signatures, so they make up a larger share of valid
 
 `valid_meta.jsonl` / `test_meta.jsonl` keep the SQL, reference code and ORDER BY columns for execution-based evaluation.
 
-### Chat Template Structure:
+### Chat Template Structure
+
 Each record uses the MLX chat format and the same prompt the Ollama runtime and `app.py` use:
+
 ```json
 {
   "messages": [
@@ -305,6 +329,7 @@ Each record uses the MLX chat format and the same prompt the Ollama runtime and 
   ]
 }
 ```
+
 v4 training samples are 411 tokens long on average (v3: ~230) and at most 3,119 tokens, under `max_seq_length: 3200`; the answer (the part that is trained) averages 211 tokens.
 
 ---
@@ -314,7 +339,7 @@ v4 training samples are 411 tokens long on average (v3: ~230) and at most 3,119 
 `sql2pyspark-mlx/complex_v8/` is a **standalone** second pipeline (2026-09-29), built so the 10,000 new pairs needed no change to the v1–v7 generator. It only imports `compare()` / `rows_of()` from `verify_pairs.py` and `split()` / `format_sample()` from `convert_sql_pyspark.py`. See [complex_v8/README.md](../sql2pyspark-mlx/complex_v8/README.md).
 
 | File | Role |
-|---|---|
+| --- | --- |
 | `catalog.py` | 20 **new tables** in 6 domains never used before: music (`artists`, `tracks`, `listeners`, `plays`), insurance (`policyholders`, `adjusters`, `policies`, `claims`), logistics (`warehouses`, `skus`, `stock_moves`), energy (`sites`, `meter_readings`, `tariff_windows`), education (`students`, `courses`, `enrollments`), support (`support_agents`, `tickets`, `ticket_events`); clustered timestamps (bursts of minutes, days between bursts) so session logic has something to find |
 | `generate.py` | stage-based generator: every stage emits a SQL CTE and the matching PySpark block together; filter thresholds come from the real sample values, so most filters keep rows |
 | `verify.py` | Spark execution check with the same rules as `verify_pairs.py` |
@@ -324,7 +349,7 @@ v4 training samples are 411 tokens long on average (v3: ~230) and at most 3,119 
 **Families** (share of the 10,000 training pairs):
 
 | Family | Pairs | Content |
-|---|---|---|
+| --- | --- | --- |
 | `cx_pipeline` | 2,786 | 3–7 stages: joins (incl. grandparent and multi-joins), EXISTS / NOT EXISTS / IN subqueries → `left_semi` / `left_anti`, correlated scalar subqueries → pre-aggregated LEFT JOIN + COALESCE, dedup with ROW_NUMBER, compare-to-group-average, LATERAL VIEW [OUTER] [POS]EXPLODE, aggregation with FILTER / CASE / HAVING / PERCENTILE_APPROX / COLLECT_SET |
 | `cx_window_heavy` | 1,690 | 8–16 window functions over 3–6 window specs (named `WINDOW` clauses, ROWS frames, IGNORE NULLS, NTH_VALUE, NTILE, PERCENT_RANK, share-of-total with NULLIF, windows partitioned by date expressions), often followed by a second window stage |
 | `cx_setop` | 1,355 | UNION ALL / UNION / INTERSECT [ALL] / EXCEPT [ALL] / MINUS; **positional unions of differently named columns → `.union()`**, same names → `.unionByName()`; literal source columns; 3-way unions; union-then-aggregate |
@@ -350,9 +375,11 @@ cd sql2pyspark-mlx/complex_v8
 `sql2pyspark-mlx/complex_v9/` is the training dataset for **v9**. It keeps the SQL, tables, and train/valid/test split structure of [complex_v8](../sql2pyspark-mlx/complex_v8/README.md), but transforms the PySpark representation of queries that use window functions. See [complex_v9/README.md](../sql2pyspark-mlx/complex_v9/README.md).
 
 ### The Problem in v8
+
 v8 scored only 1/15 on `cx_window_heavy` on the complex_v8 test set despite having 1,690 training pairs of that family. In the v8 target code ("hoist" style), **every** window specification was defined as a variable at the top of the script. This forced the model to plan 8–16 near-identical lines before generating any DataFrame transformations, frequently triggering token-exhaustion loops (`w1` ... `w93` as also seen in `real001`).
 
 ### The "Mirror" Style
+
 The PySpark code now mirrors the SQL structure directly:
 
 | SQL | PySpark (v8, "hoist") | PySpark (v9, "mirror") |
@@ -363,6 +390,7 @@ The PySpark code now mirrors the SQL structure directly:
 `generate.py --window-style mirror` renders this style (the default `hoist` reproduces complex_v8 byte for byte); SQL queries are identical in both styles.
 
 ### Dataset Contents & Re-Verification
+
 - **`data/train.jsonl`**: 11,989 pairs (9,999 complex_v8 training pairs re-rendered in mirror style + 1,990 extra `cx_window_heavy` pairs from seed 9).
 - **`data/valid.jsonl` (500) & `data/test.jsonl` (300)**: re-rendered complex_v8 validation and test sets.
 - **`data_mix/`**: 13,251 training pairs (every complex pair with a window [7,251] + 2,000 complex pairs without windows + 4,000 v7 pairs to retain classic accuracy) and 1,000 validation pairs.
@@ -370,6 +398,7 @@ The PySpark code now mirrors the SQL structure directly:
 - **Leakage check**: the extra pairs have non-empty results and zero signature overlap with valid/test.
 
 ### Rebuilding complex_v9
+
 ```bash
 cd sql2pyspark-mlx/complex_v9
 ../.venv/bin/python ../complex_v8/generate.py --n 13000 --seed 8 --out raw_pairs --window-style mirror
@@ -387,10 +416,12 @@ cd sql2pyspark-mlx/complex_v9
 `sql2pyspark-mlx/classic_v10/` is the training dataset for **v10**, aimed at two failures v9 still had on the classic tables. See [classic_v10/README.md](../sql2pyspark-mlx/classic_v10/README.md).
 
 ### The problems in v9
+
 - **`real001` loops.** v9 learned the mirror window style only on the complex_v8 tables. The classic v1–v7 targets still hoisted every window spec (`w`, `w2`, … up to `w21`; 6,829 of the 16,923 v7 training pairs), and v9 repeated exactly that block on the real queries (`w70`, `w71`, …).
 - **Bare `IN` / `NOT IN`.** Every classic IN-subquery aliased the outer table in the SQL (`FROM orders o WHERE o.customer_id IN (...)`), and `id NOT IN (SELECT fk FROM child)` never appeared. On the bare form (`holdout024`, `holdout052`) v8/v9 aliased the DataFrames but wrote an unqualified `F.col("id")` in the join condition (`AMBIGUOUS_REFERENCE`).
 
 ### What is in it
+
 | File | Content |
 | :--- | :--- |
 | `mirror.py` | `mirror_code(sql, code)` rewrites hoisted window code: every `name = Window...` (and derived `w2 = w.rowsBetween(...)`, resolved first) is substituted where it is used; a variable stays only when the SQL names the window (`WINDOW w AS (...)`). Returns `None` for multi-line definitions; the result is checked with `ast.parse`. |
@@ -402,6 +433,7 @@ cd sql2pyspark-mlx/complex_v9
 - **`data_mix/`** (what v10 trains on): 12,463 pairs = 6,646 classic training pairs whose window code changed + 817 `IN` / `NOT IN` + 2,000 classic pairs without windows + 3,000 complex_v9 pairs (already mirror style); validation 850 = 500 classic + 50 `IN` / `NOT IN` + 300 complex. Mean ~793 tokens; 3 samples exceed `max_seq_length` 3,200 and are truncated.
 
 ### Rebuilding classic_v10
+
 ```bash
 cd sql2pyspark-mlx/classic_v10
 ../.venv/bin/python build.py prepare                                   # ../raw_pairs/verified.jsonl -> raw_pairs/
@@ -412,6 +444,7 @@ cd sql2pyspark-mlx/classic_v10
 ```
 
 ### Opt-in: generic union aliases in complex_v8
+
 `complex_v8/generate.py --fix-union-aliases` stops the set-operation families from renaming a key column to a count-like alias (`site_id AS qty`): branch columns are grouped by shape (keys vs. integers) and keys get key-like generic names (`entity_id`, `ref_id`, `key_id`). The default output is byte-identical to complex_v8; with the flag, 2,999 of 3,000 set-operation pairs verify and none has a key → count alias. Not used by any trained model yet.
 
 ---
@@ -421,11 +454,13 @@ cd sql2pyspark-mlx/classic_v10
 `sql2pyspark-mlx/targeted_v11/` is the training dataset for **v11**, designed to eliminate regressions observed in v10 on the hold-out evaluation suite (`holdout_v4`). See [targeted_v11/README.md](../sql2pyspark-mlx/targeted_v11/README.md).
 
 ### The Problems in v10
+
 1. **`holdout_v4_012` Regression**: When evaluating correlated `NOT EXISTS` queries whose subquery compares an inner column with an outer column (e.g., `a.appt_date >= p.birth_date`), v10 placed that cross comparison in the inner `.filter()`, where the outer alias `p` was not defined, causing a PySpark runtime `AnalysisException`. Classic datasets only correlated on key equality (`o.customer_id = c.id`), and `classic_v10`'s bare `IN` / `NOT IN` pairs inadvertently overfitted the rule "subquery conditions go in the inner filter".
 2. **`holdout_v4_017`**: A projection placed *after* `INTERSECT ALL` instead of selecting columns *before* the set operation.
 3. **`holdout_v4_021`**: A `WHERE` condition on an exploded array value applied *before* the explode rather than exploding first and filtering after.
 
 ### The Canonical PySpark Rule
+
 > **Subquery Condition Placement Rule:**
 > Every condition that references the outer query (cross condition or outer-only condition) **must go into the join condition** (`left_semi` / `left_anti`).
 > Only conditions that reference **exclusively inner columns** may go into the inner `.filter()`.
@@ -457,16 +492,18 @@ result = (
 | `in_corr` (`inc`) | 1,000 | Correlated `x [NOT] IN (SELECT i.k FROM ... WHERE <outer reference>)`. `NOT IN` over nullable columns gets explicit `IS NOT NULL` guards. |
 | `exists_multi` (`exm`) | 1,500 | Two subquery predicates in one `WHERE` (`EXISTS` + `NOT EXISTS`, double `EXISTS`, `EXISTS` + `IN`) chained into sequential semi / anti joins. |
 | `exists_agg` (`exa`) | 1,500 | Correlated subquery followed by `GROUP BY` (+ `HAVING`, `ORDER BY`), written inline or with filtered rows in a CTE. |
-| `setop_proj` (`sop`) | 1,000 | `INTERSECT [ALL]`, `EXCEPT [ALL | DISTINCT]`, `MINUS`, `UNION` over filtered branches: each branch is filtered and **selected before** the set operation. |
+| `setop_proj` (`sop`) | 1,000 | `INTERSECT [ALL]`, `EXCEPT [ALL \| DISTINCT]`, `MINUS`, `UNION` over filtered branches: each branch is filtered and **selected before** the set operation. |
 | `lateral_filter` (`lvf`) | 1,000 | `LATERAL VIEW [OUTER] [POS]EXPLODE` over nested arrays/structs (`carts.items`, `carts.coupon_codes`, `products.tags`, `price_tiers`) with `WHERE` on exploded values: **explode first, then filter**. |
 
 ### Verification & Splits
+
 - **Spark verification**: 14,700 / 14,700 raw pairs match execution results (`raw_v11/verify_report.json`). 2,661 pairs with empty sample results were dropped.
 - **`data/`**: 10,000 `train.jsonl`, 300 `valid.jsonl`, 300 `heldout_meta.jsonl` (50 held-out pairs per family evaluated via `eval/evaluate.py --set`).
 - **`data_mix/`**: 15,000 training pairs (10,000 new targeted pairs + 5,000 sampled from `classic_v10/data_mix` covering mirrored classic, bare `IN`/`NOT IN`, and complex_v9). Validation: 600 pairs (300 new + 300 v10). Mean ~1,430 characters per sample.
 - **Zero Evaluation Leakage**: Uses only training tables (`train_tables()` + `extra_train_tables()`; `EXTRA_TABLES` also holds the hold-out `vehicle_trips`). The hold-out domain tables (`patients`, `doctors`, `appointments`, `flights`, `bookings`, `vehicle_trips`) never appear in training.
 
 ### Rebuilding targeted_v11
+
 ```bash
 cd sql2pyspark-mlx/targeted_v11
 ../.venv/bin/python generate.py --seed 11 --out raw_v11                       # 14,700 raw pairs
@@ -503,4 +540,3 @@ cd sql2pyspark-mlx/targeted_v12
 `sql2pyspark-mlx/targeted_v13/` ([README](../sql2pyspark-mlx/targeted_v13/README.md)) targets v12's last two classic misses, `x >= (SELECT MAX(x) FROM t WHERE ...)`: 2,000 `scalar_where` pairs from `targeted_v11/generate.py --seed 13 --counts v13` (comparisons, `F.lit(v) * 1.5` arithmetic so an empty subquery stays NULL, `BETWEEN` two scalars, `SELECT`-list items, `HAVING`, joins), written as `v = df.filter(...).agg(F.max("x")).first()[0]` then `.filter(F.col("x") >= v)`. 2,600 / 2,600 raw pairs verified; 150 held out. Mix 11,500 = 2,000 new + 4,000 complex_v9 + 2,000 targeted_v12 + 1,500 targeted_v11 + 2,000 classic.
 
 **Result**: v13 learned the form (150/150 held out) but applied it to *correlated* scalar subqueries too (`... WHERE t2.k = t.k`, which need a window or a grouped join): the fixed-test `subquery` family fell from 15/17 to 6/17, and the hold-out from 59 to 52. Like v10's `IN` / `NOT IN` pairs, a narrow targeted family without contrasting pairs over-generalizes; a retry needs correlated counter-examples in the same family and a larger classic replay. v13 is not used.
-
