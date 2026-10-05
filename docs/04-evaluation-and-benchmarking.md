@@ -251,7 +251,7 @@ Earlier samples are kept outside the report's glob: `eval/results/v4-split/` (th
 - **v8** (2026-09-30, continued from v7 on the complex_v8 mix) is better on the v4 hold-out (18 vs. 16), the fixed test set (139 vs. 137) and the new complex test (60 vs. 31), but scores 60/62 on the hold-out (rule ≥ 61) and 0/4 real-world queries; the owner **promoted** it on 2026-09-30 (`make promote TAG=v8 PREV=v7`); v7 is kept as `sql2pyspark:v7`. See [v8 results](#-v8-results-2026-09-30).
 - **v9-q4** (2026-10-01, v9 as Q4_K_M) missed the rule only by one hold-out query (59 vs. 60) and was **promoted** by the owner (`make promote TAG=v9-q4 PREV=v8`); v8 is kept as `sql2pyspark:v8`. See [v9 results](#-v9-results-2026-10-01).
 - **v13-q4** (2026-10-03) learned uncorrelated scalar subqueries (150/150) but broke correlated ones and an unseen table name (hold-out 52, fixed test 134); **not used**. See [v13 results](#-v13-results-2026-10-03--regression-not-used).
-- **v12-q4** (2026-10-03) fixes v11's `OR` slip (fixed-test `OR` queries 11/12, held-out `or_where` 97/100) and keeps the subquery gains (287/300, 230/250); classic 95/97, complex 83/100; **promoted on the Mac** (2026-10-03 06:05, `make promote TAG=v12-q4 PREV=v11-q4`; the server keeps v9-q4). See [v12 results](#-v12-results-2026-10-03).
+- **v12-q4** (2026-10-03) fixes v11's `OR` slip (fixed-test `OR` queries 11/12, held-out `or_where` 97/100) and keeps the subquery gains (287/300, 230/250); classic 95/97, complex 83/100; **promoted on the Mac** (2026-10-03 06:05, `make promote TAG=v12-q4 PREV=v11-q4`; deployed to the server 2026-10-03 16:48). See [v12 results](#-v12-results-2026-10-03).
 - **v11-q4** (2026-10-02, `latest` on the Mac 2026-10-02 18:45 → 10-03 by the owner's choice; the server keeps v9-q4) misses the rule on the classic families of the fixed test (93 vs. 97: two `OR` → two `.filter()` slips) and the complex test (84 vs. 87), but is the best model on subqueries (283/300 held-out targeted pairs vs. 130, 50/50 `IN` / `NOT IN`) and restores the v4 hold-out (21); promoted on the Mac only. See [v11 results](#-v11-results-2026-10-02).
 - **v10-q4** (2026-10-01) misses the rule on the v4 hold-out (18 vs. 21) and the complex test (85 vs. 87) but fixes bare `IN` / `NOT IN` (49/50 vs. 11/50) and the `real001` loop; **not promoted yet** (the owner's call). See [v10 results](#-v10-results-2026-10-01).
 - **v6** (2026-09-28, the 7B model) beats or ties v5 on every set and meets every condition except the real-world query one, which no model has met; it was **promoted** (`make promote TAG=v6 PREV=v5`), with v5 kept as `sql2pyspark:v5` for rollback. See [v6 results](#-v6-results-2026-09-28).
@@ -311,7 +311,7 @@ The queries are far outside the v3 training distribution:
 
 v13 continues from v12's adapters on **`targeted_v13/data_mix`** (see [Data Engineering § 12](02-data-engineering-pipeline.md)): 2,000 uncorrelated scalar-subquery pairs + 4,000 complex_v9 + 2,000 targeted_v12 + 1,500 targeted_v11 + 2,000 classic = 11,500; 2,400 micro-batches, 2026-10-03 06:29 → 11:38, validation loss 0.010 → **0.007**. `eval/start_training_v13.sh` scored v13-q4 on every set and on all held-out targeted pairs, and v13-q4 / v12-q4 on the 150 v13 held-out pairs (`eval/results/v13-heldout/`); the Q8_0 `sql2pyspark:v13` was scored on the hold-out by hand afterwards.
 
-| Eval set | v9-q4 (server) | **v12-q4** (`latest` on the Mac) | v13-q4 | v13 (Q8_0) |
+| Eval set | v9-q4 (server until 10-03) | **v12-q4** (`latest` on the Mac) | v13-q4 | v13 (Q8_0) |
 |---|---|---|---|---|
 | Hold-out (62, unseen tables) | 59 | **59** | 52 | 49 |
 | Fixed test set: classic families (97) | **97** | 95 | 86 | — |
@@ -329,7 +329,7 @@ v13 continues from v12's adapters on **`targeted_v13/data_mix`** (see [Data Engi
 - **Target hit, then over-applied**: 150/150 scalar-subquery pairs and `gen01245` / `gen05869` pass, but 11 classic `subquery` queries that v12-q4 solved now fail: correlated scalar subqueries (`x > (SELECT AVG(x) FROM t t2 WHERE t2.k = t.k)`, a window `AVG ... OVER (PARTITION BY k)` in the classic data) are written as a separate aggregate and a non-existent column (`s2.avg_sqft_by_city`, `m.max_credit_limit`).
 - **`df_patents`**: on the hold-out table `patients`, v13-q4 writes `df_patents` in 7 of 13 answers (Q8_0: 10); no earlier model did, and the word is in no training sample — a drift in copying an unseen name.
 - Everything else is level or down: `OR` 12/12, `IN` / `NOT IN` 50/50, v11 / v12 held-out 284 / 227 (v12-q4 287 / 230), complex 79 (set operations 12/25), v4 hold-out 19.
-- **Decision**: not used; v12-q4 stays `latest` on the Mac, v9-q4 on the server. The model files on disk were restored to v12 / v12-q4. A retry would start from v12 with correlated *and* uncorrelated scalar pairs side by side, all 296 classic scalar-subquery pairs and a larger classic replay — and a validation set that contains the forms the new data could break.
+- **Decision**: not used; v12-q4 stays `latest` on the Mac (and on the server since 2026-10-03 16:48). The model files on disk were restored to v12 / v12-q4. A retry would start from v12 with correlated *and* uncorrelated scalar pairs side by side, all 296 classic scalar-subquery pairs and a larger classic replay — and a validation set that contains the forms the new data could break.
 
 ---
 
@@ -337,7 +337,7 @@ v13 continues from v12's adapters on **`targeted_v13/data_mix`** (see [Data Engi
 
 v12 continues from v11's adapters on **`targeted_v12/data_mix`** (see [Data Engineering § 11](02-data-engineering-pipeline.md)): 4,700 new pairs with `OR` / mixed `AND`-`OR` conditions (2,000 `or_where` + 2,700 in the six v11 families) + all 976 classic v7 `OR` pairs + 2,800 classic + 2,500 complex_v9 + 2,000 targeted_v11 = 12,976; 2,400 micro-batches of 1 (600 updates of 4, peak LR 5e-5), 2026-10-02 18:55 → 23:47 (4 h 52 min, peak 9.9 GB). Validation loss 0.012 → 0.014 (step 800) → 0.008 → **0.007**. Exported as Q8_0 (`sql2pyspark:v12`) and Q4_K_M (`sql2pyspark:v12-q4`); `eval/start_training_v12.sh` scored v12-q4 on every set and the v11 held-out pairs, and v12-q4 / v11-q4 / v9-q4 on the 250 v12 held-out pairs (`eval/results/v12-heldout/`).
 
-| Eval set | v9-q4 (server) | v11-q4 (`latest` 10-02 → 10-03) | **v12-q4** |
+| Eval set | v9-q4 (server until 10-03) | v11-q4 (`latest` 10-02 → 10-03) | **v12-q4** |
 |---|---|---|---|
 | Hold-out (62) | 59 | 60 | **59** |
 | Fixed test set: classic families (97) | 97 | 93 | **95** |
@@ -357,7 +357,7 @@ Held-out targeted_v12 pairs by family (v9-q4 / v11-q4 / **v12-q4**): `or_where` 
 - **Classic 95/97**: both misses (`gen01245`, `gen05869`) are an uncorrelated scalar subquery in `WHERE` (`x >= (SELECT MAX(x) ...)`): v12 compares against a column of a separate aggregate DataFrame (`max_df["max_x"]`, `MISSING_ATTRIBUTES`).
 - **complex test 83/100**: many-window queries 14/15 (best so far), pipelines 22/32 (v11-q4 26), set operations 19/25 (22).
 - **Real-world queries 0/4**, no loops (`real001` / `real002` syntax errors, `real003` / `real004` run-time errors).
-- **Decision (owner)**: v12-q4 removes v11's silent wrong-rows slip and keeps every subquery gain; it is a little behind on complex pipelines (run-time errors) and even on the four general sets (v9-q4 307, v11-q4 308, v12-q4 306). Promoted on the Mac with the owner's approval: `make promote TAG=v12-q4 PREV=v11-q4` (2026-10-03 06:05); no server deploy. Next data targets: uncorrelated scalar subqueries in `WHERE`, more complex-pipeline replay.
+- **Decision (owner)**: v12-q4 removes v11's silent wrong-rows slip and keeps every subquery gain; it is a little behind on complex pipelines (run-time errors) and even on the four general sets (v9-q4 307, v11-q4 308, v12-q4 306). Promoted on the Mac with the owner's approval: `make promote TAG=v12-q4 PREV=v11-q4` (2026-10-03 06:05); deployed to the server the same day (2026-10-03 16:48, `GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v12-q4 v9-q4`). Next data targets: uncorrelated scalar subqueries in `WHERE`, more complex-pipeline replay.
 
 ---
 

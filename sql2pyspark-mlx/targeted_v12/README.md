@@ -49,7 +49,7 @@ Train, export and evaluate: `zsh eval/start_training_v12.sh` from the repo root.
 Trained 2026-10-02 18:55 → 23:47 (4 h 52 min, peak 9.9 GB), validation loss 0.012 → 0.014 → 0.008 → **0.007**
 (`train_v12.log`).
 
-| Eval set | v9-q4 (server) | v11-q4 (`latest` 10-02 → 10-03) | v12-q4 |
+| Eval set | v9-q4 (server until 10-03) | v11-q4 (`latest` 10-02 → 10-03) | v12-q4 |
 |---|---|---|---|
 | Held-out targeted_v12 pairs (250, `data/heldout_meta.jsonl`) | 148 | 169 | **230** |
 | … `or_where` (100) | **98** | 79 | 97 |
