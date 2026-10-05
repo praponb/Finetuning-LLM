@@ -40,7 +40,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 5. **Exports GGUF models**: standard Q8_0 GGUF (8.10 GB) and, since v9, a 4-bit Q4_K_M GGUF (4.68 GB, smaller and faster for the CPU-only server), served by Ollama behind a Streamlit UI (`app.py`).
 6. **Execution-based evaluation and repair**:
    - Scores models on 62 unseen hold-out queries (v7 98%, v6 97%, v8 97%, v10-q4 97%, v9 / v9-q4 95%), 25 v4-feature queries (v9-q4 **84%**, v8 72%, v9 72%, v10-q4 72%, v7 64%), 4 real-world production queries, a fixed 150-query test set (v10-q4 **147**, v9-q4 140, v8 139, v7 137, v9 134), 100 complex queries on new tables (v9 / v9-q4 **87**, v10-q4 85, v8 60, v7 31) and 50 held-out bare `IN` / `NOT IN` queries (v10-q4 **49**, v9-q4 11).
-   - `sql2pyspark:latest` = **v12-q4 on the Mac** (since 2026-10-03 06:05; v11 with the `OR` slip fixed; v11-q4 2026-10-02 → 10-03) and **v9-q4 on the server**. v9-q4 (4-bit v9, `latest` 2026-10-01 → 10-02 on the Mac): fixes most many-window failures (complex test 87 vs. v8's 60), missed the promotion rule only by one hold-out query, and generates 1.64× as fast as v8 on the server's CPU.
+   - `sql2pyspark:latest` = **v12-q4 on the Mac** (since 2026-10-03 06:05; v11 with the `OR` slip fixed; v11-q4 2026-10-02 → 10-03) and **on the server** (since 2026-10-03 16:48). v9-q4 (4-bit v9, `latest` 2026-10-01 → 10-02 on the Mac, 10-01 → 10-03 on the server): fixes most many-window failures (complex test 87 vs. v8's 60), missed the promotion rule only by one hold-out query, and generates 1.64× as fast as v8 on the server's CPU.
    - Candidate **v10-q4** (2026-10-01): fixes bare `IN` / `NOT IN` and the `real001` loop, better on the hold-out and fixed test, but misses the rule on the v4 hold-out (18 vs. 21) and the complex test (85 vs. 87); promotion is the owner's call.
    - **Kimi K3 repair loop** (`kimi_repair.py`): checks and repairs failed answers on empty tables with declared schemas, fixing 3/4 real-world queries for ~$0.20 per query; includes AST `setop_check()` and `join_check()`.
 
@@ -70,7 +70,7 @@ flowchart TD
 
     subgraph ServeEval [Serving, Repair & Validation]
         GGUF --> Modelfile[Modelfile]
-        Modelfile --> Ollama[Ollama Server<br/>latest = v12-q4 (Mac), v9-q4 (server);<br/>v8–v11 (+ Q4) kept]
+        Modelfile --> Ollama[Ollama Server<br/>latest = v12-q4 (Mac + server);<br/>v8–v11 (+ Q4) kept]
         Q4GGUF --> OllamaServer[Ubuntu Server<br/>sql2pyspark.praponb.com]
         Ollama <--> Streamlit[app.py<br/>Streamlit UI]
         Streamlit <--> Kimi[kimi_repair.py<br/>join_check + setop_check<br/>Kimi K3 Repair Loop]
@@ -96,7 +96,7 @@ Finetuning-LLM/
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
 ├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the latest export (v10 since 2026-10-01 18:44)
-├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of the same export (v12-q4 = `latest` on the Mac, restored after the v13 export; v9-q4 = `latest` on the server)
+├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of the same export (v12-q4 = `latest` on the Mac, restored after the v13 export; also `latest` on the server since 2026-10-03)
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh, update_model.sh
@@ -338,7 +338,7 @@ To package the fine-tuned model for Ollama (`make export TAG=v9`):
      `./llama.cpp/build/bin/llama-quantize sql2pyspark.gguf sql2pyspark-q4.gguf Q4_K_M`
      (**4.68 GB** for 7B, ~40% less RAM; 1.64× v8's generation speed on the server's CPU).
 4. **Ollama registration and promotion**:
-   `ollama create sql2pyspark:v9 -f Modelfile`. `sql2pyspark:latest` currently points to **v12-q4** on the Mac (`make promote TAG=v12-q4 PREV=v11-q4`, 2026-10-03; v11-q4 2026-10-02 → 10-03) and to v9-q4 on the server (`make promote TAG=v9-q4 PREV=v8`, 2026-10-01); v8 is kept as `sql2pyspark:v8`. Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
+   `ollama create sql2pyspark:v9 -f Modelfile`. `sql2pyspark:latest` currently points to **v12-q4** on the Mac (`make promote TAG=v12-q4 PREV=v11-q4`, 2026-10-03; v11-q4 2026-10-02 → 10-03) and on the server (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v12-q4 v9-q4`, 2026-10-03 16:48; v9-q4 there 2026-10-01 → 10-03); v8 is kept as `sql2pyspark:v8`. Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
 
 ---
 
@@ -350,7 +350,7 @@ To package the fine-tuned model for Ollama (`make export TAG=v9`):
 
 ### Streamlit Web Application (`app.py`):
 - **Two columns**: SQL input on the left, generated PySpark on the right (with a copy button).
-- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v12-q4 on the Mac, v9-q4 on the server), `sql2pyspark:v9-q4`, `sql2pyspark:v11-q4`, or `sql2pyspark:v8` (v1–v6 were removed on 2026-09-30).
+- **Model tag field in the sidebar**: any Ollama tag, e.g. `sql2pyspark:latest` (v12-q4 on the Mac and the server), `sql2pyspark:v9-q4`, `sql2pyspark:v11-q4`, or `sql2pyspark:v8` (v1–v6 were removed on 2026-09-30).
 - **Robust code extraction**: `extract_code()` also handles replies that stop before the closing code fence.
 - **Error handling**: clear messages when Ollama is unreachable or the input is blank; 180 s timeout (600 s for SQL longer than 2,000 characters; 120/300 s before the 7B model).
 - **Long SQL** (> 2,000 characters): `repeat_last_n=2048` stops the window-definition loops seen on long real queries; v9's "mirror" window style removes this on complex-style queries, but `real001` still loops on v9; the candidate v10-q4 (classic data in the mirror style too) no longer loops on it.
@@ -487,7 +487,7 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v9-q4` | 75% | 100% | 100% | 67% | 50% | 75% | 100% |
 
 ### v13 results (2026-10-03, regression, not used)
-| Eval set | v9-q4 (server) | **v12-q4** (`latest` on the Mac) | v13-q4 | v13 (Q8_0) |
+| Eval set | v9-q4 (server until 10-03) | **v12-q4** (`latest` on the Mac) | v13-q4 | v13 (Q8_0) |
 |---|---|---|---|---|
 | Hold-out (62, unseen tables) | 59 | **59** | 52 | 49 |
 | Fixed test set: classic families (97) | **97** | 95 | 86 | — |
@@ -505,7 +505,7 @@ v4 hold-out, correct results (lenient) by feature group:
 - 150/150 scalar-subquery pairs, but correlated scalar subqueries broke (classic `subquery` 6/17) and `df_patents` appears for `df_patients` (hold-out 52/62; Q8_0 49/62). v12-q4 stays `latest`; the model files on disk were restored to v12.
 
 ### v12 results (2026-10-03, `latest` on the Mac since 2026-10-03)
-| Eval set | v9-q4 (server) | v11-q4 (`latest` 10-02 → 10-03) | **v12-q4** |
+| Eval set | v9-q4 (server until 10-03) | v11-q4 (`latest` 10-02 → 10-03) | **v12-q4** |
 |---|---|---|---|
 | Hold-out (62) | 59 | 60 | **59** |
 | Fixed test set: classic families (97) | 97 | 93 | **95** |
@@ -520,7 +520,7 @@ v4 hold-out, correct results (lenient) by feature group:
 
 - **`OR` fixed** (11/12 fixed-test `OR` queries, 97/100 held-out `or_where`), **subqueries kept** (287/300, 230/250, `IN` / `NOT IN` 50/50, v4 hold-out 21).
 - **Remaining**: classic 95/97 (two uncorrelated scalar subqueries in `WHERE` compared against a separate aggregate DataFrame's column), complex 83/100 (pipelines 22/32), real queries 0/4.
-- **Decision**: promoted on the Mac with the owner's approval (`make promote TAG=v12-q4 PREV=v11-q4`, 2026-10-03 06:05); no server deploy.
+- **Decision**: promoted on the Mac with the owner's approval (`make promote TAG=v12-q4 PREV=v11-q4`, 2026-10-03 06:05); deployed to the server the same day (2026-10-03 16:48).
 
 ### v11 results (2026-10-02, `latest` on the Mac 2026-10-02 → 10-03)
 | Eval set | v9-q4 (`latest`) | v10-q4 | **v11-q4** | Rule (vs. v9-q4) |
@@ -726,7 +726,7 @@ Details, memory tips and troubleshooting: [docs/07-operations-runbook.md](docs/0
 
 ## 11. Server Deployment
 
-Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **https://sql2pyspark.praponb.com** is served from an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v9-q4), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports.
+Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **https://sql2pyspark.praponb.com** is served from an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v12-q4 since 2026-10-03), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports.
 
 - **Sizing**:
   - **Q8_0 (v8)**: ~8 GB RAM for Ollama + ~1.5 GB for the app and Spark + OS → 12 GB minimum, 16 GB recommended; ~25 GB disk.

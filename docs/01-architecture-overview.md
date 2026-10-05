@@ -55,7 +55,7 @@ flowchart TD
 
     subgraph ServingUI["4. Serving & Streamlit UI"]
         Modelfile["Modelfile<br/>(Chat Template & System Prompt)"]
-        Ollama["Ollama Engine<br/>(latest = v12-q4 on the Mac, v9-q4 on the server;<br/>v8–v11 (+ Q4) kept)"]
+        Ollama["Ollama Engine<br/>(latest = v12-q4 on the Mac and the server;<br/>v8–v11 (+ Q4) kept)"]
         Streamlit["app.py<br/>(Streamlit Web UI)"]
         KimiApp["kimi_repair.py<br/>(Static check + EmptyTableRunner)"]
 

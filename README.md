@@ -9,11 +9,10 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 
 **Models in use:** on the **Mac**, `sql2pyspark:latest` = **v12-q4** since 2026-10-03 06:05 (`make promote TAG=v12-q4 PREV=v11-q4`;
 see [v12 results](#v12-results-2026-10-03); roll back with `ollama cp sql2pyspark:v11-q4 sql2pyspark:latest`). The
-**server** still serves **v9-q4** (no server deploy yet, by the owner's decision). To move the server to v12-q4, run **on the
-Mac** from the repo root: `GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v12-q4 v9-q4` (scp + ssh, no sudo; the
-file on disk is v12-q4; rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v9-q4 sql2pyspark:latest'`).
+**server** serves **v12-q4** too since 2026-10-03 16:48 (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v12-q4 v9-q4`, run
+on the Mac; same weights blob as the Mac's tag; rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v9-q4 sql2pyspark:latest'`).
 
-**v9-q4** (`latest` 2026-10-01 → 10-02 on the Mac, still on the server): v9 as a 4-bit Q4_K_M build (4.7 GB). v9 is v8 continued on the
+**v9-q4** (`latest` 2026-10-01 → 10-02 on the Mac, 10-01 → 10-03 on the server): v9 as a 4-bit Q4_K_M build (4.7 GB). v9 is v8 continued on the
 [complex_v9 dataset](sql2pyspark-mlx/complex_v9/README.md): the complex_v8 queries with **"mirror" window code** (an
 inline `Window` spec for `OVER (...)`, a variable only for a SQL-named `WINDOW`) + 1,990 extra many-window pairs.
 v9-q4 scores **87/100** on the complex test (v8 60; many-window queries **12/15**, v8 1/15), **140/150** on the fixed
@@ -282,7 +281,7 @@ with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300
 
 ### v13 results (2026-10-03) — regression, not used
 
-| Eval set | v9-q4 (server) | **v12-q4** (`latest` on the Mac) | v13-q4 | v13 (Q8_0) |
+| Eval set | v9-q4 (server until 10-03) | **v12-q4** (`latest` on the Mac) | v13-q4 | v13 (Q8_0) |
 |---|---|---|---|---|
 | Hold-out (62, unseen tables) | 59 | **59** | 52 | 49 |
 | Fixed test set: classic families (97) | **97** | 95 | 86 | — |
@@ -314,7 +313,7 @@ targeted_v11 and 2,000 classic pairs (11,500). v12's adapters continued, 2,400 m
   in 10 answers), so it is the training, not the 4-bit export.
 * complex test 79/100 (set operations 12/25), v4 hold-out 19/25.
 
-**Decision**: v13 is not used; **v12-q4 stays `latest` on the Mac** (v9-q4 on the server). `sql2pyspark.gguf` /
+**Decision**: v13 is not used; **v12-q4 stays `latest` on the Mac** (and went to the server on 2026-10-03 16:48). `sql2pyspark.gguf` /
 `sql2pyspark-q4.gguf` were restored to v12 / v12-q4 from the Ollama blobs after the run (same SHA-256 as the tags), so
 the files on disk match the recommended model. The v13 data, adapters and results stay in the repo as a record. A retry
 would start from v12's adapters with correlated / uncorrelated contrast pairs, all 296 classic scalar-subquery pairs and
@@ -322,7 +321,7 @@ a larger classic replay.
 
 ### v12 results (2026-10-03)
 
-| Eval set | v9-q4 (server) | v11-q4 (`latest` 10-02 → 10-03) | **v12-q4** |
+| Eval set | v9-q4 (server until 10-03) | v11-q4 (`latest` 10-02 → 10-03) | **v12-q4** |
 |---|---|---|---|
 | Hold-out (62, unseen tables) | 59 | 60 | **59** |
 | Fixed test set: classic families (97) | 97 | 93 | **95** |
@@ -364,7 +363,7 @@ targeted_v11 pairs (12,976 in total, 4,982 with `OR`).
 wrong rows for `OR` filters, and it keeps every subquery gain. It is slightly behind on complex pipelines (run-time
 errors, which the app's static check / Kimi K3 repair can catch) and the four general sets are even (v9-q4 307,
 v11-q4 308, v12-q4 306). The owner approved it: `make promote TAG=v12-q4 PREV=v11-q4` on the Mac (2026-10-03 06:05; a
-smoke test through the app gave a correct `OR` + correlated `NOT EXISTS` answer); no server deploy. Next data targets: uncorrelated scalar subqueries in `WHERE`
+smoke test through the app gave a correct `OR` + correlated `NOT EXISTS` answer); deployed to the server the same day (2026-10-03 16:48). Next data targets: uncorrelated scalar subqueries in `WHERE`
 (`crossJoin` with the one-row aggregate, or `.first()[0]` as a literal) and more complex-pipeline replay.
 
 ### v11 results (2026-10-02)
@@ -707,7 +706,7 @@ way to serve the model on macOS. Stop Docker before `make train`.
 ## Server deployment
 
 The trained model also runs on a Linux server: **https://sql2pyspark.praponb.com** is served from a home Ubuntu machine
-(`192.168.1.49`, CPU only, native Ollama with v9-q4, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS,
+(`192.168.1.49`, CPU only, native Ollama with v12-q4, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS,
 **Cloudflare Access login**: owner's email only, sign in with Cloudflare or an emailed one-time code). The 7B model needs
 ~8–12 GB RAM as Q4_K_M (12–16 GB as Q8_0) and ~15–25 GB disk; without a GPU a short query takes ~25 s and a typical one up to a minute. `deploy/update_model.sh` copies a
 newly promoted model to the server (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v9-q4 v8` sent the 4.7 GB Q4_K_M build on 2026-10-01; on the server's CPU v9-q4 generates **4.05 tokens/s vs. v8's 2.47** (1.64×): the app's default GROUP BY query takes **23.5 s vs. 38.5 s** warm, and loading the model takes 16 s vs. 36 s (measured 2026-10-01)). Steps, sizing, updates and

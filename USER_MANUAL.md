@@ -107,7 +107,7 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
 ### Sidebar Options
 
 - **Model Tag**: Change the text field in the sidebar to switch between model versions:
-  - `sql2pyspark` or `sql2pyspark:latest`: the default. On the Mac it is **v12-q4** since 2026-10-03 (best on subqueries and `OR` filters; see the v12 entry below); on the server (sql2pyspark.praponb.com) it is still **v9-q4** (7B as 4-bit Q4_K_M, since 2026-10-01; much better than v8 on long multi-CTE and many-window queries, 87/100 vs. 60 on the complex test, and ~1.6× faster on a CPU).
+  - `sql2pyspark` or `sql2pyspark:latest`: the default. On the Mac it is **v12-q4** since 2026-10-03 (best on subqueries and `OR` filters; see the v12 entry below); on the server (sql2pyspark.praponb.com) it is **v12-q4** as well since 2026-10-03 16:48 (7B as 4-bit Q4_K_M, ~1.6× faster than Q8_0 on a CPU; v9-q4 before, 2026-10-01 → 10-03).
   - `sql2pyspark:v9`: the same model at Q8_0 (8.1 GB).
   - `sql2pyspark:v12-q4` (`latest` on the Mac since 2026-10-03): v11 with the `OR` slip fixed (`WHERE a OR b` stays one `.filter()` with `|`) and the same subquery skills; `sql2pyspark:v12` is the same model at Q8_0.
   - `sql2pyspark:v11-q4` (`latest` on the Mac 2026-10-02 → 10-03): best on subqueries that compare inner and outer columns (`NOT EXISTS (... AND a.date >= p.date)`), `IN` / `NOT IN`, set operations and `LATERAL VIEW` filters; but it can turn a `WHERE a OR b` into two `.filter()` calls (wrong rows), so check `OR` queries. `sql2pyspark:v11` is the same model at Q8_0.
@@ -350,7 +350,7 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
 ### Q3: Why does long SQL produce repeating window definitions?
 - **Cause**: the model writes every window spec as a variable before the query and, on long SQL with many windows, repeats that line until it runs out of tokens (e.g. `w1` ... `w93`).
 - **Solution**:
-  - Use a current model (**v9-q4** on the server, **v12-q4** on the Mac; both write window specs inline): it writes `OVER (...)` specs inline ("mirror" style) and loops far less on multi-CTE queries (many-window queries 11–12/15 vs. v8's 1/15), though the longest real-world query (`real001`) still loops. The candidate **v10-q4** (`sql2pyspark:v10-q4`) was also trained on the classic tables in the mirror style and no longer loops on `real001` (it ends normally in ~2.5 min; the result still needs repair). The next iteration, **v11** (trained on `targeted_v11`), further targets correlated subquery cross conditions, setop projections, and lateral view filters.
+  - Use a current model (**v12-q4**, on the Mac and the server): it writes `OVER (...)` specs inline ("mirror" style) and loops far less on multi-CTE queries (many-window queries 11–12/15 vs. v8's 1/15), though the longest real-world query (`real001`) still loops. The candidate **v10-q4** (`sql2pyspark:v10-q4`) was also trained on the classic tables in the mirror style and no longer loops on `real001` (it ends normally in ~2.5 min; the result still needs repair). The next iteration, **v11** (trained on `targeted_v11`), further targets correlated subquery cross conditions, setop projections, and lateral view filters.
   - The Web UI automatically sets `repeat_last_n=2048` for queries over 2,000 characters.
   - If querying the Ollama API directly, pass `"repeat_last_n": 2048` in the request options payload.
   - Enable the Kimi K3 repair toggle in the sidebar to auto-repair looped queries into compact code.
