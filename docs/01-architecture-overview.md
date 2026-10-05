@@ -83,12 +83,15 @@ flowchart TD
 ## 🎯 Design Principles & Core Philosophy
 
 ### 1. Dual-Rendering by Construction (`sqlspec.py`)
+
 Rather than translating SQL with another LLM (which can hallucinate) or with fragile regular expressions, each query is built as a tree of Python objects (expressions, predicates, window specs, relations, `SELECT`s). Each object class in `sqlspec.py` defines both a `.sql(style)` method and a `.py(ctx)` method, so both texts are rendered from the same underlying structure.
 
 ### 2. Ground-Truth Spark Execution Verification (`verify_pairs.py`)
+
 Before any pair is used for training, it is executed in a local `pyspark.sql.SparkSession`:
 $$\text{spark.sql(sql\_query)} \stackrel{?}{=} \text{exec(pyspark\_code)}$$
 Both results are compared on:
+
 - Exact column names and order
 - Multiset row equivalence (row order ignored, floats rounded to 4 decimals)
 - Sequence of the `ORDER BY` columns, when the query has one
@@ -96,12 +99,15 @@ Both results are compared on:
 Only matching pairs go into `verified.jsonl`. In the v7 dataset 20,066 of 20,105 pairs pass (20,065 after removing 1 duplicate of the fixed test set); in v5 20,071 passed; in v4 20,068 passed; in v3 all 15,105 passed.
 
 ### 3. Feature-Signature Splitting (`convert_sql_pyspark.py`)
+
 Random row-level splitting leaks: near-identical query structures with different constants land in both train and test. Instead:
+
 - Each query gets a **feature signature**: `family | sorted(feature_tags)`.
 - Whole signatures are held out for `valid.jsonl` and `test.jsonl` (0 signatures shared with train).
 - Validation loss therefore measures generalisation to unseen combinations of SQL features. (It still uses the generator's own style; the hand-written hold-out set in `eval/` is the stronger test.)
 
 ### 4. Apple Silicon Training (Apple MLX)
+
 - **Base model**:
   - `v1–v5`: `mlx-community/Qwen2.5-Coder-3B-Instruct-4bit` (36 transformer blocks, 3.09 B parameters)
   - `v6–v13`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 transformer blocks, 7.61 B parameters)
@@ -119,7 +125,9 @@ Random row-level splitting leaks: near-identical query structures with different
 - **Resilience**: `train_resumable.py` sets smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) and resumes from the latest checkpoint if macOS aborts a long GPU buffer.
 
 ### 5. Hybrid Inference & Empty-Table Verification Loop (`kimi_repair.py`)
+
 To handle complex multi-CTE queries where small models can fail on identifier names, missing closing parentheses, or repetition loops:
+
 - The local fine-tuned model converts the query first (fast, free, private).
 - An AST static checker immediately detects:
   - Syntax errors
@@ -129,9 +137,10 @@ To handle complex multi-CTE queries where small models can fail on identifier na
   - Unqualified `F.col("id")` in join conditions between aliased DataFrames (`join_check()`, preventing Spark's `AMBIGUOUS_REFERENCE` error)
 - When an error is detected, when the SQL is long (> 2,000 characters), or on demand, **Kimi K3** (Moonshot AI) checks and repairs the code using an empty-table Spark runner (`EmptyTableRunner`). Schemas are inferred from the SQL without needing real user data. With updated prompt rules (explicit `UNPIVOT` NULL exclusion and positional set-operation matching), this loop repaired v7's answers to the 4 production-grade queries 23 times out of 24 (3 runs per mode; 12/12 on empty tables) for ~$0.07–$0.27 per query.
 
-
 ### 6. Train on the Mac, serve anywhere
-Training needs Apple MLX, so it runs on the M2 Mac; the exported GGUF is portable. Besides the Mac (native Ollama with the Metal GPU, app in Docker), the model is served from an Ubuntu server for the public site https://sql2pyspark.praponb.com: native Ollama on the CPU, the app as a systemd service and a Cloudflare Tunnel for HTTPS. Both Q8_0 (`sql2pyspark.gguf`) and compact Q4_K_M (`sql2pyspark-q4.gguf`) formats are available. See [Server Deployment](08-server-deployment.md).
+
+Training needs Apple MLX, so it runs on the M2 Mac; the exported GGUF is portable. Besides the Mac (native Ollama with the Metal GPU, app in Docker), the model is served from an Ubuntu server for the public site <https://sql2pyspark.praponb.com>: native Ollama on the CPU, the app as a systemd service and a Cloudflare Tunnel for HTTPS. Both Q8_0 (`sql2pyspark.gguf`) and compact Q4_K_M (`sql2pyspark-q4.gguf`) formats are available. See [Server Deployment](08-server-deployment.md)
+
 ---
 
 ## 📐 Output Code Conventions (Model Target Behavior)
@@ -152,7 +161,8 @@ result = (
 )
 ```
 
-### Key Formatting Rules:
+### Key Formatting Rules
+
 1. **Input names**: table `table_name` is always read from `df_table_name`.
 2. **Output name**: the final DataFrame is always assigned to `result`.
 3. **Column order & aliases**: output columns, aliases and order match the SQL `SELECT` list one-to-one.
@@ -172,4 +182,3 @@ result = (
    - Every condition referencing the outer query (cross conditions or outer-only conditions) goes into the join condition (`left_semi` / `left_anti`).
    - Only conditions referencing **exclusively inner columns** may go into the inner `.filter()`.
    - For `LATERAL VIEW [POS]EXPLODE`, explosion occurs first, then filtering on exploded values.
-

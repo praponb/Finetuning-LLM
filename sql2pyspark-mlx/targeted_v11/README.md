@@ -32,12 +32,12 @@ result = (
 ## What is in it
 
 | Family (id prefix) | Train | What |
-|---|---|---|
+| --- | --- | --- |
 | `exists_corr` (`exc`) | 4,000 | `[NOT] EXISTS` with 1–2 cross conditions: comparisons (either side first), `DATE_ADD` / `DATE_SUB`, `DATEDIFF`, `BETWEEN o.x AND DATE_ADD(o.x, n)`, `BETWEEN o.start AND o.end`, arithmetic (`i.x > o.y * 1.5`), `<>`; sometimes an outer-only condition inside the subquery (it also belongs in the join condition: for `NOT EXISTS` it is not an outer filter). Relations: parent → child, child → parent, siblings sharing a foreign key (`subscriptions` / `orders` on `customer_id`) and self (`employees` manager / reports). Aliases short, with `AS`, or the table names themselves. |
 | `in_corr` (`inc`) | 1,000 | correlated `x [NOT] IN (SELECT i.k FROM ... WHERE <outer reference>)`; `NOT IN` over nullable keys gets explicit `IS NOT NULL` guards |
 | `exists_multi` (`exm`) | 1,500 | two subquery predicates in one `WHERE` (`EXISTS` + `NOT EXISTS`, two of a kind, `EXISTS` + `IN`) → two chained semi / anti joins |
 | `exists_agg` (`exa`) | 1,500 | a correlated subquery, then `GROUP BY` (+ `HAVING`, `ORDER BY`), inline or with the filtered rows in a CTE |
-| `setop_proj` (`sop`) | 1,000 | `INTERSECT [ALL]` / `EXCEPT [ALL | DISTINCT]` / `MINUS` / `UNION` of filtered branches (same table, tables sharing a column, parent `id` vs. child key): each branch is filtered and **selected before** the set operation |
+| `setop_proj` (`sop`) | 1,000 | `INTERSECT [ALL]` / `EXCEPT [ALL \| DISTINCT]` / `MINUS` / `UNION` of filtered branches (same table, tables sharing a column, parent `id` vs. child key): each branch is filtered and **selected before** the set operation |
 | `lateral_filter` (`lvf`) | 1,000 | `LATERAL VIEW [OUTER] [POS]EXPLODE` over `carts.items` (structs), `carts.coupon_codes`, `products.tags`, `price_tiers` arrays with a `WHERE` on the exploded value / position: explode first, **then filter**; sometimes followed by `GROUP BY` |
 
 **Spark verification: 14,700 / 14,700 raw pairs match** (`raw_v11/verify_report.json`); 2,661 have an empty result on
@@ -46,7 +46,7 @@ tables of `eval/holdout*.jsonl` never appear). Literals come from the
 seed-7 sample rows the verifier uses, so most results are non-empty.
 
 | Path | Content |
-|---|---|
+| --- | --- |
 | `generate.py` | the six generators (`--seed 11 --out raw_v11`) |
 | `build.py` | drops empty results and any SQL found in an eval set, then per family: 50 held out (`data/heldout_meta.jsonl`), 50 validation, the rest of the quota for training; writes `data/` and `data_mix/` |
 | `data/` | `train.jsonl` (10,000), `valid.jsonl` (300), `heldout_meta.jsonl` (300, evaluated with `eval/evaluate.py --set`), `split_stats.json` |
@@ -73,7 +73,7 @@ Trained 2026-10-02 05:55 → 11:59 (6 h 04 min, peak 9.7 GB), validation loss 0.
 (`train_v11.log`).
 
 | Eval set | v9-q4 (`latest`) | v10-q4 | v11-q4 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Held-out targeted pairs (300, `data/heldout_meta.jsonl`) | 130 | 83 | **283** |
 | … correlated `EXISTS` / `IN` / two subqueries / + `GROUP BY` / set ops / `LATERAL VIEW` (50 each) | 18 / 4 / 19 / 27 / 45 / 17 | 9 / 5 / 5 / 10 / 41 / 13 | **47 / 46 / 44 / 48 / 49 / 49** |
 | v4 hold-out (25) | 21 | 18 | **21** (`012`, `017`, `021` fixed) |

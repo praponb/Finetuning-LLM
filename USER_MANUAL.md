@@ -5,6 +5,7 @@ Welcome to **SQL2PySpark**, an execution-verified, specialized AI assistant that
 ---
 
 ## 📑 Table of Contents
+
 1. [Overview & Conventions](#1-overview--conventions)
 2. [Prerequisites & Setup](#2-prerequisites--setup)
 3. [Using the Streamlit Web UI](#3-using-the-streamlit-web-ui)
@@ -32,6 +33,7 @@ SQL2PySpark translates complex SQL queries into clean PySpark code following sta
 ## 2. Prerequisites & Setup
 
 ### Prerequisites
+
 1. **Ollama**: Installed and running locally.
    - macOS: Launch via Applications or run `open -a Ollama`.
    - Linux: Run `systemctl start ollama` or `ollama serve`.
@@ -40,7 +42,9 @@ SQL2PySpark translates complex SQL queries into clean PySpark code following sta
 3. **Python Environment** (for the Web UI): Python 3.10+ with Streamlit installed (`pip install -r requirements.txt`).
 
 ### Quick Start
+
 To launch the user interface:
+
 ```bash
 # Using Makefile
 make app
@@ -48,16 +52,21 @@ make app
 # Or directly with Streamlit
 streamlit run app.py
 ```
+
 Open your browser at **`http://localhost:8501`**.
 
 #### Public site
-The app is also hosted at **https://sql2pyspark.praponb.com** (an Ubuntu server without a GPU: a typical query takes 20 s to a minute, long SQL several minutes; the Kimi K3 repair is off there). The site asks you to **log in first**: enter your email, click *Send login code* and type the code from the email (or choose *Sign in with Cloudflare*); only allowed emails get in, and the login lasts 24 hours. Hosting details: [docs/08-server-deployment.md](docs/08-server-deployment.md).
+
+The app is also hosted at **<https://sql2pyspark.praponb.com>** (an Ubuntu server without a GPU: a typical query takes 20 s to a minute, long SQL several minutes; the Kimi K3 repair is off there). The site asks you to **log in first**: enter your email, click *Send login code* and type the code from the email (or choose *Sign in with Cloudflare*); only allowed emails get in, and the login lasts 24 hours. Hosting details: [docs/08-server-deployment.md](docs/08-server-deployment.md).
 
 #### Running with Docker
+
 If you prefer running via Docker:
+
 ```bash
 docker compose up -d --build
 ```
+
 The web application will be accessible at `http://localhost:8501`, connecting to the host's Ollama daemon at `http://host.docker.internal:11434`.
 
 ---
@@ -66,7 +75,7 @@ The web application will be accessible at `http://localhost:8501`, connecting to
 
 The Web UI provides an intuitive side-by-side interface for fast query translation and validation.
 
-```
+```text
 ┌─────────────────────────────────────────┬─────────────────────────────────────────┐
 │              Input SQL                  │          Generated PySpark Code         │
 ├─────────────────────────────────────────┼─────────────────────────────────────────┤
@@ -101,7 +110,7 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
    - Click the built-in copy icon in the upper right of the code box to copy the snippet directly to your clipboard.
 4. **Review Static AST Checks**:
    - Immediately below the output, a status card displays the result of the Abstract Syntax Tree (AST) inspection:
-     -  **Code passes static checks**: Python syntax is valid, no undefined variable names are referenced, and `result` is assigned.
+     - **Code passes static checks**: Python syntax is valid, no undefined variable names are referenced, and `result` is assigned.
      - ⚠️ **Check Warnings**: Alerts you if the model left a bracket open, hallucinated an undefined variable, or missed assigning `result`.
 
 ### Sidebar Options
@@ -123,11 +132,15 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
 You can convert SQL directly from your terminal or shell scripts using Ollama's CLI.
 
 ### Interactive Mode
+
 Launch an interactive session with the model:
+
 ```bash
 ollama run sql2pyspark
 ```
+
 At the prompt, request a conversion:
+
 ```text
 >>> Convert SQL to PySpark:
 ... ```sql
@@ -139,6 +152,7 @@ At the prompt, request a conversion:
 ```
 
 ### Non-Interactive / Scripting (Pipes)
+
 Pass SQL directly via standard input or arguments:
 
 ```bash
@@ -151,6 +165,7 @@ GROUP BY p.category;
 ```
 
 To extract pure Python code from the response in shell scripts:
+
 ```bash
 ollama run sql2pyspark "Convert SQL to PySpark:
 \`\`\`sql
@@ -183,6 +198,7 @@ curl http://localhost:11434/api/chat -d '{
 ```
 
 #### Extracting Code via `jq`
+
 ```bash
 curl -s http://localhost:11434/api/chat -d '{
   "model": "sql2pyspark",
@@ -270,15 +286,16 @@ SQL2PySpark supports a wide spectrum of SQL constructs:
 | **Joins** | `INNER`, `LEFT`, `RIGHT`, `FULL`, `CROSS` | `df_a.join(df_b, on=..., how="left")` |
 | **Semi / Anti Joins** | `WHERE EXISTS (...)` / `WHERE NOT EXISTS (...)` | `df_a.join(df_b, on=..., how="left_semi" / "left_anti")` |
 | **Null-Safe Join** | `a <=> b` or `a IS NOT DISTINCT FROM b` | `df_a.join(df_b, df_a.id.eqNullSafe(df_b.id))` |
-| **Window Functions** | `ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...)` | `w = Window.partitionBy(...).orderBy(...)`<br>`F.row_number().over(w)` (v9 writes the spec inline on long multi-CTE queries) |
+| **Window Functions** | `ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...)` | `w = Window.partitionBy(...).orderBy(...)`, then `F.row_number().over(w)` (v9 writes the spec inline on long multi-CTE queries) |
 | **Window Frames** | `RANGE BETWEEN INTERVAL 1 DAY PRECEDING...` | `w.rangeBetween(-86400, 0)` or `w.rowsBetween(-5, 0)` |
 | **Set Operations** | `UNION ALL`, `UNION`, `INTERSECT`, `EXCEPT` | `.unionByName()`, `.distinct()`, `.intersect()`, `.subtract()` |
 | **Reshaping** | `PIVOT (SUM(v) FOR col IN ('A', 'B'))` | `.groupBy(...).pivot("col", ["A", "B"]).agg(...)` |
 | **Unpivoting** | `UNPIVOT (val FOR metric IN (cpu, mem))` | `df.unpivot(ids, values, "metric", "val")` |
-| **Array & Nested Data**| `EXPLODE(items)`, `LATERAL VIEW` | `.select(..., F.explode("items").alias(...))` |
-| **Higher-Order Lambdas**| `TRANSFORM(arr, x -> x + 1)`, `FILTER(...)` | `F.transform("arr", lambda x: x + 1)` |
+| **Array & Nested Data** | `EXPLODE(items)`, `LATERAL VIEW` | `.select(..., F.explode("items").alias(...))` |
+| **Higher-Order Lambdas** | `TRANSFORM(arr, x -> x + 1)`, `FILTER(...)` | `F.transform("arr", lambda x: x + 1)` |
 
 ### Input Recommendations for Best Results
+
 - **Specify Table Aliases**: When performing multi-table joins, prefixing columns with table names or aliases (e.g. `o.customer_id = c.id`) ensures unambiguous column resolution in PySpark.
 - **Explicit Aggregation Aliases**: Always alias computed expressions in SQL (e.g., `COUNT(*) AS total_count`). PySpark will then cleanly name output columns.
 - **Target DataFrame Names**: Assume base tables are pre-loaded as `df_<table_name>`. If your code will run on existing DataFrames, name your SQL tables accordingly.
@@ -304,7 +321,9 @@ graph TD
 ```
 
 ### 1. Zero-Cost AST Static Checks
+
 Every conversion runs through Python's `ast` parser instantly:
+
 - Detects unclosed parentheses, missing commas, and syntax slips.
 - Detects undefined variable references (such as hallucinated window identifiers like `w93`).
 - Confirms that the target variable `result` is assigned.
@@ -312,20 +331,25 @@ Every conversion runs through Python's `ast` parser instantly:
 - Flags unqualified `F.col("<name>")` in join conditions when both DataFrames are aliased (`join_check()`; prevents Spark runtime `AMBIGUOUS_REFERENCE` errors).
 
 ### 2. Kimi K3 Repair with Sandboxed Schema Execution
+
 When a check fails, when the SQL is long (over 2,000 characters), or when requested:
+
 1. **What leaves your machine**: the SQL query and the generated PySpark code are sent to Moonshot AI's Kimi API; no table data is (the app has none). Kimi declares the table schemas it infers from the SQL, and [kimi_repair.py](kimi_repair.py) creates empty DataFrames with those schemas (`EmptyTableRunner`). Don't enable the repair for SQL you may not share with a third-party API.
 2. **Local Spark execution**: each candidate code version runs in a local PySpark session on those empty tables, which catches wrong column names, type errors and column-order mismatches (not mistakes that only show in the data).
 3. **Column Parity Check**: The tool verifies that the DataFrame's output columns match the expected projection of the SQL query.
 4. **Result**: Shows the repaired code, token metrics, execution time, and repair cost (typically $0.07–$0.27 per query; with the Spark-default rules, v7's answers to the 4 real-world test queries were repaired 12/12 times on empty tables and 11/12 on sample tables over 3 runs).
 
 ### Activating Kimi K3
+
 Create a file named `.env` in the repository root (it is gitignored, so the key never gets committed) with:
+
 ```bash
 KIMI_API_KEY=your_moonshot_api_key
 # optional (these are the defaults):
 KIMI_BASE_URL=https://api.moonshot.ai/v1
 KIMI_MODEL=kimi-k3
 ```
+
 Get a key at platform.moonshot.ai (console → API keys). Keep the file private (`chmod 600 .env`).
 Restart the app (`make app` or `docker compose restart app`). The repair options in the sidebar will activate automatically.
 
@@ -333,7 +357,8 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
 
 ## 8. Troubleshooting & FAQ
 
-### Q1: "Cannot connect to Ollama at http://localhost:11434"
+### Q1: "Cannot connect to Ollama at <http://localhost:11434>"
+
 - **Cause**: The Ollama background process is not running.
 - **Solution**:
   - macOS: Open the Ollama application (`open -a Ollama`).
@@ -341,6 +366,7 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
   - Check in browser: Visit `http://localhost:11434` (should display *"Ollama is running"*).
 
 ### Q2: "Model 'sql2pyspark' not found"
+
 - **Cause**: The model tag has not been registered in Ollama.
 - **Solution**:
   - Run `ollama list` to verify registered tags.
@@ -348,6 +374,7 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
   - Alternatively, type an existing tag (e.g., `sql2pyspark:v7`) in the sidebar text box.
 
 ### Q3: Why does long SQL produce repeating window definitions?
+
 - **Cause**: the model writes every window spec as a variable before the query and, on long SQL with many windows, repeats that line until it runs out of tokens (e.g. `w1` ... `w93`).
 - **Solution**:
   - Use a current model (**v12-q4**, on the Mac and the server): it writes `OVER (...)` specs inline ("mirror" style) and loops far less on multi-CTE queries (many-window queries 11–12/15 vs. v8's 1/15), though the longest real-world query (`real001`) still loops. The candidate **v10-q4** (`sql2pyspark:v10-q4`) was also trained on the classic tables in the mirror style and no longer loops on `real001` (it ends normally in ~2.5 min; the result still needs repair). The next iteration, **v11** (trained on `targeted_v11`), further targets correlated subquery cross conditions, setop projections, and lateral view filters.
@@ -356,6 +383,7 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
   - Enable the Kimi K3 repair toggle in the sidebar to auto-repair looped queries into compact code.
 
 ### Q4: Out of Memory on 16 GB Apple Silicon Mac
+
 - **Cause**: Running Docker Desktop, Ollama, and local model training concurrently.
 - **Solution**:
   - Docker Desktop's VM allocates ~8 GB RAM. Stop Docker (`docker compose down`) before running model fine-tuning (`make train`).
@@ -364,6 +392,7 @@ Restart the app (`make app` or `docker compose restart app`). The repair options
 ---
 
 ## 🔗 Related Documentation
+
 - [docs/INDEX.md](docs/INDEX.md) — Documentation index and navigation
 - [docs/05-serving-and-streamlit-ui.md](docs/05-serving-and-streamlit-ui.md) — Deep technical serving architecture
 - [docs/07-operations-runbook.md](docs/07-operations-runbook.md) — Admin & developer operations guide

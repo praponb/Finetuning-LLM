@@ -46,7 +46,7 @@ keeps the subquery gains (287/300 v11 held-out pairs, 230/250 v12 held-out pairs
 misreads correlated scalar subqueries and misspells an unseen table (hold-out 52/62, fixed test 134/150). See
 [v13 results](#v13-results-2026-10-03--regression-not-used).
 
-```
+```text
 schemas.py ─┐
             ├─ generate_dataset.py ─┐                         ┌─ data/train.jsonl ─ mlx_lm.lora ─ adapters/
 handwritten_pairs.py ───────────────┴─ raw_pairs/ ─ verify ─ split ┤                        │
@@ -74,13 +74,13 @@ Editor type-checking (Pyrefly) is configured in [`pyrefly.toml`](pyrefly.toml) t
 ## Pipeline
 
 | Step | Command | What it does |
-|---|---|---|
+| --- | --- | --- |
 | Data | `make data N=20000 SEED=5` | Generate 20k pairs + 105 hand-written pairs, execute both sides of every pair in local Spark, keep only pairs whose results match, split by feature signature (~20 min). |
 | Train | `make train` | `train_resumable.py` runs `mlx_lm.lora -c sql2pyspark-mlx/lora_config.yaml` and resumes from the last checkpoint if Metal aborts a step (v6: Qwen2.5-Coder-7B-Instruct-4bit, batch 1 × 4 accumulation, ~8.5 h; v5: continued from v4's 3B adapters with peak LR 5e-5; ~5 h 40 min on a base M2). |
 | Export | `make export TAG=v9` | Fuse adapters, dequantize, convert to Q8_0 GGUF, `ollama create sql2pyspark:v9`. |
 | Evaluate | `make eval TAG=v9 PREV=v8` | Score both models on the hold-out set, the v4 hold-out set, the real-world queries and the same sample of the test split. |
 | Promote | `make promote TAG=v8 PREV=v7` | Point `sql2pyspark:latest` (what `app.py` uses by default) at the new model; keeps the old one as `:$(PREV)`. |
-| UI | `make app` | Streamlit converter on http://localhost:8501; the sidebar field picks any Ollama tag. |
+| UI | `make app` | Streamlit converter on <http://localhost:8501>; the sidebar field picks any Ollama tag. |
 
 `make help` lists every target. The Makefile defaults are `TAG=v9` and `PREV=v8` (v8 exists, so promote it explicitly with `TAG=v8 PREV=v7`) (`BASE` is `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` since v6; v1–v5 used 3B). On a 16 GB Mac,
 don't run Ollama (evaluations, the app) or Docker while training: Ollama plus training ran out of GPU memory once, and
@@ -157,6 +157,7 @@ window, join, set operation, reshape, nested and pipeline groups) on the hold-ou
 
 `eval/build_real_queries.py` → `eval/real_queries.jsonl`: 4 real-world queries supplied by users, run against the
 hand-made tables in `eval/real_tables.py` (scored with `--tables eval/real_tables.py`):
+
 1. `real001` (`marketing_attribution`): 4-CTE report with sessionization, interval joins, dedup windowing, grouping sets.
 2. `real002` (`order_fulfillment`): higher-order array lambdas, lateral view explode, RANGE windows, QUALIFY, PIVOT, correlated SLA subquery.
 3. `real003` (`iot_telemetry`): complex JSON parsing, bitwise masks, native UNPIVOT, correlated LATERAL join, stateful imputation with `LAST_VALUE IGNORE NULLS`, CUME_DIST, MAP_FROM_ARRAYS, aggregate FILTER.
@@ -174,7 +175,7 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 
 <!-- RESULTS:START -->
 | Model | Eval set | n | Syntax OK | Runs (strict) | Correct (strict) | Runs (lenient) | Correct (lenient) | s / query |
-|---|---|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `sql2pyspark:v1` | holdout | 62 | 79% | 0% | **0%** | 16% | **6%** | 4.2 |
 | `sql2pyspark:v10-q4` | holdout | 62 | 98% | 97% | **97%** | 97% | **97%** | 4.9 |
 | `sql2pyspark:v11-q4` | holdout | 62 | 98% | 97% | **97%** | 97% | **97%** | 8.4 |
@@ -240,7 +241,7 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 Hold-out, correct results (lenient) by difficulty:
 
 | Model | simple (n=15) | medium (n=22) | complex (n=25) |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `sql2pyspark:v1` | 7% | 14% | 0% |
 | `sql2pyspark:v10-q4` | 100% | 95% | 96% |
 | `sql2pyspark:v11-q4` | 100% | 95% | 96% |
@@ -260,7 +261,7 @@ Hold-out, correct results (lenient) by difficulty:
 v4 hold-out, correct results (lenient) by feature group:
 
 | Model | aggregation (n=4) | window (n=5) | join (n=5) | setop (n=3) | reshape (n=2) | nested (n=4) | pipeline (n=2) |
-|---|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- | --- |
 | `sql2pyspark:v10-q4` | 75% | 100% | 80% | 33% | 0% | 75% | 100% |
 | `sql2pyspark:v11-q4` | 75% | 100% | 100% | 67% | 50% | 75% | 100% |
 | `sql2pyspark:v12-q4` | 50% | 100% | 100% | 67% | 100% | 75% | 100% |
@@ -282,7 +283,7 @@ with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300
 ### v13 results (2026-10-03) — regression, not used
 
 | Eval set | v9-q4 (server until 10-03) | **v12-q4** (`latest` on the Mac) | v13-q4 | v13 (Q8_0) |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 59 | **59** | 52 | 49 |
 | Fixed test set: classic families (97) | **97** | 95 | 86 | — |
 | … `subquery` family (17) | **17** | 15 | 6 | — |
@@ -322,7 +323,7 @@ a larger classic replay.
 ### v12 results (2026-10-03)
 
 | Eval set | v9-q4 (server until 10-03) | v11-q4 (`latest` 10-02 → 10-03) | **v12-q4** |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 59 | 60 | **59** |
 | Fixed test set: classic families (97) | 97 | 93 | **95** |
 | Fixed test set: v4 families (53) | 43 | 50 | **48** |
@@ -369,7 +370,7 @@ smoke test through the app gave a correct `OR` + correlated `NOT EXISTS` answer)
 ### v11 results (2026-10-02)
 
 | Eval set | v9-q4 (`latest`) | v10-q4 | **v11-q4** | Rule (vs. v9-q4) |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 59 | 60 | **60** | ✅ ≥ 59 |
 | Fixed test set: classic families (97) | 97 | 97 | **93** | ❌ ≥ 97 |
 | Fixed test set: v4 families (53, incl. 22 pipelines) | 43 (14) | 50 (19) | **50 (19)** | — |
@@ -422,7 +423,7 @@ fix became v12 ([v12 results](#v12-results-2026-10-03)).
 ### v10 results (2026-10-01)
 
 | Eval set | **v9-q4** (`latest`) | **v10-q4** | Rule (vs. v9-q4) |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 59 | **60** | ✅ needs ≥ 59 (`holdout024`, `holdout052` fixed; `holdout041` lost: one extra `)`) |
 | Fixed test set: classic families (97) | 97 | **97** | ✅ |
 | Fixed test set: v4 families (53, incl. 22 pipelines) | 43 (14) | **50 (19)** | — |
@@ -468,7 +469,7 @@ with outer columns in non-equality conditions (keep them in the join condition).
 ### v9 results (2026-10-01)
 
 | Eval set | v8 | v9 (Q8_0) | **v9-q4 (Q4_K_M)** | Rule (vs. v8) |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 60 | 59 | **59** | ❌ needs ≥ 60 (both: new miss `holdout052`) |
 | Fixed test set: classic families (97) | 97 | 96 | **97** | v9 ❌, v9-q4 ✅ |
 | Fixed test set: all (150) | 139 | 134 | **140** | v9 ❌, v9-q4 ✅ needs ≥ 139 |
@@ -512,7 +513,7 @@ semi/anti joins.
 ### v8 results (2026-09-30)
 
 | Eval set | v6 | v7 | **v8** | Rule for v8 (vs. v7) |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 60 | 61 | **60** | ❌ needs ≥ 61 |
 | Fixed test set: classic families (97) | 96 | 97 | **97** | ✅ needs ≥ 94 |
 | Fixed test set: v4 families (53, incl. 22 pipelines) | 36 (10) | 40 (12) | **42 (13)** | — |
@@ -548,7 +549,7 @@ every other set; the owner **promoted** it on 2026-09-30 (`make promote TAG=v8 P
 ### v7 results (2026-09-29)
 
 | Eval set | v5 | v6 | **v7** | Rule for v7 (vs. v6) |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 56 | 60 | **61** | ✅ needs ≥ 60 |
 | Fixed test set: classic families (97) | 95 | 96 | **97** | ✅ needs ≥ 94 |
 | Fixed test set: v4 families (53, incl. 22 pipelines) | 33 (8) | 36 (10) | **40 (12)** | — |
@@ -582,7 +583,7 @@ has solved a real-world query yet (v6 was promoted with the latter). The owner p
 ### v6 results (2026-09-28)
 
 | Eval set | v3 | v5 | **v6 (7B)** | Rule for v6 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 59 | 56 | **60** | ✅ needs ≥ 56 (v5) |
 | Fixed test set: classic families (97) | 96 | 95 | **96** | ✅ needs ≥ 94 |
 | Fixed test set: v4 families (53, incl. 22 pipelines) | 9 (0) | 33 (8) | **36 (10)** | — |
@@ -610,7 +611,7 @@ missing it too).
 ### v5 results (2026-09-28)
 
 | Eval set | v3 | v4 | v5 | Rule for v5 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 59 | 58 | 56 | ❌ needs ≥ 59 |
 | Fixed test set: classic families (97) | 96 | 84 | **95** | ✅ needs ≥ 94 |
 | Fixed test set: v4 families (53, incl. 22 pipelines) | 9 (0) | 26 (5) | **33 (8)** | — |
@@ -634,7 +635,7 @@ promoted to `latest` anyway by the owner's decision, with v3 kept as `sql2pyspar
 ### v4 results (2026-09-27)
 
 | Eval set | v3 | v4 | Change |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Hold-out (62, unseen tables) | 59/62 (95.2%) | 58/62 (93.5%) | -1: `holdout058` (dropped `.distinct()` on one side of a CROSS JOIN) |
 | v4 hold-out (25, new features) | 3/25 (12%) | 9/25 (36%) | ×3: `FILTER`/`COUNT_IF`, `NULLS LAST` + `IGNORE NULLS`, `INTERVAL` join, `INTERSECT ALL`, multi-agg `PIVOT`, lambdas, struct/map/JSON |
 | Real-world queries (4) | 0/4 | 0/4 | 1 reply now parses and runs up to an alias error (`real003`) |
@@ -705,7 +706,7 @@ way to serve the model on macOS. Stop Docker before `make train`.
 
 ## Server deployment
 
-The trained model also runs on a Linux server: **https://sql2pyspark.praponb.com** is served from a home Ubuntu machine
+The trained model also runs on a Linux server: **<https://sql2pyspark.praponb.com>** is served from a home Ubuntu machine
 (`192.168.1.49`, CPU only, native Ollama with v12-q4, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS,
 **Cloudflare Access login**: owner's email only, sign in with Cloudflare or an emailed one-time code). The 7B model needs
 ~8–12 GB RAM as Q4_K_M (12–16 GB as Q8_0) and ~15–25 GB disk; without a GPU a short query takes ~25 s and a typical one up to a minute. `deploy/update_model.sh` copies a
@@ -714,7 +715,7 @@ troubleshooting: [docs/08-server-deployment.md](docs/08-server-deployment.md); s
 
 ## Layout
 
-```
+```text
 app.py, kimi_repair.py, Modelfile, Makefile, requirements.txt, pyrefly.toml, .gitignore
 README.md, USER_MANUAL.md, PROJECT_DOCUMENTATION.md, docs/          documentation
 sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4–v7 families), handwritten_pairs.py,

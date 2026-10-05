@@ -16,7 +16,7 @@ Training data for **v10**, the follow-up to v9 ([complex_v9](../complex_v9/READM
 ## What is in it
 
 | Path | Content |
-|---|---|
+| --- | --- |
 | `mirror.py` | rewrites hoisted window code to the mirror style: each window variable is substituted where it is used (derived ones like `w2 = w.rowsBetween(...)` resolved first); a variable stays only when the SQL names the window (`WINDOW w AS (...)`) |
 | `inlist.py` | 900 targeted pairs: `parent.id [NOT] IN (SELECT child.fk ...)` and `child.fk [NOT] IN (SELECT parent.id ...)` with no SQL aliases; the PySpark side aliases both DataFrames and qualifies the join columns; NOT IN over a nullable column gets an explicit `IS NOT NULL` |
 | `build.py` | `prepare` (mirror the v7 pairs) and `split` (data/ + data_mix/) |
@@ -46,7 +46,7 @@ Trained 2026-10-01 12:18 → 18:42 (6 h 24 min, peak 9.9 GB), validation loss 0.
 (`train_v10.log`). v10-q4 (Q4_K_M) vs. v9-q4 (`latest`):
 
 | Eval set | v9-q4 | v10-q4 |
-|---|---|---|
+| --- | --- | --- |
 | Held-out `IN` / `NOT IN` (50, `data/inlist_valid_meta.jsonl`) | 11 | **49** |
 | Hold-out (62) | 59 | **60** |
 | Fixed test set (150) | 140 | **147** |

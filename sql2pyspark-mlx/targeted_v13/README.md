@@ -25,7 +25,7 @@ options still reproduce their data byte for byte), 2,000 train: an uncorrelated 
 `WHERE`, same table or a table with a related numeric column) used as
 
 | Shape | SQL | PySpark |
-|---|---|---|
+| --- | --- | --- |
 | comparison | `x >= (SELECT AVG(x) FROM t WHERE ...)`, `= (SELECT MAX ...)` | `v = df.filter(...).agg(F.avg("x")).first()[0]`, `.filter(F.col("x") >= v)` |
 | arithmetic | `x <= 1.5 * (SELECT AVG(x) ...)` | `.filter(F.col("x") <= F.lit(v) * 1.5)` (`F.lit` keeps an empty subquery a NULL) |
 | `BETWEEN` | `x BETWEEN (SELECT MIN ...) AND (SELECT AVG ...)` | two values, `.between(v1, v2)` |
@@ -37,7 +37,7 @@ Spark verification: **2,600 / 2,600 raw pairs match**; 347 empty results are dro
 set or with targeted_v11 / v12. 150 are held out (`data/heldout_meta.jsonl`), 75 go to validation.
 
 | Path | Content |
-|---|---|
+| --- | --- |
 | `build.py` | the split above; `data/` and `data_mix/` |
 | `data_mix/` | what v13 trains on (11,500, mean ~2,200 characters): 2,000 new + 4,000 complex_v9 + 2,000 targeted_v12 + 1,500 targeted_v11 + 500 classic `OR` + 1,500 other classic; validation 75 new + 300 v12 |
 | `lora_config.yaml` | continues from v12 (`../targeted_v12/adapters`), 2,400 micro-batches, writes `targeted_v13/adapters/` |
