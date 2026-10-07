@@ -1,0 +1,85 @@
+{
+  "verified": 13499,
+  "empty": 1172,
+  "dropped_seen_sql": 20,
+  "families": {
+    "scalar_uncorr": {
+      "available": 2948,
+      "train": 2500,
+      "valid": 50,
+      "heldout": 50
+    },
+    "scalar_corr_win": {
+      "available": 3801,
+      "train": 3000,
+      "valid": 50,
+      "heldout": 50
+    },
+    "scalar_corr_join": {
+      "available": 3123,
+      "train": 2500,
+      "valid": 50,
+      "heldout": 50
+    },
+    "scalar_mixed": {
+      "available": 2435,
+      "train": 2000,
+      "valid": 50,
+      "heldout": 50
+    }
+  },
+  "data_mix": {
+    "train": 25008,
+    "new": 10000,
+    "classic_scalar": 708,
+    "classic_or": 500,
+    "classic_plain": 5000,
+    "complex_v9": 4500,
+    "targeted_v12": 2500,
+    "targeted_v11": 1800,
+    "valid": 386,
+    "valid_classic_scalar": 36,
+    "with_scalar_subquery": 11184,
+    "mean_chars": 1621,
+    "max_chars": 13781
+  },
+  "train_features": {
+    "order_by": 4054,
+    "scalar_corr_win": 3000,
+    "scalar_uncorr": 2500,
+    "scalar_corr_join": 2500,
+    "scalar_mixed": 2000,
+    "outer_filter": 1773,
+    "uncorr_aliased": 1306,
+    "uncorr_v13": 1194,
+    "corr_where": 1142,
+    "child_count": 1118,
+    "corr_select_item": 1060,
+    "join_select_item": 1014,
+    "inner_filter": 825,
+    "uncorr_key_literal": 801,
+    "corr_inner_filter": 738,
+    "mixed_select_win": 717,
+    "mixed_where_win": 684,
+    "join_where_count": 677,
+    "mixed_where_join": 599,
+    "select_value": 553,
+    "child_avg": 518,
+    "join_where_col": 484,
+    "child_max": 439,
+    "scalar_cmp": 411,
+    "join_where_lit": 353,
+    "child_sum": 317,
+    "corr_arith": 296,
+    "count_also_selected": 232,
+    "scalar_select_item": 231,
+    "scalar_arith": 180,
+    "select_diff": 161,
+    "scalar_join": 160,
+    "scalar_other_table": 131,
+    "scalar_between": 127,
+    "select_ratio": 110,
+    "child_min": 108,
+    "scalar_having": 85
+  }
+}

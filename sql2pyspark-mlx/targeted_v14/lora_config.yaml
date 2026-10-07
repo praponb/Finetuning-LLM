@@ -1,0 +1,43 @@
+# LoRA fine-tune for v14 (the v13 retry): v12 continued on targeted_v14 (10,000 correlated + uncorrelated scalar-subquery
+# pairs side by side, every classic scalar-subquery pair, and a large classic / complex_v9 / targeted_v12 / v11 replay;
+# build.py). Continues from v12 (targeted_v12/adapters, NOT v13) and writes to ./targeted_v14/adapters. Settings follow
+# v13 (7B, batch 1 x 4 accumulation, half LR because it continues training), twice the micro-batches (the mix is ~2x).
+# Run from sql2pyspark-mlx/ (stop Docker and unload Ollama models first - 16 GB M2):
+#   .venv/bin/python train_resumable.py --config targeted_v14/lora_config.yaml
+model: mlx-community/Qwen2.5-Coder-7B-Instruct-4bit
+train: true
+fine_tune_type: lora
+# data_mix = 10,000 new + 708 classic scalar subquery + 5,500 classic + 4,500 complex_v9 + 2,500 targeted_v12 + 1,800 v11
+data: ./targeted_v14/data_mix
+adapter_path: ./targeted_v14/adapters
+resume_adapter_file: ./targeted_v12/adapters/adapters.safetensors   # v12 (sql2pyspark:latest = v12-q4)
+seed: 14
+
+# 1,200 optimizer updates of 4 samples = 4,800 micro-batches of 1 (2x v13).
+iters: 4800
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true             # loss only on the assistant (PySpark) tokens
+grad_checkpoint: true
+
+num_layers: 8                 # last 8 of 28 blocks, same as v6-v13 (required to resume their adapters)
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+
+optimizer: adamw
+learning_rate: 5.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-6
+  arguments: [5.0e-5, 1150, 5.0e-6]    # [init, decay_steps, end]  (optimizer updates)
+
+steps_per_report: 50
+steps_per_eval: 800
+val_batches: 150
+save_every: 200
+test: false
+test_batches: 200
