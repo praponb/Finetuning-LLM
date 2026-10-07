@@ -63,4 +63,6 @@ The pairs taught "scalar subquery → separate aggregate value", and v13 applied
 (`... WHERE t2.k = t.k`), which need a window or a grouped join; the mix had no such counter-examples and a small
 classic replay. v13 also misspells the unseen hold-out table `patients` as `df_patents`. v12-q4 stays `latest`. A retry
 should put correlated and uncorrelated scalar subqueries side by side and replay all classic scalar-subquery pairs.
+That retry is [targeted_v14](../targeted_v14/README.md) (v14, 2026-10-07: fixes the classic `subquery` family, not
+promoted because of name slips on unseen tables).
 Details: [README → v13 results](../../README.md#v13-results-2026-10-03--regression-not-used).

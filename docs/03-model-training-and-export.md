@@ -18,6 +18,7 @@ The project has used two base models in the `Qwen2.5-Coder` family:
 | **v11** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | v10 continued on `targeted_v11` (correlated subqueries with outer conditions in the join, set operations, `LATERAL VIEW` filters; 15,000 mix); Q8_0 (`v11`) and Q4_K_M (`v11-q4`, `latest` on the Mac 2026-10-02 → 10-03). |
 | **v12** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | v11 continued on `targeted_v12` (`OR` / mixed `AND`-`OR` conditions + replay; 12,976 mix); Q8_0 (`v12`) and Q4_K_M (`v12-q4` = `latest` on the Mac since 2026-10-03). |
 | **v13** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | v12 continued on `targeted_v13` (uncorrelated scalar subqueries + replay; 11,500 mix); Q8_0 (`v13`) and Q4_K_M (`v13-q4`); a regression, not used. |
+| **v14** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | v12 continued on `targeted_v14` (correlated + uncorrelated scalar subqueries side by side + replay; 25,008 mix); Q8_0 (`v14`), Q4_K_M (`v14-q4`) and the iter-2,400 checkpoint (`v14-c2400-q4`); not promoted. |
 
 ### Why scale from 3B to 7B in v6?
 
@@ -118,6 +119,24 @@ v11 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Toke
 ```
 
 The high starting validation loss (0.072, v10 started its run at 0.013) shows the targeted forms were new to v10.
+
+### v14 (7B, continued from v12, targeted_v14 data mix) — not promoted
+
+Run with `train_resumable.py --config targeted_v14/lora_config.yaml` from `eval/start_training_v14.sh` (log `sql2pyspark-mlx/targeted_v14/train_v14.log`): 25,008 pairs, resumes `targeted_v12/adapters` (not v13's), 4,800 micro-batches (1,200 updates, cosine to 5e-6 over 1,150), `val_batches: 150`, seed 14. 2026-10-06 14:21 → 10-07 00:47; about 2.5 h of that the Mac was asleep (training only advanced in short DarkWakes until it was woken), so the chain now runs under `caffeinate -s -i -w <pid>`.
+
+```text
+v14 iter Val Loss    Train Loss    Learning Rate    Speed (it/s)    Trained Tokens    Peak Mem
+───────────────────────────────────────────────────────────────────────────────────────────────
+1        0.055       —             —                —               —                 —
+800      0.015       0.016         4.819e-5         0.209           200,408           9.81 GB
+1600     0.010       0.012         4.058e-5         0.222           403,573           9.81 GB
+2400     0.008       0.006         2.916e-5         0.222           601,185           9.81 GB
+3200     0.006       0.006         1.726e-5         0.165           786,162           9.93 GB
+4000     0.006       0.007         8.340e-6         0.107           1,000,507         9.93 GB
+4800     0.006       0.005         5.000e-6         0.192           1,204,576         10.00 GB
+```
+
+The starting loss (0.055) shows the correlated forms were new to v12. This time the validation set held the classic scalar-subquery pairs, and the classic `subquery` family did reach 17/17; the regression v14 does have (names copied from training tables into unseen schemas) is not something an in-distribution validation set can show. The iter-2,400 checkpoint, exported by `eval/eval_v14_ckpt.sh 2400` as `sql2pyspark:v14-c2400-q4`, has the same slips.
 
 ### v13 (7B, continued from v12, targeted_v13 data mix) — not used
 
@@ -376,11 +395,14 @@ Current tags:
 | `sql2pyspark:v12` | `3fb11c1936f0` | exported 2026-10-02 23:50 from `sql2pyspark.gguf` (Q8_0, 8.1 GB); v11 continued on `targeted_v12` |
 | `sql2pyspark:v13` | `4052bde11540` | exported 2026-10-03 11:39 (Q8_0); a regression, not used |
 | `sql2pyspark:v13-q4` | `409a47e29018` | Q4_K_M of v13; not used |
+| `sql2pyspark:v14` | `9e585bcdede2` | exported 2026-10-07 00:50 (Q8_0); v12 continued on `targeted_v14`; not promoted |
+| `sql2pyspark:v14-q4` | `87f0d5bd6909` | Q4_K_M of v14; not promoted |
+| `sql2pyspark:v14-c2400-q4` | `2b18fa841a7c` | Q4_K_M of the v14 iter-2,400 checkpoint (`eval/eval_v14_ckpt.sh`); not promoted |
 | `sql2pyspark:v12-q4` | `096519684f69` | the same weights as Q4_K_M (`sql2pyspark-q4.gguf`, 4.7 GB); `latest` on the Mac since 2026-10-03 |
 
 The older tags were removed from the Mac's Ollama on 2026-09-30 to save ~24.6 GB: `v6` (`192e20ddb887`, 7B), `v5` (`b6a1ace642a4`, 3B), `v4` (`23108327a0d7`), `v3` (`aa95ad200568`), `v2` (`fb27933c2519`) and `v1` (`3dd2beaef9ff`, template-based). v2–v6 can be rebuilt from `sql2pyspark-mlx/runs/vN/adapters/` with `mlx_lm.fuse --adapter-path runs/vN/adapters` (v2–v5 with `--model mlx-community/Qwen2.5-Coder-3B-Instruct-4bit`), then `make gguf ollama TAG=vN` (v1's adapters were deleted with `archive/`).
 
-`sql2pyspark.gguf` and `sql2pyspark-q4.gguf` hold the **v12** weights (the v13 export overwrote them on 2026-10-03 11:39; they were restored from the Ollama blobs of `sql2pyspark:v12` / `:v12-q4` afterwards, same SHA-256; v9 / v10 / v11 / v13 remain as Ollama tags only); Ollama keeps its own copy of every tag. `make fuse` also writes `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/`; `make clean` deletes them (and the LoRA checkpoints) once the export is in Ollama. The v2–v6 adapters, configs and logs are kept in `sql2pyspark-mlx/runs/v2/` … `runs/v6/`; v7's adapters are in `sql2pyspark-mlx/adapters/` and `runs/v7/`, v8's in `sql2pyspark-mlx/complex_v8/adapters/`, v9's in `sql2pyspark-mlx/complex_v9/adapters/`, and v10's in `sql2pyspark-mlx/classic_v10/adapters/`. To serve a model on another machine (e.g. the Ubuntu server behind sql2pyspark.praponb.com), copy `sql2pyspark.gguf` or `sql2pyspark-q4.gguf` and `Modelfile` there and run `ollama create sql2pyspark -f Modelfile`; see [Server Deployment](08-server-deployment.md).
+`sql2pyspark.gguf` and `sql2pyspark-q4.gguf` hold the **v12** weights (the v13 export overwrote them on 2026-10-03 11:39 and the v14 export on 2026-10-07 00:50; both times they were restored from the Ollama blobs of `sql2pyspark:v12` / `:v12-q4` afterwards, same SHA-256; v9 / v10 / v11 / v13 / v14 remain as Ollama tags only); Ollama keeps its own copy of every tag. `make fuse` also writes `sql2pyspark-hf/` and `sql2pyspark-mlx/sql2pyspark-model/`; `make clean` deletes them (and the LoRA checkpoints) once the export is in Ollama. The v2–v6 adapters, configs and logs are kept in `sql2pyspark-mlx/runs/v2/` … `runs/v6/`; v7's adapters are in `sql2pyspark-mlx/adapters/` and `runs/v7/`, v8's in `sql2pyspark-mlx/complex_v8/adapters/`, v9's in `sql2pyspark-mlx/complex_v9/adapters/`, and v10's in `sql2pyspark-mlx/classic_v10/adapters/`. To serve a model on another machine (e.g. the Ubuntu server behind sql2pyspark.praponb.com), copy `sql2pyspark.gguf` or `sql2pyspark-q4.gguf` and `Modelfile` there and run `ollama create sql2pyspark -f Modelfile`; see [Server Deployment](08-server-deployment.md).
 
 The automated post-training script for v6 ([eval/post_training_v6.sh](../eval/post_training_v6.sh)) monitors `train.log`, triggers `make export TAG=v6`, runs all 4 evaluation sets with `--timeout 600` (since 7B generates ~2x slower than 3B), and reloads the Docker app service upon completion.
 
@@ -392,6 +414,6 @@ For v9, [eval/start_training_v9.sh](../eval/start_training_v9.sh) orchestrates t
 
 For v10, [eval/start_training_v10.sh](../eval/start_training_v10.sh) does the same with `classic_v10/lora_config.yaml` (resuming from v9's adapters), exports `sql2pyspark:v10` (Q8_0) and `sql2pyspark:v10-q4` (Q4_K_M), evaluates v10-q4 on the four eval sets and the same 100-query complex sample, and v10-q4 and v9-q4 on the 50 held-out `IN` / `NOT IN` pairs (`eval/results/inlist/`).
 
-For v11, v12 and v13, [eval/start_training_v11.sh](../eval/start_training_v11.sh), [eval/start_training_v12.sh](../eval/start_training_v12.sh) and [eval/start_training_v13.sh](../eval/start_training_v13.sh) do the same with `targeted_v11/` and `targeted_v12/lora_config.yaml` (each resuming from the previous version's adapters) and add the held-out targeted pairs: `eval/results/v11-heldout/` (300), `eval/results/v12-heldout/` (250) and `eval/results/v13-heldout/` (150), scored for the new model and the earlier ones.
+For v11, v12 and v13, [eval/start_training_v11.sh](../eval/start_training_v11.sh), [eval/start_training_v12.sh](../eval/start_training_v12.sh) and [eval/start_training_v13.sh](../eval/start_training_v13.sh) do the same with `targeted_v11/` and `targeted_v12/lora_config.yaml` (each resuming from the previous version's adapters) and add the held-out targeted pairs: `eval/results/v11-heldout/` (300), `eval/results/v12-heldout/` (250) and `eval/results/v13-heldout/` (150), scored for the new model and the earlier ones. [eval/start_training_v14.sh](../eval/start_training_v14.sh) does the same for v14 (`targeted_v14/lora_config.yaml`, resuming from v12's adapters; `eval/results/v14-heldout/`, 200), and [eval/eval_v14_ckpt.sh](../eval/eval_v14_ckpt.sh) exports and evaluates an earlier v14 checkpoint.
 
 The model is served at `POST http://localhost:11434/api/chat`.

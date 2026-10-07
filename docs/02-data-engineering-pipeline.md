@@ -540,3 +540,20 @@ cd sql2pyspark-mlx/targeted_v12
 `sql2pyspark-mlx/targeted_v13/` ([README](../sql2pyspark-mlx/targeted_v13/README.md)) targets v12's last two classic misses, `x >= (SELECT MAX(x) FROM t WHERE ...)`: 2,000 `scalar_where` pairs from `targeted_v11/generate.py --seed 13 --counts v13` (comparisons, `F.lit(v) * 1.5` arithmetic so an empty subquery stays NULL, `BETWEEN` two scalars, `SELECT`-list items, `HAVING`, joins), written as `v = df.filter(...).agg(F.max("x")).first()[0]` then `.filter(F.col("x") >= v)`. 2,600 / 2,600 raw pairs verified; 150 held out. Mix 11,500 = 2,000 new + 4,000 complex_v9 + 2,000 targeted_v12 + 1,500 targeted_v11 + 2,000 classic.
 
 **Result**: v13 learned the form (150/150 held out) but applied it to *correlated* scalar subqueries too (`... WHERE t2.k = t.k`, which need a window or a grouped join): the fixed-test `subquery` family fell from 15/17 to 6/17, and the hold-out from 59 to 52. Like v10's `IN` / `NOT IN` pairs, a narrow targeted family without contrasting pairs over-generalizes; a retry needs correlated counter-examples in the same family and a larger classic replay. v13 is not used.
+
+---
+
+## 13. The targeted_v14 dataset (v14): correlated and uncorrelated scalar subqueries side by side
+
+`sql2pyspark-mlx/targeted_v14/` ([README](../sql2pyspark-mlx/targeted_v14/README.md)) is that retry. [`generate.py`](../sql2pyspark-mlx/targeted_v14/generate.py) (reusing the targeted_v11 helpers and the v13 builder) makes 4 families on the 17 training tables, where the deciding detail is whether the inner `WHERE` refers to the outer alias:
+
+| Family | Train | PySpark target |
+| --- | --- | --- |
+| `scalar_uncorr` | 2,500 | `v = df.filter(...).agg(...).first()[0]` — the v13 shapes, plus aliased same-table forms whose inner `WHERE` compares the would-be key with a literal (`b.city = 'Paris'`) |
+| `scalar_corr_win` | 3,000 | same-table correlation on a non-NULL key (`b.city = a.city`) -> `.withColumn("avg_x_by_city", F.avg("x").over(Window.partitionBy("city")))` *before* any outer filter; with an inner filter -> filtered `groupBy("city")` + join on `"city"` |
+| `scalar_corr_join` | 2,500 | a parent row against an aggregate of its child rows -> `groupBy(fk)` + join on `fk = p.id`; `COUNT` -> left join + `F.coalesce(..., F.lit(0))` |
+| `scalar_mixed` | 2,000 | a correlated and an uncorrelated scalar subquery in one query |
+
+13,500 raw pairs, 13,499 verified (one divides by zero in Spark SQL), 1,172 empty dropped; 50 validation and 50 held out per family. Mix 25,008 = 10,000 new + all 708 classic scalar-subquery pairs + 5,000 classic + 500 classic `OR` + 4,500 complex_v9 + 2,500 targeted_v12 + 1,800 targeted_v11; validation = 200 new + the 36 classic scalar-subquery validation pairs + 150 v12 pairs.
+
+**Result (v14, 2026-10-07)**: the contrast worked — classic `subquery` family 17/17 (v12 15, v13 6), 196/200 held-out pairs — but v14 copies training-table names into unseen schemas (`apppt_date`, `num_stores` for `num_stops`, `ss.restock`): hold-out 58/62, v4 hold-out 18/25. The iter-2,400 checkpoint shows the same slips, so the cause is the data (10,000 more pairs on the same 17 tables), not the training length. v14 is not promoted. See [Evaluation](04-evaluation-and-benchmarking.md#-v14-results-2026-10-07--not-promoted).
