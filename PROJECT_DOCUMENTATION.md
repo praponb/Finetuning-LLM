@@ -27,7 +27,7 @@ This is the single-file version of the guides in [docs/](docs/INDEX.md); each se
 The goal is a small local model that turns SQL into PySpark code that actually runs and returns the same result. The pipeline:
 
 1. **Generates ~20k SQL/PySpark pairs** with a compositional generator (`sqlspec.py`, `generate_dataset.py`, and since v4 the stage-based `advanced.py` for long pipelines, advanced Spark SQL and nested data) that renders both sides from the same objects, so they agree by construction.
-2. **Executes every pair in local Spark** (`verify_pairs.py`) and keeps only pairs whose column names, rows and ORDER BY sequence match: 20,071 of 20,105 pairs pass (v5); 15,499 of 15,500 pass on `complex_v9`; 7,857 of 7,858 mirrored classic pairs and 900 / 900 `IN` / `NOT IN` pairs pass on `classic_v10`; 14,700 of 14,700 pass on `targeted_v11`; 6,950 of 6,950 on `targeted_v12`; 2,600 of 2,600 on `targeted_v13`; 13,499 of 13,500 on `targeted_v14`.
+2. **Executes every pair in local Spark** (`verify_pairs.py`) and keeps only pairs whose column names, rows and ORDER BY sequence match: 20,071 of 20,105 pairs pass (v5); 15,499 of 15,500 pass on `complex_v9`; 7,857 of 7,858 mirrored classic pairs and 900 / 900 `IN` / `NOT IN` pairs pass on `classic_v10`; 14,700 of 14,700 pass on `targeted_v11`; 6,950 of 6,950 on `targeted_v12`; 2,600 of 2,600 on `targeted_v13`; 13,499 of 13,500 on `targeted_v14`; 13,983 of 14,000 (+ 340 / 340 schema-shift) on `schema_v15`.
 3. **Splits by feature signature** (`convert_sql_pyspark.py`), so validation and test contain feature combinations that never occur in training.
 4. **Fine-tunes Qwen2.5-Coder (4-bit MLX)** with LoRA on a base M2:
    - `v1–v5`: 3B base model (`mlx-community/Qwen2.5-Coder-3B-Instruct-4bit`), validation loss 0.030 → **0.012** (v5, continued from v4, ~5 h 40 min).
@@ -60,7 +60,7 @@ flowchart TD
 
     subgraph TrainPhase [Training & Export]
         JSONL --> MLX[mlx_lm.lora<br/>train_resumable.py]
-        BaseModel["Qwen2.5-Coder 4-bit<br/>(3B v1–v5; 7B v6–v14)"] --> MLX
+        BaseModel["Qwen2.5-Coder 4-bit<br/>(3B v1–v5; 7B v6–v15)"] --> MLX
         MLX --> Adapters[targeted_v12/adapters/]
         Adapters --> Fuse[mlx_lm.fuse --dequantize]
         Fuse --> HF[sql2pyspark-hf/<br/>BF16]
@@ -114,6 +114,7 @@ Finetuning-LLM/
 │   ├── targeted_v12/             # 4.7k OR / mixed AND-OR pairs + replay (13k mix), v12 LoRA config + adapters
 │   ├── targeted_v13/             # 2k scalar-subquery pairs + replay (11.5k mix), v13 LoRA config + adapters (not used)
 │   ├── targeted_v14/             # 10k correlated + uncorrelated scalar-subquery pairs + replay (25k mix), v14 LoRA config + adapters (not promoted)
+│   ├── schema_v15/               # synthetic catalog (35 domains, 221 tables) + generators, 10k pairs + 200 schema-shift pairs (25k mix), v15 LoRA config + adapters
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # Parallel PySpark verification
 │   ├── convert_sql_pyspark.py    # Signature splitter & chat formatter
@@ -150,9 +151,12 @@ Finetuning-LLM/
 │   ├── start_training_v13.sh     # v13 automated end-to-end launcher (not used model)
 │   ├── start_training_v14.sh     # v14 automated end-to-end launcher (train, Q8/Q4 export, evals incl. 200 targeted_v14 held-out; not promoted)
 │   ├── eval_v14_ckpt.sh          # export + evaluate an earlier v14 checkpoint (iter 2,400 -> sql2pyspark:v14-c2400-q4)
+│   ├── start_training_v15.sh     # v15 automated end-to-end launcher (train, Q8/Q4 export, evals incl. schema-shift for v15-q4 / v14-q4 / v12-q4, name slips)
+│   ├── schema_shift_tables.py    # --tables file for the schema-shift set (the 5 synthetic domains v15 never trains on)
+│   ├── name_slips.py             # counts failures with an unresolved table / column / field name per model and eval set
 │   ├── complex_v8_test.jsonl     # 300 held-out complex_v8 test pairs
 │   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
-│   └── results/                  # <tag>__<set>.json results (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 / v9-q4 / v10-q4 results, v9-q4-repair, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/)
+│   └── results/                  # <tag>__<set>.json results (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 / v9-q4 / v10-q4 results, v9-q4-repair, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/)
 └── llama.cpp/                    # Upstream checkout used for convert_hf_to_gguf.py
 ```
 
@@ -266,6 +270,12 @@ Whole signatures are held out for validation (10%) and test (5%). A signature is
   - `v6`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 layers, 7.61 B parameters)
 - **Framework**: Apple MLX (`mlx-lm`)
 - **Config**: [lora_config.yaml](sql2pyspark-mlx/lora_config.yaml)
+
+### v15 (7B Model, Continued from v14 on schema_v15) — candidate, recommended
+
+- **Data**: `sql2pyspark-mlx/schema_v15/` (a synthetic catalog of 35 domains / 221 tables / 759 column names; 10,000 pairs of the existing forms on 30 of the domains — 4,000 classic, 1,000 advanced, 1,000 nested, 2,000 subquery / `OR`, 2,000 scalar subquery; 13,983/14,000 verified — + 3,000 targeted_v14 + 708 classic scalar + 5,300 classic + 3,500 complex_v9 + 1,500 targeted_v12 + 1,000 targeted_v11 = 25,008; 200 schema-shift pairs on the other 5 domains).
+- **Training**: resumed from v14, 4,800 micro-batches, seed 15, 8 h 09 min (2026-10-07 13:18 → 21:27); validation loss 0.011 → 0.019 → **0.007**. Tags `sql2pyspark:v15` (`39e9aae00d19`), `:v15-q4` (`882787d22c3c`).
+- **Outcome**: hold-out 60, classic 97/97, complex 89, schema-shift 189/200, fewer name slips; v4 hold-out 20 (v12-q4 21). Recommended for promotion (see [v15 results](#v15-results-2026-10-08)).
 
 ### v14 (7B Model, Continued from v12 on targeted_v14) — not promoted
 
@@ -433,6 +443,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v13-q4` | holdout | 62 | 98% | 84% | **84%** | 84% | **84%** | 4.5 |
 | `sql2pyspark:v14-c2400-q4` | holdout | 62 | 98% | 94% | **94%** | 94% | **94%** | 4.7 |
 | `sql2pyspark:v14-q4` | holdout | 62 | 98% | 94% | **94%** | 94% | **94%** | 5.9 |
+| `sql2pyspark:v15-q4` | holdout | 62 | 100% | 98% | **97%** | 98% | **97%** | 6.2 |
 | `sql2pyspark:v2` | holdout | 62 | 98% | 92% | **90%** | 92% | **90%** | 4.1 |
 | `sql2pyspark:v3` | holdout | 62 | 97% | 95% | **95%** | 95% | **95%** | 3.3 |
 | `sql2pyspark:v4` | holdout | 62 | 100% | 95% | **94%** | 95% | **94%** | 4.0 |
@@ -448,6 +459,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v13-q4` | holdout_v4 | 25 | 100% | 76% | **76%** | 76% | **76%** | 8.3 |
 | `sql2pyspark:v14-c2400-q4` | holdout_v4 | 25 | 100% | 80% | **76%** | 80% | **76%** | 10.1 |
 | `sql2pyspark:v14-q4` | holdout_v4 | 25 | 100% | 76% | **72%** | 76% | **72%** | 11.5 |
+| `sql2pyspark:v15-q4` | holdout_v4 | 25 | 100% | 84% | **80%** | 84% | **80%** | 11.5 |
 | `sql2pyspark:v2` | holdout_v4 | 25 | 92% | 32% | **20%** | 32% | **20%** | 6.5 |
 | `sql2pyspark:v3` | holdout_v4 | 25 | 88% | 32% | **12%** | 32% | **12%** | 7.1 |
 | `sql2pyspark:v4` | holdout_v4 | 25 | 96% | 60% | **36%** | 60% | **36%** | 7.0 |
@@ -462,6 +474,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v12-q4` | real_queries | 4 | 50% | 0% | **0%** | 0% | **0%** | 101.7 |
 | `sql2pyspark:v13-q4` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 69.9 |
 | `sql2pyspark:v14-q4` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 95.9 |
+| `sql2pyspark:v15-q4` | real_queries | 4 | 100% | 0% | **0%** | 0% | **0%** | 97.0 |
 | `sql2pyspark:v2` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 55.3 |
 | `sql2pyspark:v3` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 78.9 |
 | `sql2pyspark:v4` | real_queries | 4 | 25% | 0% | **0%** | 0% | **0%** | 92.8 |
@@ -477,6 +490,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v13-q4` | test_fixed | 150 | 100% | 91% | **89%** | 91% | **89%** | 11.9 |
 | `sql2pyspark:v14-c2400-q4` | test_fixed | 150 | 98% | 95% | **93%** | 95% | **93%** | 14.8 |
 | `sql2pyspark:v14-q4` | test_fixed | 150 | 99% | 97% | **97%** | 97% | **97%** | 15.8 |
+| `sql2pyspark:v15-q4` | test_fixed | 150 | 100% | 97% | **97%** | 97% | **97%** | 15.6 |
 | `sql2pyspark:v3` | test_fixed | 150 | 92% | 73% | **69%** | 73% | **70%** | 8.0 |
 | `sql2pyspark:v4` | test_fixed | 150 | 90% | 80% | **73%** | 80% | **73%** | 11.6 |
 | `sql2pyspark:v5` | test_fixed | 150 | 97% | 88% | **85%** | 89% | **85%** | 11.2 |
@@ -490,6 +504,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v12-q4` | complex_v8_test | 100 | 98% | 88% | **83%** | 88% | **83%** | 49.5 |
 | `sql2pyspark:v13-q4` | complex_v8_test | 100 | 97% | 81% | **79%** | 81% | **79%** | 38.6 |
 | `sql2pyspark:v14-q4` | complex_v8_test | 100 | 98% | 87% | **82%** | 87% | **82%** | 47.6 |
+| `sql2pyspark:v15-q4` | complex_v8_test | 100 | 99% | 93% | **89%** | 93% | **89%** | 47.0 |
 | `sql2pyspark:v7` | complex_v8_test | 100 | 83% | 38% | **31%** | 38% | **31%** | 72.9 |
 | `sql2pyspark:v8` | complex_v8_test | 100 | 96% | 68% | **60%** | 68% | **60%** | 96.9 |
 | `sql2pyspark:v9` | complex_v8_test | 100 | 100% | 92% | **87%** | 92% | **87%** | 57.9 |
@@ -507,6 +522,7 @@ Hold-out, correct results (lenient) by difficulty:
 | `sql2pyspark:v13-q4` | 87% | 86% | 80% |
 | `sql2pyspark:v14-c2400-q4` | 100% | 91% | 92% |
 | `sql2pyspark:v14-q4` | 100% | 91% | 92% |
+| `sql2pyspark:v15-q4` | 100% | 95% | 96% |
 | `sql2pyspark:v2` | 93% | 95% | 84% |
 | `sql2pyspark:v3` | 100% | 95% | 92% |
 | `sql2pyspark:v4` | 100% | 95% | 88% |
@@ -527,6 +543,7 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v13-q4` | 75% | 100% | 80% | 67% | 50% | 75% | 50% |
 | `sql2pyspark:v14-c2400-q4` | 100% | 100% | 100% | 67% | 50% | 25% | 50% |
 | `sql2pyspark:v14-q4` | 75% | 100% | 100% | 67% | 50% | 25% | 50% |
+| `sql2pyspark:v15-q4` | 100% | 100% | 60% | 67% | 100% | 75% | 50% |
 | `sql2pyspark:v2` | 0% | 40% | 20% | 67% | 0% | 0% | 0% |
 | `sql2pyspark:v3` | 0% | 40% | 0% | 33% | 0% | 0% | 0% |
 | `sql2pyspark:v4` | 25% | 40% | 20% | 67% | 50% | 50% | 0% |
@@ -536,6 +553,22 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v8` | 100% | 60% | 60% | 67% | 100% | 75% | 50% |
 | `sql2pyspark:v9` | 75% | 100% | 100% | 33% | 50% | 50% | 50% |
 | `sql2pyspark:v9-q4` | 75% | 100% | 100% | 67% | 50% | 75% | 100% |
+
+### v15 results (2026-10-08)
+
+| Eval set | **v12-q4** (`latest`, Mac + server) | v14-q4 | **v15-q4** |
+| --- | --- | --- | --- |
+| Hold-out (62, unseen tables) | 59 | 58 | **60** |
+| Fixed test set: classic families (97) / all (150) | 95 / 143 | 95 / **145** | **97** / **145** |
+| v4 hold-out (25) | **21** | 18 | 20 |
+| complex_v8 test (100 of 300) | 83 | 82 | **89** |
+| Held-out `IN` / `NOT IN` (50) | **50** | **50** | **50** |
+| Held-out targeted_v11 / v12 / v13 / v14 pairs | **287** / 230 / 123 / 96 | 280 / 227 / **150** / **196** | 278 / **232** / **150** / 193 |
+| Schema-shift pairs (200, 5 domains never trained on) | 155 | 179 | **189** |
+| Failures with an unresolved name (all sets above) | 93 | 57 | **42** |
+| Real-world queries (4) | 0 | 0 | 0 |
+
+- The name drift is down (hold-out 60, schema-shift 189, unresolved-name failures 42) and everything learned so far is kept or better (classic 97/97 incl. `subquery` 17/17, complex 89). Costs: v4 hold-out 20 vs. 21 and v11 held-out 278 vs. 287. Recommended for promotion (beats v12-q4 on the hold-out, the agreed rule); the owner decides.
 
 ### v14 results (2026-10-07, not promoted)
 
@@ -804,6 +837,7 @@ The Makefile defaults are `BASE ?= mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`
 - `eval/start_training_v11.sh` provides end-to-end automation for v11 on `targeted_v11/data_mix` (resumes v10 adapters, 4,000 micro-batches), exports Q8_0 (`sql2pyspark:v11`) and Q4_K_M (`sql2pyspark:v11-q4`), evaluates v11-q4 across all suites, and benchmarks v11-q4, v10-q4, and v9-q4 on the 300 held-out `targeted_v11` pairs (`eval/results/v11-heldout/`).
 - `eval/start_training_v12.sh` does the same for v12 on `targeted_v12/data_mix` (resumes v11's adapters, 2,400 micro-batches; tags `sql2pyspark:v12`, `:v12-q4`), adds the v11 held-out pairs for v12-q4 and the 250 v12 held-out pairs for v12-q4 / v11-q4 / v9-q4 (`eval/results/v12-heldout/`).
 - `eval/start_training_v13.sh` does the same for v13 on `targeted_v13/data_mix` (resumes v12; v13 regressed and is not used).
+- `eval/start_training_v15.sh` does the same for v15 on `schema_v15/data_mix` (resumes v14, 4,800 micro-batches, `caffeinate -s -i` inside), adds the v14 held-out pairs for v15-q4, scores v15-q4 / v14-q4 / v12-q4 on the 200 schema-shift pairs (`eval/results/schema-shift/`, tables from `eval/schema_shift_tables.py`) and prints `eval/name_slips.py`.
 - `eval/start_training_v14.sh` does the same for v14 on `targeted_v14/data_mix` (resumes v12, 4,800 micro-batches; adds the v13 held-out pairs for v14-q4 and the 200 v14 held-out pairs for v14-q4 / v12-q4, `eval/results/v14-heldout/`); `eval/eval_v14_ckpt.sh [N]` exports and evaluates the iter-N checkpoint (default 2,400). v14 is not promoted.
 
 **Docker** works for everything except training: `docker-compose.yml` defines an `app` service (Streamlit, using the host's Ollama), a `tools` profile (Java 17 + PySpark for the data pipeline and evaluation) and an optional `ollama` profile; both images use `python:3.12-slim-bookworm`. Verified: the app container, the v3 dataset build (`make data` in `tools`) and the v3 hold-out evaluation in `tools` (59/62, identical to the native run). MLX training can't run in Docker on a Mac, and Docker should be stopped during training (its VM takes ~8 GB).

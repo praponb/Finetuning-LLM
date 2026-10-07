@@ -1,0 +1,3178 @@
+{
+  "model": "sql2pyspark:v15-q4",
+  "set": "sql2pyspark-mlx/targeted_v13/data/heldout_meta.jsonl",
+  "n": 150,
+  "summary": {
+    "ALL": {
+      "n": 150,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 1.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 1.0
+    },
+    "scalar_where": {
+      "n": 150,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 1.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 1.0
+    }
+  },
+  "avg_seconds": 7.26,
+  "cases": [
+    {
+      "id": "scw01311",
+      "level": "scalar_where",
+      "sql": "SELECT oi.id, oi.quantity, o.shipping_fee\nFROM order_items oi\nJOIN orders o ON oi.order_id = o.id\nWHERE oi.quantity < (SELECT AVG(quantity) FROM order_items WHERE quantity > 8)\nORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_quantity = df_order_items.filter(F.col(\"quantity\") > 8).agg(F.avg(\"quantity\")).first()[0]\n\nresult = (\n    df_order_items.alias(\"oi\")\n    .join(df_orders.alias(\"o\"), F.col(\"oi.order_id\") == F.col(\"o.id\"), \"inner\")\n    .filter(F.col(\"oi.quantity\") < avg_quantity)\n    .select(F.col(\"oi.id\"), F.col(\"oi.quantity\"), F.col(\"o.shipping_fee\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 8.25,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00877",
+      "level": "scalar_where",
+      "sql": "select id, price from products where price < (select avg(unit_price) from order_items where quantity is not null and quantity >= 8);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_unit_price = df_order_items.filter(F.col(\"quantity\").isNotNull()).filter(F.col(\"quantity\") >= 8).agg(F.avg(\"unit_price\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"price\") < avg_unit_price)\n    .select(\"id\", \"price\")\n)\n```",
+      "seconds": 6.03,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01733",
+      "level": "scalar_where",
+      "sql": "SELECT id, shipped_date, cost, cost - (SELECT MAX(cost) FROM shipments WHERE carrier IN ('Flash', 'FedEx')) AS cost_minus_max\nFROM shipments\nWHERE delivered_date < DATE '2024-05-16'\nORDER BY shipped_date DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_cost = df_shipments.filter(F.col(\"carrier\").isin(\"Flash\", \"FedEx\")).agg(F.max(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .filter(F.col(\"delivered_date\") < \"2024-05-16\")\n    .select(\n        \"id\",\n        \"shipped_date\",\n        \"cost\",\n        (F.col(\"cost\") - max_cost).alias(\"cost_minus_max\"),\n    )\n    .orderBy(F.col(\"shipped_date\").desc())\n)\n```",
+      "seconds": 9.38,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01027",
+      "level": "scalar_where",
+      "sql": "SELECT plan, AVG(monthly_fee) AS avg_monthly_fee\nFROM subscriptions\nGROUP BY plan\nHAVING AVG(monthly_fee) >= (SELECT AVG(shipping_fee) FROM orders)\nORDER BY avg_monthly_fee DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_shipping_fee = df_orders.agg(F.avg(\"shipping_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .groupBy(\"plan\")\n    .agg(F.avg(\"monthly_fee\").alias(\"avg_monthly_fee\"))\n    .filter(F.col(\"avg_monthly_fee\") >= avg_shipping_fee)\n    .orderBy(F.col(\"avg_monthly_fee\").desc())\n)\n```",
+      "seconds": 6.94,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01805",
+      "level": "scalar_where",
+      "sql": "SELECT id, status, end_date, monthly_fee, monthly_fee - (SELECT AVG(amount) FROM orders) AS monthly_fee_vs_avg FROM subscriptions WHERE status <> 'EXPIRED'",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\namount_by_order = df_orders.agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"status\") != \"EXPIRED\")\n    .select(\n        \"id\",\n        \"status\",\n        \"end_date\",\n        \"monthly_fee\",\n        (F.col(\"monthly_fee\") - amount_by_order).alias(\"monthly_fee_vs_avg\"),\n    )\n)\n```",
+      "seconds": 7.39,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01490",
+      "level": "scalar_where",
+      "sql": "SELECT id, units FROM store_sales WHERE units > (SELECT AVG(units) FROM store_sales)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_units = df_store_sales.agg(F.avg(\"units\")).first()[0]\n\nresult = (\n    df_store_sales\n    .filter(F.col(\"units\") > avg_units)\n    .select(\"id\", \"units\")\n)\n```",
+      "seconds": 4.6,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00020",
+      "level": "scalar_where",
+      "sql": "select method, avg(amount) as avg_amount from payments group by method having avg(amount) >= (select avg(amount) from payments) order by avg_amount desc;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_amount = df_payments.agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_payments\n    .groupBy(\"method\")\n    .agg(F.avg(\"amount\").alias(\"avg_amount\"))\n    .filter(F.col(\"avg_amount\") >= avg_amount)\n    .orderBy(F.col(\"avg_amount\").desc())\n)\n```",
+      "seconds": 6.19,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01029",
+      "level": "scalar_where",
+      "sql": "SELECT id, plan, customer_id, monthly_fee, monthly_fee - (SELECT AVG(shipping_fee) FROM orders) AS monthly_fee_vs_avg\nFROM subscriptions\nORDER BY monthly_fee",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_shipping_fee = df_orders.agg(F.avg(\"shipping_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .select(\n        \"id\",\n        \"plan\",\n        \"customer_id\",\n        \"monthly_fee\",\n        (F.col(\"monthly_fee\") - avg_shipping_fee).alias(\"monthly_fee_vs_avg\"),\n    )\n    .orderBy(\"monthly_fee\")\n)\n```",
+      "seconds": 6.96,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01833",
+      "level": "scalar_where",
+      "sql": "SELECT p.id, p.amount, o.store_id\nFROM payments p\nJOIN orders o ON p.order_id = o.id\nWHERE p.amount <= (SELECT AVG(amount) FROM payments);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_amount = df_payments.agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_payments.alias(\"p\")\n    .join(df_orders.alias(\"o\"), F.col(\"p.order_id\") == F.col(\"o.id\"), \"inner\")\n    .filter(F.col(\"p.amount\") <= avg_amount)\n    .select(F.col(\"p.id\"), F.col(\"p.amount\"), F.col(\"o.store_id\"))\n)\n```",
+      "seconds": 7.68,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01665",
+      "level": "scalar_where",
+      "sql": "SELECT id, delivered_date, status, cost, cost - (SELECT MAX(cost) FROM shipments WHERE cost IS NOT NULL) AS cost_vs_max\nFROM shipments\nWHERE cost >= 80",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_cost = df_shipments.filter(F.col(\"cost\").isNotNull()).agg(F.max(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .filter(F.col(\"cost\") >= 80)\n    .select(\n        \"id\",\n        \"delivered_date\",\n        \"status\",\n        \"cost\",\n        (F.col(\"cost\") - max_cost).alias(\"cost_vs_max\"),\n    )\n)\n```",
+      "seconds": 7.63,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01998",
+      "level": "scalar_where",
+      "sql": "SELECT status, MAX(balance) AS max_balance\nFROM accounts\nGROUP BY status\nHAVING MAX(balance) >= (SELECT AVG(balance) FROM accounts WHERE account_type <> 'LOAN');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_balance = df_accounts.filter(F.col(\"account_type\") != \"LOAN\").agg(F.avg(\"balance\")).first()[0]\n\nresult = (\n    df_accounts\n    .groupBy(\"status\")\n    .agg(F.max(\"balance\").alias(\"max_balance\"))\n    .filter(F.col(\"max_balance\") >= avg_balance)\n)\n```",
+      "seconds": 6.12,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01048",
+      "level": "scalar_where",
+      "sql": "SELECT id, manager_id, salary, salary - (SELECT AVG(salary) FROM employees WHERE is_remote = TRUE) AS salary_vs_avg FROM employees WHERE salary < 124953 ORDER BY salary, id LIMIT 5;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_salary = df_employees.filter(F.col(\"is_remote\")).agg(F.avg(\"salary\")).first()[0]\n\nresult = (\n    df_employees\n    .filter(F.col(\"salary\") < 124953)\n    .select(\n        \"id\",\n        \"manager_id\",\n        \"salary\",\n        (F.col(\"salary\") - avg_salary).alias(\"salary_vs_avg\"),\n    )\n    .orderBy(\"salary\", \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 8.51,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01168",
+      "level": "scalar_where",
+      "sql": "SELECT id, account_type, opened_date, balance, balance - (SELECT AVG(balance) FROM accounts WHERE balance > 69267) AS diff_from_avg FROM accounts ORDER BY opened_date",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_balance = df_accounts.filter(F.col(\"balance\") > 69267).agg(F.avg(\"balance\")).first()[0]\n\nresult = (\n    df_accounts\n    .select(\n        \"id\",\n        \"account_type\",\n        \"opened_date\",\n        \"balance\",\n        (F.col(\"balance\") - avg_balance).alias(\"diff_from_avg\"),\n    )\n    .orderBy(\"opened_date\")\n)\n```",
+      "seconds": 7.47,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02067",
+      "level": "scalar_where",
+      "sql": "SELECT id, product_name, stock_qty FROM products WHERE stock_qty > (SELECT MIN(stock_qty) FROM products WHERE product_name = 'Yoga Mat') ORDER BY stock_qty DESC, id LIMIT 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_stock_qty = df_products.filter(F.col(\"product_name\") == \"Yoga Mat\").agg(F.min(\"stock_qty\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"stock_qty\") > min_stock_qty)\n    .select(\"id\", \"product_name\", \"stock_qty\")\n    .orderBy(F.col(\"stock_qty\").desc(), \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 7.56,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02531",
+      "level": "scalar_where",
+      "sql": "select id, price\nfrom products\nwhere stock_qty >= 243\n  and price between (select min(price) from products) and (select avg(price) from products where brand <> 'Acme')\norder by id\nlimit 3;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_price = df_products.agg(F.min(\"price\")).first()[0]\navg_price = df_products.filter(F.col(\"brand\") != \"Acme\").agg(F.avg(\"price\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"stock_qty\") >= 243)\n    .filter(F.col(\"price\").between(min_price, avg_price))\n    .select(\"id\", \"price\")\n    .orderBy(\"id\")\n    .limit(3)\n)\n```",
+      "seconds": 8.65,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02233",
+      "level": "scalar_where",
+      "sql": "SELECT id, plan, start_date, monthly_fee FROM subscriptions WHERE monthly_fee < (SELECT AVG(monthly_fee) FROM subscriptions WHERE plan IN ('basic', 'enterprise') AND status = 'PAUSED') ORDER BY plan DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"plan\").isin(\"basic\", \"enterprise\")).filter(F.col(\"status\") == \"PAUSED\").agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"monthly_fee\") < avg_monthly_fee)\n    .select(\"id\", \"plan\", \"start_date\", \"monthly_fee\")\n    .orderBy(F.col(\"plan\").desc())\n)\n```",
+      "seconds": 8.19,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00172",
+      "level": "scalar_where",
+      "sql": "SELECT id, event_type, duration_sec, duration_sec - (SELECT AVG(duration_sec) FROM web_events) AS diff_from_avg\nFROM web_events",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_duration_sec = df_web_events.agg(F.avg(\"duration_sec\")).first()[0]\n\nresult = (\n    df_web_events\n    .select(\"id\", \"event_type\", \"duration_sec\", (F.col(\"duration_sec\") - avg_duration_sec).alias(\"diff_from_avg\"))\n)\n```",
+      "seconds": 5.73,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00695",
+      "level": "scalar_where",
+      "sql": "select id, carrier, delivered_date, cost\nfrom shipments\nwhere cost < (select min(cost) from products where cost < 483)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_cost = df_products.filter(F.col(\"cost\") < 483).agg(F.min(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .filter(F.col(\"cost\") < min_cost)\n    .select(\"id\", \"carrier\", \"delivered_date\", \"cost\")\n)\n```",
+      "seconds": 6.06,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02122",
+      "level": "scalar_where",
+      "sql": "SELECT id, amount, amount - (SELECT AVG(amount) FROM transactions WHERE is_flagged) AS amount_vs_avg FROM transactions WHERE txn_time > TIMESTAMP '2024-12-30 01:16:00' ORDER BY id LIMIT 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_amount = df_transactions.filter(F.col(\"is_flagged\")).agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_transactions\n    .filter(F.col(\"txn_time\") > \"2024-12-30 01:16:00\")\n    .select(\n        \"id\",\n        \"amount\",\n        (F.col(\"amount\") - avg_amount).alias(\"amount_vs_avg\"),\n    )\n    .orderBy(\"id\")\n    .limit(5)\n)\n```",
+      "seconds": 9.04,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01798",
+      "level": "scalar_where",
+      "sql": "SELECT id, end_date, monthly_fee FROM subscriptions WHERE monthly_fee >= 1.5 * (SELECT AVG(monthly_fee) FROM subscriptions);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"monthly_fee\") >= F.lit(avg_monthly_fee) * 1.5)\n    .select(\"id\", \"end_date\", \"monthly_fee\")\n)\n```",
+      "seconds": 5.96,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00141",
+      "level": "scalar_where",
+      "sql": "SELECT id, city, store_name, sqft FROM stores WHERE sqft >= (SELECT MAX(sqft) FROM stores WHERE region IN ('North', 'Central'))",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_sqft = df_stores.filter(F.col(\"region\").isin(\"North\", \"Central\")).agg(F.max(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .filter(F.col(\"sqft\") >= max_sqft)\n    .select(\"id\", \"city\", \"store_name\", \"sqft\")\n)\n```",
+      "seconds": 6.44,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00458",
+      "level": "scalar_where",
+      "sql": "SELECT id, salary\nFROM employees\nWHERE salary = (SELECT MAX(salary) FROM employees)\nORDER BY salary",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_salary = df_employees.agg(F.max(\"salary\")).first()[0]\n\nresult = (\n    df_employees\n    .filter(F.col(\"salary\") == max_salary)\n    .select(\"id\", \"salary\")\n    .orderBy(\"salary\")\n)\n```",
+      "seconds": 5.08,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00484",
+      "level": "scalar_where",
+      "sql": "SELECT id, product_id, unit_price FROM order_items WHERE unit_price = (SELECT MIN(unit_price) FROM order_items WHERE unit_price >= 343) ORDER BY product_id DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_unit_price = df_order_items.filter(F.col(\"unit_price\") >= 343).agg(F.min(\"unit_price\")).first()[0]\n\nresult = (\n    df_order_items\n    .filter(F.col(\"unit_price\") == min_unit_price)\n    .select(\"id\", \"product_id\", \"unit_price\")\n    .orderBy(F.col(\"product_id\").desc())\n)\n```",
+      "seconds": 7.14,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02449",
+      "level": "scalar_where",
+      "sql": "SELECT id, txn_type, amount\nFROM transactions\nWHERE amount <= 1.5 * (SELECT AVG(amount) FROM transactions WHERE txn_time <= '2025-06-20 20:21:00')\nORDER BY amount, id\nLIMIT 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_amount = df_transactions.filter(F.col(\"txn_time\") <= \"2025-06-20 20:21:00\").agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_transactions\n    .filter(F.col(\"amount\") <= F.lit(avg_amount) * 1.5)\n    .select(\"id\", \"txn_type\", \"amount\")\n    .orderBy(\"amount\", \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 8.64,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02188",
+      "level": "scalar_where",
+      "sql": "SELECT country, SUM(rating) AS total_rating FROM suppliers GROUP BY country HAVING SUM(rating) > (SELECT AVG(rating) FROM suppliers WHERE city IN ('Singapore', 'New York') AND country = 'DE');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_rating = df_suppliers.filter(F.col(\"city\").isin(\"Singapore\", \"New York\")).filter(F.col(\"country\") == \"DE\").agg(F.avg(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .groupBy(\"country\")\n    .agg(F.sum(\"rating\").alias(\"total_rating\"))\n    .filter(F.col(\"total_rating\") > avg_rating)\n)\n```",
+      "seconds": 7.15,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01440",
+      "level": "scalar_where",
+      "sql": "SELECT id, location, budget\nFROM departments\nWHERE budget = (SELECT MAX(budget) FROM departments)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_budget = df_departments.agg(F.max(\"budget\")).first()[0]\n\nresult = (\n    df_departments\n    .filter(F.col(\"budget\") == max_budget)\n    .select(\"id\", \"location\", \"budget\")\n)\n```",
+      "seconds": 4.74,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02176",
+      "level": "scalar_where",
+      "sql": "SELECT id, stock_qty\nFROM products\nWHERE cost < 632\n  AND stock_qty BETWEEN (SELECT MIN(quantity) FROM inventory) AND (SELECT AVG(quantity) FROM inventory)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_quantity = df_inventory.agg(F.min(\"quantity\")).first()[0]\navg_quantity = df_inventory.agg(F.avg(\"quantity\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"cost\") < 632)\n    .filter(F.col(\"stock_qty\").between(min_quantity, avg_quantity))\n    .select(\"id\", \"stock_qty\")\n)\n```",
+      "seconds": 7.11,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00308",
+      "level": "scalar_where",
+      "sql": "SELECT id, supplier_name, country, rating, rating - (SELECT AVG(rating) FROM suppliers WHERE city = 'Berlin') AS diff_from_avg FROM suppliers WHERE supplier_name IN ('Lion City Imports', 'Global Supply')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_rating = df_suppliers.filter(F.col(\"city\") == \"Berlin\").agg(F.avg(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .filter(F.col(\"supplier_name\").isin([\"Lion City Imports\", \"Global Supply\"]))\n    .select(\n        \"id\",\n        \"supplier_name\",\n        \"country\",\n        \"rating\",\n        (F.col(\"rating\") - avg_rating).alias(\"diff_from_avg\"),\n    )\n)\n```",
+      "seconds": 8.23,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01233",
+      "level": "scalar_where",
+      "sql": "SELECT id, status, monthly_fee\nFROM subscriptions\nWHERE status <> 'CANCELLED'\n  AND monthly_fee <= (SELECT AVG(monthly_fee) FROM subscriptions WHERE plan <> 'enterprise');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"plan\") != \"enterprise\").agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"status\") != \"CANCELLED\")\n    .filter(F.col(\"monthly_fee\") <= avg_monthly_fee)\n    .select(\"id\", \"status\", \"monthly_fee\")\n)\n```",
+      "seconds": 7.06,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00836",
+      "level": "scalar_where",
+      "sql": "SELECT id, rating FROM suppliers WHERE rating BETWEEN (SELECT MIN(rating) FROM suppliers) AND (SELECT AVG(rating) FROM suppliers) ORDER BY id LIMIT 10",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_rating = df_suppliers.agg(F.min(\"rating\")).first()[0]\navg_rating = df_suppliers.agg(F.avg(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .filter(F.col(\"rating\").between(min_rating, avg_rating))\n    .select(\"id\", \"rating\")\n    .orderBy(\"id\")\n    .limit(10)\n)\n```",
+      "seconds": 7.1,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01551",
+      "level": "scalar_where",
+      "sql": "SELECT plan, MAX(monthly_fee) AS max_monthly_fee\nFROM subscriptions\nGROUP BY plan\nHAVING MAX(monthly_fee) > (SELECT AVG(monthly_fee) FROM subscriptions WHERE end_date IS NOT NULL);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"end_date\").isNotNull()).agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .groupBy(\"plan\")\n    .agg(F.max(\"monthly_fee\").alias(\"max_monthly_fee\"))\n    .filter(F.col(\"max_monthly_fee\") > avg_monthly_fee)\n)\n```",
+      "seconds": 6.89,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01439",
+      "level": "scalar_where",
+      "sql": "SELECT id, launch_date, category, price FROM products WHERE price <= (SELECT AVG(unit_price) FROM order_items WHERE quantity IS NULL) ORDER BY launch_date DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_unit_price = df_order_items.filter(F.col(\"quantity\").isNull()).agg(F.avg(\"unit_price\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"price\") <= avg_unit_price)\n    .select(\"id\", \"launch_date\", \"category\", \"price\")\n    .orderBy(F.col(\"launch_date\").desc())\n)\n```",
+      "seconds": 6.74,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00260",
+      "level": "scalar_where",
+      "sql": "SELECT p.id, p.amount, o.discount FROM payments AS p JOIN orders AS o ON p.order_id = o.id WHERE p.amount <= (SELECT MAX(amount) FROM payments WHERE amount <= 658);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_amount = df_payments.filter(F.col(\"amount\") <= 658).agg(F.max(\"amount\")).first()[0]\n\nresult = (\n    df_payments.alias(\"p\")\n    .join(df_orders.alias(\"o\"), F.col(\"p.order_id\") == F.col(\"o.id\"), \"inner\")\n    .filter(F.col(\"p.amount\") <= max_amount)\n    .select(F.col(\"p.id\"), F.col(\"p.amount\"), F.col(\"o.discount\"))\n)\n```",
+      "seconds": 8.39,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02514",
+      "level": "scalar_where",
+      "sql": "SELECT id, sqft FROM stores WHERE sqft BETWEEN (SELECT MIN(sqft) FROM stores) AND (SELECT AVG(sqft) FROM stores WHERE region = 'Central');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_sqft = df_stores.agg(F.min(\"sqft\")).first()[0]\navg_sqft = df_stores.filter(F.col(\"region\") == \"Central\").agg(F.avg(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .filter(F.col(\"sqft\").between(min_sqft, avg_sqft))\n    .select(\"id\", \"sqft\")\n)\n```",
+      "seconds": 7.37,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00374",
+      "level": "scalar_where",
+      "sql": "SELECT id, sqft, sqft - (SELECT MAX(sqft) FROM stores WHERE store_name = 'Riverside') AS sqft_minus_max\nFROM stores\nWHERE store_name IS NOT NULL",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_sqft = df_stores.filter(F.col(\"store_name\") == \"Riverside\").agg(F.max(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .filter(F.col(\"store_name\").isNotNull())\n    .select(\"id\", \"sqft\", (F.col(\"sqft\") - max_sqft).alias(\"sqft_minus_max\"))\n)\n```",
+      "seconds": 7.17,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01591",
+      "level": "scalar_where",
+      "sql": "select ss.id, ss.units, s.sqft\nfrom store_sales ss\njoin stores s on ss.store_id = s.id\nwhere ss.units < (select avg(units) from store_sales where sale_date < '2023-06-23' and revenue >= 3640)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_units = df_store_sales.filter(F.col(\"sale_date\") < \"2023-06-23\").filter(F.col(\"revenue\") >= 3640).agg(F.avg(\"units\")).first()[0]\n\nresult = (\n    df_store_sales.alias(\"ss\")\n    .join(df_stores.alias(\"s\"), F.col(\"ss.store_id\") == F.col(\"s.id\"), \"inner\")\n    .filter(F.col(\"ss.units\") < avg_units)\n    .select(F.col(\"ss.id\"), F.col(\"ss.units\"), F.col(\"s.sqft\"))\n)\n```",
+      "seconds": 10.49,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01538",
+      "level": "scalar_where",
+      "sql": "SELECT id, monthly_fee\nFROM subscriptions\nWHERE monthly_fee BETWEEN (SELECT MIN(monthly_fee) FROM subscriptions WHERE status IN ('EXPIRED', 'PAUSED')) AND (SELECT AVG(monthly_fee) FROM subscriptions WHERE start_date < '2024-04-15')\n  AND end_date <= DATE '2025-01-20'",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_monthly_fee = df_subscriptions.filter(F.col(\"status\").isin(\"EXPIRED\", \"PAUSED\")).agg(F.min(\"monthly_fee\")).first()[0]\navg_monthly_fee = df_subscriptions.filter(F.col(\"start_date\") < \"2024-04-15\").agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"monthly_fee\").between(min_monthly_fee, avg_monthly_fee))\n    .filter(F.col(\"end_date\") <= \"2025-01-20\")\n    .select(\"id\", \"monthly_fee\")\n)\n```",
+      "seconds": 11.39,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00617",
+      "level": "scalar_where",
+      "sql": "SELECT status, SUM(monthly_fee) AS total_monthly_fee\nFROM subscriptions\nGROUP BY status\nHAVING SUM(monthly_fee) > (SELECT AVG(monthly_fee) FROM subscriptions WHERE start_date >= '2024-05-29')\nORDER BY total_monthly_fee DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"start_date\") >= \"2024-05-29\").agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .groupBy(\"status\")\n    .agg(F.sum(\"monthly_fee\").alias(\"total_monthly_fee\"))\n    .filter(F.col(\"total_monthly_fee\") > avg_monthly_fee)\n    .orderBy(F.col(\"total_monthly_fee\").desc())\n)\n```",
+      "seconds": 8.88,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00974",
+      "level": "scalar_where",
+      "sql": "SELECT id, amount, shipping_fee\nFROM orders\nWHERE shipping_fee < (SELECT AVG(shipping_fee) FROM orders WHERE amount >= 736)\nORDER BY amount DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_shipping_fee = df_orders.filter(F.col(\"amount\") >= 736).agg(F.avg(\"shipping_fee\")).first()[0]\n\nresult = (\n    df_orders\n    .filter(F.col(\"shipping_fee\") < avg_shipping_fee)\n    .select(\"id\", \"amount\", \"shipping_fee\")\n    .orderBy(F.col(\"amount\").desc())\n)\n```",
+      "seconds": 6.79,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01523",
+      "level": "scalar_where",
+      "sql": "SELECT id, location, dept_name, budget FROM departments WHERE budget >= (SELECT MIN(budget) FROM departments)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_budget = df_departments.agg(F.min(\"budget\")).first()[0]\n\nresult = (\n    df_departments\n    .filter(F.col(\"budget\") >= min_budget)\n    .select(\"id\", \"location\", \"dept_name\", \"budget\")\n)\n```",
+      "seconds": 5.18,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00625",
+      "level": "scalar_where",
+      "sql": "SELECT a.id, a.balance, c.credit_limit FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE a.balance >= (SELECT MIN(balance) FROM accounts WHERE balance <= 38976);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_balance = df_accounts.filter(F.col(\"balance\") <= 38976).agg(F.min(\"balance\")).first()[0]\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_customers.alias(\"c\"), F.col(\"a.customer_id\") == F.col(\"c.id\"), \"inner\")\n    .filter(F.col(\"a.balance\") >= min_balance)\n    .select(F.col(\"a.id\"), F.col(\"a.balance\"), F.col(\"c.credit_limit\"))\n)\n```",
+      "seconds": 8.71,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00853",
+      "level": "scalar_where",
+      "sql": "select id, stock_qty from products where stock_qty = (select max(stock_qty) from products where price > 633 and stock_qty < 315) order by id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_stock_qty = df_products.filter(F.col(\"price\") > 633).filter(F.col(\"stock_qty\") < 315).agg(F.max(\"stock_qty\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"stock_qty\") == max_stock_qty)\n    .select(\"id\", \"stock_qty\")\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 7.21,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00350",
+      "level": "scalar_where",
+      "sql": "select e.id, e.salary, d.budget from employees e join departments d on e.dept_id = d.id where e.salary >= (select avg(salary) from employees) order by id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_salary = df_employees.agg(F.avg(\"salary\")).first()[0]\n\nresult = (\n    df_employees.alias(\"e\")\n    .join(df_departments.alias(\"d\"), F.col(\"e.dept_id\") == F.col(\"d.id\"), \"inner\")\n    .filter(F.col(\"e.salary\") >= avg_salary)\n    .select(F.col(\"e.id\"), F.col(\"e.salary\"), F.col(\"d.budget\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 8.39,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00333",
+      "level": "scalar_where",
+      "sql": "SELECT id, cost, price, stock_qty FROM products WHERE stock_qty >= (SELECT AVG(quantity) FROM order_items WHERE unit_price <= 440);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_quantity = df_order_items.filter(F.col(\"unit_price\") <= 440).agg(F.avg(\"quantity\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"stock_qty\") >= avg_quantity)\n    .select(\"id\", \"cost\", \"price\", \"stock_qty\")\n)\n```",
+      "seconds": 6.05,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00073",
+      "level": "scalar_where",
+      "sql": "SELECT id, credit_limit\nFROM customers\nWHERE credit_limit > (SELECT AVG(credit_limit) FROM customers)\nORDER BY id DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_credit_limit = df_customers.agg(F.avg(\"credit_limit\")).first()[0]\n\nresult = (\n    df_customers\n    .filter(F.col(\"credit_limit\") > avg_credit_limit)\n    .select(\"id\", \"credit_limit\")\n    .orderBy(F.col(\"id\").desc())\n)\n```",
+      "seconds": 5.54,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00215",
+      "level": "scalar_where",
+      "sql": "select a.id, a.balance, c.name from accounts a join customers c on a.customer_id = c.id where a.balance >= (select min(balance) from accounts where balance >= 38976);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_balance = df_accounts.filter(F.col(\"balance\") >= 38976).agg(F.min(\"balance\")).first()[0]\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_customers.alias(\"c\"), F.col(\"a.customer_id\") == F.col(\"c.id\"), \"inner\")\n    .filter(F.col(\"a.balance\") >= min_balance)\n    .select(F.col(\"a.id\"), F.col(\"a.balance\"), F.col(\"c.name\"))\n)\n```",
+      "seconds": 8.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00070",
+      "level": "scalar_where",
+      "sql": "SELECT id, plan, customer_id, monthly_fee\nFROM subscriptions\nWHERE monthly_fee BETWEEN (SELECT MIN(amount) FROM payments) AND (SELECT AVG(amount) FROM payments);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_amount = df_payments.agg(F.min(\"amount\")).first()[0]\navg_amount = df_payments.agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"monthly_fee\").between(min_amount, avg_amount))\n    .select(\"id\", \"plan\", \"customer_id\", \"monthly_fee\")\n)\n```",
+      "seconds": 6.63,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01553",
+      "level": "scalar_where",
+      "sql": "select channel, max(shipping_fee) as max_shipping_fee from orders group by channel having max(shipping_fee) < (select avg(monthly_fee) from subscriptions) order by max_shipping_fee desc;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_orders\n    .groupBy(\"channel\")\n    .agg(F.max(\"shipping_fee\").alias(\"max_shipping_fee\"))\n    .filter(F.col(\"max_shipping_fee\") < avg_monthly_fee)\n    .orderBy(F.col(\"max_shipping_fee\").desc())\n)\n```",
+      "seconds": 6.88,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02236",
+      "level": "scalar_where",
+      "sql": "SELECT id, opened_date, balance, balance - (SELECT MAX(balance) FROM accounts) AS balance_minus_max\nFROM accounts;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_balance = df_accounts.agg(F.max(\"balance\")).first()[0]\n\nresult = (\n    df_accounts\n    .select(\"id\", \"opened_date\", \"balance\", (F.col(\"balance\") - max_balance).alias(\"balance_minus_max\"))\n)\n```",
+      "seconds": 4.96,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01516",
+      "level": "scalar_where",
+      "sql": "select id, balance from accounts where balance is not null and balance between (select min(balance) from accounts) and (select avg(balance) from accounts)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_balance = df_accounts.agg(F.min(\"balance\")).first()[0]\navg_balance = df_accounts.agg(F.avg(\"balance\")).first()[0]\n\nresult = (\n    df_accounts\n    .filter(F.col(\"balance\").isNotNull())\n    .filter(F.col(\"balance\").between(min_balance, avg_balance))\n    .select(\"id\", \"balance\")\n)\n```",
+      "seconds": 6.73,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01710",
+      "level": "scalar_where",
+      "sql": "SELECT id, credit_limit\nFROM customers\nWHERE signup_date < DATE '2024-05-27'\n  AND credit_limit < 1.2 * (SELECT AVG(credit_limit) FROM customers WHERE is_active = TRUE);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_credit_limit = df_customers.filter(F.col(\"is_active\")).agg(F.avg(\"credit_limit\")).first()[0]\n\nresult = (\n    df_customers\n    .filter(F.col(\"signup_date\") < \"2024-05-27\")\n    .filter(F.col(\"credit_limit\") < F.lit(avg_credit_limit) * 1.2)\n    .select(\"id\", \"credit_limit\")\n)\n```",
+      "seconds": 7.76,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02563",
+      "level": "scalar_where",
+      "sql": "SELECT id, start_date, plan, monthly_fee\nFROM subscriptions\nWHERE monthly_fee <= 2 * (SELECT AVG(monthly_fee) FROM subscriptions WHERE monthly_fee < 129)\nORDER BY id\nLIMIT 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"monthly_fee\") < 129).agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"monthly_fee\") <= F.lit(avg_monthly_fee) * 2)\n    .select(\"id\", \"start_date\", \"plan\", \"monthly_fee\")\n    .orderBy(\"id\")\n    .limit(5)\n)\n```",
+      "seconds": 8.1,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01660",
+      "level": "scalar_where",
+      "sql": "SELECT p.id, p.amount, o.customer_id FROM payments p JOIN orders o ON p.order_id = o.id WHERE p.amount <= (SELECT AVG(amount) FROM payments WHERE method IN ('promptpay', 'cash'))",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_amount = df_payments.filter(F.col(\"method\").isin(\"promptpay\", \"cash\")).agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_payments.alias(\"p\")\n    .join(df_orders.alias(\"o\"), F.col(\"p.order_id\") == F.col(\"o.id\"), \"inner\")\n    .filter(F.col(\"p.amount\") <= avg_amount)\n    .select(F.col(\"p.id\"), F.col(\"p.amount\"), F.col(\"o.customer_id\"))\n)\n```",
+      "seconds": 8.63,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00460",
+      "level": "scalar_where",
+      "sql": "SELECT id, order_date, status, discount\nFROM orders\nWHERE discount = (SELECT MAX(discount) FROM orders WHERE channel IN ('partner', 'web'));",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_discount = df_orders.filter(F.col(\"channel\").isin(\"partner\", \"web\")).agg(F.max(\"discount\")).first()[0]\n\nresult = (\n    df_orders\n    .filter(F.col(\"discount\") == max_discount)\n    .select(\"id\", \"order_date\", \"status\", \"discount\")\n)\n```",
+      "seconds": 5.91,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02111",
+      "level": "scalar_where",
+      "sql": "SELECT id, units\nFROM store_sales\nWHERE units < (SELECT AVG(units) FROM store_sales WHERE units <= 20);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_units = df_store_sales.filter(F.col(\"units\") <= 20).agg(F.avg(\"units\")).first()[0]\n\nresult = (\n    df_store_sales\n    .filter(F.col(\"units\") < avg_units)\n    .select(\"id\", \"units\")\n)\n```",
+      "seconds": 5.21,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00716",
+      "level": "scalar_where",
+      "sql": "select id, paid_at, amount, round(amount * 100.0 / (select sum(amount) from payments), 2) as pct_of_total_amount\nfrom payments\norder by paid_at",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\ntotal_amount = df_payments.agg(F.sum(\"amount\")).first()[0]\n\nresult = (\n    df_payments\n    .select(\n        \"id\",\n        \"paid_at\",\n        \"amount\",\n        F.round(F.col(\"amount\") * 100.0 / total_amount, 2).alias(\"pct_of_total_amount\"),\n    )\n    .orderBy(\"paid_at\")\n)\n```",
+      "seconds": 7.08,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02566",
+      "level": "scalar_where",
+      "sql": "SELECT id, channel, order_date, discount, discount - (SELECT AVG(discount) FROM orders WHERE channel IS NOT NULL AND channel = 'web') AS discount_vs_avg\nFROM orders",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_discount = df_orders.filter(F.col(\"channel\").isNotNull()).filter(F.col(\"channel\") == \"web\").agg(F.avg(\"discount\")).first()[0]\n\nresult = (\n    df_orders\n    .select(\n        \"id\",\n        \"channel\",\n        \"order_date\",\n        \"discount\",\n        (F.col(\"discount\") - avg_discount).alias(\"discount_vs_avg\"),\n    )\n)\n```",
+      "seconds": 7.25,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02289",
+      "level": "scalar_where",
+      "sql": "SELECT id, credit_limit, ROUND(credit_limit * 100.0 / (SELECT SUM(credit_limit) FROM customers WHERE segment IN ('Corporate', 'Consumer')), 2) AS share_pct\nFROM customers\nWHERE segment = 'Consumer'",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\ntotal_credit_limit = df_customers.filter(F.col(\"segment\").isin(\"Corporate\", \"Consumer\")).agg(F.sum(\"credit_limit\")).first()[0]\n\nresult = (\n    df_customers\n    .filter(F.col(\"segment\") == \"Consumer\")\n    .select(\n        \"id\",\n        \"credit_limit\",\n        F.round(F.col(\"credit_limit\") * 100.0 / total_credit_limit, 2).alias(\"share_pct\"),\n    )\n)\n```",
+      "seconds": 8.24,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01872",
+      "level": "scalar_where",
+      "sql": "SELECT t.id, t.amount, a.status FROM transactions t JOIN accounts a ON t.account_id = a.id WHERE t.amount > (SELECT MAX(amount) FROM transactions WHERE merchant = '7-Eleven');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_amount = df_transactions.filter(F.col(\"merchant\") == \"7-Eleven\").agg(F.max(\"amount\")).first()[0]\n\nresult = (\n    df_transactions.alias(\"t\")\n    .join(df_accounts.alias(\"a\"), F.col(\"t.account_id\") == F.col(\"a.id\"), \"inner\")\n    .filter(F.col(\"t.amount\") > max_amount)\n    .select(F.col(\"t.id\"), F.col(\"t.amount\"), F.col(\"a.status\"))\n)\n```",
+      "seconds": 8.46,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02059",
+      "level": "scalar_where",
+      "sql": "SELECT plan, AVG(monthly_fee) AS avg_monthly_fee\nFROM subscriptions\nGROUP BY plan\nHAVING AVG(monthly_fee) > (SELECT AVG(monthly_fee) FROM subscriptions WHERE start_date IS NOT NULL);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"start_date\").isNotNull()).agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .groupBy(\"plan\")\n    .agg(F.avg(\"monthly_fee\").alias(\"avg_monthly_fee\"))\n    .filter(F.col(\"avg_monthly_fee\") > avg_monthly_fee)\n)\n```",
+      "seconds": 6.65,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02597",
+      "level": "scalar_where",
+      "sql": "SELECT id, is_remote, salary\nFROM employees\nWHERE salary <= 0.8 * (SELECT AVG(salary) FROM employees WHERE salary < 92015)\n  AND full_name IN ('Liam O''Neil', 'Pim Chaiyaporn');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_salary = df_employees.filter(F.col(\"salary\") < 92015).agg(F.avg(\"salary\")).first()[0]\n\nresult = (\n    df_employees\n    .filter(F.col(\"salary\") <= F.lit(avg_salary) * 0.8)\n    .filter(F.col(\"full_name\").isin(\"Liam O'Neil\", \"Pim Chaiyaporn\"))\n    .select(\"id\", \"is_remote\", \"salary\")\n)\n```",
+      "seconds": 8.41,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01949",
+      "level": "scalar_where",
+      "sql": "SELECT we.id, we.duration_sec, s.browser FROM web_events we JOIN sessions s ON we.session_id = s.id WHERE we.duration_sec <= (SELECT MIN(duration_sec) FROM web_events) ORDER BY duration_sec DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_duration_sec = df_web_events.agg(F.min(\"duration_sec\")).first()[0]\n\nresult = (\n    df_web_events.alias(\"we\")\n    .join(df_sessions.alias(\"s\"), F.col(\"we.session_id\") == F.col(\"s.id\"), \"inner\")\n    .filter(F.col(\"we.duration_sec\") <= min_duration_sec)\n    .select(F.col(\"we.id\"), F.col(\"we.duration_sec\"), F.col(\"s.browser\"))\n    .orderBy(F.col(\"duration_sec\").desc())\n)\n```",
+      "seconds": 8.92,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00958",
+      "level": "scalar_where",
+      "sql": "SELECT id, event_type, duration_sec, duration_sec - (SELECT AVG(duration_sec) FROM web_events WHERE duration_sec >= 469) AS diff_from_avg\nFROM web_events\nWHERE page <> '/cart'",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_duration_sec = df_web_events.filter(F.col(\"duration_sec\") >= 469).agg(F.avg(\"duration_sec\")).first()[0]\n\nresult = (\n    df_web_events\n    .filter(F.col(\"page\") != \"/cart\")\n    .select(\n        \"id\",\n        \"event_type\",\n        \"duration_sec\",\n        (F.col(\"duration_sec\") - avg_duration_sec).alias(\"diff_from_avg\"),\n    )\n)\n```",
+      "seconds": 7.82,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01985",
+      "level": "scalar_where",
+      "sql": "SELECT id, age\nFROM customers\nWHERE age < (SELECT AVG(age) FROM customers);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_age = df_customers.agg(F.avg(\"age\")).first()[0]\n\nresult = (\n    df_customers\n    .filter(F.col(\"age\") < avg_age)\n    .select(\"id\", \"age\")\n)\n```",
+      "seconds": 4.52,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01234",
+      "level": "scalar_where",
+      "sql": "select id, hire_date, salary from employees where salary > (select min(salary) from employees) order by salary",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_salary = df_employees.agg(F.min(\"salary\")).first()[0]\n\nresult = (\n    df_employees\n    .filter(F.col(\"salary\") > min_salary)\n    .select(\"id\", \"hire_date\", \"salary\")\n    .orderBy(\"salary\")\n)\n```",
+      "seconds": 5.28,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02564",
+      "level": "scalar_where",
+      "sql": "select id, order_date, shipping_fee\nfrom orders\nwhere shipping_fee < (select avg(shipping_fee) from orders where amount < 1276)\n  and status = 'PENDING';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_shipping_fee = df_orders.filter(F.col(\"amount\") < 1276).agg(F.avg(\"shipping_fee\")).first()[0]\n\nresult = (\n    df_orders\n    .filter(F.col(\"shipping_fee\") < avg_shipping_fee)\n    .filter(F.col(\"status\") == \"PENDING\")\n    .select(\"id\", \"order_date\", \"shipping_fee\")\n)\n```",
+      "seconds": 7.03,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00403",
+      "level": "scalar_where",
+      "sql": "SELECT p.id, p.cost, s.country FROM products p JOIN suppliers s ON p.supplier_id = s.id WHERE p.cost <= (SELECT AVG(cost) FROM products) ORDER BY cost",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_cost = df_products.agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_products.alias(\"p\")\n    .join(df_suppliers.alias(\"s\"), F.col(\"p.supplier_id\") == F.col(\"s.id\"), \"inner\")\n    .filter(F.col(\"p.cost\") <= avg_cost)\n    .select(F.col(\"p.id\"), F.col(\"p.cost\"), F.col(\"s.country\"))\n    .orderBy(\"cost\")\n)\n```",
+      "seconds": 8.18,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01298",
+      "level": "scalar_where",
+      "sql": "SELECT id, page, duration_sec FROM web_events WHERE duration_sec <= 0.5 * (SELECT AVG(duration_sec) FROM web_events WHERE event_type <> 'add_to_cart') ORDER BY duration_sec, id LIMIT 5;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_duration_sec = df_web_events.filter(F.col(\"event_type\") != \"add_to_cart\").agg(F.avg(\"duration_sec\")).first()[0]\n\nresult = (\n    df_web_events\n    .filter(F.col(\"duration_sec\") <= F.lit(avg_duration_sec) * 0.5)\n    .select(\"id\", \"page\", \"duration_sec\")\n    .orderBy(\"duration_sec\", \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 8.14,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00715",
+      "level": "scalar_where",
+      "sql": "select id, amount, store_id, shipping_fee from orders where shipping_fee < (select avg(monthly_fee) from subscriptions where end_date < '2024-10-03')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"end_date\") < \"2024-10-03\").agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_orders\n    .filter(F.col(\"shipping_fee\") < avg_monthly_fee)\n    .select(\"id\", \"amount\", \"store_id\", \"shipping_fee\")\n)\n```",
+      "seconds": 6.99,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01774",
+      "level": "scalar_where",
+      "sql": "SELECT id, store_id, revenue\nFROM store_sales\nWHERE revenue < (SELECT MAX(revenue) FROM store_sales)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_revenue = df_store_sales.agg(F.max(\"revenue\")).first()[0]\n\nresult = (\n    df_store_sales\n    .filter(F.col(\"revenue\") < max_revenue)\n    .select(\"id\", \"store_id\", \"revenue\")\n)\n```",
+      "seconds": 5.16,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01063",
+      "level": "scalar_where",
+      "sql": "select id, merchant, txn_time, amount, amount - (select avg(amount) from payments) as amount_vs_avg from transactions order by merchant;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_amount = df_payments.agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_transactions\n    .select(\n        \"id\",\n        \"merchant\",\n        \"txn_time\",\n        \"amount\",\n        (F.col(\"amount\") - avg_amount).alias(\"amount_vs_avg\"),\n    )\n    .orderBy(\"merchant\")\n)\n```",
+      "seconds": 6.42,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00723",
+      "level": "scalar_where",
+      "sql": "SELECT id, supplier_name, rating, rating - (SELECT MAX(rating) FROM suppliers WHERE city IN ('New York', 'London')) AS rating_vs_max FROM suppliers WHERE city = 'New York' ORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_rating = df_suppliers.filter(F.col(\"city\").isin(\"New York\", \"London\")).agg(F.max(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .filter(F.col(\"city\") == \"New York\")\n    .select(\n        \"id\",\n        \"supplier_name\",\n        \"rating\",\n        (F.col(\"rating\") - max_rating).alias(\"rating_vs_max\"),\n    )\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 8.04,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01960",
+      "level": "scalar_where",
+      "sql": "SELECT id, stock_qty, brand, price\nFROM products\nWHERE price BETWEEN (SELECT MIN(price) FROM products WHERE launch_date < '2024-10-08') AND (SELECT AVG(price) FROM products WHERE product_name IS NOT NULL)\nORDER BY brand DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_price = df_products.filter(F.col(\"launch_date\") < \"2024-10-08\").agg(F.min(\"price\")).first()[0]\navg_price = df_products.filter(F.col(\"product_name\").isNotNull()).agg(F.avg(\"price\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"price\").between(min_price, avg_price))\n    .select(\"id\", \"stock_qty\", \"brand\", \"price\")\n    .orderBy(F.col(\"brand\").desc())\n)\n```",
+      "seconds": 9.18,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00892",
+      "level": "scalar_where",
+      "sql": "select id, age\nfrom customers\nwhere age between (select min(age) from customers where country = 'US') and (select avg(age) from customers where country = 'JP')\n  and email is not null;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_age = df_customers.filter(F.col(\"country\") == \"US\").agg(F.min(\"age\")).first()[0]\navg_age = df_customers.filter(F.col(\"country\") == \"JP\").agg(F.avg(\"age\")).first()[0]\n\nresult = (\n    df_customers\n    .filter(F.col(\"age\").between(min_age, avg_age))\n    .filter(F.col(\"email\").isNotNull())\n    .select(\"id\", \"age\")\n)\n```",
+      "seconds": 8.22,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00179",
+      "level": "scalar_where",
+      "sql": "SELECT id, quantity, quantity - (SELECT AVG(quantity) FROM inventory WHERE quantity > 229) AS quantity_minus_avg FROM inventory;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_quantity = df_inventory.filter(F.col(\"quantity\") > 229).agg(F.avg(\"quantity\")).first()[0]\n\nresult = (\n    df_inventory\n    .select(\"id\", \"quantity\", (F.col(\"quantity\") - avg_quantity).alias(\"quantity_minus_avg\"))\n)\n```",
+      "seconds": 5.41,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00855",
+      "level": "scalar_where",
+      "sql": "SELECT id, salary\nFROM employees\nWHERE salary = (SELECT MAX(salary) FROM employees)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_salary = df_employees.agg(F.max(\"salary\")).first()[0]\n\nresult = (\n    df_employees\n    .filter(F.col(\"salary\") == max_salary)\n    .select(\"id\", \"salary\")\n)\n```",
+      "seconds": 4.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01268",
+      "level": "scalar_where",
+      "sql": "select id, duration_sec\nfrom web_events\nwhere duration_sec > 0.5 * (select avg(duration_sec) from web_events);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_duration_sec = df_web_events.agg(F.avg(\"duration_sec\")).first()[0]\n\nresult = (\n    df_web_events\n    .filter(F.col(\"duration_sec\") > F.lit(avg_duration_sec) * 0.5)\n    .select(\"id\", \"duration_sec\")\n)\n```",
+      "seconds": 5.77,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00259",
+      "level": "scalar_where",
+      "sql": "select id, product_id, quantity, round(quantity * 100.0 / (select sum(quantity) from inventory where quantity <= 71 and last_restock <= '2025-01-29'), 2) as pct_of_total from order_items order by id desc",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\ntotal_quantity = df_inventory.filter(F.col(\"quantity\") <= 71).filter(F.col(\"last_restock\") <= \"2025-01-29\").agg(F.sum(\"quantity\")).first()[0]\n\nresult = (\n    df_order_items\n    .select(\n        \"id\",\n        \"product_id\",\n        \"quantity\",\n        F.round(F.col(\"quantity\") * 100.0 / total_quantity, 2).alias(\"pct_of_total\"),\n    )\n    .orderBy(F.col(\"id\").desc())\n)\n```",
+      "seconds": 9.77,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01683",
+      "level": "scalar_where",
+      "sql": "SELECT id, customer_id, amount, discount\nFROM orders\nWHERE discount >= 1.2 * (SELECT AVG(discount) FROM orders WHERE discount > 0.2);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_discount = df_orders.filter(F.col(\"discount\") > 0.2).agg(F.avg(\"discount\")).first()[0]\n\nresult = (\n    df_orders\n    .filter(F.col(\"discount\") >= F.lit(avg_discount) * 1.2)\n    .select(\"id\", \"customer_id\", \"amount\", \"discount\")\n)\n```",
+      "seconds": 6.49,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00217",
+      "level": "scalar_where",
+      "sql": "select id, city, sqft from stores where sqft < (select min(sqft) from stores where store_name <> 'Airport Kiosk' and opened_date > '2025-03-15')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_sqft = df_stores.filter(F.col(\"store_name\") != \"Airport Kiosk\").filter(F.col(\"opened_date\") > \"2025-03-15\").agg(F.min(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .filter(F.col(\"sqft\") < min_sqft)\n    .select(\"id\", \"city\", \"sqft\")\n)\n```",
+      "seconds": 7.58,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00611",
+      "level": "scalar_where",
+      "sql": "SELECT id, quantity, quantity - (SELECT AVG(stock_qty) FROM products) AS quantity_vs_avg\nFROM order_items\nWHERE quantity IS NOT NULL",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_stock_qty = df_products.agg(F.avg(\"stock_qty\")).first()[0]\n\nresult = (\n    df_order_items\n    .filter(F.col(\"quantity\").isNotNull())\n    .select(\"id\", \"quantity\", (F.col(\"quantity\") - avg_stock_qty).alias(\"quantity_vs_avg\"))\n)\n```",
+      "seconds": 5.8,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00955",
+      "level": "scalar_where",
+      "sql": "SELECT id, price FROM products WHERE price > (SELECT MAX(unit_price) FROM order_items WHERE unit_price >= 185) ORDER BY price",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_unit_price = df_order_items.filter(F.col(\"unit_price\") >= 185).agg(F.max(\"unit_price\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"price\") > max_unit_price)\n    .select(\"id\", \"price\")\n    .orderBy(\"price\")\n)\n```",
+      "seconds": 6.2,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02041",
+      "level": "scalar_where",
+      "sql": "SELECT id, balance FROM accounts WHERE balance >= (SELECT AVG(balance) FROM accounts) ORDER BY balance, id LIMIT 10",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_balance = df_accounts.agg(F.avg(\"balance\")).first()[0]\n\nresult = (\n    df_accounts\n    .filter(F.col(\"balance\") >= avg_balance)\n    .select(\"id\", \"balance\")\n    .orderBy(\"balance\", \"id\")\n    .limit(10)\n)\n```",
+      "seconds": 5.93,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01363",
+      "level": "scalar_where",
+      "sql": "select id, shipped_date, cost\nfrom shipments\nwhere cost <= 0.5 * (select avg(cost) from shipments)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_cost = df_shipments.agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .filter(F.col(\"cost\") <= F.lit(avg_cost) * 0.5)\n    .select(\"id\", \"shipped_date\", \"cost\")\n)\n```",
+      "seconds": 5.93,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01785",
+      "level": "scalar_where",
+      "sql": "SELECT carrier, AVG(cost) AS avg_cost FROM shipments GROUP BY carrier HAVING AVG(cost) < (SELECT AVG(cost) FROM shipments);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_cost = df_shipments.agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .groupBy(\"carrier\")\n    .agg(F.avg(\"cost\").alias(\"avg_cost\"))\n    .filter(F.col(\"avg_cost\") < avg_cost)\n)\n```",
+      "seconds": 5.64,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02288",
+      "level": "scalar_where",
+      "sql": "select id, store_id, revenue from store_sales where revenue >= 4175 and revenue >= (select max(revenue) from store_sales where sale_date > '2025-05-09');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_revenue = df_store_sales.filter(F.col(\"sale_date\") > \"2025-05-09\").agg(F.max(\"revenue\")).first()[0]\n\nresult = (\n    df_store_sales\n    .filter(F.col(\"revenue\") >= 4175)\n    .filter(F.col(\"revenue\") >= max_revenue)\n    .select(\"id\", \"store_id\", \"revenue\")\n)\n```",
+      "seconds": 8.24,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00425",
+      "level": "scalar_where",
+      "sql": "SELECT id, customer_id, monthly_fee\nFROM subscriptions\nWHERE monthly_fee BETWEEN (SELECT MIN(monthly_fee) FROM subscriptions) AND (SELECT AVG(monthly_fee) FROM subscriptions);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_monthly_fee = df_subscriptions.agg(F.min(\"monthly_fee\")).first()[0]\navg_monthly_fee = df_subscriptions.agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"monthly_fee\").between(min_monthly_fee, avg_monthly_fee))\n    .select(\"id\", \"customer_id\", \"monthly_fee\")\n)\n```",
+      "seconds": 7.46,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01262",
+      "level": "scalar_where",
+      "sql": "SELECT id, duration_sec FROM web_events WHERE duration_sec <= 2 * (SELECT AVG(duration_sec) FROM web_events)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_duration_sec = df_web_events.agg(F.avg(\"duration_sec\")).first()[0]\n\nresult = (\n    df_web_events\n    .filter(F.col(\"duration_sec\") <= F.lit(avg_duration_sec) * 2)\n    .select(\"id\", \"duration_sec\")\n)\n```",
+      "seconds": 5.63,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02522",
+      "level": "scalar_where",
+      "sql": "SELECT id, opened_date, sqft FROM stores WHERE sqft > (SELECT AVG(sqft) FROM stores WHERE opened_date < DATE '2025-04-05');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_sqft = df_stores.filter(F.col(\"opened_date\") < \"2025-04-05\").agg(F.avg(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .filter(F.col(\"sqft\") > avg_sqft)\n    .select(\"id\", \"opened_date\", \"sqft\")\n)\n```",
+      "seconds": 6.78,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01651",
+      "level": "scalar_where",
+      "sql": "SELECT id, amount FROM payments WHERE amount BETWEEN (SELECT MIN(amount) FROM payments WHERE status <> 'SUCCESS') AND (SELECT AVG(amount) FROM payments WHERE amount < 1264) ORDER BY amount",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_amount = df_payments.filter(F.col(\"status\") != \"SUCCESS\").agg(F.min(\"amount\")).first()[0]\navg_amount = df_payments.filter(F.col(\"amount\") < 1264).agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_payments\n    .filter(F.col(\"amount\").between(min_amount, avg_amount))\n    .select(\"id\", \"amount\")\n    .orderBy(\"amount\")\n)\n```",
+      "seconds": 7.95,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01340",
+      "level": "scalar_where",
+      "sql": "select plan, avg(monthly_fee) as avg_monthly_fee from subscriptions group by plan having avg(monthly_fee) >= (select avg(monthly_fee) from subscriptions where status = 'PAUSED') order by avg_monthly_fee desc",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"status\") == \"PAUSED\").agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .groupBy(\"plan\")\n    .agg(F.avg(\"monthly_fee\").alias(\"avg_monthly_fee\"))\n    .filter(F.col(\"avg_monthly_fee\") >= avg_monthly_fee)\n    .orderBy(F.col(\"avg_monthly_fee\").desc())\n)\n```",
+      "seconds": 7.96,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01963",
+      "level": "scalar_where",
+      "sql": "SELECT id, order_id, amount\nFROM payments\nWHERE method <> 'promptpay'\n  AND amount < 1.5 * (SELECT AVG(amount) FROM payments WHERE paid_at < '2023-07-22 10:14:00' AND amount <= 1421);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_amount = df_payments.filter(F.col(\"paid_at\") < \"2023-07-22 10:14:00\").filter(F.col(\"amount\") <= 1421).agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_payments\n    .filter(F.col(\"method\") != \"promptpay\")\n    .filter(F.col(\"amount\") < F.lit(avg_amount) * 1.5)\n    .select(\"id\", \"order_id\", \"amount\")\n)\n```",
+      "seconds": 9.61,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00249",
+      "level": "scalar_where",
+      "sql": "SELECT id, sqft\nFROM stores\nWHERE sqft = (SELECT MIN(sqft) FROM stores WHERE opened_date IS NOT NULL)\nORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_sqft = df_stores.filter(F.col(\"opened_date\").isNotNull()).agg(F.min(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .filter(F.col(\"sqft\") == min_sqft)\n    .select(\"id\", \"sqft\")\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 6.11,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01391",
+      "level": "scalar_where",
+      "sql": "SELECT id, paid_at, amount, amount - (SELECT AVG(amount) FROM orders) AS amount_vs_avg\nFROM payments\nORDER BY paid_at;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_amount = df_orders.agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_payments\n    .select(\"id\", \"paid_at\", \"amount\", (F.col(\"amount\") - avg_amount).alias(\"amount_vs_avg\"))\n    .orderBy(\"paid_at\")\n)\n```",
+      "seconds": 5.61,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01941",
+      "level": "scalar_where",
+      "sql": "select i.id, i.quantity, p.supplier_id from inventory as i join products as p on i.product_id = p.id where i.quantity >= (select max(quantity) from inventory where quantity >= 132) order by id desc",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_quantity = df_inventory.filter(F.col(\"quantity\") >= 132).agg(F.max(\"quantity\")).first()[0]\n\nresult = (\n    df_inventory.alias(\"i\")\n    .join(df_products.alias(\"p\"), F.col(\"i.product_id\") == F.col(\"p.id\"), \"inner\")\n    .filter(F.col(\"i.quantity\") >= max_quantity)\n    .select(F.col(\"i.id\"), F.col(\"i.quantity\"), F.col(\"p.supplier_id\"))\n    .orderBy(F.col(\"id\").desc())\n)\n```",
+      "seconds": 9.17,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00426",
+      "level": "scalar_where",
+      "sql": "SELECT p.id, p.cost, s.rating FROM products AS p JOIN suppliers AS s ON p.supplier_id = s.id WHERE p.cost < (SELECT AVG(cost) FROM products WHERE cost <= 492) ORDER BY id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_cost = df_products.filter(F.col(\"cost\") <= 492).agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_products.alias(\"p\")\n    .join(df_suppliers.alias(\"s\"), F.col(\"p.supplier_id\") == F.col(\"s.id\"), \"inner\")\n    .filter(F.col(\"p.cost\") < avg_cost)\n    .select(F.col(\"p.id\"), F.col(\"p.cost\"), F.col(\"s.rating\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 8.9,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01630",
+      "level": "scalar_where",
+      "sql": "SELECT a.id, a.balance, c.email FROM accounts a JOIN customers c ON a.customer_id = c.id WHERE a.balance <= (SELECT MAX(balance) FROM accounts WHERE opened_date > '2024-02-13' AND status = 'FROZEN') ORDER BY balance DESC, id LIMIT 10",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_balance = df_accounts.filter((F.col(\"opened_date\") > \"2024-02-13\") & (F.col(\"status\") == \"FROZEN\")).agg(F.max(\"balance\")).first()[0]\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_customers.alias(\"c\"), F.col(\"a.customer_id\") == F.col(\"c.id\"), \"inner\")\n    .filter(F.col(\"a.balance\") <= max_balance)\n    .select(F.col(\"a.id\"), F.col(\"a.balance\"), F.col(\"c.email\"))\n    .orderBy(F.col(\"balance\").desc(), \"id\")\n    .limit(10)\n)\n```",
+      "seconds": 11.71,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00661",
+      "level": "scalar_where",
+      "sql": "SELECT id, brand, stock_qty, stock_qty - (SELECT AVG(quantity) FROM order_items) AS diff_from_avg FROM products WHERE category = 'Electronics';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_quantity = df_order_items.agg(F.avg(\"quantity\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"category\") == \"Electronics\")\n    .select(\"id\", \"brand\", \"stock_qty\", (F.col(\"stock_qty\") - avg_quantity).alias(\"diff_from_avg\"))\n)\n```",
+      "seconds": 6.22,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00090",
+      "level": "scalar_where",
+      "sql": "SELECT p.id, p.cost, s.country FROM products p JOIN suppliers s ON p.supplier_id = s.id WHERE p.cost > (SELECT MIN(cost) FROM products WHERE launch_date < '2024-12-22')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_cost = df_products.filter(F.col(\"launch_date\") < \"2024-12-22\").agg(F.min(\"cost\")).first()[0]\n\nresult = (\n    df_products.alias(\"p\")\n    .join(df_suppliers.alias(\"s\"), F.col(\"p.supplier_id\") == F.col(\"s.id\"), \"inner\")\n    .filter(F.col(\"p.cost\") > min_cost)\n    .select(F.col(\"p.id\"), F.col(\"p.cost\"), F.col(\"s.country\"))\n)\n```",
+      "seconds": 9.09,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02435",
+      "level": "scalar_where",
+      "sql": "SELECT id, plan, monthly_fee FROM subscriptions WHERE monthly_fee > (SELECT AVG(monthly_fee) FROM subscriptions) ORDER BY id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"monthly_fee\") > avg_monthly_fee)\n    .select(\"id\", \"plan\", \"monthly_fee\")\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 5.71,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00759",
+      "level": "scalar_where",
+      "sql": "SELECT id, carrier, cost FROM shipments WHERE cost >= (SELECT MIN(cost) FROM products WHERE brand = 'Globex') ORDER BY cost, id LIMIT 3;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_cost = df_products.filter(F.col(\"brand\") == \"Globex\").agg(F.min(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .filter(F.col(\"cost\") >= min_cost)\n    .select(\"id\", \"carrier\", \"cost\")\n    .orderBy(\"cost\", \"id\")\n    .limit(3)\n)\n```",
+      "seconds": 6.77,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01188",
+      "level": "scalar_where",
+      "sql": "SELECT id, salary\nFROM employees\nWHERE salary < 1.5 * (SELECT AVG(salary) FROM employees WHERE job_title IN ('Director', 'Manager'));",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_salary = df_employees.filter(F.col(\"job_title\").isin(\"Director\", \"Manager\")).agg(F.avg(\"salary\")).first()[0]\n\nresult = (\n    df_employees\n    .filter(F.col(\"salary\") < F.lit(avg_salary) * 1.5)\n    .select(\"id\", \"salary\")\n)\n```",
+      "seconds": 6.09,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00025",
+      "level": "scalar_where",
+      "sql": "SELECT id, account_type, status, balance FROM accounts WHERE balance < (SELECT AVG(balance) FROM accounts)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_balance = df_accounts.agg(F.avg(\"balance\")).first()[0]\n\nresult = (\n    df_accounts\n    .filter(F.col(\"balance\") < avg_balance)\n    .select(\"id\", \"account_type\", \"status\", \"balance\")\n)\n```",
+      "seconds": 4.87,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00131",
+      "level": "scalar_where",
+      "sql": "SELECT id, carrier, cost\nFROM shipments\nWHERE cost BETWEEN (SELECT MIN(cost) FROM shipments WHERE cost < 58) AND (SELECT AVG(cost) FROM shipments WHERE delivered_date <= DATE '2024-01-13' AND carrier <> 'FedEx')\nORDER BY carrier DESC, id\nLIMIT 3;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_cost = df_shipments.filter(F.col(\"cost\") < 58).agg(F.min(\"cost\")).first()[0]\navg_cost = df_shipments.filter(F.col(\"delivered_date\") <= \"2024-01-13\").filter(F.col(\"carrier\") != \"FedEx\").agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .filter(F.col(\"cost\").between(min_cost, avg_cost))\n    .select(\"id\", \"carrier\", \"cost\")\n    .orderBy(F.col(\"carrier\").desc(), \"id\")\n    .limit(3)\n)\n```",
+      "seconds": 10.87,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01128",
+      "level": "scalar_where",
+      "sql": "SELECT id, cost, price\nFROM products\nWHERE price > (SELECT AVG(price) FROM products WHERE price >= 754)\nORDER BY cost",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_price = df_products.filter(F.col(\"price\") >= 754).agg(F.avg(\"price\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"price\") > avg_price)\n    .select(\"id\", \"cost\", \"price\")\n    .orderBy(\"cost\")\n)\n```",
+      "seconds": 5.96,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01455",
+      "level": "scalar_where",
+      "sql": "SELECT id, supplier_name, country, rating, ROUND(rating * 100.0 / (SELECT SUM(rating) FROM suppliers), 2) AS share_pct\nFROM suppliers\nWHERE city <> 'Tokyo';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\ntotal_rating = df_suppliers.agg(F.sum(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .filter(F.col(\"city\") != \"Tokyo\")\n    .select(\n        \"id\",\n        \"supplier_name\",\n        \"country\",\n        \"rating\",\n        F.round(F.col(\"rating\") * 100.0 / total_rating, 2).alias(\"share_pct\"),\n    )\n)\n```",
+      "seconds": 7.69,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01990",
+      "level": "scalar_where",
+      "sql": "select id, stock_qty, cost, price\nfrom products\nwhere price between (select min(unit_price) from order_items where unit_price is not null) and (select avg(unit_price) from order_items where unit_price <= 155)\norder by price;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_unit_price = df_order_items.filter(F.col(\"unit_price\").isNotNull()).agg(F.min(\"unit_price\")).first()[0]\navg_unit_price = df_order_items.filter(F.col(\"unit_price\") <= 155).agg(F.avg(\"unit_price\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"price\").between(min_unit_price, avg_unit_price))\n    .select(\"id\", \"stock_qty\", \"cost\", \"price\")\n    .orderBy(\"price\")\n)\n```",
+      "seconds": 8.89,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01015",
+      "level": "scalar_where",
+      "sql": "SELECT id, quantity FROM inventory WHERE quantity BETWEEN (SELECT MIN(quantity) FROM inventory WHERE quantity >= 132 AND last_restock > '2024-03-04') AND (SELECT AVG(quantity) FROM inventory WHERE last_restock < DATE '2024-03-30')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_quantity = df_inventory.filter(F.col(\"quantity\") >= 132).filter(F.col(\"last_restock\") > \"2024-03-04\").agg(F.min(\"quantity\")).first()[0]\navg_quantity = df_inventory.filter(F.col(\"last_restock\") < \"2024-03-30\").agg(F.avg(\"quantity\")).first()[0]\n\nresult = (\n    df_inventory\n    .filter(F.col(\"quantity\").between(min_quantity, avg_quantity))\n    .select(\"id\", \"quantity\")\n)\n```",
+      "seconds": 9.82,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00777",
+      "level": "scalar_where",
+      "sql": "SELECT id, unit_price FROM order_items WHERE unit_price > 225 AND unit_price BETWEEN (SELECT MIN(unit_price) FROM order_items) AND (SELECT AVG(unit_price) FROM order_items);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_unit_price = df_order_items.agg(F.min(\"unit_price\")).first()[0]\navg_unit_price = df_order_items.agg(F.avg(\"unit_price\")).first()[0]\n\nresult = (\n    df_order_items\n    .filter(F.col(\"unit_price\") > 225)\n    .filter(F.col(\"unit_price\").between(min_unit_price, avg_unit_price))\n    .select(\"id\", \"unit_price\")\n)\n```",
+      "seconds": 7.63,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00569",
+      "level": "scalar_where",
+      "sql": "select o.id, o.discount, c.segment from orders o join customers c on o.customer_id = c.id where o.discount < (select avg(discount) from orders where order_date <= '2024-03-26');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_discount = df_orders.filter(F.col(\"order_date\") <= \"2024-03-26\").agg(F.avg(\"discount\")).first()[0]\n\nresult = (\n    df_orders.alias(\"o\")\n    .join(df_customers.alias(\"c\"), F.col(\"o.customer_id\") == F.col(\"c.id\"), \"inner\")\n    .filter(F.col(\"o.discount\") < avg_discount)\n    .select(F.col(\"o.id\"), F.col(\"o.discount\"), F.col(\"c.segment\"))\n)\n```",
+      "seconds": 8.98,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00133",
+      "level": "scalar_where",
+      "sql": "SELECT id, location, dept_name, budget\nFROM departments\nWHERE budget = (SELECT MIN(budget) FROM departments WHERE budget < 3815150 AND budget >= 1313664)\nORDER BY budget",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_budget = df_departments.filter(F.col(\"budget\") < 3815150).filter(F.col(\"budget\") >= 1313664).agg(F.min(\"budget\")).first()[0]\n\nresult = (\n    df_departments\n    .filter(F.col(\"budget\") == min_budget)\n    .select(\"id\", \"location\", \"dept_name\", \"budget\")\n    .orderBy(\"budget\")\n)\n```",
+      "seconds": 7.85,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00940",
+      "level": "scalar_where",
+      "sql": "SELECT id, product_id, quantity\nFROM inventory\nWHERE quantity >= (SELECT MIN(quantity) FROM inventory WHERE quantity IS NOT NULL AND last_restock >= DATE '2024-01-23')\n  AND quantity >= 106;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_quantity = df_inventory.filter(F.col(\"quantity\").isNotNull()).filter(F.col(\"last_restock\") >= \"2024-01-23\").agg(F.min(\"quantity\")).first()[0]\n\nresult = (\n    df_inventory\n    .filter(F.col(\"quantity\") >= min_quantity)\n    .filter(F.col(\"quantity\") >= 106)\n    .select(\"id\", \"product_id\", \"quantity\")\n)\n```",
+      "seconds": 7.88,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01554",
+      "level": "scalar_where",
+      "sql": "SELECT id, revenue, store_id, units\nFROM store_sales\nWHERE units <= (SELECT AVG(units) FROM store_sales)\n  AND units > 20\nORDER BY id DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_units = df_store_sales.agg(F.avg(\"units\")).first()[0]\n\nresult = (\n    df_store_sales\n    .filter(F.col(\"units\") <= avg_units)\n    .filter(F.col(\"units\") > 20)\n    .select(\"id\", \"revenue\", \"store_id\", \"units\")\n    .orderBy(F.col(\"id\").desc())\n)\n```",
+      "seconds": 6.87,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01698",
+      "level": "scalar_where",
+      "sql": "select id, product_id, quantity\nfrom inventory\nwhere quantity < (select max(stock_qty) from products where category = 'Electronics' and cost <= 492)\norder by product_id desc",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_stock_qty = df_products.filter(F.col(\"category\") == \"Electronics\").filter(F.col(\"cost\") <= 492).agg(F.max(\"stock_qty\")).first()[0]\n\nresult = (\n    df_inventory\n    .filter(F.col(\"quantity\") < max_stock_qty)\n    .select(\"id\", \"product_id\", \"quantity\")\n    .orderBy(F.col(\"product_id\").desc())\n)\n```",
+      "seconds": 7.41,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00079",
+      "level": "scalar_where",
+      "sql": "SELECT id, stock_qty FROM products WHERE stock_qty < (SELECT MAX(stock_qty) FROM products) ORDER BY id LIMIT 10;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_stock_qty = df_products.agg(F.max(\"stock_qty\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"stock_qty\") < max_stock_qty)\n    .select(\"id\", \"stock_qty\")\n    .orderBy(\"id\")\n    .limit(10)\n)\n```",
+      "seconds": 5.62,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01097",
+      "level": "scalar_where",
+      "sql": "SELECT s.id, s.cost, o.status AS order_status\nFROM shipments s\nJOIN orders o ON s.order_id = o.id\nWHERE s.cost < (SELECT AVG(cost) FROM shipments WHERE carrier <> 'UPS')\nORDER BY cost, id\nLIMIT 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_cost = df_shipments.filter(F.col(\"carrier\") != \"UPS\").agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_shipments.alias(\"s\")\n    .join(df_orders.alias(\"o\"), F.col(\"s.order_id\") == F.col(\"o.id\"), \"inner\")\n    .filter(F.col(\"s.cost\") < avg_cost)\n    .select(F.col(\"s.id\"), F.col(\"s.cost\"), F.col(\"o.status\").alias(\"order_status\"))\n    .orderBy(\"cost\", \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 9.74,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02283",
+      "level": "scalar_where",
+      "sql": "select id, supplier_name, rating from suppliers where rating >= (select avg(rating) from suppliers where supplier_name <> 'Lion City Imports') order by supplier_name desc, id limit 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_rating = df_suppliers.filter(F.col(\"supplier_name\") != \"Lion City Imports\").agg(F.avg(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .filter(F.col(\"rating\") >= avg_rating)\n    .select(\"id\", \"supplier_name\", \"rating\")\n    .orderBy(F.col(\"supplier_name\").desc(), \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 7.74,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01496",
+      "level": "scalar_where",
+      "sql": "SELECT id, supplier_name, rating\nFROM suppliers\nWHERE rating <= (SELECT MAX(rating) FROM suppliers)\nORDER BY rating DESC, id\nLIMIT 10;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_rating = df_suppliers.agg(F.max(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .filter(F.col(\"rating\") <= max_rating)\n    .select(\"id\", \"supplier_name\", \"rating\")\n    .orderBy(F.col(\"rating\").desc(), \"id\")\n    .limit(10)\n)\n```",
+      "seconds": 6.61,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00657",
+      "level": "scalar_where",
+      "sql": "select id, end_date, monthly_fee\nfrom subscriptions\nwhere monthly_fee = (select max(monthly_fee) from subscriptions where end_date >= '2024-11-14')\norder by end_date desc",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_monthly_fee = df_subscriptions.filter(F.col(\"end_date\") >= \"2024-11-14\").agg(F.max(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .filter(F.col(\"monthly_fee\") == max_monthly_fee)\n    .select(\"id\", \"end_date\", \"monthly_fee\")\n    .orderBy(F.col(\"end_date\").desc())\n)\n```",
+      "seconds": 7.64,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02401",
+      "level": "scalar_where",
+      "sql": "SELECT p.id, p.amount, o.amount AS order_amount\nFROM payments p\nJOIN orders o ON p.order_id = o.id\nWHERE p.amount > (SELECT MAX(amount) FROM payments WHERE method IN ('bank_transfer', 'paypal'))\nORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_amount = df_payments.filter(F.col(\"method\").isin(\"bank_transfer\", \"paypal\")).agg(F.max(\"amount\")).first()[0]\n\nresult = (\n    df_payments.alias(\"p\")\n    .join(df_orders.alias(\"o\"), F.col(\"p.order_id\") == F.col(\"o.id\"), \"inner\")\n    .filter(F.col(\"p.amount\") > max_amount)\n    .select(F.col(\"p.id\"), F.col(\"p.amount\"), F.col(\"o.amount\").alias(\"order_amount\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 9.22,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02332",
+      "level": "scalar_where",
+      "sql": "select id, order_date, discount\nfrom orders\nwhere discount > 1.2 * (select avg(discount) from orders where order_date > '2023-12-06')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_discount = df_orders.filter(F.col(\"order_date\") > \"2023-12-06\").agg(F.avg(\"discount\")).first()[0]\n\nresult = (\n    df_orders\n    .filter(F.col(\"discount\") > F.lit(avg_discount) * 1.2)\n    .select(\"id\", \"order_date\", \"discount\")\n)\n```",
+      "seconds": 6.8,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02365",
+      "level": "scalar_where",
+      "sql": "select city, max(sqft) as max_sqft\nfrom stores\ngroup by city\nhaving max(sqft) > (select avg(sqft) from stores where region <> 'Central')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_sqft = df_stores.filter(F.col(\"region\") != \"Central\").agg(F.avg(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .groupBy(\"city\")\n    .agg(F.max(\"sqft\").alias(\"max_sqft\"))\n    .filter(F.col(\"max_sqft\") > avg_sqft)\n)\n```",
+      "seconds": 6.47,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00731",
+      "level": "scalar_where",
+      "sql": "SELECT id, country, rating FROM suppliers WHERE rating BETWEEN (SELECT MIN(rating) FROM suppliers WHERE city IS NOT NULL) AND (SELECT AVG(rating) FROM suppliers WHERE supplier_name <> 'Global Supply') ORDER BY rating DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_rating = df_suppliers.filter(F.col(\"city\").isNotNull()).agg(F.min(\"rating\")).first()[0]\navg_rating = df_suppliers.filter(F.col(\"supplier_name\") != \"Global Supply\").agg(F.avg(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .filter(F.col(\"rating\").between(min_rating, avg_rating))\n    .select(\"id\", \"country\", \"rating\")\n    .orderBy(F.col(\"rating\").desc())\n)\n```",
+      "seconds": 8.31,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00709",
+      "level": "scalar_where",
+      "sql": "SELECT a.id, a.balance, c.email\nFROM accounts AS a\nJOIN customers AS c ON a.customer_id = c.id\nWHERE a.balance >= (SELECT MAX(balance) FROM accounts WHERE account_type = 'SAVINGS');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_balance = df_accounts.filter(F.col(\"account_type\") == \"SAVINGS\").agg(F.max(\"balance\")).first()[0]\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_customers.alias(\"c\"), F.col(\"a.customer_id\") == F.col(\"c.id\"), \"inner\")\n    .filter(F.col(\"a.balance\") >= max_balance)\n    .select(F.col(\"a.id\"), F.col(\"a.balance\"), F.col(\"c.email\"))\n)\n```",
+      "seconds": 8.4,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01249",
+      "level": "scalar_where",
+      "sql": "SELECT id, merchant, txn_time, amount\nFROM transactions\nWHERE amount BETWEEN (SELECT MIN(amount) FROM transactions) AND (SELECT AVG(amount) FROM transactions WHERE txn_type = 'FEE')\n  AND is_flagged = TRUE",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_amount = df_transactions.agg(F.min(\"amount\")).first()[0]\navg_amount = df_transactions.filter(F.col(\"txn_type\") == \"FEE\").agg(F.avg(\"amount\")).first()[0]\n\nresult = (\n    df_transactions\n    .filter(F.col(\"amount\").between(min_amount, avg_amount))\n    .filter(F.col(\"is_flagged\"))\n    .select(\"id\", \"merchant\", \"txn_time\", \"amount\")\n)\n```",
+      "seconds": 7.81,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00832",
+      "level": "scalar_where",
+      "sql": "SELECT id, store_name, sqft FROM stores WHERE sqft < (SELECT AVG(sqft) FROM stores WHERE store_name IN ('Downtown Express', 'Siam Flagship'))",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_sqft = df_stores.filter(F.col(\"store_name\").isin(\"Downtown Express\", \"Siam Flagship\")).agg(F.avg(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .filter(F.col(\"sqft\") < avg_sqft)\n    .select(\"id\", \"store_name\", \"sqft\")\n)\n```",
+      "seconds": 6.65,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01091",
+      "level": "scalar_where",
+      "sql": "SELECT id, is_flagged, merchant, amount\nFROM transactions\nWHERE amount < (SELECT MIN(amount) FROM transactions WHERE amount > 1572)\n  AND txn_time IS NOT NULL",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_amount = df_transactions.filter(F.col(\"amount\") > 1572).agg(F.min(\"amount\")).first()[0]\n\nresult = (\n    df_transactions\n    .filter(F.col(\"amount\") < min_amount)\n    .filter(F.col(\"txn_time\").isNotNull())\n    .select(\"id\", \"is_flagged\", \"merchant\", \"amount\")\n)\n```",
+      "seconds": 6.84,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02264",
+      "level": "scalar_where",
+      "sql": "SELECT id, rating FROM suppliers WHERE rating <= 1.5 * (SELECT AVG(rating) FROM suppliers);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_rating = df_suppliers.agg(F.avg(\"rating\")).first()[0]\n\nresult = (\n    df_suppliers\n    .filter(F.col(\"rating\") <= F.lit(avg_rating) * 1.5)\n    .select(\"id\", \"rating\")\n)\n```",
+      "seconds": 5.15,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00632",
+      "level": "scalar_where",
+      "sql": "SELECT id, age\nFROM customers\nWHERE age <= (SELECT MIN(age) FROM customers)\n  AND email NOT IN ('IVY@GMAIL.COM', 'frank@company.co')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_age = df_customers.agg(F.min(\"age\")).first()[0]\n\nresult = (\n    df_customers\n    .filter(F.col(\"age\") <= min_age)\n    .filter(~F.col(\"email\").isin(\"IVY@GMAIL.COM\", \"frank@company.co\"))\n    .select(\"id\", \"age\")\n)\n```",
+      "seconds": 6.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02370",
+      "level": "scalar_where",
+      "sql": "select id, customer_id, balance from accounts where balance between (select min(balance) from accounts where account_type = 'CHECKING') and (select avg(balance) from accounts where status is null and opened_date < date '2024-09-16');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_balance = df_accounts.filter(F.col(\"account_type\") == \"CHECKING\").agg(F.min(\"balance\")).first()[0]\navg_balance = df_accounts.filter(F.col(\"status\").isNull()).filter(F.col(\"opened_date\") < \"2024-09-16\").agg(F.avg(\"balance\")).first()[0]\n\nresult = (\n    df_accounts\n    .filter(F.col(\"balance\").between(min_balance, avg_balance))\n    .select(\"id\", \"customer_id\", \"balance\")\n)\n```",
+      "seconds": 8.99,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02251",
+      "level": "scalar_where",
+      "sql": "SELECT id, event_time, duration_sec\nFROM web_events\nWHERE duration_sec <= (SELECT AVG(duration_sec) FROM web_events)\n  AND event_time >= TIMESTAMP '2024-09-05 05:00:00';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_duration_sec = df_web_events.agg(F.avg(\"duration_sec\")).first()[0]\n\nresult = (\n    df_web_events\n    .filter(F.col(\"duration_sec\") <= avg_duration_sec)\n    .filter(F.col(\"event_time\") >= \"2024-09-05 05:00:00\")\n    .select(\"id\", \"event_time\", \"duration_sec\")\n)\n```",
+      "seconds": 7.57,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00434",
+      "level": "scalar_where",
+      "sql": "SELECT id, location, budget, ROUND(budget * 100.0 / (SELECT SUM(budget) FROM departments), 2) AS share_pct FROM departments WHERE location IS NOT NULL",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\ntotal_budget = df_departments.agg(F.sum(\"budget\")).first()[0]\n\nresult = (\n    df_departments\n    .filter(F.col(\"location\").isNotNull())\n    .select(\n        \"id\",\n        \"location\",\n        \"budget\",\n        F.round(F.col(\"budget\") * 100.0 / total_budget, 2).alias(\"share_pct\"),\n    )\n)\n```",
+      "seconds": 7.38,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00838",
+      "level": "scalar_where",
+      "sql": "SELECT id, discount, discount - (SELECT AVG(discount) FROM orders WHERE status <> 'SHIPPED') AS discount_minus_avg FROM orders;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_discount = df_orders.filter(F.col(\"status\") != \"SHIPPED\").agg(F.avg(\"discount\")).first()[0]\n\nresult = (\n    df_orders\n    .select(\"id\", \"discount\", (F.col(\"discount\") - avg_discount).alias(\"discount_minus_avg\"))\n)\n```",
+      "seconds": 5.67,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00295",
+      "level": "scalar_where",
+      "sql": "SELECT id, carrier, cost FROM shipments WHERE cost <= 0.5 * (SELECT AVG(cost) FROM shipments)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_cost = df_shipments.agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .filter(F.col(\"cost\") <= F.lit(avg_cost) * 0.5)\n    .select(\"id\", \"carrier\", \"cost\")\n)\n```",
+      "seconds": 5.38,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01515",
+      "level": "scalar_where",
+      "sql": "select id, account_type, balance\nfrom accounts\nwhere balance between (select min(balance) from accounts where account_type in ('CREDIT', 'SAVINGS')) and (select avg(balance) from accounts)\n  and account_type <> 'CHECKING'\norder by balance;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_balance = df_accounts.filter(F.col(\"account_type\").isin(\"CREDIT\", \"SAVINGS\")).agg(F.min(\"balance\")).first()[0]\navg_balance = df_accounts.agg(F.avg(\"balance\")).first()[0]\n\nresult = (\n    df_accounts\n    .filter(F.col(\"balance\").between(min_balance, avg_balance))\n    .filter(F.col(\"account_type\") != \"CHECKING\")\n    .select(\"id\", \"account_type\", \"balance\")\n    .orderBy(\"balance\")\n)\n```",
+      "seconds": 8.99,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01270",
+      "level": "scalar_where",
+      "sql": "SELECT id, salary\nFROM employees\nWHERE email IN ('kanya@mail.co.th', 'bob.smith@yahoo.com')\n  AND salary < (SELECT MAX(salary) FROM employees WHERE salary >= 92015)\nORDER BY salary DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_salary = df_employees.filter(F.col(\"salary\") >= 92015).agg(F.max(\"salary\")).first()[0]\n\nresult = (\n    df_employees\n    .filter(F.col(\"email\").isin([\"kanya@mail.co.th\", \"bob.smith@yahoo.com\"]) & (F.col(\"salary\") < max_salary))\n    .select(\"id\", \"salary\")\n    .orderBy(F.col(\"salary\").desc())\n)\n```",
+      "seconds": 8.12,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02550",
+      "level": "scalar_where",
+      "sql": "select id, store_id, units\nfrom store_sales\nwhere units between (select min(units) from store_sales where sale_date < '2024-07-09') and (select avg(units) from store_sales where revenue <= 2182);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_units = df_store_sales.filter(F.col(\"sale_date\") < \"2024-07-09\").agg(F.min(\"units\")).first()[0]\navg_units = df_store_sales.filter(F.col(\"revenue\") <= 2182).agg(F.avg(\"units\")).first()[0]\n\nresult = (\n    df_store_sales\n    .filter(F.col(\"units\").between(min_units, avg_units))\n    .select(\"id\", \"store_id\", \"units\")\n)\n```",
+      "seconds": 8.74,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01099",
+      "level": "scalar_where",
+      "sql": "SELECT id, product_id, quantity FROM inventory WHERE quantity <= (SELECT AVG(quantity) FROM order_items) ORDER BY product_id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_quantity = df_order_items.agg(F.avg(\"quantity\")).first()[0]\n\nresult = (\n    df_inventory\n    .filter(F.col(\"quantity\") <= avg_quantity)\n    .select(\"id\", \"product_id\", \"quantity\")\n    .orderBy(\"product_id\")\n)\n```",
+      "seconds": 5.26,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01410",
+      "level": "scalar_where",
+      "sql": "SELECT id, segment, credit_limit FROM customers WHERE credit_limit >= 1.2 * (SELECT AVG(credit_limit) FROM customers)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_credit_limit = df_customers.agg(F.avg(\"credit_limit\")).first()[0]\n\nresult = (\n    df_customers\n    .filter(F.col(\"credit_limit\") >= F.lit(avg_credit_limit) * 1.2)\n    .select(\"id\", \"segment\", \"credit_limit\")\n)\n```",
+      "seconds": 5.74,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00737",
+      "level": "scalar_where",
+      "sql": "SELECT id, channel, customer_id, discount FROM orders WHERE discount = (SELECT MAX(discount) FROM orders WHERE order_date >= '2025-07-26');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_discount = df_orders.filter(F.col(\"order_date\") >= \"2025-07-26\").agg(F.max(\"discount\")).first()[0]\n\nresult = (\n    df_orders\n    .filter(F.col(\"discount\") == max_discount)\n    .select(\"id\", \"channel\", \"customer_id\", \"discount\")\n)\n```",
+      "seconds": 6.46,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw00672",
+      "level": "scalar_where",
+      "sql": "select id, duration_sec from web_events where duration_sec > (select avg(duration_sec) from web_events where duration_sec < 352) and event_time > '2023-11-10 05:52:00' order by duration_sec",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_duration_sec = df_web_events.filter(F.col(\"duration_sec\") < 352).agg(F.avg(\"duration_sec\")).first()[0]\n\nresult = (\n    df_web_events\n    .filter(F.col(\"duration_sec\") > avg_duration_sec)\n    .filter(F.col(\"event_time\") > \"2023-11-10 05:52:00\")\n    .select(\"id\", \"duration_sec\")\n    .orderBy(\"duration_sec\")\n)\n```",
+      "seconds": 8.87,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01179",
+      "level": "scalar_where",
+      "sql": "select id, product_name, cost from products where cost > (select avg(cost) from shipments where status = 'IN_TRANSIT') order by cost",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_cost = df_shipments.filter(F.col(\"status\") == \"IN_TRANSIT\").agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_products\n    .filter(F.col(\"cost\") > avg_cost)\n    .select(\"id\", \"product_name\", \"cost\")\n    .orderBy(\"cost\")\n)\n```",
+      "seconds": 6.3,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02218",
+      "level": "scalar_where",
+      "sql": "SELECT id, budget\nFROM departments\nWHERE budget <= (SELECT AVG(budget) FROM departments)\nORDER BY budget DESC, id\nLIMIT 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_budget = df_departments.agg(F.avg(\"budget\")).first()[0]\n\nresult = (\n    df_departments\n    .filter(F.col(\"budget\") <= avg_budget)\n    .select(\"id\", \"budget\")\n    .orderBy(F.col(\"budget\").desc(), \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 6.11,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01151",
+      "level": "scalar_where",
+      "sql": "SELECT region, SUM(sqft) AS total_sqft\nFROM stores\nGROUP BY region\nHAVING SUM(sqft) > (SELECT AVG(sqft) FROM stores)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_sqft = df_stores.agg(F.avg(\"sqft\")).first()[0]\n\nresult = (\n    df_stores\n    .groupBy(\"region\")\n    .agg(F.sum(\"sqft\").alias(\"total_sqft\"))\n    .filter(F.col(\"total_sqft\") > avg_sqft)\n)\n```",
+      "seconds": 5.9,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02135",
+      "level": "scalar_where",
+      "sql": "SELECT carrier, AVG(cost) AS avg_cost\nFROM shipments\nGROUP BY carrier\nHAVING AVG(cost) >= (SELECT AVG(cost) FROM shipments WHERE delivered_date IS NOT NULL)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_cost = df_shipments.filter(F.col(\"delivered_date\").isNotNull()).agg(F.avg(\"cost\")).first()[0]\n\nresult = (\n    df_shipments\n    .groupBy(\"carrier\")\n    .agg(F.avg(\"cost\").alias(\"avg_cost\"))\n    .filter(F.col(\"avg_cost\") >= avg_cost)\n)\n```",
+      "seconds": 6.25,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw02081",
+      "level": "scalar_where",
+      "sql": "SELECT id, status, paid_at, amount\nFROM payments\nWHERE amount <= (SELECT MAX(amount) FROM payments WHERE method IS NOT NULL AND method = 'card')\nORDER BY paid_at, id\nLIMIT 10;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_amount = df_payments.filter(F.col(\"method\").isNotNull()).filter(F.col(\"method\") == \"card\").agg(F.max(\"amount\")).first()[0]\n\nresult = (\n    df_payments\n    .filter(F.col(\"amount\") <= max_amount)\n    .select(\"id\", \"status\", \"paid_at\", \"amount\")\n    .orderBy(\"paid_at\", \"id\")\n    .limit(10)\n)\n```",
+      "seconds": 7.6,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01951",
+      "level": "scalar_where",
+      "sql": "SELECT status, AVG(monthly_fee) AS avg_monthly_fee FROM subscriptions GROUP BY status HAVING AVG(monthly_fee) > (SELECT AVG(monthly_fee) FROM subscriptions WHERE start_date <= '2023-09-14') ORDER BY avg_monthly_fee DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_monthly_fee = df_subscriptions.filter(F.col(\"start_date\") <= \"2023-09-14\").agg(F.avg(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .groupBy(\"status\")\n    .agg(F.avg(\"monthly_fee\").alias(\"avg_monthly_fee\"))\n    .filter(F.col(\"avg_monthly_fee\") > avg_monthly_fee)\n    .orderBy(F.col(\"avg_monthly_fee\").desc())\n)\n```",
+      "seconds": 8.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01441",
+      "level": "scalar_where",
+      "sql": "SELECT id, email, credit_limit, credit_limit - (SELECT MAX(credit_limit) FROM customers) AS diff_from_max\nFROM customers\nORDER BY id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_credit_limit = df_customers.agg(F.max(\"credit_limit\")).first()[0]\n\nresult = (\n    df_customers\n    .select(\"id\", \"email\", \"credit_limit\", (F.col(\"credit_limit\") - max_credit_limit).alias(\"diff_from_max\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 5.94,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01911",
+      "level": "scalar_where",
+      "sql": "SELECT id, end_date, monthly_fee, ROUND(monthly_fee * 100.0 / (SELECT SUM(monthly_fee) FROM subscriptions), 2) AS pct_of_total FROM subscriptions ORDER BY monthly_fee",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\ntotal_monthly_fee = df_subscriptions.agg(F.sum(\"monthly_fee\")).first()[0]\n\nresult = (\n    df_subscriptions\n    .select(\n        \"id\",\n        \"end_date\",\n        \"monthly_fee\",\n        F.round(F.col(\"monthly_fee\") * 100.0 / total_monthly_fee, 2).alias(\"pct_of_total\"),\n    )\n    .orderBy(\"monthly_fee\")\n)\n```",
+      "seconds": 7.65,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "scw01073",
+      "level": "scalar_where",
+      "sql": "SELECT id, amount, channel, shipping_fee FROM orders WHERE shipping_fee BETWEEN (SELECT MIN(shipping_fee) FROM orders) AND (SELECT AVG(shipping_fee) FROM orders WHERE channel NOT IN ('store', 'mobile'))",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmin_shipping_fee = df_orders.agg(F.min(\"shipping_fee\")).first()[0]\navg_shipping_fee = df_orders.filter(~F.col(\"channel\").isin(\"store\", \"mobile\")).agg(F.avg(\"shipping_fee\")).first()[0]\n\nresult = (\n    df_orders\n    .filter(F.col(\"shipping_fee\").between(min_shipping_fee, avg_shipping_fee))\n    .select(\"id\", \"amount\", \"channel\", \"shipping_fee\")\n)\n```",
+      "seconds": 7.91,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    }
+  ]
+}

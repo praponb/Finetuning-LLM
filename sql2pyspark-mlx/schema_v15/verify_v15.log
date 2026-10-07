@@ -1,0 +1,86 @@
+classic: 5600 pairs (6093 tries; skipped {'Skip': 236, 'KeyError': 238, 'ValueError': 17})
+adv: 1500 pairs (2000 tries; skipped {'Skip': 489, 'ValueError': 11})
+nested: 1400 pairs (1402 tries; skipped {})
+subq: 2800 pairs (2938 tries; skipped {'Skip': 138})
+scalar: 2700 pairs (2700 tries; skipped {})
+wrote 14000 pairs to raw_v15
+classic: 130 pairs (141 tries; skipped {'KeyError': 5, 'ValueError': 1, 'Skip': 5})
+adv: 35 pairs (49 tries; skipped {'Skip': 14})
+nested: 45 pairs (45 tries; skipped {})
+subq: 65 pairs (65 tries; skipped {})
+scalar: 65 pairs (65 tries; skipped {})
+wrote 340 pairs to raw_v15_shift
+  "total": 14000,
+  "ok": 13983,
+  "pass_rate": 0.9988,
+  "ok_but_empty_result": 1381,
+    "ok": 13983,
+      "ok": 158,
+      "ok": 124
+      "ok": 70,
+      "ok": 60
+      "ok": 105
+      "ok": 97
+      "ok": 184
+      "ok": 837
+      "ok": 401
+      "ok": 322
+      "ok": 196
+      "ok": 411
+      "ok": 739
+      "ok": 321
+      "ok": 304
+      "ok": 488,
+      "ok": 340
+      "ok": 1389,
+      "ok": 746
+      "ok": 698,
+      "ok": 671
+      "ok": 650
+      "ok": 720
+      "ok": 659
+      "ok": 865,
+      "ok": 456
+      "ok": 279
+      "ok": 259
+      "ok": 552
+      "ok": 361
+      "ok": 521
+  "seconds": 775.8
+  "total": 340,
+  "ok": 340,
+  "pass_rate": 1.0,
+  "ok_but_empty_result": 35,
+    "ok": 340
+      "ok": 1
+      "ok": 5
+      "ok": 2
+      "ok": 3
+      "ok": 1
+      "ok": 9
+      "ok": 21
+      "ok": 8
+      "ok": 5
+      "ok": 5
+      "ok": 6
+      "ok": 21
+      "ok": 12
+      "ok": 6
+      "ok": 13
+      "ok": 11
+      "ok": 45
+      "ok": 17
+      "ok": 14
+      "ok": 16
+      "ok": 22
+      "ok": 18
+      "ok": 9
+      "ok": 16
+      "ok": 19
+      "ok": 3
+      "ok": 7
+      "ok": 9
+      "ok": 5
+      "ok": 11
+  "seconds": 69.0
+VERIFY_DONE

@@ -1,0 +1,81 @@
+{
+  "raw_v15": {
+    "verified": 13983,
+    "empty": 1381,
+    "usable": 12602
+  },
+  "available": {
+    "classic": 4972,
+    "adv": 1241,
+    "nested": 1389,
+    "subq": 2514,
+    "scalar": 2486
+  },
+  "raw_v15_shift": {
+    "verified": 340,
+    "empty": 35,
+    "usable": 305
+  },
+  "shift_available": {
+    "classic": 115,
+    "adv": 29,
+    "nested": 45,
+    "subq": 54,
+    "scalar": 62
+  },
+  "data_mix": {
+    "train": 25008,
+    "new": 10000,
+    "targeted_v14": 3000,
+    "classic_scalar": 708,
+    "classic_or": 500,
+    "classic_plain": 4800,
+    "complex_v9": 3500,
+    "targeted_v12": 1500,
+    "targeted_v11": 1000,
+    "valid": 336,
+    "schema_shift": 200,
+    "mean_chars": 1541,
+    "max_chars": 12156
+  },
+  "train_groups": {
+    "classic": 4000,
+    "scalar": 2000,
+    "nested": 1000,
+    "subq": 2000,
+    "adv": 1000
+  },
+  "train_families": {
+    "nested": 1000,
+    "select": 626,
+    "or_where": 588,
+    "agg": 574,
+    "scalar_mixed": 523,
+    "scalar_corr_win": 506,
+    "exists_corr": 506,
+    "scalar_corr_join": 497,
+    "scalar_uncorr": 474,
+    "window": 416,
+    "subquery": 404,
+    "pipeline": 383,
+    "join": 369,
+    "setop": 336,
+    "exists_agg": 284,
+    "topn": 275,
+    "join_agg": 249,
+    "cte_agg_join": 242,
+    "in_corr": 225,
+    "special": 208,
+    "setop_proj": 202,
+    "exists_multi": 195,
+    "cte_chain": 194,
+    "adv_window": 138,
+    "adv_agg": 124,
+    "derived": 107,
+    "adv_dedup": 98,
+    "adv_session": 87,
+    "adv_setop": 68,
+    "adv_join": 56,
+    "adv_reshape": 46
+  }
+}

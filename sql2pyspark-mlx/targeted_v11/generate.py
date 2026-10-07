@@ -293,11 +293,12 @@ def relations():
                 if a.name != b.name:
                     rels.append({"kind": "sibling", "outer": a, "inner": b, "okey": fa.name, "ikey": fb.name,
                                  "inull": fb.nullable, "onull": fa.nullable})
-    e = TBL["employees"]
-    rels.append({"kind": "self_manager", "outer": e, "inner": e, "okey": "manager_id", "ikey": "id",
-                 "inull": False, "onull": True})
-    rels.append({"kind": "self_reports", "outer": e, "inner": e, "okey": "id", "ikey": "manager_id",
-                 "inull": True, "onull": False})
+    e = TBL.get("employees")    # absent from other catalogs (schema_v15)
+    if e is not None:
+        rels.append({"kind": "self_manager", "outer": e, "inner": e, "okey": "manager_id", "ikey": "id",
+                     "inull": False, "onull": True})
+        rels.append({"kind": "self_reports", "outer": e, "inner": e, "okey": "id", "ikey": "manager_id",
+                     "inull": True, "onull": False})
     for r in rels:
         r["pairs"] = cross_pairs(r["outer"], r["inner"], r["okey"], r["ikey"])
     return rels
