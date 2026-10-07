@@ -1,0 +1,9 @@
+scalar_uncorr: 3300 pairs (3340 tries)
+scalar_corr_win: 3900 pairs (3963 tries)
+scalar_corr_join: 3500 pairs (3505 tries)
+scalar_mixed: 2800 pairs (2850 tries)
+wrote 13500 pairs to raw_v14
+  },
+  "seconds": 724.1
+}
+VERIFY_DONE

@@ -29,7 +29,7 @@ def load():
 
 def table(runs) -> str:
     lines = ["| Model | Eval set | n | Syntax OK | Runs (strict) | Correct (strict) | Runs (lenient) | Correct (lenient) | s / query |",
-             "|---|---|---|---|---|---|---|---|---|"]
+             "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
     for model, set_name, d in runs:
         a = d["summary"]["ALL"]
         lines.append(f"| `{model}` | {set_name} | {a['n']} | {a['strict_syntax']:.0%} | {a['strict_runs']:.0%} | "
@@ -40,7 +40,7 @@ def table(runs) -> str:
         levels = [k for k in ("simple", "medium", "complex") if k in hold[0][1]["summary"]]
         lines += ["", "Hold-out, correct results (lenient) by difficulty:", "",
                   "| Model | " + " | ".join(f"{lv} (n={hold[0][1]['summary'][lv]['n']})" for lv in levels) + " |",
-                  "|---|" + "---|" * len(levels)]
+                  "| --- |" + " --- |" * len(levels)]
         for m, d in hold:
             lines.append(f"| `{m}` | " + " | ".join(f"{d['summary'][lv]['lenient_match']:.0%}" for lv in levels) + " |")
     v4 = [(m, d) for m, s, d in runs if s == "holdout_v4"]
@@ -49,7 +49,7 @@ def table(runs) -> str:
                   if k in v4[0][1]["summary"]]
         lines += ["", "v4 hold-out, correct results (lenient) by feature group:", "",
                   "| Model | " + " | ".join(f"{g} (n={v4[0][1]['summary'][g]['n']})" for g in groups) + " |",
-                  "|---|" + "---|" * len(groups)]
+                  "| --- |" + " --- |" * len(groups)]
         for m, d in v4:
             lines.append(f"| `{m}` | " + " | ".join(f"{d['summary'][g]['lenient_match']:.0%}" for g in groups) + " |")
     return "\n".join(lines)
