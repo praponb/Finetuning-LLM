@@ -52,3 +52,16 @@ cd sql2pyspark-mlx/complex_v16
 ```
 
 Train, export and evaluate: `zsh eval/start_training_v16.sh` from the repo root.
+
+## Results (v16, 2026-10-09) — not promoted
+
+Trained 2026-10-08 06:55 → 18:49 (11 h 54 min, peak 10.0 GB), validation loss 0.008 → 0.012 → 0.007 → 0.006 → 0.004
+(`train_v16.log`). v16-q4 vs. v15-q4:
+
+* **Complex schema-shift 128 / 110** of 150 (set operations 17 / 9 of 20, long pipelines 13 / 9 of 15, grouping 17 / 14
+  of 19; window-heavy 16 / 19 of 24), with fewer name slips there (9 / 20).
+* Costs: hold-out 58 / 60, complex test 84 / 89, v11 / v12 held-out 261 / 216 (278 / 232), schema-shift 185 / 189;
+  most new failures are unresolved names on the original tables. Fixed test 146 / 145, classic 97/97.
+* Not promoted; v15-q4 stays the recommended candidate.
+
+Details: [README → v16 results](../../README.md#v16-results-2026-10-09--not-promoted).

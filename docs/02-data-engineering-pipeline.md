@@ -569,3 +569,13 @@ cd sql2pyspark-mlx/targeted_v12
 Mix 25,008 = 10,000 new + 3,000 targeted_v14 + 708 classic scalar-subquery + 5,300 other classic + 3,500 complex_v9 + 1,500 targeted_v12 + 1,000 targeted_v11; validation = 200 new + 36 classic scalar + 100 v14.
 
 **Result (v15, 2026-10-08)**: hold-out 60/62, schema-shift 189/200 (v12-q4 155), failures with an unresolved name 42 across all sets (v14-q4 57, v12-q4 93), classic 97/97, complex 89/100; v4 hold-out 20/25. See [Evaluation](04-evaluation-and-benchmarking.md#-v15-results-2026-10-08).
+
+---
+
+## 15. The complex_v16 dataset (v16): complex forms on the synthetic schemas
+
+`sql2pyspark-mlx/complex_v16/` ([README](../sql2pyspark-mlx/complex_v16/README.md)) puts the complex forms, so far trained only on complex_v8's 20 tables (the complex test's tables), on the schema_v15 synthetic catalog. [`cx_patch.py`](../sql2pyspark-mlx/complex_v16/cx_patch.py) converts the synthetic flat tables to complex_v8 `Col` / `Table` and installs them into `complex_v8/catalog.py` before [`complex_v8/generate.py`](../sql2pyspark-mlx/complex_v8/generate.py) is imported (and in every spawned verify worker); `rebind()` replaces the generator's hard-coded table lists (`FACT_TABLES`, `ALL_TABLES`, the FULL OUTER splits). [`generate.py`](../sql2pyspark-mlx/complex_v16/generate.py) runs 8 families in the mirror window style — `cx_pipeline` (3–7 stages), `cx_long_pipeline` (6–9 stages), `cx_window_heavy`, `cx_setop`, `cx_sessionize` (its own gaps-and-islands on synthetic timestamp tables), `cx_full_outer`, `cx_grouping`, `cx_reshape`; `cx_interval` is left out (it needs complex_v8's own tables). [`verify_v16.py`](../sql2pyspark-mlx/complex_v16/verify_v16.py) runs `complex_v8/verify.py` with the patch: 13,494 / 13,500 raw pairs pass; 2,025 empty and 357 over 3,000 tokens are dropped (11,112 usable, 10,000 used; mean 1,283 tokens, p95 2,592). The same families on the 5 held-out domains give the **complex schema-shift** eval set (300 pairs; `eval/complex_shift_tables.py`).
+
+Mix 21,008 = 10,000 new + 2,500 schema_v15 + 1,500 targeted_v14 + 708 classic scalar-subquery + 3,300 classic (300 with `OR`) + 1,500 complex_v9 + 800 targeted_v12 + 700 targeted_v11; validation 337.
+
+**Result (v16, 2026-10-09)**: complex schema-shift 128/150 (v15-q4 110), but hold-out 58/62, complex test 84/100, v11 / v12 held-out 261 / 216 (v15-q4 278 / 232): the smaller replay share cost the earlier forms on the original tables. Not promoted. See [Evaluation](04-evaluation-and-benchmarking.md#-v16-results-2026-10-09--not-promoted).
