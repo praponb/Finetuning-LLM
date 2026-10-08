@@ -434,11 +434,11 @@ Current tags:
 | `sql2pyspark:v14` | `9e585bcdede2` | exported 2026-10-07 00:50 (Q8_0); v12 continued on `targeted_v14`; not promoted |
 | `sql2pyspark:v14-q4` | `87f0d5bd6909` | Q4_K_M of v14; not promoted |
 | `sql2pyspark:v15` | `39e9aae00d19` | exported 2026-10-07 21:27 (Q8_0); v14 continued on `schema_v15`; promoted as `v15-q4` |
-| `sql2pyspark:v15-q4` | `882787d22c3c` | Q4_K_M of v15 (`sql2pyspark-q4.gguf`); `latest` on the Mac since 2026-10-09 05:50 |
+| `sql2pyspark:v15-q4` | `882787d22c3c` | Q4_K_M of v15 (`sql2pyspark-q4.gguf`); `latest` on the Mac since 2026-10-09 05:50, on the server since 06:29 |
 | `sql2pyspark:v16` | `819c5cb3093b` | exported 2026-10-08 18:52 (Q8_0); v15 continued on `complex_v16`; not promoted |
 | `sql2pyspark:v16-q4` | `0f940baf7d6a` | Q4_K_M of v16; not promoted |
 | `sql2pyspark:v14-c2400-q4` | `2b18fa841a7c` | Q4_K_M of the v14 iter-2,400 checkpoint (`eval/eval_v14_ckpt.sh`); not promoted |
-| `sql2pyspark:v12-q4` | `096519684f69` | the same weights as Q4_K_M (`sql2pyspark-q4.gguf`, 4.7 GB); `latest` on the Mac 2026-10-03 → 10-09; still `latest` on the server |
+| `sql2pyspark:v12-q4` | `096519684f69` | the same weights as Q4_K_M (`sql2pyspark-q4.gguf`, 4.7 GB); `latest` on the Mac and the server 2026-10-03 → 10-09 |
 
 The older tags were removed from the Mac's Ollama on 2026-09-30 to save ~24.6 GB: `v6` (`192e20ddb887`, 7B), `v5` (`b6a1ace642a4`, 3B), `v4` (`23108327a0d7`), `v3` (`aa95ad200568`), `v2` (`fb27933c2519`) and `v1` (`3dd2beaef9ff`, template-based). v2–v6 can be rebuilt from `sql2pyspark-mlx/runs/vN/adapters/` with `mlx_lm.fuse --adapter-path runs/vN/adapters` (v2–v5 with `--model mlx-community/Qwen2.5-Coder-3B-Instruct-4bit`), then `make gguf ollama TAG=vN` (v1's adapters were deleted with `archive/`).
 
