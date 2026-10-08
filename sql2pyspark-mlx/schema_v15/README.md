@@ -67,7 +67,7 @@ cd sql2pyspark-mlx/schema_v15
 Train, export and evaluate: `zsh eval/start_training_v15.sh` from the repo root (it also scores v14-q4 and v12-q4 on
 the schema-shift set and prints `eval/name_slips.py`, which counts failures with an unresolved name).
 
-## Results (v15, 2026-10-08) — candidate, recommended for promotion
+## Results (v15, 2026-10-08) — `latest` on the Mac since 2026-10-09
 
 Trained 2026-10-07 13:18 → 21:27 (8 h 09 min, peak 10.0 GB), validation loss 0.011 → 0.019 → 0.009 → 0.008 → 0.007 →
 0.007 → 0.007 (`train_v15.log`). v15-q4 vs. v14-q4 / v12-q4:

@@ -41,7 +41,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 5. **Exports GGUF models**: standard Q8_0 GGUF (8.10 GB) and, since v9, a 4-bit Q4_K_M GGUF (4.68 GB, smaller and faster for the CPU-only server), served by Ollama behind a Streamlit UI (`app.py`).
 6. **Execution-based evaluation and repair**:
    - Scores models on 62 unseen hold-out queries (v7 98%, v6 97%, v8 97%, v10-q4 97%, v9 / v9-q4 95%), 25 v4-feature queries (v9-q4 **84%**, v8 72%, v9 72%, v10-q4 72%, v7 64%), 4 real-world production queries, a fixed 150-query test set (v10-q4 **147**, v9-q4 140, v8 139, v7 137, v9 134), 100 complex queries on new tables (v9 / v9-q4 **87**, v10-q4 85, v8 60, v7 31) and 50 held-out bare `IN` / `NOT IN` queries (v10-q4 **49**, v9-q4 11).
-   - `sql2pyspark:latest` = **v12-q4 on the Mac** (since 2026-10-03 06:05; v11 with the `OR` slip fixed; v11-q4 2026-10-02 → 10-03) and **on the server** (since 2026-10-03 16:48). v9-q4 (4-bit v9, `latest` 2026-10-01 → 10-02 on the Mac, 10-01 → 10-03 on the server): fixes most many-window failures (complex test 87 vs. v8's 60), missed the promotion rule only by one hold-out query, and generates 1.64× as fast as v8 on the server's CPU.
+   - `sql2pyspark:latest` = **v15-q4 on the Mac** (since 2026-10-09 05:50; v14 continued on 221 synthetic tables: hold-out 60, complex 89, schema-shift 189/200) and **on the server** (since 2026-10-09 06:29; v12-q4 was `latest` on the Mac 2026-10-03 06:05 → 10-09 and on the server 2026-10-03 16:48 → 10-09, v11-q4 on the Mac 2026-10-02 → 10-03). v9-q4 (4-bit v9, `latest` 2026-10-01 → 10-02 on the Mac, 10-01 → 10-03 on the server): fixes most many-window failures (complex test 87 vs. v8's 60), missed the promotion rule only by one hold-out query, and generates 1.64× as fast as v8 on the server's CPU.
    - Candidate **v10-q4** (2026-10-01): fixes bare `IN` / `NOT IN` and the `real001` loop, better on the hold-out and fixed test, but misses the rule on the v4 hold-out (18 vs. 21) and the complex test (85 vs. 87); promotion is the owner's call.
    - **Kimi K3 repair loop** (`kimi_repair.py`): checks and repairs failed answers on empty tables with declared schemas, fixing 3/4 real-world queries for ~$0.20 per query; includes AST `setop_check()` and `join_check()`.
 
@@ -98,7 +98,7 @@ Finetuning-LLM/
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
 ├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the latest export (v10 since 2026-10-01 18:44)
-├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of the same export (v12-q4 = `latest` on the Mac, restored after the v13 and v14 exports; also `latest` on the server since 2026-10-03)
+├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of the same export (v15-q4 = `latest` on the Mac and the server since 2026-10-09; restored after the v16 export)
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh, update_model.sh
@@ -280,11 +280,11 @@ Whole signatures are held out for validation (10%) and test (5%). A signature is
 - **Training**: resumed from v15, 3,600 micro-batches, seed 16, 11 h 54 min (2026-10-08 06:55 → 18:49); validation loss 0.008 → 0.012 → 0.007 → 0.006 → **0.004**. Tags `sql2pyspark:v16` (`819c5cb3093b`), `:v16-q4` (`0f940baf7d6a`).
 - **Outcome**: complex schema-shift 128/150 (v15-q4 110), but hold-out 58, complex 84, v11 / v12 held-out 261 / 216. Not promoted (see [v16 results](#v16-results-2026-10-09-not-promoted)).
 
-### v15 (7B Model, Continued from v14 on schema_v15) — candidate, recommended
+### v15 (7B Model, Continued from v14 on schema_v15) — `latest` on the Mac since 2026-10-09
 
 - **Data**: `sql2pyspark-mlx/schema_v15/` (a synthetic catalog of 35 domains / 221 tables / 759 column names; 10,000 pairs of the existing forms on 30 of the domains — 4,000 classic, 1,000 advanced, 1,000 nested, 2,000 subquery / `OR`, 2,000 scalar subquery; 13,983/14,000 verified — + 3,000 targeted_v14 + 708 classic scalar + 5,300 classic + 3,500 complex_v9 + 1,500 targeted_v12 + 1,000 targeted_v11 = 25,008; 200 schema-shift pairs on the other 5 domains).
 - **Training**: resumed from v14, 4,800 micro-batches, seed 15, 8 h 09 min (2026-10-07 13:18 → 21:27); validation loss 0.011 → 0.019 → **0.007**. Tags `sql2pyspark:v15` (`39e9aae00d19`), `:v15-q4` (`882787d22c3c`).
-- **Outcome**: hold-out 60, classic 97/97, complex 89, schema-shift 189/200, fewer name slips; v4 hold-out 20 (v12-q4 21). Recommended for promotion (see [v15 results](#v15-results-2026-10-08)).
+- **Outcome**: hold-out 60, classic 97/97, complex 89, schema-shift 189/200, fewer name slips; v4 hold-out 20 (v12-q4 21). Promoted on the Mac by the owner on 2026-10-09 05:50 (see [v15 results](#v15-results-2026-10-08)).
 
 ### v14 (7B Model, Continued from v12 on targeted_v14) — not promoted
 
@@ -389,7 +389,7 @@ To package the fine-tuned model for Ollama (`make export TAG=v9`):
      `./llama.cpp/build/bin/llama-quantize sql2pyspark.gguf sql2pyspark-q4.gguf Q4_K_M`
      (**4.68 GB** for 7B, ~40% less RAM; 1.64× v8's generation speed on the server's CPU).
 4. **Ollama registration and promotion**:
-   `ollama create sql2pyspark:v9 -f Modelfile`. `sql2pyspark:latest` currently points to **v12-q4** on the Mac (`make promote TAG=v12-q4 PREV=v11-q4`, 2026-10-03; v11-q4 2026-10-02 → 10-03) and on the server (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v12-q4 v9-q4`, 2026-10-03 16:48; v9-q4 there 2026-10-01 → 10-03); v8 is kept as `sql2pyspark:v8`. Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
+   `ollama create sql2pyspark:v9 -f Modelfile`. `sql2pyspark:latest` currently points to **v15-q4** on the Mac (`make promote TAG=v15-q4 PREV=v12-q4`, 2026-10-09 05:50; v12-q4 2026-10-03 → 10-09, v11-q4 2026-10-02 → 10-03) and on the server (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v15-q4 v12-q4`, 2026-10-09 06:29; v12-q4 there 2026-10-03 → 10-09, v9-q4 2026-10-01 → 10-03); v8 is kept as `sql2pyspark:v8`. Roll back anytime with `ollama cp sql2pyspark:<PREV> sql2pyspark:latest`.
 
 ---
 
@@ -585,7 +585,7 @@ v4 hold-out, correct results (lenient) by feature group:
 | Failures with an unresolved name (all sets above except complex-shift) | 93 | **42** | 74 |
 | Real-world queries (4) | 0 | 0 | 0 |
 
-- v16 wins the set it was built for (complex pairs on unseen domains, 128 vs. 110: set operations, long pipelines, grouping sets) but loses on the hold-out, the complex test and the v11 / v12 held-out pairs, mostly through unresolved names on the original tables; the final validation loss (0.004, the lowest so far) did not carry over. Not promoted (hold-out 58; the rule needs at least 60); v15-q4 stays the recommended candidate.
+- v16 wins the set it was built for (complex pairs on unseen domains, 128 vs. 110: set operations, long pipelines, grouping sets) but loses on the hold-out, the complex test and the v11 / v12 held-out pairs, mostly through unresolved names on the original tables; the final validation loss (0.004, the lowest so far) did not carry over. Not promoted (hold-out 58; the rule needs at least 60); v15-q4 stayed the recommended candidate and became `latest` on the Mac on 2026-10-09 05:50.
 
 ### v15 results (2026-10-08)
 
@@ -601,7 +601,7 @@ v4 hold-out, correct results (lenient) by feature group:
 | Failures with an unresolved name (all sets above) | 93 | 57 | **42** |
 | Real-world queries (4) | 0 | 0 | 0 |
 
-- The name drift is down (hold-out 60, schema-shift 189, unresolved-name failures 42) and everything learned so far is kept or better (classic 97/97 incl. `subquery` 17/17, complex 89). Costs: v4 hold-out 20 vs. 21 and v11 held-out 278 vs. 287. Recommended for promotion (beats v12-q4 on the hold-out, the agreed rule); the owner decides.
+- The name drift is down (hold-out 60, schema-shift 189, unresolved-name failures 42) and everything learned so far is kept or better (classic 97/97 incl. `subquery` 17/17, complex 89). Costs: v4 hold-out 20 vs. 21 and v11 held-out 278 vs. 287. Recommended for promotion (beats v12-q4 on the hold-out, the agreed rule); the owner promoted it on the Mac on 2026-10-09 05:50 and deployed it to the server at 06:29.
 
 ### v14 results (2026-10-07, not promoted)
 

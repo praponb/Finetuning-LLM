@@ -7,10 +7,10 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) is the single-file technical guide;
 > [docs/INDEX.md](docs/INDEX.md) indexes the modular guides (architecture, data, training, evaluation, serving, file catalog, runbook).
 
-**Models in use:** on the **Mac**, `sql2pyspark:latest` = **v12-q4** since 2026-10-03 06:05 (`make promote TAG=v12-q4 PREV=v11-q4`;
-see [v12 results](#v12-results-2026-10-03); roll back with `ollama cp sql2pyspark:v11-q4 sql2pyspark:latest`). The
-**server** serves **v12-q4** too since 2026-10-03 16:48 (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v12-q4 v9-q4`, run
-on the Mac; same weights blob as the Mac's tag; rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v9-q4 sql2pyspark:latest'`).
+**Models in use:** on the **Mac**, `sql2pyspark:latest` = **v15-q4** since 2026-10-09 05:50 (`make promote TAG=v15-q4 PREV=v12-q4`;
+see [v15 results](#v15-results-2026-10-08); roll back with `ollama cp sql2pyspark:v12-q4 sql2pyspark:latest`). The
+**server** serves **v15-q4** too since 2026-10-09 06:29 (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v15-q4 v12-q4`, run
+on the Mac; same weights file as the Mac's tag; rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v12-q4 sql2pyspark:latest'`).
 
 **v9-q4** (`latest` 2026-10-01 → 10-02 on the Mac, 10-01 → 10-03 on the server): v9 as a 4-bit Q4_K_M build (4.7 GB). v9 is v8 continued on the
 [complex_v9 dataset](sql2pyspark-mlx/complex_v9/README.md): the complex_v8 queries with **"mirror" window code** (an
@@ -36,7 +36,7 @@ hold-out (v10-q4 18; `holdout_v4_012`, `017`, `021` fixed), **50/50** `IN` / `NO
 (v10-q4 147; on 2 queries v11 turned an `OR` into two `.filter()` calls), 84/100 complex test (v9-q4 87). See
 [v11 results](#v11-results-2026-10-02).
 
-**v12-q4** (trained 2026-10-02/03; **`latest` on the Mac since 2026-10-03**): v11 continued on the
+**v12-q4** (trained 2026-10-02/03; `latest` on the Mac 2026-10-03 → 10-09 and on the server 2026-10-03 → 10-09): v11 continued on the
 [targeted_v12 dataset](sql2pyspark-mlx/targeted_v12/README.md) (4,700 new pairs with `OR` / mixed `AND`-`OR` conditions +
 replay). It fixes v11's `OR` slip (fixed-test `OR` queries 11/12, v11-q4 9; held-out `OR` pairs 97/100, v11-q4 79) and
 keeps the subquery gains (287/300 v11 held-out pairs, 230/250 v12 held-out pairs vs. v11-q4 169), 21/25 v4 hold-out;
@@ -52,7 +52,7 @@ promoted**: it fixes the whole classic `subquery` family (17/17) and its 200 hel
 v4 hold-out 18/25 (v12-q4 59 / 21). Its iter-2400 checkpoint is no better (58 / 19, fixed test 139). See
 [v14 results](#v14-results-2026-10-07--not-promoted).
 
-**v15-q4** (trained 2026-10-07, **candidate, recommended for promotion; the owner decides**): v14 continued on the
+**v15-q4** (trained 2026-10-07, **`latest` on the Mac since 2026-10-09 05:50 and on the server since 06:29**): v14 continued on the
 [schema_v15 dataset](sql2pyspark-mlx/schema_v15/README.md) — 10,000 pairs of the existing query forms on **221 synthetic
 tables in 35 domains** with names the model has never seen, against v13 / v14's name drift. **60/62** hold-out (v12-q4
 59), classic families **97/97**, fixed test 145/150, complex test **89/100** (best so far), **189/200** on 5 domains
@@ -367,7 +367,8 @@ schema_v15, 1,500 targeted_v14, all 708 classic scalar-subquery, 3,300 classic, 
 
 **Recommendation**: do not promote v16-q4 (hold-out 58; the agreed rule needs at least 60; complex test and v11 / v12
 held-out down too).
-v15-q4 stays the recommended candidate (`make promote TAG=v15-q4 PREV=v12-q4`). `sql2pyspark.gguf` /
+v15-q4 stayed the recommended candidate and the owner promoted it on the Mac on 2026-10-09 05:50
+(`make promote TAG=v15-q4 PREV=v12-q4`; rollback `ollama cp sql2pyspark:v12-q4 sql2pyspark:latest`). `sql2pyspark.gguf` /
 `sql2pyspark-q4.gguf` were restored to v15 / v15-q4 from the Ollama blobs (same SHA-256); v16 / v16-q4 stay as Ollama
 tags. A later run could keep v16's complex-shift gain with a smaller complex share (e.g. 4,000 new pairs) and v15's full
 replay.
@@ -415,7 +416,7 @@ targeted_v11 pairs. v14's adapters continued for 4,800 micro-batches, 2026-10-07
   values, `holdout_v4_025` `trip_id`; `001` and `004` fixed) and v11 held-out 278 (287; two-subquery `exm` pairs). The
   real-world queries stay 0/4.
 
-**Recommendation**: promote v15-q4. It beats v12-q4 on the hold-out (60 > 59, the agreed rule) and on the fixed test,
+**Recommendation**: promote v15-q4 (**done: the Mac 2026-10-09 05:50, the server 06:29**). It beats v12-q4 on the hold-out (60 > 59, the agreed rule) and on the fixed test,
 the complex test and the schema-shift set, and keeps the classic subquery family; it misses the plan's "no loss on the
 v4 hold-out" clause by one query. `make promote TAG=v15-q4 PREV=v12-q4` on the Mac (rollback
 `ollama cp sql2pyspark:v12-q4 sql2pyspark:latest`); the server deploy is a separate decision
@@ -921,7 +922,7 @@ sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4�
                    complex_v16/ (10k complex pairs on the synthetic catalog + complex schema-shift set, 21k mix & v16 LoRA config; not promoted),
                    runs/v2/ … runs/v7/ (adapters, configs, logs; v6/v7 data is in the git history too)
 sql2pyspark.gguf   Q8_0 GGUF of v15 (exported 2026-10-07 21:27, restored after the v16 export; 8.1 GB; v12 is an Ollama tag); Ollama keeps its own copy of every tag
-sql2pyspark-q4.gguf Q4_K_M GGUF of v15-q4 (the candidate; `latest` = v12-q4 is an Ollama tag, 4.7 GB, compact CPU export for Linux server)
+sql2pyspark-q4.gguf Q4_K_M GGUF of v15-q4 (`latest` on the Mac and the server since 2026-10-09, 4.7 GB, compact CPU export for Linux server)
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,
                    post_training_v4.sh … post_training_v8.sh, start_training_v7.sh … start_training_v16.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py,

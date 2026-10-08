@@ -73,7 +73,7 @@ make data N=20000 WORKERS=6
 ```bash
 # MLX LoRA fine-tuning via train_resumable.py
 # (v16: 7B continued from v15 on complex_v16/data_mix (10k complex pairs on the synthetic tables + replay), 3,600 steps, 11 h 54 min; not promoted;
-#  v15: 7B continued from v14 on schema_v15/data_mix (existing forms on 221 synthetic tables + replay), 4,800 steps, 8 h 09 min; candidate;
+#  v15: 7B continued from v14 on schema_v15/data_mix (existing forms on 221 synthetic tables + replay), 4,800 steps, 8 h 09 min; v15-q4 = `latest` on the Mac since 2026-10-09;
 #  v14: 7B continued from v12 on targeted_v14/data_mix (correlated + uncorrelated scalar subqueries + replay), 4,800 steps, ~8 h awake; not promoted;
 #  v13: 7B continued from v12 on targeted_v13/data_mix (scalar subqueries + replay), 2,400 steps, 5 h 09 min; not used;
 #  v12: 7B continued from v11 on targeted_v12/data_mix (OR / mixed AND-OR + replay), 2,400 steps, 4 h 52 min;
