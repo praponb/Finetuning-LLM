@@ -59,6 +59,13 @@ tables in 35 domains** with names the model has never seen, against v13 / v14's 
 never trained on (v12-q4 155), failures with an unresolved name 42 (v14-q4 57, v12-q4 93); but v4 hold-out 20/25
 (v12-q4 21) and v11 held-out 278/300 (287). See [v15 results](#v15-results-2026-10-08).
 
+**v16** (2026-10-08/09, complex forms on the synthetic schemas, from v15) is **not promoted**: v15 continued on the
+[complex_v16 dataset](sql2pyspark-mlx/complex_v16/README.md) — 10,000 complex pairs (pipelines of up to 9 stages,
+many-window queries, set operations, gaps-and-islands, grouping sets, pivot / unpivot) on the synthetic tables. It wins
+the **complex schema-shift** set (complex pairs on 5 domains never trained on) **128/150** vs. v15-q4 110, but loses
+elsewhere: hold-out 58/62, complex test 84/100, v11 / v12 held-out 261 / 216 (v15-q4 60, 89, 278 / 232). See
+[v16 results](#v16-results-2026-10-09--not-promoted).
+
 ```text
 schemas.py ─┐
             ├─ generate_dataset.py ─┐                         ┌─ data/train.jsonl ─ mlx_lm.lora ─ adapters/
@@ -198,6 +205,7 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 | `sql2pyspark:v14-c2400-q4` | holdout | 62 | 98% | 94% | **94%** | 94% | **94%** | 4.7 |
 | `sql2pyspark:v14-q4` | holdout | 62 | 98% | 94% | **94%** | 94% | **94%** | 5.9 |
 | `sql2pyspark:v15-q4` | holdout | 62 | 100% | 98% | **97%** | 98% | **97%** | 6.2 |
+| `sql2pyspark:v16-q4` | holdout | 62 | 100% | 94% | **94%** | 94% | **94%** | 9.6 |
 | `sql2pyspark:v2` | holdout | 62 | 98% | 92% | **90%** | 92% | **90%** | 4.1 |
 | `sql2pyspark:v3` | holdout | 62 | 97% | 95% | **95%** | 95% | **95%** | 3.3 |
 | `sql2pyspark:v4` | holdout | 62 | 100% | 95% | **94%** | 95% | **94%** | 4.0 |
@@ -214,6 +222,7 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 | `sql2pyspark:v14-c2400-q4` | holdout_v4 | 25 | 100% | 80% | **76%** | 80% | **76%** | 10.1 |
 | `sql2pyspark:v14-q4` | holdout_v4 | 25 | 100% | 76% | **72%** | 76% | **72%** | 11.5 |
 | `sql2pyspark:v15-q4` | holdout_v4 | 25 | 100% | 84% | **80%** | 84% | **80%** | 11.5 |
+| `sql2pyspark:v16-q4` | holdout_v4 | 25 | 100% | 80% | **80%** | 80% | **80%** | 15.3 |
 | `sql2pyspark:v2` | holdout_v4 | 25 | 92% | 32% | **20%** | 32% | **20%** | 6.5 |
 | `sql2pyspark:v3` | holdout_v4 | 25 | 88% | 32% | **12%** | 32% | **12%** | 7.1 |
 | `sql2pyspark:v4` | holdout_v4 | 25 | 96% | 60% | **36%** | 60% | **36%** | 7.0 |
@@ -229,6 +238,7 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 | `sql2pyspark:v13-q4` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 69.9 |
 | `sql2pyspark:v14-q4` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 95.9 |
 | `sql2pyspark:v15-q4` | real_queries | 4 | 100% | 0% | **0%** | 0% | **0%** | 97.0 |
+| `sql2pyspark:v16-q4` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 104.4 |
 | `sql2pyspark:v2` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 55.3 |
 | `sql2pyspark:v3` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 78.9 |
 | `sql2pyspark:v4` | real_queries | 4 | 25% | 0% | **0%** | 0% | **0%** | 92.8 |
@@ -245,6 +255,7 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 | `sql2pyspark:v14-c2400-q4` | test_fixed | 150 | 98% | 95% | **93%** | 95% | **93%** | 14.8 |
 | `sql2pyspark:v14-q4` | test_fixed | 150 | 99% | 97% | **97%** | 97% | **97%** | 15.8 |
 | `sql2pyspark:v15-q4` | test_fixed | 150 | 100% | 97% | **97%** | 97% | **97%** | 15.6 |
+| `sql2pyspark:v16-q4` | test_fixed | 150 | 100% | 98% | **97%** | 98% | **97%** | 17.2 |
 | `sql2pyspark:v3` | test_fixed | 150 | 92% | 73% | **69%** | 73% | **70%** | 8.0 |
 | `sql2pyspark:v4` | test_fixed | 150 | 90% | 80% | **73%** | 80% | **73%** | 11.6 |
 | `sql2pyspark:v5` | test_fixed | 150 | 97% | 88% | **85%** | 89% | **85%** | 11.2 |
@@ -259,6 +270,7 @@ Replies are capped at 2,048 tokens (`--num-predict`; 1,024 before 2026-09-27, wh
 | `sql2pyspark:v13-q4` | complex_v8_test | 100 | 97% | 81% | **79%** | 81% | **79%** | 38.6 |
 | `sql2pyspark:v14-q4` | complex_v8_test | 100 | 98% | 87% | **82%** | 87% | **82%** | 47.6 |
 | `sql2pyspark:v15-q4` | complex_v8_test | 100 | 99% | 93% | **89%** | 93% | **89%** | 47.0 |
+| `sql2pyspark:v16-q4` | complex_v8_test | 100 | 99% | 88% | **84%** | 88% | **84%** | 51.2 |
 | `sql2pyspark:v7` | complex_v8_test | 100 | 83% | 38% | **31%** | 38% | **31%** | 72.9 |
 | `sql2pyspark:v8` | complex_v8_test | 100 | 96% | 68% | **60%** | 68% | **60%** | 96.9 |
 | `sql2pyspark:v9` | complex_v8_test | 100 | 100% | 92% | **87%** | 92% | **87%** | 57.9 |
@@ -277,6 +289,7 @@ Hold-out, correct results (lenient) by difficulty:
 | `sql2pyspark:v14-c2400-q4` | 100% | 91% | 92% |
 | `sql2pyspark:v14-q4` | 100% | 91% | 92% |
 | `sql2pyspark:v15-q4` | 100% | 95% | 96% |
+| `sql2pyspark:v16-q4` | 93% | 91% | 96% |
 | `sql2pyspark:v2` | 93% | 95% | 84% |
 | `sql2pyspark:v3` | 100% | 95% | 92% |
 | `sql2pyspark:v4` | 100% | 95% | 88% |
@@ -298,6 +311,7 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v14-c2400-q4` | 100% | 100% | 100% | 67% | 50% | 25% | 50% |
 | `sql2pyspark:v14-q4` | 75% | 100% | 100% | 67% | 50% | 25% | 50% |
 | `sql2pyspark:v15-q4` | 100% | 100% | 60% | 67% | 100% | 75% | 50% |
+| `sql2pyspark:v16-q4` | 75% | 100% | 80% | 67% | 50% | 75% | 100% |
 | `sql2pyspark:v2` | 0% | 40% | 20% | 67% | 0% | 0% | 0% |
 | `sql2pyspark:v3` | 0% | 40% | 0% | 33% | 0% | 0% | 0% |
 | `sql2pyspark:v4` | 25% | 40% | 20% | 67% | 50% | 50% | 0% |
@@ -311,6 +325,52 @@ v4 hold-out, correct results (lenient) by feature group:
 
 **v3 vs. v2:** v3 fixes 3 of v2's 6 hold-out failures (`GROUP BY 1` on a `CASE`, two unbalanced-parenthesis slips)
 with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300).
+
+### v16 results (2026-10-09) — not promoted
+
+| Eval set | **v12-q4** (`latest`, Mac + server) | **v15-q4** (recommended) | v16-q4 |
+| --- | --- | --- | --- |
+| Hold-out (62, unseen tables) | 59 | **60** | 58 |
+| Fixed test set: classic families (97) | 95 | **97** | **97** |
+| … `subquery` family (17) | 15 | **17** | **17** |
+| Fixed test set: all (150) | 143 | 145 | **146** |
+| v4 hold-out (25) | **21** | 20 | 20 |
+| complex_v8 test (100 of 300) | 83 | **89** | 84 |
+| … `cx_setop` (25) / `cx_pipeline` (32) | 19 / 22 | **22** / **29** | 21 / 26 |
+| Held-out `IN` / `NOT IN` (50) | **50** | **50** | **50** |
+| Held-out targeted_v11 pairs (300) | **287** | 278 | 261 |
+| Held-out targeted_v12 pairs (250) | 230 | **232** | 216 |
+| Held-out targeted_v13 / v14 scalar-subquery pairs (150 / 200) | 123 / 96 | **150** / **193** | 149 / 190 |
+| Schema-shift pairs (200, 5 domains never trained on) | 155 | **189** | 185 |
+| **Complex schema-shift pairs (150 of 300, the same 5 domains)** | — | 110 | **128** |
+| Failures with an unresolved name, all sets above except complex-shift | 93 of 240 | **42 of 81** | 74 of 128 |
+| … on the complex schema-shift pairs | — | 20 of 40 | **9 of 22** |
+| Real-world queries (4) | 0 | 0 | 0 |
+
+**Why v16**: the complex forms had only been trained on complex_v8's 20 tables (the complex test's tables), and v15
+showed that new names generalize better than more pairs on known tables. [complex_v16](sql2pyspark-mlx/complex_v16/README.md)
+runs the complex_v8 generator on the schema_v15 synthetic catalog (`cx_patch.py` converts and installs the tables and
+rebinds the generator's table lists) with longer pipelines (6–9 stages): 13,494 / 13,500 raw pairs verified, 10,000
+under 3,000 tokens for training, and 300 **complex schema-shift** pairs on the 5 held-out domains
+(`--tables eval/complex_shift_tables.py`; scored on a seeded 150, ~45 s a query). The mix (21,008) adds 2,500
+schema_v15, 1,500 targeted_v14, all 708 classic scalar-subquery, 3,300 classic, 1,500 complex_v9, 800 targeted_v12 and
+700 targeted_v11 pairs. v15's adapters continued for 3,600 micro-batches, 2026-10-08 06:55 → 18:49 (11 h 54 min, peak
+10.0 GB, no sleep); validation loss 0.008 → 0.012 (peak learning rate) → 0.007 → 0.006 → **0.004**.
+
+* **Gain**: complex schema-shift 128/150 vs. 110 (set operations 17 / 9 of 20, long pipelines 13 / 9 of 15, grouping
+  17 / 14 of 19; window-heavy 16 / 19 of 24 is the one family it loses), with fewer name slips there (9 vs. 20).
+* **Costs**: the replay share fell (10,000 of 21,008 pairs new), and the earlier forms on the 42 original tables slipped:
+  v11 held-out 261 (two-subquery `exists_multi` 32/50 vs. 41, `lateral_filter` 44 vs. 49), v12 held-out 216, complex
+  test 84 (pipelines 26/32), hold-out 58 (`holdout003` `F.distinct`, `holdout016` / `holdout046` unresolved columns).
+  Most new failures are unresolved names (74 vs. 42 outside complex-shift); the lowest validation loss so far did not
+  carry over to the held-out sets.
+
+**Recommendation**: do not promote v16-q4 (hold-out 58; the agreed rule needs at least 60; complex test and v11 / v12
+held-out down too).
+v15-q4 stays the recommended candidate (`make promote TAG=v15-q4 PREV=v12-q4`). `sql2pyspark.gguf` /
+`sql2pyspark-q4.gguf` were restored to v15 / v15-q4 from the Ollama blobs (same SHA-256); v16 / v16-q4 stay as Ollama
+tags. A later run could keep v16's complex-shift gain with a smaller complex share (e.g. 4,000 new pairs) and v15's full
+replay.
 
 ### v15 results (2026-10-08)
 
@@ -858,14 +918,16 @@ sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4�
                    targeted_v13/ (2k scalar-subquery pairs + replay, 11.5k mix & v13 LoRA config; v13 not used),
                    targeted_v14/ (10k correlated + uncorrelated scalar-subquery pairs + replay, 25k mix & v14 LoRA config; not promoted),
                    schema_v15/ (synthetic catalog of 221 tables + generators, 10k pairs + schema-shift set, 25k mix & v15 LoRA config),
+                   complex_v16/ (10k complex pairs on the synthetic catalog + complex schema-shift set, 21k mix & v16 LoRA config; not promoted),
                    runs/v2/ … runs/v7/ (adapters, configs, logs; v6/v7 data is in the git history too)
-sql2pyspark.gguf   Q8_0 GGUF of v15 (exported 2026-10-07 21:27, 8.1 GB; v12 is an Ollama tag); Ollama keeps its own copy of every tag
+sql2pyspark.gguf   Q8_0 GGUF of v15 (exported 2026-10-07 21:27, restored after the v16 export; 8.1 GB; v12 is an Ollama tag); Ollama keeps its own copy of every tag
 sql2pyspark-q4.gguf Q4_K_M GGUF of v15-q4 (the candidate; `latest` = v12-q4 is an Ollama tag, 4.7 GB, compact CPU export for Linux server)
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,
-                   post_training_v4.sh … post_training_v8.sh, start_training_v7.sh … start_training_v15.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py,
+                   post_training_v4.sh … post_training_v8.sh, start_training_v7.sh … start_training_v16.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py,
+                   complex_shift_tables.py,
                    complex_v8_test.jsonl, complex_eval_v8.sh,
-                   results/ (+ v2-split/ … v8-repair/, v7-repair-rules/, v9-q4-repair/, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/), logs-repair-rules/, *.log
+                   results/ (+ v2-split/ … v8-repair/, v7-repair-rules/, v9-q4-repair/, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/), logs-repair-rules/, *.log
 docker/, docker-compose.yml, .dockerignore          Docker setup
 deploy/            sql2pyspark.service (systemd unit), setup_server.sh, update_model.sh: Ubuntu server hosting (docs/08)
 llama.cpp/         upstream checkout, used only for convert_hf_to_gguf.py

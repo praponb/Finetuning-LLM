@@ -1,0 +1,4 @@
+__pycache__/
+# regenerable: generate.py --split train / heldout, then verify_v16.py (see README.md)
+raw_v16/
+raw_v16_shift/

@@ -1,0 +1,55 @@
+{
+  "raw_v16": {
+    "verified": 13494,
+    "empty": 2025,
+    "too_long": 357,
+    "usable": 11112
+  },
+  "raw_v16_shift": {
+    "verified": 450,
+    "empty": 71,
+    "too_long": 13,
+    "usable": 366
+  },
+  "new_train_tokens": {
+    "mean": 1283,
+    "p50": 1167,
+    "p95": 2592,
+    "max": 3000
+  },
+  "data_mix": {
+    "train": 21008,
+    "new": 10000,
+    "schema_v15": 2500,
+    "targeted_v14": 1500,
+    "classic_scalar": 708,
+    "classic": 3300,
+    "complex_v9": 1500,
+    "targeted_v12": 800,
+    "targeted_v11": 700,
+    "valid": 337,
+    "complex_shift": 300,
+    "mean_chars": 3061,
+    "max_chars": 12091
+  },
+  "train_families": {
+    "cx_pipeline": 2771,
+    "cx_window_heavy": 1645,
+    "cx_setop": 1447,
+    "cx_grouping": 1119,
+    "cx_reshape": 890,
+    "cx_sessionize": 872,
+    "cx_long_pipeline": 662,
+    "cx_full_outer": 594
+  },
+  "shift_families": {
+    "cx_window_heavy": 48,
+    "cx_pipeline": 47,
+    "cx_setop": 47,
+    "cx_reshape": 38,
+    "cx_sessionize": 37,
+    "cx_grouping": 35,
+    "cx_long_pipeline": 29,
+    "cx_full_outer": 19
+  }
+}
