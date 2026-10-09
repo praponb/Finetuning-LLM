@@ -10,7 +10,8 @@ Nothing here touches `sql2pyspark:latest` / `v15-q4`, the root `sql2pyspark*.ggu
 
 ## Verdict
 
-**No-go for a full run as planned** — two of the four go/no-go checks fail:
+**No-go for a full run as planned** — two of the four go/no-go checks fail. **Decision (2026-10-10): not used for now**;
+this folder, the adapters, `gguf/pilot-q4.gguf` and the Ollama tags are kept for a later run on a machine with more memory.
 
 | Check (plan) | Result | |
 | --- | --- | --- |
