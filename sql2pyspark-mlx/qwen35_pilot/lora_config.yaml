@@ -1,0 +1,37 @@
+# Pilot step 3: short LoRA run of Qwen3.5-9B-4bit on the v15 mix (schema_v15/data_mix), fresh adapters, peak lr 1e-4
+# as v6 (the last fresh 7B run). 400 micro-batches = 100 optimizer updates of 4 samples; the full run would be 4,800.
+# Run from sql2pyspark-mlx/ with Ollama and Docker stopped (lora_q35.py = mlx_lm.lora + gd_patch + chunked_loss):
+#   .venv/bin/python train_resumable.py --config qwen35_pilot/lora_config.yaml --launcher qwen35_pilot/lora_q35.py
+model: mlx-community/Qwen3.5-9B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_mix2600   # v15 mix without the 1.0% of samples > 2,600 tokens (filter_mix.py)
+adapter_path: ./qwen35_pilot/adapters
+seed: 35
+
+iters: 400
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 2600          # 3,200 fits in memory (9.3 GB peak) but trips the GPU watchdog (README)
+mask_prompt: true             # loss on the assistant tokens (incl. the empty think block's closing "\n</think>\n\n")
+grad_checkpoint: true
+
+num_layers: 8                 # last 8 of 32 blocks (6 linear-attention + 2 full-attention)
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+
+optimizer: adamw
+learning_rate: 1.0e-4
+lr_schedule:
+  name: cosine_decay
+  warmup: 10
+  warmup_init: 1.0e-6
+  arguments: [1.0e-4, 90, 1.0e-5]    # [init, decay_steps, end]  (optimizer updates)
+
+steps_per_report: 20
+steps_per_eval: 400           # initial + final validation
+val_batches: 50
+save_every: 25                # frequent checkpoints: train_resumable.py restarts after a watchdog abort
+test: false

@@ -46,14 +46,18 @@ OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/") 
 IMPORTS = "from pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n"
 
 
-def ask(model: str, sql: str, timeout: int, num_predict: int, extra: dict | None = None) -> tuple[str, float]:
+def ask(model: str, sql: str, timeout: int, num_predict: int, extra: dict | None = None,
+        think: bool | None = None) -> tuple[str, float]:
     t0 = time.time()
-    r = requests.post(OLLAMA_URL, json={
+    body = {
         "model": model,
         "messages": [{"role": "user", "content": f"Convert SQL to PySpark:\n```sql\n{sql}\n```"}],
         "stream": False,
         "options": {"temperature": 0, "seed": 0, "num_predict": num_predict, **(extra or {})},
-    }, timeout=timeout)
+    }
+    if think is not None:   # thinking-capable architectures (Qwen3.5): Ollama's built-in renderer ignores TEMPLATE
+        body["think"] = think
+    r = requests.post(OLLAMA_URL, json=body, timeout=timeout)
     r.raise_for_status()
     return r.json().get("message", {}).get("content", ""), time.time() - t0
 
@@ -144,6 +148,8 @@ def main():
                     help="max tokens per reply (was 1024 before 2026-09-27; only long real-world queries need more)")
     ap.add_argument("--option", action="append", default=[], metavar="KEY=VALUE",
                     help="extra Ollama option, repeatable (e.g. --option repeat_penalty=1.2 --option repeat_last_n=256)")
+    ap.add_argument("--think", choices=["true", "false"], default=None,
+                    help="send Ollama's think flag (Qwen3.5 models need --think false; default: not sent)")
     ap.add_argument("--tables", default=None,
                     help="extra sample tables: a .py file with make_dataframes(spark), e.g. eval/real_tables.py")
     ap.add_argument("--out", default=None, help="results JSON (default eval/results/<model>__<set>.json)")
@@ -175,7 +181,8 @@ def main():
             reply, secs = cached[c["id"]]
         else:
             try:
-                reply, secs = ask(args.model, c["sql"], args.timeout, args.num_predict, extra)
+                reply, secs = ask(args.model, c["sql"], args.timeout, args.num_predict, extra,
+                                  None if args.think is None else args.think == "true")
             except Exception as e:  # noqa: BLE001
                 reply, secs = f"<request failed: {_short(e)}>", 0.0
         code = extract_code(reply)

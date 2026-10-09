@@ -1,0 +1,36 @@
+start 2026-10-09 08:58:13 max_seq 3200 layers 8 + gd_patch v2 + chunked loss v2
+Loading configuration file qwen35_pilot/memtest.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.121% (10.820M/8953.802M)
+Starting training..., iters: 50
+Calculating loss...:   0%|          | 0/4 [00:00<?, ?it/s]Calculating loss...:  25%|██▌       | 1/4 [00:16<00:50, 16.69s/it]Calculating loss...:  50%|█████     | 2/4 [00:33<00:33, 16.83s/it]Calculating loss...:  75%|███████▌  | 3/4 [00:52<00:17, 17.90s/it]Calculating loss...: 100%|██████████| 4/4 [01:10<00:00, 17.73s/it]Calculating loss...: 100%|██████████| 4/4 [01:10<00:00, 17.57s/it]
+Iter 1: Val loss 0.171, Val took 70.275s
+Iter 5: Train loss 0.088, Learning Rate 1.000e-04, It/sec 0.011, Tokens/sec 16.658, Trained Tokens 7854, Peak mem 9.320 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 19, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 328, in train
+    mx.eval(state, losses, n_tokens, grad_accum)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [METAL] Command buffer execution failed: Impacting Interactivity (0000000e:kIOGPUCommandBufferCallbackErrorImpactingInteractivity).
+exit=1
+end 2026-10-09 09:10:14

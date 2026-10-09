@@ -1,0 +1,35 @@
+start 2026-10-09 08:37:06 max_seq 3200 layers 8 + gd_patch
+Loading configuration file qwen35_pilot/memtest.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.121% (10.820M/8953.802M)
+Starting training..., iters: 50
+Calculating loss...:   0%|          | 0/4 [00:00<?, ?it/s]Calculating loss...:  25%|██▌       | 1/4 [00:16<00:50, 16.91s/it]Calculating loss...:  50%|█████     | 2/4 [00:33<00:33, 16.99s/it]Calculating loss...:  75%|███████▌  | 3/4 [00:53<00:18, 18.04s/it]Calculating loss...: 100%|██████████| 4/4 [01:11<00:00, 18.27s/it]Calculating loss...: 100%|██████████| 4/4 [01:11<00:00, 17.97s/it]
+Iter 1: Val loss 0.171, Val took 71.896s
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 14, in <module>
+    main()
+    ~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 328, in train
+    mx.eval(state, losses, n_tokens, grad_accum)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).
+exit=1
+end 2026-10-09 08:39:47
