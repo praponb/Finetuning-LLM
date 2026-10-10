@@ -61,7 +61,7 @@ matching folder in `~/GitHub`; they come along with `~/.claude/` and stay unused
 
 ## Phase 0 — on the M2, before 2026-10-30
 
-1. Merge PR #30 (and any later PR), so `main` and `b_pbv_main` are both pushed; `git status` clean in every repo.
+1. Merge every open PR (PR #30: done 2026-10-10), so `main` and `b_pbv_main` are both pushed; `git status` clean in every repo.
 2. Record the reference environment for later comparison:
 
    ```bash
