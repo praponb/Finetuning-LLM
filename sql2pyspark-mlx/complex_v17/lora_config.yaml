@@ -1,0 +1,43 @@
+# LoRA fine-tune for v17 (the v16 follow-up): v15 continued on complex_v17/data_mix = v15's full mix (25,008:
+# schema_v15 + targeted_v14 + classic + complex_v9 + targeted_v12 / v11 replay) + 4,000 of v16's complex pairs on the
+# synthetic catalog (~14%, v16 had 48%; build.py). Same start (v15), schedule and length as v15's run, so the
+# difference to v15 is the complex share and to v16 the replay.
+# Run from sql2pyspark-mlx/ (stop Docker and unload Ollama models first - 16 GB M2):
+#   .venv/bin/python train_resumable.py --config complex_v17/lora_config.yaml
+model: mlx-community/Qwen2.5-Coder-7B-Instruct-4bit
+train: true
+fine_tune_type: lora
+# data_mix = 25,008 v15 mix + 4,000 complex_v16 = 29,008; valid = v16's 337
+data: ./complex_v17/data_mix
+adapter_path: ./complex_v17/adapters
+resume_adapter_file: ./schema_v15/adapters/adapters.safetensors   # v15 (latest on the Mac and the server)
+seed: 17
+
+# 1,200 optimizer updates of 4 samples = 4,800 micro-batches of 1 (as v15).
+iters: 4800
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true             # loss only on the assistant (PySpark) tokens
+grad_checkpoint: true
+
+num_layers: 8                 # last 8 of 28 blocks, same as v6-v16 (required to resume their adapters)
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+
+optimizer: adamw
+learning_rate: 5.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-6
+  arguments: [5.0e-5, 1150, 5.0e-6]    # [init, decay_steps, end]  (optimizer updates)
+
+steps_per_report: 50
+steps_per_eval: 800
+val_batches: 150
+save_every: 200
+test: false
+test_batches: 200

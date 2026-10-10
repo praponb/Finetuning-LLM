@@ -1,0 +1,10 @@
+{
+  "train": 29008,
+  "schema_v15_mix": 25008,
+  "complex_v16": 4000,
+  "complex_share": 0.138,
+  "valid": 337,
+  "train_valid_overlap": 0,
+  "mean_chars": 1980,
+  "max_chars": 12156
+}
