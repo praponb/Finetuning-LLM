@@ -1,0 +1,50 @@
+{
+    "adapter_path": "./qwen35_pilot/adapters",
+    "batch_size": 1,
+    "clear_cache_threshold": 0,
+    "config": "qwen35_pilot/lora_config.yaml",
+    "data": "./qwen35_pilot/data_mix2600",
+    "fine_tune_type": "lora",
+    "grad_accumulation_steps": 4,
+    "grad_checkpoint": true,
+    "iters": 400,
+    "learning_rate": 0.0001,
+    "lora_parameters": {
+        "rank": 16,
+        "dropout": 0.05,
+        "scale": 20.0
+    },
+    "lr_schedule": {
+        "name": "cosine_decay",
+        "warmup": 10,
+        "warmup_init": 1e-06,
+        "arguments": [
+            0.0001,
+            90,
+            1e-05
+        ]
+    },
+    "mask_prompt": true,
+    "max_seq_length": 2600,
+    "model": "mlx-community/Qwen3.5-9B-4bit",
+    "num_layers": 8,
+    "optimizer": "adamw",
+    "optimizer_config": {
+        "adam": {},
+        "adamw": {},
+        "muon": {},
+        "sgd": {},
+        "adafactor": {}
+    },
+    "project_name": null,
+    "report_to": null,
+    "resume_adapter_file": null,
+    "save_every": 25,
+    "seed": 35,
+    "steps_per_eval": 400,
+    "steps_per_report": 20,
+    "test": false,
+    "test_batches": 500,
+    "train": true,
+    "val_batches": 50
+}

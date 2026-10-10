@@ -21,6 +21,7 @@ The project has used two base models in the `Qwen2.5-Coder` family:
 | **v14** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | v12 continued on `targeted_v14` (correlated + uncorrelated scalar subqueries side by side + replay; 25,008 mix); Q8_0 (`v14`), Q4_K_M (`v14-q4`) and the iter-2,400 checkpoint (`v14-c2400-q4`); not promoted. |
 | **v15** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | v14 continued on `schema_v15` (the existing forms on 221 synthetic tables with unseen names + replay; 25,008 mix); Q8_0 (`v15`) and Q4_K_M (`v15-q4` = `latest` on the Mac since 2026-10-09). |
 | **v16** | `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` | 28 transformer blocks | 7.61 B | 3,200 tokens | v15 continued on `complex_v16` (10,000 complex pairs on the synthetic tables + replay; 21,008 mix); Q8_0 (`v16`) and Q4_K_M (`v16-q4`); not promoted. |
+| **Qwen3.5 pilot** | `mlx-community/Qwen3.5-9B-4bit` | 32 blocks (3 of 4 Gated DeltaNet) | ~9 B | 2,600 tokens | Feasibility pilot (2026-10-09): 400 iterations on the v15 mix, hold-out 41/62; needs local mlx-lm patches on 16 GB, ~14 h for a full run; not used for now ([qwen35_pilot](../sql2pyspark-mlx/qwen35_pilot/README.md)). |
 
 ### Why scale from 3B to 7B in v6?
 
@@ -99,7 +100,8 @@ test_batches: 200
 The first v4 run crashed after ~250 iterations with `[METAL] Command buffer execution failed: Impacting Interactivity`: macOS aborts a GPU command buffer that runs too long, and mlx_lm cannot recover. `train_resumable.py`:
 
 - runs `mlx_lm.lora` with smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`; ~9% slower), which avoided the error for the whole second run;
-- if the run still dies, restarts from the newest checkpoint (saved every 100 iterations) for the remaining iterations, continuing the cosine learning-rate schedule from where it stopped (AdamW moments restart), up to 6 times.
+- if the run still dies, restarts from the newest checkpoint (saved every 100 iterations) for the remaining iterations, continuing the cosine learning-rate schedule from where it stopped (AdamW moments restart), up to 6 times;
+- `--launcher <script>` runs a wrapper instead of `mlx_lm.lora` (the Qwen3.5 pilot's `qwen35_pilot/lora_q35.py`, which installs its mlx-lm patches first); since 2026-10-09 a crash right after the first checkpoint no longer stops the resume with `shutil.SameFileError`.
 
 ---
 

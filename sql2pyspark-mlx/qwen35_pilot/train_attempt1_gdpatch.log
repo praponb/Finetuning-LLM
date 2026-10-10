@@ -1,0 +1,114 @@
+start 2026-10-09 09:15:14 +0700
+[train_resumable] segment 1: iterations 1..400 (qwen35_pilot/lora_config.yaml)
+Loading configuration file qwen35_pilot/lora_config.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.121% (10.820M/8953.802M)
+Starting training..., iters: 400
+Calculating loss...:   0%|          | 0/50 [00:00<?, ?it/s]Calculating loss...:   2%|▏         | 1/50 [00:01<01:23,  1.71s/it]Calculating loss...:   4%|▍         | 2/50 [00:03<01:21,  1.71s/it]Calculating loss...:   6%|▌         | 3/50 [00:05<01:19,  1.70s/it]Calculating loss...:   8%|▊         | 4/50 [00:06<01:17,  1.69s/it]Calculating loss...:  10%|█         | 5/50 [00:09<01:25,  1.89s/it]Calculating loss...:  12%|█▏        | 6/50 [00:12<01:40,  2.29s/it]Calculating loss...:  14%|█▍        | 7/50 [00:14<01:41,  2.37s/it]Calculating loss...:  16%|█▌        | 8/50 [00:16<01:37,  2.33s/it]Calculating loss...:  18%|█▊        | 9/50 [00:18<01:30,  2.21s/it]Calculating loss...:  20%|██        | 10/50 [00:32<03:53,  5.83s/it]Calculating loss...:  22%|██▏       | 11/50 [00:35<03:10,  4.89s/it]Calculating loss...:  24%|██▍       | 12/50 [00:37<02:28,  3.91s/it]Calculating loss...:  26%|██▌       | 13/50 [00:43<02:48,  4.56s/it]Calculating loss...:  28%|██▊       | 14/50 [00:45<02:18,  3.85s/it]Calculating loss...:  30%|███       | 15/50 [00:47<01:54,  3.27s/it]Calculating loss...:  32%|███▏      | 16/50 [00:50<01:48,  3.20s/it]Calculating loss...:  34%|███▍      | 17/50 [01:07<04:01,  7.32s/it]Calculating loss...:  36%|███▌      | 18/50 [01:09<03:02,  5.70s/it]Calculating loss...:  38%|███▊      | 19/50 [01:12<02:29,  4.81s/it]Calculating loss...:  40%|████      | 20/50 [01:24<03:30,  7.02s/it]Calculating loss...:  42%|████▏     | 21/50 [01:38<04:27,  9.23s/it]Calculating loss...:  44%|████▍     | 22/50 [01:57<05:41, 12.21s/it]Calculating loss...:  46%|████▌     | 23/50 [02:01<04:17,  9.55s/it]Calculating loss...:  48%|████▊     | 24/50 [02:03<03:11,  7.35s/it]Calculating loss...:  50%|█████     | 25/50 [02:05<02:23,  5.73s/it]Calculating loss...:  52%|█████▏    | 26/50 [02:10<02:12,  5.52s/it]Calculating loss...:  54%|█████▍    | 27/50 [02:11<01:40,  4.37s/it]Calculating loss...:  56%|█████▌    | 28/50 [02:14<01:27,  3.98s/it]Calculating loss...:  58%|█████▊    | 29/50 [02:18<01:17,  3.70s/it]Calculating loss...:  60%|██████    | 30/50 [02:20<01:03,  3.18s/it]Calculating loss...:  62%|██████▏   | 31/50 [02:26<01:20,  4.21s/it]Calculating loss...:  64%|██████▍   | 32/50 [02:28<01:05,  3.61s/it]Calculating loss...:  66%|██████▌   | 33/50 [02:31<00:55,  3.27s/it]Calculating loss...:  68%|██████▊   | 34/50 [02:43<01:33,  5.86s/it]Calculating loss...:  70%|███████   | 35/50 [02:45<01:12,  4.84s/it]Calculating loss...:  72%|███████▏  | 36/50 [02:47<00:56,  4.05s/it]Calculating loss...:  74%|███████▍  | 37/50 [02:50<00:46,  3.58s/it]Calculating loss...:  76%|███████▌  | 38/50 [02:53<00:39,  3.33s/it]Calculating loss...:  78%|███████▊  | 39/50 [02:59<00:46,  4.23s/it]Calculating loss...:  80%|████████  | 40/50 [03:03<00:40,  4.04s/it]Calculating loss...:  82%|████████▏ | 41/50 [03:05<00:32,  3.57s/it]Calculating loss...:  84%|████████▍ | 42/50 [03:18<00:50,  6.33s/it]Calculating loss...:  86%|████████▌ | 43/50 [03:21<00:37,  5.35s/it]Calculating loss...:  88%|████████▊ | 44/50 [03:32<00:42,  7.06s/it]Calculating loss...:  90%|█████████ | 45/50 [03:34<00:27,  5.55s/it]Calculating loss...:  92%|█████████▏| 46/50 [03:36<00:17,  4.49s/it]Calculating loss...:  94%|█████████▍| 47/50 [03:38<00:11,  3.67s/it]Calculating loss...:  96%|█████████▌| 48/50 [03:40<00:06,  3.27s/it]Calculating loss...:  98%|█████████▊| 49/50 [03:43<00:03,  3.07s/it]Calculating loss...: 100%|██████████| 50/50 [03:57<00:00,  6.39s/it]Calculating loss...: 100%|██████████| 50/50 [03:57<00:00,  4.75s/it]
+Iter 1: Val loss 0.299, Val took 237.340s
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 27, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 328, in train
+    mx.eval(state, losses, n_tokens, grad_accum)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [METAL] Command buffer execution failed: Impacting Interactivity (0000000e:kIOGPUCommandBufferCallbackErrorImpactingInteractivity).
+[train_resumable] crashed before the first checkpoint; restarting from scratch
+[train_resumable] exit code 1; 0/400 iterations saved
+[train_resumable] segment 2: iterations 1..400 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg2.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg2.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.121% (10.820M/8953.802M)
+Starting training..., iters: 400
+Calculating loss...:   0%|          | 0/50 [00:00<?, ?it/s]Calculating loss...:   2%|▏         | 1/50 [00:01<01:24,  1.72s/it]Calculating loss...:   4%|▍         | 2/50 [00:03<01:21,  1.70s/it]Calculating loss...:   6%|▌         | 3/50 [00:05<01:19,  1.69s/it]Calculating loss...:   8%|▊         | 4/50 [00:06<01:17,  1.69s/it]Calculating loss...:  10%|█         | 5/50 [00:09<01:24,  1.88s/it]Calculating loss...:  12%|█▏        | 6/50 [00:12<01:40,  2.29s/it]Calculating loss...:  14%|█▍        | 7/50 [00:14<01:41,  2.36s/it]Calculating loss...:  16%|█▌        | 8/50 [00:16<01:37,  2.32s/it]Calculating loss...:  18%|█▊        | 9/50 [00:18<01:30,  2.21s/it]Calculating loss...:  20%|██        | 10/50 [00:32<03:53,  5.85s/it]Calculating loss...:  22%|██▏       | 11/50 [00:35<03:11,  4.91s/it]Calculating loss...:  24%|██▍       | 12/50 [00:37<02:29,  3.93s/it]Calculating loss...:  26%|██▌       | 13/50 [00:43<02:49,  4.59s/it]Calculating loss...:  28%|██▊       | 14/50 [00:45<02:19,  3.88s/it]Calculating loss...:  30%|███       | 15/50 [00:47<01:55,  3.30s/it]Calculating loss...:  32%|███▏      | 16/50 [00:50<01:49,  3.23s/it]Calculating loss...:  34%|███▍      | 17/50 [01:13<05:02,  9.17s/it]Calculating loss...:  36%|███▌      | 18/50 [01:17<03:59,  7.48s/it]Calculating loss...:  38%|███▊      | 19/50 [01:21<03:27,  6.69s/it]Calculating loss...:  40%|████      | 20/50 [01:37<04:42,  9.41s/it]Calculating loss...:  42%|████▏     | 21/50 [01:53<05:30, 11.39s/it]Calculating loss...:  44%|████▍     | 22/50 [02:14<06:35, 14.13s/it]Calculating loss...:  46%|████▌     | 23/50 [02:17<04:55, 10.96s/it]Calculating loss...:  48%|████▊     | 24/50 [02:20<03:37,  8.38s/it]Calculating loss...:  50%|█████     | 25/50 [02:22<02:42,  6.49s/it]Calculating loss...:  52%|█████▏    | 26/50 [02:27<02:27,  6.15s/it]Calculating loss...:  54%|█████▍    | 27/50 [02:29<01:51,  4.85s/it]Calculating loss...:  56%|█████▌    | 28/50 [02:32<01:36,  4.39s/it]Calculating loss...:  58%|█████▊    | 29/50 [02:36<01:25,  4.06s/it]Calculating loss...:  60%|██████    | 30/50 [02:38<01:09,  3.47s/it]Calculating loss...:  62%|██████▏   | 31/50 [02:45<01:27,  4.58s/it]Calculating loss...:  64%|██████▍   | 32/50 [02:47<01:10,  3.93s/it]Calculating loss...:  66%|██████▌   | 33/50 [02:50<01:00,  3.56s/it]Calculating loss...:  68%|██████▊   | 34/50 [03:03<01:42,  6.39s/it]Calculating loss...:  70%|███████   | 35/50 [03:06<01:19,  5.30s/it]Calculating loss...:  72%|███████▏  | 36/50 [03:08<01:02,  4.43s/it]Calculating loss...:  74%|███████▍  | 37/50 [03:11<00:50,  3.92s/it]Calculating loss...:  76%|███████▌  | 38/50 [03:14<00:43,  3.65s/it]Calculating loss...:  78%|███████▊  | 39/50 [03:21<00:50,  4.63s/it]Calculating loss...:  80%|████████  | 40/50 [03:25<00:44,  4.43s/it]Calculating loss...:  82%|████████▏ | 41/50 [03:27<00:35,  3.92s/it]Calculating loss...:  84%|████████▍ | 42/50 [03:41<00:55,  6.92s/it]Calculating loss...:  86%|████████▌ | 43/50 [03:45<00:40,  5.84s/it]Calculating loss...:  88%|████████▊ | 44/50 [03:56<00:45,  7.62s/it]Calculating loss...:  90%|█████████ | 45/50 [03:59<00:29,  5.97s/it]Calculating loss...:  92%|█████████▏| 46/50 [04:01<00:19,  4.81s/it]Calculating loss...:  94%|█████████▍| 47/50 [04:03<00:11,  3.92s/it]Calculating loss...:  96%|█████████▌| 48/50 [04:05<00:06,  3.48s/it]Calculating loss...:  98%|█████████▊| 49/50 [04:08<00:03,  3.25s/it]Calculating loss...: 100%|██████████| 50/50 [04:22<00:00,  6.65s/it]Calculating loss...: 100%|██████████| 50/50 [04:22<00:00,  5.26s/it]
+Iter 1: Val loss 0.299, Val took 262.799s
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 27, in <module>
+    # keep MLX's free-buffer cache small: with ~8-9 GB active on the 16 GB M2 a large cache pushes macOS into swapping
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 328, in train
+    mx.eval(state, losses, n_tokens, grad_accum)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [METAL] Command buffer execution failed: Impacting Interactivity (0000000e:kIOGPUCommandBufferCallbackErrorImpactingInteractivity).
+[train_resumable] crashed before the first checkpoint; restarting from scratch
+[train_resumable] exit code 1; 0/400 iterations saved
+[train_resumable] segment 3: iterations 1..400 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg3.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg3.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.121% (10.820M/8953.802M)
+Starting training..., iters: 400
+Calculating loss...:   0%|          | 0/50 [00:00<?, ?it/s]Calculating loss...:   2%|▏         | 1/50 [00:01<01:24,  1.73s/it]Calculating loss...:   4%|▍         | 2/50 [00:03<01:21,  1.70s/it]Calculating loss...:   6%|▌         | 3/50 [00:05<01:19,  1.70s/it]Calculating loss...:   8%|▊         | 4/50 [00:06<01:17,  1.70s/it]Calculating loss...:  10%|█         | 5/50 [00:09<01:25,  1.89s/it]Calculating loss...:  12%|█▏        | 6/50 [00:12<01:40,  2.29s/it]Calculating loss...:  14%|█▍        | 7/50 [00:14<01:44,  2.44s/it]Calculating loss...:  16%|█▌        | 8/50 [00:17<01:42,  2.43s/it]Calculating loss...:  18%|█▊        | 9/50 [00:19<01:35,  2.32s/it]Calculating loss...:  20%|██        | 10/50 [00:34<04:10,  6.26s/it]Calculating loss...:  22%|██▏       | 11/50 [00:37<03:25,  5.26s/it]Calculating loss...:  24%|██▍       | 12/50 [00:39<02:40,  4.22s/it]Calculating loss...:  26%|██▌       | 13/50 [00:45<03:03,  4.95s/it]Calculating loss...:  28%|██▊       | 14/50 [00:48<02:30,  4.19s/it]Calculating loss...:  30%|███       | 15/50 [00:50<02:04,  3.57s/it]Calculating loss...:  32%|███▏      | 16/50 [00:53<01:58,  3.50s/it]Calculating loss...:  34%|███▍      | 17/50 [01:12<04:23,  7.99s/it]Calculating loss...:  36%|███▌      | 18/50 [01:14<03:19,  6.22s/it]Calculating loss...:  38%|███▊      | 19/50 [01:17<02:42,  5.25s/it]Calculating loss...:  40%|████      | 20/50 [01:30<03:49,  7.66s/it]Calculating loss...:  42%|████▏     | 21/50 [01:46<04:51, 10.05s/it]Calculating loss...:  44%|████▍     | 22/50 [02:07<06:12, 13.29s/it]Calculating loss...:  46%|████▌     | 23/50 [02:10<04:40, 10.38s/it]Calculating loss...:  48%|████▊     | 24/50 [02:13<03:27,  7.98s/it]Calculating loss...:  50%|█████     | 25/50 [02:15<02:35,  6.22s/it]Calculating loss...:  52%|█████▏    | 26/50 [02:20<02:23,  5.97s/it]Calculating loss...:  54%|█████▍    | 27/50 [02:22<01:48,  4.72s/it]Calculating loss...:  56%|█████▌    | 28/50 [02:25<01:34,  4.29s/it]Calculating loss...:  58%|█████▊    | 29/50 [02:28<01:23,  3.98s/it]Calculating loss...:  60%|██████    | 30/50 [02:30<01:08,  3.41s/it]Calculating loss...:  62%|██████▏   | 31/50 [02:38<01:26,  4.54s/it]Calculating loss...:  64%|██████▍   | 32/50 [02:40<01:10,  3.89s/it]Calculating loss...:  66%|██████▌   | 33/50 [02:43<00:59,  3.53s/it]Calculating loss...:  68%|██████▊   | 34/50 [02:56<01:41,  6.33s/it]Calculating loss...:  70%|███████   | 35/50 [02:58<01:18,  5.24s/it]Calculating loss...:  72%|███████▏  | 36/50 [03:01<01:01,  4.38s/it]Calculating loss...:  74%|███████▍  | 37/50 [03:03<00:50,  3.87s/it]Calculating loss...:  76%|███████▌  | 38/50 [03:06<00:43,  3.60s/it]Calculating loss...:  78%|███████▊  | 39/50 [03:13<00:50,  4.58s/it]Calculating loss...:  80%|████████  | 40/50 [03:17<00:43,  4.36s/it]Calculating loss...:  82%|████████▏ | 41/50 [03:20<00:34,  3.86s/it]Calculating loss...:  84%|████████▍ | 42/50 [03:33<00:54,  6.84s/it]Calculating loss...:  86%|████████▌ | 43/50 [03:37<00:40,  5.79s/it]Calculating loss...:  88%|████████▊ | 44/50 [03:48<00:45,  7.56s/it]Calculating loss...:  90%|█████████ | 45/50 [03:51<00:29,  5.92s/it]Calculating loss...:  92%|█████████▏| 46/50 [03:53<00:19,  4.77s/it]Calculating loss...:  94%|█████████▍| 47/50 [03:54<00:11,  3.87s/it]Calculating loss...:  96%|█████████▌| 48/50 [03:57<00:06,  3.43s/it]Calculating loss...:  98%|█████████▊| 49/50 [03:59<00:03,  3.20s/it]Calculating loss...: 100%|██████████| 50/50 [04:14<00:00,  6.56s/it]Calculating loss...: 100%|██████████| 50/50 [04:14<00:00,  5.09s/it]
+Iter 1: Val loss 0.299, Val took 254.431s
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 31, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 328, in train
+    mx.eval(state, losses, n_tokens, grad_accum)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [METAL] Command buffer execution failed: Impacting Interactivity (0000000e:kIOGPUCommandBufferCallbackErrorImpactingInteractivity).
+[train_resumable] crashed before the first checkpoint; restarting from scratch
+[train_resumable] exit code 1; 0/400 iterations saved
+[train_resumable] segment 4: iterations 1..400 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg4.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg4.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.121% (10.820M/8953.802M)
+Starting training..., iters: 400
+Calculating loss...:   0%|          | 0/50 [00:00<?, ?it/s]Calculating loss...:   2%|▏         | 1/50 [00:01<01:27,  1.79s/it]Calculating loss...:   4%|▍         | 2/50 [00:03<01:22,  1.72s/it]Calculating loss...:   6%|▌         | 3/50 [00:05<01:20,  1.71s/it]Calculating loss...:   8%|▊         | 4/50 [00:06<01:18,  1.70s/it]Calculating loss...:  10%|█         | 5/50 [00:09<01:25,  1.89s/it]Calculating loss...:  12%|█▏        | 6/50 [00:12<01:40,  2.29s/it]/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/resource_tracker.py:475: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/mp-48ta80zp'}
+  warnings.warn(

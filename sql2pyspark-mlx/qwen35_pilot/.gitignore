@@ -1,0 +1,9 @@
+__pycache__/
+# rebuildable: make_long_set.py / filter_mix.py (see README.md)
+data_long/
+data_mix2600/
+# export temporaries and copies (gguf/ holds *.gguf, ignored at the root)
+hf/
+gguf/
+adapters_memtest/
+adapters_resume150/

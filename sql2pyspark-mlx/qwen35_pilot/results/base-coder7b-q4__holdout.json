@@ -1,0 +1,1348 @@
+{
+  "model": "sql2pyspark:base-coder7b-q4",
+  "set": "eval/holdout.jsonl",
+  "n": 62,
+  "summary": {
+    "ALL": {
+      "n": 62,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.1613,
+      "strict_match": 0.129,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.1613,
+      "lenient_match": 0.129
+    },
+    "complex": {
+      "n": 25,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.12,
+      "strict_match": 0.12,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.12,
+      "lenient_match": 0.12
+    },
+    "medium": {
+      "n": 22,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.2727,
+      "strict_match": 0.1818,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.2727,
+      "lenient_match": 0.1818
+    },
+    "simple": {
+      "n": 15,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0667,
+      "strict_match": 0.0667,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.0667,
+      "lenient_match": 0.0667
+    }
+  },
+  "avg_seconds": 12.56,
+  "cases": [
+    {
+      "id": "holdout001",
+      "level": "simple",
+      "sql": "SELECT id, full_name, city FROM patients WHERE insurance_type = 'PRIVATE';",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'patients' is a DataFrame\npatients = spark.table(\"patients\")\n\n# Filter and select the required columns\nfiltered_patients = patients.filter(patients.insurance_type == 'PRIVATE').select(\"id\", \"full_name\", \"city\")\n\n# Show the result\nfiltered_patients.show()\n```",
+      "seconds": 8.17,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout002",
+      "level": "simple",
+      "sql": "SELECT * FROM doctors WHERE years_experience >= 10 ORDER BY years_experience DESC;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"DoctorsQuery\").getOrCreate()\n\n# Assuming doctors_df is your DataFrame containing the doctors data\ndoctors_df = spark.table(\"doctors\")\n\n# Filter and sort the DataFrame\nfiltered_sorted_df = doctors_df.filter(doctors_df.years_experience >= 10).orderBy(doctors_df.years_experience.desc())\n\n# Show the result\nfiltered_sorted_df.show()\n```",
+      "seconds": 5.08,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout003",
+      "level": "simple",
+      "sql": "SELECT DISTINCT specialty FROM doctors;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming doctors_df is your DataFrame containing the doctors data\ndoctors_df = spark.table(\"doctors\")\n\n# Select distinct specialties\ndistinct_specialties = doctors_df.selectDistinct(\"specialty\")\n\n# Show the result\ndistinct_specialties.show()\n```",
+      "seconds": 4.2,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `selectDistinct` is not supported."
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `selectDistinct` is not supported."
+      }
+    },
+    {
+      "id": "holdout004",
+      "level": "simple",
+      "sql": "SELECT id, airline, origin, destination FROM flights WHERE distance_km BETWEEN 1000 AND 5000;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightData\").getOrCreate()\n\n# Assuming flights_df is your DataFrame containing the flights data\nflights_df = spark.table(\"flights\")  # Replace with your actual DataFrame\n\n# Filter the DataFrame based on the distance_km column\nfiltered_flights_df = flights_df.filter((flights_df.distance_km >= 1000) & (flights_df.distance_km <= 5000))\n\n# Select the required columns\nresult_df = filtered_flights_df.select(\"id\", \"airline\", \"origin\", \"destination\")\n\n# Show the result\nresult_df.show()\n```",
+      "seconds": 7.8,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout005",
+      "level": "simple",
+      "sql": "SELECT id, passenger_name, price FROM bookings WHERE is_cancelled = FALSE AND seat_class IN ('BUSINESS', 'FIRST');",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'bookings' is already loaded as a DataFrame\n# For example, bookings = spark.read.csv(\"path_to_your_csv_file\", header=True, inferSchema=True)\n\n# Filter the DataFrame based on the conditions\nfiltered_bookings = bookings.filter((col(\"is_cancelled\") == False) & (col(\"seat_class\").isin(['BUSINESS', 'FIRST'])))\n\n# Select the required columns\nresult = filtered_bookings.select(\"id\", \"passenger_name\", \"price\")\n\n# Show the result\nresult.show()\n```\n\nMake sure to replace `\"path_to_your_csv_file\"` with the actual path to your CSV file if you're loading data from a file. If your data is already in a DataFrame, you can skip the `spark.read.csv` part.",
+      "seconds": 12.15,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout006",
+      "level": "simple",
+      "sql": "SELECT COUNT(*) AS total_appointments FROM appointments WHERE status = 'NO_SHOW';",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"AppointmentCount\").getOrCreate()\n\n# Assuming 'appointments' is a DataFrame\nappointments = spark.table(\"appointments\")\n\n# Filter the DataFrame to include only rows where status is 'NO_SHOW'\nfiltered_appointments = appointments.filter(appointments.status == 'NO_SHOW')\n\n# Count the number of rows in the filtered DataFrame\ntotal_appointments = filtered_appointments.count()\n\n# Print the result\nprint(f\"Total no-show appointments: {total_appointments}\")\n```",
+      "seconds": 6.89,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout007",
+      "level": "simple",
+      "sql": "SELECT id, UPPER(TRIM(full_name)) AS patient_name, YEAR(birth_date) AS birth_year FROM patients;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import upper, trim, year\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'patients' is your DataFrame\npatients = spark.table(\"patients\")\n\n# Apply transformations\nresult = patients.select(\n    patients.id,\n    upper(trim(patients.full_name)).alias(\"patient_name\"),\n    year(patients.birth_date).alias(\"birth_year\")\n)\n\n# Show the result\nresult.show()\n```\n\nThis code initializes a Spark session, selects the `id` column directly, applies the `upper` and `trim` functions to the `full_name` column, and extracts the year from the `birth_date` column. The result is then displayed using the `show` method.",
+      "seconds": 10.46,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout008",
+      "level": "simple",
+      "sql": "SELECT id, fee, ROUND(fee * 1.07, 2) AS fee_with_vat FROM appointments;",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, round\n\n# Assuming 'appointments' is already a DataFrame\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Apply the transformation\nappointments = appointments.withColumn(\"fee_with_vat\", round(col(\"fee\") * 1.07, 2))\n\n# Select the required columns\nappointments = appointments.select(\"id\", \"fee\", \"fee_with_vat\")\n```\n\nThis code first imports the necessary functions from PySpark, then applies the transformation to calculate the `fee_with_vat` column. Finally, it selects the required columns from the DataFrame.",
+      "seconds": 8.99,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'appointments' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'appointments' is not defined"
+      }
+    },
+    {
+      "id": "holdout009",
+      "level": "simple",
+      "sql": "SELECT id, departure_time, TO_DATE(departure_time) AS departure_day, HOUR(departure_time) AS departure_hour FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, to_date, hour\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightDataProcessing\").getOrCreate()\n\n# Assuming 'flights' DataFrame is already created\nflights = spark.table(\"flights\")\n\n# Convert SQL query to PySpark DataFrame code\nflights_transformed = flights.select(\n    col(\"id\"),\n    col(\"departure_time\"),\n    to_date(col(\"departure_time\")).alias(\"departure_day\"),\n    hour(col(\"departure_time\")).alias(\"departure_hour\")\n)\n\n# Show the transformed DataFrame\nflights_transformed.show()\n```",
+      "seconds": 7.77,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout010",
+      "level": "simple",
+      "sql": "SELECT * FROM bookings WHERE loyalty_tier IS NULL;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"BookingsQuery\").getOrCreate()\n\n# Assuming 'bookings' is already loaded as a DataFrame\nbookings = spark.table(\"bookings\")\n\n# Filter the DataFrame where loyalty_tier is NULL\nfiltered_bookings = bookings.filter(bookings.loyalty_tier.isNull())\n\n# Show the result\nfiltered_bookings.show()\n```",
+      "seconds": 5.35,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout011",
+      "level": "simple",
+      "sql": "SELECT id, passenger_name FROM bookings WHERE passenger_name LIKE '%a%' ORDER BY id LIMIT 5;",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'bookings' is already loaded as a DataFrame\n# For example, bookings = spark.read.csv(\"path_to_your_csv_file\", header=True, inferSchema=True)\n\n# Perform the transformation\nresult = bookings.filter(col(\"passenger_name\").like(\"%a%\")) \\\n                .select(\"id\", \"passenger_name\") \\\n                .orderBy(\"id\") \\\n                .limit(5)\n\n# Show the result\nresult.show()\n```\n\nMake sure to replace `\"path_to_your_csv_file\"` with the actual path to your CSV file if you are loading data from a file. If the data is already in a DataFrame, you can skip the `spark.read.csv` line.",
+      "seconds": 11.25,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout012",
+      "level": "simple",
+      "sql": "SELECT id, doctor_name, COALESCE(hospital, 'Unassigned') AS hospital FROM doctors;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import coalesce\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"DoctorsData\").getOrCreate()\n\n# Assuming doctors_df is your DataFrame containing the doctors data\ndoctors_df = spark.table(\"doctors\")\n\n# Apply the COALESCE function to handle missing values in the 'hospital' column\nresult_df = doctors_df.withColumn(\"hospital\", coalesce(doctors_df[\"hospital\"], \"Unassigned\"))\n\n# Select the required columns\nresult_df = result_df.select(\"id\", \"doctor_name\", \"hospital\")\n\n# Show the result\nresult_df.show()\n```",
+      "seconds": 7.97,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Unassigned` cannot be resolved. Did you mean one of the following? [`hospital`, `id`, `specialty`, `doctor_name`, `years_experience`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Unassigned` cannot be resolved. Did you mean one of the following? [`hospital`, `id`, `specialty`, `doctor_name`, `years_experience`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "holdout013",
+      "level": "simple",
+      "sql": "SELECT id,\n       CASE WHEN wait_minutes > 60 THEN 'long'\n            WHEN wait_minutes > 15 THEN 'normal'\n            ELSE 'short' END AS wait_band\nFROM appointments;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import when\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"AppointmentWaitTime\").getOrCreate()\n\n# Assuming 'appointments' is your DataFrame\nappointments = spark.table(\"appointments\")\n\n# Apply the CASE statement using when\nappointments = appointments.withColumn(\"wait_band\", \n    when(appointments.wait_minutes > 60, 'long')\n    .when(appointments.wait_minutes > 15, 'normal')\n    .otherwise('short'))\n\n# Select the required columns\nappointments = appointments.select(\"id\", \"wait_band\")\n\n# Show the result\nappointments.show()\n```\n\nThis code initializes a Spark session, applies the conditional logic using PySpark's `when` function, and selects the required columns to match the SQL query.",
+      "seconds": 11.08,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout014",
+      "level": "simple",
+      "sql": "SELECT MAX(base_fare) AS max_fare, MIN(base_fare) AS min_fare, ROUND(AVG(base_fare), 2) AS avg_fare FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import max, min, avg, round\n\n# Assuming 'flights' is already a DataFrame\nspark = SparkSession.builder.appName(\"FlightStats\").getOrCreate()\n\n# Perform the aggregation\nflight_stats = flights.agg(\n    max(\"base_fare\").alias(\"max_fare\"),\n    min(\"base_fare\").alias(\"min_fare\"),\n    round(avg(\"base_fare\"), 2).alias(\"avg_fare\")\n)\n\n# Show the result\nflight_stats.show()\n```",
+      "seconds": 6.92,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      }
+    },
+    {
+      "id": "holdout015",
+      "level": "simple",
+      "sql": "SELECT id, DATEDIFF(CURRENT_DATE(), birth_date) / 365 AS approx_age FROM patients;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import current_date, datediff\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'patients' DataFrame is already created\n# patients = spark.read.option(\"header\", \"true\").csv(\"path_to_your_csv\")\n\n# Convert SQL query to PySpark DataFrame code\napprox_age_df = patients.withColumn(\"approx_age\", (datediff(current_date(), patients[\"birth_date\"]) / 365))\n\n# Show the result\napprox_age_df.show()\n```\n\nThis code snippet initializes a Spark session, assumes that the `patients` DataFrame is already created, and then uses the `withColumn` method to add a new column `approx_age` to the DataFrame. The `datediff` function calculates the difference in days between the current date and the `birth_date`, and then it's divided by 365 to approximate the age. Finally, the `show` method is used to display the resulting DataFrame.",
+      "seconds": 13.2,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      }
+    },
+    {
+      "id": "holdout016",
+      "level": "medium",
+      "sql": "SELECT specialty, COUNT(*) AS doctor_count, AVG(years_experience) AS avg_experience\nFROM doctors\nGROUP BY specialty\nORDER BY doctor_count DESC, specialty;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import count, avg\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"DoctorStats\").getOrCreate()\n\n# Assuming doctors_df is your DataFrame containing the doctors data\ndoctors_df = spark.table(\"doctors\")  # Replace with your actual DataFrame\n\n# Perform the aggregation and ordering\nresult_df = doctors_df.groupBy(\"specialty\") \\\n                      .agg(count(\"*\").alias(\"doctor_count\"), avg(\"years_experience\").alias(\"avg_experience\")) \\\n                      .orderBy(\"doctor_count\", \"specialty\")\n\n# Show the result\nresult_df.show()\n```\n\nMake sure to replace `doctors` with the actual name of your DataFrame if it's different. This code will give you the same result as the SQL query you provided.",
+      "seconds": 10.83,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout017",
+      "level": "medium",
+      "sql": "SELECT status, COUNT(*) AS n, SUM(fee) AS total_fee\nFROM appointments\nWHERE appt_date >= '2024-01-01'\nGROUP BY status\nHAVING COUNT(*) >= 2;",
+      "reply": "Here's how you can convert the provided SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, sum, count\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"AppointmentAnalysis\").getOrCreate()\n\n# Assuming 'appointments' is already loaded into a DataFrame named 'appointments_df'\nappointments_df = spark.table(\"appointments\")\n\n# Filter the DataFrame based on the condition\nfiltered_df = appointments_df.filter(col(\"appt_date\") >= \"2024-01-01\")\n\n# Group by 'status' and calculate the required aggregations\nresult_df = filtered_df.groupBy(\"status\") \\\n    .agg(count(\"*\").alias(\"n\"), sum(\"fee\").alias(\"total_fee\")) \\\n    .filter(col(\"n\") >= 2)\n\n# Show the result\nresult_df.show()\n```\n\nThis code snippet performs the same operations as the SQL query:\n1. Filters the `appointments` DataFrame to include only rows where `appt_date` is greater than or equal to '2024-01-01'.\n2. Groups the filtered DataFrame by the `status` column.\n3. Calculates the count of rows (`n`) and the sum of the `fee` column (`total_fee`) for each group.\n4. Filters the groups to include only those with a count of rows (`n`) greater than or equal to 2.\n5. Displays the resulting DataFrame.",
+      "seconds": 17.66,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout018",
+      "level": "medium",
+      "sql": "SELECT airline, origin, COUNT(*) AS flights, ROUND(AVG(distance_km), 0) AS avg_distance FROM flights GROUP BY airline, origin;",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import count, avg, round\n\n# Assuming 'flights' is your DataFrame\nflights = spark.table(\"flights\")\n\nresult = flights.groupBy(\"airline\", \"origin\") \\\n              .agg(count(\"*\").alias(\"flights\"), \n                   round(avg(\"distance_km\"), 0).alias(\"avg_distance\"))\n```\n\nThis code first groups the DataFrame by the \"airline\" and \"origin\" columns. Then, it calculates the count of flights and the average distance, rounding the average distance to the nearest integer. The results are stored in the `result` DataFrame.",
+      "seconds": 8.71,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout019",
+      "level": "medium",
+      "sql": "SELECT seat_class, SUM(CASE WHEN is_cancelled THEN 1 ELSE 0 END) AS cancelled, COUNT(*) AS total FROM bookings GROUP BY seat_class;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import sum, when, count\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'bookings' is your DataFrame\n# Replace 'bookings' with your actual DataFrame name\n\n# Convert SQL query to PySpark DataFrame code\nresult = bookings.groupBy(\"seat_class\") \\\n                .agg(sum(when(bookings[\"is_cancelled\"], 1)).alias(\"cancelled\"),\n                     count(\"*\").alias(\"total\"))\n\n# Show the result\nresult.show()\n```\n\nThis code snippet initializes a Spark session, groups the `bookings` DataFrame by `seat_class`, and calculates the sum of `1` for each row where `is_cancelled` is `True` (aliased as `cancelled`) and the total count of rows (aliased as `total`). Finally, it displays the result.",
+      "seconds": 11.84,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout020",
+      "level": "medium",
+      "sql": "SELECT a.id, p.full_name, a.appt_date, a.fee FROM appointments a JOIN patients p ON a.patient_id = p.id WHERE a.status = 'DONE';",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'appointments' and 'patients' are already loaded as DataFrames\nappointments = spark.table(\"appointments\")\npatients = spark.table(\"patients\")\n\n# Perform the join and filter operation\nresult = appointments.join(patients, appointments.patient_id == patients.id, \"inner\") \\\n    .filter(col(\"status\") == \"DONE\") \\\n    .select(col(\"id\"), col(\"full_name\"), col(\"appt_date\"), col(\"fee\"))\n\n# Show the result\nresult.show()\n```\n\nMake sure that the `appointments` and `patients` DataFrames are already loaded into your Spark session before running this code.",
+      "seconds": 10.49,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [AMBIGUOUS_REFERENCE] Reference `id` is ambiguous, could be: [`appointments`.`id`, `patients`.`id`]. SQLSTATE: 42704"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [AMBIGUOUS_REFERENCE] Reference `id` is ambiguous, could be: [`appointments`.`id`, `patients`.`id`]. SQLSTATE: 42704"
+      }
+    },
+    {
+      "id": "holdout021",
+      "level": "medium",
+      "sql": "SELECT d.doctor_name, d.specialty, a.appt_date FROM doctors d LEFT JOIN appointments a ON d.id = a.doctor_id WHERE d.specialty = 'Cardiology';",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming doctors and appointments are already loaded as DataFrames\ndoctors = spark.table(\"doctors\")\nappointments = spark.table(\"appointments\")\n\n# Perform the left join\njoined_df = doctors.join(appointments, doctors.id == appointments.doctor_id, \"left\")\n\n# Filter the results\nfiltered_df = joined_df.filter(col(\"specialty\") == \"Cardiology\")\n\n# Select the required columns\nresult_df = filtered_df.select(col(\"doctor_name\"), col(\"specialty\"), col(\"appt_date\"))\n\n# Show the result\nresult_df.show()\n```\n\nMake sure that the `doctors` and `appointments` DataFrames are already loaded into your Spark session before running this code.",
+      "seconds": 11.25,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout022",
+      "level": "medium",
+      "sql": "SELECT b.id, b.passenger_name, f.airline, f.origin, f.destination\nFROM bookings b\nINNER JOIN flights f ON b.flight_id = f.id\nWHERE f.origin = 'BKK'\nORDER BY b.id;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"BookingsFlightsJoin\").getOrCreate()\n\n# Assuming bookings and flights DataFrames are already created\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_bookings.csv\")\n# flights = spark.read.option(\"header\", \"true\").csv(\"path_to_flights.csv\")\n\n# Perform the join operation\njoined_df = bookings.join(flights, col(\"bookings.flight_id\") == col(\"flights.id\"), \"inner\")\n\n# Filter the DataFrame based on the condition\nfiltered_df = joined_df.filter(col(\"flights.origin\") == \"BKK\")\n\n# Select the required columns\nselected_df = filtered_df.select(\"bookings.id\", \"bookings.passenger_name\", \"flights.airline\", \"flights.origin\", \"flights.destination\")\n\n# Order the DataFrame by the id column\nresult_df = selected_df.orderBy(col(\"bookings.id\"))\n\n# Show the result\nresult_df.show()\n```\n\nMake sure to replace `\"path_to_bookings.csv\"` and `\"path_to_flights.csv\"` with the actual paths to your CSV files or adjust the code to read from other data sources if necessary.",
+      "seconds": 16.06,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout023",
+      "level": "medium",
+      "sql": "SELECT DATE_FORMAT(appt_date, 'yyyy-MM') AS month, COUNT(*) AS appointments\nFROM appointments\nGROUP BY DATE_FORMAT(appt_date, 'yyyy-MM')\nORDER BY month;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import date_format, count\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"AppointmentCount\").getOrCreate()\n\n# Assuming 'appointments' is your DataFrame\nappointments = spark.table(\"appointments\")\n\n# Perform the transformation\nresult = appointments.groupBy(date_format(\"appt_date\", \"yyyy-MM\").alias(\"month\")) \\\n                    .agg(count(\"*\").alias(\"appointments\")) \\\n                    .orderBy(\"month\")\n\n# Show the result\nresult.show()\n```\n\nThis code initializes a Spark session, groups the `appointments` DataFrame by the formatted `appt_date` column, counts the number of appointments for each month, and orders the result by month.",
+      "seconds": 9.94,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout024",
+      "level": "medium",
+      "sql": "SELECT id, full_name FROM patients WHERE id IN (SELECT patient_id FROM appointments WHERE appt_type = 'emergency');",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming patients and appointments DataFrames are already created\n# patients = spark.read.option(\"header\", \"true\").csv(\"path_to_patients.csv\")\n# appointments = spark.read.option(\"header\", \"true\").csv(\"path_to_appointments.csv\")\n\n# Perform the join and filter operation\nresult = patients.join(appointments, patients.id == appointments.patient_id, \"inner\") \\\n                .filter(appointments.appt_type == 'emergency') \\\n                .select(\"id\", \"full_name\")\n\n# Show the result\nresult.show()\n```\n\nMake sure to replace `\"path_to_patients.csv\"` and `\"path_to_appointments.csv\"` with the actual paths to your CSV files or adjust the code to read from other data sources if necessary.",
+      "seconds": 11.2,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      }
+    },
+    {
+      "id": "holdout025",
+      "level": "medium",
+      "sql": "SELECT * FROM doctors d WHERE NOT EXISTS (SELECT 1 FROM appointments a WHERE a.doctor_id = d.id AND a.status = 'DONE');",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"DoctorsAppointments\").getOrCreate()\n\n# Assuming doctors and appointments DataFrames are already created\n# doctors = spark.read.option(\"header\", \"true\").csv(\"path_to_doctors.csv\")\n# appointments = spark.read.option(\"header\", \"true\").csv(\"path_to_appointments.csv\")\n\n# Perform the SQL query using PySpark\ndoctors = spark.table(\"doctors\")\nappointments = spark.table(\"appointments\")\n\n# Using the notExists method to filter doctors\nfiltered_doctors = doctors.filter(~appointments.join(doctors, on=doctors.id == appointments.doctor_id, how=\"left\").filter(col(\"status\") == \"DONE\").select(\"doctor_id\").isNotNull())\n\n# Show the result\nfiltered_doctors.show()\n```\n\nIn this code:\n- We first initialize a Spark session.\n- We assume that the `doctors` and `appointments` DataFrames are already created.\n- We use the `filter` method along with a `left join` to find doctors who do not have any appointments with a status of 'DONE'.\n- The `isNotNull` method is used to check if there are any matching records in the joined DataFrame, and the `~` operator is used to negate the condition, effectively filtering out doctors with done appointments.\n- Finally, we display the filtered doctors using the `show` method.",
+      "seconds": 18.47,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `isNotNull` is not supported."
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `isNotNull` is not supported."
+      }
+    },
+    {
+      "id": "holdout026",
+      "level": "medium",
+      "sql": "SELECT id, flight_id, price, RANK() OVER (PARTITION BY flight_id ORDER BY price DESC) AS price_rank FROM bookings;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import rank, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightRanking\").getOrCreate()\n\n# Assuming 'bookings' is your DataFrame\n# Replace 'bookings' with your actual DataFrame name\n\n# Apply the rank function\nranked_bookings = bookings.withColumn(\"price_rank\", rank().over(Window.partitionBy(\"flight_id\").orderBy(col(\"price\").desc())))\n\n# Show the result\nranked_bookings.show()\n```\n\nMake sure to replace `bookings` with the actual name of your DataFrame. This code will create a new column `price_rank` that ranks the prices within each `flight_id` in descending order.",
+      "seconds": 9.83,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout027",
+      "level": "medium",
+      "sql": "SELECT id, patient_id, appt_date, LAG(appt_date) OVER (PARTITION BY patient_id ORDER BY appt_date, id) AS previous_visit FROM appointments;",
+      "reply": "To convert the given SQL query into PySpark DataFrame code, you can use the `lag` function from the `pyspark.sql.functions` module. Here's how you can do it:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import lag, col\n\n# Assuming you have already created a Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'appointments' is your DataFrame\nappointments = spark.table(\"appointments\")\n\n# Use the lag function to get the previous visit date\nappointments = appointments.withColumn(\"previous_visit\", lag(col(\"appt_date\")).over(\n    windowSpec=Window.partitionBy(\"patient_id\").orderBy(\"appt_date\", \"id\")\n))\n\n# Show the result\nappointments.show()\n```\n\nIn this code:\n- `lag(col(\"appt_date\"))` is used to get the value of `appt_date` from the previous row.\n- `Window.partitionBy(\"patient_id\").orderBy(\"appt_date\", \"id\")` defines the window specification, which partitions the data by `patient_id` and orders it by `appt_date` and `id`.\n\nMake sure to replace `\"appointments\"` with the actual name of your DataFrame if it's different.",
+      "seconds": 15.14,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: Column.over() got an unexpected keyword argument 'windowSpec'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: Column.over() got an unexpected keyword argument 'windowSpec'"
+      }
+    },
+    {
+      "id": "holdout028",
+      "level": "medium",
+      "sql": "SELECT insurance_type, gender, COUNT(*) AS patients FROM patients GROUP BY insurance_type, gender ORDER BY insurance_type, gender;",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import count\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'patients' is already loaded as a DataFrame\n# patients = spark.read.csv(\"path_to_your_data.csv\", header=True, inferSchema=True)\n\n# Perform the aggregation and ordering\nresult = patients.groupBy(\"insurance_type\", \"gender\").agg(count(\"*\").alias(\"patients\")).orderBy(\"insurance_type\", \"gender\")\n\n# Show the result\nresult.show()\n```\n\nMake sure to replace `\"path_to_your_data.csv\"` with the actual path to your data file if you are reading from a CSV file. If your data is already in a DataFrame, you can skip the `spark.read.csv` line.",
+      "seconds": 10.28,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      }
+    },
+    {
+      "id": "holdout029",
+      "level": "medium",
+      "sql": "SELECT id, airline, base_fare FROM flights WHERE base_fare > (SELECT AVG(base_fare) FROM flights);",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg\n\n# Create a Spark session\nspark = SparkSession.builder.appName(\"FlightData\").getOrCreate()\n\n# Load the flights data into a DataFrame\nflights_df = spark.read.csv(\"path_to_flights_data.csv\", header=True, inferSchema=True)\n\n# Calculate the average base_fare\naverage_base_fare = flights_df.select(avg(\"base_fare\")).collect()[0][0]\n\n# Filter the flights DataFrame to include only rows where base_fare is greater than the average\nfiltered_flights_df = flights_df.filter(flights_df.base_fare > average_base_fare)\n\n# Select the required columns\nresult_df = filtered_flights_df.select(\"id\", \"airline\", \"base_fare\")\n\n# Show the result\nresult_df.show()\n```\n\nMake sure to replace `\"path_to_flights_data.csv\"` with the actual path to your flights data file. This code assumes that the data is stored in a CSV file with a header row and that the column names match those in the SQL query.",
+      "seconds": 13.81,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [PATH_NOT_FOUND] Path does not exist: file:/Users/praponb/GitHub/Finetuning-LLM/path_to_flights_data.csv. SQLSTATE: 42K03"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [PATH_NOT_FOUND] Path does not exist: file:/Users/praponb/GitHub/Finetuning-LLM/path_to_flights_data.csv. SQLSTATE: 42K03"
+      }
+    },
+    {
+      "id": "holdout030",
+      "level": "medium",
+      "sql": "SELECT loyalty_tier, ROUND(AVG(price), 2) AS avg_price FROM bookings WHERE NOT is_cancelled GROUP BY loyalty_tier;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg, round\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'bookings' is your DataFrame\n# Replace 'bookings' with your actual DataFrame name\n\n# Perform the transformation\nresult = bookings.filter(bookings.is_cancelled == False) \\\n                .groupBy(\"loyalty_tier\") \\\n                .agg(round(avg(\"price\"), 2).alias(\"avg_price\"))\n\n# Show the result\nresult.show()\n```\n\nThis code snippet initializes a Spark session, filters out the cancelled bookings, groups the data by `loyalty_tier`, calculates the average price rounded to two decimal places, and then shows the result.",
+      "seconds": 10.28,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout031",
+      "level": "medium",
+      "sql": "SELECT city FROM patients WHERE city IS NOT NULL UNION SELECT hospital FROM doctors WHERE hospital IS NOT NULL;",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming patients and doctors are already loaded as DataFrames\npatients = spark.table(\"patients\")\ndoctors = spark.table(\"doctors\")\n\n# Select city from patients where city is not null\npatients_filtered = patients.filter(col(\"city\").isNotNull()).select(\"city\")\n\n# Select hospital from doctors where hospital is not null\ndoctors_filtered = doctors.filter(col(\"hospital\").isNotNull()).select(\"hospital\")\n\n# Union the two DataFrames\nresult = patients_filtered.union(doctors_filtered)\n\n# Show the result\nresult.show()\n```\n\nMake sure that the `patients` and `doctors` DataFrames are already loaded into your Spark session before running this code.",
+      "seconds": 10.91,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=11 rows, py=68 rows; first diff: sql-only=[] py-only=[\"('New York',)\"]"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=11 rows, py=68 rows; first diff: sql-only=[] py-only=[\"('New York',)\"]"
+      }
+    },
+    {
+      "id": "holdout032",
+      "level": "medium",
+      "sql": "SELECT id, passenger_name, CONCAT(seat_class, '-', COALESCE(loyalty_tier, 'NONE')) AS fare_code FROM bookings;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import concat, coalesce\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'bookings' is already loaded as a DataFrame\n# For example:\n# bookings = spark.read.csv(\"path_to_your_bookings_data.csv\", header=True, inferSchema=True)\n\n# Perform the transformation\nfare_code_df = bookings.select(\n    \"id\",\n    \"passenger_name\",\n    concat(\"seat_class\", \"-\", coalesce(\"loyalty_tier\", \"NONE\")).alias(\"fare_code\")\n)\n\n# Show the result\nfare_code_df.show()\n```\n\nThis code snippet initializes a Spark session, assumes that the `bookings` DataFrame is already loaded, and then applies the transformation using PySpark's `select` and `concat` functions. The `coalesce` function is used to handle `NULL` values in the `loyalty_tier` column, replacing them with 'NONE'.",
+      "seconds": 13.11,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout033",
+      "level": "medium",
+      "sql": "SELECT doctor_id, COUNT(DISTINCT patient_id) AS unique_patients\nFROM appointments\nGROUP BY doctor_id\nHAVING COUNT(DISTINCT patient_id) > 1\nORDER BY unique_patients DESC, doctor_id;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import countDistinct, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"DoctorPatientCount\").getOrCreate()\n\n# Assuming 'appointments' is already loaded as a DataFrame\nappointments = spark.table(\"appointments\")\n\n# Perform the transformation\nresult = appointments.groupBy(\"doctor_id\") \\\n    .agg(countDistinct(\"patient_id\").alias(\"unique_patients\")) \\\n    .filter(col(\"unique_patients\") > 1) \\\n    .orderBy(col(\"unique_patients\").desc(), col(\"doctor_id\"))\n\n# Show the result\nresult.show()\n```\n\nThis code snippet initializes a Spark session, groups the `appointments` DataFrame by `doctor_id`, counts the distinct `patient_id` for each doctor, filters out doctors with less than or equal to one unique patient, and orders the result by `unique_patients` in descending order and `doctor_id` in ascending order.",
+      "seconds": 12.87,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout034",
+      "level": "medium",
+      "sql": "SELECT id, departure_time, DATE_TRUNC('month', departure_time) AS dep_month FROM flights WHERE airline <> 'Delta';",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, date_trunc\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightData\").getOrCreate()\n\n# Assuming 'flights' is your DataFrame\nflights = spark.table(\"flights\")  # or spark.read.csv(\"path_to_your_flights_data.csv\", header=True, inferSchema=True)\n\n# Convert SQL query to PySpark DataFrame code\nresult = flights.filter(col(\"airline\") != \"Delta\").withColumn(\"dep_month\", date_trunc(\"month\", col(\"departure_time\")))\n\n# Show the result\nresult.show()\n```\n\nThis code initializes a Spark session, reads the flights data into a DataFrame, filters out flights where the airline is 'Delta', and adds a new column `dep_month` that contains the month part of the `departure_time`. Finally, it displays the result.",
+      "seconds": 11.88,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['id', 'departure_time', 'dep_month'] py=['id', 'airline', 'origin', 'destination', 'departure_time', 'distance_km', 'base_fare', 'dep_month']"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['id', 'departure_time', 'dep_month'] py=['id', 'airline', 'origin', 'destination', 'departure_time', 'distance_km', 'base_fare', 'dep_month']"
+      }
+    },
+    {
+      "id": "holdout035",
+      "level": "medium",
+      "sql": "SELECT origin, destination, COUNT(*) AS n\nFROM flights\nWHERE destination IS NOT NULL\nGROUP BY origin, destination\nHAVING COUNT(*) > 1;",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, count\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightData\").getOrCreate()\n\n# Load the flights DataFrame\nflights = spark.read.csv(\"path_to_flights_data.csv\", header=True, inferSchema=True)\n\n# Filter the DataFrame to exclude rows where destination is NULL\nflights_filtered = flights.filter(col(\"destination\").isNotNull())\n\n# Group by origin and destination, and count the number of rows in each group\nflights_grouped = flights_filtered.groupBy(\"origin\", \"destination\").agg(count(\"*\").alias(\"n\"))\n\n# Filter the grouped DataFrame to only include groups with more than one row\nflights_filtered_grouped = flights_grouped.filter(col(\"n\") > 1)\n\n# Show the result\nflights_filtered_grouped.show()\n```\n\nMake sure to replace `\"path_to_flights_data.csv\"` with the actual path to your flights data file. This code assumes that the flights data is stored in a CSV file with a header row and that the columns are named `origin` and `destination`.",
+      "seconds": 14.43,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [PATH_NOT_FOUND] Path does not exist: file:/Users/praponb/GitHub/Finetuning-LLM/path_to_flights_data.csv. SQLSTATE: 42K03"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [PATH_NOT_FOUND] Path does not exist: file:/Users/praponb/GitHub/Finetuning-LLM/path_to_flights_data.csv. SQLSTATE: 42K03"
+      }
+    },
+    {
+      "id": "holdout036",
+      "level": "medium",
+      "sql": "SELECT appt_type,\n       COUNT(CASE WHEN status = 'DONE' THEN 1 END) AS done,\n       COUNT(CASE WHEN status = 'NO_SHOW' THEN 1 END) AS no_show\nFROM appointments\nGROUP BY appt_type;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, count, when\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"AppointmentStats\").getOrCreate()\n\n# Assuming 'appointments' is your DataFrame\nappointments = spark.table(\"appointments\")\n\n# Perform the aggregation\nresult = appointments.groupBy(\"appt_type\") \\\n    .agg(\n        count(when(col(\"status\") == \"DONE\", 1)).alias(\"done\"),\n        count(when(col(\"status\") == \"NO_SHOW\", 1)).alias(\"no_show\")\n    )\n\n# Show the result\nresult.show()\n```\n\nThis code initializes a Spark session, groups the `appointments` DataFrame by `appt_type`, and then uses the `agg` function along with `count` and `when` to calculate the counts of `DONE` and `NO_SHOW` statuses. Finally, it shows the result.",
+      "seconds": 12.12,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout037",
+      "level": "medium",
+      "sql": "SELECT * FROM bookings WHERE booked_at = (SELECT MAX(booked_at) FROM bookings);",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import max\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"BookingsQuery\").getOrCreate()\n\n# Load the bookings DataFrame\nbookings_df = spark.table(\"bookings\")\n\n# Find the maximum booked_at value\nmax_booked_at = bookings_df.select(max(\"booked_at\")).collect()[0][0]\n\n# Filter the bookings DataFrame to get rows where booked_at is the maximum value\nresult_df = bookings_df.filter(bookings_df.booked_at == max_booked_at)\n\n# Show the result\nresult_df.show()\n```\n\nThis code snippet performs the following steps:\n1. Initializes a Spark session.\n2. Loads the `bookings` DataFrame from the Spark catalog.\n3. Finds the maximum value of the `booked_at` column.\n4. Filters the `bookings` DataFrame to include only rows where `booked_at` equals the maximum value.\n5. Displays the resulting DataFrame.",
+      "seconds": 12.64,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout038",
+      "level": "complex",
+      "sql": "WITH doctor_revenue AS (\n    SELECT doctor_id, SUM(fee) AS revenue, COUNT(*) AS visits\n    FROM appointments\n    WHERE status = 'DONE'\n    GROUP BY doctor_id\n)\nSELECT d.id, d.doctor_name, d.specialty, r.revenue, r.visits\nFROM doctors d\nJOIN doctor_revenue r ON d.id = r.doctor_id\nORDER BY r.revenue DESC, d.id;",
+      "reply": "Here's how you can convert the provided SQL query into clean, idiomatic PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import sum, count, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"DoctorRevenue\").getOrCreate()\n\n# Sample data for doctors and appointments\ndoctors_data = [\n    (1, 'Dr. Smith', 'Cardiology'),\n    (2, 'Dr. Johnson', 'Dermatology'),\n    (3, 'Dr. Williams', 'Orthopedics')\n]\n\nappointments_data = [\n    (1, 1, 100, 'DONE'),\n    (2, 2, 200, 'DONE'),\n    (3, 1, 150, 'DONE'),\n    (4, 3, 300, 'DONE'),\n    (5, 2, 250, 'DONE')\n]\n\n# Create DataFrames\ndoctors_df = spark.createDataFrame(doctors_data, [\"id\", \"doctor_name\", \"specialty\"])\nappointments_df = spark.createDataFrame(appointments_data, [\"id\", \"doctor_id\", \"fee\", \"status\"])\n\n# Filter and aggregate appointments data\ndoctor_revenue_df = appointments_df.filter(col(\"status\") == \"DONE\") \\\n    .groupBy(\"doctor_id\") \\\n    .agg(sum(\"fee\").alias(\"revenue\"), count(\"*\").alias(\"visits\"))\n\n# Join doctors and doctor_revenue DataFrames\nresult_df = doctors_df.join(doctor_revenue_df, doctors_df.id == doctor_revenue_df.doctor_id) \\\n    .select(doctors_df.id, doctors_df.doctor_name, doctors_df.specialty, doctor_revenue_df.revenue, doctor_revenue_df.visits) \\\n    .orderBy(doctor_revenue_df.revenue.desc(), doctors_df.id)\n\n# Show the result\nresult_df.show()\n```\n\nThis code initializes a Spark session, creates sample data for doctors and appointments, and then performs the same operations as the SQL query using PySpark DataFrame API. The result is a DataFrame containing the doctor's ID, name, specialty, revenue, and number of visits, ordered by revenue in descending order and then by doctor ID.",
+      "seconds": 26.9,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout039",
+      "level": "complex",
+      "sql": "WITH ranked AS (\n    SELECT b.*, ROW_NUMBER() OVER (PARTITION BY flight_id ORDER BY price DESC, id) AS rn\n    FROM bookings b\n)\nSELECT id, flight_id, passenger_name, price FROM ranked WHERE rn <= 2;",
+      "reply": "Here's how you can convert the provided SQL query into clean, idiomatic PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import row_number, col\nfrom pyspark.sql.window import Window\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'bookings' DataFrame is already created\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_your_bookings_data.csv\")\n\n# Define the window specification\nwindow_spec = Window.partitionBy(\"flight_id\").orderBy(col(\"price\").desc(), col(\"id\"))\n\n# Add the row number column\nranked = bookings.withColumn(\"rn\", row_number().over(window_spec))\n\n# Select the required columns where rn <= 2\nresult = ranked.filter(col(\"rn\") <= 2).select(\"id\", \"flight_id\", \"passenger_name\", \"price\")\n\n# Show the result\nresult.show()\n```\n\nThis code snippet performs the same operations as the SQL query:\n1. It creates a window specification that partitions the data by `flight_id` and orders it by `price` in descending order and `id` in ascending order.\n2. It adds a row number column `rn` to the DataFrame based on the window specification.\n3. It filters the DataFrame to include only rows where the row number is less than or equal to 2.\n4. It selects the required columns and displays the result.",
+      "seconds": 17.52,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout040",
+      "level": "complex",
+      "sql": "SELECT month, revenue, SUM(revenue) OVER (ORDER BY month) AS cumulative_revenue\nFROM (\n    SELECT DATE_FORMAT(appt_date, 'yyyy-MM') AS month, SUM(fee) AS revenue\n    FROM appointments\n    GROUP BY DATE_FORMAT(appt_date, 'yyyy-MM')\n) t\nORDER BY month;",
+      "reply": "Here's how you can convert the provided SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import date_format, sum, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"RevenueAnalysis\").getOrCreate()\n\n# Assuming 'appointments' DataFrame is already created\nappointments = spark.table(\"appointments\")\n\n# Step 1: Group by month and calculate revenue\nmonthly_revenue = appointments.groupBy(date_format(\"appt_date\", \"yyyy-MM\").alias(\"month\")) \\\n                              .agg(sum(\"fee\").alias(\"revenue\"))\n\n# Step 2: Calculate cumulative revenue\ncumulative_revenue = monthly_revenue.withColumn(\"cumulative_revenue\", sum(\"revenue\").over(orderBy(col(\"month\"))))\n\n# Step 3: Order by month\nresult = cumulative_revenue.orderBy(\"month\")\n\n# Show the result\nresult.show()\n```\n\nThis code snippet performs the same operations as the SQL query:\n1. Groups the appointments by month.\n2. Calculates the total revenue for each month.\n3. Calculates the cumulative revenue by summing up the revenues in ascending order of months.\n4. Orders the result by month.",
+      "seconds": 14.65,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'orderBy' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'orderBy' is not defined"
+      }
+    },
+    {
+      "id": "holdout041",
+      "level": "complex",
+      "sql": "SELECT d.specialty,\n       SUM(a.fee) AS total_fee,\n       ROUND(100.0 * SUM(a.fee) / SUM(SUM(a.fee)) OVER (), 2) AS pct_of_total\nFROM appointments a\nJOIN doctors d ON a.doctor_id = d.id\nGROUP BY d.specialty;",
+      "reply": "Here's how you can convert the provided SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import sum, col, round, expr\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'appointments' and 'doctors' are already loaded into DataFrames\nappointments = spark.table(\"appointments\")\ndoctors = spark.table(\"doctors\")\n\n# Perform the join and aggregation\nresult = appointments.join(doctors, appointments.doctor_id == doctors.id) \\\n    .groupBy(doctors.specialty) \\\n    .agg(\n        sum(appointments.fee).alias(\"total_fee\"),\n        round(100.0 * sum(appointments.fee) / expr(\"sum(sum(fee)) over ()\"), 2).alias(\"pct_of_total\")\n    )\n\n# Show the result\nresult.show()\n```\n\nThis code snippet performs the same operations as the SQL query:\n1. Joins the `appointments` and `doctors` DataFrames on the `doctor_id` and `id` columns.\n2. Groups the results by the `specialty` column.\n3. Calculates the total fee for each specialty.\n4. Calculates the percentage of the total fee for each specialty.",
+      "seconds": 15.67,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout042",
+      "level": "complex",
+      "sql": "SELECT p.full_name, d.doctor_name, a.appt_date, a.fee\nFROM appointments a\nJOIN patients p ON a.patient_id = p.id\nJOIN doctors d ON a.doctor_id = d.id\nWHERE a.appt_type IN ('surgery', 'emergency') AND d.years_experience > 5;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"AppointmentData\").getOrCreate()\n\n# Assuming the dataframes are already loaded into Spark\nappointments = spark.table(\"appointments\")\npatients = spark.table(\"patients\")\ndoctors = spark.table(\"doctors\")\n\n# Perform the join and filter operations\nresult = appointments.join(patients, appointments.patient_id == patients.id, \"inner\") \\\n                    .join(doctors, appointments.doctor_id == doctors.id, \"inner\") \\\n                    .filter((col(\"appt_type\").isin(\"surgery\", \"emergency\")) & (col(\"years_experience\") > 5)) \\\n                    .select(\"patients.full_name\", \"doctors.doctor_name\", \"appointments.appt_date\", \"appointments.fee\")\n\n# Show the result\nresult.show()\n```\n\nThis PySpark code snippet performs the same operations as the provided SQL query. It joins the `appointments`, `patients`, and `doctors` DataFrames based on the specified conditions and filters the results according to the given criteria.",
+      "seconds": 13.74,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout043",
+      "level": "complex",
+      "sql": "SELECT p.id, p.full_name FROM patients p LEFT JOIN appointments a ON p.id = a.patient_id WHERE a.id IS NULL;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming patients and appointments DataFrames are already created\n# patients = spark.read.option(\"header\", \"true\").csv(\"path_to_patients.csv\")\n# appointments = spark.read.option(\"header\", \"true\").csv(\"path_to_appointments.csv\")\n\n# Perform the left join and filter\nresult = patients.join(appointments, patients.id == appointments.patient_id, \"left\") \\\n                .filter(col(\"appointments.id\").isNull()) \\\n                .select(\"patients.id\", \"patients.full_name\")\n\n# Show the result\nresult.show()\n```\n\nMake sure to replace `\"path_to_patients.csv\"` and `\"path_to_appointments.csv\"` with the actual paths to your CSV files or adjust the code to read from other data sources if necessary.",
+      "seconds": 11.88,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      }
+    },
+    {
+      "id": "holdout044",
+      "level": "complex",
+      "sql": "SELECT b.id, b.flight_id, b.price\nFROM bookings b\nWHERE b.price > (SELECT AVG(b2.price) FROM bookings b2 WHERE b2.flight_id = b.flight_id);",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"BookingsAnalysis\").getOrCreate()\n\n# Assuming 'bookings' DataFrame is already created and loaded with data\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_bookings_data.csv\")\n\n# Calculate the average price for each flight_id\navg_price_per_flight = bookings.groupBy(\"flight_id\").agg(avg(\"price\").alias(\"avg_price\"))\n\n# Join the original bookings DataFrame with the average price DataFrame\nfiltered_bookings = bookings.join(avg_price_per_flight, on=\"flight_id\", how=\"inner\")\n\n# Filter the bookings where price is greater than the average price for the same flight_id\nresult = filtered_bookings.filter(col(\"price\") > col(\"avg_price\"))\n\n# Select the required columns\nresult = result.select(\"id\", \"flight_id\", \"price\")\n\n# Show the result\nresult.show()\n```\n\nThis code snippet performs the following steps:\n1. Initializes a Spark session.\n2. Groups the bookings DataFrame by `flight_id` and calculates the average price for each flight.\n3. Joins the original bookings DataFrame with the average price DataFrame on `flight_id`.\n4. Filters the bookings where the price is greater than the average price for the same flight.\n5. Selects the required columns (`id`, `flight_id`, `price`) from the filtered DataFrame.\n6. Displays the result.",
+      "seconds": 18.65,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout045",
+      "level": "complex",
+      "sql": "SELECT f.airline,\n       COUNT(*) AS bookings,\n       ROUND(100.0 * SUM(CASE WHEN b.is_cancelled THEN 1 ELSE 0 END) / COUNT(*), 1) AS cancel_rate\nFROM bookings b\nJOIN flights f ON b.flight_id = f.id\nGROUP BY f.airline\nORDER BY cancel_rate DESC, f.airline;",
+      "reply": "Here's the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, count, sum, round\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"BookingsAnalysis\").getOrCreate()\n\n# Assuming bookings and flights DataFrames are already created\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_bookings.csv\")\n# flights = spark.read.option(\"header\", \"true\").csv(\"path_to_flights.csv\")\n\n# Perform the join and aggregation\nresult = bookings.join(flights, bookings.flight_id == flights.id) \\\n    .groupBy(flights.airline) \\\n    .agg(\n        count(\"*\").alias(\"bookings\"),\n        round(100.0 * sum(col(\"is_cancelled\").cast(\"int\")) / count(\"*\"), 1).alias(\"cancel_rate\")\n    ) \\\n    .orderBy(col(\"cancel_rate\").desc(), col(\"airline\"))\n\n# Show the result\nresult.show()\n```\n\nMake sure to replace `\"path_to_bookings.csv\"` and `\"path_to_flights.csv\"` with the actual paths to your data files if you are reading from CSV files. If your data is already in DataFrames, you can skip the `read` and `join` steps.",
+      "seconds": 15.89,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout046",
+      "level": "complex",
+      "sql": "SELECT * FROM (\n    SELECT specialty, hospital, years_experience FROM doctors\n) PIVOT (\n    MAX(years_experience) FOR hospital IN ('City Hospital', 'Bumrungrad', 'General Clinic')\n);",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import max, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"DoctorsPivot\").getOrCreate()\n\n# Sample data\ndata = [(\"Cardiology\", \"City Hospital\", 10),\n        (\"Cardiology\", \"Bumrungrad\", 15),\n        (\"Cardiology\", \"General Clinic\", 12),\n        (\"Orthopedics\", \"City Hospital\", 8),\n        (\"Orthopedics\", \"Bumrungrad\", 12),\n        (\"Orthopedics\", \"General Clinic\", 14)]\n\n# Create DataFrame\ndf = spark.createDataFrame(data, [\"specialty\", \"hospital\", \"years_experience\"])\n\n# Pivot the DataFrame\npivot_df = df.groupBy(\"specialty\").pivot(\"hospital\").agg(max(\"years_experience\"))\n\n# Show the result\npivot_df.show()\n```\n\nThis code initializes a Spark session, creates a sample DataFrame, and then performs the pivot operation using PySpark's DataFrame API. The `groupBy` method is used to group the data by the `specialty` column, and the `pivot` method is used to pivot the `hospital` column. The `agg` method is used to aggregate the `years_experience` column using the `max` function. Finally, the result is displayed using the `show` method.",
+      "seconds": 17.33,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout047",
+      "level": "complex",
+      "sql": "SELECT id, patient_id, appt_date,\n       DATEDIFF(appt_date, LAG(appt_date) OVER (PARTITION BY patient_id ORDER BY appt_date, id)) AS days_since_last\nFROM appointments\nWHERE patient_id IS NOT NULL;",
+      "reply": "Here's how you can convert the provided SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, datediff, lag, when\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'appointments' is your DataFrame\nappointments = spark.table(\"appointments\")\n\n# Convert SQL query to PySpark DataFrame code\nresult = appointments \\\n    .filter(col(\"patient_id\").isNotNull()) \\\n    .withColumn(\"days_since_last\", \n                datediff(col(\"appt_date\"), \n                          lag(col(\"appt_date\")).over(\n                              partitionBy(\"patient_id\").orderBy(\"appt_date\", \"id\")\n                          )\n                )\n               )\n\n# Show the result\nresult.show()\n```\n\nThis code initializes a Spark session, filters out rows where `patient_id` is `NULL`, and then calculates the number of days since the last appointment for each patient, ordered by `appt_date` and `id`. The result is stored in the `result` DataFrame, which can be displayed using the `show()` method.",
+      "seconds": 13.51,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'partitionBy' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'partitionBy' is not defined"
+      }
+    },
+    {
+      "id": "holdout048",
+      "level": "complex",
+      "sql": "WITH daily AS (\n    SELECT doctor_id, appt_date, COUNT(*) AS n\n    FROM appointments\n    GROUP BY doctor_id, appt_date\n),\nranked AS (\n    SELECT *, RANK() OVER (PARTITION BY doctor_id ORDER BY n DESC) AS r\n    FROM daily\n)\nSELECT doctor_id, appt_date, n FROM ranked WHERE r = 1;",
+      "reply": "Here's how you can convert the provided SQL query into clean, idiomatic PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import rank, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"DailyAppointments\").getOrCreate()\n\n# Assuming 'appointments' is your DataFrame\nappointments = spark.table(\"appointments\")\n\n# Step 1: Create the 'daily' DataFrame\ndaily = appointments.groupBy(\"doctor_id\", \"appt_date\").count().withColumnRenamed(\"count\", \"n\")\n\n# Step 2: Create the 'ranked' DataFrame\nranked = daily.withColumn(\"r\", rank().over(partitionBy=\"doctor_id\", orderBy=col(\"n\").desc()))\n\n# Step 3: Select the top-ranked records\nresult = ranked.filter(col(\"r\") == 1).select(\"doctor_id\", \"appt_date\", \"n\")\n\n# Show the result\nresult.show()\n```\n\nThis code performs the same operations as the SQL query:\n1. Groups the appointments by `doctor_id` and `appt_date`, counting the number of appointments for each group.\n2. Ranks the groups within each `doctor_id` based on the count in descending order.\n3. Selects only the top-ranked records (i.e., the group with the highest count for each `doctor_id`).",
+      "seconds": 16.51,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: Column.over() got an unexpected keyword argument 'partitionBy'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: Column.over() got an unexpected keyword argument 'partitionBy'"
+      }
+    },
+    {
+      "id": "holdout049",
+      "level": "complex",
+      "sql": "SELECT origin, destination, COUNT(*) AS flights, MAX(base_fare) AS max_fare\nFROM flights\nWHERE destination IS NOT NULL AND origin <> destination\nGROUP BY origin, destination\nORDER BY flights DESC, origin, destination\nLIMIT 5;",
+      "reply": "Here's how you can convert the provided SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, count, max\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightDataAnalysis\").getOrCreate()\n\n# Assuming 'flights' DataFrame is already created from your data source\n# For example: flights = spark.read.csv(\"path_to_your_data.csv\", header=True, inferSchema=True)\n\n# Perform the transformation\nresult = flights.filter(col(\"destination\").isNotNull() & (col(\"origin\") != col(\"destination\"))) \\\n              .groupBy(\"origin\", \"destination\") \\\n              .agg(count(\"*\").alias(\"flights\"), max(\"base_fare\").alias(\"max_fare\")) \\\n              .orderBy(col(\"flights\").desc(), col(\"origin\"), col(\"destination\")) \\\n              .limit(5)\n\n# Show the result\nresult.show()\n```\n\nMake sure to replace `\"path_to_your_data.csv\"` with the actual path to your data source if you're reading from a CSV file. If your data is in a different format or source, adjust the `spark.read` method accordingly.",
+      "seconds": 14.07,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      }
+    },
+    {
+      "id": "holdout050",
+      "level": "complex",
+      "sql": "SELECT f.id, f.airline\nFROM flights f\nWHERE EXISTS (\n    SELECT 1 FROM bookings b\n    WHERE b.flight_id = f.id AND b.seat_class = 'FIRST' AND NOT b.is_cancelled\n);",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightBookings\").getOrCreate()\n\n# Assuming flights and bookings DataFrames are already created\n# flights = spark.read.option(\"header\", \"true\").csv(\"path_to_flights.csv\")\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_bookings.csv\")\n\n# Perform the join and filter operation\nresult = flights.join(bookings, flights.id == bookings.flight_id, \"inner\") \\\n    .filter((bookings.seat_class == 'FIRST') & (bookings.is_cancelled == False)) \\\n    .select(flights.id, flights.airline)\n\n# Show the result\nresult.show()\n```\n\nThis code snippet performs the same operation as the SQL query. It joins the `flights` and `bookings` DataFrames on the `id` and `flight_id` columns, filters the results to include only those bookings where the seat class is 'FIRST' and the booking is not cancelled, and then selects the `id` and `airline` columns from the `flights` DataFrame.",
+      "seconds": 15.04,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      }
+    },
+    {
+      "id": "holdout051",
+      "level": "complex",
+      "sql": "SELECT CASE WHEN YEAR(birth_date) < 2024 THEN 'early'\n            WHEN YEAR(birth_date) = 2024 THEN 'mid'\n            ELSE 'late' END AS cohort,\n       COUNT(*) AS patients\nFROM patients\nGROUP BY 1\nORDER BY cohort;",
+      "reply": "Here's how you can convert the provided SQL query into clean, idiomatic PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import year, when, count\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"PatientCohort\").getOrCreate()\n\n# Assuming 'patients' DataFrame is already created\n# patients = spark.read.option(\"header\", \"true\").csv(\"path_to_your_data.csv\")\n\n# Convert SQL query to PySpark DataFrame code\npatients = patients.withColumn(\"cohort\", \n    when(year(\"birth_date\") < 2024, \"early\")\n    .when(year(\"birth_date\") == 2024, \"mid\")\n    .otherwise(\"late\")\n)\n\ncohort_counts = patients.groupBy(\"cohort\").agg(count(\"*\").alias(\"patients\"))\n\n# Order the results by cohort\ncohort_counts = cohort_counts.orderBy(\"cohort\")\n\n# Show the result\ncohort_counts.show()\n```\n\nThis code snippet initializes a Spark session, adds a new column `cohort` to the `patients` DataFrame based on the `birth_date`, groups the DataFrame by the `cohort` column, counts the number of patients in each cohort, and finally orders the results by the `cohort`.",
+      "seconds": 15.55,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      }
+    },
+    {
+      "id": "holdout052",
+      "level": "complex",
+      "sql": "SELECT id, doctor_name FROM doctors WHERE id NOT IN (SELECT doctor_id FROM appointments WHERE status = 'CANCELLED');",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming doctors and appointments DataFrames are already created\n# doctors = spark.read.option(\"header\", \"true\").csv(\"path_to_doctors.csv\")\n# appointments = spark.read.option(\"header\", \"true\").csv(\"path_to_appointments.csv\")\n\n# Perform the SQL query using PySpark\nresult = doctors.join(appointments, doctors.id == appointments.doctor_id, \"left_anti\").select(\"id\", \"doctor_name\")\n\n# Show the result\nresult.show()\n```\n\nIn this code:\n- We first import the necessary modules from PySpark.\n- We initialize a Spark session.\n- We assume that the `doctors` and `appointments` DataFrames are already created. If not, you would need to read them from a source like a CSV file.\n- We use the `join` method with the `left_anti` join type to filter out the doctors who have cancelled appointments.\n- Finally, we select the `id` and `doctor_name` columns from the resulting DataFrame and display it using the `show` method.",
+      "seconds": 15.14,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'doctors' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'doctors' is not defined"
+      }
+    },
+    {
+      "id": "holdout053",
+      "level": "complex",
+      "sql": "SELECT 'patient' AS kind, full_name AS name FROM patients\nUNION ALL\nSELECT 'passenger' AS kind, passenger_name AS name FROM bookings;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import lit\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming patients and bookings DataFrames are already created\n# patients DataFrame should have columns: full_name\n# bookings DataFrame should have columns: passenger_name\n\n# Create DataFrame for patients\npatients_df = spark.createDataFrame([\n    (\"John Doe\",),\n    (\"Jane Smith\",)\n], [\"full_name\"])\n\n# Create DataFrame for bookings\nbookings_df = spark.createDataFrame([\n    (\"Alice Johnson\",),\n    (\"Bob Brown\",)\n], [\"passenger_name\"])\n\n# Select and rename columns for patients DataFrame\npatients_df = patients_df.select(lit(\"patient\").alias(\"kind\"), \"full_name\").withColumnRenamed(\"full_name\", \"name\")\n\n# Select and rename columns for bookings DataFrame\nbookings_df = bookings_df.select(lit(\"passenger\").alias(\"kind\"), \"passenger_name\").withColumnRenamed(\"passenger_name\", \"name\")\n\n# Union the two DataFrames\nresult_df = patients_df.union(bookings_df)\n\n# Show the result\nresult_df.show()\n```\n\nThis code initializes a Spark session, creates sample DataFrames for `patients` and `bookings`, and then performs the equivalent operations as the SQL query using PySpark DataFrame API.",
+      "seconds": 16.66,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout054",
+      "level": "complex",
+      "sql": "SELECT id, departure_time, base_fare,\n       ROUND(AVG(base_fare) OVER (PARTITION BY airline ORDER BY departure_time, id\n                                  ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS fare_ma3\nFROM flights;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg, round, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightData\").getOrCreate()\n\n# Assuming flights_df is your DataFrame containing the flights data\nflights_df = spark.table(\"flights\")  # Replace with your actual DataFrame\n\n# Calculate the moving average\nfare_ma3 = avg(col(\"base_fare\")).over(\n    windowSpec=Window.partitionBy(\"airline\").orderBy(\"departure_time\", \"id\").rowsBetween(-2, 0)\n)\n\n# Add the moving average column to the DataFrame\nflights_df = flights_df.withColumn(\"fare_ma3\", round(fare_ma3, 2))\n\n# Show the result\nflights_df.show()\n```\n\nMake sure to replace `spark.table(\"flights\")` with your actual DataFrame if it's not loaded from a table.",
+      "seconds": 11.83,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: Column.over() got an unexpected keyword argument 'windowSpec'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: Column.over() got an unexpected keyword argument 'windowSpec'"
+      }
+    },
+    {
+      "id": "holdout055",
+      "level": "complex",
+      "sql": "SELECT full_name FROM patients INTERSECT SELECT passenger_name FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import SparkSession\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"PatientBookingsIntersection\").getOrCreate()\n\n# Assuming patients and bookings DataFrames are already created\n# patients = spark.read.option(\"header\", \"true\").csv(\"path_to_patients.csv\")\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_bookings.csv\")\n\n# Perform the intersection\nintersection_df = patients.select(\"full_name\").intersect(bookings.select(\"passenger_name\"))\n\n# Show the result\nintersection_df.show()\n```",
+      "seconds": 6.69,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      }
+    },
+    {
+      "id": "holdout056",
+      "level": "complex",
+      "sql": "SELECT id FROM flights EXCEPT SELECT flight_id FROM bookings;",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\n\n# Create a Spark session\nspark = SparkSession.builder.appName(\"FlightBookings\").getOrCreate()\n\n# Assuming flights and bookings are already loaded as DataFrames\n# flights = spark.read.csv(\"path_to_flights_data\", header=True, inferSchema=True)\n# bookings = spark.read.csv(\"path_to_bookings_data\", header=True, inferSchema=True)\n\n# Perform the EXCEPT operation\nresult = flights.select(\"id\").subtract(bookings.select(\"flight_id\"))\n\n# Show the result\nresult.show()\n```\n\nMake sure to replace `\"path_to_flights_data\"` and `\"path_to_bookings_data\"` with the actual paths to your data files. Also, ensure that the column names match those in your data.",
+      "seconds": 9.73,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      }
+    },
+    {
+      "id": "holdout057",
+      "level": "complex",
+      "sql": "SELECT *\nFROM (\n    SELECT patient_id, COUNT(*) AS visits, SUM(fee) AS spend\n    FROM appointments\n    WHERE patient_id IS NOT NULL\n    GROUP BY patient_id\n) t\nWHERE visits >= 2\nORDER BY spend DESC, patient_id;",
+      "reply": "Here's how you can convert the provided SQL query into clean, idiomatic PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, count, sum\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'appointments' is already loaded as a DataFrame\nappointments = spark.table(\"appointments\")\n\n# Perform the transformation\nresult = (\n    appointments\n    .filter(col(\"patient_id\").isNotNull())\n    .groupBy(\"patient_id\")\n    .agg(count(\"*\").alias(\"visits\"), sum(\"fee\").alias(\"spend\"))\n    .filter(col(\"visits\") >= 2)\n    .orderBy(col(\"spend\").desc(), col(\"patient_id\"))\n)\n\n# Show the result\nresult.show()\n```\n\nThis code snippet performs the same operations as the SQL query:\n1. Filters out rows where `patient_id` is `NULL`.\n2. Groups the data by `patient_id`.\n3. Aggregates the count of visits and the sum of fees for each patient.\n4. Filters the results to include only patients with at least 2 visits.\n5. Orders the results by the total spend in descending order and then by `patient_id`.",
+      "seconds": 14.82,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout058",
+      "level": "complex",
+      "sql": "SELECT s.specialty, t.appt_type\nFROM (SELECT DISTINCT specialty FROM doctors) s\nCROSS JOIN (SELECT DISTINCT appt_type FROM appointments WHERE appt_type IS NOT NULL) t\nORDER BY s.specialty, t.appt_type;",
+      "reply": "Here's how you can convert the given SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming doctors and appointments are already loaded into DataFrames named doctors_df and appointments_df\ndoctors_df = spark.table(\"doctors\")\nappointments_df = spark.table(\"appointments\")\n\n# Select distinct specialties from doctors\nspecialties_df = doctors_df.selectDistinct(\"specialty\")\n\n# Select distinct non-null appt_types from appointments\nappointments_df = appointments_df.filter(col(\"appt_type\").isNotNull()).selectDistinct(\"appt_type\")\n\n# Cross join the two DataFrames\nresult_df = specialties_df.crossJoin(appointments_df)\n\n# Order the result by specialty and appt_type\nresult_df = result_df.orderBy(col(\"specialty\"), col(\"appt_type\"))\n\n# Show the result\nresult_df.show()\n```\n\nThis code initializes a Spark session, selects distinct specialties from the `doctors` DataFrame, selects distinct non-null `appt_type` values from the `appointments` DataFrame, performs a cross join on these two DataFrames, and finally orders the result by `specialty` and `appt_type`.",
+      "seconds": 15.24,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `selectDistinct` is not supported."
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `selectDistinct` is not supported."
+      }
+    },
+    {
+      "id": "holdout059",
+      "level": "complex",
+      "sql": "WITH active AS (\n    SELECT * FROM bookings WHERE is_cancelled = FALSE\n),\nby_flight AS (\n    SELECT flight_id, COUNT(*) AS seats_sold, SUM(price) AS revenue\n    FROM active\n    GROUP BY flight_id\n)\nSELECT f.id, f.airline, f.origin,\n       COALESCE(b.seats_sold, 0) AS seats_sold,\n       COALESCE(b.revenue, 0) AS revenue\nFROM flights f\nLEFT JOIN by_flight b ON f.id = b.flight_id\nORDER BY revenue DESC, f.id;",
+      "reply": "Here's the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, count, sum, coalesce, desc\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightRevenue\").getOrCreate()\n\n# Assuming 'bookings' and 'flights' DataFrames are already created\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_bookings.csv\")\n# flights = spark.read.option(\"header\", \"true\").csv(\"path_to_flights.csv\")\n\n# Step 1: Filter active bookings\nactive = bookings.filter(col(\"is_cancelled\") == False)\n\n# Step 2: Group by flight_id and calculate seats_sold and revenue\nby_flight = active.groupBy(\"flight_id\").agg(\n    count(\"*\").alias(\"seats_sold\"),\n    sum(\"price\").alias(\"revenue\")\n)\n\n# Step 3: Join flights and by_flight DataFrames\njoined_df = flights.join(by_flight, flights.id == by_flight.flight_id, \"left\")\n\n# Step 4: Select required columns and handle nulls\nresult_df = joined_df.select(\n    flights.id,\n    flights.airline,\n    flights.origin,\n    coalesce(by_flight.seats_sold, 0).alias(\"seats_sold\"),\n    coalesce(by_flight.revenue, 0).alias(\"revenue\")\n)\n\n# Step 5: Order by revenue and id\nresult_df = result_df.orderBy(desc(\"revenue\"), \"id\")\n\n# Show the result\nresult_df.show()\n```\n\nMake sure to replace the commented lines with the actual code to read the `bookings` and `flights` DataFrames from your data source.",
+      "seconds": 20.82,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout060",
+      "level": "complex",
+      "sql": "SELECT id, doctor_name, years_experience, PERCENT_RANK() OVER (ORDER BY years_experience) AS pct FROM doctors;",
+      "reply": "Here is the equivalent PySpark DataFrame code for the provided SQL query:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import percent_rank\n\n# Assuming you have already created a Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Load the doctors DataFrame\ndoctors = spark.read.table(\"doctors\")\n\n# Apply the percent_rank function\ndoctors_with_pct = doctors.withColumn(\"pct\", percent_rank().over(doctors.orderBy(\"years_experience\")))\n\n# Show the result\ndoctors_with_pct.show()\n```\n\nThis code assumes that you have already created a Spark session and loaded the `doctors` DataFrame from a table. The `percent_rank` function is applied to the `years_experience` column, and the result is stored in a new column named `pct`. Finally, the result is displayed using the `show` method.",
+      "seconds": 10.49,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkTypeError: [NOT_EXPECTED_TYPE] Argument `window` should be WindowSpec, got DataFrame."
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkTypeError: [NOT_EXPECTED_TYPE] Argument `window` should be WindowSpec, got DataFrame."
+      }
+    },
+    {
+      "id": "holdout061",
+      "level": "complex",
+      "sql": "SELECT id,\n       INITCAP(SUBSTRING_INDEX(TRIM(passenger_name), ' ', 1)) AS first_name,\n       LENGTH(TRIM(passenger_name)) AS name_length\nFROM bookings\nWHERE passenger_name IS NOT NULL;",
+      "reply": "Here's how you can convert the provided SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, initcap, substring_index, trim, length\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"example\").getOrCreate()\n\n# Assuming 'bookings' DataFrame is already created\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_your_csv\")\n\n# Apply the transformations\nresult = bookings.filter(col(\"passenger_name\").isNotNull()) \\\n                .withColumn(\"first_name\", initcap(substring_index(trim(col(\"passenger_name\")), \" \", 1))) \\\n                .withColumn(\"name_length\", length(trim(col(\"passenger_name\"))))\n\n# Show the result\nresult.show()\n```\n\nThis code snippet initializes a Spark session, filters out rows where `passenger_name` is `NULL`, and then applies the transformations to create the `first_name` and `name_length` columns. Finally, it displays the resulting DataFrame.",
+      "seconds": 12.27,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout062",
+      "level": "complex",
+      "sql": "SELECT f.airline, b.seat_class, SUM(b.price) AS revenue\nFROM bookings b\nJOIN flights f ON b.flight_id = f.id\nGROUP BY ROLLUP(f.airline, b.seat_class);",
+      "reply": "Here's how you can convert the provided SQL query into PySpark DataFrame code:\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import sum, col\n\n# Initialize Spark session\nspark = SparkSession.builder.appName(\"FlightRevenue\").getOrCreate()\n\n# Assuming bookings and flights DataFrames are already created\n# bookings = spark.read.option(\"header\", \"true\").csv(\"path_to_bookings.csv\")\n# flights = spark.read.option(\"header\", \"true\").csv(\"path_to_flights.csv\")\n\n# Perform the join operation\njoined_df = bookings.join(flights, bookings.flight_id == flights.id, \"inner\")\n\n# Perform the aggregation\nresult_df = joined_df.groupBy(\"airline\", \"seat_class\").agg(sum(\"price\").alias(\"revenue\"))\n\n# Use ROLLUP to get the grand total and subtotals\nresult_df = result_df.groupBy(\"airline\", \"seat_class\").agg(sum(\"price\").alias(\"revenue\")).rollup(\"airline\", \"seat_class\").agg(sum(\"revenue\").alias(\"revenue\"))\n\n# Show the result\nresult_df.show()\n```\n\nThis code snippet assumes that you have already created the `bookings` and `flights` DataFrames. If not, you need to read them from your data source (e.g., CSV, database, etc.). The `rollup` function is used to get the grand total and subtotals for the `airline` and `seat_class` columns.",
+      "seconds": 17.36,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    }
+  ]
+}

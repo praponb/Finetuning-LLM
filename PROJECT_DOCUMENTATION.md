@@ -116,6 +116,7 @@ Finetuning-LLM/
 │   ├── targeted_v14/             # 10k correlated + uncorrelated scalar-subquery pairs + replay (25k mix), v14 LoRA config + adapters (not promoted)
 │   ├── schema_v15/               # synthetic catalog (35 domains, 221 tables) + generators, 10k pairs + 200 schema-shift pairs (25k mix), v15 LoRA config + adapters
 │   ├── complex_v16/              # complex_v8 generator on the synthetic catalog: 10k complex pairs + 300 complex schema-shift pairs (21k mix), v16 LoRA config + adapters (not promoted)
+│   ├── qwen35_pilot/             # Qwen3.5-9B feasibility pilot (2026-10-09): mlx-lm patches, export + eval scripts, logs, results; not used for now (kept)
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # Parallel PySpark verification
 │   ├── convert_sql_pyspark.py    # Signature splitter & chat formatter
@@ -273,6 +274,12 @@ Whole signatures are held out for validation (10%) and test (5%). A signature is
   - `v6`: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (28 layers, 7.61 B parameters)
 - **Framework**: Apple MLX (`mlx-lm`)
 - **Config**: [lora_config.yaml](sql2pyspark-mlx/lora_config.yaml)
+
+### Qwen3.5-9B pilot (2026-10-09) — not used for now
+
+- **Question**: can `mlx-community/Qwen3.5-9B-4bit` (hybrid Gated DeltaNet / full attention, 248k vocabulary) be trained, exported and served on this setup? See [qwen35_pilot/README.md](sql2pyspark-mlx/qwen35_pilot/README.md).
+- **Result**: 400 iterations on the v15 mix (max_seq 2600) give hold-out 41/62 (untuned Qwen3.5-9B 0/62, untuned Qwen2.5-Coder-7B 8/62); stock mlx-lm 0.31.3 runs out of memory, and with the local patches (`gd_chunked.py`, `chunked_loss.py`, MLX cache limits) the peak is 12.62 GB; ~10.5 s / iteration, so a full run would take ~14 h. Export (fuse → `fix_norms.py` → GGUF `--no-mtp` → Q4_K_M → Ollama) works; Ollama needs `think: false`.
+- **Decision (2026-10-10)**: not used for now; the folder, adapters, pilot GGUF and Ollama tags are kept for a later run on a machine with more memory.
 
 ### v16 (7B Model, Continued from v15 on complex_v16) — not promoted
 

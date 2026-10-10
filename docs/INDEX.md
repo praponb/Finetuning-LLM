@@ -32,6 +32,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 | [File Catalog & Reference](06-file-catalog-and-reference.md) | Repository Index | All Contributors | Comprehensive reference of all scripts, datasets, configs, logs, and artifacts in the repository |
 | [Operations Runbook](07-operations-runbook.md) | Practical How-To & Makefile Guide | Developers, DevOps | Environment setup, Make targets (`TAG=v9 PREV=v8`), memory limits, Docker profiles, troubleshooting & FAQs |
 | [Server Deployment](08-server-deployment.md) | Hosting on Ubuntu + Cloudflare Tunnel | DevOps, Owners | Moving the trained GGUF to an Ubuntu server, Q4_K_M export for CPU inference, RAM/disk sizing, native Ollama + systemd app (`deploy/`), Cloudflare Tunnel & Access for sql2pyspark.praponb.com, updates, troubleshooting |
+| [Mac mini Migration](09-mac-mini-migration.md) | Moving to the Mac mini M6 (32 GB), 2026-10-30 | Owners | Plan: what to copy (≈185 GB incl. Ollama models and the other `~/GitHub` projects), setup, rebuild, verification checks with pass bars, re-measuring the 16 GB settings, wrap-up |
 | [User Manual](../USER_MANUAL.md) | End-User Guide & API Reference | End Users, Developers | Web UI walkthrough, Ollama CLI usage, REST API curl/Python examples, SQL feature support, Kimi K3 repair, troubleshooting |
 | [Master Project Documentation](../PROJECT_DOCUMENTATION.md) | All-in-One Guide | All Readers | Single-file consolidated summary of the entire documentation suite |
 
@@ -87,7 +88,8 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── 05-serving-and-streamlit-ui.md
 │   ├── 06-file-catalog-and-reference.md
 │   ├── 07-operations-runbook.md
-│   └── 08-server-deployment.md
+│   ├── 08-server-deployment.md
+│   └── 09-mac-mini-migration.md
 ├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh, update_model.sh
 ├── sql2pyspark-mlx/              # Data synthesis, verification & MLX training
 │   ├── schemas.py                # Table catalog (17 base + 5 extra train, 5 base + 1 extra hold-out)

@@ -1,0 +1,2 @@
+{"model": "sql2pyspark:v15-q4", "tok_s": 14.37, "tokens": 234, "cold_load_s": 6.86, "prompt_tok_s": 85.87, "server_pred_tok_s": 4.0}
+{"model": "sql2pyspark:q35-pilot-q4", "tok_s": 11.7, "tokens": 260, "cold_load_s": 7.11, "prompt_tok_s": 56.34, "server_pred_tok_s": 3.25}

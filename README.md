@@ -66,6 +66,13 @@ the **complex schema-shift** set (complex pairs on 5 domains never trained on) *
 elsewhere: hold-out 58/62, complex test 84/100, v11 / v12 held-out 261 / 216 (v15-q4 60, 89, 278 / 232). See
 [v16 results](#v16-results-2026-10-09--not-promoted).
 
+**Qwen3.5-9B pilot** (2026-10-09, a newer base model; [qwen35_pilot](sql2pyspark-mlx/qwen35_pilot/README.md)) is **not
+used for now** (the owner's decision, 2026-10-10). 400 iterations on the v15 mix take it from 0 to 41/62 on the hold-out
+and the export to Ollama works, but on the 16 GB M2 it fits only with three local mlx-lm patches (peak 12.62 GB at
+max_seq 2600), a full 4,800-iteration run would take ~14 h, and Ollama needs `think: false` for it. The folder,
+adapters, pilot GGUF and Ollama tags (`sql2pyspark:q35-pilot-q4`, `:base-q35-q4`, `:base-coder7b-q4`) are kept for a
+later run on a machine with more memory.
+
 ```text
 schemas.py ─┐
             ├─ generate_dataset.py ─┐                         ┌─ data/train.jsonl ─ mlx_lm.lora ─ adapters/
@@ -920,6 +927,7 @@ sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4�
                    targeted_v14/ (10k correlated + uncorrelated scalar-subquery pairs + replay, 25k mix & v14 LoRA config; not promoted),
                    schema_v15/ (synthetic catalog of 221 tables + generators, 10k pairs + schema-shift set, 25k mix & v15 LoRA config),
                    complex_v16/ (10k complex pairs on the synthetic catalog + complex schema-shift set, 21k mix & v16 LoRA config; not promoted),
+                   qwen35_pilot/ (Qwen3.5-9B feasibility pilot: mlx-lm patches, export scripts, logs, results; not used for now),
                    runs/v2/ … runs/v7/ (adapters, configs, logs; v6/v7 data is in the git history too)
 sql2pyspark.gguf   Q8_0 GGUF of v15 (exported 2026-10-07 21:27, restored after the v16 export; 8.1 GB; v12 is an Ollama tag); Ollama keeps its own copy of every tag
 sql2pyspark-q4.gguf Q4_K_M GGUF of v15-q4 (`latest` on the Mac and the server since 2026-10-09, 4.7 GB, compact CPU export for Linux server)

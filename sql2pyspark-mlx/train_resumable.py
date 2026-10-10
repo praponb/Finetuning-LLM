@@ -11,6 +11,7 @@ Iterations are micro-batches (with grad_accumulation_steps > 1 the optimizer upd
 the learning-rate schedule counts optimizer updates.
 
 Usage (from sql2pyspark-mlx/):  python train_resumable.py [--config lora_config.yaml] [--max-restarts 6]
+                                [--launcher script.py]   (a script with mlx_lm.lora's arguments, e.g. qwen35_pilot/lora_q35.py)
 """
 from __future__ import annotations
 
@@ -52,6 +53,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--config", default="lora_config.yaml")
     ap.add_argument("--max-restarts", type=int, default=6)
+    ap.add_argument("--launcher", default=None, help="python script to run instead of mlx_lm.lora (same arguments)")
     args = ap.parse_args()
 
     os.chdir(HERE)
@@ -61,12 +63,12 @@ def main():
     adapter_dir = Path(cfg["adapter_path"])
     env = dict(os.environ, MLX_MAX_OPS_PER_BUFFER=os.environ.get("MLX_MAX_OPS_PER_BUFFER", "2"),
                MLX_MAX_MB_PER_BUFFER=os.environ.get("MLX_MAX_MB_PER_BUFFER", "40"))
-    lora = str(Path(sys.executable).with_name("mlx_lm.lora"))
+    lora = [sys.executable, args.launcher] if args.launcher else [str(Path(sys.executable).with_name("mlx_lm.lora"))]
 
     done, segment, run_cfg = 0, 1, Path(args.config)
     for attempt in range(args.max_restarts + 1):
         print(f"[train_resumable] segment {segment}: iterations {done + 1}..{total} ({run_cfg})", flush=True)
-        rc = subprocess.run([lora, "-c", str(run_cfg)], env=env).returncode
+        rc = subprocess.run([*lora, "-c", str(run_cfg)], env=env).returncode
         seg_dir = Path(yaml.safe_load(run_cfg.read_text())["adapter_path"])
         if rc == 0:
             if seg_dir != adapter_dir:       # final weights of a resumed segment -> the normal location
@@ -78,8 +80,10 @@ def main():
             print("[train_resumable] crashed before the first checkpoint; restarting from scratch", flush=True)
         elif ck is not None:
             done += ck[0]
-            # keep the checkpoint under its global iteration number
-            shutil.copy(ck[1], adapter_dir / f"{done:07d}_adapters.safetensors")
+            # keep the checkpoint under its global iteration number (segment 1 already writes it there)
+            dst = adapter_dir / f"{done:07d}_adapters.safetensors"
+            if ck[1].resolve() != dst.resolve():
+                shutil.copy(ck[1], dst)
         print(f"[train_resumable] exit code {rc}; {done}/{total} iterations saved", flush=True)
         remaining = total - done
         if remaining <= 0:

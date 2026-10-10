@@ -1,0 +1,1585 @@
+[09:39:09] step 3: training
+[10:09:26] training failed; stopping
+[10:10:22] resume from 150 (resume150.sh)
+[10:16:37] watchdog on step 1 of the resume; restarting it with small Metal buffers
+[10:21:20] watchdog again (cache 0 + small buffers); restarting the resume with default buffers, cache 512 MB, memory limit 12 GB
+[11:04:51] step 4: fuse (dequantized)
+Loading pretrained model
+Dequantizing model
+ 17G	sql2pyspark-mlx/qwen35_pilot/hf
+[11:06:06] step 4: undo the mlx norm shift
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/fix_norms.py", line 31, in <module>
+    mx.save_safetensors(str(f), w, metadata=meta)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [read] Unable to read from file.
+[11:06:06] fix_norms failed
+[11:06:20] fix_norms.py rewrote a lazily loaded shard in place (shard 1 emptied); fixed (temp file + rename), re-running the chain
+[11:06:20] step 4: fuse (dequantized)
+Loading pretrained model
+Dequantizing model
+ 17G	sql2pyspark-mlx/qwen35_pilot/hf
+[11:09:23] step 4: undo the mlx norm shift
+model-00001-of-00004.safetensors: 20 norm tensors shifted back
+model-00002-of-00004.safetensors: 30 norm tensors shifted back
+language_model.model.norm.weight: mean 2.140 -> 1.140
+model-00003-of-00004.safetensors: 31 norm tensors shifted back
+model-00004-of-00004.safetensors: 0 norm tensors shifted back
+total 81 (expected 32 x 2 + 8 x 2 + 1 = 81)
+[11:09:42] step 4: f16 GGUF
+INFO:hf-to-gguf:Loading model: hf
+INFO:hf-to-gguf:Model architecture: Qwen3_5ForConditionalGeneration
+INFO:hf-to-gguf:gguf: loading model weight map from 'model.safetensors.index.json'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00001-of-00004.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00002-of-00004.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00003-of-00004.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00004-of-00004.safetensors'
+INFO:gguf.gguf_writer:gguf: This GGUF file is for Little Endian only
+INFO:hf-to-gguf:Exporting model...
+INFO:hf-to-gguf:token_embd.weight,                    torch.bfloat16 --> F16, shape = {4096, 248320}
+INFO:hf-to-gguf:blk.0.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.0.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.0.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.0.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.0.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.0.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.0.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.0.attn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.0.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.0.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.0.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.0.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.0.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.0.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.1.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.1.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.1.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.1.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.1.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.1.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.1.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.1.attn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.1.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.1.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.1.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.1.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.1.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.1.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.2.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.2.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.2.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.2.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.2.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.2.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.2.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.2.attn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.2.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.2.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.2.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.2.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.2.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.2.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.3.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.3.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.3.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.3.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.3.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.3.attn_k_norm.weight,             torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.3.attn_k.weight,                  torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.3.attn_output.weight,             torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.3.attn_q_norm.weight,             torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.3.attn_q.weight,                  torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.3.attn_v.weight,                  torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.4.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.4.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.4.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.4.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.4.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.4.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.4.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.4.attn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.4.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.4.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.4.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.4.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.4.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.4.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.5.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.5.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.5.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.5.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.5.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.5.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.5.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.5.attn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.5.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.5.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.5.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.5.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.5.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.5.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.6.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.6.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.6.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.6.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.6.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.6.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.6.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.6.attn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.6.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.6.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.6.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.6.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.6.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.6.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.7.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.7.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.7.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.7.attn_k_norm.weight,             torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.7.attn_k.weight,                  torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.7.attn_output.weight,             torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.7.attn_q_norm.weight,             torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.7.attn_q.weight,                  torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.7.attn_v.weight,                  torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.10.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.10.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.10.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.10.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.10.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.10.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.10.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.10.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.10.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.10.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.10.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.10.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.10.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.10.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.11.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.11.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.11.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.11.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.11.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.11.attn_k_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.11.attn_k.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.11.attn_output.weight,            torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.11.attn_q_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.11.attn_q.weight,                 torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.11.attn_v.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.12.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.12.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.12.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.12.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.12.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.12.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.12.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.12.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.12.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.12.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.12.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.12.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.12.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.12.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.13.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.13.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.13.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.13.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.13.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.13.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.13.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.13.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.13.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.13.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.13.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.13.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.13.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.13.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.14.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.14.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.14.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.14.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.14.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.14.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.14.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.14.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.14.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.14.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.14.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.14.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.14.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.14.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.15.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.15.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.15.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.15.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.15.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.15.attn_k_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.15.attn_k.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.15.attn_output.weight,            torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.15.attn_q_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.15.attn_q.weight,                 torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.15.attn_v.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.16.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.16.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.16.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.16.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.16.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.16.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.16.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.16.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.16.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.16.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.16.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.16.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.16.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.16.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.17.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.17.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.17.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.17.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.17.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.17.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.17.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.17.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.17.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.17.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.17.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.17.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.17.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.17.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.18.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.18.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.18.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.18.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.18.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.18.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.18.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.18.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.18.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.18.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.18.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.18.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.18.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.18.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.19.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.19.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.19.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.19.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.19.attn_k_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.19.attn_k.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.19.attn_output.weight,            torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.19.attn_q_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.19.attn_q.weight,                 torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.19.attn_v.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.7.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.7.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.8.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.8.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.8.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.8.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.8.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.8.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.8.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.8.attn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.8.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.8.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.8.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.8.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.8.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.8.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.9.attn_norm.weight,               torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.9.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.9.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.9.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.9.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.9.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.9.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.9.attn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.9.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.9.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.9.ffn_down.weight,                torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.9.ffn_gate.weight,                torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.9.ffn_up.weight,                  torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.9.post_attention_norm.weight,     torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.19.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.20.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.20.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.20.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.20.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.20.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.20.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.20.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.20.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.20.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.20.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.20.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.20.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.20.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.20.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.21.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.21.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.21.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.21.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.21.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.21.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.21.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.21.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.21.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.21.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.21.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.21.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.21.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.21.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.22.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.22.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.22.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.22.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.22.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.22.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.22.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.22.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.22.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.22.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.22.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.22.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.22.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.22.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.23.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.23.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.23.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.23.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.23.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.23.attn_k_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.23.attn_k.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.23.attn_output.weight,            torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.23.attn_q_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.23.attn_q.weight,                 torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.23.attn_v.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.24.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.24.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.24.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.24.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.24.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.24.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.24.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.24.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.24.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.24.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.24.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.24.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.24.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.24.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.25.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.25.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.25.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.25.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.25.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.25.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.25.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.25.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.25.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.25.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.25.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.25.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.25.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.25.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.26.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.26.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.26.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.26.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.26.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.26.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.26.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.26.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.26.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.26.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.26.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.26.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.26.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.26.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.27.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.27.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.27.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.27.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.27.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.27.attn_k_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.27.attn_k.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.27.attn_output.weight,            torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.27.attn_q_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.27.attn_q.weight,                 torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.27.attn_v.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.28.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.28.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.28.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.28.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.28.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.28.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.28.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.28.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.28.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.28.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.28.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.28.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.28.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.28.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.29.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.29.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.29.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.29.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.29.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.29.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.29.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.29.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.29.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.29.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.29.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.29.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.29.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.29.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.30.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.30.ssm_a,                         torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.30.ssm_conv1d.weight,             torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.30.ssm_dt.bias,                   torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.30.ssm_alpha.weight,              torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.30.ssm_beta.weight,               torch.bfloat16 --> F16, shape = {4096, 32}
+INFO:hf-to-gguf:blk.30.attn_qkv.weight,               torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.30.attn_gate.weight,              torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.30.ssm_norm.weight,               torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.30.ssm_out.weight,                torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.30.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.30.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.30.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.30.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.31.attn_norm.weight,              torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.31.ffn_down.weight,               torch.bfloat16 --> F16, shape = {12288, 4096}
+INFO:hf-to-gguf:blk.31.ffn_gate.weight,               torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.31.ffn_up.weight,                 torch.bfloat16 --> F16, shape = {4096, 12288}
+INFO:hf-to-gguf:blk.31.post_attention_norm.weight,    torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:blk.31.attn_k_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.31.attn_k.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:blk.31.attn_output.weight,            torch.bfloat16 --> F16, shape = {4096, 4096}
+INFO:hf-to-gguf:blk.31.attn_q_norm.weight,            torch.bfloat16 --> F32, shape = {256}
+INFO:hf-to-gguf:blk.31.attn_q.weight,                 torch.bfloat16 --> F16, shape = {4096, 8192}
+INFO:hf-to-gguf:blk.31.attn_v.weight,                 torch.bfloat16 --> F16, shape = {4096, 1024}
+INFO:hf-to-gguf:output_norm.weight,                   torch.bfloat16 --> F32, shape = {4096}
+INFO:hf-to-gguf:output.weight,                        torch.bfloat16 --> F16, shape = {4096, 248320}
+INFO:hf-to-gguf:Set meta model
+INFO:hf-to-gguf:Set model parameters
+INFO:hf-to-gguf:gguf: context length = 262144
+INFO:hf-to-gguf:gguf: embedding length = 4096
+INFO:hf-to-gguf:gguf: feed forward length = 12288
+INFO:hf-to-gguf:gguf: head count = 16
+INFO:hf-to-gguf:gguf: key-value head count = 4
+WARNING:hf-to-gguf:Unknown RoPE type: default
+INFO:hf-to-gguf:gguf: rope scaling type = NONE
+INFO:hf-to-gguf:gguf: mrope sections: [11, 11, 10, 0]
+INFO:hf-to-gguf:gguf: rope theta = 10000000
+INFO:hf-to-gguf:gguf: rms norm epsilon = 1e-06
+INFO:hf-to-gguf:gguf: file type = 1
+INFO:hf-to-gguf:Set model quantization version
+INFO:hf-to-gguf:Set model tokenizer
+INFO:gguf.vocab:Adding 247587 merge(s).
+INFO:gguf.vocab:Setting special token type eos to 248046
+INFO:gguf.vocab:Setting special token type pad to 248044
+INFO:gguf.vocab:Setting add_bos_token to False
+INFO:gguf.vocab:Setting add_eos_token to False
+INFO:gguf.vocab:Setting chat_template to {%- set image_count = namespace(value=0) %}
+{%- set video_count = namespace(value=0) %}
+{%- macro render_content(content, do_vision_count, is_system_content=false) %}
+    {%- if content is string %}
+        {{- content }}
+    {%- elif content is iterable and content is not mapping %}
+        {%- for item in content %}
+            {%- if 'image' in item or 'image_url' in item or item.type == 'image' %}
+                {%- if is_system_content %}
+                    {{- raise_exception('System message cannot contain images.') }}
+                {%- endif %}
+                {%- if do_vision_count %}
+                    {%- set image_count.value = image_count.value + 1 %}
+                {%- endif %}
+                {%- if add_vision_id %}
+                    {{- 'Picture ' ~ image_count.value ~ ': ' }}
+                {%- endif %}
+                {{- '<|vision_start|><|image_pad|><|vision_end|>' }}
+            {%- elif 'video' in item or item.type == 'video' %}
+                {%- if is_system_content %}
+                    {{- raise_exception('System message cannot contain videos.') }}
+                {%- endif %}
+                {%- if do_vision_count %}
+                    {%- set video_count.value = video_count.value + 1 %}
+                {%- endif %}
+                {%- if add_vision_id %}
+                    {{- 'Video ' ~ video_count.value ~ ': ' }}
+                {%- endif %}
+                {{- '<|vision_start|><|video_pad|><|vision_end|>' }}
+            {%- elif 'text' in item %}
+                {{- item.text }}
+            {%- else %}
+                {{- raise_exception('Unexpected item type in content.') }}
+            {%- endif %}
+        {%- endfor %}
+    {%- elif content is none or content is undefined %}
+        {{- '' }}
+    {%- else %}
+        {{- raise_exception('Unexpected content type.') }}
+    {%- endif %}
+{%- endmacro %}
+{%- if not messages %}
+    {{- raise_exception('No messages provided.') }}
+{%- endif %}
+{%- if tools and tools is iterable and tools is not mapping %}
+    {{- '<|im_start|>system\n' }}
+    {{- "# Tools\n\nYou have access to the following functions:\n\n<tools>" }}
+    {%- for tool in tools %}
+        {{- "\n" }}
+        {{- tool | tojson }}
+    {%- endfor %}
+    {{- "\n</tools>" }}
+    {{- '\n\nIf you choose to call a function ONLY reply in the following format with NO suffix:\n\n<tool_call>\n<function=example_function_name>\n<parameter=example_parameter_1>\nvalue_1\n</parameter>\n<parameter=example_parameter_2>\nThis is the value for the second parameter\nthat can span\nmultiple lines\n</parameter>\n</function>\n</tool_call>\n\n<IMPORTANT>\nReminder:\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\n- Required parameters MUST be specified\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\n</IMPORTANT>' }}
+    {%- if messages[0].role == 'system' %}
+        {%- set content = render_content(messages[0].content, false, true)|trim %}
+        {%- if content %}
+            {{- '\n\n' + content }}
+        {%- endif %}
+    {%- endif %}
+    {{- '<|im_end|>\n' }}
+{%- else %}
+    {%- if messages[0].role == 'system' %}
+        {%- set content = render_content(messages[0].content, false, true)|trim %}
+        {{- '<|im_start|>system\n' + content + '<|im_end|>\n' }}
+    {%- endif %}
+{%- endif %}
+{%- set ns = namespace(multi_step_tool=true, last_query_index=messages|length - 1) %}
+{%- for message in messages[::-1] %}
+    {%- set index = (messages|length - 1) - loop.index0 %}
+    {%- if ns.multi_step_tool and message.role == "user" %}
+        {%- set content = render_content(message.content, false)|trim %}
+        {%- if not(content.startswith('<tool_response>') and content.endswith('</tool_response>')) %}
+            {%- set ns.multi_step_tool = false %}
+            {%- set ns.last_query_index = index %}
+        {%- endif %}
+    {%- endif %}
+{%- endfor %}
+{%- if ns.multi_step_tool %}
+    {{- raise_exception('No user query found in messages.') }}
+{%- endif %}
+{%- for message in messages %}
+    {%- set content = render_content(message.content, true)|trim %}
+    {%- if message.role == "system" %}
+        {%- if not loop.first %}
+            {{- raise_exception('System message must be at the beginning.') }}
+        {%- endif %}
+    {%- elif message.role == "user" %}
+        {{- '<|im_start|>' + message.role + '\n' + content + '<|im_end|>' + '\n' }}
+    {%- elif message.role == "assistant" %}
+        {%- set reasoning_content = '' %}
+        {%- if message.reasoning_content is string %}
+            {%- set reasoning_content = message.reasoning_content %}
+        {%- else %}
+            {%- if '</think>' in content %}
+                {%- set reasoning_content = content.split('</think>')[0].rstrip('\n').split('<think>')[-1].lstrip('\n') %}
+                {%- set content = content.split('</think>')[-1].lstrip('\n') %}
+            {%- endif %}
+        {%- endif %}
+        {%- set reasoning_content = reasoning_content|trim %}
+        {%- if loop.index0 > ns.last_query_index %}
+            {{- '<|im_start|>' + message.role + '\n<think>\n' + reasoning_content + '\n</think>\n\n' + content }}
+        {%- else %}
+            {{- '<|im_start|>' + message.role + '\n' + content }}
+        {%- endif %}
+        {%- if message.tool_calls and message.tool_calls is iterable and message.tool_calls is not mapping %}
+            {%- for tool_call in message.tool_calls %}
+                {%- if tool_call.function is defined %}
+                    {%- set tool_call = tool_call.function %}
+                {%- endif %}
+                {%- if loop.first %}
+                    {%- if content|trim %}
+                        {{- '\n\n<tool_call>\n<function=' + tool_call.name + '>\n' }}
+                    {%- else %}
+                        {{- '<tool_call>\n<function=' + tool_call.name + '>\n' }}
+                    {%- endif %}
+                {%- else %}
+                    {{- '\n<tool_call>\n<function=' + tool_call.name + '>\n' }}
+                {%- endif %}
+                {%- if tool_call.arguments is defined %}
+                    {%- for args_name, args_value in tool_call.arguments|items %}
+                        {{- '<parameter=' + args_name + '>\n' }}
+                        {%- set args_value = args_value | tojson | safe if args_value is mapping or (args_value is sequence and args_value is not string) else args_value | string %}
+                        {{- args_value }}
+                        {{- '\n</parameter>\n' }}
+                    {%- endfor %}
+                {%- endif %}
+                {{- '</function>\n</tool_call>' }}
+            {%- endfor %}
+        {%- endif %}
+        {{- '<|im_end|>\n' }}
+    {%- elif message.role == "tool" %}
+        {%- if loop.previtem and loop.previtem.role != "tool" %}
+            {{- '<|im_start|>user' }}
+        {%- endif %}
+        {{- '\n<tool_response>\n' }}
+        {{- content }}
+        {{- '\n</tool_response>' }}
+        {%- if not loop.last and loop.nextitem.role != "tool" %}
+            {{- '<|im_end|>\n' }}
+        {%- elif loop.last %}
+            {{- '<|im_end|>\n' }}
+        {%- endif %}
+    {%- else %}
+        {{- raise_exception('Unexpected message role.') }}
+    {%- endif %}
+{%- endfor %}
+{%- if add_generation_prompt %}
+    {{- '<|im_start|>assistant\n' }}
+    {%- if enable_thinking is defined and enable_thinking is false %}
+        {{- '<think>\n\n</think>\n\n' }}
+    {%- else %}
+        {{- '<think>\n' }}
+    {%- endif %}
+{%- endif %}
+INFO:gguf.gguf_writer:Writing the following files:
+INFO:gguf.gguf_writer:sql2pyspark-mlx/qwen35_pilot/gguf/pilot-f16.gguf: n_tensors = 427, total_size = 17.9G
+Writing:   0%|          | 0.00/17.9G [00:00<?, ?byte/s]Writing:  11%|█▏        | 2.03G/17.9G [00:05<00:40, 391Mbyte/s]Writing:  12%|█▏        | 2.10G/17.9G [00:05<00:44, 358Mbyte/s]Writing:  12%|█▏        | 2.14G/17.9G [00:05<00:45, 349Mbyte/s]Writing:  12%|█▏        | 2.17G/17.9G [00:06<00:45, 344Mbyte/s]Writing:  13%|█▎        | 2.27G/17.9G [00:06<00:45, 347Mbyte/s]Writing:  13%|█▎        | 2.37G/17.9G [00:06<00:42, 369Mbyte/s]Writing:  14%|█▍        | 2.47G/17.9G [00:06<00:38, 398Mbyte/s]Writing:  14%|█▍        | 2.54G/17.9G [00:06<00:42, 363Mbyte/s]Writing:  15%|█▍        | 2.61G/17.9G [00:07<00:40, 382Mbyte/s]Writing:  15%|█▌        | 2.71G/17.9G [00:07<00:33, 453Mbyte/s]Writing:  16%|█▌        | 2.81G/17.9G [00:07<00:29, 512Mbyte/s]Writing:  16%|█▌        | 2.91G/17.9G [00:07<00:27, 538Mbyte/s]Writing:  17%|█▋        | 2.98G/17.9G [00:07<00:32, 454Mbyte/s]Writing:  17%|█▋        | 3.04G/17.9G [00:07<00:33, 441Mbyte/s]Writing:  18%|█▊        | 3.14G/17.9G [00:08<00:27, 532Mbyte/s]Writing:  18%|█▊        | 3.24G/17.9G [00:08<00:26, 561Mbyte/s]Writing:  19%|█▊        | 3.34G/17.9G [00:08<00:26, 541Mbyte/s]Writing:  19%|█▉        | 3.45G/17.9G [00:08<00:30, 469Mbyte/s]Writing:  20%|█▉        | 3.55G/17.9G [00:08<00:30, 465Mbyte/s]Writing:  20%|██        | 3.65G/17.9G [00:09<00:31, 453Mbyte/s]Writing:  21%|██        | 3.76G/17.9G [00:09<00:37, 377Mbyte/s]Writing:  21%|██▏       | 3.83G/17.9G [00:09<00:42, 332Mbyte/s]Writing:  22%|██▏       | 3.90G/17.9G [00:10<00:42, 331Mbyte/s]Writing:  22%|██▏       | 4.00G/17.9G [00:10<00:39, 350Mbyte/s]Writing:  23%|██▎       | 4.10G/17.9G [00:10<00:38, 358Mbyte/s]Writing:  23%|██▎       | 4.20G/17.9G [00:10<00:35, 385Mbyte/s]Writing:  24%|██▍       | 4.27G/17.9G [00:11<00:40, 337Mbyte/s]Writing:  24%|██▍       | 4.34G/17.9G [00:11<00:44, 307Mbyte/s]Writing:  25%|██▍       | 4.44G/17.9G [00:11<00:39, 345Mbyte/s]Writing:  25%|██▌       | 4.54G/17.9G [00:11<00:35, 375Mbyte/s]Writing:  26%|██▌       | 4.64G/17.9G [00:11<00:33, 393Mbyte/s]Writing:  26%|██▋       | 4.71G/17.9G [00:12<00:38, 339Mbyte/s]Writing:  27%|██▋       | 4.77G/17.9G [00:12<00:41, 319Mbyte/s]Writing:  27%|██▋       | 4.87G/17.9G [00:12<00:35, 366Mbyte/s]Writing:  28%|██▊       | 4.97G/17.9G [00:12<00:34, 378Mbyte/s]Writing:  28%|██▊       | 5.08G/17.9G [00:13<00:31, 404Mbyte/s]Writing:  29%|██▉       | 5.18G/17.9G [00:13<00:32, 395Mbyte/s]Writing:  29%|██▉       | 5.22G/17.9G [00:13<00:35, 355Mbyte/s]Writing:  30%|██▉       | 5.28G/17.9G [00:13<00:33, 378Mbyte/s]Writing:  30%|██▉       | 5.36G/17.9G [00:13<00:31, 400Mbyte/s]Writing:  30%|███       | 5.43G/17.9G [00:14<00:30, 404Mbyte/s]Writing:  31%|███       | 5.53G/17.9G [00:14<00:27, 444Mbyte/s]Writing:  31%|███▏      | 5.63G/17.9G [00:14<00:26, 464Mbyte/s]Writing:  32%|███▏      | 5.73G/17.9G [00:14<00:26, 468Mbyte/s]Writing:  33%|███▎      | 5.83G/17.9G [00:14<00:26, 457Mbyte/s]Writing:  33%|███▎      | 5.93G/17.9G [00:15<00:26, 459Mbyte/s]Writing:  34%|███▎      | 6.03G/17.9G [00:15<00:25, 461Mbyte/s]Writing:  34%|███▍      | 6.14G/17.9G [00:15<00:27, 433Mbyte/s]Writing:  35%|███▍      | 6.22G/17.9G [00:15<00:28, 417Mbyte/s]Writing:  35%|███▌      | 6.28G/17.9G [00:16<00:28, 414Mbyte/s]Writing:  36%|███▌      | 6.39G/17.9G [00:16<00:25, 446Mbyte/s]Writing:  36%|███▌      | 6.49G/17.9G [00:16<00:25, 440Mbyte/s]Writing:  37%|███▋      | 6.59G/17.9G [00:16<00:25, 445Mbyte/s]Writing:  37%|███▋      | 6.65G/17.9G [00:16<00:27, 414Mbyte/s]Writing:  38%|███▊      | 6.72G/17.9G [00:17<00:27, 411Mbyte/s]Writing:  38%|███▊      | 6.82G/17.9G [00:17<00:24, 445Mbyte/s]Writing:  39%|███▊      | 6.92G/17.9G [00:17<00:24, 456Mbyte/s]Writing:  39%|███▉      | 7.02G/17.9G [00:17<00:23, 467Mbyte/s]Writing:  40%|███▉      | 7.09G/17.9G [00:17<00:25, 421Mbyte/s]Writing:  40%|███▉      | 7.16G/17.9G [00:18<00:26, 413Mbyte/s]Writing:  41%|████      | 7.26G/17.9G [00:18<00:24, 443Mbyte/s]Writing:  41%|████      | 7.36G/17.9G [00:18<00:24, 429Mbyte/s]Writing:  42%|████▏     | 7.46G/17.9G [00:18<00:23, 448Mbyte/s]Writing:  42%|████▏     | 7.56G/17.9G [00:18<00:22, 451Mbyte/s]Writing:  43%|████▎     | 7.66G/17.9G [00:19<00:22, 458Mbyte/s]Writing:  43%|████▎     | 7.76G/17.9G [00:19<00:21, 462Mbyte/s]Writing:  44%|████▍     | 7.87G/17.9G [00:19<00:23, 421Mbyte/s]Writing:  44%|████▍     | 7.95G/17.9G [00:19<00:26, 382Mbyte/s]Writing:  45%|████▍     | 8.01G/17.9G [00:20<00:26, 369Mbyte/s]Writing:  45%|████▌     | 8.12G/17.9G [00:20<00:24, 401Mbyte/s]Writing:  46%|████▌     | 8.22G/17.9G [00:20<00:24, 399Mbyte/s]Writing:  46%|████▋     | 8.32G/17.9G [00:20<00:23, 416Mbyte/s]Writing:  47%|████▋     | 8.38G/17.9G [00:21<00:26, 366Mbyte/s]Writing:  47%|████▋     | 8.45G/17.9G [00:21<00:26, 358Mbyte/s]Writing:  48%|████▊     | 8.55G/17.9G [00:21<00:23, 400Mbyte/s]Writing:  48%|████▊     | 8.65G/17.9G [00:21<00:21, 427Mbyte/s]Writing:  49%|████▉     | 8.75G/17.9G [00:21<00:20, 444Mbyte/s]Writing:  49%|████▉     | 8.82G/17.9G [00:22<00:24, 372Mbyte/s]Writing:  50%|████▉     | 8.89G/17.9G [00:22<00:25, 360Mbyte/s]Writing:  50%|█████     | 8.99G/17.9G [00:22<00:22, 399Mbyte/s]Writing:  51%|█████     | 9.09G/17.9G [00:22<00:21, 420Mbyte/s]Writing:  51%|█████▏    | 9.19G/17.9G [00:22<00:20, 433Mbyte/s]Writing:  52%|█████▏    | 9.29G/17.9G [00:23<00:20, 422Mbyte/s]Writing:  52%|█████▏    | 9.39G/17.9G [00:23<00:19, 432Mbyte/s]Writing:  53%|█████▎    | 9.50G/17.9G [00:23<00:22, 367Mbyte/s]Writing:  54%|█████▎    | 9.61G/17.9G [00:24<00:21, 383Mbyte/s]Writing:  54%|█████▍    | 9.71G/17.9G [00:24<00:20, 401Mbyte/s]Writing:  55%|█████▍    | 9.78G/17.9G [00:24<00:23, 340Mbyte/s]Writing:  55%|█████▍    | 9.85G/17.9G [00:24<00:24, 331Mbyte/s]Writing:  56%|█████▌    | 9.95G/17.9G [00:25<00:21, 375Mbyte/s]Writing:  56%|█████▌    | 10.0G/17.9G [00:25<00:20, 393Mbyte/s]Writing:  57%|█████▋    | 10.1G/17.9G [00:25<00:18, 411Mbyte/s]Writing:  57%|█████▋    | 10.2G/17.9G [00:25<00:23, 327Mbyte/s]Writing:  57%|█████▋    | 10.3G/17.9G [00:26<00:24, 315Mbyte/s]Writing:  58%|█████▊    | 10.4G/17.9G [00:26<00:21, 352Mbyte/s]Writing:  59%|█████▊    | 10.5G/17.9G [00:26<00:19, 381Mbyte/s]Writing:  59%|█████▉    | 10.6G/17.9G [00:26<00:18, 396Mbyte/s]Writing:  60%|█████▉    | 10.7G/17.9G [00:26<00:17, 410Mbyte/s]Writing:  60%|██████    | 10.8G/17.9G [00:27<00:18, 396Mbyte/s]Writing:  60%|██████    | 10.8G/17.9G [00:27<00:17, 400Mbyte/s]Writing:  61%|██████    | 10.9G/17.9G [00:27<00:15, 442Mbyte/s]Writing:  62%|██████▏   | 11.0G/17.9G [00:27<00:14, 462Mbyte/s]Writing:  62%|██████▏   | 11.1G/17.9G [00:27<00:14, 478Mbyte/s]Writing:  62%|██████▏   | 11.2G/17.9G [00:28<00:15, 444Mbyte/s]Writing:  63%|██████▎   | 11.3G/17.9G [00:28<00:15, 440Mbyte/s]Writing:  63%|██████▎   | 11.4G/17.9G [00:28<00:13, 472Mbyte/s]Writing:  64%|██████▍   | 11.5G/17.9G [00:28<00:13, 480Mbyte/s]Writing:  65%|██████▍   | 11.6G/17.9G [00:28<00:12, 491Mbyte/s]Writing:  65%|██████▍   | 11.6G/17.9G [00:29<00:14, 427Mbyte/s]Writing:  65%|██████▌   | 11.7G/17.9G [00:29<00:15, 402Mbyte/s]Writing:  66%|██████▌   | 11.8G/17.9G [00:29<00:13, 438Mbyte/s]Writing:  66%|██████▋   | 11.9G/17.9G [00:29<00:14, 429Mbyte/s]Writing:  67%|██████▋   | 12.0G/17.9G [00:29<00:13, 436Mbyte/s]Writing:  68%|██████▊   | 12.1G/17.9G [00:30<00:13, 425Mbyte/s]Writing:  68%|██████▊   | 12.2G/17.9G [00:30<00:13, 427Mbyte/s]Writing:  69%|██████▊   | 12.3G/17.9G [00:30<00:12, 435Mbyte/s]Writing:  69%|██████▉   | 12.4G/17.9G [00:30<00:13, 401Mbyte/s]Writing:  70%|██████▉   | 12.5G/17.9G [00:31<00:14, 385Mbyte/s]Writing:  70%|███████   | 12.6G/17.9G [00:31<00:13, 401Mbyte/s]Writing:  71%|███████   | 12.7G/17.9G [00:31<00:11, 439Mbyte/s]Writing:  71%|███████   | 12.8G/17.9G [00:31<00:11, 455Mbyte/s]Writing:  72%|███████▏  | 12.9G/17.9G [00:31<00:10, 467Mbyte/s]Writing:  72%|███████▏  | 12.9G/17.9G [00:32<00:12, 411Mbyte/s]Writing:  73%|███████▎  | 13.0G/17.9G [00:32<00:12, 398Mbyte/s]Writing:  73%|███████▎  | 13.1G/17.9G [00:32<00:11, 419Mbyte/s]Writing:  74%|███████▎  | 13.2G/17.9G [00:32<00:11, 401Mbyte/s]Writing:  74%|███████▍  | 13.3G/17.9G [00:33<00:11, 407Mbyte/s]Writing:  75%|███████▍  | 13.4G/17.9G [00:33<00:13, 345Mbyte/s]Writing:  75%|███████▍  | 13.4G/17.9G [00:33<00:13, 332Mbyte/s]Writing:  76%|███████▌  | 13.5G/17.9G [00:33<00:11, 377Mbyte/s]Writing:  76%|███████▌  | 13.6G/17.9G [00:33<00:10, 406Mbyte/s]Writing:  77%|███████▋  | 13.7G/17.9G [00:34<00:09, 431Mbyte/s]Writing:  77%|███████▋  | 13.8G/17.9G [00:34<00:09, 426Mbyte/s]Writing:  78%|███████▊  | 13.9G/17.9G [00:34<00:09, 437Mbyte/s]Writing:  78%|███████▊  | 14.0G/17.9G [00:34<00:09, 404Mbyte/s]Writing:  79%|███████▊  | 14.1G/17.9G [00:35<00:10, 358Mbyte/s]Writing:  79%|███████▉  | 14.1G/17.9G [00:35<00:10, 369Mbyte/s]Writing:  79%|███████▉  | 14.2G/17.9G [00:35<00:12, 306Mbyte/s]Writing:  80%|███████▉  | 14.2G/17.9G [00:35<00:11, 307Mbyte/s]Writing:  80%|███████▉  | 14.3G/17.9G [00:35<00:11, 304Mbyte/s]Writing:  80%|████████  | 14.4G/17.9G [00:36<00:09, 373Mbyte/s]Writing:  81%|████████  | 14.5G/17.9G [00:36<00:08, 421Mbyte/s]Writing:  81%|████████▏ | 14.6G/17.9G [00:36<00:07, 442Mbyte/s]Writing:  82%|████████▏ | 14.6G/17.9G [00:36<00:09, 341Mbyte/s]Writing:  82%|████████▏ | 14.7G/17.9G [00:36<00:09, 333Mbyte/s]Writing:  83%|████████▎ | 14.8G/17.9G [00:37<00:08, 377Mbyte/s]Writing:  83%|████████▎ | 14.9G/17.9G [00:37<00:07, 398Mbyte/s]Writing:  84%|████████▍ | 15.0G/17.9G [00:37<00:06, 420Mbyte/s]Writing:  84%|████████▍ | 15.1G/17.9G [00:37<00:08, 331Mbyte/s]Writing:  85%|████████▍ | 15.2G/17.9G [00:38<00:08, 322Mbyte/s]Writing:  85%|████████▌ | 15.3G/17.9G [00:38<00:07, 364Mbyte/s]Writing:  86%|████████▌ | 15.4G/17.9G [00:38<00:06, 393Mbyte/s]Writing:  86%|████████▋ | 15.5G/17.9G [00:38<00:05, 410Mbyte/s]Writing:  87%|████████▋ | 15.6G/17.9G [00:39<00:05, 400Mbyte/s]Writing:  87%|████████▋ | 15.7G/17.9G [00:39<00:05, 412Mbyte/s]Writing:  88%|████████▊ | 15.8G/17.9G [00:39<00:05, 422Mbyte/s]Writing:  89%|████████▊ | 15.9G/17.9G [00:39<00:05, 354Mbyte/s]Writing: 100%|██████████| 17.9G/17.9G [00:45<00:00, 360Mbyte/s]Writing: 100%|██████████| 17.9G/17.9G [00:45<00:00, 392Mbyte/s]
+INFO:hf-to-gguf:Model successfully exported to sql2pyspark-mlx/qwen35_pilot/gguf/pilot-f16.gguf
+[11:10:34] step 4: Q4_K_M
+total 66269872
+drwxr-xr-x   8 praponb  staff          256 Oct  9 11:10 .
+drwxr-xr-x  39 praponb  staff         1248 Oct  9 11:10 ..
+drwxr-xr-x   3 praponb  staff           96 Oct  9 08:27 .cache
+-rw-r--r--   1 praponb  staff   5680522464 Oct  9 08:39 Qwen3.5-9B-Q4_K_M.gguf
+-rw-r--r--   1 praponb  staff          213 Oct  9 08:48 download.log
+-rw-r--r--   1 praponb  staff  17920697280 Oct  9 11:10 pilot-f16.gguf
+-rw-r--r--   1 praponb  staff   5629109184 Oct  9 11:11 pilot-q4.gguf
+-rw-r--r--   1 praponb  staff   4683073536 Oct  9 08:48 qwen2.5-coder-7b-instruct-q4_k_m.gguf
+[11:11:47] start Ollama
+[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 0% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 2% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 3% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 6% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 9% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 11% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 12% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 15% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 16% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 18% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 21% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 22% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 25% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 28% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 29% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 32% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 36% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 37% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 40% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 43% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 45% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 48% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 51% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 52% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 56% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 59% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 60% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 63% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 67% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 68% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 71% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 73% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 74% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 76% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 78% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 79% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 82% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 84% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 85% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 87% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 89% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 90% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 92% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 94% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 95% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 98% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 100% [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 100% [K
+parsing GGUF ⠋ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 100% [K
+parsing GGUF ⠙ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 100% [K
+parsing GGUF ⠹ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c 100% [K
+parsing GGUF [K
+using existing layer sha256:0ab932a2e42699ae12d4ad1aa18f5ab0142664add37f3da6fd08718dd778f59c [K
+creating new layer sha256:7e8b5ba3c000ca9f1b7533d18e5b4f86263f78361180aef2ae0af8ecf611676b [K
+using existing layer sha256:6377970c6700b29b5610fd4cc973ab909db877635b9a1bc602f691175f2ff90e [K
+using existing layer sha256:704bf49632920ec81df67069060190eebeee8cf4c05bbb70a67ff96211c32196 [K
+writing manifest [K
+success [K[?25h[?2026l
+[11:11:57] step 5: q35-pilot-q4 hold-out (62)
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/09 11:11:58 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.40 instead (on interface en0)
+26/10/09 11:11:58 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/09 11:12:00 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[11:15:45] stopped: Ollama put q35 replies in message.thinking; added evaluate.py --think false, re-running from step 5
+[11:15:45] step 5: q35-pilot-q4 hold-out (62)
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/09 11:15:46 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.40 instead (on interface en0)
+26/10/09 11:15:46 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/09 11:15:46 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+  10/62  lenient match 8/10  (40s)
+  20/62  lenient match 17/20  (95s)
+{"ts": "2026-10-09 11:17:52.541", "level": "ERROR", "logger": "DataFrameQueryContextLogger", "msg": "[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `patients`.`full_name` cannot be resolved. Did you mean one of the following? [`full_name`, `patient_id`, `birth_date`, `insurance_type`, `city`]. SQLSTATE: 42703", "context": {"file": "<pyspark>", "line": "9", "fragment": "col", "errorClass": "UNRESOLVED_COLUMN.WITH_SUGGESTION"}, "exception": {"class": "Py4JJavaError", "msg": "An error occurred while calling o1402.select.\n: org.apache.spark.sql.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `patients`.`full_name` cannot be resolved. Did you mean one of the following? [`full_name`, `patient_id`, `birth_date`, `insurance_type`, `city`]. SQLSTATE: 42703;\n'Project [id#18625, 'patients.full_name]\n+- Project [id#18625, patient_id#128, full_name#116, gender#117, birth_date#118, city#119, insurance_type#120, is_smoker#121]\n   +- Join LeftOuter, (id#18625 = id#115)\n      :- Project [patient_id#128, patient_id#128 AS id#18625]\n      :  +- Project [patient_id#128]\n      :     +- Filter (appt_type#131 = emergency)\n      :        +- LogicalRDD [id#127, patient_id#128, doctor_id#129, appt_date#130, appt_type#131, fee#132, status#133, wait_minutes#134], false\n      +- LogicalRDD [id#115, full_name#116, gender#117, birth_date#118, city#119, insurance_type#120, is_smoker#121], false\n\n\tat org.apache.spark.sql.errors.QueryCompilationErrors$.unresolvedAttributeError(QueryCompilationErrors.scala:432)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.org$apache$spark$sql$catalyst$analysis$CheckAnalysis$$failUnresolvedAttribute(CheckAnalysis.scala:244)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$8(CheckAnalysis.scala:536)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$8$adapted(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:277)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$7(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$7$adapted(CheckAnalysis.scala:534)\n\tat scala.collection.immutable.List.foreach(List.scala:323)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$2(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$2$adapted(CheckAnalysis.scala:363)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:277)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis0(CheckAnalysis.scala:363)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis0$(CheckAnalysis.scala:330)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis0(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis(CheckAnalysis.scala:319)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis$(CheckAnalysis.scala:306)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$resolveInFixedPoint$1(HybridAnalyzer.scala:275)\n\tat scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker$.withTracker(QueryPlanningTracker.scala:89)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.resolveInFixedPoint(HybridAnalyzer.scala:275)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$apply$1(HybridAnalyzer.scala:82)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.withTrackedAnalyzerBridgeState(HybridAnalyzer.scala:117)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.apply(HybridAnalyzer.scala:75)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runAnalysis$1(Analyzer.scala:368)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$2(Analyzer.scala:373)\n\tat org.apache.spark.sql.internal.SQLConf$.withExistingConf(SQLConf.scala:171)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runWithSessionConf(Analyzer.scala:400)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$1(Analyzer.scala:373)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.markInAnalyzer(AnalysisHelper.scala:423)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.executeAndCheck(Analyzer.scala:373)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$2(QueryExecution.scala:200)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker.measurePhase(QueryPlanningTracker.scala:148)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$3(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution.withQueryExecutionId(QueryExecution.scala:429)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$2(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution$.withInternalError(QueryExecution.scala:872)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$1(QueryExecution.scala:409)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.execution.QueryExecution.executePhase(QueryExecution.scala:408)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$1(QueryExecution.scala:200)\n\tat scala.util.Try$.apply(Try.scala:217)\n\tat org.apache.spark.util.Utils$.doTryWithCallerStacktrace(Utils.scala:1407)\n\tat org.apache.spark.util.Utils$.getTryWithCallerStacktrace(Utils.scala:1457)\n\tat org.apache.spark.util.LazyTry.get(LazyTry.scala:61)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$analyzed$1(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.withAbortTransactionOnFailure(QueryExecution.scala:632)\n\tat org.apache.spark.sql.execution.QueryExecution.analyzed(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:151)\n\tat org.apache.spark.sql.classic.Dataset$.$anonfun$ofRows$1(Dataset.scala:114)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.classic.Dataset$.ofRows(Dataset.scala:112)\n\tat org.apache.spark.sql.classic.Dataset.withPlan(Dataset.scala:2367)\n\tat org.apache.spark.sql.classic.Dataset.select(Dataset.scala:974)\n\tat org.apache.spark.sql.classic.Dataset.select(Dataset.scala:231)\n\tat jdk.internal.reflect.GeneratedMethodAccessor111.invoke(Unknown Source)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)\n\tat py4j.Gateway.invoke(Gateway.java:282)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)\n\tat py4j.ClientServerConnection.run(ClientServerConnection.java:108)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n", "stacktrace": [{"class": null, "method": "deco", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/errors/exceptions/captured.py", "line": "251"}, {"class": null, "method": "get_return_value", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/py4j/protocol.py", "line": "327"}]}}
+{"ts": "2026-10-09 11:17:52.564", "level": "ERROR", "logger": "DataFrameQueryContextLogger", "msg": "[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `patients`.`full_name` cannot be resolved. Did you mean one of the following? [`full_name`, `patient_id`, `birth_date`, `insurance_type`, `city`]. SQLSTATE: 42703", "context": {"file": "<pyspark>", "line": "11", "fragment": "col", "errorClass": "UNRESOLVED_COLUMN.WITH_SUGGESTION"}, "exception": {"class": "Py4JJavaError", "msg": "An error occurred while calling o1429.select.\n: org.apache.spark.sql.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `patients`.`full_name` cannot be resolved. Did you mean one of the following? [`full_name`, `patient_id`, `birth_date`, `insurance_type`, `city`]. SQLSTATE: 42703;\n'Project [id#18626, 'patients.full_name]\n+- Project [id#18626, patient_id#128, full_name#116, gender#117, birth_date#118, city#119, insurance_type#120, is_smoker#121]\n   +- Join LeftOuter, (id#18626 = id#115)\n      :- Project [patient_id#128, patient_id#128 AS id#18626]\n      :  +- Project [patient_id#128]\n      :     +- Filter (appt_type#131 = emergency)\n      :        +- LogicalRDD [id#127, patient_id#128, doctor_id#129, appt_date#130, appt_type#131, fee#132, status#133, wait_minutes#134], false\n      +- LogicalRDD [id#115, full_name#116, gender#117, birth_date#118, city#119, insurance_type#120, is_smoker#121], false\n\n\tat org.apache.spark.sql.errors.QueryCompilationErrors$.unresolvedAttributeError(QueryCompilationErrors.scala:432)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.org$apache$spark$sql$catalyst$analysis$CheckAnalysis$$failUnresolvedAttribute(CheckAnalysis.scala:244)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$8(CheckAnalysis.scala:536)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$8$adapted(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:277)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$7(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$7$adapted(CheckAnalysis.scala:534)\n\tat scala.collection.immutable.List.foreach(List.scala:323)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$2(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$2$adapted(CheckAnalysis.scala:363)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:277)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis0(CheckAnalysis.scala:363)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis0$(CheckAnalysis.scala:330)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis0(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis(CheckAnalysis.scala:319)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis$(CheckAnalysis.scala:306)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$resolveInFixedPoint$1(HybridAnalyzer.scala:275)\n\tat scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker$.withTracker(QueryPlanningTracker.scala:89)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.resolveInFixedPoint(HybridAnalyzer.scala:275)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$apply$1(HybridAnalyzer.scala:82)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.withTrackedAnalyzerBridgeState(HybridAnalyzer.scala:117)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.apply(HybridAnalyzer.scala:75)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runAnalysis$1(Analyzer.scala:368)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$2(Analyzer.scala:373)\n\tat org.apache.spark.sql.internal.SQLConf$.withExistingConf(SQLConf.scala:171)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runWithSessionConf(Analyzer.scala:400)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$1(Analyzer.scala:373)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.markInAnalyzer(AnalysisHelper.scala:423)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.executeAndCheck(Analyzer.scala:373)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$2(QueryExecution.scala:200)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker.measurePhase(QueryPlanningTracker.scala:148)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$3(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution.withQueryExecutionId(QueryExecution.scala:429)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$2(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution$.withInternalError(QueryExecution.scala:872)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$1(QueryExecution.scala:409)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.execution.QueryExecution.executePhase(QueryExecution.scala:408)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$1(QueryExecution.scala:200)\n\tat scala.util.Try$.apply(Try.scala:217)\n\tat org.apache.spark.util.Utils$.doTryWithCallerStacktrace(Utils.scala:1407)\n\tat org.apache.spark.util.Utils$.getTryWithCallerStacktrace(Utils.scala:1457)\n\tat org.apache.spark.util.LazyTry.get(LazyTry.scala:61)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$analyzed$1(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.withAbortTransactionOnFailure(QueryExecution.scala:632)\n\tat org.apache.spark.sql.execution.QueryExecution.analyzed(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:151)\n\tat org.apache.spark.sql.classic.Dataset$.$anonfun$ofRows$1(Dataset.scala:114)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.classic.Dataset$.ofRows(Dataset.scala:112)\n\tat org.apache.spark.sql.classic.Dataset.withPlan(Dataset.scala:2367)\n\tat org.apache.spark.sql.classic.Dataset.select(Dataset.scala:974)\n\tat org.apache.spark.sql.classic.Dataset.select(Dataset.scala:231)\n\tat jdk.internal.reflect.GeneratedMethodAccessor111.invoke(Unknown Source)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)\n\tat py4j.Gateway.invoke(Gateway.java:282)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)\n\tat py4j.ClientServerConnection.run(ClientServerConnection.java:108)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n", "stacktrace": [{"class": null, "method": "deco", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/errors/exceptions/captured.py", "line": "251"}, {"class": null, "method": "get_return_value", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/py4j/protocol.py", "line": "327"}]}}
+  30/62  lenient match 23/30  (151s)
+  40/62  lenient match 30/40  (215s)
+  50/62  lenient match 35/50  (304s)
+  60/62  lenient match 41/60  (371s)
+  62/62  lenient match 41/62  (385s)
+
+sql2pyspark:q35-pilot-q4 on holdout.jsonl (n=62)
+  strict : syntax 100.0%  runs 69.3%  match 66.1%
+  lenient: syntax 100.0%  runs 69.3%  match 66.1%
+  results -> sql2pyspark-mlx/qwen35_pilot/results/q35-pilot-q4__holdout.json
+[11:22:16] step 6: CPU-only speed (num_gpu 0) v15-q4 vs q35-pilot-q4
+{"model": "sql2pyspark:v15-q4", "tok_s": 14.37, "tokens": 234, "cold_load_s": 6.86, "prompt_tok_s": 85.87, "server_pred_tok_s": 4.0}
+{"model": "sql2pyspark:q35-pilot-q4", "tok_s": 11.7, "tokens": 260, "cold_load_s": 7.11, "prompt_tok_s": 56.34, "server_pred_tok_s": 3.25}
+[11:23:17] base comparison: create untuned models
+[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 1% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 2% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 5% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 8% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 10% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 13% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 16% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 17% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 20% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 23% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 25% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 28% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 31% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 33% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 36% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 39% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 41% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 44% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 47% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 48% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 52% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 55% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 56% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 59% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 63% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 64% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 67% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 70% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 72% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 75% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 78% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 80% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 83% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 86% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 88% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 91% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 94% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 95% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 98% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 100% [K
+parsing GGUF ⠋ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 100% [K
+parsing GGUF ⠙ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 100% [K
+parsing GGUF ⠹ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 100% [K
+parsing GGUF [K
+using existing layer sha256:03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8 [K
+using existing layer sha256:7e8b5ba3c000ca9f1b7533d18e5b4f86263f78361180aef2ae0af8ecf611676b [K
+using existing layer sha256:6377970c6700b29b5610fd4cc973ab909db877635b9a1bc602f691175f2ff90e [K
+using existing layer sha256:704bf49632920ec81df67069060190eebeee8cf4c05bbb70a67ff96211c32196 [K
+writing manifest [K
+success [K[?25h[?2026l
+[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 0% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 1% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 5% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 8% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 9% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 13% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 15% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 17% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 20% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 23% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 25% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 28% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 32% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 34% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 38% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 42% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 44% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 48% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 51% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 53% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 57% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 61% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 63% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 67% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 70% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 72% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 76% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 80% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 82% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 86% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 90% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 92% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 96% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 100% [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 100% [K
+parsing GGUF ⠋ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c 100% [K
+parsing GGUF [K
+using existing layer sha256:509287f78cb4d4cf6b3843734733b914b2c158e43e22a7f4bf5e963800894d3c [K
+using existing layer sha256:64631f1262e4e87d47511bb7b405540321afd297f723f88bf72faae19992ddba [K
+using existing layer sha256:6377970c6700b29b5610fd4cc973ab909db877635b9a1bc602f691175f2ff90e [K
+using existing layer sha256:704bf49632920ec81df67069060190eebeee8cf4c05bbb70a67ff96211c32196 [K
+writing manifest [K
+success [K[?25h[?2026l
+[11:23:30] base-q35-q4 hold-out (62)
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/09 11:23:31 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.40 instead (on interface en0)
+26/10/09 11:23:31 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/09 11:23:32 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+  10/62  lenient match 0/10  (140s)
+  20/62  lenient match 0/20  (362s)
+  30/62  lenient match 1/30  (650s)
+  40/62  lenient match 2/40  (960s)
+  50/62  lenient match 2/50  (1338s)
+  60/62  lenient match 3/60  (1669s)
+  62/62  lenient match 3/62  (1765s)
+
+sql2pyspark:base-q35-q4 on holdout.jsonl (n=62)
+  strict : syntax 98.4%  runs 0.0%  match 0.0%
+  lenient: syntax 98.4%  runs 9.7%  match 4.8%
+  results -> sql2pyspark-mlx/qwen35_pilot/results/base-q35-q4__holdout.json
+[11:53:02] base-coder7b-q4 hold-out (62)
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/09 11:53:03 WARN Utils: Your hostname, Prapons-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.40 instead (on interface en0)
+26/10/09 11:53:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/09 11:53:04 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++---+-------------+----------+
+| id|    full_name|      city|
++---+-------------+----------+
+| 10| Kanya Srisuk|      NULL|
+| 11|         NULL|    London|
+| 12|         NULL|   Bangkok|
+| 15|   Carol Diaz|    Berlin|
+| 18|   Henry Ford|Chiang Mai|
+| 19| Kanya Srisuk|    London|
+| 21| Kanya Srisuk|Chiang Mai|
+| 24|  Liam O'Neil|Chiang Mai|
+| 25| Kanya Srisuk|Chiang Mai|
+| 32|Olivia Garcia|      NULL|
+| 39|   Emma Brown|      NULL|
++---+-------------+----------+
+
++---+-------------+----------+
+| id|    full_name|      city|
++---+-------------+----------+
+| 10| Kanya Srisuk|      NULL|
+| 11|         NULL|    London|
+| 12|         NULL|   Bangkok|
+| 15|   Carol Diaz|    Berlin|
+| 18|   Henry Ford|Chiang Mai|
+| 19| Kanya Srisuk|    London|
+| 21| Kanya Srisuk|Chiang Mai|
+| 24|  Liam O'Neil|Chiang Mai|
+| 25| Kanya Srisuk|Chiang Mai|
+| 32|Olivia Garcia|      NULL|
+| 39|   Emma Brown|      NULL|
++---+-------------+----------+
+
++---+-----------+-----------+--------------+----------------+
+| id|doctor_name|  specialty|      hospital|years_experience|
++---+-----------+-----------+--------------+----------------+
+| 38| Dr. Nguyen|    General| City Hospital|              35|
+| 35| Dr. Nguyen| Cardiology|          NULL|              34|
+| 12|  Dr. Patel|    General|General Clinic|              33|
+|  9| Dr. Tanaka| Pediatrics| City Hospital|              32|
+| 25| Dr. Nguyen|Dermatology|    Bumrungrad|              32|
+| 31|  Dr. Patel|Orthopedics|General Clinic|              32|
+| 22|  Dr. Smith| Cardiology|          NULL|              31|
+| 34| Dr. Müller| Cardiology|          NULL|              31|
+| 11|  Dr. Smith| Cardiology|          NULL|              30|
+| 33| Dr. Tanaka|Orthopedics|General Clinic|              30|
+| 24| Dr. Müller|    General|    Bumrungrad|              29|
+|  2| Dr. Müller|    General|      St. Mary|              28|
+|  7|  Dr. Patel| Cardiology| City Hospital|              28|
+| 20| Dr. Müller| Cardiology|      St. Mary|              28|
+| 27|  Dr. Smith| Cardiology|General Clinic|              27|
+| 19|  Dr. Smith| Pediatrics|          NULL|              26|
+| 18| Dr. Tanaka|Dermatology|      St. Mary|              25|
+|  1|  Dr. Patel| Cardiology|    Bumrungrad|              24|
+|  6| Dr. Nguyen|Orthopedics|      St. Mary|              23|
+| 28| Dr. Tanaka| Pediatrics|General Clinic|              23|
++---+-----------+-----------+--------------+----------------+
+only showing top 20 rows
++---+-----------+-----------+--------------+----------------+
+| id|doctor_name|  specialty|      hospital|years_experience|
++---+-----------+-----------+--------------+----------------+
+| 38| Dr. Nguyen|    General| City Hospital|              35|
+| 35| Dr. Nguyen| Cardiology|          NULL|              34|
+| 12|  Dr. Patel|    General|General Clinic|              33|
+|  9| Dr. Tanaka| Pediatrics| City Hospital|              32|
+| 25| Dr. Nguyen|Dermatology|    Bumrungrad|              32|
+| 31|  Dr. Patel|Orthopedics|General Clinic|              32|
+| 22|  Dr. Smith| Cardiology|          NULL|              31|
+| 34| Dr. Müller| Cardiology|          NULL|              31|
+| 11|  Dr. Smith| Cardiology|          NULL|              30|
+| 33| Dr. Tanaka|Orthopedics|General Clinic|              30|
+| 24| Dr. Müller|    General|    Bumrungrad|              29|
+|  2| Dr. Müller|    General|      St. Mary|              28|
+|  7|  Dr. Patel| Cardiology| City Hospital|              28|
+| 20| Dr. Müller| Cardiology|      St. Mary|              28|
+| 27|  Dr. Smith| Cardiology|General Clinic|              27|
+| 19|  Dr. Smith| Pediatrics|          NULL|              26|
+| 18| Dr. Tanaka|Dermatology|      St. Mary|              25|
+|  1|  Dr. Patel| Cardiology|    Bumrungrad|              24|
+|  6| Dr. Nguyen|Orthopedics|      St. Mary|              23|
+| 28| Dr. Tanaka| Pediatrics|General Clinic|              23|
++---+-----------+-----------+--------------+----------------+
+only showing top 20 rows
++---+-------------+------+-----------+
+| id|      airline|origin|destination|
++---+-------------+------+-----------+
+|  5| Thai Airways|   FRA|        JFK|
+|  6|          ANA|   JFK|        JFK|
+|  8| Thai Airways|   NRT|        SIN|
+| 15|    Lufthansa|   SIN|        LHR|
+| 21|          ANA|   NRT|        SIN|
+| 22| Thai Airways|   SIN|        JFK|
+| 23|Singapore Air|   JFK|        SIN|
+| 24|    Lufthansa|   NRT|        BKK|
+| 31| Thai Airways|   BKK|        LHR|
+| 33|Singapore Air|   NRT|        FRA|
+| 36|    Lufthansa|   SIN|        SIN|
+| 37|    Lufthansa|   JFK|        BKK|
++---+-------------+------+-----------+
+
++---+-------------+------+-----------+
+| id|      airline|origin|destination|
++---+-------------+------+-----------+
+|  5| Thai Airways|   FRA|        JFK|
+|  6|          ANA|   JFK|        JFK|
+|  8| Thai Airways|   NRT|        SIN|
+| 15|    Lufthansa|   SIN|        LHR|
+| 21|          ANA|   NRT|        SIN|
+| 22| Thai Airways|   SIN|        JFK|
+| 23|Singapore Air|   JFK|        SIN|
+| 24|    Lufthansa|   NRT|        BKK|
+| 31| Thai Airways|   BKK|        LHR|
+| 33|Singapore Air|   NRT|        FRA|
+| 36|    Lufthansa|   SIN|        SIN|
+| 37|    Lufthansa|   JFK|        BKK|
++---+-------------+------+-----------+
+
+Total no-show appointments: 8
+Total no-show appointments: 8
++---+--------------+----------+
+| id|  patient_name|birth_year|
++---+--------------+----------+
+|  1|     DAVID LEE|      2025|
+|  2|PIM CHAIYAPORN|      2023|
+|  3|          NULL|      2023|
+|  4|    EMMA BROWN|      2023|
+|  5|     NOAH PARK|      2025|
+|  6|  KANYA SRISUK|      2024|
+|  7|     DAVID LEE|      2024|
+|  8|     GRACE KIM|      2024|
+|  9|     MIA ROSSI|      2023|
+| 10|  KANYA SRISUK|      2024|
+| 11|          NULL|      2025|
+| 12|          NULL|      2023|
+| 13|  FRANK MILLER|      2025|
+| 14|  FRANK MILLER|      2023|
+| 15|    CAROL DIAZ|      2024|
+| 16|     NOAH PARK|      2024|
+| 17|          NULL|      2024|
+| 18|    HENRY FORD|      2025|
+| 19|  KANYA SRISUK|      2023|
+| 20| OLIVIA GARCIA|      NULL|
++---+--------------+----------+
+only showing top 20 rows
++---+--------------+----------+
+| id|  patient_name|birth_year|
++---+--------------+----------+
+|  1|     DAVID LEE|      2025|
+|  2|PIM CHAIYAPORN|      2023|
+|  3|          NULL|      2023|
+|  4|    EMMA BROWN|      2023|
+|  5|     NOAH PARK|      2025|
+|  6|  KANYA SRISUK|      2024|
+|  7|     DAVID LEE|      2024|
+|  8|     GRACE KIM|      2024|
+|  9|     MIA ROSSI|      2023|
+| 10|  KANYA SRISUK|      2024|
+| 11|          NULL|      2025|
+| 12|          NULL|      2023|
+| 13|  FRANK MILLER|      2025|
+| 14|  FRANK MILLER|      2023|
+| 15|    CAROL DIAZ|      2024|
+| 16|     NOAH PARK|      2024|
+| 17|          NULL|      2024|
+| 18|    HENRY FORD|      2025|
+| 19|  KANYA SRISUK|      2023|
+| 20| OLIVIA GARCIA|      NULL|
++---+--------------+----------+
+only showing top 20 rows
++---+-------------------+-------------+--------------+
+| id|     departure_time|departure_day|departure_hour|
++---+-------------------+-------------+--------------+
+|  1|2024-03-22 18:56:00|   2024-03-22|            18|
+|  2|2024-03-13 01:10:00|   2024-03-13|             1|
+|  3|2025-05-09 09:15:00|   2025-05-09|             9|
+|  4|2025-11-15 00:19:00|   2025-11-15|             0|
+|  5|2024-10-14 04:32:00|   2024-10-14|             4|
+|  6|2024-12-07 01:49:00|   2024-12-07|             1|
+|  7|               NULL|         NULL|          NULL|
+|  8|2024-07-20 22:01:00|   2024-07-20|            22|
+|  9|2025-01-28 01:35:00|   2025-01-28|             1|
+| 10|2025-05-09 00:50:00|   2025-05-09|             0|
+| 11|2024-05-06 19:48:00|   2024-05-06|            19|
+| 12|2023-04-08 08:22:00|   2023-04-08|             8|
+| 13|2024-11-15 07:21:00|   2024-11-15|             7|
+| 14|2025-01-30 03:09:00|   2025-01-30|             3|
+| 15|2024-10-26 05:16:00|   2024-10-26|             5|
+| 16|2024-08-31 17:54:00|   2024-08-31|            17|
+| 17|2023-05-20 18:36:00|   2023-05-20|            18|
+| 18|               NULL|         NULL|          NULL|
+| 19|               NULL|         NULL|          NULL|
+| 20|2024-09-13 06:47:00|   2024-09-13|             6|
++---+-------------------+-------------+--------------+
+only showing top 20 rows
++---+-------------------+-------------+--------------+
+| id|     departure_time|departure_day|departure_hour|
++---+-------------------+-------------+--------------+
+|  1|2024-03-22 18:56:00|   2024-03-22|            18|
+|  2|2024-03-13 01:10:00|   2024-03-13|             1|
+|  3|2025-05-09 09:15:00|   2025-05-09|             9|
+|  4|2025-11-15 00:19:00|   2025-11-15|             0|
+|  5|2024-10-14 04:32:00|   2024-10-14|             4|
+|  6|2024-12-07 01:49:00|   2024-12-07|             1|
+|  7|               NULL|         NULL|          NULL|
+|  8|2024-07-20 22:01:00|   2024-07-20|            22|
+|  9|2025-01-28 01:35:00|   2025-01-28|             1|
+| 10|2025-05-09 00:50:00|   2025-05-09|             0|
+| 11|2024-05-06 19:48:00|   2024-05-06|            19|
+| 12|2023-04-08 08:22:00|   2023-04-08|             8|
+| 13|2024-11-15 07:21:00|   2024-11-15|             7|
+| 14|2025-01-30 03:09:00|   2025-01-30|             3|
+| 15|2024-10-26 05:16:00|   2024-10-26|             5|
+| 16|2024-08-31 17:54:00|   2024-08-31|            17|
+| 17|2023-05-20 18:36:00|   2023-05-20|            18|
+| 18|               NULL|         NULL|          NULL|
+| 19|               NULL|         NULL|          NULL|
+| 20|2024-09-13 06:47:00|   2024-09-13|             6|
++---+-------------------+-------------+--------------+
+only showing top 20 rows
++---+---------+--------------+----------+-----+-------------------+------------+------------+
+| id|flight_id|passenger_name|seat_class|price|          booked_at|is_cancelled|loyalty_tier|
++---+---------+--------------+----------+-----+-------------------+------------+------------+
+| 12|       23|    Emma Brown|     FIRST|576.1|2023-08-29 15:55:00|        true|        NULL|
++---+---------+--------------+----------+-----+-------------------+------------+------------+
+
++---+---------+--------------+----------+-----+-------------------+------------+------------+
+| id|flight_id|passenger_name|seat_class|price|          booked_at|is_cancelled|loyalty_tier|
++---+---------+--------------+----------+-----+-------------------+------------+------------+
+| 12|       23|    Emma Brown|     FIRST|576.1|2023-08-29 15:55:00|        true|        NULL|
++---+---------+--------------+----------+-----+-------------------+------------+------------+
+
+  10/62  lenient match 1/10  (79s)
+{"ts": "2026-10-09 11:54:48.083", "level": "ERROR", "logger": "DataFrameQueryContextLogger", "msg": "[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Unassigned` cannot be resolved. Did you mean one of the following? [`hospital`, `id`, `specialty`, `doctor_name`, `years_experience`]. SQLSTATE: 42703", "context": {"file": "jdk.internal.reflect.GeneratedMethodAccessor107.invoke(Unknown Source)", "line": "", "fragment": "col", "errorClass": "UNRESOLVED_COLUMN.WITH_SUGGESTION"}, "exception": {"class": "Py4JJavaError", "msg": "An error occurred while calling o752.withColumn.\n: org.apache.spark.sql.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Unassigned` cannot be resolved. Did you mean one of the following? [`hospital`, `id`, `specialty`, `doctor_name`, `years_experience`]. SQLSTATE: 42703;\n'Project [id#122, doctor_name#123, specialty#124, 'coalesce(hospital#125, 'Unassigned) AS hospital#10670, years_experience#126]\n+- SubqueryAlias doctors\n   +- View (`doctors`, [id#122, doctor_name#123, specialty#124, hospital#125, years_experience#126])\n      +- LogicalRDD [id#122, doctor_name#123, specialty#124, hospital#125, years_experience#126], false\n\n\tat org.apache.spark.sql.errors.QueryCompilationErrors$.unresolvedAttributeError(QueryCompilationErrors.scala:432)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.org$apache$spark$sql$catalyst$analysis$CheckAnalysis$$failUnresolvedAttribute(CheckAnalysis.scala:244)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$8(CheckAnalysis.scala:536)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$8$adapted(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:277)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$foreachUp$1(TreeNode.scala:276)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$foreachUp$1$adapted(TreeNode.scala:276)\n\tat scala.collection.immutable.Vector.foreach(Vector.scala:2125)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:276)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$foreachUp$1(TreeNode.scala:276)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$foreachUp$1$adapted(TreeNode.scala:276)\n\tat scala.collection.immutable.Vector.foreach(Vector.scala:2125)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:276)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$7(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$7$adapted(CheckAnalysis.scala:534)\n\tat scala.collection.immutable.List.foreach(List.scala:323)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$2(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$2$adapted(CheckAnalysis.scala:363)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:277)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis0(CheckAnalysis.scala:363)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis0$(CheckAnalysis.scala:330)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis0(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis(CheckAnalysis.scala:319)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis$(CheckAnalysis.scala:306)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$resolveInFixedPoint$1(HybridAnalyzer.scala:275)\n\tat scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker$.withTracker(QueryPlanningTracker.scala:89)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.resolveInFixedPoint(HybridAnalyzer.scala:275)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$apply$1(HybridAnalyzer.scala:82)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.withTrackedAnalyzerBridgeState(HybridAnalyzer.scala:117)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.apply(HybridAnalyzer.scala:75)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runAnalysis$1(Analyzer.scala:368)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$2(Analyzer.scala:373)\n\tat org.apache.spark.sql.internal.SQLConf$.withExistingConf(SQLConf.scala:171)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runWithSessionConf(Analyzer.scala:400)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$1(Analyzer.scala:373)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.markInAnalyzer(AnalysisHelper.scala:423)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.executeAndCheck(Analyzer.scala:373)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$2(QueryExecution.scala:200)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker.measurePhase(QueryPlanningTracker.scala:148)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$3(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution.withQueryExecutionId(QueryExecution.scala:429)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$2(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution$.withInternalError(QueryExecution.scala:872)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$1(QueryExecution.scala:409)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.execution.QueryExecution.executePhase(QueryExecution.scala:408)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$1(QueryExecution.scala:200)\n\tat scala.util.Try$.apply(Try.scala:217)\n\tat org.apache.spark.util.Utils$.doTryWithCallerStacktrace(Utils.scala:1407)\n\tat org.apache.spark.util.Utils$.getTryWithCallerStacktrace(Utils.scala:1457)\n\tat org.apache.spark.util.LazyTry.get(LazyTry.scala:61)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$analyzed$1(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.withAbortTransactionOnFailure(QueryExecution.scala:632)\n\tat org.apache.spark.sql.execution.QueryExecution.analyzed(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:151)\n\tat org.apache.spark.sql.classic.Dataset$.$anonfun$ofRows$1(Dataset.scala:114)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.classic.Dataset$.ofRows(Dataset.scala:112)\n\tat org.apache.spark.sql.classic.Dataset.withPlan(Dataset.scala:2367)\n\tat org.apache.spark.sql.classic.Dataset.withColumns(Dataset.scala:1365)\n\tat org.apache.spark.sql.classic.Dataset.withColumns(Dataset.scala:231)\n\tat org.apache.spark.sql.Dataset.withColumn(Dataset.scala:2292)\n\tat org.apache.spark.sql.classic.Dataset.withColumn(Dataset.scala:1904)\n\tat org.apache.spark.sql.classic.Dataset.withColumn(Dataset.scala:231)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)\n\tat py4j.Gateway.invoke(Gateway.java:282)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)\n\tat py4j.ClientServerConnection.run(ClientServerConnection.java:108)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n", "stacktrace": [{"class": null, "method": "deco", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/errors/exceptions/captured.py", "line": "251"}, {"class": null, "method": "get_return_value", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/py4j/protocol.py", "line": "327"}]}}
+{"ts": "2026-10-09 11:54:48.102", "level": "ERROR", "logger": "DataFrameQueryContextLogger", "msg": "[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Unassigned` cannot be resolved. Did you mean one of the following? [`hospital`, `id`, `specialty`, `doctor_name`, `years_experience`]. SQLSTATE: 42703", "context": {"file": "jdk.internal.reflect.GeneratedMethodAccessor107.invoke(Unknown Source)", "line": "", "fragment": "col", "errorClass": "UNRESOLVED_COLUMN.WITH_SUGGESTION"}, "exception": {"class": "Py4JJavaError", "msg": "An error occurred while calling o767.withColumn.\n: org.apache.spark.sql.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Unassigned` cannot be resolved. Did you mean one of the following? [`hospital`, `id`, `specialty`, `doctor_name`, `years_experience`]. SQLSTATE: 42703;\n'Project [id#122, doctor_name#123, specialty#124, 'coalesce(hospital#125, 'Unassigned) AS hospital#10671, years_experience#126]\n+- SubqueryAlias doctors\n   +- View (`doctors`, [id#122, doctor_name#123, specialty#124, hospital#125, years_experience#126])\n      +- LogicalRDD [id#122, doctor_name#123, specialty#124, hospital#125, years_experience#126], false\n\n\tat org.apache.spark.sql.errors.QueryCompilationErrors$.unresolvedAttributeError(QueryCompilationErrors.scala:432)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.org$apache$spark$sql$catalyst$analysis$CheckAnalysis$$failUnresolvedAttribute(CheckAnalysis.scala:244)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$8(CheckAnalysis.scala:536)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$8$adapted(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:277)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$foreachUp$1(TreeNode.scala:276)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$foreachUp$1$adapted(TreeNode.scala:276)\n\tat scala.collection.immutable.Vector.foreach(Vector.scala:2125)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:276)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$foreachUp$1(TreeNode.scala:276)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$foreachUp$1$adapted(TreeNode.scala:276)\n\tat scala.collection.immutable.Vector.foreach(Vector.scala:2125)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:276)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$7(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$7$adapted(CheckAnalysis.scala:534)\n\tat scala.collection.immutable.List.foreach(List.scala:323)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$2(CheckAnalysis.scala:534)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.$anonfun$checkAnalysis0$2$adapted(CheckAnalysis.scala:363)\n\tat org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:277)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis0(CheckAnalysis.scala:363)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis0$(CheckAnalysis.scala:330)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis0(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis(CheckAnalysis.scala:319)\n\tat org.apache.spark.sql.catalyst.analysis.CheckAnalysis.checkAnalysis$(CheckAnalysis.scala:306)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$resolveInFixedPoint$1(HybridAnalyzer.scala:275)\n\tat scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker$.withTracker(QueryPlanningTracker.scala:89)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.resolveInFixedPoint(HybridAnalyzer.scala:275)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$apply$1(HybridAnalyzer.scala:82)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.withTrackedAnalyzerBridgeState(HybridAnalyzer.scala:117)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.apply(HybridAnalyzer.scala:75)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runAnalysis$1(Analyzer.scala:368)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$2(Analyzer.scala:373)\n\tat org.apache.spark.sql.internal.SQLConf$.withExistingConf(SQLConf.scala:171)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runWithSessionConf(Analyzer.scala:400)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$1(Analyzer.scala:373)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.markInAnalyzer(AnalysisHelper.scala:423)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.executeAndCheck(Analyzer.scala:373)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$2(QueryExecution.scala:200)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker.measurePhase(QueryPlanningTracker.scala:148)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$3(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution.withQueryExecutionId(QueryExecution.scala:429)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$2(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution$.withInternalError(QueryExecution.scala:872)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$1(QueryExecution.scala:409)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.execution.QueryExecution.executePhase(QueryExecution.scala:408)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$1(QueryExecution.scala:200)\n\tat scala.util.Try$.apply(Try.scala:217)\n\tat org.apache.spark.util.Utils$.doTryWithCallerStacktrace(Utils.scala:1407)\n\tat org.apache.spark.util.Utils$.getTryWithCallerStacktrace(Utils.scala:1457)\n\tat org.apache.spark.util.LazyTry.get(LazyTry.scala:61)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$analyzed$1(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.withAbortTransactionOnFailure(QueryExecution.scala:632)\n\tat org.apache.spark.sql.execution.QueryExecution.analyzed(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:151)\n\tat org.apache.spark.sql.classic.Dataset$.$anonfun$ofRows$1(Dataset.scala:114)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.classic.Dataset$.ofRows(Dataset.scala:112)\n\tat org.apache.spark.sql.classic.Dataset.withPlan(Dataset.scala:2367)\n\tat org.apache.spark.sql.classic.Dataset.withColumns(Dataset.scala:1365)\n\tat org.apache.spark.sql.classic.Dataset.withColumns(Dataset.scala:231)\n\tat org.apache.spark.sql.Dataset.withColumn(Dataset.scala:2292)\n\tat org.apache.spark.sql.classic.Dataset.withColumn(Dataset.scala:1904)\n\tat org.apache.spark.sql.classic.Dataset.withColumn(Dataset.scala:231)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)\n\tat py4j.Gateway.invoke(Gateway.java:282)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)\n\tat py4j.ClientServerConnection.run(ClientServerConnection.java:108)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n", "stacktrace": [{"class": null, "method": "deco", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/errors/exceptions/captured.py", "line": "251"}, {"class": null, "method": "get_return_value", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/py4j/protocol.py", "line": "327"}]}}
+{"ts": "2026-10-09 11:56:19.839", "level": "ERROR", "logger": "DataFrameQueryContextLogger", "msg": "[AMBIGUOUS_REFERENCE] Reference `id` is ambiguous, could be: [`appointments`.`id`, `patients`.`id`]. SQLSTATE: 42704", "context": {"file": "<pyspark>", "line": "14", "fragment": "col", "errorClass": "AMBIGUOUS_REFERENCE"}, "exception": {"class": "Py4JJavaError", "msg": "An error occurred while calling o1037.select.\n: org.apache.spark.sql.AnalysisException: [AMBIGUOUS_REFERENCE] Reference `id` is ambiguous, could be: [`appointments`.`id`, `patients`.`id`]. SQLSTATE: 42704\n\tat org.apache.spark.sql.errors.QueryCompilationErrors$.ambiguousReferenceError(QueryCompilationErrors.scala:2326)\n\tat org.apache.spark.sql.catalyst.expressions.package$AttributeSeq.resolve(package.scala:363)\n\tat org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.resolveChildren(LogicalPlan.scala:164)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.$anonfun$resolveExpressionByPlanChildren$1(ColumnResolutionHelper.scala:466)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.$anonfun$resolveExpression$3(ColumnResolutionHelper.scala:158)\n\tat org.apache.spark.sql.catalyst.analysis.package$.withPosition(package.scala:107)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.$anonfun$resolveExpression$1(ColumnResolutionHelper.scala:152)\n\tat org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:107)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.innerResolve$1(ColumnResolutionHelper.scala:121)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.resolveExpression(ColumnResolutionHelper.scala:228)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.resolveExpressionByPlanChildren(ColumnResolutionHelper.scala:473)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.resolveExpressionByPlanChildren$(ColumnResolutionHelper.scala:458)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences.resolveExpressionByPlanChildren(Analyzer.scala:1530)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences$$anonfun$doApply$3.$anonfun$applyOrElse$82(Analyzer.scala:1726)\n\tat scala.collection.immutable.List.map(List.scala:236)\n\tat scala.collection.immutable.List.map(List.scala:79)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences$$anonfun$doApply$3.applyOrElse(Analyzer.scala:1726)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences$$anonfun$doApply$3.applyOrElse(Analyzer.scala:1577)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.$anonfun$resolveOperatorsUpWithPruning$3(AnalysisHelper.scala:139)\n\tat org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:107)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.$anonfun$resolveOperatorsUpWithPruning$1(AnalysisHelper.scala:139)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.allowInvokingTransformsInAnalyzer(AnalysisHelper.scala:416)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUpWithPruning(AnalysisHelper.scala:135)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUpWithPruning$(AnalysisHelper.scala:131)\n\tat org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.resolveOperatorsUpWithPruning(LogicalPlan.scala:37)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUp(AnalysisHelper.scala:112)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUp$(AnalysisHelper.scala:111)\n\tat org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.resolveOperatorsUp(LogicalPlan.scala:37)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences.doApply(Analyzer.scala:1577)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences.apply(Analyzer.scala:1574)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences.apply(Analyzer.scala:1530)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$2(RuleExecutor.scala:248)\n\tat scala.collection.LinearSeqOps.foldLeft(LinearSeq.scala:183)\n\tat scala.collection.LinearSeqOps.foldLeft$(LinearSeq.scala:179)\n\tat scala.collection.immutable.List.foldLeft(List.scala:79)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$1(RuleExecutor.scala:245)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$1$adapted(RuleExecutor.scala:237)\n\tat scala.collection.immutable.List.foreach(List.scala:323)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.execute(RuleExecutor.scala:237)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.super$execute(Analyzer.scala:438)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeSameContext$1(Analyzer.scala:438)\n\tat org.apache.spark.sql.internal.SQLConf$.withExistingConf(SQLConf.scala:171)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runWithSessionConf(Analyzer.scala:400)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.org$apache$spark$sql$catalyst$analysis$Analyzer$$executeSameContext(Analyzer.scala:438)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$execute$1(Analyzer.scala:433)\n\tat org.apache.spark.sql.catalyst.analysis.AnalysisContext$.withNewAnalysisContext(Analyzer.scala:276)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.execute(Analyzer.scala:433)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.execute(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$executeAndTrack$1(RuleExecutor.scala:207)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker$.withTracker(QueryPlanningTracker.scala:89)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.executeAndTrack(RuleExecutor.scala:207)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.resolveInFixedPoint(HybridAnalyzer.scala:273)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$apply$1(HybridAnalyzer.scala:82)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.withTrackedAnalyzerBridgeState(HybridAnalyzer.scala:117)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.apply(HybridAnalyzer.scala:75)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runAnalysis$1(Analyzer.scala:368)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$2(Analyzer.scala:373)\n\tat org.apache.spark.sql.internal.SQLConf$.withExistingConf(SQLConf.scala:171)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runWithSessionConf(Analyzer.scala:400)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$1(Analyzer.scala:373)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.markInAnalyzer(AnalysisHelper.scala:423)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.executeAndCheck(Analyzer.scala:373)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$2(QueryExecution.scala:200)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker.measurePhase(QueryPlanningTracker.scala:148)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$3(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution.withQueryExecutionId(QueryExecution.scala:429)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$2(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution$.withInternalError(QueryExecution.scala:872)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$1(QueryExecution.scala:409)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.execution.QueryExecution.executePhase(QueryExecution.scala:408)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$1(QueryExecution.scala:200)\n\tat scala.util.Try$.apply(Try.scala:217)\n\tat org.apache.spark.util.Utils$.doTryWithCallerStacktrace(Utils.scala:1407)\n\tat org.apache.spark.util.Utils$.getTryWithCallerStacktrace(Utils.scala:1457)\n\tat org.apache.spark.util.LazyTry.get(LazyTry.scala:61)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$analyzed$1(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.withAbortTransactionOnFailure(QueryExecution.scala:632)\n\tat org.apache.spark.sql.execution.QueryExecution.analyzed(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:151)\n\tat org.apache.spark.sql.classic.Dataset$.$anonfun$ofRows$1(Dataset.scala:114)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.classic.Dataset$.ofRows(Dataset.scala:112)\n\tat org.apache.spark.sql.classic.Dataset.withPlan(Dataset.scala:2367)\n\tat org.apache.spark.sql.classic.Dataset.select(Dataset.scala:974)\n\tat org.apache.spark.sql.classic.Dataset.select(Dataset.scala:231)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)\n\tat py4j.Gateway.invoke(Gateway.java:282)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)\n\tat py4j.ClientServerConnection.run(ClientServerConnection.java:108)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n", "stacktrace": [{"class": null, "method": "deco", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/errors/exceptions/captured.py", "line": "251"}, {"class": null, "method": "get_return_value", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/py4j/protocol.py", "line": "327"}]}}
+{"ts": "2026-10-09 11:56:19.863", "level": "ERROR", "logger": "DataFrameQueryContextLogger", "msg": "[AMBIGUOUS_REFERENCE] Reference `id` is ambiguous, could be: [`appointments`.`id`, `patients`.`id`]. SQLSTATE: 42704", "context": {"file": "<pyspark>", "line": "16", "fragment": "col", "errorClass": "AMBIGUOUS_REFERENCE"}, "exception": {"class": "Py4JJavaError", "msg": "An error occurred while calling o1070.select.\n: org.apache.spark.sql.AnalysisException: [AMBIGUOUS_REFERENCE] Reference `id` is ambiguous, could be: [`appointments`.`id`, `patients`.`id`]. SQLSTATE: 42704\n\tat org.apache.spark.sql.errors.QueryCompilationErrors$.ambiguousReferenceError(QueryCompilationErrors.scala:2326)\n\tat org.apache.spark.sql.catalyst.expressions.package$AttributeSeq.resolve(package.scala:363)\n\tat org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.resolveChildren(LogicalPlan.scala:164)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.$anonfun$resolveExpressionByPlanChildren$1(ColumnResolutionHelper.scala:466)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.$anonfun$resolveExpression$3(ColumnResolutionHelper.scala:158)\n\tat org.apache.spark.sql.catalyst.analysis.package$.withPosition(package.scala:107)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.$anonfun$resolveExpression$1(ColumnResolutionHelper.scala:152)\n\tat org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:107)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.innerResolve$1(ColumnResolutionHelper.scala:121)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.resolveExpression(ColumnResolutionHelper.scala:228)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.resolveExpressionByPlanChildren(ColumnResolutionHelper.scala:473)\n\tat org.apache.spark.sql.catalyst.analysis.ColumnResolutionHelper.resolveExpressionByPlanChildren$(ColumnResolutionHelper.scala:458)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences.resolveExpressionByPlanChildren(Analyzer.scala:1530)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences$$anonfun$doApply$3.$anonfun$applyOrElse$82(Analyzer.scala:1726)\n\tat scala.collection.immutable.List.map(List.scala:236)\n\tat scala.collection.immutable.List.map(List.scala:79)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences$$anonfun$doApply$3.applyOrElse(Analyzer.scala:1726)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences$$anonfun$doApply$3.applyOrElse(Analyzer.scala:1577)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.$anonfun$resolveOperatorsUpWithPruning$3(AnalysisHelper.scala:139)\n\tat org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:107)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.$anonfun$resolveOperatorsUpWithPruning$1(AnalysisHelper.scala:139)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.allowInvokingTransformsInAnalyzer(AnalysisHelper.scala:416)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUpWithPruning(AnalysisHelper.scala:135)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUpWithPruning$(AnalysisHelper.scala:131)\n\tat org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.resolveOperatorsUpWithPruning(LogicalPlan.scala:37)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUp(AnalysisHelper.scala:112)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUp$(AnalysisHelper.scala:111)\n\tat org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.resolveOperatorsUp(LogicalPlan.scala:37)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences.doApply(Analyzer.scala:1577)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences.apply(Analyzer.scala:1574)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer$ResolveReferences.apply(Analyzer.scala:1530)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$2(RuleExecutor.scala:248)\n\tat scala.collection.LinearSeqOps.foldLeft(LinearSeq.scala:183)\n\tat scala.collection.LinearSeqOps.foldLeft$(LinearSeq.scala:179)\n\tat scala.collection.immutable.List.foldLeft(List.scala:79)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$1(RuleExecutor.scala:245)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$1$adapted(RuleExecutor.scala:237)\n\tat scala.collection.immutable.List.foreach(List.scala:323)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.execute(RuleExecutor.scala:237)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.super$execute(Analyzer.scala:438)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeSameContext$1(Analyzer.scala:438)\n\tat org.apache.spark.sql.internal.SQLConf$.withExistingConf(SQLConf.scala:171)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runWithSessionConf(Analyzer.scala:400)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.org$apache$spark$sql$catalyst$analysis$Analyzer$$executeSameContext(Analyzer.scala:438)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$execute$1(Analyzer.scala:433)\n\tat org.apache.spark.sql.catalyst.analysis.AnalysisContext$.withNewAnalysisContext(Analyzer.scala:276)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.execute(Analyzer.scala:433)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.execute(Analyzer.scala:336)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$executeAndTrack$1(RuleExecutor.scala:207)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker$.withTracker(QueryPlanningTracker.scala:89)\n\tat org.apache.spark.sql.catalyst.rules.RuleExecutor.executeAndTrack(RuleExecutor.scala:207)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.resolveInFixedPoint(HybridAnalyzer.scala:273)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$apply$1(HybridAnalyzer.scala:82)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.withTrackedAnalyzerBridgeState(HybridAnalyzer.scala:117)\n\tat org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.apply(HybridAnalyzer.scala:75)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runAnalysis$1(Analyzer.scala:368)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$2(Analyzer.scala:373)\n\tat org.apache.spark.sql.internal.SQLConf$.withExistingConf(SQLConf.scala:171)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.runWithSessionConf(Analyzer.scala:400)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$1(Analyzer.scala:373)\n\tat org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.markInAnalyzer(AnalysisHelper.scala:423)\n\tat org.apache.spark.sql.catalyst.analysis.Analyzer.executeAndCheck(Analyzer.scala:373)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$2(QueryExecution.scala:200)\n\tat org.apache.spark.sql.catalyst.QueryPlanningTracker.measurePhase(QueryPlanningTracker.scala:148)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$3(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution.withQueryExecutionId(QueryExecution.scala:429)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$2(QueryExecution.scala:410)\n\tat org.apache.spark.sql.execution.QueryExecution$.withInternalError(QueryExecution.scala:872)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$1(QueryExecution.scala:409)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.execution.QueryExecution.executePhase(QueryExecution.scala:408)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$1(QueryExecution.scala:200)\n\tat scala.util.Try$.apply(Try.scala:217)\n\tat org.apache.spark.util.Utils$.doTryWithCallerStacktrace(Utils.scala:1407)\n\tat org.apache.spark.util.Utils$.getTryWithCallerStacktrace(Utils.scala:1457)\n\tat org.apache.spark.util.LazyTry.get(LazyTry.scala:61)\n\tat org.apache.spark.sql.execution.QueryExecution.$anonfun$analyzed$1(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.withAbortTransactionOnFailure(QueryExecution.scala:632)\n\tat org.apache.spark.sql.execution.QueryExecution.analyzed(QueryExecution.scala:212)\n\tat org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:151)\n\tat org.apache.spark.sql.classic.Dataset$.$anonfun$ofRows$1(Dataset.scala:114)\n\tat org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:810)\n\tat org.apache.spark.sql.classic.Dataset$.ofRows(Dataset.scala:112)\n\tat org.apache.spark.sql.classic.Dataset.withPlan(Dataset.scala:2367)\n\tat org.apache.spark.sql.classic.Dataset.select(Dataset.scala:974)\n\tat org.apache.spark.sql.classic.Dataset.select(Dataset.scala:231)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)\n\tat py4j.Gateway.invoke(Gateway.java:282)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)\n\tat py4j.ClientServerConnection.run(ClientServerConnection.java:108)\n\tat java.base/java.lang.Thread.run(Thread.java:840)\n", "stacktrace": [{"class": null, "method": "deco", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/errors/exceptions/captured.py", "line": "251"}, {"class": null, "method": "get_return_value", "file": "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/py4j/protocol.py", "line": "327"}]}}
++---+---------+
+| id|wait_band|
++---+---------+
+|  1|   normal|
+|  2|     long|
+|  3|   normal|
+|  4|     long|
+|  5|     long|
+|  6|   normal|
+|  7|     long|
+|  8|   normal|
+|  9|     long|
+| 10|   normal|
+| 11|     long|
+| 12|     long|
+| 13|     long|
+| 14|     long|
+| 15|     long|
+| 16|     long|
+| 17|     long|
+| 18|     long|
+| 19|     long|
+| 20|     long|
++---+---------+
+only showing top 20 rows
++---+---------+
+| id|wait_band|
++---+---------+
+|  1|   normal|
+|  2|     long|
+|  3|   normal|
+|  4|     long|
+|  5|     long|
+|  6|   normal|
+|  7|     long|
+|  8|   normal|
+|  9|     long|
+| 10|   normal|
+| 11|     long|
+| 12|     long|
+| 13|     long|
+| 14|     long|
+| 15|     long|
+| 16|     long|
+| 17|     long|
+| 18|     long|
+| 19|     long|
+| 20|     long|
++---+---------+
+only showing top 20 rows
++-----------+------------+-----------------+
+|  specialty|doctor_count|   avg_experience|
++-----------+------------+-----------------+
+|Dermatology|           5|             19.6|
+| Pediatrics|           5|             22.0|
+|Orthopedics|           9|15.11111111111111|
+| Cardiology|          10|             24.6|
+|    General|          11|             19.2|
++-----------+------------+-----------------+
+
++-----------+------------+-----------------+
+|  specialty|doctor_count|   avg_experience|
++-----------+------------+-----------------+
+|Dermatology|           5|             19.6|
+| Pediatrics|           5|             22.0|
+|Orthopedics|           9|15.11111111111111|
+| Cardiology|          10|             24.6|
+|    General|          11|             19.2|
++-----------+------------+-----------------+
+
++---------+---+-----------------+
+|   status|  n|        total_fee|
++---------+---+-----------------+
+|  NO_SHOW|  4|          5774.21|
+|     DONE|  5|5977.969999999999|
+|CANCELLED|  5|7661.459999999999|
+|   BOOKED|  8|         11248.55|
++---------+---+-----------------+
+
++---------+---+-----------------+
+|   status|  n|        total_fee|
++---------+---+-----------------+
+|  NO_SHOW|  4|          5774.21|
+|     DONE|  5|5977.969999999999|
+|CANCELLED|  5|7661.459999999999|
+|   BOOKED|  8|         11248.55|
++---------+---+-----------------+
+
+  20/62  lenient match 2/20  (190s)
++-----------+----------+----------+
+|doctor_name| specialty| appt_date|
++-----------+----------+----------+
+|  Dr. Patel|Cardiology|2023-07-25|
+| Dr. Nguyen|Cardiology|2025-02-07|
+| Dr. Nguyen|Cardiology|2023-09-29|
+|  Dr. Patel|Cardiology|2023-05-31|
+|  Dr. Patel|Cardiology|2023-12-18|
+|  Dr. Smith|Cardiology|2024-08-02|
+| Dr. Müller|Cardiology|2024-07-27|
+|  Dr. Smith|Cardiology|      NULL|
+|  Dr. Smith|Cardiology|      NULL|
+| Dr. Müller|Cardiology|2023-09-25|
+| Dr. Nguyen|Cardiology|2024-08-11|
++-----------+----------+----------+
+
++-----------+----------+----------+
+|doctor_name| specialty| appt_date|
++-----------+----------+----------+
+|  Dr. Patel|Cardiology|2023-07-25|
+| Dr. Nguyen|Cardiology|2025-02-07|
+| Dr. Nguyen|Cardiology|2023-09-29|
+|  Dr. Patel|Cardiology|2023-05-31|
+|  Dr. Patel|Cardiology|2023-12-18|
+|  Dr. Smith|Cardiology|2024-08-02|
+| Dr. Müller|Cardiology|2024-07-27|
+|  Dr. Smith|Cardiology|      NULL|
+|  Dr. Smith|Cardiology|      NULL|
+| Dr. Müller|Cardiology|2023-09-25|
+| Dr. Nguyen|Cardiology|2024-08-11|
++-----------+----------+----------+
+
++-------+------------+
+|  month|appointments|
++-------+------------+
+|2023-01|           1|
+|2023-03|           4|
+|2023-04|           1|
+|2023-05|           2|
+|2023-06|           1|
+|2023-07|           2|
+|2023-09|           2|
+|2023-12|           5|
+|2024-01|           1|
+|2024-02|           1|
+|2024-04|           1|
+|2024-06|           1|
+|2024-07|           1|
+|2024-08|           4|
+|2024-09|           1|
+|2024-11|           1|
+|2024-12|           2|
+|2025-02|           3|
+|2025-05|           2|
+|2025-06|           1|
++-------+------------+
+only showing top 20 rows
++-------+------------+
+|  month|appointments|
++-------+------------+
+|2023-01|           1|
+|2023-03|           4|
+|2023-04|           1|
+|2023-05|           2|
+|2023-06|           1|
+|2023-07|           2|
+|2023-09|           2|
+|2023-12|           5|
+|2024-01|           1|
+|2024-02|           1|
+|2024-04|           1|
+|2024-06|           1|
+|2024-07|           1|
+|2024-08|           4|
+|2024-09|           1|
+|2024-11|           1|
+|2024-12|           2|
+|2025-02|           3|
+|2025-05|           2|
+|2025-06|           1|
++-------+------------+
+only showing top 20 rows
+  30/62  lenient match 3/30  (317s)
++----------+
+|      city|
++----------+
+|  New York|
+|     Tokyo|
+|   Bangkok|
+| Singapore|
+|     Tokyo|
+|   Bangkok|
+| Singapore|
+|    London|
+|   Bangkok|
+|     Tokyo|
+|  New York|
+|    Berlin|
+|  New York|
+| Singapore|
+|Chiang Mai|
+|    London|
+|Chiang Mai|
+|Chiang Mai|
+|   Bangkok|
+|     Tokyo|
++----------+
+only showing top 20 rows
++----------+
+|      city|
++----------+
+|  New York|
+|     Tokyo|
+|   Bangkok|
+| Singapore|
+|     Tokyo|
+|   Bangkok|
+| Singapore|
+|    London|
+|   Bangkok|
+|     Tokyo|
+|  New York|
+|    Berlin|
+|  New York|
+| Singapore|
+|Chiang Mai|
+|    London|
+|Chiang Mai|
+|Chiang Mai|
+|   Bangkok|
+|     Tokyo|
++----------+
+only showing top 20 rows
++---------+---------------+
+|doctor_id|unique_patients|
++---------+---------------+
+|       45|              3|
+|        4|              2|
+|       19|              2|
+|       25|              2|
+|       37|              2|
+|       38|              2|
+|       42|              2|
++---------+---------------+
+
++---------+---------------+
+|doctor_id|unique_patients|
++---------+---------------+
+|       45|              3|
+|        4|              2|
+|       19|              2|
+|       25|              2|
+|       37|              2|
+|       38|              2|
+|       42|              2|
++---------+---------------+
+
++---+-------------+------+-----------+-------------------+-----------+---------+-------------------+
+| id|      airline|origin|destination|     departure_time|distance_km|base_fare|          dep_month|
++---+-------------+------+-----------+-------------------+-----------+---------+-------------------+
+|  1|Singapore Air|   JFK|        BKK|2024-03-22 18:56:00|      13995|   581.24|2024-03-01 00:00:00|
+|  2|Singapore Air|   FRA|        BKK|2024-03-13 01:10:00|       7385|  1598.61|2024-03-01 00:00:00|
+|  3|    Lufthansa|   SIN|        JFK|2025-05-09 09:15:00|      12765|  1552.56|2025-05-01 00:00:00|
+|  4|    Lufthansa|   JFK|       NULL|2025-11-15 00:19:00|      12269|  1313.84|2025-11-01 00:00:00|
+|  5| Thai Airways|   FRA|        JFK|2024-10-14 04:32:00|       4030|  2231.54|2024-10-01 00:00:00|
+|  6|          ANA|   JFK|        JFK|2024-12-07 01:49:00|       2278|  1881.45|2024-12-01 00:00:00|
+|  8| Thai Airways|   NRT|        SIN|2024-07-20 22:01:00|       2754|   1176.4|2024-07-01 00:00:00|
+| 11|          ANA|   JFK|        LHR|2024-05-06 19:48:00|       7834|  2473.86|2024-05-01 00:00:00|
+| 12|Singapore Air|   SIN|        FRA|2023-04-08 08:22:00|       NULL|     NULL|2023-04-01 00:00:00|
+| 13| Thai Airways|   SIN|        JFK|2024-11-15 07:21:00|      11496|  1593.73|2024-11-01 00:00:00|
+| 15|    Lufthansa|   SIN|        LHR|2024-10-26 05:16:00|       4912|     NULL|2024-10-01 00:00:00|
+| 16| Thai Airways|   FRA|        LHR|2024-08-31 17:54:00|      13874|   996.34|2024-08-01 00:00:00|
+| 17| Thai Airways|   SIN|        LHR|2023-05-20 18:36:00|       NULL|  1376.04|2023-05-01 00:00:00|
+| 18|          ANA|   JFK|        NRT|               NULL|       7200|   754.88|               NULL|
+| 19|          ANA|   JFK|        NRT|               NULL|      13656|  2175.66|               NULL|
+| 20|    Lufthansa|   SIN|        NRT|2024-09-13 06:47:00|      14097|    50.45|2024-09-01 00:00:00|
+| 21|          ANA|   NRT|        SIN|2023-09-28 23:09:00|       2182|  2174.82|2023-09-01 00:00:00|
+| 22| Thai Airways|   SIN|        JFK|2025-09-27 17:22:00|       1080|   2092.0|2025-09-01 00:00:00|
+| 23|Singapore Air|   JFK|        SIN|2023-02-15 05:27:00|       1922|   695.36|2023-02-01 00:00:00|
+| 24|    Lufthansa|   NRT|        BKK|2024-04-10 16:32:00|       3748|  1646.18|2024-04-01 00:00:00|
++---+-------------+------+-----------+-------------------+-----------+---------+-------------------+
+only showing top 20 rows
++---+-------------+------+-----------+-------------------+-----------+---------+-------------------+
+| id|      airline|origin|destination|     departure_time|distance_km|base_fare|          dep_month|
++---+-------------+------+-----------+-------------------+-----------+---------+-------------------+
+|  1|Singapore Air|   JFK|        BKK|2024-03-22 18:56:00|      13995|   581.24|2024-03-01 00:00:00|
+|  2|Singapore Air|   FRA|        BKK|2024-03-13 01:10:00|       7385|  1598.61|2024-03-01 00:00:00|
+|  3|    Lufthansa|   SIN|        JFK|2025-05-09 09:15:00|      12765|  1552.56|2025-05-01 00:00:00|
+|  4|    Lufthansa|   JFK|       NULL|2025-11-15 00:19:00|      12269|  1313.84|2025-11-01 00:00:00|
+|  5| Thai Airways|   FRA|        JFK|2024-10-14 04:32:00|       4030|  2231.54|2024-10-01 00:00:00|
+|  6|          ANA|   JFK|        JFK|2024-12-07 01:49:00|       2278|  1881.45|2024-12-01 00:00:00|
+|  8| Thai Airways|   NRT|        SIN|2024-07-20 22:01:00|       2754|   1176.4|2024-07-01 00:00:00|
+| 11|          ANA|   JFK|        LHR|2024-05-06 19:48:00|       7834|  2473.86|2024-05-01 00:00:00|
+| 12|Singapore Air|   SIN|        FRA|2023-04-08 08:22:00|       NULL|     NULL|2023-04-01 00:00:00|
+| 13| Thai Airways|   SIN|        JFK|2024-11-15 07:21:00|      11496|  1593.73|2024-11-01 00:00:00|
+| 15|    Lufthansa|   SIN|        LHR|2024-10-26 05:16:00|       4912|     NULL|2024-10-01 00:00:00|
+| 16| Thai Airways|   FRA|        LHR|2024-08-31 17:54:00|      13874|   996.34|2024-08-01 00:00:00|
+| 17| Thai Airways|   SIN|        LHR|2023-05-20 18:36:00|       NULL|  1376.04|2023-05-01 00:00:00|
+| 18|          ANA|   JFK|        NRT|               NULL|       7200|   754.88|               NULL|
+| 19|          ANA|   JFK|        NRT|               NULL|      13656|  2175.66|               NULL|
+| 20|    Lufthansa|   SIN|        NRT|2024-09-13 06:47:00|      14097|    50.45|2024-09-01 00:00:00|
+| 21|          ANA|   NRT|        SIN|2023-09-28 23:09:00|       2182|  2174.82|2023-09-01 00:00:00|
+| 22| Thai Airways|   SIN|        JFK|2025-09-27 17:22:00|       1080|   2092.0|2025-09-01 00:00:00|
+| 23|Singapore Air|   JFK|        SIN|2023-02-15 05:27:00|       1922|   695.36|2023-02-01 00:00:00|
+| 24|    Lufthansa|   NRT|        BKK|2024-04-10 16:32:00|       3748|  1646.18|2024-04-01 00:00:00|
++---+-------------+------+-----------+-------------------+-----------+---------+-------------------+
+only showing top 20 rows
++---------+----+-------+
+|appt_type|done|no_show|
++---------+----+-------+
+|emergency|   6|      1|
+|follow_up|   1|      3|
+|  checkup|   2|      1|
+|  surgery|   1|      2|
+|     NULL|   1|      1|
++---------+----+-------+
+
++---------+----+-------+
+|appt_type|done|no_show|
++---------+----+-------+
+|emergency|   6|      1|
+|follow_up|   1|      3|
+|  checkup|   2|      1|
+|  surgery|   1|      2|
+|     NULL|   1|      1|
++---------+----+-------+
+
++---+---------+--------------+----------+-------+-------------------+------------+------------+
+| id|flight_id|passenger_name|seat_class|  price|          booked_at|is_cancelled|loyalty_tier|
++---+---------+--------------+----------+-------+-------------------+------------+------------+
+| 21|       13|  Kanya Srisuk|   ECONOMY|8520.45|2025-10-03 19:04:00|        true|        GOLD|
++---+---------+--------------+----------+-------+-------------------+------------+------------+
+
++---+---------+--------------+----------+-------+-------------------+------------+------------+
+| id|flight_id|passenger_name|seat_class|  price|          booked_at|is_cancelled|loyalty_tier|
++---+---------+--------------+----------+-------+-------------------+------------+------------+
+| 21|       13|  Kanya Srisuk|   ECONOMY|8520.45|2025-10-03 19:04:00|        true|        GOLD|
++---+---------+--------------+----------+-------+-------------------+------------+------------+
+
++---+------------+-----------+-------+------+
+| id| doctor_name|  specialty|revenue|visits|
++---+------------+-----------+-------+------+
+|  2| Dr. Johnson|Dermatology|    450|     2|
+|  3|Dr. Williams|Orthopedics|    300|     1|
+|  1|   Dr. Smith| Cardiology|    250|     2|
++---+------------+-----------+-------+------+
+
++---+------------+-----------+-------+------+
+| id| doctor_name|  specialty|revenue|visits|
++---+------------+-----------+-------+------+
+|  2| Dr. Johnson|Dermatology|    450|     2|
+|  3|Dr. Williams|Orthopedics|    300|     1|
+|  1|   Dr. Smith| Cardiology|    250|     2|
++---+------------+-----------+-------+------+
+
+  40/62  lenient match 5/40  (466s)
++-----------+------------------+------------+
+|  specialty|         total_fee|pct_of_total|
++-----------+------------------+------------+
+| Cardiology|          16357.94|       34.11|
+|    General|14543.279999999999|       30.33|
+| Pediatrics| 7905.439999999999|       16.48|
+|Orthopedics|            1247.3|         2.6|
+|Dermatology|            7902.0|       16.48|
++-----------+------------------+------------+
+
++-----------+------------------+------------+
+|  specialty|         total_fee|pct_of_total|
++-----------+------------------+------------+
+| Cardiology|          16357.94|       34.11|
+|    General|14543.279999999999|       30.33|
+| Pediatrics| 7905.439999999999|       16.48|
+|Orthopedics|            1247.3|         2.6|
+|Dermatology|            7902.0|       16.48|
++-----------+------------------+------------+
+
++--------------+-----------+----------+-------+
+|     full_name|doctor_name| appt_date|    fee|
++--------------+-----------+----------+-------+
+|  Kanya Srisuk| Dr. Nguyen|2025-07-13|2248.59|
+|Pim Chaiyaporn| Dr. Müller|2024-07-27|2057.72|
+|    Alice Wong| Dr. Tanaka|2023-07-28|2615.48|
+|     bob smith| Dr. Nguyen|2024-12-16| 582.63|
+|     Noah Park|  Dr. Smith|2023-04-22| 867.99|
+|  FRANK MILLER|  Dr. Patel|2023-05-29|1394.41|
+|          NULL| Dr. Nguyen|2025-05-10|1692.74|
+|    Emma Brown| Dr. Nguyen|2024-08-11|1624.19|
+|     Noah Park|       NULL|2024-01-23|2329.64|
+|     bob smith| Dr. Müller|2023-09-25|1796.46|
+|  Kanya Srisuk| Dr. Nguyen|2025-02-07|2147.05|
+|    David Lee | Dr. Müller|2025-09-09|1496.65|
++--------------+-----------+----------+-------+
+
++--------------+-----------+----------+-------+
+|     full_name|doctor_name| appt_date|    fee|
++--------------+-----------+----------+-------+
+|  Kanya Srisuk| Dr. Nguyen|2025-07-13|2248.59|
+|Pim Chaiyaporn| Dr. Müller|2024-07-27|2057.72|
+|    Alice Wong| Dr. Tanaka|2023-07-28|2615.48|
+|     bob smith| Dr. Nguyen|2024-12-16| 582.63|
+|     Noah Park|  Dr. Smith|2023-04-22| 867.99|
+|  FRANK MILLER|  Dr. Patel|2023-05-29|1394.41|
+|          NULL| Dr. Nguyen|2025-05-10|1692.74|
+|    Emma Brown| Dr. Nguyen|2024-08-11|1624.19|
+|     Noah Park|       NULL|2024-01-23|2329.64|
+|     bob smith| Dr. Müller|2023-09-25|1796.46|
+|  Kanya Srisuk| Dr. Nguyen|2025-02-07|2147.05|
+|    David Lee | Dr. Müller|2025-09-09|1496.65|
++--------------+-----------+----------+-------+
+
++-----------+----------+-------------+--------------+
+|  specialty|Bumrungrad|City Hospital|General Clinic|
++-----------+----------+-------------+--------------+
+| Cardiology|        15|           10|            12|
+|Orthopedics|        12|            8|            14|
++-----------+----------+-------------+--------------+
+
++-----------+----------+-------------+--------------+
+|  specialty|Bumrungrad|City Hospital|General Clinic|
++-----------+----------+-------------+--------------+
+| Cardiology|        15|           10|            12|
+|Orthopedics|        12|            8|            14|
++-----------+----------+-------------+--------------+
+
+  50/62  lenient match 7/50  (620s)
++---------+-------------+
+|     kind|         name|
++---------+-------------+
+|  patient|     John Doe|
+|  patient|   Jane Smith|
+|passenger|Alice Johnson|
+|passenger|    Bob Brown|
++---------+-------------+
+
++---------+-------------+
+|     kind|         name|
++---------+-------------+
+|  patient|     John Doe|
+|  patient|   Jane Smith|
+|passenger|Alice Johnson|
+|passenger|    Bob Brown|
++---------+-------------+
+
++----------+------+------------------+
+|patient_id|visits|             spend|
++----------+------+------------------+
+|         7|     2|           4379.37|
+|        35|     2|           4167.29|
+|        42|     4|3814.7200000000003|
+|        30|     2|            3648.6|
+|        19|     3|3581.6800000000003|
+|         2|     2|           3490.43|
+|         5|     2|           3197.63|
+|         3|     3|           2942.77|
+|        27|     2|            2900.0|
++----------+------+------------------+
+
++----------+------+------------------+
+|patient_id|visits|             spend|
++----------+------+------------------+
+|         7|     2|           4379.37|
+|        35|     2|           4167.29|
+|        42|     4|3814.7200000000003|
+|        30|     2|            3648.6|
+|        19|     3|3581.6800000000003|
+|         2|     2|           3490.43|
+|         5|     2|           3197.63|
+|         3|     3|           2942.77|
+|        27|     2|            2900.0|
++----------+------+------------------+
+
+  60/62  lenient match 8/60  (758s)
+  62/62  lenient match 8/62  (788s)
+
+sql2pyspark:base-coder7b-q4 on holdout.jsonl (n=62)
+  strict : syntax 100.0%  runs 16.1%  match 12.9%
+  lenient: syntax 100.0%  runs 16.1%  match 12.9%
+  results -> sql2pyspark-mlx/qwen35_pilot/results/base-coder7b-q4__holdout.json
+[?2026h[?25l[1G[K[?25h[?2026l[?25l[2K[1G[?25h[12:06:18] ALL DONE
