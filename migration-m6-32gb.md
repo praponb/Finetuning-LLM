@@ -3,7 +3,10 @@
 The step-by-step checklist with the commands to run, from the week before delivery to the point where the new Mac
 takes over. The reasons and background are in [docs/09-mac-mini-migration.md](docs/09-mac-mini-migration.md).
 
-- **Delivery**: 2026-10-23 to 10-25. **Budget**: day 1 = steps 1–4 (~4–5 h), day 2 = step 5 (checks, ~2–3 h).
+- **Delivery**: 2026-10-23 to 10-25. **Budget**: day 1 = steps 1–4 (~4 h), day 2 = step 5 (checks, ~2–3 h).
+- **Route**: the big folders (~165 GB) are staged on the Ubuntu server (`prapon@192.168.1.49:~/m2-backup/`, mode 700)
+  ahead of time; on delivery day the Mac mini pulls them over Ethernet. Secrets never go to the server: they go
+  straight from the M2 to the Mac mini (step 3.1). The server copy also serves as an off-machine backup.
 - **Rules**: same user name `praponb` and same paths on the new Mac; nothing is deleted on either Mac; the M2 stays
   the main machine until every check in step 5 passes.
 - **Who**: 👤 = you (needs a password, `sudo`, a login or your hands), 🤖 = ask Claude Code to do it.
@@ -12,7 +15,8 @@ takes over. The reasons and background are in [docs/09-mac-mini-migration.md](do
 
 ### 0.1 Decide the extra folders (👤, any day)
 
-Mark each line; the "copy" ones are added to step 3.3.
+Mark each line; the "copy" ones are added to step 3.3. Folders that hold logins or tokens (`~/.gemini`, `~/.kimi-code`,
+`~/.openclaw`, `~/.config`) always go directly; the others may also be staged on the server (step 0.5).
 
 | Folder | Size | Suggestion |
 | --- | --- | --- |
@@ -43,7 +47,7 @@ for d in ~/GitHub/*/ ~/GitHub/Batch-to-Streaming-Converter/batch2streaming-mlx/;
 done
 ```
 
-Every repo should show `0 changed, 0 unpushed`. Merge any open PR first (PR #31 at the time of writing).
+Every repo should show `0 changed, 0 unpushed`. Merge any open PR first.
 
 ### 0.3 Postgres dump (👤, only if you still use the EDB install)
 
@@ -61,6 +65,24 @@ sudo launchctl kickstart system/postgresql-18 2>/dev/null || sudo launchctl load
 No training or long chains on the M2 until step 5 is done. (v17 is not started on the M2: it is the first real run
 on the M6.)
 
+### 0.5 Stage the big folders on the server (🤖)
+
+First pass started 2026-10-12 13:23 (log `~/m2-server-copy.log`). Run it again after the snapshot (0.2) on 10-21/22:
+rsync only sends what changed. It never deletes anything, and the four `.env` files are excluded.
+
+```bash
+SRV=prapon@192.168.1.49
+X=(--exclude .env --exclude sql2pyspark-hf/ --exclude '.venv*/' --exclude 'llama.cpp/build/'
+   --exclude node_modules/ --exclude __pycache__/ --exclude .DS_Store)
+ssh $SRV 'mkdir -p ~/m2-backup/GitHub ~/m2-backup/.ollama/models && chmod 700 ~/m2-backup'
+caffeinate -i -s rsync -a $X ~/GitHub/                  $SRV:m2-backup/GitHub/                  # ~38 GB
+caffeinate -i -s rsync -a ~/.ollama/models/             $SRV:m2-backup/.ollama/models/          # ~126 GB
+ssh $SRV 'du -sh ~/m2-backup; df -h /'
+```
+
+The server has 295 GB free before the copy and about 130 GB after. The Hugging Face cache is not staged: it was gone
+from the M2 by 2026-10-12, and the base models are downloaded again in step 4.
+
 ## Step 1 — first boot of the Mac mini (👤, ~30 min)
 
 1. Setup assistant: create the user **`praponb`** (full name as on the M2). Sign in with your Apple ID. Update macOS.
@@ -69,8 +91,8 @@ on the M6.)
    - **Remote Login** on, and **Allow full disk access for remote users** on (otherwise rsync can't write
      `~/Documents` / `~/Downloads`).
 3. System Settings → Energy: **Prevent automatic sleeping when the display is off** on.
-4. Connect the two Macs with a Thunderbolt / USB-C cable (Thunderbolt Bridge) or both to wired Ethernet. Wi-Fi works
-   but takes hours for ~180 GB.
+4. Connect the Mac mini to the router with an **Ethernet cable** (it pulls ~180 GB from the server: ~30–40 min on
+   gigabit, hours on Wi-Fi). The M2 can stay on Wi-Fi; it only sends the small direct copies.
 
 ## Step 2 — install the tools on the Mac mini (👤, ~1 h)
 
@@ -91,40 +113,43 @@ Then install by hand (download from the vendor):
 - **Claude Code**: `curl -fsSL https://claude.ai/install.sh | bash` (don't log in yet; the settings come in step 3)
 - The other apps from `~/m2-apps.txt` whenever you want them (Office, LINE, Raycast, Karabiner, …)
 
-## Step 3 — copy from the M2 (👤, ~1 h on a cable)
+## Step 3 — copy (👤, ~1 h)
 
-All commands in this step run **on the M2**. Quit Ollama on both Macs; Postgres stays stopped.
+Quit Ollama on the Mac mini; Postgres stays stopped on both Macs.
 
-### 3.1 Key and Brewfile first
+### 3.1 Direct from the M2: key, settings and secrets (run **on the M2**)
+
+These never go through the server.
 
 ```bash
 NEW=praponb@<mini>.local
 ssh-copy-id -i ~/.ssh/id_ed25519.pub $NEW           # password once; afterwards rsync doesn't ask
 rsync -a ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub ~/.ssh/known_hosts $NEW:.ssh/
 rsync -a ~/Brewfile ~/m2-* $NEW:
-```
-
-Then **on the Mac mini**: `chmod 600 ~/.ssh/id_ed25519 && brew bundle --file ~/Brewfile` (long; it installs
-Python 3.14, openjdk@17, git, gh, postgresql@17/@18, cloudflared, …). Wait for it before 3.4.
-
-### 3.2 The big copies (on the M2; can run while `brew bundle` runs)
-
-```bash
-NEW=praponb@<mini>.local
-rsync -a --progress \
-  --exclude sql2pyspark-hf/ --exclude '.venv*/' --exclude 'llama.cpp/build/' \
-  --exclude node_modules/ --exclude __pycache__/ --exclude .DS_Store \
-  ~/GitHub/ $NEW:GitHub/                                          # ~38 GB
-rsync -a --progress ~/.ollama/models/ $NEW:.ollama/models/          # ~126 GB
-rsync -a --progress ~/.cache/huggingface/hub/ $NEW:.cache/huggingface/hub/   # ~15 GB
-rsync -a --progress --exclude cache/ --exclude shell-snapshots/ --exclude session-env/ ~/.claude/ $NEW:.claude/
 rsync -a ~/.claude.json ~/.zshrc ~/.zprofile ~/.gitconfig ~/.databrickscfg $NEW:
 rsync -a ~/.cloudflared/ $NEW:.cloudflared/
+rsync -a --exclude cache/ --exclude shell-snapshots/ --exclude session-env/ ~/.claude/ $NEW:.claude/
+tar -C ~/GitHub -cf - Finetuning-LLM/.env New_Nexus_Web/.env Agentic-AI-agents/.env OpenClaw-Line/demo/.env \
+  | ssh $NEW 'tar -C ~/GitHub -xf -'                 # the 4 .env files the server copy leaves out
 ```
 
-This replaces the `.zprofile` from step 2 with the M2's, which already has the `brew shellenv` line.
+This replaces the `.zprofile` from step 2 with the M2's, which already has the `brew shellenv` line. Then **on the
+Mac mini**: `chmod 600 ~/.ssh/id_ed25519 && brew bundle --file ~/Brewfile` (long; it installs Python 3.14,
+openjdk@17, git, gh, postgresql@17/@18, cloudflared, …). Wait for it before 3.4.
 
-### 3.3 Extra folders from step 0.1 (on the M2; keep only the lines you marked "copy")
+### 3.2 Pull the big folders from the server (run **on the Mac mini**; can run while `brew bundle` runs)
+
+```bash
+SRV=prapon@192.168.1.49
+ssh -o BatchMode=yes $SRV 'du -sh ~/m2-backup'      # works without a password = the key from 3.1 is in place
+rsync -a --progress $SRV:m2-backup/GitHub/                  ~/GitHub/                  # ~38 GB
+rsync -a --progress $SRV:m2-backup/.ollama/models/          ~/.ollama/models/          # ~126 GB
+ls ~/GitHub/Finetuning-LLM/.env && echo "secrets from 3.1 still there"
+```
+
+The `.env` files from 3.1 are kept: the server copy has no `.env`, and rsync without `--delete` removes nothing.
+
+### 3.3 Extra folders from step 0.1 (run **on the M2**; keep only the lines you marked "copy")
 
 ```bash
 rsync -a --progress ~/Documents/          $NEW:Documents/
@@ -137,7 +162,7 @@ rsync -a --progress ~/.openclaw/          $NEW:.openclaw/
 rsync -a --progress ~/.config/            $NEW:.config/
 ```
 
-### 3.4 Homebrew Postgres data (on the M2, after `brew bundle` finished on the Mac mini)
+### 3.4 Homebrew Postgres data (run **on the M2**, after `brew bundle` finished on the Mac mini)
 
 ```bash
 rsync -a /opt/homebrew/var/postgresql@17/ $NEW:/opt/homebrew/var/postgresql@17/
@@ -159,6 +184,8 @@ cd ~/GitHub/Finetuning-LLM
 shasum -a 256 -c ~/m2-gguf.sha256                           # both GGUFs: OK
 make setup                                                  # new venv (mlx 0.32.2, mlx-lm 0.31.3, ...)
 diff ~/m2-pip-freeze.txt <(sql2pyspark-mlx/.venv/bin/pip freeze) && echo "same packages"
+sql2pyspark-mlx/.venv/bin/hf download mlx-community/Qwen2.5-Coder-7B-Instruct-4bit   # base of every run (4.3 GB)
+sql2pyspark-mlx/.venv/bin/hf download mlx-community/Qwen3.5-9B-4bit                  # phase 5 probe only (6.0 GB)
 sql2pyspark-mlx/.venv/bin/pip install cmake
 cd llama.cpp && ../sql2pyspark-mlx/.venv/bin/cmake -B build -DGGML_METAL=ON -DCMAKE_BUILD_TYPE=Release \
   && ../sql2pyspark-mlx/.venv/bin/cmake --build build -j --target llama-quantize && cd ..
@@ -230,3 +257,5 @@ Tell Claude: **"Mac mini checks passed: go on with phase 5, then v17."**
    `make promote …` and `deploy/update_model.sh` via `!`).
 3. **Wrap-up**: docs updated from "M2 16 GB" to the measured M6 numbers; Claude's memory updated.
 4. Keep the M2 as a fallback for a few weeks. Wiping or reusing it is your decision.
+5. The server copy `~/m2-backup` (~165 GB) stays as a backup until you decide to remove it (👤
+   `ssh prapon@192.168.1.49 'rm -rf ~/m2-backup'`).
