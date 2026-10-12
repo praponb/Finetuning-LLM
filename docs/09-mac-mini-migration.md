@@ -1,6 +1,7 @@
 # 09 - Migration to the Mac mini M6 (32 GB)
 
-> **Status**: plan approved 2026-10-10; nothing done yet. The new Mac (M6, 32 GB, **2 TB**) arrives on **2026-10-30**.
+> **Status**: plan approved 2026-10-10, updated 2026-10-12; nothing done yet. The new Mac (M6, 32 GB, **2 TB**) arrives
+> **2026-10-23 to 10-25** (moved up from 30 October).
 
 **Goal**: move training, export, evaluation, the local app and the server deploys — and the owner's other projects in
 `~/GitHub` — from the base **M2 MacBook (16 GB)** to a **Mac mini M6 (32 GB)** without losing anything, then prove the
@@ -15,6 +16,7 @@ change.
 | Transfer method | Clean setup + `rsync` (not Migration Assistant): venvs and builds are recreated for the M6 |
 | Other projects in `~/GitHub` | Move them in the same session ([Other projects](#other-projects)) |
 | Re-measuring the 16 GB settings (phase 5) | Right after phase 4 passes, in the order listed there |
+| v17 (prepared 2026-10-10, commit 772ad91, never started on the M2) | First real training run on the M6, after phase 5, with the unchanged config (decided 2026-10-12) |
 
 ## Principles
 
@@ -40,10 +42,14 @@ change.
 | Claude Code `~/.claude/` | 101 MB | copy | settings + the project memories of every project |
 | SSH key `~/.ssh/id_ed25519` (+ `.pub`) | | copy | The server trusts this key; the deploy uses `scp` / `ssh` from the Mac |
 | Homebrew Postgres data (`/opt/homebrew/var/postgresql@17`, `@18`) | 170 MB | copy while stopped | Both services are stopped on the M2; same major versions on the new Mac |
+| EDB PostgreSQL 18 (`/Library/PostgreSQL/18`, LaunchDaemon `postgresql-18`, pgAdmin 4) | | `pg_dumpall` in phase 0, restore on the new Mac | A separate install beside Homebrew's; its data needs `sudo`, so the owner runs the dump and the restore |
+| Cloudflare tunnel `~/.cloudflared/` (`config.yml` + credentials) | | copy; cut over in phase 4 | Tunnel `0644141d…` serves `batch2stream.praponb.com` (→ :8100) and `line-bot.praponb.com` (→ :18789) **from this Mac** (LaunchDaemon `com.cloudflare.cloudflared`, brew service `sh.brew.cloudflared`). Only one Mac may run it. sql2pyspark.praponb.com is on the server and doesn't change |
+| Dotfiles `~/.zshrc`, `~/.zprofile`, `~/.gitconfig`, `~/.databrickscfg` | | copy | `PATH` also names `~/.kimi-code/bin`, the Android SDK, `/Applications/flutter`, `~/DataEngineerLearn/google-cloud-sdk`, `~/.lmstudio/bin`: those come from the phase 0 inventory |
+| Node.js 24.16 (nodejs.org package in `/usr/local`, not Homebrew) + global npm `openclaw`, `eas-cli` | | reinstall | `npm ls -g --depth=0` in phase 0 |
 | **Total to copy** | **≈185 GB** | | ~9% of the 2 TB |
 
-Docker Desktop's VM (9.5 GB) is not copied: reinstall Docker Desktop and rebuild the images if they're needed
-(the `tools` / `ollama` compose profiles; the server doesn't use Docker). The Android SDK / AVDs (`~/Library/Android`,
+Docker Desktop's VM (9.5 GB) is not copied: reinstall Docker Desktop (OpenClaw-Line's demo uses Docker compose) and
+rebuild the images when needed (this repo's `tools` / `ollama` compose profiles; the server doesn't use Docker). The Android SDK / AVDs (`~/Library/Android`,
 `~/.android`) are not part of this plan; reinstall them through Android Studio if wanted.
 
 ## Other projects
@@ -51,6 +57,7 @@ Docker Desktop's VM (9.5 GB) is not copied: reinstall Docker Desktop and rebuild
 | Folder | Size | Git | Move | Rebuild on the new Mac |
 | --- | --- | --- | --- | --- |
 | `Batch-to-Streaming-Converter/` | 15 GB | **the top folder has no git**; `batch2streaming-mlx/` is a repo (praponb/Batch-to-Streaming-Converter), clean, pushed | copy the whole folder (the top folder exists only on the M2) except the venvs | `.venv`, `batch2streaming-mlx/.venv`, `.venv-gguf`, `.venv-validate` (3 GB together; `webapp/requirements.txt`), `llama.cpp/build`. Keeps `batch2streaming-3b.gguf`, `batch2streaming-3b-fused/`, adapters v5 / v6 |
+| `OpenClaw-Line/` (praponb/OpenClaw-Line, new 2026-10-10) | 802 MB (793 MB `node_modules`) | clean, pushed | copy except `node_modules`; has `demo/.env` (copied) | `npm ci` (Node 24.16, `.nvmrc`), `make build test`; the demo needs Docker Desktop and the tunnel |
 | `New_Nexus_Web/` | 1.3 GB | clean, pushed | copy except `frontend/node_modules` | `npm install` in `frontend/`, venv from `backend/requirements.txt`; has `.env` (copied) |
 | `Agentic-AI-agents/` (praponb/Digital-Twin) | 209 MB | clean, pushed | copy | venv from `pyproject.toml` / per-folder `requirements.txt` as needed; has `.env` (copied) |
 | `Senior-Data-Engineer-Test/` | 5.5 MB | clean except an untracked `.DS_Store` | copy | `Task1/requirements.txt` if used |
@@ -59,10 +66,13 @@ Docker Desktop's VM (9.5 GB) is not copied: reinstall Docker Desktop and rebuild
 Claude Code memory folders for `Jobs4Dent-ClaudeCode` and `Nexus-ClaudeCode` exist in `~/.claude/projects/` without a
 matching folder in `~/GitHub`; they come along with `~/.claude/` and stay unused.
 
-## Phase 0 — on the M2, before 2026-10-30
+## Phase 0 — on the M2, before 2026-10-23
 
-1. Merge PR #30 (and any later PR), so `main` and `b_pbv_main` are both pushed; `git status` clean in every repo.
-2. Record the reference environment for later comparison:
+1. Merge every open PR (PR #30: done 2026-10-10), so `main` and `b_pbv_main` are both pushed; `git status` clean in every repo.
+2. Inventory of everything outside `~/GitHub` (any day before): `du -sh ~/* ~/.[!.]*`. The owner marks each folder
+   (e.g. `~/DataEngineerLearn`, `~/.kimi-code`, `~/.lmstudio` 1.9 GB, Flutter, the Android SDK) copy / reinstall / leave;
+   the "copy" ones are added to the phase 2 rsync.
+3. Record the reference environment for later comparison (on 2026-10-21 or 10-22, so it is current):
 
    ```bash
    cd ~/GitHub/Finetuning-LLM
@@ -70,9 +80,13 @@ matching folder in `~/GitHub`; they come along with `~/.claude/` and stay unused
    ollama list > ~/m2-ollama-list.txt
    shasum -a 256 sql2pyspark*.gguf > ~/m2-gguf.sha256
    brew bundle dump --file ~/Brewfile          # formulae + casks, reinstalled in phase 1
+   ls /Applications > ~/m2-apps.txt            # apps not from Homebrew (Office, LINE, LM Studio, Raycast, …): reinstall by hand
+   npm ls -g --depth=0 > ~/m2-npm-global.txt
    ```
 
-3. No training or long chain runs from 2026-10-29 until the copy is done.
+   The owner dumps every Postgres instance in use (EDB needs the `postgres` password), e.g.
+   `/Library/PostgreSQL/18/bin/pg_dumpall -U postgres > ~/m2-edb18.sql`.
+4. No training or long chain runs from 2026-10-22 until the copy is done.
 
 ## Phase 1 — set up the Mac mini (day 1, ~1–2 h)
 
@@ -86,7 +100,8 @@ matching folder in `~/GitHub`; they come along with `~/.claude/` and stay unused
      `openjdk@17`, `git`, `git-lfs`, `gh`, `node`, `postgresql@17` / `@18`, `cloudflared`, `databricks`, …); put
      `openjdk@17` on `PATH` the same way as on the M2 (`/opt/homebrew/opt/openjdk@17/bin`); Spark needs Java 17
    - Apps: Ollama (the latest; the M2 has 0.35.1, the server 0.34.4: the GGUF blobs work on both), Visual Studio Code,
-     Google Chrome (+ the Claude extension), Antigravity, Docker Desktop (only if the compose setup is wanted)
+     Google Chrome (+ the Claude extension), Antigravity, Docker Desktop, Node.js 24 (nodejs.org package, as on the
+     M2), then `npm i -g openclaw eas-cli`; the rest of `~/m2-apps.txt` as wanted
    - Claude Code (native install), then log in
 4. Accounts: `gh auth login` (https), `git config --global user.name "Prapon (Aek) Bavonparadon"` and
    `user.email 119161666+praponb@users.noreply.github.com`, `git lfs install`.
@@ -106,12 +121,15 @@ rsync -a --progress \
 rsync -a --progress ~/.ollama/models/ $NEW:.ollama/models/
 rsync -a --progress ~/.cache/huggingface/hub/ $NEW:.cache/huggingface/hub/
 rsync -a --progress --exclude cache/ --exclude shell-snapshots/ --exclude session-env/ ~/.claude/ $NEW:.claude/
-rsync -a ~/.claude.json ~/Brewfile ~/m2-*.txt ~/m2-gguf.sha256 $NEW:
+rsync -a ~/.claude.json ~/Brewfile ~/m2-* $NEW:
+rsync -a ~/.zshrc ~/.zprofile ~/.gitconfig ~/.databrickscfg $NEW:
+rsync -a ~/.cloudflared/ $NEW:.cloudflared/
 scp ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub $NEW:.ssh/
 rsync -a /opt/homebrew/var/postgresql@17 /opt/homebrew/var/postgresql@18 $NEW:/opt/homebrew/var/   # after brew bundle on the new Mac
 ```
 
-`--exclude '.venv*/'` and `--exclude 'llama.cpp/build/'` apply in every project (venvs and builds are recreated).
+`--exclude '.venv*/'`, `--exclude node_modules/` and `--exclude 'llama.cpp/build/'` apply in every project (venvs,
+`node_modules` and builds are recreated). Add the folders marked "copy" in the phase 0 inventory the same way.
 Then on the Mac mini: `chmod 600 ~/.ssh/id_ed25519`, and compare `shasum -a 256 ~/GitHub/Finetuning-LLM/sql2pyspark*.gguf`
 with `~/m2-gguf.sha256`.
 
@@ -132,7 +150,9 @@ slow on the M6 (check in phase 4), upgrade `mlx` / `mlx-lm` to the first version
 
 Other projects: recreate the venvs / `node_modules` listed in [Other projects](#other-projects) when each project is
 next used (Batch-to-Streaming-Converter: the three venvs in `batch2streaming-mlx/` and `llama.cpp/build` first, since
-it shares the MLX toolchain). `brew services start postgresql@17` (or `@18`) only if a project needs it.
+it shares the MLX toolchain). OpenClaw-Line: `npm ci`, then `make build test`. `brew services start postgresql@17`
+(or `@18`) only if a project needs it; EDB PostgreSQL 18: install it with the EDB installer and restore
+`~/m2-edb18.sql` with `psql -U postgres -f` (owner, needs the password).
 
 ## Phase 4 — verify before trusting the new Mac (day 1–2, ~2–3 h)
 
@@ -149,6 +169,8 @@ Each check has a pass bar. Until all of them pass, the M2 stays the main machine
 | 7 | Server access | `ssh -o BatchMode=yes prapon@192.168.1.49 'ollama list'` | lists the server tags (`latest` = v15-q4) without a password |
 | 8 | Claude Code | start `claude` in the repo, ask for pending items | it reads this project's memory |
 | 9 | Other projects | `git status` in each repo; `ollama run batch2streaming:latest` answers | clean (as on the M2); model loads |
+| 10 | OpenClaw-Line | `npm ci && make build test` | passes |
+| 11 | Tunnel cutover (owner runs the `sudo` steps) | stop cloudflared on the M2 (`sudo launchctl bootout system/com.cloudflare.cloudflared`, `brew services stop cloudflared`), then `sudo cloudflared service install` on the new Mac | `cloudflared tunnel info 0644141d…` shows one connector (the new Mac); both hostnames answer once their local services run |
 
 The deploy script (`deploy/update_model.sh`) only needs check 7 plus the root GGUFs; no test deploy is needed until
 the next model is promoted.
@@ -170,7 +192,21 @@ Measured in this order, each on its own; the results go into the docs in phase 6
 4. **Batch size** (measure only): whether batch 2–4 without gradient accumulation fits and how fast it is. It changes
    training dynamics, so it's used only on a future new run, never on a rerun of an existing version.
 
-## Phase 6 — wrap-up (after phase 5)
+## v17 — the first training run on the M6 (after phase 5)
+
+v17 (v15 + its full mix + 4,000 complex pairs, 4,800 iterations; [complex_v17](../sql2pyspark-mlx/complex_v17/))
+was prepared on the M2 but never started there. It runs on the new Mac with the **unchanged** config and chain, so its
+scores compare with v15 / v16:
+
+```bash
+cd ~/GitHub/Finetuning-LLM && nohup zsh eval/start_training_v17.sh > eval/start_training_v17.log 2>&1 &
+```
+
+The M2 estimate was ~19.5 h (training ~10.3 h); the phase 4 smoke test gives the M6 time per iteration. If phase 5
+showed that Ollama can run beside training, that is used only from v18 on. Promotion and the server deploy stay the
+owner's decision.
+
+## Phase 6 — wrap-up (after v17)
 
 1. Docs in one pass: README / PROJECT_DOCUMENTATION / docs 01, 03, 05, 07, 08 say "base M2 16 GB" in ~21 places; record
    the new machine, the measured speed and memory, any MLX version change and the phase 5 results; mark this

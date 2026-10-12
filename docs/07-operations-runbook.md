@@ -9,7 +9,7 @@ A practical guide for setting up, running, changing, and troubleshooting the SQL
 ### System Requirements
 
 - **Hardware**: Apple Silicon Mac. Developed and measured on a base **M2 with 16 GB** unified memory; more memory gives more headroom.
-- **Disk space**: after the 2026-09-30 cleanup the project uses ~15 GB (8.1 GB GGUF, 2 GB venv, 0.6 GB `llama.cpp/`, data and adapters) plus ~16 GB in Ollama (`latest`/v8 and v7). A 7B export needs ~30 GB more while it runs (BF16 `sql2pyspark-hf/` ~15 GB, fused MLX model ~4 GB, new GGUF 8 GB, LoRA checkpoints ~3 GB); `make clean` frees it afterwards. Each new Ollama tag adds 8.1 GB (`ollama rm` old ones).
+- **Disk space** (measured 2026-10-10): the project folder uses ~46 GB (3.4 GB `.git`, 7.5 + 4.4 GB root GGUFs, 2.1 GB venv, 0.6 GB `llama.cpp/`, 5.6 GB `qwen35_pilot/`, data and adapters, and a 14 GB `sql2pyspark-hf/` export leftover that `make clean` removes), Ollama ~125 GB (22 `sql2pyspark:*` tags) and the Hugging Face cache ~15 GB. A 7B export needs ~30 GB more while it runs (BF16 `sql2pyspark-hf/` ~15 GB, fused MLX model ~4 GB, new GGUF 8 GB, LoRA checkpoints ~3 GB); `make clean` frees it afterwards. Each new Ollama tag adds 8.1 GB (`ollama rm` old ones).
 - **Docker Desktop** (optional): for the containerised app, data pipeline and evaluation; see [Docker](#-docker).
 
 ### Software Dependencies

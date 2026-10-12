@@ -22,7 +22,7 @@ complex query on the Mac, and on the CPU-only server 4.05 vs. 2.47 tokens/s. See
 **v8** (the previous `latest`) is kept as `sql2pyspark:v8`: roll back with `ollama cp sql2pyspark:v8 sql2pyspark:latest`
 (the server also keeps v7). `sql2pyspark:v9` is the same model at Q8_0 (8.1 GB).
 
-**Candidate:** `sql2pyspark:v10-q4` (trained 2026-10-01, not promoted; the owner decides): v9 continued on the
+**v10-q4** (trained 2026-10-01, never promoted; superseded by v11 / v12): v9 continued on the
 [classic_v10 dataset](sql2pyspark-mlx/classic_v10/README.md) (the classic pairs in the mirror window style + bare
 `IN` / `NOT IN` subqueries). **49/50** on held-out `IN` / `NOT IN` queries (v9-q4 11), **147/150** on the fixed test
 (140), **60/62** on the hold-out (59; `holdout024` and `holdout052` fixed), `real001` no longer loops; but **18/25** on the
