@@ -49,16 +49,11 @@ done
 
 Every repo should show `0 changed, 0 unpushed`. Merge any open PR first.
 
-### 0.3 Postgres dump (👤, only if you still use the EDB install)
+### 0.3 Postgres
 
-The EDB PostgreSQL 18 in `/Library/PostgreSQL/18` is a separate install from Homebrew's (`@17` on port 5432, `@18` on
-5434 for Jobs4Dent). Homebrew's data folders are copied as files in step 3; EDB's needs a dump:
-
-```bash
-sudo grep '^port' /Library/PostgreSQL/18/data/postgresql.conf     # its port
-sudo launchctl kickstart system/postgresql-18 2>/dev/null || sudo launchctl load -w /Library/LaunchDaemons/postgresql-18.plist
-/Library/PostgreSQL/18/bin/pg_dumpall -U postgres -p <port> > ~/m2-edb18.sql   # asks for the postgres password
-```
+Only Homebrew's Postgres moves (`@17` on port 5432, `@18` on 5434 for Jobs4Dent): its data folders are copied as files
+in step 3.4. The EDB PostgreSQL 18 in `/Library/PostgreSQL/18` is not used (owner, 2026-10-12): not copied, not
+reinstalled.
 
 ### 0.4 Freeze (from 2026-10-22)
 
@@ -200,8 +195,6 @@ Other projects (when you next use each one; Claude can do these):
 - `Batch-to-Streaming-Converter`: the venvs in `batch2streaming-mlx/` (`webapp/requirements.txt`) and `llama.cpp/build`
 - `New_Nexus_Web`: `cd frontend && npm install`; backend venv from `backend/requirements.txt`
 - `Agentic-AI-agents`: venv from `pyproject.toml` / `requirements.txt` as needed
-- EDB PostgreSQL (only if dumped in 0.3): install it with the EDB installer, then
-  `psql -U postgres -p <port> -f ~/m2-edb18.sql`
 - Homebrew Postgres, if a project needs it: `brew services start postgresql@17` (and/or `@18`)
 
 ## Step 5 — checks before the Mac mini takes over (day 2, ~2–3 h)
