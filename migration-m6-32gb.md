@@ -62,20 +62,28 @@ on the M6.)
 
 ### 0.5 Stage the big folders on the server (🤖)
 
-First pass started 2026-10-12 13:23 (log `~/m2-server-copy.log`). Run it again after the snapshot (0.2) on 10-21/22:
-rsync only sends what changed. It never deletes anything, and the four `.env` files are excluded.
+First pass done 2026-10-12 (13:23–16:42, log `~/m2-server-copy.log`; checked: Ollama identical, GitHub identical except
+files deleted on the M2 afterwards). Run it again after the snapshot (0.2) on 10-21/22: rsync only sends what changed,
+and **`--delete`** removes from the server copy whatever was deleted on the M2 since, so it doesn't come back on the Mac
+mini. `--delete` only acts inside `~/m2-backup/GitHub` and `~/m2-backup/.ollama/models` on the server, never on the M2,
+and excluded files (`.env`, venvs, …) are left alone. The four `.env` files are never sent.
 
 ```bash
 SRV=prapon@192.168.1.49
+SSH=(-e "ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=8")   # survives short Wi-Fi drops
 X=(--exclude .env --exclude sql2pyspark-hf/ --exclude '.venv*/' --exclude 'llama.cpp/build/'
    --exclude node_modules/ --exclude __pycache__/ --exclude .DS_Store)
 ssh $SRV 'mkdir -p ~/m2-backup/GitHub ~/m2-backup/.ollama/models && chmod 700 ~/m2-backup'
-caffeinate -i -s rsync -a $X ~/GitHub/                  $SRV:m2-backup/GitHub/                  # ~38 GB
-caffeinate -i -s rsync -a ~/.ollama/models/             $SRV:m2-backup/.ollama/models/          # ~126 GB
-ssh $SRV 'du -sh ~/m2-backup; df -h /'
+rsync -a -n -v --delete $SSH $X ~/GitHub/ $SRV:m2-backup/GitHub/ | grep '^deleting'   # dry run: review first
+caffeinate -i -s rsync -a --delete $SSH $X ~/GitHub/        $SRV:m2-backup/GitHub/          # ~38 GB
+caffeinate -i -s rsync -a --delete $SSH ~/.ollama/models/   $SRV:m2-backup/.ollama/models/  # ~126 GB
+ssh $SRV 'df -h /'
 ```
 
-The server has 295 GB free before the copy and about 130 GB after. The Hugging Face cache is not staged: it was gone
+Keep the trailing `/` on every source and target path: without it rsync copies into a subfolder, and `--delete` would
+then compare the wrong folders. If a run stops ("Broken pipe"), run the same line again; finished files are skipped.
+
+The server had 295 GB free before the first pass and 133 GB after. The Hugging Face cache is not staged: it was gone
 from the M2 by 2026-10-12, and the base models are downloaded again in step 4.
 
 ## Step 1 — first boot of the Mac mini (👤, ~30 min)
