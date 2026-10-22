@@ -245,9 +245,11 @@ cloudflared tunnel info 0644141d-f671-490f-a0f9-4f34fe6fe69f   # one connector: 
 curl -sI https://batch2stream.praponb.com | head -1            # 302 (Cloudflare Access login)
 ```
 
-`line-bot.praponb.com` (→ :18789) is open: it answers 404 since 2026-10-13 and where the LINE bot runs is not decided
-yet: (a) the `hermes-line` tunnel (`66ac460e…`), (b) a Mac with its own small tunnel (not `0644141d…`), or (c) the
-server (a `line-bot` rule in `/etc/cloudflared-batch2stream` + OpenClaw there). Its steps are added here once decided.
+`line-bot.praponb.com` is a leftover and stays at 404 (owner, 2026-10-22). The LINE channel's webhook already goes to
+the server: `https://openclaw-feedback.praponb.com/line/webhook` (the OpenClaw-Line worker, tunnel `582a2422…`). The
+M2's personal OpenClaw gateway (`~/.openclaw`, LaunchAgent `ai.openclaw.gateway`, :18789) used the same channel and is
+not moved: a channel has only one webhook URL. `~/.openclaw` is still copied (step 0.1) as a backup; don't start a
+gateway from it on the Mac mini.
 
 **All 11 pass → the Mac mini is the main machine.** If something fails, keep working on the M2 and ask Claude.
 
