@@ -15,21 +15,22 @@ takes over. The reasons and background are in [docs/09-mac-mini-migration.md](do
 
 ### 0.1 Decide the extra folders (👤, any day)
 
-Mark each line; the "copy" ones are added to step 3.3. Folders that hold logins or tokens (`~/.gemini`, `~/.kimi-code`,
-`~/.openclaw`, `~/.config`) always go directly; the others may also be staged on the server (step 0.5).
+Decided by the owner on 2026-10-22; the "copy" ones are in step 3.3. Folders that hold logins or tokens
+(`~/.gemini`, `~/.kimi-code`, `~/.openclaw`, `~/.config`) always go directly; the others may also be staged on the
+server (step 0.5).
 
-| Folder | Size | Suggestion |
-| --- | --- | --- |
-| `~/Documents` | 11 GB | copy (skip if it's already in iCloud) |
-| `~/Downloads` | 2.7 GB | copy (or tidy first) |
-| `~/.lmstudio` | 1.9 GB | copy if you use LM Studio |
-| `~/.gemini` | 1.3 GB | copy |
-| `~/DataEngineerLearn` (incl. google-cloud-sdk) | 487 MB | copy |
-| `~/.kimi-code` | 344 MB | copy |
-| `~/.openclaw` | 76 MB | **copy** (OpenClaw / LINE bot state) |
-| `~/.config` (incl. gcloud credentials) | 5 MB | copy |
-| `~/Library`, `~/.npm`, `~/.vscode`, `~/.local`, `~/.antigravity-ide` | ~19 GB | leave (apps rebuild them; VS Code extensions sync) |
-| Flutter (`/Applications/flutter`, `~/.pub-cache`), Android SDK | ~1 GB + | reinstall only if still used |
+| Folder | Size | Suggestion | Decision |
+| --- | --- | --- | --- |
+| `~/Documents` | 11 GB | copy (skip if it's already in iCloud) | **copy** |
+| `~/Downloads` | 2.7 GB | copy (or tidy first) | **copy** |
+| `~/.lmstudio` | 1.9 GB | copy if you use LM Studio | **leave** |
+| `~/.gemini` | 1.3 GB | copy | **copy** |
+| `~/DataEngineerLearn` (incl. google-cloud-sdk) | 487 MB | copy | **copy** |
+| `~/.kimi-code` | 344 MB | copy | **copy** |
+| `~/.openclaw` | 76 MB | copy (OpenClaw / LINE bot state) | **copy** (backup only, see check 11) |
+| `~/.config` (incl. gcloud credentials) | 5 MB | copy | **copy** |
+| `~/Library`, `~/.npm`, `~/.vscode`, `~/.local`, `~/.antigravity-ide` | ~19 GB | leave (apps rebuild them; VS Code extensions sync) | **leave** |
+| Flutter (`/Applications/flutter`, `~/.pub-cache`), Android SDK | ~1 GB + | reinstall only if still used | **leave** (not reinstalled) |
 
 ### 0.2 Snapshot the M2 (👤 or 🤖, on 2026-10-30 or 10-31)
 
@@ -157,7 +158,6 @@ The `.env` files from 3.1 are kept: the server copy has no `.env`, and rsync wit
 ```bash
 rsync -a --progress ~/Documents/          $NEW:Documents/
 rsync -a --progress ~/Downloads/          $NEW:Downloads/
-rsync -a --progress ~/.lmstudio/          $NEW:.lmstudio/
 rsync -a --progress ~/.gemini/            $NEW:.gemini/
 rsync -a --progress ~/DataEngineerLearn/  $NEW:DataEngineerLearn/
 rsync -a --progress ~/.kimi-code/         $NEW:.kimi-code/
