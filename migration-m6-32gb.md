@@ -195,7 +195,10 @@ cd llama.cpp && ../sql2pyspark-mlx/.venv/bin/cmake -B build -DGGML_METAL=ON -DCM
 ```
 
 If `make setup` or MLX fails on the M6 (the pinned MLX 0.32.2 predates it), stop and ask Claude to upgrade
-`mlx` / `mlx-lm` and note it in `requirements.txt`.
+`mlx` / `mlx-lm` and note it in `requirements.txt`. Tested on the M2 on 2026-10-22 (v15 config, short smoke runs):
+**mlx 0.32.3 + mlx-lm 0.32.2** trains with the same losses as the pin, so upgrade to that pair. **Never mlx 0.32.4**:
+the first optimizer update turns every LoRA weight into NaN (with either mlx-lm, with or without `grad_checkpoint`
+and the small Metal buffers). Fuse and inference are not affected (the fused v15 is byte-identical).
 
 Other projects (when you next use each one; Claude can do these):
 
