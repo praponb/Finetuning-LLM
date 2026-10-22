@@ -1,7 +1,8 @@
 # 09 - Migration to the Mac mini M6 (32 GB)
 
 > **Status**: plan approved 2026-10-10, updated 2026-10-12; nothing done yet. The new Mac (M6, 32 GB, **2 TB**) arrives
-> **2026-10-23 to 10-25** (moved up from 30 October).
+> **2026-11-01** (was 2026-10-23 to 10-25, changed 2026-10-22). The dates and commands in
+> [migration-m6-32gb.md](../migration-m6-32gb.md) are the current ones.
 
 **Goal**: move training, export, evaluation, the local app and the server deploys — and the owner's other projects in
 `~/GitHub` — from the base **M2 MacBook (16 GB)** to a **Mac mini M6 (32 GB)** without losing anything, then prove the

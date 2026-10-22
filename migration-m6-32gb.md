@@ -3,7 +3,7 @@
 The step-by-step checklist with the commands to run, from the week before delivery to the point where the new Mac
 takes over. The reasons and background are in [docs/09-mac-mini-migration.md](docs/09-mac-mini-migration.md).
 
-- **Delivery**: 2026-10-23 to 10-25. **Budget**: day 1 = steps 1–4 (~4 h), day 2 = step 5 (checks, ~2–3 h).
+- **Delivery**: 2026-11-01 (Sunday; moved from 10-23 to 10-25 on 2026-10-22). **Budget**: day 1 = steps 1–4 (~4 h), day 2 = step 5 (checks, ~2–3 h).
 - **Route**: the big folders (~165 GB) are staged on the Ubuntu server (`prapon@192.168.1.49:~/m2-backup/`, mode 700)
   ahead of time; on delivery day the Mac mini pulls them over Ethernet. Secrets never go to the server: they go
   straight from the M2 to the Mac mini (step 3.1). The server copy also serves as an off-machine backup.
@@ -31,7 +31,7 @@ Mark each line; the "copy" ones are added to step 3.3. Folders that hold logins 
 | `~/Library`, `~/.npm`, `~/.vscode`, `~/.local`, `~/.antigravity-ide` | ~19 GB | leave (apps rebuild them; VS Code extensions sync) |
 | Flutter (`/Applications/flutter`, `~/.pub-cache`), Android SDK | ~1 GB + | reinstall only if still used |
 
-### 0.2 Snapshot the M2 (👤 or 🤖, on 2026-10-21 or 10-22)
+### 0.2 Snapshot the M2 (👤 or 🤖, on 2026-10-30 or 10-31)
 
 ```bash
 cd ~/GitHub/Finetuning-LLM
@@ -55,7 +55,7 @@ Only Homebrew's Postgres moves (`@17` on port 5432, `@18` on 5434 for Jobs4Dent)
 in step 3.4. The EDB PostgreSQL 18 in `/Library/PostgreSQL/18` is not used (owner, 2026-10-12): not copied, not
 reinstalled.
 
-### 0.4 Freeze (from 2026-10-22)
+### 0.4 Freeze (from 2026-10-31)
 
 No training or long chains on the M2 until step 5 is done. (v17 is not started on the M2: it is the first real run
 on the M6.)
@@ -63,10 +63,10 @@ on the M6.)
 ### 0.5 Stage the big folders on the server (🤖)
 
 First pass done 2026-10-12 (13:23–16:42, log `~/m2-server-copy.log`; checked: Ollama identical, GitHub identical except
-files deleted on the M2 afterwards). Run it again after the snapshot (0.2) on 10-21/22: rsync only sends what changed,
+files deleted on the M2 afterwards). Run it again after the snapshot (0.2) on 10-30/31: rsync only sends what changed,
 and **`--delete`** removes from the server copy whatever was deleted on the M2 since, so it doesn't come back on the Mac
 mini. `--delete` only acts inside `~/m2-backup/GitHub` and `~/m2-backup/.ollama/models` on the server, never on the M2,
-and excluded files (`.env`, venvs, …) are left alone. The four `.env` files are never sent.
+and excluded files (`.env`, venvs, …) are left alone. The five `.env` files are never sent.
 
 ```bash
 SRV=prapon@192.168.1.49
@@ -83,7 +83,7 @@ ssh $SRV 'df -h /'
 Keep the trailing `/` on every source and target path: without it rsync copies into a subfolder, and `--delete` would
 then compare the wrong folders. If a run stops ("Broken pipe"), run the same line again; finished files are skipped.
 
-The server had 295 GB free before the first pass and 133 GB after. The Hugging Face cache is not staged: it was gone
+The server had 295 GB free before the first pass, 133 GB after it and 116 GB on 2026-10-22. The Hugging Face cache is not staged: it was gone
 from the M2 by 2026-10-12, and the base models are downloaded again in step 4.
 
 ## Step 1 — first boot of the Mac mini (👤, ~30 min)
@@ -133,7 +133,7 @@ rsync -a ~/.claude.json ~/.zshrc ~/.zprofile ~/.gitconfig ~/.databrickscfg $NEW:
 rsync -a ~/.cloudflared/ $NEW:.cloudflared/
 rsync -a --exclude cache/ --exclude shell-snapshots/ --exclude session-env/ ~/.claude/ $NEW:.claude/
 tar -C ~/GitHub -cf - Finetuning-LLM/.env New_Nexus_Web/.env Agentic-AI-agents/.env OpenClaw-Line/demo/.env \
-  | ssh $NEW 'tar -C ~/GitHub -xf -'                 # the 4 .env files the server copy leaves out
+  Hadoop-to-Lakehouse/.env | ssh $NEW 'tar -C ~/GitHub -xf -'   # the 5 .env files the server copy leaves out
 ```
 
 This replaces the `.zprofile` from step 2 with the M2's, which already has the `brew shellenv` line. Then **on the
@@ -222,27 +222,32 @@ step 5 checks in migration-m6-32gb.md"** and it reports a pass/fail table.
 | 8 | Claude Code | `claude` in this repo → "list all pending items" | answers from this project's memory |
 | 9 | Other projects | `git status` in each repo; `ollama run batch2streaming:latest "hi"` | clean; model answers |
 | 10 | OpenClaw-Line | `cd ~/GitHub/OpenClaw-Line && npm ci && make build test` | passes |
-| 11 | Tunnel (👤) | see below | `batch2stream.praponb.com` / `line-bot.praponb.com` answer once their local services run |
+| 11 | Tunnels (👤) | see below | the M2 and the Mac mini run no connector for `0644141d…`; `batch2stream.praponb.com` answers |
 
-### Check 11 — move the Cloudflare tunnel (👤, needs `sudo`)
+### Check 11 — Cloudflare tunnels (👤, needs `sudo`)
 
-Only one Mac may run tunnel `0644141d…`. It isn't running on the M2 right now, but make sure it stays off there:
+Nothing moves to the Mac mini. Since 2026-10-13 tunnel `0644141d…` (`batch2stream.praponb.com`) runs on the Ubuntu
+server (systemd `cloudflared-batch2stream`, app `batch2stream-web` on 127.0.0.1:8100). Only one machine may run a
+connector for it (a second one splits the requests), so it stays off on both Macs. On the M2 it isn't running, but its
+LaunchDaemon is still installed and enabled (`RunAtLoad`), so switch it off for good:
 
 ```bash
 # on the M2
 sudo launchctl bootout system /Library/LaunchDaemons/com.cloudflare.cloudflared.plist 2>/dev/null
 brew services stop cloudflared 2>/dev/null
 sudo launchctl disable system/com.cloudflare.cloudflared       # don't start again at boot
-scp /Library/LaunchDaemons/com.cloudflare.cloudflared.plist praponb@<mini>.local:/tmp/
 ```
 
 ```bash
-# on the Mac mini (same paths: /opt/homebrew/bin/cloudflared, ~/.cloudflared/config.yml)
-sudo cp /tmp/com.cloudflare.cloudflared.plist /Library/LaunchDaemons/
-sudo chown root:wheel /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
-sudo launchctl bootstrap system /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
-cloudflared tunnel info 0644141d-f671-490f-a0f9-4f34fe6fe69f    # one connector, from the Mac mini
+# on the Mac mini: brew bundle only installs the binary; don't install the LaunchDaemon or start the service
+brew services list | grep cloudflared                          # "none" or "stopped"
+cloudflared tunnel info 0644141d-f671-490f-a0f9-4f34fe6fe69f   # one connector: linux_amd64 (the server)
+curl -sI https://batch2stream.praponb.com | head -1            # 302 (Cloudflare Access login)
 ```
+
+`line-bot.praponb.com` (→ :18789) is open: it answers 404 since 2026-10-13 and where the LINE bot runs is not decided
+yet: (a) the `hermes-line` tunnel (`66ac460e…`), (b) a Mac with its own small tunnel (not `0644141d…`), or (c) the
+server (a `line-bot` rule in `/etc/cloudflared-batch2stream` + OpenClaw there). Its steps are added here once decided.
 
 **All 11 pass → the Mac mini is the main machine.** If something fails, keep working on the M2 and ask Claude.
 
