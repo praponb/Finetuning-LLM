@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Cloudflare Tunnel "sql2pyspark" (1f233bc8): sql2pyspark.praponb.com -> 127.0.0.1:8502.
+     Config + credentials in ~/.cloudflared (sql2pyspark-config.yml, 1f233bc8-....json). -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.praponb.cloudflared-sql2pyspark</string>
+  <key>UserName</key><string>praponb</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/cloudflared</string>
+    <string>--no-autoupdate</string>
+    <string>--config</string><string>/Users/praponb/.cloudflared/sql2pyspark-config.yml</string>
+    <string>tunnel</string>
+    <string>run</string>
+    <string>--protocol</string><string>http2</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key><string>/Users/praponb</string>
+  </dict>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>10</integer>
+  <key>StandardOutPath</key><string>/Users/praponb/Library/Logs/sql2pyspark/cloudflared.log</string>
+  <key>StandardErrorPath</key><string>/Users/praponb/Library/Logs/sql2pyspark/cloudflared.log</string>
+</dict>
+</plist>

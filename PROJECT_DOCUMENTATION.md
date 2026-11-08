@@ -73,7 +73,7 @@ flowchart TD
     subgraph ServeEval [Serving, Repair & Validation]
         GGUF --> Modelfile[Modelfile]
         Modelfile --> Ollama[Ollama Server<br/>latest = v12-q4 (Mac + server);<br/>v8–v11 (+ Q4) kept]
-        Q4GGUF --> OllamaServer[Ubuntu Server<br/>sql2pyspark.praponb.com]
+        Q4GGUF --> OllamaServer[Mac mini M6 since 2026-11-08<br/>sql2pyspark.praponb.com]
         Ollama <--> Streamlit[app.py<br/>Streamlit UI]
         Streamlit <--> Kimi[kimi_repair.py<br/>join_check + setop_check<br/>Kimi K3 Repair Loop]
         Ollama <--> Eval[eval/evaluate.py<br/>Spark Scoring]
@@ -101,7 +101,7 @@ Finetuning-LLM/
 ├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of the same export (v15-q4 = `latest` on the Mac and the server since 2026-10-09; restored after the v16 export)
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
-├── deploy/                       # Ubuntu server: sql2pyspark.service (systemd), setup_server.sh, update_model.sh
+├── deploy/                       # macmini/ (public site since 2026-11-08); former Ubuntu server: sql2pyspark.service, setup_server.sh, update_model.sh
 ├── sql2pyspark-mlx/              # Data synthesis, verification & MLX training
 │   ├── schemas.py                # 17 base + 5 extra train, 5 base + 1 extra hold-out tables & sample data
 │   ├── sqlspec.py                # Dual-rendering expression/query objects
@@ -420,7 +420,7 @@ To package the fine-tuned model for Ollama (`make export TAG=v9`):
 With `KIMI_API_KEY` set (in `.env` or passed into Docker), `app.py` provides automated post-processing:
 
 1. **Static AST & set-operation/join check** (`static_check(code, sql)`): instant check for syntax errors, undefined names (such as `w93` from repetition loops), a missing `result` variable, `.unionByName()` used for positional `UNION`/`INTERSECT`/`EXCEPT` with differently named columns (`setop_check()`), and unqualified `F.col("<name>")` in join conditions between aliased DataFrames (`join_check()`).
-2. **Empty table execution** (`EmptyTableRunner`): Kimi K3 (Moonshot AI, `reasoning_effort=high`) infers table schemas from the SQL, runs the code on empty PySpark tables in a local `SparkSession`, and verifies that output columns match the SQL's columns.
+2. **Empty table execution** (`EmptyTableRunner`): Kimi (Moonshot AI, `KIMI_MODEL`, default `kimi-k3.1-pro` since 2026-11-08, before `kimi-k3`; `reasoning_effort=high`) infers table schemas from the SQL, runs the code on empty PySpark tables in a local `SparkSession`, and verifies that output columns match the SQL's columns.
 3. **Sidebar controls**: options to repair *When a check fails or the SQL is long* (default; long = over 2,000 characters), *When a check fails*, *Always*, or *Off*, plus a manual *Check and repair with Kimi K3* button. Long SQL queries are repaired by default because model mistakes on long multi-stage queries often only manifest when the code runs.
 4. **Container readiness**: `docker/app.Dockerfile` includes Java 17 and PySpark (2.1 GB image), running the local Spark checks seamlessly inside the container.
 
@@ -889,7 +889,9 @@ Details, memory tips and troubleshooting: [docs/07-operations-runbook.md](docs/0
 
 ## 11. Server Deployment
 
-Training stays on the Mac (MLX); the exported GGUF runs anywhere Ollama does. **<https://sql2pyspark.praponb.com>** is served from an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v12-q4 since 2026-10-03), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports.
+**Since 2026-11-08 <https://sql2pyspark.praponb.com> runs on the Mac mini M6** (LaunchDaemons for Ollama, the app on 127.0.0.1:8502 and Cloudflare Tunnel `sql2pyspark`; ~3 s per query; Kimi K3.1 Pro repair on). A promoted model goes live with `ollama cp sql2pyspark:<tag> sql2pyspark:latest`. See [deploy/macmini/README.md](deploy/macmini/README.md) and docs/08.
+
+Until then (2026-09-29 → 11-08) the exported GGUF ran on an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v12-q4 since 2026-10-03), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports.
 
 - **Sizing**:
   - **Q8_0 (v8)**: ~8 GB RAM for Ollama + ~1.5 GB for the app and Spark + OS → 12 GB minimum, 16 GB recommended; ~25 GB disk.

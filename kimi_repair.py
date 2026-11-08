@@ -23,9 +23,19 @@ from typing import Callable
 
 SQL_CALL = re.compile(r"\.sql\s*\(")
 DEFAULT_BASE_URL = "https://api.moonshot.ai/v1"
-DEFAULT_MODEL = "kimi-k3"
-# USD per million tokens: (input cache miss, input cache hit, output); Kimi pricing page, 2026-09
-PRICES = {"kimi-k3": (3.0, 0.30, 15.0)}
+DEFAULT_MODEL = "kimi-k3.1-pro"
+# USD per million tokens: (input cache miss, input cache hit, output); kimi-k3 from Kimi's pricing page (2026-09),
+# the K3.1 Pro rates as listed for Moonshot's API on 2026-11-08 (launched 2026-10-24)
+PRICES = {"kimi-k3": (3.0, 0.30, 15.0),
+          "kimi-k3.1-pro": (2.0, 0.20, 10.0),
+          "kimi-k3.1-pro-highspeed": (4.0, 0.20, 20.0)}
+MODEL_NAMES = {"kimi-k3": "Kimi K3", "kimi-k3.1-pro": "Kimi K3.1 Pro",
+               "kimi-k3.1-pro-highspeed": "Kimi K3.1 Pro (highspeed)"}
+
+
+def display_name(model: str) -> str:
+    """Human-readable model name for the UI (falls back to the API model ID)."""
+    return MODEL_NAMES.get(model, model)
 PREDEFINED = {"F", "Window", "spark"}
 MAX_ROWS, MAX_CHARS = 20, 6000
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Streamlit app behind sql2pyspark.praponb.com, on 127.0.0.1:8502 (8501 stays free for `make app`).
+     Runs at boot as praponb; the Kimi key comes from the repo's .env (the site is behind Cloudflare Access). -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.praponb.sql2pyspark</string>
+  <key>UserName</key><string>praponb</string>
+  <key>WorkingDirectory</key><string>/Users/praponb/GitHub/Finetuning-LLM</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/bin/streamlit</string>
+    <string>run</string>
+    <string>app.py</string>
+    <string>--server.port</string><string>8502</string>
+    <string>--server.address</string><string>127.0.0.1</string>
+    <string>--server.headless</string><string>true</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key><string>/Users/praponb</string>
+    <key>JAVA_HOME</key><string>/opt/homebrew/opt/openjdk@17</string>
+    <key>PATH</key><string>/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>OLLAMA_URL</key><string>http://127.0.0.1:11434</string>
+    <key>PYTHONUNBUFFERED</key><string>1</string>
+  </dict>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>10</integer>
+  <key>StandardOutPath</key><string>/Users/praponb/Library/Logs/sql2pyspark/app.log</string>
+  <key>StandardErrorPath</key><string>/Users/praponb/Library/Logs/sql2pyspark/app.log</string>
+</dict>
+</plist>

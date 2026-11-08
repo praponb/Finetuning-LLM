@@ -131,9 +131,9 @@ The older tags `v1`–`v6` were removed on 2026-09-30; see [Model Training & Exp
 
 `app.py` sends `temperature` 0.2. For SQL longer than 2,000 characters, `generation_options()` also sets `repeat_last_n` to 2,048 (Ollama's default: 64) and the request timeout rises from 180 s to 600 s: on long multi-CTE queries the model otherwise repeats window definitions until the token limit. Short queries are unaffected (see the repetition-penalty experiment in [Evaluation](04-evaluation-and-benchmarking.md)). With v6 (7B) this setting no longer stops the `real001` loop (identical 92-window reply); the static check flags the resulting syntax error, and the Kimi K3 repair fixed the same kind of looping answer from v5 in both repair tests.
 
-### Kimi K3 repair (optional)
+### Kimi repair (optional)
 
-With `KIMI_API_KEY` set (in `.env`; Docker passes it in), the app checks and repairs the model's answer with Kimi K3 (Moonshot AI). The shared logic is in `kimi_repair.py`:
+With `KIMI_API_KEY` set (in `.env`; Docker passes it in), the app checks and repairs the model's answer with Kimi (Moonshot AI): `KIMI_MODEL`, default **`kimi-k3.1-pro`** since 2026-11-08 (before: `kimi-k3`, which produced the results quoted below). The UI labels follow the model (`kr.display_name()`), and `PRICES` holds the per-token rates for the cost shown after each repair. Spark's Python workers use the app's own interpreter (`PYSPARK_PYTHON`), so a different `python3` on `PATH` doesn't break the checks. The shared logic is in `kimi_repair.py`:
 
 1. **Static check** (free, instant, `static_check()`):
    - Syntax errors
@@ -177,4 +177,4 @@ The image includes Java 17 and PySpark for the Kimi K3 checks (2.1 GB; 0.8 GB be
 
 ### On a Linux server
 
-The public site <https://sql2pyspark.praponb.com> runs on an Ubuntu server with native Ollama and the app as a systemd service behind a Cloudflare Tunnel and a Cloudflare Access login (allowed emails only; Cloudflare account or emailed one-time code); see [Server Deployment](08-server-deployment.md).
+The public site <https://sql2pyspark.praponb.com> runs on the Mac mini M6 since 2026-11-08: LaunchDaemons for Ollama, the app (127.0.0.1:8502, so `make app` keeps 8501) and Cloudflare Tunnel `sql2pyspark`, behind a Cloudflare Access login; see [deploy/macmini](../deploy/macmini/README.md). Before, an Ubuntu server served it with native Ollama and the app as a systemd service behind a Cloudflare Tunnel and the same Cloudflare Access login (allowed emails only; Cloudflare account or emailed one-time code); see [Server Deployment](08-server-deployment.md).
