@@ -12,6 +12,8 @@ LONG_SQL_CHARS = 2000
 # Kimi K3 repair (optional): KIMI_API_KEY from the environment or .env (Docker passes .env in)
 kr.load_env(Path(__file__).resolve().parent / ".env")
 KIMI_READY = bool(os.environ.get("KIMI_API_KEY"))
+KIMI_MODEL = os.environ.get("KIMI_MODEL") or kr.DEFAULT_MODEL
+KIMI = kr.display_name(KIMI_MODEL)      # e.g. "Kimi K3.1 Pro", used in every label
 REPAIR_MODES = ["When a check fails or the SQL is long", "When a check fails", "Always", "Off"]
 
 
@@ -31,7 +33,11 @@ extract_code = kr.extract_code
 @st.cache_resource(show_spinner="Starting Spark for the code checks...")
 def get_spark():
     """Local Spark session for Kimi's tool (empty tables only, so one core and little memory are enough)."""
+    import sys
     from pyspark.sql import SparkSession
+    # Python workers must use the app's own interpreter: `python3` on PATH can be another minor version
+    # (Homebrew 3.15 vs the 3.14 venv on the Mac mini) -> PYTHON_VERSION_MISMATCH in every Kimi check.
+    os.environ.setdefault("PYSPARK_PYTHON", sys.executable)
     spark = (SparkSession.builder.master("local[1]").appName("sql2pyspark-app")
              .config("spark.ui.enabled", "false").config("spark.ui.showConsoleProgress", "false")
              .config("spark.sql.shuffle.partitions", "1")
@@ -41,21 +47,20 @@ def get_spark():
 
 
 def run_repair(sql: str, code: str) -> None:
-    """Kimi K3 fixes `code`, checking its versions on empty tables; the result goes to session state."""
-    model = os.environ.get("KIMI_MODEL") or kr.DEFAULT_MODEL
-    with st.status("Kimi K3 is checking and repairing the code...", expanded=True) as status:
+    """Kimi fixes `code`, checking its versions on empty tables; the result goes to session state."""
+    with st.status(f"{KIMI} is checking and repairing the code...", expanded=True) as status:
         try:
             runner = kr.EmptyTableRunner(get_spark(), sql)
-            r = kr.repair(kr.make_client(), model, "high", sql, code, runner, max_runs=5,
+            r = kr.repair(kr.make_client(), KIMI_MODEL, "high", sql, code, runner, max_runs=5,
                           on_event=lambda line: st.write(line))
         except Exception as e:  # noqa: BLE001
-            status.update(label="Kimi K3 repair failed", state="error")
-            st.error(f"Kimi K3 repair failed: {kr.short_error(e)}")
+            status.update(label=f"{KIMI} repair failed", state="error")
+            st.error(f"{KIMI} repair failed: {kr.short_error(e)}")
             return
         last = r["runs"][-1]["output"] if r["runs"] else ""
         verified = bool(r["runs"]) and r["runs"][-1]["code"].strip() == r["code"].strip() \
             and last.startswith("OK") and "MISMATCH" not in last
-        status.update(label=f"Kimi K3 finished: {len(r['runs'])} checks, {r['seconds']:.0f} s, ${r['cost_usd']:.2f}",
+        status.update(label=f"{KIMI} finished: {len(r['runs'])} checks, {r['seconds']:.0f} s, ${r['cost_usd']:.2f}",
                       state="complete", expanded=False)
     st.session_state["repair"] = {**r, "verified": verified}
 
@@ -76,11 +81,11 @@ with st.sidebar:
         value="sql2pyspark",
         help="Any tag from `ollama list`, e.g. sql2pyspark:v1 to compare with the previous model.",
     )
-    st.subheader("Kimi K3 repair")
+    st.subheader(f"{KIMI} repair")
     if KIMI_READY:
         repair_mode = st.radio(
             "Run the repair", REPAIR_MODES, index=0,
-            help="Kimi K3 (Moonshot AI) checks the code on empty tables with the schemas the SQL implies and fixes "
+            help=f"{KIMI} (Moonshot AI) checks the code on empty tables with the schemas the SQL implies and fixes "
                  "syntax, name, column and type errors. About $0.10-0.30 and 1-5 minutes per repair. Long SQL "
                  f"(> {LONG_SQL_CHARS:,} characters) is repaired by default: the model's errors there often only show "
                  "when the code runs.",
@@ -168,11 +173,11 @@ with col2:
         if st.session_state.pop("auto_repair", False) and wanted:
             run_repair(converted["sql"], converted["code"])
         elif KIMI_READY and "repair" not in st.session_state and \
-                st.button("🛠 Check and repair with Kimi K3", width="stretch"):
+                st.button(f"🛠 Check and repair with {KIMI}", width="stretch"):
             run_repair(converted["sql"], converted["code"])
         rep = st.session_state.get("repair")
         if rep:
-            st.subheader("Repaired by Kimi K3")
+            st.subheader(f"Repaired by {KIMI}")
             st.code(rep["code"], language="python")
             if rep["verified"]:
                 st.success("This version ran on empty tables with the SQL's schemas and returns the SQL's columns.")

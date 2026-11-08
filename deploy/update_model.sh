@@ -1,4 +1,6 @@
 #!/bin/zsh
+# NOTE (2026-11-08): sql2pyspark.praponb.com now runs on the Mac mini (deploy/macmini/); there a promoted model goes live
+# with `ollama cp sql2pyspark:<tag> sql2pyspark:latest`. This script only updates the former Ubuntu server.
 # Put the last export (sql2pyspark.gguf on the Mac) on the Ubuntu server as sql2pyspark:<TAG> and make it the server's
 # sql2pyspark:latest, keeping the old latest as sql2pyspark:<PREV> for rollback. No sudo needed (Ollama CLI + scp).
 #   zsh deploy/update_model.sh v8 v7          # after `make promote TAG=v8 PREV=v7` on the Mac

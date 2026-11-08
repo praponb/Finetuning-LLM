@@ -138,11 +138,11 @@ To handle complex multi-CTE queries where small models can fail on identifier na
   - Missing `result` assignment
   - `.unionByName()` used for positional `UNION`/`INTERSECT`/`EXCEPT` where branches have different column names (`setop_check()`)
   - Unqualified `F.col("id")` in join conditions between aliased DataFrames (`join_check()`, preventing Spark's `AMBIGUOUS_REFERENCE` error)
-- When an error is detected, when the SQL is long (> 2,000 characters), or on demand, **Kimi K3** (Moonshot AI) checks and repairs the code using an empty-table Spark runner (`EmptyTableRunner`). Schemas are inferred from the SQL without needing real user data. With updated prompt rules (explicit `UNPIVOT` NULL exclusion and positional set-operation matching), this loop repaired v7's answers to the 4 production-grade queries 23 times out of 24 (3 runs per mode; 12/12 on empty tables) for ~$0.07–$0.27 per query.
+- When an error is detected, when the SQL is long (> 2,000 characters), or on demand, **Kimi** (Moonshot AI; K3.1 Pro by default since 2026-11-08, `KIMI_MODEL`; the numbers below are from Kimi K3) checks and repairs the code using an empty-table Spark runner (`EmptyTableRunner`). Schemas are inferred from the SQL without needing real user data. With updated prompt rules (explicit `UNPIVOT` NULL exclusion and positional set-operation matching), this loop repaired v7's answers to the 4 production-grade queries 23 times out of 24 (3 runs per mode; 12/12 on empty tables) for ~$0.07–$0.27 per query.
 
 ### 6. Train on the Mac, serve anywhere
 
-Training needs Apple MLX, so it runs on the M2 Mac; the exported GGUF is portable. Besides the Mac (native Ollama with the Metal GPU, app in Docker), the model is served from an Ubuntu server for the public site <https://sql2pyspark.praponb.com>: native Ollama on the CPU, the app as a systemd service and a Cloudflare Tunnel for HTTPS. Both Q8_0 (`sql2pyspark.gguf`) and compact Q4_K_M (`sql2pyspark-q4.gguf`) formats are available. See [Server Deployment](08-server-deployment.md)
+Training needs Apple MLX, so it runs on the M2 Mac; the exported GGUF is portable. Besides the Mac (native Ollama with the Metal GPU, app in Docker), the public site <https://sql2pyspark.praponb.com> is served from the Mac mini M6 since 2026-11-08 (LaunchDaemons: Ollama on the Metal GPU, the app, a Cloudflare Tunnel; [deploy/macmini](../deploy/macmini/README.md)). From 2026-09-29 to 11-08 an Ubuntu server served it on the CPU. Both Q8_0 (`sql2pyspark.gguf`) and compact Q4_K_M (`sql2pyspark-q4.gguf`) formats are available. See [Server Deployment](08-server-deployment.md)
 
 ---
 

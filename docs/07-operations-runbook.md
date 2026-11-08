@@ -241,7 +241,7 @@ What has been verified:
 
 ## 🌐 Hosting on a server
 
-To serve the trained model from an Ubuntu server (the public site <https://sql2pyspark.praponb.com>), follow [Server Deployment](08-server-deployment.md): copy the GGUF, register it in a native Ollama, run the app as `sql2pyspark.service` (`deploy/`), and publish it through a Cloudflare Tunnel behind a Cloudflare Access login. After promoting a new model on the Mac, `zsh deploy/update_model.sh <TAG> <PREV>` puts it on the server (or `GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh <TAG> <PREV>` to push a 4-bit quantized model for faster CPU inference and lower memory usage).
+The public site <https://sql2pyspark.praponb.com> runs on the Mac mini since 2026-11-08 ([deploy/macmini](../deploy/macmini/README.md)): a promoted model goes live with `ollama cp sql2pyspark:<tag> sql2pyspark:latest` (the app always asks for `latest`); after a code change restart the app with `sudo launchctl kickstart -k system/com.praponb.sql2pyspark`; logs in `~/Library/Logs/sql2pyspark/`. To serve it from an Ubuntu server instead (the setup until 2026-11-08, kept for rollback), follow [Server Deployment](08-server-deployment.md): copy the GGUF, register it in a native Ollama, run the app as `sql2pyspark.service` (`deploy/`), and publish it through a Cloudflare Tunnel behind a Cloudflare Access login. After promoting a new model on the Mac, `zsh deploy/update_model.sh <TAG> <PREV>` puts it on the server (or `GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh <TAG> <PREV>` to push a 4-bit quantized model for faster CPU inference and lower memory usage).
 
 ## 🩺 Troubleshooting & FAQ
 

@@ -1,6 +1,33 @@
-# 08 - Server Deployment (Ubuntu + Cloudflare Tunnel)
+# 08 - Server Deployment (Mac mini; formerly Ubuntu + Cloudflare Tunnel)
 
-Training needs Apple MLX, so it stays on the Mac. The finished model is a plain GGUF file that Ollama can serve on any Linux machine. This guide covers the deployment of **<https://sql2pyspark.praponb.com>** on a home Ubuntu server, set up on 2026-09-29.
+## 🍎 Current: the Mac mini M6 (since 2026-11-08)
+
+**<https://sql2pyspark.praponb.com>** is served from the Mac mini M6 (32 GB), the same machine that trains the model.
+Three LaunchDaemons start at boot (after the FileVault unlock) without a GUI login and run as `praponb`:
+
+| Daemon | What |
+| :--- | :--- |
+| `com.praponb.ollama` | `ollama serve` on 127.0.0.1:11434 (models in `~/.ollama`; replaces the Ollama app, which is no longer a Login Item) |
+| `com.praponb.sql2pyspark` | Streamlit `app.py` on **127.0.0.1:8502** from `~/GitHub/Finetuning-LLM` with the project venv (`make app` keeps 8501) |
+| `com.praponb.cloudflared-sql2pyspark` | Cloudflare Tunnel **`sql2pyspark`** (`1f233bc8…`), config `~/.cloudflared/sql2pyspark-config.yml` |
+
+- **Speed**: the Metal GPU answers the default GROUP BY query in ~3.5 s including the model load (the server: 35–50 s).
+- **Login**: the same Cloudflare Access application (it is tied to the hostname, so the move didn't change it).
+- **Kimi repair**: on, with **Kimi K3.1 Pro** (`KIMI_MODEL=kimi-k3.1-pro` in the repo's `.env`).
+- **New model**: `ollama cp sql2pyspark:<tag> sql2pyspark:latest` on the Mac mini; `deploy/update_model.sh` is not needed.
+- **Code change**: update `~/GitHub/Finetuning-LLM`, then `sudo launchctl kickstart -k system/com.praponb.sql2pyspark`.
+- **Power**: `pmset sleep 0 autorestart 1`; after a power cut the Mac boots but waits for the FileVault password.
+- Install, operation, logs and rollback: [deploy/macmini/README.md](../deploy/macmini/README.md).
+
+**The switch (2026-11-08)**: the daemons were installed and checked first (`sudo zsh deploy/macmini/install.sh`), then
+`cloudflared tunnel route dns --overwrite-dns sql2pyspark sql2pyspark.praponb.com` moved the hostname at 14:31:53
+(Bangkok time) without downtime. On the server, `deploy/macmini/server_stop_sql2pyspark.sh` disabled `sql2pyspark.service` and
+removed the hostname's rule from `inventory-tunnel` (backup `/etc/cloudflared/config.yml.bak-20261108-sql2pyspark`).
+The server's Ollama and its `sql2pyspark:*` tags stay for a rollback.
+
+## 🗄️ History: the Ubuntu server (2026-09-29 → 2026-11-08)
+
+Training needs Apple MLX, so it stays on the Mac. The finished model is a plain GGUF file that Ollama can serve on any Linux machine. The rest of this guide covers the deployment of **<https://sql2pyspark.praponb.com>** on a home Ubuntu server, set up on 2026-09-29 and used until 2026-11-08; it still works as a rollback target.
 
 ---
 

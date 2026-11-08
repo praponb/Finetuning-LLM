@@ -9,8 +9,9 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 
 **Models in use:** on the **Mac**, `sql2pyspark:latest` = **v15-q4** since 2026-10-09 05:50 (`make promote TAG=v15-q4 PREV=v12-q4`;
 see [v15 results](#v15-results-2026-10-08); roll back with `ollama cp sql2pyspark:v12-q4 sql2pyspark:latest`). The
-**server** serves **v15-q4** too since 2026-10-09 06:29 (`GGUF=sql2pyspark-q4.gguf zsh deploy/update_model.sh v15-q4 v12-q4`, run
-on the Mac; same weights file as the Mac's tag; rollback: `ssh prapon@192.168.1.49 'ollama cp sql2pyspark:v12-q4 sql2pyspark:latest'`).
+public site **<https://sql2pyspark.praponb.com>** runs on the **Mac mini M6** since 2026-11-08 and serves that same
+`latest`, so promoting a model on the Mac mini also updates the site (the Ubuntu server served it from 2026-09-29 to
+2026-11-08; see [docs/08](docs/08-server-deployment.md)).
 
 **v9-q4** (`latest` 2026-10-01 → 10-02 on the Mac, 10-01 → 10-03 on the server): v9 as a 4-bit Q4_K_M build (4.7 GB). v9 is v8 continued on the
 [complex_v9 dataset](sql2pyspark-mlx/complex_v9/README.md): the complex_v8 queries with **"mirror" window code** (an
@@ -900,9 +901,14 @@ Verified: the app container, the v3 dataset build in `tools` (15,105/15,105 pair
 Metal, which containers can't use), and Ollama in a container is CPU-only there, so native Ollama stays the recommended
 way to serve the model on macOS. Stop Docker before `make train`.
 
-## Server deployment
+## Public site (Mac mini) and server deployment
 
-The trained model also runs on a Linux server: **<https://sql2pyspark.praponb.com>** is served from a home Ubuntu machine
+Since 2026-11-08 **<https://sql2pyspark.praponb.com>** is served from the **Mac mini M6** (32 GB): three LaunchDaemons
+(Ollama, the Streamlit app on 127.0.0.1:8502, Cloudflare Tunnel `sql2pyspark`) start at boot; the Metal GPU answers a
+typical query in ~3 s (the server took 35–50 s). Files and operation: [deploy/macmini/](deploy/macmini/README.md). The
+Kimi repair on the site uses **Kimi K3.1 Pro** (`KIMI_MODEL=kimi-k3.1-pro` in `.env`).
+
+History (2026-09-29 → 2026-11-08): the site was served from a home Ubuntu machine
 (`192.168.1.49`, CPU only, native Ollama with v12-q4, the Streamlit app as a systemd service, Cloudflare Tunnel for HTTPS,
 **Cloudflare Access login**: owner's email only, sign in with Cloudflare or an emailed one-time code). The 7B model needs
 ~8–12 GB RAM as Q4_K_M (12–16 GB as Q8_0) and ~15–25 GB disk; without a GPU a short query takes ~25 s and a typical one up to a minute. `deploy/update_model.sh` copies a
@@ -938,7 +944,8 @@ eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout
                    complex_v8_test.jsonl, complex_eval_v8.sh,
                    results/ (+ v2-split/ … v8-repair/, v7-repair-rules/, v9-q4-repair/, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/), logs-repair-rules/, *.log
 docker/, docker-compose.yml, .dockerignore          Docker setup
-deploy/            sql2pyspark.service (systemd unit), setup_server.sh, update_model.sh: Ubuntu server hosting (docs/08)
+deploy/            macmini/: LaunchDaemons + install.sh for the public site on the Mac mini (since 2026-11-08);
+                   sql2pyspark.service, setup_server.sh, update_model.sh: the former Ubuntu server hosting (docs/08)
 llama.cpp/         upstream checkout, used only for convert_hf_to_gguf.py
 ```
 

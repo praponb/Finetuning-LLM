@@ -57,7 +57,7 @@ Open your browser at **`http://localhost:8501`**.
 
 #### Public site
 
-The app is also hosted at **<https://sql2pyspark.praponb.com>** (an Ubuntu server without a GPU: a typical query takes 20 s to a minute, long SQL several minutes; the Kimi K3 repair is off there). The site asks you to **log in first**: enter your email, click *Send login code* and type the code from the email (or choose *Sign in with Cloudflare*); only allowed emails get in, and the login lasts 24 hours. Hosting details: [docs/08-server-deployment.md](docs/08-server-deployment.md).
+The app is also hosted at **<https://sql2pyspark.praponb.com>** (the Mac mini M6 since 2026-11-08: a typical query takes a few seconds; the Kimi K3.1 Pro repair is on). The site asks you to **log in first**: enter your email, click *Send login code* and type the code from the email (or choose *Sign in with Cloudflare*); only allowed emails get in, and the login lasts 24 hours. Hosting details: [docs/08-server-deployment.md](docs/08-server-deployment.md).
 
 #### Running with Docker
 
@@ -123,7 +123,7 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
   - `sql2pyspark:v10-q4` (candidate, 2026-10-01, not promoted): converts bare `IN` / `NOT IN` subqueries correctly (49/50 vs. v9-q4's 11/50) and no longer loops on long window-heavy classic queries, but is slightly weaker on the v4 hold-out (18 vs. 21 of 25); `sql2pyspark:v10` is the same model at Q8_0. Type the tag in this field to try it.
   - `sql2pyspark:v8`: The previous production model, kept for rollback (`ollama cp sql2pyspark:v8 sql2pyspark:latest`; the server also keeps `v7`).
   - The older tags `v1`–`v6` were removed on 2026-09-30 to save disk space (see `docs/03-model-training-and-export.md` to rebuild one).
-- **Kimi K3 Repair**: *When a check fails or the SQL is long* (default; long = over 2,000 characters), *When a check fails*, *Always* or *Off* (requires `KIMI_API_KEY` in `.env`; without it the section explains how to enable it).
+- **Kimi repair** (the heading shows the configured model, e.g. *Kimi K3.1 Pro repair*): *When a check fails or the SQL is long* (default; long = over 2,000 characters), *When a check fails*, *Always* or *Off* (requires `KIMI_API_KEY` in `.env`; without it the section explains how to enable it).
 
 ---
 
@@ -304,7 +304,7 @@ SQL2PySpark supports a wide spectrum of SQL constructs:
 
 ## 7. Automated Code Validation & Kimi K3 Repair
 
-For mission-critical conversions or massive multi-CTE queries (2,000+ characters), the system provides an automated verification and self-correction loop powered by Moonshot AI's **Kimi K3**.
+For mission-critical conversions or massive multi-CTE queries (2,000+ characters), the system provides an automated verification and self-correction loop powered by Moonshot AI's Kimi models: **Kimi K3.1 Pro** by default since 2026-11-08 (the results in this repo were measured with Kimi K3; `KIMI_MODEL` picks the model).
 
 ```mermaid
 graph TD
@@ -347,8 +347,12 @@ Create a file named `.env` in the repository root (it is gitignored, so the key 
 KIMI_API_KEY=your_moonshot_api_key
 # optional (these are the defaults):
 KIMI_BASE_URL=https://api.moonshot.ai/v1
-KIMI_MODEL=kimi-k3
+KIMI_MODEL=kimi-k3.1-pro
 ```
+
+Other models: `kimi-k3.1-pro-highspeed` (faster, twice the price) or `kimi-k3` (the model behind the repo's repair
+results). Prices per million tokens (input / cached input / output): K3.1 Pro $2 / $0.20 / $10, highspeed $4 / $0.20 / $20,
+K3 $3 / $0.30 / $15 (`PRICES` in `kimi_repair.py`; the app shows the cost of each repair).
 
 Get a key at platform.moonshot.ai (console → API keys). Keep the file private (`chmod 600 .env`).
 Restart the app (`make app` or `docker compose restart app`). The repair options in the sidebar will activate automatically.
