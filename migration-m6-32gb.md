@@ -15,22 +15,28 @@ takes over. The reasons and background are in [docs/09-mac-mini-migration.md](do
 
 ### 0.1 Decide the extra folders (👤, any day)
 
-Decided by the owner on 2026-10-22; the "copy" ones are in step 3.3. Folders that hold logins or tokens
-(`~/.gemini`, `~/.kimi-code`, `~/.openclaw`, `~/.config`) always go directly; the others may also be staged on the
-server (step 0.5).
+Decided by the owner on 2026-10-22; completed on 2026-11-08 from a fresh inventory (sizes below; full list in
+`~/m2-home-inventory.txt`, made with `find ~ -mindepth 1 -maxdepth 1 ! -name GitHub -print0 | xargs -0 du -sh | sort -rh`).
+The "copy" ones are in step 3.3. Folders and files that hold logins or tokens (`~/.gemini`, `~/.kimi-code`,
+`~/.openclaw`, `~/.config`, `~/.hermes`, `~/.boto`, `~/inventory-credentials-*.txt`) always go directly; the others may
+also be staged on the server (step 0.5). Outside `~/GitHub` the M2 holds ~190 GB, of which `~/.ollama/models` (125 GB)
+and `~/.cache/huggingface` (6.1 GB) are handled in steps 3.2 / 4.
 
-| Folder | Size | Suggestion | Decision |
+| Folder | Size (11-08) | Suggestion | Decision |
 | --- | --- | --- | --- |
 | `~/Documents` | 11 GB | copy (skip if it's already in iCloud) | **copy** |
-| `~/Downloads` | 2.7 GB | copy (or tidy first) | **copy** |
-| `~/.lmstudio` | 1.9 GB | copy if you use LM Studio | **leave** |
-| `~/.gemini` | 1.3 GB | copy | **copy** |
-| `~/DataEngineerLearn` (incl. google-cloud-sdk) | 487 MB | copy | **copy** |
+| `~/Downloads` | 2.2 GB | copy (or tidy first) | **copy** |
+| `~/.hermes` (Hermes agent: tools, installs, config) | 2.4 GB | copy (`~/hermes-backup-migrate-20261013.zip` is the config backup) | **copy** (11-08) |
+| `~/.lmstudio` | 2.3 GB | copy if you use LM Studio | **leave** |
+| `~/b2s-macmini-transfer` (`extras/`) | 1.9 GB | copy | **copy** (11-08) |
+| `~/.gemini` | 1.4 GB | copy | **copy** |
+| `~/DataEngineerLearn` (incl. google-cloud-sdk) | 723 MB | copy | **copy** |
 | `~/.kimi-code` | 344 MB | copy | **copy** |
-| `~/.openclaw` | 76 MB | copy (OpenClaw / LINE bot state) | **copy** (backup only, see check 11) |
-| `~/.config` (incl. gcloud credentials) | 5 MB | copy | **copy** |
-| `~/Library`, `~/.npm`, `~/.vscode`, `~/.local`, `~/.antigravity-ide` | ~19 GB | leave (apps rebuild them; VS Code extensions sync) | **leave** |
-| Flutter (`/Applications/flutter`, `~/.pub-cache`), Android SDK | ~1 GB + | reinstall only if still used | **leave** (not reinstalled) |
+| `~/.openclaw` | 75 MB | copy (OpenClaw / LINE bot state) | **copy** (backup only, see check 11) |
+| `~/.config` (incl. gcloud credentials) | 84 MB | copy | **copy** |
+| Small items: `~/inventory-backups/`, `~/inventory-credentials-20260828.txt`, `~/SKILL.md`, `~/hermes-backup-migrate-20261013.zip`, `~/2026-10-10T09-35-52.795+07-00-openclaw-backup.tar.gz`, `~/.boto`, `~/.ipython/`, `~/.streamlit/` | ~11 MB | copy | **copy** (11-08) |
+| `~/Library` (27 GB, of which 15 GB is Docker's disk image in `Containers/com.docker.docker` and 5.8 GB `Caches`), `~/.cache/uv`, `~/.npm`, `~/.vscode`, `~/.local`, `~/.antigravity-ide`, `~/.antigravity`, `~/.gem`, `~/.cocoapods` | ~35 GB | leave (apps rebuild them; VS Code extensions sync; Docker images are rebuilt) | **leave** |
+| Flutter, Android SDK | — | gone from the M2 (11-08: no `/Applications/flutter`, `~/Library/Android`, `~/.android`; only `~/.pub-cache` 862 MB and `~/.dartServer` 188 MB are left, and `~/.zprofile` / `~/.zshrc` still put them on `PATH`) | **leave** (not reinstalled) |
 
 ### 0.2 Snapshot the M2 (👤 or 🤖, on 2026-10-30 or 10-31)
 
@@ -163,7 +169,14 @@ rsync -a --progress ~/DataEngineerLearn/  $NEW:DataEngineerLearn/
 rsync -a --progress ~/.kimi-code/         $NEW:.kimi-code/
 rsync -a --progress ~/.openclaw/          $NEW:.openclaw/
 rsync -a --progress ~/.config/            $NEW:.config/
+rsync -a --progress ~/.hermes/            $NEW:.hermes/
+rsync -a --progress ~/b2s-macmini-transfer/ $NEW:b2s-macmini-transfer/
+rsync -a --progress ~/inventory-backups ~/.ipython ~/.streamlit $NEW:     # no trailing slash: copies the folders
+rsync -a --progress ~/inventory-credentials-20260828.txt ~/SKILL.md ~/.boto \
+  ~/hermes-backup-migrate-20261013.zip ~/2026-10-10T09-35-52.795+07-00-openclaw-backup.tar.gz $NEW:
 ```
+
+Together ~20 GB (Documents 11 GB): roughly 7–10 min from the M2 over Wi-Fi at the ~50 MB/s measured on 2026-10-12.
 
 ### 3.4 Homebrew Postgres data (run **on the M2**, after `brew bundle` finished on the Mac mini)
 

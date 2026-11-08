@@ -72,7 +72,8 @@ matching folder in `~/GitHub`; they come along with `~/.claude/` and stay unused
 1. Merge every open PR (PR #30: done 2026-10-10), so `main` and `b_pbv_main` are both pushed; `git status` clean in every repo.
 2. Inventory of everything outside `~/GitHub` (any day before): `du -sh ~/* ~/.[!.]*`. The owner marks each folder
    (e.g. `~/DataEngineerLearn`, `~/.kimi-code`, `~/.lmstudio` 1.9 GB, Flutter, the Android SDK) copy / reinstall / leave;
-   the "copy" ones are added to the phase 2 rsync.
+   the "copy" ones are added to the phase 2 rsync. **Done** (2026-10-22, completed 2026-11-08): the decisions and the
+   rsync lines are in [`migration-m6-32gb.md`](../migration-m6-32gb.md) steps 0.1 and 3.3.
 3. Record the reference environment for later comparison (on 2026-10-21 or 10-22, so it is current):
 
    ```bash
