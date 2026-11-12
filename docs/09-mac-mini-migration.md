@@ -227,12 +227,13 @@ owner's decision.
 10.1 GB, no restarts), all evals by 22:30. Hold-out 61, but fixed 142 and complex 85 below v15-q4 → not promoted; see
 [complex_v17](../sql2pyspark-mlx/complex_v17/README.md).
 
-## Phase 6 — wrap-up (after v17) — done 2026-11-12 except item 3
+## Phase 6 — wrap-up (after v17) — done 2026-11-12; item 3 (retiring the M2) in progress
 
 1. Docs in one pass: README / PROJECT_DOCUMENTATION / docs 01, 03, 05, 07, 08 say "base M2 16 GB" in ~21 places; record
    the new machine, the measured speed and memory, any MLX version change and the phase 5 results; mark this
    document done. **Done 2026-11-12**: the current-state lines name the Mac mini; numbers measured on the M2 stay as
    history ("measured on a base M2").
 2. Claude Code memory: replace the M2 hardware notes with the measured M6 numbers. **Done 2026-11-12.**
-3. The M2: keep it as a fallback for a few weeks. Wiping or reusing it is the owner's decision (open; so is removing
-   `~/m2-backup` on the server).
+3. The M2: **the owner decided to retire it (2026-11-12)**; the steps (last check for unsynced files, switch off its
+   services, sign out, erase) are [step 7 of the runbook](../migration-m6-32gb.md#step-7--retire-the-m2-owners-decision-2026-11-12).
+   The server copy `~/m2-backup` stays until the owner removes it.
