@@ -1,0 +1,34 @@
+# Qwen3.5-9B run 5 on the Mac mini M6 (2026-11-10, owner approved the name-copy round): continues run 4
+# (adapters_m6c, 11,600 iterations, hold-out 46: 13 of 16 failures = invented table names) for 2,400 iterations on
+# data_namecopy (namecopy/build.py: 8,000 v17-mix pairs with every base table renamed to fresh names + 8,000 originals).
+# Run via chain_m6d.sh.
+model: mlx-community/Qwen3.5-9B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_namecopy
+adapter_path: ./qwen35_pilot/adapters_m6d
+resume_adapter_file: ./qwen35_pilot/adapters_m6c/adapters.safetensors   # run 4
+seed: 38
+iters: 2400
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 8
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+optimizer: adamw
+learning_rate: 3.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 30
+  warmup_init: 1.0e-6
+  arguments: [3.0e-5, 570, 3.0e-6]    # [init, decay_steps, end]  (optimizer updates = 2,400 / 4)
+steps_per_report: 50
+steps_per_eval: 800
+val_batches: 110
+save_every: 200
+test: false

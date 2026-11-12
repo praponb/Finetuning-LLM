@@ -1,0 +1,35 @@
+# Qwen3.5-9B run 8 on the Mac mini M6 (2026-11-11, owner: "Please try again with Qwen 3.5"): short polish of run 7
+# (adapters_m6f: holdout 57, v4 22, fixed 143, complex 81, complex-shift 101; val rose 0.008 -> 0.011 late, and the
+# df_appointments -> df_appments slip came back). 2,400 iterations on a FRESH name-copy set (data_m6g =
+# namecopy/build.py --seed 2027 --out data_m6g: 8,000 newly renamed + 8,000 original pairs) at a low learning rate
+# (5e-6 -> 5e-7). Run via chain_m6g.sh.
+model: ./qwen35_pilot/base_r5_fused
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_m6g
+resume_adapter_file: ./qwen35_pilot/adapters_m6f/adapters.safetensors   # run 7 (12,000 iterations on this adapter in total)
+adapter_path: ./qwen35_pilot/adapters_m6g
+seed: 41
+iters: 2400
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16                # last 16 of 32 blocks (same as runs 6-7, required to resume)
+lora_parameters:
+  rank: 32
+  dropout: 0.05
+  scale: 10.0                 # same as runs 6-7
+optimizer: adamw
+learning_rate: 5.0e-6
+lr_schedule:
+  name: cosine_decay
+  warmup: 30
+  warmup_init: 5.0e-7
+  arguments: [5.0e-6, 570, 5.0e-7]    # [init, decay_steps, end]  (optimizer updates = 2,400 / 4)
+steps_per_report: 50
+steps_per_eval: 400
+val_batches: 110
+save_every: 200
+test: false

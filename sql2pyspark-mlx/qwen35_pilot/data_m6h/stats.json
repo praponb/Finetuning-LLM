@@ -1,0 +1,9 @@
+{
+  "complex_v9": 5000,
+  "complex_v16": 2000,
+  "renamed": 2000,
+  "replay": 3000,
+  "train": 12000,
+  "valid": 437,
+  "eval_sql_inside_train": 0
+}

@@ -1,0 +1,34 @@
+# Qwen3.5-9B run 7 on the Mac mini M6 (2026-11-11, owner: "proceed with option 1"): continues run 6 (adapters_m6e,
+# 4,800 iterations; holdout 59, v4 21, fixed 136, complex 77, complex-shift 94) for 4,800 more iterations on the same
+# base (base_r5_fused) and data (data_m6e) at half the learning rate (1e-5 -> 1e-6), new seed so the order differs.
+# Run via chain_m6f.sh.
+model: ./qwen35_pilot/base_r5_fused
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_m6e
+resume_adapter_file: ./qwen35_pilot/adapters_m6e/adapters.safetensors   # run 6 (9,600 iterations in total)
+adapter_path: ./qwen35_pilot/adapters_m6f
+seed: 40
+iters: 4800
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16                # last 16 of 32 blocks (same as run 6, required to resume)
+lora_parameters:
+  rank: 32
+  dropout: 0.05
+  scale: 10.0                 # same as run 6
+optimizer: adamw
+learning_rate: 1.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 30
+  warmup_init: 1.0e-6
+  arguments: [1.0e-5, 1170, 1.0e-6]    # [init, decay_steps, end]  (optimizer updates = 4,800 / 4)
+steps_per_report: 50
+steps_per_eval: 800
+val_batches: 110
+save_every: 200
+test: false
