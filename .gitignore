@@ -23,3 +23,8 @@ llama.cpp/
 
 # intermediate LoRA checkpoints (every 100-200 iterations); only each run's final adapters.safetensors is tracked
 [0-9][0-9][0-9][0-9][0-9][0-9][0-9]_adapters.safetensors
+# macOS
+.DS_Store
+# train_resumable.py restart leftovers (segment adapters + resume configs), deleted after a run
+sql2pyspark-mlx/adapters_*_seg[0-9]*/
+sql2pyspark-mlx/.resume_seg[0-9]*.yaml

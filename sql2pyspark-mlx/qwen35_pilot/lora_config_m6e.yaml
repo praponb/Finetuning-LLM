@@ -1,0 +1,35 @@
+# Qwen3.5-9B run 6 on the Mac mini M6 (2026-11-10, owner: "go ahead with the bigger adapter"): runs 4-5 plateaued on
+# hard queries (complex 64 -> 65, complex-shift 74 -> 74) with 8 layers x rank 16. Run 5's adapter is fused into the
+# 4-bit model (base_r5_fused = mlx_lm.fuse of adapters_m6d, same outputs as base + adapter) and a fresh, 4x larger
+# adapter (16 of 32 layers, rank 32: 43.3M parameters) is trained on top: the whole v17 mix with 8,000 of its pairs
+# renamed (data_m6e, namecopy/build.py --keep all --out data_m6e). Memory test: 15.5 GB peak on the longest samples.
+# Run via chain_m6e.sh.
+model: ./qwen35_pilot/base_r5_fused
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_m6e
+adapter_path: ./qwen35_pilot/adapters_m6e
+seed: 39
+iters: 4800
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16                # last 16 of 32 blocks
+lora_parameters:
+  rank: 32
+  dropout: 0.05
+  scale: 10.0                 # attempt 1 (scale 20, lr 5e-5): val 0.014 -> 0.039 by iteration 1,200
+optimizer: adamw
+learning_rate: 2.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-6
+  arguments: [2.0e-5, 1150, 2.0e-6]    # [init, decay_steps, end]  (optimizer updates = 4,800 / 4)
+steps_per_report: 50
+steps_per_eval: 800
+val_batches: 110
+save_every: 200
+test: false
