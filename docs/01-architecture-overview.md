@@ -6,7 +6,7 @@ The **SQL → PySpark Fine-Tuning Pipeline** is an end-to-end, local system deve
 
 ## 🏗️ System Architecture & Workflow
 
-The whole lifecycle—from synthetic query generation to inference in a web UI—runs offline on local hardware (developed and measured on a base Apple M2 with 16 GB).
+The whole lifecycle—from synthetic query generation to inference in a web UI—runs offline on local hardware (developed on a base Apple M2 with 16 GB up to v16; on a Mac mini M6 with 32 GB since 2026-11-08, from v17).
 
 ```mermaid
 flowchart TD
@@ -142,7 +142,7 @@ To handle complex multi-CTE queries where small models can fail on identifier na
 
 ### 6. Train on the Mac, serve anywhere
 
-Training needs Apple MLX, so it runs on the M2 Mac; the exported GGUF is portable. Besides the Mac (native Ollama with the Metal GPU, app in Docker), the public site <https://sql2pyspark.praponb.com> is served from the Mac mini M6 since 2026-11-08 (LaunchDaemons: Ollama on the Metal GPU, the app, a Cloudflare Tunnel; [deploy/macmini](../deploy/macmini/README.md)). From 2026-09-29 to 11-08 an Ubuntu server served it on the CPU. Both Q8_0 (`sql2pyspark.gguf`) and compact Q4_K_M (`sql2pyspark-q4.gguf`) formats are available. See [Server Deployment](08-server-deployment.md)
+Training needs Apple MLX, so it runs on the Mac (the Mac mini M6 since 2026-11-08; the M2 before); the exported GGUF is portable. Besides the Mac (native Ollama with the Metal GPU, app in Docker), the public site <https://sql2pyspark.praponb.com> is served from the Mac mini M6 since 2026-11-08 (LaunchDaemons: Ollama on the Metal GPU, the app, a Cloudflare Tunnel; [deploy/macmini](../deploy/macmini/README.md)). From 2026-09-29 to 11-08 an Ubuntu server served it on the CPU. Both Q8_0 (`sql2pyspark.gguf`) and compact Q4_K_M (`sql2pyspark-q4.gguf`) formats are available. See [Server Deployment](08-server-deployment.md)
 
 ---
 

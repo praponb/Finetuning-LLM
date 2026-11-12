@@ -1,8 +1,11 @@
 # 09 - Migration to the Mac mini M6 (32 GB)
 
-> **Status**: plan approved 2026-10-10, updated 2026-10-12; nothing done yet. The new Mac (M6, 32 GB, **2 TB**) arrives
-> **2026-11-01** (was 2026-10-23 to 10-25, changed 2026-10-22). The dates and commands in
-> [migration-m6-32gb.md](../migration-m6-32gb.md) are the current ones.
+> **Status (2026-11-12): done.** The Mac mini M6 (32 GB, 2 TB, 192.168.1.50) arrived on 2026-11-08 (the plan said
+> 11-01); the data was copied straight from the M2 ([migration-m6-32gb.md](../migration-m6-32gb.md) has the commands
+> as run), all 11 phase 4 checks passed on 11-08, phase 5 was measured the same afternoon and v17 ran that evening.
+> sql2pyspark.praponb.com and metalsql.praponb.com moved to the Mac mini too (LaunchDaemons;
+> [deploy/macmini](../deploy/macmini/README.md)); the Ubuntu server copy of sql2pyspark is kept only for rollback. The
+> rest of this page is the plan as approved, with the results added below.
 
 **Goal**: move training, export, evaluation, the local app and the server deploys — and the owner's other projects in
 `~/GitHub` — from the base **M2 MacBook (16 GB)** to a **Mac mini M6 (32 GB)** without losing anything, then prove the
@@ -194,6 +197,18 @@ Measured in this order, each on its own; the results go into the docs in phase 6
 4. **Batch size** (measure only): whether batch 2–4 without gradient accumulation fits and how fast it is. It changes
    training dynamics, so it's used only on a future new run, never on a rerun of an existing version.
 
+**Results (2026-11-08 15:44 → 16:03, v15 config copies):**
+
+| # | Measurement | Result | Consequence |
+| --- | --- | --- | --- |
+| 1 | Metal command buffers | MLX defaults 154.6 tok/s, peak 8.64 GB; small 2 / 40 buffers 159.2 tok/s, 8.42 GB; no watchdog abort with either | small buffers are not slower on the M6: `train_resumable.py` unchanged |
+| 2 | Ollama beside training | no OOM (training 8.64 GB + v15-q4 6.2 GB); training −20–30% (105–125 tok/s), 5 hold-out queries 5/5 at ~9 s each (2.7 s alone) | overlap allowed, but it slows both; the public site's Ollama runs during training |
+| 3 | Qwen3.5-9B probe (64 longest samples, max_seq 3200, 8 layers) | stock mlx-lm 0.31.3: Metal OOM even on 32 GB; with the patches: peak 14.6 GB, 95 tok/s (M2 ~30) | a full run is ~3× faster than on the M2; the owner then ran 8 Qwen3.5 rounds (stopped 2026-11-12, see [qwen35_pilot](../sql2pyspark-mlx/qwen35_pilot/README.md)) |
+| 4 | Batch size without accumulation | batch 2: 90–103 tok/s, peak 13.9 GB; batch 4: 73 tok/s, 18.9 GB | slower than batch 1 × 4 accumulation (155 tok/s): kept |
+
+Phase 4 reference numbers: hold-out 60/62 with v15-q4 (as on the M2) at 2.72 s / query (M2 ~6–8 s); MLX working set
+26.8 GB, smoke test ~1.8 s / iteration, peak 8.3 GB, same losses as the M2. MLX stayed at mlx 0.32.2 / mlx-lm 0.31.3.
+
 ## v17 — the first training run on the M6 (after phase 5)
 
 v17 (v15 + its full mix + 4,000 complex pairs, 4,800 iterations; [complex_v17](../sql2pyspark-mlx/complex_v17/))
@@ -208,10 +223,16 @@ The M2 estimate was ~19.5 h (training ~10.3 h); the phase 4 smoke test gives the
 showed that Ollama can run beside training, that is used only from v18 on. Promotion and the server deploy stay the
 owner's decision.
 
-## Phase 6 — wrap-up (after v17)
+**Result**: done 2026-11-08 — training 16:03 → 19:05 (**~3 h** vs. ~10.3 h estimated for the M2; 137–156 tok/s, peak
+10.1 GB, no restarts), all evals by 22:30. Hold-out 61, but fixed 142 and complex 85 below v15-q4 → not promoted; see
+[complex_v17](../sql2pyspark-mlx/complex_v17/README.md).
+
+## Phase 6 — wrap-up (after v17) — done 2026-11-12 except item 3
 
 1. Docs in one pass: README / PROJECT_DOCUMENTATION / docs 01, 03, 05, 07, 08 say "base M2 16 GB" in ~21 places; record
    the new machine, the measured speed and memory, any MLX version change and the phase 5 results; mark this
-   document done.
-2. Claude Code memory: replace the M2 hardware notes with the measured M6 numbers.
-3. The M2: keep it as a fallback for a few weeks. Wiping or reusing it is the owner's decision.
+   document done. **Done 2026-11-12**: the current-state lines name the Mac mini; numbers measured on the M2 stay as
+   history ("measured on a base M2").
+2. Claude Code memory: replace the M2 hardware notes with the measured M6 numbers. **Done 2026-11-12.**
+3. The M2: keep it as a fallback for a few weeks. Wiping or reusing it is the owner's decision (open; so is removing
+   `~/m2-backup` on the server).

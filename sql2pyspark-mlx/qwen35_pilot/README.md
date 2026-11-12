@@ -1,4 +1,4 @@
-# qwen35_pilot — can Qwen3.5-9B be trained, exported and served on this setup? (feasibility pilot, 2026-10-09)
+# qwen35_pilot — Qwen3.5-9B: feasibility pilot (2026-10-09) and runs 2-9 on the Mac mini (2026-11-09 → 11-12)
 
 Qwen3.8's smallest model is 27B (4-bit MLX 16.1 GB): too big for the 16 GB M2 and the 13 GB server. The closest
 newer base that fits is **Qwen3.5-9B** (`mlx-community/Qwen3.5-9B-4bit`, 6.0 GB): a hybrid model where 3 of every 4
@@ -8,7 +8,59 @@ answers "can we train, export and serve it?" before anyone spends days on a full
 
 Nothing here touches `sql2pyspark:latest` / `v15-q4`, the root `sql2pyspark*.gguf` files or the server.
 
-## Verdict
+## Mac mini M6 runs (2026-11-09 → 11-12): runs 2-9 — stopped, Qwen2.5-Coder-7B stays
+
+On the 32 GB Mac mini the memory and speed blockers below are gone (patched peak 14-16 GB, ~80-106 tokens/s), so the
+owner asked for real runs. Eight runs followed, each continuing the previous adapter; every chain script
+(`chain_m6*.sh`) trains via `train_resumable.py --launcher lora_q35.py`, exports (fuse `--dequantize` → `fix_norms.py`
+→ f16 GGUF `--no-mtp` → Q4_K_M) to a scratch Ollama tag and runs 5 evals with `--think false`. None of them touched
+`sql2pyspark:latest` or the site.
+
+| Run | Config | What changed | Iterations | hold-out /62 | v4 /25 | fixed /150 | complex /100 | complex-shift /150 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2 (pilot 2) | `lora_config_m6.yaml` | pilot adapters + 1,600 it on the v17 mix, max_seq 3200, lr 1e-4 | 2,000 | 51 | 13 | 111 | 38 | 51 |
+| 3 | `lora_config_m6b.yaml` | + 4,800 it, lr 1e-4 → 1e-5 | 6,800 | 44 | 15 | 115 | 55 | 59 |
+| 4 | `lora_config_m6c.yaml` | + 4,800 it, lr 3e-5 → 3e-6 | 11,600 | 46 | 17 | 128 | 64 | 74 |
+| 5 | `lora_config_m6d.yaml` | + 2,400 it on `data_namecopy` (name copying, below), lr 3e-5 | 14,000 | 52 | 16 | 134 | 65 | 74 |
+| 6 | `lora_config_m6e.yaml` | run 5 fused into the base (`base_r5_fused`); **new 16-layer rank-32 adapter** (43.3M parameters), scale 10, lr 2e-5, `data_m6e` | 4,800 | 59 | 21 | 136 | 77 | 94 |
+| 7 | `lora_config_m6f.yaml` | run 6 + 4,800 it, lr 1e-5 | 9,600 | 57 | 22 | 143 | 81 | 101 |
+| **8** | `lora_config_m6g.yaml` | run 7 + 2,400 it on a fresh name-copy set `data_m6g`, lr 5e-6 | 12,000 | **59** | **22** | **143** | **82** | **111** |
+| 9 | `lora_config_m6h.yaml` | run 8 + 2,400 it on the complex-focused `data_m6h`, lr 5e-6 | 14,400 | 59 | 22 | 141 | 81 | 111 |
+| v15-q4 (`latest`) | | Qwen2.5-Coder-7B | | 60 | 20 | 145 | 89 | 110 |
+| v17-q4 | | Qwen2.5-Coder-7B | | 61 | 21 | 142 | 85 | 116 |
+
+**Verdict (2026-11-12): stopped.** The best Qwen3.5 model, run 8 (`sql2pyspark:q35m6g-q4`), ties the Qwen2.5-Coder-7B
+models on hold-out, v4 and complex-shift but stays 7 below v15-q4 on the complex test, and run 9's 5,000 unseen complex
+pairs did not move it (82 → 81). Complex queries also take ~1.4× longer (~26 s vs. ~18 s). Qwen2.5-Coder-7B stays the
+base; v15-q4 stays `latest`.
+
+What the runs showed:
+
+- **Name drift**: runs 3-4 corrupted table names on the hold-out (`df_doctors` → `df_drators`, `df_patients` →
+  `df_patents`), the same with MLX inference, so it came from training, not the export. **Name copying** fixed most of
+  it: [`namecopy/build.py`](namecopy/build.py) renames the base tables of 8,000 mix pairs consistently in SQL and code
+  (`df_X` → `df_Y`, 6,900+ fresh names, none equal to any eval identifier). Replies with a table name not in the SQL, over the 5 eval sets: run 3 44, run 4 37, run 5
+  18, runs 6-9 1-6. Options `--out`, `--keep N|all`, `--seed` (run 5: defaults; run 6: `--keep all --out data_m6e`;
+  run 8: `--seed 2027 --out data_m6g`).
+- **Adapter size** was the main lever for hard queries: 8 layers × rank 16 plateaued at complex 64-65; 16 layers ×
+  rank 32 reached 77 in one run. Scale 20 with lr 5e-5 diverged (first attempt of run 6, val 0.014 → 0.039,
+  `*_attempt1.log`); scale 10 with lr 2e-5 trained cleanly.
+- **More complex data did not help**: [`complexmix/build.py`](complexmix/build.py) (run 9: 5,000 unseen complex_v9 +
+  2,000 unseen complex_v16 + 2,000 renamed + 3,000 replay; 0 of the 837 eval queries inside) lowered validation loss to
+  0.005 but left complex at 81.
+- **Training on the M6**: ~80 tokens/s for the rank-32 adapter, peak ~15.7 GB. Every ~400-1,000 iterations MLX hit
+  `[metal::malloc] Resource limit (499000) exceeded` (a Metal buffer-count limit, not memory); `train_resumable.py`
+  resumed from the last checkpoint each time (up to 8 restarts per run; a restart resets the AdamW state).
+
+Kept on the Mac mini (git-ignored): `base_r5_fused/` (4.7 GB, `mlx_lm.fuse --model mlx-community/Qwen3.5-9B-4bit
+--adapter-path adapters_m6d`, no `--dequantize`; needed to export or continue runs 6-9), the rank-32 adapters of runs
+6-9 (169 MB each, over GitHub's 100 MB limit), `gguf/m6g-q4.gguf` and the Ollama tag `sql2pyspark:q35m6g-q4`. The other
+run tags and GGUFs were removed on 2026-11-12. Qwen3.8 (2026-11-09) only exists as 27B dense and larger: its pilot ran
+out of Metal memory on long samples at ~50 tokens/s (peak 25.8 GB), so it was not pursued.
+
+## The original pilot (2026-10-09, M2 16 GB)
+
+### Verdict
 
 **No-go for a full run as planned** — two of the four go/no-go checks fail. **Decision (2026-10-10): not used for now**;
 this folder, the adapters, `gguf/pilot-q4.gguf` and the Ollama tags are kept for a later run on a machine with more memory.
@@ -83,3 +135,8 @@ Scripts, configs and logs are tracked; the data copies (`data_long/`, `data_mix2
 [`make_long_set.py`](make_long_set.py) / [`filter_mix.py`](filter_mix.py)), the intermediate checkpoints and `gguf/`
 are not. Kept on disk: `adapters/adapters.safetensors` (final), `gguf/pilot-q4.gguf`, Ollama tags
 `sql2pyspark:q35-pilot-q4`, `sql2pyspark:base-q35-q4`, `sql2pyspark:base-coder7b-q4`.
+
+Runs 2-9 (Mac mini): `lora_config_m6{,b,c,d,e,f,g,h}.yaml`, `chain_m6*.sh` (logs `chain_m6*.log`, `train_m6*.log`),
+`Modelfile.q35m6*`, `results/q35m6*-q4__*.json`, the data builders `namecopy/build.py` and `complexmix/build.py` and
+their outputs `data_namecopy/`, `data_m6e/`, `data_m6g/`, `data_m6h/` (tracked), the final adapters `adapters_m6*/`
+(runs 2-5 tracked; runs 6-9's 169 MB files only on the Mac mini, with `base_r5_fused/`).

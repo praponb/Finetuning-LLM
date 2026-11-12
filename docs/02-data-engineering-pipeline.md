@@ -579,3 +579,16 @@ Mix 25,008 = 10,000 new + 3,000 targeted_v14 + 708 classic scalar-subquery + 5,3
 Mix 21,008 = 10,000 new + 2,500 schema_v15 + 1,500 targeted_v14 + 708 classic scalar-subquery + 3,300 classic (300 with `OR`) + 1,500 complex_v9 + 800 targeted_v12 + 700 targeted_v11; validation 337.
 
 **Result (v16, 2026-10-09)**: complex schema-shift 128/150 (v15-q4 110), but hold-out 58/62, complex test 84/100, v11 / v12 held-out 261 / 216 (v15-q4 278 / 232): the smaller replay share cost the earlier forms on the original tables. Not promoted. See [Evaluation](04-evaluation-and-benchmarking.md#-v16-results-2026-10-09--not-promoted).
+
+## 16. The complex_v17 dataset (v17): v15's full mix + a smaller complex share
+
+`sql2pyspark-mlx/complex_v17/` ([README](../sql2pyspark-mlx/complex_v17/README.md)): v16 lost the earlier forms because complex pairs were 48% of its mix. `build.py` (seed 17) keeps v15's whole mix (`schema_v15/data_mix`, 25,008) and adds 4,000 pairs sampled from `complex_v16/data/train.jsonl` (the complex schema-shift set is already excluded): 29,008 pairs, complex share 13.8%; validation = v16's 337 (0 overlap).
+
+**Result (v17, 2026-11-08, Mac mini M6)**: hold-out 61/62, complex schema-shift 116/150, fewest failures (110), but fixed test 142 and complex test 85 (v15-q4 145 / 89). Not promoted. See [Evaluation](04-evaluation-and-benchmarking.md#-v17-results-2026-11-08--not-promoted).
+
+## 17. Qwen3.5-9B data: name copying and a complex-focused mix (2026-11-10 → 11-12)
+
+Two builders in `sql2pyspark-mlx/qwen35_pilot/` ([README](../sql2pyspark-mlx/qwen35_pilot/README.md)) for the Qwen3.5 runs on the Mac mini:
+
+- **`namecopy/build.py`**: Qwen3.5 drifted on unseen table names (`df_doctors` → `df_drators`, `df_patients` → `df_patents`). The builder takes v17-mix pairs and renames their base tables consistently in the SQL and the code (`df_X` → `df_Y`, `\bX\b` → `Y`) to fresh names built from 392 nouns, qualifiers and prefixes (`dim_`, `fact_`, `stg_`, …); every identifier in the eval sets and the synthetic catalogs (9,549) is banned, CTE names are left alone. Output: 8,000 renamed + `--keep` originals (`data_namecopy` 16,000; `data_m6e` = the whole mix + 8,000 renamed, 29,008; `data_m6g` with `--seed 2027`). It cut the replies with a wrong table name over the 5 eval sets from 37 (run 4) to 18 (run 5) and 1–6 (runs 6–9).
+- **`complexmix/build.py`** (`data_m6h`, 12,000): 5,000 complex_v9 + 2,000 complex_v16 pairs that the v17 mix does not contain, 2,000 renamed pairs and 3,000 other v17-mix pairs; it checks that none of the 837 eval queries is inside. Run 9 on it left the complex test at 81 (run 8: 82).

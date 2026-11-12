@@ -29,7 +29,7 @@ The goal is a small local model that turns SQL into PySpark code that actually r
 1. **Generates ~20k SQL/PySpark pairs** with a compositional generator (`sqlspec.py`, `generate_dataset.py`, and since v4 the stage-based `advanced.py` for long pipelines, advanced Spark SQL and nested data) that renders both sides from the same objects, so they agree by construction.
 2. **Executes every pair in local Spark** (`verify_pairs.py`) and keeps only pairs whose column names, rows and ORDER BY sequence match: 20,071 of 20,105 pairs pass (v5); 15,499 of 15,500 pass on `complex_v9`; 7,857 of 7,858 mirrored classic pairs and 900 / 900 `IN` / `NOT IN` pairs pass on `classic_v10`; 14,700 of 14,700 pass on `targeted_v11`; 6,950 of 6,950 on `targeted_v12`; 2,600 of 2,600 on `targeted_v13`; 13,499 of 13,500 on `targeted_v14`; 13,983 of 14,000 (+ 340 / 340 schema-shift) on `schema_v15`; 13,494 of 13,500 on `complex_v16`.
 3. **Splits by feature signature** (`convert_sql_pyspark.py`), so validation and test contain feature combinations that never occur in training.
-4. **Fine-tunes Qwen2.5-Coder (4-bit MLX)** with LoRA on a base M2:
+4. **Fine-tunes Qwen2.5-Coder (4-bit MLX)** with LoRA on a base M2 (v1–v16) and the Mac mini M6 32 GB (v17 on):
    - `v1–v5`: 3B base model (`mlx-community/Qwen2.5-Coder-3B-Instruct-4bit`), validation loss 0.030 → **0.012** (v5, continued from v4, ~5 h 40 min).
    - `v6`: 7B base model (`mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`), fresh adapters, batch 1 × 4 accumulation, validation loss 0.289 → **0.010** (8 h 19 min).
    - `v7`: 7B base model continued from v6 on edge-case mix, validation loss 0.011 → **0.009** (4 h 58 min).
@@ -60,7 +60,7 @@ flowchart TD
 
     subgraph TrainPhase [Training & Export]
         JSONL --> MLX[mlx_lm.lora<br/>train_resumable.py]
-        BaseModel["Qwen2.5-Coder 4-bit<br/>(3B v1–v5; 7B v6–v16)"] --> MLX
+        BaseModel["Qwen2.5-Coder 4-bit<br/>(3B v1–v5; 7B v6–v17)"] --> MLX
         MLX --> Adapters[targeted_v12/adapters/]
         Adapters --> Fuse[mlx_lm.fuse --dequantize]
         Fuse --> HF[sql2pyspark-hf/<br/>BF16]
@@ -97,8 +97,8 @@ Finetuning-LLM/
 ├── kimi_repair.py                # Kimi K3 check + repair loop (join_check, setop_check, EmptyTableRunner)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
-├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the latest export (v10 since 2026-10-01 18:44)
-├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of the same export (v15-q4 = `latest` on the Mac and the server since 2026-10-09; restored after the v16 export)
+├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the latest export (v17 since 2026-11-08 19:06)
+├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of the same export (v17-q4 since 2026-11-08; `latest` = v15-q4 lives in Ollama)
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # macmini/ (public site since 2026-11-08); former Ubuntu server: sql2pyspark.service, setup_server.sh, update_model.sh
@@ -116,7 +116,8 @@ Finetuning-LLM/
 │   ├── targeted_v14/             # 10k correlated + uncorrelated scalar-subquery pairs + replay (25k mix), v14 LoRA config + adapters (not promoted)
 │   ├── schema_v15/               # synthetic catalog (35 domains, 221 tables) + generators, 10k pairs + 200 schema-shift pairs (25k mix), v15 LoRA config + adapters
 │   ├── complex_v16/              # complex_v8 generator on the synthetic catalog: 10k complex pairs + 300 complex schema-shift pairs (21k mix), v16 LoRA config + adapters (not promoted)
-│   ├── qwen35_pilot/             # Qwen3.5-9B feasibility pilot (2026-10-09): mlx-lm patches, export + eval scripts, logs, results; not used for now (kept)
+│   ├── complex_v17/              # v15 mix + 4,000 complex_v16 pairs (29k), v17 LoRA config + adapters (not promoted)
+│   ├── qwen35_pilot/             # Qwen3.5-9B: feasibility pilot (2026-10-09) + runs 2-9 on the Mac mini (2026-11-09..12), mlx-lm patches, name-copy / complex-mix builders, results; stopped
 │   ├── handwritten_pairs.py      # 105 curated pairs
 │   ├── verify_pairs.py           # Parallel PySpark verification
 │   ├── convert_sql_pyspark.py    # Signature splitter & chat formatter
@@ -156,6 +157,7 @@ Finetuning-LLM/
 │   ├── start_training_v15.sh     # v15 automated end-to-end launcher (train, Q8/Q4 export, evals incl. schema-shift for v15-q4 / v14-q4 / v12-q4, name slips)
 │   ├── schema_shift_tables.py    # --tables file for the schema-shift set (the 5 synthetic domains v15 never trains on)
 │   ├── start_training_v16.sh     # v16 automated end-to-end launcher (train, Q8/Q4 export, evals, complex-shift on 150 for v16-q4 / v15-q4, name slips)
+│   ├── start_training_v17.sh     # v17 launcher (same chain as v16; complex-shift for v17-q4 only; no Docker restart)
 │   ├── complex_shift_tables.py   # --tables file for the complex schema-shift set (complex_v8 rows on the 5 held-out synthetic domains)
 │   ├── name_slips.py             # counts failures with an unresolved table / column / field name per model and eval set
 │   ├── complex_v8_test.jsonl     # 300 held-out complex_v8 test pairs
@@ -275,11 +277,18 @@ Whole signatures are held out for validation (10%) and test (5%). A signature is
 - **Framework**: Apple MLX (`mlx-lm`)
 - **Config**: [lora_config.yaml](sql2pyspark-mlx/lora_config.yaml)
 
-### Qwen3.5-9B pilot (2026-10-09) — not used for now
+### v17 (7B Model, Continued from v15 on complex_v17) — not promoted
 
-- **Question**: can `mlx-community/Qwen3.5-9B-4bit` (hybrid Gated DeltaNet / full attention, 248k vocabulary) be trained, exported and served on this setup? See [qwen35_pilot/README.md](sql2pyspark-mlx/qwen35_pilot/README.md).
-- **Result**: 400 iterations on the v15 mix (max_seq 2600) give hold-out 41/62 (untuned Qwen3.5-9B 0/62, untuned Qwen2.5-Coder-7B 8/62); stock mlx-lm 0.31.3 runs out of memory, and with the local patches (`gd_chunked.py`, `chunked_loss.py`, MLX cache limits) the peak is 12.62 GB; ~10.5 s / iteration, so a full run would take ~14 h. Export (fuse → `fix_norms.py` → GGUF `--no-mtp` → Q4_K_M → Ollama) works; Ollama needs `think: false`.
-- **Decision (2026-10-10)**: not used for now; the folder, adapters, pilot GGUF and Ollama tags are kept for a later run on a machine with more memory.
+- **Data**: `sql2pyspark-mlx/complex_v17/` (v15's full mix of 25,008 + 4,000 complex_v16 pairs = 29,008, complex share 13.8%; v16's 337 validation pairs). See [complex_v17/README.md](sql2pyspark-mlx/complex_v17/README.md).
+- **Training**: the first real run on the **Mac mini M6 (32 GB)**: v15's config unchanged (4,800 micro-batches, seed 17), 2026-11-08 16:03 → 19:05 (~3 h; the M2 estimate was ~10 h), 137–156 tokens/s, peak 10.1 GB, no restarts; validation loss 0.009 → 0.013 → 0.008. Tags `sql2pyspark:v17`, `:v17-q4`.
+- **Outcome**: hold-out **61/62** (best so far), v4 21/25, complex schema-shift 116/150, fewest failures (110 vs. v15-q4 121); but fixed test 142 and complex test 85 (v15-q4 145 / 89) → not promoted (see [v17 results](#v17-results-2026-11-08-not-promoted)).
+
+### Qwen3.5-9B (pilot 2026-10-09, runs 2–9 on the Mac mini 2026-11-09 → 11-12) — stopped
+
+- **Question**: can `mlx-community/Qwen3.5-9B-4bit` (hybrid Gated DeltaNet / full attention, 248k vocabulary) be trained, exported and served on this setup, and does it beat Qwen2.5-Coder-7B? See [qwen35_pilot/README.md](sql2pyspark-mlx/qwen35_pilot/README.md).
+- **Pilot (M2 16 GB)**: 400 iterations on the v15 mix give hold-out 41/62 (untuned Qwen3.5-9B 0/62, untuned Qwen2.5-Coder-7B 8/62); stock mlx-lm 0.31.3 runs out of memory, and with the local patches (`gd_chunked.py`, `chunked_loss.py`, MLX cache limits) the peak is 12.62 GB; a full run would take ~14 h. Export (fuse → `fix_norms.py` → GGUF `--no-mtp` → Q4_K_M → Ollama) works; Ollama needs `think: false`.
+- **Runs 2–9 (Mac mini)**: longer training on the v17 mix, then name-copy data (`namecopy/build.py`: consistent table renames against `df_patients` → `df_patents` drift), a new 16-layer rank-32 adapter on run 5 fused into the base, and a complex-focused round (`complexmix/build.py`). Best = run 8 (`sql2pyspark:q35m6g-q4`): hold-out 59, v4 22, fixed 143, complex 82, complex-shift 111 (v15-q4: 60 / 20 / 145 / 89 / 110). Run 9's 5,000 unseen complex pairs left complex at 81.
+- **Decision (2026-11-12)**: stopped; Qwen2.5-Coder-7B stays the base. Qwen3.8 exists only as 27B and larger; its pilot (2026-11-09) ran out of Metal memory on long samples at ~50 tokens/s.
 
 ### v16 (7B Model, Continued from v15 on complex_v16) — not promoted
 
@@ -373,7 +382,7 @@ To address long-query repetition loops and increase capacity for multi-CTE pipel
 - **Duration**: ~5 h 16 min (v4), ~5 h 39 min (v5) on a base Apple M2 (16 GB)
 - **Crash-proof**: `make train` runs [train_resumable.py](sql2pyspark-mlx/train_resumable.py): smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) and automatic resume from the newest checkpoint.
 
-Note: don't run Ollama or Docker while training on a 16 GB Mac; Ollama plus training caused a Metal out-of-memory crash, and Docker Desktop's VM takes another 8 GB.
+Note: don't run Ollama or Docker while training on a 16 GB Mac; Ollama plus training caused a Metal out-of-memory crash, and Docker Desktop's VM takes another 8 GB. On the 32 GB Mac mini both fit (training −20–30% while Ollama answers).
 
 Details: [docs/03-model-training-and-export.md](docs/03-model-training-and-export.md).
 
@@ -461,6 +470,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v14-q4` | holdout | 62 | 98% | 94% | **94%** | 94% | **94%** | 5.9 |
 | `sql2pyspark:v15-q4` | holdout | 62 | 100% | 98% | **97%** | 98% | **97%** | 6.2 |
 | `sql2pyspark:v16-q4` | holdout | 62 | 100% | 94% | **94%** | 94% | **94%** | 9.6 |
+| `sql2pyspark:v17-q4` | holdout | 62 | 100% | 98% | **98%** | 98% | **98%** | 2.6 |
 | `sql2pyspark:v2` | holdout | 62 | 98% | 92% | **90%** | 92% | **90%** | 4.1 |
 | `sql2pyspark:v3` | holdout | 62 | 97% | 95% | **95%** | 95% | **95%** | 3.3 |
 | `sql2pyspark:v4` | holdout | 62 | 100% | 95% | **94%** | 95% | **94%** | 4.0 |
@@ -478,6 +488,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v14-q4` | holdout_v4 | 25 | 100% | 76% | **72%** | 76% | **72%** | 11.5 |
 | `sql2pyspark:v15-q4` | holdout_v4 | 25 | 100% | 84% | **80%** | 84% | **80%** | 11.5 |
 | `sql2pyspark:v16-q4` | holdout_v4 | 25 | 100% | 80% | **80%** | 80% | **80%** | 15.3 |
+| `sql2pyspark:v17-q4` | holdout_v4 | 25 | 100% | 88% | **84%** | 88% | **84%** | 4.8 |
 | `sql2pyspark:v2` | holdout_v4 | 25 | 92% | 32% | **20%** | 32% | **20%** | 6.5 |
 | `sql2pyspark:v3` | holdout_v4 | 25 | 88% | 32% | **12%** | 32% | **12%** | 7.1 |
 | `sql2pyspark:v4` | holdout_v4 | 25 | 96% | 60% | **36%** | 60% | **36%** | 7.0 |
@@ -494,6 +505,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v14-q4` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 95.9 |
 | `sql2pyspark:v15-q4` | real_queries | 4 | 100% | 0% | **0%** | 0% | **0%** | 97.0 |
 | `sql2pyspark:v16-q4` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 104.4 |
+| `sql2pyspark:v17-q4` | real_queries | 4 | 75% | 0% | **0%** | 0% | **0%** | 41.9 |
 | `sql2pyspark:v2` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 55.3 |
 | `sql2pyspark:v3` | real_queries | 4 | 0% | 0% | **0%** | 0% | **0%** | 78.9 |
 | `sql2pyspark:v4` | real_queries | 4 | 25% | 0% | **0%** | 0% | **0%** | 92.8 |
@@ -511,6 +523,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v14-q4` | test_fixed | 150 | 99% | 97% | **97%** | 97% | **97%** | 15.8 |
 | `sql2pyspark:v15-q4` | test_fixed | 150 | 100% | 97% | **97%** | 97% | **97%** | 15.6 |
 | `sql2pyspark:v16-q4` | test_fixed | 150 | 100% | 98% | **97%** | 98% | **97%** | 17.2 |
+| `sql2pyspark:v17-q4` | test_fixed | 150 | 99% | 95% | **95%** | 95% | **95%** | 6.8 |
 | `sql2pyspark:v3` | test_fixed | 150 | 92% | 73% | **69%** | 73% | **70%** | 8.0 |
 | `sql2pyspark:v4` | test_fixed | 150 | 90% | 80% | **73%** | 80% | **73%** | 11.6 |
 | `sql2pyspark:v5` | test_fixed | 150 | 97% | 88% | **85%** | 89% | **85%** | 11.2 |
@@ -526,6 +539,7 @@ The suite in `eval/` scores models by executing their answers in Spark and compa
 | `sql2pyspark:v14-q4` | complex_v8_test | 100 | 98% | 87% | **82%** | 87% | **82%** | 47.6 |
 | `sql2pyspark:v15-q4` | complex_v8_test | 100 | 99% | 93% | **89%** | 93% | **89%** | 47.0 |
 | `sql2pyspark:v16-q4` | complex_v8_test | 100 | 99% | 88% | **84%** | 88% | **84%** | 51.2 |
+| `sql2pyspark:v17-q4` | complex_v8_test | 100 | 100% | 91% | **85%** | 91% | **85%** | 19.8 |
 | `sql2pyspark:v7` | complex_v8_test | 100 | 83% | 38% | **31%** | 38% | **31%** | 72.9 |
 | `sql2pyspark:v8` | complex_v8_test | 100 | 96% | 68% | **60%** | 68% | **60%** | 96.9 |
 | `sql2pyspark:v9` | complex_v8_test | 100 | 100% | 92% | **87%** | 92% | **87%** | 57.9 |
@@ -545,6 +559,7 @@ Hold-out, correct results (lenient) by difficulty:
 | `sql2pyspark:v14-q4` | 100% | 91% | 92% |
 | `sql2pyspark:v15-q4` | 100% | 95% | 96% |
 | `sql2pyspark:v16-q4` | 93% | 91% | 96% |
+| `sql2pyspark:v17-q4` | 100% | 95% | 100% |
 | `sql2pyspark:v2` | 93% | 95% | 84% |
 | `sql2pyspark:v3` | 100% | 95% | 92% |
 | `sql2pyspark:v4` | 100% | 95% | 88% |
@@ -567,6 +582,7 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v14-q4` | 75% | 100% | 100% | 67% | 50% | 25% | 50% |
 | `sql2pyspark:v15-q4` | 100% | 100% | 60% | 67% | 100% | 75% | 50% |
 | `sql2pyspark:v16-q4` | 75% | 100% | 80% | 67% | 50% | 75% | 100% |
+| `sql2pyspark:v17-q4` | 75% | 100% | 80% | 67% | 50% | 100% | 100% |
 | `sql2pyspark:v2` | 0% | 40% | 20% | 67% | 0% | 0% | 0% |
 | `sql2pyspark:v3` | 0% | 40% | 0% | 33% | 0% | 0% | 0% |
 | `sql2pyspark:v4` | 25% | 40% | 20% | 67% | 50% | 50% | 0% |
@@ -576,6 +592,21 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v8` | 100% | 60% | 60% | 67% | 100% | 75% | 50% |
 | `sql2pyspark:v9` | 75% | 100% | 100% | 33% | 50% | 50% | 50% |
 | `sql2pyspark:v9-q4` | 75% | 100% | 100% | 67% | 50% | 75% | 100% |
+
+### v17 results (2026-11-08, not promoted)
+
+| Eval set | **v15-q4** (`latest`) | v16-q4 | **v17-q4** |
+| --- | --- | --- | --- |
+| Hold-out (62) | 60 | 58 | **61** |
+| Fixed test (150; `subquery` 17/17 for all) | 145 | **146** | 142 |
+| v4 hold-out (25) | 20 | 20 | **21** |
+| complex_v8 test (100 of 300) | **89** | 84 | 85 |
+| Held-out targeted_v11 / v12 / v13 / v14 | 278 / 232 / 150 / 193 | 261 / 216 / 149 / 190 | **283** / **233** / **150** / **197** |
+| Schema-shift (200) / complex schema-shift (150 of 300) | **189** / 110 | 185 / **128** | **189** / 116 |
+| Held-out `IN` / `NOT IN` (50) | 50 | 50 | 50 |
+| Failures in total / with an unresolved name | 121 / 62 | 150 / 83 | **110** / **58** |
+
+v17 fails the promotion rule on the fixed test (−3) and the complex test (−4); `latest` stays v15-q4. Qwen3.5-9B's best run (run 8, `q35m6g-q4`) on the same five main sets: hold-out 59, v4 22, fixed 143, complex 82, complex-shift 111.
 
 ### v16 results (2026-10-09, not promoted)
 
