@@ -292,3 +292,55 @@ Tell Claude: **"Mac mini checks passed: go on with phase 5, then v17."**
 4. Keep the M2 as a fallback for a few weeks. Wiping or reusing it is your decision.
 5. The server copy `~/m2-backup` (~165 GB) stays as a backup until you decide to remove it (👤
    `ssh prapon@192.168.1.49 'rm -rf ~/m2-backup'`).
+
+## Step 7 — retire the M2 (owner's decision, 2026-11-12)
+
+Checked from the Mac mini on 2026-11-12: the M2 serves nothing any more. Each tunnel has one connector:
+`sql2pyspark` and `metalsql` on the Mac mini (darwin_arm64, since 11-08), `0644141d…` (batch2stream) on the Ubuntu
+server. The Mac mini has run everything since 2026-11-08 (training, both sites, Claude Code with this project's memory).
+
+**Keep**: the server copy `~/m2-backup` (~165 GB, the M2 snapshot of 2026-10-22) stays as the last copy of the M2
+until you remove it (👤 `ssh prapon@192.168.1.49 'rm -rf ~/m2-backup'`). The Mac mini's SSH key `~/.ssh/id_ed25519` is
+**the same key** the M2 used (copied in step 3.1): don't revoke it on GitHub or remove it from the server's
+`authorized_keys`, or the Mac mini loses access too. Erasing the M2 removes its copy.
+
+### 7.1 Last look for anything not yet on the Mac mini (👤, on the M2, ~15 min)
+
+```bash
+NEW=praponb@192.168.1.50
+# git: uncommitted or unpushed work in any repo (expect: none, or only the known untracked files)
+for d in ~/GitHub/*/.git; do r=${d%/.git}; s=$(git -C $r status --porcelain | head -3); \
+  u=$(git -C $r log --oneline @{u}.. 2>/dev/null | head -3); [[ -n $s$u ]] && echo "== $r" && echo "$s" && echo "$u"; done
+# files newer on the M2 than on the Mac mini (dry run, nothing is sent; -u skips files the Mac mini changed since)
+rsync -anu --itemize-changes --exclude sql2pyspark-hf/ --exclude '.venv*/' --exclude 'llama.cpp/build/' \
+  --exclude node_modules/ --exclude __pycache__/ --exclude .DS_Store ~/GitHub/ $NEW:GitHub/ | grep -v '^\.' | head -50
+for f in Documents Downloads Desktop Pictures Movies Music; do echo "== $f"; \
+  find ~/$f -type f -newermt 2026-11-08 2>/dev/null | head -5; done
+```
+
+Anything listed that you still need: copy it with the step 3.2 / 3.3 lines (without `-n`). Also check by hand what
+lives only in apps on the M2: Safari / Chrome bookmarks and passwords (if not synced), Notes and Photos (if not in
+iCloud), LM Studio / Docker images (rebuildable), other Keychain items.
+
+### 7.2 Switch off the M2's services and sign out (👤, on the M2)
+
+```bash
+# Cloudflare: the LaunchDaemon of tunnel 0644141d was disabled in check 11; remove it for good
+sudo launchctl bootout system/com.cloudflare.cloudflared 2>/dev/null
+sudo rm -f /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
+brew services stop --all
+pkill -x cloudflared; killall Ollama 2>/dev/null; pkill -x ollama
+launchctl bootout gui/$(id -u)/ai.openclaw.gateway 2>/dev/null     # personal OpenClaw gateway (not moved)
+gh auth logout                                                      # GitHub CLI token of this Mac
+```
+
+Then in the apps: sign out of Claude Code (`/logout`) and Docker Desktop, deauthorise the M2 in Music / TV (Account →
+Authorisations), and unpair Bluetooth devices you'll use with the Mac mini.
+
+### 7.3 Erase (👤, irreversible)
+
+1. System Settings → [your name] → **Sign Out** of the Apple Account (turns off Find My and Activation Lock; keep a
+   copy of the data in iCloud when asked).
+2. System Settings → General → Transfer or Reset → **Erase All Content and Settings**.
+
+The M2 is then ready to sell, give away or reuse. Tell Claude when it's done, so the docs and memory say so.
