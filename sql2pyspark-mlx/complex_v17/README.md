@@ -47,5 +47,5 @@ finished at 22:30. Tags `sql2pyspark:v17`, `sql2pyspark:v17-q4`.
 **Verdict: not promoted.** v17 has the best hold-out and the fewest failures so far, but the promotion rule (hold-out
 ≥ 60, classic `subquery` 17/17, no loss on v4 / fixed / complex) fails on the fixed test (−3) and the complex test (−4),
 and complex-shift +6 is not clearly above v15. `sql2pyspark:latest` stays **v15-q4**. Note: the export overwrote the
-root `sql2pyspark.gguf` / `sql2pyspark-q4.gguf`, which now hold v17 / v17-q4 (restore v15 from the Ollama blobs before a
-server deploy with `deploy/update_model.sh`).
+root `sql2pyspark.gguf` / `sql2pyspark-q4.gguf`; they were restored to v15 / v15-q4 from the Ollama blobs on 2026-11-12
+(same SHA-256).

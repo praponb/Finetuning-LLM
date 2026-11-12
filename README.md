@@ -372,7 +372,7 @@ validation loss 0.009 → 0.013 → 0.008), the whole chain incl. all evals done
 
 **Recommendation**: do not promote (hold-out and failures improve, but the rule also needs no loss on fixed and
 complex: 142 < 145, 85 < 89). `sql2pyspark:latest` stays v15-q4; v17 / v17-q4 stay as Ollama tags. The export
-overwrote the root `sql2pyspark.gguf` / `sql2pyspark-q4.gguf`, which now hold v17 / v17-q4.
+overwrote the root `sql2pyspark.gguf` / `sql2pyspark-q4.gguf`; they were restored to v15 / v15-q4 from the Ollama blobs on 2026-11-12 (same SHA-256).
 
 ### v16 results (2026-10-09) — not promoted
 
@@ -976,8 +976,8 @@ sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4�
                    complex_v17/ (v15 mix + 4,000 complex_v16 pairs = 29k, v17 LoRA config + adapters; not promoted),
                    qwen35_pilot/ (Qwen3.5-9B: feasibility pilot + runs 2-9 on the Mac mini, mlx-lm patches, name-copy / complex-mix builders, results; stopped),
                    runs/v2/ … runs/v7/ (adapters, configs, logs; v6/v7 data is in the git history too)
-sql2pyspark.gguf   Q8_0 GGUF of v17 (exported 2026-11-08 19:06, 8.1 GB; v17 not promoted, `latest` = v15-q4 lives in Ollama); Ollama keeps its own copy of every tag
-sql2pyspark-q4.gguf Q4_K_M GGUF of v17-q4 (2026-11-08, 4.7 GB; restore v15-q4 from its Ollama blob before using deploy/update_model.sh for `latest`)
+sql2pyspark.gguf   Q8_0 GGUF of v15 (8.1 GB; restored from the Ollama blob 2026-11-12 after the v17 export; v17 is an Ollama tag); Ollama keeps its own copy of every tag
+sql2pyspark-q4.gguf Q4_K_M GGUF of v15-q4 (`latest`, 4.7 GB; restored 2026-11-12 after the v17 export; what deploy/update_model.sh copies)
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,
                    post_training_v4.sh … post_training_v8.sh, start_training_v7.sh … start_training_v17.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py,
