@@ -97,8 +97,8 @@ Finetuning-LLM/
 ├── kimi_repair.py                # Kimi K3 check + repair loop (join_check, setop_check, EmptyTableRunner)
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
-├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of the latest export (v17 since 2026-11-08 19:06)
-├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of the same export (v17-q4 since 2026-11-08; `latest` = v15-q4 lives in Ollama)
+├── sql2pyspark.gguf              # 8.10 GB Q8_0 GGUF of v15 (restored from the Ollama blob 2026-11-12 after the v17 export)
+├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of v15-q4 = `latest` (restored 2026-11-12; v17 / v17-q4 are Ollama tags)
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # macmini/ (public site since 2026-11-08); former Ubuntu server: sql2pyspark.service, setup_server.sh, update_model.sh
