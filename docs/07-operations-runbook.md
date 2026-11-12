@@ -8,7 +8,7 @@ A practical guide for setting up, running, changing, and troubleshooting the SQL
 
 ### System Requirements
 
-- **Hardware**: Apple Silicon Mac. Developed and measured on a base **M2 with 16 GB** unified memory; more memory gives more headroom.
+- **Hardware**: Apple Silicon Mac. Developed on a base **M2 with 16 GB** (v1–v16); since 2026-11-08 the project runs on a **Mac mini M6 with 32 GB** (v17 trained in ~3 h vs. ~10 h estimated on the M2). 16 GB is enough for the 7B runs with the settings below.
 - **Disk space** (measured 2026-10-10): the project folder uses ~46 GB (3.4 GB `.git`, 7.5 + 4.4 GB root GGUFs, 2.1 GB venv, 0.6 GB `llama.cpp/`, 5.6 GB `qwen35_pilot/`, data and adapters, and a 14 GB `sql2pyspark-hf/` export leftover that `make clean` removes), Ollama ~125 GB (22 `sql2pyspark:*` tags) and the Hugging Face cache ~15 GB. A 7B export needs ~30 GB more while it runs (BF16 `sql2pyspark-hf/` ~15 GB, fused MLX model ~4 GB, new GGUF 8 GB, LoRA checkpoints ~3 GB); `make clean` frees it afterwards. Each new Ollama tag adds 8.1 GB (`ollama rm` old ones).
 - **Docker Desktop** (optional): for the containerised app, data pipeline and evaluation; see [Docker](#-docker).
 
@@ -174,6 +174,8 @@ make app
 
 Training peaks at ~9.7–10.3 GB (v6 7B: 10.1 GB). On a 16 GB Mac, running an Ollama evaluation at the same time crashed training with a Metal out-of-memory error. Run evaluations, the app, and Ollama chats only after training finishes.
 
+On the **32 GB Mac mini** (measured 2026-11-08, v15 config) Ollama beside training works without an OOM (training 8.6 GB + v15-q4 6.2 GB), but it slows both: training −20–30%, a hold-out query ~9 s instead of 2.7 s. The public site's Ollama runs there all the time, so a query during training is fine; the chain scripts still unload the models before training.
+
 Docker Desktop's VM (8 GB) competes for the same memory, so stop it before training: `docker compose down`, then quit Docker Desktop.
 
 ### Training Speed vs. Memory (`sql2pyspark-mlx/lora_config.yaml`)
@@ -188,6 +190,8 @@ Measured on a base M2:
 | 8 layers of 36, batch 2 × 2 accumulation, `grad_checkpoint: true` (**v4/v5**, samples up to 3.1k tokens) | ~0.09–0.18 it/s (micro-batches) | ~9.8–10.3 GB |
 | 8 layers of 28, batch 1 × 4 accumulation, `grad_checkpoint: true` (**v6**, 7B base model, 3.2k tokens) | ~0.14–0.25 it/s (micro-batches of 1; ~37–50 tok/s) | 10.1 GB |
 | 8 layers of 28, batch 2 × 2 accumulation, `grad_checkpoint: true` (7B dry run, 64 longest samples) | — | Metal out-of-memory |
+
+Measured on the Mac mini M6 (32 GB, 2026-11-08, v15 config): batch 1 × 4 accumulation 137–159 tok/s, peak 8.4–10.1 GB (v17: 4,800 micro-batches in ~3 h); the small Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`) are not slower there than the MLX defaults (159 vs. 155 tok/s), so `train_resumable.py` keeps them; batch 2 / 4 without accumulation are slower (90–103 / 73 tok/s, peak 13.9 / 18.9 GB). Qwen3.5-9B (patched, 16 layers × rank 32): ~80 tok/s, peak ~15.7 GB, with a `[metal::malloc] Resource limit (499000) exceeded` crash every ~400–1,000 iterations that `train_resumable.py` resumes from.
 
 With v4/v5's long samples on 3B, batch 4 ran out of GPU memory even with gradient checkpointing, and batch 2 without it did too. On the 7B model (v6), batch 2 with checkpointing caused Metal OOM during dry runs, whereas batch 1 with 4 accumulation steps peaked at ~9.2 GB, safely inside the ~10.7–12.7 GB Metal limit on a 16 GB Mac. To test a new setting, run a few iterations on the longest samples before a full run.
 
