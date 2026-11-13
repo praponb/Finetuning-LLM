@@ -121,7 +121,7 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
   - `sql2pyspark:v12-q4` (`latest` on the Mac since 2026-10-03): v11 with the `OR` slip fixed (`WHERE a OR b` stays one `.filter()` with `|`) and the same subquery skills; `sql2pyspark:v12` is the same model at Q8_0.
   - `sql2pyspark:v11-q4` (`latest` on the Mac 2026-10-02 → 10-03): best on subqueries that compare inner and outer columns (`NOT EXISTS (... AND a.date >= p.date)`), `IN` / `NOT IN`, set operations and `LATERAL VIEW` filters; but it can turn a `WHERE a OR b` into two `.filter()` calls (wrong rows), so check `OR` queries. `sql2pyspark:v11` is the same model at Q8_0.
   - `sql2pyspark:v10-q4` (candidate, 2026-10-01, not promoted): converts bare `IN` / `NOT IN` subqueries correctly (49/50 vs. v9-q4's 11/50) and no longer loops on long window-heavy classic queries, but is slightly weaker on the v4 hold-out (18 vs. 21 of 25); `sql2pyspark:v10` is the same model at Q8_0. Type the tag in this field to try it.
-  - `sql2pyspark:v8`: The previous production model, kept for rollback (`ollama cp sql2pyspark:v8 sql2pyspark:latest`; the server also keeps `v7`).
+  - `sql2pyspark:v8`: The previous production model, kept for rollback (`ollama cp sql2pyspark:v8 sql2pyspark:latest`; the server kept `v7` until 2026-11-14).
   - The older tags `v1`–`v6` were removed on 2026-09-30 to save disk space (see `docs/03-model-training-and-export.md` to rebuild one).
 - **Kimi repair** (the heading shows the configured model, e.g. *Kimi K3.1 Pro repair*): *When a check fails or the SQL is long* (default; long = over 2,000 characters), *When a check fails*, *Always* or *Off* (requires `KIMI_API_KEY` in `.env`; without it the section explains how to enable it).
 

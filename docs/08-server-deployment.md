@@ -23,11 +23,11 @@ Three LaunchDaemons start at boot (after the FileVault unlock) without a GUI log
 `cloudflared tunnel route dns --overwrite-dns sql2pyspark sql2pyspark.praponb.com` moved the hostname at 14:31:53
 (Bangkok time) without downtime. On the server, `deploy/macmini/server_stop_sql2pyspark.sh` disabled `sql2pyspark.service` and
 removed the hostname's rule from `inventory-tunnel` (backup `/etc/cloudflared/config.yml.bak-20261108-sql2pyspark`).
-The server's Ollama and its `sql2pyspark:*` tags stay for a rollback.
+The server's copy was kept for a rollback until **2026-11-14**, when it was removed (the unit and its backups, the `sql2pyspark:*` Ollama tags, `~/web-env`, `~/Finetuning-LLM`, `~/sql2pyspark.gguf` and the cloudflared config backup, plus the Docker Compose copy from 2026-09-29: containers `finetuning-llm-app-1` / `finetuning-llm-ollama-1` with v7 on LAN ports 8501 / 11435, their images and the `finetuning-llm_ollama-models` volume); the server's Ollama still serves `batch2stream`. Rollback is now a tag on the Mac mini ([deploy/macmini](../deploy/macmini/README.md#rollback)).
 
 ## 🗄️ History: the Ubuntu server (2026-09-29 → 2026-11-08)
 
-Training needs Apple MLX, so it stays on the Mac. The finished model is a plain GGUF file that Ollama can serve on any Linux machine. The rest of this guide covers the deployment of **<https://sql2pyspark.praponb.com>** on a home Ubuntu server, set up on 2026-09-29 and used until 2026-11-08; it still works as a rollback target.
+Training needs Apple MLX, so it stays on the Mac. The finished model is a plain GGUF file that Ollama can serve on any Linux machine. The rest of this guide covers the deployment of **<https://sql2pyspark.praponb.com>** on a home Ubuntu server, set up on 2026-09-29 and used until 2026-11-08; the server copy was removed on 2026-11-14, so these steps now describe a fresh setup.
 
 ---
 

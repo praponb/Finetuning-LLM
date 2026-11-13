@@ -922,7 +922,7 @@ Details, memory tips and troubleshooting: [docs/07-operations-runbook.md](docs/0
 
 **Since 2026-11-08 <https://sql2pyspark.praponb.com> runs on the Mac mini M6** (LaunchDaemons for Ollama, the app on 127.0.0.1:8502 and Cloudflare Tunnel `sql2pyspark`; ~3 s per query; Kimi K3.1 Pro repair on). A promoted model goes live with `ollama cp sql2pyspark:<tag> sql2pyspark:latest`. See [deploy/macmini/README.md](deploy/macmini/README.md) and docs/08.
 
-Until then (2026-09-29 → 11-08) the exported GGUF ran on an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v12-q4 since 2026-10-03), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports.
+Until then (2026-09-29 → 11-08) the exported GGUF ran on an Ubuntu server on the LAN (`192.168.1.49`, HP EliteDesk, 8 threads, 13 GB RAM, no GPU): native Ollama (`sql2pyspark:latest` = v12-q4 since 2026-10-03), the Streamlit app as `sql2pyspark.service` (systemd, venv `~/web-env`, code in `~/Finetuning-LLM`) and a Cloudflare Tunnel (`cloudflared.service`) for HTTPS without opening router ports. The server copy (unit, Ollama tags, venv, code) was kept for rollback until 2026-11-14, then removed.
 
 - **Sizing**:
   - **Q8_0 (v8)**: ~8 GB RAM for Ollama + ~1.5 GB for the app and Spark + OS → 12 GB minimum, 16 GB recommended; ~25 GB disk.

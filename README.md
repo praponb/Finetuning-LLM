@@ -21,7 +21,7 @@ test set (v8 139), **21/25** on the v4 hold-out (v8 18) and 59/62 on the hold-ou
 the app's `join_check()` flags), 0/4 on the real-world queries like every model. It is faster too: 39 s vs. 97 s per
 complex query on the Mac, and on the CPU-only server 4.05 vs. 2.47 tokens/s. See [v9 results](#v9-results-2026-10-01).
 **v8** (the previous `latest`) is kept as `sql2pyspark:v8`: roll back with `ollama cp sql2pyspark:v8 sql2pyspark:latest`
-(the server also keeps v7). `sql2pyspark:v9` is the same model at Q8_0 (8.1 GB).
+(the server kept v7 until 2026-11-14). `sql2pyspark:v9` is the same model at Q8_0 (8.1 GB).
 
 **v10-q4** (trained 2026-10-01, never promoted; superseded by v11 / v12): v9 continued on the
 [classic_v10 dataset](sql2pyspark-mlx/classic_v10/README.md) (the classic pairs in the mirror window style + bare
