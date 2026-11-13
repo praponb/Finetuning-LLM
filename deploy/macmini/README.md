@@ -40,9 +40,13 @@ for L in com.praponb.ollama com.praponb.sql2pyspark com.praponb.cloudflared-sql2
   sudo launchctl bootout system/$L; sudo rm /Library/LaunchDaemons/$L.plist; done
 ```
 
-## Rollback to the Ubuntu server
+## Rollback
 
-On the server (`ssh prapon@192.168.1.49`): restore the backed-up `/etc/cloudflared/config.yml` (it has the
-`sql2pyspark.praponb.com → http://localhost:8501` rule), `sudo systemctl restart cloudflared`,
-`sudo systemctl enable --now sql2pyspark`. Then on the Mac mini:
-`cloudflared tunnel route dns --overwrite-dns inventory-tunnel sql2pyspark.praponb.com`.
+The Mac mini is the only host. To go back to the previous model:
+`ollama cp sql2pyspark:v12-q4 sql2pyspark:latest` (the app always asks for `latest`; every tag from v8 on is kept on
+the Mac mini). For a code change, `git checkout` the earlier commit and
+`sudo launchctl kickstart -k system/com.praponb.sql2pyspark`.
+
+The Ubuntu server is no longer a fallback: its copy (`sql2pyspark.service`, the `sql2pyspark:*` Ollama tags, `~/web-env`,
+`~/Finetuning-LLM` and the `config.yml.bak-20261108-sql2pyspark` backup) was removed on 2026-11-14. To host the site
+there again, set it up from scratch with [docs/08](../../docs/08-server-deployment.md).

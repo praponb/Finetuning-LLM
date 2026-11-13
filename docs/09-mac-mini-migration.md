@@ -4,7 +4,7 @@
 > 11-01); the data was copied straight from the M2 ([migration-m6-32gb.md](../migration-m6-32gb.md) has the commands
 > as run), all 11 phase 4 checks passed on 11-08, phase 5 was measured the same afternoon and v17 ran that evening.
 > sql2pyspark.praponb.com and metalsql.praponb.com moved to the Mac mini too (LaunchDaemons;
-> [deploy/macmini](../deploy/macmini/README.md)); the Ubuntu server copy of sql2pyspark is kept only for rollback. The
+> [deploy/macmini](../deploy/macmini/README.md)); the Ubuntu server copy of sql2pyspark was kept for rollback until 2026-11-14, then removed. The
 > rest of this page is the plan as approved, with the results added below.
 
 **Goal**: move training, export, evaluation, the local app and the server deploys — and the owner's other projects in
@@ -236,4 +236,6 @@ owner's decision.
 2. Claude Code memory: replace the M2 hardware notes with the measured M6 numbers. **Done 2026-11-12.**
 3. The M2: **the owner decided to retire it (2026-11-12)**; the steps (last check for unsynced files, switch off its
    services, sign out, erase) are [step 7 of the runbook](../migration-m6-32gb.md#step-7--retire-the-m2-owners-decision-2026-11-12).
-   The server copy `~/m2-backup` stays until the owner removes it.
+   The server copy `~/m2-backup` was removed on 2026-11-14 (owner's decision), before the M2 was erased.
+   **Status 2026-11-14**: steps 7.1 (last check; two git-ignored files copied) and 7.2 (services off) done; the
+   erase (7.3) is on hold.

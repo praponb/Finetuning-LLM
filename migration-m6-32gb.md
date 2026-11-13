@@ -6,7 +6,7 @@ takes over. The reasons and background are in [docs/09-mac-mini-migration.md](do
 - **Delivery**: 2026-11-01 (Sunday; moved from 10-23 to 10-25 on 2026-10-22); arrived, steps 1–2 + tools done by 2026-11-08. **Budget**: day 1 = steps 1–4 (~4 h), day 2 = step 5 (checks, ~2–3 h).
 - **Route** (changed 2026-11-08, owner): everything goes **directly from the M2 to the Mac mini (`192.168.1.50`)**
   over the LAN (step 3). The copy staged earlier on the Ubuntu server (`prapon@192.168.1.49:~/m2-backup/`, step 0.5)
-  is not used for the copy any more; it stays only as an off-machine backup until you remove it (step 6).
+  was not used for the copy; it stayed as an off-machine backup until 2026-11-14, when it was removed.
 - **Rules**: same user name `praponb` and same paths on the new Mac; nothing is deleted on either Mac; the M2 stays
   the main machine until every check in step 5 passes.
 - **Who**: 👤 = you (needs a password, `sudo`, a login or your hands), 🤖 = ask Claude Code to do it.
@@ -290,8 +290,8 @@ Tell Claude: **"Mac mini checks passed: go on with phase 5, then v17."**
    `make promote …` and `deploy/update_model.sh` via `!`).
 3. **Wrap-up**: docs updated from "M2 16 GB" to the measured M6 numbers; Claude's memory updated.
 4. Keep the M2 as a fallback for a few weeks. Wiping or reusing it is your decision.
-5. The server copy `~/m2-backup` (~165 GB) stays as a backup until you decide to remove it (👤
-   `ssh prapon@192.168.1.49 'rm -rf ~/m2-backup'`).
+5. The server copy `~/m2-backup` (154 GB) was removed on 2026-11-14 (owner's decision), together with the server's
+   sql2pyspark copy.
 
 ## Step 7 — retire the M2 (owner's decision, 2026-11-12)
 
@@ -299,12 +299,24 @@ Checked from the Mac mini on 2026-11-12: the M2 serves nothing any more. Each tu
 `sql2pyspark` and `metalsql` on the Mac mini (darwin_arm64, since 11-08), `0644141d…` (batch2stream) on the Ubuntu
 server. The Mac mini has run everything since 2026-11-08 (training, both sites, Claude Code with this project's memory).
 
-**Keep**: the server copy `~/m2-backup` (~165 GB, the M2 snapshot of 2026-10-22) stays as the last copy of the M2
-until you remove it (👤 `ssh prapon@192.168.1.49 'rm -rf ~/m2-backup'`). The Mac mini's SSH key `~/.ssh/id_ed25519` is
-**the same key** the M2 used (copied in step 3.1): don't revoke it on GitHub or remove it from the server's
-`authorized_keys`, or the Mac mini loses access too. Erasing the M2 removes its copy.
+**No backup left**: the server copy `~/m2-backup` (the M2 snapshot of 2026-10-22) was removed on 2026-11-14, so
+anything that exists only on the M2 is lost when it is erased: step 7.1 is the last chance to copy it. The Mac mini's SSH key `~/.ssh/id_ed25519` is
+**the same key** the M2 used (copied in step 3.1): don't remove it from the server's `authorized_keys`, or the Mac
+mini loses access too. Erasing the M2 removes its copy. (GitHub doesn't use it: the account has no SSH keys and every
+repo uses HTTPS through `gh`, checked 2026-11-14.)
 
 ### 7.1 Last look for anything not yet on the Mac mini (👤, on the M2, ~15 min)
+
+Checked from the Mac mini on 2026-11-14 (the M2 isn't reachable over SSH): every repo on the Mac mini is committed and
+pushed (only the known untracked `Senior-Data-Engineer-Test/OSDE_Q.docx`). Two repos had GitHub pushes after 11-08 that
+the Mac mini didn't have: `Hadoop-to-Lakehouse` (3 commits of 11-11, fast-forwarded) and `Margin-Reconciler-System`
+(created 11-09, cloned). Their git-ignored files (`.env`, `*.db`, `mock_data/`, venvs) exist only where the work was
+done, so check those two on the M2 as well.
+
+Run on the M2 the same day: no unpushed commits; the only files missing on the Mac mini were
+`Hadoop-to-Lakehouse/.env` (newer on the M2, without `DATABRICKS_TOKEN` after the trial teardown; the Mac mini's old
+copy is in `~/.env-backups/`, mode 600, outside the repo) and `Margin-Reconciler-System/reconciler.db` + `mock_data/`;
+both copied. New files in `~/Documents`, `~/Downloads` and `~/Pictures` were not copied (owner's decision).
 
 ```bash
 NEW=praponb@192.168.1.50
@@ -324,6 +336,9 @@ iCloud), LM Studio / Docker images (rebuildable), other Keychain items.
 
 ### 7.2 Switch off the M2's services and sign out (👤, on the M2)
 
+Done 2026-11-14; checked from the Mac mini: no tunnel has an M2 connector (the only `darwin_arm64` connectors,
+`sql2pyspark` and `metalsql`, are the Mac mini's), all sites answer, the Mac mini's `gh` login and server SSH work.
+
 ```bash
 # Cloudflare: the LaunchDaemon of tunnel 0644141d was disabled in check 11; remove it for good
 sudo launchctl bootout system/com.cloudflare.cloudflared 2>/dev/null
@@ -338,6 +353,8 @@ Then in the apps: sign out of Claude Code (`/logout`) and Docker Desktop, deauth
 Authorisations), and unpair Bluetooth devices you'll use with the Mac mini.
 
 ### 7.3 Erase (👤, irreversible)
+
+**On hold (owner, 2026-11-14)**: 7.1 and 7.2 are done; the M2 is still signed in to the Apple Account and not erased.
 
 1. System Settings → [your name] → **Sign Out** of the Apple Account (turns off Find My and Activation Lock; keep a
    copy of the data in iCloud when asked).
