@@ -62,7 +62,8 @@ def run_repair(sql: str, code: str) -> None:
             and last.startswith("OK") and "MISMATCH" not in last
         status.update(label=f"{KIMI} finished: {len(r['runs'])} checks, {r['seconds']:.0f} s, ${r['cost_usd']:.2f}",
                       state="complete", expanded=False)
-    st.session_state["repair"] = {**r, "verified": verified}
+    # after the verified check, so a version that only gained import lines still counts as checked
+    st.session_state["repair"] = {**r, "code": kr.add_imports(r["code"]), "verified": verified}
 
 
 # Page setup

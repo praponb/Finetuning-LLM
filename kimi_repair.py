@@ -108,6 +108,24 @@ def extract_code(text: str) -> str:
     return text.replace("```", "").strip()
 
 
+IMPORTS = {"F": "from pyspark.sql import functions as F", "Window": "from pyspark.sql.window import Window"}
+
+
+def add_imports(code: str) -> str:
+    """Prepend the import lines for `F` / `Window` when the code uses them without defining them (the repair
+    prompt says both are predefined, so Kimi often leaves them out). Unparsable code is returned unchanged."""
+    try:
+        tree = ast.parse(code)
+    except SyntaxError:
+        return code
+    used = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
+    bound = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name) and not isinstance(n.ctx, ast.Load)}
+    bound |= {(a.asname or a.name).split(".")[0] for n in ast.walk(tree)
+              if isinstance(n, (ast.Import, ast.ImportFrom)) for a in n.names}
+    missing = [line for name, line in IMPORTS.items() if name in used and name not in bound]
+    return "\n".join(missing) + "\n\n" + code if missing else code
+
+
 def short_error(e: BaseException) -> str:
     msg = str(e).strip().splitlines()[0] if str(e).strip() else ""
     return f"{type(e).__name__}: {msg}"[:400]
