@@ -1,0 +1,87 @@
+[12:52:32] dequantize the 4-bit base (mlx_lm.convert -d) -> sql2pyspark-mlx/qwen35moe/hf_base
+[INFO] Loading
+[INFO] Using dtype: bfloat16
+[INFO] Dequantizing
+ 65G	sql2pyspark-mlx/qwen35moe/hf_base
+[12:52:50] fix_norms (undo mlx-lm's +1 RMSNorm shift)
+model-00001-of-00014.safetensors: 6 norm tensors shifted back
+model-00002-of-00014.safetensors: 8 norm tensors shifted back
+model-00003-of-00014.safetensors: 8 norm tensors shifted back
+model-00004-of-00014.safetensors: 8 norm tensors shifted back
+model-00005-of-00014.safetensors: 6 norm tensors shifted back
+model-00006-of-00014.safetensors: 8 norm tensors shifted back
+model-00007-of-00014.safetensors: 8 norm tensors shifted back
+model-00008-of-00014.safetensors: 8 norm tensors shifted back
+model-00009-of-00014.safetensors: 6 norm tensors shifted back
+model-00010-of-00014.safetensors: 8 norm tensors shifted back
+model-00011-of-00014.safetensors: 8 norm tensors shifted back
+model-00012-of-00014.safetensors: 8 norm tensors shifted back
+model-00013-of-00014.safetensors: 6 norm tensors shifted back
+language_model.model.norm.weight: mean 2.578 -> 1.578
+model-00014-of-00014.safetensors: 5 norm tensors shifted back
+total 101 (expected 32 x 2 + 8 x 2 + 1 = 81)
+[12:53:12] convert to f16 GGUF (--no-mtp)
+INFO:hf-to-gguf:Loading model: hf_base
+INFO:hf-to-gguf:Model architecture: Qwen3_5MoeForConditionalGeneration
+INFO:hf-to-gguf:gguf: loading model weight map from 'model.safetensors.index.json'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00001-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00002-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00003-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00004-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00005-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00006-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00007-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00008-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00009-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00010-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00011-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00012-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00013-of-00014.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00014-of-00014.safetensors'
+INFO:gguf.gguf_writer:gguf: This GGUF file is for Little Endian only
+INFO:hf-to-gguf:Exporting model...
+INFO:hf-to-gguf:token_embd.weight,                    torch.bfloat16 --> F16, shape = {2048, 248320}
+INFO:hf-to-gguf:blk.0.attn_norm.weight,               torch.bfloat16 --> F32, shape = {2048}
+INFO:hf-to-gguf:blk.0.ssm_a,                          torch.float32 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.0.ssm_conv1d.weight,              torch.bfloat16 --> F32, shape = {4, 8192}
+INFO:hf-to-gguf:blk.0.ssm_dt.bias,                    torch.bfloat16 --> F32, shape = {32}
+INFO:hf-to-gguf:blk.0.ssm_alpha.weight,               torch.bfloat16 --> F16, shape = {2048, 32}
+INFO:hf-to-gguf:blk.0.ssm_beta.weight,                torch.bfloat16 --> F16, shape = {2048, 32}
+INFO:hf-to-gguf:blk.0.attn_qkv.weight,                torch.bfloat16 --> F16, shape = {2048, 8192}
+INFO:hf-to-gguf:blk.0.attn_gate.weight,               torch.bfloat16 --> F16, shape = {2048, 4096}
+INFO:hf-to-gguf:blk.0.ssm_norm.weight,                torch.bfloat16 --> F32, shape = {128}
+INFO:hf-to-gguf:blk.0.ssm_out.weight,                 torch.bfloat16 --> F16, shape = {4096, 2048}
+INFO:hf-to-gguf:blk.0.ffn_gate_inp.weight,            torch.bfloat16 --> F32, shape = {2048, 256}
+INFO:hf-to-gguf:blk.0.ffn_down_shexp.weight,          torch.bfloat16 --> F16, shape = {512, 2048}
+INFO:hf-to-gguf:blk.0.ffn_gate_shexp.weight,          torch.bfloat16 --> F16, shape = {2048, 512}
+INFO:hf-to-gguf:blk.0.ffn_up_shexp.weight,            torch.bfloat16 --> F16, shape = {2048, 512}
+INFO:hf-to-gguf:blk.0.ffn_gate_inp_shexp.weight,      torch.bfloat16 --> F32, shape = {2048, 1}
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/convert_hf_to_gguf.py", line 312, in <module>
+    main()
+    ~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/convert_hf_to_gguf.py", line 306, in main
+    model_instance.write()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/conversion/base.py", line 1234, in write
+    self.prepare_tensors()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/conversion/qwen.py", line 151, in prepare_tensors
+    super().prepare_tensors()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/conversion/base.py", line 1075, in prepare_tensors
+    for new_name, data_torch in (self.modify_tensors(data_torch, name, bid)):
+                                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/conversion/qwen.py", line 634, in modify_tensors
+    yield from super().modify_tensors(data_torch, name, bid)
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/conversion/qwen.py", line 435, in modify_tensors
+    yield from super().modify_tensors(data_torch, name, bid)
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/conversion/qwen.py", line 148, in modify_tensors
+    yield from super().modify_tensors(data_torch, name, bid)
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/conversion/base.py", line 686, in modify_tensors
+    new_name = self.map_tensor_name(name)
+  File "/Users/praponb/GitHub/Finetuning-LLM/llama.cpp/conversion/base.py", line 630, in map_tensor_name
+    raise ValueError(f"Can not map tensor {name!r}")
+ValueError: Can not map tensor 'model.layers.0.mlp.switch_mlp.down_proj.weight'
+[12:53:14] gguf failed

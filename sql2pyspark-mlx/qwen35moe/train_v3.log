@@ -1,0 +1,968 @@
+start 2026-11-16 19:38:24 +0700
+[train_resumable] segment 1: iterations 1..4800 (qwen35moe/lora_v3.yaml)
+Loading configuration file qwen35moe/lora_v3.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from ./qwen35moe/adapters_v2/adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 4800
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:02<00:49,  2.08s/it]Calculating loss...:   8%|▊         | 2/25 [00:02<00:23,  1.04s/it]Calculating loss...:  12%|█▏        | 3/25 [00:02<00:15,  1.43it/s]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:18,  1.15it/s]Calculating loss...:  20%|██        | 5/25 [00:04<00:17,  1.15it/s]Calculating loss...:  24%|██▍       | 6/25 [00:06<00:21,  1.16s/it]Calculating loss...:  28%|██▊       | 7/25 [00:08<00:25,  1.43s/it]Calculating loss...:  32%|███▏      | 8/25 [00:09<00:21,  1.24s/it]Calculating loss...:  36%|███▌      | 9/25 [00:10<00:19,  1.25s/it]Calculating loss...:  40%|████      | 10/25 [00:11<00:17,  1.20s/it]Calculating loss...:  44%|████▍     | 11/25 [00:11<00:12,  1.09it/s]Calculating loss...:  48%|████▊     | 12/25 [00:12<00:09,  1.37it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:12<00:07,  1.63it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:14<00:09,  1.13it/s]Calculating loss...:  60%|██████    | 15/25 [00:14<00:08,  1.12it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:15<00:06,  1.36it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:17<00:08,  1.07s/it]Calculating loss...:  72%|███████▏  | 18/25 [00:18<00:07,  1.09s/it]Calculating loss...:  76%|███████▌  | 19/25 [00:19<00:05,  1.01it/s]Calculating loss...:  80%|████████  | 20/25 [00:19<00:04,  1.04it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:20<00:03,  1.28it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:21<00:02,  1.11it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:23<00:02,  1.16s/it]Calculating loss...:  96%|█████████▌| 24/25 [00:23<00:00,  1.12it/s]Calculating loss...: 100%|██████████| 25/25 [00:24<00:00,  1.03it/s]Calculating loss...: 100%|██████████| 25/25 [00:24<00:00,  1.01it/s]
+Iter 1: Val loss 0.007, Val took 24.674s
+Iter 50: Train loss 0.026, Learning Rate 3.730e-05, It/sec 0.180, Tokens/sec 66.892, Trained Tokens 18592, Peak mem 25.902 GB
+Iter 100: Train loss 0.078, Learning Rate 8.020e-05, It/sec 0.290, Tokens/sec 70.772, Trained Tokens 30779, Peak mem 25.902 GB
+Iter 100: Saved adapter weights to qwen35moe/adapters_v3/adapters.safetensors and qwen35moe/adapters_v3/0000100_adapters.safetensors.
+Iter 150: Train loss 0.157, Learning Rate 1.000e-04, It/sec 0.227, Tokens/sec 70.189, Trained Tokens 46219, Peak mem 25.902 GB
+Iter 200: Train loss 0.133, Learning Rate 9.995e-05, It/sec 0.322, Tokens/sec 73.177, Trained Tokens 57583, Peak mem 25.902 GB
+Iter 200: Saved adapter weights to qwen35moe/adapters_v3/adapters.safetensors and qwen35moe/adapters_v3/0000200_adapters.safetensors.
+Iter 250: Train loss 0.127, Learning Rate 9.985e-05, It/sec 0.219, Tokens/sec 68.043, Trained Tokens 73124, Peak mem 26.510 GB
+Iter 300: Train loss 0.129, Learning Rate 9.970e-05, It/sec 0.272, Tokens/sec 71.985, Trained Tokens 86372, Peak mem 26.510 GB
+Iter 300: Saved adapter weights to qwen35moe/adapters_v3/adapters.safetensors and qwen35moe/adapters_v3/0000300_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 300/4800 iterations saved
+[train_resumable] segment 2: iterations 301..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg2.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg2.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0000300_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 4500
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:01<00:24,  1.02s/it]Calculating loss...:   8%|▊         | 2/25 [00:01<00:13,  1.69it/s]Calculating loss...:  12%|█▏        | 3/25 [00:02<00:22,  1.01s/it]Calculating loss...:  16%|█▌        | 4/25 [00:04<00:23,  1.10s/it]Calculating loss...:  20%|██        | 5/25 [00:04<00:16,  1.18it/s]Calculating loss...:  24%|██▍       | 6/25 [00:05<00:19,  1.01s/it]Calculating loss...:  28%|██▊       | 7/25 [00:06<00:18,  1.02s/it]Calculating loss...:  32%|███▏      | 8/25 [00:08<00:18,  1.12s/it]Calculating loss...:  36%|███▌      | 9/25 [00:08<00:14,  1.14it/s]Calculating loss...:  40%|████      | 10/25 [00:09<00:12,  1.21it/s]Calculating loss...:  44%|████▍     | 11/25 [00:09<00:10,  1.40it/s]Calculating loss...:  48%|████▊     | 12/25 [00:10<00:08,  1.61it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:10<00:07,  1.54it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:11<00:06,  1.83it/s]Calculating loss...:  60%|██████    | 15/25 [00:12<00:08,  1.18it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:12<00:06,  1.47it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:13<00:04,  1.74it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:13<00:04,  1.66it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:14<00:03,  1.95it/s]Calculating loss...:  80%|████████  | 20/25 [00:15<00:02,  1.69it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:16<00:03,  1.07it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:16<00:02,  1.38it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:17<00:01,  1.62it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:17<00:00,  1.67it/s]Calculating loss...: 100%|██████████| 25/25 [00:19<00:00,  1.25it/s]Calculating loss...: 100%|██████████| 25/25 [00:19<00:00,  1.30it/s]
+Iter 1: Val loss 0.147, Val took 19.188s
+Iter 50: Train loss 0.216, Learning Rate 9.965e-05, It/sec 0.192, Tokens/sec 68.239, Trained Tokens 17752, Peak mem 25.960 GB
+Iter 100: Train loss 0.183, Learning Rate 9.957e-05, It/sec 0.216, Tokens/sec 70.009, Trained Tokens 33985, Peak mem 25.960 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg2/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg2/0000100_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 29, in inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/chunked_loss.py", line 23, in chunked_loss
+    h = lm.model(inputs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 273, in __call__
+    hidden_states = layer(hidden_states, mask=mask, cache=c)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 36, in checkpointed_fn
+    return mx.checkpoint(inner_fn)(model.trainable_parameters(), *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 235, in __call__
+    r = self.linear_attn(self.input_layernorm(x), mask, cache)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 183, in __call__
+    out, state = gated_delta_update(
+                 ~~~~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<8 lines>...
+        use_kernel=not self.training,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 86, in gated_delta_update
+    return chunk_gated_delta(q, k, v, log_g, beta, state)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 64, in chunk_gated_delta
+    w = _unit_lower_inv(lower + mx.eye(C))                           # (I + L)^-1
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 29, in _unit_lower_inv
+    return mx.ones_like(m)
+           ~~~~~~~~~~~~^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 400/4800 iterations saved
+[train_resumable] segment 3: iterations 401..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg3.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg3.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0000400_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 4400
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:01<00:29,  1.25s/it]Calculating loss...:   8%|▊         | 2/25 [00:01<00:15,  1.44it/s]Calculating loss...:  12%|█▏        | 3/25 [00:02<00:17,  1.24it/s]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:17,  1.20it/s]Calculating loss...:  20%|██        | 5/25 [00:03<00:14,  1.38it/s]Calculating loss...:  24%|██▍       | 6/25 [00:05<00:17,  1.08it/s]Calculating loss...:  28%|██▊       | 7/25 [00:05<00:14,  1.23it/s]Calculating loss...:  32%|███▏      | 8/25 [00:07<00:16,  1.03it/s]Calculating loss...:  36%|███▌      | 9/25 [00:07<00:13,  1.17it/s]Calculating loss...:  40%|████      | 10/25 [00:08<00:13,  1.08it/s]Calculating loss...:  44%|████▍     | 11/25 [00:10<00:14,  1.03s/it]Calculating loss...:  48%|████▊     | 12/25 [00:10<00:11,  1.12it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:10<00:08,  1.41it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:12<00:10,  1.01it/s]Calculating loss...:  60%|██████    | 15/25 [00:13<00:10,  1.09s/it]Calculating loss...:  64%|██████▍   | 16/25 [00:14<00:09,  1.00s/it]Calculating loss...:  68%|██████▊   | 17/25 [00:16<00:10,  1.28s/it]Calculating loss...:  72%|███████▏  | 18/25 [00:18<00:09,  1.32s/it]Calculating loss...:  76%|███████▌  | 19/25 [00:18<00:06,  1.01s/it]Calculating loss...:  80%|████████  | 20/25 [00:20<00:06,  1.27s/it]Calculating loss...:  84%|████████▍ | 21/25 [00:20<00:03,  1.02it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:20<00:02,  1.32it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:22<00:02,  1.14s/it]Calculating loss...:  96%|█████████▌| 24/25 [00:23<00:00,  1.13it/s]Calculating loss...: 100%|██████████| 25/25 [00:23<00:00,  1.13it/s]Calculating loss...: 100%|██████████| 25/25 [00:23<00:00,  1.04it/s]
+Iter 1: Val loss 0.219, Val took 23.970s
+Iter 50: Train loss 0.753, Learning Rate 9.919e-05, It/sec 0.234, Tokens/sec 69.640, Trained Tokens 14856, Peak mem 26.421 GB
+Iter 100: Train loss 0.378, Learning Rate 9.910e-05, It/sec 0.223, Tokens/sec 69.511, Trained Tokens 30451, Peak mem 26.421 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg3/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg3/0000100_adapters.safetensors.
+Iter 150: Train loss 0.264, Learning Rate 9.897e-05, It/sec 0.237, Tokens/sec 72.697, Trained Tokens 45776, Peak mem 26.421 GB
+Iter 200: Train loss 0.194, Learning Rate 9.877e-05, It/sec 0.247, Tokens/sec 73.285, Trained Tokens 60586, Peak mem 26.421 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg3/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg3/0000200_adapters.safetensors.
+Iter 250: Train loss 0.142, Learning Rate 9.853e-05, It/sec 0.215, Tokens/sec 74.730, Trained Tokens 77925, Peak mem 26.421 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 259, in step
+    optimizer.update(model, grad)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/optimizers/optimizers.py", line 29, in update
+    model.update(self.apply_gradients(gradients, model))
+                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/optimizers/optimizers.py", line 109, in apply_gradients
+    return tree_map(self.apply_single, gradients, parameters, self.state)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 52, in tree_map
+    return TreeType(*subtrees) if hasattr(tree, "_fields") else TreeType(subtrees)
+                                                                ~~~~~~~~^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 49, in <genexpr>
+    tree_map(fn, child, *(r[i] for r in rest), is_leaf=is_leaf)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 59, in tree_map
+    return fn(tree, *rest)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/optimizers/optimizers.py", line 596, in apply_single
+    return super().apply_single(
+           ~~~~~~~~~~~~~~~~~~~~^
+        gradient, parameter * (1 - lr * self.weight_decay), state
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/optimizers/optimizers.py", line 533, in apply_single
+    m = b1 * m + (1 - b1) * gradient
+                 ~~~~~~~~~^~~~~~~~~~
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 600/4800 iterations saved
+[train_resumable] segment 4: iterations 601..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg4.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg4.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0000600_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 4200
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:00<00:19,  1.22it/s]Calculating loss...:   8%|▊         | 2/25 [00:02<00:33,  1.47s/it]Calculating loss...:  12%|█▏        | 3/25 [00:03<00:21,  1.04it/s]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:14,  1.44it/s]Calculating loss...:  20%|██        | 5/25 [00:04<00:17,  1.15it/s]Calculating loss...:  24%|██▍       | 6/25 [00:05<00:15,  1.21it/s]Calculating loss...:  28%|██▊       | 7/25 [00:05<00:11,  1.54it/s]Calculating loss...:  32%|███▏      | 8/25 [00:06<00:13,  1.25it/s]Calculating loss...:  36%|███▌      | 9/25 [00:06<00:10,  1.57it/s]Calculating loss...:  40%|████      | 10/25 [00:08<00:12,  1.25it/s]Calculating loss...:  44%|████▍     | 11/25 [00:08<00:10,  1.30it/s]Calculating loss...:  48%|████▊     | 12/25 [00:10<00:14,  1.15s/it]Calculating loss...:  52%|█████▏    | 13/25 [00:11<00:12,  1.05s/it]Calculating loss...:  56%|█████▌    | 14/25 [00:11<00:08,  1.24it/s]Calculating loss...:  60%|██████    | 15/25 [00:12<00:06,  1.54it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:13<00:07,  1.24it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:13<00:05,  1.50it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:14<00:05,  1.19it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:15<00:05,  1.15it/s]Calculating loss...:  80%|████████  | 20/25 [00:16<00:03,  1.43it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:16<00:02,  1.70it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:17<00:02,  1.19it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:18<00:01,  1.13it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:19<00:00,  1.08it/s]Calculating loss...: 100%|██████████| 25/25 [00:20<00:00,  1.35it/s]Calculating loss...: 100%|██████████| 25/25 [00:20<00:00,  1.23it/s]
+Iter 1: Val loss 0.169, Val took 20.297s
+Iter 50: Train loss 1.723, Learning Rate 9.766e-05, It/sec 0.203, Tokens/sec 68.912, Trained Tokens 17009, Peak mem 25.627 GB
+Iter 100: Train loss 1.440, Learning Rate 9.757e-05, It/sec 0.213, Tokens/sec 73.929, Trained Tokens 34354, Peak mem 25.627 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg4/0000100_adapters.safetensors.
+Iter 150: Train loss 0.496, Learning Rate 9.743e-05, It/sec 0.250, Tokens/sec 71.412, Trained Tokens 48614, Peak mem 26.150 GB
+Iter 200: Train loss 0.522, Learning Rate 9.721e-05, It/sec 0.235, Tokens/sec 72.927, Trained Tokens 64108, Peak mem 26.211 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg4/0000200_adapters.safetensors.
+Iter 250: Train loss 0.340, Learning Rate 9.696e-05, It/sec 0.248, Tokens/sec 73.123, Trained Tokens 78839, Peak mem 26.211 GB
+Iter 300: Train loss 0.266, Learning Rate 9.661e-05, It/sec 0.286, Tokens/sec 73.098, Trained Tokens 91623, Peak mem 26.350 GB
+Iter 300: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg4/0000300_adapters.safetensors.
+Iter 350: Train loss 0.180, Learning Rate 9.624e-05, It/sec 0.177, Tokens/sec 70.791, Trained Tokens 111655, Peak mem 26.350 GB
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:01<00:44,  1.84s/it]Calculating loss...:   8%|▊         | 2/25 [00:02<00:30,  1.34s/it]Calculating loss...:  12%|█▏        | 3/25 [00:03<00:26,  1.19s/it]Calculating loss...:  16%|█▌        | 4/25 [00:04<00:19,  1.08it/s]Calculating loss...:  20%|██        | 5/25 [00:04<00:14,  1.39it/s]Calculating loss...:  24%|██▍       | 6/25 [00:05<00:15,  1.20it/s]Calculating loss...:  28%|██▊       | 7/25 [00:07<00:18,  1.01s/it]Calculating loss...:  32%|███▏      | 8/25 [00:07<00:15,  1.08it/s]Calculating loss...:  36%|███▌      | 9/25 [00:08<00:13,  1.16it/s]Calculating loss...:  40%|████      | 10/25 [00:09<00:14,  1.05it/s]Calculating loss...:  44%|████▍     | 11/25 [00:10<00:11,  1.22it/s]Calculating loss...:  48%|████▊     | 12/25 [00:10<00:09,  1.42it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:11<00:09,  1.24it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:12<00:07,  1.52it/s]Calculating loss...:  60%|██████    | 15/25 [00:13<00:07,  1.26it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:13<00:06,  1.50it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:14<00:06,  1.28it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:15<00:05,  1.29it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:16<00:04,  1.26it/s]Calculating loss...:  80%|████████  | 20/25 [00:16<00:03,  1.47it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:17<00:02,  1.65it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:17<00:01,  1.82it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:18<00:01,  1.50it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:20<00:01,  1.01s/it]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.10s/it]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.16it/s]
+Iter 400: Val loss 0.159, Val took 21.562s
+Iter 400: Train loss 0.146, Learning Rate 9.577e-05, It/sec 0.272, Tokens/sec 74.762, Trained Tokens 125386, Peak mem 26.350 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg4/0000400_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 29, in inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/chunked_loss.py", line 23, in chunked_loss
+    h = lm.model(inputs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 273, in __call__
+    hidden_states = layer(hidden_states, mask=mask, cache=c)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 36, in checkpointed_fn
+    return mx.checkpoint(inner_fn)(model.trainable_parameters(), *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 239, in __call__
+    out = h + self.mlp(self.post_attention_layernorm(h))
+              ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 36, in _moe_call
+    return y + mx.sigmoid(self.shared_expert_gate(x)) * self.shared_expert(x)
+                                                        ~~~~~~~~~~~~~~~~~~^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_next.py", line 169, in __call__
+    return self.down_proj(swiglu(self.gate_proj(x), self.up_proj(x)))
+                                 ~~~~~~~~~~~~~~^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/lora.py", line 97, in __call__
+    z = (self.dropout(x) @ self.lora_a) @ self.lora_b
+         ~~~~~~~~~~~~^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/layers/dropout.py", line 35, in __call__
+    return (mask * x) * (1 / self._p_1)
+           ~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 1000/4800 iterations saved
+[train_resumable] segment 5: iterations 1001..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg5.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg5.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0001000_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 3800
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:00<00:08,  2.75it/s]Calculating loss...:   8%|▊         | 2/25 [00:01<00:18,  1.25it/s]Calculating loss...:  12%|█▏        | 3/25 [00:01<00:13,  1.69it/s]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:23,  1.14s/it]Calculating loss...:  20%|██        | 5/25 [00:04<00:19,  1.05it/s]Calculating loss...:  24%|██▍       | 6/25 [00:05<00:17,  1.07it/s]Calculating loss...:  28%|██▊       | 7/25 [00:07<00:22,  1.23s/it]Calculating loss...:  32%|███▏      | 8/25 [00:07<00:17,  1.03s/it]Calculating loss...:  36%|███▌      | 9/25 [00:08<00:13,  1.17it/s]Calculating loss...:  40%|████      | 10/25 [00:09<00:15,  1.03s/it]Calculating loss...:  44%|████▍     | 11/25 [00:10<00:15,  1.08s/it]Calculating loss...:  48%|████▊     | 12/25 [00:11<00:11,  1.15it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:11<00:09,  1.27it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:12<00:07,  1.50it/s]Calculating loss...:  60%|██████    | 15/25 [00:13<00:09,  1.07it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:14<00:08,  1.04it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:15<00:06,  1.31it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:16<00:06,  1.04it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:17<00:06,  1.10s/it]Calculating loss...:  80%|████████  | 20/25 [00:18<00:04,  1.17it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:18<00:02,  1.46it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:19<00:02,  1.24it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:20<00:01,  1.30it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:20<00:00,  1.57it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.26it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.15it/s]
+Iter 1: Val loss 0.145, Val took 21.799s
+Iter 50: Train loss 0.556, Learning Rate 9.235e-05, It/sec 0.236, Tokens/sec 70.499, Trained Tokens 14942, Peak mem 25.657 GB
+Iter 100: Train loss 0.398, Learning Rate 9.224e-05, It/sec 0.201, Tokens/sec 68.061, Trained Tokens 31863, Peak mem 25.974 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg5/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg5/0000100_adapters.safetensors.
+Iter 150: Train loss 5.820, Learning Rate 9.208e-05, It/sec 0.269, Tokens/sec 72.116, Trained Tokens 45279, Peak mem 25.974 GB
+Iter 200: Train loss 5.673, Learning Rate 9.183e-05, It/sec 0.286, Tokens/sec 78.532, Trained Tokens 59027, Peak mem 25.974 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg5/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg5/0000200_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 29, in inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/chunked_loss.py", line 23, in chunked_loss
+    h = lm.model(inputs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 273, in __call__
+    hidden_states = layer(hidden_states, mask=mask, cache=c)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 36, in checkpointed_fn
+    return mx.checkpoint(inner_fn)(model.trainable_parameters(), *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 235, in __call__
+    r = self.linear_attn(self.input_layernorm(x), mask, cache)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 183, in __call__
+    out, state = gated_delta_update(
+                 ~~~~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<8 lines>...
+        use_kernel=not self.training,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 86, in gated_delta_update
+    return chunk_gated_delta(q, k, v, log_g, beta, state)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 64, in chunk_gated_delta
+    w = _unit_lower_inv(lower + mx.eye(C))                           # (I + L)^-1
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 34, in _unit_lower_inv
+    top = mx.concatenate([a_inv, mx.zeros_like(m[..., :h, h:])], axis=-1)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 1200/4800 iterations saved
+[train_resumable] segment 6: iterations 1201..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg6.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg6.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0001200_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 3600
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:01<00:24,  1.01s/it]Calculating loss...:   8%|▊         | 2/25 [00:01<00:18,  1.26it/s]Calculating loss...:  12%|█▏        | 3/25 [00:02<00:13,  1.68it/s]Calculating loss...:  16%|█▌        | 4/25 [00:02<00:10,  2.02it/s]Calculating loss...:  20%|██        | 5/25 [00:03<00:13,  1.43it/s]Calculating loss...:  24%|██▍       | 6/25 [00:03<00:10,  1.74it/s]Calculating loss...:  28%|██▊       | 7/25 [00:04<00:09,  1.99it/s]Calculating loss...:  32%|███▏      | 8/25 [00:05<00:14,  1.21it/s]Calculating loss...:  36%|███▌      | 9/25 [00:06<00:14,  1.11it/s]Calculating loss...:  40%|████      | 10/25 [00:07<00:12,  1.18it/s]Calculating loss...:  44%|████▍     | 11/25 [00:08<00:10,  1.28it/s]Calculating loss...:  48%|████▊     | 12/25 [00:08<00:10,  1.29it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:09<00:07,  1.56it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:09<00:07,  1.42it/s]Calculating loss...:  60%|██████    | 15/25 [00:10<00:07,  1.39it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:11<00:05,  1.57it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:11<00:04,  1.85it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:13<00:06,  1.14it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:14<00:05,  1.09it/s]Calculating loss...:  80%|████████  | 20/25 [00:15<00:05,  1.05s/it]Calculating loss...:  84%|████████▍ | 21/25 [00:15<00:03,  1.22it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:16<00:02,  1.16it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:17<00:01,  1.38it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:17<00:00,  1.63it/s]Calculating loss...: 100%|██████████| 25/25 [00:18<00:00,  1.42it/s]Calculating loss...: 100%|██████████| 25/25 [00:18<00:00,  1.35it/s]
+Iter 1: Val loss 5.804, Val took 18.466s
+Iter 50: Train loss 6.434, Learning Rate 8.865e-05, It/sec 0.229, Tokens/sec 72.914, Trained Tokens 15932, Peak mem 25.853 GB
+Iter 100: Train loss 5.700, Learning Rate 8.854e-05, It/sec 0.231, Tokens/sec 74.350, Trained Tokens 32014, Peak mem 26.061 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg6/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg6/0000100_adapters.safetensors.
+Iter 150: Train loss 4.839, Learning Rate 8.837e-05, It/sec 0.341, Tokens/sec 78.179, Trained Tokens 43494, Peak mem 26.061 GB
+Iter 200: Train loss 4.554, Learning Rate 8.811e-05, It/sec 0.215, Tokens/sec 74.358, Trained Tokens 60762, Peak mem 26.061 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg6/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg6/0000200_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 235, in __call__
+    r = self.linear_attn(self.input_layernorm(x), mask, cache)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 183, in __call__
+    out, state = gated_delta_update(
+                 ~~~~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<8 lines>...
+        use_kernel=not self.training,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 86, in gated_delta_update
+    return chunk_gated_delta(q, k, v, log_g, beta, state)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 64, in chunk_gated_delta
+    w = _unit_lower_inv(lower + mx.eye(C))                           # (I + L)^-1
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 29, in _unit_lower_inv
+    return mx.ones_like(m)
+           ~~~~~~~~~~~~^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 1400/4800 iterations saved
+[train_resumable] segment 7: iterations 1401..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg7.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg7.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0001400_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 3400
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:01<00:45,  1.88s/it]Calculating loss...:   8%|▊         | 2/25 [00:02<00:21,  1.05it/s]Calculating loss...:  12%|█▏        | 3/25 [00:02<00:17,  1.25it/s]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:17,  1.23it/s]Calculating loss...:  20%|██        | 5/25 [00:03<00:12,  1.60it/s]Calculating loss...:  24%|██▍       | 6/25 [00:05<00:17,  1.09it/s]Calculating loss...:  28%|██▊       | 7/25 [00:05<00:13,  1.32it/s]Calculating loss...:  32%|███▏      | 8/25 [00:07<00:16,  1.01it/s]Calculating loss...:  36%|███▌      | 9/25 [00:08<00:18,  1.16s/it]Calculating loss...:  40%|████      | 10/25 [00:10<00:19,  1.30s/it]Calculating loss...:  44%|████▍     | 11/25 [00:11<00:18,  1.29s/it]Calculating loss...:  48%|████▊     | 12/25 [00:12<00:13,  1.02s/it]Calculating loss...:  52%|█████▏    | 13/25 [00:12<00:09,  1.22it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:13<00:09,  1.19it/s]Calculating loss...:  60%|██████    | 15/25 [00:13<00:06,  1.56it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:13<00:04,  1.82it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:15<00:06,  1.26it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:16<00:05,  1.23it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:16<00:04,  1.25it/s]Calculating loss...:  80%|████████  | 20/25 [00:17<00:03,  1.30it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:17<00:02,  1.58it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:19<00:02,  1.21it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:20<00:01,  1.13it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:20<00:00,  1.45it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.47it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.18it/s]
+Iter 1: Val loss 5.036, Val took 21.121s
+Iter 50: Train loss 5.463, Learning Rate 8.435e-05, It/sec 0.335, Tokens/sec 76.298, Trained Tokens 11371, Peak mem 22.876 GB
+Iter 100: Train loss 4.128, Learning Rate 8.424e-05, It/sec 0.284, Tokens/sec 73.750, Trained Tokens 24355, Peak mem 26.547 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg7/0000100_adapters.safetensors.
+Iter 150: Train loss 3.831, Learning Rate 8.406e-05, It/sec 0.198, Tokens/sec 70.373, Trained Tokens 42144, Peak mem 26.547 GB
+Iter 200: Train loss 3.490, Learning Rate 8.378e-05, It/sec 0.292, Tokens/sec 75.872, Trained Tokens 55144, Peak mem 26.547 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg7/0000200_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 1600/4800 iterations saved
+[train_resumable] segment 8: iterations 1601..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg8.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg8.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0001600_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 3200
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:00<00:16,  1.42it/s]Calculating loss...:   8%|▊         | 2/25 [00:02<00:31,  1.38s/it]Calculating loss...:  12%|█▏        | 3/25 [00:02<00:19,  1.12it/s]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:13,  1.53it/s]Calculating loss...:  20%|██        | 5/25 [00:04<00:16,  1.22it/s]Calculating loss...:  24%|██▍       | 6/25 [00:04<00:12,  1.51it/s]Calculating loss...:  28%|██▊       | 7/25 [00:05<00:15,  1.16it/s]Calculating loss...:  32%|███▏      | 8/25 [00:07<00:19,  1.12s/it]Calculating loss...:  36%|███▌      | 9/25 [00:08<00:15,  1.03it/s]Calculating loss...:  40%|████      | 10/25 [00:08<00:13,  1.15it/s]Calculating loss...:  44%|████▍     | 11/25 [00:09<00:12,  1.09it/s]Calculating loss...:  48%|████▊     | 12/25 [00:10<00:10,  1.25it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:11<00:12,  1.04s/it]Calculating loss...:  56%|█████▌    | 14/25 [00:13<00:11,  1.07s/it]Calculating loss...:  60%|██████    | 15/25 [00:13<00:08,  1.19it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:14<00:07,  1.19it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:16<00:09,  1.16s/it]Calculating loss...:  72%|███████▏  | 18/25 [00:16<00:06,  1.15it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:17<00:05,  1.00it/s]Calculating loss...:  80%|████████  | 20/25 [00:17<00:03,  1.31it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:18<00:03,  1.31it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:20<00:02,  1.01it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:22<00:02,  1.31s/it]Calculating loss...:  96%|█████████▌| 24/25 [00:23<00:01,  1.27s/it]Calculating loss...: 100%|██████████| 25/25 [00:24<00:00,  1.17s/it]Calculating loss...: 100%|██████████| 25/25 [00:24<00:00,  1.03it/s]
+Iter 1: Val loss 3.939, Val took 24.368s
+Iter 50: Train loss 3.710, Learning Rate 7.953e-05, It/sec 0.229, Tokens/sec 71.830, Trained Tokens 15686, Peak mem 26.270 GB
+Iter 100: Train loss 3.304, Learning Rate 7.941e-05, It/sec 0.236, Tokens/sec 73.375, Trained Tokens 31243, Peak mem 26.270 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg8/0000100_adapters.safetensors.
+Iter 150: Train loss 2.997, Learning Rate 7.921e-05, It/sec 0.189, Tokens/sec 70.814, Trained Tokens 49962, Peak mem 26.374 GB
+Iter 200: Train loss 2.841, Learning Rate 7.892e-05, It/sec 0.253, Tokens/sec 72.504, Trained Tokens 64289, Peak mem 26.374 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg8/0000200_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 235, in __call__
+    r = self.linear_attn(self.input_layernorm(x), mask, cache)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 183, in __call__
+    out, state = gated_delta_update(
+                 ~~~~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<8 lines>...
+        use_kernel=not self.training,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 86, in gated_delta_update
+    return chunk_gated_delta(q, k, v, log_g, beta, state)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 64, in chunk_gated_delta
+    w = _unit_lower_inv(lower + mx.eye(C))                           # (I + L)^-1
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 29, in _unit_lower_inv
+    return mx.ones_like(m)
+           ~~~~~~~~~~~~^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 1800/4800 iterations saved
+[train_resumable] segment 9: iterations 1801..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg9.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg9.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0001800_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 3000
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:00<00:07,  3.10it/s]Calculating loss...:   8%|▊         | 2/25 [00:01<00:21,  1.07it/s]Calculating loss...:  12%|█▏        | 3/25 [00:02<00:23,  1.06s/it]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:20,  1.03it/s]Calculating loss...:  20%|██        | 5/25 [00:05<00:23,  1.18s/it]Calculating loss...:  24%|██▍       | 6/25 [00:05<00:18,  1.04it/s]Calculating loss...:  28%|██▊       | 7/25 [00:07<00:20,  1.16s/it]Calculating loss...:  32%|███▏      | 8/25 [00:09<00:22,  1.31s/it]Calculating loss...:  36%|███▌      | 9/25 [00:09<00:15,  1.03it/s]Calculating loss...:  40%|████      | 10/25 [00:09<00:11,  1.25it/s]Calculating loss...:  44%|████▍     | 11/25 [00:10<00:13,  1.07it/s]Calculating loss...:  48%|████▊     | 12/25 [00:12<00:14,  1.10s/it]Calculating loss...:  52%|█████▏    | 13/25 [00:12<00:10,  1.16it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:13<00:08,  1.27it/s]Calculating loss...:  60%|██████    | 15/25 [00:14<00:09,  1.05it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:16<00:09,  1.09s/it]Calculating loss...:  68%|██████▊   | 17/25 [00:16<00:07,  1.10it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:17<00:06,  1.16it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:17<00:04,  1.48it/s]Calculating loss...:  80%|████████  | 20/25 [00:17<00:02,  1.73it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:18<00:02,  1.95it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:19<00:02,  1.33it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:19<00:01,  1.66it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:20<00:00,  2.08it/s]Calculating loss...: 100%|██████████| 25/25 [00:20<00:00,  1.64it/s]Calculating loss...: 100%|██████████| 25/25 [00:20<00:00,  1.19it/s]
+Iter 1: Val loss 3.363, Val took 20.933s
+Iter 50: Train loss 2.942, Learning Rate 7.426e-05, It/sec 0.222, Tokens/sec 72.785, Trained Tokens 16392, Peak mem 25.814 GB
+Iter 100: Train loss 2.851, Learning Rate 7.413e-05, It/sec 0.274, Tokens/sec 73.960, Trained Tokens 29907, Peak mem 26.203 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg9/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg9/0000100_adapters.safetensors.
+Iter 150: Train loss 2.734, Learning Rate 7.393e-05, It/sec 0.195, Tokens/sec 70.851, Trained Tokens 48061, Peak mem 26.203 GB
+Iter 200: Train loss 2.420, Learning Rate 7.362e-05, It/sec 0.259, Tokens/sec 71.399, Trained Tokens 61857, Peak mem 26.203 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg9/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg9/0000200_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 2000/4800 iterations saved
+[train_resumable] segment 10: iterations 2001..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg10.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg10.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0002000_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 2800
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:00<00:08,  2.80it/s]Calculating loss...:   8%|▊         | 2/25 [00:01<00:24,  1.07s/it]Calculating loss...:  12%|█▏        | 3/25 [00:03<00:24,  1.11s/it]Calculating loss...:  16%|█▌        | 4/25 [00:05<00:30,  1.46s/it]Calculating loss...:  20%|██        | 5/25 [00:05<00:20,  1.05s/it]Calculating loss...:  24%|██▍       | 6/25 [00:06<00:17,  1.06it/s]Calculating loss...:  28%|██▊       | 7/25 [00:07<00:20,  1.12s/it]Calculating loss...:  32%|███▏      | 8/25 [00:07<00:14,  1.16it/s]Calculating loss...:  36%|███▌      | 9/25 [00:08<00:14,  1.13it/s]Calculating loss...:  40%|████      | 10/25 [00:09<00:13,  1.08it/s]Calculating loss...:  44%|████▍     | 11/25 [00:10<00:12,  1.14it/s]Calculating loss...:  48%|████▊     | 12/25 [00:11<00:11,  1.16it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:12<00:09,  1.21it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:12<00:07,  1.40it/s]Calculating loss...:  60%|██████    | 15/25 [00:13<00:07,  1.32it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:14<00:07,  1.14it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:16<00:09,  1.21s/it]Calculating loss...:  72%|███████▏  | 18/25 [00:18<00:08,  1.25s/it]Calculating loss...:  76%|███████▌  | 19/25 [00:19<00:08,  1.40s/it]Calculating loss...:  80%|████████  | 20/25 [00:20<00:05,  1.06s/it]Calculating loss...:  84%|████████▍ | 21/25 [00:21<00:04,  1.06s/it]Calculating loss...:  88%|████████▊ | 22/25 [00:22<00:03,  1.18s/it]Calculating loss...:  92%|█████████▏| 23/25 [00:22<00:01,  1.07it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:23<00:00,  1.30it/s]Calculating loss...: 100%|██████████| 25/25 [00:23<00:00,  1.54it/s]Calculating loss...: 100%|██████████| 25/25 [00:23<00:00,  1.06it/s]
+Iter 1: Val loss 3.212, Val took 23.707s
+Iter 50: Train loss 2.529, Learning Rate 6.864e-05, It/sec 0.223, Tokens/sec 70.705, Trained Tokens 15871, Peak mem 25.435 GB
+Iter 100: Train loss 2.502, Learning Rate 6.851e-05, It/sec 0.268, Tokens/sec 72.244, Trained Tokens 29361, Peak mem 25.435 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg10/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg10/0000100_adapters.safetensors.
+Iter 150: Train loss 2.273, Learning Rate 6.829e-05, It/sec 0.248, Tokens/sec 70.140, Trained Tokens 43482, Peak mem 26.076 GB
+Iter 200: Train loss 2.115, Learning Rate 6.797e-05, It/sec 0.226, Tokens/sec 71.853, Trained Tokens 59378, Peak mem 26.076 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg10/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg10/0000200_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 235, in __call__
+    r = self.linear_attn(self.input_layernorm(x), mask, cache)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 183, in __call__
+    out, state = gated_delta_update(
+                 ~~~~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<8 lines>...
+        use_kernel=not self.training,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 86, in gated_delta_update
+    return chunk_gated_delta(q, k, v, log_g, beta, state)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 72, in chunk_gated_delta
+    attn = mx.where(tril, (qi @ ki.swapaxes(-1, -2)) * decay[:, :, i], 0.0)
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 2200/4800 iterations saved
+[train_resumable] segment 11: iterations 2201..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg11.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg11.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0002200_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 2600
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:01<00:40,  1.68s/it]Calculating loss...:   8%|▊         | 2/25 [00:03<00:39,  1.70s/it]Calculating loss...:  12%|█▏        | 3/25 [00:04<00:27,  1.23s/it]Calculating loss...:  16%|█▌        | 4/25 [00:04<00:19,  1.09it/s]Calculating loss...:  20%|██        | 5/25 [00:05<00:20,  1.01s/it]Calculating loss...:  24%|██▍       | 6/25 [00:06<00:18,  1.01it/s]Calculating loss...:  28%|██▊       | 7/25 [00:06<00:13,  1.30it/s]Calculating loss...:  32%|███▏      | 8/25 [00:07<00:12,  1.33it/s]Calculating loss...:  36%|███▌      | 9/25 [00:08<00:12,  1.27it/s]Calculating loss...:  40%|████      | 10/25 [00:08<00:09,  1.63it/s]Calculating loss...:  44%|████▍     | 11/25 [00:09<00:07,  1.97it/s]Calculating loss...:  48%|████▊     | 12/25 [00:09<00:06,  2.16it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:11<00:10,  1.10it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:12<00:12,  1.10s/it]Calculating loss...:  60%|██████    | 15/25 [00:14<00:13,  1.32s/it]Calculating loss...:  64%|██████▍   | 16/25 [00:15<00:10,  1.14s/it]Calculating loss...:  68%|██████▊   | 17/25 [00:15<00:07,  1.05it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:17<00:07,  1.07s/it]Calculating loss...:  76%|███████▌  | 19/25 [00:18<00:06,  1.06s/it]Calculating loss...:  80%|████████  | 20/25 [00:18<00:04,  1.10it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:19<00:03,  1.12it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:19<00:02,  1.42it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:21<00:01,  1.02it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:22<00:00,  1.11it/s]Calculating loss...: 100%|██████████| 25/25 [00:23<00:00,  1.05it/s]Calculating loss...: 100%|██████████| 25/25 [00:23<00:00,  1.07it/s]
+Iter 1: Val loss 3.040, Val took 23.402s
+Iter 50: Train loss 2.329, Learning Rate 6.278e-05, It/sec 0.308, Tokens/sec 72.836, Trained Tokens 11819, Peak mem 24.604 GB
+Iter 100: Train loss 2.320, Learning Rate 6.264e-05, It/sec 0.208, Tokens/sec 72.744, Trained Tokens 29303, Peak mem 26.416 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg11/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg11/0000100_adapters.safetensors.
+Iter 150: Train loss 2.298, Learning Rate 6.242e-05, It/sec 0.193, Tokens/sec 68.497, Trained Tokens 47061, Peak mem 26.416 GB
+Iter 200: Train loss 2.144, Learning Rate 6.208e-05, It/sec 0.261, Tokens/sec 71.825, Trained Tokens 60805, Peak mem 26.416 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg11/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg11/0000200_adapters.safetensors.
+Iter 250: Train loss 2.081, Learning Rate 6.167e-05, It/sec 0.292, Tokens/sec 74.511, Trained Tokens 73554, Peak mem 26.416 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 2400/4800 iterations saved
+[train_resumable] segment 12: iterations 2401..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg12.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg12.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0002400_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 2400
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:01<00:45,  1.88s/it]Calculating loss...:   8%|▊         | 2/25 [00:02<00:28,  1.25s/it]Calculating loss...:  12%|█▏        | 3/25 [00:04<00:28,  1.30s/it]Calculating loss...:  16%|█▌        | 4/25 [00:05<00:28,  1.37s/it]Calculating loss...:  20%|██        | 5/25 [00:07<00:29,  1.48s/it]Calculating loss...:  24%|██▍       | 6/25 [00:07<00:22,  1.20s/it]Calculating loss...:  28%|██▊       | 7/25 [00:08<00:20,  1.16s/it]Calculating loss...:  32%|███▏      | 8/25 [00:09<00:15,  1.09it/s]Calculating loss...:  36%|███▌      | 9/25 [00:09<00:13,  1.20it/s]Calculating loss...:  40%|████      | 10/25 [00:10<00:11,  1.25it/s]Calculating loss...:  44%|████▍     | 11/25 [00:12<00:15,  1.08s/it]Calculating loss...:  48%|████▊     | 12/25 [00:12<00:11,  1.15it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:13<00:10,  1.15it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:14<00:07,  1.39it/s]Calculating loss...:  60%|██████    | 15/25 [00:14<00:07,  1.42it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:15<00:07,  1.21it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:16<00:05,  1.52it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:17<00:05,  1.36it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:17<00:04,  1.38it/s]Calculating loss...:  80%|████████  | 20/25 [00:18<00:03,  1.47it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:18<00:02,  1.47it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:19<00:01,  1.86it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:19<00:01,  1.98it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:20<00:00,  1.32it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.24it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.14it/s]
+Iter 1: Val loss 2.728, Val took 21.874s
+Iter 50: Train loss 2.148, Learning Rate 5.677e-05, It/sec 0.249, Tokens/sec 70.499, Trained Tokens 14130, Peak mem 25.615 GB
+Iter 100: Train loss 2.080, Learning Rate 5.663e-05, It/sec 0.219, Tokens/sec 71.328, Trained Tokens 30424, Peak mem 25.615 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg12/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg12/0000100_adapters.safetensors.
+Iter 150: Train loss 2.037, Learning Rate 5.640e-05, It/sec 0.263, Tokens/sec 73.255, Trained Tokens 44335, Peak mem 25.615 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 2500/4800 iterations saved
+[train_resumable] segment 13: iterations 2501..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg13.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg13.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0002500_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 2300
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:01<00:41,  1.73s/it]Calculating loss...:   8%|▊         | 2/25 [00:01<00:19,  1.16it/s]Calculating loss...:  12%|█▏        | 3/25 [00:02<00:14,  1.56it/s]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:17,  1.20it/s]Calculating loss...:  20%|██        | 5/25 [00:04<00:15,  1.30it/s]Calculating loss...:  24%|██▍       | 6/25 [00:05<00:20,  1.09s/it]Calculating loss...:  28%|██▊       | 7/25 [00:06<00:16,  1.12it/s]Calculating loss...:  32%|███▏      | 8/25 [00:07<00:17,  1.06s/it]Calculating loss...:  36%|███▌      | 9/25 [00:08<00:17,  1.09s/it]Calculating loss...:  40%|████      | 10/25 [00:10<00:16,  1.12s/it]Calculating loss...:  44%|████▍     | 11/25 [00:10<00:11,  1.18it/s]Calculating loss...:  48%|████▊     | 12/25 [00:10<00:08,  1.46it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:11<00:07,  1.54it/s]Calculating loss...:  56%|█████▌    | 14/25 [00:11<00:05,  1.88it/s]Calculating loss...:  60%|██████    | 15/25 [00:12<00:06,  1.54it/s]Calculating loss...:  64%|██████▍   | 16/25 [00:14<00:08,  1.06it/s]Calculating loss...:  68%|██████▊   | 17/25 [00:14<00:06,  1.29it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:14<00:04,  1.41it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:16<00:06,  1.01s/it]Calculating loss...:  80%|████████  | 20/25 [00:18<00:06,  1.26s/it]Calculating loss...:  84%|████████▍ | 21/25 [00:18<00:03,  1.02it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:19<00:02,  1.05it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:20<00:01,  1.21it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:20<00:00,  1.47it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.30it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.16it/s]
+Iter 1: Val loss 2.736, Val took 21.600s
+Iter 50: Train loss 2.123, Learning Rate 5.375e-05, It/sec 0.270, Tokens/sec 69.177, Trained Tokens 12823, Peak mem 25.421 GB
+Iter 100: Train loss 2.251, Learning Rate 5.360e-05, It/sec 0.264, Tokens/sec 72.944, Trained Tokens 26626, Peak mem 25.421 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg13/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg13/0000100_adapters.safetensors.
+Iter 150: Train loss 2.040, Learning Rate 5.337e-05, It/sec 0.256, Tokens/sec 74.286, Trained Tokens 41134, Peak mem 25.643 GB
+Iter 200: Train loss 1.813, Learning Rate 5.301e-05, It/sec 0.380, Tokens/sec 76.541, Trained Tokens 51200, Peak mem 25.643 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg13/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg13/0000200_adapters.safetensors.
+Iter 250: Train loss 1.879, Learning Rate 5.259e-05, It/sec 0.242, Tokens/sec 71.280, Trained Tokens 65915, Peak mem 25.643 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 2700/4800 iterations saved
+[train_resumable] segment 14: iterations 2701..4800 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg14.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg14.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35moe/adapters_v3/0002700_adapters.safetensors
+Trainable parameters: 0.061% (21.166M/34660.609M)
+Starting training..., iters: 2100
+Calculating loss...:   0%|          | 0/25 [00:00<?, ?it/s]Calculating loss...:   4%|▍         | 1/25 [00:00<00:23,  1.02it/s]Calculating loss...:   8%|▊         | 2/25 [00:01<00:18,  1.23it/s]Calculating loss...:  12%|█▏        | 3/25 [00:03<00:23,  1.06s/it]Calculating loss...:  16%|█▌        | 4/25 [00:03<00:19,  1.07it/s]Calculating loss...:  20%|██        | 5/25 [00:04<00:17,  1.14it/s]Calculating loss...:  24%|██▍       | 6/25 [00:04<00:13,  1.46it/s]Calculating loss...:  28%|██▊       | 7/25 [00:05<00:14,  1.24it/s]Calculating loss...:  32%|███▏      | 8/25 [00:06<00:10,  1.57it/s]Calculating loss...:  36%|███▌      | 9/25 [00:07<00:15,  1.06it/s]Calculating loss...:  40%|████      | 10/25 [00:08<00:15,  1.01s/it]Calculating loss...:  44%|████▍     | 11/25 [00:10<00:16,  1.19s/it]Calculating loss...:  48%|████▊     | 12/25 [00:10<00:11,  1.10it/s]Calculating loss...:  52%|█████▏    | 13/25 [00:12<00:12,  1.04s/it]Calculating loss...:  56%|█████▌    | 14/25 [00:13<00:12,  1.13s/it]Calculating loss...:  60%|██████    | 15/25 [00:14<00:11,  1.10s/it]Calculating loss...:  64%|██████▍   | 16/25 [00:15<00:09,  1.07s/it]Calculating loss...:  68%|██████▊   | 17/25 [00:16<00:07,  1.10it/s]Calculating loss...:  72%|███████▏  | 18/25 [00:17<00:06,  1.05it/s]Calculating loss...:  76%|███████▌  | 19/25 [00:17<00:04,  1.27it/s]Calculating loss...:  80%|████████  | 20/25 [00:18<00:03,  1.31it/s]Calculating loss...:  84%|████████▍ | 21/25 [00:18<00:02,  1.44it/s]Calculating loss...:  88%|████████▊ | 22/25 [00:19<00:01,  1.67it/s]Calculating loss...:  92%|█████████▏| 23/25 [00:20<00:01,  1.40it/s]Calculating loss...:  96%|█████████▌| 24/25 [00:21<00:00,  1.10it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.38it/s]Calculating loss...: 100%|██████████| 25/25 [00:21<00:00,  1.15it/s]
+Iter 1: Val loss 2.526, Val took 21.824s
+Iter 50: Train loss 2.031, Learning Rate 4.774e-05, It/sec 0.211, Tokens/sec 67.720, Trained Tokens 16036, Peak mem 26.313 GB
+Iter 100: Train loss 2.071, Learning Rate 4.759e-05, It/sec 0.268, Tokens/sec 71.658, Trained Tokens 29419, Peak mem 26.313 GB
+Iter 100: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg14/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_v3_seg14/0000100_adapters.safetensors.
+Iter 150: Train loss 2.011, Learning Rate 4.734e-05, It/sec 0.273, Tokens/sec 72.453, Trained Tokens 42686, Peak mem 26.313 GB

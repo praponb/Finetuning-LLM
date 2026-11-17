@@ -1,0 +1,37 @@
+[12:54:21] dequantize the 4-bit base (mlx_lm.convert -d) -> sql2pyspark-mlx/qwen35moe/hf_base
+[INFO] Loading
+[INFO] Using dtype: bfloat16
+[INFO] Dequantizing
+ 65G	sql2pyspark-mlx/qwen35moe/hf_base
+[12:54:42] fix_norms (undo mlx-lm's +1 RMSNorm shift)
+model-00001-of-00014.safetensors: 6 norm tensors shifted back
+model-00002-of-00014.safetensors: 8 norm tensors shifted back
+model-00003-of-00014.safetensors: 8 norm tensors shifted back
+model-00004-of-00014.safetensors: 8 norm tensors shifted back
+model-00005-of-00014.safetensors: 6 norm tensors shifted back
+model-00006-of-00014.safetensors: 8 norm tensors shifted back
+model-00007-of-00014.safetensors: 8 norm tensors shifted back
+model-00008-of-00014.safetensors: 8 norm tensors shifted back
+model-00009-of-00014.safetensors: 6 norm tensors shifted back
+model-00010-of-00014.safetensors: 8 norm tensors shifted back
+model-00011-of-00014.safetensors: 8 norm tensors shifted back
+model-00012-of-00014.safetensors: 8 norm tensors shifted back
+model-00013-of-00014.safetensors: 6 norm tensors shifted back
+language_model.model.norm.weight: mean 2.578 -> 1.578
+model-00014-of-00014.safetensors: 5 norm tensors shifted back
+total 101 (expected 32 x 2 + 8 x 2 + 1 = 81)
+[12:55:07] fix_experts (switch_mlp -> HF experts.gate_up_proj / down_proj)
+model-00001-of-00014.safetensors: 50 tensors
+model-00002-of-00014.safetensors: 51 tensors
+model-00003-of-00014.safetensors: 51 tensors
+model-00004-of-00014.safetensors: 51 tensors
+model-00005-of-00014.safetensors: 54 tensors
+model-00006-of-00014.safetensors: 51 tensors
+model-00007-of-00014.safetensors: 51 tensors
+model-00008-of-00014.safetensors: 51 tensors
+model-00009-of-00014.safetensors: 54 tensors
+model-00010-of-00014.safetensors: 51 tensors
+model-00011-of-00014.safetensors: 51 tensors
+model-00012-of-00014.safetensors: 51 tensors
+model-00013-of-00014.safetensors: 54 tensors
+[12:56:08] fix_experts failed

@@ -1,0 +1,11 @@
+{
+  "cases": 2,
+  "ok": 2,
+  "pass_rate": 1.0,
+  "cost_usd": 0.18,
+  "cost_per_ok_usd": 0.092,
+  "median_seconds": 264.6,
+  "mean_checks_ok": 1.0,
+  "sql_lines_median": 113,
+  "errors": 0
+}

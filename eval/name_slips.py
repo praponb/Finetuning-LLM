@@ -22,7 +22,8 @@ SETS = [("holdout", "{m}__holdout.json"), ("holdout_v4", "{m}__holdout_v4.json")
         ("complex", "{m}__complex_v8_test.json"), ("v11 held-out", "v11-heldout/{m}__heldout.json"),
         ("v12 held-out", "v12-heldout/{m}__heldout.json"), ("v13 held-out", "v13-heldout/{m}__heldout.json"),
         ("v14 held-out", "v14-heldout/{m}__heldout.json"), ("schema-shift", "schema-shift/{m}__schema_shift.json"),
-        ("complex-shift", "complex-shift/{m}__complex_shift.json")]
+        ("complex-shift", "complex-shift/{m}__complex_shift.json"),
+        ("real-style", "realstyle/{m}__realstyle.json")]
 
 
 def classify(path: Path):

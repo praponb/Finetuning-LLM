@@ -1,0 +1,607 @@
+{
+  "model": "sql2pyspark:q35moe-base-q4",
+  "set": "eval/holdout_v4.jsonl",
+  "n": 25,
+  "summary": {
+    "ALL": {
+      "n": 25,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.08,
+      "lenient_match": 0.04
+    },
+    "aggregation": {
+      "n": 4,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.0,
+      "lenient_match": 0.0
+    },
+    "join": {
+      "n": 5,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.0,
+      "lenient_match": 0.0
+    },
+    "nested": {
+      "n": 4,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.25,
+      "lenient_match": 0.0
+    },
+    "pipeline": {
+      "n": 2,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.0,
+      "lenient_match": 0.0
+    },
+    "reshape": {
+      "n": 2,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.0,
+      "lenient_match": 0.0
+    },
+    "setop": {
+      "n": 3,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.3333,
+      "lenient_match": 0.3333
+    },
+    "window": {
+      "n": 5,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.0,
+      "strict_match": 0.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.0,
+      "lenient_match": 0.0
+    }
+  },
+  "avg_seconds": 15.97,
+  "cases": [
+    {
+      "id": "holdout_v4_001",
+      "level": "aggregation",
+      "sql": "SELECT d.specialty, a.status, COUNT(*) AS appointments, ROUND(SUM(a.fee), 2) AS total_fee\nFROM appointments a\nJOIN doctors d ON a.doctor_id = d.id\nGROUP BY GROUPING SETS ((d.specialty, a.status), (d.specialty), ())",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details\n1.  **Joins**: Uses `join` with an explicit `on` condition.\n2.  **Grouping Sets**: PySpark does not have a direct `GROUPING SETS` function. We achieve the same result by performing three separate aggregations and then using `unionByName` to combine them.\n    *   Group 1: `(specialty, status)`\n    *   Group 2: `(specialty)` (where `status` is null)\n    *   Group 3: `()` (where both `specialty` and `status` are null)\n3.  **Null Handling**: We explicitly set the missing columns to `null` in the partial aggregations to ensure the schema matches the final union.\n4.  **Rounding**: Uses `F.round` with the specified precision.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql import Window\n\n# Assuming 'appointments' and 'doctors' DataFrames are already loaded\n# df_appointments = spark.read...\n# df_doctors = spark.read...\n\n# 1. Perform the Join\njoined_df = appointments.join(doctors, appointments.doctor_id == doctors.id, \"inner\")\n\n# 2. Define the three aggregation groups to mimic GROUPING SETS\n\n# Group A: (specialty, status)\ngroup_a = joined_df.groupBy(\"specialty\", \"status\") \\\n    .agg(\n        F.count(\"*\").alias(\"appointments\"),\n        F.round(F.sum(\"fee\"), 2).alias(\"total_fee\")\n    )\n\n# Group B: (specialty) only -> status becomes null\ngroup_b = joined_df.groupBy(\"specialty\") \\\n    .agg(\n        F.count(\"*\").alias(\"appointments\"),\n        F.round(F.sum(\"fee\"), 2).alias(\"total_fee\")\n    ) \\\n    .withColumn(\"status\", F.lit(None).cast(\"string\")) # Cast to match group_a schema\n\n# Group C: () only -> both specialty and status become null\ngroup_c = joined_df.groupBy() \\\n    .agg(\n        F.count(\"*\").alias(\"appointments\"),\n        F.round(F.sum(\"fee\"), 2).alias(\"total_fee\")\n    ) \\\n    .withColumn(\"specialty\", F.lit(None).cast(\"string\")) \\\n    .withColumn(\"status\", F.lit(None).cast(\"string\"))\n\n# 3. Union the results\n# Note: Ensure column order matches exactly for unionByName to work correctly\nfinal_df = group_a.unionByName(group_b, allowMissingColumns=True) \\\n    .unionByName(group_c, allowMissingColumns=True)\n\n# Optional: Sort for readability (optional)\nfinal_df.orderBy(F.col(\"specialty\").asc_nulls_last(), F.col(\"status\").asc_nulls_last()) \\\n    .show()\n```\n\n### Explanation of the Logic\n*   **Group A** corresponds to `(d.specialty, a.status)`.\n*   **Group B** corresponds to `(d.specialty)`. In the SQL, this implies `status` is nullified for the grouping. We manually cast `status` to `null` to align the schema with Group A.\n*   **Group C** corresponds to `()`. Both `specialty` and `status` are nullified.\n*   **`unionByName`**: This is the most efficient way to stack these results in PySpark without needing complex window functions or `cube` logic that might be harder to read.\n\n*Note: If your `status` column in the original DataFrame is not a string, ensure the `.cast(\"string\")` matches the actual data type or remove the cast if you prefer to keep the original null type.*",
+      "seconds": 15.78,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'appointments' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'appointments' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_002",
+      "level": "aggregation",
+      "sql": "SELECT airline, origin, GROUPING_ID() AS grouping_level, COUNT(*) AS flights, MAX(base_fare) AS max_fare\nFROM flights\nGROUP BY ROLLUP (airline, origin)\nHAVING COUNT(*) >= 2\nORDER BY grouping_level, flights DESC",
+      "reply": "Here is the idiomatic PySpark code to replicate your SQL query.\n\n### Key Implementation Details\n1.  **`ROLLUP`**: In PySpark, `ROLLUP` is handled by passing the column list to `groupBy` and using the `grouping_id` function to replicate the `GROUPING_ID()` logic.\n2.  **`GROUPING_ID()`**: This is calculated using `pyspark.sql.functions.grouping_id`. It returns an integer representing the grouping level (e.g., 0 for full detail, 1 for `airline` only, 2 for `origin` only, 3 for grand total).\n3.  **`HAVING`**: Since `groupBy` in PySpark doesn't support `HAVING` directly, we apply the filter (`COUNT(*) >= 2`) after the aggregation.\n4.  **`ORDER BY`**: We sort by the calculated `grouping_level` and then by `flights` in descending order.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql import Window\n\n# Assuming 'df' is your DataFrame containing columns: airline, origin, base_fare\n\n# 1. Perform the Rollup Aggregation\n# We group by airline and origin. \n# We calculate the grouping_id manually to match SQL's GROUPING_ID() behavior.\n# Note: In PySpark, grouping_id() returns an integer where the bits correspond to the columns.\n# However, to match the specific SQL logic of ROLLUP(airline, origin), we can use the built-in grouping_id function \n# which returns the correct integer ID for the rollup levels.\n\nrollup_df = df.groupBy(\n    F.rollup(\"airline\", \"origin\")\n).agg(\n    F.count(\"*\").alias(\"flights\"),\n    F.max(\"base_fare\").alias(\"max_fare\"),\n    F.grouping_id(\"airline\", \"origin\").alias(\"grouping_level\")\n)\n\n# 2. Apply HAVING Clause (Filter after aggregation)\n# Filter rows where the count of flights is >= 2\nfiltered_df = rollup_df.filter(F.col(\"flights\") >= 2)\n\n# 3. Apply ORDER BY\n# Sort by grouping_level (ascending) and flights (descending)\nresult_df = filtered_df.orderBy(\n    F.col(\"grouping_level\").asc(),\n    F.col(\"flights\").desc()\n)\n\n# Show the result\nresult_df.show()\n```\n\n### Explanation of `grouping_id` Logic\nIn your SQL, `ROLLUP(airline, origin)` generates these levels:\n1.  `(airline, origin)` -> `grouping_id` = 0\n2.  `(airline, NULL)` -> `grouping_id` = 1 (Grouped by airline only)\n3.  `(NULL, NULL)` -> `grouping_id` = 3 (Grand total)\n\n*Note: The exact integer value of `grouping_id` depends on the column order. In PySpark, `grouping_id(\"airline\", \"origin\")` will return:*\n*   `0` if both are grouped (no nulls).\n*   `1` if `airline` is grouped but `origin` is null.\n*   `3` if both are null (Grand Total).\n\nThis matches the standard SQL behavior for `ROLLUP`.",
+      "seconds": 14.22,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_003",
+      "level": "aggregation",
+      "sql": "SELECT doctor_id,\n       COUNT(*) FILTER (WHERE status = 'NO_SHOW') AS no_shows,\n       AVG(wait_minutes) FILTER (WHERE appt_type = 'emergency') AS avg_emergency_wait,\n       COUNT_IF(fee > 1000) AS expensive_visits,\n       ROUND(SUM(fee) / NULLIF(COUNT(CASE WHEN status = 'DONE' THEN 1 END), 0), 2) AS fee_per_done_visit\nFROM appointments\nGROUP BY doctor_id",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details:\n1.  **Filtering Logic**: PySpark DataFrames do not support the SQL `FILTER` clause directly. We use `F.when(...).then(...).otherwise(None)` inside aggregation functions to achieve the same conditional counting/averaging.\n2.  **`COUNT_IF`**: This is implemented using `F.sum(F.when(condition, 1).otherwise(0))`.\n3.  **`NULLIF` & Division**: We use `F.when` to handle the division by zero logic (replacing `NULLIF`), ensuring the result is `0.0` or `None` instead of throwing an error when the denominator is 0.\n4.  **Rounding**: We use `F.round` for the final calculation.\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql import Window\n\n# Assuming 'df' is your DataFrame containing the 'appointments' table\n# Columns: doctor_id, status, wait_minutes, appt_type, fee\n\nresult_df = (\n    df\n    .groupBy(\"doctor_id\")\n    .agg(\n        # COUNT(*) FILTER (WHERE status = 'NO_SHOW')\n        F.sum(\n            F.when(F.col(\"status\") == \"NO_SHOW\", 1).otherwise(0)\n        ).alias(\"no_shows\"),\n\n        # AVG(wait_minutes) FILTER (WHERE appt_type = 'emergency')\n        F.avg(\n            F.when(F.col(\"appt_type\") == \"emergency\", F.col(\"wait_minutes\")).otherwise(None)\n        ).alias(\"avg_emergency_wait\"),\n\n        # COUNT_IF(fee > 1000)\n        F.sum(\n            F.when(F.col(\"fee\") > 1000, 1).otherwise(0)\n        ).alias(\"expensive_visits\"),\n\n        # ROUND(SUM(fee) / NULLIF(COUNT(CASE WHEN status = 'DONE' THEN 1 END), 0), 2)\n        F.round(\n            F.sum(\"fee\") / \n            F.when(\n                F.sum(F.when(F.col(\"status\") == \"DONE\", 1).otherwise(0)) == 0, \n                None\n            ).otherwise(\n                F.sum(F.when(F.col(\"status\") == \"DONE\", 1).otherwise(0))\n            ),\n            2\n        ).alias(\"fee_per_done_visit\")\n    )\n)\n\n# Show the result\nresult_df.show()\n```\n\n### Alternative: Using `F.expr` (More SQL-like)\nIf you prefer a more direct translation that leverages Spark SQL's expression parser (which handles `FILTER` and `NULLIF` natively if the Spark version supports it), you can use `F.expr`:\n\n```python\nfrom pyspark.sql import functions as F\n\nresult_df = (\n    df\n    .groupBy(\"doctor_id\")\n    .agg(\n        F.expr(\"COUNT(*) FILTER (WHERE status = 'NO_SHOW')\").alias(\"no_shows\"),\n        F.expr(\"AVG(wait_minutes) FILTER (WHERE appt_type = 'emergency')\").alias(\"avg_emergency_wait\"),\n        F.expr(\"COUNT_IF(fee > 1000)\").alias(\"expensive_visits\"),\n        F.expr(\"ROUND(SUM(fee) / NULLIF(COUNT(CASE WHEN status = 'DONE' THEN 1 END), 0), 2)\").alias(\"fee_per_done_visit\")\n    )\n)\n```\n*Note: The `F.expr` approach is cleaner but relies on the specific Spark version supporting the `FILTER` clause in aggregations (available in Spark 3.0+). The first approach using `when/otherwise` is universally compatible and more explicit for data engineering pipelines.*",
+      "seconds": 16.42,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_004",
+      "level": "aggregation",
+      "sql": "SELECT seat_class,\n       PERCENTILE_APPROX(price, 0.5) AS median_price,\n       STDDEV_SAMP(price) AS price_stddev,\n       SORT_ARRAY(COLLECT_SET(loyalty_tier)) AS tiers,\n       PERCENT_RANK() OVER (ORDER BY AVG(price) DESC) AS price_rank\nFROM bookings\nWHERE NOT is_cancelled\nGROUP BY seat_class",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details:\n1.  **`PERCENTILE_APPROX`**: Mapped to `pyspark.sql.functions.approx_percentile`.\n2.  **`STDDEV_SAMP`**: Mapped to `pyspark.sql.functions.stddev_samp`.\n3.  **`COLLECT_SET` + `SORT_ARRAY`**: Since `sort_array` is not a direct aggregation function, we collect the set and then apply `sort_array` on the resulting array.\n4.  **`PERCENT_RANK()`**: This is a window function. In PySpark, we must define a `Window` specification ordered by the average price (descending) and apply `percent_rank` on top of the grouped results.\n5.  **Order of Operations**: We perform aggregations first, then apply the window function on the aggregated result set.\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql import Window\n\n# Define the Window specification for the PERCENT_RANK calculation\n# It orders by the calculated average price in descending order\nwindow_spec = Window.orderBy(F.avg(\"price\").desc())\n\n# Build the DataFrame pipeline\nresult_df = (\n    df\n    # Filter out cancelled bookings\n    .filter(~F.col(\"is_cancelled\"))\n    \n    # Group by seat_class and perform aggregations\n    .groupBy(\"seat_class\")\n    .agg(\n        F.approx_percentile(\"price\", 0.5).alias(\"median_price\"),\n        F.stddev_samp(\"price\").alias(\"price_stddev\"),\n        # Collect unique tiers and sort them\n        F.sort_array(F.collect_set(\"loyalty_tier\")).alias(\"tiers\")\n    )\n    \n    # Apply the window function to calculate the rank based on average price\n    .withColumn(\n        \"price_rank\", \n        F.percent_rank().over(window_spec)\n    )\n    \n    # Select final columns to match SQL output structure\n    .select(\n        \"seat_class\",\n        \"median_price\",\n        \"price_stddev\",\n        \"tiers\",\n        \"price_rank\"\n    )\n)\n\n# Show the result\nresult_df.show(truncate=False)\n```\n\n### Notes on Compatibility:\n*   **`approx_percentile`**: Requires Spark 2.4+ and uses the T-Digest algorithm. If you are on an older version, you may need to use `percentile_approx` (which is an alias in newer versions) or implement a custom UDF.\n*   **`sort_array`**: This function sorts the array in ascending order by default. If your SQL `SORT_ARRAY` implies a specific custom sort order, ensure the data types in `loyalty_tier` support standard sorting.\n*   **Window Function Scope**: The `percent_rank` is calculated *after* the `groupBy`. This matches the SQL behavior where the window function operates on the result set of the aggregation.",
+      "seconds": 12.27,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_005",
+      "level": "window",
+      "sql": "SELECT id, full_name, city, birth_date,\n       DENSE_RANK() OVER (PARTITION BY city ORDER BY birth_date DESC NULLS LAST) AS age_rank_in_city,\n       LAST_VALUE(insurance_type) IGNORE NULLS OVER (ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_insurance\nFROM patients\nORDER BY city NULLS FIRST, age_rank_in_city",
+      "reply": "Here is the idiomatic PySpark code to replicate your SQL query.\n\n### Key Implementation Details\n1.  **Windowing**: We use `Window` functions from `pyspark.sql.functions`.\n2.  **`DENSE_RANK`**: Mapped directly to `dense_rank()`.\n3.  **`LAST_VALUE` with `IGNORE NULLS`**:\n    *   In PySpark, `last_value` does not have a direct `IGNORE NULLS` flag in older versions, but in Spark 3.0+, it supports the `ignoreNulls` parameter.\n    *   **Crucial Logic**: The SQL `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` combined with `IGNORE NULLS` implies we want the *most recent non-null* value seen so far.\n    *   *Note*: If you are on Spark < 3.0, you must use a workaround (like `last_value(..., ignoreNulls=True)` is not available, so you'd typically use `last_value` with a custom filter or `coalesce` logic). The code below assumes **Spark 3.0+** which supports `ignoreNulls=True`.\n4.  **`NULLS FIRST/LAST`**:\n    *   `birth_date DESC NULLS LAST`: In PySpark, `desc()` puts nulls last by default in most contexts, but to be explicit and match SQL behavior exactly, we ensure the sort order handles nulls correctly.\n    *   `city NULLS FIRST`: We use `asc_nulls_first()` for the final sort.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import Window\nfrom pyspark.sql.functions import col, dense_rank, last_value, desc, asc_nulls_first\n\n# Define the Window for DENSE_RANK\n# Partition by city, Order by birth_date DESC (Nulls Last is default behavior for desc() in Spark 3+)\nwindow_rank = Window.partitionBy(\"city\").orderBy(col(\"birth_date\").desc())\n\n# Define the Window for LAST_VALUE\n# Order by id, Rows between unbounded preceding and current row, Ignore Nulls\n# Note: This requires Spark 3.0+ for the ignoreNulls parameter\nwindow_last = Window.orderBy(\"id\").rowsBetween(Window.unboundedPreceding, Window.currentRow)\n\ndf_result = (\n    df_patients\n    .select(\n        \"id\",\n        \"full_name\",\n        \"city\",\n        \"birth_date\",\n        dense_rank().over(window_rank).alias(\"age_rank_in_city\"),\n        last_value(\"insurance_type\", ignoreNulls=True).over(window_last).alias(\"last_known_insurance\")\n    )\n    .orderBy(\n        col(\"city\").asc_nulls_first(),\n        col(\"age_rank_in_city\")\n    )\n)\n\n# Show the result\ndf_result.show()\n```\n\n### Explanation of Logic Mapping\n\n| SQL Clause | PySpark Equivalent | Notes |\n| :--- | :--- | :--- |\n| `PARTITION BY city` | `Window.partitionBy(\"city\")` | Standard partitioning. |\n| `ORDER BY birth_date DESC NULLS LAST` | `.orderBy(col(\"birth_date\").desc())` | `desc()` in Spark places nulls at the end by default, matching `NULLS LAST`. |\n| `DENSE_RANK()` | `dense_rank().over(...)` | Direct mapping. |\n| `ORDER BY id` | `Window.orderBy(\"id\")` | Defines the frame for the running calculation. |\n| `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` | `rowsBetween(Window.unboundedPreceding, Window.currentRow)` | Defines the sliding window from the start up to the current row. |\n| `IGNORE NULLS` | `ignoreNulls=True` | Available in Spark 3.0+. If your environment is older, you would need to replace `last_value` with a custom UDF or a `coalesce` logic using `when` and `last` window functions manually. |\n| `ORDER BY city NULLS FIRST` | `.orderBy(col(\"city\").asc_nulls_first())` | Explicitly handles nulls at the beginning of the sort. |",
+      "seconds": 17.41,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout_v4_006",
+      "level": "window",
+      "sql": "SELECT id, origin, departure_time, base_fare,\n       COUNT(*) OVER (PARTITION BY origin ORDER BY CAST(departure_time AS BIGINT)\n                      RANGE BETWEEN 2592000 PRECEDING AND CURRENT ROW) AS flights_last_30d,\n       AVG(base_fare) OVER (PARTITION BY origin ORDER BY departure_time, id\n                            ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) AS avg_fare_prev_3\nFROM flights",
+      "reply": "Here is the idiomatic PySpark code to replicate your SQL query.\n\n### Key Implementation Details\n1.  **Windowing Logic**:\n    *   **`RANGE BETWEEN 2592000 PRECEDING AND CURRENT ROW`**: In PySpark, `RANGE` windows require the ordering column to be numeric. Since your SQL casts `departure_time` to `BIGINT`, we convert the string/datetime column to a Unix timestamp (seconds) in PySpark to match the logic.\n    *   **`ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING`**: This is a standard row-based window. We use `rowsBetween(-3, -1)` to get the 3 rows immediately before the current one.\n2.  **Ordering**: The second window uses a composite key (`departure_time`, `id`). We ensure both are included in the `orderBy` clause.\n3.  **Data Types**: Ensure `departure_time` is cast to a numeric type (Unix timestamp) before defining the window spec for the `RANGE` calculation.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import Window\nfrom pyspark.sql.functions import col, count, avg, unix_timestamp, current_row\n\n# Assuming 'df' is your DataFrame with columns: id, origin, departure_time, base_fare\n# Note: If departure_time is a string, we cast it to a timestamp first.\n\n# 1. Prepare the timestamp for RANGE calculation\n# Convert departure_time to Unix timestamp (seconds) to match the SQL CAST(departure_time AS BIGINT)\n# If departure_time is already a TimestampType, you can use .cast(\"long\") or .cast(\"bigint\")\ndf_with_ts = df.withColumn(\"ts\", unix_timestamp(col(\"departure_time\")).cast(\"long\"))\n\n# 2. Define Window 1: Flights in last 30 days (2,592,000 seconds)\n# SQL: RANGE BETWEEN 2592000 PRECEDING AND CURRENT ROW\nwindow_30d = Window.partitionBy(\"origin\") \\\n    .orderBy(\"ts\") \\\n    .rangeBetween(-2592000, 0)\n\n# 3. Define Window 2: Average fare of previous 3 rows\n# SQL: ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING\n# Note: We order by ts (numeric) and id to match the SQL logic exactly.\nwindow_prev_3 = Window.partitionBy(\"origin\") \\\n    .orderBy(\"ts\", \"id\") \\\n    .rowsBetween(-3, -1)\n\n# 4. Apply the calculations\nresult_df = df_with_ts.select(\n    \"id\",\n    \"origin\",\n    \"departure_time\",\n    \"base_fare\",\n    count(\"*\").over(window_30d).alias(\"flights_last_30d\"),\n    avg(\"base_fare\").over(window_prev_3).alias(\"avg_fare_prev_3\")\n)\n\n# Optional: Drop the temporary timestamp column if not needed\nresult_df = result_df.drop(\"ts\")\n\n# Show result\nresult_df.show(truncate=False)\n```\n\n### Important Notes for Production\n*   **Data Types**: If `departure_time` is already a `TimestampType` in your DataFrame, replace `unix_timestamp(col(\"departure_time\"))` with `col(\"departure_time\").cast(\"long\")` or simply use the timestamp column directly if your Spark version supports `RANGE` with timestamps (Spark 3.0+ supports `RANGE` with timestamps, but using numeric seconds is often safer for exact interval matching).\n*   **Null Handling**: If `departure_time` contains nulls, the `unix_timestamp` function will return null, which might break the window ordering. You may need to handle nulls beforehand (e.g., `coalesce`).\n*   **Partitioning**: Ensure `origin` is a string or integer. If it's a complex type, ensure it's castable.",
+      "seconds": 16.61,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "ImportError: cannot import name 'current_row' from 'pyspark.sql.functions' (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/sql/functions/__init__.py)"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "ImportError: cannot import name 'current_row' from 'pyspark.sql.functions' (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/sql/functions/__init__.py)"
+      }
+    },
+    {
+      "id": "holdout_v4_007",
+      "level": "window",
+      "sql": "SELECT id, doctor_id, fee,\n       SUM(fee) OVER w_doc AS running_fee,\n       LAG(fee, 1, 0) OVER w_doc AS previous_fee,\n       CUME_DIST() OVER (PARTITION BY doctor_id ORDER BY fee) AS fee_cume_dist\nFROM appointments\nWINDOW w_doc AS (PARTITION BY doctor_id ORDER BY appt_date, id)",
+      "reply": "Here is the idiomatic PySpark code to replicate your SQL query.\n\n### Key Implementation Details\n1.  **Window Definition**: We define the window using `Window.partitionBy` and `Window.orderBy`.\n2.  **`LAG` Handling**: The SQL uses `LAG(fee, 1, 0)`. In PySpark, the `lag` function takes the column, the offset, and the default value as arguments.\n3.  **`CUME_DIST`**: PySpark provides `cume_dist` directly within the `functions` module.\n4.  **Ordering**: The SQL orders by `appt_date` then `id`. We replicate this by chaining `.orderBy(\"appt_date\", \"id\")`.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import Window\nfrom pyspark.sql import functions as F\n\n# Define the window specification matching the SQL:\n# PARTITION BY doctor_id ORDER BY appt_date, id\nwindow_spec = Window.partitionBy(\"doctor_id\").orderBy(\"appt_date\", \"id\")\n\n# Apply the transformations\ndf_result = (\n    df_appointments\n    .select(\n        \"id\",\n        \"doctor_id\",\n        \"fee\",\n        # SUM(fee) OVER w_doc\n        F.sum(\"fee\").over(window_spec).alias(\"running_fee\"),\n        # LAG(fee, 1, 0) OVER w_doc\n        # Note: The 3rd argument '0' is the default value if no previous row exists\n        F.lag(\"fee\", 1, 0).over(window_spec).alias(\"previous_fee\"),\n        # CUME_DIST() OVER (PARTITION BY doctor_id ORDER BY fee)\n        # Note: The SQL CUME_DIST uses the same window partition but orders by 'fee'\n        # We must redefine the order for this specific function or use a separate window spec.\n        F.cume_dist().over(\n            Window.partitionBy(\"doctor_id\").orderBy(\"fee\")\n        ).alias(\"fee_cume_dist\")\n    )\n)\n\n# Show the result\ndf_result.show()\n```\n\n### Important Note on `CUME_DIST`\nIn your SQL, the `CUME_DIST` function uses a **different ordering** (`ORDER BY fee`) than the main window (`ORDER BY appt_date, id`).\n\nIn the code above, I created a **second window specification** specifically for `cume_dist` that orders by `fee` while keeping the same partition (`doctor_id`). If you used the original `window_spec` for `cume_dist`, it would calculate the cumulative distribution based on `appt_date` and `id`, which would differ from your SQL intent.",
+      "seconds": 11.47,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      }
+    },
+    {
+      "id": "holdout_v4_008",
+      "level": "window",
+      "sql": "SELECT id, patient_id, doctor_id, appt_date, fee\nFROM appointments\nWHERE patient_id IS NOT NULL\nQUALIFY ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY appt_date DESC, id DESC) = 1",
+      "reply": "Here is the idiomatic PySpark code to replicate your SQL query.\n\n### Key Implementation Details\n1.  **Filtering**: `patient_id IS NOT NULL` is handled using `col(\"patient_id\").isNotNull()`.\n2.  **Windowing**: `ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...)` is implemented using `Window` specification.\n3.  **Ordering**: The SQL `ORDER BY appt_date DESC, id DESC` is translated to `orderBy(\"appt_date\", \"id\")` with `ascending=False` flags.\n4.  **Filtering the Window**: Since PySpark DataFrames don't have a direct `QUALIFY` clause, we compute the row number in a new column and then filter where that column equals 1.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql import Window\n\n# Assuming 'df' is your DataFrame representing the 'appointments' table\n\n# 1. Define the Window Specification\n# Partition by patient_id, order by appt_date DESC, then id DESC\nwindow_spec = Window.partitionBy(\"patient_id\").orderBy(\n    F.col(\"appt_date\").desc(),\n    F.col(\"id\").desc()\n)\n\n# 2. Add the Row Number Column\ndf_with_row_num = df.withColumn(\"rn\", F.row_number().over(window_spec))\n\n# 3. Filter for the first row per patient (rn = 1) and remove NULL patient_ids\nresult_df = (\n    df_with_row_num\n    .filter(F.col(\"patient_id\").isNotNull())\n    .filter(F.col(\"rn\") == 1)\n    .select(\"id\", \"patient_id\", \"doctor_id\", \"appt_date\", \"fee\")\n)\n\n# Optional: Show results\n# result_df.show()\n```\n\n### Explanation of Logic\n*   **`Window.partitionBy(\"patient_id\")`**: Groups the data by patient.\n*   **`orderBy(...desc())`**: Ensures the most recent appointment (and highest ID if dates match) comes first.\n*   **`F.row_number().over(...)`**: Assigns a rank of 1 to the top row in each partition.\n*   **`.filter(F.col(\"rn\") == 1)`**: This is the direct equivalent of `QUALIFY ROW_NUMBER() ... = 1`.\n*   **`.select(...)`**: Explicitly selects the columns requested in the original SQL.",
+      "seconds": 10.44,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_009",
+      "level": "window",
+      "sql": "WITH gaps AS (\n    SELECT id, driver_id, trip_start,\n           CASE WHEN LAG(trip_start) OVER (PARTITION BY driver_id ORDER BY trip_start, id) IS NULL\n                  OR trip_start > LAG(trip_start) OVER (PARTITION BY driver_id ORDER BY trip_start, id) + INTERVAL '6' HOUR\n                THEN 1 ELSE 0 END AS is_new_shift\n    FROM vehicle_trips\n)\nSELECT id, driver_id, trip_start,\n       SUM(is_new_shift) OVER (PARTITION BY driver_id ORDER BY trip_start, id\n                               ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS shift_no\nFROM gaps",
+      "reply": "Here is the idiomatic PySpark code to replicate the provided SQL query.\n\n### Key Implementation Details\n1.  **Windowing**: We use `Window` functions to replicate the `LAG` and `SUM` logic.\n2.  **Ordering**: The SQL orders by `trip_start, id`. In PySpark, we must ensure the column names match exactly and the order is explicit.\n3.  **Interval Handling**: SQL uses `INTERVAL '6' HOUR`. In PySpark, we use `pyspark.sql.functions.expr` or `pyspark.sql.functions.add_months` logic, but for hours, the most robust way is to convert the timestamp to a numeric representation (like Unix timestamp) or use `pyspark.sql.functions.expr(\"trip_start + INTERVAL '6' HOUR\")` if the Spark version supports it, or simply compare using `col(\"trip_start\") > (lag_col + 6 * 60 * 60 * 1000)` if working with milliseconds.\n    *   *Optimization*: The cleanest PySpark approach for time intervals is often using `expr` for the interval arithmetic or converting to epoch seconds. Below, I use `expr` for the interval addition as it is readable and supported in modern Spark versions.\n4.  **Logic**:\n    *   `LAG` gets the previous `trip_start`.\n    *   The `CASE` statement checks if the previous row is null (first row) OR if the current start is more than 6 hours after the previous start.\n    *   The cumulative `SUM` creates the shift number.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import Window\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.types import TimestampType\n\n# Assuming 'df' is your DataFrame with columns: id, driver_id, trip_start\n\n# Define the window specification\n# Partition by driver_id, order by trip_start and id (matching SQL)\nwindow_spec = Window.partitionBy(\"driver_id\").orderBy(\"trip_start\", \"id\")\n\n# Step 1: Calculate LAG(trip_start)\n# We use F.lag to get the previous row's trip_start\ndf_with_lag = df.withColumn(\n    \"prev_trip_start\", \n    F.lag(\"trip_start\").over(window_spec)\n)\n\n# Step 2: Calculate the gap condition (is_new_shift)\n# Logic: \n# 1. If prev_trip_start is NULL -> 1 (First row of a driver)\n# 2. If current trip_start > prev_trip_start + 6 hours -> 1\n# 3. Else -> 0\n\n# We use F.expr for the interval addition to keep it clean, \n# or convert to epoch seconds if strict type safety is needed.\n# Here we assume trip_start is a TimestampType.\ndf_with_shift = df_with_lag.withColumn(\n    \"is_new_shift\",\n    F.when(\n        F.col(\"prev_trip_start\").isNull(),\n        1\n    ).when(\n        # Compare current > previous + 6 hours\n        # Using expr to handle the interval addition cleanly\n        F.expr(\"trip_start > prev_trip_start + INTERVAL '6' HOUR\"),\n        1\n    ).otherwise(0)\n)\n\n# Step 3: Calculate the cumulative sum (shift_no)\n# SUM(is_new_shift) OVER (PARTITION BY driver_id ORDER BY trip_start, id \n#                         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)\nfinal_window = Window.partitionBy(\"driver_id\").orderBy(\"trip_start\", \"id\")\n\nresult_df = df_with_shift.withColumn(\n    \"shift_no\",\n    F.sum(\"is_new_shift\").over(final_window)\n)\n\n# Select the final columns as per the SQL output\nfinal_result = result_df.select(\"id\", \"driver_id\", \"trip_start\", \"shift_no\")\n\n# Show or write the result\n# final_result.show()\n```\n\n### Alternative: Pure Functional Approach (No `expr` for interval)\nIf you prefer to avoid `expr` for the interval logic (e.g., for better type safety or older Spark versions), you can convert timestamps to epoch seconds:\n\n```python\nfrom pyspark.sql import functions as F\n\n# ... (previous steps up to df_with_lag) ...\n\n# Convert timestamps to epoch seconds for arithmetic\n# 6 hours = 6 * 60 * 60 = 21600 seconds\nsix_hours_seconds = 6 * 60 * 60\n\ndf_with_shift = df_with_lag.withColumn(\n    \"is_new_shift\",\n    F.when(\n        F.col(\"prev_trip_start\").isNull(),\n        1\n    ).when(\n        # Convert to epoch seconds, add 6 hours, compare\n        F.col(\"trip_start\").cast(\"long\") > (F.col(\"prev_trip_start\").cast(\"long\") + six_hours_seconds),\n        1\n    ).otherwise(0)\n)\n\n# ... (rest of the code remains the same) ...\n```\n\n### Explanation of the Logic\n1.  **`Window.partitionBy(\"driver_id\").orderBy(\"trip_start\", \"id\")`**: This mirrors the SQL `PARTITION BY driver_id ORDER BY trip_start, id`. The `id` is included in the order to ensure deterministic behavior if two trips start at the exact same timestamp.\n2.  **`F.lag(\"trip_start\")`**: This retrieves the `trip_start` of the previous row within the partition. If it's the first row, it returns `null`.\n3.  **`F.when(...).otherwise(0)`**: This implements the `CASE` statement.\n    *   If `prev_trip_start` is `null`, it's a new shift (1).\n    *   If the current `trip_start` is strictly greater than `prev_trip_start + 6 hours`, it's a new shift (1).\n    *   Otherwise, it's 0.\n4.  **`F.sum(\"is_new_shift\").over(...)`**: This calculates the running total of `is_new_shift` from the beginning of the partition up to the current row, effectively creating the `shift_no` counter.",
+      "seconds": 25.6,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_010",
+      "level": "join",
+      "sql": "SELECT b.id AS booking_id, b.passenger_name, f.airline, f.departure_time\nFROM bookings b\nJOIN flights f\n  ON b.flight_id = f.id\n AND b.booked_at >= f.departure_time - INTERVAL 365 DAYS\n AND b.booked_at < f.departure_time + INTERVAL '30' DAY",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details:\n1.  **Date Arithmetic**: PySpark uses `pyspark.sql.functions.expr` or `pyspark.sql.functions.date_add` for date math. Since `booked_at` and `departure_time` are likely timestamps or dates, we use `expr` to handle the `INTERVAL` logic directly, or `date_add` for cleaner syntax if the columns are strictly dates.\n2.  **Join Condition**: The SQL uses a composite join condition (`ON` clause with multiple `AND`s). In PySpark, this is handled by passing the conditions as a list of expressions to the `join` method.\n3.  **Column Aliasing**: The `AS booking_id` is handled by the `.alias()` method or by selecting the column with a new name.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql import Window\n\n# Assuming 'bookings' and 'flights' are already loaded as DataFrames\n# bookings_df and flights_df\n\n# Define the join conditions\n# Note: We assume booked_at and departure_time are TimestampType or DateType.\n# If they are strings, you must cast them first.\n\njoin_condition = [\n    bookings.flight_id == flights.id,\n    # booked_at >= departure_time - 365 days\n    F.expr(\"booked_at >= departure_time - INTERVAL 365 DAYS\"),\n    # booked_at < departure_time + 30 days\n    F.expr(\"booked_at < departure_time + INTERVAL 30 DAYS\")\n]\n\n# Perform the join\nresult_df = bookings.alias(\"b\").join(\n    flights.alias(\"f\"),\n    on=join_condition,\n    how=\"inner\"\n)\n\n# Select and alias the final columns\nfinal_result = result_df.select(\n    F.col(\"b.id\").alias(\"booking_id\"),\n    F.col(\"b.passenger_name\"),\n    F.col(\"f.airline\"),\n    F.col(\"f.departure_time\")\n)\n\n# Show the result\nfinal_result.show()\n```\n\n### Alternative (More Explicit Date Math)\nIf you prefer not to use SQL expressions inside the join condition and want to use pure PySpark functions for date arithmetic (which can sometimes be more readable or performant depending on the Catalyst optimizer), you can construct the conditions like this:\n\n```python\nfrom pyspark.sql import functions as F\n\n# Calculate the date boundaries explicitly\ndays_ago = F.expr(\"date_sub(current_date(), 365)\") # Or use F.date_sub if you have a specific reference date\n# However, since the SQL uses relative intervals against the column itself, \n# the F.expr approach above is the most direct translation of the SQL logic.\n\n# If you strictly need to avoid SQL strings in the join:\n# lower_bound = F.date_sub(f.departure_time, 365)\n# upper_bound = F.date_add(f.departure_time, 30)\n# join_condition = [\n#     bookings.flight_id == flights.id,\n#     bookings.booked_at >= lower_bound,\n#     bookings.booked_at < upper_bound\n# ]\n# Note: The above alternative requires careful handling of column references inside the list. \n# The F.expr method used in the primary solution is generally safer for complex interval logic.\n```\n\n**Recommendation**: Stick to the **primary solution** using `F.expr` for the interval logic, as it maps 1:1 with the SQL provided and handles the `INTERVAL` syntax correctly without needing to manually construct date objects for every row.",
+      "seconds": 15.87,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'bookings' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_011",
+      "level": "join",
+      "sql": "SELECT d.id, d.doctor_name, latest.appt_date AS last_appt_date, latest.fee AS last_fee\nFROM doctors d\nLEFT JOIN LATERAL (\n    SELECT a.appt_date, a.fee\n    FROM appointments a\n    WHERE a.doctor_id = d.id\n    ORDER BY a.appt_date DESC, a.id DESC\n    LIMIT 1\n) latest ON TRUE",
+      "reply": "Here is the idiomatic PySpark code to achieve the same result.\n\nSince PySpark does not support `LATERAL` joins or `LIMIT` inside a subquery in the same way SQL does, the standard approach is to use a **Window Function** to rank appointments per doctor and then filter for the top-ranked record.\n\n### PySpark Implementation\n\n```python\nfrom pyspark.sql import Window\nfrom pyspark.sql.functions import col, row_number\n\n# Define the window specification: partition by doctor_id, order by appt_date (desc) and id (desc)\nwindow_spec = Window.partitionBy(\"doctor_id\").orderBy(\n    col(\"appt_date\").desc(), \n    col(\"id\").desc()\n)\n\n# Step 1: Create the ranked appointments DataFrame\n# We add a row number to identify the latest appointment per doctor\nlatest_appointments = (\n    appointments\n    .withColumn(\"rn\", row_number().over(window_spec))\n    .filter(col(\"rn\") == 1)\n    .select(\"doctor_id\", \"appt_date\", \"fee\")\n    .withColumnRenamed(\"appt_date\", \"last_appt_date\")\n    .withColumnRenamed(\"fee\", \"last_fee\")\n)\n\n# Step 2: Perform the Left Join\n# We join doctors with the filtered latest appointments\nresult_df = (\n    doctors\n    .join(latest_appointments, doctors.id == latest_appointments.doctor_id, how=\"left\")\n    .select(\n        doctors.id,\n        doctors.doctor_name,\n        latest_appointments.last_appt_date,\n        latest_appointments.last_fee\n    )\n)\n\n# Show the result\nresult_df.show()\n```\n\n### Key Logic Explained\n1.  **Window Function**: `row_number()` is used to rank appointments for each `doctor_id` based on the `ORDER BY` clause in your SQL (`appt_date DESC, id DESC`).\n2.  **Filtering**: We filter `rn == 1` to keep only the single latest appointment per doctor, effectively replacing the `LIMIT 1` in the lateral subquery.\n3.  **Join**: A standard `left` join is performed between the `doctors` table and the filtered `latest_appointments` DataFrame. This preserves all doctors, even those without appointments (resulting in `null` for the appointment columns), matching the `LEFT JOIN` behavior.",
+      "seconds": 9.71,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'appointments' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'appointments' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_012",
+      "level": "join",
+      "sql": "SELECT p.id, p.full_name, p.city\nFROM patients p\nWHERE NOT EXISTS (\n    SELECT 1 FROM appointments a\n    WHERE a.patient_id = p.id\n      AND a.status = 'DONE'\n      AND a.appt_date >= p.birth_date\n)",
+      "reply": "Here is the idiomatic PySpark code to replicate your SQL query.\n\n### Approach\nSince `NOT EXISTS` in SQL translates to checking for the absence of matching rows, the most efficient and readable approach in PySpark is to use a **Left Anti Join**. This keeps all rows from the `patients` table and filters out any rows that have a matching record in the `appointments` table based on your specific conditions.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\n\n# Assuming 'patients' and 'appointments' are already loaded as DataFrames\n# patients_df and appointments_df\n\n# Define the join conditions explicitly matching the SQL WHERE clause\njoin_conditions = [\n    F.col(\"patients.id\") == F.col(\"appointments.patient_id\"),\n    F.col(\"appointments.status\") == \"DONE\",\n    F.col(\"appointments.appt_date\") >= F.col(\"patients.birth_date\")\n]\n\n# Perform a Left Anti Join\n# This keeps rows from 'patients' where NO matching row exists in 'appointments'\nresult_df = patients_df.alias(\"p\").join(\n    appointments_df.alias(\"a\"),\n    on=join_conditions,\n    how=\"left_anti\"\n)\n\n# Select the required columns\nfinal_result = result_df.select(\n    F.col(\"p.id\"),\n    F.col(\"p.full_name\"),\n    F.col(\"p.city\")\n)\n\n# Show or write the result\nfinal_result.show()\n```\n\n### Key Details\n1.  **`left_anti` Join**: This is the direct PySpark equivalent of `NOT EXISTS`. It returns all rows from the left DataFrame (`patients`) that do not have a matching row in the right DataFrame (`appointments`) based on the provided conditions.\n2.  **Aliasing**: We use `.alias(\"p\")` and `.alias(\"a\")` to match the column references in your SQL query (`p.id`, `a.patient_id`, etc.), ensuring clarity and preventing ambiguity.\n3.  **Date Comparison**: The condition `a.appt_date >= p.birth_date` is handled directly in the join predicate. Ensure your `appt_date` and `birth_date` columns are of a date or timestamp type for this comparison to work correctly.",
+      "seconds": 9.71,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients_df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients_df' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_013",
+      "level": "join",
+      "sql": "SELECT COALESCE(d.hospital, 'Unknown') AS hospital, p.city, COUNT(*) AS visits\nFROM appointments a\nJOIN doctors d ON a.doctor_id = d.id\nJOIN patients p ON a.patient_id <=> p.id\nGROUP BY COALESCE(d.hospital, 'Unknown'), p.city\nORDER BY visits DESC, hospital",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details:\n1.  **`COALESCE`**: Implemented using `F.coalesce` or `F.when`.\n2.  **`<=>` (Null-Safe Equality)**: The SQL operator `<=>` checks for equality including nulls. In PySpark, the standard `==` operator throws an error if one side is null. We use `F.col(\"a.patient_id\") == F.col(\"p.id\")` **only if** you are certain data is clean, but to strictly replicate `<=>`, we use `F.when` logic or ensure the join condition handles nulls explicitly. However, standard practice in PySpark for joins is to use `==` and assume the schema handles nulls, or use `F.expr(\"a.patient_id <=> p.id\")` if using the SQL parser.\n    *   *Correction*: The most robust PySpark way to replicate `a.patient_id <=> p.id` (which returns true if both are null) is to use `F.expr(\"a.patient_id <=> p.id\")` inside the `join` condition, or simply rely on the fact that standard joins usually exclude null matches unless specified.\n    *   *Simplification*: If your data doesn't have nulls in `patient_id` or `id`, standard `==` works. If you need strict null-safe equality, use `F.expr`.\n3.  **`GROUP BY`**: Uses `groupBy` with the same expressions used in the `select`.\n4.  **`ORDER BY`**: Uses `orderBy` with `desc` for the count and `asc` for the hospital.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\n\n# Assuming 'appointments', 'doctors', and 'patients' are existing DataFrames\n# named 'df_appointments', 'df_doctors', and 'df_patients'\n\n# 1. Perform the Joins\n# Note: The SQL uses '<=>' (null-safe equality). \n# If your data might contain nulls in patient_id or id, use F.expr for the join condition.\n# Otherwise, standard equality is usually sufficient.\njoined_df = (\n    df_appointments.alias(\"a\")\n    .join(df_doctors.alias(\"d\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"), \"inner\")\n    .join(df_patients.alias(\"p\"), F.expr(\"a.patient_id <=> p.id\"), \"inner\")\n)\n\n# 2. Select, Group, and Aggregate\nresult_df = (\n    joined_df\n    .select(\n        F.coalesce(F.col(\"d.hospital\"), F.lit(\"Unknown\")).alias(\"hospital\"),\n        F.col(\"p.city\"),\n        F.count(\"*\").alias(\"visits\")\n    )\n    .groupBy(\n        F.coalesce(F.col(\"d.hospital\"), F.lit(\"Unknown\")).alias(\"hospital\"),\n        F.col(\"p.city\")\n    )\n    .agg(F.count(\"*\").alias(\"visits\"))\n)\n\n# 3. Order the results\n# SQL: ORDER BY visits DESC, hospital (ASC is default)\nfinal_df = result_df.orderBy(\n    F.col(\"visits\").desc(),\n    F.col(\"hospital\")\n)\n\n# Show or collect the result\nfinal_df.show()\n```\n\n### Alternative (More Concise) Version\nIf you prefer to chain the operations more directly without intermediate aliases:\n\n```python\nfrom pyspark.sql import functions as F\n\nfinal_df = (\n    df_appointments.alias(\"a\")\n    .join(df_doctors.alias(\"d\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"))\n    .join(df_patients.alias(\"p\"), F.expr(\"a.patient_id <=> p.id\"))\n    .groupBy(\n        F.coalesce(F.col(\"d.hospital\"), F.lit(\"Unknown\")).alias(\"hospital\"),\n        F.col(\"p.city\")\n    )\n    .agg(F.count(\"*\").alias(\"visits\"))\n    .orderBy(\n        F.col(\"visits\").desc(),\n        F.col(\"hospital\")\n    )\n)\n```\n\n**Note on the `<=>` operator:**\nThe SQL operator `<=>` is \"null-safe equal\". In PySpark, `F.expr(\"a.patient_id <=> p.id\")` is the direct translation. If you are certain your `patient_id` and `id` columns do not contain nulls, you can replace `F.expr(\"a.patient_id <=> p.id\")` with `F.col(\"a.patient_id\") == F.col(\"p.id\")` for slightly better performance.",
+      "seconds": 19.07,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [MISSING_GROUP_BY] The query does not include a GROUP BY clause. Add GROUP BY or turn it into the window functions using OVER clauses. SQLSTATE: 42803;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [MISSING_GROUP_BY] The query does not include a GROUP BY clause. Add GROUP BY or turn it into the window functions using OVER clauses. SQLSTATE: 42803;"
+      }
+    },
+    {
+      "id": "holdout_v4_014",
+      "level": "join",
+      "sql": "SELECT d.id, d.doctor_name,\n       (SELECT MAX(a.fee) FROM appointments a WHERE a.doctor_id = d.id) AS max_fee,\n       CASE WHEN d.hospital RLIKE '^(City|General)' THEN 'PUBLIC' ELSE 'PRIVATE' END AS hospital_type\nFROM doctors d\nORDER BY max_fee DESC NULLS LAST",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details:\n1.  **Subquery Handling**: SQL subqueries in the `SELECT` clause are translated to `pyspark.sql.functions.expr` or `pyspark.sql.functions.max` combined with `pyspark.sql.functions.lit` and `pyspark.sql.functions.col` for correlation, but the most robust and performant way in PySpark is to use a **Window Function** or a **Self-Join**.\n    *   *Approach Used*: I used a **Window Function** (`max` over a partition) to calculate the `max_fee` per doctor. This is generally more efficient and cleaner than a correlated subquery in Spark.\n2.  **Regex Matching**: `RLIKE` is translated to `pyspark.sql.functions.regexp` or `pyspark.sql.functions.col(...).rlike()`.\n3.  **Ordering**: `NULLS LAST` is handled by sorting the column and then explicitly handling nulls if necessary, though Spark's default sort order puts nulls last in descending order if not specified otherwise. However, to strictly match `NULLS LAST` in a `DESC` sort, we ensure the sort logic handles nulls explicitly.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\n# Initialize Spark Session (assuming you already have one as 'spark')\n# spark = SparkSession.builder.appName(\"DoctorAnalysis\").getOrCreate()\n\n# Load your data (replace with your actual source)\n# doctors_df = spark.read.csv(\"path/to/doctors.csv\", header=True, inferSchema=True)\n\n# Define the Window specification for calculating max_fee per doctor\n# We partition by doctor_id to get the max fee for that specific doctor\nwindow_spec = Window.partitionBy(\"doctor_id\")\n\n# Step 1: Calculate max_fee using a Window Function\n# This is more efficient than a correlated subquery in Spark\ndoctors_with_max_fee = doctors_df \\\n    .withColumn(\"max_fee\", F.max(\"fee\").over(window_spec)) \\\n    .withColumn(\"hospital_type\", \n                F.when(F.col(\"hospital\").rlike(\"^(City|General)\"), \"PUBLIC\")\n                 .otherwise(\"PRIVATE\"))\n\n# Step 2: Select required columns\nresult_df = doctors_with_max_fee.select(\n    \"id\",\n    \"doctor_name\",\n    \"max_fee\",\n    \"hospital_type\"\n)\n\n# Step 3: Order by max_fee DESC, NULLS LAST\n# In Spark, sorting DESC puts nulls at the end by default, but we can be explicit.\n# If max_fee is null, we want them at the bottom.\n# We sort by max_fee DESC, and if null, push to bottom.\nfinal_df = result_df.orderBy(\n    F.col(\"max_fee\").desc_nulls_last()\n)\n\n# Show the result\nfinal_df.show()\n```\n\n### Alternative: Using a Correlated Subquery (Less Efficient)\nIf your dataset is small and you strictly prefer the logic of a correlated subquery (though not recommended for large datasets in Spark), you can use `pyspark.sql.functions.expr`:\n\n```python\n# Note: This approach is generally slower on large datasets compared to Window functions\ndoctors_subquery = doctors_df.select(\n    \"id\",\n    \"doctor_name\",\n    \"hospital\",\n    F.expr(\"\"\"\n        (SELECT MAX(a.fee) FROM appointments a WHERE a.doctor_id = doctors.id) as max_fee\n    \"\"\").alias(\"max_fee\")\n).withColumn(\n    \"hospital_type\",\n    F.when(F.col(\"hospital\").rlike(\"^(City|General)\"), \"PUBLIC\").otherwise(\"PRIVATE\")\n).select(\"id\", \"doctor_name\", \"max_fee\", \"hospital_type\")\n\nfinal_df = doctors_subquery.orderBy(F.col(\"max_fee\").desc_nulls_last())\n```\n\n**Recommendation**: Use the **Window Function** approach (first code block) for better performance and readability in Apache Spark.",
+      "seconds": 17.04,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'doctors_df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'doctors_df' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_015",
+      "level": "setop",
+      "sql": "SELECT city, 'patient' AS source FROM patients WHERE city IS NOT NULL\nUNION\nSELECT hospital, 'doctor' AS source FROM doctors WHERE hospital IS NOT NULL\nORDER BY source, city",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### PySpark Implementation\n\n```python\nfrom pyspark.sql import functions as F\n\n# Assuming 'patients' and 'doctors' are existing DataFrames\n\n# 1. Select city and add source column for patients\ndf_patients = (\n    patients\n    .select(\"city\", F.lit(\"patient\").alias(\"source\"))\n    .filter(F.col(\"city\").isNotNull())\n)\n\n# 2. Select hospital and add source column for doctors\ndf_doctors = (\n    doctors\n    .select(\"hospital\", F.lit(\"doctor\").alias(\"source\"))\n    .filter(F.col(\"hospital\").isNotNull())\n)\n\n# 3. Union the two DataFrames\n# Note: The column names must match. We aligned them in the select steps above.\ndf_union = df_patients.unionByName(df_doctors)\n\n# 4. Order by source, then by the city/hospital column\n# Since the second column has different names (city vs hospital) in the source DataFrames,\n# we must alias the second column to a common name (e.g., 'location') before ordering,\n# or rely on the fact that unionByName aligns by name if we renamed the second column.\n\n# To ensure the ORDER BY works correctly on the second column regardless of original names:\ndf_result = df_union.withColumn(\"location\", F.col(\"city\").otherwise(F.col(\"hospital\"))) \\\n    .orderBy(\"source\", \"location\")\n\n# If you specifically need the output column to be named 'city' as per the SQL logic:\n# We can alias the location back to 'city' if the downstream logic expects that name.\ndf_final = df_result.select(\"source\", \"location\").withColumnRenamed(\"location\", \"city\")\n\n# Show the result\ndf_final.show()\n```\n\n### Key Logic Explained\n\n1.  **`select` + `lit`**: We explicitly select the target column (`city` or `hospital`) and create a literal string column (`'patient'` or `'doctor'`) to match the SQL `AS source`.\n2.  **`filter(...isNotNull())`**: This translates directly to the SQL `WHERE ... IS NOT NULL` clause.\n3.  **`unionByName`**: This is the PySpark equivalent of `UNION`. It ensures columns are matched by name. Since the SQL query selects `city` in the first part and `hospital` in the second, we must ensure the resulting DataFrame has a consistent schema for the second column before ordering.\n4.  **Handling the `ORDER BY`**:\n    *   In SQL, `ORDER BY source, city` works because the second column is named `city` in the first part and `hospital` in the second.\n    *   In PySpark, `unionByName` requires matching column names. If the original DataFrames have different names (`city` vs `hospital`), we must unify them.\n    *   The code above creates a temporary unified column (`location`), performs the `orderBy`, and then renames it back to `city` to strictly match the SQL output schema.\n\n### Optimized One-Liner (If column names are already consistent)\n\nIf your `patients` DataFrame has a `city` column and `doctors` has a `hospital` column, but you want to treat them as the same logical column for the final output, the most robust way is:\n\n```python\nfrom pyspark.sql import functions as F\n\ndf_result = (\n    patients\n    .select(\"city\", F.lit(\"patient\").alias(\"source\"))\n    .filter(F.col(\"city\").isNotNull())\n    .unionByName(\n        doctors\n        .select(F.col(\"hospital\").alias(\"city\"), F.lit(\"doctor\").alias(\"source\"))\n        .filter(F.col(\"city\").isNotNull())\n    )\n    .orderBy(\"source\", \"city\")\n)\n\ndf_result.show()\n```\n*This version is cleaner: it renames `hospital` to `city` immediately in the second part, allowing `unionByName` to work seamlessly and `orderBy` to function on the unified `city` column.*",
+      "seconds": 17.13,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'patients' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_016",
+      "level": "setop",
+      "sql": "SELECT patient_id, doctor_id FROM appointments WHERE status = 'DONE'\nEXCEPT ALL\nSELECT patient_id, doctor_id FROM appointments WHERE appt_type = 'checkup'",
+      "reply": "Here is the idiomatic PySpark code to replicate your SQL query.\n\n### Key Considerations\n1.  **`EXCEPT ALL`**: In PySpark, `exceptAll` preserves duplicates (unlike `except` which removes them). This matches the SQL `EXCEPT ALL` behavior.\n2.  **Column Order**: Ensure the `select` statements in both DataFrames have the columns in the exact same order (`patient_id`, then `doctor_id`) to match the SQL logic.\n3.  **Filtering**: We use `filter` (or `where`) to apply the `status = 'DONE'` and `appt_type = 'checkup'` conditions.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\n\n# Assuming 'appointments' is your DataFrame\n# df = spark.read... or already loaded\n\n# 1. Select patient_id and doctor_id where status is 'DONE'\ndf_done = (\n    df\n    .select(\"patient_id\", \"doctor_id\")\n    .filter(F.col(\"status\") == \"DONE\")\n)\n\n# 2. Select patient_id and doctor_id where appt_type is 'checkup'\ndf_checkup = (\n    df\n    .select(\"patient_id\", \"doctor_id\")\n    .filter(F.col(\"appt_type\") == \"checkup\")\n)\n\n# 3. Perform EXCEPT ALL (preserves duplicates)\nresult_df = df_done.exceptAll(df_checkup)\n\n# Show or collect the result\nresult_df.show()\n```\n\n### Alternative: Single-Step Logic (Optional)\nIf you prefer a more functional style without intermediate variables, you can chain the operations, though the two-step approach above is generally more readable and easier to debug.\n\n```python\nfrom pyspark.sql import functions as F\n\nresult_df = (\n    df\n    .select(\"patient_id\", \"doctor_id\")\n    .filter(F.col(\"status\") == \"DONE\")\n    .exceptAll(\n        df\n        .select(\"patient_id\", \"doctor_id\")\n        .filter(F.col(\"appt_type\") == \"checkup\")\n    )\n)\n```",
+      "seconds": 9.39,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_017",
+      "level": "setop",
+      "sql": "SELECT flight_id FROM bookings WHERE seat_class IN ('BUSINESS', 'FIRST')\nINTERSECT ALL\nSELECT flight_id FROM bookings WHERE NOT is_cancelled",
+      "reply": "Here is the idiomatic PySpark code to replicate your SQL query.\n\n### Key Considerations\n1.  **`INTERSECT ALL`**: Standard SQL `INTERSECT` removes duplicates. `INTERSECT ALL` preserves duplicates. In PySpark, the `intersect` method behaves like standard SQL (removes duplicates). To achieve `INTERSECT ALL` (keeping duplicates), we must use `union` followed by `groupby` and `count`, or simply rely on the fact that if the input data contains duplicates, we need to ensure the logic preserves them.\n    *   *Correction*: Actually, PySpark's `intersect` removes duplicates. To strictly replicate `INTERSECT ALL`, we need to handle the counts. However, in most practical data engineering scenarios involving `flight_id`, `flight_id` is likely a unique key or the user expects a set of unique IDs.\n    *   *Strict Interpretation*: If the SQL `INTERSECT ALL` implies that if a `flight_id` appears twice in the first set and once in the second, the result should contain it once (standard set logic) or multiple times?\n    *   *Standard SQL Behavior*: `INTERSECT ALL` returns the minimum count of occurrences in both sets.\n    *   *PySpark Approach*: Since PySpark DataFrames are distributed collections, the most robust way to replicate `INTERSECT ALL` is to add a row number or count, intersect the sets, and then explode if necessary.\n    *   *Simplification*: If the goal is simply to get the list of `flight_id`s that satisfy both conditions (and duplicates in the source table are artifacts of the schema), the standard `intersect` is usually what is intended.\n    *   *Strict Translation*: If you strictly need `INTERSECT ALL` behavior (preserving duplicates based on frequency), the code below uses a `groupby` approach to count occurrences before intersecting.\n\n**However**, for 95% of use cases, the user wants the set of IDs that exist in both groups. I will provide the **standard `intersect`** version first (most common), and then the **`INTERSECT ALL`** version (strict SQL translation) below it.\n\n### Option 1: Standard `intersect` (Recommended)\nThis removes duplicates, matching the behavior of standard SQL `INTERSECT`.\n\n```python\nfrom pyspark.sql import functions as F\n\n# Load or define your DataFrame 'df'\n# df = spark.read...\n\n# Define the two sub-queries\nquery_1 = (\n    df\n    .select(\"flight_id\")\n    .where(F.col(\"seat_class\").isin(\"BUSINESS\", \"FIRST\"))\n)\n\nquery_2 = (\n    df\n    .select(\"flight_id\")\n    .where(~F.col(\"is_cancelled\"))\n)\n\n# Perform the intersection (removes duplicates)\nresult = query_1.intersect(query_2)\n\n# Show or save result\nresult.show()\n```\n\n### Option 2: Strict `INTERSECT ALL` (Preserving Duplicates)\nIf your SQL `INTERSECT ALL` implies that if `flight_id` appears 3 times in the first set and 2 times in the second, the result should contain it 2 times, use this logic:\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\n# Define the two sub-queries with row numbers to handle duplicates\n# We add a unique row number per flight_id to simulate the \"ALL\" logic\ndef add_row_number(df, col_name):\n    return df.withColumn(\"rn\", F.row_number().over(Window.partitionBy(col_name).orderBy(col_name)))\n\nq1 = (\n    df\n    .select(\"flight_id\")\n    .where(F.col(\"seat_class\").isin(\"BUSINESS\", \"FIRST\"))\n)\n\nq2 = (\n    df\n    .select(\"flight_id\")\n    .where(~F.col(\"is_cancelled\"))\n)\n\n# Add row numbers to handle duplicates\nq1_with_rn = add_row_number(q1, \"flight_id\")\nq2_with_rn = add_row_number(q2, \"flight_id\")\n\n# Intersect the sets including the row numbers\n# This ensures we keep the minimum count of duplicates from both sides\nintersected_with_rn = q1_with_rn.intersect(q2_with_rn)\n\n# Drop the row number and select the original column\nresult = intersected_with_rn.select(\"flight_id\")\n\nresult.show()\n```\n\n### Explanation of the Logic\n1.  **Filtering**: We use `.where()` with `.isin()` for the `seat_class` check and `~` (bitwise NOT) for `is_cancelled`.\n2.  **Intersection**:\n    *   **Option 1** uses `.intersect()`, which is the direct PySpark equivalent of SQL `INTERSECT`. It returns unique `flight_id`s present in both filtered sets.\n    *   **Option 2** implements `INTERSECT ALL` by assigning a row number to each duplicate `flight_id` within its respective set. By intersecting these enriched sets, we preserve the minimum frequency of duplicates found in either set, then drop the helper column.",
+      "seconds": 21.73,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_018",
+      "level": "reshape",
+      "sql": "SELECT *\nFROM (SELECT doctor_id, appt_type, fee FROM appointments) src\nPIVOT (\n    SUM(fee) AS total_fee,\n    COUNT(1) AS visits\n    FOR appt_type IN ('checkup' AS checkup, 'emergency' AS emergency)\n)",
+      "reply": "Here is the idiomatic PySpark code to achieve the same result as your SQL query.\n\n### PySpark Implementation\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql import Window\n\n# Assuming 'appointments' is your DataFrame\n# df = spark.read...\n\npivot_df = (\n    appointments\n    .select(\"doctor_id\", \"appt_type\", \"fee\")\n    .groupBy(\"doctor_id\")\n    .pivot(\"appt_type\", [\"checkup\", \"emergency\"])\n    .agg(\n        F.sum(\"fee\").alias(\"total_fee\"),\n        F.count(\"*\").alias(\"visits\")\n    )\n)\n\n# Optional: Show the result\npivot_df.show()\n```\n\n### Key Details & Logic Mapping\n\n1.  **`groupBy(\"doctor_id\")`**: Corresponds to the implicit grouping in the SQL `PIVOT` clause on `doctor_id`.\n2.  **`.pivot(\"appt_type\", [\"checkup\", \"emergency\"])`**:\n    *   This replaces the `FOR appt_type IN (...)` clause.\n    *   The second argument `[\"checkup\", \"emergency\"]` explicitly defines the columns to create, ensuring the output matches the SQL `AS checkup` and `AS emergency` aliases.\n3.  **`.agg(...)`**:\n    *   `F.sum(\"fee\").alias(\"total_fee\")`: Matches `SUM(fee) AS total_fee`.\n    *   `F.count(\"*\").alias(\"visits\")`: Matches `COUNT(1) AS visits`.\n4.  **Handling Missing Values**:\n    *   If a specific `doctor_id` does not have a \"checkup\" appointment, the resulting column `checkup` will contain `null`. This is standard behavior for Spark pivots and matches the SQL behavior where no row exists for that combination.\n\n### Note on SQL Syntax Compatibility\nThe SQL syntax you provided (`PIVOT ... FOR ... IN (...)`) is specific to **SQL Server** or **Oracle**. Standard SQL and PySpark use a different syntax (Group By + Pivot). The code above translates the *intent* of your query into the correct PySpark API.",
+      "seconds": 9.24,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'appointments' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'appointments' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_019",
+      "level": "reshape",
+      "sql": "SELECT *\nFROM (\n    SELECT id, airline, CAST(distance_km AS DOUBLE) AS distance, base_fare AS fare\n    FROM flights\n) src\nUNPIVOT (measure_value FOR measure IN (distance AS DISTANCE_KM, fare AS BASE_FARE))",
+      "reply": "To convert the provided SQL query (which uses `UNPIVOT`) into PySpark, we need to replicate the logic of transforming columns (`distance_km` and `base_fare`) into rows.\n\nSince PySpark does not have a direct `UNPIVOT` function, the standard approach is to use `select` with `expr` or `when` to create two separate rows per original row and then `union` them, or more idiomatically, use `stack` (available in Spark 2.3+) or `select` with `explode` on an array of structs.\n\nHere is the clean, idiomatic PySpark solution using the `stack` function, which is the most efficient and readable way to unpivot columns in PySpark.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\n\n# Assuming 'flights' is your existing DataFrame\n# Step 1: Select the ID and the columns to unpivot\n# Step 2: Use 'stack' to transform columns into rows\n#   - The first argument is the number of columns to unpivot (2 here).\n#   - The subsequent arguments are pairs of (column_name, column_value).\n\nunpivoted_df = (\n    flights\n    .select(\n        \"id\",\n        \"airline\",\n        F.expr(\"CAST(distance_km AS DOUBLE) AS distance\").alias(\"distance_val\"),\n        F.col(\"base_fare\").alias(\"fare_val\")\n    )\n    .select(\n        \"id\",\n        \"airline\",\n        F.stack(\n            2,\n            \"DISTANCE_KM\", \"distance_val\",\n            \"BASE_FARE\", \"fare_val\"\n        ).alias(\"measure\", \"measure_value\")\n    )\n)\n\n# Optional: Show the result\nunpivoted_df.show()\n```\n\n### Explanation of the Transformation\n\n1.  **Preparation**: We first select `id` and `airline` as is. We cast `distance_km` to `DOUBLE` and alias it as `distance_val` to match the SQL logic. We alias `base_fare` as `fare_val`.\n2.  **`F.stack`**: This is the core function.\n    *   `2`: Indicates we are unpivoting 2 columns.\n    *   `\"DISTANCE_KM\", \"distance_val\"`: Creates a row where the measure name is \"DISTANCE_KM\" and the value is the casted distance.\n    *   `\"BASE_FARE\", \"fare_val\"`: Creates a row where the measure name is \"BASE_FARE\" and the value is the base fare.\n3.  **Result**: The output DataFrame will have columns `id`, `airline`, `measure` (the column name from the SQL `FOR measure IN`), and `measure_value` (the actual data), effectively replicating the `UNPIVOT` behavior.\n\n### Alternative (Using `union` if `stack` is unavailable)\nIf you are using a very old Spark version that doesn't support `stack`, you can achieve the same result using `union`:\n\n```python\nfrom pyspark.sql import functions as F\n\n# Row 1: Distance\nrows_distance = flights.select(\n    \"id\",\n    \"airline\",\n    F.lit(\"DISTANCE_KM\").alias(\"measure\"),\n    F.col(\"distance_km\").cast(\"double\").alias(\"measure_value\")\n)\n\n# Row 2: Fare\nrows_fare = flights.select(\n    \"id\",\n    \"airline\",\n    F.lit(\"BASE_FARE\").alias(\"measure\"),\n    F.col(\"base_fare\").alias(\"measure_value\")\n)\n\nunpivoted_df = rows_distance.union(rows_fare)\n```",
+      "seconds": 15.94,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'flights' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_020",
+      "level": "nested",
+      "sql": "SELECT t.id, t.driver_id, stop.stop_name, stop.wait_min, stop.fare\nFROM vehicle_trips t\nLATERAL VIEW OUTER EXPLODE(t.stops) s AS stop",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Logic\n1.  **`LATERAL VIEW OUTER EXPLODE`**: In PySpark, this translates to using `explode_outer` on the array column `stops`.\n2.  **`stop` alias**: The SQL selects `stop.stop_name`, `stop.wait_min`, and `stop.fare`. This implies that `stops` is an array of structs, and we are extracting specific fields from the exploded struct.\n3.  **`t.id`, `t.driver_id`**: These are selected directly from the main DataFrame.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql.functions import explode_outer, col\n\n# Assuming 'vehicle_trips' is your DataFrame\n# and 'stops' is an array of structs containing 'stop_name', 'wait_min', and 'fare'\n\nresult_df = (\n    vehicle_trips\n    # Explode the 'stops' array. \n    # explode_outer ensures rows are kept even if 'stops' is null or empty (matching OUTER)\n    .withColumn(\"stop_struct\", explode_outer(col(\"stops\")))\n    # Select the required columns, flattening the struct fields\n    .select(\n        col(\"id\"),\n        col(\"driver_id\"),\n        col(\"stop_struct.stop_name\").alias(\"stop_name\"),\n        col(\"stop_struct.wait_min\").alias(\"wait_min\"),\n        col(\"stop_struct.fare\").alias(\"fare\")\n    )\n)\n\n# Optional: Show the result\n# result_df.show()\n```\n\n### Alternative (More Concise)\nIf you prefer a slightly more compact syntax using `select` with the struct directly:\n\n```python\nfrom pyspark.sql.functions import explode_outer\n\nresult_df = (\n    vehicle_trips\n    .select(\n        \"id\",\n        \"driver_id\",\n        explode_outer(\"stops\").alias(\"stop_struct\")\n    )\n    .select(\n        \"id\",\n        \"driver_id\",\n        \"stop_struct.stop_name\",\n        \"stop_struct.wait_min\",\n        \"stop_struct.fare\"\n    )\n)\n```\n\n**Note:** Ensure that the `stops` column in your `vehicle_trips` DataFrame is actually an **Array of Structs** where the struct contains the fields `stop_name`, `wait_min`, and `fare`. If the schema differs, the column names in the `.select()` calls will need to be adjusted accordingly.",
+      "seconds": 10.49,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'vehicle_trips' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'vehicle_trips' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_021",
+      "level": "nested",
+      "sql": "SELECT id, pos + 1 AS stop_number, s.stop_name\nFROM vehicle_trips\nLATERAL VIEW POSEXPLODE(stops) x AS pos, s\nWHERE s.wait_min > 5",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Logic Translation\n1.  **`LATERAL VIEW POSEXPLODE(stops)`**: This is translated using `explode` combined with `posexplode` (or `posexplode_outer` if nulls are possible, though `posexplode` is standard for non-null arrays). We extract both the index (`pos`) and the element (`s`).\n2.  **`pos + 1 AS stop_number`**: We calculate this in the `select` statement.\n3.  **`WHERE s.wait_min > 5`**: This filter is applied after the explosion to check the condition on the specific stop object.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql import Window\n\n# Assuming 'vehicle_trips' is your DataFrame\n# and 'stops' is an array of structs containing 'wait_min' and 'stop_name'.\n\nresult_df = (\n    vehicle_trips\n    # 1. Explode the 'stops' array to get individual stop objects and their positions\n    .withColumn(\"stop_array\", F.posexplode(\"stops\"))\n    # 2. Extract the index and the stop struct from the exploded column\n    .select(\n        \"id\",\n        F.col(\"stop_array.pos\") + 1,  # pos + 1 as stop_number\n        F.col(\"stop_array.value\").alias(\"s\") # The stop struct\n    )\n    # 3. Filter where wait_min > 5\n    .filter(F.col(\"s.wait_min\") > 5)\n    # 4. Select final columns: id, stop_number, stop_name\n    .select(\n        \"id\",\n        F.col(\"stop_array.pos\") + 1, # Recalculate or alias if needed, but we can just select the calculated one\n        F.col(\"s.stop_name\")\n    )\n    # Note: The above select logic can be simplified by doing the calculation in the first select\n)\n\n# Optimized/Idomatic Version:\noptimized_result = (\n    vehicle_trips\n    .withColumn(\"exploded\", F.posexplode(\"stops\"))\n    .select(\n        \"id\",\n        F.col(\"exploded.pos\") + 1,\n        F.col(\"exploded.value.stop_name\"),\n        F.col(\"exploded.value.wait_min\")\n    )\n    .filter(F.col(\"wait_min\") > 5)\n    .select(\n        \"id\",\n        F.col(\"pos\") + 1, # If we didn't calculate it earlier, but we did. \n        # Let's fix the column names for clarity:\n        F.col(\"stop_number\").alias(\"stop_number\"), # Renaming for clarity\n        \"stop_name\"\n    )\n)\n\n# Final Clean Version (Recommended)\nfinal_result = (\n    vehicle_trips\n    .withColumn(\"exploded\", F.posexplode(\"stops\"))\n    .select(\n        \"id\",\n        F.col(\"exploded.pos\") + 1,\n        F.col(\"exploded.value.stop_name\"),\n        F.col(\"exploded.value.wait_min\")\n    )\n    .filter(F.col(\"wait_min\") > 5)\n    .select(\n        \"id\",\n        F.col(\"pos\") + 1, # This is redundant if we named it stop_number, let's fix the aliasing\n        \"stop_name\"\n    )\n)\n\n# Let's write the most direct and readable version:\nfinal_result = (\n    vehicle_trips\n    .withColumn(\"exploded\", F.posexplode(\"stops\"))\n    .select(\n        \"id\",\n        F.col(\"exploded.pos\") + 1,\n        F.col(\"exploded.value.stop_name\"),\n        F.col(\"exploded.value.wait_min\")\n    )\n    .filter(F.col(\"wait_min\") > 5)\n    .select(\n        \"id\",\n        F.col(\"pos\") + 1, # Wait, 'pos' is the column name from the alias.\n        \"stop_name\"\n    )\n)\n\n# Corrected Final Logic:\nfinal_result = (\n    vehicle_trips\n    .withColumn(\"exploded\", F.posexplode(\"stops\"))\n    .select(\n        \"id\",\n        F.col(\"exploded.pos\") + 1,\n        F.col(\"exploded.value.stop_name\"),\n        F.col(\"exploded.value.wait_min\")\n    )\n    .filter(F.col(\"wait_min\") > 5)\n    .select(\n        \"id\",\n        F.col(\"pos\") + 1, # This is confusing because 'pos' is the column name from the alias.\n        \"stop_name\"\n    )\n)\n\n# Let's simplify the variable naming to match the SQL intent exactly:\nfinal_result = (\n    vehicle_trips\n    .withColumn(\"exploded\", F.posexplode(\"stops\"))\n    .select(\n        \"id\",\n        F.col(\"exploded.pos\") + 1,\n        F.col(\"exploded.value.stop_name\"),\n        F.col(\"exploded.value.wait_min\")\n    )\n    .filter(F.col(\"wait_min\") > 5)\n    .select(\n        \"id\",\n        F.col(\"pos\") + 1, # This is the 'stop_number'\n        \"stop_name\"\n    )\n)\n\n# Actually, the cleanest way is to alias the calculated column immediately:\nfinal_result = (\n    vehicle_trips\n    .withColumn(\"exploded\", F.posexplode(\"stops\"))\n    .select(\n        \"id\",\n        (F.col(\"exploded.pos\") + 1).alias(\"stop_number\"),\n        F.col(\"exploded.value.stop_name\"),\n        F.col(\"exploded.value.wait_min\")\n    )\n    .filter(F.col(\"wait_min\") > 5)\n    .select(\"id\", \"stop_number\", \"stop_name\")\n)\n```\n\n### Final Clean Code Block\n\n```python\nfrom pyspark.sql import functions as F\n\n# Assuming 'vehicle_trips' is your DataFrame\n# and 'stops' is an array of structs with fields 'stop_name' and 'wait_min'.\n\nresult_df = (\n    vehicle_trips\n    # 1. LATERAL VIEW POSEXPLODE: Explode the array and get index + element\n    .withColumn(\"exploded\", F.posexplode(\"stops\"))\n    \n    # 2. Select and Calculate: Extract fields and compute stop_number\n    .select(\n        \"id\",\n        (F.col(\"exploded.pos\") + 1).alias(\"stop_number\"),\n        F.col(\"exploded.value.stop_name\"),\n        F.col(\"exploded.value.wait_min\")\n    )\n    \n    # 3. WHERE clause: Filter based on the wait_min of the specific stop\n    .filter(F.col(\"wait_min\") > 5)\n    \n    # 4. Final Projection: Select only the required columns\n    .select(\"id\", \"stop_number\", \"stop_name\")\n)\n```",
+      "seconds": 29.71,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'vehicle_trips' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'vehicle_trips' is not defined"
+      }
+    },
+    {
+      "id": "holdout_v4_022",
+      "level": "nested",
+      "sql": "SELECT id,\n       SIZE(stops) AS num_stops,\n       AGGREGATE(stops, 0D, (acc, s) -> acc + s.fare, acc -> ROUND(acc, 2)) AS stop_fares,\n       TRANSFORM(FILTER(stops, s -> s.wait_min >= 10), s -> s.stop_name) AS long_wait_stops,\n       EXISTS(stops, s -> s.stop_name = 'Airport') AS via_airport,\n       ZIP_WITH(fare_components, surcharge_rates, (f, r) -> ROUND(f * r, 2)) AS charged_components\nFROM vehicle_trips",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details\n1.  **Array Handling**: The SQL `SIZE`, `FILTER`, and `TRANSFORM` functions operate on arrays. In PySpark, we use `pyspark.sql.functions.size`, `pyspark.sql.functions.filter`, and `pyspark.sql.functions.transform`.\n2.  **Aggregation**: The SQL `AGGREGATE` function is not a built-in PySpark function. We implement the logic using `pyspark.sql.functions.expr` with a lambda or by chaining `reduce` on the array elements if the schema allows, but the most robust way to replicate the specific `acc + s.fare` logic is using `pyspark.sql.functions.expr` with the Spark SQL dialect syntax or manually mapping the array.\n    *   *Approach chosen*: Using `pyspark.sql.functions.expr` for the aggregation logic is the most direct translation of the SQL `AGGREGATE` syntax, as it preserves the exact logic `(acc, s) -> acc + s.fare` and the final rounding step.\n3.  **Existence Check**: `EXISTS` is translated to `pyspark.sql.functions.exists` (available in Spark 3.3+). If you are on an older version, we use `array_contains` combined with a filter logic.\n4.  **Zip Logic**: `ZIP_WITH` is translated to `pyspark.sql.functions.zip_with`.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.types import StructType, StructField, StringType, DoubleType, ArrayType\n\n# Assuming 'vehicle_trips' is your DataFrame\n# df = spark.read...\n\n# Define the logic for the aggregation manually if using older Spark versions, \n# but here we use the SQL expression for direct translation of AGGREGATE.\n# Note: This assumes the 'stops' column is an ArrayType of a Struct with 'fare' and 'wait_min' and 'stop_name'.\n\ndf_result = df.select(\n    \"id\",\n    # SIZE(stops) AS num_stops\n    F.size(\"stops\").alias(\"num_stops\"),\n    \n    # AGGREGATE(stops, 0D, (acc, s) -> acc + s.fare, acc -> ROUND(acc, 2)) AS stop_fares\n    # We use expr to replicate the SQL aggregate function exactly\n    F.expr(\"AGGREGATE(stops, 0.0, (acc, s) -> acc + s.fare, acc -> ROUND(acc, 2))\").alias(\"stop_fares\"),\n    \n    # TRANSFORM(FILTER(stops, s -> s.wait_min >= 10), s -> s.stop_name) AS long_wait_stops\n    F.transform(\n        F.filter(\"stops\", \"s.wait_min >= 10\"),\n        \"s -> s.stop_name\"\n    ).alias(\"long_wait_stops\"),\n    \n    # EXISTS(stops, s -> s.stop_name = 'Airport') AS via_airport\n    F.exists(\"stops\", \"s -> s.stop_name = 'Airport'\").alias(\"via_airport\"),\n    \n    # ZIP_WITH(fare_components, surcharge_rates, (f, r) -> ROUND(f * r, 2)) AS charged_components\n    F.zip_with(\n        \"fare_components\", \n        \"surcharge_rates\", \n        \"f, r -> ROUND(f * r, 2)\"\n    ).alias(\"charged_components\")\n)\n\n# Show or write the result\ndf_result.show(truncate=False)\n```\n\n### Prerequisites & Notes\n*   **Spark Version**: This code requires **Spark 3.3 or higher** to support `exists`, `aggregate`, `filter` (on arrays), `transform`, and `zip_with` with lambda expressions directly in the `expr` or function calls.\n*   **Schema Assumption**: The code assumes the following schema for the `stops` column:\n    *   `stops`: `ArrayType(StructType([StructField(\"fare\", DoubleType), StructField(\"wait_min\", DoubleType), StructField(\"stop_name\", StringType)]))`\n*   **Alternative for Older Spark**: If you are on Spark < 3.3, you cannot use `exists` or `aggregate` directly in the DataFrame API. You would need to use `pandas_udf` or convert to SQL context to run the query string directly:\n    ```python\n    # Alternative for Spark < 3.3 using SQL Context\n    df_result = df.createOrReplaceTempView(\"vehicle_trips\")\n    query = \"\"\"\n    SELECT id,\n           SIZE(stops) AS num_stops,\n           AGGREGATE(stops, 0D, (acc, s) -> acc + s.fare, acc -> ROUND(acc, 2)) AS stop_fares,\n           TRANSFORM(FILTER(stops, s -> s.wait_min >= 10), s -> s.stop_name) AS long_wait_stops,\n           EXISTS(stops, s -> s.stop_name = 'Airport') AS via_airport,\n           ZIP_WITH(fare_components, surcharge_rates, (f, r) -> ROUND(f * r, 2)) AS charged_components\n    FROM vehicle_trips\n    \"\"\"\n    df_result = spark.sql(query)\n    ```",
+      "seconds": 22.18,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "TypeError: 's.wait_min >= 10' is not a callable object"
+      }
+    },
+    {
+      "id": "holdout_v4_023",
+      "level": "nested",
+      "sql": "SELECT id,\n       route.origin,\n       COALESCE(route.destination, 'OPEN') AS destination,\n       extras['vehicle_type'] AS vehicle_type,\n       TRY_CAST(extras['rating'] AS DOUBLE) AS rating,\n       GET_JSON_OBJECT(telemetry_json, '$.speed.max') AS max_speed_text,\n       FROM_JSON(telemetry_json, 'STRUCT<speed: STRUCT<avg: DOUBLE, max: DOUBLE>, battery: INT>').battery AS battery\nFROM vehicle_trips",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details:\n1.  **Struct Access**: `route.origin` and `route.destination` are accessed using dot notation (e.g., `df.route.origin`).\n2.  **Map Access**: `extras['vehicle_type']` is accessed using the `getItem` method or square bracket notation on the Map column.\n3.  **JSON Parsing**:\n    *   `GET_JSON_OBJECT` is replaced by `from_json` with a defined schema, which is more performant and type-safe.\n    *   `TRY_CAST` is handled by defining the schema in `from_json` to ensure the column is cast to `DoubleType` automatically, or by using `cast()` if the schema isn't strictly enforced.\n4.  **COALESCE**: Implemented using `F.coalesce` with a default string literal.\n5.  **Column Aliasing**: Uses the `.alias()` method for clarity.\n\n### PySpark Code\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType\n\n# Define the schema for the telemetry JSON to ensure type safety and avoid parsing errors\ntelemetry_schema = StructType([\n    StructField(\"speed\", StructType([\n        StructField(\"avg\", DoubleType(), True),\n        StructField(\"max\", DoubleType(), True)\n    ]), True),\n    StructField(\"battery\", IntegerType(), True)\n])\n\n# Define the schema for the extras map if needed, though usually string keys are handled dynamically\n# Assuming 'vehicle_type' and 'rating' are strings in the JSON/Map\n\ndf = spark.table(\"vehicle_trips\")\n\nresult_df = df.select(\n    \"id\",\n    F.col(\"route.origin\").alias(\"origin\"),\n    F.coalesce(F.col(\"route.destination\"), F.lit(\"OPEN\")).alias(\"destination\"),\n    F.col(\"extras\").getItem(\"vehicle_type\").alias(\"vehicle_type\"),\n    # Using from_json to parse the specific JSON string into a typed struct\n    # This handles the TRY_CAST logic by enforcing the Double type on 'rating'\n    F.from_json(\n        F.col(\"telemetry_json\"), \n        telemetry_schema, \n        options={\"failOnInvalid\": False} # Equivalent to TRY_CAST (returns null on failure)\n    ).alias(\"parsed_telemetry\")\n).select(\n    \"id\",\n    \"origin\",\n    \"destination\",\n    \"vehicle_type\",\n    # Extract max_speed from the parsed struct\n    F.col(\"parsed_telemetry.speed.max\").alias(\"max_speed_text\"),\n    # Extract battery from the parsed struct\n    F.col(\"parsed_telemetry.battery\").alias(\"battery\")\n)\n\n# Optional: If you prefer to keep the raw JSON parsing logic inline without intermediate columns:\n# result_df = df.select(\n#     \"id\",\n#     \"route.origin\",\n#     F.coalesce(\"route.destination\", \"OPEN\").alias(\"destination\"),\n#     F.col(\"extras\").getItem(\"vehicle_type\").alias(\"vehicle_type\"),\n#     F.from_json(\"telemetry_json\", telemetry_schema).alias(\"parsed_telemetry\")\n# ).select(\n#     \"id\",\n#     \"origin\",\n#     \"destination\",\n#     \"vehicle_type\",\n#     F.col(\"parsed_telemetry.speed.max\").alias(\"max_speed_text\"),\n#     F.col(\"parsed_telemetry.battery\").alias(\"battery\")\n# )\n```\n\n### Explanation of `from_json` usage\nIn your SQL, `TRY_CAST` implies that if the JSON is malformed, the result should be `NULL` rather than throwing an error.\n*   In PySpark, `F.from_json(..., options={\"failOnInvalid\": False})` achieves this. If the JSON string doesn't match the schema, the resulting struct column will be `NULL`, which propagates correctly to the final `max_speed_text` and `battery` columns.\n*   The schema definition ensures `rating` (if extracted) and `max` are treated as `DoubleType`.",
+      "seconds": 17.27,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "no_result",
+        "detail": "LookupError: code did not assign a DataFrame to `result`"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['id', 'origin', 'destination', 'vehicle_type', 'rating', 'max_speed_text', 'battery'] py=['id', 'origin', 'destination', 'vehicle_type', 'max_speed_text', 'battery']"
+      }
+    },
+    {
+      "id": "holdout_v4_024",
+      "level": "pipeline",
+      "sql": "WITH recent AS (\n    -- appointments with a known patient\n    SELECT *\n    FROM appointments\n    WHERE patient_id IS NOT NULL\n      AND appt_date >= DATE '2023-06-01'\n),\nranked AS (\n    SELECT *,\n           ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY appt_date, id) AS visit_no,\n           SUM(fee) OVER (PARTITION BY patient_id ORDER BY appt_date, id\n                          ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_fee\n    FROM recent\n),\nper_doctor AS (\n    SELECT doctor_id,\n           COUNT(*) AS visits,\n           COUNT(*) FILTER (WHERE visit_no = 1) AS first_visits,\n           MAX(cumulative_fee) AS max_patient_spend\n    FROM ranked\n    GROUP BY doctor_id\n)\nSELECT d.doctor_name, d.specialty, p.visits, p.first_visits, p.max_patient_spend,\n       RANK() OVER (PARTITION BY d.specialty ORDER BY p.visits DESC) AS rank_in_specialty\nFROM per_doctor p\nJOIN doctors d ON p.doctor_id = d.id\nORDER BY d.specialty, rank_in_specialty",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details:\n1.  **Window Functions**: Used `Window` specifications for `ROW_NUMBER`, `SUM` (cumulative), and `RANK`.\n2.  **Filtering**: The `FILTER` clause in SQL is translated to a conditional `when/otherwise` logic within the aggregation.\n3.  **Date Handling**: `DATE '2023-06-01'` is handled using `pyspark.sql.functions.lit` or a string cast to ensure type safety.\n4.  **Ordering**: The final `ORDER BY` is applied at the end of the chain.\n\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\n# Initialize SparkSession (assuming it exists as 'spark')\n# spark = SparkSession.builder.appName(\"SQLToPySpark\").getOrCreate()\n\n# Define the date constant\nstart_date = \"2023-06-01\"\n\n# 1. CTE: recent\n# Select appointments with known patient_id and date >= 2023-06-01\nrecent_df = (\n    spark.table(\"appointments\")\n    .filter(\n        F.col(\"patient_id\").isNotNull() & \n        F.col(\"appt_date\") >= F.to_date(F.lit(start_date))\n    )\n)\n\n# 2. CTE: ranked\n# Calculate visit_no and cumulative_fee using Window functions\nwindow_spec = Window.partitionBy(\"patient_id\").orderBy(\"appt_date\", \"id\")\n\nranked_df = (\n    recent_df\n    .withColumn(\"visit_no\", F.row_number().over(window_spec))\n    .withColumn(\n        \"cumulative_fee\", \n        F.sum(\"fee\").over(window_spec.rowsBetween(Window.unboundedPreceding, Window.currentRow))\n    )\n)\n\n# 3. CTE: per_doctor\n# Aggregate by doctor_id, counting total visits and first visits (visit_no = 1)\nper_doctor_df = (\n    ranked_df\n    .groupBy(\"doctor_id\")\n    .agg(\n        F.count(\"*\").alias(\"visits\"),\n        F.sum(F.when(F.col(\"visit_no\") == 1, 1).otherwise(0)).alias(\"first_visits\"),\n        F.max(\"cumulative_fee\").alias(\"max_patient_spend\")\n    )\n)\n\n# 4. Final Join and Ranking\n# Join with doctors table and calculate rank_in_specialty\nfinal_df = (\n    per_doctor_df\n    .join(spark.table(\"doctors\"), per_doctor_df.doctor_id == spark.table(\"doctors\").id, \"inner\")\n    .select(\n        F.col(\"doctors.doctor_name\"),\n        F.col(\"doctors.specialty\"),\n        F.col(\"visits\"),\n        F.col(\"first_visits\"),\n        F.col(\"max_patient_spend\")\n    )\n    .withColumn(\n        \"rank_in_specialty\",\n        F.rank().over(\n            Window.partitionBy(\"specialty\").orderBy(F.col(\"visits\").desc())\n        )\n    )\n    .orderBy(\"specialty\", \"rank_in_specialty\")\n)\n\n# Show or write the result\nfinal_df.show()\n```\n\n### Notes on Logic Translation:\n*   **`COUNT(*) FILTER (WHERE visit_no = 1)`**: In PySpark, this is achieved by summing a conditional expression: `F.sum(F.when(F.col(\"visit_no\") == 1, 1).otherwise(0))`.\n*   **`ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`**: This is the default behavior for `sum` in a window if not specified, but explicitly using `rowsBetween(Window.unboundedPreceding, Window.currentRow)` makes the intent clear and matches the SQL exactly.\n*   **`DATE '2023-06-01'`**: Converted to a string literal and cast to a Date type using `F.to_date` to ensure compatibility with the `appt_date` column.",
+      "seconds": 17.69,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [DATATYPE_MISMATCH.BINARY_OP_DIFF_TYPES] Cannot resolve \"((patient_id IS NOT NULL) AND appt_date)\" due to data type mismatch: the left and right operands of the binary operator have incompatible types (\"BOOLEAN\" and \"DATE\"). SQLSTATE: 42K09;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [DATATYPE_MISMATCH.BINARY_OP_DIFF_TYPES] Cannot resolve \"((patient_id IS NOT NULL) AND appt_date)\" due to data type mismatch: the left and right operands of the binary operator have incompatible types (\"BOOLEAN\" and \"DATE\"). SQLSTATE: 42K09;"
+      }
+    },
+    {
+      "id": "holdout_v4_025",
+      "level": "pipeline",
+      "sql": "WITH stops AS (\n    SELECT t.id AS trip_id, t.driver_id, t.trip_start, s.stop_name, s.wait_min, s.fare\n    FROM vehicle_trips t\n    LATERAL VIEW EXPLODE(t.stops) x AS s\n),\nper_driver AS (\n    SELECT driver_id,\n           DATE_TRUNC('DAY', trip_start) AS trip_day,\n           COUNT(DISTINCT trip_id) AS trips,\n           SUM(fare) AS stop_revenue,\n           AVG(wait_min) FILTER (WHERE stop_name = 'Airport') AS airport_wait\n    FROM stops\n    GROUP BY driver_id, DATE_TRUNC('DAY', trip_start)\n)\nSELECT driver_id, trip_day, trips, ROUND(stop_revenue, 2) AS stop_revenue, airport_wait,\n       DENSE_RANK() OVER (PARTITION BY trip_day ORDER BY stop_revenue DESC) AS revenue_rank\nFROM per_driver\nORDER BY trip_day, revenue_rank, driver_id",
+      "reply": "Here is the idiomatic PySpark code equivalent to your SQL query.\n\n### Key Implementation Details:\n1.  **Explode**: Uses `explode_outer` to handle the `LATERAL VIEW EXPLODE` logic. `explode_outer` is generally safer as it preserves rows even if the array is null, matching standard SQL behavior for `LATERAL VIEW`.\n2.  **Date Truncation**: Uses `date_trunc('day', col)` which is the direct PySpark equivalent to `DATE_TRUNC('DAY', ...)`.\n3.  **Conditional Aggregation**: The `AVG(...) FILTER (WHERE ...)` is translated using `when/otherwise` logic inside the `avg` function.\n4.  **Window Function**: `DENSE_RANK` is implemented using `Window` specification with `partitionBy` and `orderBy`.\n5.  **Rounding**: Uses `round` with the specified precision.\n\n```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\n# Assuming 'df' is your DataFrame representing 'vehicle_trips'\n# and it contains columns: id, driver_id, trip_start, stops (array of structs), fare, wait_min, stop_name\n\n# Step 1: Create the 'stops' CTE equivalent\n# Explode the stops array and select the required fields\nstops_df = (\n    df\n    .select(\n        \"id\",\n        \"driver_id\",\n        \"trip_start\",\n        F.explode_outer(\"stops\").alias(\"s\") # LATERAL VIEW EXPLODE\n    )\n    .select(\n        F.col(\"id\").alias(\"trip_id\"),\n        \"driver_id\",\n        \"trip_start\",\n        F.col(\"s.stop_name\").alias(\"stop_name\"),\n        F.col(\"s.wait_min\").alias(\"wait_min\"),\n        F.col(\"s.fare\").alias(\"fare\")\n    )\n)\n\n# Step 2: Create the 'per_driver' CTE equivalent\nper_driver_df = (\n    stops_df\n    .withColumn(\"trip_day\", F.date_trunc(\"day\", \"trip_start\"))\n    .groupBy(\"driver_id\", \"trip_day\")\n    .agg(\n        F.countDistinct(\"trip_id\").alias(\"trips\"),\n        F.sum(\"fare\").alias(\"stop_revenue\"),\n        # AVG(wait_min) FILTER (WHERE stop_name = 'Airport')\n        F.avg(\n            F.when(F.col(\"stop_name\") == \"Airport\", F.col(\"wait_min\"))\n        ).alias(\"airport_wait\")\n    )\n)\n\n# Step 3: Final Select and Window Function\nwindow_spec = Window.partitionBy(\"trip_day\").orderBy(F.col(\"stop_revenue\").desc())\n\nresult_df = (\n    per_driver_df\n    .select(\n        \"driver_id\",\n        \"trip_day\",\n        \"trips\",\n        F.round(\"stop_revenue\", 2).alias(\"stop_revenue\"),\n        \"airport_wait\",\n        F.dense_rank().over(window_spec).alias(\"revenue_rank\")\n    )\n    .orderBy(\"trip_day\", \"revenue_rank\", \"driver_id\")\n)\n\n# Show or write the result\n# result_df.show()\n```\n\n### Notes on Data Types\n*   **`stops` Column**: Ensure the `stops` column in your source DataFrame is an `ArrayType` of a `StructType` containing `stop_name`, `wait_min`, and `fare`. If the structure differs, adjust the `.select` logic accordingly.\n*   **Null Handling**: `explode_outer` ensures that if `stops` is null, the row is preserved with nulls for the exploded columns, which prevents data loss during the join-like expansion.\n*   **Filtering in Aggregation**: The `F.when(...).alias(...)` pattern inside `F.avg` correctly replicates the SQL `FILTER` clause. If `stop_name` is not \"Airport\", the value passed to `avg` becomes `null`, which `avg` ignores.",
+      "seconds": 16.91,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df' is not defined"
+      }
+    }
+  ]
+}
