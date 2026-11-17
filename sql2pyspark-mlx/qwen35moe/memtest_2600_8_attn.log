@@ -1,0 +1,49 @@
+Loading configuration file qwen35moe/memtest_2600_8_attn.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.008% (2.851M/34660.609M)
+Starting training..., iters: 30
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3095 will be truncated to 2600. Consider pre-splitting your data to save memory.
+Calculating loss...:   0%|          | 0/2 [00:00<?, ?it/s]Calculating loss...:  50%|█████     | 1/2 [00:01<00:01,  1.84s/it]Calculating loss...: 100%|██████████| 2/2 [00:03<00:00,  1.80s/it]Calculating loss...: 100%|██████████| 2/2 [00:03<00:00,  1.81s/it]
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 2655 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 2681 will be truncated to 2600. Consider pre-splitting your data to save memory.
+Iter 1: Val loss 0.066, Val took 3.626s
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 27, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: [gather_axis] Cannot calculate VJP with respect to indices. Use stop_gradient on indices to stop gradients from being computed.

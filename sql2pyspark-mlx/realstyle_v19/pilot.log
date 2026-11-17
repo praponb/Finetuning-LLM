@@ -1,0 +1,147 @@
+[12:06:33] 100 cases to run (0 already done), model kimi-k3.1-pro, effort high, 8 workers, budget $15.0
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/15 12:06:34 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[12:11:15] rst00005 OK   checks=1 $0.109 280s | total ok=1 failed=0 spent=$0.11
+[12:11:59] rst00001 OK   checks=2 $0.147 324s | total ok=2 failed=0 spent=$0.26
+[12:12:17] rst00006 OK   checks=1 $0.127 342s | total ok=3 failed=0 spent=$0.38
+[12:12:19] rst00007 OK   checks=2 $0.168 343s | total ok=4 failed=0 spent=$0.55
+[12:13:25] rst00002 OK   checks=2 $0.176 410s | total ok=5 failed=0 spent=$0.73
+[12:14:59] rst00000 OK   checks=3 $0.255 504s | total ok=6 failed=0 spent=$0.98
+[12:19:14] rst00010 OK   checks=3 $0.200 418s | total ok=7 failed=0 spent=$1.18
+[12:21:11] rst00012 OK   checks=3 $0.225 466s | total ok=8 failed=0 spent=$1.41
+[12:39:22] rst00003 FAIL checks=6 $0.641 1966s | total ok=8 failed=1 spent=$2.05
+[12:48:43] rst00009 OK   checks=2 $0.179 2204s | total ok=9 failed=1 spent=$2.23
+[12:51:37] rst00004 FAIL checks=0 $0.000 0s | total ok=9 failed=2 spent=$2.23
+[12:52:13] rst00011 OK   checks=4 $0.329 2394s | total ok=10 failed=2 spent=$2.56
+[12:56:17] rst00008 FAIL checks=0 $0.000 0s | total ok=10 failed=3 spent=$2.56
+[12:59:27] rst00018 OK   checks=3 $0.255 470s | total ok=11 failed=3 spent=$2.81
+[13:00:01] rst00013 FAIL checks=0 $0.000 0s | total ok=11 failed=4 spent=$2.81
+[13:02:37] rst00020 OK   checks=3 $0.197 380s | total ok=12 failed=4 spent=$3.01
+[13:04:16] rst00014 FAIL checks=0 $0.000 0s | total ok=12 failed=5 spent=$3.01
+[13:05:01] rst00021 OK   checks=2 $0.164 334s | total ok=13 failed=5 spent=$3.17
+[13:06:13] rst00015 FAIL checks=0 $0.000 0s | total ok=13 failed=6 spent=$3.17
+[13:08:03] rst00022 OK   checks=2 $0.211 482s | total ok=14 failed=6 spent=$3.38
+[13:08:33] rst00023 OK   checks=2 $0.156 356s | total ok=15 failed=6 spent=$3.54
+[13:11:18] rst00025 OK   checks=2 $0.178 378s | total ok=16 failed=6 spent=$3.72
+[13:17:22] rst00029 OK   checks=2 $0.166 364s | total ok=17 failed=6 spent=$3.88
+[13:24:23] rst00016 FAIL checks=0 $0.000 0s | total ok=17 failed=7 spent=$3.88
+[13:24:28] rst00017 OK   checks=2 $0.153 2144s | total ok=18 failed=7 spent=$4.04
+[13:25:33] rst00030 OK   checks=3 $0.226 491s | total ok=19 failed=7 spent=$4.26
+[13:31:09] rst00033 OK   checks=1 $0.116 336s | total ok=20 failed=7 spent=$4.38
+[13:31:53] rst00032 OK   checks=2 $0.194 446s | total ok=21 failed=7 spent=$4.57
+[13:33:48] rst00028 OK   checks=4 $0.361 1515s | total ok=22 failed=7 spent=$4.93
+[13:37:14] rst00019 FAIL checks=0 $0.000 0s | total ok=22 failed=8 spent=$4.93
+[13:39:19] rst00036 OK   checks=1 $0.119 330s | total ok=23 failed=8 spent=$5.05
+[13:47:13] rst00037 OK   checks=4 $0.302 599s | total ok=24 failed=8 spent=$5.35
+[13:49:17] rst00024 FAIL checks=0 $0.000 0s | total ok=24 failed=9 spent=$5.35
+[13:51:15] rst00026 FAIL checks=0 $0.000 0s | total ok=24 failed=10 spent=$5.35
+[13:52:29] rst00035 OK   checks=2 $0.153 1236s | total ok=25 failed=10 spent=$5.51
+[13:53:04] rst00027 FAIL checks=0 $0.000 0s | total ok=25 failed=11 spent=$5.51
+=== restart 13:57:56 ===
+retrying 10 cases that hit an API error
+[13:57:57] 74 cases to run (26 already done), model kimi-k3.1-pro, effort high, 8 workers, budget $15.0 (spent before: $5.51)
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/11/15 13:57:57 WARN Utils: Your hostname, PraponBs-Mac-Mini-M6.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.50 instead (on interface en0)
+26/11/15 13:57:57 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/15 13:57:58 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[14:02:56] rst00015 OK   checks=1 $0.108 296s | total ok=1 failed=0 spent=$5.62
+[14:27:59] rst00024 FAIL checks=0 $0.000 0s | total ok=1 failed=1 spent=$5.62
+[14:27:59] rst00013 FAIL checks=0 $0.000 0s | total ok=1 failed=2 spent=$5.62
+[14:27:59] rst00004 FAIL checks=0 $0.000 0s | total ok=1 failed=3 spent=$5.62
+[14:27:59] rst00016 FAIL checks=0 $0.000 0s | total ok=1 failed=4 spent=$5.62
+[14:27:59] rst00019 FAIL checks=0 $0.000 0s | total ok=1 failed=5 spent=$5.62
+[14:27:59] rst00008 FAIL checks=0 $0.000 0s | total ok=1 failed=6 spent=$5.62
+[14:27:59] rst00014 FAIL checks=0 $0.000 0s | total ok=1 failed=7 spent=$5.62
+[14:32:56] rst00026 FAIL checks=0 $0.000 0s | total ok=1 failed=8 spent=$5.62
+[14:33:07] rst00034 OK   checks=1 $0.112 308s | total ok=2 failed=8 spent=$5.73
+[14:33:25] rst00038 FAIL checks=0 $0.000 0s | total ok=2 failed=9 spent=$5.73
+[14:34:58] rst00040 OK   checks=2 $0.204 419s | total ok=3 failed=9 spent=$5.93
+[14:36:37] rst00039 OK   checks=3 $0.274 518s | total ok=4 failed=9 spent=$6.21
+[14:41:19] rst00045 OK   checks=2 $0.180 381s | total ok=5 failed=9 spent=$6.39
+[14:43:22] rst00046 OK   checks=3 $0.210 405s | total ok=6 failed=9 spent=$6.60
+[14:57:59] rst00041 FAIL checks=0 $0.000 0s | total ok=6 failed=10 spent=$6.60
+[14:57:59] rst00031 FAIL checks=0 $0.000 0s | total ok=6 failed=11 spent=$6.60
+[14:57:59] rst00027 FAIL checks=0 $0.000 0s | total ok=6 failed=12 spent=$6.60
+[15:01:59] rst00051 OK   checks=1 $0.094 240s | total ok=7 failed=12 spent=$6.69
+[15:02:56] rst00042 FAIL checks=0 $0.000 0s | total ok=7 failed=13 spent=$6.69
+[15:03:07] rst00043 FAIL checks=0 $0.000 0s | total ok=7 failed=14 spent=$6.69
+[15:03:25] rst00044 FAIL checks=0 $0.000 0s | total ok=7 failed=15 spent=$6.69
+[15:06:12] rst00050 OK   checks=3 $0.238 493s | total ok=8 failed=15 spent=$6.93
+[15:07:34] rst00052 OK   checks=1 $0.120 335s | total ok=9 failed=15 spent=$7.05
+[15:11:19] rst00047 FAIL checks=0 $0.000 0s | total ok=9 failed=16 spent=$7.05
+[15:12:48] rst00053 OK   checks=5 $0.349 592s | total ok=10 failed=16 spent=$7.40
+[15:13:22] rst00048 FAIL checks=0 $0.000 0s | total ok=10 failed=17 spent=$7.40
+[15:20:50] rst00058 OK   checks=4 $0.315 571s | total ok=11 failed=17 spent=$7.71
+[15:27:05] rst00061 OK   checks=2 $0.169 375s | total ok=12 failed=17 spent=$7.88
+[15:28:00] rst00049 FAIL checks=0 $0.000 0s | total ok=12 failed=18 spent=$7.88
+[15:33:01] rst00063 OK   checks=2 $0.151 301s | total ok=13 failed=18 spent=$8.03
+[15:33:07] rst00054 FAIL checks=0 $0.000 0s | total ok=13 failed=19 spent=$8.03
+[15:33:25] rst00055 FAIL checks=0 $0.000 0s | total ok=13 failed=20 spent=$8.03
+[15:36:12] rst00056 FAIL checks=0 $0.000 0s | total ok=13 failed=21 spent=$8.03
+[15:37:34] rst00057 FAIL checks=0 $0.000 0s | total ok=13 failed=22 spent=$8.03
+=== restart 15:40:45: streamed turns, per-turn retry ===
+retrying 22 cases that hit an API error
+[15:40:45] 61 cases to run (39 already done), model kimi-k3.1-pro, effort high, 8 workers, budget $15.0 (spent before: $8.03)
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/11/15 15:40:45 WARN Utils: Your hostname, PraponBs-Mac-Mini-M6.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.50 instead (on interface en0)
+26/11/15 15:40:45 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/15 15:40:46 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[15:46:05] rst00026 OK   checks=2 $0.172 318s | total ok=1 failed=0 spent=$8.20
+[15:46:46] rst00016 OK   checks=1 $0.134 359s | total ok=2 failed=0 spent=$8.34
+[15:47:12] rst00019 OK   checks=2 $0.175 385s | total ok=3 failed=0 spent=$8.51
+[15:47:57] rst00008 OK   checks=2 $0.211 430s | total ok=4 failed=0 spent=$8.72
+[15:48:01] rst00004 OK   checks=2 $0.206 434s | total ok=5 failed=0 spent=$8.93
+[15:49:15] rst00014 OK   checks=1 $0.171 508s | total ok=6 failed=0 spent=$9.10
+[15:49:25] rst00024 OK   checks=3 $0.253 518s | total ok=7 failed=0 spent=$9.35
+[15:52:15] rst00013 OK   checks=3 $0.338 688s | total ok=8 failed=0 spent=$9.69
+[15:53:36] rst00042 OK   checks=1 $0.124 335s | total ok=9 failed=0 spent=$9.82
+[15:54:06] rst00031 OK   checks=2 $0.211 440s | total ok=10 failed=0 spent=$10.03
+[15:54:57] rst00038 OK   checks=3 $0.230 465s | total ok=11 failed=0 spent=$10.26
+[15:55:59] rst00027 OK   checks=3 $0.274 594s | total ok=12 failed=0 spent=$10.53
+[15:56:24] rst00043 OK   checks=1 $0.156 429s | total ok=13 failed=0 spent=$10.69
+[15:57:11] rst00041 OK   checks=3 $0.289 554s | total ok=14 failed=0 spent=$10.98
+[16:01:09] rst00047 OK   checks=3 $0.279 534s | total ok=15 failed=0 spent=$11.26
+[16:01:34] rst00048 OK   checks=3 $0.256 478s | total ok=16 failed=0 spent=$11.51
+[16:02:06] rst00056 OK   checks=2 $0.175 342s | total ok=17 failed=0 spent=$11.69
+[16:02:20] rst00049 OK   checks=2 $0.237 494s | total ok=18 failed=0 spent=$11.92
+[16:03:12] rst00044 FAIL checks=6 $0.478 827s | total ok=18 failed=1 spent=$12.40
+[16:04:42] rst00055 OK   checks=3 $0.294 522s | total ok=19 failed=1 spent=$12.70
+[16:05:46] rst00057 OK   checks=3 $0.284 516s | total ok=20 failed=1 spent=$12.98
+[16:06:03] rst00054 OK   checks=4 $0.351 666s | total ok=21 failed=1 spent=$13.33
+[16:07:18] rst00059 OK   checks=1 $0.128 369s | total ok=22 failed=1 spent=$13.46
+[16:08:15] rst00064 OK   checks=1 $0.118 354s | total ok=23 failed=1 spent=$13.58
+[16:08:25] rst00065 OK   checks=2 $0.160 314s | total ok=24 failed=1 spent=$13.74
+[16:11:49] rst00060 OK   checks=4 $0.324 616s | total ok=25 failed=1 spent=$14.06
+[16:12:02] rst00069 OK   checks=1 $0.111 284s | total ok=26 failed=1 spent=$14.17
+[16:13:57] rst00062 OK   checks=4 $0.364 711s | total ok=27 failed=1 spent=$14.54
+[16:14:35] rst00067 OK   checks=3 $0.238 529s | total ok=28 failed=1 spent=$14.77
+[16:16:11] rst00066 OK   checks=4 $0.351 689s | total ok=29 failed=1 spent=$15.12
+[16:16:21] rst00070 OK   checks=2 $0.217 486s | total ok=30 failed=1 spent=$15.34
+[16:16:45] rst00073 OK   checks=2 $0.142 283s | total ok=31 failed=1 spent=$15.48
+[16:18:13] rst00068 OK   checks=2 $0.296 730s | total ok=32 failed=1 spent=$15.78
+[16:18:40] rst00072 OK   checks=2 $0.196 410s | total ok=33 failed=1 spent=$15.98
+[16:20:49] rst00071 OK   checks=3 $0.369 744s | total ok=34 failed=1 spent=$16.34
+[16:21:30] rst00075 OK   checks=2 $0.209 415s | total ok=35 failed=1 spent=$16.55
+[16:22:14] rst00074 OK   checks=2 $0.251 497s | total ok=36 failed=1 spent=$16.81
+{
+  "cases": 76,
+  "ok": 74,
+  "pass_rate": 0.974,
+  "cost_usd": 16.81,
+  "cost_per_ok_usd": 0.227,
+  "median_seconds": 445.7,
+  "mean_checks_ok": 2.32,
+  "sql_lines_median": 131,
+  "errors": 0
+}

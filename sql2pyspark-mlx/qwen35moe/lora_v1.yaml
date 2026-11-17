@@ -1,0 +1,38 @@
+# Qwen3.5-35B-A3B full run (Phase 2, user go 2026-11-15): fresh rank-16 LoRA on the last 16 of 40 blocks (attention,
+# linear attention, shared expert; no routed experts / router), the v18a mix without samples > 2,600 tokens.
+# Settings from the Phase 1 tests: seq 2600 peak 26.6 GB (seq 3200 OOM), ~2.9 s per micro-batch -> ~4 h.
+# Run from sql2pyspark-mlx/:  .venv/bin/python train_resumable.py --config qwen35moe/lora_v1.yaml \
+#                                 --launcher qwen35moe/lora_moe.py --max-restarts 20
+model: mlx-community/Qwen3.5-35B-A3B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35moe/data_mix2600
+adapter_path: ./qwen35moe/adapters_v1
+seed: 35
+iters: 4800
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 2600
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+  keys: [self_attn.q_proj, self_attn.k_proj, self_attn.v_proj, self_attn.o_proj,
+         linear_attn.in_proj_qkv, linear_attn.in_proj_z, linear_attn.in_proj_a, linear_attn.in_proj_b,
+         linear_attn.out_proj,
+         mlp.shared_expert.gate_proj, mlp.shared_expert.up_proj, mlp.shared_expert.down_proj]
+optimizer: adamw
+learning_rate: 1.0e-4
+steps_per_report: 50
+steps_per_eval: 400
+val_batches: 25
+save_every: 200
+test: false
+lr_schedule:
+  name: cosine_decay
+  warmup: 30
+  warmup_init: 1.0e-6
+  arguments: [1.0e-4, 1170, 1.0e-5]   # [init, decay_steps, end] (optimizer updates = 4800 / 4 = 1200)

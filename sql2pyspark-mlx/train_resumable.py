@@ -94,6 +94,9 @@ def main():
         c = dict(cfg)
         c["iters"] = remaining
         c["adapter_path"] = str(seg_dir)
+        # new batch order per segment: mlx-lm shuffles with np.random.seed(seed), so the same seed made every resumed
+        # segment re-train the start of the same order (found 2026-11-15 on the Qwen3.5-35B run)
+        c["seed"] = int(cfg.get("seed", 0)) + 1000 * segment
         if done:
             c["resume_adapter_file"] = str(adapter_dir / f"{done:07d}_adapters.safetensors")
             sched = cfg["lr_schedule"]

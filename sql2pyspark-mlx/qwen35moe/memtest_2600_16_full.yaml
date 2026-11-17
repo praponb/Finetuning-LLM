@@ -1,0 +1,32 @@
+# Step 3 memory test for Qwen3.5-35B-A3B: the 64 longest samples of the v18a mix, 30 micro-batches.
+# step34.sh overrides max_seq_length / num_layers / keys for the fallbacks (seq 2600, 8 layers, attention-only).
+# Run from sql2pyspark-mlx/:  .venv/bin/python qwen35moe/lora_moe.py -c qwen35moe/memtest.yaml
+model: mlx-community/Qwen3.5-35B-A3B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35moe/data_long
+adapter_path: ./qwen35moe/adapters_memtest
+seed: 0
+iters: 30
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 2600
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+  # no routed experts (mlp.switch_mlp.*) and no router (mlp.gate): memory
+  keys: [self_attn.q_proj, self_attn.k_proj, self_attn.v_proj, self_attn.o_proj,
+         linear_attn.in_proj_qkv, linear_attn.in_proj_z, linear_attn.in_proj_a, linear_attn.in_proj_b,
+         linear_attn.out_proj,
+         mlp.shared_expert.gate_proj, mlp.shared_expert.up_proj, mlp.shared_expert.down_proj]
+optimizer: adamw
+learning_rate: 1.0e-4
+steps_per_report: 5
+steps_per_eval: 1000
+val_batches: 2
+save_every: 1000
+test: false

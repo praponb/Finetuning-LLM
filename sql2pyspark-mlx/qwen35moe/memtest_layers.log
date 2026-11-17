@@ -1,0 +1,11 @@
+[19:13:53] memtest seq 2600, 24 layers
+[19:17:13] PASS seq 2600 / 24 layers: Peak mem 26.485 GB, Tokens/sec 74.778
+[19:17:13] memtest seq 2600, 32 layers
+[19:21:10] PASS seq 2600 / 32 layers: Peak mem 26.738 GB, Tokens/sec 61.841
+[19:21:10] memtest seq 2600, 40 layers
+[19:25:46] PASS seq 2600 / 40 layers: Peak mem 26.685 GB, Tokens/sec 52.897
+[19:25:46] memtest seq 2300, 40 layers
+[19:29:43] PASS seq 2300 / 40 layers: Peak mem 25.506 GB, Tokens/sec 44.940
+[19:29:43] memtest seq 2300, 32 layers
+[19:33:09] PASS seq 2300 / 32 layers: Peak mem 25.506 GB, Tokens/sec 52.285
+[19:33:09] MEMTEST DONE

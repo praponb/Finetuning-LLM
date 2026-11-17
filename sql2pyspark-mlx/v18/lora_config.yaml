@@ -1,0 +1,43 @@
+# LoRA fine-tune for v18a (option A, "gentle v18"): v15 continued on v17's data (complex_v17/data_mix = v15's 25,008
+# mix + 4,000 complex_v16 pairs) with a lower peak learning rate (2e-5 instead of 5e-5) and half the length
+# (2,400 micro-batches = 600 optimizer updates instead of 1,200). Goal: keep v17's hold-out / complex-shift gains while
+# drifting less from v15 (v17 lost 5 fixed / 8 complex cases and won 2 / 4; the losses were spread across categories).
+# Option B (no training) is v18/average.py -> v18/adapters_avg. Both are run and scored by eval/start_training_v18.sh.
+# Run from sql2pyspark-mlx/:
+#   .venv/bin/python train_resumable.py --config v18/lora_config.yaml
+model: mlx-community/Qwen2.5-Coder-7B-Instruct-4bit
+train: true
+fine_tune_type: lora
+data: ./complex_v17/data_mix                                     # 29,008 train / 337 valid (as v17)
+adapter_path: ./v18/adapters_a
+resume_adapter_file: ./schema_v15/adapters/adapters.safetensors   # v15 (latest)
+seed: 18
+
+# 600 optimizer updates of 4 samples = 2,400 micro-batches of 1 (v17: 4,800).
+iters: 2400
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true             # loss only on the assistant (PySpark) tokens
+grad_checkpoint: true
+
+num_layers: 8                 # last 8 of 28 blocks, same as v6-v17 (required to resume their adapters)
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+
+optimizer: adamw
+learning_rate: 2.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-6
+  arguments: [2.0e-5, 550, 2.0e-6]     # [init, decay_steps, end]  (optimizer updates)
+
+steps_per_report: 50
+steps_per_eval: 800
+val_batches: 150
+save_every: 200
+test: false
+test_batches: 200

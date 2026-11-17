@@ -1,0 +1,5 @@
+__pycache__/
+# rebuildable with make_data.py (v18a mix filtered by Qwen3.5 token length)
+data_long/
+data_mix2600/
+data_mix3200/

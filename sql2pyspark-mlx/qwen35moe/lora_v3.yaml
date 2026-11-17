@@ -1,0 +1,40 @@
+# Qwen3.5-35B-A3B ROUND 3 (user 2026-11-16: "try LoRA on more layers"): LoRA on ALL 40 blocks (v1/v2: last 16).
+# Starts from q35moe-v2 (adapters_v2 fills layers 24-39 by name; layers 0-23 start fresh, lora_b = 0 = no change at start).
+# Memtest 11-16 19:25 (64 longest samples, seq 2600): 40 layers peak 26.7 GB (16 layers: 26.6), 53 tok/s (16 layers: 104).
+# Peak lr back to 1e-4 for the new layers; save every 100 (more layers -> Metal buffer-limit aborts may come sooner).
+# Run from sql2pyspark-mlx/:  .venv/bin/python train_resumable.py --config qwen35moe/lora_v3.yaml \
+#                                 --launcher qwen35moe/lora_moe.py --max-restarts 60
+model: mlx-community/Qwen3.5-35B-A3B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35moe/data_mix2600
+adapter_path: ./qwen35moe/adapters_v3
+resume_adapter_file: ./qwen35moe/adapters_v2/adapters.safetensors
+seed: 37
+iters: 4800
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 2600
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 40                # all 40 blocks
+lora_parameters:
+  rank: 16
+  dropout: 0.05
+  scale: 20.0
+  keys: [self_attn.q_proj, self_attn.k_proj, self_attn.v_proj, self_attn.o_proj,
+         linear_attn.in_proj_qkv, linear_attn.in_proj_z, linear_attn.in_proj_a, linear_attn.in_proj_b,
+         linear_attn.out_proj,
+         mlp.shared_expert.gate_proj, mlp.shared_expert.up_proj, mlp.shared_expert.down_proj]
+optimizer: adamw
+learning_rate: 1.0e-4
+steps_per_report: 50
+steps_per_eval: 400
+val_batches: 25
+save_every: 100
+test: false
+lr_schedule:
+  name: cosine_decay
+  warmup: 30
+  warmup_init: 1.0e-6
+  arguments: [1.0e-4, 1170, 1.0e-5]   # [init, decay_steps, end] (optimizer updates = 4800 / 4 = 1200)

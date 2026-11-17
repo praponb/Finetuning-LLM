@@ -1,0 +1,30 @@
+Loading configuration file qwen35moe/memtest_2600_32_full.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.049% (16.933M/34660.609M)
+Starting training..., iters: 12
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3095 will be truncated to 2600. Consider pre-splitting your data to save memory.
+Calculating loss...:   0%|          | 0/2 [00:00<?, ?it/s]Calculating loss...:  50%|█████     | 1/2 [00:02<00:02,  2.12s/it]Calculating loss...: 100%|██████████| 2/2 [00:04<00:00,  2.07s/it]Calculating loss...: 100%|██████████| 2/2 [00:04<00:00,  2.08s/it]
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 2655 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 2681 will be truncated to 2600. Consider pre-splitting your data to save memory.
+Iter 1: Val loss 0.066, Val took 4.173s
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3116 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3097 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3054 will be truncated to 2600. Consider pre-splitting your data to save memory.
+Iter 4: Train loss 0.078, Learning Rate 1.000e-04, It/sec 0.054, Tokens/sec 61.698, Trained Tokens 4599, Peak mem 26.472 GB
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3108 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3108 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3111 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3099 will be truncated to 2600. Consider pre-splitting your data to save memory.
+Iter 8: Train loss 0.679, Learning Rate 1.000e-04, It/sec 0.053, Tokens/sec 61.057, Trained Tokens 9165, Peak mem 26.738 GB
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3119 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3053 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3124 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3198 will be truncated to 2600. Consider pre-splitting your data to save memory.
+Calculating loss...:   0%|          | 0/2 [00:00<?, ?it/s]Calculating loss...:  50%|█████     | 1/2 [00:02<00:02,  2.07s/it]Calculating loss...: 100%|██████████| 2/2 [00:04<00:00,  2.07s/it]Calculating loss...: 100%|██████████| 2/2 [00:04<00:00,  2.07s/it]
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 2729 will be truncated to 2600. Consider pre-splitting your data to save memory.
+[WARNING] Some sequences are longer than 2600 tokens. The longest sentence 3202 will be truncated to 2600. Consider pre-splitting your data to save memory.
+Iter 12: Val loss 0.351, Val took 4.147s
+Iter 12: Train loss 0.380, Learning Rate 1.000e-04, It/sec 0.056, Tokens/sec 61.841, Trained Tokens 13621, Peak mem 26.738 GB
+Saved final weights to qwen35moe/adapters_memtest/adapters.safetensors.

@@ -1,0 +1,32 @@
+Loading configuration file qwen35moe/memtest_3200_16_full.yaml
+Loading pretrained model
+Loading datasets
+Training
+Trainable parameters: 0.024% (8.466M/34660.609M)
+Starting training..., iters: 30
+Calculating loss...:   0%|          | 0/2 [00:00<?, ?it/s]Calculating loss...:  50%|█████     | 1/2 [00:02<00:02,  2.05s/it]Calculating loss...: 100%|██████████| 2/2 [00:03<00:00,  1.97s/it]Calculating loss...: 100%|██████████| 2/2 [00:03<00:00,  1.99s/it]
+Iter 1: Val loss 0.079, Val took 3.991s
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35moe/lora_moe.py", line 45, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 328, in train
+    mx.eval(state, losses, n_tokens, grad_accum)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).
