@@ -297,6 +297,10 @@ Earlier samples are kept outside the report's glob: `eval/results/v4-split/` (th
 - **v15-q4** (2026-10-08, v14 continued on 221 synthetic tables with unseen names) reaches hold-out 60, classic 97/97, complex 89, schema-shift 189/200 (v12-q4 155) with fewer unresolved-name failures (42 vs. 57 / 93); v4 hold-out 20 (v12-q4 21); **promoted on the Mac** by the owner (2026-10-09 05:50, `make promote TAG=v15-q4 PREV=v12-q4`) and deployed to the server (06:29). See [v15 results](#-v15-results-2026-10-08).
 - **v16-q4** (2026-10-09, v15 continued on 10,000 complex pairs on the synthetic tables) wins the complex schema-shift set (128/150 vs. v15-q4 110) but drops to hold-out 58, complex 84 and v11 / v12 held-out 261 / 216; **not promoted**; v15-q4 became `latest` on the Mac instead. See [v16 results](#-v16-results-2026-10-09--not-promoted).
 - **v17-q4** (2026-11-08, the first Mac mini M6 run: v15 continued on its full mix + 4,000 complex_v16 pairs) has the best hold-out so far (61/62), v4 21, complex schema-shift 116 and the fewest failures (110), but fixed 142 and complex 85 (v15-q4 145 / 89); **not promoted**. See [v17 results](#-v17-results-2026-11-08--not-promoted).
+- **v18a-q4** (2026-11-15, v15 continued on the v17 mix at lr 2e-5) has hold-out 61, fixed 145, complex 88 (v15-q4 89), complex schema-shift **126** (v15-q4 110) and the fewest failures (105); it misses the rule by one complex query and was **promoted** by the owner (2026-11-15 ~12:20, `ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest`). The adapter average v18avg-q4 loses on fixed / complex. See [v18 and Qwen3.5 results](#-v18-and-qwen35-results-2026-11-15--11-18).
+- **Qwen3.5-35B-A3B** (2026-11-15 → 11-17, MoE): v1 / v2 below v18a-q4 on every set, v3 diverged; **discarded**.
+- **q9a-q4** (2026-11-17/18, Qwen3.5-9B fresh QLoRA): complex **93** (best so far) but below v18a-q4 on hold-out, v11, v13, schema-shift and complex-shift; **not promoted**.
+- **Real-style pairs** (2026-11-15): 74 long Kimi-built, Spark-verified pairs ([realstyle_v19](../sql2pyspark-mlx/realstyle_v19/README.md)), scored by `realstyle_v19/eval_realstyle.py` → `eval/results/realstyle/`; every model scores 0/74.
 - **Qwen3.5-9B** (pilot 2026-10-09: 41/62 after 400 iterations; untuned Qwen3.5-9B 0/62, untuned Qwen2.5-Coder-7B 8/62. Runs 2–9 on the Mac mini 2026-11-09 → 11-12, all with `--think false`): best = run 8 `q35m6g-q4` with hold-out 59, v4 22, fixed 143, complex 82, complex-shift 111; a complex-focused round left complex at 81. **Stopped**; see [qwen35_pilot](../sql2pyspark-mlx/qwen35_pilot/README.md).
 - **v12-q4** (2026-10-03) fixes v11's `OR` slip (fixed-test `OR` queries 11/12, held-out `or_where` 97/100) and keeps the subquery gains (287/300, 230/250); classic 95/97, complex 83/100; **promoted on the Mac** (2026-10-03 06:05, `make promote TAG=v12-q4 PREV=v11-q4`; deployed to the server 2026-10-03 16:48). See [v12 results](#-v12-results-2026-10-03).
 - **v11-q4** (2026-10-02, `latest` on the Mac 2026-10-02 18:45 → 10-03 by the owner's choice; the server keeps v9-q4) misses the rule on the classic families of the fixed test (93 vs. 97: two `OR` → two `.filter()` slips) and the complex test (84 vs. 87), but is the best model on subqueries (283/300 held-out targeted pairs vs. 130, 50/50 `IN` / `NOT IN`) and restores the v4 hold-out (21); promoted on the Mac only. See [v11 results](#-v11-results-2026-10-02).
@@ -360,6 +364,24 @@ The queries are far outside the v3 training distribution:
 **Shared gap:** all 9 set-operation queries in the test sample share one held-out signature: `UNION` + a literal `source` column + `ORDER BY`. Both models drop the `.distinct()` after `unionByName`, returning ~80 rows instead of ~8 (v2 3/9 correct, v3 1/9). This signature never occurs in training, so it is the main target for a v4 dataset, together with the two hold-out `UNION` failures.
 
 ---
+
+## 🆕 v18 and Qwen3.5 results (2026-11-15 → 11-18)
+
+v18 tried two ways to combine v15 and v17: **v18avg** (the exact average of their LoRA deltas, no training) and **v18a** (v15 continued on the v17 mix, 2,400 micro-batches, lr 2e-5). Then two new base models: **Qwen3.5-35B-A3B** (MoE, three rounds) and **Qwen3.5-9B run q9a** (fresh QLoRA, 9,600 micro-batches). Qwen3.5 models are scored with `--think false`.
+
+| Eval set | v15-q4 | v18avg-q4 | **v18a-q4** (`latest`) | q35moe-v2-q4 | q9a-q4 |
+| --- | --- | --- | --- | --- | --- |
+| Hold-out (62) | 60 | **61** | **61** | 60 | 59 |
+| v4 hold-out (25) | 20 | 20 | 20 | 19 | 20 |
+| Fixed test (150) | **145** | 143 | **145** | 137 | **145** |
+| complex_v8 test (100 of 300) | 89 | 85 | 88 | 82 | **93** |
+| Held-out `IN` / `NOT IN` (50) | 50 | 50 | 50 | 50 | 50 |
+| Held-out targeted_v11 / v12 / v13 / v14 | 278 / 232 / **150** / 193 | **285** / **236** / **150** / 195 | 281 / 232 / 148 / 195 | 255 / 222 / 147 / 192 | 279 / **236** / 143 / **197** |
+| Schema-shift (200) / complex schema-shift (150 of 300) | 189 / 110 | **190** / 110 | 186 / **126** | 171 / 94 | 184 / 122 |
+| Real-style pairs (74, `realstyle_v19`) | | | 0 | 0 | 0 |
+| Failures in total / with a name slip (`eval/name_slips.py`, incl. real-style) | | | 179 / **66** | | 183 / 83 |
+
+**Verdict**: v18a-q4 misses the rule only on the complex test (88 vs. 89) and is the best overall, so the owner **promoted** it (2026-11-15 ~12:20). q35moe was discarded (2026-11-17). q9a-q4 fails the rule on 5 sets, mostly through name slips on unseen schemas (complex-shift: 25 of its 28 failures), and was **not promoted** (2026-11-18). Results: `eval/results/{v18avg-q4,v18a-q4,q9a-q4}__*.json` and the sub-folders (`realstyle/` new).
 
 ## 🆕 v17 results (2026-11-08) — not promoted
 

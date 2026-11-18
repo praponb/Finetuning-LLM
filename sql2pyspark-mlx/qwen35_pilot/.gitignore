@@ -14,3 +14,6 @@ adapters_m6e/adapters.safetensors
 adapters_m6f/adapters.safetensors
 adapters_m6g/adapters.safetensors
 adapters_m6h/adapters.safetensors
+
+# q9a: the 173 MB rank-32 adapter is over GitHub's 100 MB limit (kept on the Mac mini)
+adapters_q9a/adapters.safetensors

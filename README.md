@@ -7,8 +7,9 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) is the single-file technical guide;
 > [docs/INDEX.md](docs/INDEX.md) indexes the modular guides (architecture, data, training, evaluation, serving, file catalog, runbook).
 
-**Models in use:** on the **Mac**, `sql2pyspark:latest` = **v15-q4** since 2026-10-09 05:50 (`make promote TAG=v15-q4 PREV=v12-q4`;
-see [v15 results](#v15-results-2026-10-08); roll back with `ollama cp sql2pyspark:v12-q4 sql2pyspark:latest`). The
+**Models in use:** on the **Mac mini**, `sql2pyspark:latest` = **v18a-q4** since 2026-11-15 ~12:20 (`ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest`;
+see [v18 and Qwen3.5 results](#v18-and-qwen35-results-2026-11-15--11-18); roll back with `ollama cp sql2pyspark:v15-q4 sql2pyspark:latest`;
+v15-q4 was `latest` 2026-10-09 → 11-15). The
 public site **<https://sql2pyspark.praponb.com>** runs on the **Mac mini M6** since 2026-11-08 and serves that same
 `latest`, so promoting a model on the Mac mini also updates the site (the Ubuntu server served it from 2026-09-29 to
 2026-11-08; see [docs/08](docs/08-server-deployment.md)).
@@ -53,7 +54,7 @@ promoted**: it fixes the whole classic `subquery` family (17/17) and its 200 hel
 v4 hold-out 18/25 (v12-q4 59 / 21). Its iter-2400 checkpoint is no better (58 / 19, fixed test 139). See
 [v14 results](#v14-results-2026-10-07--not-promoted).
 
-**v15-q4** (trained 2026-10-07, **`latest` on the Mac since 2026-10-09 05:50 and on the server since 06:29**): v14 continued on the
+**v15-q4** (trained 2026-10-07; `latest` on the Mac 2026-10-09 05:50 → 2026-11-15 and on the server 2026-10-09 → 11-08): v14 continued on the
 [schema_v15 dataset](sql2pyspark-mlx/schema_v15/README.md) — 10,000 pairs of the existing query forms on **221 synthetic
 tables in 35 domains** with names the model has never seen, against v13 / v14's name drift. **60/62** hold-out (v12-q4
 59), classic families **97/97**, fixed test 145/150, complex test **89/100** (best so far), **189/200** on 5 domains
@@ -73,12 +74,30 @@ elsewhere: hold-out 58/62, complex test 84/100, v11 / v12 held-out 261 / 216 (v1
 (110 vs. 121), but fixed test 142/150 and complex test 85/100 are below v15-q4 (145 / 89), so the promotion rule fails.
 Training took ~3 h on the M6 (the M2 estimate was ~10 h). See [v17 results](#v17-results-2026-11-08--not-promoted).
 
-**Qwen3.5-9B** (a newer base model; [qwen35_pilot](sql2pyspark-mlx/qwen35_pilot/README.md)) is **not used**. The 2026-10-09
+**v18a-q4** (2026-11-15, **`latest` since 2026-11-15 ~12:20**): v15's adapter continued on the v17 mix with a low
+learning rate (2,400 micro-batches, lr 2e-5; [v18](sql2pyspark-mlx/v18/README.md)). Hold-out 61/62, fixed 145/150,
+complex 88/100 (v15-q4 89), complex schema-shift **126/150** (v15-q4 110), fewest failures (105 vs. 121). It missed the
+rule by one complex query; the owner promoted it anyway. The other candidate, **v18avg** (the exact average of the v15
+and v17 adapters), lost on fixed and complex. See [v18 and Qwen3.5 results](#v18-and-qwen35-results-2026-11-15--11-18).
+
+**Qwen3.5-35B-A3B** (2026-11-15 → 11-17, [qwen35moe](sql2pyspark-mlx/qwen35moe/README.md)) is **discarded**: a 35B
+mixture-of-experts model trained with LoRA on its attention and shared-expert layers (routed experts frozen to fit
+32 GB). Two rounds stayed below v18a-q4 on every set (best: hold-out 60, complex 82, complex-shift 94); a third
+diverged and the Mac mini rebooted (watchdog panic). All its tags, GGUFs and adapters were deleted on 2026-11-17.
+
+**Qwen3.5-9B run q9a** (2026-11-17/18, [qwen35_pilot](sql2pyspark-mlx/qwen35_pilot/README.md#run-q9a-2026-111718-fresh-qlora-from-the-base--best-qwen35-so-far-not-promoted))
+is **not promoted**: a fresh QLoRA run from the 4-bit base on the v18a mix + 8,000 renamed pairs, 9,600 micro-batches
+(~13.7 h), after fixing a resume bug that had made runs 3-9 replay the same batches after each restart. Best complex
+score of any model (**93/100** vs. v18a-q4 88) and better v12 / v14 held-out, but hold-out 59, v11 279, v13 143,
+schema-shift 184 and complex-shift 122 are below v18a-q4 (61, 281, 148, 186, 126); it slips on table / column names
+on unseen schemas more often (83 vs. 66). The owner kept v18a-q4 (2026-11-18).
+
+**Qwen3.5-9B runs 2-9** (a newer base model; [qwen35_pilot](sql2pyspark-mlx/qwen35_pilot/README.md)) were **not used**. The 2026-10-09
 pilot on the 16 GB M2 needed three local mlx-lm patches and would have taken ~14 h per run. On the Mac mini the owner
 ran 8 more rounds (2026-11-09 → 11-12: longer training, consistent table renames against name drift, a 16-layer rank-32
 adapter, a complex-focused round). The best, run 8 (`sql2pyspark:q35m6g-q4`), scores 59 / 22 / 143 / 82 / 111
 (hold-out / v4 / fixed / complex / complex-shift; v15-q4 60 / 20 / 145 / 89 / 110) and stays 7 behind on the complex
-test, which a complex-focused round did not move; Qwen3.5 training is stopped. **Qwen3.8** only comes as 27B and larger;
+test, which a complex-focused round did not move; those runs stopped on 2026-11-12. **Qwen3.8** only comes as 27B and larger;
 its pilot (2026-11-09) ran out of Metal memory on long samples at ~50 tokens/s, so it was not pursued.
 
 ```text
@@ -347,6 +366,33 @@ v4 hold-out, correct results (lenient) by feature group:
 
 **v3 vs. v2:** v3 fixes 3 of v2's 6 hold-out failures (`GROUP BY 1` on a `CASE`, two unbalanced-parenthesis slips)
 with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300).
+
+### v18 and Qwen3.5 results (2026-11-15 → 11-18)
+
+All on the Mac mini M6, `--think false` for the Qwen3.5 models. Real-style = the 74 long Kimi-built pairs
+([realstyle_v19](sql2pyspark-mlx/realstyle_v19/README.md)); every model scores 0 there.
+
+| Eval set | v15-q4 | v18avg-q4 | **v18a-q4** (`latest`) | q35moe-v2-q4 | q9a-q4 |
+| --- | --- | --- | --- | --- | --- |
+| Hold-out (62, unseen tables) | 60 | **61** | **61** | 60 | 59 |
+| v4 hold-out (25) | 20 | 20 | 20 | 19 | 20 |
+| Fixed test set (150) | **145** | 143 | **145** | 137 | **145** |
+| complex_v8 test (100 of 300) | 89 | 85 | 88 | 82 | **93** |
+| Held-out `IN` / `NOT IN` (50) | **50** | **50** | **50** | **50** | **50** |
+| Held-out targeted_v11 / v12 pairs (300 / 250) | 278 / 232 | **285** / **236** | 281 / 232 | 255 / 222 | 279 / **236** |
+| Held-out targeted_v13 / v14 pairs (150 / 200) | **150** / 193 | **150** / 195 | 148 / 195 | 147 / 192 | 143 / **197** |
+| Schema-shift pairs (200) | 189 | **190** | 186 | 171 | 184 |
+| Complex schema-shift pairs (150 of 300) | 110 | 110 | **126** | 94 | 122 |
+| Real-style pairs (74) | | | 0 | 0 | 0 |
+
+- **v18a-q4 promoted** (owner, 2026-11-15 ~12:20): it misses the rule only on the complex test (88 vs. 89), like v15
+  missed v4 by one, and is the best overall: complex-shift +16 and the fewest failures (105 vs. v15-q4 121, without
+  real-style). Root GGUFs = v18a / v18a-q4; rollback `ollama cp sql2pyspark:v15-q4 sql2pyspark:latest`.
+- **Qwen3.5-35B-A3B** (v1 / v2 / v3, [qwen35moe](sql2pyspark-mlx/qwen35moe/README.md)): v2 above is the better round
+  (v1: hold-out 57, complex 63, complex-shift 80); v3 diverged. Discarded and deleted 2026-11-17.
+- **q9a-q4** ([qwen35_pilot](sql2pyspark-mlx/qwen35_pilot/README.md)): best complex score so far and the best Qwen3.5
+  model, but below v18a-q4 on 5 sets; failures over all sets incl. real-style 183 vs. 179, with a name slip 83 vs. 66
+  (complex-shift 25 vs. 10). Not promoted (owner, 2026-11-18); kept as the Ollama tag `sql2pyspark:q9a-q4`.
 
 ### v17 results (2026-11-08) — not promoted
 
@@ -974,16 +1020,19 @@ sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4�
                    schema_v15/ (synthetic catalog of 221 tables + generators, 10k pairs + schema-shift set, 25k mix & v15 LoRA config),
                    complex_v16/ (10k complex pairs on the synthetic catalog + complex schema-shift set, 21k mix & v16 LoRA config; not promoted),
                    complex_v17/ (v15 mix + 4,000 complex_v16 pairs = 29k, v17 LoRA config + adapters; not promoted),
-                   qwen35_pilot/ (Qwen3.5-9B: feasibility pilot + runs 2-9 on the Mac mini, mlx-lm patches, name-copy / complex-mix builders, results; stopped),
+                   v18/ (v18avg adapter average + v18a config, adapters and log; v18a-q4 = `latest`),
+                   qwen35_pilot/ (Qwen3.5-9B: feasibility pilot, runs 2-9 and run q9a on the Mac mini, mlx-lm patches, name-copy / complex-mix builders, results; not promoted),
+                   qwen35moe/ (Qwen3.5-35B-A3B: MoE LoRA launcher, expert export fix, configs, logs; discarded),
+                   realstyle_v19/ (Kimi-built real-style pairs: generator, 74-pair test set, eval_realstyle.py),
                    runs/v2/ … runs/v7/ (adapters, configs, logs; v6/v7 data is in the git history too)
-sql2pyspark.gguf   Q8_0 GGUF of v15 (8.1 GB; restored from the Ollama blob 2026-11-12 after the v17 export; v17 is an Ollama tag); Ollama keeps its own copy of every tag
-sql2pyspark-q4.gguf Q4_K_M GGUF of v15-q4 (`latest`, 4.7 GB; restored 2026-11-12 after the v17 export; what deploy/update_model.sh copies)
+sql2pyspark.gguf   Q8_0 GGUF of v18a (copied from the Ollama blob at the 2026-11-15 promotion); Ollama keeps its own copy of every tag
+sql2pyspark-q4.gguf Q4_K_M GGUF of v18a-q4 (`latest`, 4.7 GB; copied from the Ollama blob 2026-11-15; what deploy/update_model.sh copies)
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,
-                   post_training_v4.sh … post_training_v8.sh, start_training_v7.sh … start_training_v17.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py,
+                   post_training_v4.sh … post_training_v8.sh, start_training_v7.sh … start_training_v18.sh, start_training_q35moe*.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py,
                    complex_shift_tables.py,
                    complex_v8_test.jsonl, complex_eval_v8.sh,
-                   results/ (+ v2-split/ … v8-repair/, v7-repair-rules/, v9-q4-repair/, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/), logs-repair-rules/, *.log
+                   results/ (+ v2-split/ … v8-repair/, v7-repair-rules/, v9-q4-repair/, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/, realstyle/), logs-repair-rules/, *.log
 docker/, docker-compose.yml, .dockerignore          Docker setup
 deploy/            macmini/: LaunchDaemons + install.sh for the public site on the Mac mini (since 2026-11-08);
                    sql2pyspark.service, setup_server.sh, update_model.sh: the former Ubuntu server hosting (docs/08)
