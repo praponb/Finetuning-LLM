@@ -354,10 +354,13 @@ Authorisations), and unpair Bluetooth devices you'll use with the Mac mini.
 
 ### 7.3 Erase (👤, irreversible)
 
-**On hold (owner, 2026-11-14)**: 7.1 and 7.2 are done; the M2 is still signed in to the Apple Account and not erased.
+**Dropped (owner, 2026-11-20)**: the M2 will not be erased and nothing more will be removed from it; it stays in use
+as the owner's laptop. History: on hold since 2026-11-14 (after 7.1 and 7.2); on 2026-11-17 the Finetuning-LLM files
+(repo + zip) and all `sql2pyspark:*` Ollama tags were deleted from it over SSH; on 2026-11-20 the owner switched
+Remote Login off again. The steps below are kept only for reference, in case the owner ever retires it.
 
 1. System Settings → [your name] → **Sign Out** of the Apple Account (turns off Find My and Activation Lock; keep a
    copy of the data in iCloud when asked).
 2. System Settings → General → Transfer or Reset → **Erase All Content and Settings**.
 
-The M2 is then ready to sell, give away or reuse. Tell Claude when it's done, so the docs and memory say so.
+The M2 is then ready to sell, give away or reuse.

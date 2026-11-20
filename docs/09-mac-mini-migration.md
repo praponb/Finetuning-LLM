@@ -227,7 +227,7 @@ owner's decision.
 10.1 GB, no restarts), all evals by 22:30. Hold-out 61, but fixed 142 and complex 85 below v15-q4 → not promoted; see
 [complex_v17](../sql2pyspark-mlx/complex_v17/README.md).
 
-## Phase 6 — wrap-up (after v17) — done 2026-11-12; item 3 (retiring the M2) in progress
+## Phase 6 — wrap-up (after v17) — done 2026-11-12; item 3 (retiring the M2) closed 2026-11-20 (erase dropped)
 
 1. Docs in one pass: README / PROJECT_DOCUMENTATION / docs 01, 03, 05, 07, 08 say "base M2 16 GB" in ~21 places; record
    the new machine, the measured speed and memory, any MLX version change and the phase 5 results; mark this
@@ -238,4 +238,5 @@ owner's decision.
    services, sign out, erase) are [step 7 of the runbook](../migration-m6-32gb.md#step-7--retire-the-m2-owners-decision-2026-11-12).
    The server copy `~/m2-backup` was removed on 2026-11-14 (owner's decision), before the M2 was erased.
    **Status 2026-11-14**: steps 7.1 (last check; two git-ignored files copied) and 7.2 (services off) done; the
-   erase (7.3) is on hold.
+   erase (7.3) is on hold. **Status 2026-11-20**: the erase is dropped (owner's decision); the M2 stays in use, nothing
+   more is removed from it, and its Remote Login is off. The sql2pyspark files on it were already deleted on 2026-11-17.
