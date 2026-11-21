@@ -1,0 +1,28 @@
+{
+  "targeted_v11": 1000,
+  "targeted_v12": 800,
+  "targeted_v14": 800,
+  "short_anti": 600,
+  "explode": 600,
+  "complex_v16": 400,
+  "complex_v9": 400,
+  "multi_join_renamed": 600,
+  "stem_clean": 1000,
+  "stem_derived": 600,
+  "replay": 3200,
+  "train": 10000,
+  "valid": 737,
+  "eval_sql_inside_train": 0,
+  "multi_join_interval": 600,
+  "derived_names_per_pair": {
+    "4": 26,
+    "1": 420,
+    "3": 47,
+    "2": 107
+  },
+  "spot_check": {
+    "checked": 200,
+    "orig_ok": 199,
+    "renamed_ok": 199
+  }
+}

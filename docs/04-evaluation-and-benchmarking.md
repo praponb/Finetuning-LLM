@@ -300,6 +300,7 @@ Earlier samples are kept outside the report's glob: `eval/results/v4-split/` (th
 - **v18a-q4** (2026-11-15, v15 continued on the v17 mix at lr 2e-5) has hold-out 61, fixed 145, complex 88 (v15-q4 89), complex schema-shift **126** (v15-q4 110) and the fewest failures (105); it misses the rule by one complex query and was **promoted** by the owner (2026-11-15 ~12:20, `ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest`). The adapter average v18avg-q4 loses on fixed / complex. See [v18 and Qwen3.5 results](#-v18-and-qwen35-results-2026-11-15--11-18).
 - **Qwen3.5-35B-A3B** (2026-11-15 → 11-17, MoE): v1 / v2 below v18a-q4 on every set, v3 diverged; **discarded**.
 - **q9a-q4** (2026-11-17/18, Qwen3.5-9B fresh QLoRA): complex **93** (best so far) but below v18a-q4 on hold-out, v11, v13, schema-shift and complex-shift; **not promoted**.
+- **q9b / q9c / q9d-q4** (2026-11-20 → 11-22, Qwen3.5-9B polish rounds on top of q9a): q9d has the fewest failures (61 vs. v18a-q4 105) and name slips (29 vs. 53) and the best v11–v14, but hold-out 59 vs. 61; **not promoted** (owner 2026-11-22: keep v18a-q4). See [q9b-q9d results](#-qwen35-9b-polish-rounds-q9b-q9d-2026-11-20--11-22--not-promoted).
 - **Real-style pairs** (2026-11-15): 74 long Kimi-built, Spark-verified pairs ([realstyle_v19](../sql2pyspark-mlx/realstyle_v19/README.md)), scored by `realstyle_v19/eval_realstyle.py` → `eval/results/realstyle/`; every model scores 0/74.
 - **Qwen3.5-9B** (pilot 2026-10-09: 41/62 after 400 iterations; untuned Qwen3.5-9B 0/62, untuned Qwen2.5-Coder-7B 8/62. Runs 2–9 on the Mac mini 2026-11-09 → 11-12, all with `--think false`): best = run 8 `q35m6g-q4` with hold-out 59, v4 22, fixed 143, complex 82, complex-shift 111; a complex-focused round left complex at 81. **Stopped**; see [qwen35_pilot](../sql2pyspark-mlx/qwen35_pilot/README.md).
 - **v12-q4** (2026-10-03) fixes v11's `OR` slip (fixed-test `OR` queries 11/12, held-out `or_where` 97/100) and keeps the subquery gains (287/300, 230/250); classic 95/97, complex 83/100; **promoted on the Mac** (2026-10-03 06:05, `make promote TAG=v12-q4 PREV=v11-q4`; deployed to the server 2026-10-03 16:48). See [v12 results](#-v12-results-2026-10-03).
@@ -364,6 +365,49 @@ The queries are far outside the v3 training distribution:
 **Shared gap:** all 9 set-operation queries in the test sample share one held-out signature: `UNION` + a literal `source` column + `ORDER BY`. Both models drop the `.distinct()` after `unionByName`, returning ~80 rows instead of ~8 (v2 3/9 correct, v3 1/9). This signature never occurs in training, so it is the main target for a v4 dataset, together with the two hold-out `UNION` failures.
 
 ---
+
+## 🆕 Qwen3.5-9B polish rounds q9b-q9d (2026-11-20 → 11-22) — not promoted
+
+Three short rounds on top of q9a (2,400 micro-batches each), each aimed at the cases only the previous round got wrong: q9b at column-name slips (tables and columns renamed), v13 and v11; q9c at the slip `is_certified_used` → `is_certified` (familiar columns given an unfamiliar extension); q9d at hold-out 025, v4 010 / 025 and v11–v14, at a lower lr. Scored with `--think false`. Details: [qwen35_pilot](../sql2pyspark-mlx/qwen35_pilot/README.md#polish-rounds-q9b-q9c-q9d-2026-11-20--11-22-close-to-v18a-q4-not-promoted).
+
+| Eval set | q9b-q4 | q9c-q4 | **q9d-q4** | v18a-q4 (`latest`) |
+| --- | --- | --- | --- | --- |
+| Hold-out (62) | 60 | 60 | 59 | **61** |
+| v4 hold-out (25) | 19 | 19 | **22** | 20 |
+| Real queries (4) | 0 | 0 | 0 | 0 |
+| Fixed test (150) | 145 | **147** | **147** | 145 |
+| complex_v8 test (100) | 95 | **96** | 95 | 88 |
+| `IN` / `NOT IN` (50) | 50 | 50 | 50 | 50 |
+| targeted_v11 / v12 held-out (300 / 250) | 292 / 244 | 287 / 238 | **294** / **245** | 281 / 232 |
+| targeted_v13 / v14 held-out (150 / 200) | 146 / **200** | 145 / 197 | **150** / 199 | 148 / 195 |
+| Schema-shift (200) | 185 | **188** | 185 | 186 |
+| Complex schema-shift (150 of 300) | 122 | **133** | 130 | 126 |
+| Real-style pairs (74) | 0 | | | 0 |
+| Failures (all sets except real queries and real-style) / with a name slip | 79 / 49 | 77 / 35 | **61** / **29** | 105 / 53 |
+
+**Verdict**: q9d-q4 fails the rule only on hold-out: `holdout025` (a short `SELECT * … WHERE NOT EXISTS`) loops on `result_2 = …` until the token limit, `holdout041` puts `, 2)` outside `F.round`; `holdout031` fails for every model. Each round fixed its targets and flipped one or two other cases (decoding is greedy, so flips are real, not noise). The owner kept v18a-q4 (2026-11-22). Results: `eval/results/{q9b,q9c,q9d}-q4__*.json` and the sub-folders.
+
+### Harness stretch set (`eval/harness_suite.jsonl`, 21 queries)
+
+[`sql2pyspark_harness/`](../sql2pyspark_harness/README.md) came from another LLM session: a 21-query Spark SQL suite on 8 tables with maps, arrays, structs, JSON strings, DECIMAL money and timestamps, a type-strict checker (`compare_harness.py`) and 8 hand-written reference conversions. It is wired into our evaluator as a stretch set, outside the promotion rule:
+
+- `eval/harness_suite.jsonl`: the 21 queries as eval cases (`harness_<QID>`).
+- `eval/harness_tables.py`: `--tables` file; runs the suite's setup SQL (via the harness's own parser) and returns each view materialized as `df_<table>`.
+- `eval/harness_strict.py`: re-checks the stored replies with `compare_harness.compare_one` (same column names **and** Spark types, multiset of rows, doubles to 6 places, every value forced to compute). Our checker rounds numbers to floats, so it cannot see DECIMAL vs. DOUBLE slips.
+
+```bash
+python eval/evaluate.py --model sql2pyspark:q9d-q4 --think false --timeout 600 --num-predict 4096 \
+  --set eval/harness_suite.jsonl --tables eval/harness_tables.py --out eval/results/harness/q9d-q4__harness_suite.json
+python eval/harness_strict.py eval/results/harness/*__harness_suite.json
+```
+
+| Model | Our checker | Type-strict | Passed |
+| --- | --- | --- | --- |
+| v18a-q4 | 5/21 | 5/21 | Q04b, Q04c, Q06b, Q09a, Q10a |
+| q9c-q4 | 5/21 | 5/21 | Q04b, Q04c, Q06b, Q09a, Q09b |
+| q9d-q4 | 5/21 | 5/21 | Q04b, Q04c, Q06b, Q09b, Q11a |
+
+Most failures are columns that don't resolve on nested data (map / struct / JSON fields, exploded arrays), syntax errors on the longest queries (Q08, Q11b, Q12), higher-order-function and `posexplode` misuse, and the set-operation trap of Q07. The training data has no pairs for `LEFT SEMI` / `LEFT ANTI JOIN` syntax, `RANGE BETWEEN INTERVAL`, `max_by` / `min_by`, `map_filter` / `transform_values`, `array_sort` with a comparator, `stack()`, `arr[0]` or broadcast hints, and its seeded tables have one `array<string>` column only. Results: `eval/results/harness/` (`*.strict.json` = the type-strict re-check).
 
 ## 🆕 v18 and Qwen3.5 results (2026-11-15 → 11-18)
 

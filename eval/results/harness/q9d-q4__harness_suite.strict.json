@@ -1,0 +1,137 @@
+{
+  "model": "sql2pyspark:q9d-q4",
+  "counts": {
+    "FAIL_SCHEMA": 1,
+    "ERROR_PYSPARK": 13,
+    "FAIL_DATA": 2,
+    "PASS": 5
+  },
+  "cases": [
+    {
+      "id": "harness_Q01",
+      "status": "FAIL_SCHEMA",
+      "message": "column count 13 (SQL) vs 16 (PySpark)\n  SQL:     ['customer_id:int', 'session_key:string', 'session_start:timestamp', 'session_end:timestamp', 'duration_min:decimal(23,1)', 'events:bigint', 'distinct_event_types:bigint', 'event_path:array<string>', 'entry_referrer:string', 'device_type:string', 'checkout_value:double', 'has_bad_payload:boolean', 'search_terms:string']\n  PySpark: ['customer_id:int'",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q02",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [CANNOT_RESOLVE_STAR_EXPAND] Cannot resolve `c`.* given input columns `currency`, `currency`, `customer_id`, `line_net_local`, `order_id`, `order_ts`, `rate_to_usd`. Please check that the specified table or struct exists and is accessible in the input columns. SQLSTATE: 42704",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q03",
+      "status": "FAIL_DATA",
+      "message": "6 row(s) only in SQL, 6 row(s) only in PySpark (row counts 6 vs 6)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNSUPPORTED_GROUPING_EXPRESSION] grouping()/grouping_id() can only be used with GroupingSets/Cube/Rollup. SQLSTATE: 42K0E;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q04c",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q05a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `ts` cannot be resolved. Did you mean one of the following? [`c`.`city`, `c`.`tier`, `o`.`status`, `c`.`email`, `o`.`order_ts`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [INVALID_EXTRACT_BASE_FIELD_TYPE] Can't extract a value from \"attributes_json\". Need a complex type [STRUCT, ARRAY, MAP] but got \"STRING\". SQLSTATE: 42000",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `k` cannot be resolved. Did you mean one of the following? [`status`, `channel`, `ship_to`, `currency`, `order_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `oi`.`product_id` cannot be resolved. Did you mean one of the following? [`p`.`product_id`, `oi`.`order_id`, `p`.`product_name`, `oi`.`order_ts`, `oi`.`ship_to`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q06c",
+      "status": "FAIL_DATA",
+      "message": "1 row(s) only in SQL, 0 row(s) only in PySpark (row counts 7 vs 6)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q07",
+      "status": "ERROR_PYSPARK",
+      "message": "NameError: name 'df_web_buyers' is not defined",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q08",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unmatched ')' (<pyspark>, line 33)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q09a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`collected_web_events_count` cannot be resolved. Did you mean one of the following? [`f`.`web_events_count`, `o`.`order_ts`, `o`.`currency`, `f`.`t_checkout`, `f`.`t_entry`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q09b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q10a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Q1` cannot be resolved. Did you mean one of the following? [`q1_orders`, `q2_orders`, `q3_orders`, `orders`.`customer_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q10b",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkTypeError: [NOT_EXPECTED_TYPE] Argument `col` should be Column or str, got int.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q11a",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q11b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 15) (<pyspark>, line 15)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q12",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: invalid syntax. Is this intended to be part of the string? (<pyspark>, line 13)",
+      "loose_match": false
+    }
+  ]
+}

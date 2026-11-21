@@ -118,7 +118,7 @@ Finetuning-LLM/
 │   ├── complex_v16/              # complex_v8 generator on the synthetic catalog: 10k complex pairs + 300 complex schema-shift pairs (21k mix), v16 LoRA config + adapters (not promoted)
 │   ├── complex_v17/              # v15 mix + 4,000 complex_v16 pairs (29k), v17 LoRA config + adapters (not promoted)
 │   ├── v18/                      # v18avg (adapter average) + v18a config, adapters, log; v18a-q4 = latest since 2026-11-15
-│   ├── qwen35_pilot/             # Qwen3.5-9B: feasibility pilot (2026-10-09), runs 2-9 (2026-11-09..12) and run q9a (2026-11-17/18), mlx-lm patches, name-copy / complex-mix builders, results; not promoted
+│   ├── qwen35_pilot/             # Qwen3.5-9B: feasibility pilot (2026-10-09), runs 2-9 (2026-11-09..12), run q9a (2026-11-17/18) and polish rounds q9b-q9d (2026-11-20..22), mlx-lm patches, name-copy / complex-mix / polish-mix builders, results; not promoted
 │   ├── qwen35moe/                # Qwen3.5-35B-A3B (2026-11-15..17): MoE LoRA launcher, expert export fix, configs, logs; discarded
 │   ├── realstyle_v19/            # Kimi-built real-style pairs: generator, 74-pair test set, eval_realstyle.py
 │   ├── handwritten_pairs.py      # 105 curated pairs
@@ -163,9 +163,11 @@ Finetuning-LLM/
 │   ├── start_training_v17.sh     # v17 launcher (same chain as v16; complex-shift for v17-q4 only; no Docker restart)
 │   ├── complex_shift_tables.py   # --tables file for the complex schema-shift set (complex_v8 rows on the 5 held-out synthetic domains)
 │   ├── name_slips.py             # counts failures with an unresolved table / column / field name per model and eval set
+│   ├── harness_suite.jsonl, harness_tables.py, harness_strict.py   # 21-query harness stretch set (from sql2pyspark_harness/), its tables, the type-strict re-check
 │   ├── complex_v8_test.jsonl     # 300 held-out complex_v8 test pairs
 │   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
-│   └── results/                  # <tag>__<set>.json results (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 / v9-q4 / v10-q4 results, v9-q4-repair, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/)
+│   └── results/                  # <tag>__<set>.json results (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 / v9-q4 / v10-q4 results, v9-q4-repair, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/, realstyle/, harness/)
+├── sql2pyspark_harness/          # 21-query Spark SQL suite on 8 nested-type tables + type-strict compare_harness.py + 8 reference conversions
 └── llama.cpp/                    # Upstream checkout used for convert_hf_to_gguf.py
 ```
 
@@ -295,6 +297,11 @@ Whole signatures are held out for validation (10%) and test (5%). A signature is
 
 - **Setup** ([qwen35moe/README.md](sql2pyspark-mlx/qwen35moe/README.md)): `mlx-community/Qwen3.5-35B-A3B-4bit` (MoE, 256 routed experts top-8 + a shared expert); LoRA rank 16 on attention, linear-attention and shared-expert weights of the last 16 of 40 layers (routed experts frozen), seq ≤ 2600, peak ~26.5 GB of 32 GB; `fix_experts.py` for the GGUF export (Q4_K_M 21.2 GB).
 - **Outcome**: v1 (4,800 it, lr 1e-4) and v2 (v1 + 4,800 it, lr 5e-5) stayed below v18a-q4 on every set (v2: hold-out 60, fixed 137, complex 82, complex-shift 94); v3 (all 40 layers, lr 1e-4) diverged and the Mac mini rebooted (watchdog panic). Discarded and deleted by the owner on 2026-11-17. While training v1 a `train_resumable.py` bug was found: every resumed segment replayed the same batch order (fixed: `seed + 1000 * segment`).
+
+### Qwen3.5-9B polish rounds q9b, q9c, q9d (2026-11-20 → 11-22) — not promoted
+
+- **Setup**: three short rounds on top of q9a (2,400 micro-batches each, lr 5e-6 → 5e-7, q9d 3e-6 → 3e-7), each continuing the previous adapter on data built by `qwen35_pilot/polishmix/` from pools no earlier round used: q9b renamed tables **and columns** + targeted v11 / v14 + complex; q9c "stem extensions" (a familiar column `X` renamed `X_w`, so the model stops writing the familiar name); q9d short anti-joins, `EXPLODE`, renamed multi-condition joins, derived names that follow an extended stem, more targeted v11 / v12 / v14. Eval SQL in train 0; every renamed part 200/200 in a Spark spot-check. `train_resumable.py --segment-val-batches N` (new, opt-in) shortens the validation after a Metal restart.
+- **Outcome**: q9d-q4 vs. v18a-q4: v4 **22** / 20, fixed **147** / 145, complex **95** / 88, v11–v14 **294 / 245 / 150 / 199** / 281 / 232 / 148 / 195, complex-shift **130** / 126, failures **61** / 105, name slips **29** / 53; but hold-out 59 / **61** (a repetition loop on a short `NOT EXISTS`, a bracket slip) and schema-shift 185 / 186. q9c-q4 missed by one case on hold-out and v4. **Not promoted** (owner, 2026-11-22: keep v18a-q4); kept as `sql2pyspark:q9b-q4`, `:q9c-q4`, `:q9d-q4`. On the 21-query harness stretch set, v18a-q4, q9c-q4 and q9d-q4 all score 5/21.
 
 ### Qwen3.5-9B run q9a (2026-11-17/18) — not promoted
 
@@ -610,6 +617,25 @@ v4 hold-out, correct results (lenient) by feature group:
 | `sql2pyspark:v8` | 100% | 60% | 60% | 67% | 100% | 75% | 50% |
 | `sql2pyspark:v9` | 75% | 100% | 100% | 33% | 50% | 50% | 50% |
 | `sql2pyspark:v9-q4` | 75% | 100% | 100% | 67% | 50% | 75% | 100% |
+
+### Qwen3.5-9B polish rounds q9b-q9d (2026-11-20 → 11-22, not promoted)
+
+| Eval set | q9b-q4 | q9c-q4 | **q9d-q4** | v18a-q4 (`latest`) |
+| --- | --- | --- | --- | --- |
+| Hold-out (62) | 60 | 60 | 59 | **61** |
+| v4 hold-out (25) | 19 | 19 | **22** | 20 |
+| Real queries (4) | 0 | 0 | 0 | 0 |
+| Fixed test (150) | 145 | **147** | **147** | 145 |
+| complex_v8 test (100) | 95 | **96** | 95 | 88 |
+| `IN` / `NOT IN` (50) | 50 | 50 | 50 | 50 |
+| targeted_v11 / v12 held-out (300 / 250) | 292 / 244 | 287 / 238 | **294** / **245** | 281 / 232 |
+| targeted_v13 / v14 held-out (150 / 200) | 146 / **200** | 145 / 197 | **150** / 199 | 148 / 195 |
+| Schema-shift (200) | 185 | **188** | 185 | 186 |
+| Complex schema-shift (150 of 300) | 122 | **133** | 130 | 126 |
+| Real-style pairs (74) | 0 | | | 0 |
+| Failures (all sets except real queries and real-style) / with a name slip | 79 / 49 | 77 / 35 | **61** / **29** | 105 / 53 |
+
+q9d-q4 fails the rule only on hold-out (59 vs. 61); q9c-q4 on hold-out and v4 (−1 each). The owner kept v18a-q4 (2026-11-22). Harness stretch set (21 queries on nested-type tables, `eval/harness_suite.jsonl`): v18a-q4, q9c-q4, q9d-q4 all 5/21, the same under the harness's type-strict check.
 
 ### v18 and Qwen3.5 results (2026-11-15 → 11-18)
 

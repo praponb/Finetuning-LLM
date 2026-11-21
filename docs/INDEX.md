@@ -2,12 +2,13 @@
 
 Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pipeline**. This project implements an end-to-end, local machine learning and data engineering workflow on Apple Silicon to fine-tune **Qwen2.5-Coder** (v1–v5: 3B; v6–v10: 7B) for translating Spark SQL queries into idiomatic PySpark DataFrame code.
 
-**Status (2026-11-18):**
+**Status (2026-11-22):**
 
 - **Model in use:** `sql2pyspark:latest` is **v18a-q4 on the Mac mini** since 2026-11-15 ~12:20 (`ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest`; rollback `ollama cp sql2pyspark:v15-q4 sql2pyspark:latest`); the Mac mini also serves the public site. See [Evaluation](04-evaluation-and-benchmarking.md#-v18-and-qwen35-results-2026-11-15--11-18).
 - **v18 (2026-11-15) — v18a-q4 promoted:** v15 continued on the v17 mix at lr 2e-5 (2,400 micro-batches). v18a-q4 vs. v15-q4: hold-out **61** / 60, fixed 145 / 145, complex 88 / **89**, complex schema-shift **126** / 110, failures **105** / 121; it missed the rule by one complex query and the owner promoted it. The other candidate, v18avg (the exact v15 + v17 adapter average), lost on fixed / complex. See [v18](../sql2pyspark-mlx/v18/README.md).
 - **Qwen3.5-35B-A3B (2026-11-15 → 11-17) — discarded:** MoE LoRA with frozen routed experts; v1 / v2 below v18a-q4 on every set (best v2: hold-out 60, complex 82, complex-shift 94), v3 diverged and the Mac mini rebooted; deleted on 2026-11-17. See [qwen35moe](../sql2pyspark-mlx/qwen35moe/README.md).
 - **Qwen3.5-9B run q9a (2026-11-17/18) — not promoted:** fresh QLoRA from the 4-bit base, 9,600 micro-batches with the resume-seed fix. q9a-q4 vs. v18a-q4: complex **93** / 88, v12 **236** / 232, v14 **197** / 195; but hold-out 59 / **61**, v11 279 / **281**, v13 143 / **148**, schema-shift 184 / **186**, complex-shift 122 / **126**; name slips 83 / 66. See [qwen35_pilot](../sql2pyspark-mlx/qwen35_pilot/README.md).
+- **Qwen3.5-9B polish rounds q9b-q9d (2026-11-20 → 11-22) — not promoted:** three short rounds on top of q9a (renamed tables and columns, stem extensions, short anti-joins and targeted subqueries). q9d-q4 vs. v18a-q4: v4 **22** / 20, fixed **147** / 145, complex **95** / 88, v11–v14 **294 / 245 / 150 / 199** / 281 / 232 / 148 / 195, complex-shift **130** / 126, failures **61** / 105, name slips **29** / 53; but hold-out 59 / **61**. The owner kept v18a-q4. On the new 21-query harness stretch set ([sql2pyspark_harness](../sql2pyspark_harness/README.md)) all three tested models score 5/21. See [Evaluation](04-evaluation-and-benchmarking.md#-qwen35-9b-polish-rounds-q9b-q9d-2026-11-20--11-22--not-promoted).
 - **Real-style test set (2026-11-15):** 74 long Kimi-built, Spark-verified pairs ([realstyle_v19](../sql2pyspark-mlx/realstyle_v19/README.md)); every model scores 0/74.
 - **Earlier `latest` models:** **v15-q4 on the Mac** (2026-10-09 05:50 → 11-15, `make promote TAG=v15-q4 PREV=v12-q4`; v12-q4 2026-10-03 06:05 → 10-09, v11-q4 2026-10-02 → 10-03) and was on the Ubuntu server 2026-10-09 06:29 → 11-08 (v12-q4 2026-10-03 16:48 → 10-09 and v9-q4 before); since 2026-11-08 the Mac mini serves the site, and the server copy was removed on 2026-11-14. **v12-q4** (2026-10-03): v11 continued on `targeted_v12` (`OR` / mixed `AND`-`OR` conditions + replay) fixes v11's `OR` slip (fixed-test `OR` queries 11/12 vs. 9, held-out `or_where` 97/100 vs. 79) and keeps the subquery gains (287/300 and 230/250 held-out targeted pairs vs. 283 / 169); 59 hold-out, 21 v4 hold-out, 143 fixed test (classic 95/97), 83 complex test; see [Evaluation](04-evaluation-and-benchmarking.md#-v12-results-2026-10-03).
 - **v13 (2026-10-03) — regression, not used:** v12 continued on `targeted_v13` (2,000 uncorrelated scalar-subquery pairs + replay); v13-q4 vs. v12-q4: 150 / 123 of 150 held-out scalar-subquery pairs, but hold-out 52 / 59 (`df_patents` for `df_patients` in 7 answers), fixed test 134 / 143 (classic `subquery` family 6 / 15 of 17: correlated scalar subqueries now written as a separate aggregate), v4 hold-out 19 / 21, complex 79 / 83; the Q8_0 build is no better (49/62). v12-q4 stays `latest` on the Mac; see [Evaluation](04-evaluation-and-benchmarking.md#-v13-results-2026-10-03--regression-not-used).
@@ -23,7 +24,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 - **Previous models:** v7 (61/62 hold-out, kept as `sql2pyspark:v7`), v6 (the first 7B model, 60/62), v5 (3B, 56/62). Older tags can be rebuilt from their adapters.
 - **Agent repair loop:** Kimi (Moonshot AI; Kimi K3.1 Pro in the app since 2026-11-08, earlier results with Kimi K3) integration in `kimi_repair.py`, used by `app.py` and `eval/agent_repair.py` to statically check code (syntax, undefined names, missing `result`, positional `UNION` column ordering via `setop_check`, and ambiguous unqualified columns in aliased joins via `join_check`) and repair it on empty tables with declared schemas.
 - **Environment:** Native Apple Silicon training with MLX; Docker setup for Streamlit UI, Spark data pipeline, and evaluation; deployment options for Ubuntu servers with native Ollama, systemd, and Cloudflare Tunnel/Access.
-- **Open items (2026-11-18):** the real-world queries stay 0/4 and the real-style pairs 0/74 without the Kimi repair. Done: v17 (not promoted), v18 (v18a-q4 promoted 2026-11-15), the move to the Mac mini M6 (2026-11-08, the public site included), Qwen3.5-35B-A3B (discarded) and Qwen3.5-9B runs 2-9 + q9a (not promoted).
+- **Open items (2026-11-22):** the real-world queries stay 0/4, the real-style pairs 0/74 and the harness set 5/21 without the Kimi repair. Done: v17 (not promoted), v18 (v18a-q4 promoted 2026-11-15), the move to the Mac mini M6 (2026-11-08, the public site included), Qwen3.5-35B-A3B (discarded) and Qwen3.5-9B runs 2-9, q9a and q9b-q9d (not promoted).
 
 ---
 
@@ -114,7 +115,7 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── complex_v16/              # 10k complex pairs on the synthetic catalog + complex schema-shift set (21k mix), v16 LoRA config, v16 adapters (not promoted)
 │   ├── complex_v17/              # v15 mix + 4,000 complex_v16 pairs (29k), v17 LoRA config + adapters (not promoted)
 │   ├── v18/                      # v18avg (adapter average) + v18a config, adapters, log (v18a-q4 = latest)
-│   ├── qwen35_pilot/             # Qwen3.5-9B pilot, runs 2-9 and run q9a on the Mac mini: mlx-lm patches, name-copy / complex-mix builders, configs, results (not promoted)
+│   ├── qwen35_pilot/             # Qwen3.5-9B pilot, runs 2-9, q9a and q9b-q9d on the Mac mini: mlx-lm patches, name-copy / complex-mix builders, configs, results (not promoted)
 │   ├── qwen35moe/                # Qwen3.5-35B-A3B MoE LoRA: launcher, expert export fix, configs, logs (discarded)
 │   ├── realstyle_v19/            # Kimi-built real-style pairs: generator, 74-pair test set, eval_realstyle.py
 │   ├── handwritten_pairs.py      # 105 curated pairs
@@ -142,10 +143,11 @@ Welcome to the technical documentation for the **SQL → PySpark Fine-Tuning Pip
 │   ├── agent_repair.py           # Kimi K3 repair loop for failed answers (key in .env)
 │   ├── report.py                 # Markdown results-table generator
 │   ├── post_training_v4.sh … post_training_v8.sh # Automated post-training scripts
-│   ├── start_training_v7.sh … start_training_v17.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py, complex_shift_tables.py # Training, eval runners & reports
+│   ├── start_training_v7.sh … start_training_v17.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py, complex_shift_tables.py, harness_suite.jsonl / harness_tables.py / harness_strict.py # Training, eval runners & reports
 │   ├── complex_eval_v8.sh        # Complex test benchmarking script
 │   ├── complex_v8_test.jsonl     # 300 held-out complex_v8 test pairs (100 sampled, seed 0)
 │   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
-│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 / v9-q4 results, v9-q4-repair, v10-q4 results, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/)
+│   └── results/                  # <tag>__<set>.json (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 / v9-q4 results, v9-q4-repair, v10-q4 results, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/, realstyle/, harness/)
+├── sql2pyspark_harness/          # 21-query Spark SQL suite on nested-type tables, type-strict compare_harness.py, reference conversions
 └── llama.cpp/                    # Upstream checkout (GGUF converter)
 ```

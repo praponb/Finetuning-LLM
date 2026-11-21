@@ -1,0 +1,469 @@
+{
+  "model": "sql2pyspark:q9d-q4",
+  "set": "eval/harness_suite.jsonl",
+  "n": 21,
+  "summary": {
+    "ALL": {
+      "n": 21,
+      "strict_syntax": 0.8571,
+      "strict_runs": 0.381,
+      "strict_match": 0.2381,
+      "lenient_syntax": 0.8571,
+      "lenient_runs": 0.381,
+      "lenient_match": 0.2381
+    },
+    "harness": {
+      "n": 21,
+      "strict_syntax": 0.8571,
+      "strict_runs": 0.381,
+      "strict_match": 0.2381,
+      "lenient_syntax": 0.8571,
+      "lenient_runs": 0.381,
+      "lenient_match": 0.2381
+    }
+  },
+  "avg_seconds": 23.41,
+  "cases": [
+    {
+      "id": "harness_Q01",
+      "level": "harness",
+      "sql": "WITH parsed AS (\n  SELECT\n    e.event_id,\n    e.customer_id,\n    e.event_ts,\n    e.event_type,\n    from_json(\n      e.payload,\n      'page STRING, referrer STRING, query STRING, results INT, product_id INT, qty INT,\n       cart_value DOUBLE, device STRUCT<os: STRING, type: STRING>'\n    )                                               AS p,\n    get_json_object(e.payload, '$.device.os')       AS device_os_raw\n  FROM web_events e\n  WHERE e.customer_id IS NOT NULL\n),\ngaps AS (\n  SELECT\n    *,\n    LAG(event_ts) OVER (PARTITION BY customer_id ORDER BY event_ts, event_id) AS prev_ts,\n    CASE\n      WHEN LAG(event_ts) OVER (PARTITION BY customer_id ORDER BY event_ts, event_id) IS NULL THEN 1\n      WHEN unix_timestamp(event_ts)\n           - unix_timestamp(LAG(event_ts) OVER (PARTITION BY customer_id ORDER BY event_ts, event_id)) > 30 * 60 THEN 1\n      ELSE 0\n    END AS is_new_session\n  FROM parsed\n),\nsessionized AS (\n  SELECT\n    *,\n    SUM(is_new_session) OVER (\n      PARTITION BY customer_id ORDER BY event_ts, event_id\n      ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n    ) AS session_seq\n  FROM gaps\n)\nSELECT\n  customer_id,\n  concat_ws('-', 'S', lpad(CAST(customer_id AS STRING), 4, '0'), CAST(session_seq AS STRING)) AS session_key,\n  MIN(event_ts)                                                       AS session_start,\n  MAX(event_ts)                                                       AS session_end,\n  round((unix_timestamp(MAX(event_ts)) - unix_timestamp(MIN(event_ts))) / 60.0, 1) AS duration_min,\n  COUNT(*)                                                            AS events,\n  COUNT(DISTINCT event_type)                                          AS distinct_event_types,\n  collect_list(event_type)                                            AS event_path,\n  first(p.referrer, true)                                             AS entry_referrer,\n  coalesce(max(p.device.type), 'unknown')                             AS device_type,\n  max(CASE WHEN event_type = 'checkout' THEN p.cart_value END)        AS checkout_value,\n  max(CASE WHEN p IS NULL OR p.page IS NULL THEN 1 ELSE 0 END) = 1     AS has_bad_payload,\n  array_join(array_distinct(collect_list(p.query)), ' | ')            AS search_terms\nFROM sessionized\nGROUP BY customer_id, session_seq\nORDER BY customer_id, session_start",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nparsed = (\n  df_web_events\n  .filter(F.col(\"customer_id\").isNotNull())\n  .select(\n    \"event_id\",\n    \"customer_id\",\n    \"event_ts\",\n    \"event_type\",\n    F.from_json(\"payload\", \"page STRING, referrer STRING, query STRING, results INT, product_id INT, qty INT, cart_value DOUBLE, device STRUCT<os: STRING, type: STRING>\").alias(\"p\"),\n    F.get_json_object(\"payload\", \"$.device.os\").alias(\"device_os_raw\"),\n    F.col(\"event_id\").alias(\"event_id_2\"),\n  )\n)\n\ngaps = (\n  parsed\n  .withColumn(\"prev_ts\", F.lag(\"event_ts\").over(Window.partitionBy(\"customer_id\").orderBy(\"event_ts\", \"event_id\")))\n  .withColumn(\"is_new_session\", F.when(F.col(\"prev_ts\").isNull(), 1).when(F.unix_timestamp(\"event_ts\") - F.unix_timestamp(\"prev_ts\") > 30 * 60, 1).otherwise(0))\n)\n\nsessionized = gaps.withColumn(\"session_seq\", F.sum(\"is_new_session\").over(Window.partitionBy(\"customer_id\").orderBy(\"event_ts\", \"event_id\").rowsBetween(Window.unboundedPreceding, Window.currentRow)))\n\nresult = (\n  sessionized\n  .groupBy(\"customer_id\", \"session_seq\")\n  .agg(\n    F.min(\"event_ts\").alias(\"session_start\"),\n    F.max(\"event_ts\").alias(\"session_end\"),\n    F.round((F.unix_timestamp(F.max(\"event_ts\")) - F.unix_timestamp(F.min(\"event_ts\"))) / 60.0, 1).alias(\"duration_min\"),\n    F.count(\"*\").alias(\"events\"),\n    F.countDistinct(\"event_type\").alias(\"distinct_event_types\"),\n    F.collect_list(\"event_type\").alias(\"event_path\"),\n    F.first(F.col(\"p.referrer\"), ignorenulls=True).alias(\"entry_referrer\"),\n    F.coalesce(F.max(F.col(\"p.device.type\")), F.lit(\"unknown\")).alias(\"device_type\"),\n    F.max(F.when(F.col(\"event_type\") == \"checkout\", F.col(\"p.cart_value\"))).alias(\"checkout_value\"),\n    (F.max(F.when(F.col(\"p\").isNull() | F.col(\"p.page\").isNull(), 1).otherwise(0)) == 1).alias(\"has_bad_payload\"),\n    F.array_join(F.array_distinct(F.collect_list(F.col(\"p.query\"))), \" |\").alias(\"search_terms\"),\n    F.concat_ws(\"-\", F.lit(\"S\"), F.lpad(F.col(\"customer_id\").cast(\"string\"), 4, \"0\"), F.col(\"session_seq\").cast(\"string\")).alias(\"session_key\"),\n    F.col(\"customer_id\").alias(\"customer_id_2\"),\n    F.col(\"session_seq\").alias(\"session_seq_2\"),\n  )\n  .orderBy(\"customer_id\", \"session_start\")\n)\n```",
+      "seconds": 28.4,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['customer_id', 'session_key', 'session_start', 'session_end', 'duration_min', 'events', 'distinct_event_types', 'event_path', 'entry_referrer', 'device_type', 'checkout_value', 'has_bad_payload', 'search_terms'] py=['customer_id', 'session_seq', 'session_start', 'session_end', 'duration_min', '"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "columns",
+        "detail": "sql=['customer_id', 'session_key', 'session_start', 'session_end', 'duration_min', 'events', 'distinct_event_types', 'event_path', 'entry_referrer', 'device_type', 'checkout_value', 'has_bad_payload', 'search_terms'] py=['customer_id', 'session_seq', 'session_start', 'session_end', 'duration_min', '"
+      }
+    },
+    {
+      "id": "harness_Q02",
+      "level": "harness",
+      "sql": "WITH line_values AS (\n  SELECT\n    o.customer_id,\n    o.order_id,\n    o.order_ts,\n    oi.quantity * oi.unit_price * (1 - oi.discount_pct) AS line_net_local,\n    o.currency\n  FROM orders o\n  JOIN order_items oi ON oi.order_id = o.order_id\n  WHERE o.status NOT IN ('CANCELLED', 'PENDING')\n),\nfx_latest AS (\n  SELECT currency, rate_to_usd\n  FROM (\n    SELECT currency, rate_to_usd,\n           ROW_NUMBER() OVER (PARTITION BY currency ORDER BY rate_date DESC) AS rn\n    FROM fx_rates\n  ) t\n  WHERE rn = 1\n),\ncust AS (\n  SELECT\n    lv.customer_id,\n    datediff(DATE'2024-08-01', to_date(MAX(lv.order_ts)))   AS recency_days,\n    COUNT(DISTINCT lv.order_id)                             AS frequency,\n    round(SUM(lv.line_net_local * fx.rate_to_usd), 2)       AS monetary_usd\n  FROM line_values lv\n  LEFT JOIN fx_latest fx ON fx.currency = lv.currency\n  GROUP BY lv.customer_id\n),\nscored AS (\n  SELECT\n    c.*,\n    6 - NTILE(5) OVER (ORDER BY recency_days ASC)        AS r_score,\n    NTILE(5) OVER (ORDER BY frequency ASC, customer_id)  AS f_score,\n    NTILE(5) OVER (ORDER BY monetary_usd ASC)            AS m_score,\n    round(PERCENT_RANK() OVER (ORDER BY monetary_usd), 3) AS monetary_pct_rank,\n    CUME_DIST() OVER (ORDER BY monetary_usd)             AS monetary_cume_dist\n  FROM cust c\n),\nthresholds AS (\n  SELECT\n    percentile_approx(monetary_usd, 0.5)               AS p50_usd,\n    percentile_approx(monetary_usd, array(0.25, 0.75)) AS iqr_usd,\n    avg(monetary_usd)                                  AS avg_usd,\n    stddev_samp(monetary_usd)                          AS sd_usd\n  FROM scored\n)\nSELECT\n  cu.customer_id,\n  cu.full_name,\n  upper(cu.country_code)                                         AS country,\n  coalesce(cu.tier, 'UNASSIGNED')                                AS tier,\n  s.recency_days, s.frequency, s.monetary_usd,\n  concat(s.r_score, s.f_score, s.m_score)                        AS rfm_code,\n  s.r_score + s.f_score + s.m_score                              AS rfm_total,\n  CASE\n    WHEN s.r_score >= 4 AND s.f_score >= 4 AND s.m_score >= 4 THEN 'Champion'\n    WHEN s.r_score >= 3 AND s.f_score >= 3                    THEN 'Loyal'\n    WHEN s.r_score >= 4 AND s.f_score <= 2                    THEN 'New / Promising'\n    WHEN s.r_score <= 2 AND s.m_score >= 4                    THEN 'At-risk whale'\n    WHEN s.r_score <= 2                                       THEN 'Hibernating'\n    ELSE 'Needs attention'\n  END                                                            AS segment,\n  s.monetary_usd > t.p50_usd                                     AS above_median,\n  round(try_divide(s.monetary_usd - t.avg_usd, t.sd_usd), 3)     AS monetary_zscore,\n  s.monetary_usd NOT BETWEEN t.iqr_usd[0] AND t.iqr_usd[1]       AS outside_iqr,\n  s.monetary_pct_rank\nFROM scored s\nJOIN customers cu ON cu.customer_id = s.customer_id\nCROSS JOIN thresholds t\nORDER BY rfm_total DESC, s.monetary_usd DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nline_values = (\n    df_orders.alias(\"o\")\n    .join(df_order_items.alias(\"oi\"), F.col(\"oi.order_id\") == F.col(\"o.order_id\"), \"inner\")\n    .filter(~F.col(\"o.status\").isin(\"CANCELLED\", \"PENDING\"))\n    .select(\n        \"o.customer_id\",\n        \"o.order_id\",\n        \"o.order_ts\",\n        (F.col(\"oi.quantity\") * F.col(\"oi.unit_price\") * (1 - F.col(\"oi.discount_pct\"))).alias(\"line_net_local\"),\n        \"o.currency\",\n    )\n)\n\nfx_latest = (\n    df_fx_rates\n    .withColumn(\"rn\", F.row_number().over(Window.partitionBy(\"currency\").orderBy(F.col(\"rate_date\").desc())))\n    .filter(F.col(\"rn\") == 1)\n    .select(\"currency\", \"rate_to_usd\")\n)\n\ncust = (\n    line_values.alias(\"lv\")\n    .join(fx_latest.alias(\"fx\"), F.col(\"fx.currency\") == F.col(\"lv.currency\"), \"left\")\n    .groupBy(\"lv.customer_id\")\n    .agg(\n        F.datediff(F.lit(\"2024-08-01\").cast(\"date\"), F.to_date(F.max(F.col(\"lv.order_ts\")))).alias(\"recency_days\"),\n        F.countDistinct(F.col(\"lv.order_id\")).alias(\"frequency\"),\n        F.round(F.sum(F.col(\"lv.line_net_local\") * F.col(\"fx.rate_to_usd\")), 2).alias(\"monetary_usd\"),\n    )\n)\n\nscored = (\n    cust\n    .select(\n        \"c.*\",\n        F.col(\"c.recency_days\").asc(),\n        F.ntile(5).over(Window.orderBy(\"recency_days\")).alias(\"r_score\"),\n        F.ntile(5).over(Window.orderBy(\"frequency\", \"customer_id\")).alias(\"f_score\"),\n        F.ntile(5).over(Window.orderBy(\"monetary_usd\")).alias(\"m_score\"),\n        F.round(F.percent_rank().over(Window.orderBy(\"monetary_usd\")), 3).alias(\"monetary_pct_rank\"),\n        F.cume_dist().over(Window.orderBy(\"monetary_usd\")).alias(\"monetary_cume_dist\"),\n    )\n)\n\nthresholds = (\n    scored\n    .agg(\n        F.percentile_approx(\"monetary_usd\", 0.5).alias(\"p50_usd\"),\n        F.percentile_approx(\"monetary_usd\", [0.25, 0.75]).alias(\"iqr_usd\"),\n        F.avg(\"monetary_usd\").alias(\"avg_usd\"),\n        F.stddev_samp(\"monetary_usd\").alias(\"sd_usd\"),\n    )\n)\n\nresult = (\n    scored.alias(\"s\")\n    .join(df_customers.alias(\"cu\"), F.col(\"cu.customer_id\") == F.col(\"s.customer_id\"), \"inner\")\n    .crossJoin(thresholds.alias(\"t\"))\n    .select(\n        \"cu.customer_id\",\n        \"cu.full_name\",\n        F.upper(F.col(\"cu.country_code\")).alias(\"country\"),\n        F.coalesce(F.col(\"cu.tier\"), F.lit(\"UNASSIGNED\")).alias(\"tier\"),\n        \"s.recency_days\",\n        \"s.frequency\",\n        \"s.monetary_usd\",\n        F.concat(F.col(\"s.r_score\"), F.col(\"s.f_score\"), F.col(\"s.m_score\")).alias(\"rfm_code\"),\n        (F.col(\"s.r_score\") + F.col(\"s.f_score\") + F.col(\"s.m_score\")).alias(\"rfm_total\"),\n        F.when(F.col(\"s.r_score\") >= 4 & (F.col(\"s.f_score\") >= 4) & (F.col(\"s.m_score\") >= 4), \"Champion\").when(F.col(\"s.r_score\") >= 3 & (F.col(\"s.f_score\") >= 3), \"Loyal\").when(F.col(\"s.r_score\") >= 4 & (F.col(\"s.f_score\") <= 2), \"New / Promising\").when(F.col(\"s.r_score\") <= 2 & (F.col(\"s.m_score\") >= 4), \"At-risk whale\").when(F.col(\"s.r_score\") <= 2, \"Hibernating\").otherwise(\"Needs attention\").alias(\"segment\"),\n        (F.col(\"s.monetary_usd\") > F.col(\"t.p50_usd\")).alias(\"above_median\"),\n        F.round(F.try_divide(F.col(\"s.monetary_usd\") - F.col(\"t.avg_usd\"), F.col(\"t.sd_usd\")), 3).alias(\"monetary_zscore\"),\n        (F.col(\"s.monetary_usd\").not_between(F.col(\"t.iqr_usd\")[0], F.col(\"t.iqr_usd\")[1])).alias(\"outside_iqr\"),\n        \"s.monetary_pct_rank\",\n    )\n    .orderBy(F.col(\"rfm_total\").desc(), F.col(\"monetary_usd\").desc())\n)\n```",
+      "seconds": 45.38,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [CANNOT_RESOLVE_STAR_EXPAND] Cannot resolve `c`.* given input columns `currency`, `currency`, `customer_id`, `line_net_local`, `order_id`, `order_ts`, `rate_to_usd`. Please check that the specified table or struct exists and is accessible in the input columns. SQLSTATE: 42704"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [CANNOT_RESOLVE_STAR_EXPAND] Cannot resolve `c`.* given input columns `currency`, `currency`, `customer_id`, `line_net_local`, `order_id`, `order_ts`, `rate_to_usd`. Please check that the specified table or struct exists and is accessible in the input columns. SQLSTATE: 42704"
+      }
+    },
+    {
+      "id": "harness_Q03",
+      "level": "harness",
+      "sql": "SELECT *\nFROM (\n  SELECT\n    p.category,\n    date_format(o.order_ts, 'yyyy-MM')                              AS order_month,\n    oi.quantity * oi.unit_price * (1 - oi.discount_pct)             AS net_local,\n    oi.quantity                                                     AS units\n  FROM order_items oi\n  JOIN orders   o ON o.order_id  = oi.order_id\n  JOIN products p ON p.product_id = oi.product_id\n  WHERE o.status IN ('DELIVERED', 'SHIPPED')\n) src\nPIVOT (\n  round(SUM(net_local), 2) AS rev,\n  SUM(units)               AS units\n  FOR order_month IN (\n    '2024-01' AS jan, '2024-02' AS feb, '2024-03' AS mar, '2024-04' AS apr,\n    '2024-05' AS may, '2024-06' AS jun, '2024-07' AS jul\n  )\n)\nORDER BY category",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_order_items.alias(\"oi\")\n    .join(df_orders.alias(\"o\"), F.col(\"o.order_id\") == F.col(\"oi.order_id\"), \"inner\")\n    .join(df_products.alias(\"p\"), F.col(\"p.product_id\") == F.col(\"oi.product_id\"), \"inner\")\n    .filter(F.col(\"o.status\").isin([\"DELIVERED\", \"SHIPPED\"]))\n    .select(\n        F.col(\"p.category\"),\n        F.date_format(F.col(\"o.order_ts\"), \"yyyy-MM\").alias(\"order_month\"),\n        (F.col(\"oi.quantity\") * F.col(\"oi.unit_price\") * (1 - F.col(\"oi.discount_pct\"))).alias(\"net_local\"),\n        F.col(\"oi.quantity\").alias(\"units\"),\n    )\n    .groupBy(\"category\")\n    .pivot(\"order_month\", [\"jan\", \"feb\", \"mar\", \"apr\", \"may\", \"jun\", \"jul\"])\n    .agg(\n        F.round(F.sum(\"net_local\"), 2).alias(\"rev\"),\n        F.sum(\"units\").alias(\"units\"),\n    )\n    .orderBy(\"category\")\n)\n```",
+      "seconds": 10.65,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=6 rows, py=6 rows; first diff: sql-only=[\"('beauty', None, None, 2550.0, 3.0, None, None, 312000.0, 1.0, 1700.0, 2.0, 115.0, 1.0, None, None)\"] py-only=[\"('beauty', None, None, None, None, None, None, None, None, None, None, None, None, None, None)\"]"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=6 rows, py=6 rows; first diff: sql-only=[\"('beauty', None, None, 2550.0, 3.0, None, None, 312000.0, 1.0, 1700.0, 2.0, 115.0, 1.0, None, None)\"] py-only=[\"('beauty', None, None, None, None, None, None, None, None, None, None, None, None, None, None)\"]"
+      }
+    },
+    {
+      "id": "harness_Q04a",
+      "level": "harness",
+      "sql": "WITH base AS (\n  SELECT\n    c.country_code,\n    o.channel,\n    p.category,\n    o.status,\n    oi.quantity,\n    oi.quantity * oi.unit_price * (1 - oi.discount_pct) AS net_local\n  FROM orders o\n  JOIN customers   c  ON c.customer_id = o.customer_id\n  JOIN order_items oi ON oi.order_id  = o.order_id\n  JOIN products    p  ON p.product_id = oi.product_id\n)\nSELECT\n  CASE WHEN grouping(country_code) = 1 THEN '(all countries)' ELSE country_code END AS country_code,\n  CASE WHEN grouping(channel)      = 1 THEN '(all channels)'  ELSE channel      END AS channel,\n  CASE WHEN grouping(category)     = 1 THEN '(all categories)' ELSE category    END AS category,\n  grouping_id(country_code, channel, category)                                AS gid,\n  COUNT(*)                                                                    AS lines,\n  SUM(quantity)                                                               AS units,\n  SUM(quantity) FILTER (WHERE status = 'DELIVERED')                           AS units_delivered,\n  COUNT(*)      FILTER (WHERE status IN ('CANCELLED', 'RETURNED'))            AS lines_lost,\n  round(SUM(net_local) FILTER (WHERE status <> 'CANCELLED'), 2)               AS net_local_ex_cancel\nFROM base\nGROUP BY GROUPING SETS (\n  (country_code, channel, category),\n  (country_code, channel),\n  (country_code),\n  (channel, category),\n  ()\n)\nORDER BY gid, country_code, channel, category",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nbase = (\n    df_orders.alias(\"o\")\n    .join(df_customers.alias(\"c\"), F.col(\"c.customer_id\") == F.col(\"o.customer_id\"), \"inner\")\n    .join(df_order_items.alias(\"oi\"), F.col(\"oi.order_id\") == F.col(\"o.order_id\"), \"inner\")\n    .join(df_products.alias(\"p\"), F.col(\"p.product_id\") == F.col(\"oi.product_id\"), \"inner\")\n    .select(\n        F.col(\"c.country_code\"),\n        F.col(\"o.channel\"),\n        F.col(\"p.category\"),\n        F.col(\"o.status\"),\n        F.col(\"oi.quantity\"),\n        (F.col(\"oi.quantity\") * F.col(\"oi.unit_price\") * (1 - F.col(\"oi.discount_pct\"))).alias(\"net_local\"),\n    )\n)\n\nresult = (\n    base\n    .groupingSets(\n        [[\"country_code\", \"channel\", \"category\"], [\"country_code\", \"channel\"], [\"country_code\"], [\"channel\", \"category\"], []],\n        \"country_code\", \"channel\", \"category\",\n    )\n    .agg(\n        F.grouping_id(\"country_code\", \"channel\", \"category\").alias(\"gid\"),\n        F.count(\"*\").alias(\"lines\"),\n        F.sum(\"quantity\").alias(\"units\"),\n        F.sum(F.when(F.col(\"status\") == \"DELIVERED\", F.col(\"quantity\"))).alias(\"units_delivered\"),\n        F.count(F.when(F.col(\"status\").isin(\"CANCELLED\", \"RETURNED\"), 1)).alias(\"lines_lost\"),\n        F.round(F.sum(F.when(F.col(\"status\") != \"CANCELLED\", F.col(\"net_local\"))), 2).alias(\"net_local_ex_cancel\"),\n    )\n    .select(\n        F.when(F.grouping(\"country_code\") == 1, \"(all countries)\").otherwise(\"country_code\").alias(\"country_code\"),\n        F.when(F.grouping(\"channel\") == 1, \"(all channels)\").otherwise(\"channel\").alias(\"channel\"),\n        F.when(F.grouping(\"category\") == 1, \"(all categories)\").otherwise(\"category\").alias(\"category\"),\n        \"gid\",\n        \"lines\",\n        \"units\",\n        \"units_delivered\",\n        \"lines_lost\",\n        \"net_local_ex_cancel\",\n    )\n    .orderBy(\"gid\", \"country_code\", \"channel\", \"category\")\n)\n```",
+      "seconds": 21.29,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNSUPPORTED_GROUPING_EXPRESSION] grouping()/grouping_id() can only be used with GroupingSets/Cube/Rollup. SQLSTATE: 42K0E;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNSUPPORTED_GROUPING_EXPRESSION] grouping()/grouping_id() can only be used with GroupingSets/Cube/Rollup. SQLSTATE: 42K0E;"
+      }
+    },
+    {
+      "id": "harness_Q04b",
+      "level": "harness",
+      "sql": "SELECT c.country_code, o.channel, COUNT(DISTINCT o.order_id) AS orders, grouping_id() AS gid\nFROM orders o JOIN customers c ON c.customer_id = o.customer_id\nGROUP BY ROLLUP (c.country_code, o.channel)\nORDER BY gid, country_code, channel",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_orders.alias(\"o\")\n    .join(df_customers.alias(\"c\"), F.col(\"c.customer_id\") == F.col(\"o.customer_id\"), \"inner\")\n    .rollup(F.col(\"c.country_code\").alias(\"country_code\"), F.col(\"o.channel\").alias(\"channel\"))\n    .agg(F.countDistinct(F.col(\"o.order_id\")).alias(\"orders\"), F.grouping_id().alias(\"gid\"))\n    .orderBy(\"gid\", \"country_code\", \"channel\")\n)\n```",
+      "seconds": 4.94,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "harness_Q04c",
+      "level": "harness",
+      "sql": "SELECT o.channel, o.status, COUNT(*) AS orders\nFROM orders o\nGROUP BY CUBE (o.channel, o.status)\nHAVING COUNT(*) > 1\nORDER BY channel NULLS FIRST, status NULLS FIRST",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_orders\n    .cube(\"channel\", \"status\")\n    .agg(F.count(\"*\").alias(\"orders\"))\n    .filter(F.col(\"orders\") > 1)\n    .orderBy(F.col(\"channel\").asc_nulls_first(), F.col(\"status\").asc_nulls_first())\n)\n```",
+      "seconds": 3.33,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "harness_Q05a",
+      "level": "harness",
+      "sql": "WITH prod_attr AS (\n  SELECT\n    product_id,\n    product_name,\n    category,\n    from_json(\n      attributes_json,\n      'color STRING, weight_g INT, sizes ARRAY<STRING>, tags ARRAY<STRING>,\n       warranty STRUCT<months: INT>, volume_ml INT, pages INT'\n    ) AS a\n  FROM products\n),\ncust_profile AS (\n  SELECT\n    c.customer_id,\n    c.full_name,\n    c.interests,\n    c.preferences,\n    collect_list(named_struct(\n      'order_id', o.order_id,\n      'ts',       o.order_ts,\n      'status',   o.status,\n      'city',     o.ship_to.city\n    )) AS order_structs\n  FROM customers c\n  LEFT JOIN orders o ON o.customer_id = c.customer_id\n  GROUP BY c.customer_id, c.full_name, c.interests, c.preferences\n)\nSELECT\n  cp.customer_id,\n  cp.full_name,\n  size(cp.interests)                                                         AS n_interests,\n  transform(cp.interests, x -> initcap(x))                                   AS interests_title,\n  filter(cp.interests, x -> x IN ('electronics', 'books'))                   AS tech_or_books,\n  exists(cp.interests, x -> x = 'beauty')                                    AS likes_beauty,\n  forall(cp.order_structs, s -> s.status IN ('DELIVERED','SHIPPED') OR s.order_id IS NULL) AS all_orders_ok,\n  aggregate(\n    transform(filter(cp.order_structs, s -> s.order_id IS NOT NULL), s -> 1),\n    0, (acc, x) -> acc + x\n  )                                                                          AS order_count_hof,\n  get(array_sort(\n    filter(cp.order_structs, s -> s.order_id IS NOT NULL),\n    (l, r) -> CASE WHEN l.ts > r.ts THEN -1 WHEN l.ts < r.ts THEN 1 ELSE 0 END\n  ), 0).order_id                                                             AS latest_order_id,\n  array_distinct(transform(filter(cp.order_structs, s -> s.city IS NOT NULL), s -> s.city)) AS ship_cities,\n  map_filter(cp.preferences, (k, v) -> v = 'Y')                              AS opted_in_channels,\n  transform_values(cp.preferences, (k, v) -> v = 'Y')                        AS prefs_bool,\n  map_keys(cp.preferences)                                                   AS pref_keys,\n  element_at(cp.preferences, 'newsletter')                                   AS newsletter_flag,\n  zip_with(\n    cp.interests,\n    sequence(1, size(cp.interests)),\n    (i, n) -> concat(CAST(n AS STRING), ':', i)\n  )                                                                          AS ranked_interests\nFROM cust_profile cp\nORDER BY cp.customer_id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nprod_attr = (\n  df_products\n  .select(\n    \"product_id\",\n    \"product_name\",\n    \"category\",\n    F.from_json(\"attributes_json\", \"color STRING, weight_g INT, sizes ARRAY<STRING>, tags ARRAY<STRING>, warranty STRUCT<months: INT>, volume_ml INT, pages INT\").alias(\"a\"),\n  )\n)\n\ncust_profile = (\n  df_customers.alias(\"c\")\n  .join(df_orders.alias(\"o\"), F.col(\"o.customer_id\") == F.col(\"c.customer_id\"), \"left\")\n  .groupBy(\n    F.col(\"c.customer_id\"),\n    F.col(\"c.full_name\"),\n    F.col(\"c.interests\"),\n    F.col(\"c.preferences\"),\n  )\n  .agg(\n    F.collect_list(F.named_struct(\"order_id\", F.col(\"o.order_id\"), \"ts\", F.col(\"o.order_ts\"), \"status\", F.col(\"o.status\"), \"city\", F.col(\"o.ship_to.city\"))).alias(\"order_structs\"),\n  )\n)\n\nresult = (\n  cust_profile\n  .select(\n    \"customer_id\",\n    \"full_name\",\n    F.size(\"interests\").alias(\"n_interests\"),\n    F.transform(\"interests\", lambda x: F.initcap(x)).alias(\"interests_title\"),\n    F.filter(\"interests\", lambda x: xisin(\"electronics\", \"books\")).alias(\"tech_or_books\"),\n    F.exists(\"interests\", lambda x: x == \"beauty\").alias(\"likes_beauty\"),\n    F.forall(\"order_structs\", lambda s: s[\"status\"].isin(\"DELIVERED\", \"SHIPPED\") | F.col(\"s.order_id\").isNull()).alias(\"all_orders_ok\"),\n    F.aggregate(\n      F.transform(F.filter(\"order_structs\", lambda s: s[\"order_id\"].isNotNull()), lambda s: 1),\n      0, lambda acc, x: acc + x,\n    ).alias(\"order_count_hof\"),\n    F.get(F.array_sort(F.filter(\"order_structs\", lambda s: s[\"order_id\"].isNotNull())), 0).select(\"order_id\").alias(\"latest_order_id\"),\n    F.array_distinct(F.transform(F.filter(\"order_structs\", lambda s: s[\"city\"].isNotNull()), lambda s: s[\"city\"])).alias(\"ship_cities\"),\n    F.map_filter(\"preferences\", lambda k, v: v == \"Y\").alias(\"opted_in_channels\"),\n    F.transform_values(\"preferences\", lambda k, v: v == \"Y\").alias(\"prefs_bool\"),\n    F.map_keys(\"preferences\").alias(\"pref_keys\"),\n    F.element_at(\"preferences\", \"newsletter\").alias(\"newsletter_flag\"),\n    F.zip_with(\"interests\", F.sequence(1, F.size(\"interests\")), lambda i, n: F.concat(F.col(\"n\").cast(\"string\"), F.lit(\":\"), i)).alias(\"ranked_interests\"),\n  )\n  .orderBy(\"customer_id\")\n)\n```",
+      "seconds": 27.49,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `ts` cannot be resolved. Did you mean one of the following? [`c`.`city`, `c`.`tier`, `o`.`status`, `c`.`email`, `o`.`order_ts`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `ts` cannot be resolved. Did you mean one of the following? [`c`.`city`, `c`.`tier`, `o`.`status`, `c`.`email`, `o`.`order_ts`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "harness_Q05b",
+      "level": "harness",
+      "sql": "SELECT\n  pa.product_id,\n  pa.product_name,\n  t.pos      AS tag_pos,\n  t.tag,\n  sz.size_label,\n  pa.a.warranty.months                                      AS warranty_months,\n  coalesce(pa.a.weight_g, -1)                               AS weight_g\nFROM (\n  SELECT product_id, product_name,\n         from_json(attributes_json,\n           'color STRING, weight_g INT, sizes ARRAY<STRING>, tags ARRAY<STRING>, warranty STRUCT<months: INT>') AS a\n  FROM products\n) pa\nLATERAL VIEW OUTER posexplode(pa.a.tags)  t  AS pos, tag\nLATERAL VIEW OUTER explode(pa.a.sizes)    sz AS size_label\nORDER BY pa.product_id, tag_pos, size_label",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_products\n    .select(\n        \"product_id\",\n        \"product_name\",\n        F.posexplode_outer(\"attributes_json\").alias(\"pos\", \"tag\"),\n        F.explode_outer(\"attributes_json\").alias(\"size_label\"),\n        F.col(\"attributes_json\").getItem(\"warranty\").getItem(\"months\").alias(\"warranty_months\"),\n        F.coalesce(F.col(\"attributes_json\").getItem(\"weight_g\"), F.lit(-1)).alias(\"weight_g\"),\n    )\n    .orderBy(\"product_id\", \"pos\", \"size_label\")\n)\n```",
+      "seconds": 5.87,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [INVALID_EXTRACT_BASE_FIELD_TYPE] Can't extract a value from \"attributes_json\". Need a complex type [STRUCT, ARRAY, MAP] but got \"STRING\". SQLSTATE: 42000"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [INVALID_EXTRACT_BASE_FIELD_TYPE] Can't extract a value from \"attributes_json\". Need a complex type [STRUCT, ARRAY, MAP] but got \"STRING\". SQLSTATE: 42000"
+      }
+    },
+    {
+      "id": "harness_Q05c",
+      "level": "harness",
+      "sql": "SELECT customer_id, o.*\nFROM (\n  SELECT customer_id,\n         array(\n           named_struct('k', 'first_order',  'v', CAST(MIN(order_ts) AS STRING)),\n           named_struct('k', 'last_order',   'v', CAST(MAX(order_ts) AS STRING)),\n           named_struct('k', 'order_count',  'v', CAST(COUNT(*) AS STRING))\n         ) AS kv\n  FROM orders\n  GROUP BY customer_id\n) x\nLATERAL VIEW inline(x.kv) o AS k, v\nORDER BY customer_id, k",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_orders\n    .groupBy(\"customer_id\")\n    .agg(\n        F.array(\n          F.named_struct(\"k\", \"first_order\", \"v\", F.col(\"min_order_ts\").cast(\"string\")),\n          F.named_struct(\"k\", \"last_order\", \"v\", F.col(\"max_order_ts\").cast(\"string\")),\n          F.named_struct(\"k\", \"order_count\", \"v\", F.col(\"order_count\").cast(\"string\")),\n        ).alias(\"kv\"),\n    )\n    .select(\"customer_id\", F.col(\"kv\").inline(\"o\").alias(\"k\", \"v\"))\n    .orderBy(\"customer_id\", \"k\")\n)\n```",
+      "seconds": 6.76,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `k` cannot be resolved. Did you mean one of the following? [`status`, `channel`, `ship_to`, `currency`, `order_id`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `k` cannot be resolved. Did you mean one of the following? [`status`, `channel`, `ship_to`, `currency`, `order_id`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "harness_Q06a",
+      "level": "harness",
+      "sql": "SELECT\n  c.customer_id,\n  c.full_name,\n  c.country_code,\n  (SELECT MAX(oi.quantity * oi.unit_price)\n     FROM orders o2\n     JOIN order_items oi ON oi.order_id = o2.order_id\n    WHERE o2.customer_id = c.customer_id)                                   AS max_line_local,\n  (SELECT COUNT(*) FROM web_events w WHERE w.customer_id = c.customer_id)   AS web_events\nFROM customers c\nLEFT SEMI JOIN (\n  SELECT o.customer_id\n  FROM orders o\n  JOIN order_items oi ON oi.order_id = o.order_id\n  JOIN products p     ON p.product_id = oi.product_id\n  WHERE p.category = 'electronics'\n) elec ON elec.customer_id = c.customer_id\nWHERE NOT EXISTS (\n        SELECT 1 FROM orders ox\n        WHERE ox.customer_id = c.customer_id\n          AND ox.status IN ('CANCELLED', 'RETURNED')\n      )\nORDER BY c.customer_id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nquantity_by_customer = (\n    df_orders\n    .alias(\"oi\")\n    .join(df_products.alias(\"p\"), F.col(\"p.product_id\") == F.col(\"oi.product_id\"), \"inner\")\n    .filter(F.col(\"p.category\") == \"electronics\")\n    .groupBy(F.col(\"oi.customer_id\"))\n    .agg(F.max(F.col(\"oi.quantity\") * F.col(\"oi.unit_price\")).alias(\"max_line_local\"))\n)\n\nweb_events_by_customer = df_web_events.groupBy(\"customer_id\").agg(F.count(\"*\").alias(\"web_events\"))\n\nresult = (\n    df_customers.alias(\"c\")\n    .join(elec_on_customer.alias(\"elec\"), F.col(\"elec.customer_id\") == F.col(\"c.customer_id\"), \"left_semi\")\n    .join(web_events_by_customer.alias(\"w\"), F.col(\"w.customer_id\") == F.col(\"c.customer_id\"), \"left\")\n    .join(df_orders.alias(\"ox\"), (F.col(\"ox.customer_id\") == F.col(\"c.customer_id\")) & (F.col(\"ox.status\").isin(\"CANCELLED\", \"RETURNED\")), \"left_anti\")\n    .select(\n        F.col(\"c.customer_id\"),\n        F.col(\"c.full_name\"),\n        F.col(\"c.country_code\"),\n        F.col(\"oi.max_line_local\"),\n        F.coalesce(F.col(\"w.web_events\"), F.lit(0)).alias(\"web_events\"),\n    )\n    .orderBy(\"customer_id\")\n)\n```",
+      "seconds": 13.64,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `oi`.`product_id` cannot be resolved. Did you mean one of the following? [`p`.`product_id`, `oi`.`order_id`, `p`.`product_name`, `oi`.`order_ts`, `oi`.`ship_to`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `oi`.`product_id` cannot be resolved. Did you mean one of the following? [`p`.`product_id`, `oi`.`order_id`, `p`.`product_name`, `oi`.`order_ts`, `oi`.`ship_to`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "harness_Q06b",
+      "level": "harness",
+      "sql": "SELECT c.customer_id, c.full_name, c.signup_date, size(map_keys(c.preferences)) AS n_prefs\nFROM customers c\nLEFT ANTI JOIN orders o ON o.customer_id = c.customer_id\nWHERE c.signup_date < DATE'2024-01-01'",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_customers.alias(\"c\")\n    .join(df_orders.alias(\"o\"), F.col(\"o.customer_id\") == F.col(\"c.customer_id\"), \"left_anti\")\n    .filter(F.col(\"c.signup_date\") < \"2024-01-01\")\n    .select(\n        F.col(\"c.customer_id\"),\n        F.col(\"c.full_name\"),\n        F.col(\"c.signup_date\"),\n        F.size(F.map_keys(F.col(\"c.preferences\"))).alias(\"n_prefs\"),\n    )\n)\n```",
+      "seconds": 5.56,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "harness_Q06c",
+      "level": "harness",
+      "sql": "SELECT p.product_id, p.sku, p.product_name\nFROM products p\nWHERE p.product_id NOT IN (\n        SELECT oi.product_id\n        FROM order_items oi\n        WHERE oi.order_id IN (SELECT order_id FROM orders WHERE status <> 'CANCELLED')\n      )\n   OR EXISTS (\n        SELECT 1 FROM order_items oi2\n        WHERE oi2.product_id = p.product_id AND oi2.unit_price < p.list_price * 2\n      )\nORDER BY p.product_id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_products.alias(\"p\")\n    .join(\n        df_order_items.filter(F.col(\"order_id\").isin(df_orders.filter(F.col(\"status\") != \"CANCELLED\").select(\"order_id\"))).alias(\"oi\"),\n        (F.col(\"p.product_id\") == F.col(\"oi.product_id\"))\n        & (F.col(\"oi.unit_price\") < F.col(\"p.list_price\") * 2),\n        \"left_semi\",\n    )\n    .select(F.col(\"p.product_id\"), F.col(\"p.sku\"), F.col(\"p.product_name\"))\n    .orderBy(\"product_id\")\n)\n```",
+      "seconds": 6.21,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=7 rows, py=6 rows; first diff: sql-only=[\"(402.0, 'SKU-BE-0002', 'Mineral Sunscreen SPF50')\"] py-only=[]"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=7 rows, py=6 rows; first diff: sql-only=[\"(402.0, 'SKU-BE-0002', 'Mineral Sunscreen SPF50')\"] py-only=[]"
+      }
+    },
+    {
+      "id": "harness_Q07",
+      "level": "harness",
+      "sql": "WITH web_buyers  AS (SELECT DISTINCT customer_id FROM orders WHERE channel = 'web'),\n     app_buyers  AS (SELECT DISTINCT customer_id FROM orders WHERE channel = 'app'),\n     browsers    AS (SELECT DISTINCT customer_id FROM web_events WHERE customer_id IS NOT NULL)\nSELECT 'web_and_app'        AS cohort, customer_id FROM (SELECT customer_id FROM web_buyers INTERSECT SELECT customer_id FROM app_buyers)\nUNION ALL\nSELECT 'web_only'           AS cohort, customer_id FROM (SELECT customer_id FROM web_buyers EXCEPT SELECT customer_id FROM app_buyers)\nUNION ALL\nSELECT 'app_only'           AS cohort, customer_id FROM (SELECT customer_id FROM app_buyers EXCEPT SELECT customer_id FROM web_buyers)\nUNION ALL\nSELECT 'browsed_no_purchase' AS cohort, customer_id FROM (\n  SELECT customer_id FROM browsers\n  EXCEPT\n  SELECT customer_id FROM orders WHERE status IN ('DELIVERED', 'SHIPPED')\n)\nUNION\nSELECT 'any_activity'       AS cohort, customer_id FROM (\n  SELECT customer_id FROM browsers UNION ALL SELECT customer_id FROM orders\n)\nORDER BY cohort, customer_id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nweb_buyers = (\n    df_orders\n    .filter(F.col(\"channel\") == \"web\")\n    .select(\"customer_id\")\n    .distinct()\n)\n\napp_buyers = (\n    df_orders\n    .filter(F.col(\"channel\") == \"app\")\n    .select(\"customer_id\")\n    .distinct()\n)\n\nbrowsers = (\n    df_web_events\n    .filter(F.col(\"customer_id\").isNotNull())\n    .select(\"customer_id\")\n    .distinct()\n)\n\nresult = (\n    df_web_buyers\n    .select(F.lit(\"web_and_app\").alias(\"cohort\"), \"customer_id\")\n    .intersect(df_app_buyers.select(\"customer_id\"))\n    .unionByName(\n        df_web_buyers\n        .select(F.lit(\"web_only\").alias(\"cohort\"), \"customer_id\")\n        .subtract(df_app_buyers.select(\"customer_id\"))\n    )\n    .unionByName(\n        df_app_buyers\n        .select(F.lit(\"app_only\").alias(\"cohort\"), \"customer_id\")\n        .subtract(df_web_buyers.select(\"customer_id\"))\n    )\n    .unionByName(\n        df_browsers\n        .select(\"customer_id\")\n        .subtract(df_orders.filter(F.col(\"status\").isin(\"DELIVERED\", \"SHIPPED\")).select(\"customer_id\"))\n        .alias(\"browsed_no_purchase\", \"customer_id\")\n    )\n    .unionByName(\n        df_browsers\n        .select(\"customer_id\")\n        .unionByName(df_orders.select(\"customer_id\"))\n        .alias(\"any_activity\", \"customer_id\")\n    )\n    .orderBy(\"cohort\", \"customer_id\")\n)\n```",
+      "seconds": 16.0,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_web_buyers' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_web_buyers' is not defined"
+      }
+    },
+    {
+      "id": "harness_Q08",
+      "level": "harness",
+      "sql": "WITH order_totals AS (\n  SELECT\n    o.order_id, o.customer_id, o.order_ts, o.currency, o.status, o.channel,\n    SUM(oi.quantity * oi.unit_price * (1 - oi.discount_pct)) AS net_local\n  FROM orders o\n  JOIN order_items oi ON oi.order_id = o.order_id\n  GROUP BY o.order_id, o.customer_id, o.order_ts, o.currency, o.status, o.channel\n),\nfx_pit AS (\n  SELECT * FROM (\n    SELECT /*+ BROADCAST(f) */\n      ot.order_id,\n      f.rate_to_usd,\n      f.rate_date,\n      ROW_NUMBER() OVER (PARTITION BY ot.order_id ORDER BY f.rate_date DESC) AS rn\n    FROM order_totals ot\n    JOIN fx_rates f\n      ON f.currency = ot.currency\n     AND f.rate_date <= to_date(ot.order_ts)\n  ) z WHERE rn = 1\n),\nusd AS (\n  SELECT\n    ot.*,\n    fx.rate_date                               AS fx_rate_date,\n    CAST(ot.net_local * fx.rate_to_usd AS DECIMAL(18,2)) AS net_usd\n  FROM order_totals ot\n  LEFT JOIN fx_pit fx ON fx.order_id = ot.order_id\n)\nSELECT\n  order_id, customer_id, order_ts, currency, fx_rate_date, status, net_usd,\n  SUM(net_usd) OVER (\n    ORDER BY order_ts\n    RANGE BETWEEN INTERVAL 30 DAYS PRECEDING AND CURRENT ROW\n  )                                                                     AS rolling_30d_usd,\n  COUNT(*) OVER (\n    PARTITION BY customer_id ORDER BY order_ts\n    RANGE BETWEEN INTERVAL 60 DAYS PRECEDING AND CURRENT ROW\n  )                                                                     AS cust_orders_60d,\n  SUM(net_usd) OVER (\n    PARTITION BY customer_id ORDER BY order_ts\n    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n  )                                                                     AS cust_running_usd,\n  AVG(net_usd) OVER (\n    PARTITION BY channel ORDER BY order_ts\n    ROWS BETWEEN 2 PRECEDING AND 2 FOLLOWING\n  )                                                                     AS channel_centered_avg5,\n  LAST_VALUE(CASE WHEN status = 'DELIVERED' THEN order_id END) IGNORE NULLS OVER (\n    PARTITION BY customer_id ORDER BY order_ts\n    ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING\n  )                                                                     AS prev_delivered_order,\n  FIRST_VALUE(order_ts) OVER (PARTITION BY customer_id ORDER BY order_ts) AS first_order_ts,\n  datediff(\n    to_date(order_ts),\n    to_date(LAG(order_ts) OVER (PARTITION BY customer_id ORDER BY order_ts))\n  )                                                                     AS days_since_prev,\n  LEAD(status, 1, 'NONE') OVER (PARTITION BY customer_id ORDER BY order_ts) AS next_status,\n  DENSE_RANK() OVER (PARTITION BY date_trunc('MONTH', order_ts) ORDER BY net_usd DESC) AS month_rank\nFROM usd\nORDER BY order_ts",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\norder_totals = (\n  df_orders.alias(\"o\")\n  .join(df_order_items.alias(\"oi\"), F.col(\"oi.order_id\") == F.col(\"o.order_id\"), \"inner\")\n  .groupBy(\n    \"o.order_id\", \"o.customer_id\", \"o.order_ts\", \"o.currency\", \"o.status\", \"o.channel\",\n  )\n  .agg(\n    F.sum(F.col(\"oi.quantity\") * F.col(\"oi.unit_price\") * (1 - F.col(\"oi.discount_pct\"))).alias(\"net_local\"),\n  )\n)\n\nfx_pit = (\n  order_totals.alias(\"ot\")\n  .join(df_fx_rates.alias(\"f\"), (F.col(\"f.currency\") == F.col(\"ot.currency\")) & (F.col(\"f.rate_date\") <= F.to_date(F.col(\"ot.order_ts\"))), \"inner\")\n  .withColumn(\"rn\", F.row_number().over(Window.partitionBy(\"ot.order_id\").orderBy(F.col(\"f.rate_date\").desc())))\n  .filter(F.col(\"rn\") == 1)\n  .select(\"ot.order_id\", F.col(\"f.rate_to_usd\"), F.col(\"f.rate_date\"))\n)\n\nusd = (\n  order_totals.alias(\"ot\")\n  .join(fx_pit.alias(\"fx\"), F.col(\"fx.order_id\") == F.col(\"ot.order_id\"), \"left\")\n  .select(\n    \"ot.*\",\n    F.col(\"fx.rate_date\").alias(\"fx_rate_date\"),\n    F.col(\"ot.net_local\").cast(\"decimal(18,2\")).alias(\"net_usd\"),\n    F.col(\"fx.rate_date\").alias(\"fx_rate_date\"),\n    F.col(\"fx.rate_to_usd\").alias(\"net_usd\"),\n  )\n)\n\nresult = (\n  usd\n  .select(\n    \"order_id\", \"customer_id\", \"order_ts\", \"currency\", \"fx_rate_date\", \"status\", \"net_usd\",\n    F.sum(\"net_usd\").over(Window.orderBy(\"order_ts\").rangeBetween(-30, Window.currentRow)).alias(\"rolling_30d_usd\"),\n    F.count(F.lit(1)).over(Window.partitionBy(\"customer_id\").orderBy(\"order_ts\").rangeBetween(-60, Window.currentRow)).alias(\"cust_orders_60d\"),\n    F.sum(\"net_usd\").over(Window.partitionBy(\"customer_id\").orderBy(\"order_ts\").rowsBetween(Window.unboundedPreceding, Window.currentRow)).alias(\"cust_running_usd\"),\n    F.avg(\"net_usd\").over(Window.partitionBy(\"channel\").orderBy(\"order_ts\").rowsBetween(-2, 2)).alias(\"channel_centered_avg5\"),\n    F.last(\"net_usd\", ignorenulls=True).over(Window.partitionBy(\"customer_id\").orderBy(\"order_ts\").rowsBetween(Window.unboundedPreceding, -1)).alias(\"prev_delivered_order\"),\n    F.first(\"order_ts\").over(Window.partitionBy(\"customer_id\").orderBy(\"order_ts\")).alias(\"first_order_ts\"),\n    F.datediff(F.to_date(\"order_ts\"), F.to_date(F.lag(\"order_ts\").over(Window.partitionBy(\"customer_id\").orderBy(\"order_ts\")))).alias(\"days_since_prev\"),\n    F.lead(\"status\", 1, \"NONE\").over(Window.partitionBy(\"customer_id\").orderBy(\"order_ts\")).alias(\"next_status\"),\n    F.dense_rank().over(Window.partitionBy(F.date_trunc(\"MONTH\", \"order_ts\")).orderBy(F.col(\"net_usd\").desc())).alias(\"month_rank\"),\n  )\n  .orderBy(\"order_ts\")\n)\n```",
+      "seconds": 33.49,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "harness_Q09a",
+      "level": "harness",
+      "sql": "WITH ev AS (\n  SELECT customer_id, to_date(event_ts) AS d, event_ts, event_type\n  FROM web_events\n  WHERE customer_id IS NOT NULL\n),\nfunnel AS (\n  SELECT\n    customer_id,\n    d,\n    MIN(CASE WHEN event_type IN ('page_view','search') THEN event_ts END) AS t_entry,\n    MIN(CASE WHEN event_type = 'product_view'  THEN event_ts END)         AS t_view,\n    MIN(CASE WHEN event_type = 'add_to_cart'   THEN event_ts END)         AS t_cart,\n    MIN(CASE WHEN event_type = 'checkout'      THEN event_ts END)         AS t_checkout,\n    concat_ws(' > ', array_distinct(collect_list(event_type)))            AS path\n  FROM ev\n  GROUP BY customer_id, d\n)\nSELECT\n  f.customer_id,\n  f.d,\n  f.path,\n  CASE\n    WHEN f.t_checkout IS NOT NULL THEN '4_checkout'\n    WHEN f.t_cart     IS NOT NULL THEN '3_cart'\n    WHEN f.t_view     IS NOT NULL THEN '2_view'\n    ELSE '1_entry'\n  END                                                                    AS deepest_stage,\n  (unix_timestamp(f.t_checkout) - unix_timestamp(coalesce(f.t_entry, f.t_view))) / 60 AS minutes_to_checkout,\n  o.order_id                                                             AS matched_order,\n  array_contains(split(f.path, ' > '), 'search')                         AS used_search\nFROM funnel f\nLEFT JOIN orders o\n  ON o.customer_id = f.customer_id\n AND o.order_ts BETWEEN f.t_checkout AND f.t_checkout + INTERVAL 10 MINUTES\nORDER BY f.customer_id, f.d",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nev = (\n  df_web_events\n  .filter(F.col(\"customer_id\").isNotNull())\n  .select(\n    \"customer_id\",\n    F.to_date(\"event_ts\").alias(\"d\"),\n    \"event_ts\",\n    \"event_type\",\n  )\n)\n\nfunnel = (\n  ev\n  .groupBy(\"customer_id\", \"d\")\n  .agg(\n    F.min(F.when(F.col(\"event_type\").isin([\"page_view\", \"search\"]), F.col(\"event_ts\"))).alias(\"t_entry\"),\n    F.min(F.when(F.col(\"event_type\") == \"product_view\", F.col(\"event_ts\"))).alias(\"t_view\"),\n    F.min(F.when(F.col(\"event_type\") == \"add_to_cart\", F.col(\"event_ts\"))).alias(\"t_cart\"),\n    F.min(F.when(F.col(\"event_type\") == \"checkout\", F.col(\"event_ts\"))).alias(\"t_checkout\"),\n    F.concat_ws(\" > \", F.array_distinct(F.collect_list(\"event_type\"))).alias(\"path\"),\n    F.count(\"*\").alias(\"web_events_count\"),\n  )\n)\n\nresult = (\n  funnel\n  .alias(\"f\")\n  .join(df_orders.alias(\"o\"), (F.col(\"o.customer_id\") == F.col(\"f.customer_id\")) & (F.col(\"o.order_ts\").between(F.col(\"f.t_checkout\"), F.col(\"f.t_checkout\") + F.expr(\"INTERVAL 10 MINUTES\"))), \"left\")\n  .select(\n    \"f.customer_id\",\n    \"f.d\",\n    \"f.path\",\n    F.when(F.col(\"f.t_checkout\").isNotNull(), \"4_checkout\").when(F.col(\"f.t_cart\").isNotNull(), \"3_cart\").when(F.col(\"f.t_view\").isNotNull(), \"2_view\").otherwise(\"1_entry\").alias(\"deepest_stage\"),\n    ((F.unix_timestamp(F.col(\"f.t_checkout\")) - F.unix_timestamp(F.coalesce(F.col(\"f.t_entry\"), F.col(\"f.t_view\")))) / 60).alias(\"minutes_to_checkout\"),\n    F.col(\"o.order_id\").alias(\"matched_order\"),\n    F.array_contains(F.split(F.col(\"f.path\"), \" > \"), \"search\").alias(\"used_search\"),\n    F.col(\"f.collected_web_events_count\").alias(\"collected_web_events_count\"),\n  )\n  .orderBy(\"customer_id\", \"d\")\n)\n```",
+      "seconds": 22.45,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`collected_web_events_count` cannot be resolved. Did you mean one of the following? [`f`.`web_events_count`, `o`.`order_ts`, `o`.`currency`, `f`.`t_checkout`, `f`.`t_entry`]. SQLSTATE: 4270"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `f`.`collected_web_events_count` cannot be resolved. Did you mean one of the following? [`f`.`web_events_count`, `o`.`order_ts`, `o`.`currency`, `f`.`t_checkout`, `f`.`t_entry`]. SQLSTATE: 4270"
+      }
+    },
+    {
+      "id": "harness_Q09b",
+      "level": "harness",
+      "sql": "WITH stage_flags AS (\n  SELECT\n    customer_id, to_date(event_ts) AS d,\n    max(event_type = 'product_view') AS viewed,\n    max(event_type = 'add_to_cart')  AS carted,\n    max(event_type = 'checkout')     AS checked_out\n  FROM web_events\n  WHERE customer_id IS NOT NULL\n  GROUP BY customer_id, to_date(event_ts)\n)\nSELECT\n  COUNT(*)                                                     AS visit_days,\n  count_if(viewed)                                             AS view_days,\n  count_if(carted)                                             AS cart_days,\n  count_if(checked_out)                                        AS checkout_days,\n  round(try_divide(count_if(carted), count_if(viewed)) * 100, 1)       AS view_to_cart_pct,\n  round(try_divide(count_if(checked_out), count_if(carted)) * 100, 1)  AS cart_to_checkout_pct\nFROM stage_flags",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nstage_flags = (\n    df_web_events\n    .filter(F.col(\"customer_id\").isNotNull())\n    .groupBy(\"customer_id\", F.to_date(\"event_ts\").alias(\"d\"))\n    .agg(\n        F.max(F.col(\"event_type\") == \"product_view\").alias(\"viewed\"),\n        F.max(F.col(\"event_type\") == \"add_to_cart\").alias(\"carted\"),\n        F.max(F.col(\"event_type\") == \"checkout\").alias(\"checked_out\"),\n    )\n)\n\nresult = (\n    stage_flags\n    .agg(\n        F.count(\"*\").alias(\"visit_days\"),\n        F.count_if(\"viewed\").alias(\"view_days\"),\n        F.count_if(\"carted\").alias(\"cart_days\"),\n        F.count_if(\"checked_out\").alias(\"checkout_days\"),\n        F.round(F.try_divide(F.count_if(\"carted\"), F.count_if(\"viewed\")) * 100, 1).alias(\"view_to_cart_pct\"),\n        F.round(F.try_divide(F.count_if(\"checked_out\"), F.count_if(\"carted\")) * 100, 1).alias(\"cart_to_checkout_pct\"),\n    )\n)\n```",
+      "seconds": 11.2,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "harness_Q10a",
+      "level": "harness",
+      "sql": "WITH monthly AS (\n  SELECT\n    customer_id,\n    SUM(CASE WHEN month(order_ts) BETWEEN 1 AND 3 THEN 1 ELSE 0 END) AS q1_orders,\n    SUM(CASE WHEN month(order_ts) BETWEEN 4 AND 6 THEN 1 ELSE 0 END) AS q2_orders,\n    SUM(CASE WHEN month(order_ts) BETWEEN 7 AND 9 THEN 1 ELSE 0 END) AS q3_orders\n  FROM orders\n  GROUP BY customer_id\n)\nSELECT customer_id, quarter, n_orders\nFROM monthly\nUNPIVOT EXCLUDE NULLS (n_orders FOR quarter IN (q1_orders AS Q1, q2_orders AS Q2, q3_orders AS Q3))\nWHERE n_orders > 0\nORDER BY customer_id, quarter",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmonthly = (\n    df_orders\n    .groupBy(\"customer_id\")\n    .agg(\n        F.sum(F.when(F.month(\"order_ts\").between(1, 3), 1).otherwise(0)).alias(\"q1_orders\"),\n        F.sum(F.when(F.month(\"order_ts\").between(4, 6), 1).otherwise(0)).alias(\"q2_orders\"),\n        F.sum(F.when(F.month(\"order_ts\").between(7, 9), 1).otherwise(0)).alias(\"q3_orders\"),\n    )\n)\n\nresult = (\n    monthly\n    .unpivot(\n        ids=[\"customer_id\"],\n        values=[\"Q1\", \"Q2\", \"Q3\"],\n        variableColumnName=\"quarter\",\n        valueColumnName=\"n_orders\",\n    )\n    .filter(F.col(\"n_orders\") > 0)\n    .orderBy(\"customer_id\", \"quarter\")\n)\n```",
+      "seconds": 8.92,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Q1` cannot be resolved. Did you mean one of the following? [`q1_orders`, `q2_orders`, `q3_orders`, `customer_id`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Q1` cannot be resolved. Did you mean one of the following? [`q1_orders`, `q2_orders`, `q3_orders`, `customer_id`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "harness_Q10b",
+      "level": "harness",
+      "sql": "SELECT customer_id, stack(3, 'Q1', q1_orders, 'Q2', q2_orders, 'Q3', q3_orders) AS (quarter, n_orders)\nFROM (\n  SELECT\n    customer_id,\n    SUM(CASE WHEN quarter(order_ts) = 1 THEN 1 ELSE 0 END) AS q1_orders,\n    SUM(CASE WHEN quarter(order_ts) = 2 THEN 1 ELSE 0 END) AS q2_orders,\n    SUM(CASE WHEN quarter(order_ts) = 3 THEN 1 ELSE 0 END) AS q3_orders\n  FROM orders\n  GROUP BY customer_id\n) m\nORDER BY customer_id, quarter",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_orders\n    .groupBy(\"customer_id\")\n    .agg(\n        F.sum(F.when(F.quarter(\"order_ts\") == 1, 1).otherwise(0)).alias(\"q1_orders\"),\n        F.sum(F.when(F.quarter(\"order_ts\") == 2, 1).otherwise(0)).alias(\"q2_orders\"),\n        F.sum(F.when(F.quarter(\"order_ts\") == 3, 1).otherwise(0)).alias(\"q3_orders\"),\n    )\n    .select(\n        \"customer_id\",\n        F.stack(3, \"Q1\", \"q1_orders\", \"Q2\", \"q2_orders\", \"Q3\", \"q3_orders\").alias((F.col(\"quarter\"), F.col(\"n_orders\"))),\n    )\n    .orderBy(\"customer_id\", \"quarter\")\n)\n```",
+      "seconds": 8.4,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkTypeError: [NOT_EXPECTED_TYPE] Argument `col` should be Column or str, got int."
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "PySparkTypeError: [NOT_EXPECTED_TYPE] Argument `col` should be Column or str, got int."
+      }
+    },
+    {
+      "id": "harness_Q11a",
+      "level": "harness",
+      "sql": "WITH basket AS (\n  SELECT DISTINCT oi.order_id, p.category\n  FROM order_items oi\n  JOIN products p ON p.product_id = oi.product_id\n  JOIN orders   o ON o.order_id = oi.order_id\n  WHERE o.status <> 'CANCELLED'\n),\npairs AS (\n  SELECT a.category AS cat_a, b.category AS cat_b, COUNT(DISTINCT a.order_id) AS together\n  FROM basket a\n  JOIN basket b\n    ON a.order_id = b.order_id\n   AND a.category < b.category\n  GROUP BY a.category, b.category\n),\nsingles AS (\n  SELECT category, COUNT(DISTINCT order_id) AS n FROM basket GROUP BY category\n),\ntotal AS (SELECT COUNT(DISTINCT order_id) AS n_orders FROM basket)\nSELECT\n  pr.cat_a, pr.cat_b, pr.together,\n  round(pr.together / t.n_orders, 3)                           AS support,\n  round(pr.together / sa.n, 3)                                 AS confidence_a_to_b,\n  round((pr.together / t.n_orders) / ((sa.n / t.n_orders) * (sb.n / t.n_orders)), 3) AS lift\nFROM pairs pr\nJOIN singles sa ON sa.category = pr.cat_a\nJOIN singles sb ON sb.category = pr.cat_b\nCROSS JOIN total t\nORDER BY lift DESC, together DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nbasket = (\n    df_order_items.alias(\"oi\")\n    .join(df_products.alias(\"p\"), F.col(\"p.product_id\") == F.col(\"oi.product_id\"), \"inner\")\n    .join(df_orders.alias(\"o\"), F.col(\"o.order_id\") == F.col(\"oi.order_id\"), \"inner\")\n    .filter(F.col(\"o.status\") != \"CANCELLED\")\n    .select(F.col(\"oi.order_id\"), F.col(\"p.category\"))\n    .distinct()\n)\n\npairs = (\n    basket.alias(\"a\")\n    .join(basket.alias(\"b\"), (F.col(\"a.order_id\") == F.col(\"b.order_id\")) & (F.col(\"a.category\") < F.col(\"b.category\")), \"inner\")\n    .groupBy(F.col(\"a.category\").alias(\"cat_a\"), F.col(\"b.category\").alias(\"cat_b\"))\n    .agg(F.countDistinct(F.col(\"a.order_id\")).alias(\"together\"))\n)\n\nsingles = (\n    basket\n    .groupBy(\"category\")\n    .agg(F.countDistinct(\"order_id\").alias(\"n\"))\n)\n\ntotal = (\n    basket\n    .agg(F.countDistinct(\"order_id\").alias(\"n_orders\"))\n)\n\nresult = (\n    pairs.alias(\"pr\")\n    .join(singles.alias(\"sa\"), F.col(\"sa.category\") == F.col(\"pr.cat_a\"), \"inner\")\n    .join(singles.alias(\"sb\"), F.col(\"sb.category\") == F.col(\"pr.cat_b\"), \"inner\")\n    .crossJoin(total.alias(\"t\"))\n    .select(\n        F.col(\"pr.cat_a\"),\n        F.col(\"pr.cat_b\"),\n        F.col(\"pr.together\"),\n        F.round(F.col(\"pr.together\") / F.col(\"t.n_orders\"), 3).alias(\"support\"),\n        F.round(F.col(\"pr.together\") / F.col(\"sa.n\"), 3).alias(\"confidence_a_to_b\"),\n        F.round((F.col(\"pr.together\") / F.col(\"t.n_orders\")) / ((F.col(\"sa.n\") / F.col(\"t.n_orders\")) * (F.col(\"sb.n\") / F.col(\"t.n_orders\"))), 3).alias(\"lift\"),\n    )\n    .orderBy(F.col(\"lift\").desc(), F.col(\"together\").desc())\n)\n```",
+      "seconds": 21.47,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "harness_Q11b",
+      "level": "harness",
+      "sql": "WITH months AS (\n  SELECT explode(sequence(DATE'2024-01-01', DATE'2024-08-01', INTERVAL 1 MONTH)) AS month_start\n),\nchannels AS (SELECT DISTINCT channel FROM orders),\nspine AS (SELECT m.month_start, c.channel FROM months m CROSS JOIN channels c),\nactuals AS (\n  SELECT CAST(date_trunc('MONTH', order_ts) AS DATE) AS month_start, channel, COUNT(*) AS orders\n  FROM orders\n  GROUP BY 1, 2\n)\nSELECT\n  coalesce(s.month_start, a.month_start) AS month_start,\n  coalesce(s.channel, a.channel)         AS channel,\n  coalesce(a.orders, 0)                  AS orders,\n  s.month_start IS NULL                  AS outside_spine\nFROM spine s\nFULL OUTER JOIN actuals a\n  ON a.month_start = s.month_start AND a.channel = s.channel\nORDER BY month_start, channel",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmonths = df_orders.filter(F.col(\"month_start\").isNotNull()).select(F.explode(F.sequence(F.lit(\"2024-01-01\").cast(\"date\"), F.lit(\"2024-08-01\").cast(\"date\"), F.expr(\"INTERVAL 1 MONTH\"))).alias(\"month_start\"))\n\nchannels = df_orders.select(\"channel\").distinct()\n\nspine = (\n  months\n  .crossJoin(channels)\n  .select(\"month_start\", \"channel\")\n)\n\nactuals = (\n  df_orders\n  .groupBy(F.col(\"date_trunc('MONTH', \"order_ts\").cast(\"date\")).alias(\"month_start\"), \"channel\")\n  .agg(F.count(\"*\").alias(\"orders\"))\n)\n\nresult = (\n  spine.alias(\"s\")\n  .join(actuals.alias(\"a\"), (F.col(\"a.month_start\") == F.col(\"s.month_start\")) & (F.col(\"a.channel\") == F.col(\"s.channel\")), \"full\")\n  .select(\n    F.coalesce(F.col(\"s.month_start\"), F.col(\"a.month_start\")).alias(\"month_start\"),\n    F.coalesce(F.col(\"s.channel\"), F.col(\"a.channel\")).alias(\"channel\"),\n    F.coalesce(F.col(\"a.orders\"), F.lit(0)).alias(\"orders\"),\n    (F.col(\"s.month_start\").isNull()).alias(\"outside_spine\"),\n    F.col(\"s.channel\").alias(\"channel_2\"),\n    F.col(\"s.month_start\").alias(\"month_start_2\"),\n  )\n  .orderBy(\"month_start\", \"channel\")\n)\n```",
+      "seconds": 15.06,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    },
+    {
+      "id": "harness_Q12",
+      "level": "harness",
+      "sql": "WITH\nc_clean AS (\n  SELECT\n    customer_id,\n    trim(regexp_replace(full_name, '\\\\s+', ' '))                           AS full_name,\n    lower(nullif(trim(email), ''))                                          AS email,\n    regexp_extract(lower(email), '@([a-z0-9.-]+)$', 1)                      AS email_domain,\n    CASE WHEN regexp_extract(lower(email), '\\\\.([a-z]{2})$', 1) <> ''\n         THEN upper(regexp_extract(lower(email), '\\\\.([a-z]{2})$', 1)) END  AS email_cc_hint,\n    country_code,\n    city,\n    signup_date,\n    coalesce(tier, 'BRONZE')                                                AS tier,\n    CASE coalesce(tier, 'BRONZE')\n      WHEN 'PLATINUM' THEN 4 WHEN 'GOLD' THEN 3 WHEN 'SILVER' THEN 2 ELSE 1\n    END                                                                     AS tier_rank,\n    months_between(DATE'2024-08-01', signup_date)                           AS tenure_months,\n    interests,\n    preferences\n  FROM customers\n),\np_dim AS (\n  SELECT\n    product_id, sku, product_name, category,\n    coalesce(sub_category, 'n/a')                                     AS sub_category,\n    coalesce(brand, 'Unbranded')                                      AS brand,\n    list_price,\n    CAST(get_json_object(attributes_json, '$.warranty.months') AS INT) AS warranty_months,\n    from_json(get_json_object(attributes_json, '$.tags'), 'ARRAY<STRING>') AS tags\n  FROM products\n),\nlines AS (\n  SELECT\n    oi.order_id, oi.line_no, oi.product_id, oi.quantity,\n    oi.unit_price,\n    oi.quantity * oi.unit_price                                       AS gross_local,\n    oi.quantity * oi.unit_price * oi.discount_pct                     AS discount_local,\n    oi.quantity * oi.unit_price * (1 - oi.discount_pct)               AS net_local\n  FROM order_items oi\n),\no_enriched AS (\n  SELECT\n    o.order_id, o.customer_id, o.order_ts, to_date(o.order_ts) AS order_date,\n    o.status, o.channel, o.currency,\n    o.ship_to.city                                                    AS ship_city,\n    COUNT(*)                                                          AS n_lines,\n    SUM(l.quantity)                                                   AS units,\n    SUM(l.gross_local)                                                AS gross_local,\n    SUM(l.discount_local)                                             AS discount_local,\n    SUM(l.net_local)                                                  AS net_local,\n    array_sort(collect_set(p.category))                               AS categories,\n    max_by(p.product_name, l.net_local)                               AS top_product,\n    min_by(p.product_name, l.net_local)                               AS bottom_product,\n    max(p.warranty_months)                                            AS max_warranty_months\n  FROM orders o\n  JOIN lines l  ON l.order_id = o.order_id\n  JOIN p_dim p  ON p.product_id = l.product_id\n  GROUP BY o.order_id, o.customer_id, o.order_ts, o.status, o.channel, o.currency, o.ship_to.city\n),\nfx_asof AS (\n  SELECT order_id, rate_to_usd FROM (\n    SELECT /*+ BROADCAST(f) */\n      oe.order_id, f.rate_to_usd,\n      ROW_NUMBER() OVER (PARTITION BY oe.order_id ORDER BY f.rate_date DESC) AS rn\n    FROM o_enriched oe\n    JOIN fx_rates f ON f.currency = oe.currency AND f.rate_date <= oe.order_date\n  ) WHERE rn = 1\n),\npay AS (\n  SELECT\n    order_id,\n    SUM(CASE WHEN payment_status = 'CAPTURED' THEN amount ELSE 0 END)  AS captured_local,\n    SUM(CASE WHEN payment_status = 'REFUNDED' THEN amount ELSE 0 END)  AS refunded_local,\n    COUNT(DISTINCT method)                                             AS n_methods,\n    concat_ws('+', array_sort(collect_set(method)))                    AS methods,\n    max(paid_ts)                                                       AS last_paid_ts,\n    bool_or(payment_status = 'FAILED')                                 AS any_failed\n  FROM payments\n  GROUP BY order_id\n),\npromo_hits AS (\n  SELECT\n    oe.order_id,\n    max_by(pr.promo_code, pr.promo_pct)                                AS best_promo,\n    max(pr.promo_pct)                                                  AS best_promo_pct\n  FROM o_enriched oe\n  JOIN promotions pr\n    ON oe.order_date BETWEEN pr.start_date AND pr.end_date\n   AND (size(pr.eligible_categories) = 0 OR arrays_overlap(pr.eligible_categories, oe.categories))\n  GROUP BY oe.order_id\n),\no_fact AS (\n  SELECT\n    oe.*,\n    fx.rate_to_usd,\n    CAST(oe.net_local * fx.rate_to_usd AS DECIMAL(18,2))                AS net_usd,\n    CAST(oe.discount_local * fx.rate_to_usd AS DECIMAL(18,2))           AS discount_usd,\n    coalesce(pay.captured_local, 0)                                     AS captured_local,\n    coalesce(pay.refunded_local, 0)                                     AS refunded_local,\n    pay.methods,\n    coalesce(pay.any_failed, false)                                     AS any_failed_payment,\n    CASE\n      WHEN pay.order_id IS NULL                                          THEN 'NO_PAYMENT'\n      WHEN abs(coalesce(pay.captured_local, 0) - oe.net_local) <= 1       THEN 'MATCHED'\n      WHEN coalesce(pay.captured_local, 0) > oe.net_local                 THEN 'OVERPAID'\n      WHEN coalesce(pay.captured_local, 0) = 0                            THEN 'UNPAID'\n      ELSE 'UNDERPAID'\n    END                                                                 AS recon_status,\n    ph.best_promo,\n    ph.best_promo_pct,\n    (unix_timestamp(pay.last_paid_ts) - unix_timestamp(oe.order_ts)) / 60.0 AS minutes_to_pay\n  FROM o_enriched oe\n  LEFT JOIN fx_asof    fx  ON fx.order_id  = oe.order_id\n  LEFT JOIN pay              ON pay.order_id = oe.order_id\n  LEFT JOIN promo_hits ph  ON ph.order_id  = oe.order_id\n),\no_seq AS (\n  SELECT\n    f.*,\n    ROW_NUMBER() OVER w_cust                                            AS order_seq,\n    COUNT(*)     OVER (PARTITION BY customer_id)                        AS cust_order_cnt,\n    datediff(order_date, LAG(order_date) OVER w_cust)                   AS gap_days,\n    SUM(CASE WHEN status IN ('DELIVERED','SHIPPED') THEN net_usd ELSE 0 END)\n      OVER (PARTITION BY customer_id ORDER BY order_ts, order_id\n            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)           AS cum_kept_usd\n  FROM o_fact f\n  WINDOW w_cust AS (PARTITION BY customer_id ORDER BY order_ts, order_id)\n),\nsess AS (\n  SELECT customer_id, session_seq,\n         MIN(event_ts) AS s_start, MAX(event_ts) AS s_end,\n         max(event_type = 'checkout') AS converted,\n         max(get_json_object(payload, '$.device.type')) AS device_type\n  FROM (\n    SELECT *, SUM(new_s) OVER (PARTITION BY customer_id ORDER BY event_ts, event_id) AS session_seq\n    FROM (\n      SELECT *,\n        CASE WHEN event_ts > LAG(event_ts) OVER (PARTITION BY customer_id ORDER BY event_ts, event_id)\n                             + INTERVAL 30 MINUTES\n               OR LAG(event_ts) OVER (PARTITION BY customer_id ORDER BY event_ts, event_id) IS NULL\n             THEN 1 ELSE 0 END AS new_s\n      FROM web_events\n      WHERE customer_id IS NOT NULL\n    )\n  )\n  GROUP BY customer_id, session_seq\n),\nsess_agg AS (\n  SELECT\n    customer_id,\n    COUNT(*)                                               AS sessions,\n    count_if(converted)                                    AS converting_sessions,\n    round(avg((unix_timestamp(s_end) - unix_timestamp(s_start)) / 60.0), 1) AS avg_session_min,\n    mode(device_type)                                      AS main_device\n  FROM sess\n  GROUP BY customer_id\n),\ncust_orders AS (\n  SELECT\n    customer_id,\n    COUNT(*)                                                                AS orders_total,\n    count_if(status IN ('DELIVERED','SHIPPED'))                             AS orders_kept,\n    count_if(status IN ('CANCELLED','RETURNED'))                            AS orders_lost,\n    round(SUM(net_usd) FILTER (WHERE status IN ('DELIVERED','SHIPPED')), 2) AS kept_usd,\n    round(SUM(discount_usd), 2)                                             AS discount_usd,\n    round(avg(gap_days), 1)                                                 AS avg_gap_days,\n    max(order_ts)                                                           AS last_order_ts,\n    min(order_ts)                                                           AS first_order_ts,\n    flatten(collect_list(categories))                                       AS all_cats_raw,\n    collect_list(named_struct('seq', order_seq, 'id', order_id, 'usd', net_usd, 'status', status)) AS history,\n    count_if(recon_status <> 'MATCHED' AND status <> 'CANCELLED')           AS recon_issues,\n    count_if(best_promo IS NOT NULL)                                        AS promo_orders,\n    max_by(channel, net_usd)                                                AS top_channel,\n    percentile_approx(minutes_to_pay, 0.5)                                  AS median_minutes_to_pay\n  FROM o_seq\n  GROUP BY customer_id\n),\ncat_spend AS (\n  SELECT oe.customer_id, p.category,\n         SUM(l.net_local * fx.rate_to_usd) AS cat_usd\n  FROM o_enriched oe\n  JOIN lines l      ON l.order_id = oe.order_id\n  JOIN p_dim p      ON p.product_id = l.product_id\n  JOIN fx_asof fx   ON fx.order_id = oe.order_id\n  WHERE oe.status IN ('DELIVERED','SHIPPED')\n  GROUP BY oe.customer_id, p.category\n),\ncat_affinity AS (\n  SELECT\n    customer_id,\n    map_from_entries(collect_list(struct(category, round(cat_usd / tot, 3)))) AS cat_share,\n    max_by(category, cat_usd)                                                 AS fav_category\n  FROM (\n    SELECT *, SUM(cat_usd) OVER (PARTITION BY customer_id) AS tot FROM cat_spend\n  )\n  GROUP BY customer_id\n),\nc360 AS (\n  SELECT\n    c.customer_id, c.full_name, c.email, c.email_domain,\n    c.country_code,\n    (c.email_cc_hint IS NOT NULL AND c.email_cc_hint <> c.country_code)   AS email_country_mismatch,\n    c.tier, c.tier_rank, round(c.tenure_months, 1) AS tenure_months,\n    coalesce(co.orders_total, 0)                                          AS orders_total,\n    coalesce(co.orders_kept, 0)                                           AS orders_kept,\n    coalesce(co.kept_usd, 0)                                              AS kept_usd,\n    co.discount_usd,\n    co.avg_gap_days,\n    datediff(DATE'2024-08-01', to_date(co.last_order_ts))                 AS days_since_last,\n    array_distinct(co.all_cats_raw)                                       AS bought_categories,\n    array_except(c.interests, coalesce(co.all_cats_raw, array()))         AS untapped_interests,\n    size(array_intersect(c.interests, coalesce(co.all_cats_raw, array()))) AS interest_hits,\n    ca.cat_share,\n    ca.fav_category,\n    co.top_channel,\n    co.promo_orders,\n    co.recon_issues,\n    co.median_minutes_to_pay,\n    transform(\n      array_sort(co.history, (a, b) -> a.seq - b.seq),\n      h -> concat('#', h.seq, ':', h.status)\n    )                                                                     AS order_timeline,\n    aggregate(\n      filter(co.history, h -> h.status = 'RETURNED'),\n      CAST(0 AS DECIMAL(18,2)),\n      (acc, h) -> CAST(acc + h.usd AS DECIMAL(18,2))\n    )                                                                     AS returned_usd,\n    coalesce(sa.sessions, 0)                                              AS sessions,\n    sa.converting_sessions,\n    sa.avg_session_min,\n    sa.main_device,\n    size(map_filter(c.preferences, (k, v) -> v = 'Y')) > 0                AS contactable\n  FROM c_clean c\n  LEFT JOIN cust_orders  co ON co.customer_id = c.customer_id\n  LEFT JOIN cat_affinity ca ON ca.customer_id = c.customer_id\n  LEFT JOIN sess_agg     sa ON sa.customer_id = c.customer_id\n),\nscored AS (\n  SELECT\n    *,\n    round(\n        0.40 * coalesce(PERCENT_RANK() OVER (ORDER BY kept_usd), 0)\n      + 0.25 * coalesce(PERCENT_RANK() OVER (ORDER BY orders_kept), 0)\n      + 0.20 * (1 - coalesce(PERCENT_RANK() OVER (ORDER BY days_since_last NULLS LAST), 1))\n      + 0.15 * (tier_rank / 4.0)\n      - 0.10 * least(recon_issues, 3) / 3.0\n    , 4)                                                                    AS value_score\n  FROM c360\n)\nSELECT\n  DENSE_RANK() OVER (ORDER BY value_score DESC)                             AS overall_rank,\n  RANK()       OVER (PARTITION BY country_code ORDER BY value_score DESC)   AS country_rank,\n  customer_id,\n  full_name,\n  country_code,\n  tier,\n  value_score,\n  CASE\n    WHEN orders_total = 0                                   THEN 'PROSPECT'\n    WHEN value_score >= 0.70                                THEN 'VIP'\n    WHEN value_score >= 0.45 AND days_since_last <= 45      THEN 'ACTIVE'\n    WHEN days_since_last > 90                               THEN 'LAPSING'\n    ELSE 'DEVELOPING'\n  END                                                                       AS lifecycle,\n  CASE\n    WHEN NOT contactable                         THEN 'none (no opt-in)'\n    WHEN size(untapped_interests) > 0            THEN concat('cross-sell: ', array_join(untapped_interests, ', '))\n    WHEN fav_category IS NOT NULL                THEN concat('replenish: ', fav_category)\n    ELSE 'welcome series'\n  END                                                                       AS next_best_action,\n  orders_total, orders_kept, kept_usd, returned_usd, discount_usd,\n  days_since_last, avg_gap_days,\n  bought_categories, untapped_interests, fav_category,\n  to_json(cat_share)                                                        AS cat_share_json,\n  order_timeline,\n  sessions, converting_sessions, avg_session_min, main_device,\n  email_domain, email_country_mismatch,\n  recon_issues, promo_orders, top_channel, median_minutes_to_pay,\n  round(kept_usd - AVG(kept_usd) OVER (PARTITION BY country_code), 2)       AS kept_vs_country_avg,\n  round(100 * kept_usd / nullif(SUM(kept_usd) OVER (), 0), 2)               AS pct_of_total_kept,\n  NTH_VALUE(full_name, 2) OVER (\n    PARTITION BY country_code ORDER BY value_score DESC\n    ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING\n  )                                                                         AS country_runner_up\nFROM scored\nORDER BY overall_rank, customer_id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nw_cust = Window.partitionBy(\"customer_id\").orderBy(\"order_ts\", \"order_id\")\n\nc_clean = (\n  df_customers\n  .select(\n    \"customer_id\",\n    F.trim(F.regexp_replace(\"full_name\", \"\\\\s+\", \" \")).alias(\"full_name\"),\n    F.lower(F.nullif(F.trim(\"email\"), F.lit(\"\"))).alias(\"email\"),\n    F.regexp_extract(F.lower(\"email\"), \"@([a-z0-9.-]+)$\", 1).alias(\"email_domain\"),\n    F.when(F.col(\"regexp_extract(F.lower(\"email\"), \"\\\\.[a-z]{2})$\", 1) != \"\", F.upper(F.regexp_extract(F.lower(\"email\"), \"\\\\.[a-z]{2})$, 1))).alias(\"email_cc_hint\"),\n    \"country_code\",\n    \"city\",\n    \"signup_date\",\n    F.coalesce(\"tier\", F.lit(\"BRONZE\")).alias(\"tier\"),\n    F.when(F.col(\"tier\") == \"PLATINUM\", 4).when(F.col(\"tier\") == \"GOLD\", 3).when(F.col(\"tier\") == \"SILVER\", 2).otherwise(1).alias(\"tier_rank\"),\n        F.months_between(F.lit(\"2024-08-01\").cast(\"date\"), \"signup_date\").alias(\"tenure_months\"),\n        \"interests\",\n        \"preferences\",\n    )\n)\n\np_dim = (\n  df_products\n  .select(\n    \"product_id\", \"sku\", \"product_name\", \"category\",\n    F.coalesce(\"sub_category\", F.lit(\"n/a\")).alias(\"sub_category\"),\n    F.coalesce(\"brand\", F.lit(\"Unbranded\")).alias(\"brand\"),\n    \"list_price\",\n    F.col(\"get_json_object(\"attributes_json\", \"$.warranty.months\")).cast(\"int\").alias(\"warranty_months\"),\n    F.col(\"get_json_object(\"attributes_json\", \"$.tags\"), \"array<string>\").alias(\"tags\"),\n    )\n)\n\nlines = (\n  df_order_items.alias(\"oi\")\n  .select(\n    \"oi.order_id\", \"oi.line_no\", \"oi.product_id\", \"oi.quantity\",\n    \"oi.unit_price\",\n    (F.col(\"oi.quantity\") * F.col(\"oi.unit_price\")).alias(\"gross_local\"),\n    (F.col(\"oi.quantity\") * F.col(\"oi.unit_price\") * F.col(\"oi.discount_pct\")).alias(\"discount_local\"),\n    (F.col(\"oi.quantity\") * F.col(\"oi.unit_price\") * (1 - F.col(\"oi.discount_pct\"))).alias(\"net_local\"),\n    )\n)\n\no_enriched = (\n  df_orders.alias(\"o\")\n  .join(lines.alias(\"l\"), F.col(\"l.order_id\") == F.col(\"o.order_id\"), \"inner\")\n  .join(p_dim.alias(\"p\"), F.col(\"p.product_id\") == F.col(\"l.product_id\"), \"inner\")\n  .groupBy(\n    \"o.order_id\", \"o.customer_id\", \"o.order_ts\", \"o.status\", \"o.channel\", \"o.currency\", F.col(\"o.ship_to.city\").alias(\"ship_city\"),\n    )\n  .agg(\n    F.count(\"*\").alias(\"n_lines\"),\n    F.sum(\"l.quantity\").alias(\"units\"),\n    F.sum(\"l.gross_local\").alias(\"gross_local\"),\n    F.sum(\"l.discount_local\").alias(\"discount_local\"),\n    F.sum(\"l.net_local\").alias(\"net_local\"),\n    F.array_sort(F.collect_set(\"p.category\")).alias(\"categories\"),\n    F.max_by(\"p.product_name\", \"l.net_local\").alias(\"top_product\"),\n    F.min_by(\"p.product_name\", \"l.net_local\").alias(\"bottom_product\"),\n    F.max(\"p.warranty_months\").alias(\"max_warranty_months\"),\n    )\n)\n\nfx_asof = (\n  o_enriched.alias(\"oe\")\n  .join(df_fx_rates.alias(\"f\"), (F.col(\"f.currency\") == F.col(\"oe.currency\")) & (F.col(\"f.rate_date\") <= F.col(\"oe.order_date\")), \"inner\")\n  .withColumn(\"rn\", F.row_number().over(Window.partitionBy(\"oe.order_id\").orderBy(F.col(\"f.rate_date\").desc())))\n  .filter(F.col(\"rn\") == 1)\n  .select(\"order_id\", \"rate_to_usd\")\n)\n\npay = (\n  df_payments\n  .groupBy(\"order_id\")\n  .agg(\n    F.sum(F.when(F.col(\"payment_status\") == \"CAPTURED\", F.col(\"amount\")).otherwise(0)).alias(\"captured_local\"),\n    F.sum(F.when(F.col(\"payment_status\") == \"REFUNDED\", F.col(\"amount\")).otherwise(0)).alias(\"refunded_local\"),\n    F.countDistinct(\"method\").alias(\"n_methods\"),\n    F.concat_ws(\"+\", F.array_sort(F.collect_set(\"method\"))).alias(\"methods\"),\n    F.max(\"paid_ts\").alias(\"last_paid_ts\"),\n    F.bool_or(F.col(\"payment_status\") == \"FAILED\").alias(\"any_failed\"),\n    )\n)\n\npromo_hits = (\n  o_enriched.alias(\"oe\")\n  .join(df_promotions.alias(\"pr\"), (F.col(\"oe.order_date\").between(F.col(\"pr.start_date\"), F.col(\"pr.end_date\"))) & ((F.size(F.col(\"pr.eligible_categories\")) == 0) | F.arrays_overlap(F.col(\"pr.eligible_categories\"), F.col(\"oe.categories\"))), \"inner\")\n  .groupBy(\"oe.order_id\")\n  .agg(\n    F.max_by(F.col(\"pr.promo_code\"), F.col(\"pr.promo_pct\")).alias(\"best_promo\"),\n    F.max(F.col(\"pr.promo_pct\")).alias(\"best_promo_pct\"),\n    )\n)\n\no_fact = (\n  o_enriched.alias(\"oe\")\n  .join(fx_asof.alias(\"fx\"), F.col(\"fx.order_id\") == F.col(\"oe.order_id\"), \"left\")\n  .join(pay.alias(\"pay\"), F.col(\"pay.order_id\") == F.col(\"oe.order_id\"), \"left\")\n  .join(promo_hits.alias(\"ph\"), F.col(\"ph.order_id\") == F.col(\"oe.order_id\"), \"left\")\n  .select(\n    \"oe.*\",\n    \"fx.rate_to_usd\",\n    F.col(\"oe.net_local\").cast(\"decimal(18,2)).alias(\"net_usd\"),\n    F.col(\"oe.discount_local\").cast(\"decimal(18,2)).alias(\"discount_usd\"),\n    F.coalesce(F.col(\"pay.captured_local\"), F.lit(0)).alias(\"captured_local\"),\n    F.coalesce(F.col(\"pay.refunded_local\"), F.lit(0)).alias(\"refunded_local\"),\n    \"pay.methods\",\n    F.coalesce(F.col(\"pay.any_failed\"), F.lit(false)).alias(\"any_failed_payment\"),\n    F.when(F.col(\"pay.order_id\").isNull(), \"NO_PAYMENT\").when(F.col(\"abs(F.col(\"pay.captured_local\"), 0) - F.col(\"oe.net_local\")) <= 1, \"MATCHED\").when(F.col(\"pay.captured_local\"), 0) > F.col(\"oe.net_local\"), \"OVERPAID\").when(F.col(\"pay.captured_local\"), 0) == 0, \"UNPAID\").otherwise(\"UNDERPAID\").alias(\"recon_status\"),\n    \"ph.best_promo\",\n    \"ph.best_promo_pct\",\n    ((F.unix_timestamp(\"pay.last_paid_ts\") - F.unix_timestamp(\"oe.order_ts\")) / 60.0).alias(\"minutes_to_pay\"),\n    )\n)\n\no_seq = (\n  o_fact\n  .select(\n    \"f.*\",\n    F.row_number().over(w_cust).alias(\"order_seq\"),\n    F.count(F.lit(1)).over(Window.partitionBy(\"customer_id\")).alias(\"cust_order_cnt\"),\n    F.datediff(F.col(\"order_date\"), F.lag(\"order_date\").over(w_cust)).alias(\"gap_days\"),\n    F.sum(F.when(F.col(\"status\").isin(\"DELIVERED\", \"SHIPPED\"), F.col(\"net_usd\")).otherwise(0)).over(Window.partitionBy(\"customer_id\").orderBy(\"order_ts\", \"order_id\").rowsBetween(Window.unboundedPreceding, Window.currentRow)).alias(\"cum_kept_usd\"),\n    )\n)\n\nsess = (\n  df_web_events\n  .filter(F.col(\"customer_id\").isNotNull())\n  .withColumn(\"new_s\", F.when(F.col(\"event_ts\") > F.lag(\"event_ts\").over(Window.partitionBy(\"customer_id\").orderBy(\"event_ts\", \"event_id\")) + F.expr(\"INTERVAL 30 MINUTES\") | F.lag(\"event_ts\").over(Window.partitionBy(\"customer_id\").orderBy(\"event_ts\", \"event_id\")).isNull(), 1).otherwise(0))\n  .withColumn(\"session_seq\", F.sum(\"new_s\").over(Window.partitionBy(\"customer_id\").orderBy(\"event_ts\", \"event_id\")))\n)\n\nsess_agg = (\n  sess\n  .groupBy(\"customer_id\", \"session_seq\")\n  .agg(\n    F.min(\"event_ts\").alias(\"s_start\"),\n    F.max(\"event_ts\").alias(\"s_end\"),\n    F.max(F.col(\"event_type\") == \"checkout\").alias(\"converted\"),\n    F.max(F.col(\"get_json_object(\"payload\", \"$.device.type\"))).alias(\"device_type\"),\n    )\n)\n\nsess_agg_2 = (\n  sess_agg\n  .groupBy(\"customer_id\")\n  .agg(\n    F.count(\"*\").alias(\"sessions\"),\n    F.count_if(F.col(\"converted\")).alias(\"converting_sessions\"),\n    F.round(F.avg((F.unix_timestamp(\"s_end\") - F.unix_timestamp(\"s_start\")) / 60.0), 1).alias(\"avg_session_min\"),\n    F.mode(\"device_type\").alias(\"main_device\"),\n    )\n)\n\ncust_orders = (\n  o_seq\n  .groupBy(\"customer_id\")\n  .agg(\n    F.count(\"*\").alias(\"orders_total\"),\n    F.count_if(F.col(\"status\").isin(\"DELIVERED\", \"SHIPPED\")).alias(\"orders_kept\"),\n    F.count_if(F.col(\"status\").isin(\"CANCELLED\", \"RETURNED\")).alias(\"orders_lost\"),\n    F.round(F.sum(F.when(F.col(\"status\").isin(\"DELIVERED\", \"SHIPPED\"), F.col(\"net_usd\"))).alias(\"kept_usd\"), 2).alias(\"kept_usd\"),\n    F.round(F.sum(\"discount_usd\"), 2).alias(\"discount_usd\"),\n    F.round(F.avg(\"gap_days\"), 1).alias(\"avg_gap_days\"),\n    F.max(\"order_ts\").alias(\"last_order_ts\"),\n    F.min(\"order_ts\").alias(\"first_order_ts\"),\n    F.flatten(F.collect_list(\"categories\")).alias(\"all_cats_raw\"),\n    F.collect_list(F.named_struct(\"seq\", \"order_seq\", \"id\", \"order_id\", \"usd\", \"net_usd\", \"status\", \"status\")).alias(\"history\"),\n    F.count_if(F.col(\"recon_status\") != \"MATCHED\").alias(\"recon_issues\"),\n    F.count_if(F.col(\"best_promo\").isNotNull()).alias(\"promo_orders\"),\n    F.max_by(\"channel\", \"net_usd\").alias(\"top_channel\"),\n    F.percentile_approx(\"minutes_to_pay\", 0.5).alias(\"median_minutes_to_pay\"),\n    )\n)\n\ncat_spend = (\n  o_enriched.alias(\"oe\")\n  .join(lines.alias(\"l\"), F.col(\"l.order_id\") == F.col(\"oe.order_id\"), \"inner\")\n  .join(p_dim.alias(\"p\"), F.col(\"p.product_id\") == F.col(\"l.product_id\"), \"inner\")\n  .join(fx_asof.alias(\"fx\"), F.col(\"fx.order_id\") == F.col(\"oe.order_id\"), \"inner\")\n  .filter(F.col(\"oe.status\").isin(\"DELIVERED\", \"SHIPPED\"))\n  .groupBy(F.col(\"oe.customer_id\"), \"p.category\")\n  .agg(\n    F.sum(F.col(\"l.net_local\") * F.col(\"fx.rate_to_usd\")).alias(\"cat_usd\"),\n    )\n)\n\ncat_affinity = (\n  cat_spend\n  .withColumn(\"tot\", F.sum(\"cat_usd\").over(Window.partitionBy(\"customer_id\")))\n  .select(\n    \"customer_id\",\n    F.map_from_entries(F.collect_list(F.struct(\"category\", F.round(F.col(\"cat_usd\") / F.col(\"tot\"), 3)))).alias(\"cat_share\"),\n    F.max_by(\"category\", \"cat_usd\").alias(\"fav_category\"),\n    )\n)\n\nc360 = (\n  df_c_clean.alias(\"c\")\n  .join(cust_orders.alias(\"co\"), F.col(\"co.customer_id\") == F.col(\"c.customer_id\"), \"left\")\n  .join(cat_affinity.alias(\"ca\"), F.col(\"ca.customer_id\") == F.col(\"c.customer_id\"), \"left\")\n  .join(sess_agg.alias(\"sa\"), F.col(\"sa.customer_id\") == F.col(\"c.customer_id\"), \"left\")\n  .select(\n    \"c.customer_id\", \"c.full_name\", \"c.email\", \"c.email_domain\",\n    \"c.country_code\",\n    ((F.col(\"c.email_cc_hint\").isNotNull()) & (F.col(\"c.email_cc_hint\") != F.col(\"c.country_code\"))).alias(\"email_country_mismatch\"),\n    \"c.tier\", \"c.tier_rank\", F.round(F.col(\"c.tenure_months\"), 1).alias(\"tenure_months\"),\n    F.coalesce(F.col(\"co.orders_total\"), F.lit(0)).alias(\"orders_total\"),\n    F.coalesce(F.col(\"co.orders_kept\"), F.lit(0)).alias(\"orders_kept\"),\n    F.coalesce(F.col(\"co.kept_usd\"), F.lit(0)).alias(\"kept_usd\"),\n    \"co.discount_usd\",\n    \"co.avg_gap_days\",\n    F.datediff(F.lit(\"2024-08-01\").cast(\"date\"), F.col(\"co.last_order_ts\")).alias(\"days_since_last\"),\n    F.array_distinct(F.col(\"co.all_cats_raw\")).alias(\"bought_categories\"),\n    F.array_except(F.col(\"c.interests\"), F.col(\"co.all_cats_raw\")).alias(\"untapped_interests\"),\n    F.size(F.array_intersect(F.col(\"c.interests\"), F.col(\"co.all_cats_raw\"))).alias(\"interest_hits\"),\n    \"ca.cat_share\",\n    \"ca.fav_category\",\n    \"co.top_channel\",\n    \"co.promo_orders\",\n    \"co.recon_issues\",\n    \"co.median_minutes_to_pay\",\n    F.transform(F.array_sort(F.col(\"co.history\"), lambda a, b: a[\"seq\"] - b[\"seq\"]), lambda h: F.concat(F.lit(\"#\"), h[\"seq\"], F.lit(\":\"), h[\"status\"]).alias(\"order_timeline\"),\n    F.aggregate(F.filter(F.col(\"co.history\"), lambda h: h[\"status\"] == \"RETURNED\"), F.lit(0.0), lambda acc, h: acc + h[\"usd\"]).alias(\"returned_usd\"),\n    F.coalesce(F.col(\"sa.sessions\"), F.lit(0)).alias(\"sessions\"),\n    \"sa.converting_sessions\",\n    \"sa.avg_session_min\",\n    \"sa.main_device\",\n    F.size(F.map_filter(F.col(\"c.preferences\"), lambda k, v: v == \"Y\")) > 0).alias(\"contactable\"),\n    )\n)\n\nscored = (\n  c360\n  .select(\n    \"*\",\n    F.round(\n        0.40 * F.coalesce(F.percent_rank().over(Window.orderBy(\"kept_usd\")), F.lit(0))\n        + 0.25 * F.coalesce(F.percent_rank().over(Window.orderBy(\"orders_kept\")), F.lit(0))\n        + 0.20 * (1 - F.coalesce(F.percent_rank().over(Window.orderBy(F.col(\"days_since_last\").asc_nulls_last())), 1))\n        + 0.15 * (F.col(\"tier_rank\") / 4.0)\n        - 0.10 * F.least(F.col(\"recon_issues\"), 3) / 3.0\n    , 4).alias(\"value_score\"),\n)\n\nresult = (\n  scored\n  .select(\n    F.dense_rank().over(Window.orderBy(F.col(\"value_score\").desc())).alias(\"overall_rank\"),\n    F.rank().over(Window.partitionBy(\"country_code\").orderBy(F.col(\"value_score\").desc())).alias(\"country_rank\"),\n    \"customer_id\",\n    \"full_name\",\n    \"country_code\",\n    \"tier\",\n    \"value_score\",\n    F.when(F.col(\"orders_total\") == 0, \"PROSPECT\").when(F.col(\"value_score\") >= 0.70, \"VIP\").when(F.col(\"value_score\") >= 0.45 & (F.col(\"days_since_last\") <= 45), \"ACTIVE\").when(F.col(\"days_since_last\") > 90, \"LAPSING\").otherwise(\"DEVELOPING\").alias(\"lifecycle\"),\n    F.when(~F.col(\"contactable\"), \"none (no opt-in)\").when(F.size(F.col(\"untapped_interests\")) > 0, F.concat(\"cross-sell: \", F.array_join(F.col(\"untapped_interests\"), \", \"\"))).when(F.col(\"fav_category\").isNotNull(), F.concat(\"replenish: \", F.col(\"fav_category\"))).otherwise(\"welcome series\").alias(\"next_best_action\"),\n    \"orders_total\", \"orders_kept\", \"kept_usd\", \"returned_usd\", \"discount_usd\",\n    \"days_since_last\", \"avg_gap_days\",\n    \"bought_categories\", \"untapped_interests\", \"fav_category\",\n    F.to_json(F.col(\"cat_share\")).alias(\"cat_share_json\"),\n    \"order_timeline\",\n    \"sessions\", \"converting_sessions\", \"avg_session_min\", \"main_device\",\n    \"email_domain\", \"email_country_mismatch\",\n    \"recon_issues\", \"promo_orders\", \"top",
+      "seconds": 175.04,
+      "strict": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": false,
+        "runs": false,
+        "match": false,
+        "status": "syntax",
+        "detail": ""
+      }
+    }
+  ]
+}

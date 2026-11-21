@@ -1,4 +1,4 @@
-# qwen35_pilot — Qwen3.5-9B: feasibility pilot (2026-10-09), runs 2-9 (2026-11-09 → 11-12) and the fresh run q9a (2026-11-17/18)
+# qwen35_pilot — Qwen3.5-9B: feasibility pilot (2026-10-09), runs 2-9 (2026-11-09 → 11-12), the fresh run q9a (2026-11-17/18) and the polish rounds q9b-q9d (2026-11-20 → 11-22)
 
 Qwen3.8's smallest model is 27B (4-bit MLX 16.1 GB): too big for the 16 GB M2 and the 13 GB server. The closest
 newer base that fits is **Qwen3.5-9B** (`mlx-community/Qwen3.5-9B-4bit`, 6.0 GB): a hybrid model where 3 of every 4
@@ -7,6 +7,56 @@ answers "can we train, export and serve it?" before anyone spends days on a full
 400 iterations are 1/12 of a v15-sized run.
 
 Nothing here touches `sql2pyspark:latest` (v18a-q4 since 2026-11-15; v15-q4 before), the root `sql2pyspark*.gguf` files or the site.
+
+## Polish rounds q9b, q9c, q9d (2026-11-20 → 11-22): close to v18a-q4, not promoted
+
+On 2026-11-20 the owner reopened Qwen3.5 training. Three short polish rounds followed, each continuing the previous
+adapter on q9a's base and adapter shape (`mlx-community/Qwen3.5-9B-4bit`, 16 layers, rank 32, scale 10), 2,400
+micro-batches each (batch 1 × grad-accum 4), and each aimed at the cases only the previous round got wrong. The data
+builders are in [`polishmix/`](polishmix/). Every new pair comes from pools no earlier round used (the v18a mix and the
+earlier `data_q9*` are excluded), eval SQL inside train = 0, and every renamed part passed a 200-pair Spark spot-check
+before training. Renames are whole-word swaps, never inside a SQL string literal, with a round-trip check.
+
+| Round | Continues | Data (train / valid) | lr | Aimed at | Training (Bangkok time) |
+| --- | --- | --- | --- | --- | --- |
+| q9b | q9a | `data_q9b`, [`build.py`](polishmix/build.py) (12,000 / 637): 3,600 pairs with tables **and columns** renamed, 1,800 targeted_v14, 1,200 targeted_v11, 1,200 each complex_v16 / complex_v9, 3,000 replay | 5e-6 → 5e-7 | column-name slips on unseen schemas, v13 scalar subqueries, v11 correlated conditions | 11-20 18:03 → 23:26, 3 Metal restarts |
+| q9c | q9b | `data_q9c`, [`build_q9c.py`](polishmix/build_q9c.py) (11,678 / 737): 3,600 **stem extensions** (a familiar column `X` becomes `X_w` / `w_X`), 1,200 plain renames, 504 `LATERAL VIEW`, 600 `CONCAT` literals, 374 `INTERVAL` joins, 400 each targeted v11 / v12 / v14, 600 each complex_v16 / complex_v9, 3,000 replay | 5e-6 → 5e-7 | q9b's one big slip: `is_certified_used` written as the familiar `is_certified` (20 of its 28 complex-shift failures) | 11-21 07:19 → 13:17, 6 restarts |
+| q9d | q9c | `data_q9d`, [`build_q9d.py`](polishmix/build_q9d.py) (10,000 / 737): targeted v11 / v12 / v14 1,000 / 800 / 800, 600 short anti / semi joins, 600 `EXPLODE`, 600 renamed multi-condition joins, 1,000 stem extensions + 600 where derived names follow (`X_label` → `X_w_label`), 400 each complex, 3,200 replay | 3e-6 → 3e-7 | hold-out 025 loop, v4 010 / 025, v11–v14, q9c's `_used_used` over-extension | 11-21 19:04 → 22:15, 2 restarts |
+
+Chains [`chain_q9b.sh`](chain_q9b.sh), [`chain_q9c.sh`](chain_q9c.sh), [`chain_q9d.sh`](chain_q9d.sh) (copies of
+`chain_q9a.sh`; tags `sql2pyspark:q9b-q4`, `:q9c-q4`, `:q9d-q4`; real-style only for q9b). Val loss stayed at
+0.004-0.006, peak memory ≤ 15.4 GB. For q9d, `train_resumable.py` got an opt-in `--segment-val-batches N`: mlx-lm
+validates at a resumed segment's first iteration, so q9c re-ran the full 14-minute validation after each of its 6
+restarts (~1.4 h); q9d validated resumed segments on 100 pairs (~2 min), the full set still at the start and the end.
+
+| Eval set | q9b-q4 | q9c-q4 | **q9d-q4** | v18a-q4 (`latest`) |
+| --- | --- | --- | --- | --- |
+| Hold-out (62) | 60 | 60 | 59 | **61** |
+| v4 hold-out (25) | 19 | 19 | **22** | 20 |
+| Real queries (4) | 0 | 0 | 0 | 0 |
+| Fixed test (150) | 145 | **147** | **147** | 145 |
+| complex_v8 test (100) | 95 | **96** | 95 | 88 |
+| `IN` / `NOT IN` (50) | 50 | 50 | 50 | 50 |
+| targeted_v11 / v12 held-out (300 / 250) | 292 / 244 | 287 / 238 | **294** / **245** | 281 / 232 |
+| targeted_v13 / v14 held-out (150 / 200) | 146 / **200** | 145 / 197 | **150** / 199 | 148 / 195 |
+| Schema-shift (200) | 185 | **188** | 185 | 186 |
+| Complex schema-shift (150 of 300) | 122 | **133** | 130 | 126 |
+| Real-style pairs (74) | 0 | | | 0 |
+| Failures (all sets except real queries and real-style) / with a name slip | 79 / 49 | 77 / 35 | **61** / **29** | 105 / 53 |
+
+**Verdict: not promoted** (owner 2026-11-22: keep v18a-q4). Each round fixed its targets and flipped one or two other
+cases; eval decoding is greedy, so these flips are real. q9d is the best model so far on almost every broad set (the
+fewest failures and name slips, best v11-v14, complex 95), but fails the promotion rule on hold-out (59 vs. 61):
+`holdout025`, a short `SELECT * … WHERE NOT EXISTS`, makes it repeat `result_2 = …` until the token limit (600 short
+anti-join pairs did not fix it), and `holdout041` puts `, 2)` outside `F.round` (a new bracket slip). `holdout031` fails
+for every model. q9c fails by one case each on hold-out and v4. A Qwen3.5 model in the app would also need `think: false`
+in `app.py`. No more rounds are planned. Kept on the Mac mini: `adapters_q9b/`, `adapters_q9c/`, `adapters_q9d/`
+(only `adapter_config.json` tracked), `gguf/q9{b,c,d}-q4.gguf`, the three tags.
+
+**Harness stretch set (2026-11-22).** v18a-q4, q9c-q4 and q9d-q4 were also scored on the 21 queries of
+[`sql2pyspark_harness/`](../../sql2pyspark_harness/README.md) (nested maps, structs, arrays, JSON strings, DECIMAL money,
+timestamps): **5/21 each**, the same with our checker and with the harness's type-strict check. See
+[Evaluation](../../docs/04-evaluation-and-benchmarking.md#-qwen35-9b-polish-rounds-q9b-q9d-2026-11-20--11-22--not-promoted).
 
 ## Run q9a (2026-11-17/18): fresh QLoRA from the base — best Qwen3.5 so far, not promoted
 
@@ -189,3 +239,9 @@ their outputs `data_namecopy/`, `data_m6e/`, `data_m6g/`, `data_m6h/` (tracked),
 Run q9a: `lora_config_q9a.yaml`, `chain_q9a.sh` (logs `chain_q9a.log`, `train_q9a.log`, `quantize_q9a.log`),
 `Modelfile.q9a`, `data_q9a/`, `adapters_q9a/adapter_config.json` (tracked); results in the repo's `eval/results/`
 (`q9a-q4__*.json` and the sub-folders, like v18a).
+
+Rounds q9b-q9d: `polishmix/build.py`, `build_q9c.py`, `build_q9d.py`, `lora_config_q9{b,c,d}.yaml`,
+`chain_q9{b,c,d}.sh` (logs `chain_q9*.log`, `train_q9*.log`, `quantize_q9*.log`), `Modelfile.q9{b,c,d}`,
+`data_q9{b,c,d}/` (train, valid, stats, samples), `adapters_q9{b,c,d}/adapter_config.json` (tracked),
+`harness_after_q9d.sh` (the harness eval run after the q9d chain); results in `eval/results/` (`q9{b,c,d}-q4__*.json`,
+the sub-folders and `harness/`).
