@@ -1,0 +1,14 @@
+[pref] 272 micro-batches (136 preference, 136 replay), 68 updates; start at 0 from qwen35_pilot/adapters_q9f/adapters.safetensors
+[pref] val at 0: {'pairs': 7, 'nll_chosen': 0.0488, 'margin': -0.7184, 'acc': 0.0}
+[pref] iter 25/272: pref loss 0.1001 (17), replay loss 0.0089 (8), lr 9.00e-07, 6.3 s/it, peak 10.04 GB, skipped 0
+[pref] iter 50/272: pref loss 0.0225 (16), replay loss 0.0072 (9), lr 1.80e-06, 8.0 s/it, peak 10.35 GB, skipped 0
+[pref] iter 75/272: pref loss 0.0026 (11), replay loss 0.0047 (14), lr 2.70e-06, 6.0 s/it, peak 10.35 GB, skipped 0
+[pref] iter 100/272: pref loss 0.0017 (12), replay loss 0.0062 (13), lr 2.95e-06, 6.5 s/it, peak 10.35 GB, skipped 0
+[pref] iter 125/272: pref loss 0.0013 (11), replay loss 0.0047 (14), lr 2.72e-06, 7.9 s/it, peak 10.35 GB, skipped 0
+[pref] iter 150/272: pref loss 0.0012 (10), replay loss 0.0032 (15), lr 2.32e-06, 6.2 s/it, peak 10.35 GB, skipped 0
+[pref] iter 175/272: pref loss 0.0011 (9), replay loss 0.0021 (16), lr 1.83e-06, 5.4 s/it, peak 10.35 GB, skipped 0
+[pref] iter 200/272: pref loss 0.0026 (12), replay loss 0.0032 (13), lr 1.22e-06, 7.0 s/it, peak 10.35 GB, skipped 0
+[pref] iter 225/272: pref loss 0.0016 (14), replay loss 0.0088 (11), lr 7.60e-07, 5.7 s/it, peak 10.35 GB, skipped 0
+[pref] iter 250/272: pref loss 0.0012 (14), replay loss 0.0026 (11), lr 4.39e-07, 7.3 s/it, peak 10.35 GB, skipped 0
+[pref] val at end: {'pairs': 7, 'nll_chosen': 0.0005, 'margin': 4.8848, 'acc': 1.0}
+[pref] finished

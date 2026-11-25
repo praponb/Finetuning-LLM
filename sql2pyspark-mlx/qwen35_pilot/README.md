@@ -1,4 +1,4 @@
-# qwen35_pilot — Qwen3.5-9B: feasibility pilot (2026-10-09), runs 2-9 (2026-11-09 → 11-12), the fresh run q9a (2026-11-17/18) and the polish rounds q9b-q9d (2026-11-20 → 11-22)
+# qwen35_pilot — Qwen3.5-9B: feasibility pilot (2026-10-09), runs 2-9 (2026-11-09 → 11-12), the fresh run q9a (2026-11-17/18), the polish rounds q9b-q9d (2026-11-20 → 11-22) and q9e → q9df3 (2026-11-22 → 11-25, q9df3-q4 = `latest`)
 
 Qwen3.8's smallest model is 27B (4-bit MLX 16.1 GB): too big for the 16 GB M2 and the 13 GB server. The closest
 newer base that fits is **Qwen3.5-9B** (`mlx-community/Qwen3.5-9B-4bit`, 6.0 GB): a hybrid model where 3 of every 4
@@ -6,7 +6,58 @@ layers are linear attention (Gated DeltaNet) and every 4th is full attention, wi
 answers "can we train, export and serve it?" before anyone spends days on a full run. It does **not** compare quality:
 400 iterations are 1/12 of a v15-sized run.
 
-Nothing here touches `sql2pyspark:latest` (v18a-q4 since 2026-11-15; v15-q4 before), the root `sql2pyspark*.gguf` files or the site.
+**`sql2pyspark:latest` = q9df3-q4 from this folder since 2026-11-25 19:20 Bangkok time** (v18a-q4 2026-11-15 → 11-25, the rollback). The root `sql2pyspark*.gguf` files stay v18a.
+
+## Qwen3.5-9B q9e → q9df3 (2026-11-22 → 11-25) — q9df3-q4 promoted
+
+On 2026-11-22 the owner asked for more Qwen3.5 training aimed at passing the promotion rule. Steps, in order (all on the
+Mac mini, Qwen3.5 models scored with `--think false`; scripts in [`qwen35_pilot/`](.) and [`variants/`](variants/)):
+
+1. **q9e**: a fresh QLoRA run from the 4-bit base on one combined mix (q9a's data + the new pairs of q9b-q9d, 53,486
+   pairs, 16,800 micro-batches, ~27 h). Hold-out 58, complex 87, schema-shift 176 → fails.
+2. **Export and merge variants** ([`variants/`](variants/)): Q8 / Q6 / imatrix-Q4 exports of q9e and q9d did not help
+   (higher precision lost a hold-out case), and averaging q9e checkpoints changed nothing. A 50/50 weight merge of the
+   fused q9d and q9e models, **q9de**, had the best quick-set sum (hold-out 59). A 100-query dev set on the hold-out
+   tables (`eval/dev_short.jsonl`, selection only) was added for picking between variants.
+3. **Self-play + ORPO (q9f)**: q9d answered 6,000 training-style queries ([`selfplay/`](selfplay/)); its 162
+   Spark-checked mistakes plus sampled answers gave 234 preference pairs, and a short ORPO round from the q9d adapter
+   ([`pref_q35.py`](pref_q35.py), 1,080 micro-batches) made **q9f**: hold-out 61, but 5 fixed-set queries looped
+   (fixed 135).
+4. **q9df** = 50/50 merge of fused q9d and q9f: passed every number of the rule (hold-out 61, complex 92, complex-shift
+   131, name slips 31), but the local app test found it **looping** on `SELECT *` with an `[NOT] IN` / `[NOT] EXISTS`
+   subquery, a shape missing from all training data. A 30-query loop probe (`eval/star_probe.jsonl`) was built:
+   q9df 18/30 with 6 loops, v18a-q4 27/30 with none.
+5. **Fix round q9f2**: 400 Spark-verified `SELECT *` / `t.*` subquery pairs on training tables
+   ([`selfplay/star_gen.py`](selfplay/star_gen.py)); q9df failed 75 of them → a second ORPO round from q9f (272
+   micro-batches). Merged at full / half strength (q9df2 / q9df2h) the loops were gone (probe 28/30, 0 loops), but
+   hold-out fell to 59 / 60.
+6. **q9df3 = 0.5 q9d + 0.25 q9f + 0.25 q9f2** (a quarter of the fix; no training,
+   [`step_q9df3.sh`](variants/step_q9df3.sh), [`avg_weights.py`](variants/avg_weights.py)): probe 28/30 with
+   0 loops **and** hold-out 61. The 1/8 mix (q9df3b) kept one loop.
+
+| Eval set | v18a-q4 (before) | q9d-q4 | q9df-q4 | **q9df3-q4** (`latest`) | Rule |
+| --- | --- | --- | --- | --- | --- |
+| Hold-out (62) | 61 | 59 | 61 | **61** | ≥ 61 |
+| v4 hold-out (25) | 20 | **22** | 21 | 21 | ≥ 20 |
+| Fixed test (150) | 145 | **147** | **147** | **147** | ≥ 145 |
+| complex_v8 test (100) | 88 | **95** | 92 | 93 | ≥ 88 |
+| Complex schema-shift (150 of 300) | 126 | 130 | **131** | **131** | ≥ 126 |
+| Schema-shift (200) | 186 | 185 | **191** | 186 | no clear drop |
+| targeted_v11 / v12 held-out (300 / 250) | 281 / 232 | 294 / 245 | **295** / **248** | **295** / 247 | no clear drop |
+| targeted_v13 / v14 held-out (150 / 200) | 148 / 195 | **150** / 199 | **150** / 199 | **150** / **200** | no clear drop |
+| `IN` / `NOT IN` (50) | **50** | **50** | 49 | **50** | |
+| Failures, all sets incl. real-style / with a name slip | 179 / 66 | 61 / 29 (no real-style) | 126 / 31 | 130 / 32 | slips ≤ 53 |
+| Loop probe `SELECT *` + subquery (30) | 27, 0 loops | | 18, 6 loops | **28, 0 loops** | |
+| Harness stretch set (21) | 5 | 5 | 6 | 5 | |
+| Real queries (4) / real-style pairs (74) | 0 / 0 | 0 / | 0 / 0 | 0 / 0 | |
+
+**Promoted** (owner pre-approved, 2026-11-25 19:20 Bangkok time): `ollama cp sql2pyspark:q9df3-q4 sql2pyspark:latest`
+(`94c353738904`). For a Qwen3.5 model `app.py` now sends `"think": false` (without it the model "thinks" and times out)
+and caps a reply at `num_predict` 4,096 tokens (a rare loop would otherwise hold the single Ollama slot for minutes);
+both settings are harmless for v18a-q4. The app test (Streamlit AppTest, 7 conversions incl. 4 `SELECT *` + subquery)
+passed with q9df3-q4 and with v18a-q4. The root GGUFs stay v18a. **Rollback:** `ollama cp sql2pyspark:v18a-q4
+sql2pyspark:latest` (works with the new `app.py`). Kept: adapters `adapters_q9d/e/f/f2`, `data_q9f`, `data_q9f2`,
+`selfplay/`, every variant GGUF in `variants/gguf/` and its Ollama tag.
 
 ## Polish rounds q9b, q9c, q9d (2026-11-20 → 11-22): close to v18a-q4, not promoted
 
@@ -29,7 +80,7 @@ Chains [`chain_q9b.sh`](chain_q9b.sh), [`chain_q9c.sh`](chain_q9c.sh), [`chain_q
 validates at a resumed segment's first iteration, so q9c re-ran the full 14-minute validation after each of its 6
 restarts (~1.4 h); q9d validated resumed segments on 100 pairs (~2 min), the full set still at the start and the end.
 
-| Eval set | q9b-q4 | q9c-q4 | **q9d-q4** | v18a-q4 (`latest`) |
+| Eval set | q9b-q4 | q9c-q4 | **q9d-q4** | v18a-q4 (`latest` until 2026-11-25) |
 | --- | --- | --- | --- | --- |
 | Hold-out (62) | 60 | 60 | 59 | **61** |
 | v4 hold-out (25) | 19 | 19 | **22** | 20 |

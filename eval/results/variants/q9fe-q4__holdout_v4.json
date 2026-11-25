@@ -1,0 +1,607 @@
+{
+  "model": "sql2pyspark:q9fe-q4",
+  "set": "eval/holdout_v4.jsonl",
+  "n": 25,
+  "summary": {
+    "ALL": {
+      "n": 25,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.92,
+      "strict_match": 0.84,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.92,
+      "lenient_match": 0.84
+    },
+    "aggregation": {
+      "n": 4,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 1.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 1.0
+    },
+    "join": {
+      "n": 5,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 0.8,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 0.8
+    },
+    "nested": {
+      "n": 4,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.75,
+      "strict_match": 0.75,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.75,
+      "lenient_match": 0.75
+    },
+    "pipeline": {
+      "n": 2,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 1.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 1.0
+    },
+    "reshape": {
+      "n": 2,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 0.5,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 0.5
+    },
+    "setop": {
+      "n": 3,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.6667,
+      "strict_match": 0.6667,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.6667,
+      "lenient_match": 0.6667
+    },
+    "window": {
+      "n": 5,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 1.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 1.0
+    }
+  },
+  "avg_seconds": 6.14,
+  "cases": [
+    {
+      "id": "holdout_v4_001",
+      "level": "aggregation",
+      "sql": "SELECT d.specialty, a.status, COUNT(*) AS appointments, ROUND(SUM(a.fee), 2) AS total_fee\nFROM appointments a\nJOIN doctors d ON a.doctor_id = d.id\nGROUP BY GROUPING SETS ((d.specialty, a.status), (d.specialty), ())",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments.alias(\"a\")\n    .join(df_doctors.alias(\"d\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"), \"inner\")\n    .groupingSets(\n        [[\"specialty\", \"status\"], [\"specialty\"], []],\n        F.col(\"d.specialty\").alias(\"specialty\"),\n        F.col(\"a.status\").alias(\"status\"),\n    )\n    .agg(\n        F.count(\"*\").alias(\"appointments\"),\n        F.round(F.sum(F.col(\"a.fee\")), 2).alias(\"total_fee\"),\n    )\n)\n```",
+      "seconds": 5.75,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_002",
+      "level": "aggregation",
+      "sql": "SELECT airline, origin, GROUPING_ID() AS grouping_level, COUNT(*) AS flights, MAX(base_fare) AS max_fare\nFROM flights\nGROUP BY ROLLUP (airline, origin)\nHAVING COUNT(*) >= 2\nORDER BY grouping_level, flights DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .rollup(\"airline\", \"origin\")\n    .agg(\n        F.grouping_id().alias(\"grouping_level\"),\n        F.count(\"*\").alias(\"flights\"),\n        F.max(\"base_fare\").alias(\"max_fare\"),\n    )\n    .filter(F.col(\"flights\") >= 2)\n    .orderBy(\"grouping_level\", F.col(\"flights\").desc())\n)\n```",
+      "seconds": 4.48,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_003",
+      "level": "aggregation",
+      "sql": "SELECT doctor_id,\n       COUNT(*) FILTER (WHERE status = 'NO_SHOW') AS no_shows,\n       AVG(wait_minutes) FILTER (WHERE appt_type = 'emergency') AS avg_emergency_wait,\n       COUNT_IF(fee > 1000) AS expensive_visits,\n       ROUND(SUM(fee) / NULLIF(COUNT(CASE WHEN status = 'DONE' THEN 1 END), 0), 2) AS fee_per_done_visit\nFROM appointments\nGROUP BY doctor_id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .groupBy(\"doctor_id\")\n    .agg(\n        F.count(F.when(F.col(\"status\") == \"NO_SHOW\", 1)).alias(\"no_shows\"),\n        F.avg(F.when(F.col(\"appt_type\") == \"emergency\", F.col(\"wait_minutes\"))).alias(\"avg_emergency_wait\"),\n        F.count_if(F.col(\"fee\") > 1000).alias(\"expensive_visits\"),\n        F.round(F.sum(\"fee\") / F.nullif(F.count(F.when(F.col(\"status\") == \"DONE\", 1)), F.lit(0)), 2).alias(\"fee_per_done_visit\"),\n    )\n)\n```",
+      "seconds": 6.43,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_004",
+      "level": "aggregation",
+      "sql": "SELECT seat_class,\n       PERCENTILE_APPROX(price, 0.5) AS median_price,\n       STDDEV_SAMP(price) AS price_stddev,\n       SORT_ARRAY(COLLECT_SET(loyalty_tier)) AS tiers,\n       PERCENT_RANK() OVER (ORDER BY AVG(price) DESC) AS price_rank\nFROM bookings\nWHERE NOT is_cancelled\nGROUP BY seat_class",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_bookings\n    .filter(~F.col(\"is_cancelled\"))\n    .groupBy(\"seat_class\")\n    .agg(\n        F.percentile_approx(\"price\", 0.5).alias(\"median_price\"),\n        F.stddev_samp(\"price\").alias(\"price_stddev\"),\n        F.sort_array(F.collect_set(\"loyalty_tier\")).alias(\"tiers\"),\n        F.percent_rank().over(Window.orderBy(F.avg(\"price\").desc())).alias(\"price_rank\"),\n    )\n)\n```",
+      "seconds": 5.29,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_005",
+      "level": "window",
+      "sql": "SELECT id, full_name, city, birth_date,\n       DENSE_RANK() OVER (PARTITION BY city ORDER BY birth_date DESC NULLS LAST) AS age_rank_in_city,\n       LAST_VALUE(insurance_type) IGNORE NULLS OVER (ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS last_known_insurance\nFROM patients\nORDER BY city NULLS FIRST, age_rank_in_city",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_patients\n    .select(\n        \"id\",\n        \"full_name\",\n        \"city\",\n        \"birth_date\",\n        F.dense_rank().over(Window.partitionBy(\"city\").orderBy(F.col(\"birth_date\").desc_nulls_last())).alias(\"age_rank_in_city\"),\n        F.last(\"insurance_type\", ignorenulls=True).over(Window.orderBy(\"id\").rowsBetween(Window.unboundedPreceding, Window.currentRow)).alias(\"last_known_insurance\"),\n    )\n    .orderBy(F.col(\"city\").asc_nulls_first(), \"age_rank_in_city\")\n)\n```",
+      "seconds": 6.03,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_006",
+      "level": "window",
+      "sql": "SELECT id, origin, departure_time, base_fare,\n       COUNT(*) OVER (PARTITION BY origin ORDER BY CAST(departure_time AS BIGINT)\n                      RANGE BETWEEN 2592000 PRECEDING AND CURRENT ROW) AS flights_last_30d,\n       AVG(base_fare) OVER (PARTITION BY origin ORDER BY departure_time, id\n                            ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) AS avg_fare_prev_3\nFROM flights",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_flights\n    .select(\n        \"id\",\n        \"origin\",\n        \"departure_time\",\n        \"base_fare\",\n        F.count(\"*\").over(Window.partitionBy(\"origin\").orderBy(F.col(\"departure_time\").cast(\"bigint\")).rangeBetween(-2592000, Window.currentRow)).alias(\"flights_last_30d\"),\n        F.avg(\"base_fare\").over(Window.partitionBy(\"origin\").orderBy(\"departure_time\", \"id\").rowsBetween(-3, -1)).alias(\"avg_fare_prev_3\"),\n    )\n)\n```",
+      "seconds": 6.0,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_007",
+      "level": "window",
+      "sql": "SELECT id, doctor_id, fee,\n       SUM(fee) OVER w_doc AS running_fee,\n       LAG(fee, 1, 0) OVER w_doc AS previous_fee,\n       CUME_DIST() OVER (PARTITION BY doctor_id ORDER BY fee) AS fee_cume_dist\nFROM appointments\nWINDOW w_doc AS (PARTITION BY doctor_id ORDER BY appt_date, id)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nw_doc = Window.partitionBy(\"doctor_id\").orderBy(\"appt_date\", \"id\")\n\nresult = (\n    df_appointments\n    .select(\n        \"id\",\n        \"doctor_id\",\n        \"fee\",\n        F.sum(\"fee\").over(w_doc).alias(\"running_fee\"),\n        F.lag(\"fee\", 1, 0).over(w_doc).alias(\"previous_fee\"),\n        F.cume_dist().over(Window.partitionBy(\"doctor_id\").orderBy(\"fee\")).alias(\"fee_cume_dist\"),\n    )\n)\n```",
+      "seconds": 5.57,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_008",
+      "level": "window",
+      "sql": "SELECT id, patient_id, doctor_id, appt_date, fee\nFROM appointments\nWHERE patient_id IS NOT NULL\nQUALIFY ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY appt_date DESC, id DESC) = 1",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_appointments\n    .filter(F.col(\"patient_id\").isNotNull())\n    .withColumn(\"rank_in_group\", F.row_number().over(Window.partitionBy(\"patient_id\").orderBy(F.col(\"appt_date\").desc(), F.col(\"id\").desc())))\n    .filter(F.col(\"rank_in_group\") == 1)\n    .select(\"id\", \"patient_id\", \"doctor_id\", \"appt_date\", \"fee\")\n)\n```",
+      "seconds": 4.85,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_009",
+      "level": "window",
+      "sql": "WITH gaps AS (\n    SELECT id, driver_id, trip_start,\n           CASE WHEN LAG(trip_start) OVER (PARTITION BY driver_id ORDER BY trip_start, id) IS NULL\n                  OR trip_start > LAG(trip_start) OVER (PARTITION BY driver_id ORDER BY trip_start, id) + INTERVAL '6' HOUR\n                THEN 1 ELSE 0 END AS is_new_shift\n    FROM vehicle_trips\n)\nSELECT id, driver_id, trip_start,\n       SUM(is_new_shift) OVER (PARTITION BY driver_id ORDER BY trip_start, id\n                               ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS shift_no\nFROM gaps",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\ngaps = (\n    df_vehicle_trips\n    .select(\n        \"id\",\n        \"driver_id\",\n        \"trip_start\",\n        F.when(F.lag(\"trip_start\").over(Window.partitionBy(\"driver_id\").orderBy(\"trip_start\", \"id\")).isNull() | (F.col(\"trip_start\") > F.lag(\"trip_start\").over(Window.partitionBy(\"driver_id\").orderBy(\"trip_start\", \"id\")) + F.expr(\"INTERVAL 6 HOURS\")), 1).otherwise(0).alias(\"is_new_shift\"),\n    )\n)\n\nresult = (\n    gaps\n    .select(\n        \"id\",\n        \"driver_id\",\n        \"trip_start\",\n        F.sum(\"is_new_shift\").over(Window.partitionBy(\"driver_id\").orderBy(\"trip_start\", \"id\").rowsBetween(Window.unboundedPreceding, Window.currentRow)).alias(\"shift_no\"),\n    )\n)\n```",
+      "seconds": 8.81,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_010",
+      "level": "join",
+      "sql": "SELECT b.id AS booking_id, b.passenger_name, f.airline, f.departure_time\nFROM bookings b\nJOIN flights f\n  ON b.flight_id = f.id\n AND b.booked_at >= f.departure_time - INTERVAL 365 DAYS\n AND b.booked_at < f.departure_time + INTERVAL '30' DAY",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings.alias(\"b\")\n    .join(\n        df_flights.alias(\"f\"),\n        (F.col(\"b.flight_id\") == F.col(\"f.id\"))\n        & (F.col(\"b.booked_at\") >= F.col(\"f.departure_time\") - F.expr(\"INTERVAL 365 DAYS\"))\n        & (F.col(\"b.booked_at\") < F.col(\"f.departure_time\") + F.expr(\"INTERVAL 30 DAYS\")),\n        \"inner\",\n    )\n    .select(\n        F.col(\"b.id\").alias(\"booking_id\"),\n        F.col(\"b.passenger_name\"),\n        F.col(\"f.airline\"),\n        F.col(\"f.departure_time\"),\n    )\n)\n```",
+      "seconds": 7.25,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_011",
+      "level": "join",
+      "sql": "SELECT d.id, d.doctor_name, latest.appt_date AS last_appt_date, latest.fee AS last_fee\nFROM doctors d\nLEFT JOIN LATERAL (\n    SELECT a.appt_date, a.fee\n    FROM appointments a\n    WHERE a.doctor_id = d.id\n    ORDER BY a.appt_date DESC, a.id DESC\n    LIMIT 1\n) latest ON TRUE",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_doctors\n    .alias(\"d\")\n    .join(df_appointments.alias(\"a\"), (F.col(\"a.doctor_id\") == F.col(\"d.id\")), \"left\")\n    .withColumn(\"rn\", F.row_number().over(Window.partitionBy(F.col(\"d.id\")).orderBy(F.col(\"a.appt_date\").desc(), F.col(\"a.id\").desc())))\n    .filter(F.col(\"rn\") == 1)\n    .select(\n        F.col(\"d.id\"),\n        F.col(\"d.doctor_name\"),\n        F.col(\"a.appt_date\").alias(\"last_appt_date\"),\n        F.col(\"a.fee\").alias(\"last_fee\"),\n    )\n)\n```",
+      "seconds": 7.11,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_012",
+      "level": "join",
+      "sql": "SELECT p.id, p.full_name, p.city\nFROM patients p\nWHERE NOT EXISTS (\n    SELECT 1 FROM appointments a\n    WHERE a.patient_id = p.id\n      AND a.status = 'DONE'\n      AND a.appt_date >= p.birth_date\n)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients.alias(\"p\")\n    .join(\n        df_appointments.filter(F.col(\"status\") == \"DONE\").alias(\"a\"),\n        (F.col(\"a.patient_id\") == F.col(\"p.id\"))\n        & (F.col(\"a.appt_date\") >= F.col(\"p.birth_date\")),\n        \"left_anti\",\n    )\n    .select(F.col(\"p.id\"), F.col(\"p.full_name\"), F.col(\"p.city\"))\n)\n```",
+      "seconds": 4.85,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_013",
+      "level": "join",
+      "sql": "SELECT COALESCE(d.hospital, 'Unknown') AS hospital, p.city, COUNT(*) AS visits\nFROM appointments a\nJOIN doctors d ON a.doctor_id = d.id\nJOIN patients p ON a.patient_id <=> p.id\nGROUP BY COALESCE(d.hospital, 'Unknown'), p.city\nORDER BY visits DESC, hospital",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments.alias(\"a\")\n    .join(df_doctors.alias(\"d\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"), \"inner\")\n    .join(df_patients.alias(\"p\"), F.col(\"a.patient_id\").eqNullSafe(F.col(\"p.id\")), \"left\")\n    .groupBy(\n        F.coalesce(F.col(\"d.hospital\"), F.lit(\"Unknown\")).alias(\"hospital\"),\n        F.col(\"p.city\"),\n    )\n    .agg(F.count(\"*\").alias(\"visits\"))\n    .orderBy(F.col(\"visits\").desc(), \"hospital\")\n)\n```",
+      "seconds": 6.07,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=20 rows, py=22 rows; first diff: sql-only=[\"('General Clinic', None, 1.0)\"] py-only=[\"('General Clinic', None, 3.0)\"]"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=20 rows, py=22 rows; first diff: sql-only=[\"('General Clinic', None, 1.0)\"] py-only=[\"('General Clinic', None, 3.0)\"]"
+      }
+    },
+    {
+      "id": "holdout_v4_014",
+      "level": "join",
+      "sql": "SELECT d.id, d.doctor_name,\n       (SELECT MAX(a.fee) FROM appointments a WHERE a.doctor_id = d.id) AS max_fee,\n       CASE WHEN d.hospital RLIKE '^(City|General)' THEN 'PUBLIC' ELSE 'PRIVATE' END AS hospital_type\nFROM doctors d\nORDER BY max_fee DESC NULLS LAST",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nfee_by_doctor = df_appointments.groupBy(\"doctor_id\").agg(F.max(\"fee\").alias(\"max_fee\"))\n\nresult = (\n    df_doctors.alias(\"d\")\n    .join(fee_by_doctor.alias(\"a\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"), \"left\")\n    .select(\n        F.col(\"d.id\"),\n        F.col(\"d.doctor_name\"),\n        F.col(\"a.max_fee\"),\n        F.when(F.col(\"d.hospital\").rlike(\"^(City|General)\"), \"PUBLIC\").otherwise(\"PRIVATE\").alias(\"hospital_type\"),\n    )\n    .orderBy(F.col(\"max_fee\").desc_nulls_last())\n)\n```",
+      "seconds": 6.64,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_015",
+      "level": "setop",
+      "sql": "SELECT city, 'patient' AS source FROM patients WHERE city IS NOT NULL\nUNION\nSELECT hospital, 'doctor' AS source FROM doctors WHERE hospital IS NOT NULL\nORDER BY source, city",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .filter(F.col(\"city\").isNotNull())\n    .select(\"city\", F.lit(\"patient\").alias(\"source\"))\n    .unionByName(\n        df_doctors\n        .filter(F.col(\"hospital\").isNotNull())\n        .select(\"hospital\", F.lit(\"doctor\").alias(\"source\"))\n    )\n    .distinct()\n    .orderBy(\"source\", \"city\")\n)\n```",
+      "seconds": 4.44,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN_AMONG_FIELD_NAMES] Cannot resolve column name \"city\" among (hospital, source). SQLSTATE: 42703"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN_AMONG_FIELD_NAMES] Cannot resolve column name \"city\" among (hospital, source). SQLSTATE: 42703"
+      }
+    },
+    {
+      "id": "holdout_v4_016",
+      "level": "setop",
+      "sql": "SELECT patient_id, doctor_id FROM appointments WHERE status = 'DONE'\nEXCEPT ALL\nSELECT patient_id, doctor_id FROM appointments WHERE appt_type = 'checkup'",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter(F.col(\"status\") == \"DONE\")\n    .select(\"patient_id\", \"doctor_id\")\n    .exceptAll(df_appointments.filter(F.col(\"appt_type\") == \"checkup\").select(\"patient_id\", \"doctor_id\"))\n)\n```",
+      "seconds": 3.24,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_017",
+      "level": "setop",
+      "sql": "SELECT flight_id FROM bookings WHERE seat_class IN ('BUSINESS', 'FIRST')\nINTERSECT ALL\nSELECT flight_id FROM bookings WHERE NOT is_cancelled",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .filter(F.col(\"seat_class\").isin(\"BUSINESS\", \"FIRST\"))\n    .select(\"flight_id\")\n    .intersectAll(df_bookings.filter(~F.col(\"is_cancelled\")).select(\"flight_id\"))\n)\n```",
+      "seconds": 2.94,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_018",
+      "level": "reshape",
+      "sql": "SELECT *\nFROM (SELECT doctor_id, appt_type, fee FROM appointments) src\nPIVOT (\n    SUM(fee) AS total_fee,\n    COUNT(1) AS visits\n    FOR appt_type IN ('checkup' AS checkup, 'emergency' AS emergency)\n)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .groupBy(\"doctor_id\")\n    .pivot(\"appt_type\", [\"checkup\", \"emergency\"])\n    .agg(F.sum(\"fee\").alias(\"total_fee\"), F.count(F.lit(1)).alias(\"visits\"))\n)\n```",
+      "seconds": 3.06,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_019",
+      "level": "reshape",
+      "sql": "SELECT *\nFROM (\n    SELECT id, airline, CAST(distance_km AS DOUBLE) AS distance, base_fare AS fare\n    FROM flights\n) src\nUNPIVOT (measure_value FOR measure IN (distance AS DISTANCE_KM, fare AS BASE_FARE))",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .select(\n        \"id\",\n        \"airline\",\n        F.col(\"distance_km\").cast(\"double\").alias(\"distance\"),\n        F.col(\"base_fare\").alias(\"fare\"),\n    )\n    .unpivot(\n        ids=[\"id\", \"airline\"],\n        values=[\"distance\", \"fare\"],\n        variableColumnName=\"measure\",\n        valueColumnName=\"measure_value\",\n    )\n    .filter(F.col(\"measure_value\").isNotNull())\n)\n```",
+      "seconds": 5.19,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=71 rows, py=71 rows; first diff: sql-only=[\"(1.0, 'Singapore Air', 'DISTANCE_KM', 13995.0)\"] py-only=[\"(1.0, 'Singapore Air', 'distance', 13995.0)\"]"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=71 rows, py=71 rows; first diff: sql-only=[\"(1.0, 'Singapore Air', 'DISTANCE_KM', 13995.0)\"] py-only=[\"(1.0, 'Singapore Air', 'distance', 13995.0)\"]"
+      }
+    },
+    {
+      "id": "holdout_v4_020",
+      "level": "nested",
+      "sql": "SELECT t.id, t.driver_id, stop.stop_name, stop.wait_min, stop.fare\nFROM vehicle_trips t\nLATERAL VIEW OUTER EXPLODE(t.stops) s AS stop",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_vehicle_trips\n    .withColumn(\"stop\", F.explode_outer(\"stops\"))\n    .select(\n        \"id\",\n        \"driver_id\",\n        F.col(\"stop.stop_name\"),\n        F.col(\"stop.wait_min\"),\n        F.col(\"stop.fare\"),\n    )\n)\n```",
+      "seconds": 3.49,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_021",
+      "level": "nested",
+      "sql": "SELECT id, pos + 1 AS stop_number, s.stop_name\nFROM vehicle_trips\nLATERAL VIEW POSEXPLODE(stops) x AS pos, s\nWHERE s.wait_min > 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_vehicle_trips\n    .select(\"*\", F.posexplode(\"stops\").alias(\"pos\", \"s\"))\n    .filter(F.col(\"s.wait_min\") > 5)\n    .select(\"id\", (F.col(\"pos\") + 1).alias(\"stop_number\"), F.col(\"s.stop_name\"))\n)\n```",
+      "seconds": 3.64,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_022",
+      "level": "nested",
+      "sql": "SELECT id,\n       SIZE(stops) AS num_stops,\n       AGGREGATE(stops, 0D, (acc, s) -> acc + s.fare, acc -> ROUND(acc, 2)) AS stop_fares,\n       TRANSFORM(FILTER(stops, s -> s.wait_min >= 10), s -> s.stop_name) AS long_wait_stops,\n       EXISTS(stops, s -> s.stop_name = 'Airport') AS via_airport,\n       ZIP_WITH(fare_components, surcharge_rates, (f, r) -> ROUND(f * r, 2)) AS charged_components\nFROM vehicle_trips",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_vehicle_trips\n    .select(\n        \"id\",\n        F.size(\"stops\").alias(\"num_stops\"),\n        F.aggregate(\"stops\", F.lit(0.0), lambda acc, s: acc + s[\"fare\"], lambda acc: F.round(acc, 2)).alias(\"stop_fares\"),\n        F.transform(F.filter(\"stops\", lambda s: s[\"wait_min\"] >= 10), lambda s: s[\"stop_name\"]).alias(\"long_wait_stops\"),\n        F.exists(\"stops\", lambda s: s[\"stop_name\"] == \"Airport\").alias(\"via_airport\"),\n        F.zip_with(\"fare_components\", \"surcharge_rates\", lambda f, r: F.round(f * r, 2)).alias(\"charged_components\"),\n    )\n)\n```",
+      "seconds": 7.67,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_023",
+      "level": "nested",
+      "sql": "SELECT id,\n       route.origin,\n       COALESCE(route.destination, 'OPEN') AS destination,\n       extras['vehicle_type'] AS vehicle_type,\n       TRY_CAST(extras['rating'] AS DOUBLE) AS rating,\n       GET_JSON_OBJECT(telemetry_json, '$.speed.max') AS max_speed_text,\n       FROM_JSON(telemetry_json, 'STRUCT<speed: STRUCT<avg: DOUBLE, max: DOUBLE>, battery: INT>').battery AS battery\nFROM vehicle_trips",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_vehicle_trips\n    .select(\n        \"id\",\n        F.col(\"route.origin\"),\n        F.coalesce(F.col(\"route.destination\"), F.lit(\"OPEN\")).alias(\"destination\"),\n        F.col(\"extras\")[\"vehicle_type\"].alias(\"vehicle_type\"),\n        F.try_cast(F.col(\"extras\")[\"rating\"].cast(\"double\")).alias(\"rating\"),\n        F.get_json_object(\"telemetry_json\", \"$.speed.max\").alias(\"max_speed_text\"),\n        F.from_json(\"telemetry_json\", \"STRUCT<speed: STRUCT<avg: DOUBLE, max: DOUBLE>, battery: INT>\").getItem(\"battery\").alias(\"battery\"),\n    )\n)\n```",
+      "seconds": 6.58,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: module 'pyspark.sql.functions' has no attribute 'try_cast'"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AttributeError: module 'pyspark.sql.functions' has no attribute 'try_cast'"
+      }
+    },
+    {
+      "id": "holdout_v4_024",
+      "level": "pipeline",
+      "sql": "WITH recent AS (\n    -- appointments with a known patient\n    SELECT *\n    FROM appointments\n    WHERE patient_id IS NOT NULL\n      AND appt_date >= DATE '2023-06-01'\n),\nranked AS (\n    SELECT *,\n           ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY appt_date, id) AS visit_no,\n           SUM(fee) OVER (PARTITION BY patient_id ORDER BY appt_date, id\n                          ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_fee\n    FROM recent\n),\nper_doctor AS (\n    SELECT doctor_id,\n           COUNT(*) AS visits,\n           COUNT(*) FILTER (WHERE visit_no = 1) AS first_visits,\n           MAX(cumulative_fee) AS max_patient_spend\n    FROM ranked\n    GROUP BY doctor_id\n)\nSELECT d.doctor_name, d.specialty, p.visits, p.first_visits, p.max_patient_spend,\n       RANK() OVER (PARTITION BY d.specialty ORDER BY p.visits DESC) AS rank_in_specialty\nFROM per_doctor p\nJOIN doctors d ON p.doctor_id = d.id\nORDER BY d.specialty, rank_in_specialty",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nrecent = (\n    df_appointments\n    .filter((F.col(\"patient_id\").isNotNull()) & (F.col(\"appt_date\") >= F.lit(\"2023-06-01\").cast(\"date\")))\n)\n\nranked = (\n    recent\n    .withColumn(\"visit_no\", F.row_number().over(Window.partitionBy(\"patient_id\").orderBy(\"appt_date\", \"id\")))\n    .withColumn(\"cumulative_fee\", F.sum(\"fee\").over(Window.partitionBy(\"patient_id\").orderBy(\"appt_date\", \"id\").rowsBetween(Window.unboundedPreceding, Window.currentRow)))\n)\n\nper_doctor = (\n    ranked\n    .groupBy(\"doctor_id\")\n    .agg(\n        F.count(\"*\").alias(\"visits\"),\n        F.count(F.when(F.col(\"visit_no\") == 1, 1)).alias(\"first_visits\"),\n        F.max(\"cumulative_fee\").alias(\"max_patient_spend\"),\n    )\n)\n\nresult = (\n    per_doctor.alias(\"p\")\n    .join(df_doctors.alias(\"d\"), F.col(\"p.doctor_id\") == F.col(\"d.id\"), \"inner\")\n    .select(\n        F.col(\"d.doctor_name\"),\n        F.col(\"d.specialty\"),\n        F.col(\"p.visits\"),\n        F.col(\"p.first_visits\"),\n        F.col(\"p.max_patient_spend\"),\n        F.rank().over(Window.partitionBy(F.col(\"d.specialty\")).orderBy(F.col(\"p.visits\").desc())).alias(\"rank_in_specialty\"),\n    )\n    .orderBy(\"specialty\", \"rank_in_specialty\")\n)\n```",
+      "seconds": 15.69,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "holdout_v4_025",
+      "level": "pipeline",
+      "sql": "WITH stops AS (\n    SELECT t.id AS trip_id, t.driver_id, t.trip_start, s.stop_name, s.wait_min, s.fare\n    FROM vehicle_trips t\n    LATERAL VIEW EXPLODE(t.stops) x AS s\n),\nper_driver AS (\n    SELECT driver_id,\n           DATE_TRUNC('DAY', trip_start) AS trip_day,\n           COUNT(DISTINCT trip_id) AS trips,\n           SUM(fare) AS stop_revenue,\n           AVG(wait_min) FILTER (WHERE stop_name = 'Airport') AS airport_wait\n    FROM stops\n    GROUP BY driver_id, DATE_TRUNC('DAY', trip_start)\n)\nSELECT driver_id, trip_day, trips, ROUND(stop_revenue, 2) AS stop_revenue, airport_wait,\n       DENSE_RANK() OVER (PARTITION BY trip_day ORDER BY stop_revenue DESC) AS revenue_rank\nFROM per_driver\nORDER BY trip_day, revenue_rank, driver_id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nstops = (\n    df_vehicle_trips\n    .withColumn(\"s\", F.explode(\"stops\"))\n    .select(\n        F.col(\"id\").alias(\"trip_id\"),\n        \"driver_id\",\n        \"trip_start\",\n        F.col(\"s.stop_name\"),\n        F.col(\"s.wait_min\"),\n        F.col(\"s.fare\"),\n    )\n)\n\nper_driver = (\n    stops\n    .groupBy(\"driver_id\", F.date_trunc(\"DAY\", \"trip_start\").alias(\"trip_day\"))\n    .agg(\n        F.countDistinct(\"trip_id\").alias(\"trips\"),\n        F.sum(\"fare\").alias(\"stop_revenue\"),\n        F.avg(F.when(F.col(\"stop_name\") == \"Airport\", F.col(\"wait_min\"))).alias(\"airport_wait\"),\n    )\n)\n\nresult = (\n    per_driver\n    .select(\n        \"driver_id\",\n        \"trip_day\",\n        \"trips\",\n        F.round(\"stop_revenue\", 2).alias(\"stop_revenue\"),\n        \"airport_wait\",\n        F.dense_rank().over(Window.partitionBy(\"trip_day\").orderBy(F.col(\"stop_revenue\").desc())).alias(\"revenue_rank\"),\n    )\n    .orderBy(\"trip_day\", \"revenue_rank\", \"driver_id\")\n)\n```",
+      "seconds": 12.51,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    }
+  ]
+}

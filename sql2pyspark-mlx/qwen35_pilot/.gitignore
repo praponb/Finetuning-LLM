@@ -17,3 +17,16 @@ adapters_m6h/adapters.safetensors
 
 # q9a: the 173 MB rank-32 adapter is over GitHub's 100 MB limit (kept on the Mac mini)
 adapters_q9a/adapters.safetensors
+
+# q9b-q9f2: the 173 MB rank-32 adapters are over GitHub's 100 MB limit (kept on the Mac mini; adapter_config.json tracked)
+adapters_q9b/adapters.safetensors
+adapters_q9c/adapters.safetensors
+adapters_q9d/adapters.safetensors
+adapters_q9e/adapters.safetensors
+adapters_q9f/adapters.safetensors
+adapters_q9f2/adapters.safetensors
+# q9e's 135 MB train mix (> 100 MB): rebuild with `polishmix/build_q9e.py` (seed 2032); valid.jsonl + stats.json tracked
+data_q9e/train.jsonl
+# variants/: merge working folder (fused HF models, f16 GGUFs) and the port-8512 test log
+variants/work/
+variants/apptest/*.log

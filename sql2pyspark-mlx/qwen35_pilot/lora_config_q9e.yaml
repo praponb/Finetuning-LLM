@@ -1,0 +1,35 @@
+# Qwen3.5-9B QLoRA, FRESH run "q9e" (owner 2026-11-22: train Qwen3.5 again, goal = pass the promotion rule vs v18a-q4;
+# fresh from the base on ONE combined mix; 16,800 micro-batches = the total training of the q9a -> q9d line).
+# Why: q9b/q9c/q9d each continued the previous adapter and each flipped 1-2 good cases (hold-out 025 loops in q9c/q9d).
+# Data: data_q9e = data_q9a (v18a mix, 8,000 table-renamed) + every new pair of data_q9b/q9c/q9d (polishmix/build_q9e.py).
+# Adapter shape = q9a (16 of 32 layers, rank 32, scale 10). lr as q9a but a longer cosine and a lower end (the polish
+# rounds' low-lr finish helped): 5e-5 -> 1e-6 over 4,150 of 4,200 updates. Run via chain_q9e.sh.
+model: mlx-community/Qwen3.5-9B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_q9e
+adapter_path: ./qwen35_pilot/adapters_q9e
+seed: 47
+iters: 16800
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16                # last 16 of 32 blocks
+lora_parameters:
+  rank: 32
+  dropout: 0.05
+  scale: 10.0
+optimizer: adamw
+learning_rate: 5.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-6
+  arguments: [5.0e-5, 4150, 1.0e-6]    # [init, decay_steps, end]  (optimizer updates = 16,800 / 4 = 4,200)
+steps_per_report: 50
+steps_per_eval: 2400
+val_batches: 250              # resumed segments: 100 (--segment-val-batches)
+save_every: 200
+test: false

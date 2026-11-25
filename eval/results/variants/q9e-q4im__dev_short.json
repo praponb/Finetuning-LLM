@@ -1,0 +1,2146 @@
+{
+  "model": "sql2pyspark:q9e-q4im",
+  "set": "eval/dev_short.jsonl",
+  "n": 100,
+  "summary": {
+    "ALL": {
+      "n": 100,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.9,
+      "strict_match": 0.89,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.9,
+      "lenient_match": 0.89
+    },
+    "complex": {
+      "n": 40,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.875,
+      "strict_match": 0.85,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.875,
+      "lenient_match": 0.85
+    },
+    "medium": {
+      "n": 35,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.8857,
+      "strict_match": 0.8857,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.8857,
+      "lenient_match": 0.8857
+    },
+    "simple": {
+      "n": 25,
+      "strict_syntax": 1.0,
+      "strict_runs": 0.96,
+      "strict_match": 0.96,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 0.96,
+      "lenient_match": 0.96
+    }
+  },
+  "avg_seconds": 3.55,
+  "cases": [
+    {
+      "id": "dev001",
+      "level": "simple",
+      "sql": "SELECT id, doctor_name, hospital FROM doctors WHERE specialty = 'Pediatrics';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors\n    .filter(F.col(\"specialty\") == \"Pediatrics\")\n    .select(\"id\", \"doctor_name\", \"hospital\")\n)\n```",
+      "seconds": 2.19,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev002",
+      "level": "simple",
+      "sql": "SELECT * FROM patients WHERE is_smoker = TRUE ORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .filter(F.col(\"is_smoker\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 1.79,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev003",
+      "level": "simple",
+      "sql": "SELECT DISTINCT airline FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .select(\"airline\")\n    .distinct()\n)\n```",
+      "seconds": 1.61,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev004",
+      "level": "simple",
+      "sql": "SELECT id, passenger_name, price FROM bookings WHERE price BETWEEN 500 AND 2000;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .filter(F.col(\"price\").between(500, 2000))\n    .select(\"id\", \"passenger_name\", \"price\")\n)\n```",
+      "seconds": 2.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev005",
+      "level": "simple",
+      "sql": "SELECT id, appt_date, fee FROM appointments WHERE appt_type = 'surgery' AND fee > 1000;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter((F.col(\"appt_type\") == \"surgery\") & (F.col(\"fee\") > 1000))\n    .select(\"id\", \"appt_date\", \"fee\")\n)\n```",
+      "seconds": 2.93,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev006",
+      "level": "simple",
+      "sql": "SELECT COUNT(*) AS smokers FROM patients WHERE is_smoker;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .filter(F.col(\"is_smoker\"))\n    .agg(F.count(\"*\").alias(\"smokers\"))\n)\n```",
+      "seconds": 2.07,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev007",
+      "level": "simple",
+      "sql": "SELECT id, LOWER(TRIM(passenger_name)) AS passenger FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .select(\"id\", F.lower(F.trim(\"passenger_name\")).alias(\"passenger\"))\n)\n```",
+      "seconds": 1.92,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev008",
+      "level": "simple",
+      "sql": "SELECT id, distance_km, ROUND(distance_km * 0.621371, 1) AS distance_miles FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .select(\n        \"id\",\n        \"distance_km\",\n        F.round((F.col(\"distance_km\") * 0.621371), 1).alias(\"distance_miles\"),\n    )\n)\n```",
+      "seconds": 3.1,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev009",
+      "level": "simple",
+      "sql": "SELECT id, booked_at, MONTH(booked_at) AS booked_month, DAYOFWEEK(booked_at) AS booked_dow FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .select(\n        \"id\",\n        \"booked_at\",\n        F.month(\"booked_at\").alias(\"booked_month\"),\n        F.dayofweek(\"booked_at\").alias(\"booked_dow\"),\n    )\n)\n```",
+      "seconds": 3.24,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev010",
+      "level": "simple",
+      "sql": "SELECT * FROM patients WHERE city IS NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = df_patrons.filter(F.col(\"city\").isNull())\n```",
+      "seconds": 1.25,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      }
+    },
+    {
+      "id": "dev011",
+      "level": "simple",
+      "sql": "SELECT id, doctor_name FROM doctors WHERE doctor_name LIKE 'Dr. S%' ORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors\n    .filter(F.col(\"doctor_name\").like(\"Dr. S%\"))\n    .select(\"id\", \"doctor_name\")\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 2.51,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev012",
+      "level": "simple",
+      "sql": "SELECT id, passenger_name, COALESCE(loyalty_tier, 'NONE') AS tier FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .select(\"id\", \"passenger_name\", F.coalesce(\"loyalty_tier\", F.lit(\"NONE\")).alias(\"tier\"))\n)\n```",
+      "seconds": 2.38,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev013",
+      "level": "simple",
+      "sql": "SELECT id, CASE WHEN base_fare >= 1500 THEN 'premium' WHEN base_fare >= 500 THEN 'standard' ELSE 'budget' END AS fare_band FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .select(\n        \"id\",\n        F.when(F.col(\"base_fare\") >= 1500, \"premium\").when(F.col(\"base_fare\") >= 500, \"standard\").otherwise(\"budget\").alias(\"fare_band\"),\n    )\n)\n```",
+      "seconds": 3.53,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev014",
+      "level": "simple",
+      "sql": "SELECT SUM(fee) AS total_fee, COUNT(*) AS visits, MAX(wait_minutes) AS longest_wait FROM appointments;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .agg(\n        F.sum(\"fee\").alias(\"total_fee\"),\n        F.count(\"*\").alias(\"visits\"),\n        F.max(\"wait_minutes\").alias(\"longest_wait\"),\n    )\n)\n```",
+      "seconds": 2.95,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev015",
+      "level": "simple",
+      "sql": "SELECT id, appt_date, DATE_ADD(appt_date, 30) AS follow_up_due FROM appointments WHERE appt_type = 'checkup';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter(F.col(\"appt_type\") == \"checkup\")\n    .select(\"id\", \"appt_date\", F.date_add(\"appt_date\", 30).alias(\"follow_up_due\"))\n)\n```",
+      "seconds": 2.98,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev016",
+      "level": "simple",
+      "sql": "SELECT id, full_name FROM patients WHERE insurance_type <> 'NONE' AND gender = 'F';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .filter((F.col(\"insurance_type\") != \"NONE\") & (F.col(\"gender\") == \"F\"))\n    .select(\"id\", \"full_name\")\n)\n```",
+      "seconds": 2.62,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev017",
+      "level": "simple",
+      "sql": "SELECT id, airline, base_fare FROM flights ORDER BY base_fare DESC, id LIMIT 3;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .select(\"id\", \"airline\", \"base_fare\")\n    .orderBy(F.col(\"base_fare\").desc(), \"id\")\n    .limit(3)\n)\n```",
+      "seconds": 2.71,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev018",
+      "level": "simple",
+      "sql": "SELECT id, origin, destination FROM flights WHERE origin IN ('SIN', 'NRT') AND destination <> 'BKK';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .filter(F.col(\"origin\").isin([\"SIN\", \"NRT\"]) & (F.col(\"destination\") != \"BKK\"))\n    .select(\"id\", \"origin\", \"destination\")\n)\n```",
+      "seconds": 2.87,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev019",
+      "level": "simple",
+      "sql": "SELECT id, price, price * 0.9 AS member_price FROM bookings WHERE loyalty_tier = 'GOLD';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .filter(F.col(\"loyalty_tier\") == \"GOLD\")\n    .select(\"id\", \"price\", (F.col(\"price\") * 0.9).alias(\"member_price\"))\n)\n```",
+      "seconds": 2.91,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev020",
+      "level": "simple",
+      "sql": "SELECT id, LENGTH(doctor_name) AS name_len FROM doctors;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = df_doctors.select(\"id\", F.length(\"doctor_name\").alias(\"name_len\"))\n```",
+      "seconds": 1.54,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev021",
+      "level": "simple",
+      "sql": "SELECT id, full_name, birth_date FROM patients WHERE birth_date >= '2024-01-01';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .filter(F.col(\"birth_date\") >= \"2024-01-01\")\n    .select(\"id\", \"full_name\", \"birth_date\")\n)\n```",
+      "seconds": 2.67,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev022",
+      "level": "simple",
+      "sql": "SELECT id, status, wait_minutes FROM appointments WHERE wait_minutes IS NOT NULL AND wait_minutes < 30;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter(F.col(\"wait_minutes\").isNotNull() & (F.col(\"wait_minutes\") < 30))\n    .select(\"id\", \"status\", \"wait_minutes\")\n)\n```",
+      "seconds": 2.75,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev023",
+      "level": "simple",
+      "sql": "SELECT COUNT(DISTINCT origin) AS origins, COUNT(DISTINCT destination) AS destinations FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .agg(\n        F.countDistinct(\"origin\").alias(\"origins\"),\n        F.countDistinct(\"destination\").alias(\"destinations\"),\n    )\n)\n```",
+      "seconds": 2.51,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev024",
+      "level": "simple",
+      "sql": "SELECT id, UPPER(SUBSTRING(seat_class, 1, 1)) AS class_code FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .select(\"id\", F.upper(F.substring(\"seat_class\", 1, 1)).alias(\"class_code\"))\n)\n```",
+      "seconds": 2.2,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev025",
+      "level": "simple",
+      "sql": "SELECT id, specialty, years_experience FROM doctors WHERE NOT (specialty = 'General' OR years_experience < 5);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors\n    .filter(~((F.col(\"specialty\") == \"General\") | (F.col(\"years_experience\") < 5)))\n    .select(\"id\", \"specialty\", \"years_experience\")\n)\n```",
+      "seconds": 2.87,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev026",
+      "level": "medium",
+      "sql": "SELECT hospital, COUNT(*) AS doctors FROM doctors GROUP BY hospital ORDER BY doctors DESC, hospital;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors\n    .groupBy(\"hospital\")\n    .agg(F.count(\"*\").alias(\"doctors\"))\n    .orderBy(F.col(\"doctors\").desc(), \"hospital\")\n)\n```",
+      "seconds": 2.55,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev027",
+      "level": "medium",
+      "sql": "SELECT appt_type, ROUND(AVG(wait_minutes), 1) AS avg_wait FROM appointments GROUP BY appt_type;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .groupBy(\"appt_type\")\n    .agg(F.round(F.avg(\"wait_minutes\"), 1).alias(\"avg_wait\"))\n)\n```",
+      "seconds": 2.32,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev028",
+      "level": "medium",
+      "sql": "SELECT airline, SUM(distance_km) AS total_km FROM flights GROUP BY airline HAVING SUM(distance_km) > 5000;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .groupBy(\"airline\")\n    .agg(F.sum(\"distance_km\").alias(\"total_km\"))\n    .filter(F.col(\"total_km\") > 5000)\n)\n```",
+      "seconds": 2.76,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev029",
+      "level": "medium",
+      "sql": "SELECT seat_class, COUNT(*) AS n, MIN(price) AS cheapest FROM bookings WHERE NOT is_cancelled GROUP BY seat_class;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .filter(~F.col(\"is_cancelled\"))\n    .groupBy(\"seat_class\")\n    .agg(F.count(\"*\").alias(\"n\"), F.min(\"price\").alias(\"cheapest\"))\n)\n```",
+      "seconds": 2.84,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev030",
+      "level": "medium",
+      "sql": "SELECT a.id, d.doctor_name, a.fee FROM appointments a JOIN doctors d ON a.doctor_id = d.id WHERE d.hospital = 'Bumrungrad';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments.alias(\"a\")\n    .join(df_doctors.alias(\"d\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"), \"inner\")\n    .filter(F.col(\"d.hospital\") == \"Bumrungrad\")\n    .select(F.col(\"a.id\"), F.col(\"d.doctor_name\"), F.col(\"a.fee\"))\n)\n```",
+      "seconds": 4.2,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev031",
+      "level": "medium",
+      "sql": "SELECT p.full_name, a.appt_date, a.status FROM patients p LEFT JOIN appointments a ON p.id = a.patient_id WHERE p.insurance_type = 'NONE';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patrons.alias(\"p\")\n    .join(df_appointments.alias(\"a\"), F.col(\"p.id\") == F.col(\"a.patient_id\"), \"left\")\n    .filter(F.col(\"p.insurance_type\") == \"NONE\")\n    .select(F.col(\"p.full_name\"), F.col(\"a.appt_date\"), F.col(\"a.status\"))\n)\n```",
+      "seconds": 4.09,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      }
+    },
+    {
+      "id": "dev032",
+      "level": "medium",
+      "sql": "SELECT b.passenger_name, f.departure_time, b.seat_class FROM bookings b JOIN flights f ON b.flight_id = f.id WHERE f.airline = 'ANA' ORDER BY b.id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings.alias(\"b\")\n    .join(df_flights.alias(\"f\"), F.col(\"b.flight_id\") == F.col(\"f.id\"), \"inner\")\n    .filter(F.col(\"f.airline\") == \"ANA\")\n    .select(F.col(\"b.passenger_name\"), F.col(\"f.departure_time\"), F.col(\"b.seat_class\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 4.48,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `id` cannot be resolved. Did you mean one of the following? [`b`.`seat_class`, `f`.`departure_time`, `b`.`passenger_name`]. SQLSTATE: 42703;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `id` cannot be resolved. Did you mean one of the following? [`b`.`seat_class`, `f`.`departure_time`, `b`.`passenger_name`]. SQLSTATE: 42703;"
+      }
+    },
+    {
+      "id": "dev033",
+      "level": "medium",
+      "sql": "SELECT YEAR(appt_date) AS yr, COUNT(*) AS visits FROM appointments GROUP BY YEAR(appt_date) ORDER BY yr;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .groupBy(F.year(\"appt_date\").alias(\"yr\"))\n    .agg(F.count(\"*\").alias(\"visits\"))\n    .orderBy(\"yr\")\n)\n```",
+      "seconds": 2.57,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev034",
+      "level": "medium",
+      "sql": "SELECT id, full_name FROM patients WHERE id NOT IN (SELECT patient_id FROM appointments WHERE patient_id IS NOT NULL AND status = 'DONE');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients.alias(\"p\")\n    .join(df_appointments.filter(F.col(\"status\") == \"DONE\").filter(F.col(\"patient_id\").isNotNull()).alias(\"a\"), F.col(\"p.id\") == F.col(\"a.patient_id\"), \"left_anti\")\n    .select(F.col(\"p.id\"), F.col(\"p.full_name\"))\n)\n```",
+      "seconds": 4.0,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev035",
+      "level": "medium",
+      "sql": "SELECT * FROM flights f WHERE EXISTS (SELECT 1 FROM bookings b WHERE b.flight_id = f.id AND b.loyalty_tier = 'PLATINUM');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights.alias(\"f\")\n    .join(df_bookings.filter(F.col(\"loyalty_tier\") == \"PLATINUM\").alias(\"b\"), F.col(\"f.id\") == F.col(\"b.flight_id\"), \"left_semi\")\n)\n```",
+      "seconds": 3.21,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev036",
+      "level": "medium",
+      "sql": "SELECT p.* FROM patients p WHERE NOT EXISTS (SELECT 1 FROM appointments a WHERE a.patient_id = p.id AND a.appt_type = 'emergency');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients.alias(\"p\")\n    .join(df_appointments.filter(F.col(\"appt_type\") == \"emergency\").alias(\"a\"), F.col(\"p.id\") == F.col(\"a.patient_id\"), \"left_anti\")\n)\n```",
+      "seconds": 3.0,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev037",
+      "level": "medium",
+      "sql": "SELECT id, doctor_id, fee, DENSE_RANK() OVER (PARTITION BY doctor_id ORDER BY fee DESC) AS fee_rank FROM appointments;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_appointments\n    .select(\"id\", \"doctor_id\", \"fee\", F.dense_rank().over(Window.partitionBy(\"doctor_id\").orderBy(F.col(\"fee\").desc())).alias(\"fee_rank\"))\n)\n```",
+      "seconds": 3.05,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev038",
+      "level": "medium",
+      "sql": "SELECT id, flight_id, booked_at, LEAD(booked_at) OVER (PARTITION BY flight_id ORDER BY booked_at, id) AS next_booking FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_bookings\n    .select(\n        \"id\",\n        \"flight_id\",\n        \"booked_at\",\n        F.lead(\"booked_at\").over(Window.partitionBy(\"flight_id\").orderBy(\"booked_at\", \"id\")).alias(\"next_booking\"),\n    )\n)\n```",
+      "seconds": 3.82,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev039",
+      "level": "medium",
+      "sql": "SELECT gender, is_smoker, COUNT(*) AS n FROM patients GROUP BY gender, is_smoker ORDER BY gender, is_smoker;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .groupBy(\"gender\", \"is_smoker\")\n    .agg(F.count(\"*\").alias(\"n\"))\n    .orderBy(\"gender\", \"is_smoker\")\n)\n```",
+      "seconds": 2.6,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev040",
+      "level": "medium",
+      "sql": "SELECT id, doctor_name, years_experience FROM doctors WHERE years_experience < (SELECT AVG(years_experience) FROM doctors);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\navg_years_experience = df_doctors.agg(F.avg(\"years_experience\")).first()[0]\n\nresult = (\n    df_doctors\n    .filter(F.col(\"years_experience\") < avg_years_experience)\n    .select(\"id\", \"doctor_name\", \"years_experience\")\n)\n```",
+      "seconds": 3.18,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev041",
+      "level": "medium",
+      "sql": "SELECT airline, ROUND(AVG(base_fare), 2) AS avg_fare FROM flights WHERE origin <> 'JFK' GROUP BY airline;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .filter(F.col(\"origin\") != \"JFK\")\n    .groupBy(\"airline\")\n    .agg(F.round(F.avg(\"base_fare\"), 2).alias(\"avg_fare\"))\n)\n```",
+      "seconds": 2.92,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev042",
+      "level": "medium",
+      "sql": "SELECT origin FROM flights UNION SELECT destination FROM flights WHERE destination IS NOT NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .select(\"origin\")\n    .unionByName(\n        df_flights\n        .filter(F.col(\"destination\").isNotNull())\n        .select(\"destination\")\n    )\n    .distinct()\n)\n```",
+      "seconds": 2.97,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN_AMONG_FIELD_NAMES] Cannot resolve column name \"origin\" among (destination). SQLSTATE: 42703"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [UNRESOLVED_COLUMN_AMONG_FIELD_NAMES] Cannot resolve column name \"origin\" among (destination). SQLSTATE: 42703"
+      }
+    },
+    {
+      "id": "dev043",
+      "level": "medium",
+      "sql": "SELECT id, airline, CONCAT(origin, ' -> ', COALESCE(destination, '???')) AS route FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .select(\n        \"id\",\n        \"airline\",\n        F.concat(\"origin\", F.lit(\" -> \"), F.coalesce(\"destination\", F.lit(\"???\"))).alias(\"route\"),\n    )\n)\n```",
+      "seconds": 3.11,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev044",
+      "level": "medium",
+      "sql": "SELECT doctor_id, COUNT(*) AS cancelled FROM appointments WHERE status IN ('CANCELLED', 'NO_SHOW') GROUP BY doctor_id HAVING COUNT(*) >= 2 ORDER BY cancelled DESC, doctor_id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter(F.col(\"status\").isin([\"CANCELLED\", \"NO_SHOW\"]))\n    .groupBy(\"doctor_id\")\n    .agg(F.count(\"*\").alias(\"cancelled\"))\n    .filter(F.col(\"cancelled\") >= 2)\n    .orderBy(F.col(\"cancelled\").desc(), \"doctor_id\")\n)\n```",
+      "seconds": 3.9,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev045",
+      "level": "medium",
+      "sql": "SELECT id, appt_date, DATE_TRUNC('week', appt_date) AS week_start FROM appointments WHERE status <> 'CANCELLED';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter(F.col(\"status\") != \"CANCELLED\")\n    .select(\"id\", \"appt_date\", F.date_trunc(\"week\", \"appt_date\").alias(\"week_start\"))\n)\n```",
+      "seconds": 2.89,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev046",
+      "level": "medium",
+      "sql": "SELECT loyalty_tier, COUNT(*) AS bookings, SUM(CASE WHEN seat_class = 'ECONOMY' THEN 1 ELSE 0 END) AS economy FROM bookings GROUP BY loyalty_tier;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .groupBy(\"loyalty_tier\")\n    .agg(\n        F.count(\"*\").alias(\"bookings\"),\n        F.sum(F.when(F.col(\"seat_class\") == \"ECONOMY\", 1).otherwise(0)).alias(\"economy\"),\n    )\n)\n```",
+      "seconds": 3.57,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev047",
+      "level": "medium",
+      "sql": "SELECT status, COUNT(CASE WHEN wait_minutes > 30 THEN 1 END) AS long_waits, COUNT(*) AS total FROM appointments GROUP BY status;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .groupBy(\"status\")\n    .agg(\n        F.count(F.when(F.col(\"wait_minutes\") > 30, 1)).alias(\"long_waits\"),\n        F.count(\"*\").alias(\"total\"),\n    )\n)\n```",
+      "seconds": 3.22,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev048",
+      "level": "medium",
+      "sql": "SELECT * FROM appointments WHERE fee = (SELECT MAX(fee) FROM appointments);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nmax_fee = df_appointments.agg(F.max(\"fee\")).first()[0]\n\nresult = (\n    df_appointments\n    .filter(F.col(\"fee\") == max_fee)\n)\n```",
+      "seconds": 2.41,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev049",
+      "level": "medium",
+      "sql": "SELECT id, passenger_name FROM bookings WHERE flight_id IN (SELECT id FROM flights WHERE distance_km > 8000);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings.alias(\"b\")\n    .join(df_flights.filter(F.col(\"distance_km\") > 8000).alias(\"f\"), F.col(\"b.flight_id\") == F.col(\"f.id\"), \"left_semi\")\n    .select(F.col(\"b.id\"), F.col(\"b.passenger_name\"))\n)\n```",
+      "seconds": 3.86,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev050",
+      "level": "medium",
+      "sql": "SELECT DATE_FORMAT(booked_at, 'yyyy-MM') AS month, ROUND(SUM(price), 2) AS revenue FROM bookings WHERE NOT is_cancelled GROUP BY DATE_FORMAT(booked_at, 'yyyy-MM') ORDER BY month;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .filter(~F.col(\"is_cancelled\"))\n    .groupBy(F.date_format(\"booked_at\", \"yyyy-MM\").alias(\"month\"))\n    .agg(F.round(F.sum(\"price\"), 2).alias(\"revenue\"))\n    .orderBy(\"month\")\n)\n```",
+      "seconds": 3.49,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev051",
+      "level": "medium",
+      "sql": "SELECT d.specialty, COUNT(a.id) AS appointments FROM doctors d LEFT JOIN appointments a ON d.id = a.doctor_id GROUP BY d.specialty ORDER BY appointments DESC, d.specialty;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors.alias(\"d\")\n    .join(df_appointments.alias(\"a\"), F.col(\"d.id\") == F.col(\"a.doctor_id\"), \"left\")\n    .groupBy(F.col(\"d.specialty\"))\n    .agg(F.count(F.col(\"a.id\")).alias(\"appointments\"))\n    .orderBy(F.col(\"appointments\").desc(), \"specialty\")\n)\n```",
+      "seconds": 4.25,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev052",
+      "level": "medium",
+      "sql": "SELECT id, full_name, city FROM patients WHERE city IN ('Bangkok', 'Chiang Mai') ORDER BY full_name, id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .filter(F.col(\"city\").isin([\"Bangkok\", \"Chiang Mai\"]))\n    .select(\"id\", \"full_name\", \"city\")\n    .orderBy(\"full_name\", \"id\")\n)\n```",
+      "seconds": 2.93,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev053",
+      "level": "medium",
+      "sql": "SELECT id, base_fare, NTILE(4) OVER (ORDER BY base_fare, id) AS fare_quartile FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_flights\n    .select(\"id\", \"base_fare\", F.ntile(4).over(Window.orderBy(\"base_fare\", \"id\")).alias(\"fare_quartile\"))\n)\n```",
+      "seconds": 2.97,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev054",
+      "level": "medium",
+      "sql": "SELECT airline, MAX(departure_time) AS last_departure FROM flights GROUP BY airline;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .groupBy(\"airline\")\n    .agg(F.max(\"departure_time\").alias(\"last_departure\"))\n)\n```",
+      "seconds": 2.13,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev055",
+      "level": "medium",
+      "sql": "SELECT id, full_name, CASE gender WHEN 'F' THEN 'female' WHEN 'M' THEN 'male' ELSE 'other' END AS gender_label FROM patients;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patrons\n    .select(\n        \"id\",\n        \"full_name\",\n        F.when(F.col(\"gender\") == \"F\", \"female\").when(F.col(\"gender\") == \"M\", \"male\").otherwise(\"other\").alias(\"gender_label\"),\n    )\n)\n```",
+      "seconds": 3.44,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      }
+    },
+    {
+      "id": "dev056",
+      "level": "medium",
+      "sql": "SELECT patient_id, MIN(appt_date) AS first_visit, MAX(appt_date) AS last_visit FROM appointments WHERE patient_id IS NOT NULL GROUP BY patient_id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter(F.col(\"patient_id\").isNotNull())\n    .groupBy(\"patient_id\")\n    .agg(\n        F.min(\"appt_date\").alias(\"first_visit\"),\n        F.max(\"appt_date\").alias(\"last_visit\"),\n    )\n)\n```",
+      "seconds": 3.44,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev057",
+      "level": "medium",
+      "sql": "SELECT seat_class, ROUND(AVG(price), 0) AS avg_price FROM bookings GROUP BY seat_class HAVING AVG(price) > 1000 ORDER BY avg_price DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .groupBy(\"seat_class\")\n    .agg(F.round(F.avg(\"price\"), 0).alias(\"avg_price\"))\n    .filter(F.col(\"avg_price\") > 1000)\n    .orderBy(F.col(\"avg_price\").desc())\n)\n```",
+      "seconds": 3.42,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev058",
+      "level": "medium",
+      "sql": "SELECT id, doctor_name, REPLACE(doctor_name, 'Dr. ', '') AS surname FROM doctors;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors\n    .select(\"id\", \"doctor_name\", F.regexp_replace(\"doctor_name\", \"Dr. \", \"\").alias(\"surname\"))\n)\n```",
+      "seconds": 2.3,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev059",
+      "level": "medium",
+      "sql": "SELECT b.id, b.price, f.base_fare, b.price - f.base_fare AS markup FROM bookings b JOIN flights f ON b.flight_id = f.id WHERE NOT b.is_cancelled;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings.alias(\"b\")\n    .join(df_flights.alias(\"f\"), F.col(\"b.flight_id\") == F.col(\"f.id\"), \"inner\")\n    .filter(~F.col(\"b.is_cancelled\"))\n    .select(\n        F.col(\"b.id\"),\n        F.col(\"b.price\"),\n        F.col(\"f.base_fare\"),\n        (F.col(\"b.price\") - F.col(\"f.base_fare\")).alias(\"markup\"),\n    )\n)\n```",
+      "seconds": 5.25,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev060",
+      "level": "medium",
+      "sql": "SELECT id, appt_date, fee FROM appointments WHERE appt_date BETWEEN '2024-03-01' AND '2024-09-30';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter(F.col(\"appt_date\").between(\"2024-03-01\", \"2024-09-30\"))\n    .select(\"id\", \"appt_date\", \"fee\")\n)\n```",
+      "seconds": 3.22,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev061",
+      "level": "complex",
+      "sql": "WITH visits AS (SELECT patient_id, COUNT(*) AS n_visits, SUM(fee) AS total_fee FROM appointments WHERE patient_id IS NOT NULL GROUP BY patient_id) SELECT p.id, p.full_name, v.n_visits, v.total_fee FROM patients p JOIN visits v ON p.id = v.patient_id ORDER BY v.total_fee DESC, p.id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nvisits = (\n    df_appointments\n    .filter(F.col(\"patient_id\").isNotNull())\n    .groupBy(\"patient_id\")\n    .agg(\n        F.count(\"*\").alias(\"n_visits\"),\n        F.sum(\"fee\").alias(\"total_fee\"),\n    )\n)\n\nresult = (\n    df_patrons.alias(\"p\")\n    .join(visits.alias(\"v\"), F.col(\"p.id\") == F.col(\"v.patient_id\"), \"inner\")\n    .select(\n        F.col(\"p.id\"),\n        F.col(\"p.full_name\"),\n        F.col(\"v.n_visits\"),\n        F.col(\"v.total_fee\"),\n    )\n    .orderBy(F.col(\"total_fee\").desc(), \"id\")\n)\n```",
+      "seconds": 7.4,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      }
+    },
+    {
+      "id": "dev062",
+      "level": "complex",
+      "sql": "WITH ranked AS (SELECT a.*, ROW_NUMBER() OVER (PARTITION BY doctor_id ORDER BY fee DESC, id) AS rn FROM appointments a) SELECT id, doctor_id, fee FROM ranked WHERE rn = 1;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_appointments\n    .withColumn(\"rn\", F.row_number().over(Window.partitionBy(\"doctor_id\").orderBy(F.col(\"fee\").desc(), \"id\")))\n    .filter(F.col(\"rn\") == 1)\n    .select(\"id\", \"doctor_id\", \"fee\")\n)\n```",
+      "seconds": 3.81,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev063",
+      "level": "complex",
+      "sql": "SELECT airline, COUNT(*) AS flights, ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS pct_flights FROM flights GROUP BY airline;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_flights\n    .groupBy(\"airline\")\n    .agg(F.count(\"*\").alias(\"flights\"))\n    .withColumn(\"pct_flights\", F.round(((100.0 * F.count(\"*\")) / F.sum(\"flights\").over(Window.partitionBy())), 1))\n)\n```",
+      "seconds": 3.89,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [MISSING_GROUP_BY] The query does not include a GROUP BY clause. Add GROUP BY or turn it into the window functions using OVER clauses. SQLSTATE: 42803;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [MISSING_GROUP_BY] The query does not include a GROUP BY clause. Add GROUP BY or turn it into the window functions using OVER clauses. SQLSTATE: 42803;"
+      }
+    },
+    {
+      "id": "dev064",
+      "level": "complex",
+      "sql": "SELECT b.seat_class, f.airline, COUNT(*) AS n FROM bookings b JOIN flights f ON b.flight_id = f.id WHERE NOT b.is_cancelled GROUP BY b.seat_class, f.airline HAVING COUNT(*) >= 2;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings.alias(\"b\")\n    .join(df_flights.alias(\"f\"), F.col(\"b.flight_id\") == F.col(\"f.id\"), \"inner\")\n    .filter(~F.col(\"b.is_cancelled\"))\n    .groupBy(F.col(\"b.seat_class\"), F.col(\"f.airline\"))\n    .agg(F.count(\"*\").alias(\"n\"))\n    .filter(F.col(\"n\") >= 2)\n)\n```",
+      "seconds": 4.79,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev065",
+      "level": "complex",
+      "sql": "SELECT f.id, f.airline FROM flights f LEFT JOIN bookings b ON f.id = b.flight_id WHERE b.id IS NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights.alias(\"f\")\n    .join(df_bookings.alias(\"b\"), F.col(\"f.id\") == F.col(\"b.flight_id\"), \"left\")\n    .filter(F.col(\"b.id\").isNull())\n    .select(F.col(\"f.id\"), F.col(\"f.airline\"))\n)\n```",
+      "seconds": 3.66,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev066",
+      "level": "complex",
+      "sql": "SELECT a.id, a.doctor_id, a.fee FROM appointments a WHERE a.fee > (SELECT AVG(a2.fee) FROM appointments a2 WHERE a2.doctor_id = a.doctor_id);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_appointments\n    .withColumn(\"avg_fee_by_doctor\", F.avg(\"fee\").over(Window.partitionBy(\"doctor_id\")))\n    .filter(F.col(\"fee\") > F.col(\"avg_fee_by_doctor\"))\n    .select(\"id\", \"doctor_id\", \"fee\")\n)\n```",
+      "seconds": 3.83,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev067",
+      "level": "complex",
+      "sql": "SELECT p.full_name, d.doctor_name, d.specialty FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id WHERE a.status = 'DONE' AND p.is_smoker;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments.alias(\"a\")\n    .join(df_patrons.alias(\"p\"), F.col(\"a.patient_id\") == F.col(\"p.id\"), \"inner\")\n    .join(df_doctors.alias(\"d\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"), \"inner\")\n    .filter((F.col(\"a.status\") == \"DONE\") & F.col(\"p.is_smoker\"))\n    .select(F.col(\"p.full_name\"), F.col(\"d.doctor_name\"), F.col(\"d.specialty\"))\n)\n```",
+      "seconds": 5.62,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      }
+    },
+    {
+      "id": "dev068",
+      "level": "complex",
+      "sql": "SELECT id, appt_date, fee, SUM(fee) OVER (PARTITION BY doctor_id ORDER BY appt_date, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_fee FROM appointments;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_appointments\n    .select(\n        \"id\",\n        \"appt_date\",\n        \"fee\",\n        F.sum(\"fee\").over(Window.partitionBy(\"doctor_id\").orderBy(\"appt_date\", \"id\").rowsBetween(Window.unboundedPreceding, Window.currentRow)).alias(\"running_fee\"),\n    )\n)\n```",
+      "seconds": 4.17,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev069",
+      "level": "complex",
+      "sql": "SELECT month, bookings, LAG(bookings) OVER (ORDER BY month) AS prev_month FROM (SELECT DATE_FORMAT(booked_at, 'yyyy-MM') AS month, COUNT(*) AS bookings FROM bookings GROUP BY DATE_FORMAT(booked_at, 'yyyy-MM')) t ORDER BY month;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_bookings\n    .groupBy(F.date_format(\"booked_at\", \"yyyy-MM\").alias(\"month\"))\n    .agg(F.count(\"*\").alias(\"bookings\"))\n    .withColumn(\"prev_month\", F.lag(\"bookings\").over(Window.orderBy(\"month\")))\n    .select(\"month\", \"bookings\", \"prev_month\")\n    .orderBy(\"month\")\n)\n```",
+      "seconds": 4.62,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev070",
+      "level": "complex",
+      "sql": "SELECT * FROM (SELECT f.airline, b.seat_class, b.price FROM bookings b JOIN flights f ON b.flight_id = f.id) PIVOT (SUM(price) FOR seat_class IN ('ECONOMY', 'BUSINESS', 'FIRST'));",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings.alias(\"b\")\n    .join(df_flights.alias(\"f\"), F.col(\"b.flight_id\") == F.col(\"f.id\"), \"inner\")\n    .groupBy(F.col(\"f.airline\"))\n    .pivot(\"seat_class\", [\"ECONOMY\", \"BUSINESS\", \"FIRST\"])\n    .agg(F.sum(F.col(\"price\")))\n)\n```",
+      "seconds": 4.22,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev071",
+      "level": "complex",
+      "sql": "SELECT passenger_name FROM bookings WHERE passenger_name IS NOT NULL EXCEPT SELECT full_name FROM patients;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .filter(F.col(\"passenger_name\").isNotNull())\n    .select(\"passenger_name\")\n    .subtract(df_patients.select(\"full_name\"))\n)\n```",
+      "seconds": 2.56,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev072",
+      "level": "complex",
+      "sql": "SELECT 'doctor' AS role, doctor_name AS name FROM doctors UNION ALL SELECT 'patient' AS role, full_name AS name FROM patients WHERE full_name IS NOT NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors\n    .select(F.lit(\"doctor\").alias(\"role\"), F.col(\"doctor_name\").alias(\"name\"))\n    .unionByName(\n        df_patients\n        .filter(F.col(\"full_name\").isNotNull())\n        .select(F.lit(\"patient\").alias(\"role\"), F.col(\"full_name\").alias(\"name\"))\n    )\n)\n```",
+      "seconds": 4.18,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev073",
+      "level": "complex",
+      "sql": "SELECT doctor_id, appt_type, COUNT(*) AS n FROM appointments GROUP BY doctor_id, appt_type ORDER BY doctor_id, n DESC, appt_type LIMIT 5;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .groupBy(\"doctor_id\", \"appt_type\")\n    .agg(F.count(\"*\").alias(\"n\"))\n    .orderBy(\"doctor_id\", F.col(\"n\").desc(), \"appt_type\")\n    .limit(5)\n)\n```",
+      "seconds": 3.26,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev074",
+      "level": "complex",
+      "sql": "WITH fares AS (SELECT airline, AVG(base_fare) AS avg_fare FROM flights GROUP BY airline) SELECT f.id, f.airline, f.base_fare, ROUND(f.base_fare - fa.avg_fare, 2) AS diff_from_avg FROM flights f JOIN fares fa ON f.airline = fa.airline;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nfares = (\n    df_flights\n    .groupBy(\"airline\")\n    .agg(F.avg(\"base_fare\").alias(\"avg_fare\"))\n)\n\nresult = (\n    df_flights.alias(\"f\")\n    .join(fares.alias(\"fa\"), F.col(\"f.airline\") == F.col(\"fa.airline\"), \"inner\")\n    .select(\n        F.col(\"f.id\"),\n        F.col(\"f.airline\"),\n        F.col(\"f.base_fare\"),\n        F.round(F.col(\"f.base_fare\") - F.col(\"fa.avg_fare\"), 2).alias(\"diff_from_avg\"),\n    )\n)\n```",
+      "seconds": 6.55,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev075",
+      "level": "complex",
+      "sql": "SELECT d.hospital, d.specialty, SUM(a.fee) AS revenue FROM appointments a JOIN doctors d ON a.doctor_id = d.id WHERE a.status = 'DONE' GROUP BY ROLLUP(d.hospital, d.specialty);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments.alias(\"a\")\n    .join(df_doctors.alias(\"d\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"), \"inner\")\n    .filter(F.col(\"a.status\") == \"DONE\")\n    .rollup(F.col(\"d.hospital\").alias(\"hospital\"), F.col(\"d.specialty\").alias(\"specialty\"))\n    .agg(F.sum(F.col(\"a.fee\")).alias(\"revenue\"))\n)\n```",
+      "seconds": 4.91,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev076",
+      "level": "complex",
+      "sql": "SELECT id, passenger_name, price, CUME_DIST() OVER (PARTITION BY seat_class ORDER BY price) AS price_cdf FROM bookings;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_bookings\n    .select(\"id\", \"passenger_name\", \"price\", F.cume_dist().over(Window.partitionBy(\"seat_class\").orderBy(\"price\")).alias(\"price_cdf\"))\n)\n```",
+      "seconds": 3.01,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev077",
+      "level": "complex",
+      "sql": "SELECT CASE WHEN distance_km < 2000 THEN 'short' WHEN distance_km < 6000 THEN 'medium' ELSE 'long' END AS haul, COUNT(*) AS flights, ROUND(AVG(base_fare), 2) AS avg_fare FROM flights GROUP BY 1 ORDER BY haul;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights\n    .groupBy(\n        F.when(F.col(\"distance_km\") < 2000, \"short\").when(F.col(\"distance_km\") < 6000, \"medium\").otherwise(\"long\").alias(\"haul\"),\n    )\n    .agg(\n        F.count(\"*\").alias(\"flights\"),\n        F.round(F.avg(\"base_fare\"), 2).alias(\"avg_fare\"),\n    )\n    .orderBy(\"haul\")\n)\n```",
+      "seconds": 5.14,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev078",
+      "level": "complex",
+      "sql": "SELECT d.id, d.doctor_name FROM doctors d WHERE d.id IN (SELECT a.doctor_id FROM appointments a WHERE a.appt_type = 'surgery') AND d.years_experience >= 10;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors.alias(\"d\")\n    .join(df_appointments.filter(F.col(\"appt_type\") == \"surgery\").alias(\"a\"), F.col(\"d.id\") == F.col(\"a.doctor_id\"), \"left_semi\")\n    .filter(F.col(\"d.years_experience\") >= 10)\n    .select(F.col(\"d.id\"), F.col(\"d.doctor_name\"))\n)\n```",
+      "seconds": 4.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev079",
+      "level": "complex",
+      "sql": "SELECT DISTINCT p.city FROM patients p JOIN appointments a ON p.id = a.patient_id WHERE a.fee > 1500 AND p.city IS NOT NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients.alias(\"p\")\n    .join(df_appointments.alias(\"a\"), F.col(\"p.id\") == F.col(\"a.patient_id\"), \"inner\")\n    .filter(F.col(\"a.fee\") > 1500)\n    .filter(F.col(\"p.city\").isNotNull())\n    .select(F.col(\"p.city\"))\n    .distinct()\n)\n```",
+      "seconds": 4.29,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev080",
+      "level": "complex",
+      "sql": "WITH last_appt AS (SELECT patient_id, MAX(appt_date) AS last_date FROM appointments GROUP BY patient_id) SELECT a.id, a.patient_id, a.appt_date, a.status FROM appointments a JOIN last_appt l ON a.patient_id = l.patient_id AND a.appt_date = l.last_date;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nlast_appt = (\n    df_appointments\n    .groupBy(\"patient_id\")\n    .agg(F.max(\"appt_date\").alias(\"last_date\"))\n)\n\nresult = (\n    df_appointments.alias(\"a\")\n    .join(last_appt.alias(\"l\"), (F.col(\"a.patient_id\") == F.col(\"l.patient_id\")) & (F.col(\"a.appt_date\") == F.col(\"l.last_date\")), \"inner\")\n    .select(F.col(\"a.id\"), F.col(\"a.patient_id\"), F.col(\"a.appt_date\"), F.col(\"a.status\"))\n)\n```",
+      "seconds": 5.99,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev081",
+      "level": "complex",
+      "sql": "SELECT id, departure_time, base_fare, ROUND(AVG(base_fare) OVER (PARTITION BY origin ORDER BY departure_time, id ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING), 2) AS centered_avg FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_flights\n    .select(\n        \"id\",\n        \"departure_time\",\n        \"base_fare\",\n        F.round(F.avg(\"base_fare\").over(Window.partitionBy(\"origin\").orderBy(\"departure_time\", \"id\").rowsBetween(-1, 1)), 2).alias(\"centered_avg\"),\n    )\n)\n```",
+      "seconds": 4.35,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev082",
+      "level": "complex",
+      "sql": "SELECT f.origin, COUNT(DISTINCT b.passenger_name) AS passengers FROM flights f JOIN bookings b ON f.id = b.flight_id GROUP BY f.origin HAVING COUNT(DISTINCT b.passenger_name) > 2 ORDER BY passengers DESC, f.origin;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights.alias(\"f\")\n    .join(df_bookings.alias(\"b\"), F.col(\"f.id\") == F.col(\"b.flight_id\"), \"inner\")\n    .groupBy(F.col(\"f.origin\"))\n    .agg(F.countDistinct(F.col(\"b.passenger_name\")).alias(\"passengers\"))\n    .filter(F.col(\"passengers\") > 2)\n    .orderBy(F.col(\"passengers\").desc(), \"origin\")\n)\n```",
+      "seconds": 4.86,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev083",
+      "level": "complex",
+      "sql": "SELECT id, full_name, CONCAT(UPPER(SUBSTRING(TRIM(full_name), 1, 1)), '.', COALESCE(city, 'unknown')) AS tag FROM patients;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patrons\n    .select(\n        \"id\",\n        \"full_name\",\n        F.concat(F.upper(F.substring(F.trim(\"full_name\"), 1, 1)), F.lit(\"unknown\")).alias(\"tag\"),\n    )\n)\n```",
+      "seconds": 3.14,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "NameError: name 'df_patrons' is not defined"
+      }
+    },
+    {
+      "id": "dev084",
+      "level": "complex",
+      "sql": "SELECT b.id, b.passenger_name FROM bookings b WHERE NOT EXISTS (SELECT 1 FROM flights f WHERE f.id = b.flight_id AND f.airline = 'Delta') AND b.seat_class <> 'ECONOMY';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings.alias(\"b\")\n    .join(df_flights.filter(F.col(\"airline\") == \"Delta\").alias(\"f\"), F.col(\"b.flight_id\") == F.col(\"f.id\"), \"left_anti\")\n    .filter(F.col(\"b.seat_class\") != \"ECONOMY\")\n    .select(F.col(\"b.id\"), F.col(\"b.passenger_name\"))\n)\n```",
+      "seconds": 4.49,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev085",
+      "level": "complex",
+      "sql": "SELECT a.doctor_id, ROUND(100.0 * SUM(CASE WHEN a.status = 'NO_SHOW' THEN 1 ELSE 0 END) / COUNT(*), 1) AS no_show_rate FROM appointments a GROUP BY a.doctor_id ORDER BY no_show_rate DESC, a.doctor_id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .groupBy(\"doctor_id\")\n    .agg(\n        F.round(((100.0 * F.sum(F.when(F.col(\"status\") == \"NO_SHOW\", 1).otherwise(0))) / F.count(\"*\")), 1).alias(\"no_show_rate\"),\n    )\n    .orderBy(F.col(\"no_show_rate\").desc(), \"doctor_id\")\n)\n```",
+      "seconds": 4.35,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev086",
+      "level": "complex",
+      "sql": "SELECT x.appt_type, y.seat_class FROM (SELECT DISTINCT appt_type FROM appointments WHERE appt_type IS NOT NULL) x CROSS JOIN (SELECT DISTINCT seat_class FROM bookings) y;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments\n    .filter(F.col(\"appt_type\").isNotNull())\n    .select(\"appt_type\")\n    .crossJoin(df_bookings.select(\"seat_class\"))\n)\n```",
+      "seconds": 2.61,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=16 rows, py=1440 rows; first diff: sql-only=[] py-only=[\"('emergency', 'PREMIUM')\"]"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": false,
+        "status": "rows",
+        "detail": "sql=16 rows, py=1440 rows; first diff: sql-only=[] py-only=[\"('emergency', 'PREMIUM')\"]"
+      }
+    },
+    {
+      "id": "dev087",
+      "level": "complex",
+      "sql": "WITH stats AS (SELECT specialty, MAX(years_experience) AS max_exp FROM doctors GROUP BY specialty) SELECT d.id, d.doctor_name, d.specialty FROM doctors d JOIN stats s ON d.specialty = s.specialty AND d.years_experience = s.max_exp;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nstats = (\n    df_doctors\n    .groupBy(\"specialty\")\n    .agg(F.max(\"years_experience\").alias(\"max_exp\"))\n)\n\nresult = (\n    df_doctors.alias(\"d\")\n    .join(stats.alias(\"s\"), (F.col(\"d.specialty\") == F.col(\"s.specialty\")) & (F.col(\"d.years_experience\") == F.col(\"s.max_exp\")), \"inner\")\n    .select(F.col(\"d.id\"), F.col(\"d.doctor_name\"), F.col(\"d.specialty\"))\n)\n```",
+      "seconds": 5.54,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev088",
+      "level": "complex",
+      "sql": "SELECT b.id, b.passenger_name, DATEDIFF(TO_DATE(f.departure_time), TO_DATE(b.booked_at)) AS days_before FROM bookings b JOIN flights f ON b.flight_id = f.id WHERE NOT b.is_cancelled;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings.alias(\"b\")\n    .join(df_flights.alias(\"f\"), F.col(\"b.flight_id\") == F.col(\"f.id\"), \"inner\")\n    .filter(~F.col(\"b.is_cancelled\"))\n    .select(\n        F.col(\"b.id\"),\n        F.col(\"b.passenger_name\"),\n        F.datediff(F.to_date(F.col(\"f.departure_time\")), F.to_date(F.col(\"b.booked_at\"))).alias(\"days_before\"),\n    )\n)\n```",
+      "seconds": 5.42,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev089",
+      "level": "complex",
+      "sql": "SELECT insurance_type, COUNT(*) AS patients, SUM(CASE WHEN is_smoker THEN 1 ELSE 0 END) AS smokers, ROUND(AVG(YEAR(birth_date)), 0) AS avg_birth_year FROM patients GROUP BY insurance_type ORDER BY insurance_type;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .groupBy(\"insurance_type\")\n    .agg(\n        F.count(\"*\").alias(\"patients\"),\n        F.sum(F.when(F.col(\"is_smoker\"), 1).otherwise(0)).alias(\"smokers\"),\n        F.round(F.avg(\"birth_date\"), 0).alias(\"avg_birth_year\"),\n    )\n    .orderBy(\"insurance_type\")\n)\n```",
+      "seconds": 4.3,
+      "strict": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [DATATYPE_MISMATCH.UNEXPECTED_INPUT_TYPE] Cannot resolve \"avg(birth_date)\" due to data type mismatch: The first parameter requires the \"NUMERIC\" or \"ANSI INTERVAL\" type, however \"birth_date\" has the type \"DATE\". SQLSTATE: 42K09;"
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": false,
+        "match": false,
+        "status": "py_error",
+        "detail": "AnalysisException: [DATATYPE_MISMATCH.UNEXPECTED_INPUT_TYPE] Cannot resolve \"avg(birth_date)\" due to data type mismatch: The first parameter requires the \"NUMERIC\" or \"ANSI INTERVAL\" type, however \"birth_date\" has the type \"DATE\". SQLSTATE: 42K09;"
+      }
+    },
+    {
+      "id": "dev090",
+      "level": "complex",
+      "sql": "SELECT * FROM (SELECT seat_class, loyalty_tier, price FROM bookings WHERE loyalty_tier IS NOT NULL) PIVOT (COUNT(price) FOR loyalty_tier IN ('SILVER', 'GOLD', 'PLATINUM'));",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .filter(F.col(\"loyalty_tier\").isNotNull())\n    .groupBy(\"seat_class\")\n    .pivot(\"loyalty_tier\", [\"SILVER\", \"GOLD\", \"PLATINUM\"])\n    .agg(F.count(\"price\"))\n)\n```",
+      "seconds": 3.46,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev091",
+      "level": "complex",
+      "sql": "SELECT d.doctor_name, COUNT(DISTINCT a.patient_id) AS patients, ROUND(AVG(a.wait_minutes), 1) AS avg_wait FROM doctors d JOIN appointments a ON d.id = a.doctor_id GROUP BY d.doctor_name HAVING COUNT(*) >= 3;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_doctors.alias(\"d\")\n    .join(df_appointments.alias(\"a\"), F.col(\"d.id\") == F.col(\"a.doctor_id\"), \"inner\")\n    .groupBy(F.col(\"d.doctor_name\"))\n    .agg(\n        F.countDistinct(F.col(\"a.patient_id\")).alias(\"patients\"),\n        F.round(F.avg(F.col(\"a.wait_minutes\")), 1).alias(\"avg_wait\"),\n    )\n    .filter(F.col(\"patients\") >= 3)\n)\n```",
+      "seconds": 5.3,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev092",
+      "level": "complex",
+      "sql": "SELECT id, airline, departure_time, FIRST_VALUE(base_fare) OVER (PARTITION BY airline ORDER BY departure_time, id) AS first_fare FROM flights;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_flights\n    .select(\n        \"id\",\n        \"airline\",\n        \"departure_time\",\n        F.first(\"base_fare\").over(Window.partitionBy(\"airline\").orderBy(\"departure_time\", \"id\")).alias(\"first_fare\"),\n    )\n)\n```",
+      "seconds": 3.73,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev093",
+      "level": "complex",
+      "sql": "SELECT full_name FROM patients WHERE full_name IS NOT NULL INTERSECT SELECT passenger_name FROM bookings WHERE seat_class <> 'FIRST';",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .filter(F.col(\"full_name\").isNotNull())\n    .select(\"full_name\")\n    .intersect(df_bookings.filter(F.col(\"seat_class\") != \"FIRST\").select(\"passenger_name\"))\n)\n```",
+      "seconds": 2.97,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev094",
+      "level": "complex",
+      "sql": "WITH monthly AS (SELECT doctor_id, DATE_FORMAT(appt_date, 'yyyy-MM') AS month, SUM(fee) AS revenue FROM appointments GROUP BY doctor_id, DATE_FORMAT(appt_date, 'yyyy-MM')) SELECT doctor_id, month, revenue, revenue - LAG(revenue) OVER (PARTITION BY doctor_id ORDER BY month) AS change FROM monthly;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nmonthly = (\n    df_appointments\n    .groupBy(\"doctor_id\", F.date_format(\"appt_date\", \"yyyy-MM\").alias(\"month\"))\n    .agg(F.sum(\"fee\").alias(\"revenue\"))\n)\n\nresult = (\n    monthly\n    .select(\"doctor_id\", \"month\", \"revenue\", (F.col(\"revenue\") - F.lag(\"revenue\").over(Window.partitionBy(\"doctor_id\").orderBy(\"month\"))).alias(\"change\"))\n)\n```",
+      "seconds": 5.26,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev095",
+      "level": "complex",
+      "sql": "SELECT p.id, p.full_name, COUNT(a.id) AS visits FROM patients p LEFT JOIN appointments a ON p.id = a.patient_id AND a.status = 'DONE' GROUP BY p.id, p.full_name ORDER BY visits DESC, p.id LIMIT 10;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients.alias(\"p\")\n    .join(df_appointments.alias(\"a\"), (F.col(\"p.id\") == F.col(\"a.patient_id\")) & (F.col(\"a.status\") == \"DONE\"), \"left\")\n    .groupBy(F.col(\"p.id\"), F.col(\"p.full_name\"))\n    .agg(F.count(F.col(\"a.id\")).alias(\"visits\"))\n    .orderBy(F.col(\"visits\").desc(), \"id\")\n    .limit(10)\n)\n```",
+      "seconds": 5.27,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev096",
+      "level": "complex",
+      "sql": "SELECT b.flight_id, MAX(CASE WHEN b.seat_class = 'FIRST' THEN b.price END) AS first_max, MAX(CASE WHEN b.seat_class = 'ECONOMY' THEN b.price END) AS economy_max FROM bookings b GROUP BY b.flight_id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_bookings\n    .groupBy(\"flight_id\")\n    .agg(\n        F.max(F.when(F.col(\"seat_class\") == \"FIRST\", F.col(\"price\"))).alias(\"first_max\"),\n        F.max(F.when(F.col(\"seat_class\") == \"ECONOMY\", F.col(\"price\"))).alias(\"economy_max\"),\n    )\n)\n```",
+      "seconds": 4.15,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev097",
+      "level": "complex",
+      "sql": "SELECT f.airline, f.origin, SUM(b.price) AS revenue FROM flights f JOIN bookings b ON f.id = b.flight_id WHERE NOT b.is_cancelled GROUP BY CUBE(f.airline, f.origin);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_flights.alias(\"f\")\n    .join(df_bookings.alias(\"b\"), F.col(\"f.id\") == F.col(\"b.flight_id\"), \"inner\")\n    .filter(~F.col(\"b.is_cancelled\"))\n    .cube(F.col(\"f.airline\").alias(\"airline\"), F.col(\"f.origin\").alias(\"origin\"))\n    .agg(F.sum(F.col(\"b.price\")).alias(\"revenue\"))\n)\n```",
+      "seconds": 4.74,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev098",
+      "level": "complex",
+      "sql": "SELECT a.id, a.fee, a.status FROM appointments a JOIN doctors d ON a.doctor_id = d.id AND d.specialty IN ('Cardiology', 'Orthopedics') WHERE a.fee BETWEEN 100 AND 1500;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_appointments.alias(\"a\")\n    .join(df_doctors.alias(\"d\"), F.col(\"a.doctor_id\") == F.col(\"d.id\"), \"inner\")\n    .filter(F.col(\"d.specialty\").isin([\"Cardiology\", \"Orthopedics\"]))\n    .filter(F.col(\"a.fee\").between(100, 1500))\n    .select(F.col(\"a.id\"), F.col(\"a.fee\"), F.col(\"a.status\"))\n)\n```",
+      "seconds": 5.19,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev099",
+      "level": "complex",
+      "sql": "SELECT id, INITCAP(LOWER(TRIM(full_name))) AS clean_name, REGEXP_REPLACE(TRIM(full_name), ' +', '_') AS slug FROM patients WHERE full_name IS NOT NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_patients\n    .filter(F.col(\"full_name\").isNotNull())\n    .select(\n        \"id\",\n        F.initcap(F.lower(F.trim(\"full_name\"))).alias(\"clean_name\"),\n        F.regexp_replace(F.trim(\"full_name\"), \" +\", \"_\").alias(\"slug\"),\n    )\n)\n```",
+      "seconds": 3.82,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "dev100",
+      "level": "complex",
+      "sql": "SELECT doctor_id, appt_date, n FROM (SELECT doctor_id, appt_date, COUNT(*) AS n, MAX(COUNT(*)) OVER (PARTITION BY doctor_id) AS max_n FROM appointments GROUP BY doctor_id, appt_date) t WHERE n = max_n;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\nfrom pyspark.sql.window import Window\n\nresult = (\n    df_appointments\n    .groupBy(\"doctor_id\", \"appt_date\")\n    .agg(F.count(\"*\").alias(\"n\"))\n    .withColumn(\"max_n\", F.max(\"n\").over(Window.partitionBy(\"doctor_id\")))\n    .filter(F.col(\"n\") == F.col(\"max_n\"))\n    .select(\"doctor_id\", \"appt_date\", \"n\")\n)\n```",
+      "seconds": 4.66,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    }
+  ]
+}

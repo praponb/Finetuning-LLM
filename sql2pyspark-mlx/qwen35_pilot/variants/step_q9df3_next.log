@@ -1,0 +1,18 @@
+[19:11:58] passing q9df3 / q9df3b: q9df3-q4
+[19:11:58] q9df3-q4 full evals already done
+[19:11:58] name slips
+| Eval set | v18a-q4: failures / name slips | q9d-q4: failures / name slips | q9df-q4: failures / name slips | q9df3-q4: failures / name slips |
+| --- | --- | --- | --- | --- |
+| holdout | 1 / 1 (of 62) | 3 / 1 (of 62) | 1 / 0 (of 62) | 1 / 0 (of 62) |
+| holdout_v4 | 5 / 3 (of 25) | 3 / 2 (of 25) | 4 / 2 (of 25) | 4 / 2 (of 25) |
+| test_fixed | 5 / 2 (of 150) | 3 / 0 (of 150) | 3 / 0 (of 150) | 3 / 1 (of 150) |
+| complex | 12 / 6 (of 100) | 5 / 2 (of 100) | 8 / 3 (of 100) | 7 / 1 (of 100) |
+| v11 held-out | 19 / 13 (of 300) | 6 / 3 (of 300) | 5 / 2 (of 300) | 5 / 1 (of 300) |
+| v12 held-out | 18 / 9 (of 250) | 5 / 2 (of 250) | 2 / 0 (of 250) | 3 / 0 (of 250) |
+| v13 held-out | 2 / 0 (of 150) | 0 / 0 (of 150) | 0 / 0 (of 150) | 0 / 0 (of 150) |
+| v14 held-out | 5 / 1 (of 200) | 1 / 0 (of 200) | 1 / 0 (of 200) | 0 / 0 (of 200) |
+| schema-shift | 14 / 8 (of 200) | 15 / 7 (of 200) | 9 / 4 (of 200) | 14 / 6 (of 200) |
+| complex-shift | 24 / 10 (of 150) | 20 / 12 (of 150) | 19 / 12 (of 150) | 19 / 12 (of 150) |
+| real-style | 74 / 13 (of 74) | — | 74 / 8 (of 74) | 74 / 9 (of 74) |
+| **all** | **179 / 66** | **61 / 29** | **126 / 31** | **130 / 32** |
+[19:11:58] Q9DF3 NEXT DONE (full evals: q9df3-q4)

@@ -1,0 +1,24 @@
+{
+  "q9a_base": 29008,
+  "q9b_new": 9000,
+  "q9c_new": 8678,
+  "q9d_new": 6800,
+  "train": 53486,
+  "valid": 737,
+  "dropped": {
+    "q9b_replay": 3000,
+    "q9c_replay": 3000,
+    "q9d_replay": 3200
+  },
+  "eval_sql_inside_train": 0,
+  "valid_train_overlap": 0,
+  "lines_not_from_source": 0,
+  "max_line_chars": 12907,
+  "mean_line_chars": 2517,
+  "spot_check": {
+    "checked": 200,
+    "ok": 200,
+    "stem_columns_renamed_for_check": 14,
+    "candidates": 17960
+  }
+}

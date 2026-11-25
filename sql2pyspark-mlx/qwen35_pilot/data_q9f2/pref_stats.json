@@ -1,0 +1,14 @@
+{
+  "queries": 400,
+  "greedy_fail": 75,
+  "type_rows": 8,
+  "chosen_reference": 75,
+  "type_loop": 50,
+  "type_py_error": 9,
+  "type_columns": 6,
+  "type_name": 2,
+  "pairs": 75,
+  "pairs_train": 68,
+  "pairs_valid": 7,
+  "queries_with_pairs": 75
+}
