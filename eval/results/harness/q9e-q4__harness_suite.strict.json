@@ -1,0 +1,136 @@
+{
+  "model": "sql2pyspark:q9e-q4",
+  "counts": {
+    "ERROR_PYSPARK": 17,
+    "PASS": 3,
+    "FAIL_DATA": 1
+  },
+  "cases": [
+    {
+      "id": "harness_Q01",
+      "status": "ERROR_PYSPARK",
+      "message": "AttributeError: module 'pyspark.sql.functions' has no attribute 'arrayDistinct'",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q02",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [MISSING_AGGREGATION] The non-aggregating expression \"rate_to_usd\" is based on columns which are not participating in the GROUP BY clause.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q03",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `order_month` cannot be resolved. Did you mean one of the following? [`order_id`, `line_no`, `product_id`, `quantity`, `unit_price`, `discount_pct`, `order_id`, `customer_id`, `order_ts`, `status`, `channel`, `currency`, `ship_to`, `product_id`, `sku`, `product_name`, `category`, `sub_categor",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04a",
+      "status": "ERROR_PYSPARK",
+      "message": "IndentationError: unexpected indent (<pyspark>, line 21)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `gid` cannot be resolved. Did you mean one of the following? [`orders`, `channel`, `country_code`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04c",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q05a",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unmatched ')' (<pyspark>, line 11)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `tags` cannot be resolved. Did you mean one of the following? [`sku`, `brand`, `category`, `list_price`, `product_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05c",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 8) (<pyspark>, line 8)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `p`.`category` cannot be resolved. Did you mean one of the following? [`o2`.`status`, `o2`.`channel`, `o2`.`currency`, `oi`.`line_no`, `o2`.`order_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q06c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `status` cannot be resolved. Did you mean one of the following? [`quantity`, `line_no`, `order_id`, `product_id`, `unit_price`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q07",
+      "status": "ERROR_PYSPARK",
+      "message": "NameError: name 'df_web_buyers' is not defined",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q08",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unmatched ')' (<pyspark>, line 36)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q09a",
+      "status": "ERROR_PYSPARK",
+      "message": "AttributeError: module 'pyspark.sql.functions' has no attribute 'arrayDistinct'",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q09b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q10a",
+      "status": "FAIL_DATA",
+      "message": "14 row(s) only in SQL, 14 row(s) only in PySpark (row counts 14 vs 14)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q10b",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkTypeError: [NOT_EXPECTED_TYPE] Argument `col` should be Column or str, got list.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q11a",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: '(' was never closed (<pyspark>, line 29)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q11b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 21) (<pyspark>, line 21)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q12",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 35) (<pyspark>, line 35)",
+      "loose_match": false
+    }
+  ]
+}

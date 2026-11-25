@@ -1,0 +1,20 @@
+[18:01:45] collect with sql2pyspark:q9d-q4
+[18:27:04] collect exited; retry in 60 s
+[09:26:05] make preference pairs
+{
+  "queries": 6000,
+  "greedy_fail": 162,
+  "type_rows": 23,
+  "chosen_reference": 149,
+  "type_name": 116,
+  "type_py_error": 71,
+  "chosen_own": 85,
+  "type_columns": 22,
+  "type_loop": 1,
+  "type_no_result": 1,
+  "pairs": 234,
+  "pairs_train": 216,
+  "pairs_valid": 18,
+  "queries_with_pairs": 168
+}
+[?2026h[?25l[1G[K[?25h[?2026l[?25l[2K[1G[?25h[09:26:05] STEP C DONE

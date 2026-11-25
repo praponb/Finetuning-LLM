@@ -1,0 +1,16 @@
+{
+  "queries": 6000,
+  "greedy_fail": 162,
+  "type_rows": 23,
+  "chosen_reference": 149,
+  "type_name": 116,
+  "type_py_error": 71,
+  "chosen_own": 85,
+  "type_columns": 22,
+  "type_loop": 1,
+  "type_no_result": 1,
+  "pairs": 234,
+  "pairs_train": 216,
+  "pairs_valid": 18,
+  "queries_with_pairs": 168
+}

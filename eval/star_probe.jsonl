@@ -1,0 +1,30 @@
+{"id": "star001", "level": "simple", "sql": "SELECT * FROM bookings WHERE flight_id IN (SELECT id FROM flights WHERE airline = 'ANA');", "order_cols": []}
+{"id": "star002", "level": "simple", "sql": "SELECT * FROM doctors WHERE id NOT IN (SELECT doctor_id FROM appointments WHERE appt_type = 'surgery');", "order_cols": []}
+{"id": "star003", "level": "simple", "sql": "SELECT * FROM patients WHERE id IN (SELECT patient_id FROM appointments WHERE status = 'NO_SHOW');", "order_cols": []}
+{"id": "star004", "level": "simple", "sql": "SELECT * FROM flights WHERE id NOT IN (SELECT flight_id FROM bookings WHERE seat_class = 'FIRST');", "order_cols": []}
+{"id": "star005", "level": "simple", "sql": "SELECT * FROM appointments WHERE doctor_id IN (SELECT id FROM doctors WHERE hospital = 'Bumrungrad') ORDER BY id;", "order_cols": ["id"]}
+{"id": "star006", "level": "simple", "sql": "SELECT * FROM patients WHERE id NOT IN (SELECT patient_id FROM appointments WHERE patient_id IS NOT NULL);", "order_cols": []}
+{"id": "star007", "level": "simple", "sql": "SELECT * FROM appointments WHERE patient_id IN (SELECT id FROM patients WHERE is_smoker = TRUE) AND fee > 500;", "order_cols": []}
+{"id": "star008", "level": "simple", "sql": "select * from bookings where flight_id not in (select id from flights where origin = 'BKK')", "order_cols": []}
+{"id": "star009", "level": "medium", "sql": "SELECT b.* FROM bookings b WHERE b.flight_id IN (SELECT f.id FROM flights f WHERE f.distance_km > 8000);", "order_cols": []}
+{"id": "star010", "level": "medium", "sql": "SELECT d.* FROM doctors d WHERE d.id NOT IN (SELECT a.doctor_id FROM appointments a WHERE a.status = 'CANCELLED');", "order_cols": []}
+{"id": "star011", "level": "medium", "sql": "SELECT * FROM appointments a WHERE a.patient_id IN (SELECT p.id FROM patients p WHERE p.insurance_type = 'NONE') ORDER BY a.fee DESC, a.id LIMIT 5;", "order_cols": ["fee", "id"]}
+{"id": "star012", "level": "medium", "sql": "SELECT p.* FROM patients p WHERE p.id IN (SELECT a.patient_id FROM appointments a WHERE a.appt_type = 'emergency') AND p.gender <> 'X';", "order_cols": []}
+{"id": "star013", "level": "medium", "sql": "SELECT * FROM doctors d WHERE EXISTS (SELECT 1 FROM appointments a WHERE a.doctor_id = d.id AND a.fee > 2500);", "order_cols": []}
+{"id": "star014", "level": "medium", "sql": "SELECT * FROM flights f WHERE NOT EXISTS (SELECT 1 FROM bookings b WHERE b.flight_id = f.id AND b.is_cancelled = TRUE);", "order_cols": []}
+{"id": "star015", "level": "medium", "sql": "SELECT * FROM patients p WHERE EXISTS (SELECT 1 FROM appointments a WHERE a.patient_id = p.id);", "order_cols": []}
+{"id": "star016", "level": "medium", "sql": "SELECT * FROM patients p WHERE NOT EXISTS (SELECT 1 FROM appointments a WHERE a.patient_id = p.id);", "order_cols": []}
+{"id": "star017", "level": "medium", "sql": "SELECT f.* FROM flights f WHERE EXISTS (SELECT 1 FROM bookings b WHERE b.flight_id = f.id AND b.seat_class = 'BUSINESS') ORDER BY f.id;", "order_cols": ["id"]}
+{"id": "star018", "level": "medium", "sql": "SELECT a.* FROM appointments a WHERE NOT EXISTS (SELECT 1 FROM doctors d WHERE d.id = a.doctor_id AND d.specialty = 'General');", "order_cols": []}
+{"id": "star019", "level": "medium", "sql": "SELECT * FROM bookings b WHERE EXISTS (SELECT * FROM flights f WHERE f.id = b.flight_id AND f.destination = 'LHR');", "order_cols": []}
+{"id": "star020", "level": "medium", "sql": "SELECT * FROM doctors d WHERE NOT EXISTS (SELECT 1 FROM appointments a WHERE a.doctor_id = d.id AND a.status = 'NO_SHOW') ORDER BY d.years_experience DESC, d.id;", "order_cols": ["years_experience", "id"]}
+{"id": "star021", "level": "medium", "sql": "select * from appointments a where exists (select 1 from patients p where p.id = a.patient_id and p.city is null)", "order_cols": []}
+{"id": "star022", "level": "medium", "sql": "SELECT * FROM bookings WHERE price > (SELECT AVG(price) FROM bookings) AND flight_id IN (SELECT id FROM flights WHERE airline = 'Delta');", "order_cols": []}
+{"id": "star023", "level": "medium", "sql": "SELECT * FROM appointments WHERE fee > (SELECT AVG(fee) FROM appointments WHERE appt_type = 'checkup');", "order_cols": []}
+{"id": "star024", "level": "medium", "sql": "SELECT * FROM flights WHERE base_fare < (SELECT MAX(base_fare) FROM flights) / 4 AND id NOT IN (SELECT flight_id FROM bookings WHERE loyalty_tier = 'GOLD');", "order_cols": []}
+{"id": "star025", "level": "medium", "sql": "SELECT * FROM patients WHERE city IN ('Bangkok', 'Tokyo') AND id NOT IN (SELECT patient_id FROM appointments WHERE patient_id IS NOT NULL AND fee > 1000);", "order_cols": []}
+{"id": "star026", "level": "medium", "sql": "SELECT * FROM doctors WHERE specialty IN (SELECT specialty FROM doctors WHERE years_experience > 30);", "order_cols": []}
+{"id": "star027", "level": "medium", "sql": "SELECT * FROM bookings b WHERE b.price > 3000 AND NOT EXISTS (SELECT 1 FROM flights f WHERE f.id = b.flight_id AND f.origin = f.destination);", "order_cols": []}
+{"id": "star028", "level": "medium", "sql": "SELECT * FROM appointments a WHERE EXISTS (SELECT 1 FROM doctors d WHERE d.id = a.doctor_id AND d.hospital = 'St. Mary') AND a.status <> 'CANCELLED' ORDER BY a.appt_date, a.id;", "order_cols": ["appt_date", "id"]}
+{"id": "star029", "level": "medium", "sql": "SELECT DISTINCT * FROM flights WHERE id IN (SELECT flight_id FROM bookings WHERE price > 8000);", "order_cols": []}
+{"id": "star030", "level": "medium", "sql": "SELECT * FROM patients WHERE id IN (SELECT patient_id FROM appointments WHERE doctor_id IN (SELECT id FROM doctors WHERE specialty = 'Pediatrics'));", "order_cols": []}

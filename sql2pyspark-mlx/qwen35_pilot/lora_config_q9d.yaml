@@ -1,0 +1,35 @@
+# Qwen3.5-9B round "q9d" (owner 2026-11-21, "choice #3"): continues q9c (adapters_q9c: holdout 60, v4 19, fixed 147,
+# complex 96, complex-shift 133, v11 287, v12 238, v13 145, v14 197; fails the rule vs v18a only on holdout / v4 by 1).
+# Data data_q9d = polishmix/build_q9d.py: 10,000 pairs = 2,600 correlated subqueries + short anti joins + EXPLODE +
+# renamed multi-condition (INTERVAL) joins + stem extensions (clean / derived names follow) + complex + 3,200 replay.
+# Gentler than q9c: 2,400 micro-batches at 3e-6 -> 3e-7. Run via chain_q9d.sh (--segment-val-batches 100).
+model: mlx-community/Qwen3.5-9B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_q9d
+resume_adapter_file: ./qwen35_pilot/adapters_q9c/adapters.safetensors   # q9c (q9a 9,600 + q9b 2,400 + q9c 2,400)
+adapter_path: ./qwen35_pilot/adapters_q9d
+seed: 46
+iters: 2400
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16                # last 16 of 32 blocks (same as q9a / q9b, required to resume)
+lora_parameters:
+  rank: 32
+  dropout: 0.05
+  scale: 10.0                 # same as q9a / q9b
+optimizer: adamw
+learning_rate: 3.0e-6
+lr_schedule:
+  name: cosine_decay
+  warmup: 30
+  warmup_init: 3.0e-7
+  arguments: [3.0e-6, 570, 3.0e-7]    # [init, decay_steps, end]  (optimizer updates = 2,400 / 4)
+steps_per_report: 50
+steps_per_eval: 1200
+val_batches: 737              # the whole validation set
+save_every: 200
+test: false

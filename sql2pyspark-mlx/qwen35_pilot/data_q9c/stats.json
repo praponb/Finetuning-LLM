@@ -1,0 +1,26 @@
+{
+  "stem_ext": 3600,
+  "plain_rename": 1200,
+  "lateral": 504,
+  "concat_lit": 600,
+  "interval_join": 374,
+  "targeted_v11": 400,
+  "targeted_v12": 400,
+  "targeted_v14": 400,
+  "complex_v16": 600,
+  "complex_v9": 600,
+  "replay": 3000,
+  "train": 11678,
+  "valid": 737,
+  "valid_stem": 100,
+  "eval_sql_inside_train": 0,
+  "stem_columns_per_pair": {
+    "2": 1795,
+    "1": 1805
+  },
+  "spot_check": {
+    "checked": 200,
+    "orig_ok": 200,
+    "renamed_ok": 200
+  }
+}

@@ -102,7 +102,8 @@ The first v4 run crashed after ~250 iterations with `[METAL] Command buffer exec
 
 - runs `mlx_lm.lora` with smaller Metal command buffers (`MLX_MAX_OPS_PER_BUFFER=2`, `MLX_MAX_MB_PER_BUFFER=40`; ~9% slower), which avoided the error for the whole second run;
 - if the run still dies, restarts from the newest checkpoint (saved every 100 iterations) for the remaining iterations, continuing the cosine learning-rate schedule from where it stopped (AdamW moments restart), up to 6 times;
-- `--launcher <script>` runs a wrapper instead of `mlx_lm.lora` (the Qwen3.5 pilot's `qwen35_pilot/lora_q35.py`, which installs its mlx-lm patches first); since 2026-10-09 a crash right after the first checkpoint no longer stops the resume with `shutil.SameFileError`.
+- `--launcher <script>` runs a wrapper instead of `mlx_lm.lora` (the Qwen3.5 pilot's `qwen35_pilot/lora_q35.py`, which installs its mlx-lm patches first); since 2026-10-09 a crash right after the first checkpoint no longer stops the resume with `shutil.SameFileError`;
+- `--segment-val-batches N` (opt-in, 2026-11-21): resumed segments validate on the first N validation pairs only. mlx-lm validates at a segment's first iteration, so without it every restart repeats the full validation (q9c: 6 × 14 min); the Qwen3.5 round q9d used N = 100.
 
 ---
 

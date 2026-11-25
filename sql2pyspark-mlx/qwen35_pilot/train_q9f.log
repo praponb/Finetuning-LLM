@@ -1,0 +1,49 @@
+[pref] 1080 micro-batches (432 preference, 648 replay), 270 updates; start at 0 from qwen35_pilot/adapters_q9d/adapters.safetensors
+[pref] val at 0: {'pairs': 18, 'nll_chosen': 0.0418, 'margin': -0.3267, 'acc': 0.3889}
+[pref] iter 25/1080: pref loss 0.1444 (11), replay loss 0.0092 (13), lr 6.00e-07, 8.2 s/it, peak 9.26 GB, skipped 1
+[pref] iter 50/1080: pref loss 0.1427 (9), replay loss 0.0041 (16), lr 1.20e-06, 8.1 s/it, peak 10.62 GB, skipped 1
+[pref] iter 75/1080: pref loss 0.1718 (7), replay loss 0.0053 (18), lr 1.80e-06, 8.4 s/it, peak 12.20 GB, skipped 1
+[pref] iter 100/1080: pref loss 0.1312 (11), replay loss 0.0032 (14), lr 2.00e-06, 6.6 s/it, peak 12.20 GB, skipped 1
+[pref] iter 125/1080: pref loss 0.0942 (9), replay loss 0.0083 (16), lr 1.99e-06, 7.5 s/it, peak 12.20 GB, skipped 1
+[pref] iter 150/1080: pref loss 0.0699 (14), replay loss 0.0037 (11), lr 1.98e-06, 6.7 s/it, peak 12.20 GB, skipped 1
+[pref] iter 175/1080: pref loss 0.1635 (9), replay loss 0.0071 (16), lr 1.97e-06, 6.6 s/it, peak 12.20 GB, skipped 1
+[pref] iter 200/1080: pref loss 0.1248 (9), replay loss 0.0075 (16), lr 1.94e-06, 7.1 s/it, peak 12.20 GB, skipped 1
+[pref] iter 225/1080: pref loss 0.0953 (11), replay loss 0.0028 (14), lr 1.91e-06, 7.2 s/it, peak 12.20 GB, skipped 1
+[pref] iter 250/1080: pref loss 0.0518 (13), replay loss 0.0039 (12), lr 1.88e-06, 9.3 s/it, peak 12.20 GB, skipped 1
+[pref] iter 275/1080: pref loss 0.0727 (9), replay loss 0.0040 (16), lr 1.85e-06, 8.5 s/it, peak 12.21 GB, skipped 1
+[pref] iter 300/1080: pref loss 0.0696 (10), replay loss 0.0056 (15), lr 1.80e-06, 7.2 s/it, peak 13.01 GB, skipped 1
+[pref] iter 325/1080: pref loss 0.0324 (11), replay loss 0.0054 (14), lr 1.76e-06, 7.2 s/it, peak 13.01 GB, skipped 1
+[pref] iter 350/1080: pref loss 0.0261 (11), replay loss 0.0119 (14), lr 1.71e-06, 5.5 s/it, peak 13.01 GB, skipped 1
+[pref] iter 375/1080: pref loss 0.0744 (9), replay loss 0.0058 (16), lr 1.66e-06, 8.8 s/it, peak 13.01 GB, skipped 1
+[pref] iter 400/1080: pref loss 0.0093 (2), replay loss 0.0040 (23), lr 1.59e-06, 5.9 s/it, peak 13.01 GB, skipped 1
+[pref] iter 425/1080: pref loss 0.0844 (11), replay loss 0.0042 (14), lr 1.53e-06, 10.2 s/it, peak 13.01 GB, skipped 1
+[pref] iter 450/1080: pref loss 0.0204 (12), replay loss 0.0046 (12), lr 1.47e-06, 10.5 s/it, peak 13.01 GB, skipped 2
+[pref] iter 475/1080: pref loss 0.0689 (9), replay loss 0.0101 (16), lr 1.41e-06, 7.0 s/it, peak 13.01 GB, skipped 2
+[pref] iter 500/1080: pref loss 0.0564 (9), replay loss 0.0119 (16), lr 1.33e-06, 4.8 s/it, peak 13.01 GB, skipped 2
+[pref] val at 500: {'pairs': 18, 'nll_chosen': 0.0184, 'margin': 1.0215, 'acc': 0.6667}
+[pref] iter 525/1080: pref loss 0.0276 (9), replay loss 0.0073 (16), lr 1.27e-06, 8.3 s/it, peak 13.01 GB, skipped 2
+[pref] iter 550/1080: pref loss 0.0605 (8), replay loss 0.0083 (17), lr 1.20e-06, 5.2 s/it, peak 13.01 GB, skipped 2
+[pref] iter 575/1080: pref loss 0.0446 (13), replay loss 0.0066 (12), lr 1.13e-06, 8.3 s/it, peak 13.01 GB, skipped 2
+[pref] iter 600/1080: pref loss 0.0919 (14), replay loss 0.0053 (11), lr 1.05e-06, 11.5 s/it, peak 13.01 GB, skipped 2
+[pref] iter 625/1080: pref loss 0.0394 (9), replay loss 0.0137 (16), lr 9.87e-07, 7.3 s/it, peak 13.01 GB, skipped 2
+[pref] iter 650/1080: pref loss 0.0904 (11), replay loss 0.0061 (14), lr 9.20e-07, 9.9 s/it, peak 13.01 GB, skipped 2
+[pref] iter 675/1080: pref loss 0.0582 (13), replay loss 0.0060 (12), lr 8.54e-07, 7.3 s/it, peak 13.01 GB, skipped 2
+[pref] iter 700/1080: pref loss 0.0701 (10), replay loss 0.0078 (15), lr 7.79e-07, 7.8 s/it, peak 13.01 GB, skipped 2
+[pref] iter 725/1080: pref loss 0.0616 (5), replay loss 0.0079 (20), lr 7.17e-07, 7.3 s/it, peak 13.01 GB, skipped 2
+[pref] iter 750/1080: pref loss 0.0435 (11), replay loss 0.0043 (13), lr 6.57e-07, 9.8 s/it, peak 13.01 GB, skipped 3
+[pref] iter 775/1080: pref loss 0.0392 (6), replay loss 0.0053 (19), lr 5.99e-07, 6.2 s/it, peak 13.01 GB, skipped 3
+[pref] iter 800/1080: pref loss 0.0434 (9), replay loss 0.0049 (15), lr 5.35e-07, 9.3 s/it, peak 13.01 GB, skipped 4
+[pref] iter 825/1080: pref loss 0.0564 (7), replay loss 0.0055 (18), lr 4.84e-07, 7.3 s/it, peak 13.01 GB, skipped 4
+[pref] iter 850/1080: pref loss 0.0896 (10), replay loss 0.0039 (15), lr 4.36e-07, 7.4 s/it, peak 13.01 GB, skipped 4
+[pref] iter 875/1080: pref loss 0.0650 (11), replay loss 0.0054 (14), lr 3.92e-07, 12.9 s/it, peak 13.01 GB, skipped 4
+[pref] iter 900/1080: pref loss 0.0325 (13), replay loss 0.0019 (12), lr 3.46e-07, 6.7 s/it, peak 13.01 GB, skipped 4
+[pref] iter 925/1080: pref loss 0.0580 (8), replay loss 0.0083 (17), lr 3.11e-07, 7.1 s/it, peak 13.01 GB, skipped 4
+[pref] iter 950/1080: pref loss 0.0698 (11), replay loss 0.0047 (14), lr 2.81e-07, 8.8 s/it, peak 13.01 GB, skipped 4
+[pref] iter 975/1080: pref loss 0.0593 (11), replay loss 0.0034 (14), lr 2.55e-07, 11.0 s/it, peak 13.01 GB, skipped 4
+[pref] iter 1000/1080: pref loss 0.0529 (9), replay loss 0.0043 (16), lr 2.31e-07, 6.2 s/it, peak 13.01 GB, skipped 4
+[pref] val at 1000: {'pairs': 18, 'nll_chosen': 0.0152, 'margin': 1.2515, 'acc': 0.7222}
+[pref] iter 1025/1080: pref loss 0.0578 (8), replay loss 0.0055 (17), lr 2.16e-07, 8.4 s/it, peak 13.01 GB, skipped 4
+[pref] iter 1050/1080: pref loss 0.0706 (12), replay loss 0.0061 (13), lr 2.06e-07, 9.1 s/it, peak 13.01 GB, skipped 4
+[pref] iter 1075/1080: pref loss 0.0322 (11), replay loss 0.0063 (14), lr 2.01e-07, 8.0 s/it, peak 13.01 GB, skipped 4
+[pref] val at end: {'pairs': 18, 'nll_chosen': 0.0153, 'margin': 1.2505, 'acc': 0.7222}
+[pref] finished

@@ -12,6 +12,7 @@ the learning-rate schedule counts optimizer updates.
 
 Usage (from sql2pyspark-mlx/):  python train_resumable.py [--config lora_config.yaml] [--max-restarts 6]
                                 [--launcher script.py]   (a script with mlx_lm.lora's arguments, e.g. qwen35_pilot/lora_q35.py)
+                                [--segment-val-batches N]  (smaller validation in resumed segments only)
 """
 from __future__ import annotations
 
@@ -54,6 +55,9 @@ def main():
     ap.add_argument("--config", default="lora_config.yaml")
     ap.add_argument("--max-restarts", type=int, default=6)
     ap.add_argument("--launcher", default=None, help="python script to run instead of mlx_lm.lora (same arguments)")
+    ap.add_argument("--segment-val-batches", type=int, default=None,
+                    help="val_batches for resumed segments only (mlx-lm validates at a segment's iteration 1, so a "
+                         "full validation after every restart is wasted; q9c lost ~1.4 h to 6 of them). Default: unchanged")
     args = ap.parse_args()
 
     os.chdir(HERE)
@@ -97,6 +101,8 @@ def main():
         # new batch order per segment: mlx-lm shuffles with np.random.seed(seed), so the same seed made every resumed
         # segment re-train the start of the same order (found 2026-11-15 on the Qwen3.5-35B run)
         c["seed"] = int(cfg.get("seed", 0)) + 1000 * segment
+        if args.segment_val_batches:
+            c["val_batches"] = args.segment_val_batches
         if done:
             c["resume_adapter_file"] = str(adapter_dir / f"{done:07d}_adapters.safetensors")
             sched = cfg["lr_schedule"]

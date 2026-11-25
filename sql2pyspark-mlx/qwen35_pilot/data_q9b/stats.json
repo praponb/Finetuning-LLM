@@ -1,0 +1,22 @@
+{
+  "renamed": 3600,
+  "targeted_v14": 1800,
+  "targeted_v11": 1200,
+  "complex_v16": 1200,
+  "complex_v9": 1200,
+  "replay": 3000,
+  "train": 12000,
+  "valid": 637,
+  "valid_renamed": 100,
+  "eval_sql_inside_train": 0,
+  "columns_per_renamed_pair": {
+    "1": 1462,
+    "3": 962,
+    "2": 1176
+  },
+  "spot_check": {
+    "checked": 200,
+    "orig_ok": 200,
+    "renamed_ok": 200
+  }
+}

@@ -20,8 +20,10 @@ REPAIR_MODES = ["When a check fails or the SQL is long", "When a check fails", "
 def generation_options(sql: str) -> dict:
     """Ollama options for one request. On long multi-CTE SQL the model can repeat window definitions until it runs
     out of tokens; a repetition window of 2,048 tokens (Ollama's default is 64) stops that. It is applied to long
-    inputs only, because on short queries it cost one hold-out query (docs/04, repetition-penalty experiment)."""
-    options = {"temperature": 0.2}
+    inputs only, because on short queries it cost one hold-out query (docs/04, repetition-penalty experiment).
+    num_predict 4,096 caps a reply (a rare loop would otherwise run to the context limit and block the one-request-at-a-time
+    Ollama for every visitor); real answers are far shorter, and the harness eval uses the same cap."""
+    options = {"temperature": 0.2, "num_predict": 4096}
     if len(sql) > LONG_SQL_CHARS:
         options["repeat_last_n"] = 2048
     return options
@@ -139,6 +141,7 @@ with col2:
                                 }
                             ],
                             "stream": False,
+                            "think": False,      # Qwen3.5 models (q9*): no thinking pass, else they time out
                             "options": generation_options(sql_input),
                         },
                         timeout=600 if len(sql_input) > LONG_SQL_CHARS else 180

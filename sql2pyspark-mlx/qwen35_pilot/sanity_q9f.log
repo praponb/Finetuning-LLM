@@ -1,0 +1,9 @@
+[pref] 40 micro-batches (40 preference, 0 replay), 10 updates; start at 0 from qwen35_pilot/adapters_q9d/adapters.safetensors
+[pref] val at 0: {'pairs': 20, 'nll_chosen': 0.0252, 'margin': -0.5593, 'acc': 0.2}
+[pref] iter 10/40: pref loss 0.1534 (10), replay loss 0.0000 (0), lr 2.00e-05, 15.6 s/it, peak 11.01 GB, skipped 0
+[pref] iter 20/40: pref loss 0.0817 (10), replay loss 0.0000 (0), lr 1.71e-05, 15.8 s/it, peak 11.73 GB, skipped 0
+[pref] iter 30/40: pref loss 0.0706 (10), replay loss 0.0000 (0), lr 1.01e-05, 8.5 s/it, peak 11.73 GB, skipped 0
+[pref] iter 40/40: pref loss 0.0478 (10), replay loss 0.0000 (0), lr 9.54e-07, 15.1 s/it, peak 11.73 GB, skipped 0
+[pref] val at end: {'pairs': 20, 'nll_chosen': 0.0227, 'margin': 2.4865, 'acc': 1.0}
+[pref] finished
+sanity: margin -0.5593 -> 2.4865, nll_chosen 0.0252 -> 0.0227, acc 0.2 -> 1.0, peak 11.73 GB -> SANITY OK

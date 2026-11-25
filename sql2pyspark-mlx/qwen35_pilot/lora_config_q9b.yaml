@@ -1,0 +1,35 @@
+# Qwen3.5-9B polish round "q9b" (owner 2026-11-20: continue Qwen3.5 training): short low-lr polish of q9a
+# (adapters_q9a: holdout 59, v4 20, fixed 145, complex 93, complex-shift 122, v11 279, v13 143; name slips 83 vs v18a 66).
+# Data data_q9b = polishmix/build.py: 12,000 pairs = 3,600 renamed (tables + 1-3 columns) + unseen targeted_v14 /
+# targeted_v11 / complex_v16 / complex_v9 + 3,000 replay. 2,400 micro-batches at 5e-6 -> 5e-7 (run 8's polish schedule).
+# Run via chain_q9b.sh.
+model: mlx-community/Qwen3.5-9B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_q9b
+resume_adapter_file: ./qwen35_pilot/adapters_q9a/adapters.safetensors   # q9a (9,600 iterations)
+adapter_path: ./qwen35_pilot/adapters_q9b
+seed: 44
+iters: 2400
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16                # last 16 of 32 blocks (same as q9a, required to resume)
+lora_parameters:
+  rank: 32
+  dropout: 0.05
+  scale: 10.0                 # same as q9a
+optimizer: adamw
+learning_rate: 5.0e-6
+lr_schedule:
+  name: cosine_decay
+  warmup: 30
+  warmup_init: 5.0e-7
+  arguments: [5.0e-6, 570, 5.0e-7]    # [init, decay_steps, end]  (optimizer updates = 2,400 / 4)
+steps_per_report: 50
+steps_per_eval: 400
+val_batches: 637              # the whole validation set
+save_every: 200
+test: false

@@ -1,0 +1,16 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/11/24 13:30:17 WARN Utils: Your hostname, PraponBs-Mac-Mini-M6.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.50 instead (on interface en0)
+26/11/24 13:30:17 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/24 13:30:17 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+  10/25  lenient match 10/10  (63s)
+  20/25  lenient match 17/20  (112s)
+  25/25  lenient match 21/25  (159s)
+
+sql2pyspark:q9fe-q4 on holdout_v4.jsonl (n=25)
+  strict : syntax 100.0%  runs 92.0%  match 84.0%
+  lenient: syntax 100.0%  runs 92.0%  match 84.0%
+  results -> eval/results/variants/q9fe-q4__holdout_v4.json

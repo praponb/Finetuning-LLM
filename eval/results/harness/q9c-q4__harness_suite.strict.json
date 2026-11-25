@@ -1,0 +1,137 @@
+{
+  "model": "sql2pyspark:q9c-q4",
+  "counts": {
+    "ERROR_PYSPARK": 12,
+    "FAIL_DATA": 3,
+    "PASS": 5,
+    "FAIL_SCHEMA": 1
+  },
+  "cases": [
+    {
+      "id": "harness_Q01",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q02",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: '(' was never closed (<pyspark>, line 208)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q03",
+      "status": "FAIL_DATA",
+      "message": "6 row(s) only in SQL, 6 row(s) only in PySpark (row counts 6 vs 6)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04a",
+      "status": "ERROR_PYSPARK",
+      "message": "AttributeError: 'GroupedData' object has no attribute 'select'",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q04c",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q05a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `ts` cannot be resolved. Did you mean one of the following? [`c`.`city`, `c`.`tier`, `o`.`status`, `c`.`email`, `o`.`order_ts`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05b",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: posexplode_outer() takes 1 positional argument but 6 were given",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `k` cannot be resolved. Did you mean one of the following? [`status`, `channel`, `ship_to`, `currency`, `order_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `oi`.`product_id` cannot be resolved. Did you mean one of the following? [`p`.`product_id`, `oi`.`order_id`, `p`.`product_name`, `oi`.`order_ts`, `oi`.`ship_to`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q06c",
+      "status": "FAIL_DATA",
+      "message": "1 row(s) only in SQL, 0 row(s) only in PySpark (row counts 7 vs 6)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q07",
+      "status": "FAIL_DATA",
+      "message": "0 row(s) only in SQL, 30 row(s) only in PySpark (row counts 18 vs 48)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q08",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 32) (<pyspark>, line 32)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q09a",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q09b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q10a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `Q1` cannot be resolved. Did you mean one of the following? [`q1_orders`, `q2_orders`, `q3_orders`, `orders`.`customer_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q10b",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkTypeError: [NOT_EXPECTED_TYPE] Argument `col` should be Column or str, got int.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q11a",
+      "status": "FAIL_SCHEMA",
+      "message": "column count 6 (SQL) vs 9 (PySpark)\n  SQL:     ['cat_a:string', 'cat_b:string', 'together:bigint', 'support:double', 'confidence_a_to_b:double', 'lift:double']\n  PySpark: ['cat_a:string', 'cat_b:string', 'together:bigint', 'support:double', 'confidence_a_to_b:double', 'lift:double', 'total_orders:bigint', 'n_a:bigint', 'n_b:bigint']",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q11b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 25) (<pyspark>, line 25)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q12",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 13) (<pyspark>, line 13)",
+      "loose_match": false
+    }
+  ]
+}

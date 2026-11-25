@@ -1,0 +1,15 @@
+{
+  "skip_in_q9e_or_dup": 16630,
+  "skip_eval_leak": 8,
+  "ref_check_ok": 6000,
+  "ref_check_fail": 1,
+  "data_short": 1200,
+  "data_any": 1200,
+  "targeted_short": 1800,
+  "targeted_any": 1800,
+  "pool": 6000,
+  "candidates_data": 11664,
+  "candidates_targeted": 15321,
+  "eval_strings": 2112,
+  "short_lt_400": 5056
+}
