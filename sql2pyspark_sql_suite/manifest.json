@@ -1,0 +1,766 @@
+{
+  "suite_version": "2026-11-26+7b49afb5",
+  "spark3_mode": false,
+  "harness_input": "suite_all.sql",
+  "paste_budget": {
+    "max_tokens": 3000,
+    "chars_per_token": 3.7,
+    "max_chars": 11100
+  },
+  "statements": [
+    {
+      "id": "setup:customers",
+      "part": "part1",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/customers.sql"
+    },
+    {
+      "id": "setup:products",
+      "part": "part1",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/products.sql"
+    },
+    {
+      "id": "setup:orders",
+      "part": "part1",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/orders.sql"
+    },
+    {
+      "id": "setup:order_items",
+      "part": "part1",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/order_items.sql"
+    },
+    {
+      "id": "setup:payments",
+      "part": "part1",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/payments.sql"
+    },
+    {
+      "id": "setup:fx_rates",
+      "part": "part1",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/fx_rates.sql"
+    },
+    {
+      "id": "setup:web_events",
+      "part": "part1",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/web_events.sql"
+    },
+    {
+      "id": "setup:promotions",
+      "part": "part1",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/promotions.sql"
+    },
+    {
+      "id": "Q01",
+      "part": "part1",
+      "kind": "query",
+      "title": "Web sessionization (30-min inactivity gap) + JSON payload parsing",
+      "spark4_only": false,
+      "needs_views": [
+        "web_events"
+      ],
+      "file": "queries/Q01.sql"
+    },
+    {
+      "id": "Q02",
+      "part": "part1",
+      "kind": "query",
+      "title": "RFM segmentation with NTILE, PERCENT_RANK and percentile_approx",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "orders",
+        "order_items",
+        "fx_rates"
+      ],
+      "file": "queries/Q02.sql"
+    },
+    {
+      "id": "Q03",
+      "part": "part1",
+      "kind": "query",
+      "title": "PIVOT: monthly net revenue and units by category",
+      "spark4_only": false,
+      "needs_views": [
+        "products",
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q03.sql"
+    },
+    {
+      "id": "Q04a",
+      "part": "part1",
+      "kind": "query",
+      "title": "GROUPING SETS / ROLLUP / CUBE with grouping_id and FILTER clause",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "products",
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q04a.sql"
+    },
+    {
+      "id": "Q04b",
+      "part": "part1",
+      "kind": "query",
+      "title": "ROLLUP and CUBE variants (converter should handle both shorthand forms)",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "orders"
+      ],
+      "file": "queries/Q04b.sql"
+    },
+    {
+      "id": "Q04c",
+      "part": "part1",
+      "kind": "query",
+      "title": "GROUPING SETS / ROLLUP / CUBE with grouping_id and FILTER clause",
+      "spark4_only": false,
+      "needs_views": [
+        "orders"
+      ],
+      "file": "queries/Q04c.sql"
+    },
+    {
+      "id": "Q05a",
+      "part": "part1",
+      "kind": "query",
+      "title": "Arrays, maps, structs and higher-order functions; LATERAL VIEW explode",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "products",
+        "orders"
+      ],
+      "file": "queries/Q05a.sql"
+    },
+    {
+      "id": "Q05b",
+      "part": "part1",
+      "kind": "query",
+      "title": "LATERAL VIEW posexplode / explode OUTER / inline over structs",
+      "spark4_only": false,
+      "needs_views": [
+        "products"
+      ],
+      "file": "queries/Q05b.sql"
+    },
+    {
+      "id": "Q05c",
+      "part": "part1",
+      "kind": "query",
+      "title": "Arrays, maps, structs and higher-order functions; LATERAL VIEW explode",
+      "spark4_only": false,
+      "needs_views": [
+        "orders"
+      ],
+      "file": "queries/Q05c.sql"
+    },
+    {
+      "id": "Q06a",
+      "part": "part1",
+      "kind": "query",
+      "title": "Semi/anti joins and correlated subqueries",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "products",
+        "orders",
+        "order_items",
+        "web_events"
+      ],
+      "file": "queries/Q06a.sql"
+    },
+    {
+      "id": "Q06b",
+      "part": "part1",
+      "kind": "query",
+      "title": "Semi/anti joins and correlated subqueries",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "orders"
+      ],
+      "file": "queries/Q06b.sql"
+    },
+    {
+      "id": "Q06c",
+      "part": "part1",
+      "kind": "query",
+      "title": "Semi/anti joins and correlated subqueries",
+      "spark4_only": false,
+      "needs_views": [
+        "products",
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q06c.sql"
+    },
+    {
+      "id": "Q07",
+      "part": "part1",
+      "kind": "query",
+      "title": "Set operations",
+      "spark4_only": false,
+      "needs_views": [
+        "orders",
+        "web_events"
+      ],
+      "file": "queries/Q07.sql"
+    },
+    {
+      "id": "Q08",
+      "part": "part1",
+      "kind": "query",
+      "title": "Point-in-time FX conversion + time-range window frames",
+      "spark4_only": false,
+      "needs_views": [
+        "orders",
+        "order_items",
+        "fx_rates"
+      ],
+      "file": "queries/Q08.sql"
+    },
+    {
+      "id": "Q09a",
+      "part": "part1",
+      "kind": "query",
+      "title": "Funnel analysis per customer-day",
+      "spark4_only": false,
+      "needs_views": [
+        "orders",
+        "web_events"
+      ],
+      "file": "queries/Q09a.sql"
+    },
+    {
+      "id": "Q09b",
+      "part": "part1",
+      "kind": "query",
+      "title": "Funnel analysis per customer-day",
+      "spark4_only": false,
+      "needs_views": [
+        "web_events"
+      ],
+      "file": "queries/Q09b.sql"
+    },
+    {
+      "id": "Q10a",
+      "part": "part1",
+      "kind": "query",
+      "title": "UNPIVOT (Spark 3.4+) and the stack() equivalent",
+      "spark4_only": false,
+      "needs_views": [
+        "orders"
+      ],
+      "file": "queries/Q10a.sql"
+    },
+    {
+      "id": "Q10b",
+      "part": "part1",
+      "kind": "query",
+      "title": "UNPIVOT (Spark 3.4+) and the stack() equivalent",
+      "spark4_only": false,
+      "needs_views": [
+        "orders"
+      ],
+      "file": "queries/Q10b.sql"
+    },
+    {
+      "id": "Q11a",
+      "part": "part1",
+      "kind": "query",
+      "title": "Market-basket pairs (self-join), CROSS JOIN calendar, FULL OUTER JOIN",
+      "spark4_only": false,
+      "needs_views": [
+        "products",
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q11a.sql"
+    },
+    {
+      "id": "Q11b",
+      "part": "part1",
+      "kind": "query",
+      "title": "Market-basket pairs (self-join), CROSS JOIN calendar, FULL OUTER JOIN",
+      "spark4_only": false,
+      "needs_views": [
+        "orders"
+      ],
+      "file": "queries/Q11b.sql"
+    },
+    {
+      "id": "Q12",
+      "part": "part1",
+      "kind": "query",
+      "title": "THE BIG ONE: customer 360 scorecard",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "products",
+        "orders",
+        "order_items",
+        "payments",
+        "fx_rates",
+        "web_events",
+        "promotions"
+      ],
+      "files": [
+        "queries/Q12_part1.sql",
+        "queries/Q12_part2.sql"
+      ]
+    },
+    {
+      "id": "setup:inventory_movements",
+      "part": "part2",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/inventory_movements.sql"
+    },
+    {
+      "id": "setup:tier_history",
+      "part": "part2",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/tier_history.sql"
+    },
+    {
+      "id": "setup:category_tree",
+      "part": "part2",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/category_tree.sql"
+    },
+    {
+      "id": "setup:support_tickets",
+      "part": "part2",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/support_tickets.sql"
+    },
+    {
+      "id": "setup:price_history",
+      "part": "part2",
+      "kind": "setup",
+      "title": "",
+      "spark4_only": false,
+      "file": "setup/price_history.sql"
+    },
+    {
+      "id": "Q13a",
+      "part": "part2",
+      "kind": "query",
+      "title": "Stock-state islands per product/warehouse (IN_STOCK / STOCKOUT / BACKORDER)",
+      "spark4_only": false,
+      "needs_views": [
+        "inventory_movements"
+      ],
+      "file": "queries/Q13a.sql"
+    },
+    {
+      "id": "Q13b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Consecutive-day activity streaks per customer (web OR order OR ticket)",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "orders",
+        "web_events",
+        "support_tickets"
+      ],
+      "file": "queries/Q13b.sql"
+    },
+    {
+      "id": "Q14a",
+      "part": "part2",
+      "kind": "query",
+      "title": "COGS per outbound movement",
+      "spark4_only": false,
+      "needs_views": [
+        "products",
+        "inventory_movements"
+      ],
+      "file": "queries/Q14a.sql"
+    },
+    {
+      "id": "Q14b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Ending inventory valuation (remaining FIFO layers) with ROLLUP",
+      "spark4_only": false,
+      "needs_views": [
+        "products",
+        "inventory_movements"
+      ],
+      "file": "queries/Q14b.sql"
+    },
+    {
+      "id": "Q15a",
+      "part": "part2",
+      "kind": "query",
+      "title": "Tier in force at the time of each order",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "orders",
+        "order_items",
+        "tier_history"
+      ],
+      "file": "queries/Q15a.sql"
+    },
+    {
+      "id": "Q15b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Tier timeline per customer: days per tier, upgrades/downgrades, drift check",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "tier_history"
+      ],
+      "file": "queries/Q15b.sql"
+    },
+    {
+      "id": "Q16",
+      "part": "part2",
+      "kind": "query",
+      "title": "Hierarchy flattening (fixed-depth self-joins) and revenue roll-up",
+      "spark4_only": false,
+      "needs_views": [
+        "products",
+        "orders",
+        "order_items",
+        "fx_rates",
+        "category_tree"
+      ],
+      "file": "queries/Q16.sql"
+    },
+    {
+      "id": "Q17a",
+      "part": "part2",
+      "kind": "query",
+      "title": "One row per ticket, every field cleaned / extracted",
+      "spark4_only": false,
+      "needs_views": [
+        "payments",
+        "support_tickets"
+      ],
+      "file": "queries/Q17a.sql"
+    },
+    {
+      "id": "Q17b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Tag analytics: explode, positional tags, per-tag SLA and satisfaction",
+      "spark4_only": false,
+      "needs_views": [
+        "support_tickets"
+      ],
+      "file": "queries/Q17b.sql"
+    },
+    {
+      "id": "Q18a",
+      "part": "part2",
+      "kind": "query",
+      "title": "Weekly (Monday-aligned) tumbling + 30-day sliding windows over orders",
+      "spark4_only": false,
+      "needs_views": [
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q18a.sql"
+    },
+    {
+      "id": "Q18b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Session windows with a dynamic gap (checkout closes a session faster)",
+      "spark4_only": false,
+      "needs_views": [
+        "web_events"
+      ],
+      "file": "queries/Q18b.sql"
+    },
+    {
+      "id": "Q18c",
+      "part": "part2",
+      "kind": "query",
+      "title": "Ticket SLA in Bangkok local business hours (Mon-Fri 09:00-18:00)",
+      "spark4_only": false,
+      "needs_views": [
+        "support_tickets"
+      ],
+      "file": "queries/Q18c.sql"
+    },
+    {
+      "id": "Q19",
+      "part": "part2",
+      "kind": "query",
+      "title": "Time-series gap filling and interpolation",
+      "spark4_only": false,
+      "needs_views": [
+        "price_history"
+      ],
+      "file": "queries/Q19.sql"
+    },
+    {
+      "id": "Q20a",
+      "part": "part2",
+      "kind": "query",
+      "title": "Distribution stats per category x channel (GROUP BY ALL)",
+      "spark4_only": false,
+      "needs_views": [
+        "products",
+        "orders",
+        "order_items",
+        "fx_rates"
+      ],
+      "file": "queries/Q20a.sql"
+    },
+    {
+      "id": "Q20b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Histogram with width_bucket + window over an aggregate in the same SELECT",
+      "spark4_only": false,
+      "needs_views": [
+        "orders",
+        "order_items",
+        "fx_rates"
+      ],
+      "file": "queries/Q20b.sql"
+    },
+    {
+      "id": "Q21a",
+      "part": "part2",
+      "kind": "query",
+      "title": "Per-customer order history as arrays, ~30 array/map functions in one SELECT",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "orders"
+      ],
+      "file": "queries/Q21a.sql"
+    },
+    {
+      "id": "Q21b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Generators over maps and structs: explode(map), posexplode_outer, inline_outer",
+      "spark4_only": false,
+      "needs_views": [
+        "customers"
+      ],
+      "file": "queries/Q21b.sql"
+    },
+    {
+      "id": "Q22a",
+      "part": "part2",
+      "kind": "query",
+      "title": "Chained correlated LATERAL subqueries, EXISTS in SELECT / CASE, nested CTE",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "products",
+        "orders",
+        "order_items",
+        "web_events",
+        "support_tickets"
+      ],
+      "file": "queries/Q22a.sql"
+    },
+    {
+      "id": "Q22b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Tuple IN subquery, correlated AVG comparison, scalar subquery in HAVING",
+      "spark4_only": false,
+      "needs_views": [
+        "products",
+        "orders",
+        "order_items",
+        "fx_rates",
+        "web_events"
+      ],
+      "file": "queries/Q22b.sql"
+    },
+    {
+      "id": "Q22c",
+      "part": "part2",
+      "kind": "query",
+      "title": "Multiset set operations: INTERSECT ALL and EXCEPT ALL",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "products",
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q22c.sql"
+    },
+    {
+      "id": "Q23a",
+      "part": "part2",
+      "kind": "query",
+      "title": "NOT IN against a subquery that yields a NULL returns NO rows; NOT EXISTS does",
+      "spark4_only": false,
+      "needs_views": [
+        "products"
+      ],
+      "file": "queries/Q23a.sql"
+    },
+    {
+      "id": "Q23b",
+      "part": "part2",
+      "kind": "query",
+      "title": "Three-valued logic, null-aware aggregates and comparisons",
+      "spark4_only": false,
+      "needs_views": [
+        "customers"
+      ],
+      "file": "queries/Q23b.sql"
+    },
+    {
+      "id": "Q23c",
+      "part": "part2",
+      "kind": "query",
+      "title": "Numeric typing: decimals, int division, rounding modes, try_* and ANSI casts",
+      "spark4_only": false,
+      "needs_views": [
+        "order_items"
+      ],
+      "file": "queries/Q23c.sql"
+    },
+    {
+      "id": "Q24a",
+      "part": "part2",
+      "kind": "query",
+      "title": "PIVOT on (channel, status) tuples with two aggregates",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q24a.sql"
+    },
+    {
+      "id": "Q24b",
+      "part": "part2",
+      "kind": "query",
+      "title": "UNPIVOT two value columns at once, keeping NULLs",
+      "spark4_only": false,
+      "needs_views": [
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q24b.sql"
+    },
+    {
+      "id": "Q24c",
+      "part": "part2",
+      "kind": "query",
+      "title": "Transpose: metrics-as-columns -> stack() -> PIVOT channels to columns",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q24c.sql"
+    },
+    {
+      "id": "Q25a",
+      "part": "part2",
+      "kind": "query",
+      "title": "WITH RECURSIVE: hierarchy of any depth (compare with the fixed-depth Q16)",
+      "spark4_only": true,
+      "needs_views": [
+        "category_tree"
+      ],
+      "file": "queries/Q25a.sql"
+    },
+    {
+      "id": "Q25b",
+      "part": "part2",
+      "kind": "query",
+      "title": "SQL pipe syntax",
+      "spark4_only": true,
+      "needs_views": [
+        "orders",
+        "order_items"
+      ],
+      "file": "queries/Q25b.sql"
+    },
+    {
+      "id": "Q25c",
+      "part": "part2",
+      "kind": "query",
+      "title": "QUALIFY, LATERAL ... ORDER BY LIMIT, listagg, collations, VARIANT",
+      "spark4_only": true,
+      "needs_views": [
+        "customers",
+        "orders",
+        "order_items",
+        "web_events",
+        "support_tickets"
+      ],
+      "file": "queries/Q25c.sql"
+    },
+    {
+      "id": "Q26",
+      "part": "part2",
+      "kind": "query",
+      "title": "THE BIG ONE #2: order margin control tower",
+      "spark4_only": false,
+      "needs_views": [
+        "customers",
+        "products",
+        "orders",
+        "order_items",
+        "payments",
+        "fx_rates",
+        "inventory_movements",
+        "tier_history",
+        "category_tree",
+        "support_tickets"
+      ],
+      "files": [
+        "queries/Q26_part1.sql",
+        "queries/Q26_part2.sql"
+      ]
+    }
+  ]
+}

@@ -421,9 +421,16 @@ Mac mini, Qwen3.5 models scored with `--think false`; scripts in [`qwen35_pilot/
 and caps a reply at `num_predict` 4,096 tokens (a rare loop would otherwise hold the single Ollama slot for minutes);
 both settings are harmless for v18a-q4. Since 2026-11-26 the app warns before converting SQL over 12,000 characters
 (its reply can't fit in 4,096 tokens) and shows a notice when a reply is cut off at the cap (no automatic Kimi repair then). The app test (Streamlit AppTest, 7 conversions incl. 4 `SELECT *` + subquery)
-passed with q9df3-q4 and with v18a-q4. The root GGUFs stay v18a. **Rollback:** `ollama cp sql2pyspark:v18a-q4
+passed with q9df3-q4 and with v18a-q4. Root GGUFs (2026-11-26): `sql2pyspark-q4.gguf` = q9df3-q4 (same SHA-256 as the
+Ollama blob; register it with `ollama create … -f Modelfile.qwen35`); `sql2pyspark.gguf` stays v18a Q8_0, because a Q8_0
+build of q9df3 (`sql2pyspark:q9df3-q8`) scored hold-out 59 vs. 61 (v4 22, fixed 148, dev 96). **Rollback:** `ollama cp sql2pyspark:v18a-q4
 sql2pyspark:latest` (works with the new `app.py`). Kept: adapters `adapters_q9d/e/f/f2`, `data_q9f`, `data_q9f2`,
 `selfplay/`, every variant GGUF in `variants/gguf/` and its Ollama tag.
+
+**Harness v2 (2026-11-26):** 50 queries from `sql2pyspark_sql_suite/` on 13 nested-type tables (`eval/harness_suite_v2.jsonl`,
+test only; Q20a left out because its `corr` result depends on partitioning): q9df3-q4 **6/50** (Part 1 5/21, Part 2 1/29),
+v18a-q4 5/50 (5/21, 0/29). Training-data pilot [`harness_v20`](sql2pyspark-mlx/harness_v20/README.md): 37 Kimi-built pairs
+verified type-strict in Spark for $8.94, not used for training yet.
 
 ### v18 and Qwen3.5 results (2026-11-15 → 11-18)
 
@@ -1082,9 +1089,11 @@ sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4�
                    qwen35_pilot/ (Qwen3.5-9B: pilot, runs 2-9, q9a-q9f2, mlx-lm patches, polish / self-play / ORPO scripts, variants/ merges; q9df3-q4 = `latest`),
                    qwen35moe/ (Qwen3.5-35B-A3B: MoE LoRA launcher, expert export fix, configs, logs; discarded),
                    realstyle_v19/ (Kimi-built real-style pairs: generator, 74-pair test set, eval_realstyle.py),
+                   harness_v20/ (Kimi-built harness-style training pairs, type-strict check; 2026-11-26 pilot: 37 pairs, outputs git-ignored),
                    runs/v2/ … runs/v7/ (adapters, configs, logs; v6/v7 data is in the git history too)
 sql2pyspark.gguf   Q8_0 GGUF of v18a (copied from the Ollama blob at the 2026-11-15 promotion); Ollama keeps its own copy of every tag
-sql2pyspark-q4.gguf Q4_K_M GGUF of v18a-q4 (the rollback, 4.7 GB; `latest` = q9df3-q4 lives in qwen35_pilot/variants/gguf/; copied from the Ollama blob 2026-11-15; what deploy/update_model.sh copies)
+sql2pyspark-q4.gguf Q4_K_M GGUF of q9df3-q4 (`latest`, Qwen3.5-9B, 5.6 GB; copied from qwen35_pilot/variants/gguf/ on 2026-11-26, same SHA-256 as the Ollama blob; v18a-q4 before)
+Modelfile.qwen35   Qwen3.5 Modelfile (empty think block) for sql2pyspark-q4.gguf; `Modelfile` (Qwen2.5 template) is for sql2pyspark.gguf
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,
                    post_training_v4.sh … post_training_v8.sh, start_training_v7.sh … start_training_v18.sh, start_training_q35moe*.sh, eval_v14_ckpt.sh, name_slips.py, schema_shift_tables.py,

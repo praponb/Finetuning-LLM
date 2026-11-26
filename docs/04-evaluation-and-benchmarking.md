@@ -461,6 +461,39 @@ python eval/harness_strict.py eval/results/harness/*__harness_suite.json
 
 Most failures are columns that don't resolve on nested data (map / struct / JSON fields, exploded arrays), syntax errors on the longest queries (Q08, Q11b, Q12), higher-order-function and `posexplode` misuse, and the set-operation trap of Q07. The training data has no pairs for `LEFT SEMI` / `LEFT ANTI JOIN` syntax, `RANGE BETWEEN INTERVAL`, `max_by` / `min_by`, `map_filter` / `transform_values`, `array_sort` with a comparator, `stack()`, `arr[0]` or broadcast hints, and its seeded tables have one `array<string>` column only. Results: `eval/results/harness/` (`*.strict.json` = the type-strict re-check).
 
+### Harness v2 (`eval/harness_suite_v2.jsonl`, 50 queries) — added 2026-11-26
+
+[`sql2pyspark_sql_suite/`](../sql2pyspark_sql_suite/) extends the harness suite: Part 1 is byte-identical to
+`sql2pyspark_harness/sql2pyspark_test_suite.sql` (21 queries, 8 tables), Part 2 adds Q13–Q26 (30 queries) on 5 more tables
+(`inventory_movements`, `tier_history`, `category_tree`, `support_tickets`, `price_history`): gaps-and-islands, FIFO costing,
+SCD2 as-of joins, hierarchy flattening, text cleanup, `window()` / `session_window()`, gap filling, statistics, deep
+array / map functions, chained subqueries, NULL traps, decimal typing, multi-value PIVOT / UNPIVOT, and three Spark-4-only
+queries (Q25a–c: `WITH RECURSIVE`, pipe syntax, `QUALIFY`). All 51 run on our Spark 4.2.0 (ANSI on, UTC).
+
+- `eval/build_harness_v2.py` → `eval/harness_suite_v2.jsonl`: 50 cases, `level` = `part1` / `part2` (the 21 Part-1 ids and
+  SQL are the same as `harness_suite.jsonl`). **Q20a is left out**: `corr(quantity, unit_usd)` over a group where one
+  column is constant divides by exactly zero under the evaluator's `local[1]` session (ANSI `DIVIDE_BY_ZERO`), but not
+  under `local[*]`, so its result depends on partitioning and a correct `F.corr` answer would fail too.
+- `eval/harness_tables_v2.py`: `--tables` file for the 13 tables (`harness_tables.py` now takes the suite file as a parameter).
+- `eval/harness_strict.py --v2 <result files>`: the type-strict re-check on the v2 set.
+- **Test only**: no query or table of the suite goes into training data.
+
+```bash
+python eval/evaluate.py --model sql2pyspark:q9df3-q4 --think false --timeout 600 --num-predict 4096 \
+  --set eval/harness_suite_v2.jsonl --tables eval/harness_tables_v2.py --out eval/results/harness/q9df3-q4__harness_suite_v2.json
+python eval/harness_strict.py --v2 eval/results/harness/*__harness_suite_v2.json
+```
+
+| Model | All (50) | Part 1 (21) | Part 2 (29) | Code runs | Syntax errors | Type-strict | Passed |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| v18a-q4 | 5 | 5 | 0 | 7 | 7 | 5 | Q04b, Q04c, Q06b, Q09a, Q10a |
+| **q9df3-q4** (`latest`) | **6** | 5 | **1** | 10 | 19 (5 cut off at 4,096 tokens) | 6 | Q04b, Q04c, Q06b, Q09b, Q11a, Q18a |
+
+Almost every Part-2 answer fails before it can be compared: unbalanced brackets and cut-off code on the long queries,
+functions that don't exist in PySpark (`F.not_exists`, `F.timestampdiff`), `Column is not iterable`. This is the gap the
+[harness_v20](../sql2pyspark-mlx/harness_v20/README.md) training pairs target (pilot 2026-11-26: 37 Kimi-built pairs, type-strict
+verified, $8.94).
+
 ## 🆕 v18 and Qwen3.5 results (2026-11-15 → 11-18)
 
 v18 tried two ways to combine v15 and v17: **v18avg** (the exact average of their LoRA deltas, no training) and **v18a** (v15 continued on the v17 mix, 2,400 micro-batches, lr 2e-5). Then two new base models: **Qwen3.5-35B-A3B** (MoE, three rounds) and **Qwen3.5-9B run q9a** (fresh QLoRA, 9,600 micro-batches). Qwen3.5 models are scored with `--think false`.
