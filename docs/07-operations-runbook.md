@@ -252,7 +252,7 @@ The public site <https://sql2pyspark.praponb.com> runs on the Mac mini since 202
 ### 1. "Cannot connect to Ollama" in Streamlit
 
 - **Cause**: Ollama isn't running, or `OLLAMA_URL` points to the wrong server.
-- **Fix**: `open -a Ollama` (or `ollama serve`), then check `curl http://localhost:11434/api/tags`.
+- **Fix**: on a dev Mac, `open -a Ollama` (or `ollama serve`), then check `curl http://localhost:11434/api/tags`. On the Mac mini, never open the app: check the daemon with `sudo launchctl print system/com.praponb.ollama | grep -E 'state|pid'` and `lsof -nP -iTCP:11434 -sTCP:LISTEN` (it should be `/opt/homebrew/bin/ollama`), and restart it with `sudo launchctl kickstart -k system/com.praponb.ollama` ([deploy/macmini](../deploy/macmini/README.md)).
 
 ### 2. PySpark fails because Java is missing
 

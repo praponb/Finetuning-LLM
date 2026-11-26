@@ -9,6 +9,12 @@ import kimi_repair as kr
 # Ollama server; in Docker this points at the host (see docker-compose.yml)
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/")
 LONG_SQL_CHARS = 2000
+MAX_REPLY_TOKENS = 4096         # num_predict cap on every reply
+# SQL averages ~3.7 characters per model token and the PySpark reply needs ~1.1-1.2 tokens per input token
+# (q9df3-q4 on the real-style + harness sets), so above ~12,000 characters (~3,200 tokens) a full answer
+# no longer fits in MAX_REPLY_TOKENS: the reply is cut off after ~3-4 minutes of the one Ollama slot.
+CHARS_PER_TOKEN = 3.7
+VERY_LONG_SQL_CHARS = 12_000
 # Kimi K3 repair (optional): KIMI_API_KEY from the environment or .env (Docker passes .env in)
 kr.load_env(Path(__file__).resolve().parent / ".env")
 KIMI_READY = bool(os.environ.get("KIMI_API_KEY"))
@@ -23,7 +29,7 @@ def generation_options(sql: str) -> dict:
     inputs only, because on short queries it cost one hold-out query (docs/04, repetition-penalty experiment).
     num_predict 4,096 caps a reply (a rare loop would otherwise run to the context limit and block the one-request-at-a-time
     Ollama for every visitor); real answers are far shorter, and the harness eval uses the same cap."""
-    options = {"temperature": 0.2, "num_predict": 4096}
+    options = {"temperature": 0.2, "num_predict": MAX_REPLY_TOKENS}
     if len(sql) > LONG_SQL_CHARS:
         options["repeat_last_n"] = 2048
     return options
@@ -117,6 +123,15 @@ with col1:
         height=320,
         label_visibility="collapsed"
     )
+    if len(sql_input) > VERY_LONG_SQL_CHARS:
+        st.warning(
+            f"**This SQL is very long:** {len(sql_input):,} characters, about "
+            f"{len(sql_input) / CHARS_PER_TOKEN:,.0f} tokens. The model's reply is capped at {MAX_REPLY_TOKENS:,} "
+            "tokens, which fits a query of about 3,000 tokens, so the code for this one will be cut off after "
+            "3-4 minutes of waiting (other visitors wait too). Split it and convert one part at a time, "
+            "for example each CTE or subquery.",
+            icon=":material/warning:",
+        )
     convert_btn = st.button("🚀 Convert to PySpark", type="primary", width="stretch")
 
 with col2:
@@ -150,20 +165,30 @@ with col2:
                     if response.status_code == 200:
                         payload = response.json()
                         pyspark_output = payload.get("message", {}).get("content", "")
-                        st.session_state["converted"] = {"sql": sql_input, "code": extract_code(pyspark_output)}
+                        truncated = payload.get("done_reason") == "length"   # hit MAX_REPLY_TOKENS
+                        st.session_state["converted"] = {"sql": sql_input, "code": extract_code(pyspark_output),
+                                                         "truncated": truncated}
                         st.session_state.pop("repair", None)
-                        st.session_state["auto_repair"] = True
+                        # no automatic Kimi repair of cut-off code (costly on huge SQL); the button stays
+                        st.session_state["auto_repair"] = not truncated
                     else:
                         st.error(f"Ollama returned error code {response.status_code}: {response.text}")
 
                 except requests.exceptions.ConnectionError:
-                    st.error(f"Cannot connect to Ollama at {OLLAMA_URL}. Make sure the Ollama service is running (`open -a Ollama`).")
+                    st.error(f"Cannot connect to Ollama at {OLLAMA_URL}. Make sure the Ollama service is running.")
                 except Exception as e:
                     st.error(f"An unexpected error occurred: {str(e)}")
 
     converted = st.session_state.get("converted")
     if converted:
         result_container.code(converted["code"], language="python")
+        if converted.get("truncated"):
+            st.warning(
+                f"**The reply was cut off** at the {MAX_REPLY_TOKENS:,}-token limit, so this code is incomplete. "
+                "Converting the same SQL again will stop at the same point: split it and convert one part at a "
+                "time, for example each CTE or subquery.",
+                icon=":material/content_cut:",
+            )
         problem = kr.static_check(converted["code"], converted["sql"])
         if problem:
             st.warning(f"The model's code has a problem: {problem}")
