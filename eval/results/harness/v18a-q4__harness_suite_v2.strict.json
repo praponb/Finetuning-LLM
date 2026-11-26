@@ -1,0 +1,311 @@
+{
+  "model": "sql2pyspark:v18a-q4",
+  "counts": {
+    "ERROR_PYSPARK": 43,
+    "FAIL_SCHEMA": 1,
+    "PASS": 5,
+    "FAIL_DATA": 1
+  },
+  "cases": [
+    {
+      "id": "harness_Q01",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `S` cannot be resolved. Did you mean one of the following? [`p`, `prev_ts`, `session_seq`, `device_os_raw`, `is_new_session`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q02",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `r_score` cannot be resolved. Did you mean one of the following? [`frequency`, `recency_days`, `monetary_usd`, `lv`.`customer_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q03",
+      "status": "FAIL_SCHEMA",
+      "message": "column count 15 (SQL) vs 16 (PySpark)\n  SQL:     ['category:string', 'jan_rev:decimal(37,2)', 'jan_units:bigint', 'feb_rev:decimal(37,2)', 'feb_units:bigint', 'mar_rev:decimal(37,2)', 'mar_units:bigint', 'apr_rev:decimal(37,2)', 'apr_units:bigint', 'may_rev:decimal(37,2)', 'may_units:bigint', 'jun_rev:decimal(37,2)', 'jun_units:bigint', 'jul_rev:decimal(37,2)', 'jul_units:bigint']\n  PySpark: ['cat",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [DATATYPE_MISMATCH.UNEXPECTED_INPUT_TYPE] Cannot resolve \"CASE WHEN country_code_grouping THEN (all countries ELSE country_code END\" due to data type mismatch: The first parameter requires the \"BOOLEAN\" type, however \"country_code_grouping\" has the type \"TINYINT\". SQLSTATE: 42K09;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q04c",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q05a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `ts` cannot be resolved. Did you mean one of the following? [`c`.`city`, `c`.`tier`, `o`.`status`, `c`.`email`, `o`.`order_ts`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `a`.`warranty`.`months` cannot be resolved. Did you mean one of the following? [`tag_pos`, `tag`, `size_label`, `products`.`product_id`, `products`.`product_name`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `k` cannot be resolved. Did you mean one of the following? [`status`, `channel`, `ship_to`, `currency`, `order_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `status` cannot be resolved. Did you mean one of the following? [`c`.`city`, `c`.`tier`, `c`.`email`, `c`.`interests`, `c`.`full_name`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q06c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `status` cannot be resolved. Did you mean one of the following? [`quantity`, `line_no`, `order_id`, `product_id`, `unit_price`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q07",
+      "status": "ERROR_PYSPARK",
+      "message": "NameError: name 'df_browsers' is not defined",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q08",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `net_usd` cannot be resolved. Did you mean one of the following? [`ot`.`status`, `fx_rate_date`, `ot`.`net_local`, `ot`.`order_ts`, `ot`.`channel`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q09a",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q09b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [DATATYPE_MISMATCH.UNEXPECTED_INPUT_TYPE] Cannot resolve \"count_if(viewed)\" due to data type mismatch: The first parameter requires the \"BOOLEAN\" type, however \"viewed\" has the type \"INT\". SQLSTATE: 42K09;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q10a",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q10b",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkTypeError: [NOT_EXPECTED_TYPE] Argument `col` should be Column or str, got int.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q11a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [MISSING_GROUP_BY] The query does not include a GROUP BY clause. Add GROUP BY or turn it into the window functions using OVER clauses. SQLSTATE: 42803;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q11b",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q12",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: '(' was never closed (<pyspark>, line 100)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q13a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [MISSING_AGGREGATION] The non-aggregating expression \"next_move_ts\" is based on columns which are not participating in the GROUP BY clause.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q13b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: invalid decimal literal (<pyspark>, line 44)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q14a",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 58) (<pyspark>, line 58)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q14b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 252) (<pyspark>, line 252)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q15a",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q15b",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkTypeError: [NOT_ITERABLE] Column is not iterable.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q16",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [CANNOT_RESOLVE_STAR_EXPAND] Cannot resolve `p`.* given input columns `a1_id`, `a1_name`, `a2_id`, `a2_name`, `a3_id`, `a3_name`, `node_id`, `node_name`, `parent_id`. Please check that the specified table or struct exists and is accessible in the input columns. SQLSTATE: 42704",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q17a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `` cannot be resolved. Did you mean one of the following? [`body`, `csat`, `meta`, `tags`, `channel`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q17b",
+      "status": "ERROR_PYSPARK",
+      "message": "AttributeError: module 'pyspark.sql.functions' has no attribute 'map'",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q18a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNSUPPORTED_FEATURE.LATERAL_COLUMN_ALIAS_IN_WINDOW] The feature is not supported: Referencing a lateral column alias `bucket_start` in window expression \"sum(orders) OVER (PARTITION BY grain ORDER BY lateralAliasReference(bucket_start) ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)\". SQLSTATE: 0A000",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q18b",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: time_diff() missing 1 required positional argument: 'end'",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q18c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [CANNOT_RESOLVE_STAR_EXPAND] Cannot resolve ``.* given input columns `agent_email`, `body`, `channel`, `csat`, `customer_id`, `first_response_ts`, `meta`, `opened_ts`, `priority`, `resolved_ts`, `subject`, `tags`, `ticket_id`. Please check that the specified table or struct exists and is accessible in the input columns. SQLSTATE: 42704",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q19",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: invalid syntax. Perhaps you forgot a comma? (<pyspark>, line 8)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q20b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [AMBIGUOUS_REFERENCE] Reference `o`.`order_id` is ambiguous, could be: [`o`.`order_id`, `o`.`order_id`]. SQLSTATE: 42704",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q21a",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q21b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `kind` cannot be resolved. Did you mean one of the following? [`interest`, `pref_key`, `pref_val`, `interest_pos`, `customers`.`city`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q22a",
+      "status": "ERROR_PYSPARK",
+      "message": "AssertionError: all exprs should be Column",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q22b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [NESTED_AGGREGATE_FUNCTION] It is not allowed to use an aggregate function in the argument of another aggregate function. Please use the inner aggregate function in a sub-query. SQLSTATE: 42607;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q22c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `category` cannot be resolved. Did you mean one of the following? [`tier`, `city`, `email`, `interests`, `customer_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q23a",
+      "status": "FAIL_DATA",
+      "message": "0 row(s) only in SQL, 9 row(s) only in PySpark (row counts 11 vs 20)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q23b",
+      "status": "ERROR_PYSPARK",
+      "message": "NameError: name 'null' is not defined",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q23c",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: invalid decimal literal (<pyspark>, line 28)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q24a",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: GroupedData.pivot() takes from 2 to 3 positional arguments but 4 were given",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q24b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [AMBIGUOUS_REFERENCE] Reference `n_orders` is ambiguous, could be: [`n_orders`, `n_orders`, `n_orders`]. SQLSTATE: 42704",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q24c",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q25a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `c`.`parent_id` cannot be resolved. Did you mean one of the following? [`t`.`parent_id`, `depth`, `id_path`, `t`.`node_id`, `t`.`node_name`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q25b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `net_local` cannot be resolved. Did you mean one of the following? [`ym`, `o`.`currency`, `o`.`order_id`, `((quantity * unit_price) * (1 - discount_pct) AS net_local)`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q25c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [MISSING_AGGREGATION] The non-aggregating expression \"ticket_id\" is based on columns which are not participating in the GROUP BY clause.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q26",
+      "status": "ERROR_PYSPARK",
+      "message": "IndentationError: unexpected indent (<pyspark>, line 270)",
+      "loose_match": false
+    }
+  ]
+}

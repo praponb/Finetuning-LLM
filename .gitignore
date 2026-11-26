@@ -28,3 +28,8 @@ llama.cpp/
 # train_resumable.py restart leftovers (segment adapters + resume configs), deleted after a run
 sql2pyspark-mlx/adapters_*_seg[0-9]*/
 sql2pyspark-mlx/.resume_seg[0-9]*.yaml
+# harness_v20 Kimi pilot outputs (pairs + logs stay local until a training round uses them)
+sql2pyspark-mlx/harness_v20/pilot/
+sql2pyspark-mlx/harness_v20/pilot*.log
+# Spark scratch from the suites
+sql2pyspark_sql_suite/spark-warehouse/

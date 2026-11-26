@@ -98,7 +98,8 @@ Finetuning-LLM/
 ├── requirements.txt              # Pinned dependencies (MLX, PySpark, Streamlit, openai, ...)
 ├── pyrefly.toml                  # Editor type-checker config (project venv)
 ├── sql2pyspark.gguf              # Q8_0 GGUF of v18a (copied from the Ollama blob at the 2026-11-15 promotion)
-├── sql2pyspark-q4.gguf           # 4.68 GB Q4_K_M GGUF of v18a-q4 (`latest` 2026-11-15 → 11-25, now the rollback; q9df3-q4 lives in qwen35_pilot/variants/gguf/)
+├── sql2pyspark-q4.gguf           # 5.6 GB Q4_K_M GGUF of q9df3-q4 (`latest`; copied 2026-11-26; v18a-q4 before)
+├── Modelfile.qwen35              # Qwen3.5 template (empty think block) for sql2pyspark-q4.gguf
 ├── docker-compose.yml, docker/, .dockerignore   # Docker: app (with Java 17 + PySpark), tools, ollama
 ├── docs/                         # Detailed guides (INDEX.md + 01–08)
 ├── deploy/                       # macmini/ (public site since 2026-11-08); former Ubuntu server: sql2pyspark.service, setup_server.sh, update_model.sh
@@ -164,10 +165,12 @@ Finetuning-LLM/
 │   ├── complex_shift_tables.py   # --tables file for the complex schema-shift set (complex_v8 rows on the 5 held-out synthetic domains)
 │   ├── name_slips.py             # counts failures with an unresolved table / column / field name per model and eval set
 │   ├── harness_suite.jsonl, harness_tables.py, harness_strict.py   # 21-query harness stretch set (from sql2pyspark_harness/), its tables, the type-strict re-check
+│   ├── build_harness_v2.py, harness_suite_v2.jsonl, harness_tables_v2.py # harness v2: 50 of the 51 sql2pyspark_sql_suite queries on 13 tables (Q20a left out), TEST ONLY
 │   ├── complex_v8_test.jsonl     # 300 held-out complex_v8 test pairs
 │   ├── logs-repair-rules/        # Console logs for v7 repair with Spark-default rules
 │   └── results/                  # <tag>__<set>.json results (+ v2..v4-split, v5..v8-repair, v7-repair-rules, v9 / v9-q4 / v10-q4 results, v9-q4-repair, inlist/, v11-heldout/, v12-heldout/, v13-heldout/, v14-heldout/, schema-shift/, complex-shift/, realstyle/, harness/)
 ├── sql2pyspark_harness/          # 21-query Spark SQL suite on 8 nested-type tables + type-strict compare_harness.py + 8 reference conversions
+├── sql2pyspark_sql_suite/        # 51-query suite (Part 1 = the harness suite, Part 2 = Q13-Q26 on 5 more tables): setup/, queries/, manifest.json, suite_all.sql
 └── llama.cpp/                    # Upstream checkout used for convert_hf_to_gguf.py
 ```
 
@@ -301,7 +304,8 @@ Whole signatures are held out for validation (10%) and test (5%). A signature is
 ### Qwen3.5-9B q9e → q9df3 (2026-11-22 → 11-25) — q9df3-q4 = `latest` since 2026-11-25
 
 - **Setup** ([qwen35_pilot/README.md](sql2pyspark-mlx/qwen35_pilot/README.md)): q9e (fresh QLoRA on one combined 53k mix, 16,800 micro-batches) failed the rule (hold-out 58); precision variants (Q8 / Q6 / imatrix) did not help; self-play on 6,000 queries + a short ORPO round from q9d gave q9f (hold-out 61 but fixed-set loops); the 50/50 merge q9df passed every number but looped on `SELECT *` + `[NOT] IN` / `[NOT] EXISTS` subqueries; a second ORPO round on 400 such Spark-verified pairs (q9f2) removed the loops; the final weight merge **q9df3 = 0.5 q9d + 0.25 q9f + 0.25 q9f2** keeps both.
-- **Outcome**: q9df3-q4 vs. v18a-q4: hold-out 61 / 61, v4 **21** / 20, fixed **147** / 145, complex **93** / 88, complex-shift **131** / 126, schema-shift 186 / 186, v11–v14 **295 / 247 / 150 / 200** / 281 / 232 / 148 / 195, failures **130** / 179, name slips **32** / 66, loop probe 28/30 with 0 loops (v18a 27/30). **Promoted** 2026-11-25 19:20 Bangkok time (owner pre-approved); `app.py` sends `"think": false` + `num_predict` 4,096; root GGUFs stay v18a; rollback `ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest`.
+- **Outcome**: q9df3-q4 vs. v18a-q4: hold-out 61 / 61, v4 **21** / 20, fixed **147** / 145, complex **93** / 88, complex-shift **131** / 126, schema-shift 186 / 186, v11–v14 **295 / 247 / 150 / 200** / 281 / 232 / 148 / 195, failures **130** / 179, name slips **32** / 66, loop probe 28/30 with 0 loops (v18a 27/30). **Promoted** 2026-11-25 19:20 Bangkok time (owner pre-approved); `app.py` sends `"think": false` + `num_predict` 4,096; root GGUFs stayed v18a until 2026-11-26 (then `sql2pyspark-q4.gguf` = q9df3-q4; a q9df3 Q8_0 build scored hold-out 59, so `sql2pyspark.gguf` stays v18a); rollback `ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest`.
+- **Harness v2 (2026-11-26)**: 50 queries from `sql2pyspark_sql_suite/` (`eval/harness_suite_v2.jsonl`, test only): q9df3-q4 6/50 (Part 1 5/21, Part 2 1/29), v18a-q4 5/50; most Part-2 answers fail on syntax / non-existent functions. Training-data pilot `sql2pyspark-mlx/harness_v20/`: 37 type-strict verified Kimi pairs for $8.94.
 
 ### Qwen3.5-9B polish rounds q9b, q9c, q9d (2026-11-20 → 11-22) — not promoted
 

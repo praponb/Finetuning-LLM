@@ -19,19 +19,19 @@ HARNESS = ROOT / "sql2pyspark_harness"
 SUITE = HARNESS / "sql2pyspark_test_suite.sql"
 
 
-def load_suite():
+def load_suite(suite: Path = SUITE):
     """The harness's own parser (compare_harness.load_suite): [Statement(id, sql)] with full-line comments removed."""
     spec = importlib.util.spec_from_file_location("compare_harness", HARNESS / "compare_harness.py")
     mod = importlib.util.module_from_spec(spec)
     sys.modules["compare_harness"] = mod          # its @dataclass needs the module registered
     spec.loader.exec_module(mod)
-    return mod.load_suite(SUITE)
+    return mod.load_suite(suite)
 
 
-def make_dataframes(spark) -> dict:
+def make_dataframes(spark, suite: Path = SUITE) -> dict:
     """Run the setup statements, materialize each view, return {"df_<table>": DataFrame} (views re-registered)."""
     frames = {}
-    for s in load_suite():
+    for s in load_suite(suite):
         if not s.is_setup:
             continue
         spark.sql(s.sql)

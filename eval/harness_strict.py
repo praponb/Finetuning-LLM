@@ -6,6 +6,7 @@ evaluate.py and runs each one through sql2pyspark_harness/compare_harness.compar
 data types, same multiset of rows (doubles to 6 places), every value forced to compute. No model is queried.
 
   python eval/harness_strict.py eval/results/harness/v18a-q4__harness_suite.json [more result files]
+  python eval/harness_strict.py --v2 eval/results/harness/v18a-q4__harness_suite_v2.json   (50-query set, 13 tables)
     -> prints PASS / FAIL_SCHEMA / FAIL_DATA / ERROR_PYSPARK per case, writes <file>.strict.json
 """
 from __future__ import annotations
@@ -33,7 +34,11 @@ def builder(code: str, tables: list[str]):
 
 
 def main(paths: list[str]) -> None:
-    stmts = ht.load_suite()
+    if paths and paths[0] == "--v2":        # eval/harness_suite_v2.jsonl: sql2pyspark_sql_suite/suite_all.sql
+        import harness_tables_v2 as h2
+        paths, stmts = paths[1:], h2.load_suite()
+    else:
+        stmts = ht.load_suite()
     ch = sys.modules["compare_harness"]       # loaded by load_suite()
     by_id = {f"harness_{s.id}": s for s in stmts if not s.is_setup}
     tables = [s.id.split(":", 1)[1] for s in stmts if s.is_setup]
