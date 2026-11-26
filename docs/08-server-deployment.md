@@ -7,7 +7,7 @@ Three LaunchDaemons start at boot (after the FileVault unlock) without a GUI log
 
 | Daemon | What |
 | :--- | :--- |
-| `com.praponb.ollama` | `ollama serve` on 127.0.0.1:11434 (models in `~/.ollama`; replaces the Ollama app, which is no longer a Login Item) |
+| `com.praponb.ollama` | `ollama serve` on 127.0.0.1:11434 (models in `~/.ollama`; `OLLAMA_NUM_PARALLEL=1` since 2026-11-26; replaces the Ollama app, which is no longer a Login Item) |
 | `com.praponb.sql2pyspark` | Streamlit `app.py` on **127.0.0.1:8502** from `~/GitHub/Finetuning-LLM` with the project venv (`make app` keeps 8501) |
 | `com.praponb.cloudflared-sql2pyspark` | Cloudflare Tunnel **`sql2pyspark`** (`1f233bc8…`), config `~/.cloudflared/sql2pyspark-config.yml` |
 
@@ -16,6 +16,10 @@ Three LaunchDaemons start at boot (after the FileVault unlock) without a GUI log
 - **Kimi repair**: on, with **Kimi K3.1 Pro** (`KIMI_MODEL=kimi-k3.1-pro` in the repo's `.env`).
 - **New model**: `ollama cp sql2pyspark:<tag> sql2pyspark:latest` on the Mac mini; `deploy/update_model.sh` is not needed.
 - **Code change**: update `~/GitHub/Finetuning-LLM`, then `sudo launchctl kickstart -k system/com.praponb.sql2pyspark`.
+- **Ollama app incident (2026-11-17 → 11-26)**: the daemon was unloaded on 11-17 and `Ollama.app` took port 11434, so
+  the site ran on the app's settings. Fixed on 2026-11-26 (Bangkok time): `OLLAMA_NUM_PARALLEL=1` added to
+  `com.praponb.ollama.plist` and reinstalled, the app quit and removed from *Open at Login*, and the daemon owns the port
+  again. Don't open `Ollama.app` on the Mac mini.
 - **Power**: `pmset sleep 0 autorestart 1`; after a power cut the Mac boots but waits for the FileVault password.
 - Install, operation, logs and rollback: [deploy/macmini/README.md](../deploy/macmini/README.md).
 

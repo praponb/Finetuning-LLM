@@ -419,7 +419,8 @@ Mac mini, Qwen3.5 models scored with `--think false`; scripts in [`qwen35_pilot/
 **Promoted** (owner pre-approved, 2026-11-25 19:20 Bangkok time): `ollama cp sql2pyspark:q9df3-q4 sql2pyspark:latest`
 (`94c353738904`). For a Qwen3.5 model `app.py` now sends `"think": false` (without it the model "thinks" and times out)
 and caps a reply at `num_predict` 4,096 tokens (a rare loop would otherwise hold the single Ollama slot for minutes);
-both settings are harmless for v18a-q4. The app test (Streamlit AppTest, 7 conversions incl. 4 `SELECT *` + subquery)
+both settings are harmless for v18a-q4. Since 2026-11-26 the app warns before converting SQL over 12,000 characters
+(its reply can't fit in 4,096 tokens) and shows a notice when a reply is cut off at the cap (no automatic Kimi repair then). The app test (Streamlit AppTest, 7 conversions incl. 4 `SELECT *` + subquery)
 passed with q9df3-q4 and with v18a-q4. The root GGUFs stay v18a. **Rollback:** `ollama cp sql2pyspark:v18a-q4
 sql2pyspark:latest` (works with the new `app.py`). Kept: adapters `adapters_q9d/e/f/f2`, `data_q9f`, `data_q9f2`,
 `selfplay/`, every variant GGUF in `variants/gguf/` and its Ollama tag.

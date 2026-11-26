@@ -154,7 +154,9 @@ On the 4 real-world queries this mode fixes 3 (0/4 before; $0.79 in total, 1.5-6
 
 ### 4. Error Handling
 
-- **Ollama unreachable**: shows `Cannot connect to Ollama at <OLLAMA_URL>. Make sure the Ollama service is running (open -a Ollama).`
+- **Ollama unreachable**: shows `Cannot connect to Ollama at <OLLAMA_URL>. Make sure the Ollama service is running.` (the hint `open -a Ollama` was dropped on 2026-11-26: on the Mac mini the LaunchDaemon serves Ollama, and the app must not be opened).
+- **Very long SQL** (since 2026-11-26): above `VERY_LONG_SQL_CHARS` = 12,000 characters (~3,200 tokens at `CHARS_PER_TOKEN` 3.7) a warning appears under the input before converting. The reply needs ~1.1-1.2 tokens per input token, so it can't fit in `MAX_REPLY_TOKENS` (the `num_predict` cap of 4,096) and would be cut off after 3-4 minutes of the single Ollama slot; the warning suggests converting one CTE or subquery at a time. Triggered by two capped site requests on 2026-11-26 (08:17 and 08:47 Bangkok time, the same 26,138-token input).
+- **Cut-off reply**: when Ollama returns `done_reason: "length"`, the app shows a notice that the code is incomplete and skips the automatic Kimi repair (costly on huge SQL); the *Check and repair* button stays.
 - **Blank input**: shows a warning.
 - **Timeout**: 180 seconds per request (600 seconds for SQL longer than 2,000 characters; raised from 120/300 s for the slower 7B model, which needed up to ~270 s on the real-world queries).
 
