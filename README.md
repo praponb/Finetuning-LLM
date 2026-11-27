@@ -7,10 +7,10 @@ Spark SQL into idiomatic PySpark DataFrame code, then serves it with **Ollama** 
 > [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) is the single-file technical guide;
 > [docs/INDEX.md](docs/INDEX.md) indexes the modular guides (architecture, data, training, evaluation, serving, file catalog, runbook).
 
-**Models in use:** on the **Mac mini**, `sql2pyspark:latest` = **q9df3-q4** (Qwen3.5-9B) since 2026-11-25 19:20 Bangkok time
-(`ollama cp sql2pyspark:q9df3-q4 sql2pyspark:latest`; see [Qwen3.5-9B q9e → q9df3](#qwen35-9b-q9e--q9df3-2026-11-22--11-25--q9df3-q4-promoted);
-roll back with `ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest`; v18a-q4 was `latest` 2026-11-15 → 11-25, v15-q4
-2026-10-09 → 11-15). The app sends `"think": false` and caps replies at 4,096 tokens for the Qwen3.5 model. The
+**Models in use:** on the **Mac mini**, `sql2pyspark:latest` = **q9gm-q4** (Qwen3.5-9B) since 2026-11-27 12:02 Bangkok time
+(`ollama cp sql2pyspark:q9gm-q4 sql2pyspark:latest`; see [Qwen3.5-9B q9g](#qwen35-9b-q9g-2026-11-26--11-27--q9gm-q4-promoted);
+roll back with `ollama cp sql2pyspark:q9df3-q4 sql2pyspark:latest`; q9df3-q4 was `latest` 2026-11-25 → 11-27, v18a-q4
+2026-11-15 → 11-25, v15-q4 2026-10-09 → 11-15). The app sends `"think": false` and caps replies at 4,096 tokens for the Qwen3.5 model. The
 public site **<https://sql2pyspark.praponb.com>** runs on the **Mac mini M6** since 2026-11-08 and serves that same
 `latest`, so promoting a model on the Mac mini also updates the site (the Ubuntu server served it from 2026-09-29 to
 2026-11-08; see [docs/08](docs/08-server-deployment.md)).
@@ -81,7 +81,12 @@ complex 88/100 (v15-q4 89), complex schema-shift **126/150** (v15-q4 110), fewes
 rule by one complex query; the owner promoted it anyway. The other candidate, **v18avg** (the exact average of the v15
 and v17 adapters), lost on fixed and complex. See [v18 and Qwen3.5 results](#v18-and-qwen35-results-2026-11-15--11-18).
 
-**q9df3-q4** (2026-11-25, **`latest` since 2026-11-25 19:20**): Qwen3.5-9B, a weight merge of the polish round q9d, an
+**q9gm-q4** (2026-11-27, **`latest` since 2026-11-27 12:02**): Qwen3.5-9B, a 50/50 weight merge of q9df3 and **q9g**, a
+full round continued from q9df3 with 4,000 free template pairs on nested types, maps, JSON and higher-order functions.
+Against q9df3-q4: fixed 149 vs. 147, complex 98 vs. 93, complex-shift 135 vs. 131, harness v2 8/50 vs. 6/50, failures
+115 vs. 130; v4 20 vs. 21 (accepted). See [Qwen3.5-9B q9g](#qwen35-9b-q9g-2026-11-26--11-27--q9gm-q4-promoted).
+
+**q9df3-q4** (2026-11-25, `latest` 2026-11-25 19:20 → 11-27 12:02, the rollback): Qwen3.5-9B, a weight merge of the polish round q9d, an
 ORPO round on its own Spark-checked mistakes (q9f) and a small loop-fix round (q9f2). It passes every part of the
 promotion rule: hold-out 61, v4 21, fixed 147, complex 93, complex-shift 131, failures 130 vs. 179 and name
 slips 32 vs. 66 (v18a-q4). See [Qwen3.5-9B q9e → q9df3](#qwen35-9b-q9e--q9df3-2026-11-22--11-25--q9df3-q4-promoted).
@@ -373,6 +378,64 @@ v4 hold-out, correct results (lenient) by feature group:
 **v3 vs. v2:** v3 fixes 3 of v2's 6 hold-out failures (`GROUP BY 1` on a `CASE`, two unbalanced-parenthesis slips)
 with no regressions. On the test sample the two are tied (v2 286/300, v3 284/300).
 
+### Qwen3.5-9B q9g (2026-11-26 → 11-27) — q9gm-q4 promoted
+
+On 2026-11-26 the owner asked for one more **full** Qwen3.5-9B training round with no new Kimi API spend. The aim was
+to keep the promotion-rule numbers and lift **harness v2** (50 nested-type / map / JSON / higher-order-function /
+semi-join / set-operation / time-window queries; q9df3-q4 6/50). Full record: [`qwen35_pilot/q9g/`](sql2pyspark-mlx/qwen35_pilot/q9g/README.md).
+
+1. **Exact starting point:**
+   - q9df3 (0.5 q9d + 0.25 q9f + 0.25 q9f2, all rank 32) is exactly one rank-96 LoRA on the 4-bit base: concatenated
+     A matrices, weighted B matrices ([`combine_adapters.py`](sql2pyspark-mlx/qwen35_pilot/q9g/combine_adapters.py)).
+   - Its fused weights match the q9df3 merge to bf16 rounding.
+   - Its Q4 export scored 61 / 21 / 147, the same as q9df3-q4.
+2. **Free template pairs** [`nested_v20/`](sql2pyspark-mlx/nested_v20/README.md):
+   - 6,000 SQL + PySpark pairs in 17 families (posexplode / inline, maps, `from_json`, higher-order functions,
+     `max_by`, LEFT SEMI / ANTI, INTERSECT / EXCEPT ALL, RANGE INTERVAL frames, UNPIVOT, time buckets, date spines,
+     DECIMAL, GROUP BY ALL, a 3-stage pipeline).
+   - Each pair has its own typed tables from the training domains.
+   - 5,797 passed the type-strict Spark check.
+3. **Training mix and run:**
+   - Mix `data_q9g` ([`build_q9g.py`](sql2pyspark-mlx/qwen35_pilot/polishmix/build_q9g.py)): 4,000 nested_v20 + 37 Kimi pilot pairs × 3 +
+     400 `SELECT *` pairs + 7,500 replay = 12,011 lines. Leakage 0.
+   - Training continued the rank-96 adapter: 9,600 micro-batches, lr 1e-5 → 5e-7, 11.7 h (2026-11-26 14:47 →
+     11-27 02:30), 9 auto-resumed Metal restarts, no divergence.
+4. **Candidates:**
+   - q9g-q4 alone failed the quick gate (hold-out 59).
+   - **q9gm-q4**, a 50/50 weight merge of the fused q9g and q9df3 models, passed the gate and the full evals.
+   - Merges at q9g weight 0.35 / 0.65 passed the gate but did not beat q9gm-q4 (harness v2 5 / 7).
+
+| Eval set | v18a-q4 | q9df3-q4 (before) | **q9gm-q4** (`latest`) | Rule |
+| --- | --- | --- | --- | --- |
+| Hold-out (62) | 61 | 61 | **61** | ≥ 61 |
+| v4 hold-out (25) | 20 | **21** | 20 | ≥ 20 |
+| Fixed test (150) | 145 | 147 | **149** | ≥ 145 |
+| complex_v8 test (100) | 88 | 93 | **98** | ≥ 88 |
+| Complex schema-shift (150 of 300) | 126 | 131 | **135** | ≥ 126 |
+| Schema-shift (200) | 186 | 186 | **187** | no clear drop |
+| targeted_v11 / v12 held-out (300 / 250) | 281 / 232 | 295 / 247 | **297** / **249** | no clear drop |
+| targeted_v13 / v14 held-out (150 / 200) | 148 / 195 | **150** / **200** | **150** / **200** | no clear drop |
+| `IN` / `NOT IN` (50) | 50 | 50 | 50 | |
+| Failures, all sets / with a name slip | 179 / 66 | 130 / **32** | **115** / 34 | slips ≤ 53 |
+| Loop probe `SELECT *` + subquery (30) | 27, 0 loops | 28, 0 loops | 28, 0 loops | |
+| Harness v1 (21) / harness v2 (50), type-strict | 5 / 5 | 5 / 6 | **6** / **8** (Part 2: 2/29) | |
+| Real queries (4) / real-style pairs (74) | 0 / 0 | 0 / 0 | 0 / 0 | |
+
+**Promoted** (owner pre-approved for this round, v4 20 vs. 21 accepted; 2026-11-27 12:02 Bangkok time):
+- `ollama cp sql2pyspark:q9gm-q4 sql2pyspark:latest` (`20b780359182`).
+- `sql2pyspark-q4.gguf` = q9gm-q4 (same SHA-256 as `variants/gguf/q9gm-q4.gguf`). `sql2pyspark.gguf` stays v18a Q8_0.
+- Checks after the switch: AppTest on the live `app.py` 7/7 (2–5 s each), the long-input test passed, health 200, and
+  an anonymous request gets a 302 to Cloudflare Access.
+
+**Rollback:**
+```bash
+ollama cp sql2pyspark:q9df3-q4 sql2pyspark:latest
+cp sql2pyspark-mlx/qwen35_pilot/variants/gguf/q9df3-q4.gguf sql2pyspark-q4.gguf
+```
+
+Harness v2 Part 2 is still mostly unsolved: most long answers fail before the results can be compared (wrong `pivot`
+calls, `Column is not callable`, indentation).
+
 ### Qwen3.5-9B q9e → q9df3 (2026-11-22 → 11-25) — q9df3-q4 promoted
 
 On 2026-11-22 the owner asked for more Qwen3.5 training aimed at passing the promotion rule. Steps, in order (all on the
@@ -400,7 +463,7 @@ Mac mini, Qwen3.5 models scored with `--think false`; scripts in [`qwen35_pilot/
    [`step_q9df3.sh`](sql2pyspark-mlx/qwen35_pilot/variants/step_q9df3.sh), [`avg_weights.py`](sql2pyspark-mlx/qwen35_pilot/variants/avg_weights.py)): probe 28/30 with
    0 loops **and** hold-out 61. The 1/8 mix (q9df3b) kept one loop.
 
-| Eval set | v18a-q4 (before) | q9d-q4 | q9df-q4 | **q9df3-q4** (`latest`) | Rule |
+| Eval set | v18a-q4 (before) | q9d-q4 | q9df-q4 | **q9df3-q4** (`latest` 11-25 → 11-27) | Rule |
 | --- | --- | --- | --- | --- | --- |
 | Hold-out (62) | 61 | 59 | 61 | **61** | ≥ 61 |
 | v4 hold-out (25) | 20 | **22** | 21 | 21 | ≥ 20 |
@@ -1086,13 +1149,14 @@ sql2pyspark-mlx/   schemas.py, sqlspec.py, generate_dataset.py, advanced.py (v4�
                    complex_v16/ (10k complex pairs on the synthetic catalog + complex schema-shift set, 21k mix & v16 LoRA config; not promoted),
                    complex_v17/ (v15 mix + 4,000 complex_v16 pairs = 29k, v17 LoRA config + adapters; not promoted),
                    v18/ (v18avg adapter average + v18a config, adapters and log; v18a-q4 = rollback, `latest` 11-15 → 11-25),
-                   qwen35_pilot/ (Qwen3.5-9B: pilot, runs 2-9, q9a-q9f2, mlx-lm patches, polish / self-play / ORPO scripts, variants/ merges; q9df3-q4 = `latest`),
+                   qwen35_pilot/ (Qwen3.5-9B: pilot, runs 2-9, q9a-q9f2, mlx-lm patches, polish / self-play / ORPO scripts, variants/ merges, q9g/ round; q9gm-q4 = `latest`),
                    qwen35moe/ (Qwen3.5-35B-A3B: MoE LoRA launcher, expert export fix, configs, logs; discarded),
                    realstyle_v19/ (Kimi-built real-style pairs: generator, 74-pair test set, eval_realstyle.py),
+                   nested_v20/ (free template pairs for the harness gaps, type-strict Spark check; used by q9g; outputs git-ignored),
                    harness_v20/ (Kimi-built harness-style training pairs, type-strict check; 2026-11-26 pilot: 37 pairs, outputs git-ignored),
                    runs/v2/ … runs/v7/ (adapters, configs, logs; v6/v7 data is in the git history too)
 sql2pyspark.gguf   Q8_0 GGUF of v18a (copied from the Ollama blob at the 2026-11-15 promotion); Ollama keeps its own copy of every tag
-sql2pyspark-q4.gguf Q4_K_M GGUF of q9df3-q4 (`latest`, Qwen3.5-9B, 5.6 GB; copied from qwen35_pilot/variants/gguf/ on 2026-11-26, same SHA-256 as the Ollama blob; v18a-q4 before)
+sql2pyspark-q4.gguf Q4_K_M GGUF of q9gm-q4 (`latest`, Qwen3.5-9B, 5.6 GB; copied from qwen35_pilot/variants/gguf/ on 2026-11-27, same SHA-256 as the Ollama blob; q9df3-q4 11-26 → 11-27, v18a-q4 before)
 Modelfile.qwen35   Qwen3.5 Modelfile (empty think block) for sql2pyspark-q4.gguf; `Modelfile` (Qwen2.5 template) is for sql2pyspark.gguf
 eval/              build_holdout.py, holdout.jsonl, build_holdout_v4.py, holdout_v4.jsonl, build_real_queries.py,
                    real_queries.jsonl, real_tables.py, test_fixed.jsonl, evaluate.py, report.py, agent_repair.py,

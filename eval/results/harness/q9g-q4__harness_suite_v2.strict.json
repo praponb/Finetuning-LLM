@@ -1,0 +1,311 @@
+{
+  "model": "sql2pyspark:q9g-q4",
+  "counts": {
+    "ERROR_PYSPARK": 43,
+    "PASS": 5,
+    "FAIL_SCHEMA": 1,
+    "FAIL_DATA": 1
+  },
+  "cases": [
+    {
+      "id": "harness_Q01",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 14) (<pyspark>, line 14)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q02",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q03",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkTypeError: [NOT_ITERABLE] Column is not iterable.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNSUPPORTED_GROUPING_EXPRESSION] grouping()/grouping_id() can only be used with GroupingSets/Cube/Rollup. SQLSTATE: 42K0E;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04b",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `grouping_id` is not supported.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q04c",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q05a",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 11) (<pyspark>, line 11)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `tags` cannot be resolved. Did you mean one of the following? [`sku`, `brand`, `category`, `list_price`, `product_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q05c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `kv` cannot be resolved. Did you mean one of the following? [`orders`.`customer_id`, `array(struct(struct(first_order AS k, CAST(min(order_ts) AS STRING) AS v), struct(last_order AS k, CAST(max(order_ts) AS STRING) AS v), struct(order_count AS k, CAST(count(1) AS STRING) AS v)) AS kv)`]. SQLS",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `max_line_local` cannot be resolved. Did you mean one of the following? [`c`.`interests`, `c`.`email`, `c`.`tier`, `c`.`city`, `c`.`full_name`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q06b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q06c",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `oi`.`product_id` cannot be resolved. Did you mean one of the following? [`p`.`product_id`, `oi`.`order_id`, `p`.`product_name`, `oi`.`order_ts`, `oi`.`ship_to`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q07",
+      "status": "ERROR_PYSPARK",
+      "message": "NameError: name 'df_browsers' is not defined",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q08",
+      "status": "ERROR_PYSPARK",
+      "message": "IndentationError: unexpected indent (<pyspark>, line 47)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q09a",
+      "status": "FAIL_SCHEMA",
+      "message": "  col 5: name 'matched_order' vs 'order_id'",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q09b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q10a",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q10b",
+      "status": "PASS",
+      "message": "",
+      "loose_match": true
+    },
+    {
+      "id": "harness_Q11a",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: '(' was never closed (<pyspark>, line 30)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q11b",
+      "status": "FAIL_DATA",
+      "message": "13 row(s) only in SQL, 27 row(s) only in PySpark (row counts 24 vs 38)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q12",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unmatched ')' (<pyspark>, line 181)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q13a",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 55) (<pyspark>, line 55)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q13b",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q14a",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: '(' was never closed (<pyspark>, line 54)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q14b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: '(' was never closed (<pyspark>, line 22)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q15a",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkTypeError: [NOT_ITERABLE] Column is not iterable.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q15b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: invalid syntax. Perhaps you forgot a comma? (<pyspark>, line 41)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q16",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `ch`.`parent_id` cannot be resolved. Did you mean one of the following? [`p`.`parent_id`, `p`.`node_id`, `p`.`path_ids`, `p`.`node_name`, `p`.`path_names`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q17a",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: invalid syntax. Perhaps you forgot a comma? (<pyspark>, line 10)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q17b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: closing parenthesis ']' does not match opening parenthesis '(' (<pyspark>, line 7)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q18a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNSUPPORTED_FEATURE.LATERAL_COLUMN_ALIAS_IN_WINDOW] The feature is not supported: Referencing a lateral column alias `start` in window expression \"sum(orders) OVER (PARTITION BY grain ORDER BY lateralAliasReference(start) ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)\". SQLSTATE: 0A000",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q18b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [MULTI_ALIAS_WITHOUT_GENERATOR] Multi part aliasing (session_start, session_end) is not supported with \"session_window\" as it is not a generator function. SQLSTATE: 42K0E;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q18c",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: unterminated string literal (detected at line 43) (<pyspark>, line 43)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q19",
+      "status": "ERROR_PYSPARK",
+      "message": "AttributeError: module 'pyspark.sql.functions' has no attribute 'null'",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q20b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: '(' was never closed (<pyspark>, line 4)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q21a",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: collect_list() takes 1 positional argument but 2 were given",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q21b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: '(' was never closed (<pyspark>, line 3)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q22a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `signup_date` cannot be resolved. Did you mean one of the following? [`n_orders`, `n_channels`, `last_order_ts`, `orders`.`customer_id`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q22b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `l2`.`unit_usd` cannot be resolved. Did you mean one of the following? [`l`.`unit_usd`, `l2`.`cnt`, `l`.`line_no`, `l`.`order_ts`, `l`.`category`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q22c",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkAttributeError: [ATTRIBUTE_NOT_SUPPORTED] Attribute `subtractAll` is not supported.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q23a",
+      "status": "ERROR_PYSPARK",
+      "message": "NameError: name 'NULL' is not defined",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q23b",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: invalid syntax. Perhaps you forgot a comma? (<pyspark>, line 22)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q23c",
+      "status": "ERROR_PYSPARK",
+      "message": "SyntaxError: invalid decimal literal (<pyspark>, line 28)",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q24a",
+      "status": "ERROR_PYSPARK",
+      "message": "PySparkTypeError: [NOT_ITERABLE] Column is not iterable.",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q24b",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q24c",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: GroupedData.pivot() takes from 2 to 3 positional arguments but 4 were given",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q25a",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `t`.`depth` cannot be resolved. Did you mean one of the following? [`t`.`0`, `t`.`node_id`, `c`.`node_id`, `t`.`node_name`, `c`.`node_name`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q25b",
+      "status": "ERROR_PYSPARK",
+      "message": "AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `o`.`order_id` cannot be resolved. Did you mean one of the following? [`ym`, `net_local`]. SQLSTATE: 42703;",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q25c",
+      "status": "ERROR_PYSPARK",
+      "message": "TypeError: 'Column' object is not callable",
+      "loose_match": false
+    },
+    {
+      "id": "harness_Q26",
+      "status": "ERROR_PYSPARK",
+      "message": "IndentationError: unexpected indent (<pyspark>, line 109)",
+      "loose_match": false
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/11/26 14:32:46 WARN Utils: Your hostname, PraponBs-Mac-Mini-M6.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.50 instead (on interface en0)
+26/11/26 14:32:46 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+26/11/26 14:32:46 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+eval SQL strings: 2195; inside train: 0; valid/train overlap: 0
+{
+  "nested_v20": 4000,
+  "harness_v20_pilot_x3": 111,
+  "star_pool": 400,
+  "replay_q9e": 7500,
+  "train": 12011,
+  "valid": 837,
+  "nested_families": {
+    "array_fns": 252,
+    "by_agg": 252,
+    "decimal": 254,
+    "group_all_tuple": 245,
+    "hof": 256,
+    "inline": 249,
+    "json": 253,
+    "map": 252,
+    "pipeline": 246,
+    "posexplode": 249,
+    "range_frame": 248,
+    "semi_anti": 248,
+    "setop": 142,
+    "spine": 193,
+    "struct_collect": 159,
+    "time_bucket": 252,
+    "unpivot": 250
+  },
+  "dropped": {
+    "nested_not_ok": 203,
+    "nested_dup_sql": 129
+  },
+  "eval_sql_inside_train": 0,
+  "valid_train_overlap": 0,
+  "max_line_chars": 12695,
+  "mean_line_chars": 2057,
+  "spot_check_nested_v20": {
+    "ok": 200
+  },
+  "spot_check_replay": {
+    "checked": 200,
+    "ok": 200,
+    "stem_columns_renamed_for_check": 7,
+    "candidates": 2935
+  }
+}
