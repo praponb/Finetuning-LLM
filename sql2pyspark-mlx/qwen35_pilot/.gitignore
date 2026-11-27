@@ -30,3 +30,6 @@ data_q9e/train.jsonl
 # variants/: merge working folder (fused HF models, f16 GGUFs) and the port-8512 test log
 variants/work/
 variants/apptest/*.log
+# q9g: the rank-96 adapters (~520 MB) are over GitHub's 100 MB limit (kept on the Mac mini; adapter_config.json tracked)
+adapters_q9g/adapters.safetensors
+adapters_q9g_init/adapters.safetensors

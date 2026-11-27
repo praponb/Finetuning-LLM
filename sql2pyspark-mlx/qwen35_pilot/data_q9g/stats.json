@@ -1,0 +1,44 @@
+{
+  "nested_v20": 4000,
+  "harness_v20_pilot_x3": 111,
+  "star_pool": 400,
+  "replay_q9e": 7500,
+  "train": 12011,
+  "valid": 837,
+  "nested_families": {
+    "array_fns": 252,
+    "by_agg": 252,
+    "decimal": 254,
+    "group_all_tuple": 245,
+    "hof": 256,
+    "inline": 249,
+    "json": 253,
+    "map": 252,
+    "pipeline": 246,
+    "posexplode": 249,
+    "range_frame": 248,
+    "semi_anti": 248,
+    "setop": 142,
+    "spine": 193,
+    "struct_collect": 159,
+    "time_bucket": 252,
+    "unpivot": 250
+  },
+  "dropped": {
+    "nested_not_ok": 203,
+    "nested_dup_sql": 129
+  },
+  "eval_sql_inside_train": 0,
+  "valid_train_overlap": 0,
+  "max_line_chars": 12695,
+  "mean_line_chars": 2057,
+  "spot_check_nested_v20": {
+    "ok": 200
+  },
+  "spot_check_replay": {
+    "checked": 200,
+    "ok": 200,
+    "stem_columns_renamed_for_check": 7,
+    "candidates": 2935
+  }
+}

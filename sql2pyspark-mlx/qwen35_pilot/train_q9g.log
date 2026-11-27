@@ -1,0 +1,814 @@
+start 2026-11-26 14:47:49 +0700
+[train_resumable] segment 1: iterations 1..9600 (qwen35_pilot/lora_config_q9g.yaml)
+Loading configuration file qwen35_pilot/lora_config_q9g.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from ./qwen35_pilot/adapters_q9g_init/adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 9600
+Calculating loss...:   0%|          | 0/250 [00:00<?, ?it/s]Calculating loss...:   0%|          | 1/250 [00:01<07:58,  1.92s/it]Calculating loss...:   1%|          | 2/250 [00:03<06:31,  1.58s/it]Calculating loss...:   1%|          | 3/250 [00:04<06:18,  1.53s/it]Calculating loss...:   2%|▏         | 4/250 [00:09<10:55,  2.66s/it]Calculating loss...:   2%|▏         | 5/250 [00:10<09:29,  2.32s/it]Calculating loss...:   2%|▏         | 6/250 [00:11<07:20,  1.81s/it]Calculating loss...:   3%|▎         | 7/250 [00:13<07:01,  1.74s/it]Calculating loss...:   3%|▎         | 8/250 [00:14<06:31,  1.62s/it]Calculating loss...:   4%|▎         | 9/250 [00:15<06:08,  1.53s/it]Calculating loss...:   4%|▍         | 10/250 [00:18<07:26,  1.86s/it]Calculating loss...:   4%|▍         | 11/250 [00:22<09:28,  2.38s/it]Calculating loss...:   5%|▍         | 12/250 [00:22<06:58,  1.76s/it]Calculating loss...:   5%|▌         | 13/250 [00:24<07:46,  1.97s/it]Calculating loss...:   6%|▌         | 14/250 [00:26<07:30,  1.91s/it]Calculating loss...:   6%|▌         | 15/250 [00:26<05:32,  1.41s/it]Calculating loss...:   6%|▋         | 16/250 [00:29<06:53,  1.77s/it]Calculating loss...:   7%|▋         | 17/250 [00:29<05:06,  1.31s/it]Calculating loss...:   7%|▋         | 18/250 [00:30<03:56,  1.02s/it]Calculating loss...:   8%|▊         | 19/250 [00:30<03:02,  1.26it/s]Calculating loss...:   8%|▊         | 20/250 [00:30<02:36,  1.47it/s]Calculating loss...:   8%|▊         | 21/250 [00:33<04:23,  1.15s/it]Calculating loss...:   9%|▉         | 22/250 [00:34<04:24,  1.16s/it]Calculating loss...:   9%|▉         | 23/250 [00:35<04:24,  1.16s/it]Calculating loss...:  10%|▉         | 24/250 [00:36<04:34,  1.21s/it]Calculating loss...:  10%|█         | 25/250 [00:37<03:52,  1.04s/it]Calculating loss...:  10%|█         | 26/250 [00:39<04:39,  1.25s/it]Calculating loss...:  11%|█         | 27/250 [00:40<05:06,  1.38s/it]Calculating loss...:  11%|█         | 28/250 [00:44<08:15,  2.23s/it]Calculating loss...:  12%|█▏        | 29/250 [00:46<07:03,  1.91s/it]Calculating loss...:  12%|█▏        | 30/250 [00:47<06:05,  1.66s/it]Calculating loss...:  12%|█▏        | 31/250 [00:48<05:31,  1.51s/it]Calculating loss...:  13%|█▎        | 32/250 [00:48<04:11,  1.16s/it]Calculating loss...:  13%|█▎        | 33/250 [00:49<03:21,  1.08it/s]Calculating loss...:  14%|█▎        | 34/250 [00:49<02:51,  1.26it/s]Calculating loss...:  14%|█▍        | 35/250 [00:51<04:05,  1.14s/it]Calculating loss...:  14%|█▍        | 36/250 [00:52<04:20,  1.22s/it]Calculating loss...:  15%|█▍        | 37/250 [00:56<06:37,  1.87s/it]Calculating loss...:  15%|█▌        | 38/250 [00:57<05:50,  1.65s/it]Calculating loss...:  16%|█▌        | 39/250 [00:57<04:30,  1.28s/it]Calculating loss...:  16%|█▌        | 40/250 [00:58<03:29,  1.00it/s]Calculating loss...:  16%|█▋        | 41/250 [01:01<05:43,  1.64s/it]Calculating loss...:  17%|█▋        | 42/250 [01:01<04:19,  1.25s/it]Calculating loss...:  17%|█▋        | 43/250 [01:03<05:17,  1.54s/it]Calculating loss...:  18%|█▊        | 44/250 [01:04<04:05,  1.19s/it]Calculating loss...:  18%|█▊        | 45/250 [01:05<03:46,  1.10s/it]Calculating loss...:  18%|█▊        | 46/250 [01:05<02:57,  1.15it/s]Calculating loss...:  19%|█▉        | 47/250 [01:06<02:52,  1.18it/s]Calculating loss...:  19%|█▉        | 48/250 [01:07<03:28,  1.03s/it]Calculating loss...:  20%|█▉        | 49/250 [01:08<02:45,  1.22it/s]Calculating loss...:  20%|██        | 50/250 [01:08<02:33,  1.31it/s]Calculating loss...:  20%|██        | 51/250 [01:08<02:01,  1.64it/s]Calculating loss...:  21%|██        | 52/250 [01:09<01:43,  1.92it/s]Calculating loss...:  21%|██        | 53/250 [01:09<01:44,  1.89it/s]Calculating loss...:  22%|██▏       | 54/250 [01:10<01:45,  1.86it/s]Calculating loss...:  22%|██▏       | 55/250 [01:12<02:57,  1.10it/s]Calculating loss...:  22%|██▏       | 56/250 [01:14<04:25,  1.37s/it]Calculating loss...:  23%|██▎       | 57/250 [01:16<05:06,  1.59s/it]Calculating loss...:  23%|██▎       | 58/250 [01:16<03:48,  1.19s/it]Calculating loss...:  24%|██▎       | 59/250 [01:18<04:11,  1.31s/it]Calculating loss...:  24%|██▍       | 60/250 [01:18<03:13,  1.02s/it]Calculating loss...:  24%|██▍       | 61/250 [01:19<02:36,  1.21it/s]Calculating loss...:  25%|██▍       | 62/250 [01:20<02:48,  1.12it/s]Calculating loss...:  25%|██▌       | 63/250 [01:21<02:47,  1.12it/s]Calculating loss...:  26%|██▌       | 64/250 [01:21<02:22,  1.31it/s]Calculating loss...:  26%|██▌       | 65/250 [01:23<03:16,  1.06s/it]Calculating loss...:  26%|██▋       | 66/250 [01:23<02:39,  1.16it/s]Calculating loss...:  27%|██▋       | 67/250 [01:26<04:12,  1.38s/it]Calculating loss...:  27%|██▋       | 68/250 [01:27<04:06,  1.35s/it]Calculating loss...:  28%|██▊       | 69/250 [01:30<05:06,  1.69s/it]Calculating loss...:  28%|██▊       | 70/250 [01:31<05:08,  1.71s/it]Calculating loss...:  28%|██▊       | 71/250 [01:32<03:47,  1.27s/it]Calculating loss...:  29%|██▉       | 72/250 [01:32<02:55,  1.01it/s]Calculating loss...:  29%|██▉       | 73/250 [01:34<03:39,  1.24s/it]Calculating loss...:  30%|██▉       | 74/250 [01:34<02:53,  1.02it/s]Calculating loss...:  30%|███       | 75/250 [01:37<04:31,  1.55s/it]Calculating loss...:  30%|███       | 76/250 [01:40<05:26,  1.88s/it]Calculating loss...:  31%|███       | 77/250 [01:41<04:36,  1.60s/it]Calculating loss...:  31%|███       | 78/250 [01:41<03:28,  1.21s/it]Calculating loss...:  32%|███▏      | 79/250 [01:44<05:03,  1.77s/it]Calculating loss...:  32%|███▏      | 80/250 [01:45<03:55,  1.39s/it]Calculating loss...:  32%|███▏      | 81/250 [01:46<03:36,  1.28s/it]Calculating loss...:  33%|███▎      | 82/250 [01:47<03:14,  1.16s/it]Calculating loss...:  33%|███▎      | 83/250 [01:47<02:35,  1.08it/s]Calculating loss...:  34%|███▎      | 84/250 [01:49<03:10,  1.15s/it]Calculating loss...:  34%|███▍      | 85/250 [01:49<02:32,  1.08it/s]Calculating loss...:  34%|███▍      | 86/250 [01:50<02:21,  1.16it/s]Calculating loss...:  35%|███▍      | 87/250 [01:51<02:48,  1.04s/it]Calculating loss...:  35%|███▌      | 88/250 [01:51<02:13,  1.22it/s]Calculating loss...:  36%|███▌      | 89/250 [01:52<01:59,  1.35it/s]Calculating loss...:  36%|███▌      | 90/250 [01:52<01:41,  1.58it/s]Calculating loss...:  36%|███▋      | 91/250 [01:54<02:18,  1.15it/s]Calculating loss...:  37%|███▋      | 92/250 [01:54<02:01,  1.30it/s]Calculating loss...:  37%|███▋      | 93/250 [01:55<01:46,  1.48it/s]Calculating loss...:  38%|███▊      | 94/250 [01:55<01:36,  1.62it/s]Calculating loss...:  38%|███▊      | 95/250 [01:56<01:47,  1.44it/s]Calculating loss...:  38%|███▊      | 96/250 [01:57<02:03,  1.25it/s]Calculating loss...:  39%|███▉      | 97/250 [01:58<01:40,  1.53it/s]Calculating loss...:  39%|███▉      | 98/250 [01:58<01:20,  1.88it/s]Calculating loss...:  40%|███▉      | 99/250 [01:58<01:07,  2.24it/s]Calculating loss...:  40%|████      | 100/250 [01:58<01:00,  2.47it/s]Calculating loss...:  40%|████      | 101/250 [01:59<00:56,  2.66it/s]Calculating loss...:  41%|████      | 102/250 [01:59<01:13,  2.01it/s]Calculating loss...:  41%|████      | 103/250 [02:03<03:22,  1.38s/it]Calculating loss...:  42%|████▏     | 104/250 [02:03<02:35,  1.06s/it]Calculating loss...:  42%|████▏     | 105/250 [02:04<02:04,  1.17it/s]Calculating loss...:  42%|████▏     | 106/250 [02:05<02:24,  1.00s/it]Calculating loss...:  43%|████▎     | 107/250 [02:05<01:56,  1.23it/s]Calculating loss...:  43%|████▎     | 108/250 [02:07<02:46,  1.17s/it]Calculating loss...:  44%|████▎     | 109/250 [02:10<03:33,  1.51s/it]Calculating loss...:  44%|████▍     | 110/250 [02:10<02:44,  1.18s/it]Calculating loss...:  44%|████▍     | 111/250 [02:10<02:10,  1.06it/s]Calculating loss...:  45%|████▍     | 112/250 [02:11<01:53,  1.22it/s]Calculating loss...:  45%|████▌     | 113/250 [02:11<01:32,  1.49it/s]Calculating loss...:  46%|████▌     | 114/250 [02:12<01:16,  1.78it/s]Calculating loss...:  46%|████▌     | 115/250 [02:13<02:06,  1.06it/s]Calculating loss...:  46%|████▋     | 116/250 [02:16<03:03,  1.37s/it]Calculating loss...:  47%|████▋     | 117/250 [02:18<03:51,  1.74s/it]Calculating loss...:  47%|████▋     | 118/250 [02:20<03:53,  1.77s/it]Calculating loss...:  48%|████▊     | 119/250 [02:22<03:38,  1.67s/it]Calculating loss...:  48%|████▊     | 120/250 [02:22<02:50,  1.31s/it]Calculating loss...:  48%|████▊     | 121/250 [02:24<02:59,  1.39s/it]Calculating loss...:  49%|████▉     | 122/250 [02:24<02:14,  1.05s/it]Calculating loss...:  49%|████▉     | 123/250 [02:26<03:06,  1.47s/it]Calculating loss...:  50%|████▉     | 124/250 [02:27<02:21,  1.13s/it]Calculating loss...:  50%|█████     | 125/250 [02:28<02:31,  1.21s/it]Calculating loss...:  50%|█████     | 126/250 [02:28<01:59,  1.04it/s]Calculating loss...:  51%|█████     | 127/250 [02:29<01:55,  1.07it/s]Calculating loss...:  51%|█████     | 128/250 [02:30<01:57,  1.04it/s]Calculating loss...:  52%|█████▏    | 129/250 [02:31<01:38,  1.23it/s]Calculating loss...:  52%|█████▏    | 130/250 [02:31<01:24,  1.41it/s]Calculating loss...:  52%|█████▏    | 131/250 [02:35<03:19,  1.68s/it]Calculating loss...:  53%|█████▎    | 132/250 [02:37<03:20,  1.70s/it]Calculating loss...:  53%|█████▎    | 133/250 [02:40<03:50,  1.97s/it]Calculating loss...:  54%|█████▎    | 134/250 [02:40<02:53,  1.49s/it]Calculating loss...:  54%|█████▍    | 135/250 [02:42<03:02,  1.59s/it]Calculating loss...:  54%|█████▍    | 136/250 [02:43<02:38,  1.39s/it]Calculating loss...:  55%|█████▍    | 137/250 [02:43<02:05,  1.11s/it]Calculating loss...:  55%|█████▌    | 138/250 [02:46<02:59,  1.61s/it]Calculating loss...:  56%|█████▌    | 139/250 [02:48<03:28,  1.88s/it]Calculating loss...:  56%|█████▌    | 140/250 [02:51<03:32,  1.93s/it]Calculating loss...:  56%|█████▋    | 141/250 [02:51<02:37,  1.45s/it]Calculating loss...:  57%|█████▋    | 142/250 [02:51<01:59,  1.11s/it]Calculating loss...:  57%|█████▋    | 143/250 [02:54<02:54,  1.63s/it]Calculating loss...:  58%|█████▊    | 144/250 [02:55<02:40,  1.52s/it]Calculating loss...:  58%|█████▊    | 145/250 [02:55<01:59,  1.13s/it]Calculating loss...:  58%|█████▊    | 146/250 [02:58<02:33,  1.48s/it]Calculating loss...:  59%|█████▉    | 147/250 [02:59<02:28,  1.44s/it]Calculating loss...:  59%|█████▉    | 148/250 [03:01<02:35,  1.53s/it]Calculating loss...:  60%|█████▉    | 149/250 [03:03<02:57,  1.76s/it]Calculating loss...:  60%|██████    | 150/250 [03:04<02:16,  1.37s/it]Calculating loss...:  60%|██████    | 151/250 [03:04<01:44,  1.05s/it]Calculating loss...:  61%|██████    | 152/250 [03:07<02:28,  1.52s/it]Calculating loss...:  61%|██████    | 153/250 [03:07<01:50,  1.14s/it]Calculating loss...:  62%|██████▏   | 154/250 [03:09<02:17,  1.44s/it]Calculating loss...:  62%|██████▏   | 155/250 [03:11<02:41,  1.70s/it]Calculating loss...:  62%|██████▏   | 156/250 [03:12<02:00,  1.28s/it]Calculating loss...:  63%|██████▎   | 157/250 [03:13<02:18,  1.49s/it]Calculating loss...:  63%|██████▎   | 158/250 [03:15<02:07,  1.39s/it]Calculating loss...:  64%|██████▎   | 159/250 [03:16<02:07,  1.40s/it]Calculating loss...:  64%|██████▍   | 160/250 [03:16<01:35,  1.06s/it]Calculating loss...:  64%|██████▍   | 161/250 [03:17<01:15,  1.17it/s]Calculating loss...:  65%|██████▍   | 162/250 [03:17<01:02,  1.41it/s]Calculating loss...:  65%|██████▌   | 163/250 [03:17<00:51,  1.70it/s]Calculating loss...:  66%|██████▌   | 164/250 [03:18<00:43,  1.97it/s]Calculating loss...:  66%|██████▌   | 165/250 [03:20<01:34,  1.11s/it]Calculating loss...:  66%|██████▋   | 166/250 [03:21<01:27,  1.04s/it]Calculating loss...:  67%|██████▋   | 167/250 [03:22<01:31,  1.11s/it]Calculating loss...:  67%|██████▋   | 168/250 [03:23<01:15,  1.09it/s]Calculating loss...:  68%|██████▊   | 169/250 [03:24<01:16,  1.05it/s]Calculating loss...:  68%|██████▊   | 170/250 [03:24<01:04,  1.24it/s]Calculating loss...:  68%|██████▊   | 171/250 [03:25<01:08,  1.15it/s]Calculating loss...:  69%|██████▉   | 172/250 [03:26<01:05,  1.18it/s]Calculating loss...:  69%|██████▉   | 173/250 [03:28<01:29,  1.16s/it]Calculating loss...:  70%|██████▉   | 174/250 [03:29<01:19,  1.05s/it]Calculating loss...:  70%|███████   | 175/250 [03:29<01:03,  1.18it/s]Calculating loss...:  70%|███████   | 176/250 [03:32<01:38,  1.33s/it]Calculating loss...:  71%|███████   | 177/250 [03:33<01:26,  1.19s/it]Calculating loss...:  71%|███████   | 178/250 [03:34<01:24,  1.17s/it]Calculating loss...:  72%|███████▏  | 179/250 [03:34<01:04,  1.10it/s]Calculating loss...:  72%|███████▏  | 180/250 [03:34<00:51,  1.37it/s]Calculating loss...:  72%|███████▏  | 181/250 [03:37<01:27,  1.27s/it]Calculating loss...:  73%|███████▎  | 182/250 [03:37<01:07,  1.00it/s]Calculating loss...:  73%|███████▎  | 183/250 [03:38<00:54,  1.23it/s]Calculating loss...:  74%|███████▎  | 184/250 [03:40<01:33,  1.42s/it]Calculating loss...:  74%|███████▍  | 185/250 [03:42<01:29,  1.37s/it]Calculating loss...:  74%|███████▍  | 186/250 [03:44<01:45,  1.64s/it]Calculating loss...:  75%|███████▍  | 187/250 [03:47<02:09,  2.06s/it]Calculating loss...:  75%|███████▌  | 188/250 [03:49<02:04,  2.01s/it]Calculating loss...:  76%|███████▌  | 189/250 [03:52<02:18,  2.27s/it]Calculating loss...:  76%|███████▌  | 190/250 [03:54<02:14,  2.23s/it]Calculating loss...:  76%|███████▋  | 191/250 [03:54<01:36,  1.64s/it]Calculating loss...:  77%|███████▋  | 192/250 [03:57<01:51,  1.92s/it]Calculating loss...:  77%|███████▋  | 193/250 [03:57<01:21,  1.44s/it]Calculating loss...:  78%|███████▊  | 194/250 [03:58<01:10,  1.26s/it]Calculating loss...:  78%|███████▊  | 195/250 [03:58<00:55,  1.00s/it]Calculating loss...:  78%|███████▊  | 196/250 [03:59<00:44,  1.22it/s]Calculating loss...:  79%|███████▉  | 197/250 [04:02<01:26,  1.62s/it]Calculating loss...:  79%|███████▉  | 198/250 [04:03<01:06,  1.28s/it]Calculating loss...:  80%|███████▉  | 199/250 [04:06<01:31,  1.80s/it]Calculating loss...:  80%|████████  | 200/250 [04:06<01:07,  1.35s/it]Calculating loss...:  80%|████████  | 201/250 [04:06<00:49,  1.02s/it]Calculating loss...:  81%|████████  | 202/250 [04:07<00:39,  1.20it/s]Calculating loss...:  81%|████████  | 203/250 [04:07<00:33,  1.39it/s]Calculating loss...:  82%|████████▏ | 204/250 [04:07<00:29,  1.56it/s]Calculating loss...:  82%|████████▏ | 205/250 [04:08<00:24,  1.83it/s]Calculating loss...:  82%|████████▏ | 206/250 [04:08<00:21,  2.02it/s]Calculating loss...:  83%|████████▎ | 207/250 [04:10<00:40,  1.07it/s]Calculating loss...:  83%|████████▎ | 208/250 [04:11<00:32,  1.30it/s]Calculating loss...:  84%|████████▎ | 209/250 [04:12<00:41,  1.01s/it]Calculating loss...:  84%|████████▍ | 210/250 [04:13<00:34,  1.15it/s]Calculating loss...:  84%|████████▍ | 211/250 [04:15<00:47,  1.23s/it]Calculating loss...:  85%|████████▍ | 212/250 [04:16<00:45,  1.21s/it]Calculating loss...:  85%|████████▌ | 213/250 [04:17<00:46,  1.27s/it]Calculating loss...:  86%|████████▌ | 214/250 [04:18<00:39,  1.10s/it]Calculating loss...:  86%|████████▌ | 215/250 [04:18<00:30,  1.16it/s]Calculating loss...:  86%|████████▋ | 216/250 [04:19<00:23,  1.43it/s]Calculating loss...:  87%|████████▋ | 217/250 [04:20<00:33,  1.00s/it]Calculating loss...:  87%|████████▋ | 218/250 [04:21<00:25,  1.26it/s]Calculating loss...:  88%|████████▊ | 219/250 [04:21<00:20,  1.50it/s]Calculating loss...:  88%|████████▊ | 220/250 [04:21<00:16,  1.78it/s]Calculating loss...:  88%|████████▊ | 221/250 [04:22<00:15,  1.88it/s]Calculating loss...:  89%|████████▉ | 222/250 [04:22<00:12,  2.26it/s]Calculating loss...:  89%|████████▉ | 223/250 [04:24<00:26,  1.00it/s]Calculating loss...:  90%|████████▉ | 224/250 [04:26<00:30,  1.17s/it]Calculating loss...:  90%|█████████ | 225/250 [04:27<00:28,  1.12s/it]Calculating loss...:  90%|█████████ | 226/250 [04:28<00:28,  1.19s/it]Calculating loss...:  91%|█████████ | 227/250 [04:29<00:22,  1.00it/s]Calculating loss...:  91%|█████████ | 228/250 [04:30<00:22,  1.03s/it]Calculating loss...:  92%|█████████▏| 229/250 [04:31<00:21,  1.03s/it]Calculating loss...:  92%|█████████▏| 230/250 [04:31<00:17,  1.16it/s]Calculating loss...:  92%|█████████▏| 231/250 [04:34<00:24,  1.27s/it]Calculating loss...:  93%|█████████▎| 232/250 [04:34<00:18,  1.02s/it]Calculating loss...:  93%|█████████▎| 233/250 [04:36<00:22,  1.33s/it]Calculating loss...:  94%|█████████▎| 234/250 [04:36<00:16,  1.03s/it]Calculating loss...:  94%|█████████▍| 235/250 [04:37<00:11,  1.26it/s]Calculating loss...:  94%|█████████▍| 236/250 [04:39<00:15,  1.14s/it]Calculating loss...:  95%|█████████▍| 237/250 [04:39<00:11,  1.12it/s]Calculating loss...:  95%|█████████▌| 238/250 [04:40<00:12,  1.07s/it]Calculating loss...:  96%|█████████▌| 239/250 [04:44<00:18,  1.73s/it]Calculating loss...:  96%|█████████▌| 240/250 [04:46<00:17,  1.80s/it]Calculating loss...:  96%|█████████▋| 241/250 [04:46<00:12,  1.35s/it]Calculating loss...:  97%|█████████▋| 242/250 [04:46<00:08,  1.04s/it]Calculating loss...:  97%|█████████▋| 243/250 [04:47<00:07,  1.04s/it]Calculating loss...:  98%|█████████▊| 244/250 [04:48<00:05,  1.19it/s]Calculating loss...:  98%|█████████▊| 245/250 [04:51<00:07,  1.49s/it]Calculating loss...:  98%|█████████▊| 246/250 [04:51<00:05,  1.25s/it]Calculating loss...:  99%|█████████▉| 247/250 [04:53<00:04,  1.35s/it]Calculating loss...:  99%|█████████▉| 248/250 [04:53<00:02,  1.06s/it]Calculating loss...: 100%|█████████▉| 249/250 [04:54<00:00,  1.20it/s]Calculating loss...: 100%|██████████| 250/250 [04:54<00:00,  1.47it/s]Calculating loss...: 100%|██████████| 250/250 [04:54<00:00,  1.18s/it]
+[WARNING] Some sequences are longer than 3200 tokens. The longest sentence 3226 will be truncated to 3200. Consider pre-splitting your data to save memory.
+Iter 1: Val loss 0.012, Val took 294.501s
+Iter 50: Train loss 0.043, Learning Rate 1.990e-06, It/sec 0.246, Tokens/sec 73.629, Trained Tokens 14983, Peak mem 13.733 GB
+Iter 100: Train loss 0.059, Learning Rate 3.160e-06, It/sec 0.329, Tokens/sec 76.683, Trained Tokens 26653, Peak mem 13.733 GB
+Iter 150: Train loss 0.023, Learning Rate 4.240e-06, It/sec 0.364, Tokens/sec 78.651, Trained Tokens 37458, Peak mem 13.733 GB
+Iter 200: Train loss 0.008, Learning Rate 5.410e-06, It/sec 0.268, Tokens/sec 74.386, Trained Tokens 51311, Peak mem 14.451 GB
+Iter 200: Saved adapter weights to qwen35_pilot/adapters_q9g/adapters.safetensors and qwen35_pilot/adapters_q9g/0000200_adapters.safetensors.
+Iter 250: Train loss 0.023, Learning Rate 6.490e-06, It/sec 0.278, Tokens/sec 75.235, Trained Tokens 64839, Peak mem 14.451 GB
+Iter 300: Train loss 0.024, Learning Rate 7.660e-06, It/sec 0.181, Tokens/sec 71.967, Trained Tokens 84744, Peak mem 16.156 GB
+Iter 350: Train loss 0.012, Learning Rate 8.740e-06, It/sec 0.279, Tokens/sec 73.864, Trained Tokens 97989, Peak mem 16.156 GB
+Iter 400: Train loss 0.018, Learning Rate 9.910e-06, It/sec 0.291, Tokens/sec 75.578, Trained Tokens 110970, Peak mem 16.156 GB
+Iter 400: Saved adapter weights to qwen35_pilot/adapters_q9g/adapters.safetensors and qwen35_pilot/adapters_q9g/0000400_adapters.safetensors.
+Iter 450: Train loss 0.016, Learning Rate 1.000e-05, It/sec 0.202, Tokens/sec 72.870, Trained Tokens 128967, Peak mem 16.156 GB
+Iter 500: Train loss 0.008, Learning Rate 9.998e-06, It/sec 0.241, Tokens/sec 74.028, Trained Tokens 144332, Peak mem 16.156 GB
+Iter 550: Train loss 0.009, Learning Rate 9.995e-06, It/sec 0.278, Tokens/sec 74.259, Trained Tokens 157691, Peak mem 16.156 GB
+Iter 600: Train loss 0.011, Learning Rate 9.990e-06, It/sec 0.277, Tokens/sec 74.251, Trained Tokens 171080, Peak mem 16.824 GB
+Iter 600: Saved adapter weights to qwen35_pilot/adapters_q9g/adapters.safetensors and qwen35_pilot/adapters_q9g/0000600_adapters.safetensors.
+Iter 650: Train loss 0.006, Learning Rate 9.984e-06, It/sec 0.368, Tokens/sec 77.430, Trained Tokens 181614, Peak mem 16.824 GB
+Iter 700: Train loss 0.005, Learning Rate 9.976e-06, It/sec 0.233, Tokens/sec 73.888, Trained Tokens 197457, Peak mem 16.824 GB
+Iter 750: Train loss 0.007, Learning Rate 9.968e-06, It/sec 0.202, Tokens/sec 72.144, Trained Tokens 215318, Peak mem 16.824 GB
+Iter 800: Train loss 0.012, Learning Rate 9.958e-06, It/sec 0.195, Tokens/sec 73.664, Trained Tokens 234230, Peak mem 16.824 GB
+Iter 800: Saved adapter weights to qwen35_pilot/adapters_q9g/adapters.safetensors and qwen35_pilot/adapters_q9g/0000800_adapters.safetensors.
+Iter 850: Train loss 0.008, Learning Rate 9.946e-06, It/sec 0.301, Tokens/sec 77.186, Trained Tokens 247057, Peak mem 16.824 GB
+Iter 900: Train loss 0.007, Learning Rate 9.933e-06, It/sec 0.320, Tokens/sec 77.941, Trained Tokens 259249, Peak mem 16.824 GB
+Iter 950: Train loss 0.008, Learning Rate 9.919e-06, It/sec 0.270, Tokens/sec 76.712, Trained Tokens 273462, Peak mem 16.824 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 800/9600 iterations saved
+[train_resumable] segment 2: iterations 801..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg2.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg2.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0000800_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 8800
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<01:03,  1.57it/s]Calculating loss...:   2%|▏         | 2/100 [00:01<00:49,  1.98it/s]Calculating loss...:   3%|▎         | 3/100 [00:01<00:40,  2.39it/s]Calculating loss...:   4%|▍         | 4/100 [00:01<00:40,  2.38it/s]Calculating loss...:   5%|▌         | 5/100 [00:02<00:54,  1.74it/s]Calculating loss...:   6%|▌         | 6/100 [00:03<01:04,  1.46it/s]Calculating loss...:   7%|▋         | 7/100 [00:07<02:32,  1.64s/it]Calculating loss...:   8%|▊         | 8/100 [00:07<01:52,  1.23s/it]Calculating loss...:   9%|▉         | 9/100 [00:07<01:24,  1.08it/s]Calculating loss...:  10%|█         | 10/100 [00:08<01:12,  1.24it/s]Calculating loss...:  11%|█         | 11/100 [00:08<00:59,  1.49it/s]Calculating loss...:  12%|█▏        | 12/100 [00:09<01:15,  1.17it/s]Calculating loss...:  13%|█▎        | 13/100 [00:11<01:23,  1.05it/s]Calculating loss...:  14%|█▍        | 14/100 [00:14<02:22,  1.65s/it]Calculating loss...:  15%|█▌        | 15/100 [00:14<01:45,  1.24s/it]Calculating loss...:  16%|█▌        | 16/100 [00:15<01:23,  1.01it/s]Calculating loss...:  17%|█▋        | 17/100 [00:16<01:33,  1.13s/it]Calculating loss...:  18%|█▊        | 18/100 [00:17<01:17,  1.06it/s]Calculating loss...:  19%|█▉        | 19/100 [00:19<01:53,  1.40s/it]Calculating loss...:  20%|██        | 20/100 [00:20<01:47,  1.34s/it]Calculating loss...:  21%|██        | 21/100 [00:21<01:24,  1.06s/it]Calculating loss...:  22%|██▏       | 22/100 [00:21<01:09,  1.11it/s]Calculating loss...:  23%|██▎       | 23/100 [00:21<00:56,  1.37it/s]Calculating loss...:  24%|██▍       | 24/100 [00:22<00:48,  1.56it/s]Calculating loss...:  25%|██▌       | 25/100 [00:22<00:42,  1.77it/s]Calculating loss...:  26%|██▌       | 26/100 [00:25<01:34,  1.28s/it]Calculating loss...:  27%|██▋       | 27/100 [00:27<01:46,  1.46s/it]Calculating loss...:  28%|██▊       | 28/100 [00:27<01:20,  1.12s/it]Calculating loss...:  29%|██▉       | 29/100 [00:30<01:42,  1.45s/it]Calculating loss...:  30%|███       | 30/100 [00:32<02:00,  1.73s/it]Calculating loss...:  31%|███       | 31/100 [00:32<01:30,  1.31s/it]Calculating loss...:  32%|███▏      | 32/100 [00:33<01:10,  1.04s/it]Calculating loss...:  33%|███▎      | 33/100 [00:33<00:55,  1.21it/s]Calculating loss...:  34%|███▍      | 34/100 [00:36<01:28,  1.34s/it]Calculating loss...:  35%|███▌      | 35/100 [00:37<01:19,  1.22s/it]Calculating loss...:  36%|███▌      | 36/100 [00:39<01:37,  1.53s/it]Calculating loss...:  37%|███▋      | 37/100 [00:41<01:42,  1.62s/it]Calculating loss...:  38%|███▊      | 38/100 [00:41<01:18,  1.26s/it]Calculating loss...:  39%|███▉      | 39/100 [00:41<00:58,  1.04it/s]Calculating loss...:  40%|████      | 40/100 [00:43<01:13,  1.22s/it]Calculating loss...:  41%|████      | 41/100 [00:45<01:24,  1.43s/it]Calculating loss...:  42%|████▏     | 42/100 [00:45<01:02,  1.08s/it]Calculating loss...:  43%|████▎     | 43/100 [00:46<00:50,  1.13it/s]Calculating loss...:  44%|████▍     | 44/100 [00:47<00:47,  1.19it/s]Calculating loss...:  45%|████▌     | 45/100 [00:48<01:00,  1.11s/it]Calculating loss...:  46%|████▌     | 46/100 [00:49<00:47,  1.14it/s]Calculating loss...:  47%|████▋     | 47/100 [00:51<01:14,  1.41s/it]Calculating loss...:  48%|████▊     | 48/100 [00:51<00:55,  1.06s/it]Calculating loss...:  49%|████▉     | 49/100 [00:52<00:46,  1.09it/s]Calculating loss...:  50%|█████     | 50/100 [00:52<00:35,  1.39it/s]Calculating loss...:  51%|█████     | 51/100 [00:55<01:01,  1.25s/it]Calculating loss...:  52%|█████▏    | 52/100 [00:57<01:18,  1.64s/it]Calculating loss...:  53%|█████▎    | 53/100 [00:59<01:12,  1.55s/it]Calculating loss...:  54%|█████▍    | 54/100 [01:00<01:13,  1.59s/it]Calculating loss...:  55%|█████▌    | 55/100 [01:04<01:44,  2.33s/it]Calculating loss...:  56%|█████▌    | 56/100 [01:06<01:26,  1.96s/it]Calculating loss...:  57%|█████▋    | 57/100 [01:06<01:03,  1.47s/it]Calculating loss...:  58%|█████▊    | 58/100 [01:06<00:48,  1.14s/it]Calculating loss...:  59%|█████▉    | 59/100 [01:07<00:45,  1.12s/it]Calculating loss...:  60%|██████    | 60/100 [01:08<00:43,  1.08s/it]Calculating loss...:  61%|██████    | 61/100 [01:09<00:34,  1.14it/s]Calculating loss...:  62%|██████▏   | 62/100 [01:09<00:27,  1.37it/s]Calculating loss...:  63%|██████▎   | 63/100 [01:09<00:23,  1.60it/s]Calculating loss...:  64%|██████▍   | 64/100 [01:11<00:33,  1.08it/s]Calculating loss...:  65%|██████▌   | 65/100 [01:13<00:44,  1.28s/it]Calculating loss...:  66%|██████▌   | 66/100 [01:15<00:47,  1.39s/it]Calculating loss...:  67%|██████▋   | 67/100 [01:16<00:41,  1.26s/it]Calculating loss...:  68%|██████▊   | 68/100 [01:17<00:43,  1.34s/it]Calculating loss...:  69%|██████▉   | 69/100 [01:18<00:32,  1.06s/it]Calculating loss...:  70%|███████   | 70/100 [01:18<00:25,  1.16it/s]Calculating loss...:  71%|███████   | 71/100 [01:19<00:20,  1.39it/s]Calculating loss...:  72%|███████▏  | 72/100 [01:19<00:18,  1.54it/s]Calculating loss...:  73%|███████▎  | 73/100 [01:19<00:14,  1.82it/s]Calculating loss...:  74%|███████▍  | 74/100 [01:20<00:13,  1.98it/s]Calculating loss...:  75%|███████▌  | 75/100 [01:20<00:11,  2.23it/s]Calculating loss...:  76%|███████▌  | 76/100 [01:20<00:10,  2.31it/s]Calculating loss...:  77%|███████▋  | 77/100 [01:22<00:17,  1.35it/s]Calculating loss...:  78%|███████▊  | 78/100 [01:23<00:16,  1.36it/s]Calculating loss...:  79%|███████▉  | 79/100 [01:25<00:25,  1.22s/it]Calculating loss...:  80%|████████  | 80/100 [01:25<00:19,  1.03it/s]Calculating loss...:  81%|████████  | 81/100 [01:26<00:15,  1.26it/s]Calculating loss...:  82%|████████▏ | 82/100 [01:27<00:16,  1.11it/s]Calculating loss...:  83%|████████▎ | 83/100 [01:27<00:12,  1.34it/s]Calculating loss...:  84%|████████▍ | 84/100 [01:28<00:09,  1.62it/s]Calculating loss...:  85%|████████▌ | 85/100 [01:29<00:10,  1.39it/s]Calculating loss...:  86%|████████▌ | 86/100 [01:29<00:08,  1.56it/s]Calculating loss...:  87%|████████▋ | 87/100 [01:29<00:07,  1.76it/s]Calculating loss...:  88%|████████▊ | 88/100 [01:30<00:08,  1.41it/s]Calculating loss...:  89%|████████▉ | 89/100 [01:32<00:10,  1.07it/s]Calculating loss...:  90%|█████████ | 90/100 [01:32<00:07,  1.29it/s]Calculating loss...:  91%|█████████ | 91/100 [01:34<00:08,  1.08it/s]Calculating loss...:  92%|█████████▏| 92/100 [01:35<00:07,  1.01it/s]Calculating loss...:  93%|█████████▎| 93/100 [01:37<00:09,  1.40s/it]Calculating loss...:  94%|█████████▍| 94/100 [01:40<00:11,  1.88s/it]Calculating loss...:  95%|█████████▌| 95/100 [01:40<00:06,  1.39s/it]Calculating loss...:  96%|█████████▌| 96/100 [01:41<00:04,  1.12s/it]Calculating loss...:  97%|█████████▋| 97/100 [01:41<00:02,  1.11it/s]Calculating loss...:  98%|█████████▊| 98/100 [01:42<00:01,  1.34it/s]Calculating loss...:  99%|█████████▉| 99/100 [01:42<00:00,  1.55it/s]Calculating loss...: 100%|██████████| 100/100 [01:42<00:00,  1.91it/s]Calculating loss...: 100%|██████████| 100/100 [01:42<00:00,  1.03s/it]
+Iter 1: Val loss 0.007, Val took 102.741s
+Iter 50: Train loss 0.023, Learning Rate 9.955e-06, It/sec 0.228, Tokens/sec 74.919, Trained Tokens 16405, Peak mem 13.245 GB
+Iter 100: Train loss 0.021, Learning Rate 9.953e-06, It/sec 0.240, Tokens/sec 75.233, Trained Tokens 32083, Peak mem 15.519 GB
+Iter 150: Train loss 0.017, Learning Rate 9.950e-06, It/sec 0.278, Tokens/sec 75.953, Trained Tokens 45763, Peak mem 15.519 GB
+Iter 200: Train loss 0.023, Learning Rate 9.944e-06, It/sec 0.266, Tokens/sec 74.389, Trained Tokens 59763, Peak mem 15.519 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg2/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg2/0000200_adapters.safetensors.
+Iter 250: Train loss 0.018, Learning Rate 9.938e-06, It/sec 0.401, Tokens/sec 75.277, Trained Tokens 69150, Peak mem 15.519 GB
+Iter 300: Train loss 0.011, Learning Rate 9.929e-06, It/sec 0.340, Tokens/sec 75.499, Trained Tokens 80249, Peak mem 15.519 GB
+Iter 350: Train loss 0.018, Learning Rate 9.920e-06, It/sec 0.245, Tokens/sec 74.104, Trained Tokens 95395, Peak mem 15.519 GB
+Iter 400: Train loss 0.006, Learning Rate 9.909e-06, It/sec 0.279, Tokens/sec 74.511, Trained Tokens 108746, Peak mem 15.519 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg2/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg2/0000400_adapters.safetensors.
+Iter 450: Train loss 0.010, Learning Rate 9.896e-06, It/sec 0.257, Tokens/sec 73.222, Trained Tokens 122991, Peak mem 16.777 GB
+Iter 500: Train loss 0.019, Learning Rate 9.882e-06, It/sec 0.270, Tokens/sec 72.410, Trained Tokens 136401, Peak mem 16.824 GB
+Iter 550: Train loss 0.013, Learning Rate 9.867e-06, It/sec 0.222, Tokens/sec 72.256, Trained Tokens 152651, Peak mem 16.824 GB
+Iter 600: Train loss 0.013, Learning Rate 9.849e-06, It/sec 0.333, Tokens/sec 79.284, Trained Tokens 164546, Peak mem 16.824 GB
+Iter 600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg2/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg2/0000600_adapters.safetensors.
+Iter 650: Train loss 0.011, Learning Rate 9.831e-06, It/sec 0.212, Tokens/sec 74.097, Trained Tokens 182004, Peak mem 16.824 GB
+Iter 700: Train loss 0.005, Learning Rate 9.811e-06, It/sec 0.317, Tokens/sec 78.376, Trained Tokens 194361, Peak mem 16.824 GB
+Iter 750: Train loss 0.008, Learning Rate 9.790e-06, It/sec 0.260, Tokens/sec 73.932, Trained Tokens 208592, Peak mem 17.192 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 235, in __call__
+    r = self.linear_attn(self.input_layernorm(x), mask, cache)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 146, in __call__
+    a = self.in_proj_a(inputs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/lora.py", line 98, in __call__
+    return y + (self.scale * z).astype(x.dtype)
+                ~~~~~~~~~~~^~~
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 1400/9600 iterations saved
+[train_resumable] segment 3: iterations 1401..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg3.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg3.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0001400_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 8200
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<00:25,  3.83it/s]Calculating loss...:   2%|▏         | 2/100 [00:00<00:32,  3.06it/s]Calculating loss...:   3%|▎         | 3/100 [00:00<00:27,  3.52it/s]Calculating loss...:   4%|▍         | 4/100 [00:01<00:39,  2.40it/s]Calculating loss...:   5%|▌         | 5/100 [00:02<00:53,  1.78it/s]Calculating loss...:   6%|▌         | 6/100 [00:02<00:47,  1.99it/s]Calculating loss...:   7%|▋         | 7/100 [00:03<00:59,  1.56it/s]Calculating loss...:   8%|▊         | 8/100 [00:04<01:18,  1.17it/s]Calculating loss...:   9%|▉         | 9/100 [00:09<03:00,  1.98s/it]Calculating loss...:  10%|█         | 10/100 [00:11<03:15,  2.17s/it]Calculating loss...:  11%|█         | 11/100 [00:14<03:35,  2.42s/it]Calculating loss...:  12%|█▏        | 12/100 [00:15<02:34,  1.76s/it]Calculating loss...:  13%|█▎        | 13/100 [00:16<02:17,  1.59s/it]Calculating loss...:  14%|█▍        | 14/100 [00:16<01:43,  1.21s/it]Calculating loss...:  15%|█▌        | 15/100 [00:17<01:41,  1.20s/it]Calculating loss...:  16%|█▌        | 16/100 [00:20<02:12,  1.57s/it]Calculating loss...:  17%|█▋        | 17/100 [00:21<02:03,  1.48s/it]Calculating loss...:  18%|█▊        | 18/100 [00:22<01:37,  1.19s/it]Calculating loss...:  19%|█▉        | 19/100 [00:23<01:44,  1.29s/it]Calculating loss...:  20%|██        | 20/100 [00:25<01:46,  1.33s/it]Calculating loss...:  21%|██        | 21/100 [00:27<02:15,  1.72s/it]Calculating loss...:  22%|██▏       | 22/100 [00:29<02:16,  1.75s/it]Calculating loss...:  23%|██▎       | 23/100 [00:31<02:13,  1.73s/it]Calculating loss...:  24%|██▍       | 24/100 [00:31<01:41,  1.33s/it]Calculating loss...:  25%|██▌       | 25/100 [00:32<01:20,  1.07s/it]Calculating loss...:  26%|██▌       | 26/100 [00:32<01:04,  1.15it/s]Calculating loss...:  27%|██▋       | 27/100 [00:33<01:04,  1.13it/s]Calculating loss...:  28%|██▊       | 28/100 [00:33<00:53,  1.35it/s]Calculating loss...:  29%|██▉       | 29/100 [00:35<01:03,  1.12it/s]Calculating loss...:  30%|███       | 30/100 [00:35<01:02,  1.11it/s]Calculating loss...:  31%|███       | 31/100 [00:37<01:07,  1.02it/s]Calculating loss...:  32%|███▏      | 32/100 [00:37<00:59,  1.14it/s]Calculating loss...:  33%|███▎      | 33/100 [00:38<00:49,  1.36it/s]Calculating loss...:  34%|███▍      | 34/100 [00:38<00:40,  1.62it/s]Calculating loss...:  35%|███▌      | 35/100 [00:39<00:47,  1.37it/s]Calculating loss...:  36%|███▌      | 36/100 [00:39<00:37,  1.69it/s]Calculating loss...:  37%|███▋      | 37/100 [00:41<01:02,  1.01it/s]Calculating loss...:  38%|███▊      | 38/100 [00:44<01:26,  1.39s/it]Calculating loss...:  39%|███▉      | 39/100 [00:44<01:08,  1.12s/it]Calculating loss...:  40%|████      | 40/100 [00:46<01:16,  1.28s/it]Calculating loss...:  41%|████      | 41/100 [00:46<01:00,  1.02s/it]Calculating loss...:  42%|████▏     | 42/100 [00:47<00:49,  1.17it/s]Calculating loss...:  43%|████▎     | 43/100 [00:47<00:39,  1.43it/s]Calculating loss...:  44%|████▍     | 44/100 [00:50<01:13,  1.31s/it]Calculating loss...:  45%|████▌     | 45/100 [00:50<00:54,  1.01it/s]Calculating loss...:  46%|████▌     | 46/100 [00:52<01:18,  1.46s/it]Calculating loss...:  47%|████▋     | 47/100 [00:53<01:00,  1.14s/it]Calculating loss...:  48%|████▊     | 48/100 [00:53<00:50,  1.03it/s]Calculating loss...:  49%|████▉     | 49/100 [00:54<00:41,  1.22it/s]Calculating loss...:  50%|█████     | 50/100 [00:55<00:40,  1.22it/s]Calculating loss...:  51%|█████     | 51/100 [00:56<00:41,  1.19it/s]Calculating loss...:  52%|█████▏    | 52/100 [00:58<00:57,  1.20s/it]Calculating loss...:  53%|█████▎    | 53/100 [00:58<00:45,  1.04it/s]Calculating loss...:  54%|█████▍    | 54/100 [00:58<00:34,  1.33it/s]Calculating loss...:  55%|█████▌    | 55/100 [00:59<00:29,  1.55it/s]Calculating loss...:  56%|█████▌    | 56/100 [01:01<00:51,  1.16s/it]Calculating loss...:  57%|█████▋    | 57/100 [01:02<00:47,  1.11s/it]Calculating loss...:  58%|█████▊    | 58/100 [01:06<01:18,  1.86s/it]Calculating loss...:  59%|█████▉    | 59/100 [01:06<00:58,  1.42s/it]Calculating loss...:  60%|██████    | 60/100 [01:06<00:44,  1.12s/it]Calculating loss...:  61%|██████    | 61/100 [01:08<00:53,  1.36s/it]Calculating loss...:  62%|██████▏   | 62/100 [01:09<00:40,  1.05s/it]Calculating loss...:  63%|██████▎   | 63/100 [01:09<00:31,  1.16it/s]Calculating loss...:  64%|██████▍   | 64/100 [01:10<00:28,  1.26it/s]Calculating loss...:  65%|██████▌   | 65/100 [01:12<00:38,  1.09s/it]Calculating loss...:  66%|██████▌   | 66/100 [01:13<00:37,  1.10s/it]Calculating loss...:  67%|██████▋   | 67/100 [01:14<00:43,  1.31s/it]Calculating loss...:  68%|██████▊   | 68/100 [01:17<00:57,  1.78s/it]Calculating loss...:  69%|██████▉   | 69/100 [01:18<00:42,  1.36s/it]Calculating loss...:  70%|███████   | 70/100 [01:20<00:46,  1.56s/it]Calculating loss...:  71%|███████   | 71/100 [01:20<00:34,  1.19s/it]Calculating loss...:  72%|███████▏  | 72/100 [01:21<00:33,  1.19s/it]Calculating loss...:  73%|███████▎  | 73/100 [01:24<00:44,  1.63s/it]Calculating loss...:  74%|███████▍  | 74/100 [01:24<00:32,  1.24s/it]Calculating loss...:  75%|███████▌  | 75/100 [01:27<00:39,  1.57s/it]Calculating loss...:  76%|███████▌  | 76/100 [01:27<00:28,  1.20s/it]Calculating loss...:  77%|███████▋  | 77/100 [01:27<00:22,  1.02it/s]Calculating loss...:  78%|███████▊  | 78/100 [01:28<00:17,  1.29it/s]Calculating loss...:  79%|███████▉  | 79/100 [01:28<00:13,  1.55it/s]Calculating loss...:  80%|████████  | 80/100 [01:28<00:10,  1.90it/s]Calculating loss...:  81%|████████  | 81/100 [01:29<00:08,  2.16it/s]Calculating loss...:  82%|████████▏ | 82/100 [01:31<00:18,  1.05s/it]Calculating loss...:  83%|████████▎ | 83/100 [01:32<00:19,  1.12s/it]Calculating loss...:  84%|████████▍ | 84/100 [01:33<00:13,  1.16it/s]Calculating loss...:  85%|████████▌ | 85/100 [01:33<00:10,  1.44it/s]Calculating loss...:  86%|████████▌ | 86/100 [01:35<00:15,  1.09s/it]Calculating loss...:  87%|████████▋ | 87/100 [01:38<00:20,  1.55s/it]Calculating loss...:  88%|████████▊ | 88/100 [01:38<00:14,  1.19s/it]Calculating loss...:  89%|████████▉ | 89/100 [01:38<00:10,  1.08it/s]Calculating loss...:  90%|█████████ | 90/100 [01:39<00:08,  1.16it/s]Calculating loss...:  91%|█████████ | 91/100 [01:39<00:06,  1.30it/s]Calculating loss...:  92%|█████████▏| 92/100 [01:40<00:05,  1.42it/s]Calculating loss...:  93%|█████████▎| 93/100 [01:40<00:04,  1.64it/s]Calculating loss...:  94%|█████████▍| 94/100 [01:43<00:07,  1.31s/it]Calculating loss...:  95%|█████████▌| 95/100 [01:45<00:06,  1.32s/it]Calculating loss...:  96%|█████████▌| 96/100 [01:47<00:06,  1.62s/it]Calculating loss...:  97%|█████████▋| 97/100 [01:47<00:03,  1.23s/it]Calculating loss...:  98%|█████████▊| 98/100 [01:48<00:02,  1.00s/it]Calculating loss...:  99%|█████████▉| 99/100 [01:50<00:01,  1.22s/it]Calculating loss...: 100%|██████████| 100/100 [01:50<00:00,  1.05it/s]Calculating loss...: 100%|██████████| 100/100 [01:50<00:00,  1.10s/it]
+[WARNING] Some sequences are longer than 3200 tokens. The longest sentence 3202 will be truncated to 3200. Consider pre-splitting your data to save memory.
+Iter 1: Val loss 0.009, Val took 110.356s
+Iter 50: Train loss 0.013, Learning Rate 9.725e-06, It/sec 0.217, Tokens/sec 75.826, Trained Tokens 17498, Peak mem 14.771 GB
+Iter 100: Train loss 0.013, Learning Rate 9.723e-06, It/sec 0.279, Tokens/sec 75.187, Trained Tokens 30978, Peak mem 14.771 GB
+Iter 150: Train loss 0.015, Learning Rate 9.719e-06, It/sec 0.307, Tokens/sec 75.543, Trained Tokens 43290, Peak mem 14.771 GB
+Iter 200: Train loss 0.018, Learning Rate 9.713e-06, It/sec 0.300, Tokens/sec 76.178, Trained Tokens 56007, Peak mem 15.011 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/0000200_adapters.safetensors.
+Iter 250: Train loss 0.019, Learning Rate 9.706e-06, It/sec 0.220, Tokens/sec 73.598, Trained Tokens 72758, Peak mem 16.476 GB
+Iter 300: Train loss 0.011, Learning Rate 9.696e-06, It/sec 0.282, Tokens/sec 74.931, Trained Tokens 86022, Peak mem 16.476 GB
+Iter 350: Train loss 0.019, Learning Rate 9.686e-06, It/sec 0.223, Tokens/sec 73.291, Trained Tokens 102480, Peak mem 16.476 GB
+Iter 400: Train loss 0.020, Learning Rate 9.673e-06, It/sec 0.280, Tokens/sec 75.343, Trained Tokens 115936, Peak mem 16.476 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/0000400_adapters.safetensors.
+Iter 450: Train loss 0.011, Learning Rate 9.659e-06, It/sec 0.338, Tokens/sec 76.975, Trained Tokens 127333, Peak mem 16.476 GB
+Iter 500: Train loss 0.013, Learning Rate 9.643e-06, It/sec 0.289, Tokens/sec 75.725, Trained Tokens 140428, Peak mem 16.476 GB
+Iter 550: Train loss 0.009, Learning Rate 9.626e-06, It/sec 0.277, Tokens/sec 75.118, Trained Tokens 153995, Peak mem 16.476 GB
+Iter 600: Train loss 0.012, Learning Rate 9.606e-06, It/sec 0.242, Tokens/sec 74.033, Trained Tokens 169279, Peak mem 16.476 GB
+Iter 600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/0000600_adapters.safetensors.
+Iter 650: Train loss 0.012, Learning Rate 9.586e-06, It/sec 0.302, Tokens/sec 75.845, Trained Tokens 181842, Peak mem 16.476 GB
+Iter 700: Train loss 0.017, Learning Rate 9.563e-06, It/sec 0.278, Tokens/sec 76.790, Trained Tokens 195649, Peak mem 16.476 GB
+Iter 750: Train loss 0.010, Learning Rate 9.540e-06, It/sec 0.299, Tokens/sec 75.372, Trained Tokens 208271, Peak mem 16.476 GB
+Iter 800: Train loss 0.008, Learning Rate 9.513e-06, It/sec 0.218, Tokens/sec 72.255, Trained Tokens 224875, Peak mem 17.108 GB
+Iter 800: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/0000800_adapters.safetensors.
+Iter 850: Train loss 0.003, Learning Rate 9.487e-06, It/sec 0.307, Tokens/sec 74.980, Trained Tokens 237086, Peak mem 17.108 GB
+Iter 900: Train loss 0.006, Learning Rate 9.457e-06, It/sec 0.223, Tokens/sec 74.985, Trained Tokens 253893, Peak mem 17.108 GB
+Iter 950: Train loss 0.007, Learning Rate 9.427e-06, It/sec 0.190, Tokens/sec 72.978, Trained Tokens 273080, Peak mem 17.300 GB
+Iter 1000: Train loss 0.008, Learning Rate 9.394e-06, It/sec 0.254, Tokens/sec 75.238, Trained Tokens 287887, Peak mem 17.300 GB
+Iter 1000: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/0001000_adapters.safetensors.
+Iter 1050: Train loss 0.007, Learning Rate 9.362e-06, It/sec 0.318, Tokens/sec 75.892, Trained Tokens 299834, Peak mem 17.300 GB
+Iter 1100: Train loss 0.007, Learning Rate 9.325e-06, It/sec 0.256, Tokens/sec 75.490, Trained Tokens 314577, Peak mem 17.300 GB
+Iter 1150: Train loss 0.009, Learning Rate 9.290e-06, It/sec 0.302, Tokens/sec 76.735, Trained Tokens 327277, Peak mem 17.300 GB
+Iter 1200: Train loss 0.013, Learning Rate 9.250e-06, It/sec 0.283, Tokens/sec 77.434, Trained Tokens 340963, Peak mem 17.300 GB
+Iter 1200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg3/0001200_adapters.safetensors.
+Iter 1250: Train loss 0.004, Learning Rate 9.212e-06, It/sec 0.194, Tokens/sec 72.035, Trained Tokens 359555, Peak mem 17.311 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 2600/9600 iterations saved
+[train_resumable] segment 4: iterations 2601..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg4.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg4.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0002600_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 7000
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:02<03:56,  2.39s/it]Calculating loss...:   2%|▏         | 2/100 [00:04<03:34,  2.19s/it]Calculating loss...:   3%|▎         | 3/100 [00:07<04:19,  2.67s/it]Calculating loss...:   4%|▍         | 4/100 [00:08<02:47,  1.75s/it]Calculating loss...:   5%|▌         | 5/100 [00:10<03:04,  1.95s/it]Calculating loss...:   6%|▌         | 6/100 [00:10<02:09,  1.38s/it]Calculating loss...:   7%|▋         | 7/100 [00:14<03:17,  2.13s/it]Calculating loss...:   8%|▊         | 8/100 [00:14<02:23,  1.56s/it]Calculating loss...:   9%|▉         | 9/100 [00:15<02:11,  1.45s/it]Calculating loss...:  10%|█         | 10/100 [00:17<02:24,  1.61s/it]Calculating loss...:  11%|█         | 11/100 [00:20<02:49,  1.90s/it]Calculating loss...:  12%|█▏        | 12/100 [00:22<02:56,  2.00s/it]Calculating loss...:  13%|█▎        | 13/100 [00:22<02:10,  1.50s/it]Calculating loss...:  14%|█▍        | 14/100 [00:24<02:05,  1.45s/it]Calculating loss...:  15%|█▌        | 15/100 [00:25<02:09,  1.53s/it]Calculating loss...:  16%|█▌        | 16/100 [00:26<01:44,  1.24s/it]Calculating loss...:  17%|█▋        | 17/100 [00:28<02:05,  1.51s/it]Calculating loss...:  18%|█▊        | 18/100 [00:30<02:00,  1.47s/it]Calculating loss...:  19%|█▉        | 19/100 [00:30<01:31,  1.13s/it]Calculating loss...:  20%|██        | 20/100 [00:30<01:09,  1.15it/s]Calculating loss...:  21%|██        | 21/100 [00:31<01:08,  1.16it/s]Calculating loss...:  22%|██▏       | 22/100 [00:33<01:23,  1.07s/it]Calculating loss...:  23%|██▎       | 23/100 [00:33<01:14,  1.03it/s]Calculating loss...:  24%|██▍       | 24/100 [00:34<01:03,  1.20it/s]Calculating loss...:  25%|██▌       | 25/100 [00:34<00:53,  1.39it/s]Calculating loss...:  26%|██▌       | 26/100 [00:36<01:18,  1.06s/it]Calculating loss...:  27%|██▋       | 27/100 [00:40<02:08,  1.76s/it]Calculating loss...:  28%|██▊       | 28/100 [00:40<01:36,  1.34s/it]Calculating loss...:  29%|██▉       | 29/100 [00:43<02:05,  1.76s/it]Calculating loss...:  30%|███       | 30/100 [00:44<01:49,  1.57s/it]Calculating loss...:  31%|███       | 31/100 [00:44<01:24,  1.22s/it]Calculating loss...:  32%|███▏      | 32/100 [00:46<01:35,  1.40s/it]Calculating loss...:  33%|███▎      | 33/100 [00:48<01:49,  1.63s/it]Calculating loss...:  34%|███▍      | 34/100 [00:49<01:23,  1.27s/it]Calculating loss...:  35%|███▌      | 35/100 [00:49<01:15,  1.16s/it]Calculating loss...:  36%|███▌      | 36/100 [00:51<01:14,  1.17s/it]Calculating loss...:  37%|███▋      | 37/100 [00:51<00:57,  1.09it/s]Calculating loss...:  38%|███▊      | 38/100 [00:51<00:45,  1.36it/s]Calculating loss...:  39%|███▉      | 39/100 [00:52<00:37,  1.63it/s]Calculating loss...:  40%|████      | 40/100 [00:52<00:30,  1.98it/s]Calculating loss...:  41%|████      | 41/100 [00:54<00:58,  1.00it/s]Calculating loss...:  42%|████▏     | 42/100 [00:57<01:32,  1.60s/it]Calculating loss...:  43%|████▎     | 43/100 [00:59<01:32,  1.62s/it]Calculating loss...:  44%|████▍     | 44/100 [00:59<01:08,  1.23s/it]Calculating loss...:  45%|████▌     | 45/100 [01:02<01:36,  1.76s/it]Calculating loss...:  46%|████▌     | 46/100 [01:04<01:42,  1.90s/it]Calculating loss...:  47%|████▋     | 47/100 [01:05<01:19,  1.50s/it]Calculating loss...:  48%|████▊     | 48/100 [01:05<00:59,  1.15s/it]Calculating loss...:  49%|████▉     | 49/100 [01:06<00:48,  1.05it/s]Calculating loss...:  50%|█████     | 50/100 [01:06<00:37,  1.35it/s]Calculating loss...:  51%|█████     | 51/100 [01:08<01:00,  1.23s/it]Calculating loss...:  52%|█████▏    | 52/100 [01:09<00:46,  1.04it/s]Calculating loss...:  53%|█████▎    | 53/100 [01:09<00:37,  1.26it/s]Calculating loss...:  54%|█████▍    | 54/100 [01:09<00:30,  1.49it/s]Calculating loss...:  55%|█████▌    | 55/100 [01:11<00:38,  1.16it/s]Calculating loss...:  56%|█████▌    | 56/100 [01:11<00:30,  1.43it/s]Calculating loss...:  57%|█████▋    | 57/100 [01:11<00:26,  1.65it/s]Calculating loss...:  58%|█████▊    | 58/100 [01:12<00:21,  1.93it/s]Calculating loss...:  59%|█████▉    | 59/100 [01:12<00:19,  2.09it/s]Calculating loss...:  60%|██████    | 60/100 [01:13<00:29,  1.37it/s]Calculating loss...:  61%|██████    | 61/100 [01:15<00:41,  1.07s/it]Calculating loss...:  62%|██████▏   | 62/100 [01:17<00:53,  1.41s/it]Calculating loss...:  63%|██████▎   | 63/100 [01:19<00:52,  1.43s/it]Calculating loss...:  64%|██████▍   | 64/100 [01:19<00:40,  1.12s/it]Calculating loss...:  65%|██████▌   | 65/100 [01:21<00:40,  1.15s/it]Calculating loss...:  66%|██████▌   | 66/100 [01:21<00:30,  1.11it/s]Calculating loss...:  67%|██████▋   | 67/100 [01:21<00:24,  1.34it/s]Calculating loss...:  68%|██████▊   | 68/100 [01:22<00:20,  1.56it/s]Calculating loss...:  69%|██████▉   | 69/100 [01:22<00:16,  1.85it/s]Calculating loss...:  70%|███████   | 70/100 [01:22<00:15,  1.93it/s]Calculating loss...:  71%|███████   | 71/100 [01:23<00:13,  2.09it/s]Calculating loss...:  72%|███████▏  | 72/100 [01:23<00:12,  2.33it/s]Calculating loss...:  73%|███████▎  | 73/100 [01:25<00:21,  1.27it/s]Calculating loss...:  74%|███████▍  | 74/100 [01:26<00:22,  1.15it/s]Calculating loss...:  75%|███████▌  | 75/100 [01:28<00:30,  1.22s/it]Calculating loss...:  76%|███████▌  | 76/100 [01:30<00:36,  1.50s/it]Calculating loss...:  77%|███████▋  | 77/100 [01:31<00:32,  1.42s/it]Calculating loss...:  78%|███████▊  | 78/100 [01:32<00:28,  1.28s/it]Calculating loss...:  79%|███████▉  | 79/100 [01:32<00:20,  1.03it/s]Calculating loss...:  80%|████████  | 80/100 [01:35<00:28,  1.43s/it]Calculating loss...:  81%|████████  | 81/100 [01:38<00:35,  1.89s/it]Calculating loss...:  82%|████████▏ | 82/100 [01:40<00:35,  1.95s/it]Calculating loss...:  83%|████████▎ | 83/100 [01:40<00:24,  1.46s/it]Calculating loss...:  84%|████████▍ | 84/100 [01:41<00:17,  1.12s/it]Calculating loss...:  85%|████████▌ | 85/100 [01:41<00:13,  1.13it/s]Calculating loss...:  86%|████████▌ | 86/100 [01:43<00:16,  1.18s/it]Calculating loss...:  87%|████████▋ | 87/100 [01:44<00:16,  1.28s/it]Calculating loss...:  88%|████████▊ | 88/100 [01:45<00:11,  1.01it/s]Calculating loss...:  89%|████████▉ | 89/100 [01:45<00:08,  1.30it/s]Calculating loss...:  90%|█████████ | 90/100 [01:46<00:08,  1.25it/s]Calculating loss...:  91%|█████████ | 91/100 [01:46<00:05,  1.52it/s]Calculating loss...:  92%|█████████▏| 92/100 [01:46<00:04,  1.80it/s]Calculating loss...:  93%|█████████▎| 93/100 [01:47<00:03,  1.98it/s]Calculating loss...:  94%|█████████▍| 94/100 [01:47<00:03,  1.84it/s]Calculating loss...:  95%|█████████▌| 95/100 [01:49<00:03,  1.27it/s]Calculating loss...:  96%|█████████▌| 96/100 [01:49<00:02,  1.49it/s]Calculating loss...:  97%|█████████▋| 97/100 [01:49<00:01,  1.84it/s]Calculating loss...:  98%|█████████▊| 98/100 [01:50<00:01,  2.00it/s]Calculating loss...:  99%|█████████▉| 99/100 [01:51<00:00,  1.64it/s]Calculating loss...: 100%|██████████| 100/100 [01:51<00:00,  1.99it/s]Calculating loss...: 100%|██████████| 100/100 [01:51<00:00,  1.11s/it]
+Iter 1: Val loss 0.006, Val took 111.503s
+Iter 50: Train loss 0.010, Learning Rate 8.721e-06, It/sec 0.249, Tokens/sec 74.462, Trained Tokens 14980, Peak mem 14.798 GB
+Iter 100: Train loss 0.014, Learning Rate 8.718e-06, It/sec 0.287, Tokens/sec 76.054, Trained Tokens 28215, Peak mem 14.856 GB
+Iter 150: Train loss 0.011, Learning Rate 8.713e-06, It/sec 0.283, Tokens/sec 73.650, Trained Tokens 41240, Peak mem 16.257 GB
+Iter 200: Train loss 0.010, Learning Rate 8.706e-06, It/sec 0.236, Tokens/sec 71.383, Trained Tokens 56377, Peak mem 16.257 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/0000200_adapters.safetensors.
+Iter 250: Train loss 0.012, Learning Rate 8.697e-06, It/sec 0.184, Tokens/sec 69.896, Trained Tokens 75357, Peak mem 16.257 GB
+Iter 300: Train loss 0.015, Learning Rate 8.685e-06, It/sec 0.261, Tokens/sec 74.961, Trained Tokens 89692, Peak mem 16.257 GB
+Iter 350: Train loss 0.007, Learning Rate 8.673e-06, It/sec 0.194, Tokens/sec 71.552, Trained Tokens 108179, Peak mem 16.777 GB
+Iter 400: Train loss 0.018, Learning Rate 8.657e-06, It/sec 0.211, Tokens/sec 71.003, Trained Tokens 125033, Peak mem 16.777 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/0000400_adapters.safetensors.
+Iter 450: Train loss 0.009, Learning Rate 8.640e-06, It/sec 0.222, Tokens/sec 72.081, Trained Tokens 141237, Peak mem 16.777 GB
+Iter 500: Train loss 0.008, Learning Rate 8.620e-06, It/sec 0.284, Tokens/sec 72.975, Trained Tokens 154067, Peak mem 16.777 GB
+Iter 550: Train loss 0.015, Learning Rate 8.600e-06, It/sec 0.261, Tokens/sec 75.315, Trained Tokens 168511, Peak mem 16.777 GB
+Iter 600: Train loss 0.011, Learning Rate 8.575e-06, It/sec 0.293, Tokens/sec 75.271, Trained Tokens 181370, Peak mem 16.777 GB
+Iter 600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/0000600_adapters.safetensors.
+Iter 650: Train loss 0.008, Learning Rate 8.551e-06, It/sec 0.275, Tokens/sec 75.568, Trained Tokens 195133, Peak mem 17.192 GB
+Iter 700: Train loss 0.009, Learning Rate 8.523e-06, It/sec 0.286, Tokens/sec 75.668, Trained Tokens 208360, Peak mem 17.192 GB
+Iter 750: Train loss 0.010, Learning Rate 8.494e-06, It/sec 0.213, Tokens/sec 74.624, Trained Tokens 225863, Peak mem 17.192 GB
+Iter 800: Train loss 0.019, Learning Rate 8.462e-06, It/sec 0.219, Tokens/sec 72.613, Trained Tokens 242451, Peak mem 17.192 GB
+Iter 800: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/0000800_adapters.safetensors.
+Iter 850: Train loss 0.011, Learning Rate 8.430e-06, It/sec 0.263, Tokens/sec 72.893, Trained Tokens 256318, Peak mem 17.628 GB
+Iter 900: Train loss 0.005, Learning Rate 8.394e-06, It/sec 0.312, Tokens/sec 75.722, Trained Tokens 268443, Peak mem 17.628 GB
+Iter 950: Train loss 0.006, Learning Rate 8.358e-06, It/sec 0.304, Tokens/sec 75.096, Trained Tokens 280811, Peak mem 17.628 GB
+Iter 1000: Train loss 0.005, Learning Rate 8.318e-06, It/sec 0.227, Tokens/sec 73.839, Trained Tokens 297090, Peak mem 17.628 GB
+Iter 1000: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/0001000_adapters.safetensors.
+Iter 1050: Train loss 0.012, Learning Rate 8.278e-06, It/sec 0.188, Tokens/sec 72.649, Trained Tokens 316450, Peak mem 17.628 GB
+Iter 1100: Train loss 0.009, Learning Rate 8.234e-06, It/sec 0.271, Tokens/sec 73.153, Trained Tokens 329965, Peak mem 17.628 GB
+Iter 1150: Train loss 0.008, Learning Rate 8.191e-06, It/sec 0.262, Tokens/sec 73.227, Trained Tokens 343913, Peak mem 17.628 GB
+Iter 1200: Train loss 0.010, Learning Rate 8.143e-06, It/sec 0.317, Tokens/sec 76.073, Trained Tokens 355897, Peak mem 17.628 GB
+Iter 1200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg4/0001200_adapters.safetensors.
+Iter 1250: Train loss 0.007, Learning Rate 8.097e-06, It/sec 0.265, Tokens/sec 73.153, Trained Tokens 369700, Peak mem 17.628 GB
+Iter 1300: Train loss 0.008, Learning Rate 8.046e-06, It/sec 0.261, Tokens/sec 72.856, Trained Tokens 383679, Peak mem 17.628 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 235, in __call__
+    r = self.linear_attn(self.input_layernorm(x), mask, cache)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 183, in __call__
+    out, state = gated_delta_update(
+                 ~~~~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<8 lines>...
+        use_kernel=not self.training,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 86, in gated_delta_update
+    return chunk_gated_delta(q, k, v, log_g, beta, state)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 64, in chunk_gated_delta
+    w = _unit_lower_inv(lower + mx.eye(C))                           # (I + L)^-1
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  [Previous line repeated 1 more time]
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 32, in _unit_lower_inv
+    b_inv = _unit_lower_inv(m[..., h:, h:])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 31, in _unit_lower_inv
+    a_inv = _unit_lower_inv(m[..., :h, :h])
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 29, in _unit_lower_inv
+    return mx.ones_like(m)
+           ~~~~~~~~~~~~^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 3800/9600 iterations saved
+[train_resumable] segment 5: iterations 3801..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg5.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg5.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0003800_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 5800
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<00:53,  1.83it/s]Calculating loss...:   2%|▏         | 2/100 [00:01<01:32,  1.06it/s]Calculating loss...:   3%|▎         | 3/100 [00:02<01:11,  1.35it/s]Calculating loss...:   4%|▍         | 4/100 [00:05<02:58,  1.86s/it]Calculating loss...:   5%|▌         | 5/100 [00:06<02:11,  1.38s/it]Calculating loss...:   6%|▌         | 6/100 [00:09<02:51,  1.82s/it]Calculating loss...:   7%|▋         | 7/100 [00:10<02:28,  1.60s/it]Calculating loss...:   8%|▊         | 8/100 [00:10<01:50,  1.20s/it]Calculating loss...:   9%|▉         | 9/100 [00:11<01:31,  1.00s/it]Calculating loss...:  10%|█         | 10/100 [00:14<02:23,  1.60s/it]Calculating loss...:  11%|█         | 11/100 [00:17<03:11,  2.15s/it]Calculating loss...:  12%|█▏        | 12/100 [00:19<02:55,  1.99s/it]Calculating loss...:  13%|█▎        | 13/100 [00:19<02:11,  1.52s/it]Calculating loss...:  14%|█▍        | 14/100 [00:20<02:02,  1.42s/it]Calculating loss...:  15%|█▌        | 15/100 [00:22<02:05,  1.48s/it]Calculating loss...:  16%|█▌        | 16/100 [00:24<02:10,  1.55s/it]Calculating loss...:  17%|█▋        | 17/100 [00:24<01:39,  1.19s/it]Calculating loss...:  18%|█▊        | 18/100 [00:28<02:52,  2.11s/it]Calculating loss...:  19%|█▉        | 19/100 [00:29<02:28,  1.84s/it]Calculating loss...:  20%|██        | 20/100 [00:30<01:52,  1.41s/it]Calculating loss...:  21%|██        | 21/100 [00:32<02:06,  1.60s/it]Calculating loss...:  22%|██▏       | 22/100 [00:32<01:36,  1.24s/it]Calculating loss...:  23%|██▎       | 23/100 [00:33<01:16,  1.01it/s]Calculating loss...:  24%|██▍       | 24/100 [00:33<01:12,  1.05it/s]Calculating loss...:  25%|██▌       | 25/100 [00:34<01:09,  1.08it/s]Calculating loss...:  26%|██▌       | 26/100 [00:35<00:55,  1.33it/s]Calculating loss...:  27%|██▋       | 27/100 [00:35<00:45,  1.59it/s]Calculating loss...:  28%|██▊       | 28/100 [00:35<00:40,  1.77it/s]Calculating loss...:  29%|██▉       | 29/100 [00:38<01:20,  1.14s/it]Calculating loss...:  30%|███       | 30/100 [00:39<01:20,  1.16s/it]Calculating loss...:  31%|███       | 31/100 [00:42<02:03,  1.79s/it]Calculating loss...:  32%|███▏      | 32/100 [00:43<01:35,  1.40s/it]Calculating loss...:  33%|███▎      | 33/100 [00:43<01:13,  1.10s/it]Calculating loss...:  34%|███▍      | 34/100 [00:44<00:57,  1.14it/s]Calculating loss...:  35%|███▌      | 35/100 [00:45<01:07,  1.04s/it]Calculating loss...:  36%|███▌      | 36/100 [00:46<01:09,  1.08s/it]Calculating loss...:  37%|███▋      | 37/100 [00:47<01:10,  1.11s/it]Calculating loss...:  38%|███▊      | 38/100 [00:48<00:59,  1.05it/s]Calculating loss...:  39%|███▉      | 39/100 [00:50<01:08,  1.12s/it]Calculating loss...:  40%|████      | 40/100 [00:51<01:10,  1.18s/it]Calculating loss...:  41%|████      | 41/100 [00:51<00:57,  1.02it/s]Calculating loss...:  42%|████▏     | 42/100 [00:52<00:50,  1.14it/s]Calculating loss...:  43%|████▎     | 43/100 [00:52<00:40,  1.40it/s]Calculating loss...:  44%|████▍     | 44/100 [00:53<00:33,  1.68it/s]Calculating loss...:  45%|████▌     | 45/100 [00:53<00:28,  1.94it/s]Calculating loss...:  46%|████▌     | 46/100 [00:55<00:55,  1.04s/it]Calculating loss...:  47%|████▋     | 47/100 [00:56<00:47,  1.12it/s]Calculating loss...:  48%|████▊     | 48/100 [00:57<00:51,  1.00it/s]Calculating loss...:  49%|████▉     | 49/100 [01:00<01:24,  1.65s/it]Calculating loss...:  50%|█████     | 50/100 [01:03<01:37,  1.95s/it]Calculating loss...:  51%|█████     | 51/100 [01:03<01:11,  1.47s/it]Calculating loss...:  52%|█████▏    | 52/100 [01:04<00:55,  1.15s/it]Calculating loss...:  53%|█████▎    | 53/100 [01:07<01:29,  1.90s/it]Calculating loss...:  54%|█████▍    | 54/100 [01:08<01:06,  1.46s/it]Calculating loss...:  55%|█████▌    | 55/100 [01:09<01:08,  1.53s/it]Calculating loss...:  56%|█████▌    | 56/100 [01:12<01:16,  1.74s/it]Calculating loss...:  57%|█████▋    | 57/100 [01:13<01:16,  1.78s/it]Calculating loss...:  58%|█████▊    | 58/100 [01:16<01:29,  2.14s/it]Calculating loss...:  59%|█████▉    | 59/100 [01:17<01:12,  1.77s/it]Calculating loss...:  60%|██████    | 60/100 [01:18<00:52,  1.32s/it]Calculating loss...:  61%|██████    | 61/100 [01:19<00:49,  1.26s/it]Calculating loss...:  62%|██████▏   | 62/100 [01:22<01:06,  1.76s/it]Calculating loss...:  63%|██████▎   | 63/100 [01:22<00:51,  1.38s/it]Calculating loss...:  64%|██████▍   | 64/100 [01:23<00:39,  1.09s/it]Calculating loss...:  65%|██████▌   | 65/100 [01:23<00:30,  1.13it/s]Calculating loss...:  66%|██████▌   | 66/100 [01:24<00:32,  1.04it/s]Calculating loss...:  67%|██████▋   | 67/100 [01:25<00:33,  1.01s/it]Calculating loss...:  68%|██████▊   | 68/100 [01:26<00:29,  1.08it/s]Calculating loss...:  69%|██████▉   | 69/100 [01:26<00:22,  1.35it/s]Calculating loss...:  70%|███████   | 70/100 [01:27<00:22,  1.32it/s]Calculating loss...:  71%|███████   | 71/100 [01:29<00:30,  1.06s/it]Calculating loss...:  72%|███████▏  | 72/100 [01:30<00:34,  1.23s/it]Calculating loss...:  73%|███████▎  | 73/100 [01:32<00:37,  1.40s/it]Calculating loss...:  74%|███████▍  | 74/100 [01:36<00:52,  2.01s/it]Calculating loss...:  75%|███████▌  | 75/100 [01:36<00:38,  1.53s/it]Calculating loss...:  76%|███████▌  | 76/100 [01:36<00:28,  1.19s/it]Calculating loss...:  77%|███████▋  | 77/100 [01:38<00:29,  1.30s/it]Calculating loss...:  78%|███████▊  | 78/100 [01:40<00:30,  1.39s/it]Calculating loss...:  79%|███████▉  | 79/100 [01:41<00:31,  1.48s/it]Calculating loss...:  80%|████████  | 80/100 [01:44<00:36,  1.81s/it]Calculating loss...:  81%|████████  | 81/100 [01:47<00:41,  2.20s/it]Calculating loss...:  82%|████████▏ | 82/100 [01:47<00:29,  1.64s/it]Calculating loss...:  83%|████████▎ | 83/100 [01:49<00:27,  1.65s/it]Calculating loss...:  84%|████████▍ | 84/100 [01:50<00:23,  1.47s/it]Calculating loss...:  85%|████████▌ | 85/100 [01:50<00:16,  1.12s/it]Calculating loss...:  86%|████████▌ | 86/100 [01:52<00:16,  1.17s/it]Calculating loss...:  87%|████████▋ | 87/100 [01:54<00:21,  1.66s/it]Calculating loss...:  88%|████████▊ | 88/100 [01:55<00:15,  1.28s/it]Calculating loss...:  89%|████████▉ | 89/100 [01:57<00:16,  1.53s/it]Calculating loss...:  90%|█████████ | 90/100 [01:57<00:11,  1.19s/it]Calculating loss...:  91%|█████████ | 91/100 [01:59<00:10,  1.22s/it]Calculating loss...:  92%|█████████▏| 92/100 [02:01<00:13,  1.69s/it]Calculating loss...:  93%|█████████▎| 93/100 [02:03<00:11,  1.62s/it]Calculating loss...:  94%|█████████▍| 94/100 [02:04<00:07,  1.32s/it]Calculating loss...:  95%|█████████▌| 95/100 [02:05<00:06,  1.21s/it]Calculating loss...:  96%|█████████▌| 96/100 [02:07<00:06,  1.69s/it]Calculating loss...:  97%|█████████▋| 97/100 [02:10<00:05,  1.90s/it]Calculating loss...:  98%|█████████▊| 98/100 [02:12<00:03,  1.89s/it]Calculating loss...:  99%|█████████▉| 99/100 [02:13<00:01,  1.76s/it]Calculating loss...: 100%|██████████| 100/100 [02:14<00:00,  1.57s/it]Calculating loss...: 100%|██████████| 100/100 [02:14<00:00,  1.35s/it]
+Iter 1: Val loss 0.007, Val took 134.663s
+Iter 50: Train loss 0.009, Learning Rate 7.141e-06, It/sec 0.278, Tokens/sec 76.932, Trained Tokens 13831, Peak mem 14.284 GB
+Iter 100: Train loss 0.015, Learning Rate 7.138e-06, It/sec 0.284, Tokens/sec 76.172, Trained Tokens 27251, Peak mem 16.779 GB
+Iter 150: Train loss 0.014, Learning Rate 7.132e-06, It/sec 0.175, Tokens/sec 72.695, Trained Tokens 48039, Peak mem 16.779 GB
+Iter 200: Train loss 0.008, Learning Rate 7.124e-06, It/sec 0.267, Tokens/sec 73.759, Trained Tokens 61858, Peak mem 16.779 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg5/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg5/0000200_adapters.safetensors.
+Iter 250: Train loss 0.007, Learning Rate 7.113e-06, It/sec 0.227, Tokens/sec 75.124, Trained Tokens 78399, Peak mem 16.779 GB
+Iter 300: Train loss 0.008, Learning Rate 7.100e-06, It/sec 0.297, Tokens/sec 74.078, Trained Tokens 90889, Peak mem 16.779 GB
+Iter 350: Train loss 0.007, Learning Rate 7.085e-06, It/sec 0.313, Tokens/sec 75.322, Trained Tokens 102913, Peak mem 16.779 GB
+Iter 400: Train loss 0.010, Learning Rate 7.066e-06, It/sec 0.257, Tokens/sec 73.840, Trained Tokens 117292, Peak mem 16.779 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg5/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg5/0000400_adapters.safetensors.
+Iter 450: Train loss 0.005, Learning Rate 7.047e-06, It/sec 0.260, Tokens/sec 74.679, Trained Tokens 131670, Peak mem 16.779 GB
+Iter 500: Train loss 0.007, Learning Rate 7.023e-06, It/sec 0.252, Tokens/sec 74.785, Trained Tokens 146526, Peak mem 16.779 GB
+Iter 550: Train loss 0.009, Learning Rate 6.999e-06, It/sec 0.201, Tokens/sec 72.780, Trained Tokens 164626, Peak mem 16.779 GB
+Iter 600: Train loss 0.007, Learning Rate 6.971e-06, It/sec 0.269, Tokens/sec 75.543, Trained Tokens 178669, Peak mem 16.779 GB
+Iter 600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg5/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg5/0000600_adapters.safetensors.
+Iter 650: Train loss 0.006, Learning Rate 6.942e-06, It/sec 0.288, Tokens/sec 76.427, Trained Tokens 191932, Peak mem 16.779 GB
+Iter 700: Train loss 0.003, Learning Rate 6.909e-06, It/sec 0.219, Tokens/sec 72.147, Trained Tokens 208372, Peak mem 16.779 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 34, in inner_fn
+    return fn(model, *args, **kwargs)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 235, in __call__
+    r = self.linear_attn(self.input_layernorm(x), mask, cache)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/models/qwen3_5.py", line 183, in __call__
+    out, state = gated_delta_update(
+                 ~~~~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<8 lines>...
+        use_kernel=not self.training,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/gd_chunked.py", line 85, in gated_delta_update
+    log_g = -mx.exp(A_log.astype(mx.float32)) * nn.softplus(a + dt_bias)   # = log(compute_g(A_log, a, dt_bias))
+                                                ~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/layers/activations.py", line 102, in softplus
+    return mx.logaddexp(x, 0)
+           ~~~~~~~~~~~~^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 4400/9600 iterations saved
+[train_resumable] segment 6: iterations 4401..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg6.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg6.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0004400_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 5200
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<00:47,  2.10it/s]Calculating loss...:   2%|▏         | 2/100 [00:00<00:33,  2.92it/s]Calculating loss...:   3%|▎         | 3/100 [00:02<01:35,  1.01it/s]Calculating loss...:   4%|▍         | 4/100 [00:03<01:38,  1.02s/it]Calculating loss...:   5%|▌         | 5/100 [00:05<02:18,  1.46s/it]Calculating loss...:   6%|▌         | 6/100 [00:06<02:05,  1.34s/it]Calculating loss...:   7%|▋         | 7/100 [00:08<02:20,  1.51s/it]Calculating loss...:   8%|▊         | 8/100 [00:09<02:04,  1.36s/it]Calculating loss...:   9%|▉         | 9/100 [00:10<01:45,  1.16s/it]Calculating loss...:  10%|█         | 10/100 [00:13<02:27,  1.63s/it]Calculating loss...:  11%|█         | 11/100 [00:13<01:48,  1.22s/it]Calculating loss...:  12%|█▏        | 12/100 [00:14<01:28,  1.00s/it]Calculating loss...:  13%|█▎        | 13/100 [00:15<01:36,  1.11s/it]Calculating loss...:  14%|█▍        | 14/100 [00:16<01:49,  1.27s/it]Calculating loss...:  15%|█▌        | 15/100 [00:18<01:50,  1.30s/it]Calculating loss...:  16%|█▌        | 16/100 [00:18<01:26,  1.03s/it]Calculating loss...:  17%|█▋        | 17/100 [00:20<01:38,  1.19s/it]Calculating loss...:  18%|█▊        | 18/100 [00:21<01:44,  1.28s/it]Calculating loss...:  19%|█▉        | 19/100 [00:22<01:29,  1.10s/it]Calculating loss...:  20%|██        | 20/100 [00:23<01:13,  1.09it/s]Calculating loss...:  21%|██        | 21/100 [00:24<01:37,  1.24s/it]Calculating loss...:  22%|██▏       | 22/100 [00:28<02:30,  1.94s/it]Calculating loss...:  23%|██▎       | 23/100 [00:28<01:52,  1.46s/it]Calculating loss...:  24%|██▍       | 24/100 [00:29<01:33,  1.23s/it]Calculating loss...:  25%|██▌       | 25/100 [00:30<01:24,  1.13s/it]Calculating loss...:  26%|██▌       | 26/100 [00:31<01:21,  1.10s/it]Calculating loss...:  27%|██▋       | 27/100 [00:32<01:26,  1.18s/it]Calculating loss...:  28%|██▊       | 28/100 [00:33<01:05,  1.11it/s]Calculating loss...:  29%|██▉       | 29/100 [00:33<00:53,  1.32it/s]Calculating loss...:  30%|███       | 30/100 [00:35<01:25,  1.22s/it]Calculating loss...:  31%|███       | 31/100 [00:37<01:37,  1.41s/it]Calculating loss...:  32%|███▏      | 32/100 [00:38<01:17,  1.14s/it]Calculating loss...:  33%|███▎      | 33/100 [00:38<00:58,  1.14it/s]Calculating loss...:  34%|███▍      | 34/100 [00:40<01:27,  1.32s/it]Calculating loss...:  35%|███▌      | 35/100 [00:41<01:15,  1.16s/it]Calculating loss...:  36%|███▌      | 36/100 [00:41<00:58,  1.10it/s]Calculating loss...:  37%|███▋      | 37/100 [00:42<00:58,  1.07it/s]Calculating loss...:  38%|███▊      | 38/100 [00:43<00:48,  1.29it/s]Calculating loss...:  39%|███▉      | 39/100 [00:43<00:40,  1.49it/s]Calculating loss...:  40%|████      | 40/100 [00:44<00:34,  1.75it/s]Calculating loss...:  41%|████      | 41/100 [00:44<00:29,  1.99it/s]Calculating loss...:  42%|████▏     | 42/100 [00:44<00:26,  2.22it/s]Calculating loss...:  43%|████▎     | 43/100 [00:45<00:22,  2.54it/s]Calculating loss...:  44%|████▍     | 44/100 [00:45<00:20,  2.67it/s]Calculating loss...:  45%|████▌     | 45/100 [00:46<00:29,  1.86it/s]Calculating loss...:  46%|████▌     | 46/100 [00:46<00:26,  2.02it/s]Calculating loss...:  47%|████▋     | 47/100 [00:47<00:35,  1.49it/s]Calculating loss...:  48%|████▊     | 48/100 [00:48<00:31,  1.68it/s]Calculating loss...:  49%|████▉     | 49/100 [00:49<00:41,  1.22it/s]Calculating loss...:  50%|█████     | 50/100 [00:52<01:14,  1.49s/it]Calculating loss...:  51%|█████     | 51/100 [00:54<01:17,  1.59s/it]Calculating loss...:  52%|█████▏    | 52/100 [00:57<01:43,  2.17s/it]Calculating loss...:  53%|█████▎    | 53/100 [00:58<01:18,  1.67s/it]Calculating loss...:  54%|█████▍    | 54/100 [00:58<00:59,  1.29s/it]Calculating loss...:  55%|█████▌    | 55/100 [01:01<01:11,  1.60s/it]Calculating loss...:  56%|█████▌    | 56/100 [01:02<01:07,  1.54s/it]Calculating loss...:  57%|█████▋    | 57/100 [01:02<00:50,  1.17s/it]Calculating loss...:  58%|█████▊    | 58/100 [01:03<00:39,  1.06it/s]Calculating loss...:  59%|█████▉    | 59/100 [01:06<01:02,  1.52s/it]Calculating loss...:  60%|██████    | 60/100 [01:06<00:47,  1.19s/it]Calculating loss...:  61%|██████    | 61/100 [01:06<00:36,  1.08it/s]Calculating loss...:  62%|██████▏   | 62/100 [01:07<00:36,  1.03it/s]Calculating loss...:  63%|██████▎   | 63/100 [01:08<00:29,  1.25it/s]Calculating loss...:  64%|██████▍   | 64/100 [01:10<00:39,  1.10s/it]Calculating loss...:  65%|██████▌   | 65/100 [01:13<00:57,  1.65s/it]Calculating loss...:  66%|██████▌   | 66/100 [01:15<00:59,  1.74s/it]Calculating loss...:  67%|██████▋   | 67/100 [01:17<01:07,  2.03s/it]Calculating loss...:  68%|██████▊   | 68/100 [01:18<00:50,  1.57s/it]Calculating loss...:  69%|██████▉   | 69/100 [01:19<00:49,  1.59s/it]Calculating loss...:  70%|███████   | 70/100 [01:22<00:59,  1.98s/it]Calculating loss...:  71%|███████   | 71/100 [01:25<01:03,  2.20s/it]Calculating loss...:  72%|███████▏  | 72/100 [01:25<00:45,  1.63s/it]Calculating loss...:  73%|███████▎  | 73/100 [01:26<00:34,  1.26s/it]Calculating loss...:  74%|███████▍  | 74/100 [01:26<00:25,  1.00it/s]Calculating loss...:  75%|███████▌  | 75/100 [01:28<00:32,  1.31s/it]Calculating loss...:  76%|███████▌  | 76/100 [01:29<00:28,  1.21s/it]Calculating loss...:  77%|███████▋  | 77/100 [01:32<00:37,  1.63s/it]Calculating loss...:  78%|███████▊  | 78/100 [01:34<00:41,  1.87s/it]Calculating loss...:  79%|███████▉  | 79/100 [01:36<00:39,  1.89s/it]Calculating loss...:  80%|████████  | 80/100 [01:38<00:37,  1.85s/it]Calculating loss...:  81%|████████  | 81/100 [01:38<00:26,  1.39s/it]Calculating loss...:  82%|████████▏ | 82/100 [01:38<00:19,  1.07s/it]Calculating loss...:  83%|████████▎ | 83/100 [01:41<00:27,  1.63s/it]Calculating loss...:  84%|████████▍ | 84/100 [01:43<00:25,  1.58s/it]Calculating loss...:  85%|████████▌ | 85/100 [01:43<00:18,  1.20s/it]Calculating loss...:  86%|████████▌ | 86/100 [01:44<00:13,  1.02it/s]Calculating loss...:  87%|████████▋ | 87/100 [01:44<00:10,  1.28it/s]Calculating loss...:  88%|████████▊ | 88/100 [01:44<00:08,  1.50it/s]Calculating loss...:  89%|████████▉ | 89/100 [01:47<00:14,  1.30s/it]Calculating loss...:  90%|█████████ | 90/100 [01:48<00:10,  1.06s/it]Calculating loss...:  91%|█████████ | 91/100 [01:48<00:07,  1.17it/s]Calculating loss...:  92%|█████████▏| 92/100 [01:49<00:06,  1.22it/s]Calculating loss...:  93%|█████████▎| 93/100 [01:51<00:08,  1.15s/it]Calculating loss...:  94%|█████████▍| 94/100 [01:51<00:05,  1.00it/s]Calculating loss...:  95%|█████████▌| 95/100 [01:52<00:03,  1.26it/s]Calculating loss...:  96%|█████████▌| 96/100 [01:52<00:02,  1.49it/s]Calculating loss...:  97%|█████████▋| 97/100 [01:54<00:03,  1.03s/it]Calculating loss...:  98%|█████████▊| 98/100 [01:57<00:03,  1.72s/it]Calculating loss...:  99%|█████████▉| 99/100 [01:58<00:01,  1.51s/it]Calculating loss...: 100%|██████████| 100/100 [01:59<00:00,  1.20s/it]Calculating loss...: 100%|██████████| 100/100 [01:59<00:00,  1.19s/it]
+Iter 1: Val loss 0.006, Val took 119.196s
+Iter 50: Train loss 0.010, Learning Rate 6.215e-06, It/sec 0.303, Tokens/sec 77.221, Trained Tokens 12762, Peak mem 12.909 GB
+Iter 100: Train loss 0.021, Learning Rate 6.212e-06, It/sec 0.266, Tokens/sec 76.379, Trained Tokens 27092, Peak mem 13.733 GB
+Iter 150: Train loss 0.012, Learning Rate 6.206e-06, It/sec 0.243, Tokens/sec 72.352, Trained Tokens 41984, Peak mem 14.167 GB
+Iter 200: Train loss 0.010, Learning Rate 6.196e-06, It/sec 0.328, Tokens/sec 72.829, Trained Tokens 53094, Peak mem 14.857 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg6/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg6/0000200_adapters.safetensors.
+Iter 250: Train loss 0.004, Learning Rate 6.185e-06, It/sec 0.228, Tokens/sec 73.383, Trained Tokens 69153, Peak mem 14.857 GB
+Iter 300: Train loss 0.008, Learning Rate 6.171e-06, It/sec 0.282, Tokens/sec 72.895, Trained Tokens 82083, Peak mem 16.349 GB
+Iter 350: Train loss 0.010, Learning Rate 6.155e-06, It/sec 0.211, Tokens/sec 71.979, Trained Tokens 99141, Peak mem 16.778 GB
+Iter 400: Train loss 0.008, Learning Rate 6.135e-06, It/sec 0.210, Tokens/sec 72.515, Trained Tokens 116421, Peak mem 16.778 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg6/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg6/0000400_adapters.safetensors.
+Iter 450: Train loss 0.015, Learning Rate 6.114e-06, It/sec 0.234, Tokens/sec 74.864, Trained Tokens 132436, Peak mem 16.778 GB
+Iter 500: Train loss 0.004, Learning Rate 6.089e-06, It/sec 0.282, Tokens/sec 75.091, Trained Tokens 145773, Peak mem 16.778 GB
+Iter 550: Train loss 0.007, Learning Rate 6.063e-06, It/sec 0.181, Tokens/sec 69.795, Trained Tokens 165027, Peak mem 17.300 GB
+Iter 600: Train loss 0.005, Learning Rate 6.033e-06, It/sec 0.205, Tokens/sec 71.966, Trained Tokens 182564, Peak mem 17.300 GB
+Iter 600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg6/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg6/0000600_adapters.safetensors.
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 259, in step
+    optimizer.update(model, grad)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/optimizers/optimizers.py", line 29, in update
+    model.update(self.apply_gradients(gradients, model))
+                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/optimizers/optimizers.py", line 109, in apply_gradients
+    return tree_map(self.apply_single, gradients, parameters, self.state)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 52, in tree_map
+    return TreeType(*subtrees) if hasattr(tree, "_fields") else TreeType(subtrees)
+                                                                ~~~~~~~~^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 49, in <genexpr>
+    tree_map(fn, child, *(r[i] for r in rest), is_leaf=is_leaf)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 55, in tree_map
+    k: tree_map(fn, child, *(r[k] for r in rest), is_leaf=is_leaf)
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/utils.py", line 59, in tree_map
+    return fn(tree, *rest)
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/optimizers/optimizers.py", line 596, in apply_single
+    return super().apply_single(
+           ~~~~~~~~~~~~~~~~~~~~^
+        gradient, parameter * (1 - lr * self.weight_decay), state
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/optimizers/optimizers.py", line 534, in apply_single
+    v = b2 * v + (1 - b2) * mx.square(gradient)
+        ~~~^~~
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 5000/9600 iterations saved
+[train_resumable] segment 7: iterations 5001..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg7.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg7.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0005000_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 4600
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<01:01,  1.60it/s]Calculating loss...:   2%|▏         | 2/100 [00:00<00:44,  2.20it/s]Calculating loss...:   3%|▎         | 3/100 [00:01<00:38,  2.55it/s]Calculating loss...:   4%|▍         | 4/100 [00:01<00:37,  2.54it/s]Calculating loss...:   5%|▌         | 5/100 [00:02<01:05,  1.44it/s]Calculating loss...:   6%|▌         | 6/100 [00:05<02:01,  1.29s/it]Calculating loss...:   7%|▋         | 7/100 [00:05<01:36,  1.03s/it]Calculating loss...:   8%|▊         | 8/100 [00:07<01:52,  1.22s/it]Calculating loss...:   9%|▉         | 9/100 [00:08<01:43,  1.14s/it]Calculating loss...:  10%|█         | 10/100 [00:08<01:25,  1.05it/s]Calculating loss...:  11%|█         | 11/100 [00:09<01:23,  1.06it/s]Calculating loss...:  12%|█▏        | 12/100 [00:11<01:46,  1.22s/it]Calculating loss...:  13%|█▎        | 13/100 [00:13<01:56,  1.34s/it]Calculating loss...:  14%|█▍        | 14/100 [00:13<01:31,  1.06s/it]Calculating loss...:  15%|█▌        | 15/100 [00:14<01:11,  1.18it/s]Calculating loss...:  16%|█▌        | 16/100 [00:14<01:00,  1.39it/s]Calculating loss...:  17%|█▋        | 17/100 [00:15<01:18,  1.06it/s]Calculating loss...:  18%|█▊        | 18/100 [00:16<01:06,  1.23it/s]Calculating loss...:  19%|█▉        | 19/100 [00:18<01:37,  1.21s/it]Calculating loss...:  20%|██        | 20/100 [00:19<01:26,  1.08s/it]Calculating loss...:  21%|██        | 21/100 [00:21<01:46,  1.34s/it]Calculating loss...:  22%|██▏       | 22/100 [00:21<01:19,  1.02s/it]Calculating loss...:  23%|██▎       | 23/100 [00:21<01:01,  1.26it/s]Calculating loss...:  24%|██▍       | 24/100 [00:22<01:03,  1.20it/s]Calculating loss...:  25%|██▌       | 25/100 [00:24<01:11,  1.05it/s]Calculating loss...:  26%|██▌       | 26/100 [00:26<01:48,  1.47s/it]Calculating loss...:  27%|██▋       | 27/100 [00:28<01:54,  1.56s/it]Calculating loss...:  28%|██▊       | 28/100 [00:28<01:27,  1.22s/it]Calculating loss...:  29%|██▉       | 29/100 [00:31<02:00,  1.69s/it]Calculating loss...:  30%|███       | 30/100 [00:34<02:14,  1.93s/it]Calculating loss...:  31%|███       | 31/100 [00:34<01:41,  1.47s/it]Calculating loss...:  32%|███▏      | 32/100 [00:34<01:17,  1.13s/it]Calculating loss...:  33%|███▎      | 33/100 [00:35<01:12,  1.08s/it]Calculating loss...:  34%|███▍      | 34/100 [00:36<00:58,  1.14it/s]Calculating loss...:  35%|███▌      | 35/100 [00:36<00:44,  1.45it/s]Calculating loss...:  36%|███▌      | 36/100 [00:37<00:56,  1.13it/s]Calculating loss...:  37%|███▋      | 37/100 [00:40<01:20,  1.29s/it]Calculating loss...:  38%|███▊      | 38/100 [00:40<01:09,  1.12s/it]Calculating loss...:  39%|███▉      | 39/100 [00:41<01:03,  1.04s/it]Calculating loss...:  40%|████      | 40/100 [00:42<00:52,  1.14it/s]Calculating loss...:  41%|████      | 41/100 [00:43<01:07,  1.15s/it]Calculating loss...:  42%|████▏     | 42/100 [00:44<00:53,  1.08it/s]Calculating loss...:  43%|████▎     | 43/100 [00:44<00:41,  1.39it/s]Calculating loss...:  44%|████▍     | 44/100 [00:45<00:34,  1.60it/s]Calculating loss...:  45%|████▌     | 45/100 [00:45<00:39,  1.40it/s]Calculating loss...:  46%|████▌     | 46/100 [00:48<01:01,  1.13s/it]Calculating loss...:  47%|████▋     | 47/100 [00:49<01:02,  1.17s/it]Calculating loss...:  48%|████▊     | 48/100 [00:49<00:46,  1.11it/s]Calculating loss...:  49%|████▉     | 49/100 [00:50<00:38,  1.34it/s]Calculating loss...:  50%|█████     | 50/100 [00:50<00:34,  1.43it/s]Calculating loss...:  51%|█████     | 51/100 [00:51<00:30,  1.63it/s]Calculating loss...:  52%|█████▏    | 52/100 [00:51<00:34,  1.38it/s]Calculating loss...:  53%|█████▎    | 53/100 [00:54<01:02,  1.33s/it]Calculating loss...:  54%|█████▍    | 54/100 [00:55<00:55,  1.21s/it]Calculating loss...:  55%|█████▌    | 55/100 [00:56<00:43,  1.03it/s]Calculating loss...:  56%|█████▌    | 56/100 [00:57<00:53,  1.22s/it]Calculating loss...:  57%|█████▋    | 57/100 [00:59<00:52,  1.21s/it]Calculating loss...:  58%|█████▊    | 58/100 [00:59<00:38,  1.08it/s]Calculating loss...:  59%|█████▉    | 59/100 [01:00<00:36,  1.12it/s]Calculating loss...:  60%|██████    | 60/100 [01:00<00:29,  1.38it/s]Calculating loss...:  61%|██████    | 61/100 [01:00<00:24,  1.58it/s]Calculating loss...:  62%|██████▏   | 62/100 [01:03<00:41,  1.09s/it]Calculating loss...:  63%|██████▎   | 63/100 [01:03<00:33,  1.12it/s]Calculating loss...:  64%|██████▍   | 64/100 [01:03<00:26,  1.35it/s]Calculating loss...:  65%|██████▌   | 65/100 [01:05<00:32,  1.06it/s]Calculating loss...:  66%|██████▌   | 66/100 [01:05<00:26,  1.29it/s]Calculating loss...:  67%|██████▋   | 67/100 [01:05<00:21,  1.56it/s]Calculating loss...:  68%|██████▊   | 68/100 [01:07<00:30,  1.06it/s]Calculating loss...:  69%|██████▉   | 69/100 [01:08<00:25,  1.24it/s]Calculating loss...:  70%|███████   | 70/100 [01:08<00:22,  1.32it/s]Calculating loss...:  71%|███████   | 71/100 [01:09<00:19,  1.48it/s]Calculating loss...:  72%|███████▏  | 72/100 [01:10<00:27,  1.03it/s]Calculating loss...:  73%|███████▎  | 73/100 [01:11<00:21,  1.25it/s]Calculating loss...:  74%|███████▍  | 74/100 [01:11<00:17,  1.46it/s]Calculating loss...:  75%|███████▌  | 75/100 [01:11<00:13,  1.80it/s]Calculating loss...:  76%|███████▌  | 76/100 [01:12<00:12,  1.95it/s]Calculating loss...:  77%|███████▋  | 77/100 [01:13<00:15,  1.46it/s]Calculating loss...:  78%|███████▊  | 78/100 [01:13<00:13,  1.66it/s]Calculating loss...:  79%|███████▉  | 79/100 [01:15<00:17,  1.23it/s]Calculating loss...:  80%|████████  | 80/100 [01:18<00:29,  1.45s/it]Calculating loss...:  81%|████████  | 81/100 [01:18<00:21,  1.11s/it]Calculating loss...:  82%|████████▏ | 82/100 [01:18<00:16,  1.08it/s]Calculating loss...:  83%|████████▎ | 83/100 [01:21<00:25,  1.51s/it]Calculating loss...:  84%|████████▍ | 84/100 [01:22<00:18,  1.18s/it]Calculating loss...:  85%|████████▌ | 85/100 [01:22<00:14,  1.04it/s]Calculating loss...:  86%|████████▌ | 86/100 [01:23<00:10,  1.30it/s]Calculating loss...:  87%|████████▋ | 87/100 [01:24<00:12,  1.01it/s]Calculating loss...:  88%|████████▊ | 88/100 [01:24<00:10,  1.20it/s]Calculating loss...:  89%|████████▉ | 89/100 [01:25<00:07,  1.42it/s]Calculating loss...:  90%|█████████ | 90/100 [01:25<00:05,  1.75it/s]Calculating loss...:  91%|█████████ | 91/100 [01:26<00:06,  1.49it/s]Calculating loss...:  92%|█████████▏| 92/100 [01:26<00:04,  1.75it/s]Calculating loss...:  93%|█████████▎| 93/100 [01:27<00:04,  1.69it/s]Calculating loss...:  94%|█████████▍| 94/100 [01:28<00:03,  1.52it/s]Calculating loss...:  95%|█████████▌| 95/100 [01:28<00:03,  1.60it/s]Calculating loss...:  96%|█████████▌| 96/100 [01:29<00:02,  1.72it/s]Calculating loss...:  97%|█████████▋| 97/100 [01:29<00:01,  1.73it/s]Calculating loss...:  98%|█████████▊| 98/100 [01:31<00:01,  1.34it/s]Calculating loss...:  99%|█████████▉| 99/100 [01:33<00:01,  1.22s/it]Calculating loss...: 100%|██████████| 100/100 [01:33<00:00,  1.05it/s]Calculating loss...: 100%|██████████| 100/100 [01:33<00:00,  1.07it/s]
+Iter 1: Val loss 0.008, Val took 93.752s
+Iter 50: Train loss 0.006, Learning Rate 5.249e-06, It/sec 0.252, Tokens/sec 77.167, Trained Tokens 15324, Peak mem 12.836 GB
+Iter 100: Train loss 0.010, Learning Rate 5.245e-06, It/sec 0.281, Tokens/sec 77.350, Trained Tokens 29101, Peak mem 13.845 GB
+Iter 150: Train loss 0.015, Learning Rate 5.239e-06, It/sec 0.229, Tokens/sec 72.842, Trained Tokens 45026, Peak mem 13.845 GB
+Iter 200: Train loss 0.009, Learning Rate 5.229e-06, It/sec 0.262, Tokens/sec 73.932, Trained Tokens 59129, Peak mem 14.137 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0000200_adapters.safetensors.
+Iter 250: Train loss 0.007, Learning Rate 5.217e-06, It/sec 0.215, Tokens/sec 74.161, Trained Tokens 76374, Peak mem 14.137 GB
+Iter 300: Train loss 0.011, Learning Rate 5.202e-06, It/sec 0.323, Tokens/sec 75.013, Trained Tokens 88002, Peak mem 14.137 GB
+Iter 350: Train loss 0.006, Learning Rate 5.185e-06, It/sec 0.307, Tokens/sec 75.884, Trained Tokens 100341, Peak mem 17.299 GB
+Iter 400: Train loss 0.005, Learning Rate 5.164e-06, It/sec 0.245, Tokens/sec 75.011, Trained Tokens 115659, Peak mem 17.299 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0000400_adapters.safetensors.
+Iter 450: Train loss 0.008, Learning Rate 5.142e-06, It/sec 0.248, Tokens/sec 75.461, Trained Tokens 130880, Peak mem 17.299 GB
+Iter 500: Train loss 0.006, Learning Rate 5.115e-06, It/sec 0.210, Tokens/sec 74.176, Trained Tokens 148544, Peak mem 17.299 GB
+Iter 550: Train loss 0.008, Learning Rate 5.088e-06, It/sec 0.325, Tokens/sec 76.892, Trained Tokens 160383, Peak mem 17.299 GB
+Iter 600: Train loss 0.005, Learning Rate 5.056e-06, It/sec 0.356, Tokens/sec 78.496, Trained Tokens 171393, Peak mem 17.299 GB
+Iter 600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0000600_adapters.safetensors.
+Iter 650: Train loss 0.002, Learning Rate 5.024e-06, It/sec 0.205, Tokens/sec 72.138, Trained Tokens 188964, Peak mem 17.299 GB
+Iter 700: Train loss 0.004, Learning Rate 4.987e-06, It/sec 0.267, Tokens/sec 74.261, Trained Tokens 202867, Peak mem 17.299 GB
+Iter 750: Train loss 0.006, Learning Rate 4.950e-06, It/sec 0.235, Tokens/sec 76.126, Trained Tokens 219078, Peak mem 17.299 GB
+Iter 800: Train loss 0.006, Learning Rate 4.908e-06, It/sec 0.248, Tokens/sec 73.872, Trained Tokens 233970, Peak mem 17.299 GB
+Iter 800: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0000800_adapters.safetensors.
+Iter 850: Train loss 0.003, Learning Rate 4.866e-06, It/sec 0.266, Tokens/sec 75.130, Trained Tokens 248076, Peak mem 17.299 GB
+Iter 900: Train loss 0.004, Learning Rate 4.819e-06, It/sec 0.229, Tokens/sec 72.857, Trained Tokens 263994, Peak mem 17.299 GB
+Iter 950: Train loss 0.017, Learning Rate 4.773e-06, It/sec 0.295, Tokens/sec 76.032, Trained Tokens 276868, Peak mem 17.299 GB
+Iter 1000: Train loss 0.006, Learning Rate 4.721e-06, It/sec 0.184, Tokens/sec 70.554, Trained Tokens 296018, Peak mem 17.299 GB
+Iter 1000: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0001000_adapters.safetensors.
+Iter 1050: Train loss 0.007, Learning Rate 4.671e-06, It/sec 0.324, Tokens/sec 74.587, Trained Tokens 307535, Peak mem 17.299 GB
+Iter 1100: Train loss 0.009, Learning Rate 4.615e-06, It/sec 0.275, Tokens/sec 78.390, Trained Tokens 321789, Peak mem 17.299 GB
+Iter 1150: Train loss 0.004, Learning Rate 4.561e-06, It/sec 0.289, Tokens/sec 77.409, Trained Tokens 335199, Peak mem 17.299 GB
+Iter 1200: Train loss 0.005, Learning Rate 4.501e-06, It/sec 0.274, Tokens/sec 76.160, Trained Tokens 349108, Peak mem 17.300 GB
+Iter 1200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0001200_adapters.safetensors.
+Iter 1250: Train loss 0.005, Learning Rate 4.443e-06, It/sec 0.289, Tokens/sec 75.678, Trained Tokens 362209, Peak mem 17.300 GB
+Iter 1300: Train loss 0.004, Learning Rate 4.379e-06, It/sec 0.221, Tokens/sec 74.462, Trained Tokens 379049, Peak mem 17.300 GB
+Iter 1350: Train loss 0.006, Learning Rate 4.318e-06, It/sec 0.296, Tokens/sec 74.534, Trained Tokens 391659, Peak mem 17.300 GB
+Iter 1400: Train loss 0.003, Learning Rate 4.250e-06, It/sec 0.310, Tokens/sec 77.325, Trained Tokens 404128, Peak mem 17.300 GB
+Iter 1400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0001400_adapters.safetensors.
+Iter 1450: Train loss 0.004, Learning Rate 4.186e-06, It/sec 0.217, Tokens/sec 73.364, Trained Tokens 421061, Peak mem 17.300 GB
+Iter 1500: Train loss 0.004, Learning Rate 4.115e-06, It/sec 0.274, Tokens/sec 75.919, Trained Tokens 434929, Peak mem 17.300 GB
+Iter 1550: Train loss 0.006, Learning Rate 4.047e-06, It/sec 0.338, Tokens/sec 75.517, Trained Tokens 446108, Peak mem 17.300 GB
+Iter 1600: Train loss 0.005, Learning Rate 3.973e-06, It/sec 0.210, Tokens/sec 71.553, Trained Tokens 463122, Peak mem 17.628 GB
+Iter 1600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0001600_adapters.safetensors.
+Iter 1650: Train loss 0.003, Learning Rate 3.904e-06, It/sec 0.419, Tokens/sec 79.939, Trained Tokens 472663, Peak mem 17.628 GB
+Iter 1700: Train loss 0.006, Learning Rate 3.827e-06, It/sec 0.228, Tokens/sec 73.706, Trained Tokens 488849, Peak mem 17.654 GB
+Iter 1750: Train loss 0.005, Learning Rate 3.755e-06, It/sec 0.186, Tokens/sec 72.117, Trained Tokens 508247, Peak mem 17.654 GB
+Iter 1800: Train loss 0.003, Learning Rate 3.676e-06, It/sec 0.266, Tokens/sec 75.892, Trained Tokens 522506, Peak mem 17.654 GB
+Iter 1800: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg7/0001800_adapters.safetensors.
+Iter 1850: Train loss 0.003, Learning Rate 3.603e-06, It/sec 0.249, Tokens/sec 75.528, Trained Tokens 537660, Peak mem 17.654 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 6800/9600 iterations saved
+[train_resumable] segment 8: iterations 6801..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg8.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg8.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0006800_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 2800
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<00:38,  2.57it/s]Calculating loss...:   2%|▏         | 2/100 [00:00<00:29,  3.30it/s]Calculating loss...:   3%|▎         | 3/100 [00:01<01:07,  1.45it/s]Calculating loss...:   4%|▍         | 4/100 [00:03<01:28,  1.08it/s]Calculating loss...:   5%|▌         | 5/100 [00:05<02:24,  1.52s/it]Calculating loss...:   6%|▌         | 6/100 [00:07<02:45,  1.76s/it]Calculating loss...:   7%|▋         | 7/100 [00:09<02:50,  1.84s/it]Calculating loss...:   8%|▊         | 8/100 [00:10<02:02,  1.34s/it]Calculating loss...:   9%|▉         | 9/100 [00:11<01:58,  1.31s/it]Calculating loss...:  10%|█         | 10/100 [00:11<01:30,  1.01s/it]Calculating loss...:  11%|█         | 11/100 [00:12<01:23,  1.07it/s]Calculating loss...:  12%|█▏        | 12/100 [00:15<02:07,  1.45s/it]Calculating loss...:  13%|█▎        | 13/100 [00:15<01:36,  1.11s/it]Calculating loss...:  14%|█▍        | 14/100 [00:15<01:19,  1.08it/s]Calculating loss...:  15%|█▌        | 15/100 [00:16<01:07,  1.26it/s]Calculating loss...:  16%|█▌        | 16/100 [00:18<01:44,  1.25s/it]Calculating loss...:  17%|█▋        | 17/100 [00:20<02:03,  1.48s/it]Calculating loss...:  18%|█▊        | 18/100 [00:21<01:37,  1.19s/it]Calculating loss...:  19%|█▉        | 19/100 [00:22<01:48,  1.34s/it]Calculating loss...:  20%|██        | 20/100 [00:23<01:23,  1.04s/it]Calculating loss...:  21%|██        | 21/100 [00:23<01:09,  1.14it/s]Calculating loss...:  22%|██▏       | 22/100 [00:24<01:01,  1.27it/s]Calculating loss...:  23%|██▎       | 23/100 [00:26<01:21,  1.06s/it]Calculating loss...:  24%|██▍       | 24/100 [00:27<01:19,  1.05s/it]Calculating loss...:  25%|██▌       | 25/100 [00:28<01:30,  1.20s/it]Calculating loss...:  26%|██▌       | 26/100 [00:32<02:27,  2.00s/it]Calculating loss...:  27%|██▋       | 27/100 [00:33<02:06,  1.74s/it]Calculating loss...:  28%|██▊       | 28/100 [00:35<02:09,  1.80s/it]Calculating loss...:  29%|██▉       | 29/100 [00:35<01:35,  1.34s/it]Calculating loss...:  30%|███       | 30/100 [00:36<01:12,  1.04s/it]Calculating loss...:  31%|███       | 31/100 [00:37<01:14,  1.08s/it]Calculating loss...:  32%|███▏      | 32/100 [00:39<01:31,  1.34s/it]Calculating loss...:  33%|███▎      | 33/100 [00:41<01:53,  1.70s/it]Calculating loss...:  34%|███▍      | 34/100 [00:43<01:56,  1.77s/it]Calculating loss...:  35%|███▌      | 35/100 [00:45<02:01,  1.87s/it]Calculating loss...:  36%|███▌      | 36/100 [00:48<02:05,  1.96s/it]Calculating loss...:  37%|███▋      | 37/100 [00:48<01:32,  1.47s/it]Calculating loss...:  38%|███▊      | 38/100 [00:48<01:08,  1.11s/it]Calculating loss...:  39%|███▉      | 39/100 [00:48<00:53,  1.14it/s]Calculating loss...:  40%|████      | 40/100 [00:49<00:50,  1.20it/s]Calculating loss...:  41%|████      | 41/100 [00:50<00:40,  1.46it/s]Calculating loss...:  42%|████▏     | 42/100 [00:50<00:34,  1.67it/s]Calculating loss...:  43%|████▎     | 43/100 [00:50<00:29,  1.93it/s]Calculating loss...:  44%|████▍     | 44/100 [00:52<00:44,  1.26it/s]Calculating loss...:  45%|████▌     | 45/100 [00:52<00:37,  1.47it/s]Calculating loss...:  46%|████▌     | 46/100 [00:53<00:33,  1.61it/s]Calculating loss...:  47%|████▋     | 47/100 [00:54<00:42,  1.23it/s]Calculating loss...:  48%|████▊     | 48/100 [00:56<01:08,  1.31s/it]Calculating loss...:  49%|████▉     | 49/100 [00:58<01:15,  1.49s/it]Calculating loss...:  50%|█████     | 50/100 [00:59<00:58,  1.17s/it]Calculating loss...:  51%|█████     | 51/100 [01:00<00:53,  1.09s/it]Calculating loss...:  52%|█████▏    | 52/100 [01:02<01:06,  1.39s/it]Calculating loss...:  53%|█████▎    | 53/100 [01:04<01:19,  1.69s/it]Calculating loss...:  54%|█████▍    | 54/100 [01:04<00:58,  1.28s/it]Calculating loss...:  55%|█████▌    | 55/100 [01:06<00:55,  1.24s/it]Calculating loss...:  56%|█████▌    | 56/100 [01:06<00:43,  1.01it/s]Calculating loss...:  57%|█████▋    | 57/100 [01:06<00:34,  1.26it/s]Calculating loss...:  58%|█████▊    | 58/100 [01:06<00:26,  1.60it/s]Calculating loss...:  59%|█████▉    | 59/100 [01:07<00:21,  1.87it/s]Calculating loss...:  60%|██████    | 60/100 [01:09<00:45,  1.14s/it]Calculating loss...:  61%|██████    | 61/100 [01:11<00:53,  1.37s/it]Calculating loss...:  62%|██████▏   | 62/100 [01:13<00:53,  1.40s/it]Calculating loss...:  63%|██████▎   | 63/100 [01:13<00:38,  1.05s/it]Calculating loss...:  64%|██████▍   | 64/100 [01:13<00:30,  1.17it/s]Calculating loss...:  65%|██████▌   | 65/100 [01:15<00:35,  1.02s/it]Calculating loss...:  66%|██████▌   | 66/100 [01:15<00:29,  1.17it/s]Calculating loss...:  67%|██████▋   | 67/100 [01:18<00:46,  1.41s/it]Calculating loss...:  68%|██████▊   | 68/100 [01:20<00:47,  1.49s/it]Calculating loss...:  69%|██████▉   | 69/100 [01:21<00:40,  1.31s/it]Calculating loss...:  70%|███████   | 70/100 [01:21<00:29,  1.01it/s]Calculating loss...:  71%|███████   | 71/100 [01:21<00:23,  1.24it/s]Calculating loss...:  72%|███████▏  | 72/100 [01:22<00:19,  1.45it/s]Calculating loss...:  73%|███████▎  | 73/100 [01:22<00:15,  1.74it/s]Calculating loss...:  74%|███████▍  | 74/100 [01:22<00:14,  1.84it/s]Calculating loss...:  75%|███████▌  | 75/100 [01:23<00:17,  1.39it/s]Calculating loss...:  76%|███████▌  | 76/100 [01:25<00:24,  1.04s/it]Calculating loss...:  77%|███████▋  | 77/100 [01:25<00:18,  1.25it/s]Calculating loss...:  78%|███████▊  | 78/100 [01:26<00:14,  1.57it/s]Calculating loss...:  79%|███████▉  | 79/100 [01:28<00:25,  1.22s/it]Calculating loss...:  80%|████████  | 80/100 [01:29<00:19,  1.03it/s]Calculating loss...:  81%|████████  | 81/100 [01:29<00:15,  1.22it/s]Calculating loss...:  82%|████████▏ | 82/100 [01:31<00:19,  1.11s/it]Calculating loss...:  83%|████████▎ | 83/100 [01:31<00:14,  1.14it/s]Calculating loss...:  84%|████████▍ | 84/100 [01:32<00:11,  1.40it/s]Calculating loss...:  85%|████████▌ | 85/100 [01:32<00:08,  1.74it/s]Calculating loss...:  86%|████████▌ | 86/100 [01:32<00:07,  1.94it/s]Calculating loss...:  87%|████████▋ | 87/100 [01:33<00:06,  2.10it/s]Calculating loss...:  88%|████████▊ | 88/100 [01:35<00:13,  1.14s/it]Calculating loss...:  89%|████████▉ | 89/100 [01:36<00:12,  1.14s/it]Calculating loss...:  90%|█████████ | 90/100 [01:39<00:14,  1.50s/it]Calculating loss...:  91%|█████████ | 91/100 [01:41<00:15,  1.78s/it]Calculating loss...:  92%|█████████▏| 92/100 [01:42<00:10,  1.34s/it]Calculating loss...:  93%|█████████▎| 93/100 [01:43<00:09,  1.30s/it]Calculating loss...:  94%|█████████▍| 94/100 [01:43<00:06,  1.05s/it]Calculating loss...:  95%|█████████▌| 95/100 [01:44<00:04,  1.20it/s]Calculating loss...:  96%|█████████▌| 96/100 [01:45<00:03,  1.01it/s]Calculating loss...:  97%|█████████▋| 97/100 [01:48<00:04,  1.58s/it]Calculating loss...:  98%|█████████▊| 98/100 [01:50<00:03,  1.72s/it]Calculating loss...:  99%|█████████▉| 99/100 [01:54<00:02,  2.30s/it]Calculating loss...: 100%|██████████| 100/100 [01:54<00:00,  1.73s/it]Calculating loss...: 100%|██████████| 100/100 [01:54<00:00,  1.14s/it]
+Iter 1: Val loss 0.005, Val took 114.482s
+Iter 50: Train loss 0.005, Learning Rate 2.510e-06, It/sec 0.327, Tokens/sec 76.129, Trained Tokens 11635, Peak mem 13.245 GB
+Iter 100: Train loss 0.007, Learning Rate 2.505e-06, It/sec 0.272, Tokens/sec 74.754, Trained Tokens 25368, Peak mem 13.245 GB
+Iter 150: Train loss 0.006, Learning Rate 2.498e-06, It/sec 0.225, Tokens/sec 73.610, Trained Tokens 41716, Peak mem 13.300 GB
+Iter 200: Train loss 0.003, Learning Rate 2.487e-06, It/sec 0.267, Tokens/sec 74.896, Trained Tokens 55757, Peak mem 13.300 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/0000200_adapters.safetensors.
+Iter 250: Train loss 0.004, Learning Rate 2.473e-06, It/sec 0.284, Tokens/sec 73.319, Trained Tokens 68670, Peak mem 14.089 GB
+Iter 300: Train loss 0.005, Learning Rate 2.456e-06, It/sec 0.266, Tokens/sec 75.367, Trained Tokens 82815, Peak mem 14.089 GB
+Iter 350: Train loss 0.006, Learning Rate 2.437e-06, It/sec 0.263, Tokens/sec 75.553, Trained Tokens 97166, Peak mem 16.039 GB
+Iter 400: Train loss 0.004, Learning Rate 2.413e-06, It/sec 0.253, Tokens/sec 73.653, Trained Tokens 111732, Peak mem 16.039 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/0000400_adapters.safetensors.
+Iter 450: Train loss 0.003, Learning Rate 2.389e-06, It/sec 0.252, Tokens/sec 74.863, Trained Tokens 126591, Peak mem 17.108 GB
+Iter 500: Train loss 0.004, Learning Rate 2.359e-06, It/sec 0.215, Tokens/sec 72.662, Trained Tokens 143512, Peak mem 17.108 GB
+Iter 550: Train loss 0.011, Learning Rate 2.329e-06, It/sec 0.233, Tokens/sec 73.533, Trained Tokens 159268, Peak mem 17.108 GB
+Iter 600: Train loss 0.004, Learning Rate 2.294e-06, It/sec 0.365, Tokens/sec 80.276, Trained Tokens 170277, Peak mem 17.108 GB
+Iter 600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/0000600_adapters.safetensors.
+Iter 650: Train loss 0.012, Learning Rate 2.260e-06, It/sec 0.239, Tokens/sec 75.124, Trained Tokens 186014, Peak mem 17.108 GB
+Iter 700: Train loss 0.006, Learning Rate 2.219e-06, It/sec 0.290, Tokens/sec 75.122, Trained Tokens 198963, Peak mem 17.108 GB
+Iter 750: Train loss 0.003, Learning Rate 2.180e-06, It/sec 0.304, Tokens/sec 76.613, Trained Tokens 211552, Peak mem 17.108 GB
+Iter 800: Train loss 0.003, Learning Rate 2.136e-06, It/sec 0.288, Tokens/sec 75.413, Trained Tokens 224660, Peak mem 17.108 GB
+Iter 800: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/0000800_adapters.safetensors.
+Iter 850: Train loss 0.014, Learning Rate 2.093e-06, It/sec 0.238, Tokens/sec 77.076, Trained Tokens 240846, Peak mem 17.108 GB
+Iter 900: Train loss 0.004, Learning Rate 2.044e-06, It/sec 0.253, Tokens/sec 73.538, Trained Tokens 255393, Peak mem 17.108 GB
+Iter 950: Train loss 0.010, Learning Rate 1.998e-06, It/sec 0.232, Tokens/sec 71.984, Trained Tokens 270932, Peak mem 17.108 GB
+Iter 1000: Train loss 0.002, Learning Rate 1.946e-06, It/sec 0.345, Tokens/sec 76.412, Trained Tokens 282005, Peak mem 17.108 GB
+Iter 1000: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/0001000_adapters.safetensors.
+Iter 1050: Train loss 0.004, Learning Rate 1.896e-06, It/sec 0.271, Tokens/sec 75.589, Trained Tokens 295946, Peak mem 17.108 GB
+Iter 1100: Train loss 0.009, Learning Rate 1.842e-06, It/sec 0.309, Tokens/sec 74.726, Trained Tokens 308032, Peak mem 17.108 GB
+Iter 1150: Train loss 0.005, Learning Rate 1.790e-06, It/sec 0.369, Tokens/sec 75.994, Trained Tokens 318339, Peak mem 17.108 GB
+Iter 1200: Train loss 0.002, Learning Rate 1.733e-06, It/sec 0.358, Tokens/sec 75.748, Trained Tokens 328915, Peak mem 17.108 GB
+Iter 1200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/0001200_adapters.safetensors.
+Iter 1250: Train loss 0.005, Learning Rate 1.680e-06, It/sec 0.189, Tokens/sec 70.947, Trained Tokens 347685, Peak mem 17.300 GB
+Iter 1300: Train loss 0.004, Learning Rate 1.622e-06, It/sec 0.245, Tokens/sec 77.463, Trained Tokens 363463, Peak mem 17.300 GB
+Iter 1350: Train loss 0.006, Learning Rate 1.569e-06, It/sec 0.238, Tokens/sec 74.825, Trained Tokens 379188, Peak mem 17.300 GB
+Iter 1400: Train loss 0.003, Learning Rate 1.510e-06, It/sec 0.290, Tokens/sec 74.651, Trained Tokens 392045, Peak mem 17.300 GB
+Iter 1400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg8/0001400_adapters.safetensors.
+Iter 1450: Train loss 0.004, Learning Rate 1.456e-06, It/sec 0.263, Tokens/sec 76.299, Trained Tokens 406549, Peak mem 17.300 GB
+Iter 1500: Train loss 0.003, Learning Rate 1.397e-06, It/sec 0.252, Tokens/sec 74.859, Trained Tokens 421415, Peak mem 17.300 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 8200/9600 iterations saved
+[train_resumable] segment 9: iterations 8201..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg9.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg9.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0008200_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 1400
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<00:39,  2.49it/s]Calculating loss...:   2%|▏         | 2/100 [00:01<01:20,  1.21it/s]Calculating loss...:   3%|▎         | 3/100 [00:02<01:35,  1.02it/s]Calculating loss...:   4%|▍         | 4/100 [00:04<01:56,  1.21s/it]Calculating loss...:   5%|▌         | 5/100 [00:04<01:24,  1.12it/s]Calculating loss...:   6%|▌         | 6/100 [00:08<03:06,  1.98s/it]Calculating loss...:   7%|▋         | 7/100 [00:10<03:04,  1.99s/it]Calculating loss...:   8%|▊         | 8/100 [00:11<02:16,  1.49s/it]Calculating loss...:   9%|▉         | 9/100 [00:11<01:50,  1.21s/it]Calculating loss...:  10%|█         | 10/100 [00:11<01:22,  1.09it/s]Calculating loss...:  11%|█         | 11/100 [00:12<01:05,  1.35it/s]Calculating loss...:  12%|█▏        | 12/100 [00:12<00:52,  1.67it/s]Calculating loss...:  13%|█▎        | 13/100 [00:13<01:11,  1.22it/s]Calculating loss...:  14%|█▍        | 14/100 [00:14<00:59,  1.44it/s]Calculating loss...:  15%|█▌        | 15/100 [00:15<01:16,  1.11it/s]Calculating loss...:  16%|█▌        | 16/100 [00:15<00:59,  1.41it/s]Calculating loss...:  17%|█▋        | 17/100 [00:17<01:16,  1.08it/s]Calculating loss...:  18%|█▊        | 18/100 [00:17<01:01,  1.34it/s]Calculating loss...:  19%|█▉        | 19/100 [00:18<00:54,  1.48it/s]Calculating loss...:  20%|██        | 20/100 [00:18<00:44,  1.81it/s]Calculating loss...:  21%|██        | 21/100 [00:20<01:16,  1.03it/s]Calculating loss...:  22%|██▏       | 22/100 [00:20<00:59,  1.32it/s]Calculating loss...:  23%|██▎       | 23/100 [00:21<00:48,  1.59it/s]Calculating loss...:  24%|██▍       | 24/100 [00:21<00:41,  1.85it/s]Calculating loss...:  25%|██▌       | 25/100 [00:21<00:38,  1.95it/s]Calculating loss...:  26%|██▌       | 26/100 [00:22<00:43,  1.71it/s]Calculating loss...:  27%|██▋       | 27/100 [00:23<00:40,  1.79it/s]Calculating loss...:  28%|██▊       | 28/100 [00:25<01:15,  1.05s/it]Calculating loss...:  29%|██▉       | 29/100 [00:25<01:04,  1.10it/s]Calculating loss...:  30%|███       | 30/100 [00:27<01:14,  1.06s/it]Calculating loss...:  31%|███       | 31/100 [00:28<01:10,  1.02s/it]Calculating loss...:  32%|███▏      | 32/100 [00:28<00:54,  1.26it/s]Calculating loss...:  33%|███▎      | 33/100 [00:29<01:02,  1.07it/s]Calculating loss...:  34%|███▍      | 34/100 [00:31<01:13,  1.11s/it]Calculating loss...:  35%|███▌      | 35/100 [00:31<00:58,  1.11it/s]Calculating loss...:  36%|███▌      | 36/100 [00:35<01:45,  1.65s/it]Calculating loss...:  37%|███▋      | 37/100 [00:35<01:19,  1.26s/it]Calculating loss...:  38%|███▊      | 38/100 [00:35<00:59,  1.05it/s]Calculating loss...:  39%|███▉      | 39/100 [00:36<00:48,  1.27it/s]Calculating loss...:  40%|████      | 40/100 [00:37<00:59,  1.00it/s]Calculating loss...:  41%|████      | 41/100 [00:37<00:47,  1.25it/s]Calculating loss...:  42%|████▏     | 42/100 [00:39<00:58,  1.01s/it]Calculating loss...:  43%|████▎     | 43/100 [00:41<01:10,  1.23s/it]Calculating loss...:  44%|████▍     | 44/100 [00:42<01:07,  1.21s/it]Calculating loss...:  45%|████▌     | 45/100 [00:43<01:00,  1.10s/it]Calculating loss...:  46%|████▌     | 46/100 [00:43<00:47,  1.15it/s]Calculating loss...:  47%|████▋     | 47/100 [00:44<00:51,  1.04it/s]Calculating loss...:  48%|████▊     | 48/100 [00:45<00:41,  1.25it/s]Calculating loss...:  49%|████▉     | 49/100 [00:47<00:59,  1.18s/it]Calculating loss...:  50%|█████     | 50/100 [00:47<00:47,  1.06it/s]Calculating loss...:  51%|█████     | 51/100 [00:48<00:43,  1.13it/s]Calculating loss...:  52%|█████▏    | 52/100 [00:49<00:47,  1.01it/s]Calculating loss...:  53%|█████▎    | 53/100 [00:49<00:38,  1.23it/s]Calculating loss...:  54%|█████▍    | 54/100 [00:50<00:30,  1.50it/s]Calculating loss...:  55%|█████▌    | 55/100 [00:50<00:25,  1.78it/s]Calculating loss...:  56%|█████▌    | 56/100 [00:50<00:21,  2.03it/s]Calculating loss...:  57%|█████▋    | 57/100 [00:53<00:52,  1.23s/it]Calculating loss...:  58%|█████▊    | 58/100 [00:54<00:40,  1.04it/s]Calculating loss...:  59%|█████▉    | 59/100 [00:54<00:31,  1.31it/s]Calculating loss...:  60%|██████    | 60/100 [00:55<00:30,  1.33it/s]Calculating loss...:  61%|██████    | 61/100 [00:55<00:24,  1.60it/s]Calculating loss...:  62%|██████▏   | 62/100 [00:58<00:50,  1.33s/it]Calculating loss...:  63%|██████▎   | 63/100 [00:58<00:38,  1.05s/it]Calculating loss...:  64%|██████▍   | 64/100 [01:00<00:47,  1.33s/it]Calculating loss...:  65%|██████▌   | 65/100 [01:01<00:43,  1.25s/it]Calculating loss...:  66%|██████▌   | 66/100 [01:03<00:43,  1.27s/it]Calculating loss...:  67%|██████▋   | 67/100 [01:03<00:34,  1.06s/it]Calculating loss...:  68%|██████▊   | 68/100 [01:05<00:39,  1.25s/it]Calculating loss...:  69%|██████▉   | 69/100 [01:07<00:41,  1.34s/it]Calculating loss...:  70%|███████   | 70/100 [01:10<00:59,  1.97s/it]Calculating loss...:  71%|███████   | 71/100 [01:12<00:59,  2.04s/it]Calculating loss...:  72%|███████▏  | 72/100 [01:13<00:48,  1.72s/it]Calculating loss...:  73%|███████▎  | 73/100 [01:13<00:34,  1.28s/it]Calculating loss...:  74%|███████▍  | 74/100 [01:14<00:25,  1.01it/s]Calculating loss...:  75%|███████▌  | 75/100 [01:14<00:20,  1.20it/s]Calculating loss...:  76%|███████▌  | 76/100 [01:17<00:31,  1.33s/it]Calculating loss...:  77%|███████▋  | 77/100 [01:20<00:42,  1.86s/it]Calculating loss...:  78%|███████▊  | 78/100 [01:21<00:36,  1.65s/it]Calculating loss...:  79%|███████▉  | 79/100 [01:21<00:25,  1.23s/it]Calculating loss...:  80%|████████  | 80/100 [01:22<00:19,  1.03it/s]Calculating loss...:  81%|████████  | 81/100 [01:23<00:23,  1.23s/it]Calculating loss...:  82%|████████▏ | 82/100 [01:26<00:29,  1.66s/it]Calculating loss...:  83%|████████▎ | 83/100 [01:26<00:21,  1.26s/it]Calculating loss...:  84%|████████▍ | 84/100 [01:27<00:16,  1.02s/it]Calculating loss...:  85%|████████▌ | 85/100 [01:28<00:17,  1.14s/it]Calculating loss...:  86%|████████▌ | 86/100 [01:29<00:13,  1.06it/s]Calculating loss...:  87%|████████▋ | 87/100 [01:29<00:10,  1.21it/s]Calculating loss...:  88%|████████▊ | 88/100 [01:32<00:18,  1.51s/it]Calculating loss...:  89%|████████▉ | 89/100 [01:34<00:17,  1.58s/it]Calculating loss...:  90%|█████████ | 90/100 [01:35<00:12,  1.25s/it]Calculating loss...:  91%|█████████ | 91/100 [01:35<00:08,  1.01it/s]Calculating loss...:  92%|█████████▏| 92/100 [01:36<00:06,  1.16it/s]Calculating loss...:  93%|█████████▎| 93/100 [01:37<00:07,  1.08s/it]Calculating loss...:  94%|█████████▍| 94/100 [01:37<00:05,  1.17it/s]Calculating loss...:  95%|█████████▌| 95/100 [01:38<00:03,  1.30it/s]Calculating loss...:  96%|█████████▌| 96/100 [01:39<00:02,  1.37it/s]Calculating loss...:  97%|█████████▋| 97/100 [01:39<00:01,  1.65it/s]Calculating loss...:  98%|█████████▊| 98/100 [01:40<00:01,  1.32it/s]Calculating loss...:  99%|█████████▉| 99/100 [01:41<00:00,  1.06it/s]Calculating loss...: 100%|██████████| 100/100 [01:42<00:00,  1.28it/s]Calculating loss...: 100%|██████████| 100/100 [01:42<00:00,  1.02s/it]
+Iter 1: Val loss 0.006, Val took 102.405s
+Iter 50: Train loss 0.002, Learning Rate 1.031e-06, It/sec 0.230, Tokens/sec 75.630, Trained Tokens 16416, Peak mem 13.459 GB
+Iter 100: Train loss 0.004, Learning Rate 1.026e-06, It/sec 0.339, Tokens/sec 76.923, Trained Tokens 27748, Peak mem 13.459 GB
+Iter 150: Train loss 0.003, Learning Rate 1.019e-06, It/sec 0.234, Tokens/sec 73.649, Trained Tokens 43483, Peak mem 14.451 GB
+Iter 200: Train loss 0.002, Learning Rate 1.007e-06, It/sec 0.263, Tokens/sec 74.662, Trained Tokens 57665, Peak mem 14.451 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/0000200_adapters.safetensors.
+Iter 250: Train loss 0.002, Learning Rate 9.936e-07, It/sec 0.316, Tokens/sec 75.627, Trained Tokens 69642, Peak mem 14.451 GB
+Iter 300: Train loss 0.002, Learning Rate 9.759e-07, It/sec 0.333, Tokens/sec 75.629, Trained Tokens 80999, Peak mem 16.156 GB
+Iter 350: Train loss 0.003, Learning Rate 9.571e-07, It/sec 0.232, Tokens/sec 73.988, Trained Tokens 96935, Peak mem 16.156 GB
+Iter 400: Train loss 0.005, Learning Rate 9.342e-07, It/sec 0.301, Tokens/sec 73.543, Trained Tokens 109143, Peak mem 16.156 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/0000400_adapters.safetensors.
+Iter 450: Train loss 0.007, Learning Rate 9.110e-07, It/sec 0.282, Tokens/sec 76.399, Trained Tokens 122695, Peak mem 16.156 GB
+Iter 500: Train loss 0.006, Learning Rate 8.840e-07, It/sec 0.275, Tokens/sec 73.588, Trained Tokens 136096, Peak mem 16.156 GB
+Iter 550: Train loss 0.003, Learning Rate 8.576e-07, It/sec 0.275, Tokens/sec 71.524, Trained Tokens 149095, Peak mem 16.985 GB
+Iter 600: Train loss 0.003, Learning Rate 8.279e-07, It/sec 0.347, Tokens/sec 74.667, Trained Tokens 159840, Peak mem 16.985 GB
+Iter 600: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/0000600_adapters.safetensors.
+Iter 650: Train loss 0.002, Learning Rate 7.996e-07, It/sec 0.242, Tokens/sec 73.213, Trained Tokens 174992, Peak mem 16.985 GB
+Iter 700: Train loss 0.007, Learning Rate 7.687e-07, It/sec 0.354, Tokens/sec 80.183, Trained Tokens 186327, Peak mem 16.985 GB
+Iter 750: Train loss 0.005, Learning Rate 7.400e-07, It/sec 0.216, Tokens/sec 74.219, Trained Tokens 203469, Peak mem 16.985 GB
+Iter 800: Train loss 0.005, Learning Rate 7.094e-07, It/sec 0.274, Tokens/sec 73.368, Trained Tokens 216861, Peak mem 17.300 GB
+Iter 800: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/0000800_adapters.safetensors.
+Iter 850: Train loss 0.002, Learning Rate 6.817e-07, It/sec 0.251, Tokens/sec 72.890, Trained Tokens 231353, Peak mem 17.300 GB
+Iter 900: Train loss 0.002, Learning Rate 6.529e-07, It/sec 0.224, Tokens/sec 74.994, Trained Tokens 248103, Peak mem 17.300 GB
+Iter 950: Train loss 0.004, Learning Rate 6.277e-07, It/sec 0.184, Tokens/sec 71.091, Trained Tokens 267441, Peak mem 17.300 GB
+Iter 1000: Train loss 0.005, Learning Rate 6.021e-07, It/sec 0.309, Tokens/sec 76.401, Trained Tokens 279786, Peak mem 17.300 GB
+Iter 1000: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg9/0001000_adapters.safetensors.
+Iter 1050: Train loss 0.006, Learning Rate 5.805e-07, It/sec 0.300, Tokens/sec 74.872, Trained Tokens 292246, Peak mem 17.300 GB
+Traceback (most recent call last):
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/qwen35_pilot/lora_q35.py", line 36, in <module>
+    lora.main()
+    ~~~~~~~~~^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 369, in main
+    run(types.SimpleNamespace(**args))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 341, in run
+    train_model(args, model, train_set, valid_set, training_callback)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/lora.py", line 295, in train_model
+    train(
+    ~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<4 lines>...
+        training_callback=training_callback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 319, in train
+    lvalue, toks, grad_accum = step(
+                               ~~~~^
+        batch,
+        ^^^^^^
+        grad_accum,
+        ^^^^^^^^^^^
+        it % grad_accum_steps == 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx_lm/tuner/trainer.py", line 250, in step
+    (lvalue, toks), grad = loss_value_and_grad(model, *batch)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.venv/lib/python3.14/site-packages/mlx/nn/utils.py", line 35, in wrapped_value_grad_fn
+    value, grad = value_grad_fn(model.trainable_parameters(), *args, **kwargs)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: [metal::malloc] Resource limit (499000) exceeded.
+[train_resumable] exit code 1; 9200/9600 iterations saved
+[train_resumable] segment 10: iterations 9201..9600 (/Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg10.yaml)
+Loading configuration file /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/.resume_seg10.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from qwen35_pilot/adapters_q9g/0009200_adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 400
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<00:40,  2.43it/s]Calculating loss...:   2%|▏         | 2/100 [00:00<00:35,  2.78it/s]Calculating loss...:   3%|▎         | 3/100 [00:01<00:36,  2.67it/s]Calculating loss...:   4%|▍         | 4/100 [00:04<02:33,  1.60s/it]Calculating loss...:   5%|▌         | 5/100 [00:06<02:50,  1.79s/it]Calculating loss...:   6%|▌         | 6/100 [00:07<02:26,  1.56s/it]Calculating loss...:   7%|▋         | 7/100 [00:09<02:18,  1.49s/it]Calculating loss...:   8%|▊         | 8/100 [00:09<01:56,  1.27s/it]Calculating loss...:   9%|▉         | 9/100 [00:13<02:54,  1.92s/it]Calculating loss...:  10%|█         | 10/100 [00:15<02:56,  1.97s/it]Calculating loss...:  11%|█         | 11/100 [00:15<02:08,  1.45s/it]Calculating loss...:  12%|█▏        | 12/100 [00:17<02:04,  1.42s/it]Calculating loss...:  13%|█▎        | 13/100 [00:17<01:37,  1.12s/it]Calculating loss...:  14%|█▍        | 14/100 [00:17<01:17,  1.11it/s]Calculating loss...:  15%|█▌        | 15/100 [00:20<01:50,  1.30s/it]Calculating loss...:  16%|█▌        | 16/100 [00:21<02:01,  1.45s/it]Calculating loss...:  17%|█▋        | 17/100 [00:22<01:31,  1.10s/it]Calculating loss...:  18%|█▊        | 18/100 [00:24<01:51,  1.36s/it]Calculating loss...:  19%|█▉        | 19/100 [00:25<01:52,  1.38s/it]Calculating loss...:  20%|██        | 20/100 [00:26<01:50,  1.38s/it]Calculating loss...:  21%|██        | 21/100 [00:28<01:46,  1.35s/it]Calculating loss...:  22%|██▏       | 22/100 [00:28<01:21,  1.05s/it]Calculating loss...:  23%|██▎       | 23/100 [00:30<01:45,  1.37s/it]Calculating loss...:  24%|██▍       | 24/100 [00:31<01:22,  1.09s/it]Calculating loss...:  25%|██▌       | 25/100 [00:31<01:14,  1.00it/s]Calculating loss...:  26%|██▌       | 26/100 [00:32<00:57,  1.29it/s]Calculating loss...:  27%|██▋       | 27/100 [00:32<00:47,  1.55it/s]Calculating loss...:  28%|██▊       | 28/100 [00:33<00:58,  1.24it/s]Calculating loss...:  29%|██▉       | 29/100 [00:34<00:47,  1.49it/s]Calculating loss...:  30%|███       | 30/100 [00:34<00:40,  1.75it/s]Calculating loss...:  31%|███       | 31/100 [00:35<01:01,  1.13it/s]Calculating loss...:  32%|███▏      | 32/100 [00:37<01:09,  1.02s/it]Calculating loss...:  33%|███▎      | 33/100 [00:37<00:53,  1.25it/s]Calculating loss...:  34%|███▍      | 34/100 [00:40<01:37,  1.47s/it]Calculating loss...:  35%|███▌      | 35/100 [00:44<02:28,  2.29s/it]Calculating loss...:  36%|███▌      | 36/100 [00:46<02:19,  2.18s/it]Calculating loss...:  37%|███▋      | 37/100 [00:48<02:07,  2.03s/it]Calculating loss...:  38%|███▊      | 38/100 [00:49<01:52,  1.82s/it]Calculating loss...:  39%|███▉      | 39/100 [00:51<01:42,  1.67s/it]Calculating loss...:  40%|████      | 40/100 [00:51<01:17,  1.29s/it]Calculating loss...:  41%|████      | 41/100 [00:53<01:21,  1.37s/it]Calculating loss...:  42%|████▏     | 42/100 [00:55<01:37,  1.68s/it]Calculating loss...:  43%|████▎     | 43/100 [00:55<01:14,  1.30s/it]Calculating loss...:  44%|████▍     | 44/100 [00:56<00:55,  1.01it/s]Calculating loss...:  45%|████▌     | 45/100 [00:58<01:17,  1.41s/it]Calculating loss...:  46%|████▌     | 46/100 [00:58<00:59,  1.11s/it]Calculating loss...:  47%|████▋     | 47/100 [01:00<01:03,  1.19s/it]Calculating loss...:  48%|████▊     | 48/100 [01:01<00:56,  1.08s/it]Calculating loss...:  49%|████▉     | 49/100 [01:01<00:49,  1.02it/s]Calculating loss...:  50%|█████     | 50/100 [01:02<00:50,  1.01s/it]Calculating loss...:  51%|█████     | 51/100 [01:03<00:38,  1.28it/s]Calculating loss...:  52%|█████▏    | 52/100 [01:03<00:31,  1.55it/s]Calculating loss...:  53%|█████▎    | 53/100 [01:03<00:27,  1.74it/s]Calculating loss...:  54%|█████▍    | 54/100 [01:04<00:25,  1.82it/s]Calculating loss...:  55%|█████▌    | 55/100 [01:05<00:36,  1.24it/s]Calculating loss...:  56%|█████▌    | 56/100 [01:09<01:12,  1.65s/it]Calculating loss...:  57%|█████▋    | 57/100 [01:09<00:54,  1.26s/it]Calculating loss...:  58%|█████▊    | 58/100 [01:12<01:07,  1.61s/it]Calculating loss...:  59%|█████▉    | 59/100 [01:12<00:51,  1.25s/it]Calculating loss...:  60%|██████    | 60/100 [01:13<00:49,  1.24s/it]Calculating loss...:  61%|██████    | 61/100 [01:14<00:38,  1.02it/s]Calculating loss...:  62%|██████▏   | 62/100 [01:16<00:47,  1.25s/it]Calculating loss...:  63%|██████▎   | 63/100 [01:16<00:36,  1.00it/s]Calculating loss...:  64%|██████▍   | 64/100 [01:16<00:29,  1.23it/s]Calculating loss...:  65%|██████▌   | 65/100 [01:17<00:23,  1.49it/s]Calculating loss...:  66%|██████▌   | 66/100 [01:18<00:25,  1.36it/s]Calculating loss...:  67%|██████▋   | 67/100 [01:19<00:28,  1.17it/s]Calculating loss...:  68%|██████▊   | 68/100 [01:19<00:22,  1.44it/s]Calculating loss...:  69%|██████▉   | 69/100 [01:20<00:21,  1.42it/s]Calculating loss...:  70%|███████   | 70/100 [01:22<00:32,  1.07s/it]Calculating loss...:  71%|███████   | 71/100 [01:22<00:25,  1.15it/s]Calculating loss...:  72%|███████▏  | 72/100 [01:24<00:29,  1.05s/it]Calculating loss...:  73%|███████▎  | 73/100 [01:25<00:32,  1.22s/it]Calculating loss...:  74%|███████▍  | 74/100 [01:26<00:25,  1.00it/s]Calculating loss...:  75%|███████▌  | 75/100 [01:26<00:19,  1.30it/s]Calculating loss...:  76%|███████▌  | 76/100 [01:26<00:15,  1.57it/s]Calculating loss...:  77%|███████▋  | 77/100 [01:27<00:12,  1.85it/s]Calculating loss...:  78%|███████▊  | 78/100 [01:27<00:11,  2.00it/s]Calculating loss...:  79%|███████▉  | 79/100 [01:28<00:13,  1.57it/s]Calculating loss...:  80%|████████  | 80/100 [01:28<00:11,  1.70it/s]Calculating loss...:  81%|████████  | 81/100 [01:29<00:10,  1.87it/s]Calculating loss...:  82%|████████▏ | 82/100 [01:31<00:17,  1.03it/s]Calculating loss...:  83%|████████▎ | 83/100 [01:32<00:19,  1.12s/it]Calculating loss...:  84%|████████▍ | 84/100 [01:33<00:17,  1.10s/it]Calculating loss...:  85%|████████▌ | 85/100 [01:34<00:13,  1.10it/s]Calculating loss...:  86%|████████▌ | 86/100 [01:34<00:10,  1.37it/s]Calculating loss...:  87%|████████▋ | 87/100 [01:36<00:12,  1.06it/s]Calculating loss...:  88%|████████▊ | 88/100 [01:36<00:09,  1.24it/s]Calculating loss...:  89%|████████▉ | 89/100 [01:36<00:07,  1.51it/s]Calculating loss...:  90%|█████████ | 90/100 [01:38<00:08,  1.14it/s]Calculating loss...:  91%|█████████ | 91/100 [01:38<00:06,  1.37it/s]Calculating loss...:  92%|█████████▏| 92/100 [01:39<00:05,  1.39it/s]Calculating loss...:  93%|█████████▎| 93/100 [01:39<00:04,  1.67it/s]Calculating loss...:  94%|█████████▍| 94/100 [01:40<00:03,  1.65it/s]Calculating loss...:  95%|█████████▌| 95/100 [01:41<00:04,  1.16it/s]Calculating loss...:  96%|█████████▌| 96/100 [01:42<00:03,  1.29it/s]Calculating loss...:  97%|█████████▋| 97/100 [01:44<00:03,  1.07s/it]Calculating loss...:  98%|█████████▊| 98/100 [01:47<00:03,  1.62s/it]Calculating loss...:  99%|█████████▉| 99/100 [01:47<00:01,  1.24s/it]Calculating loss...: 100%|██████████| 100/100 [01:47<00:00,  1.04it/s]Calculating loss...: 100%|██████████| 100/100 [01:47<00:00,  1.08s/it]
+Iter 1: Val loss 0.004, Val took 107.694s
+Iter 50: Train loss 0.005, Learning Rate 5.429e-07, It/sec 0.245, Tokens/sec 76.560, Trained Tokens 15639, Peak mem 13.343 GB
+Iter 100: Train loss 0.004, Learning Rate 5.382e-07, It/sec 0.309, Tokens/sec 75.625, Trained Tokens 27888, Peak mem 13.343 GB
+Iter 150: Train loss 0.002, Learning Rate 5.315e-07, It/sec 0.256, Tokens/sec 73.262, Trained Tokens 42218, Peak mem 16.456 GB
+Iter 200: Train loss 0.007, Learning Rate 5.228e-07, It/sec 0.313, Tokens/sec 75.925, Trained Tokens 54348, Peak mem 16.456 GB
+Iter 200: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg10/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg10/0000200_adapters.safetensors.
+Iter 250: Train loss 0.005, Learning Rate 5.146e-07, It/sec 0.247, Tokens/sec 73.691, Trained Tokens 69285, Peak mem 16.456 GB
+Iter 300: Train loss 0.002, Learning Rate 5.070e-07, It/sec 0.261, Tokens/sec 74.428, Trained Tokens 83538, Peak mem 16.456 GB
+Iter 350: Train loss 0.003, Learning Rate 5.021e-07, It/sec 0.340, Tokens/sec 76.108, Trained Tokens 94739, Peak mem 16.456 GB
+Calculating loss...:   0%|          | 0/100 [00:00<?, ?it/s]Calculating loss...:   1%|          | 1/100 [00:00<01:20,  1.24it/s]Calculating loss...:   2%|▏         | 2/100 [00:02<02:00,  1.23s/it]Calculating loss...:   3%|▎         | 3/100 [00:06<04:12,  2.61s/it]Calculating loss...:   4%|▍         | 4/100 [00:07<02:51,  1.78s/it]Calculating loss...:   5%|▌         | 5/100 [00:07<01:59,  1.26s/it]Calculating loss...:   6%|▌         | 6/100 [00:08<02:04,  1.33s/it]Calculating loss...:   7%|▋         | 7/100 [00:09<01:35,  1.03s/it]Calculating loss...:   8%|▊         | 8/100 [00:10<01:44,  1.14s/it]Calculating loss...:   9%|▉         | 9/100 [00:13<02:24,  1.59s/it]Calculating loss...:  10%|█         | 10/100 [00:14<02:26,  1.63s/it]Calculating loss...:  11%|█         | 11/100 [00:15<01:51,  1.26s/it]Calculating loss...:  12%|█▏        | 12/100 [00:15<01:27,  1.00it/s]Calculating loss...:  13%|█▎        | 13/100 [00:16<01:30,  1.04s/it]Calculating loss...:  14%|█▍        | 14/100 [00:18<01:51,  1.30s/it]Calculating loss...:  15%|█▌        | 15/100 [00:20<01:52,  1.32s/it]Calculating loss...:  16%|█▌        | 16/100 [00:20<01:27,  1.05s/it]Calculating loss...:  17%|█▋        | 17/100 [00:20<01:07,  1.23it/s]Calculating loss...:  18%|█▊        | 18/100 [00:22<01:15,  1.08it/s]Calculating loss...:  19%|█▉        | 19/100 [00:22<01:02,  1.30it/s]Calculating loss...:  20%|██        | 20/100 [00:22<00:51,  1.55it/s]Calculating loss...:  21%|██        | 21/100 [00:23<00:59,  1.32it/s]Calculating loss...:  22%|██▏       | 22/100 [00:24<00:50,  1.53it/s]Calculating loss...:  23%|██▎       | 23/100 [00:24<00:45,  1.71it/s]Calculating loss...:  24%|██▍       | 24/100 [00:25<00:40,  1.86it/s]Calculating loss...:  25%|██▌       | 25/100 [00:25<00:33,  2.21it/s]Calculating loss...:  26%|██▌       | 26/100 [00:26<00:59,  1.25it/s]Calculating loss...:  27%|██▋       | 27/100 [00:29<01:44,  1.43s/it]Calculating loss...:  28%|██▊       | 28/100 [00:31<01:48,  1.51s/it]Calculating loss...:  29%|██▉       | 29/100 [00:33<01:51,  1.56s/it]Calculating loss...:  30%|███       | 30/100 [00:34<01:44,  1.50s/it]Calculating loss...:  31%|███       | 31/100 [00:34<01:19,  1.15s/it]Calculating loss...:  32%|███▏      | 32/100 [00:35<01:06,  1.03it/s]Calculating loss...:  33%|███▎      | 33/100 [00:35<00:53,  1.24it/s]Calculating loss...:  34%|███▍      | 34/100 [00:36<00:43,  1.51it/s]Calculating loss...:  35%|███▌      | 35/100 [00:39<01:29,  1.37s/it]Calculating loss...:  36%|███▌      | 36/100 [00:39<01:09,  1.09s/it]Calculating loss...:  37%|███▋      | 37/100 [00:41<01:19,  1.26s/it]Calculating loss...:  38%|███▊      | 38/100 [00:44<01:44,  1.68s/it]Calculating loss...:  39%|███▉      | 39/100 [00:45<01:45,  1.73s/it]Calculating loss...:  40%|████      | 40/100 [00:46<01:20,  1.34s/it]Calculating loss...:  41%|████      | 41/100 [00:46<01:03,  1.08s/it]Calculating loss...:  42%|████▏     | 42/100 [00:47<00:58,  1.00s/it]Calculating loss...:  43%|████▎     | 43/100 [00:47<00:46,  1.22it/s]Calculating loss...:  44%|████▍     | 44/100 [00:50<01:06,  1.19s/it]Calculating loss...:  45%|████▌     | 45/100 [00:50<00:53,  1.02it/s]Calculating loss...:  46%|████▌     | 46/100 [00:51<00:57,  1.06s/it]Calculating loss...:  47%|████▋     | 47/100 [00:53<01:01,  1.16s/it]Calculating loss...:  48%|████▊     | 48/100 [00:54<01:03,  1.23s/it]Calculating loss...:  49%|████▉     | 49/100 [00:55<00:52,  1.03s/it]Calculating loss...:  50%|█████     | 50/100 [00:55<00:40,  1.22it/s]Calculating loss...:  51%|█████     | 51/100 [00:55<00:32,  1.49it/s]Calculating loss...:  52%|█████▏    | 52/100 [00:57<00:40,  1.19it/s]Calculating loss...:  53%|█████▎    | 53/100 [01:00<01:12,  1.53s/it]Calculating loss...:  54%|█████▍    | 54/100 [01:01<01:05,  1.42s/it]Calculating loss...:  55%|█████▌    | 55/100 [01:01<00:52,  1.17s/it]Calculating loss...:  56%|█████▌    | 56/100 [01:04<01:07,  1.53s/it]Calculating loss...:  57%|█████▋    | 57/100 [01:05<01:06,  1.54s/it]Calculating loss...:  58%|█████▊    | 58/100 [01:07<01:03,  1.52s/it]Calculating loss...:  59%|█████▉    | 59/100 [01:08<01:03,  1.55s/it]Calculating loss...:  60%|██████    | 60/100 [01:10<00:59,  1.48s/it]Calculating loss...:  61%|██████    | 61/100 [01:13<01:20,  2.08s/it]Calculating loss...:  62%|██████▏   | 62/100 [01:14<01:00,  1.60s/it]Calculating loss...:  63%|██████▎   | 63/100 [01:14<00:46,  1.26s/it]Calculating loss...:  64%|██████▍   | 64/100 [01:15<00:35,  1.01it/s]Calculating loss...:  65%|██████▌   | 65/100 [01:16<00:36,  1.03s/it]Calculating loss...:  66%|██████▌   | 66/100 [01:18<00:49,  1.45s/it]Calculating loss...:  67%|██████▋   | 67/100 [01:19<00:38,  1.16s/it]Calculating loss...:  68%|██████▊   | 68/100 [01:19<00:29,  1.09it/s]Calculating loss...:  69%|██████▉   | 69/100 [01:19<00:23,  1.32it/s]Calculating loss...:  70%|███████   | 70/100 [01:20<00:18,  1.66it/s]Calculating loss...:  71%|███████   | 71/100 [01:21<00:22,  1.31it/s]Calculating loss...:  72%|███████▏  | 72/100 [01:24<00:39,  1.42s/it]Calculating loss...:  73%|███████▎  | 73/100 [01:24<00:30,  1.14s/it]Calculating loss...:  74%|███████▍  | 74/100 [01:24<00:23,  1.12it/s]Calculating loss...:  75%|███████▌  | 75/100 [01:26<00:29,  1.18s/it]Calculating loss...:  76%|███████▌  | 76/100 [01:29<00:40,  1.69s/it]Calculating loss...:  77%|███████▋  | 77/100 [01:30<00:29,  1.28s/it]Calculating loss...:  78%|███████▊  | 78/100 [01:31<00:32,  1.48s/it]Calculating loss...:  79%|███████▉  | 79/100 [01:33<00:31,  1.52s/it]Calculating loss...:  80%|████████  | 80/100 [01:33<00:23,  1.18s/it]Calculating loss...:  81%|████████  | 81/100 [01:35<00:26,  1.41s/it]Calculating loss...:  82%|████████▏ | 82/100 [01:36<00:21,  1.20s/it]Calculating loss...:  83%|████████▎ | 83/100 [01:37<00:20,  1.18s/it]Calculating loss...:  84%|████████▍ | 84/100 [01:38<00:18,  1.14s/it]Calculating loss...:  85%|████████▌ | 85/100 [01:39<00:13,  1.11it/s]Calculating loss...:  86%|████████▌ | 86/100 [01:40<00:13,  1.03it/s]Calculating loss...:  87%|████████▋ | 87/100 [01:40<00:10,  1.25it/s]Calculating loss...:  88%|████████▊ | 88/100 [01:41<00:08,  1.42it/s]Calculating loss...:  89%|████████▉ | 89/100 [01:43<00:14,  1.33s/it]Calculating loss...:  90%|█████████ | 90/100 [01:45<00:13,  1.36s/it]Calculating loss...:  91%|█████████ | 91/100 [01:47<00:14,  1.56s/it]Calculating loss...:  92%|█████████▏| 92/100 [01:48<00:11,  1.48s/it]Calculating loss...:  93%|█████████▎| 93/100 [01:49<00:07,  1.13s/it]Calculating loss...:  94%|█████████▍| 94/100 [01:49<00:05,  1.09it/s]Calculating loss...:  95%|█████████▌| 95/100 [01:52<00:08,  1.68s/it]Calculating loss...:  96%|█████████▌| 96/100 [01:55<00:07,  1.95s/it]Calculating loss...:  97%|█████████▋| 97/100 [01:56<00:05,  1.77s/it]Calculating loss...:  98%|█████████▊| 98/100 [01:59<00:04,  2.11s/it]Calculating loss...:  99%|█████████▉| 99/100 [02:00<00:01,  1.62s/it]Calculating loss...: 100%|██████████| 100/100 [02:00<00:00,  1.23s/it]Calculating loss...: 100%|██████████| 100/100 [02:00<00:00,  1.21s/it]
+Iter 400: Val loss 0.004, Val took 120.559s
+Iter 400: Train loss 0.004, Learning Rate 5.000e-07, It/sec 0.256, Tokens/sec 73.785, Trained Tokens 109130, Peak mem 16.456 GB
+Iter 400: Saved adapter weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg10/adapters.safetensors and /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg10/0000400_adapters.safetensors.
+Saved final weights to /Users/praponb/GitHub/Finetuning-LLM/sql2pyspark-mlx/adapters_q9g_seg10/adapters.safetensors.
+[train_resumable] finished all 9600 iterations
+exit=0
+end 2026-11-27 02:30:12 +0700

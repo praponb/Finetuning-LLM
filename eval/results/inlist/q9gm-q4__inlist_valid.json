@@ -1,0 +1,1078 @@
+{
+  "model": "sql2pyspark:q9gm-q4",
+  "set": "sql2pyspark-mlx/classic_v10/data/inlist_valid_meta.jsonl",
+  "n": 50,
+  "summary": {
+    "ALL": {
+      "n": 50,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 1.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 1.0
+    },
+    "inlist": {
+      "n": 50,
+      "strict_syntax": 1.0,
+      "strict_runs": 1.0,
+      "strict_match": 1.0,
+      "lenient_syntax": 1.0,
+      "lenient_runs": 1.0,
+      "lenient_match": 1.0
+    }
+  },
+  "avg_seconds": 4.36,
+  "cases": [
+    {
+      "id": "inl00420",
+      "level": "inlist",
+      "sql": "SELECT id, customer_id, started_at FROM sessions WHERE id IN (SELECT session_id FROM web_events WHERE page IN ('/home', '/search')) ORDER BY customer_id, id LIMIT 5;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_sessions.alias(\"s\")\n    .join(df_web_events.filter(F.col(\"page\").isin(\"/home\", \"/search\")).alias(\"we\"), F.col(\"s.id\") == F.col(\"we.session_id\"), \"left_semi\")\n    .select(F.col(\"s.id\"), F.col(\"s.customer_id\"), F.col(\"s.started_at\"))\n    .orderBy(\"customer_id\", \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 4.44,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00455",
+      "level": "inlist",
+      "sql": "select id, duration_sec, event_time, event_type from web_events where session_id in (select id from sessions where country IN ('SG', 'TH'))",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_web_events.alias(\"we\")\n    .join(df_sessions.filter(F.col(\"country\").isin(\"SG\", \"TH\")).alias(\"s\"), F.col(\"we.session_id\") == F.col(\"s.id\"), \"left_semi\")\n    .select(\n        F.col(\"we.id\"),\n        F.col(\"we.duration_sec\"),\n        F.col(\"we.event_time\"),\n        F.col(\"we.event_type\"),\n    )\n)\n```",
+      "seconds": 4.6,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00164",
+      "level": "inlist",
+      "sql": "SELECT id, carrier FROM shipments WHERE status IN ('LOST', 'RETURNED') AND order_id IN (SELECT id FROM orders WHERE channel <> 'store') ORDER BY id",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_shipments.alias(\"s\")\n    .join(df_orders.filter(F.col(\"channel\") != \"store\").alias(\"o\"), F.col(\"s.order_id\") == F.col(\"o.id\"), \"left_semi\")\n    .filter(F.col(\"s.status\").isin(\"LOST\", \"RETURNED\"))\n    .select(F.col(\"s.id\"), F.col(\"s.carrier\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 4.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00140",
+      "level": "inlist",
+      "sql": "select id, order_id, status, amount, method from payments where order_id in (select id from orders) order by order_id desc, id limit 10",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_payments.alias(\"p\")\n    .join(df_orders.alias(\"o\"), F.col(\"p.order_id\") == F.col(\"o.id\"), \"left_semi\")\n    .select(\n        F.col(\"p.id\"),\n        F.col(\"p.order_id\"),\n        F.col(\"p.status\"),\n        F.col(\"p.amount\"),\n        F.col(\"p.method\"),\n    )\n    .orderBy(F.col(\"order_id\").desc(), \"id\")\n    .limit(10)\n)\n```",
+      "seconds": 5.21,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00425",
+      "level": "inlist",
+      "sql": "SELECT id, channel\nFROM orders\nWHERE id IN (SELECT order_id FROM order_items WHERE quantity > 4)\nORDER BY id\nLIMIT 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_orders.alias(\"o\")\n    .join(df_order_items.filter(F.col(\"quantity\") > 4).alias(\"oi\"), F.col(\"o.id\") == F.col(\"oi.order_id\"), \"left_semi\")\n    .select(F.col(\"o.id\"), F.col(\"o.channel\"))\n    .orderBy(\"id\")\n    .limit(5)\n)\n```",
+      "seconds": 3.99,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00434",
+      "level": "inlist",
+      "sql": "select id, city, name, country\nfrom customers\nwhere country = 'JP' and id in (select customer_id from sessions where browser <> 'Safari')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_customers.alias(\"c\")\n    .join(df_sessions.filter(F.col(\"browser\") != \"Safari\").alias(\"s\"), F.col(\"c.id\") == F.col(\"s.customer_id\"), \"left_semi\")\n    .filter(F.col(\"c.country\") == \"JP\")\n    .select(F.col(\"c.id\"), F.col(\"c.city\"), F.col(\"c.name\"), F.col(\"c.country\"))\n)\n```",
+      "seconds": 4.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00029",
+      "level": "inlist",
+      "sql": "SELECT id, quantity\nFROM order_items\nWHERE product_id IN (SELECT id FROM products WHERE price <= 1049.0)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_order_items.alias(\"oi\")\n    .join(df_products.filter(F.col(\"price\") <= 1049.0).alias(\"p\"), F.col(\"oi.product_id\") == F.col(\"p.id\"), \"left_semi\")\n    .select(F.col(\"oi.id\"), F.col(\"oi.quantity\"))\n)\n```",
+      "seconds": 3.64,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00763",
+      "level": "inlist",
+      "sql": "SELECT id, event_time\nFROM web_events\nWHERE duration_sec > 237 AND session_id IN (SELECT id FROM sessions WHERE country IN ('DE', 'JP'))\nORDER BY event_time DESC;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_web_events.alias(\"we\")\n    .join(df_sessions.filter(F.col(\"country\").isin(\"DE\", \"JP\")).alias(\"s\"), F.col(\"we.session_id\") == F.col(\"s.id\"), \"left_semi\")\n    .filter(F.col(\"we.duration_sec\") > 237)\n    .select(F.col(\"we.id\"), F.col(\"we.event_time\"))\n    .orderBy(F.col(\"event_time\").desc())\n)\n```",
+      "seconds": 4.73,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00285",
+      "level": "inlist",
+      "sql": "SELECT id, shipping_fee, status, order_date\nFROM orders\nWHERE customer_id IN (SELECT id FROM customers WHERE country = 'TH');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_orders.alias(\"o\")\n    .join(df_customers.filter(F.col(\"country\") == \"TH\").alias(\"c\"), F.col(\"o.customer_id\") == F.col(\"c.id\"), \"left_semi\")\n    .select(F.col(\"o.id\"), F.col(\"o.shipping_fee\"), F.col(\"o.status\"), F.col(\"o.order_date\"))\n)\n```",
+      "seconds": 4.03,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00386",
+      "level": "inlist",
+      "sql": "select id, cost, launch_date, product_name\nfrom products\nwhere id in (select product_id from order_items where unit_price <= 235.6) and brand IN ('Globex', 'Acme')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_products.alias(\"p\")\n    .join(df_order_items.filter(F.col(\"unit_price\") <= 235.6).alias(\"oi\"), F.col(\"p.id\") == F.col(\"oi.product_id\"), \"left_semi\")\n    .filter(F.col(\"p.brand\").isin(\"Globex\", \"Acme\"))\n    .select(F.col(\"p.id\"), F.col(\"p.cost\"), F.col(\"p.launch_date\"), F.col(\"p.product_name\"))\n)\n```",
+      "seconds": 4.95,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00612",
+      "level": "inlist",
+      "sql": "select id, email, credit_limit from customers where id not in (select customer_id from subscriptions where status IN ('CANCELLED', 'EXPIRED') and customer_id is not null)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_customers.alias(\"c\")\n    .join(df_subscriptions.filter(F.col(\"status\").isin(\"CANCELLED\", \"EXPIRED\")).filter(F.col(\"customer_id\").isNotNull()).alias(\"s\"), F.col(\"c.id\") == F.col(\"s.customer_id\"), \"left_anti\")\n    .select(F.col(\"c.id\"), F.col(\"c.email\"), F.col(\"c.credit_limit\"))\n)\n```",
+      "seconds": 4.4,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00494",
+      "level": "inlist",
+      "sql": "SELECT id, device, started_at\nFROM sessions\nWHERE customer_id IN (SELECT id FROM customers)\nORDER BY started_at DESC, id\nLIMIT 5;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_sessions.alias(\"s\")\n    .join(df_customers.alias(\"c\"), F.col(\"s.customer_id\") == F.col(\"c.id\"), \"left_semi\")\n    .select(F.col(\"s.id\"), F.col(\"s.device\"), F.col(\"s.started_at\"))\n    .orderBy(F.col(\"started_at\").desc(), \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 4.19,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00089",
+      "level": "inlist",
+      "sql": "SELECT id, opened_date FROM accounts WHERE balance >= 35817.5 AND id IN (SELECT account_id FROM transactions)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_transactions.alias(\"t\"), F.col(\"a.id\") == F.col(\"t.account_id\"), \"left_semi\")\n    .filter(F.col(\"a.balance\") >= 35817.5)\n    .select(F.col(\"a.id\"), F.col(\"a.opened_date\"))\n)\n```",
+      "seconds": 3.87,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00523",
+      "level": "inlist",
+      "sql": "select id, cost from shipments where order_id not in (select id from orders where status IN ('SHIPPED', 'COMPLETED')) and order_id is not null order by cost desc, id limit 5",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_shipments.alias(\"s\")\n    .join(df_orders.filter(F.col(\"status\").isin(\"SHIPPED\", \"COMPLETED\")).alias(\"o\"), F.col(\"s.order_id\") == F.col(\"o.id\"), \"left_anti\")\n    .filter(F.col(\"s.order_id\").isNotNull())\n    .select(F.col(\"s.id\"), F.col(\"s.cost\"))\n    .orderBy(F.col(\"cost\").desc(), \"id\")\n    .limit(5)\n)\n```",
+      "seconds": 5.06,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00013",
+      "level": "inlist",
+      "sql": "SELECT id, store_id, last_restock\nFROM inventory\nWHERE store_id IN (SELECT id FROM stores) AND quantity > 190",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_inventory.alias(\"i\")\n    .join(df_stores.alias(\"s\"), F.col(\"i.store_id\") == F.col(\"s.id\"), \"left_semi\")\n    .filter(F.col(\"i.quantity\") > 190)\n    .select(F.col(\"i.id\"), F.col(\"i.store_id\"), F.col(\"i.last_restock\"))\n)\n```",
+      "seconds": 4.03,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00073",
+      "level": "inlist",
+      "sql": "select id, order_id, paid_at, amount, status\nfrom payments\nwhere order_id in (select id from orders where shipping_fee >= 28.3) and amount >= 1430.5\norder by id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_payments.alias(\"p\")\n    .join(df_orders.filter(F.col(\"shipping_fee\") >= 28.3).alias(\"o\"), F.col(\"p.order_id\") == F.col(\"o.id\"), \"left_semi\")\n    .filter(F.col(\"p.amount\") >= 1430.5)\n    .select(\n        F.col(\"p.id\"),\n        F.col(\"p.order_id\"),\n        F.col(\"p.paid_at\"),\n        F.col(\"p.amount\"),\n        F.col(\"p.status\"),\n    )\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 5.96,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00357",
+      "level": "inlist",
+      "sql": "select id, carrier, delivered_date from shipments where order_id is not null and order_id not in (select id from orders where discount < 0.2);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_shipments.alias(\"s\")\n    .join(df_orders.filter(F.col(\"discount\") < 0.2).alias(\"o\"), F.col(\"s.order_id\") == F.col(\"o.id\"), \"left_anti\")\n    .filter(F.col(\"s.order_id\").isNotNull())\n    .select(F.col(\"s.id\"), F.col(\"s.carrier\"), F.col(\"s.delivered_date\"))\n)\n```",
+      "seconds": 4.41,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00594",
+      "level": "inlist",
+      "sql": "select id, store_id, product_id from store_sales where store_id in (select id from stores where city = 'Singapore');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_store_sales.alias(\"ss\")\n    .join(df_stores.filter(F.col(\"city\") == \"Singapore\").alias(\"s\"), F.col(\"ss.store_id\") == F.col(\"s.id\"), \"left_semi\")\n    .select(F.col(\"ss.id\"), F.col(\"ss.store_id\"), F.col(\"ss.product_id\"))\n)\n```",
+      "seconds": 3.79,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00474",
+      "level": "inlist",
+      "sql": "SELECT id, session_id, event_time, event_type\nFROM web_events\nWHERE event_type <> 'page_view' AND session_id NOT IN (SELECT id FROM sessions WHERE browser = 'Safari')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_web_events.alias(\"we\")\n    .join(df_sessions.filter(F.col(\"browser\") == \"Safari\").alias(\"s\"), F.col(\"we.session_id\") == F.col(\"s.id\"), \"left_anti\")\n    .filter(F.col(\"we.event_type\") != \"page_view\")\n    .select(F.col(\"we.id\"), F.col(\"we.session_id\"), F.col(\"we.event_time\"), F.col(\"we.event_type\"))\n)\n```",
+      "seconds": 4.7,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00879",
+      "level": "inlist",
+      "sql": "select id, dept_name, location, budget\nfrom departments\nwhere id not in (select dept_id from employees)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_departments.alias(\"d\")\n    .join(df_employees.alias(\"e\"), F.col(\"d.id\") == F.col(\"e.dept_id\"), \"left_anti\")\n    .select(F.col(\"d.id\"), F.col(\"d.dept_name\"), F.col(\"d.location\"), F.col(\"d.budget\"))\n)\n```",
+      "seconds": 3.72,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00600",
+      "level": "inlist",
+      "sql": "SELECT id, city FROM customers WHERE id NOT IN (SELECT customer_id FROM orders WHERE shipping_fee >= 30.0 AND customer_id IS NOT NULL) ORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_customers.alias(\"c\")\n    .join(df_orders.filter(F.col(\"shipping_fee\") >= 30.0).filter(F.col(\"customer_id\").isNotNull()).alias(\"o\"), F.col(\"c.id\") == F.col(\"o.customer_id\"), \"left_anti\")\n    .select(F.col(\"c.id\"), F.col(\"c.city\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 4.27,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00195",
+      "level": "inlist",
+      "sql": "select id, status, balance, opened_date\nfrom accounts\nwhere id not in (select account_id from transactions where merchant = 'Lazada')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_transactions.filter(F.col(\"merchant\") == \"Lazada\").alias(\"t\"), F.col(\"a.id\") == F.col(\"t.account_id\"), \"left_anti\")\n    .select(F.col(\"a.id\"), F.col(\"a.status\"), F.col(\"a.balance\"), F.col(\"a.opened_date\"))\n)\n```",
+      "seconds": 4.02,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00659",
+      "level": "inlist",
+      "sql": "SELECT id, store_id, sale_date\nFROM store_sales\nWHERE store_id IN (SELECT id FROM stores)\nORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_store_sales.alias(\"ss\")\n    .join(df_stores.alias(\"s\"), F.col(\"ss.store_id\") == F.col(\"s.id\"), \"left_semi\")\n    .select(F.col(\"ss.id\"), F.col(\"ss.store_id\"), F.col(\"ss.sale_date\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 3.68,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00231",
+      "level": "inlist",
+      "sql": "SELECT id, txn_type\nFROM transactions\nWHERE account_id NOT IN (SELECT id FROM accounts WHERE status = 'OPEN')",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_transactions.alias(\"t\")\n    .join(df_accounts.filter(F.col(\"status\") == \"OPEN\").alias(\"a\"), F.col(\"t.account_id\") == F.col(\"a.id\"), \"left_anti\")\n    .select(F.col(\"t.id\"), F.col(\"t.txn_type\"))\n)\n```",
+      "seconds": 3.48,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00848",
+      "level": "inlist",
+      "sql": "select id, order_id, carrier\nfrom shipments\nwhere order_id is not null and order_id not in (select id from orders);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_shipments.alias(\"s\")\n    .join(df_orders.alias(\"o\"), F.col(\"s.order_id\") == F.col(\"o.id\"), \"left_anti\")\n    .filter(F.col(\"s.order_id\").isNotNull())\n    .select(F.col(\"s.id\"), F.col(\"s.order_id\"), F.col(\"s.carrier\"))\n)\n```",
+      "seconds": 3.9,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00376",
+      "level": "inlist",
+      "sql": "SELECT id, city FROM suppliers WHERE city = 'New York' AND id NOT IN (SELECT supplier_id FROM products WHERE supplier_id IS NOT NULL) ORDER BY city DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_suppliers.alias(\"s\")\n    .join(df_products.filter(F.col(\"supplier_id\").isNotNull()).alias(\"p\"), F.col(\"s.id\") == F.col(\"p.supplier_id\"), \"left_anti\")\n    .filter(F.col(\"s.city\") == \"New York\")\n    .select(F.col(\"s.id\"), F.col(\"s.city\"))\n    .orderBy(F.col(\"city\").desc())\n)\n```",
+      "seconds": 4.5,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00302",
+      "level": "inlist",
+      "sql": "SELECT id, opened_date, balance, status\nFROM accounts\nWHERE id IN (SELECT account_id FROM transactions WHERE txn_type IN ('DEBIT', 'CREDIT'))",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_transactions.filter(F.col(\"txn_type\").isin(\"DEBIT\", \"CREDIT\")).alias(\"t\"), F.col(\"a.id\") == F.col(\"t.account_id\"), \"left_semi\")\n    .select(F.col(\"a.id\"), F.col(\"a.opened_date\"), F.col(\"a.balance\"), F.col(\"a.status\"))\n)\n```",
+      "seconds": 4.19,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00419",
+      "level": "inlist",
+      "sql": "SELECT id, order_id, status FROM shipments WHERE order_id IS NOT NULL AND order_id NOT IN (SELECT id FROM orders WHERE status <> 'CANCELLED') ORDER BY status DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_shipments.alias(\"s\")\n    .join(df_orders.filter(F.col(\"status\") != \"CANCELLED\").alias(\"o\"), F.col(\"s.order_id\") == F.col(\"o.id\"), \"left_anti\")\n    .filter(F.col(\"s.order_id\").isNotNull())\n    .select(F.col(\"s.id\"), F.col(\"s.order_id\"), F.col(\"s.status\"))\n    .orderBy(F.col(\"status\").desc())\n)\n```",
+      "seconds": 4.75,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00258",
+      "level": "inlist",
+      "sql": "SELECT id, customer_id, account_type, opened_date FROM accounts WHERE customer_id NOT IN (SELECT id FROM customers WHERE email = 'grace.kim@gmail.com') AND customer_id IS NOT NULL;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_customers.filter(F.col(\"email\") == \"grace.kim@gmail.com\").alias(\"c\"), F.col(\"a.customer_id\") == F.col(\"c.id\"), \"left_anti\")\n    .filter(F.col(\"a.customer_id\").isNotNull())\n    .select(F.col(\"a.id\"), F.col(\"a.customer_id\"), F.col(\"a.account_type\"), F.col(\"a.opened_date\"))\n)\n```",
+      "seconds": 4.81,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00116",
+      "level": "inlist",
+      "sql": "SELECT id, quantity, unit_price, product_id\nFROM order_items\nWHERE unit_price >= 340.5 AND order_id NOT IN (SELECT id FROM orders WHERE channel = 'mobile')\nORDER BY id\nLIMIT 3",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_order_items.alias(\"oi\")\n    .join(df_orders.filter(F.col(\"channel\") == \"mobile\").alias(\"o\"), F.col(\"oi.order_id\") == F.col(\"o.id\"), \"left_anti\")\n    .filter(F.col(\"oi.unit_price\") >= 340.5)\n    .select(F.col(\"oi.id\"), F.col(\"oi.quantity\"), F.col(\"oi.unit_price\"), F.col(\"oi.product_id\"))\n    .orderBy(\"id\")\n    .limit(3)\n)\n```",
+      "seconds": 5.29,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00136",
+      "level": "inlist",
+      "sql": "select id, supplier_id, category, brand\nfrom products\nwhere supplier_id not in (select id from suppliers) and supplier_id is not null;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_products.alias(\"p\")\n    .join(df_suppliers.alias(\"s\"), F.col(\"p.supplier_id\") == F.col(\"s.id\"), \"left_anti\")\n    .filter(F.col(\"p.supplier_id\").isNotNull())\n    .select(F.col(\"p.id\"), F.col(\"p.supplier_id\"), F.col(\"p.category\"), F.col(\"p.brand\"))\n)\n```",
+      "seconds": 4.22,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00606",
+      "level": "inlist",
+      "sql": "SELECT id, txn_time, txn_type, merchant\nFROM transactions\nWHERE account_id IN (SELECT id FROM accounts WHERE balance < 57456.1);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_transactions.alias(\"t\")\n    .join(df_accounts.filter(F.col(\"balance\") < 57456.1).alias(\"a\"), F.col(\"t.account_id\") == F.col(\"a.id\"), \"left_semi\")\n    .select(F.col(\"t.id\"), F.col(\"t.txn_time\"), F.col(\"t.txn_type\"), F.col(\"t.merchant\"))\n)\n```",
+      "seconds": 4.31,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00826",
+      "level": "inlist",
+      "sql": "SELECT id, customer_id, opened_date, account_type\nFROM accounts\nWHERE id IN (SELECT account_id FROM transactions WHERE merchant <> 'Lazada') AND balance > 27143.2\nORDER BY customer_id DESC",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_transactions.filter(F.col(\"merchant\") != \"Lazada\").alias(\"t\"), F.col(\"a.id\") == F.col(\"t.account_id\"), \"left_semi\")\n    .filter(F.col(\"a.balance\") > 27143.2)\n    .select(F.col(\"a.id\"), F.col(\"a.customer_id\"), F.col(\"a.opened_date\"), F.col(\"a.account_type\"))\n    .orderBy(F.col(\"customer_id\").desc())\n)\n```",
+      "seconds": 5.36,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00244",
+      "level": "inlist",
+      "sql": "select id, customer_id, opened_date\nfrom accounts\nwhere customer_id not in (select id from customers where city IN ('Bangkok', 'Berlin')) and balance >= 38403.6 and customer_id is not null",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_accounts.alias(\"a\")\n    .join(df_customers.filter(F.col(\"city\").isin(\"Bangkok\", \"Berlin\")).alias(\"c\"), F.col(\"a.customer_id\") == F.col(\"c.id\"), \"left_anti\")\n    .filter(F.col(\"a.balance\") >= 38403.6)\n    .filter(F.col(\"a.customer_id\").isNotNull())\n    .select(F.col(\"a.id\"), F.col(\"a.customer_id\"), F.col(\"a.opened_date\"))\n)\n```",
+      "seconds": 5.3,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00160",
+      "level": "inlist",
+      "sql": "SELECT id, region, store_name, opened_date FROM stores WHERE id NOT IN (SELECT store_id FROM inventory WHERE quantity >= 79);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_stores.alias(\"s\")\n    .join(df_inventory.filter(F.col(\"quantity\") >= 79).alias(\"i\"), F.col(\"s.id\") == F.col(\"i.store_id\"), \"left_anti\")\n    .select(F.col(\"s.id\"), F.col(\"s.region\"), F.col(\"s.store_name\"), F.col(\"s.opened_date\"))\n)\n```",
+      "seconds": 4.08,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00200",
+      "level": "inlist",
+      "sql": "SELECT id, account_id, txn_type FROM transactions WHERE amount < 2462.7 AND account_id NOT IN (SELECT id FROM accounts WHERE balance < 36176.8);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_transactions.alias(\"t\")\n    .join(df_accounts.filter(F.col(\"balance\") < 36176.8).alias(\"a\"), F.col(\"t.account_id\") == F.col(\"a.id\"), \"left_anti\")\n    .filter(F.col(\"t.amount\") < 2462.7)\n    .select(F.col(\"t.id\"), F.col(\"t.account_id\"), F.col(\"t.txn_type\"))\n)\n```",
+      "seconds": 4.75,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00691",
+      "level": "inlist",
+      "sql": "SELECT id, store_id, sale_date, product_id FROM store_sales WHERE store_id IN (SELECT id FROM stores);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_store_sales.alias(\"ss\")\n    .join(df_stores.alias(\"s\"), F.col(\"ss.store_id\") == F.col(\"s.id\"), \"left_semi\")\n    .select(\n        F.col(\"ss.id\"),\n        F.col(\"ss.store_id\"),\n        F.col(\"ss.sale_date\"),\n        F.col(\"ss.product_id\"),\n    )\n)\n```",
+      "seconds": 4.16,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00715",
+      "level": "inlist",
+      "sql": "select id, order_id, paid_at, status, amount\nfrom payments\nwhere order_id in (select id from orders where shipping_fee < 33.8);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_payments.alias(\"p\")\n    .join(df_orders.filter(F.col(\"shipping_fee\") < 33.8).alias(\"o\"), F.col(\"p.order_id\") == F.col(\"o.id\"), \"left_semi\")\n    .select(\n        F.col(\"p.id\"),\n        F.col(\"p.order_id\"),\n        F.col(\"p.paid_at\"),\n        F.col(\"p.status\"),\n        F.col(\"p.amount\"),\n    )\n)\n```",
+      "seconds": 4.98,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00556",
+      "level": "inlist",
+      "sql": "SELECT id, store_id FROM inventory WHERE quantity < 77 AND product_id NOT IN (SELECT id FROM products WHERE cost > 624.7) ORDER BY id;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_inventory.alias(\"i\")\n    .join(df_products.filter(F.col(\"cost\") > 624.7).alias(\"p\"), F.col(\"i.product_id\") == F.col(\"p.id\"), \"left_anti\")\n    .filter(F.col(\"i.quantity\") < 77)\n    .select(F.col(\"i.id\"), F.col(\"i.store_id\"))\n    .orderBy(\"id\")\n)\n```",
+      "seconds": 4.47,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00723",
+      "level": "inlist",
+      "sql": "select id, sale_date, store_id, revenue from store_sales where product_id not in (select id from products where price <= 454.1) order by id desc limit 3;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_store_sales.alias(\"ss\")\n    .join(df_products.filter(F.col(\"price\") <= 454.1).alias(\"p\"), F.col(\"ss.product_id\") == F.col(\"p.id\"), \"left_anti\")\n    .select(F.col(\"ss.id\"), F.col(\"ss.sale_date\"), F.col(\"ss.store_id\"), F.col(\"ss.revenue\"))\n    .orderBy(F.col(\"id\").desc())\n    .limit(3)\n)\n```",
+      "seconds": 4.9,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00147",
+      "level": "inlist",
+      "sql": "SELECT id, is_active, signup_date, name\nFROM customers\nWHERE id NOT IN (SELECT customer_id FROM sessions WHERE country = 'JP' AND customer_id IS NOT NULL)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_customers.alias(\"c\")\n    .join(df_sessions.filter(F.col(\"country\") == \"JP\").filter(F.col(\"customer_id\").isNotNull()).alias(\"s\"), F.col(\"c.id\") == F.col(\"s.customer_id\"), \"left_anti\")\n    .select(F.col(\"c.id\"), F.col(\"c.is_active\"), F.col(\"c.signup_date\"), F.col(\"c.name\"))\n)\n```",
+      "seconds": 4.4,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00417",
+      "level": "inlist",
+      "sql": "select id, device, started_at, browser from sessions where id in (select session_id from web_events) order by started_at desc",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_sessions.alias(\"s\")\n    .join(df_web_events.alias(\"we\"), F.col(\"s.id\") == F.col(\"we.session_id\"), \"left_semi\")\n    .select(F.col(\"s.id\"), F.col(\"s.device\"), F.col(\"s.started_at\"), F.col(\"s.browser\"))\n    .orderBy(F.col(\"started_at\").desc())\n)\n```",
+      "seconds": 4.04,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00841",
+      "level": "inlist",
+      "sql": "SELECT id, city, signup_date, country\nFROM customers\nWHERE age <= 59 AND id NOT IN (SELECT customer_id FROM sessions WHERE customer_id IS NOT NULL)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_customers.alias(\"c\")\n    .join(df_sessions.filter(F.col(\"customer_id\").isNotNull()).alias(\"s\"), F.col(\"c.id\") == F.col(\"s.customer_id\"), \"left_anti\")\n    .filter(F.col(\"c.age\") <= 59)\n    .select(F.col(\"c.id\"), F.col(\"c.city\"), F.col(\"c.signup_date\"), F.col(\"c.country\"))\n)\n```",
+      "seconds": 4.55,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00672",
+      "level": "inlist",
+      "sql": "select id, store_id, quantity, last_restock\nfrom inventory\nwhere store_id not in (select id from stores where city <> 'London');",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_inventory.alias(\"i\")\n    .join(df_stores.filter(F.col(\"city\") != \"London\").alias(\"s\"), F.col(\"i.store_id\") == F.col(\"s.id\"), \"left_anti\")\n    .select(F.col(\"i.id\"), F.col(\"i.store_id\"), F.col(\"i.quantity\"), F.col(\"i.last_restock\"))\n)\n```",
+      "seconds": 4.04,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00503",
+      "level": "inlist",
+      "sql": "select id, budget, dept_name\nfrom departments\nwhere id in (select dept_id from employees where level IN ('L5', 'L4'))",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_departments.alias(\"d\")\n    .join(df_employees.filter(F.col(\"level\").isin(\"L5\", \"L4\")).alias(\"e\"), F.col(\"d.id\") == F.col(\"e.dept_id\"), \"left_semi\")\n    .select(F.col(\"d.id\"), F.col(\"d.budget\"), F.col(\"d.dept_name\"))\n)\n```",
+      "seconds": 4.08,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00633",
+      "level": "inlist",
+      "sql": "select id, discount\nfrom orders\nwhere id in (select order_id from payments);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_orders.alias(\"o\")\n    .join(df_payments.alias(\"p\"), F.col(\"o.id\") == F.col(\"p.order_id\"), \"left_semi\")\n    .select(F.col(\"o.id\"), F.col(\"o.discount\"))\n)\n```",
+      "seconds": 3.01,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00266",
+      "level": "inlist",
+      "sql": "SELECT id, category, stock_qty, price FROM products WHERE cost >= 617.5 AND id NOT IN (SELECT product_id FROM inventory)",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_products.alias(\"p\")\n    .join(df_inventory.alias(\"i\"), F.col(\"p.id\") == F.col(\"i.product_id\"), \"left_anti\")\n    .filter(F.col(\"p.cost\") >= 617.5)\n    .select(F.col(\"p.id\"), F.col(\"p.category\"), F.col(\"p.stock_qty\"), F.col(\"p.price\"))\n)\n```",
+      "seconds": 4.24,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00777",
+      "level": "inlist",
+      "sql": "SELECT id, product_name\nFROM products\nWHERE id IN (SELECT product_id FROM store_sales WHERE units > 15)\nORDER BY product_name;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_products.alias(\"p\")\n    .join(df_store_sales.filter(F.col(\"units\") > 15).alias(\"ss\"), F.col(\"p.id\") == F.col(\"ss.product_id\"), \"left_semi\")\n    .select(F.col(\"p.id\"), F.col(\"p.product_name\"))\n    .orderBy(\"product_name\")\n)\n```",
+      "seconds": 3.84,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00451",
+      "level": "inlist",
+      "sql": "select id, dept_id, job_title, salary from employees where dept_id in (select id from departments where dept_name IN ('Engineering', 'Marketing')) order by id desc;",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_employees.alias(\"e\")\n    .join(df_departments.filter(F.col(\"dept_name\").isin(\"Engineering\", \"Marketing\")).alias(\"d\"), F.col(\"e.dept_id\") == F.col(\"d.id\"), \"left_semi\")\n    .select(F.col(\"e.id\"), F.col(\"e.dept_id\"), F.col(\"e.job_title\"), F.col(\"e.salary\"))\n    .orderBy(F.col(\"id\").desc())\n)\n```",
+      "seconds": 4.71,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    },
+    {
+      "id": "inl00286",
+      "level": "inlist",
+      "sql": "SELECT id, order_date FROM orders WHERE id IN (SELECT order_id FROM payments);",
+      "reply": "```python\nfrom pyspark.sql import functions as F\n\nresult = (\n    df_orders.alias(\"o\")\n    .join(df_payments.alias(\"p\"), F.col(\"o.id\") == F.col(\"p.order_id\"), \"left_semi\")\n    .select(F.col(\"o.id\"), F.col(\"o.order_date\"))\n)\n```",
+      "seconds": 3.06,
+      "strict": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      },
+      "lenient": {
+        "syntax": true,
+        "runs": true,
+        "match": true,
+        "status": "ok",
+        "detail": ""
+      }
+    }
+  ]
+}

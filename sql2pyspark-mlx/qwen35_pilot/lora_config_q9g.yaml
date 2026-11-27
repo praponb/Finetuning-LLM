@@ -1,0 +1,36 @@
+# Qwen3.5-9B QLoRA round "q9g" (owner 2026-11-26): ONE more full round CONTINUED FROM q9df3 (the live model), no API spend.
+# Start: adapters_q9g_init = q9df3 written as one exact rank-96 LoRA on the 4-bit base (q9g/combine_adapters.py: A's
+# concatenated, B's x 0.5 / 0.25 / 0.25 of q9d / q9f / q9f2; step 0 checked the fused weights and the scores).
+# Data: data_q9g = nested_v20 (4,000 free template pairs for the harness gaps) + 37 Kimi pilot pairs x3 + star_pool 400
+# + 7,500 replay lines of data_q9e (polishmix/build_q9g.py). Low lr: a polish round on top of a good model.
+# 9,600 micro-batches = 2,400 updates: warm-up 100 (1e-6 -> 1e-5), cosine to 5e-7. Run via q9g/chain_q9g.sh.
+model: mlx-community/Qwen3.5-9B-4bit
+train: true
+fine_tune_type: lora
+data: ./qwen35_pilot/data_q9g
+adapter_path: ./qwen35_pilot/adapters_q9g
+resume_adapter_file: ./qwen35_pilot/adapters_q9g_init/adapters.safetensors
+seed: 48
+iters: 9600
+batch_size: 1
+grad_accumulation_steps: 4
+max_seq_length: 3200
+mask_prompt: true
+grad_checkpoint: true
+num_layers: 16                # last 16 of 32 blocks (as q9d / q9f / q9f2)
+lora_parameters:
+  rank: 96                    # 3 x 32: the combined q9df3 adapter
+  dropout: 0.05
+  scale: 10.0
+optimizer: adamw
+learning_rate: 1.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 100
+  warmup_init: 1.0e-6
+  arguments: [1.0e-5, 2300, 5.0e-7]    # [init, decay_steps, end]  (optimizer updates = 9,600 / 4 = 2,400)
+steps_per_report: 50
+steps_per_eval: 2400
+val_batches: 250              # resumed segments: 100 (--segment-val-batches)
+save_every: 200
+test: false

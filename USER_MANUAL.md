@@ -116,8 +116,9 @@ The Web UI provides an intuitive side-by-side interface for fast query translati
 ### Sidebar Options
 
 - **Model Tag**: Change the text field in the sidebar to switch between model versions:
-  - `sql2pyspark` or `sql2pyspark:latest`: the default. It is **q9df3-q4** since 2026-11-25 (Qwen3.5-9B as 4-bit Q4_K_M; hold-out 61/62, complex 93/100, complex schema-shift 131/150, the fewest name slips on unseen tables), served on the Mac mini, which also runs the public site sql2pyspark.praponb.com since 2026-11-08. The app sends `"think": false` (a Qwen3.5 model would otherwise "think" first and time out) and caps a reply at 4,096 tokens. Earlier: v18a-q4 (2026-11-15 → 11-25), v15-q4 (2026-10-09 → 11-15), v12-q4 (2026-10-03 → 10-09), v9-q4 (2026-10-01 → 10-03).
-  - `sql2pyspark:v18a-q4`: the previous `latest` (7B Qwen2.5-Coder), kept for rollback (`ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest`).
+  - `sql2pyspark` or `sql2pyspark:latest`: the default. It is **q9gm-q4** since 2026-11-27 (Qwen3.5-9B as 4-bit Q4_K_M; hold-out 61/62, complex 98/100, complex schema-shift 135/150, harness v2 8/50), served on the Mac mini, which also runs the public site sql2pyspark.praponb.com since 2026-11-08. The app sends `"think": false` (a Qwen3.5 model would otherwise "think" first and time out) and caps a reply at 4,096 tokens. Earlier: q9df3-q4 (2026-11-25 → 11-27), v18a-q4 (2026-11-15 → 11-25), v15-q4 (2026-10-09 → 11-15), v12-q4 (2026-10-03 → 10-09), v9-q4 (2026-10-01 → 10-03).
+  - `sql2pyspark:q9df3-q4`: the previous `latest` (Qwen3.5-9B), kept for rollback (`ollama cp sql2pyspark:q9df3-q4 sql2pyspark:latest`).
+  - `sql2pyspark:v18a-q4`: the `latest` before q9df3-q4 (7B Qwen2.5-Coder).
   - `sql2pyspark:v15-q4`: the `latest` before v18a-q4.
   - `sql2pyspark:v9`: the same model at Q8_0 (8.1 GB).
   - `sql2pyspark:v12-q4` (`latest` 2026-10-03 → 10-09): v11 with the `OR` slip fixed (`WHERE a OR b` stays one `.filter()` with `|`) and the same subquery skills; `sql2pyspark:v12` is the same model at Q8_0.

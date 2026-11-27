@@ -48,8 +48,8 @@ for L in com.praponb.ollama com.praponb.sql2pyspark com.praponb.cloudflared-sql2
 ## Rollback
 
 The Mac mini is the only host. To go back to the previous model:
-`ollama cp sql2pyspark:v18a-q4 sql2pyspark:latest` (the app always asks for `latest`; every tag from v8 on is kept on
-the Mac mini; `latest` = q9df3-q4 since 2026-11-25). For a code change, `git checkout` the earlier commit and
+`ollama cp sql2pyspark:q9df3-q4 sql2pyspark:latest` (the app always asks for `latest`; every tag from v8 on is kept on
+the Mac mini; `latest` = q9gm-q4 since 2026-11-27, q9df3-q4 2026-11-25 → 11-27, v18a-q4 before). For a code change, `git checkout` the earlier commit and
 `sudo launchctl kickstart -k system/com.praponb.sql2pyspark`.
 
 The Ubuntu server is no longer a fallback: its copy (`sql2pyspark.service`, the `sql2pyspark:*` Ollama tags, `~/web-env`,

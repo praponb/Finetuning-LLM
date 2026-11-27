@@ -1,0 +1,17 @@
+Loading configuration file qwen35_pilot/q9g/memtest.yaml
+Loading pretrained model
+Loading datasets
+Training
+Loading fine-tuned weights from ./qwen35_pilot/adapters_q9g_init/adapters.safetensors
+Trainable parameters: 1.450% (129.835M/8953.802M)
+Starting training..., iters: 50
+Calculating loss...:   0%|          | 0/5 [00:00<?, ?it/s]Calculating loss...:  20%|██        | 1/5 [00:01<00:07,  1.92s/it]Calculating loss...:  40%|████      | 2/5 [00:03<00:04,  1.58s/it]Calculating loss...:  60%|██████    | 3/5 [00:04<00:03,  1.53s/it]Calculating loss...:  80%|████████  | 4/5 [00:09<00:02,  2.67s/it]Calculating loss...: 100%|██████████| 5/5 [00:10<00:00,  2.33s/it]Calculating loss...: 100%|██████████| 5/5 [00:10<00:00,  2.18s/it]
+Iter 1: Val loss 0.001, Val took 10.888s
+Iter 10: Train loss 0.033, Learning Rate 1.900e-06, It/sec 0.296, Tokens/sec 75.133, Trained Tokens 2535, Peak mem 9.900 GB
+Iter 20: Train loss 0.038, Learning Rate 4.600e-06, It/sec 0.273, Tokens/sec 68.828, Trained Tokens 5058, Peak mem 13.733 GB
+Iter 30: Train loss 0.043, Learning Rate 6.400e-06, It/sec 0.222, Tokens/sec 68.202, Trained Tokens 8126, Peak mem 13.733 GB
+Iter 40: Train loss 0.080, Learning Rate 9.100e-06, It/sec 0.289, Tokens/sec 75.227, Trained Tokens 10731, Peak mem 13.733 GB
+Calculating loss...:   0%|          | 0/5 [00:00<?, ?it/s]Calculating loss...:  20%|██        | 1/5 [00:00<00:01,  2.78it/s]Calculating loss...:  40%|████      | 2/5 [00:00<00:00,  3.19it/s]Calculating loss...:  60%|██████    | 3/5 [00:04<00:03,  1.77s/it]Calculating loss...:  80%|████████  | 4/5 [00:04<00:01,  1.26s/it]Calculating loss...: 100%|██████████| 5/5 [00:05<00:00,  1.03it/s]Calculating loss...: 100%|██████████| 5/5 [00:05<00:00,  1.02s/it]
+Iter 50: Val loss 0.008, Val took 5.082s
+Iter 50: Train loss 0.018, Learning Rate 1.000e-05, It/sec 0.169, Tokens/sec 71.827, Trained Tokens 14983, Peak mem 13.733 GB
+Saved final weights to qwen35_pilot/q9g/memtest_adapters/adapters.safetensors.

@@ -1,0 +1,28 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/11/27 02:41:00 WARN Utils: Your hostname, PraponBs-Mac-Mini-M6.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.50 instead (on interface en0)
+26/11/27 02:41:00 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/27 02:41:01 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+  10/150  lenient match 10/10  (90s)
+  20/150  lenient match 20/20  (155s)
+  30/150  lenient match 29/30  (263s)
+  40/150  lenient match 38/40  (324s)
+  50/150  lenient match 47/50  (393s)
+  60/150  lenient match 57/60  (488s)
+  70/150  lenient match 67/70  (547s)
+  80/150  lenient match 77/80  (593s)
+  90/150  lenient match 87/90  (677s)
+  100/150  lenient match 97/100  (758s)
+  110/150  lenient match 107/110  (823s)
+  120/150  lenient match 117/120  (932s)
+  130/150  lenient match 126/130  (1024s)
+  140/150  lenient match 136/140  (1121s)
+  150/150  lenient match 146/150  (1260s)
+
+sql2pyspark:q9g-q4 on test_fixed.jsonl (n=150)
+  strict : syntax 100.0%  runs 99.3%  match 97.3%
+  lenient: syntax 100.0%  runs 99.3%  match 97.3%
+  results -> eval/results/variants/q9g-q4__test_fixed.json
